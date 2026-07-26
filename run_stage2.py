@@ -113,16 +113,13 @@ def find_article(text: str, article_no: int) -> tuple[int, int, str, str] | None
     else:
         return None
 
-    end = min(len(text), hit.end() + 16000)
+    end = len(text)
     # End at the next recognisable article heading.
     for nxt in NEXT_ARTICLE_RE.finditer(text, hit.end()):
         if nxt.start() - start < 150:
             continue
         end = nxt.start()
         break
-    # If damaged encoding prevents next-heading recognition, cap the excerpt.
-    if end - start > 16000:
-        end = start + 16000
     excerpt = text[start:end].strip()
     return start, end, heading, excerpt
 
