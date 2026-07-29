@@ -43,7 +43,7 @@ def extract_conditions(text: str) -> list[WHTCondition]:
         conditions.append(
             WHTCondition(
                 condition_type=ConditionType.beneficial_owner,
-                operator="=",
+                operator="==",
                 value="true",
                 description="beneficial owner required",
                 source_text=text,
