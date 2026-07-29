@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from datetime import date
 from enum import Enum
 
 
@@ -32,6 +33,7 @@ class WHTRate:
     source_text: str | None = None
     source_paragraph: str | None = None
     priority: int = 0
+    effective_date: date | None = None
 
 
 @dataclass
@@ -45,3 +47,22 @@ class Rule:
     legal_basis: str | None = None
     source_text: str | None = None
     extraction_status: str = "needs_review"
+    effective_date: date | None = None
+
+
+@dataclass
+class ProtocolChange:
+    rate: float | None = None
+    legal_basis: str | None = None
+    add_conditions: list[WHTCondition] = field(default_factory=list)
+    remove_condition_types: list[ConditionType] = field(default_factory=list)
+
+
+@dataclass
+class Protocol:
+    name: str
+    effective_date: date
+    changes: list[ProtocolChange] = field(default_factory=list)
+    article: int | None = None
+    paragraph: str | None = None
+    transaction_type: str | None = None
