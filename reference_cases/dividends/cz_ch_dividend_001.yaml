@@ -1,0 +1,44 @@
+id: CZ-CH-DIV-001
+
+description: Czech company pays dividends to Swiss parent.
+
+payer_country: CZ
+recipient_country: CH
+income_type: dividends
+
+facts:
+  ownership_percent: 100
+  holding_days: 400
+  beneficial_owner: true
+  listed_company: false
+
+expected:
+
+  domestic_rate: 15
+
+  treaty:
+    article: "10"
+    paragraph: "2"
+    rate: 5
+
+  protocol: true
+
+  eu_directive: false
+
+  documentation:
+    - Tax residence certificate
+    - Beneficial owner declaration
+
+  conclusion: >
+    Treaty rate of 5% applies.
+
+verified_sources:
+
+  - Czech Income Taxes Act
+  - Czech-Switzerland DTT
+  - Protocol to the DTT
+
+status: verified
+reviewed_by:
+review_date:
+
