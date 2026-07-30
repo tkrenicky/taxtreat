@@ -1,0 +1,93 @@
+required:
+  - id
+  - payer_country
+  - recipient_country
+  - income_type
+  - domestic_law
+  - treaty
+  - documentation
+  - sources
+  - status
+
+fields:
+  id: string
+  payer_country: ISO-3166-1 alpha-2
+  recipient_country: ISO-3166-1 alpha-2
+  income_type:
+    allowed:
+      - dividends
+      - interest
+      - royalties
+
+  domestic_law:
+    required:
+      - standard_rate
+      - legal_reference
+    fields:
+      standard_rate: number
+      legal_reference: string
+      notes: string|null
+
+  treaty:
+    required:
+      - applicable
+    fields:
+      applicable: boolean
+      article: integer|null
+      paragraph: string|null
+      standard_rate: number|null
+      reduced_rates: list
+      beneficial_owner_required: boolean|null
+      notes: string|null
+
+  reduced_rate:
+    required:
+      - rate
+      - conditions
+    fields:
+      rate: number
+      conditions:
+        ownership_percent: number|null
+        holding_months: number|null
+        beneficial_owner: boolean|null
+        recipient_type: string|null
+        other: list
+
+  protocol:
+    fields:
+      applicable: boolean
+      effective_date: date|null
+      reference: string|null
+      notes: string|null
+
+  eu_directive:
+    fields:
+      applicable: boolean
+      directive: string|null
+      minimum_ownership_percent: number|null
+      minimum_holding_months: number|null
+      conditions: list
+
+  documentation:
+    type: list
+
+  sources:
+    type: list
+    item_fields:
+      title: string
+      authority: string
+      url: string
+      accessed_on: date
+      source_type:
+        allowed:
+          - legislation
+          - treaty
+          - protocol
+          - official_guidance
+          - eu_law
+
+  status:
+    allowed:
+      - draft
+      - reviewed
+      - verified
