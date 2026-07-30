@@ -2,47 +2,39 @@ id: CZ-CH-DIV
 payer_country: CZ
 recipient_country: CH
 income_type: dividends
-
 domestic_law:
   standard_rate: 15
-  legal_reference: Czech Income Taxes Act
+  legal_reference: Income Taxes Act
   notes: null
-
 treaty:
   applicable: true
   article: 10
-  paragraph: "2"
-  standard_rate: 15
+  paragraph: '2'
+  standard_rate: 5
   beneficial_owner_required: true
   reduced_rates:
-    - rate: 5
-      conditions:
-        ownership_percent: 10
-        holding_months: null
-        beneficial_owner: true
-        recipient_type: company
-        other: []
-  notes: Verify the exact wording and effect of the applicable protocol.
-
+  - rate: 5
+    conditions:
+      ownership_percent: 10
+      holding_months: 12
+      beneficial_owner: true
+  notes: null
 protocol:
-  applicable: true
+  applicable: false
   effective_date: null
   reference: null
-  notes: Pending verification against the official consolidated treaty text.
-
+  notes: null
 eu_directive:
   applicable: false
   directive: null
   minimum_ownership_percent: null
   minimum_holding_months: null
   conditions: []
-
 documentation:
-  - Certificate of tax residence
-  - Beneficial owner declaration
-  - Evidence of ownership
-  - Corporate documents of the recipient
-
-sources: []
-
+- Certificate of residence
+sources:
+- title: Czech-Switzerland DTT
+  authority: Government
+  url: https://example.org
+  source_type: treaty
 status: draft

@@ -1,0 +1,37 @@
+[
+  {
+    "payer":"CZ",
+    "recipient":"CH",
+    "income_code":"DIV",
+    "income_type":"dividends",
+    "domestic_rate":15,
+    "domestic_reference":"Income Taxes Act",
+    "treaty_applicable":true,
+    "article":10,
+    "paragraph":"2",
+    "treaty_rate":5,
+    "beneficial_owner":true,
+    "reduced_rates":[
+      {
+        "rate":5,
+        "conditions":{
+          "ownership_percent":10,
+          "holding_months":12,
+          "beneficial_owner":true
+        }
+      }
+    ],
+    "documentation":[
+      "Certificate of residence"
+    ],
+    "sources":[
+      {
+        "title":"Czech-Switzerland DTT",
+        "authority":"Government",
+        "url":"https://example.org",
+        "source_type":"treaty"
+      }
+    ],
+    "status":"draft"
+  }
+]
