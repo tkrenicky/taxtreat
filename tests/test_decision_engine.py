@@ -387,3 +387,233 @@ if __name__ == "__main__":
         print(f"  missing_facts={result.missing_facts}")
         print(f"  explanation={result.explanation}")
         print()
+
+from taxtreat.engine.decision_engine import (
+    _coerce_numeric,
+    _coerce_boolean,
+    _normalize_holding_period_months,
+)
+
+
+def test_coerce_numeric():
+    assert _coerce_numeric(10) == 10.0
+    assert _coerce_numeric("10%") == 10.0
+    assert _coerce_numeric("10,5") == 10.5
+    assert _coerce_numeric("") is None
+    assert _coerce_numeric(True) is None
+    assert _coerce_numeric("abc") is None
+
+
+def test_coerce_boolean():
+    assert _coerce_boolean(True) is True
+    assert _coerce_boolean(False) is False
+    assert _coerce_boolean("YES") is True
+    assert _coerce_boolean("no") is False
+    assert _coerce_boolean("x") is None
+
+
+def test_normalize_holding_period():
+    assert _normalize_holding_period_months(12, "month") == 12
+    assert _normalize_holding_period_months(2, "year") == 24
+    assert round(_normalize_holding_period_months(365, "day"), 2) == 12
+    assert _normalize_holding_period_months(1, "week") is None
+    assert _normalize_holding_period_months(None, "month") is None
+    assert _normalize_holding_period_months(1, None) is None
+
+
+def test_missing_ownership_fact():
+    rule = Rule(
+        rates=[
+            WHTRate(
+                rate=5,
+                conditions=[
+                    WHTCondition(
+                        condition_type=ConditionType.minimum_ownership,
+                        operator=">=",
+                        value="10",
+                    )
+                ],
+            )
+        ]
+    )
+
+    result = evaluate(rule, {})
+
+    assert result.requires_review
+    assert "ownership" in result.missing_facts
+
+
+def test_no_rates():
+    result = evaluate(Rule(rates=[]), {})
+
+    assert result.requires_review
+    assert result.eligible is False
+
+
+def test_only_default_rate():
+    result = evaluate(
+        Rule(
+            rates=[
+                WHTRate(rate=15, conditions=[], legal_basis="default")
+            ]
+        ),
+        {},
+    )
+
+    assert result.eligible
+    assert result.withholding_rate == 15
+
+
+def test_no_rate_selected():
+    rule = Rule(
+        rates=[
+            WHTRate(
+                rate=5,
+                conditions=[
+                    WHTCondition(
+                        condition_type=ConditionType.minimum_ownership,
+                        operator=">=",
+                        value="10",
+                    )
+                ],
+            )
+        ]
+    )
+
+    result = evaluate(rule, {"ownership": 1})
+
+    assert result.requires_review
+    assert result.eligible is False
+
+
+from taxtreat.engine.decision_engine import (
+    _coerce_boolean,
+    _coerce_numeric,
+    _normalize_holding_period_months,
+)
+
+
+def test_coerce_numeric_edge_cases():
+    assert _coerce_numeric(None) is None
+    assert _coerce_numeric(True) is None
+    assert _coerce_numeric(False) is None
+    assert _coerce_numeric("") is None
+    assert _coerce_numeric("   ") is None
+    assert _coerce_numeric("10%") == 10.0
+    assert _coerce_numeric("10,5") == 10.5
+    assert _coerce_numeric("abc") is None
+    assert _coerce_numeric(object()) is None
+
+
+def test_coerce_boolean_edge_cases():
+    assert _coerce_boolean(True) is True
+    assert _coerce_boolean(False) is False
+    assert _coerce_boolean("TRUE") is True
+    assert _coerce_boolean(" yes ") is True
+    assert _coerce_boolean("1") is True
+    assert _coerce_boolean("FALSE") is False
+    assert _coerce_boolean("no") is False
+    assert _coerce_boolean("0") is False
+    assert _coerce_boolean("unknown") is None
+    assert _coerce_boolean(123) is None
+
+
+def test_normalize_holding_period_all_units():
+    assert _normalize_holding_period_months(12, "month") == 12
+    assert _normalize_holding_period_months(12, "months") == 12
+    assert _normalize_holding_period_months(1, "year") == 12
+    assert _normalize_holding_period_months(2, "years") == 24
+    assert _normalize_holding_period_months(365, "day") == 12
+    assert _normalize_holding_period_months(730, "days") == 24
+    assert _normalize_holding_period_months(None, "months") is None
+    assert _normalize_holding_period_months(12, None) is None
+    assert _normalize_holding_period_months(12, "weeks") is None
+
+
+def test_invalid_boolean_condition_requires_review():
+    rule = Rule(
+        rates=[
+            WHTRate(
+                rate=5,
+                conditions=[
+                    WHTCondition(
+                        condition_type=ConditionType.beneficial_owner,
+                        operator="contains",
+                        value="true",
+                    )
+                ],
+            )
+        ]
+    )
+
+    result = evaluate(rule, {"beneficial_owner": True})
+
+    assert result.requires_review is True
+    assert result.eligible is False
+
+
+def test_invalid_boolean_value_requires_review():
+    rule = Rule(
+        rates=[
+            WHTRate(
+                rate=5,
+                conditions=[
+                    WHTCondition(
+                        condition_type=ConditionType.beneficial_owner,
+                        operator="==",
+                        value="banana",
+                    )
+                ],
+            )
+        ]
+    )
+
+    result = evaluate(rule, {"beneficial_owner": True})
+
+    assert result.requires_review is True
+    assert result.eligible is False
+
+
+def test_unknown_condition_type_requires_review():
+    class DummyCondition:
+        condition_type = object()
+        operator = "=="
+        value = "1"
+        unit = None
+
+    rule = Rule(
+        rates=[
+            WHTRate(
+                rate=5,
+                conditions=[DummyCondition()],
+            )
+        ]
+    )
+
+    result = evaluate(rule, {})
+
+    assert result.requires_review is True
+    assert result.eligible is False
+
+
+def test_no_matching_rate_without_default_requires_review():
+    rule = Rule(
+        rates=[
+            WHTRate(
+                rate=5,
+                conditions=[
+                    WHTCondition(
+                        condition_type=ConditionType.minimum_ownership,
+                        operator=">=",
+                        value="50",
+                        unit="%",
+                    )
+                ],
+            )
+        ]
+    )
+
+    result = evaluate(rule, {"ownership": 10})
+
+    assert result.requires_review is True
+    assert result.eligible is False

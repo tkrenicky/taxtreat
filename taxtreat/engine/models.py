@@ -56,6 +56,7 @@ class ProtocolChange:
     legal_basis: str | None = None
     add_conditions: list[WHTCondition] = field(default_factory=list)
     remove_condition_types: list[ConditionType] = field(default_factory=list)
+    add_rates: list[WHTRate] = field(default_factory=list)
 
 
 @dataclass

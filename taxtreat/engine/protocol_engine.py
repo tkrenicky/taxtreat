@@ -2,9 +2,8 @@ from __future__ import annotations
 
 from copy import deepcopy
 from datetime import date
-from typing import Any
 
-from taxtreat.engine.models import ConditionType, Protocol, ProtocolChange, Rule, WHTCondition, WHTRate
+from taxtreat.engine.models import Protocol, ProtocolChange, Rule
 
 
 class ProtocolEngine:
@@ -70,3 +69,6 @@ class ProtocolEngine:
                     for condition in rate.conditions
                     if condition.condition_type not in change.remove_condition_types
                 ]
+
+        if change.add_rates:
+            rule.rates.extend(deepcopy(change.add_rates))
