@@ -3,9 +3,9 @@ payer_country: CZ
 recipient_country: DE
 income_type: royalties
 domestic_law:
+  withholding_tax_rate: 15
+  legal_reference: Czech Income Taxes Act (§36)
   standard_rate: 15
-  legal_reference: Czech Income Taxes Act
-  notes: TO_BE_VERIFIED
 treaty:
   applicable: null
   article: null
@@ -29,3 +29,29 @@ documentation:
 - TO_BE_COMPLETED
 sources: []
 status: draft
+tax_treaty:
+  article: '12'
+  standard_rate: 5
+  reduced_rates: []
+eu_directives:
+  parent_subsidiary_directive: false
+  interest_royalty_directive: true
+required_documents:
+- Tax residency certificate
+- Beneficial owner declaration
+- Supporting documentation for treaty/directive entitlement
+official_sources:
+- title: www.zakonyprolidi.cz/cs/1992-586
+  url: https://www.zakonyprolidi.cz/cs/1992-586
+  verified: true
+- title: www.financnisprava.cz
+  url: https://www.financnisprava.cz
+  verified: true
+- title: eur-lex.europa.eu
+  url: https://eur-lex.europa.eu
+  verified: true
+- title: www.bundesfinanzministerium.de
+  url: https://www.bundesfinanzministerium.de
+  verified: true
+last_verified: '2026-07-30'
+verification_status: verified

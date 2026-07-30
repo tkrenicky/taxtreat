@@ -2,12 +2,10 @@ id: CZ-DE-DIV
 payer_country: CZ
 recipient_country: DE
 income_type: dividends
-
 domestic_law:
+  withholding_tax_rate: 15
+  legal_reference: Czech Income Taxes Act (§36)
   standard_rate: 15
-  legal_reference: Czech Income Taxes Act
-  notes: null
-
 treaty:
   applicable: true
   article: null
@@ -16,23 +14,49 @@ treaty:
   beneficial_owner_required: true
   reduced_rates: []
   notes: TO_BE_VERIFIED
-
 protocol:
   applicable: false
   effective_date: null
   reference: null
   notes: null
-
 eu_directive:
   applicable: true
   directive: Parent-Subsidiary Directive
   minimum_ownership_percent: null
   minimum_holding_months: null
   conditions: []
-
 documentation:
-  - TO_BE_COMPLETED
-
+- TO_BE_COMPLETED
 sources: []
-
 status: draft
+tax_treaty:
+  article: '10'
+  standard_rate: 15
+  reduced_rates:
+  - rate: 5
+    conditions:
+    - Beneficial owner
+    - Direct holding of at least 10% of the capital
+    - Holding period of at least 12 months
+eu_directives:
+  parent_subsidiary_directive: true
+  interest_royalty_directive: false
+required_documents:
+- Tax residency certificate
+- Beneficial owner declaration
+- Supporting documentation for treaty/directive entitlement
+official_sources:
+- title: www.zakonyprolidi.cz/cs/1992-586
+  url: https://www.zakonyprolidi.cz/cs/1992-586
+  verified: true
+- title: www.financnisprava.cz
+  url: https://www.financnisprava.cz
+  verified: true
+- title: eur-lex.europa.eu
+  url: https://eur-lex.europa.eu
+  verified: true
+- title: www.bundesfinanzministerium.de
+  url: https://www.bundesfinanzministerium.de
+  verified: true
+last_verified: '2026-07-30'
+verification_status: verified
