@@ -3,7 +3,10 @@ from pathlib import Path
 import pytest
 import yaml
 
-from taxtreat.engine.decision_engine import evaluate
+from taxtreat.engine.decision_engine import (
+    _normalize_holding_period_months,
+    evaluate,
+)
 from taxtreat.engine.models import (
     ConditionType,
     Rule,
@@ -16,9 +19,16 @@ REFERENCE_DIR = Path("reference_cases")
 
 
 def load_cases():
+    cases = []
+
     for file in sorted(REFERENCE_DIR.rglob("*.yaml")):
         data = yaml.safe_load(file.read_text(encoding="utf-8"))
-        yield pytest.param(data, id=data.get("id", file.stem))
+        cases.append(pytest.param(data, id=data.get("id", file.stem)))
+
+    return cases
+
+
+REFERENCE_CASES = load_cases()
 
 
 def build_rule(case):
@@ -74,16 +84,24 @@ def build_rule(case):
 
 def build_context(case):
     facts = case["facts"]
+    holding_days = facts.get("holding_days")
+
+    holding_months = None
+    if holding_days is not None:
+        holding_months = _normalize_holding_period_months(
+            holding_days,
+            "days",
+        )
 
     return {
         "ownership": facts.get("ownership_percent"),
-        "holding_period_days": facts.get("holding_days"),
+        "holding_months": holding_months,
         "beneficial_owner": facts.get("beneficial_owner"),
         "listed_company": facts.get("listed_company"),
     }
 
 
-@pytest.mark.parametrize("case", load_cases())
+@pytest.mark.parametrize("case", REFERENCE_CASES)
 def test_reference_case_structure(case):
     required = {
         "id",
@@ -99,12 +117,14 @@ def test_reference_case_structure(case):
     assert required.issubset(case)
 
     expected = case["expected"]
+
     assert "domestic_rate" in expected
     assert "treaty" in expected
     assert "documentation" in expected
     assert "conclusion" in expected
 
     treaty = expected["treaty"]
+
     assert "article" in treaty
     assert "paragraph" in treaty
     assert isinstance(treaty["rate"], (int, float))
@@ -113,7 +133,7 @@ def test_reference_case_structure(case):
     assert case["verified_sources"]
 
 
-@pytest.mark.parametrize("case", load_cases())
+@pytest.mark.parametrize("case", REFERENCE_CASES)
 def test_reference_case_decision_engine(case):
     rule = build_rule(case)
     context = build_context(case)
@@ -124,4 +144,4 @@ def test_reference_case_decision_engine(case):
 
     assert result.requires_review is False
     assert result.eligible is True
-    assert result.rate == expected_rate
+    assert result.withholding_rate == expected_rate
