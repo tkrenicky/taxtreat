@@ -10,13 +10,6 @@ OWNERSHIP_RE = re.compile(
     re.IGNORECASE,
 )
 
-def extract_dividend_rule(text):
-    return {
-        "transaction_type": "dividend",
-        "withholding_rates": [float(x) for x in RATE_RE.findall(text)],
-        "ownership_thresholds": [float(x) for x in OWNERSHIP_RE.findall(text)],
-    }
-
 HOLDING_RE = re.compile(
     r"(?:for at least|during)[^.]{0,30}?(\d+)\s*(?:days?|months?|years?)",
     re.IGNORECASE,
