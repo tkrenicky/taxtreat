@@ -3,29 +3,28 @@ payer_country: CZ
 recipient_country: DE
 income_type: interest
 domestic_law:
-  standard_rate: 15
+  standard_rate: 15.0
   legal_reference: Czech Income Taxes Act
-  notes: TO_BE_VERIFIED
+  notes: null
 treaty:
-  applicable: null
-  article: null
-  paragraph: null
-  standard_rate: null
-  beneficial_owner_required: null
+  applicable: true
+  article: 11
+  paragraph: '1'
+  standard_rate: 0.0
+  beneficial_owner_required: true
   reduced_rates: []
-  notes: TO_BE_VERIFIED
+  notes: null
 protocol:
-  applicable: null
+  applicable: false
   effective_date: null
   reference: null
-  notes: TO_BE_VERIFIED
+  notes: null
 eu_directive:
-  applicable: null
+  applicable: false
   directive: null
   minimum_ownership_percent: null
   minimum_holding_months: null
   conditions: []
-documentation:
-- TO_BE_COMPLETED
+documentation: []
 sources: []
 status: draft
