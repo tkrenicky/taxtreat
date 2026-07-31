@@ -86,3 +86,50 @@ def test_benchmark_removes_stale_output_when_identity_gate_fails(
 
     assert row["parse_status"] == "failed"
     assert "counterparty_not_found" in row["error"]
+
+
+def test_failed_identity_is_recorded_in_report(monkeypatch, tmp_path):
+    parsed_dir = tmp_path / "parsed"
+    report = tmp_path / "benchmark.csv"
+    parsed_dir.mkdir()
+
+    def rejected_parse(country, title, pdf, output):
+        raise RuntimeError(
+            "Treaty identity rejected: counterparty_not_found "
+            "(expected 'Testland')"
+        )
+
+    monkeypatch.setattr(benchmark_treaties, "PARSED_DIR", parsed_dir)
+    monkeypatch.setattr(benchmark_treaties, "REPORT", report)
+    monkeypatch.setattr(benchmark_treaties, "load_treaties", lambda: [_treaty()])
+    monkeypatch.setattr(benchmark_treaties, "parse_treaty", rejected_parse)
+
+    benchmark_treaties.main()
+
+    with report.open(encoding="utf-8-sig", newline="") as file:
+        row = next(csv.DictReader(file))
+
+    assert row["identity_status"] == "rejected"
+    assert row["identity_reason"] == "counterparty_not_found"
+
+
+def test_detector_failure_records_validated_identity():
+    result = benchmark_treaties.classify_failed_parse(
+        "RuntimeError: Treaty start not found."
+    )
+
+    assert result == {
+        "identity_status": "validated",
+        "identity_reason": "counterparty_matched",
+    }
+
+
+def test_unreadable_source_records_identity_not_run():
+    result = benchmark_treaties.classify_failed_parse(
+        "pypdf.errors.PdfStreamError: Stream has ended unexpectedly"
+    )
+
+    assert result == {
+        "identity_status": "not_run",
+        "identity_reason": "source_unreadable",
+    }

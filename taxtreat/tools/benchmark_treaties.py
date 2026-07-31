@@ -14,6 +14,11 @@ from taxtreat.engine.extractors import dividend_rule
 DB = Path("data/processed/taxtreat_cz.sqlite")
 PARSED_DIR = Path("data/parsed")
 REPORT = Path("reports/treaty_extraction_benchmark.csv")
+PARSE_TIMEOUT_SECONDS = 120
+
+_IDENTITY_REJECTION_RE = re.compile(
+    r"Treaty identity rejected:\s*(?P<reason>[a-z_]+)"
+)
 
 
 def slugify(value: str) -> str:
@@ -60,6 +65,7 @@ def parse_treaty(country: str, title: str, pdf: Path, output: Path) -> None:
         ],
         capture_output=True,
         text=True,
+        timeout=PARSE_TIMEOUT_SECONDS,
     )
 
     if result.returncode != 0:
@@ -74,6 +80,41 @@ STDERR
 {result.stderr}
 """
         )
+
+def classify_failed_parse(error: str) -> dict[str, str]:
+    """Classify identity stage for failed parser subprocesses."""
+
+    rejection = _IDENTITY_REJECTION_RE.search(error)
+    if rejection:
+        return {
+            "identity_status": "rejected",
+            "identity_reason": rejection.group("reason"),
+        }
+
+    # The detector runs only after successful identity validation.
+    if "Treaty start not found" in error:
+        return {
+            "identity_status": "validated",
+            "identity_reason": "counterparty_matched",
+        }
+
+    if "PdfStreamError" in error or "Stream has ended unexpectedly" in error:
+        return {
+            "identity_status": "not_run",
+            "identity_reason": "source_unreadable",
+        }
+
+    if "timed out" in error.lower():
+        return {
+            "identity_status": "unknown",
+            "identity_reason": "parse_timeout",
+        }
+
+    return {
+        "identity_status": "unknown",
+        "identity_reason": "parser_failed",
+    }
+
 
 def benchmark(parsed_path: Path) -> dict[str, object]:
     data = json.loads(parsed_path.read_text(encoding="utf-8"))
@@ -133,6 +174,8 @@ def main() -> None:
             "error": "",
         }
 
+        print(f"RUN    {country}", flush=True)
+
         try:
             # A benchmark must never trust a cached parsed file. Re-run the
             # identity gate and parser so stale or wrongly associated treaty
@@ -143,17 +186,29 @@ def main() -> None:
             row["parse_status"] = "ok"
             row.update(benchmark(parsed_path))
 
+        except subprocess.TimeoutExpired as exc:
+            row["parse_status"] = "failed"
+            row["error"] = (
+                f"Parser timed out after {PARSE_TIMEOUT_SECONDS} seconds: {exc}"
+            )
+            row.update(classify_failed_parse(row["error"]))
+            parsed_path.unlink(missing_ok=True)
+
         except Exception as exc:
             row["parse_status"] = "failed"
             row["error"] = str(exc)
+            row.update(classify_failed_parse(row["error"]))
+            parsed_path.unlink(missing_ok=True)
 
         rows.append(row)
 
         print(
             f"{row['parse_status'].upper():6} "
             f"{country} "
+            f"identity={row.get('identity_status', '')} "
             f"A10={row.get('article_10', '')} "
-            f"rates={row.get('dividend_rates', '')}"
+            f"rates={row.get('dividend_rates', '')}",
+            flush=True,
         )
 
     fieldnames = [

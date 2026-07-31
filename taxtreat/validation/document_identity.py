@@ -117,17 +117,35 @@ def publication_reference(title: str | None) -> str | None:
     return f"{int(match.group('number'))}/{match.group('year')}"
 
 
-def _distinctive_root(alias: str) -> str | None:
+def _distinctive_roots(alias: str) -> tuple[str, ...]:
+    """Return generic lexical roots for common country-name variants.
+
+    The rules are language-shape rules, not country-specific exceptions. They
+    cover registry labels such as ``Moldávie`` vs. treaty wording
+    ``Moldavská republika`` and ``Kyrgyzstán`` vs. ``Kyrgyzská republika``.
+    """
+
     words = [word for word in alias.split() if word not in _GENERIC_COUNTRY_WORDS]
     if not words:
-        return None
+        return ()
 
     word = max(words, key=len)
+    candidates: list[str] = [word]
+
     if len(word) >= 4 and word[-1] in "aeioy":
-        root = word[:-1]
-        if len(root) >= 3:
-            return root
-    return word if len(word) >= 3 else None
+        candidates.append(word[:-1])
+
+    for suffix in ("stan", "sko", "ie"):
+        if word.endswith(suffix):
+            candidates.append(word[: -len(suffix)])
+
+    roots: list[str] = []
+    seen: set[str] = set()
+    for candidate in candidates:
+        if len(candidate) >= 4 and candidate not in seen:
+            seen.add(candidate)
+            roots.append(candidate)
+    return tuple(roots)
 
 
 def _match_country(expected_country: str, normalized_text: str) -> tuple[str, str] | None:
@@ -138,9 +156,12 @@ def _match_country(expected_country: str, normalized_text: str) -> tuple[str, st
             return alias, "exact_alias"
 
     for alias in aliases:
-        root = _distinctive_root(alias)
-        if root and re.search(rf"(?<![a-z0-9]){re.escape(root)}[a-z0-9]*", normalized_text):
-            return alias, "country_root"
+        for root in _distinctive_roots(alias):
+            if re.search(
+                rf"(?<![a-z0-9]){re.escape(root)}[a-z0-9]*",
+                normalized_text,
+            ):
+                return alias, "country_root"
 
     return None
 

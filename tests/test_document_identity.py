@@ -96,3 +96,25 @@ def test_rejects_empty_or_unusable_extraction():
 
     assert not result.is_valid
     assert result.reason == "insufficient_text"
+
+
+def test_validates_moldavia_registry_name_against_treaty_adjective():
+    result = validate_treaty_identity(
+        expected_country="Moldávie",
+        source_title="88/2000 Sb.m.s.",
+        text=_treaty_text("Moldavskou republikou", "88 / 2000"),
+    )
+
+    assert result.is_valid
+    assert result.matched_method == "country_root"
+
+
+def test_validates_stan_registry_name_against_republic_adjective():
+    result = validate_treaty_identity(
+        expected_country="Kyrgyzstán",
+        source_title="50/2020 Sb.m.s.",
+        text=_treaty_text("Kyrgyzskou republikou", "50 / 2020"),
+    )
+
+    assert result.is_valid
+    assert result.matched_method == "country_root"
