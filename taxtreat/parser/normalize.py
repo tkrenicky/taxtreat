@@ -33,8 +33,19 @@ REPLACEMENTS = {
 def repair(text: str) -> str:
     for old, new in REPLACEMENTS.items():
         text = text.replace(old, new)
-    return text
 
+    def replace_article(match: re.Match) -> str:
+        number = re.sub(r"\s+", "", match.group(1))
+        return f"Článek {number}"
+
+    text = re.sub(
+        r"Č\s*l\s*á\s*n\s*e\s*k\s*((?:\d\s*)+)",
+        replace_article,
+        text,
+        flags=re.IGNORECASE,
+    )
+
+    return text
 
 def normalize_line(line: str) -> str:
     line = unicodedata.normalize("NFKC", line)

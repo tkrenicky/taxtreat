@@ -15,21 +15,30 @@ CLAUSE_MARKER_RE = re.compile(
 
 BENEFICIAL_OWNER_RE = re.compile(
     r"(?:beneficial\s+owner|beneficially\s+owned|"
-    r"skutečný\s+vlastník|oprávněný\s+vlastník|"
-    r"skutecny\s+vlastnik|opravneny\s+vlastnik)",
+    r"skute\w*\s+vlastn\w*|opravn\w*\s+vlastn\w*)",
     re.IGNORECASE,
 )
 
 OWNERSHIP_BEFORE_RE = re.compile(
     r"(?:holds?|owns?|controls?|participation|interest|"
-    r"vlastní|drží|ovládá|podíl|účast)",
+    r"vlastn\w*|dr\w*|ovl\w*|pod\w*|účast)",
     re.IGNORECASE,
 )
 
 OWNERSHIP_AFTER_RE = re.compile(
     r"(?:capital|voting\s+power|shares?|participation|interest|"
-    r"základní(?:ho|m)?\s+kapitál(?:u|e)?|hlasovac(?:ích|í)\s+práv|"
-    r"podíl(?:u|em)?|účast)",
+    r"kapit\w*|hlasovac\w*\s+pr\w*|pod\w*|účast)",
+    re.IGNORECASE,
+)
+
+ZERO_RATE_RE = re.compile(
+    r"(?:taxable\s+only|shall\s+be\s+taxable\s+only|"
+    r"podl\w*\s+zdan\w*\s+jen|zdan\w*\s+jen)",
+    re.IGNORECASE,
+)
+
+TAX_RATE_CONTEXT_RE = re.compile(
+    r"(?:gross\s+amount|hrub\w*\s+(?:amount|c\w*stk\w*))",
     re.IGNORECASE,
 )
 
@@ -85,6 +94,11 @@ def _deduplicate_conditions(conditions: list[WHTCondition]) -> list[WHTCondition
 def _is_ownership_percentage(text: str, match: re.Match) -> bool:
     before = text[max(0, match.start() - 60):match.start()]
     after = text[match.end():min(len(text), match.end() + 55)]
+
+    # A percentage followed by "gross amount" / "hrubé částky" is a tax rate,
+    # even where damaged PDF encoding leaves "skutečný vlastník" nearby.
+    if TAX_RATE_CONTEXT_RE.search(after):
+        return False
 
     return bool(
         OWNERSHIP_BEFORE_RE.search(before)
@@ -183,10 +197,14 @@ def _extract_rate_clauses(text: str) -> list[tuple[float, str]]:
     if len(clauses) > 1:
         for clause in clauses:
             candidates = _rate_candidates(clause)
-            if not candidates:
+
+            if candidates:
+                rate, _ = candidates[0]
+                extracted.append((rate, clause))
                 continue
-            rate, _ = candidates[0]
-            extracted.append((rate, clause))
+
+            if ZERO_RATE_RE.search(clause):
+                extracted.append((0.0, clause))
 
     if extracted:
         return extracted

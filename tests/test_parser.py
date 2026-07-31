@@ -165,3 +165,8 @@ def test_registry_has_default_dividend():
 def test_split_paragraphs_empty_text():
     assert split_paragraphs("") == []
     assert split_paragraphs("   ") == []
+
+
+def test_repair_spaced_article_heading():
+    assert repair("CÏ l aÂ ne k 1 0") == "Článek 10"
+    assert repair("CÏ laÂ n e k 1 2") == "Článek 12"

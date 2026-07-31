@@ -1,0 +1,855 @@
+﻿country,title,pdf,parsed_file,parse_status,articles_detected,article_10,article_11,article_12,dividend_status,dividend_rates,dividend_conditions,error
+Albánie,270/1996 Sb.,data/raw/treaty/9405698b6b8fedc5.pdf,data/parsed/albanie.json,ok,30,True,True,True,confirmed,5.0|15.0,beneficial_owner:true|beneficial_owner:true,
+Andorra,46/2023 Sb.m.s.,data/raw/treaty/092da06b2629bd65.pdf,data/parsed/andorra.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+Arménie,86/2009 Sb.m.s.,data/raw/treaty/111c9bed2e8a8afb.pdf,data/parsed/armenie.json,ok,29,True,True,True,incomplete,,,
+Austrálie,5/1996 Sb.,data/raw/treaty/54d26da6c801852f.pdf,data/parsed/australie.json,ok,64,True,True,True,confirmed,15.0|15.0,minimum_ownership:20,
+Bahrajn,59/2012 Sb.m.s.,data/raw/treaty/2f630ebaba348ee1.pdf,data/parsed/bahrajn.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+Bangladéš,8/2021 Sb.m.s.,data/raw/treaty/fdda70d6240ecd9d.pdf,data/parsed/banglades.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+Barbados,69/2012 Sb.m.s.,data/raw/treaty/dc25d4bd803712c2.pdf,data/parsed/barbados.json,ok,29,True,True,True,confirmed,5.0|15.0|5.0,minimum_ownership:25|beneficial_owner:true|beneficial_owner:true|beneficial_owner:true,
+Belgie,95/2000 Sb.m.s.,data/raw/treaty/b5dce9a7d1cc9e45.pdf,data/parsed/belgie.json,ok,29,True,True,True,confirmed,5.0|15.0,minimum_ownership:25|beneficial_owner:true|beneficial_owner:true,
+Bosna a Hercegovina,58/2010 Sb. m.s.,data/raw/treaty/b20676ce0a24b3d5.pdf,data/parsed/bosna_a_hercegovina.json,ok,28,True,True,True,incomplete,,,
+Botswana,49/2020 Sb.m.s.,data/raw/treaty/495f56cefd553f3e.pdf,data/parsed/botswana.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+Brazílie,200/1991 Sb.,data/raw/treaty/9d4b0f47764e6e1a.pdf,data/parsed/brazilie.json,ok,29,True,True,True,confirmed,15.0,beneficial_owner:true,
+Bulharsko,203/1999 Sb.,data/raw/treaty/b6aaaa07be5d6ad9.pdf,data/parsed/bulharsko.json,ok,29,True,True,True,confirmed,10.0,beneficial_owner:true,
+Bělorusko,31/1998 Sb.,data/raw/treaty/e57bf1e617250a79.pdf,data/parsed/belorusko.json,ok,29,True,True,True,confirmed,10.0,beneficial_owner:true,
+Chile,5/2017 Sb.m.s.,data/raw/treaty/3f6037dbe4761499.pdf,data/parsed/chile.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+Chorvatsko,42/2000 Sb.m.s.,data/raw/treaty/2ca164a53d4eb996.pdf,data/parsed/chorvatsko.json,ok,29,True,True,True,confirmed,5.0,beneficial_owner:true,
+Dánsko,14/2013 Sb.m.s.,data/raw/treaty/0df17c68deb632e7.pdf,data/parsed/dansko.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+Egypt,283/1995 Sb.,data/raw/treaty/45da8bd6cc76b217.pdf,data/parsed/egypt.json,ok,29,True,True,True,confirmed,5.0|15.0,minimum_ownership:25|beneficial_owner:true|beneficial_owner:true,
+Estonsko,184/1995 Sb.,data/raw/treaty/4d47d11e60e1773a.pdf,data/parsed/estonsko.json,ok,29,True,True,True,incomplete,,,
+Etiopie,54/2008 Sb.m.s.,data/raw/treaty/e01aa470fbf085b3.pdf,data/parsed/etiopie.json,ok,29,True,True,True,incomplete,,,
+Filipíny,132/2003 Sb.m.s.,data/raw/treaty/d1b5a6bffa834699.pdf,data/parsed/filipiny.json,ok,28,True,True,True,confirmed,10.0|15.0|10.0,minimum_ownership:10|beneficial_owner:true|beneficial_owner:true|beneficial_owner:true,
+Finsko,43/1996 Sb.,data/raw/treaty/b8639e7c202a2f61.pdf,data/parsed/finsko.json,ok,28,True,True,True,incomplete,,,
+Francie,79/2005 Sb.m.s.,data/raw/treaty/58233afe6e19c7ff.pdf,data/parsed/francie.json,ok,30,True,True,True,confirmed,0.0|10.0,minimum_ownership:25|beneficial_owner:true|beneficial_owner:true,
+Ghana,38/2020 Sb.m.s.,data/raw/treaty/19938cb5a1fe7fbc.pdf,data/parsed/ghana.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+Gruzie,40/2007 Sb.m.s.,data/raw/treaty/e6279bf8653f735a.pdf,data/parsed/gruzie.json,ok,28,True,True,True,confirmed,5.0|10.0,minimum_ownership:25|beneficial_owner:true|beneficial_owner:true,
+Hongkong,49/2012 Sb.m.s.,data/raw/treaty/635ec7202906789f.pdf,data/parsed/hongkong.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+Indie,301/1999 Sb.,data/raw/treaty/5bb350ce5f87879d.pdf,data/parsed/indie.json,ok,31,True,True,True,confirmed,10.0,beneficial_owner:true,
+Indonésie,67/1996 Sb.,data/raw/treaty/c7633f3cfe6a3757.pdf,data/parsed/indonesie.json,ok,29,True,True,True,confirmed,10.0|15.0|12.5,minimum_ownership:20|beneficial_owner:true|beneficial_owner:true|beneficial_owner:true,
+Irsko,163/1996 Sb.,data/raw/treaty/8b96e4e29d7f01ad.pdf,data/parsed/irsko.json,ok,30,True,True,True,incomplete,,,
+Island,11/2001 Sb.m.s.,data/raw/treaty/9ef91cc860d25c46.pdf,data/parsed/island.json,ok,28,True,True,True,confirmed,5.0|15.0,minimum_ownership:25|beneficial_owner:true|beneficial_owner:true,
+Itálie,17/1985 Sb.,data/raw/treaty/41288bbf1e3ca3e6.pdf,data/parsed/italie.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+Izrael,21/1995 Sb.,data/raw/treaty/29b7da072e3d13a0.pdf,data/parsed/izrael.json,ok,30,True,True,True,confirmed,5.0|15.0,minimum_ownership:25|beneficial_owner:true|beneficial_owner:true,
+JAR (Jihoafrická republika),7/1998 Sb.,data/raw/treaty/51243a10b98e8061.pdf,data/parsed/jar_jihoafricka_republika.json,ok,29,True,True,True,confirmed,5.0|15.0,beneficial_owner:true|beneficial_owner:true,
+Japonsko,46/1979 Sb.,data/raw/treaty/643db08248ebc8bc.pdf,data/parsed/japonsko.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+Jordánsko,88/2007 Sb.m.s.,data/raw/treaty/77d62971ffd51c5f.pdf,data/parsed/jordansko.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+KLDR (Korejská lidově demokratická republika),3/2006 Sb.m.s.,data/raw/treaty/b7e469380e780a5a.pdf,data/parsed/kldr_korejska_lidove_demokraticka_republika.json,ok,30,True,True,True,confirmed,10.0,beneficial_owner:true,
+Kamerun,415/2025 Sb.,data/raw/treaty/d23391e2d6c63872.html,data/parsed/kamerun.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+invalid pdf header: b'<!DOC'
+EOF marker not found
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 20, in <module>
+    pages = extract_pdf_pages(args.pdf)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/extractor.py"", line 40, in extract_pdf_pages
+    pages = _extract_with_pypdf(path)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/extractor.py"", line 12, in _extract_with_pypdf
+    reader = PdfReader(str(path))
+             ^^^^^^^^^^^^^^^^^^^^
+  File ""/home/codespace/.local/lib/python3.12/site-packages/pypdf/_reader.py"", line 136, in __init__
+    self._initialize_stream(stream)
+  File ""/home/codespace/.local/lib/python3.12/site-packages/pypdf/_reader.py"", line 158, in _initialize_stream
+    self.read(stream)
+  File ""/home/codespace/.local/lib/python3.12/site-packages/pypdf/_reader.py"", line 597, in read
+    self._find_eof_marker(stream)
+  File ""/home/codespace/.local/lib/python3.12/site-packages/pypdf/_reader.py"", line 703, in _find_eof_marker
+    line = read_previous_line(stream)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/codespace/.local/lib/python3.12/site-packages/pypdf/_utils.py"", line 319, in read_previous_line
+    raise PdfStreamError(STREAM_TRUNCATED_PREMATURELY)
+pypdf.errors.PdfStreamError: Stream has ended unexpectedly
+
+"
+Kanada,83/2002 Sb.m.s.,data/raw/treaty/19439d602c713b60.pdf,data/parsed/kanada.json,ok,29,True,True,True,confirmed,5.0|15.0,minimum_ownership:10|beneficial_owner:true|beneficial_owner:true,
+Katar,45/2022 Sb.m.s.,data/raw/treaty/5ce6ddcd8517709a.pdf,data/parsed/katar.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+Kazachstán,3/2000 Sb.m.s.,data/raw/treaty/c93ffd86a6777cd5.pdf,data/parsed/kazachstan.json,ok,29,True,True,True,incomplete,,,
+Kolumbie,39/2015 Sb.m.s.,data/raw/treaty/ec7716e89b45db9a.pdf,data/parsed/kolumbie.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+Korejská republika,1/2020 Sb.m.s.,data/raw/treaty/4cdc1ac2bdd58c3e.pdf,data/parsed/korejska_republika.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+Kosovo,38/2023 Sb.m.s.,data/raw/treaty/83f4f3cd9b52c07e.pdf,data/parsed/kosovo.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+Kuvajt,48/2004 Sb.m.s.,data/raw/treaty/2c0373154a0fa980.pdf,data/parsed/kuvajt.json,ok,30,True,True,True,confirmed,5.0,beneficial_owner:true,
+Kypr,120/2009 Sb.m.s.,data/raw/treaty/5a67898259fa2243.pdf,data/parsed/kypr.json,ok,27,True,True,True,incomplete,,,
+Kyrgyzstán,50/2020 Sb.m.s.,data/raw/treaty/a3c0d53daa3f5a8a.pdf,data/parsed/kyrgyzstan.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+Libanon,30/2000 Sb.m.s.,data/raw/treaty/f15f93b7a59d6958.pdf,data/parsed/libanon.json,ok,30,True,True,True,confirmed,5.0,beneficial_owner:true,
+Lichtenštejnsko,8/2016 Sb.m.s.,data/raw/treaty/3c14ad253e11a760.pdf,data/parsed/lichtenstejnsko.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+Litva,230/1995 Sb.,data/raw/treaty/873dcac41f61cb91.pdf,data/parsed/litva.json,ok,29,True,True,True,incomplete,,,
+Lotyšsko,170/1995 Sb.,data/raw/treaty/6264d4e84baed425.pdf,data/parsed/lotyssko.json,ok,29,True,True,True,incomplete,,,
+Lucembursko,51/2014 Sb.m.s.,data/raw/treaty/e0c6c6938586cf35.pdf,data/parsed/lucembursko.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+Makedonie,88/2002 Sb.m.s.,data/raw/treaty/0c893e712b4c3776.pdf,data/parsed/makedonie.json,ok,28,True,True,True,incomplete,,,
+Malajsie,71/1998 Sb.,data/raw/treaty/40caf9cb5f4b8e6c.pdf,data/parsed/malajsie.json,ok,30,True,True,True,confirmed,10.0,beneficial_owner:true,
+Malta,164/1997 Sb.,data/raw/treaty/33e41fd7e6b26fca.pdf,data/parsed/malta.json,ok,29,True,True,True,incomplete,,,
+Maroko,83/2006 Sb.m.s.,data/raw/treaty/1421e7ce5d6f36a2.pdf,data/parsed/maroko.json,ok,29,True,True,True,confirmed,10.0|5.0,beneficial_owner:true|beneficial_owner:true,
+Maďarsko,21/1995 Sb.,data/raw/treaty/29b7da072e3d13a0.pdf,data/parsed/madarsko.json,ok,30,True,True,True,confirmed,5.0|15.0,minimum_ownership:25|beneficial_owner:true|beneficial_owner:true,
+Mexiko,7/2003 Sb.m.s.,data/raw/treaty/c6af51e142d5bb38.pdf,data/parsed/mexiko.json,ok,29,True,True,True,confirmed,10.0,beneficial_owner:true,
+Moldávie,88/2000 Sb.m.s.,data/raw/treaty/f516b7a298fda39f.pdf,data/parsed/moldavie.json,ok,29,True,True,True,confirmed,5.0|15.0,minimum_ownership:25|beneficial_owner:true|beneficial_owner:true,
+Mongolsko,18/1999 Sb.,data/raw/treaty/3c77111564d931c9.pdf,data/parsed/mongolsko.json,ok,30,True,True,True,incomplete,,,
+Nigérie,339/1991 Sb.,data/raw/treaty/f041ff7ffb421dc2.pdf,data/parsed/nigerie.json,ok,28,True,True,True,confirmed,15.0,beneficial_owner:true,
+Nizozemí,138/1974 Sb.,data/raw/treaty/8cc2573d18d16e57.pdf,data/parsed/nizozemi.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+Norsko,121/2005 Sb.m.s.,data/raw/treaty/b3e90a762197974f.pdf,data/parsed/norsko.json,ok,34,True,True,True,incomplete,,,
+Nový Zéland,75/2008 Sb.m.s.,data/raw/treaty/9ef2cc07342533a7.pdf,data/parsed/novy_zeland.json,ok,27,True,True,True,incomplete,,,
+Německo,18/1984 Sb.,data/raw/treaty/01e8af60121a31b9.pdf,data/parsed/nemecko.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+Panama,91/2013 Sb.m.s.,data/raw/treaty/552ba1bd84d02189.pdf,data/parsed/panama.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+Polsko,102/2012 Sb.m.s.,data/raw/treaty/eb350622b0da7c4b.pdf,data/parsed/polsko.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+Portugalsko,275/1997 Sb.,data/raw/treaty/6223b970cbd73099.pdf,data/parsed/portugalsko.json,ok,29,True,True,True,confirmed,10.0,beneficial_owner:true,
+Pákistán,58/2015 Sb.m.s.,data/raw/treaty/db889c0ec21ff424.pdf,data/parsed/pakistan.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+Rakousko,31/2007 Sb.m.s.,data/raw/treaty/790847066c210f8b.pdf,data/parsed/rakousko.json,ok,28,True,True,True,confirmed,10.0|0.0,beneficial_owner:true|minimum_ownership:10|beneficial_owner:true,
+Rumunsko,180/1994 Sb.,data/raw/treaty/6f1813e5770cc729.pdf,data/parsed/rumunsko.json,ok,30,True,True,True,incomplete,,,
+Rusko,275/1997 Sb.,data/raw/treaty/6223b970cbd73099.pdf,data/parsed/rusko.json,ok,29,True,True,True,confirmed,10.0,beneficial_owner:true,
+Rwanda,482/2024 Sb.,data/raw/treaty/d23391e2d6c63872.html,data/parsed/rwanda.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+invalid pdf header: b'<!DOC'
+EOF marker not found
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 20, in <module>
+    pages = extract_pdf_pages(args.pdf)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/extractor.py"", line 40, in extract_pdf_pages
+    pages = _extract_with_pypdf(path)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/extractor.py"", line 12, in _extract_with_pypdf
+    reader = PdfReader(str(path))
+             ^^^^^^^^^^^^^^^^^^^^
+  File ""/home/codespace/.local/lib/python3.12/site-packages/pypdf/_reader.py"", line 136, in __init__
+    self._initialize_stream(stream)
+  File ""/home/codespace/.local/lib/python3.12/site-packages/pypdf/_reader.py"", line 158, in _initialize_stream
+    self.read(stream)
+  File ""/home/codespace/.local/lib/python3.12/site-packages/pypdf/_reader.py"", line 597, in read
+    self._find_eof_marker(stream)
+  File ""/home/codespace/.local/lib/python3.12/site-packages/pypdf/_reader.py"", line 703, in _find_eof_marker
+    line = read_previous_line(stream)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/codespace/.local/lib/python3.12/site-packages/pypdf/_utils.py"", line 319, in read_previous_line
+    raise PdfStreamError(STREAM_TRUNCATED_PREMATURELY)
+pypdf.errors.PdfStreamError: Stream has ended unexpectedly
+
+"
+San Marino,27/2022 Sb.m.s.,data/raw/treaty/ae57ee9ce600b3de.pdf,data/parsed/san_marino.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+Saúdská Arábie,42/2013 Sb.m.s.,data/raw/treaty/402894f3fcf76059.pdf,data/parsed/saudska_arabie.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+Senegal,32/2022 Sb.m.s.,data/raw/treaty/062cd7a52ac4f0f1.pdf,data/parsed/senegal.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+Singapur,224/1998 Sb.,data/raw/treaty/3be1f7b6380ccffd.pdf,data/parsed/singapur.json,ok,28,True,True,True,confirmed,5.0,beneficial_owner:true,
+Slovensko,100/2003 Sb.m.s.,data/raw/treaty/9510adf761033dd1.pdf,data/parsed/slovensko.json,ok,28,True,True,True,confirmed,5.0|15.0,minimum_ownership:10|beneficial_owner:true|beneficial_owner:true,
+Slovinsko,Redakční oprava část. 74/1998 Sb.,data/raw/notice/70b153b6490624b1.pdf,data/parsed/slovinsko.json,ok,29,True,True,True,confirmed,5.0|15.0,minimum_ownership:25|beneficial_owner:true|beneficial_owner:true,
+Spojené arabské emiráty,206/2024 Sb.,data/raw/treaty/d23391e2d6c63872.html,data/parsed/spojene_arabske_emiraty.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+invalid pdf header: b'<!DOC'
+EOF marker not found
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 20, in <module>
+    pages = extract_pdf_pages(args.pdf)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/extractor.py"", line 40, in extract_pdf_pages
+    pages = _extract_with_pypdf(path)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/extractor.py"", line 12, in _extract_with_pypdf
+    reader = PdfReader(str(path))
+             ^^^^^^^^^^^^^^^^^^^^
+  File ""/home/codespace/.local/lib/python3.12/site-packages/pypdf/_reader.py"", line 136, in __init__
+    self._initialize_stream(stream)
+  File ""/home/codespace/.local/lib/python3.12/site-packages/pypdf/_reader.py"", line 158, in _initialize_stream
+    self.read(stream)
+  File ""/home/codespace/.local/lib/python3.12/site-packages/pypdf/_reader.py"", line 597, in read
+    self._find_eof_marker(stream)
+  File ""/home/codespace/.local/lib/python3.12/site-packages/pypdf/_reader.py"", line 703, in _find_eof_marker
+    line = read_previous_line(stream)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/codespace/.local/lib/python3.12/site-packages/pypdf/_utils.py"", line 319, in read_previous_line
+    raise PdfStreamError(STREAM_TRUNCATED_PREMATURELY)
+pypdf.errors.PdfStreamError: Stream has ended unexpectedly
+
+"
+Srbsko,88/2005 Sb.m.s.,data/raw/treaty/a7328056d0237b90.pdf,data/parsed/srbsko.json,ok,29,True,True,True,confirmed,10.0,beneficial_owner:true,
+Srí Lanka,483/2024 Sb.,data/raw/treaty/d23391e2d6c63872.html,data/parsed/sri_lanka.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+invalid pdf header: b'<!DOC'
+EOF marker not found
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 20, in <module>
+    pages = extract_pdf_pages(args.pdf)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/extractor.py"", line 40, in extract_pdf_pages
+    pages = _extract_with_pypdf(path)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/extractor.py"", line 12, in _extract_with_pypdf
+    reader = PdfReader(str(path))
+             ^^^^^^^^^^^^^^^^^^^^
+  File ""/home/codespace/.local/lib/python3.12/site-packages/pypdf/_reader.py"", line 136, in __init__
+    self._initialize_stream(stream)
+  File ""/home/codespace/.local/lib/python3.12/site-packages/pypdf/_reader.py"", line 158, in _initialize_stream
+    self.read(stream)
+  File ""/home/codespace/.local/lib/python3.12/site-packages/pypdf/_reader.py"", line 597, in read
+    self._find_eof_marker(stream)
+  File ""/home/codespace/.local/lib/python3.12/site-packages/pypdf/_reader.py"", line 703, in _find_eof_marker
+    line = read_previous_line(stream)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/codespace/.local/lib/python3.12/site-packages/pypdf/_utils.py"", line 319, in read_previous_line
+    raise PdfStreamError(STREAM_TRUNCATED_PREMATURELY)
+pypdf.errors.PdfStreamError: Stream has ended unexpectedly
+
+"
+Sýrie,115/2009 Sb.m.s.,data/raw/treaty/5e53f6105bedfaed.pdf,data/parsed/syrie.json,ok,29,True,True,True,incomplete,,,
+Thajsko,230/1995 Sb.,data/raw/treaty/873dcac41f61cb91.pdf,data/parsed/thajsko.json,ok,29,True,True,True,incomplete,,,
+Tunisko,419/1992 Sb.,data/raw/treaty/b46e07e2404cf2bd.pdf,data/parsed/tunisko.json,ok,75,True,True,True,incomplete,,,
+Turecko,19/2004 Sb.m.s.,data/raw/treaty/ea184962aca2b8ec.pdf,data/parsed/turecko.json,ok,28,True,True,True,confirmed,10.0,beneficial_owner:true,
+Turkmenistán,23/2018 Sb.m.s.,data/raw/treaty/31f075061a5ba309.pdf,data/parsed/turkmenistan.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+Tádžikistán,88/2007 Sb.m.s.,data/raw/treaty/77d62971ffd51c5f.pdf,data/parsed/tadzikistan.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+USA (Spojené státy americké),32/1994 Sb.,data/raw/treaty/b8914955af752a1c.pdf,data/parsed/usa_spojene_staty_americke.json,ok,30,True,True,True,confirmed,5.0|15.0,minimum_ownership:10|beneficial_owner:true|beneficial_owner:true,
+Ukrajina,103/1999 Sb.,data/raw/treaty/3595802010f83ca3.pdf,data/parsed/ukrajina.json,ok,29,True,True,True,incomplete,,,
+Uzbekistán,28/2001 Sb.m.s.,data/raw/treaty/d07ae59f6356593c.pdf,data/parsed/uzbekistan.json,ok,30,True,True,True,confirmed,10.0,beneficial_owner:true,
+Velká Británie (Spojené království Velké Británie a Severního Irska),89/1992 Sb.,data/raw/treaty/3351e6135071e247.pdf,data/parsed/velka_britanie_spojene_kralovstvi_velke_britanie_a_severniho_irska.json,ok,28,True,True,True,confirmed,5.0|15.0,minimum_ownership:25|beneficial_owner:true|beneficial_owner:true,
+Venezuela,7/1998 Sb.,data/raw/treaty/51243a10b98e8061.pdf,data/parsed/venezuela.json,ok,29,True,True,True,confirmed,5.0|15.0,beneficial_owner:true|beneficial_owner:true,
+Vietnam,108/1998 Sb.,data/raw/treaty/5f53fa7a006654db.pdf,data/parsed/vietnam.json,ok,29,True,True,True,confirmed,10.0,beneficial_owner:true,
+Ázerbájdžán,74/2006 Sb.m.s.,data/raw/treaty/b2ded63f6421342b.pdf,data/parsed/azerbajdzan.json,ok,29,True,True,True,confirmed,8.0,beneficial_owner:true,
+Írán,47/2016 Sb.m.s.,data/raw/treaty/007b01bb9f6114a8.pdf,data/parsed/iran.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+Černá Hora,94/2025 Sb.,data/raw/treaty/d23391e2d6c63872.html,data/parsed/cerna_hora.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+invalid pdf header: b'<!DOC'
+EOF marker not found
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 20, in <module>
+    pages = extract_pdf_pages(args.pdf)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/extractor.py"", line 40, in extract_pdf_pages
+    pages = _extract_with_pypdf(path)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/extractor.py"", line 12, in _extract_with_pypdf
+    reader = PdfReader(str(path))
+             ^^^^^^^^^^^^^^^^^^^^
+  File ""/home/codespace/.local/lib/python3.12/site-packages/pypdf/_reader.py"", line 136, in __init__
+    self._initialize_stream(stream)
+  File ""/home/codespace/.local/lib/python3.12/site-packages/pypdf/_reader.py"", line 158, in _initialize_stream
+    self.read(stream)
+  File ""/home/codespace/.local/lib/python3.12/site-packages/pypdf/_reader.py"", line 597, in read
+    self._find_eof_marker(stream)
+  File ""/home/codespace/.local/lib/python3.12/site-packages/pypdf/_reader.py"", line 703, in _find_eof_marker
+    line = read_previous_line(stream)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/home/codespace/.local/lib/python3.12/site-packages/pypdf/_utils.py"", line 319, in read_previous_line
+    raise PdfStreamError(STREAM_TRUNCATED_PREMATURELY)
+pypdf.errors.PdfStreamError: Stream has ended unexpectedly
+
+"
+Čína,65/2011 Sb.m.s.,data/raw/treaty/30be39ad2547c984.pdf,data/parsed/cina.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+Řecko,98/1989 Sb.,data/raw/treaty/09408abab88f2ada.pdf,data/parsed/recko.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+Španělsko,23/1982 Sb.,data/raw/treaty/fd2a055857ae34b5.pdf,data/parsed/spanelsko.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+Švédsko,9/1981 Sb.,data/raw/treaty/2352aa1bc488cefd.pdf,data/parsed/svedsko.json,failed,,,,,,,,"
+STDOUT
+------
+
+
+STDERR
+------
+Traceback (most recent call last):
+  File ""/workspaces/taxtreat/parse_treaty.py"", line 23, in <module>
+    treaty_text, start_page = extract_treaty(pages)
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 21, in extract_treaty
+    start = find_start(pages)
+            ^^^^^^^^^^^^^^^^^
+  File ""/workspaces/taxtreat/taxtreat/parser/detector.py"", line 16, in find_start
+    raise RuntimeError(""Treaty start not found."")
+RuntimeError: Treaty start not found.
+
+"
+Švýcarsko,281/1996 Sb.,data/raw/treaty/e2b4649db40a2bec.pdf,data/parsed/svycarsko.json,ok,29,True,True,True,confirmed,5.0|15.0,beneficial_owner:true|beneficial_owner:true,

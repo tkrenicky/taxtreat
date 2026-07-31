@@ -140,3 +140,33 @@ def test_extractor_remaining_edge_cases():
     assert rule.rate is None
     assert rule.rates == []
     assert rule.extraction_status == "incomplete"
+
+
+def test_austrian_exemption_without_explicit_zero_percentage():
+    from taxtreat.engine.models import ConditionType
+    from taxtreat.engine.extractors import dividend_rule
+
+    text = """
+    a) Jestlize skutecný vlastnõk dividend je rezidentem druhého státu,
+    dan nepresáhne 10 procent hrubé cástky dividend.
+
+    b) Jestlize skutecný vlastnõk je spolecnost, která vlastnõ nejméne
+    10 procent kapitálu spolecnosti vyplácejõcõ dividendy, tyto dividendy
+    podléhajõ zdanenõ jen ve smluvnõm státe skutecného vlastnõka.
+    """
+
+    rule = dividend_rule(text)
+
+    assert {rate.rate for rate in rule.rates} == {0.0, 10.0}
+
+    zero_rate = next(rate for rate in rule.rates if rate.rate == 0.0)
+
+    assert any(
+        condition.condition_type == ConditionType.minimum_ownership
+        and condition.value == "10"
+        for condition in zero_rate.conditions
+    )
+    assert any(
+        condition.condition_type == ConditionType.beneficial_owner
+        for condition in zero_rate.conditions
+    )
