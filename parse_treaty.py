@@ -1,45 +1,92 @@
-import json
+from __future__ import annotations
+
 import argparse
+import json
+from pathlib import Path
+from typing import Sequence
 
-from taxtreat.parser.extractor import extract_pdf_pages
-from taxtreat.parser.normalize import normalize_pages
-from taxtreat.parser.detector import extract_treaty
 from taxtreat.parser.article_parser import parse_articles
+from taxtreat.parser.detector import extract_treaty
+from taxtreat.parser.extractor import extract_pdf_pages
 from taxtreat.parser.models import ParsedTreaty
-
-
-parser = argparse.ArgumentParser()
-
-parser.add_argument("pdf")
-parser.add_argument("--country", required=True)
-parser.add_argument("--title", required=True)
-parser.add_argument("--output", required=True)
-
-args = parser.parse_args()
-
-pages = extract_pdf_pages(args.pdf)
-pages = normalize_pages(pages)
-
-treaty_text, start_page = extract_treaty(pages)
-
-articles = parse_articles(treaty_text)
-
-parsed = ParsedTreaty(
-    country=args.country,
-    source_title=args.title,
-    source_path=args.pdf,
-    start_page=start_page,
-    articles=articles,
+from taxtreat.parser.normalize import normalize_pages
+from taxtreat.validation.document_identity import (
+    TreatyIdentityError,
+    validate_treaty_identity,
 )
 
-with open(args.output, "w", encoding="utf8") as f:
-    json.dump(parsed.to_dict(), f, ensure_ascii=False, indent=2)
 
-print()
-print("Country:", parsed.country)
-print("Treaty starts:", parsed.start_page)
-print("Articles:", len(parsed.articles))
-print()
+def parse_treaty_file(
+    source_path: str | Path,
+    *,
+    country: str,
+    source_title: str,
+) -> ParsedTreaty:
+    """Parse one treaty only after its counterparty identity is validated."""
 
-for a in parsed.articles[:10]:
-    print(a.number, "-", a.title)
+    source_path = Path(source_path)
+    pages = normalize_pages(extract_pdf_pages(source_path))
+
+    identity = validate_treaty_identity(
+        expected_country=country,
+        source_title=source_title,
+        text="\n\n".join(pages),
+    )
+    if not identity.is_valid:
+        raise TreatyIdentityError(identity)
+
+    treaty_text, start_page = extract_treaty(pages)
+    articles = parse_articles(treaty_text)
+
+    return ParsedTreaty(
+        country=country,
+        source_title=source_title,
+        source_path=str(source_path),
+        start_page=start_page,
+        identity_validation=identity.to_dict(),
+        articles=articles,
+    )
+
+
+def write_parsed_treaty(parsed: ParsedTreaty, output: str | Path) -> None:
+    output = Path(output)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(
+        json.dumps(parsed.to_dict(), ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+
+
+def build_argument_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("pdf")
+    parser.add_argument("--country", required=True)
+    parser.add_argument("--title", required=True)
+    parser.add_argument("--output", required=True)
+    return parser
+
+
+def main(argv: Sequence[str] | None = None) -> int:
+    args = build_argument_parser().parse_args(argv)
+    parsed = parse_treaty_file(
+        args.pdf,
+        country=args.country,
+        source_title=args.title,
+    )
+    write_parsed_treaty(parsed, args.output)
+
+    print()
+    print("Country:", parsed.country)
+    print("Identity:", parsed.identity_validation["status"])
+    print("Treaty starts:", parsed.start_page)
+    print("Articles:", len(parsed.articles))
+    print()
+
+    for article in parsed.articles[:10]:
+        print(article.number, "-", article.title)
+
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

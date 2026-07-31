@@ -56,6 +56,17 @@ class TreatyIdentityResult:
         return result
 
 
+class TreatyIdentityError(RuntimeError):
+    """Raised when a source document does not match its expected treaty partner."""
+
+    def __init__(self, result: TreatyIdentityResult):
+        self.result = result
+        super().__init__(
+            "Treaty identity rejected: "
+            f"{result.reason} (expected {result.expected_country!r})"
+        )
+
+
 def normalize_legal_text(value: str) -> str:
     """Normalize text for deterministic identity matching.
 

@@ -82,7 +82,11 @@ def benchmark(parsed_path: Path) -> dict[str, object]:
         for article in data.get("articles", [])
     }
 
+    identity = data.get("identity_validation") or {}
+
     result: dict[str, object] = {
+        "identity_status": identity.get("status", "missing"),
+        "identity_reason": identity.get("reason", ""),
         "articles_detected": len(articles),
         "article_10": 10 in articles,
         "article_11": 11 in articles,
@@ -130,8 +134,11 @@ def main() -> None:
         }
 
         try:
-            if not parsed_path.exists():
-                parse_treaty(country, title, pdf, parsed_path)
+            # A benchmark must never trust a cached parsed file. Re-run the
+            # identity gate and parser so stale or wrongly associated treaty
+            # data cannot survive from an earlier execution.
+            parsed_path.unlink(missing_ok=True)
+            parse_treaty(country, title, pdf, parsed_path)
 
             row["parse_status"] = "ok"
             row.update(benchmark(parsed_path))
@@ -155,6 +162,8 @@ def main() -> None:
         "pdf",
         "parsed_file",
         "parse_status",
+        "identity_status",
+        "identity_reason",
         "articles_detected",
         "article_10",
         "article_11",
