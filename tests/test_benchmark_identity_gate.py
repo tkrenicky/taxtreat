@@ -31,6 +31,12 @@ def test_benchmark_reparses_cached_output_and_reports_identity(monkeypatch, tmp_
                         "status": "validated",
                         "reason": "counterparty_matched",
                     },
+                    "source_resolution": {
+                        "status": "resolved",
+                        "method": "publication_notice_country_match",
+                        "effective_title": "2/2026 Sb.m.s.",
+                        "metadata_mismatch": True,
+                    },
                     "articles": [],
                 }
             ),
@@ -55,6 +61,10 @@ def test_benchmark_reparses_cached_output_and_reports_identity(monkeypatch, tmp_
     assert row["parse_status"] == "ok"
     assert row["identity_status"] == "validated"
     assert row["identity_reason"] == "counterparty_matched"
+    assert row["source_resolution_status"] == "resolved"
+    assert row["source_resolution_method"] == "publication_notice_country_match"
+    assert row["effective_title"] == "2/2026 Sb.m.s."
+    assert row["metadata_mismatch"] == "True"
 
 
 def test_benchmark_removes_stale_output_when_identity_gate_fails(

@@ -118,3 +118,14 @@ def test_validates_stan_registry_name_against_republic_adjective():
 
     assert result.is_valid
     assert result.matched_method == "country_root"
+
+
+def test_validates_china_against_czech_adjectival_form():
+    result = validate_treaty_identity(
+        expected_country="Čína",
+        source_title="65/2011 Sb.m.s.",
+        text=_treaty_text("Čínskou lidovou republikou", "65 / 2011"),
+    )
+
+    assert result.is_valid
+    assert result.matched_method == "country_root"

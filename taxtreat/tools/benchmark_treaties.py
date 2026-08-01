@@ -124,10 +124,15 @@ def benchmark(parsed_path: Path) -> dict[str, object]:
     }
 
     identity = data.get("identity_validation") or {}
+    resolution = data.get("source_resolution") or {}
 
     result: dict[str, object] = {
         "identity_status": identity.get("status", "missing"),
         "identity_reason": identity.get("reason", ""),
+        "source_resolution_status": resolution.get("status", "missing"),
+        "source_resolution_method": resolution.get("method", ""),
+        "effective_title": resolution.get("effective_title", data.get("source_title", "")),
+        "metadata_mismatch": resolution.get("metadata_mismatch", False),
         "articles_detected": len(articles),
         "article_10": 10 in articles,
         "article_11": 11 in articles,
@@ -219,6 +224,10 @@ def main() -> None:
         "parse_status",
         "identity_status",
         "identity_reason",
+        "source_resolution_status",
+        "source_resolution_method",
+        "effective_title",
+        "metadata_mismatch",
         "articles_detected",
         "article_10",
         "article_11",
