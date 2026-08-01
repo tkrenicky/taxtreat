@@ -142,7 +142,7 @@ def _distinctive_roots(alias: str) -> tuple[str, ...]:
     roots: list[str] = []
     seen: set[str] = set()
     for candidate in candidates:
-        if len(candidate) >= 4 and candidate not in seen:
+        if len(candidate) >= 3 and candidate not in seen:
             seen.add(candidate)
             roots.append(candidate)
     return tuple(roots)
@@ -157,8 +157,13 @@ def _match_country(expected_country: str, normalized_text: str) -> tuple[str, st
 
     for alias in aliases:
         for root in _distinctive_roots(alias):
+            if len(root) == 3:
+                continuation = r"(?:an)?sk[a-z0-9]*"
+            else:
+                continuation = r"[a-z0-9]*"
+
             if re.search(
-                rf"(?<![a-z0-9]){re.escape(root)}[a-z0-9]*",
+                rf"(?<![a-z0-9]){re.escape(root)}{continuation}",
                 normalized_text,
             ):
                 return alias, "country_root"

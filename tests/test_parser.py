@@ -170,3 +170,18 @@ def test_split_paragraphs_empty_text():
 def test_repair_spaced_article_heading():
     assert repair("CÏ l aÂ ne k 1 0") == "Článek 10"
     assert repair("CÏ laÂ n e k 1 2") == "Článek 12"
+
+
+def test_find_starts_returns_all_treaties_in_collection():
+    from taxtreat.parser.detector import find_starts, treaty_ranges
+
+    pages = [
+        "cover",
+        "SMLOUVA Izrael\nČlánek 1",
+        "Článek 10",
+        "SMLOUVA Maďarsko\nČlánek 1",
+        "Článek 10",
+    ]
+
+    assert find_starts(pages) == [1, 3]
+    assert treaty_ranges(pages) == [(1, 3), (3, 5)]

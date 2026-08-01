@@ -80,5 +80,22 @@ def normalize_page(text):
     return "\n".join(lines)
 
 
+
+def normalize_detection_page(text: str) -> str:
+    """Normalize a page for structural detection without dropping headers.
+
+    PDF extractors sometimes merge a collection header and the treaty title on
+    one line. Header removal is useful for legal text parsing, but must not erase
+    the only occurrence of ``SMLOUVA`` or ``Článek 1`` used to identify a
+    treaty segment.
+    """
+
+    lines = [normalize_line(line) for line in text.splitlines()]
+    return "\n".join(line for line in lines if line)
+
+
+def normalize_detection_pages(pages):
+    return [normalize_detection_page(page) for page in pages]
+
 def normalize_pages(pages):
     return [normalize_page(page) for page in pages]
