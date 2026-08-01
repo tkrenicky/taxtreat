@@ -9,7 +9,6 @@ from taxtreat.parser.article_parser import parse_articles
 from taxtreat.parser.detector import extract_treaty
 from taxtreat.parser.extractor import extract_pdf_pages
 from taxtreat.parser.models import ParsedTreaty
-from taxtreat.parser.publication import resolve_treaty_source
 from taxtreat.parser.normalize import normalize_pages
 from taxtreat.validation.document_identity import (
     TreatyIdentityError,
@@ -26,18 +25,12 @@ def parse_treaty_file(
     """Parse one treaty only after its counterparty identity is validated."""
 
     source_path = Path(source_path)
-    raw_pages = extract_pdf_pages(source_path)
-    selected_pages, resolution = resolve_treaty_source(
-        raw_pages,
-        country=country,
-        source_title=source_title,
-    )
-    pages = normalize_pages(selected_pages)
+    pages = normalize_pages(extract_pdf_pages(source_path))
 
     identity = validate_treaty_identity(
         expected_country=country,
-        source_title=resolution.effective_title,
-        text="\n\n".join(selected_pages),
+        source_title=source_title,
+        text="\n\n".join(pages),
     )
     if not identity.is_valid:
         raise TreatyIdentityError(identity)
@@ -47,11 +40,10 @@ def parse_treaty_file(
 
     return ParsedTreaty(
         country=country,
-        source_title=resolution.effective_title,
+        source_title=source_title,
         source_path=str(source_path),
-        start_page=resolution.start_page + start_page - 1,
+        start_page=start_page,
         identity_validation=identity.to_dict(),
-        source_resolution=resolution.to_dict(),
         articles=articles,
     )
 

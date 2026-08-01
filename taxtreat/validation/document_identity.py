@@ -156,18 +156,9 @@ def _match_country(expected_country: str, normalized_text: str) -> tuple[str, st
             return alias, "exact_alias"
 
     for alias in aliases:
-        roots = list(_distinctive_roots(alias))
-        distinctive_words = [
-            word for word in alias.split() if word not in _GENERIC_COUNTRY_WORDS
-        ]
-        for word in distinctive_words:
-            if len(word) == 4 and word[-1] in "aeioy":
-                roots.append(word[:-1])
-
-        for root in dict.fromkeys(roots):
-            continuation = r"sk[a-z0-9]*" if len(root) == 3 else r"[a-z0-9]*"
+        for root in _distinctive_roots(alias):
             if re.search(
-                rf"(?<![a-z0-9]){re.escape(root)}{continuation}",
+                rf"(?<![a-z0-9]){re.escape(root)}[a-z0-9]*",
                 normalized_text,
             ):
                 return alias, "country_root"
