@@ -133,6 +133,8 @@ def _distinctive_roots(alias: str) -> tuple[str, ...]:
     candidates: list[str] = [word]
 
     if len(word) >= 4 and word[-1] in "aeioy":
+        # Generic noun-to-adjective stem, e.g. ``cina`` -> ``cinska``.
+        # The boundary-aware matcher below prevents substring-only matches.
         candidates.append(word[:-1])
 
     for suffix in ("stan", "sko", "ie"):
@@ -142,7 +144,7 @@ def _distinctive_roots(alias: str) -> tuple[str, ...]:
     roots: list[str] = []
     seen: set[str] = set()
     for candidate in candidates:
-        if len(candidate) >= 4 and candidate not in seen:
+        if len(candidate) >= 3 and candidate not in seen:
             seen.add(candidate)
             roots.append(candidate)
     return tuple(roots)

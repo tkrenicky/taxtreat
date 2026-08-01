@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import csv
 import json
+import os
 import re
 import sqlite3
 import subprocess
@@ -14,7 +15,7 @@ from taxtreat.engine.extractors import dividend_rule
 DB = Path("data/processed/taxtreat_cz.sqlite")
 PARSED_DIR = Path("data/parsed")
 REPORT = Path("reports/treaty_extraction_benchmark.csv")
-PARSE_TIMEOUT_SECONDS = 120
+PARSE_TIMEOUT_SECONDS = int(os.getenv("TAXTREAT_PARSE_TIMEOUT_SECONDS", "1200"))
 
 _IDENTITY_REJECTION_RE = re.compile(
     r"Treaty identity rejected:\s*(?P<reason>[a-z_]+)"
@@ -124,10 +125,18 @@ def benchmark(parsed_path: Path) -> dict[str, object]:
     }
 
     identity = data.get("identity_validation") or {}
+    extraction = data.get("text_extraction") or {}
+    source_resolution = data.get("source_resolution") or {}
 
     result: dict[str, object] = {
         "identity_status": identity.get("status", "missing"),
         "identity_reason": identity.get("reason", ""),
+        "extraction_method": extraction.get("method", ""),
+        "extraction_score": extraction.get("score", ""),
+        "source_resolution_status": source_resolution.get("status", ""),
+        "source_resolution_method": source_resolution.get("method", ""),
+        "effective_title": source_resolution.get("effective_title", ""),
+        "metadata_mismatch": source_resolution.get("metadata_mismatch", ""),
         "articles_detected": len(articles),
         "article_10": 10 in articles,
         "article_11": 11 in articles,
@@ -206,6 +215,7 @@ def main() -> None:
             f"{row['parse_status'].upper():6} "
             f"{country} "
             f"identity={row.get('identity_status', '')} "
+            f"extract={row.get('extraction_method', '')} "
             f"A10={row.get('article_10', '')} "
             f"rates={row.get('dividend_rates', '')}",
             flush=True,
@@ -219,6 +229,12 @@ def main() -> None:
         "parse_status",
         "identity_status",
         "identity_reason",
+        "extraction_method",
+        "extraction_score",
+        "source_resolution_status",
+        "source_resolution_method",
+        "effective_title",
+        "metadata_mismatch",
         "articles_detected",
         "article_10",
         "article_11",

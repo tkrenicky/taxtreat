@@ -17,6 +17,8 @@ class ParsedTreaty:
     source_path: str
     start_page: int | None
     identity_validation: dict[str, object] | None = None
+    text_extraction: dict[str, object] | None = None
+    source_resolution: dict[str, object] | None = None
     articles: list[TreatyArticle] = field(default_factory=list)
 
     def to_dict(self):

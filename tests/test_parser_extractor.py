@@ -79,3 +79,76 @@ def test_garbled_pypdf_output_uses_pdftotext(monkeypatch, tmp_path):
     )
 
     assert extract_pdf_pages(pdf_path) == ["SMLOUVA\nČlánek 1"]
+
+
+def test_auto_extractor_selects_hybrid_page_by_page(monkeypatch, tmp_path):
+    from taxtreat.parser.extractor import extract_document
+
+    pdf_path = tmp_path / "mixed.pdf"
+    pdf_path.write_bytes(b"%PDF-fake")
+
+    monkeypatch.setenv("TAXTREAT_OCR", "off")
+    monkeypatch.setattr(
+        "taxtreat.parser.extractor._extract_with_pypdf",
+        lambda path: ["Cover", "", "Článek 10\nDividendy"],
+    )
+    monkeypatch.setattr(
+        "taxtreat.parser.extractor._extract_with_pdftotext",
+        lambda path: ["", "Článek 1\nOsoby\nČlánek 2\nDaně", ""],
+    )
+
+    result = extract_document(pdf_path)
+
+    assert result.method == "hybrid"
+    assert "Článek 1" in result.pages[1]
+    assert "Článek 10" in result.pages[2]
+
+
+def test_auto_extractor_uses_ocr_as_generic_fallback(monkeypatch, tmp_path):
+    from taxtreat.parser.extractor import extract_document
+
+    pdf_path = tmp_path / "scan.pdf"
+    pdf_path.write_bytes(b"%PDF-fake")
+
+    monkeypatch.setenv("TAXTREAT_OCR", "auto")
+    monkeypatch.setattr(
+        "taxtreat.parser.extractor._extract_with_pypdf",
+        lambda path: ["Smlouva notice", ""],
+    )
+    monkeypatch.setattr(
+        "taxtreat.parser.extractor._extract_with_pdftotext",
+        lambda path: ["Smlouva notice", ""],
+    )
+    monkeypatch.setattr(
+        "taxtreat.parser.extractor._extract_with_ocr",
+        lambda path: [
+            "Článek 1\nOsoby\nČlánek 2\nDaně",
+            "Článek 10\nDividendy\nČlánek 11\nÚroky\nČlánek 12\nLicenční poplatky",
+        ],
+    )
+
+    result = extract_document(pdf_path)
+
+    assert "ocr" in result.method
+    numbers = {
+        number
+        for attempt in result.attempts
+        if "ocr" in attempt.method
+        for number in attempt.article_numbers
+    }
+    assert {1, 10, 11, 12}.issubset(numbers)
+
+
+def test_html_source_is_read_without_pdf_parser(tmp_path):
+    from taxtreat.parser.extractor import extract_document
+
+    path = tmp_path / "treaty.html"
+    path.write_text(
+        "<html><body><h1>Článek 1</h1><p>Osoby</p></body></html>",
+        encoding="utf-8",
+    )
+
+    result = extract_document(path)
+
+    assert result.method == "html"
+    assert "Článek 1" in result.pages[0]

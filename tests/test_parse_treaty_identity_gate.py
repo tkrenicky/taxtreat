@@ -1,6 +1,7 @@
 import pytest
 
 import parse_treaty
+from taxtreat.parser.extractor import ExtractionResult
 from taxtreat.validation.document_identity import TreatyIdentityError
 
 
@@ -23,8 +24,8 @@ def _pages(counterparty: str) -> list[str]:
 def test_parser_rejects_wrong_counterparty_before_article_detection(monkeypatch):
     monkeypatch.setattr(
         parse_treaty,
-        "extract_pdf_pages",
-        lambda path: _pages("Státem Izrael"),
+        "extract_document",
+        lambda path: ExtractionResult(_pages("Státem Izrael"), "test", 100),
     )
 
     with pytest.raises(TreatyIdentityError) as exc_info:
@@ -41,8 +42,8 @@ def test_parser_rejects_wrong_counterparty_before_article_detection(monkeypatch)
 def test_parser_records_validated_identity_in_normalized_json(monkeypatch, tmp_path):
     monkeypatch.setattr(
         parse_treaty,
-        "extract_pdf_pages",
-        lambda path: _pages("Rakouskou republikou"),
+        "extract_document",
+        lambda path: ExtractionResult(_pages("Rakouskou republikou"), "test", 100),
     )
 
     parsed = parse_treaty.parse_treaty_file(
@@ -55,6 +56,8 @@ def test_parser_records_validated_identity_in_normalized_json(monkeypatch, tmp_p
     assert parsed.identity_validation["status"] == "validated"
     assert parsed.identity_validation["expected_country"] == "Rakousko"
     assert parsed.articles
+    assert parsed.text_extraction["method"] == "test"
+    assert parsed.source_resolution["status"] in {"fallback", "resolved"}
 
     output = tmp_path / "nested" / "austria.json"
     parse_treaty.write_parsed_treaty(parsed, output)
