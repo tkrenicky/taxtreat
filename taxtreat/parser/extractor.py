@@ -5,7 +5,7 @@ import re
 import shutil
 import subprocess
 import tempfile
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
@@ -190,35 +190,124 @@ def _numeric_image_sort_key(path: Path) -> tuple[int, str]:
     return (int(match.group(1)) if match else 0, path.name)
 
 
+def _pdf_page_count(path: Path) -> int:
+    """Return the page count without extracting page text."""
+
+    try:
+        result = subprocess.run(
+            ["pdfinfo", str(path)],
+            check=True,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=60,
+        )
+        match = re.search(r"^Pages:\\s*(\\d+)\\s*$", result.stdout, re.MULTILINE)
+        if match:
+            return int(match.group(1))
+    except (FileNotFoundError, subprocess.SubprocessError, ValueError):
+        pass
+
+    return len(PdfReader(str(path)).pages)
+
+
+def _ocr_pdf_page(
+    path: Path,
+    page_number: int,
+    *,
+    dpi: int,
+    language: str,
+    workdir: Path,
+) -> str:
+    """Render and OCR one PDF page with bounded subprocess runtimes."""
+
+    prefix = workdir / f"page-{page_number:04d}"
+    subprocess.run(
+        [
+            "pdftoppm",
+            "-f",
+            str(page_number),
+            "-l",
+            str(page_number),
+            "-singlefile",
+            "-png",
+            "-gray",
+            "-r",
+            str(dpi),
+            str(path),
+            str(prefix),
+        ],
+        check=True,
+        capture_output=True,
+        timeout=180,
+    )
+    image = prefix.with_suffix(".png")
+    if not image.exists():
+        raise RuntimeError(f"OCR renderer produced no image for page {page_number}")
+    return _ocr_image(image, language)
+
+
 def _extract_with_ocr(path: Path) -> list[str]:
     if shutil.which("pdftoppm") is None or shutil.which("tesseract") is None:
         raise RuntimeError("OCR tools pdftoppm/tesseract are not installed")
 
-    dpi = int(os.getenv("TAXTREAT_OCR_DPI", "180"))
+    dpi = int(os.getenv("TAXTREAT_OCR_DPI", "160"))
     workers = max(1, int(os.getenv("TAXTREAT_OCR_WORKERS", "2")))
     language = os.getenv("TAXTREAT_OCR_LANG", "ces+eng")
+    page_count = _pdf_page_count(path)
+    max_pages = max(0, int(os.getenv("TAXTREAT_OCR_MAX_PAGES", "0")))
+    if max_pages:
+        page_count = min(page_count, max_pages)
+
+    if page_count <= 0:
+        raise RuntimeError("OCR could not determine a positive PDF page count")
 
     with tempfile.TemporaryDirectory(prefix="taxtreat_ocr_") as tmp:
-        prefix = Path(tmp) / "page"
-        subprocess.run(
-            [
-                "pdftoppm",
-                "-png",
-                "-gray",
-                "-r",
-                str(dpi),
-                str(path),
-                str(prefix),
-            ],
-            check=True,
-            capture_output=True,
-            timeout=900,
+        workdir = Path(tmp)
+        pages = [""] * page_count
+        completed = 0
+
+        print(
+            f"OCR    {path.name}: 0/{page_count} pages (dpi={dpi}, workers={workers})",
+            flush=True,
         )
-        images = sorted(Path(tmp).glob("page-*.png"), key=_numeric_image_sort_key)
-        if not images:
-            raise RuntimeError("OCR renderer produced no pages")
+
         with ThreadPoolExecutor(max_workers=workers) as executor:
-            return list(executor.map(lambda image: _ocr_image(image, language), images))
+            futures = {
+                executor.submit(
+                    _ocr_pdf_page,
+                    path,
+                    page_number,
+                    dpi=dpi,
+                    language=language,
+                    workdir=workdir,
+                ): page_number
+                for page_number in range(1, page_count + 1)
+            }
+
+            for future in as_completed(futures):
+                page_number = futures[future]
+                try:
+                    pages[page_number - 1] = future.result()
+                except Exception as exc:
+                    pages[page_number - 1] = ""
+                    print(
+                        f"OCRERR {path.name}: page {page_number}: "
+                        f"{type(exc).__name__}: {exc}",
+                        flush=True,
+                    )
+
+                completed += 1
+                if completed == page_count or completed % 2 == 0:
+                    print(
+                        f"OCR    {path.name}: {completed}/{page_count} pages",
+                        flush=True,
+                    )
+
+        if not any(page.strip() for page in pages):
+            raise RuntimeError("OCR produced no usable page text")
+        return pages
 
 
 def extract_document(path: str | Path) -> ExtractionResult:
