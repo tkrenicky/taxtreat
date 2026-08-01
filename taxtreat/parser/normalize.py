@@ -29,6 +29,34 @@ REPLACEMENTS = {
     "Ï": "",
 }
 
+_ARTICLE_HEADING_COMPACT_RE = re.compile(
+    r"(?:c(?:i)?l+a+n+e+k|article)0*(?P<number>\d{1,3})",
+    re.IGNORECASE,
+)
+
+
+def _ascii_compact(value: str) -> str:
+    value = unicodedata.normalize("NFKD", value)
+    value = "".join(char for char in value if not unicodedata.combining(char))
+    return re.sub(r"[^a-z0-9]+", "", value.casefold())
+
+
+def canonicalize_article_heading(line: str) -> str | None:
+    """Return one canonical article heading or ``None``.
+
+    PDF text layers often split or corrupt the Czech heading ``Článek`` into
+    variants such as ``C Ï l aÂ n e k`` or ``CILAANEK``.  Matching the compact
+    accent-free form is deterministic while the full-line requirement avoids
+    confusing prose such as ``podle článku 1`` with a heading.
+    """
+
+    compact = _ascii_compact(line)
+    match = _ARTICLE_HEADING_COMPACT_RE.fullmatch(compact)
+    if match is None:
+        return None
+
+    return f"Článek {int(match.group('number'))}"
+
 
 def repair(text: str) -> str:
     for old, new in REPLACEMENTS.items():
@@ -47,12 +75,19 @@ def repair(text: str) -> str:
 
     return text
 
+
 def normalize_line(line: str) -> str:
     line = unicodedata.normalize("NFKC", line)
     line = repair(line)
+
+    heading = canonicalize_article_heading(line)
+    if heading is not None:
+        return heading
+
     line = line.replace("\xa0", " ")
     line = re.sub(r"[ \t]+", " ", line)
     return line.strip()
+
 
 def remove_headers(lines):
     cleaned = []
@@ -69,7 +104,6 @@ def remove_headers(lines):
         if any(re.search(p, line, re.IGNORECASE) for p in patterns):
             continue
         cleaned.append(line)
-
     return cleaned
 
 

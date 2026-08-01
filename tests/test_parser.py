@@ -170,3 +170,57 @@ def test_split_paragraphs_empty_text():
 def test_repair_spaced_article_heading():
     assert repair("CÏ l aÂ ne k 1 0") == "Článek 10"
     assert repair("CÏ laÂ n e k 1 2") == "Článek 12"
+
+
+def test_normalize_ocr_article_heading_variants():
+    from taxtreat.parser.normalize import normalize_line
+
+    assert normalize_line("C I L A A N E K 0 1") == "Článek 1"
+    assert normalize_line("A R T I C L E 1 2") == "Článek 12"
+
+
+def test_normalize_does_not_convert_article_reference_in_prose():
+    from taxtreat.parser.normalize import normalize_line
+
+    text = "Daň se ukládá podle článku 1 této smlouvy."
+    assert normalize_line(text) == text
+
+
+def test_find_start_when_title_is_on_previous_page():
+    pages = [
+        "SMLOUVA mezi smluvními státy",
+        "Článek 1\nOsoby",
+        "Článek 2\nDaně",
+    ]
+
+    assert find_start(pages) == 1
+
+
+def test_find_start_prefers_candidate_followed_by_article_two():
+    pages = [
+        "Obsah\nČlánek 1",
+        "Úvodní informace",
+        "Článek 1\nOsoby",
+        "Článek 2\nDaně",
+    ]
+
+    assert find_start(pages) == 2
+
+
+def test_parse_articles_after_ocr_heading_normalization():
+    from taxtreat.parser.normalize import normalize_page
+
+    treaty = normalize_page(
+        """
+C I L A A N E K 1 0
+Dividendy
+1. Text článku.
+
+A R T I C L E 1 1
+Úroky
+1. Text článku.
+"""
+    )
+
+    articles = parse_articles(treaty)
+    assert [article.number for article in articles] == [10, 11]
