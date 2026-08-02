@@ -10,8 +10,8 @@ from taxtreat.engine.extractors import dividend_rule
 from taxtreat.engine.validation import RuleValidator
 
 
-def test_switzerland_dividends_integration():
-    repo = TreatyRepository("taxtreat.db")
+def test_switzerland_dividends_integration(seeded_treaty_db):
+    repo = TreatyRepository(seeded_treaty_db)
 
     article = repo.get_article(10)
     assert article is not None, "Expected the Switzerland dividend article to be present in the database"
@@ -61,7 +61,12 @@ def test_switzerland_dividends_integration():
 
     for label, facts in scenarios:
         result = evaluate(rule, facts)
-        assert result.withholding_rate is not None, f"Expected a withholding rate for {label}"
+        if facts.get("beneficial_owner") is False:
+            assert result.withholding_rate is None
+            assert result.eligible is False
+            assert result.requires_review is True
+        else:
+            assert result.withholding_rate is not None, f"Expected a withholding rate for {label}"
         print(f"Scenario {label}")
         print(f"  selected withholding rate: {result.withholding_rate}")
         print(f"  legal basis: {getattr(result, 'selected_legal_basis', None)}")

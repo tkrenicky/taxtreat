@@ -1,10 +1,14 @@
 import re
+import unicodedata
 
 from taxtreat.engine.models import ConditionType, Rule, WHTCondition, WHTRate
 
 
 PERCENT_RE = re.compile(
-    r"(?P<value>\d+(?:[.,]\d+)?)\s*(?:%|percent|per\s+cent|procent(?:a|o|u|y)?|proc\.)",
+    r"(?:(?P<value>\d+(?:[.,]\d+)?)|"
+    r"(?P<word>zero|five|ten|fifteen|twenty(?:[-\s]five)?|"
+    r"nula|p[eě]t|deset|patn[aá]ct|dvacet(?:\s+p[eě]t)?))\s*"
+    r"(?:%|o/o|°/o|percent|per\s+cent|procent(?:a|o|u|y)?|proc\.)",
     re.IGNORECASE,
 )
 
@@ -38,9 +42,31 @@ ZERO_RATE_RE = re.compile(
 )
 
 TAX_RATE_CONTEXT_RE = re.compile(
-    r"(?:gross\s+amount|hrub\w*\s+(?:amount|c\w*stk\w*))",
+    r"(?:gross\s+amount|hrub\w*\s*(?:amount|castk\w*))",
     re.IGNORECASE,
 )
+
+TAX_CAP_CONTEXT_RE = re.compile(
+    r"(?:tax|dan|sazb\w*|rate).{0,60}(?:shall\s+not\s+exceed|"
+    r"not\s+exceed|nepresah\w*)\s*$",
+    re.IGNORECASE | re.DOTALL,
+)
+
+_WORD_PERCENTAGES = {
+    "zero": 0.0,
+    "nula": 0.0,
+    "five": 5.0,
+    "pet": 5.0,
+    "ten": 10.0,
+    "deset": 10.0,
+    "fifteen": 15.0,
+    "patnact": 15.0,
+    "twenty": 20.0,
+    "dvacet": 20.0,
+    "twenty five": 25.0,
+    "twenty-five": 25.0,
+    "dvacet pet": 25.0,
+}
 
 HOLDING_PERIOD_RE = re.compile(
     r"(?:(?:for\s+(?:an?\s+)?(?:uninterrupted|continuous)?\s*period\s+of\s+at\s+least)|"
@@ -56,8 +82,19 @@ HOLDING_PERIOD_RE = re.compile(
 )
 
 
-def _to_float(value: str) -> float:
-    return float(value.replace(",", "."))
+def _searchable(value: str) -> str:
+    value = value.translate(str.maketrans({"õ": "i", "Õ": "I"}))
+    value = unicodedata.normalize("NFKD", value)
+    value = "".join(char for char in value if not unicodedata.combining(char))
+    return value.casefold()
+
+
+def _match_value(match: re.Match) -> float:
+    numeric = match.groupdict().get("value")
+    if numeric is not None:
+        return float(numeric.replace(",", "."))
+    word = _searchable(match.groupdict().get("word") or "").replace("  ", " ").strip()
+    return _WORD_PERCENTAGES[word]
 
 
 def _normalise_number(value: float) -> str:
@@ -94,15 +131,20 @@ def _deduplicate_conditions(conditions: list[WHTCondition]) -> list[WHTCondition
 def _is_ownership_percentage(text: str, match: re.Match) -> bool:
     before = text[max(0, match.start() - 60):match.start()]
     after = text[match.end():min(len(text), match.end() + 55)]
+    searchable_before = _searchable(before)
+    searchable_after = _searchable(after)
 
     # A percentage followed by "gross amount" / "hrubé částky" is a tax rate,
     # even where damaged PDF encoding leaves "skutečný vlastník" nearby.
-    if TAX_RATE_CONTEXT_RE.search(after):
+    if TAX_RATE_CONTEXT_RE.search(searchable_after):
+        return False
+
+    if TAX_CAP_CONTEXT_RE.search(searchable_before):
         return False
 
     return bool(
-        OWNERSHIP_BEFORE_RE.search(before)
-        or OWNERSHIP_AFTER_RE.search(after)
+        OWNERSHIP_BEFORE_RE.search(searchable_before)
+        or OWNERSHIP_AFTER_RE.search(searchable_after)
     )
 
 
@@ -111,7 +153,7 @@ def _ownership_values(text: str) -> list[float]:
 
     for match in PERCENT_RE.finditer(text):
         if _is_ownership_percentage(text, match):
-            values.append(_to_float(match.group("value")))
+            values.append(_match_value(match))
 
     return values
 
@@ -185,7 +227,7 @@ def _rate_candidates(clause: str) -> list[tuple[float, re.Match]]:
     for match in PERCENT_RE.finditer(clause):
         if _is_ownership_percentage(clause, match):
             continue
-        candidates.append((_to_float(match.group("value")), match))
+        candidates.append((_match_value(match), match))
 
     return candidates
 
