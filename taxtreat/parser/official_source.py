@@ -77,6 +77,33 @@ def official_download_urls(source_title: str | None) -> tuple[str, ...]:
     return tuple(urls)
 
 
+def verified_mirror_urls(source_title: str | None) -> tuple[str, ...]:
+    """Return deterministic read-only mirrors for an exact publication reference.
+
+    The print endpoint is intentionally tried before the interactive page because
+    it is server-rendered and does not depend on the JavaScript challenge used by
+    the normal document view. Krajta is an additional transport fallback for the
+    domestic ``Sb.`` collection only. Every response still has to pass publication,
+    counterparty and semantic treaty validation before it can be accepted.
+    """
+
+    reference = publication_reference(source_title)
+    if reference is None:
+        return ()
+
+    number, year = reference.split("/", 1)
+    normalized_title = re.sub(r"\s+", "", (source_title or "").casefold())
+    collection = "ms" if "sb.m.s" in normalized_title else "cs"
+    document = f"{year}-{int(number)}"
+    urls = [
+        f"https://www.zakonyprolidi.cz/print/{collection}/{document}/?sil=1",
+        f"https://www.zakonyprolidi.cz/{collection}/{document}",
+    ]
+    if collection == "cs":
+        urls.append(f"https://krajta.slv.cz/{year}/{int(number)}")
+    return tuple(urls)
+
+
 def _request(url: str) -> Request:
     return Request(
         url,
@@ -106,7 +133,19 @@ def _html_to_text(payload: bytes) -> str:
     ):
         element.decompose()
 
-    root = soup.find("main") or soup.find(attrs={"role": "main"}) or soup.body or soup
+    # Some legal mirrors prepend a short anti-bot ``<main>`` before the actual
+    # server-rendered document. Selecting the first main element therefore drops
+    # the treaty. Prefer the text-richest plausible document container instead.
+    candidates = list(soup.find_all("main"))
+    candidates.extend(soup.find_all(attrs={"role": "main"}))
+    candidates.extend(soup.find_all("article"))
+    if soup.body is not None:
+        candidates.append(soup.body)
+    root = max(
+        candidates,
+        key=lambda element: len(element.get_text(" ", strip=True)),
+        default=soup,
+    )
     text = root.get_text("\n")
     lines = [" ".join(line.split()) for line in text.splitlines()]
     return "\n".join(line for line in lines if line)
@@ -310,6 +349,75 @@ def _extract_linked_pdf(
     return None
 
 
+
+
+def _mirror_url_has_reference(url: str, reference: str) -> bool:
+    """Confirm that a deterministic mirror URL encodes the exact publication."""
+
+    number, year = reference.split("/", 1)
+    number = str(int(number))
+    path = urlparse(url).path.rstrip("/")
+    return bool(
+        re.search(rf"/(?:cs|ms)/(?:{re.escape(year)}-{re.escape(number)})(?:/|$)", path)
+        or re.search(rf"/{re.escape(year)}/{re.escape(number)}(?:/|$)", path)
+    )
+
+def _fetch_verified_mirror(
+    source_title: str | None,
+    *,
+    expected_country: str | None,
+    timeout: float,
+    errors: list[str],
+) -> OfficialSourceDocument | None:
+    """Fetch a mirror only after official transports failed.
+
+    The mirror is accepted only when the exact publication reference appears in
+    the page and the normal country/semantic treaty validation succeeds.
+    """
+
+    reference = publication_reference(source_title)
+    if reference is None:
+        return None
+
+    for url in verified_mirror_urls(source_title):
+        try:
+            with urlopen(_request(url), timeout=timeout) as response:
+                payload = response.read()
+                content_type = _content_type(response)
+        except (HTTPError, URLError, TimeoutError, OSError) as exc:
+            errors.append(f"{url}: {type(exc).__name__}: {exc}")
+            continue
+
+        if content_type and content_type not in {"text/html", "application/xhtml+xml"}:
+            errors.append(f"{url}: unsupported mirror content type {content_type}")
+            continue
+
+        text = _html_to_text(payload)
+        compact = re.sub(r"\s+", "", text.casefold())
+        number, year = reference.split("/", 1)
+        publication_markers = (
+            f"{int(number)}/{year}sb.",
+            f"{int(number)}/{year}sb.m.s.",
+            f"{int(number)}/{year}sb.m.s",
+        )
+        marker_in_text = any(
+            marker.replace(" ", "") in compact for marker in publication_markers
+        )
+        if not marker_in_text and not _mirror_url_has_reference(url, reference):
+            errors.append(f"{url}: exact publication reference {reference} not found")
+            continue
+
+        if _complete_treaty_pages(
+            [text],
+            expected_country=expected_country,
+            source_title=source_title,
+        ):
+            return OfficialSourceDocument(pages=[text], url=url)
+        errors.append(f"{url}: mirror text did not contain a complete validated treaty")
+
+    return None
+
+
 def fetch_official_document(
     source_title: str | None,
     *,
@@ -400,5 +508,14 @@ def fetch_official_document(
             return linked
 
         errors.append(f"{url}: official page did not expose complete treaty text or PDF")
+
+    mirror = _fetch_verified_mirror(
+        source_title,
+        expected_country=expected_country,
+        timeout=request_timeout,
+        errors=errors,
+    )
+    if mirror is not None:
+        return mirror
 
     raise OfficialSourceError("; ".join(errors) or "Official source could not be fetched")

@@ -113,7 +113,14 @@ def _parse_extraction(
 
 
 def _official_method(url: str) -> str:
-    suffix = Path(urlparse(url).path).suffix.casefold().lstrip(".")
+    parsed_url = urlparse(url)
+    if parsed_url.hostname in {
+        "www.zakonyprolidi.cz",
+        "zakonyprolidi.cz",
+        "krajta.slv.cz",
+    }:
+        return "verified_mirror_html"
+    suffix = Path(parsed_url.path).suffix.casefold().lstrip(".")
     if suffix in {"xml", "json", "pdf"}:
         return f"official_esbirka_{suffix}"
     return "official_esbirka_html"

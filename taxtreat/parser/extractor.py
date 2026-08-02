@@ -14,7 +14,9 @@ from pypdf import PdfReader
 
 from .article_parser import parse_articles
 from .article_selection import select_best_article_sequence
+from .detector import extract_treaty
 from .normalize import normalize_pages
+from .publication import select_treaty_pages
 from taxtreat.validation.document_identity import validate_treaty_identity
 
 GLYPH_CODE_RE = re.compile(r"/C\d+")
@@ -267,14 +269,38 @@ def _country_start_page(pages: list[str], expected_country: str | None) -> int |
     return None
 
 
-def _ocr_target_reached(pages: list[str], expected_country: str | None) -> bool:
-    start = _country_start_page(pages, expected_country)
+def _ocr_target_reached(
+    pages: list[str],
+    expected_country: str | None,
+    source_title: str | None = None,
+) -> bool:
+    """Stop only when the same treaty segment used by the parser is complete.
+
+    Publications can contain contents pages, parallel-language versions or
+    other legal text with Article 10-12 headings before the actual treaty
+    sequence selected by the parser.  Evaluating the whole OCR prefix can
+    therefore stop one batch too early.  Mirror the downstream publication
+    selection and treaty-start detection before deciding that OCR is complete.
+    """
+
+    normalized = normalize_pages(pages)
+    if expected_country:
+        selection = select_treaty_pages(
+            normalized,
+            expected_country=expected_country,
+            source_title=source_title,
+        )
+        candidate_pages = selection.pages
+    else:
+        candidate_pages = normalized
+
+    start = _country_start_page(candidate_pages, expected_country)
     if start is None:
         return False
 
-    normalized = normalize_pages(pages[start:])
     try:
-        articles = parse_articles("\n".join(normalized))
+        treaty_text, _ = extract_treaty(candidate_pages[start:])
+        articles = parse_articles(treaty_text)
     except RuntimeError:
         return False
     return select_best_article_sequence(articles).is_complete
@@ -284,6 +310,7 @@ def _extract_with_ocr(
     path: Path,
     *,
     expected_country: str | None = None,
+    source_title: str | None = None,
 ) -> list[str]:
     if shutil.which("pdftoppm") is None or shutil.which("tesseract") is None:
         raise RuntimeError("OCR tools pdftoppm/tesseract are not installed")
@@ -356,7 +383,7 @@ def _extract_with_ocr(
                         )
 
             pages.extend(batch)
-            if _ocr_target_reached(pages, expected_country):
+            if _ocr_target_reached(pages, expected_country, source_title):
                 print(
                     f"OCRSTOP {path.name}: treaty articles complete after "
                     f"{len(pages)}/{page_count} pages",
@@ -426,6 +453,7 @@ def extract_document(
                 ocr_pages = _extract_with_ocr(
                     path,
                     expected_country=expected_country,
+                    source_title=source_title,
                 )
             except TypeError as exc:
                 if "unexpected keyword argument" not in str(exc):

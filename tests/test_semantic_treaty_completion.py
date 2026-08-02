@@ -111,6 +111,37 @@ def test_ocr_stop_requires_one_semantically_complete_treaty_sequence():
     assert _ocr_target_reached(unrelated + treaty, None) is True
 
 
+def test_ocr_stop_uses_same_selected_treaty_segment_as_final_parser():
+    notice = (
+        "50 SDĚLENÍ Ministerstva zahraničních věcí. "
+        "Smlouva mezi Českou republikou a Kyrgyzskou republikou, podepsaná v Praze."
+    )
+    misleading_prefix = [
+        notice,
+        "Článek 10\nDIVIDENDY",
+        "Článek 11\nÚROKY",
+        "Článek 12\nLICENČNÍ POPLATKY",
+        "Článek 1\nPersons Covered\nČlánek 2\nTaxes Covered\nČlánek 3\nDefinitions",
+    ]
+
+    assert _ocr_target_reached(
+        misleading_prefix,
+        "Kyrgyzstán",
+        "50/2020 Sb.m.s.",
+    ) is False
+
+    complete = misleading_prefix + [
+        "Článek 10\nDIVIDENDY",
+        "Článek 11\nÚROKY",
+        "Článek 12\nLICENČNÍ POPLATKY",
+    ]
+    assert _ocr_target_reached(
+        complete,
+        "Kyrgyzstán",
+        "50/2020 Sb.m.s.",
+    ) is True
+
+
 def test_mojibake_notice_selects_tajik_treaty_and_corrects_publication_number():
     jordan = (
         "49 88 SDEÏ L E N IÂ Ministerstva zahranicÏnõÂch veÏcõÂ. "
@@ -277,3 +308,162 @@ def test_parser_prefers_official_structured_text_when_local_dividend_rate_is_mis
 
     assert parsed.text_extraction["method"] == "official_esbirka_xml"
     assert parsed.source_resolution["method"] == "official_esbirka_xml"
+
+
+def test_verified_mirror_urls_are_deterministic():
+    from taxtreat.parser.official_source import verified_mirror_urls
+
+    assert verified_mirror_urls("482/2024 Sb.") == (
+        "https://www.zakonyprolidi.cz/print/cs/2024-482/?sil=1",
+        "https://www.zakonyprolidi.cz/cs/2024-482",
+        "https://krajta.slv.cz/2024/482",
+    )
+    assert verified_mirror_urls("50/2020 Sb.m.s.") == (
+        "https://www.zakonyprolidi.cz/print/ms/2020-50/?sil=1",
+        "https://www.zakonyprolidi.cz/ms/2020-50",
+    )
+
+
+
+def test_html_extraction_uses_document_instead_of_short_challenge_main():
+    from taxtreat.parser.official_source import _html_to_text
+
+    html = b"""<html><body>
+    <main>Vyckejte chvilicku ...</main>
+    <article>
+      <h1>Sdeleni c. 482/2024 Sb.</h1>
+      <p>Smlouva mezi Ceskou republikou a Rwandskou republikou.</p>
+      <h2>Clanek 1</h2><p>OSOBY. Text.</p>
+      <h2>Clanek 10</h2><p>DIVIDENDY. Dan nepresahne 10 procent.</p>
+      <h2>Clanek 11</h2><p>UROKY. Text.</p>
+      <h2>Clanek 12</h2><p>LICENCNI POPLATKY. Text.</p>
+      <h2>Clanek 13</h2><p>ZISKY ZE ZCIZENI MAJETKU. Text.</p>
+    </article>
+    </body></html>"""
+
+    text = _html_to_text(html)
+
+    assert "482/2024" in text
+    assert "DIVIDENDY" in text
+
+def test_official_source_uses_verified_mirror_after_official_failures(monkeypatch):
+    html = b"""<html><main>
+    <h1>Sdeleni c. 482/2024 Sb.</h1>
+    <p>Smlouva mezi Ceskou republikou a Rwandskou republikou.</p>
+    <h2>Clanek 1</h2><h3>OSOBY</h3><p>Text.</p>
+    <h2>Clanek 10</h2><h3>DIVIDENDY</h3>
+    <p>Dan nepresahne 10 procent hrube castky dividend.</p>
+    <h2>Clanek 11</h2><h3>UROKY</h3><p>Text.</p>
+    <h2>Clanek 12</h2><h3>LICENCNI POPLATKY</h3><p>Text.</p>
+    <h2>Clanek 13</h2><h3>ZISKY ZE ZCIZENI MAJETKU</h3><p>Text.</p>
+    </main></html>"""
+
+    class Headers:
+        def get_content_type(self):
+            return "text/html"
+
+    class Response:
+        headers = Headers()
+        def __enter__(self):
+            return self
+        def __exit__(self, *args):
+            return False
+        def read(self):
+            return html
+
+    def fake_urlopen(request, timeout):
+        if "zakonyprolidi.cz" in request.full_url:
+            return Response()
+        raise OSError("official transport unavailable")
+
+    monkeypatch.setattr("taxtreat.parser.official_source.urlopen", fake_urlopen)
+
+    result = fetch_official_document(
+        "482/2024 Sb.",
+        expected_country="Rwanda",
+        timeout=1,
+    )
+
+    assert result.url == "https://www.zakonyprolidi.cz/print/cs/2024-482/?sil=1"
+    assert "DIVIDENDY" in result.pages[0]
+
+
+
+def test_regular_collection_uses_krajta_after_zpl_challenge(monkeypatch):
+    challenge = b"<html><main>Vyckejte chvilicku ...</main></html>"
+    treaty = b"""<html><article>
+    <h1>Sdeleni c. 482/2024 Sb.</h1>
+    <p>Smlouva mezi Ceskou republikou a Rwandskou republikou.</p>
+    <h2>Clanek 1</h2><h3>OSOBY</h3><p>Text.</p>
+    <h2>Clanek 10</h2><h3>DIVIDENDY</h3><p>Dan nepresahne 10 procent.</p>
+    <h2>Clanek 11</h2><h3>UROKY</h3><p>Text.</p>
+    <h2>Clanek 12</h2><h3>LICENCNI POPLATKY</h3><p>Text.</p>
+    <h2>Clanek 13</h2><h3>ZISKY ZE ZCIZENI MAJETKU</h3><p>Text.</p>
+    </article></html>"""
+
+    class Headers:
+        def get_content_type(self):
+            return "text/html"
+
+    class Response:
+        headers = Headers()
+
+        def __init__(self, payload):
+            self.payload = payload
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+        def read(self):
+            return self.payload
+
+    def fake_urlopen(request, timeout):
+        if "e-sbirka.gov.cz" in request.full_url:
+            raise OSError("official transport unavailable")
+        if "zakonyprolidi.cz" in request.full_url:
+            return Response(challenge)
+        if "krajta.slv.cz" in request.full_url:
+            return Response(treaty)
+        raise AssertionError(request.full_url)
+
+    monkeypatch.setattr("taxtreat.parser.official_source.urlopen", fake_urlopen)
+
+    result = fetch_official_document(
+        "482/2024 Sb.",
+        expected_country="Rwanda",
+        timeout=1,
+    )
+
+    assert result.url == "https://krajta.slv.cz/2024/482"
+    assert "DIVIDENDY" in result.pages[0]
+
+def test_uncapped_dividend_article_is_a_complete_rule(tmp_path: Path):
+    from taxtreat.tools.benchmark_treaties import _derive_completion_flags
+
+    payload = {
+        "identity_validation": {"status": "validated", "reason": "counterparty_matched"},
+        "text_extraction": {"method": "verified_mirror_html", "score": 100},
+        "source_resolution": {"status": "resolved", "method": "verified_mirror_html"},
+        "articles": [
+            {"number": 1, "title": "OSOBY", "text": "Text."},
+            {
+                "number": 10,
+                "title": "DIVIDENDY",
+                "text": "Dividendy podléhají zdanění v obou smluvních státech.",
+            },
+            {"number": 11, "title": "ÚROKY", "text": "Text."},
+            {"number": 12, "title": "LICENČNÍ POPLATKY", "text": "Text."},
+        ],
+    }
+    path = tmp_path / "uncapped.json"
+    path.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+
+    result = benchmark(path)
+    result.update(_derive_completion_flags({"parse_status": "ok", **result}))
+
+    assert result["dividend_status"] == "confirmed_uncapped"
+    assert result["dividend_rates"] == "domestic_law"
+    assert result["rules_complete"] is True

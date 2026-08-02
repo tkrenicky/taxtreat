@@ -23,6 +23,7 @@ from taxtreat.parser.article_selection import (
     articles_from_payload,
     select_best_article_sequence,
 )
+from taxtreat.validation.document_identity import normalize_legal_text
 
 DB = Path("data/processed/taxtreat_cz.sqlite")
 PARSED_DIR = Path("data/parsed")
@@ -336,6 +337,28 @@ def classify_failed_parse(error: str) -> dict[str, str]:
     }
 
 
+def _dividend_is_uncapped(text: str) -> bool:
+    """Recognise treaties that permit source taxation without a treaty cap."""
+
+    normalized = normalize_legal_text(text)
+    uncapped_markers = (
+        "podlehaji zdaneni v obou smluvnich statech",
+        "mohou byt zdaneny v obou smluvnich statech",
+        "may be taxed in both contracting states",
+        "taxable in both contracting states",
+    )
+    cap_markers = (
+        "nepresahne",
+        "shall not exceed",
+        "not exceed",
+        "procent",
+        "%",
+    )
+    return any(marker in normalized for marker in uncapped_markers) and not any(
+        marker in normalized for marker in cap_markers
+    )
+
+
 def _derive_completion_flags(result: dict[str, object]) -> dict[str, object]:
     parsed = result.get("parse_status") == "ok"
     # Income article classification is semantic, not tied to OECD numbering.
@@ -349,10 +372,10 @@ def _derive_completion_flags(result: dict[str, object]) -> dict[str, object]:
         )
     )
     rates = str(result.get("dividend_rates", "")).strip()
-    rules_complete = (
-        articles_complete
-        and str(result.get("dividend_status", "")) == "confirmed"
-        and bool(rates)
+    dividend_status = str(result.get("dividend_status", ""))
+    rules_complete = articles_complete and (
+        (dividend_status == "confirmed" and bool(rates))
+        or dividend_status == "confirmed_uncapped"
     )
 
     if not parsed:
@@ -424,6 +447,9 @@ def benchmark(parsed_path: Path) -> dict[str, object]:
             for rate in rule.rates
             for condition in rate.conditions
         )
+        if not rule.rates and _dividend_is_uncapped(dividend.text):
+            result["dividend_status"] = "confirmed_uncapped"
+            result["dividend_rates"] = "domestic_law"
 
     return result
 
