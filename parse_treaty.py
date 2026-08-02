@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
+from urllib.parse import urlparse
 from typing import Sequence
 import re
 
@@ -11,6 +12,7 @@ from taxtreat.parser.article_selection import (
     ARTICLE_TYPES,
     select_best_article_sequence,
 )
+from taxtreat.engine.extractors import dividend_rule
 from taxtreat.parser.detector import extract_treaty
 from taxtreat.parser.extractor import ExtractionAttempt, ExtractionResult, extract_document
 from taxtreat.parser.models import ParsedTreaty, TreatyArticle
@@ -27,6 +29,22 @@ from taxtreat.validation.document_identity import (
 )
 
 
+def _parsed_quality(parsed: ParsedTreaty) -> tuple[int, int, int, int, int]:
+    selection = select_best_article_sequence(parsed.articles)
+    dividend = selection.semantic_articles.get("dividend")
+    rate_count = 0
+    if dividend is not None:
+        rate_count = len(dividend_rule(dividend.text).rates)
+    text_length = sum(len(article.title) + len(article.text) for article in parsed.articles)
+    return (
+        selection.semantic_score,
+        int(rate_count > 0),
+        rate_count,
+        len(parsed.articles),
+        text_length,
+    )
+
+
 def _article_semantic_score(articles: list[TreatyArticle]) -> int:
     return select_best_article_sequence(articles).semantic_score
 
@@ -39,6 +57,7 @@ def _parse_extraction(
     country: str,
     source_title: str,
     official_url: str | None = None,
+    official_method: str | None = None,
 ) -> ParsedTreaty:
     pages = normalize_pages(extraction.pages)
 
@@ -76,7 +95,7 @@ def _parse_extraction(
         source_resolution.update(
             {
                 "status": "resolved",
-                "method": "official_esbirka_html",
+                "method": official_method or "official_esbirka",
                 "official_url": official_url,
             }
         )
@@ -91,6 +110,13 @@ def _parse_extraction(
         source_resolution=source_resolution,
         articles=articles,
     )
+
+
+def _official_method(url: str) -> str:
+    suffix = Path(urlparse(url).path).suffix.casefold().lstrip(".")
+    if suffix in {"xml", "json", "pdf"}:
+        return f"official_esbirka_{suffix}"
+    return "official_esbirka_html"
 
 
 def _official_extraction(
@@ -117,8 +143,9 @@ def _official_extraction(
             }
         )
     )
+    method = _official_method(official.url)
     attempt = ExtractionAttempt(
-        method="official_esbirka_html",
+        method=method,
         score=min(len(text) // 100, 250) + len(article_numbers) * 20,
         total_characters=len(text),
         substantive_pages=sum(len(page.strip()) >= 100 for page in official.pages),
@@ -127,7 +154,7 @@ def _official_extraction(
     return (
         ExtractionResult(
             pages=official.pages,
-            method="official_esbirka_html",
+            method=method,
             score=attempt.score,
             attempts=(attempt,),
         ),
@@ -164,7 +191,8 @@ def parse_treaty_file(
             country=country,
             source_title=source_title,
         )
-        if _article_semantic_score(local_parsed.articles) == len(ARTICLE_TYPES):
+        local_quality = _parsed_quality(local_parsed)
+        if local_quality[0] == len(ARTICLE_TYPES) and local_quality[1] == 1:
             return local_parsed
     except Exception as exc:
         local_error = exc
@@ -180,12 +208,11 @@ def parse_treaty_file(
             country=country,
             source_title=source_title,
             official_url=official_url,
+            official_method=official_extraction.method,
         )
         if local_parsed is None:
             return official_parsed
-        if _article_semantic_score(official_parsed.articles) >= _article_semantic_score(
-            local_parsed.articles
-        ):
+        if _parsed_quality(official_parsed) >= _parsed_quality(local_parsed):
             return official_parsed
     except (OfficialSourceError, TreatyIdentityError, RuntimeError, ValueError, OSError):
         if local_parsed is not None:

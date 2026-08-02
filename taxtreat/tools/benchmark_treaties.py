@@ -634,6 +634,7 @@ def _bootstrap_from_snapshot(
         needs_retry = (
             row.get("parse_status") != "ok"
             or not _as_bool(row.get("articles_complete"))
+            or not _as_bool(row.get("rules_complete"))
         )
         cache["entries"][slugify(country)] = {
             "country": country,
@@ -759,6 +760,7 @@ def main() -> None:
                 should_run = (
                     not _as_bool(row.get("parsed"))
                     or not _as_bool(row.get("articles_complete"))
+                    or not _as_bool(row.get("rules_complete"))
                 )
                 if not should_run:
                     rows_by_country[country] = row
@@ -846,6 +848,7 @@ def main() -> None:
                 "needs_retry": (
                     not _as_bool(row.get("parsed"))
                     or not _as_bool(row.get("articles_complete"))
+                    or not _as_bool(row.get("rules_complete"))
                 ),
                 "row": row,
                 "updated_at": datetime.now(timezone.utc).isoformat(),

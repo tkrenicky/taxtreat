@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+
+import parse_treaty
 from pathlib import Path
 
 from taxtreat.parser.article_selection import (
@@ -9,7 +11,11 @@ from taxtreat.parser.article_selection import (
 )
 from taxtreat.parser.extractor import ExtractionResult, _ocr_target_reached
 from taxtreat.parser.models import TreatyArticle
-from taxtreat.parser.official_source import fetch_official_document
+from taxtreat.parser.official_source import (
+    OfficialSourceDocument,
+    fetch_official_document,
+    official_download_urls,
+)
 from taxtreat.parser.publication import select_treaty_pages
 from taxtreat.tools.benchmark_treaties import benchmark
 
@@ -181,3 +187,93 @@ def test_official_source_follows_linked_pdf(monkeypatch):
 
     assert result.url == "https://e-sbirka.gov.cz/files/treaty.pdf"
     assert result.pages == treaty_pages
+
+
+def test_official_download_urls_use_stable_structured_formats():
+    urls = official_download_urls("206/2024 Sb.")
+    assert urls[:3] == (
+        "https://e-sbirka.gov.cz/sb/2024/206/0000-00-00.XML",
+        "https://e-sbirka.gov.cz/sb/2024/206/0000-00-00.JSON",
+        "https://e-sbirka.gov.cz/sb/2024/206/0000-00-00.PDF",
+    )
+
+
+def test_official_source_reads_stable_xml(monkeypatch):
+    xml = """<?xml version='1.0' encoding='utf-8'?>
+    <document>
+      <title>Smlouva mezi Českou republikou a Rwandskou republikou o zamezení dvojímu zdanění.</title>
+      <article><heading>Článek 1</heading><title>OSOBY</title><p>Text.</p></article>
+      <article><heading>Článek 10</heading><title>DIVIDENDY</title><p>Daň nepřesáhne 10 procent hrubé částky dividend.</p></article>
+      <article><heading>Článek 11</heading><title>ÚROKY</title><p>Text.</p></article>
+      <article><heading>Článek 12</heading><title>LICENČNÍ POPLATKY</title><p>Text.</p></article>
+      <article><heading>Článek 13</heading><title>ZISKY ZE ZCIZENÍ MAJETKU</title><p>Text.</p></article>
+    </document>""".encode("utf-8")
+
+    class Headers:
+        def get_content_type(self):
+            return "application/xml"
+
+    class Response:
+        headers = Headers()
+        def __enter__(self):
+            return self
+        def __exit__(self, *args):
+            return False
+        def read(self):
+            return xml
+
+    monkeypatch.setattr(
+        "taxtreat.parser.official_source.urlopen",
+        lambda request, timeout: Response(),
+    )
+
+    result = fetch_official_document(
+        "482/2024 Sb.",
+        expected_country="Rwanda",
+        timeout=1,
+    )
+
+    assert result.url.endswith("/0000-00-00.XML")
+    assert "Článek 10" in result.pages[0]
+
+
+def test_parser_prefers_official_structured_text_when_local_dividend_rate_is_missing(
+    monkeypatch,
+):
+    local = [
+        "Smlouva mezi Českou republikou a Rwandskou republikou o zamezení dvojímu zdanění.\n"
+        "Článek 1\nOSOBY\nText.\n"
+        "Článek 10\nDIVIDENDY\nDividendy mohou být zdaněny.\n"
+        "Článek 11\nÚROKY\nText.\n"
+        "Článek 12\nLICENČNÍ POPLATKY\nText.\n"
+        "Článek 13\nZISKY ZE ZCIZENÍ MAJETKU"
+    ]
+    official = [
+        local[0].replace(
+            "Dividendy mohou být zdaněny.",
+            "Daň nepřesáhne 10 procent hrubé částky dividend.",
+        )
+    ]
+
+    monkeypatch.setattr(
+        parse_treaty,
+        "extract_document",
+        lambda *args, **kwargs: ExtractionResult(local, "local", 10),
+    )
+    monkeypatch.setattr(
+        parse_treaty,
+        "fetch_official_document",
+        lambda *args, **kwargs: OfficialSourceDocument(
+            pages=official,
+            url="https://e-sbirka.gov.cz/sb/2024/482/0000-00-00.xml",
+        ),
+    )
+
+    parsed = parse_treaty.parse_treaty_file(
+        "broken.html",
+        country="Rwanda",
+        source_title="482/2024 Sb.",
+    )
+
+    assert parsed.text_extraction["method"] == "official_esbirka_xml"
+    assert parsed.source_resolution["method"] == "official_esbirka_xml"

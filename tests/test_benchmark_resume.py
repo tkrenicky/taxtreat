@@ -306,3 +306,23 @@ def test_semantically_wrong_article_is_retried(monkeypatch, benchmark_env):
     benchmark_treaties.main()
 
     assert calls == ["Testland", "Testland"]
+
+
+def test_rules_incomplete_result_is_retried(monkeypatch, benchmark_env):
+    calls = []
+
+    def parser(country, title, pdf, output):
+        calls.append(country)
+        payload = _parsed_payload()
+        payload["articles"][0]["text"] = "Dividendy bez uvedené sazby."
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(json.dumps(payload), encoding="utf-8")
+
+    monkeypatch.setattr(benchmark_treaties, "parse_treaty", parser)
+
+    benchmark_treaties.main()
+    benchmark_treaties.main()
+
+    assert calls == ["Testland", "Testland"]
+    cache = json.loads(benchmark_env["cache"].read_text(encoding="utf-8"))
+    assert cache["entries"]["testland"]["needs_retry"] is True

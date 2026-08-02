@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import json
 import os
 import re
 import tempfile
+import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from pathlib import Path
 from urllib.error import HTTPError, URLError
@@ -51,12 +53,36 @@ def official_source_urls(source_title: str | None) -> tuple[str, ...]:
     return tuple(urls)
 
 
+
+
+def official_download_urls(source_title: str | None) -> tuple[str, ...]:
+    """Build public stable download URLs for structured e-Sbírka formats."""
+
+    reference = publication_reference(source_title)
+    if reference is None:
+        return ()
+
+    number, year = reference.split("/", 1)
+    normalized_title = re.sub(r"\s+", "", (source_title or "").casefold())
+    primary_collection = "sm" if "sb.m.s" in normalized_title else "sb"
+    collections = (primary_collection, "sb" if primary_collection == "sm" else "sm")
+
+    urls: list[str] = []
+    for collection in collections:
+        base = f"https://e-sbirka.gov.cz/{collection}/{year}/{number}/0000-00-00"
+        for extension in ("XML", "JSON", "PDF", "xml", "json", "pdf"):
+            url = f"{base}.{extension}"
+            if url not in urls:
+                urls.append(url)
+    return tuple(urls)
+
+
 def _request(url: str) -> Request:
     return Request(
         url,
         headers={
             "User-Agent": "Mozilla/5.0 (compatible; TaxTreat/1.0; +https://github.com/tkrenicky/taxtreat)",
-            "Accept": "text/html,application/xhtml+xml,application/pdf;q=0.9,*/*;q=0.1",
+            "Accept": "application/xml,application/json,application/pdf,text/html;q=0.9,*/*;q=0.1",
             "Accept-Language": "cs,en;q=0.8",
         },
     )
@@ -84,6 +110,66 @@ def _html_to_text(payload: bytes) -> str:
     text = root.get_text("\n")
     lines = [" ".join(line.split()) for line in text.splitlines()]
     return "\n".join(line for line in lines if line)
+
+
+
+
+def _clean_text_lines(values: list[str]) -> str:
+    lines: list[str] = []
+    previous = None
+    for value in values:
+        line = " ".join(str(value).split())
+        if not line or line == previous:
+            continue
+        lines.append(line)
+        previous = line
+    return "\n".join(lines)
+
+
+def _xml_to_text(payload: bytes) -> str:
+    root = ET.fromstring(payload)
+    return _clean_text_lines([value for value in root.itertext()])
+
+
+def _json_to_text(payload: bytes) -> str:
+    data = json.loads(payload.decode("utf-8-sig"))
+    values: list[str] = []
+
+    def walk(value: object) -> None:
+        if isinstance(value, str):
+            values.append(value)
+        elif isinstance(value, list):
+            for item in value:
+                walk(item)
+        elif isinstance(value, dict):
+            for item in value.values():
+                walk(item)
+
+    walk(data)
+    return _clean_text_lines(values)
+
+
+def _structured_to_text(payload: bytes, *, url: str, content_type: str) -> str | None:
+    probe = payload.lstrip()[:64]
+    lowered_url = url.casefold()
+    try:
+        if (
+            content_type in {"application/xml", "text/xml"}
+            or (probe.startswith(b"<") and b"<html" not in probe.lower())
+        ):
+            return _xml_to_text(payload)
+        if (
+            content_type in {"application/json", "application/ld+json"}
+            or probe.startswith((b"{", b"["))
+        ):
+            return _json_to_text(payload)
+        if lowered_url.endswith(".xml"):
+            return _xml_to_text(payload)
+        if lowered_url.endswith(".json"):
+            return _json_to_text(payload)
+    except (ET.ParseError, UnicodeDecodeError, json.JSONDecodeError, TypeError, ValueError):
+        return None
+    return None
 
 
 def _allowed_official_url(url: str) -> bool:
@@ -237,7 +323,7 @@ def fetch_official_document(
     }:
         raise OfficialSourceError("Official-source fallback is disabled")
 
-    urls = official_source_urls(source_title)
+    urls = official_download_urls(source_title) + official_source_urls(source_title)
     if not urls:
         raise OfficialSourceError(f"No publication reference in title {source_title!r}")
 
@@ -251,6 +337,21 @@ def fetch_official_document(
                 content_type = _content_type(response)
         except (HTTPError, URLError, TimeoutError, OSError) as exc:
             errors.append(f"{url}: {type(exc).__name__}: {exc}")
+            continue
+
+        structured_text = _structured_to_text(
+            payload,
+            url=url,
+            content_type=content_type,
+        )
+        if structured_text is not None:
+            if _complete_treaty_pages(
+                [structured_text],
+                expected_country=expected_country,
+                source_title=source_title,
+            ):
+                return OfficialSourceDocument(pages=[structured_text], url=url)
+            errors.append(f"{url}: structured document did not contain a complete treaty")
             continue
 
         if payload.startswith(b"%PDF") or content_type == "application/pdf":
