@@ -13,6 +13,7 @@ from bs4 import BeautifulSoup
 from pypdf import PdfReader
 
 from .normalize import normalize_pages
+from taxtreat.validation.document_identity import validate_treaty_identity
 
 GLYPH_CODE_RE = re.compile(r"/C\d+")
 ARTICLE_HEADING_RE = re.compile(
@@ -248,24 +249,63 @@ def _ocr_pdf_page(
     return _ocr_image(image, language)
 
 
-def _extract_with_ocr(path: Path) -> list[str]:
+def _country_start_page(pages: list[str], expected_country: str | None) -> int | None:
+    if not expected_country:
+        return 0
+
+    for index, page in enumerate(pages):
+        identity = validate_treaty_identity(
+            expected_country=expected_country,
+            text=page,
+            source_title=None,
+            minimum_text_length=30,
+        )
+        if identity.is_valid:
+            return index
+    return None
+
+
+def _ocr_target_reached(pages: list[str], expected_country: str | None) -> bool:
+    start = _country_start_page(pages, expected_country)
+    if start is None:
+        return False
+    _, _, article_numbers, _ = _document_metrics(pages[start:])
+    return {1, 10, 11, 12}.issubset(article_numbers)
+
+
+def _extract_with_ocr(
+    path: Path,
+    *,
+    expected_country: str | None = None,
+) -> list[str]:
     if shutil.which("pdftoppm") is None or shutil.which("tesseract") is None:
         raise RuntimeError("OCR tools pdftoppm/tesseract are not installed")
 
     dpi = int(os.getenv("TAXTREAT_OCR_DPI", "160"))
     workers = max(1, int(os.getenv("TAXTREAT_OCR_WORKERS", "2")))
     language = os.getenv("TAXTREAT_OCR_LANG", "ces+eng")
-    page_count = _pdf_page_count(path)
-    max_pages = max(0, int(os.getenv("TAXTREAT_OCR_MAX_PAGES", "0")))
-    if max_pages:
-        page_count = min(page_count, max_pages)
+    document_page_count = _pdf_page_count(path)
+    batch_pages = max(1, int(os.getenv("TAXTREAT_OCR_MAX_PAGES", "20")))
+    batch_pages = max(
+        1,
+        int(os.getenv("TAXTREAT_OCR_BATCH_PAGES", str(batch_pages))),
+    )
+    hard_max_pages = max(
+        0,
+        int(os.getenv("TAXTREAT_OCR_HARD_MAX_PAGES", "0")),
+    )
+    page_count = (
+        min(document_page_count, hard_max_pages)
+        if hard_max_pages
+        else document_page_count
+    )
 
     if page_count <= 0:
         raise RuntimeError("OCR could not determine a positive PDF page count")
 
     with tempfile.TemporaryDirectory(prefix="taxtreat_ocr_") as tmp:
         workdir = Path(tmp)
-        pages = [""] * page_count
+        pages: list[str] = []
         completed = 0
 
         print(
@@ -273,44 +313,61 @@ def _extract_with_ocr(path: Path) -> list[str]:
             flush=True,
         )
 
-        with ThreadPoolExecutor(max_workers=workers) as executor:
-            futures = {
-                executor.submit(
-                    _ocr_pdf_page,
-                    path,
-                    page_number,
-                    dpi=dpi,
-                    language=language,
-                    workdir=workdir,
-                ): page_number
-                for page_number in range(1, page_count + 1)
-            }
+        for first_page in range(1, page_count + 1, batch_pages):
+            last_page = min(first_page + batch_pages - 1, page_count)
+            batch = [""] * (last_page - first_page + 1)
 
-            for future in as_completed(futures):
-                page_number = futures[future]
-                try:
-                    pages[page_number - 1] = future.result()
-                except Exception as exc:
-                    pages[page_number - 1] = ""
-                    print(
-                        f"OCRERR {path.name}: page {page_number}: "
-                        f"{type(exc).__name__}: {exc}",
-                        flush=True,
-                    )
+            with ThreadPoolExecutor(max_workers=workers) as executor:
+                futures = {
+                    executor.submit(
+                        _ocr_pdf_page,
+                        path,
+                        page_number,
+                        dpi=dpi,
+                        language=language,
+                        workdir=workdir,
+                    ): page_number
+                    for page_number in range(first_page, last_page + 1)
+                }
 
-                completed += 1
-                if completed == page_count or completed % 2 == 0:
-                    print(
-                        f"OCR    {path.name}: {completed}/{page_count} pages",
-                        flush=True,
-                    )
+                for future in as_completed(futures):
+                    page_number = futures[future]
+                    try:
+                        batch[page_number - first_page] = future.result()
+                    except Exception as exc:
+                        print(
+                            f"OCRERR {path.name}: page {page_number}: "
+                            f"{type(exc).__name__}: {exc}",
+                            flush=True,
+                        )
+
+                    completed += 1
+                    if completed == page_count or completed % 2 == 0:
+                        print(
+                            f"OCR    {path.name}: {completed}/{page_count} pages",
+                            flush=True,
+                        )
+
+            pages.extend(batch)
+            if _ocr_target_reached(pages, expected_country):
+                print(
+                    f"OCRSTOP {path.name}: treaty articles complete after "
+                    f"{len(pages)}/{page_count} pages",
+                    flush=True,
+                )
+                break
 
         if not any(page.strip() for page in pages):
             raise RuntimeError("OCR produced no usable page text")
         return pages
 
 
-def extract_document(path: str | Path) -> ExtractionResult:
+def extract_document(
+    path: str | Path,
+    *,
+    expected_country: str | None = None,
+    source_title: str | None = None,
+) -> ExtractionResult:
     """Extract text through all available generic backends and select the best result.
 
     The selection is deterministic and based on document-wide quality, article
@@ -358,7 +415,15 @@ def extract_document(path: str | Path) -> ExtractionResult:
 
     if _should_ocr(best_attempt):
         try:
-            ocr_pages = _extract_with_ocr(path)
+            try:
+                ocr_pages = _extract_with_ocr(
+                    path,
+                    expected_country=expected_country,
+                )
+            except TypeError as exc:
+                if "unexpected keyword argument" not in str(exc):
+                    raise
+                ocr_pages = _extract_with_ocr(path)
             ocr_attempt = _attempt("ocr", ocr_pages)
             attempts.append(ocr_attempt)
             candidates.append(("ocr", ocr_pages, ocr_attempt))

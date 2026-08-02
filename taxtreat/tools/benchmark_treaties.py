@@ -19,6 +19,7 @@ from pathlib import Path
 from typing import Any
 
 from taxtreat.engine.extractors import dividend_rule
+from taxtreat.validation.document_identity import normalize_legal_text
 
 DB = Path("data/processed/taxtreat_cz.sqlite")
 PARSED_DIR = Path("data/parsed")
@@ -61,6 +62,9 @@ FIELDNAMES = [
     "article_10",
     "article_11",
     "article_12",
+    "article_10_semantic",
+    "article_11_semantic",
+    "article_12_semantic",
     "dividend_status",
     "dividend_rates",
     "dividend_conditions",
@@ -328,7 +332,14 @@ def _derive_completion_flags(result: dict[str, object]) -> dict[str, object]:
     parsed = result.get("parse_status") == "ok"
     articles_complete = parsed and all(
         _as_bool(result.get(column))
-        for column in ("article_10", "article_11", "article_12")
+        for column in (
+            "article_10",
+            "article_11",
+            "article_12",
+            "article_10_semantic",
+            "article_11_semantic",
+            "article_12_semantic",
+        )
     )
     rates = str(result.get("dividend_rates", "")).strip()
     rules_complete = (
@@ -365,6 +376,15 @@ def benchmark(parsed_path: Path) -> dict[str, object]:
     extraction = data.get("text_extraction") or {}
     source_resolution = data.get("source_resolution") or {}
 
+    def semantic(number: int, markers: tuple[str, ...]) -> bool:
+        article = articles.get(number)
+        if not article:
+            return False
+        text = normalize_legal_text(
+            f"{article.get('title', '')}\n{article.get('text', '')}"
+        )
+        return any(marker in text for marker in markers)
+
     result: dict[str, object] = {
         "identity_status": identity.get("status", "missing"),
         "identity_reason": identity.get("reason", ""),
@@ -378,6 +398,9 @@ def benchmark(parsed_path: Path) -> dict[str, object]:
         "article_10": 10 in articles,
         "article_11": 11 in articles,
         "article_12": 12 in articles,
+        "article_10_semantic": semantic(10, ("dividend",)),
+        "article_11_semantic": semantic(11, ("urok", "interest")),
+        "article_12_semantic": semantic(12, ("licenc", "royalt")),
         "dividend_status": "",
         "dividend_rates": "",
         "dividend_conditions": "",
@@ -427,6 +450,9 @@ def _ocr_settings() -> dict[str, str]:
         "TAXTREAT_OCR_DPI",
         "TAXTREAT_OCR_WORKERS",
         "TAXTREAT_OCR_MAX_PAGES",
+        "TAXTREAT_OCR_BATCH_PAGES",
+        "TAXTREAT_OCR_HARD_MAX_PAGES",
+        "TAXTREAT_OFFICIAL_SOURCE",
     )
     defaults = {
         "TAXTREAT_OCR": "auto",
@@ -434,6 +460,9 @@ def _ocr_settings() -> dict[str, str]:
         "TAXTREAT_OCR_DPI": "160",
         "TAXTREAT_OCR_WORKERS": "2",
         "TAXTREAT_OCR_MAX_PAGES": "20",
+        "TAXTREAT_OCR_BATCH_PAGES": "20",
+        "TAXTREAT_OCR_HARD_MAX_PAGES": "0",
+        "TAXTREAT_OFFICIAL_SOURCE": "auto",
     }
     return {name: os.getenv(name, defaults[name]) for name in names}
 
@@ -633,8 +662,6 @@ def _entry_matches(
         and entry.get("title", "") == treaty["title"]
         and entry.get("pdf") == treaty["local_path"]
         and entry.get("source_sha256") == source_hash
-        and entry.get("parse_pipeline_fingerprint") == parse_fingerprint
-        and entry.get("settings_fingerprint") == settings_fingerprint
     )
 
 
@@ -701,7 +728,6 @@ def main() -> None:
     }
 
     force = _env_flag("TAXTREAT_BENCHMARK_FORCE", False)
-    retry_rules = _env_flag("TAXTREAT_BENCHMARK_RETRY_RULES", False)
     pending: list[tuple[dict[str, str], str]] = []
     reused = 0
 
@@ -720,20 +746,22 @@ def main() -> None:
         )
 
         should_run = force or not matches
-        if matches and entry.get("needs_retry"):
-            should_run = True
-        if matches and retry_rules:
-            row = entry.get("row") or {}
-            should_run = should_run or not _as_bool(row.get("rules_complete"))
-
-        if not should_run:
+        if matches and not force:
             try:
                 row = _refresh_cached_row(entry)
-                rows_by_country[country] = row
-                entry["row"] = row
-                entry["needs_retry"] = False
-                reused += 1
-                continue
+                should_run = (
+                    not _as_bool(row.get("parsed"))
+                    or not _as_bool(row.get("articles_complete"))
+                )
+                if not should_run:
+                    rows_by_country[country] = row
+                    entry["row"] = row
+                    entry["needs_retry"] = False
+                    entry["parse_pipeline_fingerprint"] = parse_fingerprint
+                    entry["settings_fingerprint"] = settings_fingerprint
+                    entry["updated_at"] = datetime.now(timezone.utc).isoformat()
+                    reused += 1
+                    continue
             except (OSError, ValueError, RuntimeError, json.JSONDecodeError):
                 should_run = True
 
@@ -808,7 +836,10 @@ def main() -> None:
                     if row["parse_status"] == "ok" and parsed_path.exists()
                     else ""
                 ),
-                "needs_retry": False,
+                "needs_retry": (
+                    not _as_bool(row.get("parsed"))
+                    or not _as_bool(row.get("articles_complete"))
+                ),
                 "row": row,
                 "updated_at": datetime.now(timezone.utc).isoformat(),
             }

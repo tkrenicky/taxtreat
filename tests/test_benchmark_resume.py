@@ -104,7 +104,7 @@ def test_source_change_invalidates_cache(monkeypatch, benchmark_env):
     assert calls == ["Testland", "Testland"]
 
 
-def test_incomplete_result_is_not_retried_forever(monkeypatch, benchmark_env):
+def test_incomplete_result_is_retried_until_articles_complete(monkeypatch, benchmark_env):
     calls = []
     monkeypatch.setattr(
         benchmark_treaties,
@@ -115,10 +115,10 @@ def test_incomplete_result_is_not_retried_forever(monkeypatch, benchmark_env):
     benchmark_treaties.main()
     benchmark_treaties.main()
 
-    assert calls == ["Testland"]
+    assert calls == ["Testland", "Testland"]
     cache = json.loads(benchmark_env["cache"].read_text(encoding="utf-8"))
     entry = cache["entries"]["testland"]
-    assert entry["needs_retry"] is False
+    assert entry["needs_retry"] is True
     assert entry["row"]["result_status"] == "parsed_only"
 
 
@@ -264,3 +264,45 @@ def test_snapshot_bootstrap_retries_only_failed_and_article_incomplete(
     assert final_rows["Complete"]["cache_status"] == "reused"
     assert final_rows["Incomplete"]["parse_status"] == "ok"
     assert final_rows["Failed"]["parse_status"] == "ok"
+
+
+def test_complete_cache_survives_parser_fingerprint_change(monkeypatch, benchmark_env):
+    calls = []
+    fingerprints = iter(["parser-v1", "parser-v2"])
+    monkeypatch.setattr(
+        benchmark_treaties,
+        "_parse_pipeline_fingerprint",
+        lambda: next(fingerprints),
+    )
+    monkeypatch.setattr(
+        benchmark_treaties,
+        "parse_treaty",
+        _successful_parser(calls),
+    )
+
+    benchmark_treaties.main()
+    benchmark_treaties.main()
+
+    assert calls == ["Testland"]
+    with benchmark_env["report"].open(encoding="utf-8-sig", newline="") as file:
+        row = next(csv.DictReader(file))
+    assert row["cache_status"] == "reused"
+
+
+def test_semantically_wrong_article_is_retried(monkeypatch, benchmark_env):
+    calls = []
+
+    def parser(country, title, pdf, output):
+        calls.append(country)
+        payload = _parsed_payload()
+        payload["articles"][0]["title"] = "JINÝ ČLÁNEK"
+        payload["articles"][0]["text"] = "Text bez příslušného obsahu."
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(json.dumps(payload), encoding="utf-8")
+
+    monkeypatch.setattr(benchmark_treaties, "parse_treaty", parser)
+
+    benchmark_treaties.main()
+    benchmark_treaties.main()
+
+    assert calls == ["Testland", "Testland"]
