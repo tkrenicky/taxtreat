@@ -3,6 +3,118 @@
   "source_title": "95/2000 Sb.m.s.",
   "source_path": "data/raw/treaty/b5dce9a7d1cc9e45.pdf",
   "start_page": 5,
+  "identity_validation": {
+    "expected_country": "Belgie",
+    "status": "validated",
+    "reason": "counterparty_matched",
+    "matched_alias": "belgie",
+    "matched_method": "exact_alias",
+    "publication_reference": "95/2000",
+    "publication_reference_found": false,
+    "warnings": [
+      "publication_reference_not_found"
+    ]
+  },
+  "text_extraction": {
+    "method": "pdftotext",
+    "score": 1968,
+    "page_count": 97,
+    "attempts": [
+      {
+        "method": "pypdf",
+        "score": -550,
+        "total_characters": 270108,
+        "substantive_pages": 96,
+        "article_numbers": [],
+        "error": null
+      },
+      {
+        "method": "pdftotext",
+        "score": 1968,
+        "total_characters": 50574,
+        "substantive_pages": 48,
+        "article_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29
+        ],
+        "error": null
+      },
+      {
+        "method": "hybrid",
+        "score": 1968,
+        "total_characters": 50574,
+        "substantive_pages": 48,
+        "article_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29
+        ],
+        "error": null
+      }
+    ]
+  },
+  "source_resolution": {
+    "status": "fallback",
+    "method": "whole_document",
+    "start_page": 1,
+    "end_page": 97,
+    "effective_title": "95/2000 Sb.m.s.",
+    "metadata_mismatch": false,
+    "candidate_count": 0
+  },
   "articles": [
     {
       "number": 1,

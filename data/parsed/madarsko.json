@@ -2,311 +2,135 @@
   "country": "Maďarsko",
   "source_title": "21/1995 Sb.",
   "source_path": "data/raw/treaty/29b7da072e3d13a0.pdf",
-  "start_page": 5,
+  "start_page": 14,
+  "identity_validation": {
+    "expected_country": "Maďarsko",
+    "status": "validated",
+    "reason": "counterparty_matched",
+    "matched_alias": "madarsko",
+    "matched_method": "country_root_ocr",
+    "publication_reference": "21/1995",
+    "publication_reference_found": false,
+    "warnings": [
+      "publication_reference_not_found"
+    ]
+  },
+  "text_extraction": {
+    "method": "pypdf",
+    "score": 2090,
+    "page_count": 32,
+    "attempts": [
+      {
+        "method": "pypdf",
+        "score": 2090,
+        "total_characters": 111553,
+        "substantive_pages": 32,
+        "article_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30
+        ],
+        "error": null
+      },
+      {
+        "method": "pdftotext",
+        "score": 773,
+        "total_characters": 111216,
+        "substantive_pages": 32,
+        "article_numbers": [
+          4,
+          7,
+          11,
+          15,
+          18,
+          19,
+          20,
+          23,
+          24
+        ],
+        "error": null
+      },
+      {
+        "method": "hybrid",
+        "score": 2083,
+        "total_characters": 111564,
+        "substantive_pages": 32,
+        "article_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30
+        ],
+        "error": null
+      }
+    ]
+  },
+  "source_resolution": {
+    "status": "resolved",
+    "method": "notice_country_match",
+    "start_page": 14,
+    "end_page": 32,
+    "effective_title": "21/1995 Sb.",
+    "metadata_mismatch": false,
+    "candidate_count": 1,
+    "article_sequence_index": 0,
+    "article_sequence_count": 1,
+    "article_semantic_score": 3
+  },
   "articles": [
-    {
-      "number": 1,
-      "title": "Osoby, na které se Smlouva vztahuje",
-      "text": "Tato smlouva se vztahuje na osoby, které majõ\nbydliste ci sõdlo v jednom nebo obou smluvnõch stá-\ntech (rezidenti).",
-      "paragraphs": [
-        "Tato smlouva se vztahuje na osoby, které majõ\nbydliste ci sõdlo v jednom nebo obou smluvnõch stá-\ntech (rezidenti)."
-      ]
-    },
-    {
-      "number": 2,
-      "title": "Dane, na které se Smlouva vztahuje",
-      "text": "1. Tato smlouva se uplatn uje na dane z prõjmu\nukládané jménem kazdého ze smluvnõch státu nebo\njeho nizsõch správnõch útvaru nebo mõstnõch úradu , at'\nje zpu sob vybõránõ jakýkoli.\n2. Za dane z prõjmu se povazujõ vsechny dane\nvybõrané z celkového prõjmu nebo z cásti prõjmu\nvcetne danõ ze zisku ze zcizenõ movitého nebo nemo-\nvitého majetku, danõ z celkového objemu mezd ci platu\nvyplácených podniky a rovnez danõ z prõru stku ma-\njetku.\n3. Soucasné dane, na které se Smlouva vztahuje,\njsou:\na) v České republice:\n(i) dan z prõjmu fyzických osob;\n(ii) dan z prõjmu právnických osob;\n(dále nazývané 1ceská dan a);\nb) v Izraeli\n(i) dane ukládané podle zákona o dani z prõjmu\n(Income Tax Ordinance) a zákonu souvisejõ-\ncõch;\n(ii) dan ze zisku a dan z objemu mezd financnõch\ninstitucõ a pojist'ovacõch spolecnostõ;\n(dále nazývané 1izraelská dan a).\n4. Tato smlouva se bude rovnez vztahovat na dane\nstejného nebo podobného druhu, které budou uklá-\ndány po podpisu této smlouvy vedle nebo mõsto sou-\ncasných danõ. Přõslusné úrady smluvnõch státu si\nvzájemne sdelõ podstatné zmeny, které budou prove-\ndeny v jejich prõslusných dan ových zákonech.",
-      "paragraphs": [
-        "1. Tato smlouva se uplatn uje na dane z prõjmu\nukládané jménem kazdého ze smluvnõch státu nebo\njeho nizsõch správnõch útvaru nebo mõstnõch úradu , at'\nje zpu sob vybõránõ jakýkoli.",
-        "2. Za dane z prõjmu se povazujõ vsechny dane\nvybõrané z celkového prõjmu nebo z cásti prõjmu\nvcetne danõ ze zisku ze zcizenõ movitého nebo nemo-\nvitého majetku, danõ z celkového objemu mezd ci platu\nvyplácených podniky a rovnez danõ z prõru stku ma-\njetku.",
-        "3. Soucasné dane, na které se Smlouva vztahuje,\njsou:\na) v České republice:\n(i) dan z prõjmu fyzických osob;\n(ii) dan z prõjmu právnických osob;\n(dále nazývané 1ceská dan a);\nb) v Izraeli\n(i) dane ukládané podle zákona o dani z prõjmu\n(Income Tax Ordinance) a zákonu souvisejõ-\ncõch;\n(ii) dan ze zisku a dan z objemu mezd financnõch\ninstitucõ a pojist'ovacõch spolecnostõ;\n(dále nazývané 1izraelská dan a).",
-        "4. Tato smlouva se bude rovnez vztahovat na dane\nstejného nebo podobného druhu, které budou uklá-\ndány po podpisu této smlouvy vedle nebo mõsto sou-\ncasných danõ. Přõslusné úrady smluvnõch státu si\nvzájemne sdelõ podstatné zmeny, které budou prove-\ndeny v jejich prõslusných dan ových zákonech."
-      ]
-    },
-    {
-      "number": 3,
-      "title": "Všeobecné definice",
-      "text": "1. Pro úcely této smlouvy, pokud souvislost ne-\nvyzaduje odlisný výklad:\na) výraz 1Česká republikaa znamená územõ, na kte-\nrém platõ dan ové zákony České republiky;\nb) výraz 1Izraela znamená stát Izrael v souladu s jeho\nzákony, a pokud je pouzit v zemepisném vý-\nznamu, zahrnuje, avsak nenõ omezen na výsostné\nvody Izraele a jakoukoliv oblast vne výsostných\nvod, která v souladu se zákony Izraele je územõm,\nna nemz mohou být vykonávána práva Izraele\ntýkajõcõ se pru zkumu a vyuzõvánõ prõrodnõch, bio-\nlogických a nerostných zdroju nacházejõcõch se\nv morské vode, na morském dne a v podlozõ\ntechto vod;\nc) výrazy 1jeden smluvnõ státa a 1druhý smluvnõ\nstáta oznacujõ podle prõpadu Č eskou republiku\nnebo Izrael;\nd) výraz 1osobaa zahrnuje fyzickou osobu, spolec-\nnost a vsechna jiná sdruzenõ osob;\ne) výraz 1spolecnosta oznacuje právnickou osobu\nnebo nositele práv, povazovaného pro úcely zda-\nnenõ za právnickou osobu;\nf) výrazy 1podnik jednoho smluvnõho státua\na 1podnik druhého smluvnõho státua oznacujõ\npodnik provozovaný rezidentem jednoho smluv-\nnõho státu nebo podnik provozovaný rezidentem\ndruhého smluvnõho státu;\ng) výraz 1státnõ prõslusnõka oznacuje:\n(i) kazdou fyzickou osobu, která je státnõm ob-\ncanem nekterého smluvnõho státu;\n(ii) kazdou právnickou osobu, osobnõ spolecnost\nnebo sdruzenõ zrõzené podle práva platného\nv nekterém smluvnõm státe;\nh) výraz 1mezinárodnõ dopravaa oznacuje jakoukoli\ndopravu uskutecn ovanou lodõ, silnicnõm vozidlem\nnebo letadlem, která je provozována podnikem,\njehoz mõsto skutecného vedenõ je umõsteno v jed-\nnom smluvnõm státe, pokud taková doprava nenõ\nuskutecn ována jen mezi mõsty v druhém smluv-\nnõm státe;\ni) výraz 1prõslusný úrada oznacuje:\n(i) v prõpade České republiky ± ministra financõ\nnebo jeho zmocneného zástupce;\n(ii) v prõpade Izraele ± ministra financõ nebo jeho\nzmocneného zástupce.\n2. Kazdý výraz, který nenõ jinak definován, bude\nmõt pro aplikaci této smlouvy smluvnõm státem vý-\nznam, jez mu nálezõ podle práva tohoto státu, které\nupravuje dane, na nez se vztahuje tato smlouva, pokud\nsouvislost nevyzaduje odlisný výklad.",
-      "paragraphs": [
-        "1. Pro úcely této smlouvy, pokud souvislost ne-\nvyzaduje odlisný výklad:\na) výraz 1Česká republikaa znamená územõ, na kte-\nrém platõ dan ové zákony České republiky;\nb) výraz 1Izraela znamená stát Izrael v souladu s jeho\nzákony, a pokud je pouzit v zemepisném vý-\nznamu, zahrnuje, avsak nenõ omezen na výsostné\nvody Izraele a jakoukoliv oblast vne výsostných\nvod, která v souladu se zákony Izraele je územõm,\nna nemz mohou být vykonávána práva Izraele\ntýkajõcõ se pru zkumu a vyuzõvánõ prõrodnõch, bio-\nlogických a nerostných zdroju nacházejõcõch se\nv morské vode, na morském dne a v podlozõ\ntechto vod;\nc) výrazy 1jeden smluvnõ státa a 1druhý smluvnõ\nstáta oznacujõ podle prõpadu Č eskou republiku\nnebo Izrael;\nd) výraz 1osobaa zahrnuje fyzickou osobu, spolec-\nnost a vsechna jiná sdruzenõ osob;\ne) výraz 1spolecnosta oznacuje právnickou osobu\nnebo nositele práv, povazovaného pro úcely zda-\nnenõ za právnickou osobu;\nf) výrazy 1podnik jednoho smluvnõho státua\na 1podnik druhého smluvnõho státua oznacujõ\npodnik provozovaný rezidentem jednoho smluv-\nnõho státu nebo podnik provozovaný rezidentem\ndruhého smluvnõho státu;\ng) výraz 1státnõ prõslusnõka oznacuje:\n(i) kazdou fyzickou osobu, která je státnõm ob-\ncanem nekterého smluvnõho státu;\n(ii) kazdou právnickou osobu, osobnõ spolecnost\nnebo sdruzenõ zrõzené podle práva platného\nv nekterém smluvnõm státe;\nh) výraz 1mezinárodnõ dopravaa oznacuje jakoukoli\ndopravu uskutecn ovanou lodõ, silnicnõm vozidlem\nnebo letadlem, která je provozována podnikem,\njehoz mõsto skutecného vedenõ je umõsteno v jed-\nnom smluvnõm státe, pokud taková doprava nenõ\nuskutecn ována jen mezi mõsty v druhém smluv-\nnõm státe;\ni) výraz 1prõslusný úrada oznacuje:\n(i) v prõpade České republiky ± ministra financõ\nnebo jeho zmocneného zástupce;\n(ii) v prõpade Izraele ± ministra financõ nebo jeho\nzmocneného zástupce.",
-        "2. Kazdý výraz, který nenõ jinak definován, bude\nmõt pro aplikaci této smlouvy smluvnõm státem vý-\nznam, jez mu nálezõ podle práva tohoto státu, které\nupravuje dane, na nez se vztahuje tato smlouva, pokud\nsouvislost nevyzaduje odlisný výklad."
-      ]
-    },
-    {
-      "number": 4,
-      "title": "Dan ový domicil",
-      "text": "1. Pro úcely této smlouvy výraz 1rezident jed-\nnoho smluvnõho státua oznacuje kazdou osobu, která\nje podle práva tohoto státu podrobena v tomto státe\nzdanenõ z du vodu svého bydliste, stálého pobytu, mõs-\nta vedenõ, mõsta zalozenõ nebo jakéhokoli jiného po-\ndobného kritéria. Tento výraz vsak nezahrnuje osobu,\nkterá je podrobena zdanenõ v tomto smluvnõm státe\npouze z du vodu prõjmu ze zdroju v tomto státe nebo\nmajetku v tomto státe umõsteného.\n2. Jestlize fyzická osoba je podle ustanovenõ od-\nstavce 1 rezidentem v obou smluvnõch státech, bude jejõ\npostavenõ urceno následujõcõm zpu sobem:\na) predpokládá se, ze tato osoba je rezidentem v tom\nstáte, ve kterém má stálý byt; jestlize má stálý byt\nv obou státech, predpokládá se, ze je rezidentem\nv tom státe, ke kterému má uzsõ osobnõ a hospo-\ndárské vztahy (stredisko zivotnõch zájmu );\nb) jestlize nemu ze být urceno, ve kterém státe má\ntato osoba stredisko svých zivotnõch zájmu nebo\njestlize nemá stálý byt v zádném státe, predpo-\nkládá se, ze je rezidentem v tom státe, ve kterém\nse obvykle zdrzuje;\nc) jestlize se tato osoba obvykle zdrzuje v obou stá-\ntech nebo v zádném z nich, predpokládá se, ze je\nrezidentem v tom státe, jehoz je státnõm prõslusnõ-\nkem;\nd) jestlize je tato osoba státnõm prõslusnõkem obou\nstátu nebo zádného z nich, upravõ prõslusné úrady\nsmluvnõch státu tuto otázku vzájmenou dohodou.\n3. Jestlize osoba jiná nez osoba fyzická je podle\nustanovenõ odstavce 1 rezidentem v obou smluvnõch\nstátech, predpokládá se, ze je rezidentem v tom státe,\nv nemz se nacházõ mõsto jejõho skutecného vedenõ.\nJestlize stát, ve kterém se nacházõ mõsto skutecného\nvedenõ, nemu ze být urcen, upravõ prõslusné úrady\nsmluvnõch státu tuto otázku vzájemnou dohodou.",
-      "paragraphs": [
-        "1. Pro úcely této smlouvy výraz 1rezident jed-\nnoho smluvnõho státua oznacuje kazdou osobu, která\nje podle práva tohoto státu podrobena v tomto státe\nzdanenõ z du vodu svého bydliste, stálého pobytu, mõs-\nta vedenõ, mõsta zalozenõ nebo jakéhokoli jiného po-\ndobného kritéria. Tento výraz vsak nezahrnuje osobu,\nkterá je podrobena zdanenõ v tomto smluvnõm státe\npouze z du vodu prõjmu ze zdroju v tomto státe nebo\nmajetku v tomto státe umõsteného.",
-        "2. Jestlize fyzická osoba je podle ustanovenõ od-\nstavce 1 rezidentem v obou smluvnõch státech, bude jejõ\npostavenõ urceno následujõcõm zpu sobem:\na) predpokládá se, ze tato osoba je rezidentem v tom\nstáte, ve kterém má stálý byt; jestlize má stálý byt\nv obou státech, predpokládá se, ze je rezidentem\nv tom státe, ke kterému má uzsõ osobnõ a hospo-\ndárské vztahy (stredisko zivotnõch zájmu );\nb) jestlize nemu ze být urceno, ve kterém státe má\ntato osoba stredisko svých zivotnõch zájmu nebo\njestlize nemá stálý byt v zádném státe, predpo-\nkládá se, ze je rezidentem v tom státe, ve kterém\nse obvykle zdrzuje;\nc) jestlize se tato osoba obvykle zdrzuje v obou stá-\ntech nebo v zádném z nich, predpokládá se, ze je\nrezidentem v tom státe, jehoz je státnõm prõslusnõ-\nkem;\nd) jestlize je tato osoba státnõm prõslusnõkem obou\nstátu nebo zádného z nich, upravõ prõslusné úrady\nsmluvnõch státu tuto otázku vzájmenou dohodou.",
-        "3. Jestlize osoba jiná nez osoba fyzická je podle\nustanovenõ odstavce 1 rezidentem v obou smluvnõch\nstátech, predpokládá se, ze je rezidentem v tom státe,\nv nemz se nacházõ mõsto jejõho skutecného vedenõ.\nJestlize stát, ve kterém se nacházõ mõsto skutecného\nvedenõ, nemu ze být urcen, upravõ prõslusné úrady\nsmluvnõch státu tuto otázku vzájemnou dohodou."
-      ]
-    },
-    {
-      "number": 5,
-      "title": "Stálá provozovna",
-      "text": "1. Pro úcely této smlouvy výraz 1stálá provo-\nzovnaa oznacuje trvalé zarõzenõ pro podnikánõ, ve kte-\nrém podnik vykonává zcela nebo zcásti svoji cinnost.\n2. Výraz 1stálá provozovnaa zahrnuje obzvláste:\na) mõsto vedenõ;\nb) závod;\nc) kancelár;\nd) továrnu;\ne) dõlnu; a\nf) du l, naleziste nafty nebo plynu, lom nebo jiné\nmõsto, kde se tezõ prõrodnõ zdroje.\n3. Výraz 1stálá provozovnaa rovnez zahrnuje:\na) staveniste nebo stavbu, instalacnõ nebo montáznõ\nprojekt, avsak pouze trvá-li takové staveniste nebo\nprojekt déle nez 12 mesõcu ;\nb) poskytovánõ sluzeb, vcetne konzultacnõch a mana-\nzerských sluzeb, poskytovaných podnikem pro-\nstrednictvõm zamestnancu nebo jiných pracov-\nnõku zamestnaných podnikem pro takové úcely,\navsak pouze pokud cinnosti takového charakteru\ntrvajõ (u stejného nebo souvisejõcõho projektu) na\núzemõ státu po jedno nebo võce obdobõ presahujõcõ\nv úhrnu võce nez sest mesõcu v jakémkoli dvanác-\ntimesõcnõm obdobõ.\n4. Bez ohledu na predcházejõcõ ustanovenõ tohoto\nclánku se predpokládá, ze výraz 1stálá provozovnaa\nnezahrnuje:\na) zarõzenõ, které se vyuzõvá pouze k uskladnenõ, vy-\nstavenõ nebo dodánõ zbozõ patrõcõho podniku;\nb) zásobu zbozõ patrõcõho podniku, která se udrzuje\npouze za úcelem uskladnenõ, vystavenõ nebo do-\ndánõ;\nc) zásobu zbozõ patrõcõho podniku, která se udrzuje\npouze za úcelem zpracovánõ jiným podnikem;\nd) trvalé zarõzenõ pro podnikánõ, které se udrzuje\npouze za úcelem nákupu zbozõ nebo shromazd'o-\nvánõ informacõ pro podnik;\ne) trvalé zarõzenõ pro podnikánõ, které se udrzuje pro\npodnik pouze za úcelem reklamy, poskytovánõ\ninformacõ, vedeckého výzkumu nebo podobných\ncinnostõ, které majõ pro podnik prõpravný nebo\npomocný charakter;\nf) trvalé zarõzenõ pro podnikánõ, které se udrzuje\npouze k výkonu jakéhokoliv spojenõ cinnostõ uve-\ndených v pododstavcõch a) ± e), pokud celková\ncinnost trvalého zarõzenõ, vyplývajõcõ z tohoto\nspojenõ, má prõpravný nebo pomocný charakter.\n5. Jestlize, bez ohledu na ustanovenõ odstavcu 1\na 2, osoba ± jiná nez nezávislý zástupce, na kterého se\nvztahuje odstavec 6 ± jedná ve smluvnõm státe na úcet\npodniku a má k dispozici a obvykle pouzõvá plnou\nmoc, která ji dovoluje uzavõrat smlouvy jménem pod-\nniku, má se za to, ze tento podnik má stálou provo-\nzovnu v tomto státe ve vztahu ke vsem cinnostem,\nkteré tato osoba provádõ pro podnik, pokud cinnosti\ntéto osoby nejsou omezeny na cinnosti uvedené v od-\nstavci 4, které, pokud by byly uskutecn ovány prostred-\nnictvõm trvalého zarõzenõ, by nezakládaly existenci\nstálé provozovny podle ustanovenõ tohoto odstavce.\n6. Nemá se za to, ze podnik má stálou provo-\nzovnu ve smluvnõm státe jenom proto, ze v tomto\nstáte vykonává svoji cinnost prostrednictvõm maklére,\ngenerálnõho komisionáre nebo jiného nezávislého zá-\nstupce, pokud tyto osoby jednajõ v rámci své rádné\ncinnosti.\n7. Skutecnost, ze spolecnost, která je rezidentem\nv jednom smluvnõm státe, ovládá spolecnost nebo je\novládána splecnostõ, která je rezidentem v druhém\nsmluvnõm státe nebo která tam vykonává svoji cinnost\n(at' prostrednictvõm stálé provozovny nebo jinak), ne-\nucinõ sama o sobe z kterékoli této spolecnosti stálou\nprovozovnu druhé spolecnosti.",
-      "paragraphs": [
-        "1. Pro úcely této smlouvy výraz 1stálá provo-\nzovnaa oznacuje trvalé zarõzenõ pro podnikánõ, ve kte-\nrém podnik vykonává zcela nebo zcásti svoji cinnost.",
-        "2. Výraz 1stálá provozovnaa zahrnuje obzvláste:\na) mõsto vedenõ;\nb) závod;\nc) kancelár;\nd) továrnu;\ne) dõlnu; a\nf) du l, naleziste nafty nebo plynu, lom nebo jiné\nmõsto, kde se tezõ prõrodnõ zdroje.",
-        "3. Výraz 1stálá provozovnaa rovnez zahrnuje:\na) staveniste nebo stavbu, instalacnõ nebo montáznõ\nprojekt, avsak pouze trvá-li takové staveniste nebo\nprojekt déle nez 12 mesõcu ;\nb) poskytovánõ sluzeb, vcetne konzultacnõch a mana-\nzerských sluzeb, poskytovaných podnikem pro-\nstrednictvõm zamestnancu nebo jiných pracov-\nnõku zamestnaných podnikem pro takové úcely,\navsak pouze pokud cinnosti takového charakteru\ntrvajõ (u stejného nebo souvisejõcõho projektu) na\núzemõ státu po jedno nebo võce obdobõ presahujõcõ\nv úhrnu võce nez sest mesõcu v jakémkoli dvanác-\ntimesõcnõm obdobõ.",
-        "4. Bez ohledu na predcházejõcõ ustanovenõ tohoto\nclánku se predpokládá, ze výraz 1stálá provozovnaa\nnezahrnuje:\na) zarõzenõ, které se vyuzõvá pouze k uskladnenõ, vy-\nstavenõ nebo dodánõ zbozõ patrõcõho podniku;\nb) zásobu zbozõ patrõcõho podniku, která se udrzuje\npouze za úcelem uskladnenõ, vystavenõ nebo do-\ndánõ;\nc) zásobu zbozõ patrõcõho podniku, která se udrzuje\npouze za úcelem zpracovánõ jiným podnikem;\nd) trvalé zarõzenõ pro podnikánõ, které se udrzuje\npouze za úcelem nákupu zbozõ nebo shromazd'o-\nvánõ informacõ pro podnik;\ne) trvalé zarõzenõ pro podnikánõ, které se udrzuje pro\npodnik pouze za úcelem reklamy, poskytovánõ\ninformacõ, vedeckého výzkumu nebo podobných\ncinnostõ, které majõ pro podnik prõpravný nebo\npomocný charakter;\nf) trvalé zarõzenõ pro podnikánõ, které se udrzuje\npouze k výkonu jakéhokoliv spojenõ cinnostõ uve-\ndených v pododstavcõch a) ± e), pokud celková\ncinnost trvalého zarõzenõ, vyplývajõcõ z tohoto\nspojenõ, má prõpravný nebo pomocný charakter.",
-        "5. Jestlize, bez ohledu na ustanovenõ odstavcu 1\na 2, osoba ± jiná nez nezávislý zástupce, na kterého se\nvztahuje odstavec 6 ± jedná ve smluvnõm státe na úcet\npodniku a má k dispozici a obvykle pouzõvá plnou\nmoc, která ji dovoluje uzavõrat smlouvy jménem pod-\nniku, má se za to, ze tento podnik má stálou provo-\nzovnu v tomto státe ve vztahu ke vsem cinnostem,\nkteré tato osoba provádõ pro podnik, pokud cinnosti\ntéto osoby nejsou omezeny na cinnosti uvedené v od-\nstavci 4, které, pokud by byly uskutecn ovány prostred-\nnictvõm trvalého zarõzenõ, by nezakládaly existenci\nstálé provozovny podle ustanovenõ tohoto odstavce.",
-        "6. Nemá se za to, ze podnik má stálou provo-\nzovnu ve smluvnõm státe jenom proto, ze v tomto\nstáte vykonává svoji cinnost prostrednictvõm maklére,\ngenerálnõho komisionáre nebo jiného nezávislého zá-\nstupce, pokud tyto osoby jednajõ v rámci své rádné\ncinnosti.",
-        "7. Skutecnost, ze spolecnost, která je rezidentem\nv jednom smluvnõm státe, ovládá spolecnost nebo je\novládána splecnostõ, která je rezidentem v druhém\nsmluvnõm státe nebo která tam vykonává svoji cinnost\n(at' prostrednictvõm stálé provozovny nebo jinak), ne-\nucinõ sama o sobe z kterékoli této spolecnosti stálou\nprovozovnu druhé spolecnosti."
-      ]
-    },
-    {
-      "number": 6,
-      "title": "Přõjmy z nemovitého majetku",
-      "text": "1. Přõjmy, které pobõrá rezident jednoho smluv-\nnõho státu z nemovitého majetku (vcetne prõjmu ze\nzemedelstvõ a lesnictvõ) umõsteného ve druhém smluv-\nnõm státe, mohou být zdaneny v tomto druhém státe.\n2. Výraz 1nemovitý majeteka má takový význam,\njaký má podle zákonu smluvnõho státu, v nemz je tento\nmajetek umõsten. Výraz zahrnuje v kazdém prõpade\nprõslusenstvõ nemovitého majetku, zivý a mrtvý inven-\ntár uzõvaný v zemedelstvõ a lesnictvõ, práva, pro která\nplatõ ustanovenõ obcanského práva vztahujõcõ se na\npozemky, právo uzõvánõ nemovitého majetku a práva\nna promenlivé nebo pevné platy za tezenõ nebo za\nprivolenõ k tezenõ nerostných lozisek, pramenu a ji-\nných prõrodnõch zdroju ; lode, cluny a letadla se nepo-\nvazujõ za nemovitý majetek.\n3. Ustanovenõ odstavce 1 platõ pro prõjmy z prõ-\nmého uzõvánõ, nájmu nebo kazdého jiného zpu sobu\nuzõvánõ nemovitého majetku.\n4. Ustanovenõ odstavcu 1 a 3 platõ rovnez pro\nprõjmy z nemovitého majetku podniku a pro prõjmy\nz nemovitého majetku uzõvaného k výkonu nezávis-\nlého povolánõ.",
-      "paragraphs": [
-        "1. Přõjmy, které pobõrá rezident jednoho smluv-\nnõho státu z nemovitého majetku (vcetne prõjmu ze\nzemedelstvõ a lesnictvõ) umõsteného ve druhém smluv-\nnõm státe, mohou být zdaneny v tomto druhém státe.",
-        "2. Výraz 1nemovitý majeteka má takový význam,\njaký má podle zákonu smluvnõho státu, v nemz je tento\nmajetek umõsten. Výraz zahrnuje v kazdém prõpade\nprõslusenstvõ nemovitého majetku, zivý a mrtvý inven-\ntár uzõvaný v zemedelstvõ a lesnictvõ, práva, pro která\nplatõ ustanovenõ obcanského práva vztahujõcõ se na\npozemky, právo uzõvánõ nemovitého majetku a práva\nna promenlivé nebo pevné platy za tezenõ nebo za\nprivolenõ k tezenõ nerostných lozisek, pramenu a ji-\nných prõrodnõch zdroju ; lode, cluny a letadla se nepo-\nvazujõ za nemovitý majetek.",
-        "3. Ustanovenõ odstavce 1 platõ pro prõjmy z prõ-\nmého uzõvánõ, nájmu nebo kazdého jiného zpu sobu\nuzõvánõ nemovitého majetku.",
-        "4. Ustanovenõ odstavcu 1 a 3 platõ rovnez pro\nprõjmy z nemovitého majetku podniku a pro prõjmy\nz nemovitého majetku uzõvaného k výkonu nezávis-\nlého povolánõ."
-      ]
-    },
-    {
-      "number": 7,
-      "title": "Zisky podniku",
-      "text": "1. Zisky podniku jednoho smluvnõho státu pod-\nléhajõ zdanenõ jen v tomto státe, pokud podnik nevy-\nkonává svoji cinnost v druhém smluvnõm státe pro-\nstrednictvõm stálé provozovny, která je tam umõstena.\nJestlize podnik vykonává svoji cinnost tõmto zpu so-\nbem, mohou být zisky podniku zdaneny v tomto dru-\nhém státe, avsak pouze v takovém rozsahu, v jakém je\nlze pricõtat této stálé provozovne.\n2. Jestlize podnik jednoho smluvnõho státu vyko-\nnává svoji cinnost v druhém smluvnõm státe prostred-\nnictvõm stálé provozovny, která je tam umõstena, pri-\nsuzujõ se s výhradou ustanovenõ odstavce 3 v kazdém\nsmluvnõm státe této stálé provozovne zisky, které by\nbyla mohla docõlit, kdyby byla jako samostatný podnik\nvykonávala stejné nebo obdobné cinnosti za stejných\nnebo obdobných podmõnek a byla zcela nezávislá ve\nstyku s podnikem, jehoz je stálou provozovnou.\n3. Při výpoctu zisku stálé provozovny se povoluje\nodecõst náklady podniku, vynalozené na cõle sledované\ntouto stálou provozovnou vcetne výloh vedenõ a vse-\nobecných správnõch výloh takto vynalozených, at'\nvznikly ve státe, v nemz je tato stálá provozovna umõs-\ntena, ci jinde.\n4. Jestlize je v nekterém smluvnõm státe obyvklé\nstanovit zisky, které majõ být pricteny stálé provo-\nzovne, na základe rozdelenõ celkových zisku podniku\njeho ru zným cástem, nevylucuje ustanovenõ odstavce 2,\naby tento smluvnõ stát stanovil zisky, jez majõ být\nzdaneny, tõmto obvyklým rozdelenõm; pouzitý zpu -\nsob rozdelenõ zisku musõ být vsak takový, aby výsle-\ndek byl v souladu se zásadami stanovenými v tomto\nclánku.\n5. Stálé provozovne se neprictou zádné zisky na\nzáklade skutecnosti, ze pouze nakupovala zbozõ pro\npodnik.\n6. Zisky, které se majõ pricõst stálé provozovne, se\npro úcely predchozõch odstavcu stanovõ kazdý rok\nstejným zpu sobem, pokud neexistujõ dostatecné du -\nvody pro jiný postup.\n7. Jestlize zisky zahrnujõ prõjmy, o nichz se pojed-\nnává oddelene v jiných cláncõch této smlouvy, nebudou\nustanovenõ onech clánku dotcena ustanovenõmi tohoto\nclánku.",
-      "paragraphs": [
-        "1. Zisky podniku jednoho smluvnõho státu pod-\nléhajõ zdanenõ jen v tomto státe, pokud podnik nevy-\nkonává svoji cinnost v druhém smluvnõm státe pro-\nstrednictvõm stálé provozovny, která je tam umõstena.\nJestlize podnik vykonává svoji cinnost tõmto zpu so-\nbem, mohou být zisky podniku zdaneny v tomto dru-\nhém státe, avsak pouze v takovém rozsahu, v jakém je\nlze pricõtat této stálé provozovne.",
-        "2. Jestlize podnik jednoho smluvnõho státu vyko-\nnává svoji cinnost v druhém smluvnõm státe prostred-\nnictvõm stálé provozovny, která je tam umõstena, pri-\nsuzujõ se s výhradou ustanovenõ odstavce 3 v kazdém\nsmluvnõm státe této stálé provozovne zisky, které by\nbyla mohla docõlit, kdyby byla jako samostatný podnik\nvykonávala stejné nebo obdobné cinnosti za stejných\nnebo obdobných podmõnek a byla zcela nezávislá ve\nstyku s podnikem, jehoz je stálou provozovnou.",
-        "3. Při výpoctu zisku stálé provozovny se povoluje\nodecõst náklady podniku, vynalozené na cõle sledované\ntouto stálou provozovnou vcetne výloh vedenõ a vse-\nobecných správnõch výloh takto vynalozených, at'\nvznikly ve státe, v nemz je tato stálá provozovna umõs-\ntena, ci jinde.",
-        "4. Jestlize je v nekterém smluvnõm státe obyvklé\nstanovit zisky, které majõ být pricteny stálé provo-\nzovne, na základe rozdelenõ celkových zisku podniku\njeho ru zným cástem, nevylucuje ustanovenõ odstavce 2,\naby tento smluvnõ stát stanovil zisky, jez majõ být\nzdaneny, tõmto obvyklým rozdelenõm; pouzitý zpu -\nsob rozdelenõ zisku musõ být vsak takový, aby výsle-\ndek byl v souladu se zásadami stanovenými v tomto\nclánku.",
-        "5. Stálé provozovne se neprictou zádné zisky na\nzáklade skutecnosti, ze pouze nakupovala zbozõ pro\npodnik.",
-        "6. Zisky, které se majõ pricõst stálé provozovne, se\npro úcely predchozõch odstavcu stanovõ kazdý rok\nstejným zpu sobem, pokud neexistujõ dostatecné du -\nvody pro jiný postup.",
-        "7. Jestlize zisky zahrnujõ prõjmy, o nichz se pojed-\nnává oddelene v jiných cláncõch této smlouvy, nebudou\nustanovenõ onech clánku dotcena ustanovenõmi tohoto\nclánku."
-      ]
-    },
-    {
-      "number": 8,
-      "title": "Mezinárodnõ doprava",
-      "text": "1. Zisky z provozovánõ lodõ, silnicnõch vozidel\nnebo letadel v mezinárodnõ doprave podléhajõ zdanenõ\njen ve smluvnõm státe, ve kterém je umõsteno sõdlo\nskutecného vedenõ podniku. Pro úcely tohoto clánku\nvýraz 1ziskya zahrnuje prõjmy z prõlezitostného pro-\nnájmu lodõ, silnicnõch vozidel nebo letadel, jestlize\ntento pronájem je nahodilý ve vztahu k provozovánõ\nmezinárodnõ dopravy.\n2. Jestlize sõdlo skutecného vedenõ podniku lodnõ\ndopravy je na palube lodi, povazuje se za umõstené ve\nsmluvnõm státe, ve kterém se nacházõ domovský prõ-\nstav této lodi, nebo nenõ-li takový domovský prõstav, ve\nsmluvnõm státe, v nemz je provozovatel lodi reziden-\ntem.\n3. Ustanovenõ odstavce 1 platõ také pro zisky\nz úcasti na poolu, spolecném provozu nebo meziná-\nrodnõ provoznõ organizaci.",
-      "paragraphs": [
-        "1. Zisky z provozovánõ lodõ, silnicnõch vozidel\nnebo letadel v mezinárodnõ doprave podléhajõ zdanenõ\njen ve smluvnõm státe, ve kterém je umõsteno sõdlo\nskutecného vedenõ podniku. Pro úcely tohoto clánku\nvýraz 1ziskya zahrnuje prõjmy z prõlezitostného pro-\nnájmu lodõ, silnicnõch vozidel nebo letadel, jestlize\ntento pronájem je nahodilý ve vztahu k provozovánõ\nmezinárodnõ dopravy.",
-        "2. Jestlize sõdlo skutecného vedenõ podniku lodnõ\ndopravy je na palube lodi, povazuje se za umõstené ve\nsmluvnõm státe, ve kterém se nacházõ domovský prõ-\nstav této lodi, nebo nenõ-li takový domovský prõstav, ve\nsmluvnõm státe, v nemz je provozovatel lodi reziden-\ntem.",
-        "3. Ustanovenõ odstavce 1 platõ také pro zisky\nz úcasti na poolu, spolecném provozu nebo meziná-\nrodnõ provoznõ organizaci."
-      ]
-    },
-    {
-      "number": 9,
-      "title": "Sdruzené podniky",
-      "text": "1. Jestlize\na) se podnik jednoho smluvnõho státu podõlõ prõmo\nnebo neprõmo na rõzenõ, kontrole nebo jmenõ pod-\nniku druhého smluvnõho státu, nebo\nb) tytéz osoby se prõmo nebo neprõmo podõlejõ na\nrõzenõ, kontrole nebo jmenõ podniku jednoho\nsmluvnõho státu i podniku druhého smluvnõho\nstátu,\na jestlize v techto prõpadech jsou oba podniky ve svých\nobchodnõch nebo financnõch vztazõch vázány podmõn-\nkami, které dohodly nebo jim byly ulozeny a které se\nlisõ od podmõnek, které by byly sjednány mezi podniky\nnezávislými, mohou jakékoliv zisky, které by, nebýt\ntechto podmõnek, byly docõleny jednõm z podniku ,\nale vzhledem k temto podmõnkám docõleny nebyly,\nbýt zahrnuty do zisku tohoto podniku a následne zda-\nneny.\n2. Jestlize jeden smluvnõ stát zahrne do zisku pod-\nniku tohoto státu a následne zdanõ zisky, ze kterých\nbyl podnik druhého smluvnõho státu zdanen v tomto\ndruhém státe, a zisky takto zahrnuté jsou zisky, které\nby byly docõleny podnikem prvne zmõneného státu,\nkdyby podmõnky sjednané mezi podniky byly ta-\nkové, jaké by byly sjednány mezi nezávislými pod-\nniky, upravõ druhý stát vhodne cástku dane ulozené\nz techto zisku v tomto státe. Při stanovenõ této úpravy\nse vezme nálezitý zretel na jiná ustanovenõ této\nsmlouvy, a bude-li to nutné, prõslusné úrady smluv-\nnõch státu se za tõm úcelem vzájemne poradõ.\n3. Ustanovenõ odstavce 2 se neuplatnõ v prõpade\npodvodu nebo vedomého zanedbánõ.",
-      "paragraphs": [
-        "1. Jestlize\na) se podnik jednoho smluvnõho státu podõlõ prõmo\nnebo neprõmo na rõzenõ, kontrole nebo jmenõ pod-\nniku druhého smluvnõho státu, nebo\nb) tytéz osoby se prõmo nebo neprõmo podõlejõ na\nrõzenõ, kontrole nebo jmenõ podniku jednoho\nsmluvnõho státu i podniku druhého smluvnõho\nstátu,\na jestlize v techto prõpadech jsou oba podniky ve svých\nobchodnõch nebo financnõch vztazõch vázány podmõn-\nkami, které dohodly nebo jim byly ulozeny a které se\nlisõ od podmõnek, které by byly sjednány mezi podniky\nnezávislými, mohou jakékoliv zisky, které by, nebýt\ntechto podmõnek, byly docõleny jednõm z podniku ,\nale vzhledem k temto podmõnkám docõleny nebyly,\nbýt zahrnuty do zisku tohoto podniku a následne zda-\nneny.",
-        "2. Jestlize jeden smluvnõ stát zahrne do zisku pod-\nniku tohoto státu a následne zdanõ zisky, ze kterých\nbyl podnik druhého smluvnõho státu zdanen v tomto\ndruhém státe, a zisky takto zahrnuté jsou zisky, které\nby byly docõleny podnikem prvne zmõneného státu,\nkdyby podmõnky sjednané mezi podniky byly ta-\nkové, jaké by byly sjednány mezi nezávislými pod-\nniky, upravõ druhý stát vhodne cástku dane ulozené\nz techto zisku v tomto státe. Při stanovenõ této úpravy\nse vezme nálezitý zretel na jiná ustanovenõ této\nsmlouvy, a bude-li to nutné, prõslusné úrady smluv-\nnõch státu se za tõm úcelem vzájemne poradõ.",
-        "3. Ustanovenõ odstavce 2 se neuplatnõ v prõpade\npodvodu nebo vedomého zanedbánõ."
-      ]
-    },
-    {
-      "number": 10,
-      "title": "Dividendy",
-      "text": "1. Dividendy vyplácené spolecnostõ, která je rezi-\ndentem v jednom smluvnõm státe, osobe, která je rezi-\ndentem v druhém smluvnõm státe, mohou být zdaneny\nv tomto druhém státe.\n2. Tyto dividendy vsak mohou být rovnez zda-\nneny ve smluvnõm státe, v nemz je spolecnost, která\nje vyplácõ, rezidentem, a to podle právnõch predpisu\ntohoto státu, avsak jestlize prõjemce je skutecným\nvlastnõkem dividend, dan takto stanovená nepresáhne:\na) 5 % hrubé cástky dividend, jestlize prõjemce je\nspolecnost (jiná nez osobnõ spolecnost), která\nprõmo vlastnõ nejméne 15 % majetku spolecnosti\nvyplácejõcõ dividendy;\nb) 15 % hrubé cástky dividend ve vsech ostatnõch\nprõpadech.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti,\nze kterých jsou dividendy vypláceny.\n3. Výraz 1dividendya, pouzitý v tomto clánku,\noznacuje prõjmy z akciõ, pozitkových akciõ nebo pozit-\nkových práv, kuksu , zakladatelských podõlu nebo ji-\nných práv s podõlem na zisku, s výjimkou pohledá-\nvek, jakoz i prõjmy z práv na spolecnosti, které jsou\npodle dan ových predpisu státu, v nemz je spolecnost,\nkterá rozdõlõ zisk, rezidentem, postaveny na roven prõ-\njmu z akciõ.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk dividend, který je rezidentem v jed-\nnom smluvnõm státe, vykonává v druhém smluvnõm\nstáte, v nemz je rezidentem spolecnost vyplácejõcõ di-\nvidendy, pru myslovou nebo obchodnõ cinnost pro-\nstrednictvõm stálé provozovny, která je tam umõstena,\nnebo vykonává v tomto druhém státe nezávislé povo-\nlánõ prostrednictvõm stálé základny tam umõstené,\na jestlize úcast, pro kterou se dividendy vyplácejõ, se\nskutecne váze k této stálé provozovne nebo k této stálé\nzákladne. V takovém prõpade se pouzijõ ustanovenõ\nclánku 7 nebo clánku 14 podle toho, o jaký prõpad jde.\n5. Jestlize spolecnost, která je rezidentem v jed-\nnom smluvnõm státe, dosahuje zisky nebo prõjmy\nz druhého smluvnõho státu, nemu ze tento druhý stát\nzdanit dividendy vyplácené spolecnostõ, ledaze tyto\ndividendy jsou vypláceny rezidentu tohoto druhého\nstátu nebo ze úcast, pro kterou se dividendy vyplá-\ncejõ, skutecne patrõ ke stálé provozovne nebo stálé zá-\nkladne, která je umõstena v tomto druhém státe, ani\npodrobit nerozdelené zisky spolecnosti dani z neroz-\ndelených zisku , i kdyz vyplácené dividendy nebo ne-\nrozdelené zisky pozu stávajõ zcela nebo zcásti ze zisku\nnebo z prõjmu docõlených v tomto druhém státe.",
-      "paragraphs": [
-        "1. Dividendy vyplácené spolecnostõ, která je rezi-\ndentem v jednom smluvnõm státe, osobe, která je rezi-\ndentem v druhém smluvnõm státe, mohou být zdaneny\nv tomto druhém státe.",
-        "2. Tyto dividendy vsak mohou být rovnez zda-\nneny ve smluvnõm státe, v nemz je spolecnost, která\nje vyplácõ, rezidentem, a to podle právnõch predpisu\ntohoto státu, avsak jestlize prõjemce je skutecným\nvlastnõkem dividend, dan takto stanovená nepresáhne:\na) 5 % hrubé cástky dividend, jestlize prõjemce je\nspolecnost (jiná nez osobnõ spolecnost), která\nprõmo vlastnõ nejméne 15 % majetku spolecnosti\nvyplácejõcõ dividendy;\nb) 15 % hrubé cástky dividend ve vsech ostatnõch\nprõpadech.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti,\nze kterých jsou dividendy vypláceny.",
-        "3. Výraz 1dividendya, pouzitý v tomto clánku,\noznacuje prõjmy z akciõ, pozitkových akciõ nebo pozit-\nkových práv, kuksu , zakladatelských podõlu nebo ji-\nných práv s podõlem na zisku, s výjimkou pohledá-\nvek, jakoz i prõjmy z práv na spolecnosti, které jsou\npodle dan ových predpisu státu, v nemz je spolecnost,\nkterá rozdõlõ zisk, rezidentem, postaveny na roven prõ-\njmu z akciõ.",
-        "4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk dividend, který je rezidentem v jed-\nnom smluvnõm státe, vykonává v druhém smluvnõm\nstáte, v nemz je rezidentem spolecnost vyplácejõcõ di-\nvidendy, pru myslovou nebo obchodnõ cinnost pro-\nstrednictvõm stálé provozovny, která je tam umõstena,\nnebo vykonává v tomto druhém státe nezávislé povo-\nlánõ prostrednictvõm stálé základny tam umõstené,\na jestlize úcast, pro kterou se dividendy vyplácejõ, se\nskutecne váze k této stálé provozovne nebo k této stálé\nzákladne. V takovém prõpade se pouzijõ ustanovenõ\nclánku 7 nebo clánku 14 podle toho, o jaký prõpad jde.",
-        "5. Jestlize spolecnost, která je rezidentem v jed-\nnom smluvnõm státe, dosahuje zisky nebo prõjmy\nz druhého smluvnõho státu, nemu ze tento druhý stát\nzdanit dividendy vyplácené spolecnostõ, ledaze tyto\ndividendy jsou vypláceny rezidentu tohoto druhého\nstátu nebo ze úcast, pro kterou se dividendy vyplá-\ncejõ, skutecne patrõ ke stálé provozovne nebo stálé zá-\nkladne, která je umõstena v tomto druhém státe, ani\npodrobit nerozdelené zisky spolecnosti dani z neroz-\ndelených zisku , i kdyz vyplácené dividendy nebo ne-\nrozdelené zisky pozu stávajõ zcela nebo zcásti ze zisku\nnebo z prõjmu docõlených v tomto druhém státe."
-      ]
-    },
-    {
-      "number": 11,
-      "title": "U roky",
-      "text": "1. U roky majõcõ zdroj v jednom smluvnõm státe,\nkteré pobõrá rezident druhého smluvnõho státu, mohou\nbýt zdaneny v tomto druhém státe.\n2. Avsak takové úroky mohou být zdaneny rov-\nnez ve smluvnõm státe, v nemz majõ zdroj, a podle\nprávnõch predpisu tohoto státu, ale pokud prõjemce je\nskutecným vlastnõkem úroku , dan takto ulozená nepre-\nsáhne 10 % hrubé cástky úroku .\n3. Bez ohledu na ustanovenõ odstavce 2, úroky\nmajõcõ zdroj v jednom smluvnõm státe a placené rezi-\ndentu druhého smluvnõho státu, podléhajõ zdanenõ\npouze v tomto druhém státe, jestlize jsou tyto úroky\nplaceny z:\na) obligacõ, dluhopisu nebo obdobných závazku vlády\nprvne zmõneného smluvnõho státu; nebo\nb) pu jcek poskytnutých, refinancovaných, zarucených\nnebo zajistených nebo úveru poskytnutých, refi-\nnancovaných, zarucených nebo zajistených\n(i) v prõpade České republiky, Č eskou národnõ\nbankou;\n(ii) v prõpade Izraele, Bank of Israel.\n4. Výraz 1úrokya, pouzitý v tomto clánku, ozna-\ncuje prõjmy z pohledávek jakéhokoliv druhu zajiste-\nných i nezajistených zástavnõm právem na nemovi-\ntosti nebo majõcõch nebo ne právo úcasti na zisku dluz-\nnõka, a zvláste, prõjmy z vládnõch cenných papõru\na prõjmy z obligacõ nebo dluhopisu vcetne prémiõ\na odmen spojených s temito cennými papõry, obliga-\ncemi nebo dluhopisy. Penále za pozdnõ platbu se ne-\npovazujõ za úroky pro úcely tohoto clánku.\n5. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk úroku , který je rezidentem v jednom\nsmluvnõm státe, vykonává v druhém smluvnõm státe, ve\nkterém majõ úroky zdroj, pru myslovou nebo obchodnõ\ncinnost prostrednictvõm stálé provozovny, která je tam\numõstena, nebo nezávislé povolánõ prostrednictvõm\nstálé základny tam umõstené, a jestlize pohledávka, ze\nkteré jsou úroky placeny, se skutecne váze k této stálé\nprovozovne nebo k této stálé základne. V takovém\nprõpade se pouzijõ ustanovenõ clánku 7 nebo clánku\n14, podle toho, o jaký prõpad jde.\n6. Předpokládá se, ze úroky majõ zdroj v jednom\nsmluvnõm státe, jestlize plátcem je tento stát sám, jeho\nnizsõ správnõ útvar, mõstnõ úrad nebo rezident tohoto\nstátu. Pokud vsak osoba platõcõ úroky, at' je rezidentem\nsmluvnõho státu nebo ne, má ve smluvnõm státe stálou\nprovozovnu nebo stálou základnu, v jejõz souvislosti\ndoslo k zadluzenõ, z nehoz je placen úrok, a tyto\núroky jdou k tõzi takové stálé provozovny nebo stálé\nzákladny, pak za zdroj takových úroku bude povazo-\nván stát, v nemz je stálá provozovna nebo stálá zá-\nkladna umõstena.\n7. Jestlize cástka úroku , které se vztahujõ k pohle-\ndávce, z nõz jsou placeny, presahuje v du sledku zvlást-\nnõch vztahu existujõcõch mezi plátcem a skutecným\nvlastnõkem úroku , nebo které jeden i druhý udrzuje\ns tretõ osobou, cástku, kterou by byl smluvil plátce se\nskutecným vlastnõkem, kdyby nebylo takových\nvztahu , pouzijõ se ustanovenõ tohoto clánku jen na\ntuto posledne zmõnenou cástku. Č ástka platu , která ji\npresahuje, bude v tomto prõpade zdanena podle práv-\nnõch predpisu kazdého smluvnõho státu s prihlédnutõm\nk ostatnõm ustanovenõm této smlouvy.",
-      "paragraphs": [
-        "1. U roky majõcõ zdroj v jednom smluvnõm státe,\nkteré pobõrá rezident druhého smluvnõho státu, mohou\nbýt zdaneny v tomto druhém státe.",
-        "2. Avsak takové úroky mohou být zdaneny rov-\nnez ve smluvnõm státe, v nemz majõ zdroj, a podle\nprávnõch predpisu tohoto státu, ale pokud prõjemce je\nskutecným vlastnõkem úroku , dan takto ulozená nepre-\nsáhne 10 % hrubé cástky úroku .",
-        "3. Bez ohledu na ustanovenõ odstavce 2, úroky\nmajõcõ zdroj v jednom smluvnõm státe a placené rezi-\ndentu druhého smluvnõho státu, podléhajõ zdanenõ\npouze v tomto druhém státe, jestlize jsou tyto úroky\nplaceny z:\na) obligacõ, dluhopisu nebo obdobných závazku vlády\nprvne zmõneného smluvnõho státu; nebo\nb) pu jcek poskytnutých, refinancovaných, zarucených\nnebo zajistených nebo úveru poskytnutých, refi-\nnancovaných, zarucených nebo zajistených\n(i) v prõpade České republiky, Č eskou národnõ\nbankou;\n(ii) v prõpade Izraele, Bank of Israel.",
-        "4. Výraz 1úrokya, pouzitý v tomto clánku, ozna-\ncuje prõjmy z pohledávek jakéhokoliv druhu zajiste-\nných i nezajistených zástavnõm právem na nemovi-\ntosti nebo majõcõch nebo ne právo úcasti na zisku dluz-\nnõka, a zvláste, prõjmy z vládnõch cenných papõru\na prõjmy z obligacõ nebo dluhopisu vcetne prémiõ\na odmen spojených s temito cennými papõry, obliga-\ncemi nebo dluhopisy. Penále za pozdnõ platbu se ne-\npovazujõ za úroky pro úcely tohoto clánku.",
-        "5. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk úroku , který je rezidentem v jednom\nsmluvnõm státe, vykonává v druhém smluvnõm státe, ve\nkterém majõ úroky zdroj, pru myslovou nebo obchodnõ\ncinnost prostrednictvõm stálé provozovny, která je tam\numõstena, nebo nezávislé povolánõ prostrednictvõm\nstálé základny tam umõstené, a jestlize pohledávka, ze\nkteré jsou úroky placeny, se skutecne váze k této stálé\nprovozovne nebo k této stálé základne. V takovém\nprõpade se pouzijõ ustanovenõ clánku 7 nebo clánku\n14, podle toho, o jaký prõpad jde.",
-        "6. Předpokládá se, ze úroky majõ zdroj v jednom\nsmluvnõm státe, jestlize plátcem je tento stát sám, jeho\nnizsõ správnõ útvar, mõstnõ úrad nebo rezident tohoto\nstátu. Pokud vsak osoba platõcõ úroky, at' je rezidentem\nsmluvnõho státu nebo ne, má ve smluvnõm státe stálou\nprovozovnu nebo stálou základnu, v jejõz souvislosti\ndoslo k zadluzenõ, z nehoz je placen úrok, a tyto\núroky jdou k tõzi takové stálé provozovny nebo stálé\nzákladny, pak za zdroj takových úroku bude povazo-\nván stát, v nemz je stálá provozovna nebo stálá zá-\nkladna umõstena.",
-        "7. Jestlize cástka úroku , které se vztahujõ k pohle-\ndávce, z nõz jsou placeny, presahuje v du sledku zvlást-\nnõch vztahu existujõcõch mezi plátcem a skutecným\nvlastnõkem úroku , nebo které jeden i druhý udrzuje\ns tretõ osobou, cástku, kterou by byl smluvil plátce se\nskutecným vlastnõkem, kdyby nebylo takových\nvztahu , pouzijõ se ustanovenõ tohoto clánku jen na\ntuto posledne zmõnenou cástku. Č ástka platu , která ji\npresahuje, bude v tomto prõpade zdanena podle práv-\nnõch predpisu kazdého smluvnõho státu s prihlédnutõm\nk ostatnõm ustanovenõm této smlouvy."
-      ]
-    },
-    {
-      "number": 12,
-      "title": "Licencnõ poplatky",
-      "text": "1. Licencnõ poplatky, majõcõ zdroj v jednom\nsmluvnõm státe, vyplácené rezidentu druhého smluv-\nnõho státu, mohou být zdaneny v tomto druhém státe.\n2. Avsak takové licencnõ poplatky mohou být\ntaké zdaneny ve smluvnõm státe, ve kterém je jejich\nzdroj, a v souladu s právnõmi predpisy tohoto státu,\navsak je-li prõjemce skutecným vlastnõkem licencnõch\npoplatku , cástka dane takto stanovená nepresáhne\n5 % hrubé cástky licencnõch poplatku .\n3. Výraz 1licencnõ poplatkya pouzitý v tomto\nclánku oznacuje platby jakéhokoliv druhu obdrzené\njako náhrada za uzitõ nebo za právo na uzitõ autor-\nského práva k dõlu literárnõmu, umeleckému nebo ve-\ndeckému (vcetne kinematografických filmu , videona-\nhrávek a filmu nebo nahrávek pro televiznõ nebo roz-\nhlasové vysõlánõ), patentu, ochranné známky, návrhu\nnebo modelu, plánu, softwaru, tajného vzorce nebo\nvýrobnõho postupu nebo za uzitõ nebo za právo na\nuzitõ pru myslového, obchodnõho nebo vedeckého za-\nrõzenõ, nebo za informace, které se vztahujõ na zkuse-\nnosti nabyté v oblasti pru myslové, obchodnõ nebo ve-\ndecké.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk licencnõch poplatku , který je rezi-\ndentem v jednom smluvnõm státe, vykonává v druhém\nsmluvnõm státe, ve kterém majõ licencnõ poplatky\nzdroj, pru myslovou nebo obchodnõ cinnost prostred-\nnictvõm stálé provozovny, která je tam umõstena, nebo\nvykonává nezávislé povolánõ prostrednictvõm stálé zá-\nkladny tam umõstené, a jestlize právo nebo majetek,\nkteré dávajõ vznik licencnõm poplatku m, se skutecne\nvázou k této stálé provozovne nebo stálé základne.\nV tomto prõpade se pouzijõ ustanovenõ clánku 7 nebo\nclánku 14, podle toho, o jaký prõpad jde.\n5. Předpokládá se, ze licencnõ poplatky majõ zdroj\nve smluvnõm státe, jestlize plátcem je tento stát sám,\njeho nizsõ správnõ útvar, mõstnõ úrad nebo rezident\ntohoto státu. Jestlize vsak plátce licencnõch poplatku ,\nat' je nebo nenõ rezidentem ve smluvnõm státe, má ve\nsmluvnõm státe stálou provozovnu nebo stálou zá-\nkladnu, ve spojenõ s nõz vznikla povinnost platit li-\ncencnõ poplatky, které jdou k tõzi stálé provozovne\nnebo stálé základne, predpokládá se, ze tyto licencnõ\npoplatky majõ zdroj v tom smluvnõm státe, ve kterém je\nstálá provozovna nebo stálá základna umõstena.\n6. Jestlize cástka licencnõch poplatku , které se\nvztahujõ na uzitõ, právo nebo informaci, za které jsou\nplaceny, presahuje v du sledku zvlástnõch vztahu existu-\njõcõch mezi plátcem a skutecným vlastnõkem nebo které\njeden i druhý udrzuje s tretõ osobou, cástku, kterou by\nbyl smluvil plátce se skutecným vlastnõkem, kdyby\nnebylo takových vztahu , pouzijõ se ustanovenõ tohoto\nclánku jen na tuto posledne zmõnenou cástku. Č ástka\nplatu , která ji presahuje, bude v tomto prõpade zdanena\npodle právnõch predpisu kazdého smluvnõho státu\ns prihlédnutõm k ostatnõm ustanovenõm této smlouvy.",
-      "paragraphs": [
-        "1. Licencnõ poplatky, majõcõ zdroj v jednom\nsmluvnõm státe, vyplácené rezidentu druhého smluv-\nnõho státu, mohou být zdaneny v tomto druhém státe.",
-        "2. Avsak takové licencnõ poplatky mohou být\ntaké zdaneny ve smluvnõm státe, ve kterém je jejich\nzdroj, a v souladu s právnõmi predpisy tohoto státu,\navsak je-li prõjemce skutecným vlastnõkem licencnõch\npoplatku , cástka dane takto stanovená nepresáhne\n5 % hrubé cástky licencnõch poplatku .",
-        "3. Výraz 1licencnõ poplatkya pouzitý v tomto\nclánku oznacuje platby jakéhokoliv druhu obdrzené\njako náhrada za uzitõ nebo za právo na uzitõ autor-\nského práva k dõlu literárnõmu, umeleckému nebo ve-\ndeckému (vcetne kinematografických filmu , videona-\nhrávek a filmu nebo nahrávek pro televiznõ nebo roz-\nhlasové vysõlánõ), patentu, ochranné známky, návrhu\nnebo modelu, plánu, softwaru, tajného vzorce nebo\nvýrobnõho postupu nebo za uzitõ nebo za právo na\nuzitõ pru myslového, obchodnõho nebo vedeckého za-\nrõzenõ, nebo za informace, které se vztahujõ na zkuse-\nnosti nabyté v oblasti pru myslové, obchodnõ nebo ve-\ndecké.",
-        "4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk licencnõch poplatku , který je rezi-\ndentem v jednom smluvnõm státe, vykonává v druhém\nsmluvnõm státe, ve kterém majõ licencnõ poplatky\nzdroj, pru myslovou nebo obchodnõ cinnost prostred-\nnictvõm stálé provozovny, která je tam umõstena, nebo\nvykonává nezávislé povolánõ prostrednictvõm stálé zá-\nkladny tam umõstené, a jestlize právo nebo majetek,\nkteré dávajõ vznik licencnõm poplatku m, se skutecne\nvázou k této stálé provozovne nebo stálé základne.\nV tomto prõpade se pouzijõ ustanovenõ clánku 7 nebo\nclánku 14, podle toho, o jaký prõpad jde.",
-        "5. Předpokládá se, ze licencnõ poplatky majõ zdroj\nve smluvnõm státe, jestlize plátcem je tento stát sám,\njeho nizsõ správnõ útvar, mõstnõ úrad nebo rezident\ntohoto státu. Jestlize vsak plátce licencnõch poplatku ,\nat' je nebo nenõ rezidentem ve smluvnõm státe, má ve\nsmluvnõm státe stálou provozovnu nebo stálou zá-\nkladnu, ve spojenõ s nõz vznikla povinnost platit li-\ncencnõ poplatky, které jdou k tõzi stálé provozovne\nnebo stálé základne, predpokládá se, ze tyto licencnõ\npoplatky majõ zdroj v tom smluvnõm státe, ve kterém je\nstálá provozovna nebo stálá základna umõstena.",
-        "6. Jestlize cástka licencnõch poplatku , které se\nvztahujõ na uzitõ, právo nebo informaci, za které jsou\nplaceny, presahuje v du sledku zvlástnõch vztahu existu-\njõcõch mezi plátcem a skutecným vlastnõkem nebo které\njeden i druhý udrzuje s tretõ osobou, cástku, kterou by\nbyl smluvil plátce se skutecným vlastnõkem, kdyby\nnebylo takových vztahu , pouzijõ se ustanovenõ tohoto\nclánku jen na tuto posledne zmõnenou cástku. Č ástka\nplatu , která ji presahuje, bude v tomto prõpade zdanena\npodle právnõch predpisu kazdého smluvnõho státu\ns prihlédnutõm k ostatnõm ustanovenõm této smlouvy."
-      ]
-    },
-    {
-      "number": 13,
-      "title": "Zisky ze zcizenõ majetku",
-      "text": "1. Zisky, které plynou rezidentu jednoho smluv-\nnõho státu ze zcizenõ nemovitého majetku uvedeného\nv odstavci 2 clánku 6, mohou být zdaneny ve smluv-\nnõm státe, ve kterém je takový majetek umõsten.\n2. Zisky ze zcizenõ movitého majetku, který je\ncástõ provoznõho majetku stálé provozovny, jez má\npodnik jednoho smluvnõho státu v druhém smluvnõm\nstáte, nebo movitého majetku, který patrõ ke stálé zá-\nkladne, kterou rezident jednoho smluvnõho státu má\nv druhém smluvnõm státe k výkonu nezávislého povo-\nlánõ, vcetne takových zisku docõlených ze zcizenõ ta-\nkové stálé provozovny (samotné nebo spolu s celým\npodnikem) nebo takové stálé základny, mohou být\nzdaneny v tomto druhém státe.\n3. Zisky ze zcizenõ lodõ, letadel nebo silnicnõch\nvozidel provozovaných v mezinárodnõ doprave nebo\nmovitého majetku, který slouzõ provozu techto lodõ,\nletadel nebo silnicnõch vozidel, podléhajõ zdanenõ jen\nve smluvnõm státe, v nemz je umõsteno sõdlo skutec-\nného vedenõ podniku.\n4. Zisky ze zcizenõ podõlu na spolecnosti, která je\nrezidentem jednoho smluvnõho státu, mohou být zda-\nneny v tomto státe.\n5. Zisky ze zcizenõ jiného majetku, nez který je\nuveden v odstavcõch 1, 2, 3 a 4, podléhajõ zdanenõ jen ve\nsmluvnõm státe, v nemz je zcizitel rezidentem.",
-      "paragraphs": [
-        "1. Zisky, které plynou rezidentu jednoho smluv-\nnõho státu ze zcizenõ nemovitého majetku uvedeného\nv odstavci 2 clánku 6, mohou být zdaneny ve smluv-\nnõm státe, ve kterém je takový majetek umõsten.",
-        "2. Zisky ze zcizenõ movitého majetku, který je\ncástõ provoznõho majetku stálé provozovny, jez má\npodnik jednoho smluvnõho státu v druhém smluvnõm\nstáte, nebo movitého majetku, který patrõ ke stálé zá-\nkladne, kterou rezident jednoho smluvnõho státu má\nv druhém smluvnõm státe k výkonu nezávislého povo-\nlánõ, vcetne takových zisku docõlených ze zcizenõ ta-\nkové stálé provozovny (samotné nebo spolu s celým\npodnikem) nebo takové stálé základny, mohou být\nzdaneny v tomto druhém státe.",
-        "3. Zisky ze zcizenõ lodõ, letadel nebo silnicnõch\nvozidel provozovaných v mezinárodnõ doprave nebo\nmovitého majetku, který slouzõ provozu techto lodõ,\nletadel nebo silnicnõch vozidel, podléhajõ zdanenõ jen\nve smluvnõm státe, v nemz je umõsteno sõdlo skutec-\nného vedenõ podniku.",
-        "4. Zisky ze zcizenõ podõlu na spolecnosti, která je\nrezidentem jednoho smluvnõho státu, mohou být zda-\nneny v tomto státe.",
-        "5. Zisky ze zcizenõ jiného majetku, nez který je\nuveden v odstavcõch 1, 2, 3 a 4, podléhajõ zdanenõ jen ve\nsmluvnõm státe, v nemz je zcizitel rezidentem."
-      ]
-    },
-    {
-      "number": 14,
-      "title": "Nezávislá povolánõ",
-      "text": "1. Přõjmy, které rezident jednoho smluvnõho státu\npobõrá ze svobodného povolánõ nebo jiných cinnostõ\nnezávislého charakteru, podléhajõ zdanenõ jen v tomto\nstáte s výjimkou prõpadu , kdy za následujõcõch podmõ-\nnek mohou být takové prõjmy zdaneny také ve druhém\nsmluvnõm státe:\na) jestlize má pravidelne k dispozici stálou základnu\nv druhém smluvnõm státe pro úcely provozovánõ\nsvých cinnostõ; v takovém prõpade pouze takové\nprõjmy, které lze pricõst této stálé základne, mohou\nbýt zdaneny v tomto druhém státe; nebo\nb) jestlize se zdrzuje ve druhém státe po jedno nebo\nvõce obdobõ presahujõcõ v úhrnu 183 dnõ v jakémko-\nliv dvanáctimesõcnõm obdobõ; v takovém prõpade\npouze takové prijmy, které plynou z jeho cinnostõ\nvykonávaných v tomto druhém státe, mohou být\nzdaneny v tomto druhém státe.\n2. Výraz 1svobodné povolánõa zahrnuje obzvláste\nnezávislé cinnosti vedecké, literárnõ, umelecké, vycho-\nvatelské nebo ucitelské, jakoz i samostatné cinnosti\nlékaru , dentistu , právnõku , inzenýru , architektu a úcet-\nnõch znalcu .",
-      "paragraphs": [
-        "1. Přõjmy, které rezident jednoho smluvnõho státu\npobõrá ze svobodného povolánõ nebo jiných cinnostõ\nnezávislého charakteru, podléhajõ zdanenõ jen v tomto\nstáte s výjimkou prõpadu , kdy za následujõcõch podmõ-\nnek mohou být takové prõjmy zdaneny také ve druhém\nsmluvnõm státe:\na) jestlize má pravidelne k dispozici stálou základnu\nv druhém smluvnõm státe pro úcely provozovánõ\nsvých cinnostõ; v takovém prõpade pouze takové\nprõjmy, které lze pricõst této stálé základne, mohou\nbýt zdaneny v tomto druhém státe; nebo\nb) jestlize se zdrzuje ve druhém státe po jedno nebo\nvõce obdobõ presahujõcõ v úhrnu 183 dnõ v jakémko-\nliv dvanáctimesõcnõm obdobõ; v takovém prõpade\npouze takové prijmy, které plynou z jeho cinnostõ\nvykonávaných v tomto druhém státe, mohou být\nzdaneny v tomto druhém státe.",
-        "2. Výraz 1svobodné povolánõa zahrnuje obzvláste\nnezávislé cinnosti vedecké, literárnõ, umelecké, vycho-\nvatelské nebo ucitelské, jakoz i samostatné cinnosti\nlékaru , dentistu , právnõku , inzenýru , architektu a úcet-\nnõch znalcu ."
-      ]
-    },
-    {
-      "number": 15,
-      "title": "Zamestnánõ",
-      "text": "1. Platy, mzdy a jiné podobné odmeny, které re-\nzident jednoho smluvnõho státu pobõrá z du vodu za-\nmestnánõ, podléhajõ s výhradou ustanovenõ clánku 16,\n18, 19, 20 a 21 zdanenõ jen v tomto státe, pokud za-\nmestnánõ nenõ vykonáváno v druhém smluvnõm státe.\nJe-li tam zamestnánõ vykonáváno, mohou být odmeny\nprijaté za ne zdaneny v tomto druhém státe.\n2. Odmeny, které rezident jednoho smluvnõho\nstátu pobõrá z du vodu zamestnánõ vykonávaného\nv druhém smluvnõm státe, podléhajõ bez ohledu na\nustanovenõ odstavce 1 zdanenõ jen v prvne zmõneném\nstáte, jestlize:\na) prõjemce se zdrzuje v druhém státe po jedno nebo\nvõce obdobõ, která nepresáhnou v úhrnu 183 dny\nv jakémkoli dvanáctimesõcnõm obdobõ, a\nb) odmeny jsou vypláceny zamestnavatelem nebo za\nzamestnavatele, který nenõ rezidentem v druhém\nstáte, a\nc) odmeny nejdou k tõzi stálé provozovne nebo stálé\nzákladne, které má zamestnavatel v druhém státe.\n3. Nehlede na predchozõ ustanovenõ tohoto\nclánku mohou být odmeny pobõrané z du vodu za-\nmestnánõ vykonávaného na palube lodi, letadla nebo\nv silnicnõm vozidle v mezinárodnõ doprave zdaneny ve\nsmluvnõm státe, v nemz je umõsteno sõdlo skutecného\nvedenõ podniku.",
-      "paragraphs": [
-        "1. Platy, mzdy a jiné podobné odmeny, které re-\nzident jednoho smluvnõho státu pobõrá z du vodu za-\nmestnánõ, podléhajõ s výhradou ustanovenõ clánku 16,\n18, 19, 20 a 21 zdanenõ jen v tomto státe, pokud za-\nmestnánõ nenõ vykonáváno v druhém smluvnõm státe.\nJe-li tam zamestnánõ vykonáváno, mohou být odmeny\nprijaté za ne zdaneny v tomto druhém státe.",
-        "2. Odmeny, které rezident jednoho smluvnõho\nstátu pobõrá z du vodu zamestnánõ vykonávaného\nv druhém smluvnõm státe, podléhajõ bez ohledu na\nustanovenõ odstavce 1 zdanenõ jen v prvne zmõneném\nstáte, jestlize:\na) prõjemce se zdrzuje v druhém státe po jedno nebo\nvõce obdobõ, která nepresáhnou v úhrnu 183 dny\nv jakémkoli dvanáctimesõcnõm obdobõ, a\nb) odmeny jsou vypláceny zamestnavatelem nebo za\nzamestnavatele, který nenõ rezidentem v druhém\nstáte, a\nc) odmeny nejdou k tõzi stálé provozovne nebo stálé\nzákladne, které má zamestnavatel v druhém státe.",
-        "3. Nehlede na predchozõ ustanovenõ tohoto\nclánku mohou být odmeny pobõrané z du vodu za-\nmestnánõ vykonávaného na palube lodi, letadla nebo\nv silnicnõm vozidle v mezinárodnõ doprave zdaneny ve\nsmluvnõm státe, v nemz je umõsteno sõdlo skutecného\nvedenõ podniku."
-      ]
-    },
-    {
-      "number": 16,
-      "title": "Tantiémy",
-      "text": "Tantiémy a jiné podobné odmeny, jez rezident\njednoho smluvnõho státu pobõrá jako clen správnõ\nrady nebo jiného obdobného orgánu spolecnosti,\nkterá je rezidentem v druhém smluvnõm státe, mohou\nbýt zdaneny v tomto druhém státe.",
-      "paragraphs": [
-        "Tantiémy a jiné podobné odmeny, jez rezident\njednoho smluvnõho státu pobõrá jako clen správnõ\nrady nebo jiného obdobného orgánu spolecnosti,\nkterá je rezidentem v druhém smluvnõm státe, mohou\nbýt zdaneny v tomto druhém státe."
-      ]
-    },
-    {
-      "number": 17,
-      "title": "Umelci a sportovci",
-      "text": "1. Přõjmy, které pobõrá rezident smluvnõho státu\njako na verejnosti vystupujõcõ umelec, jako divadelnõ,\nfilmový, rozhlasový nebo televiznõ umelec nebo hu-\ndebnõk, nebo jako sportovec, z takovýchto osobne vy-\nkonávaných cinnostõ ve druhém smluvnõm státe, mo-\nhou být bez ohledu na ustanovenõ clánku 14 a 15 zda-\nneny v tomto druhém státe.\n2. Jestlize prõjmy z cinnostõ osobne vykonávaných\numelcem nebo sportovcem neplynou tomuto umelci\nnebo sportovci samému, nýbrz jiné osobe, mohou\nbýt tyto prõjmy bez ohledu na ustanovenõ clánku 7,\n14 a 15 zdaneny ve smluvnõm státe, ve kterém umelec\nnebo sportovec vykonává svoji cinnost.\n3. Přõjmy plynoucõ umelci nebo sportovci, který je\nrezidentem jednoho smluvnõho státu, z cinnostõ, které\nosobne vykonává ve druhém smluvnõm státe, podléhajõ\nbez ohledu na ustanovenõ odstavcu 1 a 2 zdanenõ pouze\nv prvne zmõneném státe, jestlize cinnosti v druhém\nstáte jsou hrazeny zcela nebo z podstatné cásti z ve-\nrejných fondu prvne zmõneného státu vcetne jeho niz-\nsõch správnõch útvaru nebo mõstnõch úradu , a tyto cin-\nnosti jsou vykonávány na základe dvoustranné kul-\nturnõ dohody mezi temito smluvnõmi státy.",
-      "paragraphs": [
-        "1. Přõjmy, které pobõrá rezident smluvnõho státu\njako na verejnosti vystupujõcõ umelec, jako divadelnõ,\nfilmový, rozhlasový nebo televiznõ umelec nebo hu-\ndebnõk, nebo jako sportovec, z takovýchto osobne vy-\nkonávaných cinnostõ ve druhém smluvnõm státe, mo-\nhou být bez ohledu na ustanovenõ clánku 14 a 15 zda-\nneny v tomto druhém státe.",
-        "2. Jestlize prõjmy z cinnostõ osobne vykonávaných\numelcem nebo sportovcem neplynou tomuto umelci\nnebo sportovci samému, nýbrz jiné osobe, mohou\nbýt tyto prõjmy bez ohledu na ustanovenõ clánku 7,\n14 a 15 zdaneny ve smluvnõm státe, ve kterém umelec\nnebo sportovec vykonává svoji cinnost.",
-        "3. Přõjmy plynoucõ umelci nebo sportovci, který je\nrezidentem jednoho smluvnõho státu, z cinnostõ, které\nosobne vykonává ve druhém smluvnõm státe, podléhajõ\nbez ohledu na ustanovenõ odstavcu 1 a 2 zdanenõ pouze\nv prvne zmõneném státe, jestlize cinnosti v druhém\nstáte jsou hrazeny zcela nebo z podstatné cásti z ve-\nrejných fondu prvne zmõneného státu vcetne jeho niz-\nsõch správnõch útvaru nebo mõstnõch úradu , a tyto cin-\nnosti jsou vykonávány na základe dvoustranné kul-\nturnõ dohody mezi temito smluvnõmi státy."
-      ]
-    },
-    {
-      "number": 18,
-      "title": "Penze",
-      "text": "Penze a jiné podobné platy vyplácené z du vodu\ndrõvejsõho zamestnánõ rezidentu jednoho smluvnõho\nstátu podléhajõ s výhradou ustanovenõ odstavce 2\nclánku 19 zdanenõ pouze v tomto státe.",
-      "paragraphs": [
-        "Penze a jiné podobné platy vyplácené z du vodu\ndrõvejsõho zamestnánõ rezidentu jednoho smluvnõho\nstátu podléhajõ s výhradou ustanovenõ odstavce 2\nclánku 19 zdanenõ pouze v tomto státe."
-      ]
-    },
-    {
-      "number": 19,
-      "title": "Verejné funkce",
-      "text": "1. a) Odmeny, jiné nez penze, vyplácené jednõm\nsmluvnõm státem nebo nizsõm správnõm\nútvarem nebo mõstnõm úradem tohoto státu\nfyzické osobe za sluzby prokazované to-\nmuto státu nebo správnõmu útvaru nebo\nmõstnõmu úradu, podléhajõ zdanenõ pouze\nv tomto státe.\nb) Takové odmeny vsak podléhajõ zdanenõ\npouze v druhém smluvnõm státe, jestlize\nsluzby jsou prokazovány v tomto státe\na fyzická osoba, která je rezidentem tohoto\nstátu:\n(i) je státnõm prõslusnõkem tohoto státu;\nnebo\n(ii) se nestala rezidentem v tomto státe jen\nz du vodu poskytovánõ techto sluzeb.\n2. a) Penze vyplácené bud' prõmo, nebo z fondu ,\nkteré zrõdil nekterý smluvnõ stát, nizsõ\nsprávnõ útvar nebo mõstnõ úrad tohoto\nstátu, fyzické osobe za sluzby prokázané\ntomuto státu, správnõmu útvaru nebo mõst-\nnõmu úradu, podléhajõ zdanenõ jen v tomto\nstáte.\nb) Takové penze vsak podléhajõ zdanenõ pouze\nv druhém smluvnõm státe, jestlize fyzická\nosoba je rezidentem a státnõm prõslusnõkem\ntohoto státu.\n3. Ustanovenõ clánku 15, 16 a 18 se pouzijõ na\nodmeny a penze za sluzby prokázané v souvislosti\ns pru myslovou nebo obchodnõ cinnostõ provádenou\nnekterým smluvnõm státem, nizsõm správnõm útvarem\nnebo mõstnõm úradem tohoto státu.",
-      "paragraphs": [
-        "1. a) Odmeny, jiné nez penze, vyplácené jednõm\nsmluvnõm státem nebo nizsõm správnõm\nútvarem nebo mõstnõm úradem tohoto státu\nfyzické osobe za sluzby prokazované to-\nmuto státu nebo správnõmu útvaru nebo\nmõstnõmu úradu, podléhajõ zdanenõ pouze\nv tomto státe.\nb) Takové odmeny vsak podléhajõ zdanenõ\npouze v druhém smluvnõm státe, jestlize\nsluzby jsou prokazovány v tomto státe\na fyzická osoba, která je rezidentem tohoto\nstátu:\n(i) je státnõm prõslusnõkem tohoto státu;\nnebo\n(ii) se nestala rezidentem v tomto státe jen\nz du vodu poskytovánõ techto sluzeb.",
-        "2. a) Penze vyplácené bud' prõmo, nebo z fondu ,\nkteré zrõdil nekterý smluvnõ stát, nizsõ\nsprávnõ útvar nebo mõstnõ úrad tohoto\nstátu, fyzické osobe za sluzby prokázané\ntomuto státu, správnõmu útvaru nebo mõst-\nnõmu úradu, podléhajõ zdanenõ jen v tomto\nstáte.\nb) Takové penze vsak podléhajõ zdanenõ pouze\nv druhém smluvnõm státe, jestlize fyzická\nosoba je rezidentem a státnõm prõslusnõkem\ntohoto státu.",
-        "3. Ustanovenõ clánku 15, 16 a 18 se pouzijõ na\nodmeny a penze za sluzby prokázané v souvislosti\ns pru myslovou nebo obchodnõ cinnostõ provádenou\nnekterým smluvnõm státem, nizsõm správnõm útvarem\nnebo mõstnõm úradem tohoto státu."
-      ]
-    },
-    {
-      "number": 20,
-      "title": "Studenti a ucni",
-      "text": "Platy, které student nebo ucen , který je nebo byl\nbezprostredne pred svým prõjezdem do jednoho\nsmluvnõho státu rezidentem v druhém smluvnõm státe\na který se zdrzuje v prvne zmõneném státe pouze za\núcelem studia nebo výcviku, dostává na úhradu ná-\nkladu výzivy, studia nebo výcviku, nebudou zdaneny\nv tomto státe za predpokladu, ze takovéto platy jsou\nmu vypláceny ze zdroju mimo tento stát.",
-      "paragraphs": [
-        "Platy, které student nebo ucen , který je nebo byl\nbezprostredne pred svým prõjezdem do jednoho\nsmluvnõho státu rezidentem v druhém smluvnõm státe\na který se zdrzuje v prvne zmõneném státe pouze za\núcelem studia nebo výcviku, dostává na úhradu ná-\nkladu výzivy, studia nebo výcviku, nebudou zdaneny\nv tomto státe za predpokladu, ze takovéto platy jsou\nmu vypláceny ze zdroju mimo tento stát."
-      ]
-    },
-    {
-      "number": 21,
-      "title": "Ucitelé a výzkumnõ pracovnõci",
-      "text": "Odmena, kterou pobõrá za výuku nebo výzkum\nfyzická osoba, která je nebo bezprostredne pred\nnávstevou jednoho smluvnõho státu byla rezidentem\ndruhého smluvnõho státu a která se zdrzuje v prvne\nzmõneném státe za úcelem provádenõ výzkumu nebo\nvýuky ve vzdelávacõm ústavu, bude vyjmuta ze zda-\nnenõ v prvne zmõneném státe. Toto vynetõ bude posky-\ntováno po obdobõ nepresahujõcõ dva roky od data\nprvnõho prõjezdu tohoto ucitele nebo výzkumného\npracovnõka do zeme. Tento clánek se neuplatnõ na prõ-\njmy z výzkumu, pokud je takový výzkum prováden\nnikoliv pro verejný zájem, nýbrz v prvé rade pro sou-\nkromý prospech urcité osoby nebo osob.",
-      "paragraphs": [
-        "Odmena, kterou pobõrá za výuku nebo výzkum\nfyzická osoba, která je nebo bezprostredne pred\nnávstevou jednoho smluvnõho státu byla rezidentem\ndruhého smluvnõho státu a která se zdrzuje v prvne\nzmõneném státe za úcelem provádenõ výzkumu nebo\nvýuky ve vzdelávacõm ústavu, bude vyjmuta ze zda-\nnenõ v prvne zmõneném státe. Toto vynetõ bude posky-\ntováno po obdobõ nepresahujõcõ dva roky od data\nprvnõho prõjezdu tohoto ucitele nebo výzkumného\npracovnõka do zeme. Tento clánek se neuplatnõ na prõ-\njmy z výzkumu, pokud je takový výzkum prováden\nnikoliv pro verejný zájem, nýbrz v prvé rade pro sou-\nkromý prospech urcité osoby nebo osob."
-      ]
-    },
-    {
-      "number": 22,
-      "title": "Jiné prõjmy",
-      "text": "1. Přõjmy osoby, která je rezidentem v jednom\nsmluvnõm státe, at' majõ zdroj kdekoliv, o nichz se ne-\npojednává v predcházejõcõch cláncõch této smlouvy,\npodléhajõ zdanenõ pouze v tomto státe.\n2. Ustanovenõ odstavce 1 se nepouzije na prõjmy\njiné nez prõjmy z nemovitého majetku, který je defi-\nnován v odstavci 2 clánku 6, jestlize prõjemce takových\nprõjmu , který je rezidentem v jednom smluvnõm státe,\nvykonává pru myslovou nebo obchodnõ cinnost v dru-\nhém smluvnõm státe prostrednictvõm stálé provozovny\ntam umõstené nebo vykonává v tomto druhém státe\nnezávislé povolánõ ze stálé základny tam umõstené,\na jestlize právo nebo majetek, pro které se prõjmy\nplatõ, jsou skutecne spojeny s takovou stálou provo-\nzovnou nebo stálou základnou. V takovém prõpade se\npouzijõ ustanovenõ clánku 7 nebo clánku 14, podle\ntoho, o jaký prõpad jde.",
-      "paragraphs": [
-        "1. Přõjmy osoby, která je rezidentem v jednom\nsmluvnõm státe, at' majõ zdroj kdekoliv, o nichz se ne-\npojednává v predcházejõcõch cláncõch této smlouvy,\npodléhajõ zdanenõ pouze v tomto státe.",
-        "2. Ustanovenõ odstavce 1 se nepouzije na prõjmy\njiné nez prõjmy z nemovitého majetku, který je defi-\nnován v odstavci 2 clánku 6, jestlize prõjemce takových\nprõjmu , který je rezidentem v jednom smluvnõm státe,\nvykonává pru myslovou nebo obchodnõ cinnost v dru-\nhém smluvnõm státe prostrednictvõm stálé provozovny\ntam umõstené nebo vykonává v tomto druhém státe\nnezávislé povolánõ ze stálé základny tam umõstené,\na jestlize právo nebo majetek, pro které se prõjmy\nplatõ, jsou skutecne spojeny s takovou stálou provo-\nzovnou nebo stálou základnou. V takovém prõpade se\npouzijõ ustanovenõ clánku 7 nebo clánku 14, podle\ntoho, o jaký prõpad jde."
-      ]
-    },
-    {
-      "number": 23,
-      "title": "Vyloucenõ dvojõho zdanenõ",
-      "text": "Dvojõ zdanenõ bude vylouceno následovne:\na) v České republice:\nČeská republika mu ze pri ukládánõ danõ svým\nrezidentu m zahrnout do základu, ze kterého se\ntakové dane ukládajõ, prõjmy, které mohou být\npodle ustanovenõ clánku této smlouvy rovnez\nzdaneny v Izraeli, avsak povolõ snõzit cástku dane\nvypoctenou z takového základu o cástku rovnajõcõ\nse dani zaplacené v Izraeli. Č ástka, o kterou se dan\nsnõzõ, vsak nepresáhne takovou cást ceské dane\nvypoctené pred jejõm snõzenõm, která pomerne\npripadá na prõjmy, které mohou být podle ustano-\nvenõ této smlouvy zdaneny v Izraeli,\nb) v Izraeli:\nV souladu s právnõmi predpisy Izraele, které upra-\nvujõ zápocet dane zaplacené v kterékoliv zemi\nkrome Izraele na dan splatnou v Izraeli, bude\nceská dan placená z prõjmu ze zdroju v České\nrepublice zapoctena na dan splatnou v Izraeli pri-\npadajõcõ na tyto prõjmy. Zapoctená cástka vsak\nnepresáhne takovou cást izraelské dane, která po-\nmerne pripadá na prõjmy ze zdroju na územõ Č es-\nké republiky ve vztahu k celkovým prõjmu m pod-\nléhajõcõm izraelské dani.",
-      "paragraphs": [
-        "Dvojõ zdanenõ bude vylouceno následovne:\na) v České republice:\nČeská republika mu ze pri ukládánõ danõ svým\nrezidentu m zahrnout do základu, ze kterého se\ntakové dane ukládajõ, prõjmy, které mohou být\npodle ustanovenõ clánku této smlouvy rovnez\nzdaneny v Izraeli, avsak povolõ snõzit cástku dane\nvypoctenou z takového základu o cástku rovnajõcõ\nse dani zaplacené v Izraeli. Č ástka, o kterou se dan\nsnõzõ, vsak nepresáhne takovou cást ceské dane\nvypoctené pred jejõm snõzenõm, která pomerne\npripadá na prõjmy, které mohou být podle ustano-\nvenõ této smlouvy zdaneny v Izraeli,\nb) v Izraeli:\nV souladu s právnõmi predpisy Izraele, které upra-\nvujõ zápocet dane zaplacené v kterékoliv zemi\nkrome Izraele na dan splatnou v Izraeli, bude\nceská dan placená z prõjmu ze zdroju v České\nrepublice zapoctena na dan splatnou v Izraeli pri-\npadajõcõ na tyto prõjmy. Zapoctená cástka vsak\nnepresáhne takovou cást izraelské dane, která po-\nmerne pripadá na prõjmy ze zdroju na územõ Č es-\nké republiky ve vztahu k celkovým prõjmu m pod-\nléhajõcõm izraelské dani."
-      ]
-    },
-    {
-      "number": 24,
-      "title": "Zákaz diskriminace",
-      "text": "1. Státnõ prõslusnõci jednoho smluvnõho státu ne-\nbudou podrobeni v druhém smluvnõm státe zádnému\nzdanenõ nebo povinnostem s nõm spojeným, které jsou\njiné nebo tõzivejsõ nez zdanenõ a s nõm spojené povin-\nnosti, kterým jsou nebo mohou být podrobeni státnõ\nprõslusnõci tohoto druhého státu, kterõ jsou ve stejné\nsituaci. Toto ustanovenõ se bez ohledu na ustanovenõ\nclánku 1 uplatnõ rovnez na osoby, které nejsou rezi-\ndenty jednoho nebo obou smluvnõch státu .\n2. Zdanenõ stálé provozovny, kterou podnik jed-\nnoho smluvnõho státu má v druhém smluvnõm státe,\nnebude v tomto druhém státe neprõznivejsõ nez zda-\nnenõ podniku tohoto druhého státu, které vykonávajõ\ntytéz cinnosti.\n3. Pokud se nebudou aplikovat ustanovenõ od-\nstavce 1 clánku 9, odstavce 7 clánku 11 nebo odstavce\n6 clánku 12, budou úroky, licencnõ poplatky a jiné\nvýlohy placené podnikem jednoho smluvnõho státu\nosobe, která je rezidentem v druhém smluvnõm státe,\nodcitatelné pro úcely stanovenõ zdanitelných zisku to-\nhoto podniku za stejných podmõnek, jako kdyby byly\nplaceny osobe, která je rezidentem v prvne zmõneném\nstáte.\n4. Podnik jednoho smluvnõho státu, jehoz jmenõ je\nzcela nebo zcásti, prõmo nebo neprõmo vlastneno nebo\nkontrolováno osobou nebo osobami, které jsou rezi-\ndenty v druhém smluvnõm státe, nebudou podrobeny\nv prvne zmõneném smluvnõm státe zádnému zdanenõ\nnebo povinnostem s nõm spojeným, které jsou jiné\nnebo tõzivejsõ nez zdanenõ a s nõm spojené povinnosti,\nkterým jsou nebo mohou být podrobeny jiné podobné\npodniky prvne zmõneného státu.\n5. Ustanovenõ tohoto clánku se bez ohledu na\nustanovenõ clánku 2 vztahujõ na dane jakéhokoliv\ndruhu a pojmenovánõ.\n6. Ustanovenõ tohoto clánku nebudou vykládána\njako zabran ujõcõ smluvnõmu státu ukládat dan z prõjmu\npobocek.\n7. Ustanovenõ tohoto clánku nebudou vykládána\njako závazek jednoho smluvnõho státu poskytnout re-\nzidentu m druhého smluvnõho státu jakékoliv osobnõ\núlevy, slevy a snõzenõ dane z du vodu osobnõho posta-\nvenõ nebo rodinných závazku , které priznává svým\nrezidentu m.",
-      "paragraphs": [
-        "1. Státnõ prõslusnõci jednoho smluvnõho státu ne-\nbudou podrobeni v druhém smluvnõm státe zádnému\nzdanenõ nebo povinnostem s nõm spojeným, které jsou\njiné nebo tõzivejsõ nez zdanenõ a s nõm spojené povin-\nnosti, kterým jsou nebo mohou být podrobeni státnõ\nprõslusnõci tohoto druhého státu, kterõ jsou ve stejné\nsituaci. Toto ustanovenõ se bez ohledu na ustanovenõ\nclánku 1 uplatnõ rovnez na osoby, které nejsou rezi-\ndenty jednoho nebo obou smluvnõch státu .",
-        "2. Zdanenõ stálé provozovny, kterou podnik jed-\nnoho smluvnõho státu má v druhém smluvnõm státe,\nnebude v tomto druhém státe neprõznivejsõ nez zda-\nnenõ podniku tohoto druhého státu, které vykonávajõ\ntytéz cinnosti.",
-        "3. Pokud se nebudou aplikovat ustanovenõ od-\nstavce 1 clánku 9, odstavce 7 clánku 11 nebo odstavce\n6 clánku 12, budou úroky, licencnõ poplatky a jiné\nvýlohy placené podnikem jednoho smluvnõho státu\nosobe, která je rezidentem v druhém smluvnõm státe,\nodcitatelné pro úcely stanovenõ zdanitelných zisku to-\nhoto podniku za stejných podmõnek, jako kdyby byly\nplaceny osobe, která je rezidentem v prvne zmõneném\nstáte.",
-        "4. Podnik jednoho smluvnõho státu, jehoz jmenõ je\nzcela nebo zcásti, prõmo nebo neprõmo vlastneno nebo\nkontrolováno osobou nebo osobami, které jsou rezi-\ndenty v druhém smluvnõm státe, nebudou podrobeny\nv prvne zmõneném smluvnõm státe zádnému zdanenõ\nnebo povinnostem s nõm spojeným, které jsou jiné\nnebo tõzivejsõ nez zdanenõ a s nõm spojené povinnosti,\nkterým jsou nebo mohou být podrobeny jiné podobné\npodniky prvne zmõneného státu.",
-        "5. Ustanovenõ tohoto clánku se bez ohledu na\nustanovenõ clánku 2 vztahujõ na dane jakéhokoliv\ndruhu a pojmenovánõ.",
-        "6. Ustanovenõ tohoto clánku nebudou vykládána\njako zabran ujõcõ smluvnõmu státu ukládat dan z prõjmu\npobocek.",
-        "7. Ustanovenõ tohoto clánku nebudou vykládána\njako závazek jednoho smluvnõho státu poskytnout re-\nzidentu m druhého smluvnõho státu jakékoliv osobnõ\núlevy, slevy a snõzenõ dane z du vodu osobnõho posta-\nvenõ nebo rodinných závazku , které priznává svým\nrezidentu m."
-      ]
-    },
-    {
-      "number": 25,
-      "title": "Omezenõ výhod",
-      "text": "Přõslusný úrad jednoho smluvnõho státu mu ze po\nkonzultaci s prõslusným úradem druhého smluvnõho\nstátu odeprõt výhody této smlouvy jakékoliv osobe\nnebo ve vztahu k jakékoliv transakci, jestlize podle\njeho názoru by poskytnutõ výhod znamenalo uzitõ\nSmlouvy v rozporu s jejõm úcelem.",
-      "paragraphs": [
-        "Přõslusný úrad jednoho smluvnõho státu mu ze po\nkonzultaci s prõslusným úradem druhého smluvnõho\nstátu odeprõt výhody této smlouvy jakékoliv osobe\nnebo ve vztahu k jakékoliv transakci, jestlize podle\njeho názoru by poskytnutõ výhod znamenalo uzitõ\nSmlouvy v rozporu s jejõm úcelem."
-      ]
-    },
-    {
-      "number": 26,
-      "title": "Ř esenõ prõpadu dohodou",
-      "text": "1. Jestlize se osoba domnõvá, ze opatrenõ jednoho\nnebo obou smluvnõch státu vedou nebo povedou u nej\nke zdanenõ, které nenõ v souladu s ustanovenõmi této\nsmlouvy, mu ze nezávisle na opravných prostredcõch,\nkteré poskytujõ vnitrostátnõ právnõ predpisy techto\nstátu , predlozit svu j prõpad prõslusnému úradu smluv-\nnõho státu, jehoz je rezidentem, nebo jestlize prõpad\nspadá pod odstavec 1 clánku 24, úradu smluvnõho\nstátu, jehoz je státnõm prõlusnõkem. Přõpad musõ být\npredlozen do trõ let od prvého oznámenõ opatrenõ,\nkteré vede ke zdanenõ, jez nenõ v souladu s ustanove-\nnõmi této smlouvy.\n2. Jestlize bude prõslusný úrad povazovat námitku\nza oprávnenou a nebude-li sám schopen najõt uspoko-\njivé resenõ, bude se snazit, aby prõpad rozhodl vzájem-\nnou dohodou s prõslusným úradem druhého smluvnõho\nstátu tak, aby se vyloucilo zdanenõ, které nenõ ve shode\ns touto smlouvou. Jakákoliv dosazená dohoda bude\nuskutecnena bez ohledu na casová omezenõ podle vni-\ntrostátnõch predpisu smluvnõch státu .\n3. Přõslusné úrady smluvnõch státu se budou snazit\nvyresit dohodou obtõze nebo pochybnosti, které mo-\nhou vzniknout pri výkladu nebo aplikaci této smlouvy.\nMohou rovnez konzultovat za úcelem zamezenõ dvo-\njõmu zdanenõ v prõpadech neupravených ve Smlouve.\n4. Přõslusné úrady smluvnõch státu mohou vejõt\nv prõmý styk za úcelem dosazenõ dohody ve smyslu\npredchozõch odstavcu . Jestlize se ústnõ výmena názoru\njevõ pro dosazenõ dohody úcelnou, mu ze se taková\nvýmena názoru uskutecnit prostrednictvõm komise slo-\nzené ze zástupcu prõslusných úradu smluvnõch státu .",
-      "paragraphs": [
-        "1. Jestlize se osoba domnõvá, ze opatrenõ jednoho\nnebo obou smluvnõch státu vedou nebo povedou u nej\nke zdanenõ, které nenõ v souladu s ustanovenõmi této\nsmlouvy, mu ze nezávisle na opravných prostredcõch,\nkteré poskytujõ vnitrostátnõ právnõ predpisy techto\nstátu , predlozit svu j prõpad prõslusnému úradu smluv-\nnõho státu, jehoz je rezidentem, nebo jestlize prõpad\nspadá pod odstavec 1 clánku 24, úradu smluvnõho\nstátu, jehoz je státnõm prõlusnõkem. Přõpad musõ být\npredlozen do trõ let od prvého oznámenõ opatrenõ,\nkteré vede ke zdanenõ, jez nenõ v souladu s ustanove-\nnõmi této smlouvy.",
-        "2. Jestlize bude prõslusný úrad povazovat námitku\nza oprávnenou a nebude-li sám schopen najõt uspoko-\njivé resenõ, bude se snazit, aby prõpad rozhodl vzájem-\nnou dohodou s prõslusným úradem druhého smluvnõho\nstátu tak, aby se vyloucilo zdanenõ, které nenõ ve shode\ns touto smlouvou. Jakákoliv dosazená dohoda bude\nuskutecnena bez ohledu na casová omezenõ podle vni-\ntrostátnõch predpisu smluvnõch státu .",
-        "3. Přõslusné úrady smluvnõch státu se budou snazit\nvyresit dohodou obtõze nebo pochybnosti, které mo-\nhou vzniknout pri výkladu nebo aplikaci této smlouvy.\nMohou rovnez konzultovat za úcelem zamezenõ dvo-\njõmu zdanenõ v prõpadech neupravených ve Smlouve.",
-        "4. Přõslusné úrady smluvnõch státu mohou vejõt\nv prõmý styk za úcelem dosazenõ dohody ve smyslu\npredchozõch odstavcu . Jestlize se ústnõ výmena názoru\njevõ pro dosazenõ dohody úcelnou, mu ze se taková\nvýmena názoru uskutecnit prostrednictvõm komise slo-\nzené ze zástupcu prõslusných úradu smluvnõch státu ."
-      ]
-    },
-    {
-      "number": 27,
-      "title": "Výmena informacõ",
-      "text": "1. Přõslusné úrady smluvnõch státu si budou vy-\nmen ovat informace nutné pro aplikaci ustanovenõ této\nsmlouvy nebo vnitrostátnõch právnõch predpisu smluv-\nnõch státu , které se vztahujõ na dane, jez jsou predme-\ntem této smlouvy, pokud zdanenõ, které upravujõ, nenõ\nv rozporu s touto smlouvou. Veskeré informace ob-\ndrzené smluvnõm státem budou udrzovány v tajnosti\nstejným zpu sobem jako informace obdrzené podle\nvnitrostátnõch právnõch predpisu tohoto státu nebo na\npozádánõ druhého smluvnõho státu poskytujõcõho in-\nformaci a budou sdeleny pouze osobám nebo úradu m\n(vcetne soudu a správnõch úradu ), které se zabývajõ\nvymerovánõm nebo vybõránõm danõ, na nez se vzta-\nhuje tato smlouva, trestnõm stõhánõm ve veci techto\ndanõ nebo rozhodovánõm o opravných prostredcõch.\nTyto osoby nebo úrady pouzijõ takovéto informace\njen k temto úcelu m. Mohou uplatnit tyto informace\npri verejných soudnõch rõzenõch nebo v právnõch roz-\nhodnutõch.\n2. Ustanovenõ odstavce 1 nebudou v zádném prõ-\npade vykládána tak, ze ukládajõ nekterému smluvnõmu\nstátu povinnost:\na) provést správnõ opatrenõ, která by byla v rozporu\ns právnõmi predpisy nebo správnõ praxõ tohoto nebo\ndruhého smluvnõho státu;\nb) sdelit informace, které by nemohly být zõskány na\nzáklade právnõch predpisu nebo v normálnõm\nsprávnõm rõzenõ tohoto nebo druhého státu;\nc) sdelit informace, které by odhalily obchodnõ, hos-\npodárské, pru myslové, komercnõ nebo profesnõ ta-\njemstvõ nebo obchodnõ postup, nebo informaci, jejõz\nsdelenõ by bylo v rozporu s verejným porádkem.",
-      "paragraphs": [
-        "1. Přõslusné úrady smluvnõch státu si budou vy-\nmen ovat informace nutné pro aplikaci ustanovenõ této\nsmlouvy nebo vnitrostátnõch právnõch predpisu smluv-\nnõch státu , které se vztahujõ na dane, jez jsou predme-\ntem této smlouvy, pokud zdanenõ, které upravujõ, nenõ\nv rozporu s touto smlouvou. Veskeré informace ob-\ndrzené smluvnõm státem budou udrzovány v tajnosti\nstejným zpu sobem jako informace obdrzené podle\nvnitrostátnõch právnõch predpisu tohoto státu nebo na\npozádánõ druhého smluvnõho státu poskytujõcõho in-\nformaci a budou sdeleny pouze osobám nebo úradu m\n(vcetne soudu a správnõch úradu ), které se zabývajõ\nvymerovánõm nebo vybõránõm danõ, na nez se vzta-\nhuje tato smlouva, trestnõm stõhánõm ve veci techto\ndanõ nebo rozhodovánõm o opravných prostredcõch.\nTyto osoby nebo úrady pouzijõ takovéto informace\njen k temto úcelu m. Mohou uplatnit tyto informace\npri verejných soudnõch rõzenõch nebo v právnõch roz-\nhodnutõch.",
-        "2. Ustanovenõ odstavce 1 nebudou v zádném prõ-\npade vykládána tak, ze ukládajõ nekterému smluvnõmu\nstátu povinnost:\na) provést správnõ opatrenõ, která by byla v rozporu\ns právnõmi predpisy nebo správnõ praxõ tohoto nebo\ndruhého smluvnõho státu;\nb) sdelit informace, které by nemohly být zõskány na\nzáklade právnõch predpisu nebo v normálnõm\nsprávnõm rõzenõ tohoto nebo druhého státu;\nc) sdelit informace, které by odhalily obchodnõ, hos-\npodárské, pru myslové, komercnõ nebo profesnõ ta-\njemstvõ nebo obchodnõ postup, nebo informaci, jejõz\nsdelenõ by bylo v rozporu s verejným porádkem."
-      ]
-    },
-    {
-      "number": 28,
-      "title": "Diplomaté a konzulárnõ úrednõci",
-      "text": "Ž ádná ustanovenõ této smlouvy se nedotýkajõ da-\nn ových výsad, které prõslusõ diplomatu m nebo konzu-\nlárnõm úrednõku m podle obecných pravidel meziná-\nrodnõho práva nebo na základe ustanovenõ zvlástnõch\ndohod.",
-      "paragraphs": [
-        "Ž ádná ustanovenõ této smlouvy se nedotýkajõ da-\nn ových výsad, které prõslusõ diplomatu m nebo konzu-\nlárnõm úrednõku m podle obecných pravidel meziná-\nrodnõho práva nebo na základe ustanovenõ zvlástnõch\ndohod."
-      ]
-    },
-    {
-      "number": 29,
-      "title": "Vstup v platnost",
-      "text": "1. Tato smlouva podléhá ratifikaci a ratifikacnõ\nlistiny budou vymeneny co nejdrõve.\n2. Smlouva nabude platnosti výmenou ratifikac-\nnõch listin a jejõ ustanovenõ se budou uplatn ovat:\na) pokud jde o dane vybõrané srázkou u zdroje, na\ncástky vyplácené k 1. lednu nebo pozdeji v kalen-\ndárnõm roce následujõcõm po roce, v nemz Smlouva\nvstoupõ v platnost;\nb) pokud jde o ostatnõ dane z prõjmu, na dane uklá-\ndané za kazdý dan ový rok pocõnajõcõ 1. ledna nebo\npozdeji kalendárnõho roku následujõcõho po roce,\nv nemz Smlouva vstoupõ v platnost.",
-      "paragraphs": [
-        "1. Tato smlouva podléhá ratifikaci a ratifikacnõ\nlistiny budou vymeneny co nejdrõve.",
-        "2. Smlouva nabude platnosti výmenou ratifikac-\nnõch listin a jejõ ustanovenõ se budou uplatn ovat:\na) pokud jde o dane vybõrané srázkou u zdroje, na\ncástky vyplácené k 1. lednu nebo pozdeji v kalen-\ndárnõm roce následujõcõm po roce, v nemz Smlouva\nvstoupõ v platnost;\nb) pokud jde o ostatnõ dane z prõjmu, na dane uklá-\ndané za kazdý dan ový rok pocõnajõcõ 1. ledna nebo\npozdeji kalendárnõho roku následujõcõho po roce,\nv nemz Smlouva vstoupõ v platnost."
-      ]
-    },
-    {
-      "number": 30,
-      "title": "Výpoved'",
-      "text": "Tato smlouva zu stane v platnosti, dokud nebude\nvypovezena nekterým smluvnõm státem. Kazdý\nsmluvnõ stát mu ze Smlouvu põsemne vypovedet diplo-\nmatickou cestou nejméne sest mesõcu pred koncem\nkazdého kalendárnõho roku zacõnajõcõho po uplynutõ\npeti let od data vstupu v platnost této smlouvy.\nV tomto prõpade se Smlouva prestane uplatn ovat:\na) pokud jde o dane vybõrané srázkou u zdroje, na\ncástky vyplácené k 1. lednu nebo pozdeji v kalen-\ndárnõm roce následujõcõm po roce, v nemz byla dána\nvýpoved';\nb) pokud jde o ostatnõ dane z prõjmu, na dane uklá-\ndané za kazdý dan ový rok pocõnajõcõ 1. ledna nebo\npozdeji kalendárnõho roku následujõcõho po roce,\nv nemz byla dána výpoved'.\nDáno v Jeruzaléme 12. prosince 1993 v anglickém\njazyce.\nZa vládu České republiky: Za vládu Státu Izrael:\nJ. Zieleniec v. r. S. Perez v. r.\nSDE LENI\nMinisterstva zahranicnõch vecõ\nMinisterstvo zahranicnõch vecõ sdeluje, ze dne 14. ledna 1993 byla v Praze podepsána Smlouva mezi Č eskou\nrepublikou a Mad'arskou republikou o zamezenõ dvojõho zdanenõ a zabránenõ dan ovému úniku v oboru danõ\nz prõjmu a z majetku.\nSe Smlouvou vyslovil souhlas Parlament České republiky a prezident republiky ji ratifikoval.\nSmlouva vstoupila v platnost na základe svého clánku 28 odst. 2 dnem 27. prosince 1994.\nČ eský preklad Smlouvy se vyhlasuje soucasne. Do anglického znenõ, jez je pro jejõ výklad rozhodné, lze\nnahlédnout na Ministerstvu zahranicnõch vecõ a Ministerstvu financõ.\nSMLOUVA\nmezi\nČ eskou republikou\na\nMad'arskou republikou\no zamezenõ dvojõho zdanenõ a zabránenõ dan ovému úniku v oboru danõ z prõjmu a z majetku\nČeská republika a Mad'arská republika\nprejõce si uzavrõt Smlouvu o zamezenõ dvojõho\nzdanenõ a zabránenõ dan ovému úniku v oboru danõ\nz prõjmu a z majetku,\nse dohodly takto:",
-      "paragraphs": [
-        "Tato smlouva zu stane v platnosti, dokud nebude\nvypovezena nekterým smluvnõm státem. Kazdý\nsmluvnõ stát mu ze Smlouvu põsemne vypovedet diplo-\nmatickou cestou nejméne sest mesõcu pred koncem\nkazdého kalendárnõho roku zacõnajõcõho po uplynutõ\npeti let od data vstupu v platnost této smlouvy.\nV tomto prõpade se Smlouva prestane uplatn ovat:\na) pokud jde o dane vybõrané srázkou u zdroje, na\ncástky vyplácené k 1. lednu nebo pozdeji v kalen-\ndárnõm roce následujõcõm po roce, v nemz byla dána\nvýpoved';\nb) pokud jde o ostatnõ dane z prõjmu, na dane uklá-\ndané za kazdý dan ový rok pocõnajõcõ 1. ledna nebo\npozdeji kalendárnõho roku následujõcõho po roce,\nv nemz byla dána výpoved'.\nDáno v Jeruzaléme 12. prosince 1993 v anglickém\njazyce.\nZa vládu České republiky: Za vládu Státu Izrael:\nJ. Zieleniec v. r. S. Perez v. r.\nSDE LENI\nMinisterstva zahranicnõch vecõ\nMinisterstvo zahranicnõch vecõ sdeluje, ze dne 14. ledna 1993 byla v Praze podepsána Smlouva mezi Č eskou\nrepublikou a Mad'arskou republikou o zamezenõ dvojõho zdanenõ a zabránenõ dan ovému úniku v oboru danõ\nz prõjmu a z majetku.\nSe Smlouvou vyslovil souhlas Parlament České republiky a prezident republiky ji ratifikoval.\nSmlouva vstoupila v platnost na základe svého clánku 28 odst. 2 dnem 27. prosince 1994.\nČ eský preklad Smlouvy se vyhlasuje soucasne. Do anglického znenõ, jez je pro jejõ výklad rozhodné, lze\nnahlédnout na Ministerstvu zahranicnõch vecõ a Ministerstvu financõ.\nSMLOUVA\nmezi\nČ eskou republikou\na\nMad'arskou republikou\no zamezenõ dvojõho zdanenõ a zabránenõ dan ovému úniku v oboru danõ z prõjmu a z majetku\nČeská republika a Mad'arská republika\nprejõce si uzavrõt Smlouvu o zamezenõ dvojõho\nzdanenõ a zabránenõ dan ovému úniku v oboru danõ\nz prõjmu a z majetku,\nse dohodly takto:"
-      ]
-    },
     {
       "number": 1,
       "title": "Osoby, na které se Smlouva vztahuje",

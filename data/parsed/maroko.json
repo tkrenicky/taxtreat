@@ -2,8 +2,255 @@
   "country": "Maroko",
   "source_title": "83/2006 Sb.m.s.",
   "source_path": "data/raw/treaty/1421e7ce5d6f36a2.pdf",
-  "start_page": 17,
+  "start_page": 2,
+  "identity_validation": {
+    "expected_country": "Maroko",
+    "status": "validated",
+    "reason": "counterparty_matched",
+    "matched_alias": "maroko",
+    "matched_method": "exact_alias",
+    "publication_reference": "83/2006",
+    "publication_reference_found": false,
+    "warnings": [
+      "publication_reference_not_found"
+    ]
+  },
+  "text_extraction": {
+    "method": "pdftotext",
+    "score": 1955,
+    "page_count": 49,
+    "attempts": [
+      {
+        "method": "pypdf",
+        "score": -550,
+        "total_characters": 306145,
+        "substantive_pages": 48,
+        "article_numbers": [],
+        "error": null
+      },
+      {
+        "method": "pdftotext",
+        "score": 1955,
+        "total_characters": 62535,
+        "substantive_pages": 21,
+        "article_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29
+        ],
+        "error": null
+      },
+      {
+        "method": "hybrid",
+        "score": 1955,
+        "total_characters": 62535,
+        "substantive_pages": 21,
+        "article_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29
+        ],
+        "error": null
+      }
+    ]
+  },
+  "source_resolution": {
+    "status": "fallback",
+    "method": "whole_document",
+    "start_page": 1,
+    "end_page": 49,
+    "effective_title": "83/2006 Sb.m.s.",
+    "metadata_mismatch": false,
+    "candidate_count": 0
+  },
   "articles": [
+    {
+      "number": 1,
+      "title": "1. Smluvnõ strany budou spolupracovat a poskytovat si vzájemne pomoc pri ochrane bezpecnosti a verej-",
+      "text": "ného porádku, pri prevenci a odhalovánõ trestných cinu a zjist'ovánõ jejich pachatelu, zejména v oblasti:\n1.1 boje proti terorizmu,\n1.2 boje proti organizovanému zlocinu,\n1.3 boje proti nezákonnému zõskávánõ a drzenõ zbranõ, streliva, výbusnin, otravných, nervove paralytických\na radioaktivnõch látek a také nedovolenému obchodu s nimi,\n1.4 boje proti nedovolené výrobe, drzenõ, zõskávánõ, vývozu, dovozu a pruvozu omamných a psychotrop-\nnõch látek a prekurzoru a také nedovolenému obchodu s nimi,\n1.5 boje proti padelánõ penez a rozsirovánõ padelaných penez,\n1.6 boje proti padelánõ a nezákonnému pozmenovánõ a rozsirovánõ cenných papõru a úrednõch dokladu,\n1.7 boje proti trestným cinum ve sfére ekonomiky, nezákonným financnõm operacõm a legalizaci výnosu\nz trestné cinnosti,\n1.8 boje proti trestným cinum zamereným proti zivotu, zdravõ, svobode a lidské dustojnosti, jakoz i proti\nmajetkovým trestným cinum,\n1.9 pátránõ po pohresovaných osobách a identifikace neznámých osob a nepoznaných mrtvol,\n1.10 pátránõ po osobách podezrelých ze spáchánõ trestných cinu, jakoz i po osobách, které se vyhýbajõ\ntrestnõ odpovednosti nebo výkonu trestu,\n1.11 pátránõ po odcizených vecech a dalsõch predmetech souvisejõcõch s trestnou cinnostõ,\n1.12 boje s trestnou cinnostõ, jejõmz objektem jsou predmety kulturnõ a historické hodnoty,\n1.13 boje proti krádezõm motorových vozidel, jejich pasovánõ a padelánõ dokladu k nim,\n1.14 boje proti obchodu s lidmi a kuplõrstvõ,\n1.15 boje proti nelegálnõ migraci a nelegálnõmu pobytu osob.\n2. Vzájemná spolupráce smluvnõch stran bude provádena zejména formou:\n2.1 výmeny materiálu, vedeckotechnických a právnõch informacõ a výsledku expertõz,\n2.2 výmeny informacõ o systémech operativnõch a kriminalistických evidencõ a moznostech jejich vyuzõvánõ,\n2.3 dodávek speciálnõ techniky pouzõvané v boji s trestnou cinnostõ,\n2.4 výmeny zkusenostõ a soucinnosti pri odborné prõprave specialistu,\n2.5 výmeny informacõ o vnitrostátnõch právnõch predpisech vztahujõcõch se k predmetu této dohody.\n3. Tato dohoda nebránõ smluvnõm stranám v navázánõ a rozvõjenõ i jiných, vzájemne prijatelných forem\nspolupráce.",
+      "paragraphs": [
+        "ného porádku, pri prevenci a odhalovánõ trestných cinu a zjist'ovánõ jejich pachatelu, zejména v oblasti:\n1.1 boje proti terorizmu,\n1.2 boje proti organizovanému zlocinu,\n1.3 boje proti nezákonnému zõskávánõ a drzenõ zbranõ, streliva, výbusnin, otravných, nervove paralytických\na radioaktivnõch látek a také nedovolenému obchodu s nimi,\n1.4 boje proti nedovolené výrobe, drzenõ, zõskávánõ, vývozu, dovozu a pruvozu omamných a psychotrop-\nnõch látek a prekurzoru a také nedovolenému obchodu s nimi,\n1.5 boje proti padelánõ penez a rozsirovánõ padelaných penez,\n1.6 boje proti padelánõ a nezákonnému pozmenovánõ a rozsirovánõ cenných papõru a úrednõch dokladu,\n1.7 boje proti trestným cinum ve sfére ekonomiky, nezákonným financnõm operacõm a legalizaci výnosu\nz trestné cinnosti,\n1.8 boje proti trestným cinum zamereným proti zivotu, zdravõ, svobode a lidské dustojnosti, jakoz i proti\nmajetkovým trestným cinum,\n1.9 pátránõ po pohresovaných osobách a identifikace neznámých osob a nepoznaných mrtvol,\n1.10 pátránõ po osobách podezrelých ze spáchánõ trestných cinu, jakoz i po osobách, které se vyhýbajõ\ntrestnõ odpovednosti nebo výkonu trestu,\n1.11 pátránõ po odcizených vecech a dalsõch predmetech souvisejõcõch s trestnou cinnostõ,\n1.12 boje s trestnou cinnostõ, jejõmz objektem jsou predmety kulturnõ a historické hodnoty,\n1.13 boje proti krádezõm motorových vozidel, jejich pasovánõ a padelánõ dokladu k nim,\n1.14 boje proti obchodu s lidmi a kuplõrstvõ,\n1.15 boje proti nelegálnõ migraci a nelegálnõmu pobytu osob.",
+        "2. Vzájemná spolupráce smluvnõch stran bude provádena zejména formou:\n2.1 výmeny materiálu, vedeckotechnických a právnõch informacõ a výsledku expertõz,\n2.2 výmeny informacõ o systémech operativnõch a kriminalistických evidencõ a moznostech jejich vyuzõvánõ,\n2.3 dodávek speciálnõ techniky pouzõvané v boji s trestnou cinnostõ,\n2.4 výmeny zkusenostõ a soucinnosti pri odborné prõprave specialistu,\n2.5 výmeny informacõ o vnitrostátnõch právnõch predpisech vztahujõcõch se k predmetu této dohody.",
+        "3. Tato dohoda nebránõ smluvnõm stranám v navázánõ a rozvõjenõ i jiných, vzájemne prijatelných forem\nspolupráce."
+      ]
+    },
+    {
+      "number": 2,
+      "title": "1. Přõslusné orgány smluvnõch stran, t.j. na ceské strane Ministerstvo vnitra a Ministerstvo financõ a na",
+      "text": "ukrajinské strane Ministerstvo vnitra, Generálnõ prokuratura, Bezpecnostnõ sluzba, Státnõ výbor pro zálezitosti\nochrany státnõch hranic, Státnõ celnõ výbor a Státnõ výbor pro zálezitosti národnostõ a migrace, budou organizovat\nsetkánõ za úcelem vyhodnocovánõ spolupráce podle této dohody a jejõho zkvalitnovánõ.\n2. K realizaci spolupráce podle této dohody prõslusné orgány smluvnõch stran mohou uzavõrat protokoly\ns uvedenõm konkrétnõch úseku spolupráce vcetne zpusobu spojenõ.",
+      "paragraphs": [
+        "ukrajinské strane Ministerstvo vnitra, Generálnõ prokuratura, Bezpecnostnõ sluzba, Státnõ výbor pro zálezitosti\nochrany státnõch hranic, Státnõ celnõ výbor a Státnõ výbor pro zálezitosti národnostõ a migrace, budou organizovat\nsetkánõ za úcelem vyhodnocovánõ spolupráce podle této dohody a jejõho zkvalitnovánõ.",
+        "2. K realizaci spolupráce podle této dohody prõslusné orgány smluvnõch stran mohou uzavõrat protokoly\ns uvedenõm konkrétnõch úseku spolupráce vcetne zpusobu spojenõ."
+      ]
+    },
+    {
+      "number": 3,
+      "title": "1. Při realizaci spolupráce podle této dohody se pouzijõ právnõ predpisy státu dozádané smluvnõ strany. Na",
+      "text": "zádost zádajõcõ smluvnõ strany mohou být pouzity procesnõ predpisy jejõho státu, pokud tomu nebránõ právnõ\npredpisy dozádaného státu.\n2. Za úcelem koordinace cinnosti pri odhalovánõ trestných cinu mohou prõslusné orgány smluvnõch stran\nvysõlat své pracovnõky na územõ státu druhé smluvnõ strany.",
+      "paragraphs": [
+        "zádost zádajõcõ smluvnõ strany mohou být pouzity procesnõ predpisy jejõho státu, pokud tomu nebránõ právnõ\npredpisy dozádaného státu.",
+        "2. Za úcelem koordinace cinnosti pri odhalovánõ trestných cinu mohou prõslusné orgány smluvnõch stran\nvysõlat své pracovnõky na územõ státu druhé smluvnõ strany."
+      ]
+    },
+    {
+      "number": 4,
+      "title": "Za úcelem ochrany vzájemne predávaných osobnõch údaju (dále jen 1údajea) v rámci spolupráce smluvnõch",
+      "text": "stran, v souladu s vnitrostátnõmi právnõmi predpisy, je treba dodrzet tyto podmõnky:\n1) Smluvnõ strana, která údaje obdrzela, je muze pouzõt pouze pro úcely a za podmõnek stanovených do-\nzádanou smluvnõ stranou.\n2) Smluvnõ strana, která prijala údaje, na zádost smluvnõ strany, která je poskytla, podá informace o pouzitõ\npredaných údaju a o výsledcõch dosazených jejich pomocõ.\n3) Udaje se mohou predávat výlucne prõslusným orgánum. Poskytovánõ údaju jiným orgánum je mozné pouze\nna základe põsemného souhlasu smluvnõ strany, která údaje poskytla.\n4) Dozádaná smluvnõ strana je povinna dbát na správnost poskytnutých údaju, jakoz i na to, zda je poskytnutõ\nnutné a úcelné. Přitom je treba respektovat právnõ predpisy státu druhé smluvnõ strany, jimiz muze být\nomezeno poskytovánõ údaju. Bude-li dodatecne zjisteno, ze byly poskytnuty nesprávné údaje nebo údaje,\nkteré nemely být poskytnuty, je nutno o tom neprodlene uvedomit smluvnõ stranu, která údaje prijala. Ta\npak musõ nesprávné údaje opravit, nebo slo-li o údaje, které nemely být poskytnuty, znicit.\n5) Osobe, o nõz byly údaje predány, budou na jejõ zádost poskytnuty informace o predaných údajõch a o jejich\nzamýsleném pouzitõ za predpokladu, ze to umoznujõ právnõ predpisy státu smluvnõ strany, která byla\no poskytnutõ údaju dotcenou osobou pozádána.\n6) Smluvnõ strana, která údaje poskytuje, oznámõ pri jejich predánõ druhé smluvnõ strane lhuty pro výmaz\ntechto údaju stanovené právnõmi predpisy svého státu. Nezávisle na techto lhutách je treba údaje vztahujõcõ\nse k dotcené osobe vymazat, nebude-li jich jiz zapotrebõ. Smluvnõ strana, která je poskytla, musõ být\ninformována o výmazu predaných údaju a o duvodech tohoto výmazu. V prõpade skoncenõ platnosti této\ndohody je nutno vsechny údaje, jez byly prijaty, znicit.\n7) Smluvnõ strany jsou povinny vést evidenci o predávánõ, prebõránõ a výmazu údaju.\n8) Smluvnõ strany jsou povinny údaje úcinne chránit proti neoprávnenému prõstupu k nim a proti jejich\nneoprávneným zmenám nebo zverejnenõ.",
+      "paragraphs": [
+        "stran, v souladu s vnitrostátnõmi právnõmi predpisy, je treba dodrzet tyto podmõnky:\n1) Smluvnõ strana, která údaje obdrzela, je muze pouzõt pouze pro úcely a za podmõnek stanovených do-\nzádanou smluvnõ stranou.\n2) Smluvnõ strana, která prijala údaje, na zádost smluvnõ strany, která je poskytla, podá informace o pouzitõ\npredaných údaju a o výsledcõch dosazených jejich pomocõ.\n3) Udaje se mohou predávat výlucne prõslusným orgánum. Poskytovánõ údaju jiným orgánum je mozné pouze\nna základe põsemného souhlasu smluvnõ strany, která údaje poskytla.\n4) Dozádaná smluvnõ strana je povinna dbát na správnost poskytnutých údaju, jakoz i na to, zda je poskytnutõ\nnutné a úcelné. Přitom je treba respektovat právnõ predpisy státu druhé smluvnõ strany, jimiz muze být\nomezeno poskytovánõ údaju. Bude-li dodatecne zjisteno, ze byly poskytnuty nesprávné údaje nebo údaje,\nkteré nemely být poskytnuty, je nutno o tom neprodlene uvedomit smluvnõ stranu, která údaje prijala. Ta\npak musõ nesprávné údaje opravit, nebo slo-li o údaje, které nemely být poskytnuty, znicit.\n5) Osobe, o nõz byly údaje predány, budou na jejõ zádost poskytnuty informace o predaných údajõch a o jejich\nzamýsleném pouzitõ za predpokladu, ze to umoznujõ právnõ predpisy státu smluvnõ strany, která byla\no poskytnutõ údaju dotcenou osobou pozádána.\n6) Smluvnõ strana, která údaje poskytuje, oznámõ pri jejich predánõ druhé smluvnõ strane lhuty pro výmaz\ntechto údaju stanovené právnõmi predpisy svého státu. Nezávisle na techto lhutách je treba údaje vztahujõcõ\nse k dotcené osobe vymazat, nebude-li jich jiz zapotrebõ. Smluvnõ strana, která je poskytla, musõ být\ninformována o výmazu predaných údaju a o duvodech tohoto výmazu. V prõpade skoncenõ platnosti této\ndohody je nutno vsechny údaje, jez byly prijaty, znicit.\n7) Smluvnõ strany jsou povinny vést evidenci o predávánõ, prebõránõ a výmazu údaju.\n8) Smluvnõ strany jsou povinny údaje úcinne chránit proti neoprávnenému prõstupu k nim a proti jejich\nneoprávneným zmenám nebo zverejnenõ."
+      ]
+    },
+    {
+      "number": 5,
+      "title": "1. Kazdá smluvnõ strana muze poskytnutõ pomoci nebo spolupráci zcela nebo zcásti odmõtnout, má-li za to,",
+      "text": "ze by to mohlo ohrozit svrchovanost, bezpecnost nebo jiný podstatný zájem jejõho státu nebo pokud by to bylo\nv rozporu s jeho právnõmi predpisy nebo se závazky vyplývajõcõmi z mezinárodnõch smluv.\n2. V prõpadech uvedených v odstavci 1 tohoto clánku se smluvnõ strany neprodlene vzájemne põsemne\ninformujõ s uvedenõm duvodu.",
+      "paragraphs": [
+        "ze by to mohlo ohrozit svrchovanost, bezpecnost nebo jiný podstatný zájem jejõho státu nebo pokud by to bylo\nv rozporu s jeho právnõmi predpisy nebo se závazky vyplývajõcõmi z mezinárodnõch smluv.",
+        "2. V prõpadech uvedených v odstavci 1 tohoto clánku se smluvnõ strany neprodlene vzájemne põsemne\ninformujõ s uvedenõm duvodu."
+      ]
+    },
+    {
+      "number": 6,
+      "title": "1. Kazdá smluvnõ strana muze poskytnutõ pomoci podmõnit urcitými podmõnkami, které jsou závazné pro",
+      "text": "druhou smluvnõ stranu.\n2. Kazdá smluvnõ strana zajistõ utajenõ informacõ predávaných druhou smluvnõ stranou, pokud tyto infor-\nmace podle právnõch predpisu státu druhé smluvnõ strany majõ utajený charakter a jako takové jsou oznaceny.\n3. Materiály, informace, technické a jiné prostredky, poskytnuté na základe této dohody, lze predat tretõm\nstátum pouze za predpokladu, ze smluvnõ strana, která je poskytla, s tõm põsemne vyjádrõ svuj souhlas.",
+      "paragraphs": [
+        "druhou smluvnõ stranu.",
+        "2. Kazdá smluvnõ strana zajistõ utajenõ informacõ predávaných druhou smluvnõ stranou, pokud tyto infor-\nmace podle právnõch predpisu státu druhé smluvnõ strany majõ utajený charakter a jako takové jsou oznaceny.",
+        "3. Materiály, informace, technické a jiné prostredky, poskytnuté na základe této dohody, lze predat tretõm\nstátum pouze za predpokladu, ze smluvnõ strana, která je poskytla, s tõm põsemne vyjádrõ svuj souhlas."
+      ]
+    },
+    {
+      "number": 7,
+      "title": "Kazdá smluvnõ strana hradõ náklady souvisejõcõ s provádenõm teto dohody, které jõ vzniknou na jejõm územõ,",
+      "text": "pokud nebude dohodnuto jinak.",
+      "paragraphs": [
+        "pokud nebude dohodnuto jinak."
+      ]
+    },
+    {
+      "number": 8,
+      "title": "Přõslusné orgány smluvnõch stran budou v zájmu realizace této dohody prõmo a operativne spolupracovat",
+      "text": "v rámci svých kompetencõ.",
+      "paragraphs": [
+        "v rámci svých kompetencõ."
+      ]
+    },
+    {
+      "number": 9,
+      "title": "Při provádenõ této dohody budou smluvnõ strany uzõvat jazyk ceský, ukrajinský, ruský nebo anglický, pokud",
+      "text": "se nedohodnou jinak.",
+      "paragraphs": [
+        "se nedohodnou jinak."
+      ]
+    },
+    {
+      "number": 10,
+      "title": "Touto dohodou nejsou dotceny závazky státu smluvnõch stran vyplývajõcõ z mezinárodnõch smluv, jimiz jsou",
+      "text": "státy smluvnõch stran vázány.",
+      "paragraphs": [
+        "státy smluvnõch stran vázány."
+      ]
+    },
+    {
+      "number": 11,
+      "title": "1. Tato dohoda se uzavõrá na dobu neurcitou a vstoupõ v platnost dnem dorucenõ pozdejsõ nóty o tom, ze",
+      "text": "byly splneny potrebné vnitrostátnõ právnõ podmõnky pro vstup Dohody v platnost.\n2. Tato dohoda muze být kazdou ze smluvnõch stran vypovezena. V takovém prõpade pozbývá platnosti\nuplynutõm sesti mesõcu ode dne dorucenõ põsemného oznámenõ diplomatickou cestou o výpovedi této dohody\ndruhé smluvnõ strane.\nDáno v Kyjeve dne 30. cervna 1997 ve dvou puvodnõch vyhotovenõch, kazdé z nich v jazyce ceském,\nukrajinském a ruském. V prõpade rozdõlnostõ ve výkladu bude rozhodujõcõ znenõ v ruském jazyce.\nZa vládu České republiky Za vládu Ukrajiny\nJan Ruml v. r. Jurij Fedorovic Kravcenko v. r.\nministr vnitra ministr vnitra\n1⁄2 ÀÃ1⁄4» ÎÀË1 Äμ ́3⁄4À3⁄42 ̧Ç oÀ°2Çμ1⁄2o3⁄4\n1⁄4 ̧1⁄2 ̧ÁÀ 21⁄2ÃÀμ1⁄21⁄2 ̧Å ́μ» 1⁄4 ̧1⁄2 ̧ÁÀ 21⁄2ÃÀμ1⁄21⁄2 ̧Å ́μ»\nSDE L E N I\nMinisterstva zahranicnõch vecõ\nMinisterstvo zahranicnõch vecõ sdeluje, ze dne 5. listopadu 1999 byl v Kyjeve podepsán Protokol mezi\nMinisterstvem vnitra České republiky a Ministerstvem vnitra Ukrajiny k provedenõ Dohody mezi vládou České\nrepubliky a vládou Ukrajiny o spolupráci v boji proti organizovanému zlocinu, terorizmu a nedovolenému\nobchodu s omamnými a psychotropnõmi látkami ze dne 30. cervna 1997*).\nProtokol vstoupil v platnost na základe svého clánku 4 dne 5. listopadu 1999.\nČeské znenõ Protokolu a ruské znenõ, jez je pro jeho výklad rozhodné, se vyhlasujõ soucasne.\nP R O T O K OL\nmezi Ministerstvem vnitra České republiky a Ministerstvem vnitra Ukrajiny\nk provedenõ Dohody mezi vládou České republiky a vládou Ukrajiny o spolupráci v boji proti\norganizovanému zlocinu, terorizmu a nedovolenému obchodu s omamnými a psychotropnõmi látkami\nze dne 30. cervna 1997\nMinisterstvo vnitra České republiky a Ministerstvo vnitra Ukrajiny (dále jen 1smluvnõ stranya),\nv souladu s clánkem 2 odst. 2 Dohody mezi vládou České republiky a vládou Ukrajiny o spolupráci v boji\nproti organizovanému zlocinu, terorizmu a nedovolenému obchodu s omamnými a psychotropnõmi látkami ze\ndne 30. cervna 1997 (dále jen 1Dohodaa),\ns cõlem zvýsit efektivnost spolupráce a koordinace úsilõ v boji proti závazné trestné cinnosti,\nse dohodly takto:",
+      "paragraphs": [
+        "byly splneny potrebné vnitrostátnõ právnõ podmõnky pro vstup Dohody v platnost.",
+        "2. Tato dohoda muze být kazdou ze smluvnõch stran vypovezena. V takovém prõpade pozbývá platnosti\nuplynutõm sesti mesõcu ode dne dorucenõ põsemného oznámenõ diplomatickou cestou o výpovedi této dohody\ndruhé smluvnõ strane.\nDáno v Kyjeve dne 30. cervna 1997 ve dvou puvodnõch vyhotovenõch, kazdé z nich v jazyce ceském,\nukrajinském a ruském. V prõpade rozdõlnostõ ve výkladu bude rozhodujõcõ znenõ v ruském jazyce.\nZa vládu České republiky Za vládu Ukrajiny\nJan Ruml v. r. Jurij Fedorovic Kravcenko v. r.\nministr vnitra ministr vnitra\n1⁄2 ÀÃ1⁄4» ÎÀË1 Äμ ́3⁄4À3⁄42 ̧Ç oÀ°2Çμ1⁄2o3⁄4\n1⁄4 ̧1⁄2 ̧ÁÀ 21⁄2ÃÀμ1⁄21⁄2 ̧Å ́μ» 1⁄4 ̧1⁄2 ̧ÁÀ 21⁄2ÃÀμ1⁄21⁄2 ̧Å ́μ»\nSDE L E N I\nMinisterstva zahranicnõch vecõ\nMinisterstvo zahranicnõch vecõ sdeluje, ze dne 5. listopadu 1999 byl v Kyjeve podepsán Protokol mezi\nMinisterstvem vnitra České republiky a Ministerstvem vnitra Ukrajiny k provedenõ Dohody mezi vládou České\nrepubliky a vládou Ukrajiny o spolupráci v boji proti organizovanému zlocinu, terorizmu a nedovolenému\nobchodu s omamnými a psychotropnõmi látkami ze dne 30. cervna 1997*).\nProtokol vstoupil v platnost na základe svého clánku 4 dne 5. listopadu 1999.\nČeské znenõ Protokolu a ruské znenõ, jez je pro jeho výklad rozhodné, se vyhlasujõ soucasne.\nP R O T O K OL\nmezi Ministerstvem vnitra České republiky a Ministerstvem vnitra Ukrajiny\nk provedenõ Dohody mezi vládou České republiky a vládou Ukrajiny o spolupráci v boji proti\norganizovanému zlocinu, terorizmu a nedovolenému obchodu s omamnými a psychotropnõmi látkami\nze dne 30. cervna 1997\nMinisterstvo vnitra České republiky a Ministerstvo vnitra Ukrajiny (dále jen 1smluvnõ stranya),\nv souladu s clánkem 2 odst. 2 Dohody mezi vládou České republiky a vládou Ukrajiny o spolupráci v boji\nproti organizovanému zlocinu, terorizmu a nedovolenému obchodu s omamnými a psychotropnõmi látkami ze\ndne 30. cervna 1997 (dále jen 1Dohodaa),\ns cõlem zvýsit efektivnost spolupráce a koordinace úsilõ v boji proti závazné trestné cinnosti,\nse dohodly takto:"
+      ]
+    },
+    {
+      "number": 1,
+      "title": "1. Smluvnõ strany si budou navzájem vymenovat informace o páchánõ trestných cinu v oblastech uvedených",
+      "text": "v clánku 1 Dohody, jakoz i dalsõch trestných cinu, zejména:\n1.1. páchaných s pouzitõm výbusnin,\n1.2. souvisejõcõch s nedovolenou prepravou radioaktivnõch látek,\n1.3. souvisejõcõch s mezinárodnõm zlocinem ve financnõch, úverových a bankovnõch systémech, s pranõm\nspinavých penez, zhotovovánõm a rozsirovánõm falesných penez a cenných papõru, s nedovoleným pouzõvánõm\nkreditnõch karet,\n1.4. páchaných v oblasti zahranicnõ ekonomické cinnosti,\n1.5. páchaných s vyuzitõm pocõtacové techniky,\n1.6. souvisejõcõch s odcizenõm intelektuálnõho vlastnictvõ,\n1.7. souvisejõcõch s obchodem s lidmi a kuplõrstvõm.\n2. Smluvnõ strany si budou vzájemné poskytovat vzory, vcetne popisu:\n2.1. ridicských prukazu,\n2.2. registracnõch dokladu k vozidlum platných pro prekracovánõ státnõch hranic vozidly,\n2.3. dokladu potrebných k registraci vozidel.\n3. Smluvnõ strany se mohou dohodnout i na dalsõch druzõch vzájemné spolupráce.\n) Dohoda mezi vládou České republiky a vládou Ukrajiny o spolupráci v boji proti organizovanému zlocinu, terorizmu\n*\na nedovolenému obchodu s omamnými a psychotropnõmi látkami, podepsaná v Kyjeve dne 30. cervna 1997, byla vyhlásena\npod c. 81/2006 Sb. m. s.",
+      "paragraphs": [
+        "v clánku 1 Dohody, jakoz i dalsõch trestných cinu, zejména:\n1.1. páchaných s pouzitõm výbusnin,\n1.2. souvisejõcõch s nedovolenou prepravou radioaktivnõch látek,\n1.3. souvisejõcõch s mezinárodnõm zlocinem ve financnõch, úverových a bankovnõch systémech, s pranõm\nspinavých penez, zhotovovánõm a rozsirovánõm falesných penez a cenných papõru, s nedovoleným pouzõvánõm\nkreditnõch karet,\n1.4. páchaných v oblasti zahranicnõ ekonomické cinnosti,\n1.5. páchaných s vyuzitõm pocõtacové techniky,\n1.6. souvisejõcõch s odcizenõm intelektuálnõho vlastnictvõ,\n1.7. souvisejõcõch s obchodem s lidmi a kuplõrstvõm.",
+        "2. Smluvnõ strany si budou vzájemné poskytovat vzory, vcetne popisu:\n2.1. ridicských prukazu,\n2.2. registracnõch dokladu k vozidlum platných pro prekracovánõ státnõch hranic vozidly,\n2.3. dokladu potrebných k registraci vozidel.",
+        "3. Smluvnõ strany se mohou dohodnout i na dalsõch druzõch vzájemné spolupráce.\n) Dohoda mezi vládou České republiky a vládou Ukrajiny o spolupráci v boji proti organizovanému zlocinu, terorizmu\n*\na nedovolenému obchodu s omamnými a psychotropnõmi látkami, podepsaná v Kyjeve dne 30. cervna 1997, byla vyhlásena\npod c. 81/2006 Sb. m. s."
+      ]
+    },
+    {
+      "number": 2,
+      "title": "Smluvnõ strany si budou vymenovat analytické zprávy a informace týkajõcõ se:",
+      "text": "1. organizovaných zlocineckých skupin pusobõcõch na územõ státu obou smluvnõch stran a majõcõch styky\ns osobami podezrelými ze spáchánõ trestných cinu nebo se zlocineckými skupinami pusobõcõmi na územõ státu\ndruhé smluvnõ strany, zpusobu páchánõ trestných cinu, zejména trestných cinu spáchaných na územõ státu druhé\nsmluvnõ strany,\n2. osob, které nedovoleným zpusobem vyrábõ, drzõ, zõskávajõ, vyvázõ, dovázõ a provázõ omamné a psycho-\ntropnõ látky a prekurzory a také s nimi nedovoleným zpusobem obchodujõ,\n3. osob, po kterých se pátrá a existuje duvodné podezrenõ, ze se nacházejõ na územõ státu druhé smluvnõ\nstrany, osob, které se zabývajõ drzenõm a pasovánõm odcizených predmetu kulturnõ a historické hodnoty, dalsõch\ncenných predmetu a také zbranõ a výbusnin, zbozõ zatõzeného spotrebnõ danõ a dalsõch predmetu,\n4. osob zabývajõcõch se krádezemi vozidel a jejich prepravou pres státnõ hranice,\n5. zaregistrovaných vozidel dovezených ze zahranicõ, zpusobu jejich nabytõ a data registrace a také si\nmohou vymenovat kopie dokladu predkládaných pri registraci vozidel a kopie jiných dokladu, které se týkajõ\ndovezených vozidel.",
+      "paragraphs": [
+        "1. organizovaných zlocineckých skupin pusobõcõch na územõ státu obou smluvnõch stran a majõcõch styky\ns osobami podezrelými ze spáchánõ trestných cinu nebo se zlocineckými skupinami pusobõcõmi na územõ státu\ndruhé smluvnõ strany, zpusobu páchánõ trestných cinu, zejména trestných cinu spáchaných na územõ státu druhé\nsmluvnõ strany,",
+        "2. osob, které nedovoleným zpusobem vyrábõ, drzõ, zõskávajõ, vyvázõ, dovázõ a provázõ omamné a psycho-\ntropnõ látky a prekurzory a také s nimi nedovoleným zpusobem obchodujõ,",
+        "3. osob, po kterých se pátrá a existuje duvodné podezrenõ, ze se nacházejõ na územõ státu druhé smluvnõ\nstrany, osob, které se zabývajõ drzenõm a pasovánõm odcizených predmetu kulturnõ a historické hodnoty, dalsõch\ncenných predmetu a také zbranõ a výbusnin, zbozõ zatõzeného spotrebnõ danõ a dalsõch predmetu,",
+        "4. osob zabývajõcõch se krádezemi vozidel a jejich prepravou pres státnõ hranice,",
+        "5. zaregistrovaných vozidel dovezených ze zahranicõ, zpusobu jejich nabytõ a data registrace a také si\nmohou vymenovat kopie dokladu predkládaných pri registraci vozidel a kopie jiných dokladu, které se týkajõ\ndovezených vozidel."
+      ]
+    },
+    {
+      "number": 3,
+      "title": "1. Smluvnõ strany si mohou v souladu s clánkem 2 odst. 1 a clánkem 3 odst. 2 Dohody vzájemne dohodnout",
+      "text": "programy vzájemného setkávánõ. Za tõm úcelem prõslusné útvary smluvnõch stran vypracujõ a dohodnou harmo-\nnogramy provádenõ spolecných akcõ vzdy na konkrétnõ casové obdobõ v prõslusných protokolech.\n2. Přõslusnými útvary smluvnõch stran podle clánku 3 odst. 1 tohoto protokolu jsou\n± za ceskou stranu:\nPolicejnõ prezidium České republiky\nAdresa: Strojnická 27, 170 89 Praha 7\nTel.: +420-261 434 509\nFax: +420-261 434 110\n± za ukrajinskou stranu:\nSpráva mezinárodnõch vztahu Hlavnõho stábu\nMinisterstva vnitra Ukrajiny\nAdresa: Bogomolca 10, Kyjev-24, 01 024\nTel.: 380-44-291-30-43, 380-44-291-18-30\nFax: 380-44-291-19-16, 380-44-291-31-82\ne-mail: andrew@bridge.ncb.mia.gov.ua.",
+      "paragraphs": [
+        "programy vzájemného setkávánõ. Za tõm úcelem prõslusné útvary smluvnõch stran vypracujõ a dohodnou harmo-\nnogramy provádenõ spolecných akcõ vzdy na konkrétnõ casové obdobõ v prõslusných protokolech.",
+        "2. Přõslusnými útvary smluvnõch stran podle clánku 3 odst. 1 tohoto protokolu jsou\n± za ceskou stranu:\nPolicejnõ prezidium České republiky\nAdresa: Strojnická 27, 170 89 Praha 7\nTel.: +420-261 434 509\nFax: +420-261 434 110\n± za ukrajinskou stranu:\nSpráva mezinárodnõch vztahu Hlavnõho stábu\nMinisterstva vnitra Ukrajiny\nAdresa: Bogomolca 10, Kyjev-24, 01 024\nTel.: 380-44-291-30-43, 380-44-291-18-30\nFax: 380-44-291-19-16, 380-44-291-31-82\ne-mail: andrew@bridge.ncb.mia.gov.ua."
+      ]
+    },
+    {
+      "number": 4,
+      "title": "Tento protokol vstoupõ v platnost dnem podpisu.",
+      "text": "Tento protokol se sjednává na dobu neurcitou. Kazdá ze smluvnõch stran muze Protokol põsemne vypove-\ndet, jeho platnost skoncõ 30 dnu ode dne dorucenõ oznámenõ o výpovedi druhé smluvnõ strane, nejpozdeji vsak\ns ukoncenõm platnosti Dohody.\nTento protokol muze být menen a doplnován vzájemnou põsemnou dohodou smluvnõch stran.\nDáno v Kyjeve dne 5. listopadu 1999 ve dvou puvodnõch vyhotovenõch, kazdé v jazyce ceském, ukrajinském\na ruském. V prõpade rozdõlnostõ ve výkladu je rozhodujõcõ znenõ v jazyce ruském.\nZa Ministerstvo vnitra České republiky Za Ministerstvo vnitra Ukrajiny\nIng. Jaroslav Kopriva v. r. Volodimir Grigorovic Melnikov v. r.\nnámestek ministra vnitra námestek ministra vnitra\nN 5 N ÝÞïÑàï\nÀ3⁄4Á»°2 o3⁄4¿À¶ ̧2° 23⁄4»3⁄4 ́ ̧1⁄4 ̧À 3À ̧33⁄4À3⁄42 ̧Ç 1⁄4μ»1⁄2 ̧o3⁄42\n·°1⁄4μÁ ̧μ» 1⁄4 ̧1⁄2 ̧ÁÀ° ·°1⁄4μÁ ̧μ» 1⁄4 ̧1⁄2 ̧ÁÀ°\n21⁄2ÃÀμ1⁄21⁄2 ̧Å ́μ» 21⁄2ÃÀμ1⁄21⁄2 ̧Å ́μ»\nSDE L E N I\nMinisterstva zahranicnõch vecõ\nMinisterstvo zahranicnõch vecõ sdeluje, ze dne 11. cervna 2001 byla v Rabatu podepsána Smlouva mezi\nČeskou republikou a Marockým královstvõm o zamezenõ dvojõho zdanenõ a zabránenõ danovému úniku v oboru\ndanõ z prõjmu.\nSe Smlouvou vyslovil souhlas Parlament České republiky a prezident republiky Smlouvu ratifikoval.\nSmlouva vstoupila v platnost na základe svého clánku 28 dne 18. cervence 2006 a jejõ ustanovenõ se budou\nprovádet v souladu se znenõm põsmen a) a b) téhoz clánku.\nČeské znenõ Smlouvy a anglické znenõ, jez je pro jejõ výklad rozhodné, se vyhlasujõ soucasne.\nS M L O U VA\nMEZI\nČESKOU REPUBLIKOU\nA\nLOVSTVIM\nMAROCKYM KRA\nNENI DAN\nO ZAMEZENI DVOJIHO ZDANENI A ZABRA OVEMU UNIKU\nV OBORU DANI Z PR\nIJMU\nČESKA REPUBLIKA A MAROCKE KRALOVSTVI,\nprejõce si uzavrõt smlouvu o zamezenõ dvojõho zdanenõ a zabránenõ danovému úniku v oboru danõ z prõjmu,\nse dohodly takto:",
+      "paragraphs": [
+        "Tento protokol se sjednává na dobu neurcitou. Kazdá ze smluvnõch stran muze Protokol põsemne vypove-\ndet, jeho platnost skoncõ 30 dnu ode dne dorucenõ oznámenõ o výpovedi druhé smluvnõ strane, nejpozdeji vsak\ns ukoncenõm platnosti Dohody.\nTento protokol muze být menen a doplnován vzájemnou põsemnou dohodou smluvnõch stran.\nDáno v Kyjeve dne 5. listopadu 1999 ve dvou puvodnõch vyhotovenõch, kazdé v jazyce ceském, ukrajinském\na ruském. V prõpade rozdõlnostõ ve výkladu je rozhodujõcõ znenõ v jazyce ruském.\nZa Ministerstvo vnitra České republiky Za Ministerstvo vnitra Ukrajiny\nIng. Jaroslav Kopriva v. r. Volodimir Grigorovic Melnikov v. r.\nnámestek ministra vnitra námestek ministra vnitra\nN 5 N ÝÞïÑàï\nÀ3⁄4Á»°2 o3⁄4¿À¶ ̧2° 23⁄4»3⁄4 ́ ̧1⁄4 ̧À 3À ̧33⁄4À3⁄42 ̧Ç 1⁄4μ»1⁄2 ̧o3⁄42\n·°1⁄4μÁ ̧μ» 1⁄4 ̧1⁄2 ̧ÁÀ° ·°1⁄4μÁ ̧μ» 1⁄4 ̧1⁄2 ̧ÁÀ°\n21⁄2ÃÀμ1⁄21⁄2 ̧Å ́μ» 21⁄2ÃÀμ1⁄21⁄2 ̧Å ́μ»\nSDE L E N I\nMinisterstva zahranicnõch vecõ\nMinisterstvo zahranicnõch vecõ sdeluje, ze dne 11. cervna 2001 byla v Rabatu podepsána Smlouva mezi\nČeskou republikou a Marockým královstvõm o zamezenõ dvojõho zdanenõ a zabránenõ danovému úniku v oboru\ndanõ z prõjmu.\nSe Smlouvou vyslovil souhlas Parlament České republiky a prezident republiky Smlouvu ratifikoval.\nSmlouva vstoupila v platnost na základe svého clánku 28 dne 18. cervence 2006 a jejõ ustanovenõ se budou\nprovádet v souladu se znenõm põsmen a) a b) téhoz clánku.\nČeské znenõ Smlouvy a anglické znenõ, jez je pro jejõ výklad rozhodné, se vyhlasujõ soucasne.\nS M L O U VA\nMEZI\nČESKOU REPUBLIKOU\nA\nLOVSTVIM\nMAROCKYM KRA\nNENI DAN\nO ZAMEZENI DVOJIHO ZDANENI A ZABRA OVEMU UNIKU\nV OBORU DANI Z PR\nIJMU\nČESKA REPUBLIKA A MAROCKE KRALOVSTVI,\nprejõce si uzavrõt smlouvu o zamezenõ dvojõho zdanenõ a zabránenõ danovému úniku v oboru danõ z prõjmu,\nse dohodly takto:"
+      ]
+    },
     {
       "number": 1,
       "title": "OSOBY, NA KTERE SE SMLOUVA VZTAHUJE",
