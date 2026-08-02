@@ -4,7 +4,7 @@ from taxtreat.engine.rule_extractor import extract_dividend_rules
 
 
 def test_extract_austria_dividend_rules():
-    data = json.load(open("data/parsed/austria.json", encoding="utf-8"))
+    data = json.load(open("data/parsed/rakousko.json", encoding="utf-8"))
 
     article10 = next(
         article
