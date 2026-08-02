@@ -7,8 +7,8 @@ from taxtreat.db.repository import TreatyRepository
 from taxtreat.services.analyze import AnalysisRequest, WHTAnalyzer
 
 
-def test_wht_analyzer_builds_report_for_dividend_request():
-    repository = TreatyRepository("taxtreat.db")
+def test_wht_analyzer_builds_report_for_dividend_request(seeded_treaty_db):
+    repository = TreatyRepository(seeded_treaty_db)
     analyzer = WHTAnalyzer(repository=repository)
 
     request = AnalysisRequest(

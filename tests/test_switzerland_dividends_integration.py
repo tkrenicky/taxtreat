@@ -10,8 +10,8 @@ from taxtreat.engine.extractors import dividend_rule
 from taxtreat.engine.validation import RuleValidator
 
 
-def test_switzerland_dividends_integration():
-    repo = TreatyRepository("taxtreat.db")
+def test_switzerland_dividends_integration(seeded_treaty_db):
+    repo = TreatyRepository(seeded_treaty_db)
 
     article = repo.get_article(10)
     assert article is not None, "Expected the Switzerland dividend article to be present in the database"
