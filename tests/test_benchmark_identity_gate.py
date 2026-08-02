@@ -1,20 +1,41 @@
 import csv
 import json
+from pathlib import Path
+
+import pytest
 
 from taxtreat.tools import benchmark_treaties
 
 
-def _treaty(country: str = "Testland") -> dict[str, str]:
+def _treaty(source: Path, country: str = "Testland") -> dict[str, str]:
+    source.parent.mkdir(parents=True, exist_ok=True)
+    source.write_bytes(b"test treaty source")
     return {
         "country_cs": country,
         "title": "1/2026 Sb.m.s.",
-        "local_path": "data/raw/treaty/source.pdf",
+        "local_path": str(source),
     }
+
+
+@pytest.fixture(autouse=True)
+def isolate_benchmark_state(monkeypatch, tmp_path):
+    monkeypatch.setattr(
+        benchmark_treaties,
+        "CACHE",
+        tmp_path / "reports" / "treaty_extraction_cache.json",
+    )
+    monkeypatch.setattr(
+        benchmark_treaties,
+        "SNAPSHOT_LATEST",
+        tmp_path / "snapshots" / "LATEST",
+    )
+    monkeypatch.setattr(benchmark_treaties, "PROGRESS_INTERVAL_SECONDS", 3600)
 
 
 def test_benchmark_reparses_cached_output_and_reports_identity(monkeypatch, tmp_path):
     parsed_dir = tmp_path / "parsed"
     report = tmp_path / "benchmark.csv"
+    source = tmp_path / "source.pdf"
     parsed_dir.mkdir()
     stale = parsed_dir / "testland.json"
     stale.write_text('{"stale": true}', encoding="utf-8")
@@ -39,7 +60,11 @@ def test_benchmark_reparses_cached_output_and_reports_identity(monkeypatch, tmp_
 
     monkeypatch.setattr(benchmark_treaties, "PARSED_DIR", parsed_dir)
     monkeypatch.setattr(benchmark_treaties, "REPORT", report)
-    monkeypatch.setattr(benchmark_treaties, "load_treaties", lambda: [_treaty()])
+    monkeypatch.setattr(
+        benchmark_treaties,
+        "load_treaties",
+        lambda: [_treaty(source)],
+    )
     monkeypatch.setattr(benchmark_treaties, "parse_treaty", fake_parse)
 
     benchmark_treaties.main()
@@ -53,6 +78,9 @@ def test_benchmark_reparses_cached_output_and_reports_identity(monkeypatch, tmp_
         row = next(csv.DictReader(file))
 
     assert row["parse_status"] == "ok"
+    assert row["parsed"] == "True"
+    assert row["articles_complete"] == "False"
+    assert row["result_status"] == "parsed_only"
     assert row["identity_status"] == "validated"
     assert row["identity_reason"] == "counterparty_matched"
 
@@ -62,6 +90,7 @@ def test_benchmark_removes_stale_output_when_identity_gate_fails(
 ):
     parsed_dir = tmp_path / "parsed"
     report = tmp_path / "benchmark.csv"
+    source = tmp_path / "source.pdf"
     parsed_dir.mkdir()
     stale = parsed_dir / "testland.json"
     stale.write_text('{"trusted": false}', encoding="utf-8")
@@ -74,7 +103,11 @@ def test_benchmark_removes_stale_output_when_identity_gate_fails(
 
     monkeypatch.setattr(benchmark_treaties, "PARSED_DIR", parsed_dir)
     monkeypatch.setattr(benchmark_treaties, "REPORT", report)
-    monkeypatch.setattr(benchmark_treaties, "load_treaties", lambda: [_treaty()])
+    monkeypatch.setattr(
+        benchmark_treaties,
+        "load_treaties",
+        lambda: [_treaty(source)],
+    )
     monkeypatch.setattr(benchmark_treaties, "parse_treaty", rejected_parse)
 
     benchmark_treaties.main()
@@ -85,12 +118,15 @@ def test_benchmark_removes_stale_output_when_identity_gate_fails(
         row = next(csv.DictReader(file))
 
     assert row["parse_status"] == "failed"
+    assert row["parsed"] == "False"
+    assert row["result_status"] == "failed"
     assert "counterparty_not_found" in row["error"]
 
 
 def test_failed_identity_is_recorded_in_report(monkeypatch, tmp_path):
     parsed_dir = tmp_path / "parsed"
     report = tmp_path / "benchmark.csv"
+    source = tmp_path / "source.pdf"
     parsed_dir.mkdir()
 
     def rejected_parse(country, title, pdf, output):
@@ -101,7 +137,11 @@ def test_failed_identity_is_recorded_in_report(monkeypatch, tmp_path):
 
     monkeypatch.setattr(benchmark_treaties, "PARSED_DIR", parsed_dir)
     monkeypatch.setattr(benchmark_treaties, "REPORT", report)
-    monkeypatch.setattr(benchmark_treaties, "load_treaties", lambda: [_treaty()])
+    monkeypatch.setattr(
+        benchmark_treaties,
+        "load_treaties",
+        lambda: [_treaty(source)],
+    )
     monkeypatch.setattr(benchmark_treaties, "parse_treaty", rejected_parse)
 
     benchmark_treaties.main()
