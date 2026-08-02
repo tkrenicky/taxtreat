@@ -7,6 +7,10 @@ from typing import Sequence
 import re
 
 from taxtreat.parser.article_parser import parse_articles
+from taxtreat.parser.article_selection import (
+    ARTICLE_TYPES,
+    select_best_article_sequence,
+)
 from taxtreat.parser.detector import extract_treaty
 from taxtreat.parser.extractor import ExtractionAttempt, ExtractionResult, extract_document
 from taxtreat.parser.models import ParsedTreaty, TreatyArticle
@@ -23,24 +27,9 @@ from taxtreat.validation.document_identity import (
 )
 
 
-_ARTICLE_MARKERS = {
-    10: ("dividend",),
-    11: ("urok", "interest"),
-    12: ("licenc", "royalt"),
-}
-
-
 def _article_semantic_score(articles: list[TreatyArticle]) -> int:
-    by_number = {article.number: article for article in articles}
-    score = 0
-    for number, markers in _ARTICLE_MARKERS.items():
-        article = by_number.get(number)
-        if article is None:
-            continue
-        text = normalize_legal_text(f"{article.title}\n{article.text}")
-        if any(marker in text for marker in markers):
-            score += 1
-    return score
+    return select_best_article_sequence(articles).semantic_score
+
 
 
 def _parse_extraction(
@@ -70,10 +59,19 @@ def _parse_extraction(
         raise TreatyIdentityError(identity)
 
     treaty_text, relative_start_page = extract_treaty(selected_pages)
-    articles = parse_articles(treaty_text)
+    parsed_articles = parse_articles(treaty_text)
+    article_selection = select_best_article_sequence(parsed_articles)
+    articles = article_selection.articles
 
     absolute_start_page = selection.start_page + relative_start_page - 1
     source_resolution = selection.to_dict()
+    source_resolution.update(
+        {
+            "article_sequence_index": article_selection.sequence_index,
+            "article_sequence_count": article_selection.sequence_count,
+            "article_semantic_score": article_selection.semantic_score,
+        }
+    )
     if official_url:
         source_resolution.update(
             {
@@ -95,8 +93,20 @@ def _parse_extraction(
     )
 
 
-def _official_extraction(source_title: str) -> tuple[ExtractionResult, str]:
-    official = fetch_official_document(source_title)
+def _official_extraction(
+    source_title: str,
+    *,
+    expected_country: str,
+) -> tuple[ExtractionResult, str]:
+    try:
+        official = fetch_official_document(
+            source_title,
+            expected_country=expected_country,
+        )
+    except TypeError as exc:
+        if "unexpected keyword argument" not in str(exc):
+            raise
+        official = fetch_official_document(source_title)
     text = "\n".join(official.pages)
     normalized = normalize_legal_text(text)
     article_numbers = tuple(
@@ -154,13 +164,16 @@ def parse_treaty_file(
             country=country,
             source_title=source_title,
         )
-        if _article_semantic_score(local_parsed.articles) == len(_ARTICLE_MARKERS):
+        if _article_semantic_score(local_parsed.articles) == len(ARTICLE_TYPES):
             return local_parsed
     except Exception as exc:
         local_error = exc
 
     try:
-        official_extraction, official_url = _official_extraction(source_title)
+        official_extraction, official_url = _official_extraction(
+            source_title,
+            expected_country=country,
+        )
         official_parsed = _parse_extraction(
             official_extraction,
             source_path=source_path,

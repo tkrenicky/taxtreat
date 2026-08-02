@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import re
 import unicodedata
+from difflib import SequenceMatcher
 from dataclasses import asdict, dataclass
 
 _PUBLICATION_REFERENCE_RE = re.compile(
@@ -137,7 +138,7 @@ def _distinctive_roots(alias: str) -> tuple[str, ...]:
         # The boundary-aware matcher below prevents substring-only matches.
         candidates.append(word[:-1])
 
-    for suffix in ("stan", "sko", "ie"):
+    for suffix in ("istan", "stan", "sko", "ie"):
         if word.endswith(suffix):
             candidates.append(word[: -len(suffix)])
 
@@ -164,6 +165,21 @@ def _match_country(expected_country: str, normalized_text: str) -> tuple[str, st
                 normalized_text,
             ):
                 return alias, "country_root"
+
+    # OCR from historical publications may insert or substitute one or two
+    # characters inside a country adjective (e.g. mojibake around diacritics).
+    # Restrict approximate matching to distinctive roots of at least five
+    # characters and similarly-sized word tokens to avoid broad substring hits.
+    words = re.findall(r"[a-z0-9]+", normalized_text)
+    for alias in aliases:
+        for root in _distinctive_roots(alias):
+            if len(root) < 5:
+                continue
+            for word in words:
+                if not (len(root) - 2 <= len(word) <= len(root) + 7):
+                    continue
+                if SequenceMatcher(None, root, word).ratio() >= 0.70:
+                    return alias, "country_root_ocr"
 
     return None
 

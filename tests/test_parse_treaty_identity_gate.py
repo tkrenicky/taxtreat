@@ -2,7 +2,16 @@ import pytest
 
 import parse_treaty
 from taxtreat.parser.extractor import ExtractionResult
+from taxtreat.parser.official_source import OfficialSourceError
 from taxtreat.validation.document_identity import TreatyIdentityError
+
+
+@pytest.fixture(autouse=True)
+def _disable_real_official_source(monkeypatch):
+    def unavailable(*args, **kwargs):
+        raise OfficialSourceError("official source disabled in local identity tests")
+
+    monkeypatch.setattr(parse_treaty, "fetch_official_document", unavailable)
 
 
 def _pages(counterparty: str) -> list[str]:

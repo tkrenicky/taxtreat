@@ -12,6 +12,8 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 from pypdf import PdfReader
 
+from .article_parser import parse_articles
+from .article_selection import select_best_article_sequence
 from .normalize import normalize_pages
 from taxtreat.validation.document_identity import validate_treaty_identity
 
@@ -269,8 +271,13 @@ def _ocr_target_reached(pages: list[str], expected_country: str | None) -> bool:
     start = _country_start_page(pages, expected_country)
     if start is None:
         return False
-    _, _, article_numbers, _ = _document_metrics(pages[start:])
-    return {1, 10, 11, 12}.issubset(article_numbers)
+
+    normalized = normalize_pages(pages[start:])
+    try:
+        articles = parse_articles("\n".join(normalized))
+    except RuntimeError:
+        return False
+    return select_best_article_sequence(articles).is_complete
 
 
 def _extract_with_ocr(

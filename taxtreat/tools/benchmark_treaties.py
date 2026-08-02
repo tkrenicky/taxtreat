@@ -19,7 +19,10 @@ from pathlib import Path
 from typing import Any
 
 from taxtreat.engine.extractors import dividend_rule
-from taxtreat.validation.document_identity import normalize_legal_text
+from taxtreat.parser.article_selection import (
+    articles_from_payload,
+    select_best_article_sequence,
+)
 
 DB = Path("data/processed/taxtreat_cz.sqlite")
 PARSED_DIR = Path("data/parsed")
@@ -65,6 +68,11 @@ FIELDNAMES = [
     "article_10_semantic",
     "article_11_semantic",
     "article_12_semantic",
+    "dividend_article_number",
+    "interest_article_number",
+    "royalty_article_number",
+    "article_sequence_index",
+    "article_sequence_count",
     "dividend_status",
     "dividend_rates",
     "dividend_conditions",
@@ -330,12 +338,11 @@ def classify_failed_parse(error: str) -> dict[str, str]:
 
 def _derive_completion_flags(result: dict[str, object]) -> dict[str, object]:
     parsed = result.get("parse_status") == "ok"
+    # Income article classification is semantic, not tied to OECD numbering.
+    # Some valid treaties use Articles 9–11 or alternative Czech headings.
     articles_complete = parsed and all(
         _as_bool(result.get(column))
         for column in (
-            "article_10",
-            "article_11",
-            "article_12",
             "article_10_semantic",
             "article_11_semantic",
             "article_12_semantic",
@@ -367,23 +374,18 @@ def _derive_completion_flags(result: dict[str, object]) -> dict[str, object]:
 
 def benchmark(parsed_path: Path) -> dict[str, object]:
     data = json.loads(parsed_path.read_text(encoding="utf-8"))
-    articles = {
-        article.get("number"): article
-        for article in data.get("articles", [])
-    }
+    parsed_articles = articles_from_payload(data.get("articles", []))
+    selection = select_best_article_sequence(parsed_articles)
+    articles = {article.number: article for article in selection.articles}
+    semantic = selection.semantic_articles
 
     identity = data.get("identity_validation") or {}
     extraction = data.get("text_extraction") or {}
     source_resolution = data.get("source_resolution") or {}
 
-    def semantic(number: int, markers: tuple[str, ...]) -> bool:
-        article = articles.get(number)
-        if not article:
-            return False
-        text = normalize_legal_text(
-            f"{article.get('title', '')}\n{article.get('text', '')}"
-        )
-        return any(marker in text for marker in markers)
+    dividend = semantic.get("dividend")
+    interest = semantic.get("interest")
+    royalty = semantic.get("royalty")
 
     result: dict[str, object] = {
         "identity_status": identity.get("status", "missing"),
@@ -394,24 +396,29 @@ def benchmark(parsed_path: Path) -> dict[str, object]:
         "source_resolution_method": source_resolution.get("method", ""),
         "effective_title": source_resolution.get("effective_title", ""),
         "metadata_mismatch": source_resolution.get("metadata_mismatch", ""),
-        "articles_detected": len(articles),
+        "articles_detected": len(selection.articles),
+        # Retained as factual compatibility columns; completion no longer
+        # assumes that these numbers carry a fixed semantic meaning.
         "article_10": 10 in articles,
         "article_11": 11 in articles,
         "article_12": 12 in articles,
-        "article_10_semantic": semantic(10, ("dividend",)),
-        "article_11_semantic": semantic(11, ("urok", "interest")),
-        "article_12_semantic": semantic(12, ("licenc", "royalt")),
+        "article_10_semantic": dividend is not None,
+        "article_11_semantic": interest is not None,
+        "article_12_semantic": royalty is not None,
+        "dividend_article_number": dividend.number if dividend else "",
+        "interest_article_number": interest.number if interest else "",
+        "royalty_article_number": royalty.number if royalty else "",
+        "article_sequence_index": selection.sequence_index,
+        "article_sequence_count": selection.sequence_count,
         "dividend_status": "",
         "dividend_rates": "",
         "dividend_conditions": "",
     }
 
-    if 10 in articles:
-        rule = dividend_rule(articles[10].get("text", ""))
+    if dividend is not None:
+        rule = dividend_rule(dividend.text)
         result["dividend_status"] = rule.extraction_status
-        result["dividend_rates"] = "|".join(
-            str(rate.rate) for rate in rule.rates
-        )
+        result["dividend_rates"] = "|".join(str(rate.rate) for rate in rule.rates)
         result["dividend_conditions"] = "|".join(
             f"{condition.condition_type.value}:{condition.value}"
             for rate in rule.rates
@@ -853,7 +860,7 @@ def main() -> None:
                 f"{_result_label(row):16} {country} "
                 f"identity={row.get('identity_status', '')} "
                 f"extract={row.get('extraction_method', '')} "
-                f"A10={row.get('article_10', '')} "
+                f"DIV={row.get('dividend_article_number', '')} "
                 f"rates={row.get('dividend_rates', '')} "
                 f"({duration:.1f}s)"
             )
