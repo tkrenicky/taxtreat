@@ -208,7 +208,7 @@ def _pdf_page_count(path: Path) -> int:
             errors="replace",
             timeout=60,
         )
-        match = re.search(r"^Pages:\\s*(\\d+)\\s*$", result.stdout, re.MULTILINE)
+        match = re.search(r"^Pages:\s*(\d+)\s*$", result.stdout, re.MULTILINE)
         if match:
             return int(match.group(1))
     except (FileNotFoundError, subprocess.SubprocessError, ValueError):
