@@ -2,8 +2,245 @@
   "country": "Island",
   "source_title": "11/2001 Sb.m.s.",
   "source_path": "data/raw/treaty/9ef91cc860d25c46.pdf",
-  "start_page": 25,
+  "start_page": 2,
+  "identity_validation": {
+    "expected_country": "Island",
+    "status": "validated",
+    "reason": "counterparty_matched",
+    "matched_alias": "island",
+    "matched_method": "exact_alias",
+    "publication_reference": "11/2001",
+    "publication_reference_found": false,
+    "warnings": [
+      "publication_reference_not_found"
+    ]
+  },
+  "text_extraction": {
+    "method": "pdftotext",
+    "score": 1954,
+    "page_count": 65,
+    "attempts": [
+      {
+        "method": "pypdf",
+        "score": -550,
+        "total_characters": 294800,
+        "substantive_pages": 64,
+        "article_numbers": [],
+        "error": null
+      },
+      {
+        "method": "pdftotext",
+        "score": 1954,
+        "total_characters": 57176,
+        "substantive_pages": 34,
+        "article_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28
+        ],
+        "error": null
+      },
+      {
+        "method": "hybrid",
+        "score": 1954,
+        "total_characters": 57176,
+        "substantive_pages": 34,
+        "article_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28
+        ],
+        "error": null
+      }
+    ]
+  },
+  "source_resolution": {
+    "status": "fallback",
+    "method": "whole_document",
+    "start_page": 1,
+    "end_page": 65,
+    "effective_title": "11/2001 Sb.m.s.",
+    "metadata_mismatch": false,
+    "candidate_count": 0
+  },
   "articles": [
+    {
+      "number": 1,
+      "title": "Definice",
+      "text": "Pro úcely této dohody:\n1. Pojem 1investicea oznacuje kazdou majetkovou hodnotu investovanou v souvislosti s hospodárskými\naktivitami investorem jedné smluvnõ strany na územõ druhé smluvnõ strany v souladu s právnõm rádem druhé\nsmluvnõ strany a zahrnuje zejména, nikoli vsak výlucne:\na) movitý a nemovitý majetek, jakoz i jakákoli jiná majetková práva, jako jsou hypotéky, zástavy, záruky\na podobná práva;\nb) akcie, obligace a nezajistené dluhopisy spolecnostõ nebo jakékoli jiné formy úcasti ve spolecnostech;\nc) peneznõ pohledávky nebo nároky na jakékoli plnenõ majõcõ hospodárskou hodnotu a souvisejõcõ s investicõ;\nd) práva z oblasti dusevnõho vlastnictvõ a prumyslová práva, vcetne autorských práv, patentu, ochranných\nznámek, obchodnõch jmen, prumyslových vzoru, obchodnõch tajemstvõ, technických postupu, know-how\na goodwill, spojená s investicõ;\ne) koncese vyplývajõcõ ze zákona nebo ze smluvnõho ujednánõ, vcetne koncesõ k pruzkumu, kultivaci, tezbe\nnebo vyuzitõ prõrodnõch zdroju.\nJakákoliv zmena formy, ve které jsou hodnoty investovány, nemá vliv na jejich postavenõ jako investice za\npredpokladu, ze takováto zmena nenõ v rozporu s povolenõm udeleným ve vztahu k puvodne investovaným\nhodnotám, pokud takové povolenõ existuje.\n2. Pojem 1výnosya znamená cástky plynoucõ z investice a zahrnuje zejména, ne vsak výlucne, zisky, úroky,\nprõrustky kapitálu, dividendy, licencnõ nebo jiné poplatky.\n3. Pojem 1investora znamená jakoukoli fyzickou nebo právnickou osobu, která investuje na územõ druhé\nsmluvnõ strany:\na) Pojem 1fyzická osobaa znamená jakoukoli fyzickou osobu majõcõ státnõ obcanstvõ nekteré ze smluvnõch\nstran v souladu s jejõmi zákony.\nb) Pojem 1právnická osobaa znamená s ohledem na obe smluvnõ strany jakoukoli spolecnost zaregistrovanou\nnebo zrõzenou v souladu s jejõmi zákony a uznanou jimi za právnickou osobu, která má trvalé sõdlo na územõ\ntéto smluvnõ strany.\nTato dohoda se vsak nevztahuje na investice uskutecnené fyzickými osobami, které jsou státnõmi prõslusnõky\nobou smluvnõch stran, pokud takové osoby v dobe investovánõ nemajõ své bydliste mimo územõ smluvnõ strany,\nkde je investice uskutecnena.\n4. Pojem 1územõa znamená:\na) ve vztahu k České republice územõ České republiky, nad kterým Česká republika vykonává svrchovaná\npráva nebo jurisdikci v souladu s mezinárodnõm právem;\nb) ve vztahu k Uruguayské východnõ republice jejõ územõ, jakoz i morské oblasti vcetne morského dna a pod-\nlozõ prilehlých k vnejsõ hranici pobreznõho more, nad nimiz Uruguay vykonává, v souladu s mezinárodnõm\nprávem, svrchovaná práva za úcelem výzkumu a vyuzõvánõ prõrodnõch zdroju techto oblastõ.\n5. Pojem 1volne smenitelná menaa znamená americký dolar, libru sterlingu, nemeckou marku, francouzský\nfrank, japonský jen nebo jakoukoli jinou menu, která je v siroké mõre uzõvána k provádenõ plateb pri mezi-\nnárodnõch transakcõch a v siroké mõre obchodovatelná na hlavnõch mezinárodnõch devizových trzõch.",
+      "paragraphs": [
+        "Pro úcely této dohody:",
+        "1. Pojem 1investicea oznacuje kazdou majetkovou hodnotu investovanou v souvislosti s hospodárskými\naktivitami investorem jedné smluvnõ strany na územõ druhé smluvnõ strany v souladu s právnõm rádem druhé\nsmluvnõ strany a zahrnuje zejména, nikoli vsak výlucne:\na) movitý a nemovitý majetek, jakoz i jakákoli jiná majetková práva, jako jsou hypotéky, zástavy, záruky\na podobná práva;\nb) akcie, obligace a nezajistené dluhopisy spolecnostõ nebo jakékoli jiné formy úcasti ve spolecnostech;\nc) peneznõ pohledávky nebo nároky na jakékoli plnenõ majõcõ hospodárskou hodnotu a souvisejõcõ s investicõ;\nd) práva z oblasti dusevnõho vlastnictvõ a prumyslová práva, vcetne autorských práv, patentu, ochranných\nznámek, obchodnõch jmen, prumyslových vzoru, obchodnõch tajemstvõ, technických postupu, know-how\na goodwill, spojená s investicõ;\ne) koncese vyplývajõcõ ze zákona nebo ze smluvnõho ujednánõ, vcetne koncesõ k pruzkumu, kultivaci, tezbe\nnebo vyuzitõ prõrodnõch zdroju.\nJakákoliv zmena formy, ve které jsou hodnoty investovány, nemá vliv na jejich postavenõ jako investice za\npredpokladu, ze takováto zmena nenõ v rozporu s povolenõm udeleným ve vztahu k puvodne investovaným\nhodnotám, pokud takové povolenõ existuje.",
+        "2. Pojem 1výnosya znamená cástky plynoucõ z investice a zahrnuje zejména, ne vsak výlucne, zisky, úroky,\nprõrustky kapitálu, dividendy, licencnõ nebo jiné poplatky.",
+        "3. Pojem 1investora znamená jakoukoli fyzickou nebo právnickou osobu, která investuje na územõ druhé\nsmluvnõ strany:\na) Pojem 1fyzická osobaa znamená jakoukoli fyzickou osobu majõcõ státnõ obcanstvõ nekteré ze smluvnõch\nstran v souladu s jejõmi zákony.\nb) Pojem 1právnická osobaa znamená s ohledem na obe smluvnõ strany jakoukoli spolecnost zaregistrovanou\nnebo zrõzenou v souladu s jejõmi zákony a uznanou jimi za právnickou osobu, která má trvalé sõdlo na územõ\ntéto smluvnõ strany.\nTato dohoda se vsak nevztahuje na investice uskutecnené fyzickými osobami, které jsou státnõmi prõslusnõky\nobou smluvnõch stran, pokud takové osoby v dobe investovánõ nemajõ své bydliste mimo územõ smluvnõ strany,\nkde je investice uskutecnena.",
+        "4. Pojem 1územõa znamená:\na) ve vztahu k České republice územõ České republiky, nad kterým Česká republika vykonává svrchovaná\npráva nebo jurisdikci v souladu s mezinárodnõm právem;\nb) ve vztahu k Uruguayské východnõ republice jejõ územõ, jakoz i morské oblasti vcetne morského dna a pod-\nlozõ prilehlých k vnejsõ hranici pobreznõho more, nad nimiz Uruguay vykonává, v souladu s mezinárodnõm\nprávem, svrchovaná práva za úcelem výzkumu a vyuzõvánõ prõrodnõch zdroju techto oblastõ.",
+        "5. Pojem 1volne smenitelná menaa znamená americký dolar, libru sterlingu, nemeckou marku, francouzský\nfrank, japonský jen nebo jakoukoli jinou menu, která je v siroké mõre uzõvána k provádenõ plateb pri mezi-\nnárodnõch transakcõch a v siroké mõre obchodovatelná na hlavnõch mezinárodnõch devizových trzõch."
+      ]
+    },
+    {
+      "number": 2,
+      "title": "Podpora a ochrana investic",
+      "text": "1. Kazdá smluvnõ strana bude podporovat a vytváret prõznivé podmõnky pro investory druhé smluvnõ\nstrany, aby investovali na jejõm územõ, a bude takové investice pripoustet v souladu se svým právem vykonávat\npravomoci plynoucõ z jejõho právnõho rádu.\n2. Investicõm investoru kazdé ze smluvnõch stran bude vzdy poskytováno rádné a spravedlivé zacházenõ\na budou pozõvat plné ochrany a bezpecnosti na územõ druhé smluvnõ strany.",
+      "paragraphs": [
+        "1. Kazdá smluvnõ strana bude podporovat a vytváret prõznivé podmõnky pro investory druhé smluvnõ\nstrany, aby investovali na jejõm územõ, a bude takové investice pripoustet v souladu se svým právem vykonávat\npravomoci plynoucõ z jejõho právnõho rádu.",
+        "2. Investicõm investoru kazdé ze smluvnõch stran bude vzdy poskytováno rádné a spravedlivé zacházenõ\na budou pozõvat plné ochrany a bezpecnosti na územõ druhé smluvnõ strany."
+      ]
+    },
+    {
+      "number": 3,
+      "title": "Dolozka nejvyssõch výhod",
+      "text": "1. Kazdá smluvnõ strana poskytne na svém územõ investicõm a výnosum investoru druhé smluvnõ strany\nzacházenõ, které je rádné a spravedlivé a nenõ méne prõznivé, nez jaké poskytuje investicõm a výnosum svých\nvlastnõch investoru nebo investicõm a výnosum investoru jakéhokoli tretõho státu.\n2. Kazdá smluvnõ strana poskytne na svém územõ investorum druhé smluvnõ strany, pokud jde o rõzenõ,\nudrzovánõ, uzõvánõ, vyuzitõ nebo nakládánõ s jejich investicõ, zacházenõ, které je rádné a spravedlivé a ne méne\nprõznivé, nez jaké poskytuje svým vlastnõm investorum nebo investorum jakéhokoliv tretõho státu.\n3. Ustanovenõ odstavcu 1 a 2 tohoto clánku nelze vykládat tak, ze zavazujõ jednu smluvnõ stranu poskytnout\ninvestorum druhé smluvnõ strany jakékoli zacházenõ, výhody nebo výsady, které muze jedna smluvnõ strana\nposkytovat na základe:\na) jakékoli celnõ unie nebo zóny volného obchodu nebo menové unie nebo podobných mezinárodnõch dohod\nvedoucõch k takovým uniõm nebo institucõm nebo jiných forem regionálnõ spolupráce, jejichz clenem jedna\nze smluvnõch stran je nebo se muze stát;\nb) jakékoli mezinárodnõ dohody nebo ujednánõ týkajõcõch se zcela nebo prevázne zdanenõ.",
+      "paragraphs": [
+        "1. Kazdá smluvnõ strana poskytne na svém územõ investicõm a výnosum investoru druhé smluvnõ strany\nzacházenõ, které je rádné a spravedlivé a nenõ méne prõznivé, nez jaké poskytuje investicõm a výnosum svých\nvlastnõch investoru nebo investicõm a výnosum investoru jakéhokoli tretõho státu.",
+        "2. Kazdá smluvnõ strana poskytne na svém územõ investorum druhé smluvnõ strany, pokud jde o rõzenõ,\nudrzovánõ, uzõvánõ, vyuzitõ nebo nakládánõ s jejich investicõ, zacházenõ, které je rádné a spravedlivé a ne méne\nprõznivé, nez jaké poskytuje svým vlastnõm investorum nebo investorum jakéhokoliv tretõho státu.",
+        "3. Ustanovenõ odstavcu 1 a 2 tohoto clánku nelze vykládat tak, ze zavazujõ jednu smluvnõ stranu poskytnout\ninvestorum druhé smluvnõ strany jakékoli zacházenõ, výhody nebo výsady, které muze jedna smluvnõ strana\nposkytovat na základe:\na) jakékoli celnõ unie nebo zóny volného obchodu nebo menové unie nebo podobných mezinárodnõch dohod\nvedoucõch k takovým uniõm nebo institucõm nebo jiných forem regionálnõ spolupráce, jejichz clenem jedna\nze smluvnõch stran je nebo se muze stát;\nb) jakékoli mezinárodnõ dohody nebo ujednánõ týkajõcõch se zcela nebo prevázne zdanenõ."
+      ]
+    },
+    {
+      "number": 4,
+      "title": "Náhrada skod",
+      "text": "Jestlize investice investoru jedné nebo druhé smluvnõ strany utrpõ skody následkem války, ozbrojeného\nkonfliktu, výjimecného stavu, nepokoju, povstánõ, vzpoury nebo jiných podobných událostõ na územõ druhé\nsmluvnõ strany, poskytne jim tato smluvnõ strana, pokud jde o náhradu, odskodnenõ, vyrovnánõ nebo jiné vy-\nporádánõ, zacházenõ ne méne prõznivé, nez jaké poskytne tato smluvnõ strana svým vlastnõm investorum nebo\ninvestorum jakéhokoli tretõho státu.",
+      "paragraphs": [
+        "Jestlize investice investoru jedné nebo druhé smluvnõ strany utrpõ skody následkem války, ozbrojeného\nkonfliktu, výjimecného stavu, nepokoju, povstánõ, vzpoury nebo jiných podobných událostõ na územõ druhé\nsmluvnõ strany, poskytne jim tato smluvnõ strana, pokud jde o náhradu, odskodnenõ, vyrovnánõ nebo jiné vy-\nporádánõ, zacházenõ ne méne prõznivé, nez jaké poskytne tato smluvnõ strana svým vlastnõm investorum nebo\ninvestorum jakéhokoli tretõho státu."
+      ]
+    },
+    {
+      "number": 5,
+      "title": "Vyvlastnenõ a podobná opatrenõ",
+      "text": "1. Investice investoru kterékoli ze smluvnõch stran nebudou znárodneny, vyvlastneny nebo podrobeny\nopatrenõm majõcõm podobný úcinek jako znárodnenõ nebo vyvlastnenõ (dále jen 1vyvlastnenõa) na územõ druhé\nsmluvnõ strany s výjimkou verejného zájmu. Vyvlastnenõ bude provedeno podle zákona, na nediskriminacnõm\nzáklade a bude provázeno opatrenõmi k zaplacenõ okamzité, primerené a úcinné náhrady. Taková náhrada se bude\nrovnat hodnote vyvlastnené investice bezprostredne pred vyvlastnenõm nebo nez se zamýslené vyvlastnenõ stalo\nverejne známým, bude zahrnovat úroky od data vyvlastnenõ, bude uskutecnena bez prodlenõ, bude úcinne\nrealizovatelná a volne prevoditelná ve volne smenitelné mene.\n2. Investorum jedné smluvnõ strany, kterõ utrpõ skody na územõ druhé smluvnõ strany v dusledku zabavenõ\nnebo znicenõ jejich majetku jakýmkoli orgánem druhé smluvnõ strany, bude poskytnuta spravedlivá a primerená\nnáhrada za utrpené skody za obdobných podmõnek, jaké jsou uvedeny v odstavci 1 tohoto clánku.",
+      "paragraphs": [
+        "1. Investice investoru kterékoli ze smluvnõch stran nebudou znárodneny, vyvlastneny nebo podrobeny\nopatrenõm majõcõm podobný úcinek jako znárodnenõ nebo vyvlastnenõ (dále jen 1vyvlastnenõa) na územõ druhé\nsmluvnõ strany s výjimkou verejného zájmu. Vyvlastnenõ bude provedeno podle zákona, na nediskriminacnõm\nzáklade a bude provázeno opatrenõmi k zaplacenõ okamzité, primerené a úcinné náhrady. Taková náhrada se bude\nrovnat hodnote vyvlastnené investice bezprostredne pred vyvlastnenõm nebo nez se zamýslené vyvlastnenõ stalo\nverejne známým, bude zahrnovat úroky od data vyvlastnenõ, bude uskutecnena bez prodlenõ, bude úcinne\nrealizovatelná a volne prevoditelná ve volne smenitelné mene.",
+        "2. Investorum jedné smluvnõ strany, kterõ utrpõ skody na územõ druhé smluvnõ strany v dusledku zabavenõ\nnebo znicenõ jejich majetku jakýmkoli orgánem druhé smluvnõ strany, bude poskytnuta spravedlivá a primerená\nnáhrada za utrpené skody za obdobných podmõnek, jaké jsou uvedeny v odstavci 1 tohoto clánku."
+      ]
+    },
+    {
+      "number": 6,
+      "title": "Převody",
+      "text": "1. Smluvnõ strany zarucõ volný prevod plateb spojených s investicemi a výnosy. Převody budou provedeny\nve volne smenitelné mene bez jakýchkoli omezenõ a zbytecných prodlenõ. Takové prevody zahrnujõ zejména,\nnikoliv vsak výlucne:\na) kapitál a dodatecné cástky k udrzenõ nebo zvetsenõ investice;\nb) zisky, úroky, dividendy a jiné bezné prõjmy;\nc) cástky na splacenõ pujcek;\nd) licencnõ nebo jiné poplatky;\ne) výnosy z prodeje nebo likvidace investice;\nf) prõjmy fyzických osob.\n2. Pro úcely této dohody bude jako prepocõtacõ kurz pouzit prevazujõcõ kurz pro bezné transakce k datu\nprevodu, pokud nebude dohodnuto jinak.\n3. Za prevody provedené 1bez zbytecného prodlenõa ve smyslu odstavce 1 tohoto clánku budou povazo-\nvány prevody uskutecnené ve lhute, která je bezne nezbytná pro provedenõ takového prevodu. Taková lhuta za\nzádných okolnostõ neprekrocõ dva mesõce.",
+      "paragraphs": [
+        "1. Smluvnõ strany zarucõ volný prevod plateb spojených s investicemi a výnosy. Převody budou provedeny\nve volne smenitelné mene bez jakýchkoli omezenõ a zbytecných prodlenõ. Takové prevody zahrnujõ zejména,\nnikoliv vsak výlucne:\na) kapitál a dodatecné cástky k udrzenõ nebo zvetsenõ investice;\nb) zisky, úroky, dividendy a jiné bezné prõjmy;\nc) cástky na splacenõ pujcek;\nd) licencnõ nebo jiné poplatky;\ne) výnosy z prodeje nebo likvidace investice;\nf) prõjmy fyzických osob.",
+        "2. Pro úcely této dohody bude jako prepocõtacõ kurz pouzit prevazujõcõ kurz pro bezné transakce k datu\nprevodu, pokud nebude dohodnuto jinak.",
+        "3. Za prevody provedené 1bez zbytecného prodlenõa ve smyslu odstavce 1 tohoto clánku budou povazo-\nvány prevody uskutecnené ve lhute, která je bezne nezbytná pro provedenõ takového prevodu. Taková lhuta za\nzádných okolnostõ neprekrocõ dva mesõce."
+      ]
+    },
+    {
+      "number": 7,
+      "title": "Postoupenõ práv",
+      "text": "1. Jestlize jedna smluvnõ strana nebo agentura zmocnená smluvnõ stranou provede platbu svým vlastnõm\ninvestorum z duvodu záruky, kterou poskytla ve vztahu k investici na územõ druhé smluvnõ strany, uzná druhá\nsmluvnõ strana:\na) postoupenõ jakéhokoli práva nebo nároku investora smluvnõ strane nebo agenture zmocnené smluvnõ stra-\nnou, at' k postoupenõ doslo ze zákona, nebo na základe právnõho ujednánõ v této zemi, jakoz i,\nb) ze smluvnõ strana nebo agentura zmocnená smluvnõ stranou je z titulu postoupenõ práv oprávnena uplatno-\nvat práva a vznáset nároky tohoto investora a ze prebõrá závazky vztahujõcõ se k investici.\n2. Postoupená práva nebo nároky neprekrocõ puvodnõ práva nebo nároky investora.",
+      "paragraphs": [
+        "1. Jestlize jedna smluvnõ strana nebo agentura zmocnená smluvnõ stranou provede platbu svým vlastnõm\ninvestorum z duvodu záruky, kterou poskytla ve vztahu k investici na územõ druhé smluvnõ strany, uzná druhá\nsmluvnõ strana:\na) postoupenõ jakéhokoli práva nebo nároku investora smluvnõ strane nebo agenture zmocnené smluvnõ stra-\nnou, at' k postoupenõ doslo ze zákona, nebo na základe právnõho ujednánõ v této zemi, jakoz i,\nb) ze smluvnõ strana nebo agentura zmocnená smluvnõ stranou je z titulu postoupenõ práv oprávnena uplatno-\nvat práva a vznáset nároky tohoto investora a ze prebõrá závazky vztahujõcõ se k investici.",
+        "2. Postoupená práva nebo nároky neprekrocõ puvodnõ práva nebo nároky investora."
+      ]
+    },
+    {
+      "number": 8,
+      "title": "esenõ sporu z investic mezi smluvnõ stranou",
+      "text": "R\na investorem druhé smluvnõ strany\n1. Jakýkoli spor týkajõcõ se investice, který vznikne mezi investorem jedné ze smluvnõch stran a druhou\nsmluvnõ stranou, bude resen, pokud to bude mozné, jednánõmi mezi stranami ve sporu.\n2. Jestlize spor nemuze být vyresen ve lhute sesti mesõcu ode dne svého vzniku, muze být na zádost\ninvestora predlozen bud':\n± soudnõmu orgánu smluvnõ strany, na jejõmz územõ byla investice uskutecnena,\nnebo\n± mezinárodnõ arbitrázi podle ustanovenõ odstavce 3 tohoto clánku.\nJakmile investor jiz predlozil spor výse uvedenému soudnõmu orgánu smluvnõ strany nebo mezinárodnõ arbitrázi,\nje výber jednoho nebo druhého z techto postupu konecný, pokud se strany sporu nedohodnou jinak.\n3. V prõpade resenõ sporu mezinárodnõ arbitrázõ bude spor dle investorovy volby predlozen bud':\n± Mezinárodnõmu stredisku pro resenõ sporu z investic (ICSID) zrõzenému 1Umluvou o resenõ sporu z investic\nmezi státya otevrenou k podpisu ve Washingtonu dne 18. brezna 1965, v prõpade, ze obe smluvnõ strany se\nstanou jejõmi cleny. Do doby, nez bude toto ustanovenõ pouzitelné, muze být spor predlozen k rozhodcõmu\nrõzenõ na základe ustanovenõ Dodatkové smernice ICSID pro vedenõ smõrcõho, arbitráznõho a skutecnost\nzjist'ujõcõho rõzenõ; nebo\n± rozhodcõmu soudu zrõzenému ad hoc podle rozhodcõch pravidel Komise Organizace spojených národu pro\nmezinárodnõ právo obchodnõ (UNCITRAL).\n4. Pro úcely clánku 25 (2) (b) Umluvy ICSID a pro úcely tohoto clánku bude spolecnost smluvnõ strany,\nv které bezprostredne pred vznikem události nebo událostõ, které vyvolaly investicnõ spor, vykonávali investori\ndruhé smluvnõ strany vetsinovou kontrolu, povazována za spolecnost této druhé smluvnõ strany.\n5. Kazdá smluvnõ strana tõmto souhlasõ s predlozenõm jakéhokoli investicnõho sporu arbitrázi k závaznému\nrozhodnutõ podle volby uvedené v odstavci 3.\n6. Rozhodcõ soud rozhodne na základe ustanovenõ této dohody, zákonu smluvnõ strany, která je stranou ve\nsporu, vcetne jejõch koliznõch norem, podmõnek jakékoli zvlástnõ dohody uzavrené v souvislosti s takovou\ninvesticõ a principu mezinárodnõho práva.\n7. Rozhodcõ nálezy jsou konecné a závazné pro obe strany ve sporu. Kazdá smluvnõ strana je vykoná\nv souladu se svým právnõm rádem.",
+      "paragraphs": [
+        "R\na investorem druhé smluvnõ strany",
+        "1. Jakýkoli spor týkajõcõ se investice, který vznikne mezi investorem jedné ze smluvnõch stran a druhou\nsmluvnõ stranou, bude resen, pokud to bude mozné, jednánõmi mezi stranami ve sporu.",
+        "2. Jestlize spor nemuze být vyresen ve lhute sesti mesõcu ode dne svého vzniku, muze být na zádost\ninvestora predlozen bud':\n± soudnõmu orgánu smluvnõ strany, na jejõmz územõ byla investice uskutecnena,\nnebo\n± mezinárodnõ arbitrázi podle ustanovenõ odstavce 3 tohoto clánku.\nJakmile investor jiz predlozil spor výse uvedenému soudnõmu orgánu smluvnõ strany nebo mezinárodnõ arbitrázi,\nje výber jednoho nebo druhého z techto postupu konecný, pokud se strany sporu nedohodnou jinak.",
+        "3. V prõpade resenõ sporu mezinárodnõ arbitrázõ bude spor dle investorovy volby predlozen bud':\n± Mezinárodnõmu stredisku pro resenõ sporu z investic (ICSID) zrõzenému 1Umluvou o resenõ sporu z investic\nmezi státya otevrenou k podpisu ve Washingtonu dne 18. brezna 1965, v prõpade, ze obe smluvnõ strany se\nstanou jejõmi cleny. Do doby, nez bude toto ustanovenõ pouzitelné, muze být spor predlozen k rozhodcõmu\nrõzenõ na základe ustanovenõ Dodatkové smernice ICSID pro vedenõ smõrcõho, arbitráznõho a skutecnost\nzjist'ujõcõho rõzenõ; nebo\n± rozhodcõmu soudu zrõzenému ad hoc podle rozhodcõch pravidel Komise Organizace spojených národu pro\nmezinárodnõ právo obchodnõ (UNCITRAL).",
+        "4. Pro úcely clánku 25 (2) (b) Umluvy ICSID a pro úcely tohoto clánku bude spolecnost smluvnõ strany,\nv které bezprostredne pred vznikem události nebo událostõ, které vyvolaly investicnõ spor, vykonávali investori\ndruhé smluvnõ strany vetsinovou kontrolu, povazována za spolecnost této druhé smluvnõ strany.",
+        "5. Kazdá smluvnõ strana tõmto souhlasõ s predlozenõm jakéhokoli investicnõho sporu arbitrázi k závaznému\nrozhodnutõ podle volby uvedené v odstavci 3.",
+        "6. Rozhodcõ soud rozhodne na základe ustanovenõ této dohody, zákonu smluvnõ strany, která je stranou ve\nsporu, vcetne jejõch koliznõch norem, podmõnek jakékoli zvlástnõ dohody uzavrené v souvislosti s takovou\ninvesticõ a principu mezinárodnõho práva.",
+        "7. Rozhodcõ nálezy jsou konecné a závazné pro obe strany ve sporu. Kazdá smluvnõ strana je vykoná\nv souladu se svým právnõm rádem."
+      ]
+    },
+    {
+      "number": 9,
+      "title": "esenõ sporu mezi smluvnõmi stranami",
+      "text": "R\n1. Spory mezi smluvnõmi stranami tykajõcõ se výkladu nebo pouzitõ této dohody budou, pokud to bude\nmozné, vyreseny konzultacemi nebo jednánõmi.\n2. Pokud spor mezi smluvnõmi stranami nemuze být takto vyresen ve lhute sesti mesõcu, bude na zádost\njedné ze smluvnõch stran predlozen rozhodcõmu soudu v souladu s ustanovenõmi tohoto clánku.\n3. Takový rozhodcõ soud bude ustaven pro kazdý jednotlivý prõpad následujõcõm zpusobem. Ve lhute dvou\nmesõcu od obdrzenõ zádosti o rozhodcõ rõzenõ urcõ kazdá smluvnõ strana jednoho clena rozhodcõho soudu. Tito\ndva clenové pak vyberou obcana tretõho státu, který bude se souhlasem obou smluvnõch stran jmenován pred-\nsedou soudu. Předseda bude jmenován do trõ mesõcu ode dne jmenovánõ ostatnõch dvou clenu.\n4. Pokud v nekteré ze lhut uvedených v odstavci 3 tohoto clánku nebylo provedeno potrebné jmenovánõ,\nmuze kterákoli ze smluvnõch stran, pokud neexistuje jiná dohoda, vyzvat predsedu Mezinárodnõho soudnõho\ndvora, aby provedl potrebná jmenovánõ. Je-li predseda obcanem nekteré smluvnõ strany nebo nemuze-li z jiného\nduvodu vykonat tento úkon, bude pozádán mõstopredseda, aby provedl potrebná jmenovánõ. Je-li také mõsto-\npredseda obcanem nekteré smluvnõ strany nebo nemuze vykonat tento úkon, bude o provedenõ potrebných\njmenovánõ pozádán sluzebne nejstarsõ clen Mezinárodnõho soudnõho dvora, který nenõ obcanem zádné smluvnõ\nstrany.\n5. Rozhodcõ soud prijõmá své rozhodnutõ vetsinou hlasu. Takové rozhodnutõ je závazné pro obe smluvnõ\nstrany. Kazdá smluvnõ strana uhradõ náklady svého clena rozhodcõho soudu a své úcasti v rozhodcõm rõzenõ;\nnáklady predsedy a ostatnõ výdaje budou hrazeny smluvnõmi stranami rovným dõlem. Rozhodcõ soud vsak muze\nve svém rozhodnutõ stanovit, ze vetsõ cást nákladu ponese jedna z techto dvou smluvnõch stran, a toto rozhodnutõ\nbude závazné pro obe smluvnõ strany. Rozhodcõ soud urcõ vlastnõ jednacõ pravidla.\n6. Spor nebude predlozen mezinárodnõmu rozhodcõmu soudu na základe ustanovenõ tohoto clánku, jestlize\ntýz spor byl jiz predlozen jinému mezinárodnõmu rozhodcõmu soudu na základe ustanovenõ clánku 8 a rõzenõ\ndosud trvá. Tato skutecnost nebude bránit tomu, aby obe smluvnõ strany vzájemne vedly prõmé prátelské\nkonzultace.\n7. Žádná smluvnõ strana se nebude domáhat uspokojenõ nároku mezinárodnõ povahy vztahujõcõho se ke\nsporu, který byl predlozen podle postupu stanovených v clánku 8, dokud nedojde k porusenõ nebo nedodrzenõ\nnálezu rozhodcõho soudu druhou smluvnõ stranou nebo k tomu, ze soudnõ orgány této druhé smluvnõ strany\nporusily nekteré z pravidel mezinárodnõho práva vcetne odeprenõ spravedlnosti nebo ze porusily ustanovenõ této\ndohody.",
+      "paragraphs": [
+        "R",
+        "1. Spory mezi smluvnõmi stranami tykajõcõ se výkladu nebo pouzitõ této dohody budou, pokud to bude\nmozné, vyreseny konzultacemi nebo jednánõmi.",
+        "2. Pokud spor mezi smluvnõmi stranami nemuze být takto vyresen ve lhute sesti mesõcu, bude na zádost\njedné ze smluvnõch stran predlozen rozhodcõmu soudu v souladu s ustanovenõmi tohoto clánku.",
+        "3. Takový rozhodcõ soud bude ustaven pro kazdý jednotlivý prõpad následujõcõm zpusobem. Ve lhute dvou\nmesõcu od obdrzenõ zádosti o rozhodcõ rõzenõ urcõ kazdá smluvnõ strana jednoho clena rozhodcõho soudu. Tito\ndva clenové pak vyberou obcana tretõho státu, který bude se souhlasem obou smluvnõch stran jmenován pred-\nsedou soudu. Předseda bude jmenován do trõ mesõcu ode dne jmenovánõ ostatnõch dvou clenu.",
+        "4. Pokud v nekteré ze lhut uvedených v odstavci 3 tohoto clánku nebylo provedeno potrebné jmenovánõ,\nmuze kterákoli ze smluvnõch stran, pokud neexistuje jiná dohoda, vyzvat predsedu Mezinárodnõho soudnõho\ndvora, aby provedl potrebná jmenovánõ. Je-li predseda obcanem nekteré smluvnõ strany nebo nemuze-li z jiného\nduvodu vykonat tento úkon, bude pozádán mõstopredseda, aby provedl potrebná jmenovánõ. Je-li také mõsto-\npredseda obcanem nekteré smluvnõ strany nebo nemuze vykonat tento úkon, bude o provedenõ potrebných\njmenovánõ pozádán sluzebne nejstarsõ clen Mezinárodnõho soudnõho dvora, který nenõ obcanem zádné smluvnõ\nstrany.",
+        "5. Rozhodcõ soud prijõmá své rozhodnutõ vetsinou hlasu. Takové rozhodnutõ je závazné pro obe smluvnõ\nstrany. Kazdá smluvnõ strana uhradõ náklady svého clena rozhodcõho soudu a své úcasti v rozhodcõm rõzenõ;\nnáklady predsedy a ostatnõ výdaje budou hrazeny smluvnõmi stranami rovným dõlem. Rozhodcõ soud vsak muze\nve svém rozhodnutõ stanovit, ze vetsõ cást nákladu ponese jedna z techto dvou smluvnõch stran, a toto rozhodnutõ\nbude závazné pro obe smluvnõ strany. Rozhodcõ soud urcõ vlastnõ jednacõ pravidla.",
+        "6. Spor nebude predlozen mezinárodnõmu rozhodcõmu soudu na základe ustanovenõ tohoto clánku, jestlize\ntýz spor byl jiz predlozen jinému mezinárodnõmu rozhodcõmu soudu na základe ustanovenõ clánku 8 a rõzenõ\ndosud trvá. Tato skutecnost nebude bránit tomu, aby obe smluvnõ strany vzájemne vedly prõmé prátelské\nkonzultace.",
+        "7. Žádná smluvnõ strana se nebude domáhat uspokojenõ nároku mezinárodnõ povahy vztahujõcõho se ke\nsporu, který byl predlozen podle postupu stanovených v clánku 8, dokud nedojde k porusenõ nebo nedodrzenõ\nnálezu rozhodcõho soudu druhou smluvnõ stranou nebo k tomu, ze soudnõ orgány této druhé smluvnõ strany\nporusily nekteré z pravidel mezinárodnõho práva vcetne odeprenõ spravedlnosti nebo ze porusily ustanovenõ této\ndohody."
+      ]
+    },
+    {
+      "number": 10,
+      "title": "Pouzitelnost Dohody",
+      "text": "1. Ustanovenõ této dohody se pouzijõ na budoucõ investice uskutecnené investory jedné smluvnõ strany na\núzemõ druhé smluvnõ strany a také na investice existujõcõ v souladu s právnõmi rády smluvnõch stran k datu vstupu\ntéto dohody v platnost.\n2. Tato dohoda se vsak nepouzije na jakýkoli spor týkajõcõ se investice, který vznikl pred vstupem této\ndohody v platnost, nebo na jakýkoli nárok týkajõcõ se investice, který byl resen pred vstupem této dohody\nv platnost.",
+      "paragraphs": [
+        "1. Ustanovenõ této dohody se pouzijõ na budoucõ investice uskutecnené investory jedné smluvnõ strany na\núzemõ druhé smluvnõ strany a také na investice existujõcõ v souladu s právnõmi rády smluvnõch stran k datu vstupu\ntéto dohody v platnost.",
+        "2. Tato dohoda se vsak nepouzije na jakýkoli spor týkajõcõ se investice, který vznikl pred vstupem této\ndohody v platnost, nebo na jakýkoli nárok týkajõcõ se investice, který byl resen pred vstupem této dohody\nv platnost."
+      ]
+    },
+    {
+      "number": 11,
+      "title": "Pouzitõ jiných predpisu a zvlástnõ závazky",
+      "text": "1. V prõpade, ze je nekterá otázka resena soucasne touto dohodou a jinou mezinárodnõ dohodou, jejõmiz\nstranami jsou obe smluvnõ strany, nic v této dohode nebránõ, aby jakákoli smluvnõ strana nebo jakýkoli jejõ\ninvestor, který vlastnõ investice na územõ druhé smluvnõ strany, vyuzil jakýchkoli pravidel, která jsou pro neho\nprõznivejsõ.\n2. Jestlize zacházenõ poskytnuté jednou smluvnõ stranou investorum druhé smluvnõ strany v souladu s jejõm\nprávnõm rádem nebo jinými zvlástnõmi smluvnõmi ustanovenõmi je prõznivejsõ, nez které je poskytováno touto\ndohodou, bude poskytnuto toto prõznivejsõ zacházenõ.",
+      "paragraphs": [
+        "1. V prõpade, ze je nekterá otázka resena soucasne touto dohodou a jinou mezinárodnõ dohodou, jejõmiz\nstranami jsou obe smluvnõ strany, nic v této dohode nebránõ, aby jakákoli smluvnõ strana nebo jakýkoli jejõ\ninvestor, který vlastnõ investice na územõ druhé smluvnõ strany, vyuzil jakýchkoli pravidel, která jsou pro neho\nprõznivejsõ.",
+        "2. Jestlize zacházenõ poskytnuté jednou smluvnõ stranou investorum druhé smluvnõ strany v souladu s jejõm\nprávnõm rádem nebo jinými zvlástnõmi smluvnõmi ustanovenõmi je prõznivejsõ, nez které je poskytováno touto\ndohodou, bude poskytnuto toto prõznivejsõ zacházenõ."
+      ]
+    },
+    {
+      "number": 12,
+      "title": "Vstup v platnost, trvánõ a ukoncenõ",
+      "text": "1. Tato dohoda vstoupõ v platnost tricátým (30) dnem po pozdejsõm z dat, v nichz si smluvnõ strany\nvzájemne oznámily splnenõ svých ústavnõch pozadavku pro vstup této dohody v platnost. Pozdejsõm datem se\nrozumõ datum odeslánõ pozdejsõ z notifikacõ.\n2. Tato dohoda zustane v platnosti po dobu deseti (10) let a zustane dále v platnosti, dokud jejõ platnost\nnebude ukoncena podle odstavce 3 tohoto clánku.\n3. Pokud jedna smluvnõ strana neoznámõ druhé smluvnõ strane jeden rok pred skoncenõm desetiletého\nobdobõ svuj úmysl ukoncit platnost Dohody, platnost Dohody vcetne tohoto clánku se automaticky prodluzuje\nna dalsõ desetileté obdobõ.\n4. Pro investice uskutecnené nebo zõskané pred datem ukoncenõ platnosti této dohody zustanou ustanovenõ\nvsech ostatnõch clánku této dohody úcinná po dobu deseti (10) let od data ukoncenõ platnosti.\nNa dukaz toho nõze podepsanõ, rádne zmocneni, podepsali tuto dohodu.\nDáno ve dvojõm vyhotovenõ v Montevideu dne 26. zárõ 1996 v jazyce ceském, spanelském a anglickém,\npricemz vsechny texty jsou stejne autentické. V prõpade jakýchkoli rozdõlnostõ ve výkladu je rozhodujõcõ anglické\nznenõ.\nZa Českou republiku Za Uruguayskou východnõ republiku\nIng. Vladimõr Dlouhý, CSc. v. r. Luis A. Mosca v. r.\nministr prumyslu a obchodu ministr hospodárstvõ a financõ\nSDE L E N I\nMinisterstva zahranicnõch vecõ\nMinisterstvo zahranicnõch vecõ sdeluje, ze dne 18. ledna 2000 byla v Oslo podepsána Smlouva mezi Českou\nrepublikou a Islandskou republikou o zamezenõ dvojõho zdanenõ a zabránenõ danovému úniku v oboru danõ\nz prõjmu.\nSe Smlouvou vyslovil souhlas Parlament České republiky a prezident republiky Smlouvu ratifikoval.\nSmlouva vstoupila v platnost na základe svého clánku 27 odst. 2 dne 28. prosince 2000. Jejõ ustanovenõ se\nbudou provádet v souladu se znenõm clánku 27 odst. 2 põsm. a) a b).\nAnglické znenõ a ceský preklad Smlouvy se vyhlasujõ soucasne.\nEKL AD\nPR\nS M L O U VA\nmezi\nČeskou republikou\na\nIslandskou republikou\no zamezenõ dvojõho zdanenõ a zabránenõ danovému úniku v oboru danõ z prõjmu\nČeská republika a Islandská republika,\nprejõce si uzavrõt smlouvu o zamezenõ dvojõho zdanenõ a zabránenõ danovému úniku v oboru danõ z prõjmu,\nse dohodly takto:",
+      "paragraphs": [
+        "1. Tato dohoda vstoupõ v platnost tricátým (30) dnem po pozdejsõm z dat, v nichz si smluvnõ strany\nvzájemne oznámily splnenõ svých ústavnõch pozadavku pro vstup této dohody v platnost. Pozdejsõm datem se\nrozumõ datum odeslánõ pozdejsõ z notifikacõ.",
+        "2. Tato dohoda zustane v platnosti po dobu deseti (10) let a zustane dále v platnosti, dokud jejõ platnost\nnebude ukoncena podle odstavce 3 tohoto clánku.",
+        "3. Pokud jedna smluvnõ strana neoznámõ druhé smluvnõ strane jeden rok pred skoncenõm desetiletého\nobdobõ svuj úmysl ukoncit platnost Dohody, platnost Dohody vcetne tohoto clánku se automaticky prodluzuje\nna dalsõ desetileté obdobõ.",
+        "4. Pro investice uskutecnené nebo zõskané pred datem ukoncenõ platnosti této dohody zustanou ustanovenõ\nvsech ostatnõch clánku této dohody úcinná po dobu deseti (10) let od data ukoncenõ platnosti.\nNa dukaz toho nõze podepsanõ, rádne zmocneni, podepsali tuto dohodu.\nDáno ve dvojõm vyhotovenõ v Montevideu dne 26. zárõ 1996 v jazyce ceském, spanelském a anglickém,\npricemz vsechny texty jsou stejne autentické. V prõpade jakýchkoli rozdõlnostõ ve výkladu je rozhodujõcõ anglické\nznenõ.\nZa Českou republiku Za Uruguayskou východnõ republiku\nIng. Vladimõr Dlouhý, CSc. v. r. Luis A. Mosca v. r.\nministr prumyslu a obchodu ministr hospodárstvõ a financõ\nSDE L E N I\nMinisterstva zahranicnõch vecõ\nMinisterstvo zahranicnõch vecõ sdeluje, ze dne 18. ledna 2000 byla v Oslo podepsána Smlouva mezi Českou\nrepublikou a Islandskou republikou o zamezenõ dvojõho zdanenõ a zabránenõ danovému úniku v oboru danõ\nz prõjmu.\nSe Smlouvou vyslovil souhlas Parlament České republiky a prezident republiky Smlouvu ratifikoval.\nSmlouva vstoupila v platnost na základe svého clánku 27 odst. 2 dne 28. prosince 2000. Jejõ ustanovenõ se\nbudou provádet v souladu se znenõm clánku 27 odst. 2 põsm. a) a b).\nAnglické znenõ a ceský preklad Smlouvy se vyhlasujõ soucasne.\nEKL AD\nPR\nS M L O U VA\nmezi\nČeskou republikou\na\nIslandskou republikou\no zamezenõ dvojõho zdanenõ a zabránenõ danovému úniku v oboru danõ z prõjmu\nČeská republika a Islandská republika,\nprejõce si uzavrõt smlouvu o zamezenõ dvojõho zdanenõ a zabránenõ danovému úniku v oboru danõ z prõjmu,\nse dohodly takto:"
+      ]
+    },
     {
       "number": 1,
       "title": "Osoby, na které se Smlouva vztahuje",

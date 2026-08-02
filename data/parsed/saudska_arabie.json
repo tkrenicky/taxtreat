@@ -1,0 +1,387 @@
+{
+  "country": "Saúdská Arábie",
+  "source_title": "42/2013 Sb.m.s.",
+  "source_path": "data/raw/treaty/402894f3fcf76059.pdf",
+  "start_page": 5,
+  "identity_validation": {
+    "expected_country": "Saúdská Arábie",
+    "status": "validated",
+    "reason": "counterparty_matched",
+    "matched_alias": "saudska arabie",
+    "matched_method": "country_root",
+    "publication_reference": "42/2013",
+    "publication_reference_found": false,
+    "warnings": [
+      "publication_reference_not_found"
+    ]
+  },
+  "text_extraction": {
+    "method": "ocr",
+    "score": 1980,
+    "page_count": 20,
+    "attempts": [
+      {
+        "method": "pypdf",
+        "score": 82,
+        "total_characters": 4255,
+        "substantive_pages": 3,
+        "article_numbers": [],
+        "error": null
+      },
+      {
+        "method": "pdftotext",
+        "score": 82,
+        "total_characters": 4280,
+        "substantive_pages": 3,
+        "article_numbers": [],
+        "error": null
+      },
+      {
+        "method": "hybrid",
+        "score": 82,
+        "total_characters": 4255,
+        "substantive_pages": 3,
+        "article_numbers": [],
+        "error": null
+      },
+      {
+        "method": "ocr",
+        "score": 1980,
+        "total_characters": 36319,
+        "substantive_pages": 19,
+        "article_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25
+        ],
+        "error": null
+      },
+      {
+        "method": "pypdf+ocr",
+        "score": 1861,
+        "total_characters": 39772,
+        "substantive_pages": 20,
+        "article_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25
+        ],
+        "error": null
+      }
+    ]
+  },
+  "source_resolution": {
+    "status": "resolved",
+    "method": "notice_country_match",
+    "start_page": 3,
+    "end_page": 20,
+    "effective_title": "42/2013 Sb.m.s.",
+    "metadata_mismatch": false,
+    "candidate_count": 1
+  },
+  "articles": [
+    {
+      "number": 1,
+      "title": "OSOBY, NA KTERÉ SE SMLOUVA VZTAHUJE",
+      "text": "Tato smlouva se vztahuje na osoby, které jsou rezidenty jednoho nebo obou\nsmluvních států.",
+      "paragraphs": [
+        "Tato smlouva se vztahuje na osoby, které jsou rezidenty jednoho nebo obou\nsmluvních států."
+      ]
+    },
+    {
+      "number": 2,
+      "title": "DANĚ, NA KTERÉ SE SMLOUVA VZTAHUJE",
+      "text": "1. Tato smlouva se vztahuje na daně z příjmu ukládané jménem každého ze\nsmluvních států nebo jeho nižších správních útvarů nebo místních úřadů, ať je\nzpůsob vybírání jakýkoli.\n2. Za daně z příjmu se považují všechny daně vybírané z celkového příjmu nebo z\nčástí příjmu, včetně daní ze zisků ze zcizení movitého nebo nemovitého majetku, a\nrovněž daní z přírůstku majetku.\n3. Současné daně, na které se tato smlouva vztahuje, jsou zejména:\na) v případě Království Saúdské Arábie:\n- Zakat;\n- daň z příjmů, včetně daně z investic do přírodního plynu;\n(dále nazývané „saúdská daň“);\nb) v případě České republiky:\n- daň z příjmů fyzických osob;\n- daň z příjmů právnických osob;\n(dále nazývané „česká daň“).\n4. Ustanovení této smlouvy se budou rovněž vztahovat na jakékoliv daně stejného\nnebo v zásadě podobného druhu, které budou ukládány kterýmkoliv smluvním\nstátem po datu podpisu této smlouvy vedle nebo místo současných daní. Příslušné\núřady smluvních států si vzájemně sdělí veškeré podstatné změny, které budou\nprovedeny v jejich příslušných daňových zákonech.",
+      "paragraphs": [
+        "1. Tato smlouva se vztahuje na daně z příjmu ukládané jménem každého ze\nsmluvních států nebo jeho nižších správních útvarů nebo místních úřadů, ať je\nzpůsob vybírání jakýkoli.",
+        "2. Za daně z příjmu se považují všechny daně vybírané z celkového příjmu nebo z\nčástí příjmu, včetně daní ze zisků ze zcizení movitého nebo nemovitého majetku, a\nrovněž daní z přírůstku majetku.",
+        "3. Současné daně, na které se tato smlouva vztahuje, jsou zejména:\na) v případě Království Saúdské Arábie:\n- Zakat;\n- daň z příjmů, včetně daně z investic do přírodního plynu;\n(dále nazývané „saúdská daň“);\nb) v případě České republiky:\n- daň z příjmů fyzických osob;\n- daň z příjmů právnických osob;\n(dále nazývané „česká daň“).",
+        "4. Ustanovení této smlouvy se budou rovněž vztahovat na jakékoliv daně stejného\nnebo v zásadě podobného druhu, které budou ukládány kterýmkoliv smluvním\nstátem po datu podpisu této smlouvy vedle nebo místo současných daní. Příslušné\núřady smluvních států si vzájemně sdělí veškeré podstatné změny, které budou\nprovedeny v jejich příslušných daňových zákonech."
+      ]
+    },
+    {
+      "number": 3,
+      "title": "VŠEOBECNÉ DEFINICE",
+      "text": "1. Pro účely této smlouvy, pokud souvislost nevyžaduje odlišný výklad:\na) výraz „Království Saúdské Arábie“ označuje území Království Saúdské\nArábie, které zahrnuje rovněž oblast mimo výsostných vod, kde, na základě jeho\nprávních předpisů a mezinárodního práva, Království Saúdské Arábie vykonává\nsvá svrchovaná a jurisdikční práva pokud jde o vodu, mořské dno, podloží a\npřírodní zdroje;\nb) výraz „Česká republika“ označuje území České republiky, na kterém jsou,\npodle českých právních předpisů a v souladu s mezinárodním právem,\nvykonávána svrchovaná práva České republiky;\n9 výrazy „jeden smluvní stát“ a „druhý smluvní stát“ označují, podle souvislosti,\nČeskou republiku nebo Království Saúdské Arábie;\nd) výraz „osoba“ zahrnuje jakoukoliv fyzickou osobu, jakoukoliv společnost nebo\nvšechna jiná sdružení osob, stát, jeho nižší správní útvar nebo místní úřad;\ne) výraz „společnost“ označuje jakoukoliv právnickou osobu nebo jakéhokoliv\nnositele práv považovaného pro účely zdanění za právnickou osobu;\nf) výrazy „podnik jednoho smluvního státu“ a „podnik druhého smluvního statu“\noznačují, podle souvislosti, podnik provozovaný rezidentem jednoho smluvního\nstátu a podnik provozovaný rezidentem druhého smluvního státu;\ng) výraz „mezinárodní doprava“ označuje jakoukoli dopravu lodí nebo letadlem\nprovozovanou podnikem, který má místo svého hlavního vedení v jednom\nsmluvním státě, vyjma případů, kdy je loď provozována nebo letadlo\nprovozováno pouze mezi místy ve druhém smluvním státě;\nh) výraz „státní příslušník“ označuje:\n- každou fyzickou osobu, která je státním občanem některého smluvního státu;\n- každou právnickou osobu, osobní společnost nebo sdružení zřízenou nebo\nzřízené podle právních předpisů platných v některém smluvním státě;\ni) výraz „příslušný úřad“ označuje:\n- v případě České republiky, ministra financí nebo jeho zmocněného zástupce;\n- vpřípadě Království Saúdské Arábie, ministerstvo financí zastupované\nministrem financí nebo jeho zmocněným zástupcem.\n2. Pokud jde o provádění této smlouvy v jakémkoliv čase některým ze smluvních\nstátů, bude mít každý výraz, který v ní není definován, pokud souvislost\nnevyžaduje odlišný výklad, takový význam, jenž mu náleží v tomto čase podle\nprávních předpisů tohoto státu pro účely daní, na které se tato smlouva vztahuje,\npřičemž jakýkoliv význam podle používaných daňových zákonů tohoto státu bude\npřevažovat nad významem daným výrazu podle jiných právních předpisů tohoto\nstátu.",
+      "paragraphs": [
+        "1. Pro účely této smlouvy, pokud souvislost nevyžaduje odlišný výklad:\na) výraz „Království Saúdské Arábie“ označuje území Království Saúdské\nArábie, které zahrnuje rovněž oblast mimo výsostných vod, kde, na základě jeho\nprávních předpisů a mezinárodního práva, Království Saúdské Arábie vykonává\nsvá svrchovaná a jurisdikční práva pokud jde o vodu, mořské dno, podloží a\npřírodní zdroje;\nb) výraz „Česká republika“ označuje území České republiky, na kterém jsou,\npodle českých právních předpisů a v souladu s mezinárodním právem,\nvykonávána svrchovaná práva České republiky;\n9 výrazy „jeden smluvní stát“ a „druhý smluvní stát“ označují, podle souvislosti,\nČeskou republiku nebo Království Saúdské Arábie;\nd) výraz „osoba“ zahrnuje jakoukoliv fyzickou osobu, jakoukoliv společnost nebo\nvšechna jiná sdružení osob, stát, jeho nižší správní útvar nebo místní úřad;\ne) výraz „společnost“ označuje jakoukoliv právnickou osobu nebo jakéhokoliv\nnositele práv považovaného pro účely zdanění za právnickou osobu;\nf) výrazy „podnik jednoho smluvního státu“ a „podnik druhého smluvního statu“\noznačují, podle souvislosti, podnik provozovaný rezidentem jednoho smluvního\nstátu a podnik provozovaný rezidentem druhého smluvního státu;\ng) výraz „mezinárodní doprava“ označuje jakoukoli dopravu lodí nebo letadlem\nprovozovanou podnikem, který má místo svého hlavního vedení v jednom\nsmluvním státě, vyjma případů, kdy je loď provozována nebo letadlo\nprovozováno pouze mezi místy ve druhém smluvním státě;\nh) výraz „státní příslušník“ označuje:\n- každou fyzickou osobu, která je státním občanem některého smluvního státu;\n- každou právnickou osobu, osobní společnost nebo sdružení zřízenou nebo\nzřízené podle právních předpisů platných v některém smluvním státě;\ni) výraz „příslušný úřad“ označuje:\n- v případě České republiky, ministra financí nebo jeho zmocněného zástupce;\n- vpřípadě Království Saúdské Arábie, ministerstvo financí zastupované\nministrem financí nebo jeho zmocněným zástupcem.",
+        "2. Pokud jde o provádění této smlouvy v jakémkoliv čase některým ze smluvních\nstátů, bude mít každý výraz, který v ní není definován, pokud souvislost\nnevyžaduje odlišný výklad, takový význam, jenž mu náleží v tomto čase podle\nprávních předpisů tohoto státu pro účely daní, na které se tato smlouva vztahuje,\npřičemž jakýkoliv význam podle používaných daňových zákonů tohoto státu bude\npřevažovat nad významem daným výrazu podle jiných právních předpisů tohoto\nstátu."
+      ]
+    },
+    {
+      "number": 4,
+      "title": "REZIDENT",
+      "text": "1. Výraz „rezident smluvního státu“ označuje pro účely této smlouvy každou\nosobu, která je podle právních předpisů tohoto státu podrobena v tomto státě\nzdanění z důvodu svého bydliště, stálého pobytu, místa založení, místa hlavního\nvedení nebo jakéhokoli jiného podobného kritéria. Tento výraz však nezahrnuje\nžádnou osobu, která je podrobena zdanění v tomto státě pouze z důvodu příjmu\nze zdrojů v tomto státě.\n2. Výraz „rezident smluvního státu“ v každém případě pro účely této smlouvy\nzahrnuje tento stát a jakýkoliv nižší správní útvar nebo místní úřad tohoto státu a\njakoukoliv právnickou osobu zřízenou podle právních předpisů platných v tomto\nstátě, která je v tomto státě provozována buď:\na) výlučně pro náboženské, charitativní, vzdělávací, vědecké nebo jiné podobné\núčely; nebo\nb) aby poskytovala penze nebo jiné podobné dávky zaměstnancům na základě\nplánu.\n3. Jestliže fyzická osoba je podle ustanovení odstavce 1 tohoto článku rezidentem\nobou smluvních států, bude její postavení určeno následovně:\na) předpokládá se, že tato osoba je rezidentem pouze toho smluvního státu, ve\nkterém má k dispozici stálý byt; jestliže má k dispozici stálý byt v obou smluvních\nstátech, předpokládá se, že je rezidentem pouze toho smluvního státu, ke kterému\nmá užší osobní a hospodářské vztahy (středisko životních zájmů);\nb) jestliže nemůže být určeno, ve kterém smluvním státě má tato osoba středisko\nsvých životních zájmů nebo jestliže nemá k dispozici stálý byt v žádném smluvním\nstátě, předpokládá se, že je rezidentem pouze toho smluvního státu, ve kterém se\nobvykle zdržuje;\nc) jestliže se tato osoba obvykle zdržuje v obou smluvních státech nebo v žádném\nz nich, předpokládá se, že je rezidentem pouze toho smluvního státu, jehož je\nstátním příslušníkem;\nd) jestliže je tato osoba státním příslušníkem obou smluvních států nebo žádného\nz nich, upraví příslušné úřady smluvních států tuto otázku vzájemnou dohodou.\n4. Jestliže osoba, jiná než osoba fyzická, je podle ustanovení odstavce 1 tohoto\nčlánku rezidentem obou smluvních států, předpokládá se, že je rezidentem pouze\ntoho státu, v němž se nachází místo jejího hlavního vedení.",
+      "paragraphs": [
+        "1. Výraz „rezident smluvního státu“ označuje pro účely této smlouvy každou\nosobu, která je podle právních předpisů tohoto státu podrobena v tomto státě\nzdanění z důvodu svého bydliště, stálého pobytu, místa založení, místa hlavního\nvedení nebo jakéhokoli jiného podobného kritéria. Tento výraz však nezahrnuje\nžádnou osobu, která je podrobena zdanění v tomto státě pouze z důvodu příjmu\nze zdrojů v tomto státě.",
+        "2. Výraz „rezident smluvního státu“ v každém případě pro účely této smlouvy\nzahrnuje tento stát a jakýkoliv nižší správní útvar nebo místní úřad tohoto státu a\njakoukoliv právnickou osobu zřízenou podle právních předpisů platných v tomto\nstátě, která je v tomto státě provozována buď:\na) výlučně pro náboženské, charitativní, vzdělávací, vědecké nebo jiné podobné\núčely; nebo\nb) aby poskytovala penze nebo jiné podobné dávky zaměstnancům na základě\nplánu.",
+        "3. Jestliže fyzická osoba je podle ustanovení odstavce 1 tohoto článku rezidentem\nobou smluvních států, bude její postavení určeno následovně:\na) předpokládá se, že tato osoba je rezidentem pouze toho smluvního státu, ve\nkterém má k dispozici stálý byt; jestliže má k dispozici stálý byt v obou smluvních\nstátech, předpokládá se, že je rezidentem pouze toho smluvního státu, ke kterému\nmá užší osobní a hospodářské vztahy (středisko životních zájmů);\nb) jestliže nemůže být určeno, ve kterém smluvním státě má tato osoba středisko\nsvých životních zájmů nebo jestliže nemá k dispozici stálý byt v žádném smluvním\nstátě, předpokládá se, že je rezidentem pouze toho smluvního státu, ve kterém se\nobvykle zdržuje;\nc) jestliže se tato osoba obvykle zdržuje v obou smluvních státech nebo v žádném\nz nich, předpokládá se, že je rezidentem pouze toho smluvního státu, jehož je\nstátním příslušníkem;\nd) jestliže je tato osoba státním příslušníkem obou smluvních států nebo žádného\nz nich, upraví příslušné úřady smluvních států tuto otázku vzájemnou dohodou.",
+        "4. Jestliže osoba, jiná než osoba fyzická, je podle ustanovení odstavce 1 tohoto\nčlánku rezidentem obou smluvních států, předpokládá se, že je rezidentem pouze\ntoho státu, v němž se nachází místo jejího hlavního vedení."
+      ]
+    },
+    {
+      "number": 5,
+      "title": "STÁLÁ PROVOZOVNA",
+      "text": "1. Výraz „stálá provozovna“ označuje pro účely této smlouvy trvalé místo\nk výkonu činnosti, jehož prostřednictvím je zcela nebo zčásti vykonávána činnost\npodniku.\n2. Výraz „stálá provozovna“ zahrnuje obzvláště:\na) místo vedení;\nb) závod;\nc) kancelář;\nd) továrnu;\ne) dílnu;\nf) místo těžby přírodních zdrojů.\n3. Výraz „stálá provozovna“ rovněž zahrnuje:\na) staveniště, stavební, montážní nebo instalační projekt nebo dozor s tím spojený,\navšak pouze pokud takové staveniště, projekt nebo dozor trvá déle než šest\nměsíců;\nb) poskytování služeb, včetně poradenských služeb, podnikem jednoho smluvního\nstátu prostřednictvím zaměstnanců nebo jiných pracovníků najatých podnikem\npro tento účel, avšak pouze pokud činnosti takového charakteru trvají na území\ndruhého smluvního státu po jedno nebo více období přesahující v úhrnu šest\nměsíců v jakémkoliv dvanáctiměsíčním období.\n4. Bez ohledu na předchozí ustanovení tohoto článku se předpokládá, že výraz\n„stálá provozovna“ nezahrnuje:\na) zařízení, které se využívá pouze za účelem uskladnění nebo vystavení zboží\npatřícího podniku;\nb) zásobu zboží patřícího podniku, která se udržuje pouze za účelem uskladnění\nnebo vystavení;\nc) zásobu zboží patřícího podniku, která se udržuje pouze za účelem zpracování\njiným podnikem;\nd) trvalé místo k výkonu činnosti, které se udržuje pouze za účelem nákupu zboží\nnebo shromažďování informací pro podnik;\ne) trvalé místo k výkonu činnosti, které se udržuje pouze za účelem vykonávání\njakékoliv jiné činnosti, která má pro podnik přípravný nebo pomocný charakter;\nf) trvalé místo kvýkonu činnosti, které se udržuje pouze k vykonávání\njakéhokoliv spojení činností uvedených v písmenech a) až e), pokud celková\nčinnost trvalého místa kvýkonu činnosti vyplývající z tohoto spojení je\npřípravného nebo pomocného charakteru.\n5. Jestliže, bez ohledu na ustanovení odstavců 1 a 2 tohoto článku, osoba - jiná než\nnezávislý zástupce, na kterého se vztahuje odstavec 6 - jedná v jednom smluvním\nstátě na účet podniku druhého smluvního státu, má se za to, že tento podnik má\nstálou provozovnu v prvně zmíněném smluvním státě ve vztahu ke všem\nčinnostem, které tato osoba provádí pro podnik, jestliže tato osoba:\na) má a obvykle vykonává v tomto státě oprávnění uzavírat smlouvy jménem\npodniku, pokud činnosti takovéto osoby nejsou omezeny na činnosti uvedené v\nodstavci 4 tohoto článku, které, pokud by byly vykonávány prostřednictvím\ntrvalého místa kvýkonu činnosti, by nezakládaly z tohoto trvalého místa\nk výkonu činnosti stálou provozovnu podle ustanovení tohoto odstavce; nebo\nb) nemá takové oprávnění, ale obvykle udržuje v prvně zmíněném státě zásobu\nzboží, ze které pravidelně dodává zboží jménem podniku.\n6. Nemá se za to, že podnik jednoho smluvního státu má stálou provozovnu ve\ndruhém smluvním státě jenom proto, že v tomto druhém státě vykonává svoji\nčinnost prostřednictvím makléře, generálního komisionáře nebo jakéhokoliv\njiného nezávislého zástupce, pokud tyto osoby jednají v rámci své řádné činnosti.\nAvšak jestliže činnosti takového zástupce jsou zcela nebo téměř zcela věnovány\nzájmům tohoto podniku a jiných podniků, které jsou jím ovládány nebo které\nmají podíl na jeho ovládání, nebude tento zástupce považován za nezávislého ve\nsmyslu tohoto odstavce.\n7. Skutečnost, že společnost, která je rezidentem jednoho smluvního státu, ovládá\nnebo je ovládána společností, která je rezidentem druhého smluvního státu nebo\nkterá v tomto druhém státě vykonává svoji činnost (ať prostřednictvím stálé\nprovozovny nebo jinak), neučiní sama o sobě z kterékoli této společnosti stálou\nprovozovnu druhé společnosti.",
+      "paragraphs": [
+        "1. Výraz „stálá provozovna“ označuje pro účely této smlouvy trvalé místo\nk výkonu činnosti, jehož prostřednictvím je zcela nebo zčásti vykonávána činnost\npodniku.",
+        "2. Výraz „stálá provozovna“ zahrnuje obzvláště:\na) místo vedení;\nb) závod;\nc) kancelář;\nd) továrnu;\ne) dílnu;\nf) místo těžby přírodních zdrojů.",
+        "3. Výraz „stálá provozovna“ rovněž zahrnuje:\na) staveniště, stavební, montážní nebo instalační projekt nebo dozor s tím spojený,\navšak pouze pokud takové staveniště, projekt nebo dozor trvá déle než šest\nměsíců;\nb) poskytování služeb, včetně poradenských služeb, podnikem jednoho smluvního\nstátu prostřednictvím zaměstnanců nebo jiných pracovníků najatých podnikem\npro tento účel, avšak pouze pokud činnosti takového charakteru trvají na území\ndruhého smluvního státu po jedno nebo více období přesahující v úhrnu šest\nměsíců v jakémkoliv dvanáctiměsíčním období.",
+        "4. Bez ohledu na předchozí ustanovení tohoto článku se předpokládá, že výraz\n„stálá provozovna“ nezahrnuje:\na) zařízení, které se využívá pouze za účelem uskladnění nebo vystavení zboží\npatřícího podniku;\nb) zásobu zboží patřícího podniku, která se udržuje pouze za účelem uskladnění\nnebo vystavení;\nc) zásobu zboží patřícího podniku, která se udržuje pouze za účelem zpracování\njiným podnikem;\nd) trvalé místo k výkonu činnosti, které se udržuje pouze za účelem nákupu zboží\nnebo shromažďování informací pro podnik;\ne) trvalé místo k výkonu činnosti, které se udržuje pouze za účelem vykonávání\njakékoliv jiné činnosti, která má pro podnik přípravný nebo pomocný charakter;\nf) trvalé místo kvýkonu činnosti, které se udržuje pouze k vykonávání\njakéhokoliv spojení činností uvedených v písmenech a) až e), pokud celková\nčinnost trvalého místa kvýkonu činnosti vyplývající z tohoto spojení je\npřípravného nebo pomocného charakteru.",
+        "5. Jestliže, bez ohledu na ustanovení odstavců 1 a 2 tohoto článku, osoba - jiná než\nnezávislý zástupce, na kterého se vztahuje odstavec 6 - jedná v jednom smluvním\nstátě na účet podniku druhého smluvního státu, má se za to, že tento podnik má\nstálou provozovnu v prvně zmíněném smluvním státě ve vztahu ke všem\nčinnostem, které tato osoba provádí pro podnik, jestliže tato osoba:\na) má a obvykle vykonává v tomto státě oprávnění uzavírat smlouvy jménem\npodniku, pokud činnosti takovéto osoby nejsou omezeny na činnosti uvedené v\nodstavci 4 tohoto článku, které, pokud by byly vykonávány prostřednictvím\ntrvalého místa kvýkonu činnosti, by nezakládaly z tohoto trvalého místa\nk výkonu činnosti stálou provozovnu podle ustanovení tohoto odstavce; nebo\nb) nemá takové oprávnění, ale obvykle udržuje v prvně zmíněném státě zásobu\nzboží, ze které pravidelně dodává zboží jménem podniku.",
+        "6. Nemá se za to, že podnik jednoho smluvního státu má stálou provozovnu ve\ndruhém smluvním státě jenom proto, že v tomto druhém státě vykonává svoji\nčinnost prostřednictvím makléře, generálního komisionáře nebo jakéhokoliv\njiného nezávislého zástupce, pokud tyto osoby jednají v rámci své řádné činnosti.\nAvšak jestliže činnosti takového zástupce jsou zcela nebo téměř zcela věnovány\nzájmům tohoto podniku a jiných podniků, které jsou jím ovládány nebo které\nmají podíl na jeho ovládání, nebude tento zástupce považován za nezávislého ve\nsmyslu tohoto odstavce.",
+        "7. Skutečnost, že společnost, která je rezidentem jednoho smluvního státu, ovládá\nnebo je ovládána společností, která je rezidentem druhého smluvního státu nebo\nkterá v tomto druhém státě vykonává svoji činnost (ať prostřednictvím stálé\nprovozovny nebo jinak), neučiní sama o sobě z kterékoli této společnosti stálou\nprovozovnu druhé společnosti."
+      ]
+    },
+    {
+      "number": 6,
+      "title": "PŘÍJMY Z NEMOVITÉHO MAJETKU",
+      "text": "1. Příjmy, které pobírá rezident jednoho smluvního státu z nemovitého majetku\n(včetně příjmů ze zemědělství nebo lesnictví) umístěného ve druhém smluvním\nstátě, mohou být zdaněny v tomto druhém smluvním státě.\n2. Výraz „nemovitý majetek“ má takový význam, jenž mu náleží podle právních\npředpisů smluvního státu, v němž je daný majetek umístěn. Tento výraz zahrnuje\nv každém případě příslušenství nemovitého majetku, živý a mrtvý inventář\nužívaný v zemědělství a lesnictví, práva, pro která platí ustanovení občanského\npráva vztahující se na pozemky, užívací právo k nemovitému majetku a práva na\nproměnlivé nebo pevné platby za těžení nebo za přivolení k těžení nerostných\nložisek, pramenů a jiných přírodních zdrojů. Lodě a letadla se nepovažují za\nnemovitý majetek.\n3. Ustanovení odstavce 1 tohoto článku platí pro příjmy pobírané z přímého\nužívání, nájmu nebo každého jiného způsobu užívání nemovitého majetku.\n4. Ustanovení odstavců 1 a 3 tohoto článku platí rovněž pro příjmy z nemovitého\nmajetku podniku a pro příjmy z nemovitého majetku užívaného k vykonávání\nnezávislého povolání.",
+      "paragraphs": [
+        "1. Příjmy, které pobírá rezident jednoho smluvního státu z nemovitého majetku\n(včetně příjmů ze zemědělství nebo lesnictví) umístěného ve druhém smluvním\nstátě, mohou být zdaněny v tomto druhém smluvním státě.",
+        "2. Výraz „nemovitý majetek“ má takový význam, jenž mu náleží podle právních\npředpisů smluvního státu, v němž je daný majetek umístěn. Tento výraz zahrnuje\nv každém případě příslušenství nemovitého majetku, živý a mrtvý inventář\nužívaný v zemědělství a lesnictví, práva, pro která platí ustanovení občanského\npráva vztahující se na pozemky, užívací právo k nemovitému majetku a práva na\nproměnlivé nebo pevné platby za těžení nebo za přivolení k těžení nerostných\nložisek, pramenů a jiných přírodních zdrojů. Lodě a letadla se nepovažují za\nnemovitý majetek.",
+        "3. Ustanovení odstavce 1 tohoto článku platí pro příjmy pobírané z přímého\nužívání, nájmu nebo každého jiného způsobu užívání nemovitého majetku.",
+        "4. Ustanovení odstavců 1 a 3 tohoto článku platí rovněž pro příjmy z nemovitého\nmajetku podniku a pro příjmy z nemovitého majetku užívaného k vykonávání\nnezávislého povolání."
+      ]
+    },
+    {
+      "number": 7,
+      "title": "ZISKY PODNIKŮ",
+      "text": "1. Zisky podniku jednoho smluvního státu podléhají zdanění jen v tomto státě,\npokud podnik nevykonává svoji činnost v druhém smluvním. státě\nprostřednictvím stálé provozovny, která je tam umístěna. Jestliže podnik\nvykonává svoji činnost tímto způsobem, mohou být zisky podniku zdaněny ve\ndruhém státě, avšak pouze v takovém rozsahu, v jakém je lze přičítat této stálé\nprovozovně.\n2. Jestliže podnik jednoho smluvního státu vykonává svoji činnost v druhém\nsmluvním státě prostřednictvím stálé provozovny, která je tam umístěna,\npřisuzují se, s výhradou ustanovení odstavce 3 tohoto článku, v každém smluvním\nstátě této stálé provozovně zisky, které by byla mohla docílit, kdyby byla jako\nsamostatný podnik vykonávala stejné nebo obdobné činnosti za stejných nebo\nobdobných podmínek a byla zcela nezávislá ve styku s podnikem, jehož je stálou\nprovozovnou.\n3. Při stanovení zisků stálé provozovny se povoluje odečíst náklady vynaložené\npro účely činnosti stálé provozovny, včetně výloh vedení a všeobecných správních\nvýloh takto vynaložených, ať vznikly ve státě, v němž je stálá provozovna\numístěna, či jinde. Avšak takový odpočet se nepovolí u částek, pokud nějaké\nbudou, placených (jinak než proti proplacení skutečných výdajů) stálou\nprovozovnou ústředí podniku nebo jakékoliv jiné z jeho kanceláří ve formě\nlicenčních poplatků, odměn nebo jiných podobných plateb náhradou za užití\npatentů nebo jiných práv nebo ve formě provize za zvláštní poskytnuté služby\nnebo za řídící služby nebo, vyjma případu bankovního podniku, ve formě příjmů\nz pohledávky co se týče peněz půjčených stálé provozovně. Podobně se nezohlední\npři stanovení zisků stálé provozovny částky účtované (jinak než proti proplacení\nskutečných výdajů) stálou provozovnou ústředí podniku nebo jakékoliv jiné z\njeho kanceláří ve formě licenčních poplatků, odměn nebo jiných podobných\nplateb náhradou za užití patentů nebo jiných práv nebo ve formě provize za\nzvláštní poskytnuté služby nebo za řídící služby nebo, vyjma případu bankovního\npodniku, ve formě příjmů z pohledávky co se týče peněz půjčených ústředí\npodniku nebo jakékoliv jiné z jeho kanceláří.\n4. Jestliže je v některém smluvním státě obvyklé stanovit zisky, které mají být\npřičteny stálé provozovně, na základě rozdělení celkových zisků podniku jeho\nrůzným částem, nic v odstavci 2 nevylučuje, aby tento smluvní stát stanovil zisky,\njež mají být zdaněny, tímto obvyklým rozdělením. Použitý způsob rozdělení musí\nbýt však takový, aby výsledek byl v souladu se zásadami stanovenými v tomto\nčlánku.\n5. Zisky, které pobírá podnik jednoho smluvního státu z vývozu zboží do druhého\nsmluvního státu nepodléhají zdanění v tomto druhém smluvním státě. Jestliže\nvývozní kontrakty zahrnují další činnosti vykonávané ve druhém smluvním státě\nprostřednictvím stálé provozovny, mohou být zisky pobírané z takovýchto\nčinností zdaněny ve druhém smluvním státě.\n6. Stálé provozovně se nepřičtou žádné zisky na základě skutečnosti, že pouze\nnakupovala zboží pro podnik.\n7. Zisky, které mají být přičteny stálé provozovně, se pro účely předchozích\nodstavců stanoví každý rok stejným způsobem, pokud neexistují dostatečné\ndůvody pro jiný postup.\n8. Výraz „zisky podniků“ zahrnuje, ale není omezen na, zisky pobírané z výroby,\nobchodní činnosti, bankovnictví, pojišťovnictví, z provozování vnitrozemské\ndopravy a z poskytování služeb. Tento výraz nezahrnuje zisky fyzické osoby\nz vykonávání osobních služeb, ať jako zaměstnance či jako nezávislé osoby.\n9. Nic vtomto článku se nedotýká provádění jakéhokoliv právního předpisu\nsmluvního státu, který se týká daně ukládané z příjmů pobíraných nerezidenty\nz pojišťovacích činností.\n10. Jestliže zisky zahrnují části příjmů, o nichž se pojednává odděleně v jiných\nčláncích této smlouvy, nebudou ustanovení oněch článků dotčena ustanoveními\ntohoto článku.",
+      "paragraphs": [
+        "1. Zisky podniku jednoho smluvního státu podléhají zdanění jen v tomto státě,\npokud podnik nevykonává svoji činnost v druhém smluvním. státě\nprostřednictvím stálé provozovny, která je tam umístěna. Jestliže podnik\nvykonává svoji činnost tímto způsobem, mohou být zisky podniku zdaněny ve\ndruhém státě, avšak pouze v takovém rozsahu, v jakém je lze přičítat této stálé\nprovozovně.",
+        "2. Jestliže podnik jednoho smluvního státu vykonává svoji činnost v druhém\nsmluvním státě prostřednictvím stálé provozovny, která je tam umístěna,\npřisuzují se, s výhradou ustanovení odstavce 3 tohoto článku, v každém smluvním\nstátě této stálé provozovně zisky, které by byla mohla docílit, kdyby byla jako\nsamostatný podnik vykonávala stejné nebo obdobné činnosti za stejných nebo\nobdobných podmínek a byla zcela nezávislá ve styku s podnikem, jehož je stálou\nprovozovnou.",
+        "3. Při stanovení zisků stálé provozovny se povoluje odečíst náklady vynaložené\npro účely činnosti stálé provozovny, včetně výloh vedení a všeobecných správních\nvýloh takto vynaložených, ať vznikly ve státě, v němž je stálá provozovna\numístěna, či jinde. Avšak takový odpočet se nepovolí u částek, pokud nějaké\nbudou, placených (jinak než proti proplacení skutečných výdajů) stálou\nprovozovnou ústředí podniku nebo jakékoliv jiné z jeho kanceláří ve formě\nlicenčních poplatků, odměn nebo jiných podobných plateb náhradou za užití\npatentů nebo jiných práv nebo ve formě provize za zvláštní poskytnuté služby\nnebo za řídící služby nebo, vyjma případu bankovního podniku, ve formě příjmů\nz pohledávky co se týče peněz půjčených stálé provozovně. Podobně se nezohlední\npři stanovení zisků stálé provozovny částky účtované (jinak než proti proplacení\nskutečných výdajů) stálou provozovnou ústředí podniku nebo jakékoliv jiné z\njeho kanceláří ve formě licenčních poplatků, odměn nebo jiných podobných\nplateb náhradou za užití patentů nebo jiných práv nebo ve formě provize za\nzvláštní poskytnuté služby nebo za řídící služby nebo, vyjma případu bankovního\npodniku, ve formě příjmů z pohledávky co se týče peněz půjčených ústředí\npodniku nebo jakékoliv jiné z jeho kanceláří.",
+        "4. Jestliže je v některém smluvním státě obvyklé stanovit zisky, které mají být\npřičteny stálé provozovně, na základě rozdělení celkových zisků podniku jeho\nrůzným částem, nic v odstavci 2 nevylučuje, aby tento smluvní stát stanovil zisky,\njež mají být zdaněny, tímto obvyklým rozdělením. Použitý způsob rozdělení musí\nbýt však takový, aby výsledek byl v souladu se zásadami stanovenými v tomto\nčlánku.",
+        "5. Zisky, které pobírá podnik jednoho smluvního státu z vývozu zboží do druhého\nsmluvního státu nepodléhají zdanění v tomto druhém smluvním státě. Jestliže\nvývozní kontrakty zahrnují další činnosti vykonávané ve druhém smluvním státě\nprostřednictvím stálé provozovny, mohou být zisky pobírané z takovýchto\nčinností zdaněny ve druhém smluvním státě.",
+        "6. Stálé provozovně se nepřičtou žádné zisky na základě skutečnosti, že pouze\nnakupovala zboží pro podnik.",
+        "7. Zisky, které mají být přičteny stálé provozovně, se pro účely předchozích\nodstavců stanoví každý rok stejným způsobem, pokud neexistují dostatečné\ndůvody pro jiný postup.",
+        "8. Výraz „zisky podniků“ zahrnuje, ale není omezen na, zisky pobírané z výroby,\nobchodní činnosti, bankovnictví, pojišťovnictví, z provozování vnitrozemské\ndopravy a z poskytování služeb. Tento výraz nezahrnuje zisky fyzické osoby\nz vykonávání osobních služeb, ať jako zaměstnance či jako nezávislé osoby.",
+        "9. Nic vtomto článku se nedotýká provádění jakéhokoliv právního předpisu\nsmluvního státu, který se týká daně ukládané z příjmů pobíraných nerezidenty\nz pojišťovacích činností.",
+        "10. Jestliže zisky zahrnují části příjmů, o nichž se pojednává odděleně v jiných\nčláncích této smlouvy, nebudou ustanovení oněch článků dotčena ustanoveními\ntohoto článku."
+      ]
+    },
+    {
+      "number": 8,
+      "title": "VODNÍ A LETECKÁ DOPRAVA",
+      "text": "1. Zisky z provozování lodí nebo letadel v mezinárodní dopravě podléhají zdanění\njen ve smluvním státě, v němž se nachází místo hlavního vedení podniku.\n2. Jestliže místo hlavního vedení podniku vodní dopravy je na palubě lodi,\npovažuje se za umístěné ve smluvním státě, v němž se nachází domovský přístav\nlodi, nebo, není-li takový domovský přístav, ve smluvním státě, jehož je\nprovozovatel lodi rezidentem.\n3. Ustanovení odstavce 1 tohoto článku platí rovněž pro zisky z účasti na poolu,\nspolečném provozu nebo mezinárodní provozní organizaci.",
+      "paragraphs": [
+        "1. Zisky z provozování lodí nebo letadel v mezinárodní dopravě podléhají zdanění\njen ve smluvním státě, v němž se nachází místo hlavního vedení podniku.",
+        "2. Jestliže místo hlavního vedení podniku vodní dopravy je na palubě lodi,\npovažuje se za umístěné ve smluvním státě, v němž se nachází domovský přístav\nlodi, nebo, není-li takový domovský přístav, ve smluvním státě, jehož je\nprovozovatel lodi rezidentem.",
+        "3. Ustanovení odstavce 1 tohoto článku platí rovněž pro zisky z účasti na poolu,\nspolečném provozu nebo mezinárodní provozní organizaci."
+      ]
+    },
+    {
+      "number": 9,
+      "title": "SDRUŽENÉ PODNIKY",
+      "text": "1. Jestliže\na) se podnik jednoho smluvního státu podílí přímo nebo nepřímo na vedení,\nkontrole nebo kapitálu podniku druhého smluvního státu, nebo\nb) tytéž osoby se podílejí přímo nebo nepřímo na vedení, kontrole nebo kapitálu\npodniku jednoho smluvního státu i podniku druhého smluvního státu\na jestliže v těchto případech jsou oba podniky ve svých obchodních nebo\nfinančních vztazích vázány podmínkami, které sjednaly nebo jim byly uloženy a\nkteré se liší od podmínek, které by byly sjednány mezi nezávislými podniky,\nmohou jakékoliv zisky, které by, nebýt těchto podmínek, byly docíleny jedním z\npodniků, ale vzhledem k těmto podmínkám docíleny nebyly, být zahrnuty do\nzisků tohoto podniku a následně zdaněny.\n2. Jestliže jeden smluvní stát zahrne do zisků podniku tohoto státu — a následně\nzdaní — zisky, které podniku druhého smluvního státu byly zdaněny v tomto\ndruhém státě, a zisky takto zahrnuté jsou zisky, které by byly docíleny podnikem\nprvně zmíněného státu, kdyby podmínky sjednané mezi oběma podniky byly\ntakové, jaké by byly sjednány mezi nezávislými podniky, upraví tento druhý stát\n— svýjimkou případu podvodu, hrubé nedbalosti nebo vědomého zanedbání —\npřiměřeně částku daně tam uložené z těchto zisků. Při stanovení této úpravy se\npřihlédne k ostatním ustanovením této smlouvy a, bude-li to nutné, příslušné\núřady smluvních států se za tím účelem vzájemně poradí.",
+      "paragraphs": [
+        "1. Jestliže\na) se podnik jednoho smluvního státu podílí přímo nebo nepřímo na vedení,\nkontrole nebo kapitálu podniku druhého smluvního státu, nebo\nb) tytéž osoby se podílejí přímo nebo nepřímo na vedení, kontrole nebo kapitálu\npodniku jednoho smluvního státu i podniku druhého smluvního státu\na jestliže v těchto případech jsou oba podniky ve svých obchodních nebo\nfinančních vztazích vázány podmínkami, které sjednaly nebo jim byly uloženy a\nkteré se liší od podmínek, které by byly sjednány mezi nezávislými podniky,\nmohou jakékoliv zisky, které by, nebýt těchto podmínek, byly docíleny jedním z\npodniků, ale vzhledem k těmto podmínkám docíleny nebyly, být zahrnuty do\nzisků tohoto podniku a následně zdaněny.",
+        "2. Jestliže jeden smluvní stát zahrne do zisků podniku tohoto státu — a následně\nzdaní — zisky, které podniku druhého smluvního státu byly zdaněny v tomto\ndruhém státě, a zisky takto zahrnuté jsou zisky, které by byly docíleny podnikem\nprvně zmíněného státu, kdyby podmínky sjednané mezi oběma podniky byly\ntakové, jaké by byly sjednány mezi nezávislými podniky, upraví tento druhý stát\n— svýjimkou případu podvodu, hrubé nedbalosti nebo vědomého zanedbání —\npřiměřeně částku daně tam uložené z těchto zisků. Při stanovení této úpravy se\npřihlédne k ostatním ustanovením této smlouvy a, bude-li to nutné, příslušné\núřady smluvních států se za tím účelem vzájemně poradí."
+      ]
+    },
+    {
+      "number": 10,
+      "title": "DIVIDENDY",
+      "text": "1. Dividendy vyplácené společností, která je rezidentem jednoho smluvního státu,\nrezidentu druhého smluvního státu, mohou být zdaněny v tomto druhém\nsmluvním státě.\n2. Tyto dividendy však mohou být rovněž zdaněny ve smluvním státě, jehož je\nspolečnost, která je vyplácí, rezidentem, a to podle právních předpisů tohoto\nstátu, avšak jestliže skutečný vlastník dividend je rezidentem druhého smluvního\nstátu, daň takto uložená nepřesáhne 5 procent hrubé částky dividend. Tento\nodstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.\n3. Výraz „dividendy“ použitý v tomto článku označuje příjmy zakcií,\npožitkových akcií nebo požitkových práv, kuksů, zakladatelských podílů nebo\njiných práv, s výjimkou pohledávek, s podílem na zisku, jakož i jiné příjmy, které\njsou podrobeny stejnému daňovému režimu jako příjmy z akcií podle právních\npředpisů státu, jehož je společnost, která rozdílí zisk nebo provádí platbu,\nrezidentem.\n4. Ustanovení odstavců 1 a 2 tohoto článku se nepoužijí, jestliže skutečný vlastník\ndividend, který je rezidentem jednoho smluvního státu, vykonává v druhém\nsmluvním státě, jehož je rezidentem společnost vyplácející dividendy, svoji\nčinnost prostřednictvím stálé provozovny, která je tam umístěna, nebo vykonává\nv tomto druhém státě nezávislé povolání ze stálé základny tam umístěné, a jestliže\núčast, pro kterou se dividendy vyplácejí, se skutečně váže k této stálé provozovně\nnebo stálé základně. V takovém případě se použijí ustanovení článku 7 nebo\nčlánku 14 této smlouvy podle toho, o jaký případ jde.\n5. Jestliže společnost, která je rezidentem jednoho smluvního státu, dosahuje\nzisky nebo příjmy z druhého smluvního státu, nemůže tento druhý stát zdanit\ndividendy vyplácené společností, ledaže jsou tyto dividendy vypláceny rezidentu\ntohoto druhého státu nebo že účast, pro kterou se dividendy vyplácejí, se skutečně\nváže ke stálé provozovně nebo stálé základně, která je umístěna v tomto druhém\nstátě, ani podrobit nerozdělené zisky společnosti dani z nerozdělených zisků\nspolečnosti, i když vyplácené dividendy nebo nerozdělené zisky pozůstávají zcela\nnebo zčásti ze zisků nebo z příjmů majících zdroj v tomto druhém státě.",
+      "paragraphs": [
+        "1. Dividendy vyplácené společností, která je rezidentem jednoho smluvního státu,\nrezidentu druhého smluvního státu, mohou být zdaněny v tomto druhém\nsmluvním státě.",
+        "2. Tyto dividendy však mohou být rovněž zdaněny ve smluvním státě, jehož je\nspolečnost, která je vyplácí, rezidentem, a to podle právních předpisů tohoto\nstátu, avšak jestliže skutečný vlastník dividend je rezidentem druhého smluvního\nstátu, daň takto uložená nepřesáhne 5 procent hrubé částky dividend. Tento\nodstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.",
+        "3. Výraz „dividendy“ použitý v tomto článku označuje příjmy zakcií,\npožitkových akcií nebo požitkových práv, kuksů, zakladatelských podílů nebo\njiných práv, s výjimkou pohledávek, s podílem na zisku, jakož i jiné příjmy, které\njsou podrobeny stejnému daňovému režimu jako příjmy z akcií podle právních\npředpisů státu, jehož je společnost, která rozdílí zisk nebo provádí platbu,\nrezidentem.",
+        "4. Ustanovení odstavců 1 a 2 tohoto článku se nepoužijí, jestliže skutečný vlastník\ndividend, který je rezidentem jednoho smluvního státu, vykonává v druhém\nsmluvním státě, jehož je rezidentem společnost vyplácející dividendy, svoji\nčinnost prostřednictvím stálé provozovny, která je tam umístěna, nebo vykonává\nv tomto druhém státě nezávislé povolání ze stálé základny tam umístěné, a jestliže\núčast, pro kterou se dividendy vyplácejí, se skutečně váže k této stálé provozovně\nnebo stálé základně. V takovém případě se použijí ustanovení článku 7 nebo\nčlánku 14 této smlouvy podle toho, o jaký případ jde.",
+        "5. Jestliže společnost, která je rezidentem jednoho smluvního státu, dosahuje\nzisky nebo příjmy z druhého smluvního státu, nemůže tento druhý stát zdanit\ndividendy vyplácené společností, ledaže jsou tyto dividendy vypláceny rezidentu\ntohoto druhého státu nebo že účast, pro kterou se dividendy vyplácejí, se skutečně\nváže ke stálé provozovně nebo stálé základně, která je umístěna v tomto druhém\nstátě, ani podrobit nerozdělené zisky společnosti dani z nerozdělených zisků\nspolečnosti, i když vyplácené dividendy nebo nerozdělené zisky pozůstávají zcela\nnebo zčásti ze zisků nebo z příjmů majících zdroj v tomto druhém státě."
+      ]
+    },
+    {
+      "number": 11,
+      "title": "PŘÍJMY Z POHLEDÁVEK",
+      "text": "1. Příjmy z pohledávek mající zdroj v jednom smluvním státě a skutečně\nvlastněné rezidentem druhého smluvního státu podléhají zdanění jen v tomto\ndruhém státě.\n2. Výraz „příjmy z pohledávek“ použitý v tomto článku označuje příjmy z\npohledávek jakéhokoliv druhu, ať zajištěných či nezajištěných zástavním právem\nna nemovitosti a majících či nemajících právo účasti na zisku dlužníka, a zvláště,\npříjmy z vládních cenných papírů a příjmy z obligací nebo dluhopisů, včetně\nprémií a výher, které se vážou k těmto cenným papírům, obligacím nebo\ndluhopisům. Penále ukládané za pozdní platbu se nepovažuje za příjem z\npohledávky pro účely tohoto článku. Výraz „příjmy z pohledávek“ nezahrnuje\nžádnou část příjmu, která je považována za dividendu podle ustanovení článku 10\nodstavce 3.\n3. Ustanovení odstavce 1 tohoto článku se nepoužijí, jestliže skutečný vlastník\npříjmů z pohledávek, který je rezidentem jednoho smluvního státu, vykonává v\ndruhém smluvním státě, ve kterém mají tyto příjmy zdroj, svoji činnost\nprostřednictvím stálé provozovny, která je tam umístěna, nebo vykonává v tomto\ndruhém státě nezávislé povolání ze stálé základny tam umístěné, a jestliže\npohledávka, ze které jsou tyto příjmy placeny, se skutečně váže k této stálé\nprovozovně nebo stálé základně. V takovém případě se použijí ustanovení článku\n7 nebo článku 14 této smlouvy podle toho, o jaký případ jde.\n4. Předpokládá se, že příjmy z pohledávek mají zdroj ve smluvním státě, jestliže\nplátcem je rezident tohoto státu. Jestliže však plátce těchto příjmů, ať je nebo\nnení rezidentem některého smluvního státu, má ve smluvním státě stálou\nprovozovnu nebo stálou základnu, ve spojení s níž došlo k zadlužení, z něhož jsou\ntyto příjmy placeny, a tyto příjmy jdou k tíži takové stálé provozovny nebo stálé\nzákladny, předpokládá se, že tyto příjmy mají zdroj v tom státě, ve kterém je\nstálá provozovna nebo stálá základna umístěna.\n5. Jestliže částka příjmů, které se vztahují k pohledávce, z níž jsou placeny,\npřesahuje, v důsledku zvláštních vztahů mezi plátcem a skutečným vlastníkem\nnebo mezi oběma z nich a nějakou další osobou, částku, kterou by byl smluvil\nplátce se skutečným vlastníkem, kdyby nebylo takových vztahů, použijí se\nustanovení tohoto článku jen na tuto posledně zmíněnou částku. Částka plateb,\nkterá ji přesahuje, bude v tomto případě zdaněna v souladu s právními předpisy\nkaždého smluvního státu, s přihlédnutím k ostatním ustanovením této smlouvy.",
+      "paragraphs": [
+        "1. Příjmy z pohledávek mající zdroj v jednom smluvním státě a skutečně\nvlastněné rezidentem druhého smluvního státu podléhají zdanění jen v tomto\ndruhém státě.",
+        "2. Výraz „příjmy z pohledávek“ použitý v tomto článku označuje příjmy z\npohledávek jakéhokoliv druhu, ať zajištěných či nezajištěných zástavním právem\nna nemovitosti a majících či nemajících právo účasti na zisku dlužníka, a zvláště,\npříjmy z vládních cenných papírů a příjmy z obligací nebo dluhopisů, včetně\nprémií a výher, které se vážou k těmto cenným papírům, obligacím nebo\ndluhopisům. Penále ukládané za pozdní platbu se nepovažuje za příjem z\npohledávky pro účely tohoto článku. Výraz „příjmy z pohledávek“ nezahrnuje\nžádnou část příjmu, která je považována za dividendu podle ustanovení článku 10\nodstavce 3.",
+        "3. Ustanovení odstavce 1 tohoto článku se nepoužijí, jestliže skutečný vlastník\npříjmů z pohledávek, který je rezidentem jednoho smluvního státu, vykonává v\ndruhém smluvním státě, ve kterém mají tyto příjmy zdroj, svoji činnost\nprostřednictvím stálé provozovny, která je tam umístěna, nebo vykonává v tomto\ndruhém státě nezávislé povolání ze stálé základny tam umístěné, a jestliže\npohledávka, ze které jsou tyto příjmy placeny, se skutečně váže k této stálé\nprovozovně nebo stálé základně. V takovém případě se použijí ustanovení článku\n7 nebo článku 14 této smlouvy podle toho, o jaký případ jde.",
+        "4. Předpokládá se, že příjmy z pohledávek mají zdroj ve smluvním státě, jestliže\nplátcem je rezident tohoto státu. Jestliže však plátce těchto příjmů, ať je nebo\nnení rezidentem některého smluvního státu, má ve smluvním státě stálou\nprovozovnu nebo stálou základnu, ve spojení s níž došlo k zadlužení, z něhož jsou\ntyto příjmy placeny, a tyto příjmy jdou k tíži takové stálé provozovny nebo stálé\nzákladny, předpokládá se, že tyto příjmy mají zdroj v tom státě, ve kterém je\nstálá provozovna nebo stálá základna umístěna.",
+        "5. Jestliže částka příjmů, které se vztahují k pohledávce, z níž jsou placeny,\npřesahuje, v důsledku zvláštních vztahů mezi plátcem a skutečným vlastníkem\nnebo mezi oběma z nich a nějakou další osobou, částku, kterou by byl smluvil\nplátce se skutečným vlastníkem, kdyby nebylo takových vztahů, použijí se\nustanovení tohoto článku jen na tuto posledně zmíněnou částku. Částka plateb,\nkterá ji přesahuje, bude v tomto případě zdaněna v souladu s právními předpisy\nkaždého smluvního státu, s přihlédnutím k ostatním ustanovením této smlouvy."
+      ]
+    },
+    {
+      "number": 12,
+      "title": "LICENČNÍ POPLATKY",
+      "text": "1. Licenční poplatky mající zdroj v jednom smluvním státě a vyplácené rezidentu\ndruhého smluvního státu mohou být zdaněny v tomto druhém státě.\n2. Tyto licenční poplatky však mohou být rovněž zdaněny ve smluvním státě, v\nněmž mají zdroj, a to podle právních předpisů tohoto státu, avšak jestliže\nskutečný vlastník licenčních poplatků je rezidentem druhého smluvního státu,\ndaň takto uložená nepřesáhne 10 procent hrubé částky licenčních poplatků.\n3. Výraz „licenční poplatky“ použitý v tomto článku označuje platby jakéhokoliv\ndruhu obdržené jako náhrada za užití nebo za právo na užití jakéhokoliv\nautorského práva k dílu literárnímu, uměleckému nebo vědeckému, včetně\nkinematografických filmů nebo filmů nebo pásek užívaných pro rozhlasové nebo\ntelevizní vysílání, jakéhokoliv patentu, ochranné známky, návrhu nebo modelu,\nplánu, tajného vzorce nebo postupu nebo za užití nebo za právo na užití\nprůmyslového, obchodního nebo vědeckého zařízení nebo za informace, které se\nvztahují na zkušenosti nabyté v oblasti průmyslové, obchodní nebo vědecké.\n4. Ustanovení odstavců 1 a 2 tohoto článku se nepoužijí, jestliže skutečný vlastník\nlicenčních poplatků, který je rezidentem jednoho smluvního státu, vykonává v\ndruhém smluvním státě, ve kterém mají licenční poplatky zdroj, svoji činnost\nprostřednictvím stálé provozovny, která je tam umístěna, nebo vykonává v tomto\ndruhém státě nezávislé povolání ze stálé základny tam umístěné, a jestliže právo\nnebo majetek, které dávají vznik licenčním poplatkům, se skutečně vážou k této\nstálé provozovně nebo stálé základně. V takovém případě se použijí ustanovení\nčlánku 7 nebo článku 14 této smlouvy podle toho, o jaký případ jde.\n5. Předpokládá se, že licenční poplatky mají zdroj ve smluvním státě, jestliže\nplátcem je rezident tohoto státu. Jestliže však plátce licenčních poplatků, ať je\nnebo není rezidentem některého smluvního státu, má ve smluvním státě stálou\nprovozovnu nebo stálou základnu, ve spojení s níž vznikla povinnost platit\nlicenční poplatky, a tyto licenční poplatky jdou k tíži takové stálé provozovny\nnebo stálé základny, předpokládá se, že tyto licenční poplatky mají zdroj v tom\nstátě, ve kterém je stálá provozovna nebo stálá základna umístěna.\n6. Jestliže částka licenčních poplatků, které se vztahují k užití, právu nebo\ninformaci, za které jsou placeny, přesahuje, v důsledku zvláštních vztahů mezi\nplátcem a skutečným vlastníkem nebo mezi oběma z nich a nějakou další osobou,\nčástku, kterou by byl smluvil plátce se skutečným vlastníkem, kdyby nebylo\ntakových vztahů, použijí se ustanovení tohoto článku jen na tuto posledně\nzmíněnou částku. Částka plateb, která ji přesahuje, bude v tomto případě\nzdaněna v souladu s právními předpisy každého smluvního státu, s přihlédnutím\nk ostatním ustanovením této smlouvy.",
+      "paragraphs": [
+        "1. Licenční poplatky mající zdroj v jednom smluvním státě a vyplácené rezidentu\ndruhého smluvního státu mohou být zdaněny v tomto druhém státě.",
+        "2. Tyto licenční poplatky však mohou být rovněž zdaněny ve smluvním státě, v\nněmž mají zdroj, a to podle právních předpisů tohoto státu, avšak jestliže\nskutečný vlastník licenčních poplatků je rezidentem druhého smluvního státu,\ndaň takto uložená nepřesáhne 10 procent hrubé částky licenčních poplatků.",
+        "3. Výraz „licenční poplatky“ použitý v tomto článku označuje platby jakéhokoliv\ndruhu obdržené jako náhrada za užití nebo za právo na užití jakéhokoliv\nautorského práva k dílu literárnímu, uměleckému nebo vědeckému, včetně\nkinematografických filmů nebo filmů nebo pásek užívaných pro rozhlasové nebo\ntelevizní vysílání, jakéhokoliv patentu, ochranné známky, návrhu nebo modelu,\nplánu, tajného vzorce nebo postupu nebo za užití nebo za právo na užití\nprůmyslového, obchodního nebo vědeckého zařízení nebo za informace, které se\nvztahují na zkušenosti nabyté v oblasti průmyslové, obchodní nebo vědecké.",
+        "4. Ustanovení odstavců 1 a 2 tohoto článku se nepoužijí, jestliže skutečný vlastník\nlicenčních poplatků, který je rezidentem jednoho smluvního státu, vykonává v\ndruhém smluvním státě, ve kterém mají licenční poplatky zdroj, svoji činnost\nprostřednictvím stálé provozovny, která je tam umístěna, nebo vykonává v tomto\ndruhém státě nezávislé povolání ze stálé základny tam umístěné, a jestliže právo\nnebo majetek, které dávají vznik licenčním poplatkům, se skutečně vážou k této\nstálé provozovně nebo stálé základně. V takovém případě se použijí ustanovení\nčlánku 7 nebo článku 14 této smlouvy podle toho, o jaký případ jde.",
+        "5. Předpokládá se, že licenční poplatky mají zdroj ve smluvním státě, jestliže\nplátcem je rezident tohoto státu. Jestliže však plátce licenčních poplatků, ať je\nnebo není rezidentem některého smluvního státu, má ve smluvním státě stálou\nprovozovnu nebo stálou základnu, ve spojení s níž vznikla povinnost platit\nlicenční poplatky, a tyto licenční poplatky jdou k tíži takové stálé provozovny\nnebo stálé základny, předpokládá se, že tyto licenční poplatky mají zdroj v tom\nstátě, ve kterém je stálá provozovna nebo stálá základna umístěna.",
+        "6. Jestliže částka licenčních poplatků, které se vztahují k užití, právu nebo\ninformaci, za které jsou placeny, přesahuje, v důsledku zvláštních vztahů mezi\nplátcem a skutečným vlastníkem nebo mezi oběma z nich a nějakou další osobou,\nčástku, kterou by byl smluvil plátce se skutečným vlastníkem, kdyby nebylo\ntakových vztahů, použijí se ustanovení tohoto článku jen na tuto posledně\nzmíněnou částku. Částka plateb, která ji přesahuje, bude v tomto případě\nzdaněna v souladu s právními předpisy každého smluvního státu, s přihlédnutím\nk ostatním ustanovením této smlouvy."
+      ]
+    },
+    {
+      "number": 13,
+      "title": "ZISKY ZE ZCIZENÍ MAJETKU",
+      "text": "1. Zisky, které pobírá rezident jednoho smluvního státu ze zcizení nemovitého\nmajetku uvedeného v článku 6 této smlouvy a umístěného ve druhém smluvním\nstátě, mohou být zdaněny v tomto druhém státě.\n2. Zisky ze zcizení movitého majetku, který je částí provozního majetku stálé\nprovozovny, jež má podnik jednoho smluvního státu ve druhém smluvním státě\nnebo movitého majetku, který patří ke stálé základně, kterou má k dispozici\nrezident jednoho smluvního státu ve druhém smluvním státě za účelem\nvykonávání nezávislého povolání, včetně zisků ze zcizení takové stálé provozovny\n(samotné nebo spolu s celým podnikem) nebo takové stálé základny, mohou být\nzdaněny v tomto druhém smluvním státě.\n3. Zisky ze zcizení lodí nebo letadel provozovaných v mezinárodní dopravě nebo\nmovitého majetku sloužícího k provozování těchto lodí nebo letadel, podléhají\nzdanění jen ve smluvním státě, v němž se nachází místo hlavního vedení podniku.\n4. Zisky, které pobírá rezident jednoho smluvního státu ze zcizení akcií nebo\njiných podílů na společnosti, která je rezidentem druhého smluvního statu,\nmohou být zdaněny v tomto druhém smluvním státě.\n5. Zisky pobírané ze zcizení jakéhokoliv jiného majetku, než který je uveden\nv předchozích odstavcích, podléhají zdanění jen ve smluvním státě, jehož je\nzcizitel rezidentem.",
+      "paragraphs": [
+        "1. Zisky, které pobírá rezident jednoho smluvního státu ze zcizení nemovitého\nmajetku uvedeného v článku 6 této smlouvy a umístěného ve druhém smluvním\nstátě, mohou být zdaněny v tomto druhém státě.",
+        "2. Zisky ze zcizení movitého majetku, který je částí provozního majetku stálé\nprovozovny, jež má podnik jednoho smluvního státu ve druhém smluvním státě\nnebo movitého majetku, který patří ke stálé základně, kterou má k dispozici\nrezident jednoho smluvního státu ve druhém smluvním státě za účelem\nvykonávání nezávislého povolání, včetně zisků ze zcizení takové stálé provozovny\n(samotné nebo spolu s celým podnikem) nebo takové stálé základny, mohou být\nzdaněny v tomto druhém smluvním státě.",
+        "3. Zisky ze zcizení lodí nebo letadel provozovaných v mezinárodní dopravě nebo\nmovitého majetku sloužícího k provozování těchto lodí nebo letadel, podléhají\nzdanění jen ve smluvním státě, v němž se nachází místo hlavního vedení podniku.",
+        "4. Zisky, které pobírá rezident jednoho smluvního státu ze zcizení akcií nebo\njiných podílů na společnosti, která je rezidentem druhého smluvního statu,\nmohou být zdaněny v tomto druhém smluvním státě.",
+        "5. Zisky pobírané ze zcizení jakéhokoliv jiného majetku, než který je uveden\nv předchozích odstavcích, podléhají zdanění jen ve smluvním státě, jehož je\nzcizitel rezidentem."
+      ]
+    },
+    {
+      "number": 14,
+      "title": "NEZÁVISLÁ POVOLÁNÍ",
+      "text": "1. Příjmy, které pobírá rezident jednoho smluvního státu ze svobodného povolání\nnebo z jiných činností nezávislého charakteru, podléhají zdanění jen v tomto\nstátě, vyjma následujících případů, kdy takové příjmy mohou být rovněž zdaněny\nve druhém smluvním státě:\na) jestliže má tento rezident pravidelně k dispozici ve druhém smluvním státě\nstálou základnu za účelem vykonávání svých činností; v takovém případě jen\ntaková část příjmů, jakou lze přičíst této stálé základně, může být zdaněna v\ntomto druhém smluvním státě; nebo\nb) jestliže jeho pobyt ve druhém smluvním státě po jedno nebo více období\nvúhrnu činí nebo přesahuje 183 dny v jakémkoli dvanáctiměsíčním období\nzačínajícím nebo končícím v příslušném daňovém roce; v takovém případě jen\ntaková část příjmů, která je pobírána z jeho činností vykonávaných v tomto\ndruhém státě, může být zdaněna v tomto druhém státě.\n2. Výraz „svobodné povolání“ zahrnuje obzvláště nezávislé činnosti vědecké,\nliterární, umělecké, vychovatelské nebo učitelské, jakož i nezávislé činnosti\nlékařů, právníků, inženýrů, architektů, dentistů a účetních znalců.",
+      "paragraphs": [
+        "1. Příjmy, které pobírá rezident jednoho smluvního státu ze svobodného povolání\nnebo z jiných činností nezávislého charakteru, podléhají zdanění jen v tomto\nstátě, vyjma následujících případů, kdy takové příjmy mohou být rovněž zdaněny\nve druhém smluvním státě:\na) jestliže má tento rezident pravidelně k dispozici ve druhém smluvním státě\nstálou základnu za účelem vykonávání svých činností; v takovém případě jen\ntaková část příjmů, jakou lze přičíst této stálé základně, může být zdaněna v\ntomto druhém smluvním státě; nebo\nb) jestliže jeho pobyt ve druhém smluvním státě po jedno nebo více období\nvúhrnu činí nebo přesahuje 183 dny v jakémkoli dvanáctiměsíčním období\nzačínajícím nebo končícím v příslušném daňovém roce; v takovém případě jen\ntaková část příjmů, která je pobírána z jeho činností vykonávaných v tomto\ndruhém státě, může být zdaněna v tomto druhém státě.",
+        "2. Výraz „svobodné povolání“ zahrnuje obzvláště nezávislé činnosti vědecké,\nliterární, umělecké, vychovatelské nebo učitelské, jakož i nezávislé činnosti\nlékařů, právníků, inženýrů, architektů, dentistů a účetních znalců."
+      ]
+    },
+    {
+      "number": 15,
+      "title": "ZAMĚSTNÁNÍ",
+      "text": "1. Platy, mzdy a jiné podobné odměny, které pobírá rezident jednoho smluvního\nstátu z důvodu zaměstnání, podléhají s výhradou ustanovení článků 16, 18 a 19\ntéto smlouvy zdanění jen v tomto státě, pokud zaměstnání není vykonáváno ve\ndruhém smluvním státě. Je-li tam zaměstnání vykonáváno, mohou být odměny z\nněj pobírané zdaněny v tomto druhém státě.\n2. Odměny, které pobírá rezident jednoho smluvního státu z důvodu zaměstnání\nvykonávaného ve druhém smluvním státě, podléhají bez ohledu na ustanovení\nodstavce 1 tohoto článku zdanění jen v prvně zmíněném státě, jestliže všechny\nnásledující podmínky jsou splněny:\na) příjemce se zdržuje ve druhém státě po jedno nebo více období nepřesahující v\núhrnu 183 dny v jakémkoliv dvanáctiměsíčním období začínajícím nebo končícím\nv příslušném daňovém roce; a\nb) odměny jsou vypláceny zaměstnavatelem nebo za zaměstnavatele, který není\nrezidentem druhého státu; a\nc) odměny nejdou k tíži stálé provozovny nebo stálé základny, kterou má\nzaměstnavatel ve druhém státě.\n3. Bez ohledu na předchozí ustanovení tohoto článku, mohou být odměny\npobírané z důvodu zaměstnání vykonávaného na palubě lodi nebo letadla\nprovozované nebo provozovaného v mezinárodní dopravě zdaněny ve smluvním\nstátě, v němž se nachází místo hlavního vedení podniku.",
+      "paragraphs": [
+        "1. Platy, mzdy a jiné podobné odměny, které pobírá rezident jednoho smluvního\nstátu z důvodu zaměstnání, podléhají s výhradou ustanovení článků 16, 18 a 19\ntéto smlouvy zdanění jen v tomto státě, pokud zaměstnání není vykonáváno ve\ndruhém smluvním státě. Je-li tam zaměstnání vykonáváno, mohou být odměny z\nněj pobírané zdaněny v tomto druhém státě.",
+        "2. Odměny, které pobírá rezident jednoho smluvního státu z důvodu zaměstnání\nvykonávaného ve druhém smluvním státě, podléhají bez ohledu na ustanovení\nodstavce 1 tohoto článku zdanění jen v prvně zmíněném státě, jestliže všechny\nnásledující podmínky jsou splněny:\na) příjemce se zdržuje ve druhém státě po jedno nebo více období nepřesahující v\núhrnu 183 dny v jakémkoliv dvanáctiměsíčním období začínajícím nebo končícím\nv příslušném daňovém roce; a\nb) odměny jsou vypláceny zaměstnavatelem nebo za zaměstnavatele, který není\nrezidentem druhého státu; a\nc) odměny nejdou k tíži stálé provozovny nebo stálé základny, kterou má\nzaměstnavatel ve druhém státě.",
+        "3. Bez ohledu na předchozí ustanovení tohoto článku, mohou být odměny\npobírané z důvodu zaměstnání vykonávaného na palubě lodi nebo letadla\nprovozované nebo provozovaného v mezinárodní dopravě zdaněny ve smluvním\nstátě, v němž se nachází místo hlavního vedení podniku."
+      ]
+    },
+    {
+      "number": 16,
+      "title": "TANTIÉMY",
+      "text": "Tantiémy a jiné podobné odměny, které pobírá rezident jednoho smluvního státu\njako člen správní rady nebo jakéhokoliv jiného obdobného orgánu společnosti,\nkterá je rezidentem druhého smluvního státu, mohou být zdaněny v tomto\ndruhém státě.",
+      "paragraphs": [
+        "Tantiémy a jiné podobné odměny, které pobírá rezident jednoho smluvního státu\njako člen správní rady nebo jakéhokoliv jiného obdobného orgánu společnosti,\nkterá je rezidentem druhého smluvního státu, mohou být zdaněny v tomto\ndruhém státě."
+      ]
+    },
+    {
+      "number": 17,
+      "title": "UMĚLCI A SPORTOVCI",
+      "text": "1. Příjmy, které pobírá rezident jednoho smluvního státu jako na veřejnosti\nvystupující umělec, jako divadelní, filmový, rozhlasový nebo televizní umělec\nnebo hudebník nebo jako sportovec z takovýchto osobně vykonávaných činností\nve druhém smluvním státě, mohou být bez ohledu na ustanovení článků 14 a 15\ntéto smlouvy zdaněny v tomto druhém státě.\n2. Jestliže příjmy z činností osobně vykonávaných umělcem nebo sportovcem\nneplynou umělci nebo sportovci samému, nýbrž jiné osobě, mohou být tyto\npříjmy bez ohledu na ustanovení článků 7, 14 a 15 této smlouvy zdaněny ve\nsmluvním státě, ve kterém jsou činnosti umělce nebo sportovce vykonávány.",
+      "paragraphs": [
+        "1. Příjmy, které pobírá rezident jednoho smluvního státu jako na veřejnosti\nvystupující umělec, jako divadelní, filmový, rozhlasový nebo televizní umělec\nnebo hudebník nebo jako sportovec z takovýchto osobně vykonávaných činností\nve druhém smluvním státě, mohou být bez ohledu na ustanovení článků 14 a 15\ntéto smlouvy zdaněny v tomto druhém státě.",
+        "2. Jestliže příjmy z činností osobně vykonávaných umělcem nebo sportovcem\nneplynou umělci nebo sportovci samému, nýbrž jiné osobě, mohou být tyto\npříjmy bez ohledu na ustanovení článků 7, 14 a 15 této smlouvy zdaněny ve\nsmluvním státě, ve kterém jsou činnosti umělce nebo sportovce vykonávány."
+      ]
+    },
+    {
+      "number": 18,
+      "title": "PENZE",
+      "text": "Penze a jiné podobné platy vyplácené rezidentu smluvního státu z důvodu\ndřívějšího zaměstnání podléhají s výhradou ustanovení článku 19 odstavce 2 této\nsmlouvy zdanění jen v tomto státě.",
+      "paragraphs": [
+        "Penze a jiné podobné platy vyplácené rezidentu smluvního státu z důvodu\ndřívějšího zaměstnání podléhají s výhradou ustanovení článku 19 odstavce 2 této\nsmlouvy zdanění jen v tomto státě."
+      ]
+    },
+    {
+      "number": 19,
+      "title": "VEŘEJNÉ FUNKCE",
+      "text": "1. a) Platy, mzdy a jiné podobné odměny, jiné než penze, vyplácené jedním\nsmluvním státem nebo nižším správním útvarem nebo místním úřadem tohoto\nstátu fyzické osobě za služby prokazované tomuto státu nebo útvaru nebo úřadu\npodléhají zdanění jen v tomto státě.\nb) Takové platy, mzdy a jiné podobné odměny však podléhají zdanění jen ve\ndruhém smluvním státě, jestliže služby jsou prokazovány v tomto druhém státě a\nfyzická osoba, která je rezidentem tohoto státu:\n- je státním příslušníkem tohoto státu; nebo\n- se nestala rezidentem tohoto státu jen z důvodu prokazování těchto služeb.\n2. a) Jakékoli penze vyplácené jedním smluvním státem nebo nižším správním\nútvarem nebo místním úřadem tohoto státu nebo vyplácené z fondů, které zřídily,\nfyzické osobě za služby prokázané tomuto státu nebo útvaru nebo úřadu,\npodléhají zdanění jen v tomto státě.\nb) Takové penze však podléhají zdanění jen ve druhém smluvním státě, jestliže\nfyzická osoba je rezidentem a státním příslušníkem tohoto druhého státu.\n3. Ustanovení článků 15, 16, 17 a 18 této smlouvy se použijí na platy, mzdy a jiné\npodobné odměny a na penze za služby prokázané v souvislosti s průmyslovou\nnebo obchodní činností vykonávanou některým smluvním státem nebo nižším\nsprávním útvarem nebo místním úřadem tohoto státu.",
+      "paragraphs": [
+        "1. a) Platy, mzdy a jiné podobné odměny, jiné než penze, vyplácené jedním\nsmluvním státem nebo nižším správním útvarem nebo místním úřadem tohoto\nstátu fyzické osobě za služby prokazované tomuto státu nebo útvaru nebo úřadu\npodléhají zdanění jen v tomto státě.\nb) Takové platy, mzdy a jiné podobné odměny však podléhají zdanění jen ve\ndruhém smluvním státě, jestliže služby jsou prokazovány v tomto druhém státě a\nfyzická osoba, která je rezidentem tohoto státu:\n- je státním příslušníkem tohoto státu; nebo\n- se nestala rezidentem tohoto státu jen z důvodu prokazování těchto služeb.",
+        "2. a) Jakékoli penze vyplácené jedním smluvním státem nebo nižším správním\nútvarem nebo místním úřadem tohoto státu nebo vyplácené z fondů, které zřídily,\nfyzické osobě za služby prokázané tomuto státu nebo útvaru nebo úřadu,\npodléhají zdanění jen v tomto státě.\nb) Takové penze však podléhají zdanění jen ve druhém smluvním státě, jestliže\nfyzická osoba je rezidentem a státním příslušníkem tohoto druhého státu.",
+        "3. Ustanovení článků 15, 16, 17 a 18 této smlouvy se použijí na platy, mzdy a jiné\npodobné odměny a na penze za služby prokázané v souvislosti s průmyslovou\nnebo obchodní činností vykonávanou některým smluvním státem nebo nižším\nsprávním útvarem nebo místním úřadem tohoto státu."
+      ]
+    },
+    {
+      "number": 20,
+      "title": "STUDENTI",
+      "text": "1. Platby, které dostává za účelem úhrady nákladů své výživy, vzdělávání nebo\nstudia student nebo žák, který je nebo bezprostředně před svým příjezdem do\njednoho smluvního státu byl rezidentem druhého smluvního státu a který se\nzdržuje v prvně zmíněném státě pouze za účelem svého vzdělávání nebo studia,\nnepodléhají zdanění v tomto státě za předpokladu, že takovéto platby plynou ze\nzdrojů mimo tento stát.\n2. Pokud jde o podpory, stipendia a odměny ze zaměstnání, které nebo která\nnejsou předmětem odstavce 1 tohoto článku, bude mít student nebo žák uvedený\nvodstavci 1 tohoto článku, kromě toho, právo v průběhu takového vzdělávání\nnebo studia na stejná daňová osvobození, slevy nebo snížení, která nebo které\npřísluší rezidentům smluvního státu, v němž se tento student zdržuje.",
+      "paragraphs": [
+        "1. Platby, které dostává za účelem úhrady nákladů své výživy, vzdělávání nebo\nstudia student nebo žák, který je nebo bezprostředně před svým příjezdem do\njednoho smluvního státu byl rezidentem druhého smluvního státu a který se\nzdržuje v prvně zmíněném státě pouze za účelem svého vzdělávání nebo studia,\nnepodléhají zdanění v tomto státě za předpokladu, že takovéto platby plynou ze\nzdrojů mimo tento stát.",
+        "2. Pokud jde o podpory, stipendia a odměny ze zaměstnání, které nebo která\nnejsou předmětem odstavce 1 tohoto článku, bude mít student nebo žák uvedený\nvodstavci 1 tohoto článku, kromě toho, právo v průběhu takového vzdělávání\nnebo studia na stejná daňová osvobození, slevy nebo snížení, která nebo které\npřísluší rezidentům smluvního státu, v němž se tento student zdržuje."
+      ]
+    },
+    {
+      "number": 21,
+      "title": "UČITELÉ A VÝZKUMNÍCI",
+      "text": "S odměnami pobíranými učitelem nebo výzkumníkem, který je rezidentem\njednoho smluvního státu, z takovýchto osobně vykonávaných činností ve druhém\nsmluvním státě se bude zacházet v souladu s ustanoveními příslušných článků této\nsmlouvy.",
+      "paragraphs": [
+        "S odměnami pobíranými učitelem nebo výzkumníkem, který je rezidentem\njednoho smluvního státu, z takovýchto osobně vykonávaných činností ve druhém\nsmluvním státě se bude zacházet v souladu s ustanoveními příslušných článků této\nsmlouvy."
+      ]
+    },
+    {
+      "number": 22,
+      "title": "OSTATNÍ PŘÍJMY",
+      "text": "1. Části příjmů rezidenta smluvního státu, ať mají zdroj kdekoliv, o kterých se\nnepojednává v předchozích článcích této smlouvy, podléhají zdanění jen v tomto\nstátě.\n2. Ustanovení odstavce 1 tohoto článku se nepoužijí na příjmy jiné než příjmy\nz nemovitého majetku, který je definován v článku 6 odstavci 2 této smlouvy,\njestliže příjemce takových příjmů, který je rezidentem jednoho smluvního státu,\nvykonává vdruhém smluvním státě svoji činnost prostřednictvím stálé\nprovozovny, která je tam umístěna, nebo vykonává vtomto druhém státě\nnezávislé povolání ze stálé základny tam umístěné, a jestliže právo nebo majetek,\npro které se příjmy platí, se skutečně vážou k této stálé provozovně nebo stálé\nzákladně. V takovém případě se použijí ustanovení článku 7 nebo článku 14 této\nsmlouvy podle toho, o jaký případ jde.",
+      "paragraphs": [
+        "1. Části příjmů rezidenta smluvního státu, ať mají zdroj kdekoliv, o kterých se\nnepojednává v předchozích článcích této smlouvy, podléhají zdanění jen v tomto\nstátě.",
+        "2. Ustanovení odstavce 1 tohoto článku se nepoužijí na příjmy jiné než příjmy\nz nemovitého majetku, který je definován v článku 6 odstavci 2 této smlouvy,\njestliže příjemce takových příjmů, který je rezidentem jednoho smluvního státu,\nvykonává vdruhém smluvním státě svoji činnost prostřednictvím stálé\nprovozovny, která je tam umístěna, nebo vykonává vtomto druhém státě\nnezávislé povolání ze stálé základny tam umístěné, a jestliže právo nebo majetek,\npro které se příjmy platí, se skutečně vážou k této stálé provozovně nebo stálé\nzákladně. V takovém případě se použijí ustanovení článku 7 nebo článku 14 této\nsmlouvy podle toho, o jaký případ jde."
+      ]
+    },
+    {
+      "number": 23,
+      "title": "METODY VYLOUČENÍ DVOJÍHO ZDANĚNÍ",
+      "text": "1. Svýhradou ustanovení právních předpisů smluvních států týkajících se\nvyloučení dvojího zdanění, jestliže rezident jednoho smluvního státu pobírá\npříjem, který může být v souladu s ustanoveními této smlouvy zdaněn ve druhém\nsmluvním státě, prvně zmíněný stát povolí snížit daň z příjmů tohoto rezidenta o\nčástku rovnající se dani z příjmů zaplacené v tomto druhém státě. Částka, o\nkterou se daň sníží však nepřesáhne tu část daně z příjmů vypočtené před jejím\nsnížením, která poměrně připadá na příjem, který může být zdaněn v tomto\ndruhém státě.\n2. Jestliže v souladu s jakýmkoliv ustanovením Smlouvy je příjem pobíraný\nrezidentem jednoho smluvního státu osvobozen od zdanění v tomto státě, tento\nstát může přesto, při výpočtu částky daně ze zbývajících příjmů tohoto rezidenta,\nvzít v úvahu osvobozený příjem.\n3. Metody vyloučení dvojího zdanění neovlivní v případě Království Saúdské\nArábie ustanovení ohledně režimu výběru Zakatu, pokud jde o saúdské státní\npříslušníky, kteří jsou rezidenty Království Saúdské Arábie.",
+      "paragraphs": [
+        "1. Svýhradou ustanovení právních předpisů smluvních států týkajících se\nvyloučení dvojího zdanění, jestliže rezident jednoho smluvního státu pobírá\npříjem, který může být v souladu s ustanoveními této smlouvy zdaněn ve druhém\nsmluvním státě, prvně zmíněný stát povolí snížit daň z příjmů tohoto rezidenta o\nčástku rovnající se dani z příjmů zaplacené v tomto druhém státě. Částka, o\nkterou se daň sníží však nepřesáhne tu část daně z příjmů vypočtené před jejím\nsnížením, která poměrně připadá na příjem, který může být zdaněn v tomto\ndruhém státě.",
+        "2. Jestliže v souladu s jakýmkoliv ustanovením Smlouvy je příjem pobíraný\nrezidentem jednoho smluvního státu osvobozen od zdanění v tomto státě, tento\nstát může přesto, při výpočtu částky daně ze zbývajících příjmů tohoto rezidenta,\nvzít v úvahu osvobozený příjem.",
+        "3. Metody vyloučení dvojího zdanění neovlivní v případě Království Saúdské\nArábie ustanovení ohledně režimu výběru Zakatu, pokud jde o saúdské státní\npříslušníky, kteří jsou rezidenty Království Saúdské Arábie."
+      ]
+    },
+    {
+      "number": 24,
+      "title": "ŘEŠENÍ PŘÍPADŮ DOHODOU",
+      "text": "1. Jestliže se osoba domnívá, že opatření jednoho nebo obou smluvních států\nvedou nebo povedou u ní ke zdanění, které není v souladu s ustanoveními této\nsmlouvy, může, bez ohledu na opravné prostředky, které poskytují vnitrostátní\nprávní předpisy těchto států, předložit svůj případ příslušnému úřadu smluvního\nstátu, jehož je rezidentem. Případ musí být předložen do tří let od prvního\noznámení opatření vedoucího ke zdanění, které není v souladu s ustanoveními této\nsmlouvy.\n2. Jestliže bude příslušný úřad považovat námitku za oprávněnou a nebude-li sám\nschopen najít uspokojivé řešení, bude se snažit případ vyřešit vzájemnou dohodou\ns příslušným úřadem druhého smluvního státu tak, aby se zamezilo zdanění, které\nnení v souladu s touto smlouvou. Jakákoliv dosažená dohoda bude uskutečněna\nbez ohledu na jakékoliv časové lhůty ve vnitrostátních právních předpisech\nsmluvních států.\n3. Příslušné úřady smluvních států se budou snažit vyřešit vzájemnou dohodou\njakékoliv obtíže nebo pochybnosti, které mohou vzniknout při výkladu nebo\nprovádění této smlouvy. Mohou rovněž spolu konzultovat za účelem vyloučení\ndvojího zdanění v případech neupravených v této smlouvě.\n4. Příslušné úřady smluvních států mohou vejít v přímý styk za účelem dosažení\ndohody ve smyslu předchozích odstavců.",
+      "paragraphs": [
+        "1. Jestliže se osoba domnívá, že opatření jednoho nebo obou smluvních států\nvedou nebo povedou u ní ke zdanění, které není v souladu s ustanoveními této\nsmlouvy, může, bez ohledu na opravné prostředky, které poskytují vnitrostátní\nprávní předpisy těchto států, předložit svůj případ příslušnému úřadu smluvního\nstátu, jehož je rezidentem. Případ musí být předložen do tří let od prvního\noznámení opatření vedoucího ke zdanění, které není v souladu s ustanoveními této\nsmlouvy.",
+        "2. Jestliže bude příslušný úřad považovat námitku za oprávněnou a nebude-li sám\nschopen najít uspokojivé řešení, bude se snažit případ vyřešit vzájemnou dohodou\ns příslušným úřadem druhého smluvního státu tak, aby se zamezilo zdanění, které\nnení v souladu s touto smlouvou. Jakákoliv dosažená dohoda bude uskutečněna\nbez ohledu na jakékoliv časové lhůty ve vnitrostátních právních předpisech\nsmluvních států.",
+        "3. Příslušné úřady smluvních států se budou snažit vyřešit vzájemnou dohodou\njakékoliv obtíže nebo pochybnosti, které mohou vzniknout při výkladu nebo\nprovádění této smlouvy. Mohou rovněž spolu konzultovat za účelem vyloučení\ndvojího zdanění v případech neupravených v této smlouvě.",
+        "4. Příslušné úřady smluvních států mohou vejít v přímý styk za účelem dosažení\ndohody ve smyslu předchozích odstavců."
+      ]
+    },
+    {
+      "number": 25,
+      "title": "VÝMĚNA INFORMACÍ",
+      "text": "1. Příslušné úřady smluvních států si budou vyměňovat takové informace, u nichž\nlze předpokládat, že jsou relevantní ve vztahu k provádění ustanovení této\nsmlouvy nebo ve vztahu k provádění nebo vymáhání vnitrostátních právních\npředpisů, které se vztahují na daně všeho druhu a pojmenování ukládané jménem\nsmluvních států nebo jejich nižších správních útvarů nebo místních úřadů, pokud\nzdanění, které upravují, není v rozporu se Smlouvou. Výměna informací není\nomezena články 1 a 2.\n2. Veškeré informace obdržené smluvním státem podle odstavce 1 budou\nudržovány v tajnosti stejným způsobem jako informace získané podle\nvnitrostátních právních předpisů tohoto státu a budou poskytnuty pouze osobám",
+      "paragraphs": [
+        "1. Příslušné úřady smluvních států si budou vyměňovat takové informace, u nichž\nlze předpokládat, že jsou relevantní ve vztahu k provádění ustanovení této\nsmlouvy nebo ve vztahu k provádění nebo vymáhání vnitrostátních právních\npředpisů, které se vztahují na daně všeho druhu a pojmenování ukládané jménem\nsmluvních států nebo jejich nižších správních útvarů nebo místních úřadů, pokud\nzdanění, které upravují, není v rozporu se Smlouvou. Výměna informací není\nomezena články 1 a 2.",
+        "2. Veškeré informace obdržené smluvním státem podle odstavce 1 budou\nudržovány v tajnosti stejným způsobem jako informace získané podle\nvnitrostátních právních předpisů tohoto státu a budou poskytnuty pouze osobám"
+      ]
+    }
+  ]
+}

@@ -2,8 +2,231 @@
   "country": "Ukrajina",
   "source_title": "103/1999 Sb.",
   "source_path": "data/raw/treaty/3595802010f83ca3.pdf",
-  "start_page": 4,
+  "start_page": 2,
+  "identity_validation": {
+    "expected_country": "Ukrajina",
+    "status": "validated",
+    "reason": "counterparty_matched",
+    "matched_alias": "ukrajina",
+    "matched_method": "country_root",
+    "publication_reference": "103/1999",
+    "publication_reference_found": false,
+    "warnings": [
+      "publication_reference_not_found"
+    ]
+  },
+  "text_extraction": {
+    "method": "pypdf",
+    "score": 2045,
+    "page_count": 24,
+    "attempts": [
+      {
+        "method": "pypdf",
+        "score": 2045,
+        "total_characters": 74138,
+        "substantive_pages": 21,
+        "article_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29
+        ],
+        "error": null
+      },
+      {
+        "method": "pdftotext",
+        "score": 1118,
+        "total_characters": 73914,
+        "substantive_pages": 21,
+        "article_numbers": [
+          1,
+          2,
+          3,
+          5,
+          7,
+          8,
+          9,
+          11,
+          12
+        ],
+        "error": null
+      },
+      {
+        "method": "hybrid",
+        "score": 2038,
+        "total_characters": 74158,
+        "substantive_pages": 21,
+        "article_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29
+        ],
+        "error": null
+      }
+    ]
+  },
+  "source_resolution": {
+    "status": "fallback",
+    "method": "whole_document",
+    "start_page": 1,
+    "end_page": 24,
+    "effective_title": "103/1999 Sb.",
+    "metadata_mismatch": false,
+    "candidate_count": 0
+  },
   "articles": [
+    {
+      "number": 1,
+      "title": "1. Uprchlõci legálne pobývajõcõ na územõ smluvnõ",
+      "text": "strany jsou za podmõnek stanovených v této dohode\na za predpokladu vzájemnosti osvobozeni od võzové\npovinnosti pro vstup na územõ nebo vycestovánõ\nz územõ jiné strany na kterýchkoliv státnõch hranicõch,\nza predpokladu, ze:\na) jsou drziteli platného cestovnõho dokladu vyda-\nného v souladu s U mluvou o právnõm postavenõ\nuprchlõku z 28. cervence 1951 nebo Dohodou tý-\nkajõcõ se vydávánõ cestovnõho dokladu uprchlõku m\nz 15. rõjna 1946 orgány smluvnõ strany, na jejõmz\núzemõ legálne pobývajõ;\nb) jejich pobyt netrvá déle nez tri mesõce.\n2. Võzum mu ze být pozadováno pro pobyt delsõ\nnez tri mesõce nebo pro pobyt za úcelem výdelecné\ncinnosti na územõ jiné smluvnõ strany.",
+      "paragraphs": [
+        "strany jsou za podmõnek stanovených v této dohode\na za predpokladu vzájemnosti osvobozeni od võzové\npovinnosti pro vstup na územõ nebo vycestovánõ\nz územõ jiné strany na kterýchkoliv státnõch hranicõch,\nza predpokladu, ze:\na) jsou drziteli platného cestovnõho dokladu vyda-\nného v souladu s U mluvou o právnõm postavenõ\nuprchlõku z 28. cervence 1951 nebo Dohodou tý-\nkajõcõ se vydávánõ cestovnõho dokladu uprchlõku m\nz 15. rõjna 1946 orgány smluvnõ strany, na jejõmz\núzemõ legálne pobývajõ;\nb) jejich pobyt netrvá déle nez tri mesõce.",
+        "2. Võzum mu ze být pozadováno pro pobyt delsõ\nnez tri mesõce nebo pro pobyt za úcelem výdelecné\ncinnosti na územõ jiné smluvnõ strany."
+      ]
+    },
+    {
+      "number": 2,
+      "title": "Pro úcely této dohody má pojem 1územõa smluvnõ",
+      "text": "strany význam vymezený touto stranou v prohlásenõ\nadresovaném generálnõmu tajemnõkovi Rady Evropy.",
+      "paragraphs": [
+        "strany význam vymezený touto stranou v prohlásenõ\nadresovaném generálnõmu tajemnõkovi Rady Evropy."
+      ]
+    },
+    {
+      "number": 3,
+      "title": "V rozsahu, který jedna nebo võce smluvnõch stran",
+      "text": "povazuje za nezbytný, mohou být státnõ hranice pre-\nkracovány jen na urcených mõstech.",
+      "paragraphs": [
+        "povazuje za nezbytný, mohou být státnõ hranice pre-\nkracovány jen na urcených mõstech."
+      ]
+    },
+    {
+      "number": 4,
+      "title": "1. Ustanovenõmi této dohody nejsou dotceny zá-",
+      "text": "kony a predpisy upravujõcõ pobyt cizincu na územõ\nkterékoliv smluvnõ strany.\n2. Kazdá smluvnõ strana si vyhrazuje právo zaká-\nzat osobám, které povazuje za nezádoucõ, vstup na své\núzemõ nebo pobyt na nem.",
+      "paragraphs": [
+        "kony a predpisy upravujõcõ pobyt cizincu na územõ\nkterékoliv smluvnõ strany.",
+        "2. Kazdá smluvnõ strana si vyhrazuje právo zaká-\nzat osobám, které povazuje za nezádoucõ, vstup na své\núzemõ nebo pobyt na nem."
+      ]
+    },
+    {
+      "number": 5,
+      "title": "Uprchlõci, kterõ vstoupõ na územõ smluvnõ strany",
+      "text": "na základe této dohody, budou kdykoliv prijati zpet na\núzemõ té smluvnõ strany, jejõz orgány vydaly cestovnõ\ndoklad, na základe pouhé zádosti prvne uvedené\nstrany, s výjimkou prõpadu, kdy tato strana povolõ\ntemto osobám, aby se usadily na jejõm územõ.",
+      "paragraphs": [
+        "na základe této dohody, budou kdykoliv prijati zpet na\núzemõ té smluvnõ strany, jejõz orgány vydaly cestovnõ\ndoklad, na základe pouhé zádosti prvne uvedené\nstrany, s výjimkou prõpadu, kdy tato strana povolõ\ntemto osobám, aby se usadily na jejõm územõ."
+      ]
+    },
+    {
+      "number": 6,
+      "title": "Touto dohodou nejsou dotcena ustanovenõ zád-",
+      "text": "ných vnitrostátnõch právnõch predpisu ani dvoustran-\nných ci mnohostranných smluv, úmluv nebo dohod,\nkteré jsou nebo v budoucnu vstoupõ v platnost a na\njejichz základe jsou uplatn ovány prõznivejsõ podmõnky\npro uprchlõky legálne pobývajõcõ na územõ jedné ze\nsmluvnõch stran, pokud jde o prekracovánõ státnõch\nhranic.",
+      "paragraphs": [
+        "ných vnitrostátnõch právnõch predpisu ani dvoustran-\nných ci mnohostranných smluv, úmluv nebo dohod,\nkteré jsou nebo v budoucnu vstoupõ v platnost a na\njejichz základe jsou uplatn ovány prõznivejsõ podmõnky\npro uprchlõky legálne pobývajõcõ na územõ jedné ze\nsmluvnõch stran, pokud jde o prekracovánõ státnõch\nhranic."
+      ]
+    },
+    {
+      "number": 7,
+      "title": "1. Kazdá smluvnõ strana si vyhrazuje právo od-",
+      "text": "lozit vstup této dohody v platnost nebo narõdit docasné\npozastavenõ jejõho provádenõ z du vodu verejného po-\nrádku, bezpecnosti nebo verejného zdravõ, a to vu ci\nvsem ostatnõm stranám nebo nekterým z nich, s výjim-\nkou ustanovenõ clánku 5. Generálnõ tajemnõk Rady\nEvropy bude okamzite informován o prijetõ takové-\nhoto opatrenõ a rovnez o ukoncenõ jeho platnosti.\n2. Smluvnõ strana, která vyuzije nekteré z moz-\nnostõ uvedených v predcházejõcõm odstavci, mu ze vy-\nzadovat provádenõ této dohody od jiné strany pouze\ntehdy, jestlize ji sama vu ci této strane provádõ.",
+      "paragraphs": [
+        "lozit vstup této dohody v platnost nebo narõdit docasné\npozastavenõ jejõho provádenõ z du vodu verejného po-\nrádku, bezpecnosti nebo verejného zdravõ, a to vu ci\nvsem ostatnõm stranám nebo nekterým z nich, s výjim-\nkou ustanovenõ clánku 5. Generálnõ tajemnõk Rady\nEvropy bude okamzite informován o prijetõ takové-\nhoto opatrenõ a rovnez o ukoncenõ jeho platnosti.",
+        "2. Smluvnõ strana, která vyuzije nekteré z moz-\nnostõ uvedených v predcházejõcõm odstavci, mu ze vy-\nzadovat provádenõ této dohody od jiné strany pouze\ntehdy, jestlize ji sama vu ci této strane provádõ."
+      ]
+    },
+    {
+      "number": 8,
+      "title": "Tato dohoda je otevrena k podpisu clenu m Rady",
+      "text": "Evropy, kterõ se mohou stát jejõmi stranami bud':\na) podpisem bez výhrady ratifikace, nebo\nb) podpisem s výhradou ratifikace s následnou rati-\nfikacõ.\nRatifikacnõ listiny budou ulozeny u generálnõho ta-\njemnõka Rady Evropy.",
+      "paragraphs": [
+        "Evropy, kterõ se mohou stát jejõmi stranami bud':\na) podpisem bez výhrady ratifikace, nebo\nb) podpisem s výhradou ratifikace s následnou rati-\nfikacõ.\nRatifikacnõ listiny budou ulozeny u generálnõho ta-\njemnõka Rady Evropy."
+      ]
+    },
+    {
+      "number": 9,
+      "title": "1. Dohoda vstoupõ v platnost jeden mesõc ode",
+      "text": "dne, kdy tri clenové Rady, v souladu s clánkem 8, po-\ndepõsõ dohodu bez výhrady ratifikace nebo ji ratifikujõ.\n2. Pro kteréhokoliv dalsõho clena Rady, který ná-\nsledne podepõse dohodu bez výhrady ratifikace nebo ji\nratifikuje, dohoda vstoupõ v platnost jeden mesõc ode\ndne podpisu nebo ode dne ulozenõ ratifikacnõ listiny.",
+      "paragraphs": [
+        "dne, kdy tri clenové Rady, v souladu s clánkem 8, po-\ndepõsõ dohodu bez výhrady ratifikace nebo ji ratifikujõ.",
+        "2. Pro kteréhokoliv dalsõho clena Rady, který ná-\nsledne podepõse dohodu bez výhrady ratifikace nebo ji\nratifikuje, dohoda vstoupõ v platnost jeden mesõc ode\ndne podpisu nebo ode dne ulozenõ ratifikacnõ listiny."
+      ]
+    },
+    {
+      "number": 10,
+      "title": "Po vstupu této dohody v platnost mu ze Výbor",
+      "text": "ministru Rady Evropy na základe jednomyslného hla-\nsovánõ vyzvat kteroukoli vládu, která nenõ clenem\nRady a je stranou bud' U mluvy o právnõm postavenõ\nuprchlõku z 28. cervence 1951 nebo Dohody týkajõcõ se\nvydávánõ cestovnõho dokladu uprchlõku m z 15. rõjna\n1946, aby pristoupila k této dohode. Tento prõstup\nvstoupõ v platnost jeden mesõc ode dne ulozenõ listiny\no prõstupu u generálnõho tajemnõka Rady Evropy.",
+      "paragraphs": [
+        "ministru Rady Evropy na základe jednomyslného hla-\nsovánõ vyzvat kteroukoli vládu, která nenõ clenem\nRady a je stranou bud' U mluvy o právnõm postavenõ\nuprchlõku z 28. cervence 1951 nebo Dohody týkajõcõ se\nvydávánõ cestovnõho dokladu uprchlõku m z 15. rõjna\n1946, aby pristoupila k této dohode. Tento prõstup\nvstoupõ v platnost jeden mesõc ode dne ulozenõ listiny\no prõstupu u generálnõho tajemnõka Rady Evropy."
+      ]
+    },
+    {
+      "number": 11,
+      "title": "Generálnõ tajemnõk Rady Evropy oznámõ clen-",
+      "text": "ským státu m Rady a státu m pristupujõcõm k této do-\nhode:\na) kazdý podpis, spolu s prõpadnou výhradou ratifi-\nkace, ulozenõ kazdé ratifikacnõ listiny a datum\nvstupu dohody v platnost;\nb) ulozenõ kazdé listiny o prõstupu v souladu s clán-\nkem 10;\nc) kazdé oznámenõ nebo prohlásenõ, které obdrzõ\nv souladu s clánky 2, 7 a 12, a datum, kdy ozná-\nmenõ nebo prohlásenõ vstupuje v platnost.",
+      "paragraphs": [
+        "ským státu m Rady a státu m pristupujõcõm k této do-\nhode:\na) kazdý podpis, spolu s prõpadnou výhradou ratifi-\nkace, ulozenõ kazdé ratifikacnõ listiny a datum\nvstupu dohody v platnost;\nb) ulozenõ kazdé listiny o prõstupu v souladu s clán-\nkem 10;\nc) kazdé oznámenõ nebo prohlásenõ, které obdrzõ\nv souladu s clánky 2, 7 a 12, a datum, kdy ozná-\nmenõ nebo prohlásenõ vstupuje v platnost."
+      ]
+    },
+    {
+      "number": 12,
+      "title": "Kazdá smluvnõ strana mu ze ukoncit provádenõ",
+      "text": "dohody tri mesõce po oznámenõ této skutecnosti gene-\nrálnõmu tajemnõkovi Rady Evropy.\nNa du kaz toho nõze podepsanõ, majõce k tomuto\nrádné zmocnenõ, podepsali tuto dohodu.\nDáno ve Štrasburku dne 20. dubna 1959 v anglic-\nkém a francouzském jazyce, pricemz obe znenõ majõ\nstejnou platnost, v jednom vyhotovenõ, které zu stane\nulozeno v archivu Rady Evropy. Generálnõ tajemnõk\npredá overené kopie signatárským vládám.\nSDE LENI\nMinisterstva zahranicnõch vecõ\nMinisterstvo zahranicnõch vecõ sdeluje, ze dne 30. cervna 1997 byla v Kyjeve podepsána Smlouva mezi\nvládou České republiky a vládou Ukrajiny o zamezenõ dvojõho zdanenõ a zabránenõ dan ovému úniku v oboru\ndanõ z prõjmu a z majetku.\nSe Smlouvou vyslovil souhlas Parlament České republiky a prezident republiky Smlouvu ratifikoval.\nSmlouva vstoupila v platnost na základe svého clánku 28 odst. 1 dne 20. dubna 1999 a jejõ ustanovenõ se\nbudou provádet v souladu se znenõm odstavce 1 põsm. a) a b). Podle odstavce 2 téhoz clánku dnem, kdy se zacne\nprovádet tato smlouva, se ve vztazõch mezi Č eskou republikou a Ukrajinou prestanou provádet:\nSmlouva o zamezenõ dvojõho zdanenõ prõjmu a majetku fyzických osob, podepsaná v Miskovci dne 27. kvetna\n1977, vyhlásená pod c. 30/1979 Sb.,\na\nSmlouva o zamezenõ dvojõho zdanenõ prõjmu a majetku právnických osob, podepsaná v Ulánbátaru dne\n19. kvetna 1978, vyhlásená pod c. 49/1979 Sb.\nČeské znenõ Smlouvy se vyhlasuje soucasne. Do anglického znenõ Smlouvy, jez je pro jejõ výklad rozhodné,\nlze nahlédnout na Ministerstvu zahranicnõch vecõ a Ministerstvu financõ.\nSMLOUVA\nmezi vládou České republiky a vládou Ukrajiny\no zamezenõ dvojõho zdanenõ a zabránenõ dan ovému úniku v oboru\ndanõ z prõjmu a z majetku\nVláda České republiky a vláda Ukrajiny,\nprejõce si uzavrõt smlouvu o zamezenõ dvojõho\nzdanenõ a zabránenõ dan ovému úniku v oboru danõ\nz prõjmu a z majetku a potvrzujõce jejich snahu rozvõjet\na prohlubovat vzájemné hospodárské vztahy,\nse dohodly takto:",
+      "paragraphs": [
+        "dohody tri mesõce po oznámenõ této skutecnosti gene-\nrálnõmu tajemnõkovi Rady Evropy.\nNa du kaz toho nõze podepsanõ, majõce k tomuto\nrádné zmocnenõ, podepsali tuto dohodu.\nDáno ve Štrasburku dne 20. dubna 1959 v anglic-\nkém a francouzském jazyce, pricemz obe znenõ majõ\nstejnou platnost, v jednom vyhotovenõ, které zu stane\nulozeno v archivu Rady Evropy. Generálnõ tajemnõk\npredá overené kopie signatárským vládám.\nSDE LENI\nMinisterstva zahranicnõch vecõ\nMinisterstvo zahranicnõch vecõ sdeluje, ze dne 30. cervna 1997 byla v Kyjeve podepsána Smlouva mezi\nvládou České republiky a vládou Ukrajiny o zamezenõ dvojõho zdanenõ a zabránenõ dan ovému úniku v oboru\ndanõ z prõjmu a z majetku.\nSe Smlouvou vyslovil souhlas Parlament České republiky a prezident republiky Smlouvu ratifikoval.\nSmlouva vstoupila v platnost na základe svého clánku 28 odst. 1 dne 20. dubna 1999 a jejõ ustanovenõ se\nbudou provádet v souladu se znenõm odstavce 1 põsm. a) a b). Podle odstavce 2 téhoz clánku dnem, kdy se zacne\nprovádet tato smlouva, se ve vztazõch mezi Č eskou republikou a Ukrajinou prestanou provádet:\nSmlouva o zamezenõ dvojõho zdanenõ prõjmu a majetku fyzických osob, podepsaná v Miskovci dne 27. kvetna\n1977, vyhlásená pod c. 30/1979 Sb.,\na\nSmlouva o zamezenõ dvojõho zdanenõ prõjmu a majetku právnických osob, podepsaná v Ulánbátaru dne",
+        "19. kvetna 1978, vyhlásená pod c. 49/1979 Sb.\nČeské znenõ Smlouvy se vyhlasuje soucasne. Do anglického znenõ Smlouvy, jez je pro jejõ výklad rozhodné,\nlze nahlédnout na Ministerstvu zahranicnõch vecõ a Ministerstvu financõ.\nSMLOUVA\nmezi vládou České republiky a vládou Ukrajiny\no zamezenõ dvojõho zdanenõ a zabránenõ dan ovému úniku v oboru\ndanõ z prõjmu a z majetku\nVláda České republiky a vláda Ukrajiny,\nprejõce si uzavrõt smlouvu o zamezenõ dvojõho\nzdanenõ a zabránenõ dan ovému úniku v oboru danõ\nz prõjmu a z majetku a potvrzujõce jejich snahu rozvõjet\na prohlubovat vzájemné hospodárské vztahy,\nse dohodly takto:"
+      ]
+    },
     {
       "number": 1,
       "title": "Osoby, na které se Smlouva vztahuje",

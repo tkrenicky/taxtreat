@@ -3,6 +3,126 @@
   "source_title": "270/1996 Sb.",
   "source_path": "data/raw/treaty/9405698b6b8fedc5.pdf",
   "start_page": 5,
+  "identity_validation": {
+    "expected_country": "Albánie",
+    "status": "validated",
+    "reason": "counterparty_matched",
+    "matched_alias": "albanie",
+    "matched_method": "exact_alias",
+    "publication_reference": "270/1996",
+    "publication_reference_found": false,
+    "warnings": [
+      "publication_reference_not_found"
+    ]
+  },
+  "text_extraction": {
+    "method": "pypdf",
+    "score": 2077,
+    "page_count": 16,
+    "attempts": [
+      {
+        "method": "pypdf",
+        "score": 2077,
+        "total_characters": 59154,
+        "substantive_pages": 15,
+        "article_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30
+        ],
+        "error": null
+      },
+      {
+        "method": "pdftotext",
+        "score": 556,
+        "total_characters": 58942,
+        "substantive_pages": 15,
+        "article_numbers": [
+          2,
+          3,
+          21,
+          23,
+          27
+        ],
+        "error": null
+      },
+      {
+        "method": "hybrid",
+        "score": 2066,
+        "total_characters": 59160,
+        "substantive_pages": 15,
+        "article_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30
+        ],
+        "error": null
+      }
+    ]
+  },
+  "source_resolution": {
+    "status": "fallback",
+    "method": "whole_document",
+    "start_page": 1,
+    "end_page": 16,
+    "effective_title": "270/1996 Sb.",
+    "metadata_mismatch": false,
+    "candidate_count": 0
+  },
   "articles": [
     {
       "number": 1,

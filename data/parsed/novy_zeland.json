@@ -2,82 +2,144 @@
   "country": "Nový Zéland",
   "source_title": "75/2008 Sb.m.s.",
   "source_path": "data/raw/treaty/9ef2cc07342533a7.pdf",
-  "start_page": 3,
+  "start_page": 24,
+  "identity_validation": {
+    "expected_country": "Nový Zéland",
+    "status": "validated",
+    "reason": "counterparty_matched",
+    "matched_alias": "novy zeland",
+    "matched_method": "exact_alias",
+    "publication_reference": "75/2008",
+    "publication_reference_found": false,
+    "warnings": [
+      "publication_reference_not_found"
+    ]
+  },
+  "text_extraction": {
+    "method": "pypdf",
+    "score": 1965,
+    "page_count": 40,
+    "attempts": [
+      {
+        "method": "pypdf",
+        "score": 1965,
+        "total_characters": 65503,
+        "substantive_pages": 27,
+        "article_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27
+        ],
+        "error": null
+      },
+      {
+        "method": "pdftotext",
+        "score": 1961,
+        "total_characters": 65652,
+        "substantive_pages": 27,
+        "article_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27
+        ],
+        "error": null
+      },
+      {
+        "method": "hybrid",
+        "score": 1961,
+        "total_characters": 65503,
+        "substantive_pages": 27,
+        "article_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27
+        ],
+        "error": null
+      }
+    ]
+  },
+  "source_resolution": {
+    "status": "resolved",
+    "method": "notice_country_match",
+    "start_page": 22,
+    "end_page": 40,
+    "effective_title": "75/2008 Sb.m.s.",
+    "metadata_mismatch": false,
+    "candidate_count": 1
+  },
   "articles": [
-    {
-      "number": 1,
-      "title": "1. Smluvní strany budou podporovat výměny stipendistů ke studijním a výzkumným pobytům ve státu druhé",
-      "text": "smluvní strany na základě následujících podmínek:\na) Celkový počet vyměňovaných osob v každém ze států smluvních stran nepřesáhne 20 osob ročně.\nb) Délka každého studijního pobytu ve státě přijímající smluvní strany je nejvýše jeden akademický rok.\nc) Stipendisté jsou nejčastěji přijímáni k výzkumným pobytům (tj. v závislosti na své kvalifikaci a preferencích\nbuďabsolvují kurzy dle vlastního výběru v rámci programů celoživotního vzdělávání, nebo se na hostitel-\nských institucích věnují samostatné výzkumné činnosti).\nd) Kurzy, které stipendisté navštěvují, nevedou k získání akademického titulu.\ne) Navrhovaní stipendisté musí mít dokončené minimálně dva roky vysokoškolského studia v příslušném\nstudijním oboru ve vysílající zemi.\nf) Stipendisté (s výjimkou studentůčínského nebo českého jazyka) musí prokázat pokročilou znalost anglic-\nkého jazyka (na úrovni, která jim umožní navštěvovat bez problémůvysokoškolské přednášky a konzultace\nv anglickém jazyce).\ng) Stipendisté (s výjimkou studentůčínského nebo českého jazyka) mohou, se souhlasem přijímající strany,\nstudovat ve státě přijímající smluvní strany prostřednictvím anglického jazyka.\n2. Vysílající smluvní strana předloží nominaci kandidátů (včetnědokladůo jejich kvalifikaci a praxi) přijímající\nsmluvní straně nejpozději do 30. dubna každého roku.\n3. Přijímající smluvní strana oznámí vysílající smluvní straně rozhodnutí o přijetí navržených osob nejpozději do\n30. července každého roku.\n4. Vysílající smluvní strana uhradí svým vysílaným osobám náklady na mezinárodní dopravu do místa jejich\npůsobení ve státěpřijímající smluvní strany a zpět a poskytne jim finanční částku (stipendium) podle platných\nvnitrostátních předpisů vysílající smluvní strany.\n5. Přijímající smluvní strana uhradí přijatým kandidátům studium, ubytování ve vysokoškolských zařízeních\na poskytne jim lékařskou péči v nezbytně nutném rozsahu v případě náhlého onemocnění nebo úrazu po\ndobu jejich pobytu v přijímající zemi.\n6. Smluvní strana bude vysílat osoby, které si na dobu pobytu ve státě druhé smluvní strany sjednají pojištění\nnákladůzdravotní péče v souladu s právními předpisy přijímající smluvní strany.\n7. Přijímající smluvní strana umožní podle svých možností osobám přijatým na základě tohoto Ujednání stra-\nvování ve vysokoškolských zařízeních.\n8. Přijímající smluvní strana umožní podle svých možností docentům, profesorům a stipendistům se srovnatel-\nným akademickým statusem, vyslaným druhou smluvní stranou, ubytování v jednolůžkových pokojích.",
-      "paragraphs": [
-        "smluvní strany na základě následujících podmínek:\na) Celkový počet vyměňovaných osob v každém ze států smluvních stran nepřesáhne 20 osob ročně.\nb) Délka každého studijního pobytu ve státě přijímající smluvní strany je nejvýše jeden akademický rok.\nc) Stipendisté jsou nejčastěji přijímáni k výzkumným pobytům (tj. v závislosti na své kvalifikaci a preferencích\nbuďabsolvují kurzy dle vlastního výběru v rámci programů celoživotního vzdělávání, nebo se na hostitel-\nských institucích věnují samostatné výzkumné činnosti).\nd) Kurzy, které stipendisté navštěvují, nevedou k získání akademického titulu.\ne) Navrhovaní stipendisté musí mít dokončené minimálně dva roky vysokoškolského studia v příslušném\nstudijním oboru ve vysílající zemi.\nf) Stipendisté (s výjimkou studentůčínského nebo českého jazyka) musí prokázat pokročilou znalost anglic-\nkého jazyka (na úrovni, která jim umožní navštěvovat bez problémůvysokoškolské přednášky a konzultace\nv anglickém jazyce).\ng) Stipendisté (s výjimkou studentůčínského nebo českého jazyka) mohou, se souhlasem přijímající strany,\nstudovat ve státě přijímající smluvní strany prostřednictvím anglického jazyka.",
-        "2. Vysílající smluvní strana předloží nominaci kandidátů (včetnědokladůo jejich kvalifikaci a praxi) přijímající\nsmluvní straně nejpozději do 30. dubna každého roku.",
-        "3. Přijímající smluvní strana oznámí vysílající smluvní straně rozhodnutí o přijetí navržených osob nejpozději do",
-        "30. července každého roku.",
-        "4. Vysílající smluvní strana uhradí svým vysílaným osobám náklady na mezinárodní dopravu do místa jejich\npůsobení ve státěpřijímající smluvní strany a zpět a poskytne jim finanční částku (stipendium) podle platných\nvnitrostátních předpisů vysílající smluvní strany.",
-        "5. Přijímající smluvní strana uhradí přijatým kandidátům studium, ubytování ve vysokoškolských zařízeních\na poskytne jim lékařskou péči v nezbytně nutném rozsahu v případě náhlého onemocnění nebo úrazu po\ndobu jejich pobytu v přijímající zemi.",
-        "6. Smluvní strana bude vysílat osoby, které si na dobu pobytu ve státě druhé smluvní strany sjednají pojištění\nnákladůzdravotní péče v souladu s právními předpisy přijímající smluvní strany.",
-        "7. Přijímající smluvní strana umožní podle svých možností osobám přijatým na základě tohoto Ujednání stra-\nvování ve vysokoškolských zařízeních.",
-        "8. Přijímající smluvní strana umožní podle svých možností docentům, profesorům a stipendistům se srovnatel-\nným akademickým statusem, vyslaným druhou smluvní stranou, ubytování v jednolůžkových pokojích."
-      ]
-    },
-    {
-      "number": 2,
-      "title": "1. Smluvní strany budou nadále podporovat výuku českého jazyka v Čínské lidové republice a výuku čínského",
-      "text": "jazyka v České republice. Za tím účelem česká strana vyšle a čínská strana přijme učitele, který bude na\nUniverzitěpro zahraniční studia v Pekingu vyučovat český jazyk. Čínská strana vyšle a česká strana přijme\nučitele k výuce čínského jazyka na Filozofické fakultě Univerzity Karlovy v Praze a na Filozofické fakultě\nUniverzity Palackého v Olomouci.\nSmluvní strany požádají o vyslání učitelů jazyka pro příští akademický rok do konce února běžného roku.\nVysílající smluvní strana předloží doklady o kvalifikaci a praxi navrhovaných kandidátů přijímající smluvní\nstraněnejdéle do konce března příslušného roku. Přijímající smluvní strana sdělí stanovisko k návrhu na přijetí\nučitele jazyka nejdéle do konce dubna příslušného roku.\nVysílající smluvní strana uhradí učiteli jazyka mezinárodní cestovné do místa působení ve státě přijímající\nsmluvní strany a zpět.\nPřijímající smluvní strana poskytne učiteli jazyka měsíční plat podle platových předpisů státu přijímající\nsmluvní strany s ohledem na kvalifikaci a délku jeho pedagogické praxe.\nPřijímající smluvní strana napomůže při zajištění bezplatného ubytování učitele jazyka ve vybaveném bytě.\nPřijímající smluvní strana poskytne učiteli jazyka nezbytnou lékařskou péči v souladu s předpisy státu při-\njímající smluvní strany.\n2. V případě, že v dobětrvání platnosti tohoto Ujednání dojde k oboustranné dohodě o zahájení výuky českého\njazyka také na jiné čínské univerzitě, česká strana vyšle a čínská strana přijme dalšího učitele českého jazyka.\n3. Smluvní strany podporují založení Institutu Konfucia na Univerzitě Palackého v Olomouci a v dalších pří-\nslušných institucích.",
-      "paragraphs": [
-        "jazyka v České republice. Za tím účelem česká strana vyšle a čínská strana přijme učitele, který bude na\nUniverzitěpro zahraniční studia v Pekingu vyučovat český jazyk. Čínská strana vyšle a česká strana přijme\nučitele k výuce čínského jazyka na Filozofické fakultě Univerzity Karlovy v Praze a na Filozofické fakultě\nUniverzity Palackého v Olomouci.\nSmluvní strany požádají o vyslání učitelů jazyka pro příští akademický rok do konce února běžného roku.\nVysílající smluvní strana předloží doklady o kvalifikaci a praxi navrhovaných kandidátů přijímající smluvní\nstraněnejdéle do konce března příslušného roku. Přijímající smluvní strana sdělí stanovisko k návrhu na přijetí\nučitele jazyka nejdéle do konce dubna příslušného roku.\nVysílající smluvní strana uhradí učiteli jazyka mezinárodní cestovné do místa působení ve státě přijímající\nsmluvní strany a zpět.\nPřijímající smluvní strana poskytne učiteli jazyka měsíční plat podle platových předpisů státu přijímající\nsmluvní strany s ohledem na kvalifikaci a délku jeho pedagogické praxe.\nPřijímající smluvní strana napomůže při zajištění bezplatného ubytování učitele jazyka ve vybaveném bytě.\nPřijímající smluvní strana poskytne učiteli jazyka nezbytnou lékařskou péči v souladu s předpisy státu při-\njímající smluvní strany.",
-        "2. V případě, že v dobětrvání platnosti tohoto Ujednání dojde k oboustranné dohodě o zahájení výuky českého\njazyka také na jiné čínské univerzitě, česká strana vyšle a čínská strana přijme dalšího učitele českého jazyka.",
-        "3. Smluvní strany podporují založení Institutu Konfucia na Univerzitě Palackého v Olomouci a v dalších pří-\nslušných institucích."
-      ]
-    },
-    {
-      "number": 3,
-      "title": "1. Česká strana poskytne každoročně 2 místa ke studiu českého jazyka na Letní škole slovanských studií pořá-",
-      "text": "dané veřejnými vysokými školami v různých místech České republiky.\n2. Česká strana uhradí zápisné, exkurze, ubytování a stravování a poskytne přijatým účastníkům z Číny lékař-\nskou péči v nezbytně nutném rozsahu v případě náhlého onemocnění nebo úrazu. Vysílající smluvní strana\nhradí mezinárodní cestovné do místa pobytu ve státě přijímající smluvní strany a zpět.\n3. Čínská strana poskytne každoročně 2 místa ke studiu v krátkodobých jazykových kurzech čínštiny. Délka\nstudia v kurzech trvá čtyři týdny. Studium je určeno pro učitele čínštiny.\n4. Čínská strana poskytne přijatým účastníkům z České republiky stipendium k pokrytí jejich životních nákladů,\nbezplatné ubytování, uhradí studijní cesty v rámci jazykových kurzů a lékařskou péči v nezbytně nutném\nrozsahu v případě náhlého onemocnění nebo úrazu. Vysílající strana hradí mezinárodní cestovné do místa\npobytu a zpět.\n5. Smluvní strana bude vysílat osoby, které si na dobu pobytu ve státě druhé smluvní strany sjednají pojištění\nnákladůzdravotní péče v souladu s právními předpisy přijímající smluvní strany.",
-      "paragraphs": [
-        "dané veřejnými vysokými školami v různých místech České republiky.",
-        "2. Česká strana uhradí zápisné, exkurze, ubytování a stravování a poskytne přijatým účastníkům z Číny lékař-\nskou péči v nezbytně nutném rozsahu v případě náhlého onemocnění nebo úrazu. Vysílající smluvní strana\nhradí mezinárodní cestovné do místa pobytu ve státě přijímající smluvní strany a zpět.",
-        "3. Čínská strana poskytne každoročně 2 místa ke studiu v krátkodobých jazykových kurzech čínštiny. Délka\nstudia v kurzech trvá čtyři týdny. Studium je určeno pro učitele čínštiny.",
-        "4. Čínská strana poskytne přijatým účastníkům z České republiky stipendium k pokrytí jejich životních nákladů,\nbezplatné ubytování, uhradí studijní cesty v rámci jazykových kurzů a lékařskou péči v nezbytně nutném\nrozsahu v případě náhlého onemocnění nebo úrazu. Vysílající strana hradí mezinárodní cestovné do místa\npobytu a zpět.",
-        "5. Smluvní strana bude vysílat osoby, které si na dobu pobytu ve státě druhé smluvní strany sjednají pojištění\nnákladůzdravotní péče v souladu s právními předpisy přijímající smluvní strany."
-      ]
-    },
-    {
-      "number": 4,
-      "title": "1. Smluvní strany v době platnosti tohoto Ujednání vyšlou a přijmou dvěškolské delegace k týdenní návštěvě",
-      "text": "státu druhé smluvní strany. Počet členůjedné delegace nepřevýší pět osob.\n2. Vysílající smluvní strana bude informovat o záměru vyslat školskou delegaci včetně jejího složení nejpozději\n2 měsíce před plánovaným zahájením pobytu.\nPřijímající smluvní strana oznámí své rozhodnutí o přijetí delegace do 20 dnů od data obdržení informace\no zájmu druhé smluvní strany vyslat delegaci.\n3. Vysílající smluvní strana potvrdí přesné datum a způsob příjezdu delegace nejméně s dvoutýdenním před-\nstihem.\n4. Vysílající smluvní strana uhradí náklady na mezinárodní cestovné do hlavního města státu přijímající smluvní\nstrany a zpět.\n5. Přijímající smluvní strana uhradí ubytování, stravování, vnitrostátní přepravu a lékařskou péči v případě ná-\nhlého onemocnění či úrazu v průběhu pobytu delegace ve státě druhé smluvní strany.",
-      "paragraphs": [
-        "státu druhé smluvní strany. Počet členůjedné delegace nepřevýší pět osob.",
-        "2. Vysílající smluvní strana bude informovat o záměru vyslat školskou delegaci včetně jejího složení nejpozději\n2 měsíce před plánovaným zahájením pobytu.\nPřijímající smluvní strana oznámí své rozhodnutí o přijetí delegace do 20 dnů od data obdržení informace\no zájmu druhé smluvní strany vyslat delegaci.",
-        "3. Vysílající smluvní strana potvrdí přesné datum a způsob příjezdu delegace nejméně s dvoutýdenním před-\nstihem.",
-        "4. Vysílající smluvní strana uhradí náklady na mezinárodní cestovné do hlavního města státu přijímající smluvní\nstrany a zpět.",
-        "5. Přijímající smluvní strana uhradí ubytování, stravování, vnitrostátní přepravu a lékařskou péči v případě ná-\nhlého onemocnění či úrazu v průběhu pobytu delegace ve státě druhé smluvní strany."
-      ]
-    },
-    {
-      "number": 5,
-      "title": "Smluvní strany se budou informovat o významných mezinárodních akcích v oblasti vysokého školství a budou",
-      "text": "vytvářet podmínky k účasti školských odborníků na nich.",
-      "paragraphs": [
-        "vytvářet podmínky k účasti školských odborníků na nich."
-      ]
-    },
-    {
-      "number": 6,
-      "title": "Smluvní strany budou podporovat navazování přímých kontaktů a rozvoj akademických výměn a spolupráce",
-      "text": "mezi vysokými školami.",
-      "paragraphs": [
-        "mezi vysokými školami."
-      ]
-    },
-    {
-      "number": 7,
-      "title": "Toto Ujednání vstupuje v platnost dnem podpisu a zůstane v platnosti do 31. prosince 2011.",
-      "text": "Dáno v Pekingu dne 8. července 2008 ve dvou původních vyhotoveních, každé v jazyce českém, čínském a an-\nglickém. V případě rozdílností ve výkladu je rozhodující znění v jazyce anglickém.\nZa Ministerstvo školství, mládeže a Za Ministerstvo školství Čínské lidové\ntělovýchovy České republiky republiky\nPhDr. Ivana GROLLOVÁ v. r. ZHANG Xinsheng v. r.\nchargé d,affaires a. i. náměstek ministra školství Čínské lidové\nVelvyslanectví České republiky republiky\nv Čínské lidové republice\nSDĚLENÍ\nMinisterstva zahraničních věcí\nMinisterstvo zahraničních věcí sděluje, že dne 26. října 2007 byla v Praze podepsána Smlouva mezi Českou\nrepublikou a Novým Zélandem o zamezení dvojímu zdanění a zabránění daňovému úniku v oboru daní z příjmu.\nSe Smlouvou vyslovil souhlas Parlament České republiky a prezident republiky Smlouvu ratifikoval.\nSmlouva vstoupila v platnost na základě svého článku 26 dne 29. srpna 2008 a její ustanovení se budou\nprovádět v souladu se zněním písmen a) a b) téhožčlánku.\nČeské znění Smlouvy se vyhlašuje současně.\nSMLOUVA\nMEZI\nČESKOU REPUBLIKOU\nA\nNOVÝM ZÉLANDEM\nO ZAMEZENÍ DVOJÍMU ZDANĚNÍ\nA ZABRÁNĚNÍ DAŇOVÉMU ÚNIKU V OBORU DANÍ Z PŘÍJMU\nČESKÁ REPUBLIKA A NOVÝ ZÉLAND,\npřejíce si uzavřít smlouvu o zamezení dvojímu zdanění a zabránění daňovému úniku v oboru daní z příjmu,\nse dohodly takto:",
-      "paragraphs": [
-        "Dáno v Pekingu dne 8. července 2008 ve dvou původních vyhotoveních, každé v jazyce českém, čínském a an-\nglickém. V případě rozdílností ve výkladu je rozhodující znění v jazyce anglickém.\nZa Ministerstvo školství, mládeže a Za Ministerstvo školství Čínské lidové\ntělovýchovy České republiky republiky\nPhDr. Ivana GROLLOVÁ v. r. ZHANG Xinsheng v. r.\nchargé d,affaires a. i. náměstek ministra školství Čínské lidové\nVelvyslanectví České republiky republiky\nv Čínské lidové republice\nSDĚLENÍ\nMinisterstva zahraničních věcí\nMinisterstvo zahraničních věcí sděluje, že dne 26. října 2007 byla v Praze podepsána Smlouva mezi Českou\nrepublikou a Novým Zélandem o zamezení dvojímu zdanění a zabránění daňovému úniku v oboru daní z příjmu.\nSe Smlouvou vyslovil souhlas Parlament České republiky a prezident republiky Smlouvu ratifikoval.\nSmlouva vstoupila v platnost na základě svého článku 26 dne 29. srpna 2008 a její ustanovení se budou\nprovádět v souladu se zněním písmen a) a b) téhožčlánku.\nČeské znění Smlouvy se vyhlašuje současně.\nSMLOUVA\nMEZI\nČESKOU REPUBLIKOU\nA\nNOVÝM ZÉLANDEM\nO ZAMEZENÍ DVOJÍMU ZDANĚNÍ\nA ZABRÁNĚNÍ DAŇOVÉMU ÚNIKU V OBORU DANÍ Z PŘÍJMU\nČESKÁ REPUBLIKA A NOVÝ ZÉLAND,\npřejíce si uzavřít smlouvu o zamezení dvojímu zdanění a zabránění daňovému úniku v oboru daní z příjmu,\nse dohodly takto:"
-      ]
-    },
     {
       "number": 1,
       "title": "OSOBY, NA KTERÉ SE SMLOUVA VZTAHUJE",

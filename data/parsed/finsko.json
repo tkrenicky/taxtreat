@@ -2,8 +2,390 @@
   "country": "Finsko",
   "source_title": "43/1996 Sb.",
   "source_path": "data/raw/treaty/b8639e7c202a2f61.pdf",
-  "start_page": 11,
+  "start_page": 2,
+  "identity_validation": {
+    "expected_country": "Finsko",
+    "status": "validated",
+    "reason": "counterparty_matched",
+    "matched_alias": "finsko",
+    "matched_method": "exact_alias",
+    "publication_reference": "43/1996",
+    "publication_reference_found": false,
+    "warnings": [
+      "publication_reference_not_found"
+    ]
+  },
+  "text_extraction": {
+    "method": "pypdf",
+    "score": 2043,
+    "page_count": 32,
+    "attempts": [
+      {
+        "method": "pypdf",
+        "score": 2043,
+        "total_characters": 110211,
+        "substantive_pages": 31,
+        "article_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28
+        ],
+        "error": null
+      },
+      {
+        "method": "pdftotext",
+        "score": 627,
+        "total_characters": 110314,
+        "substantive_pages": 31,
+        "article_numbers": [
+          2,
+          3,
+          4,
+          5,
+          7,
+          13,
+          15,
+          20
+        ],
+        "error": null
+      },
+      {
+        "method": "hybrid",
+        "score": 2037,
+        "total_characters": 110645,
+        "substantive_pages": 31,
+        "article_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28
+        ],
+        "error": null
+      }
+    ]
+  },
+  "source_resolution": {
+    "status": "fallback",
+    "method": "whole_document",
+    "start_page": 1,
+    "end_page": 32,
+    "effective_title": "43/1996 Sb.",
+    "metadata_mismatch": false,
+    "candidate_count": 0
+  },
   "articles": [
+    {
+      "number": 1,
+      "title": "Pro Strany U mluvy, které jsou vázány tõmto pro-",
+      "text": "tokolem, se U mluva dopln uje, jak je uvedeno v cláncõch\n2 az 5.",
+      "paragraphs": [
+        "tokolem, se U mluva dopln uje, jak je uvedeno v cláncõch\n2 az 5."
+      ]
+    },
+    {
+      "number": 2,
+      "title": "Článek 31odst. 2 U mluvy znõ takto:",
+      "text": "12. Zpráva bude dorucena Výboru ministru ; rov-\nnez bude dorucena dotceným státu m, a pokud se týká\nstõznosti predlozené podle clánku 25, i stezovateli. Do-\ntcené státy a stezovatel nejsou oprávneni ji zverejnit.a.",
+      "paragraphs": [
+        "12. Zpráva bude dorucena Výboru ministru ; rov-\nnez bude dorucena dotceným státu m, a pokud se týká\nstõznosti predlozené podle clánku 25, i stezovateli. Do-\ntcené státy a stezovatel nejsou oprávneni ji zverejnit.a."
+      ]
+    },
+    {
+      "number": 3,
+      "title": "Článek 44U mluvy znõ takto:",
+      "text": "1Pouze vysoké smluvnõ strany, Komise a osoby,\nnevládnõ organizace nebo skupiny osob, které podaly\nstõznost podle clánku 25, majõ právo predlozit prõpad\nSoudu.a.",
+      "paragraphs": [
+        "1Pouze vysoké smluvnõ strany, Komise a osoby,\nnevládnõ organizace nebo skupiny osob, které podaly\nstõznost podle clánku 25, majõ právo predlozit prõpad\nSoudu.a."
+      ]
+    },
+    {
+      "number": 4,
+      "title": "Článek 45U mluvy znõ takto:",
+      "text": "1Pravomoc Soudu se vztahuje na vsechny prõpady\ntýkajõcõ se výkladu a provádenõ této úmluvy, které jsou\nmu predlozeny v souladu s clánkem 48.a.\n1) U mluva o ochrane lidských práv a základnõch svobod, ve znenõ protokolu c. 3, 5 a 8, sjednaná dne 4. listopadu 1950.\nDodatkový protokol ze dne 20. brezna 1952, Protokol c. 2 ze dne 6. kvetna 1963, Protokol c. 4 ze dne 16. zárõ 1963, Protokol\nc. 6 ze dne 28. dubna 1983 a Protokol c. 7 ze dne 22. listopadu 1984 byly vyhláseny pod c. 209/1992 Sb.",
+      "paragraphs": [
+        "1Pravomoc Soudu se vztahuje na vsechny prõpady\ntýkajõcõ se výkladu a provádenõ této úmluvy, které jsou\nmu predlozeny v souladu s clánkem 48.a.\n1) U mluva o ochrane lidských práv a základnõch svobod, ve znenõ protokolu c. 3, 5 a 8, sjednaná dne 4. listopadu 1950.\nDodatkový protokol ze dne 20. brezna 1952, Protokol c. 2 ze dne 6. kvetna 1963, Protokol c. 4 ze dne 16. zárõ 1963, Protokol\nc. 6 ze dne 28. dubna 1983 a Protokol c. 7 ze dne 22. listopadu 1984 byly vyhláseny pod c. 209/1992 Sb."
+      ]
+    },
+    {
+      "number": 5,
+      "title": "Článek 48U mluvy znõ takto:",
+      "text": "11. Jestlize dotcená Vysoká smluvnõ strana, je-li\njen jedna, nebo dotcené Vysoké smluvnõ strany, je-li\njich võce, podléhajõ obligatornõ pravomoci Soudu,\nanebo nenõ-li tomu tak, pak se souhlasem dotcené Vy-\nsoké smluvnõ strany, je-li jen jedna, nebo dotcených\nVysokých smluvnõch stran, je-li jich võce, mu ze prõpad\npredat Soudu:\na) Komise;\nb) Vysoká smluvnõ strana, jejõz státnõ prõslusnõk se\npovazuje za poskozeného;\nc) Vysoká smluvnõ strana, která predlozila prõpad\nKomisi;\nd) Vysoká smluvnõ strana, proti nõz byla stõznost\npodána;\ne) osoba, nevládnõ organizace nebo skupina osob,\nkteré podaly stõznost Komisi.\n2. Je-li prõpad predán Soudu pouze v souladu\ns odstavcem 1 põsm. e), je nejprve predlozen výboru\nslozenému ze trõ clenu Soudu. V tomto výboru za-\nsedne coby soudce ex officio soudce zvolený za Vy-\nsokou smluvnõ stranu, proti nõz byla stõznost podána,\nanebo nenõ-li takový, osoba urcená Vysokou smluvnõ\nstranou, aby zasedala ve funkci soudce. Byla-li stõznost\npodána proti võce nez jedné Vysoké smluvnõ strane,\npocet clenu výboru se prõslusne zvýsõ.\nNevznásõ-li prõpad zádnou závaznou otázku s do-\npadem na výklad ci provádenõ U mluvy a nevyzaduje-li\nz jiných du vodu projednánõ Soudem, výbor mu ze jed-\nnomyslne rozhodnout, ze prõpad nebude posuzován\nSoudem. V tomto prõpade rozhodne Výbor ministru\nv souladu s ustanovenõmi clánku 32, zda doslo k poru-\nsenõ U mluvy.a.",
+      "paragraphs": [
+        "11. Jestlize dotcená Vysoká smluvnõ strana, je-li\njen jedna, nebo dotcené Vysoké smluvnõ strany, je-li\njich võce, podléhajõ obligatornõ pravomoci Soudu,\nanebo nenõ-li tomu tak, pak se souhlasem dotcené Vy-\nsoké smluvnõ strany, je-li jen jedna, nebo dotcených\nVysokých smluvnõch stran, je-li jich võce, mu ze prõpad\npredat Soudu:\na) Komise;\nb) Vysoká smluvnõ strana, jejõz státnõ prõslusnõk se\npovazuje za poskozeného;\nc) Vysoká smluvnõ strana, která predlozila prõpad\nKomisi;\nd) Vysoká smluvnõ strana, proti nõz byla stõznost\npodána;\ne) osoba, nevládnõ organizace nebo skupina osob,\nkteré podaly stõznost Komisi.",
+        "2. Je-li prõpad predán Soudu pouze v souladu\ns odstavcem 1 põsm. e), je nejprve predlozen výboru\nslozenému ze trõ clenu Soudu. V tomto výboru za-\nsedne coby soudce ex officio soudce zvolený za Vy-\nsokou smluvnõ stranu, proti nõz byla stõznost podána,\nanebo nenõ-li takový, osoba urcená Vysokou smluvnõ\nstranou, aby zasedala ve funkci soudce. Byla-li stõznost\npodána proti võce nez jedné Vysoké smluvnõ strane,\npocet clenu výboru se prõslusne zvýsõ.\nNevznásõ-li prõpad zádnou závaznou otázku s do-\npadem na výklad ci provádenõ U mluvy a nevyzaduje-li\nz jiných du vodu projednánõ Soudem, výbor mu ze jed-\nnomyslne rozhodnout, ze prõpad nebude posuzován\nSoudem. V tomto prõpade rozhodne Výbor ministru\nv souladu s ustanovenõmi clánku 32, zda doslo k poru-\nsenõ U mluvy.a."
+      ]
+    },
+    {
+      "number": 6,
+      "title": "1. Tento protokol je otevren k podpisu clenským",
+      "text": "státu m Rady Evropy, které podepsaly U mluvu a které\nmohou vyjádrit svu j souhlas být jõm vázány:\na) podpisem bez výhrady ratifikace, prijetõ nebo\nschválenõ; nebo\nb) podpisem s výhradou ratifikace, prijetõ nebo schvá-\nlenõ, po nemz bude následovat ratifikace, prijetõ\nnebo schválenõ.\n2. Ratifikacnõ listiny nebo listiny o prijetõ nebo\nschválenõ budou ulozeny u generálnõho tajemnõka\nRady Evropy.",
+      "paragraphs": [
+        "státu m Rady Evropy, které podepsaly U mluvu a které\nmohou vyjádrit svu j souhlas být jõm vázány:\na) podpisem bez výhrady ratifikace, prijetõ nebo\nschválenõ; nebo\nb) podpisem s výhradou ratifikace, prijetõ nebo schvá-\nlenõ, po nemz bude následovat ratifikace, prijetõ\nnebo schválenõ.",
+        "2. Ratifikacnõ listiny nebo listiny o prijetõ nebo\nschválenõ budou ulozeny u generálnõho tajemnõka\nRady Evropy."
+      ]
+    },
+    {
+      "number": 7,
+      "title": "1. Tento protokol vstoupõ v platnost prvnõ den",
+      "text": "mesõce následujõcõho po uplynutõ lhu ty trõ mesõcu od\ndata, kdy deset clenských státu Rady Evropy vyjádrilo\nsvu j souhlas být vázány Protokolem v souladu s usta-\nnovenõmi clánku 6.\n2. Pro kazdý clenský stát, který následne vyjádrõ\nsvu j souhlas být jõm vázán, vstoupõ Protokol v platnost\nprvnõ den mesõce následujõcõho po uplynutõ trõ mesõcu\node dne podpisu nebo ulozenõ ratifikacnõ listiny, listiny\no prijetõ nebo schválenõ.",
+      "paragraphs": [
+        "mesõce následujõcõho po uplynutõ lhu ty trõ mesõcu od\ndata, kdy deset clenských státu Rady Evropy vyjádrilo\nsvu j souhlas být vázány Protokolem v souladu s usta-\nnovenõmi clánku 6.",
+        "2. Pro kazdý clenský stát, který následne vyjádrõ\nsvu j souhlas být jõm vázán, vstoupõ Protokol v platnost\nprvnõ den mesõce následujõcõho po uplynutõ trõ mesõcu\node dne podpisu nebo ulozenõ ratifikacnõ listiny, listiny\no prijetõ nebo schválenõ."
+      ]
+    },
+    {
+      "number": 8,
+      "title": "Generálnõ tajemnõk Rady Evropy oznámõ clen-",
+      "text": "ským státu m Rady Evropy:\na) kazdý podpis;\nb) ulozenõ kazdé ratifikacnõ listiny, listiny o prijetõ\nnebo schválenõ;\nc) kazdé datum vstupu tohoto protokolu v platnost\nv souladu s clánkem 7;\nd) kazdý jiný úkon, oznámenõ nebo prohlásenõ vzta-\nhujõcõ se k tomuto protokolu.\nNa du kaz toho podepsanõ, kterõ k tomu byli rádne\nzmocneni, podepsali tento protokol.\nDáno v Ř õme dne 6. listopadu 1990 ve francouz-\nstine a anglictine, pricemz obe znenõ majõ stejnou plat-\nnost, v jednom vyhotovenõ, které bude ulozeno v ar-\nchivu Rady Evropy. Jeho overené kopie zasle generálnõ\ntajemnõk Rady Evropy vsem clenským státu m Rady\nEvropy.\nSDE LENI\nMinisterstva zahranicnõch vecõ\nDne 16. cervence 1995 byly v New Yorku prijaty zmeny Dohody o prijetõ jednotných podmõnek pro\nhomologaci (overovánõ shodnosti) a o vzájemném uznávánõ homologace výstroje a soucástõ motorových vozi-\ndel, Ž eneva 20. brezna 1958, vyhlásené pod c. 176/1960 Sb.\nDne 2. cervence 1993 Česká republika oznámila generálnõmu tajemnõkovi Organizace spojených národu ,\ndepozitári Dohody, ze v souladu s platnými zásadami mezinárodnõho práva se jako nástupnický stát České\na Slovenské Federativnõ Republiky povazuje za vázanou Dohodou o prijetõ jednotných podmõnek pro homolo-\ngaci (overovánõ shodnosti) a o vzájemném uznávánõ homologace výstroje a soucástõ motorových vozidel ze dne\n20. brezna 1958, vcetne výhrad s úcinnostõ od 1. ledna 1993.\nZmeny této dohody, prijaté na základe jejõho clánku 13 odst. 1, zahrnujõ téz zmenu názvu Dohody na:\n1Dohoda o prijetõ jednotných technických pravidel pro kolová vozidla, zarõzenõ a cásti, které se mohou montovat\na/nebo uzõvat na kolových vozidlech, a o podmõnkách pro vzájemné uznávánõ homologacõ, udelených na základe\ntechto pravidela.\nZmeny vstoupily v platnost v souladu se znenõm clánku 7 odst. 1 zmenené Dohody dnem 16. rõjna 1995\na tõmto dnem vstoupily v platnost i pro Č eskou republiku.\nČ eský predklad zmenené Dohody se vyhlasuje soucasne.\nDOHODA\no prijetõ jednotných technických pravidel pro kolová vozidla, zarõzenõ a cásti, které se mohou montovat\na/nebo uzõvat na kolových vozidlech, a o podmõnkách pro vzájemné uznávánõ homologacõ,\nudelených na základe techto pravidel*)\nU vodnõ ustanovenõ\nSmluvnõ strany,\nvedeny rozhodnutõm zmenit Dohodu o prijetõ jed-\nnotných podmõnek pro homologaci a o vzájemném\nuznávánõ homologace výstroje a soucástõ motorových\nvozidel, sjednanou v Ž eneve dne 20. brezna 1958, a\nvedeny pránõm definovat jednotná technická pra-\nvidla, jejichz splnenõ u urcitých kolových vozidel, za-\nrõzenõ a cástõ postacõ k tomu, aby mohla(y) být uzõ-\nvána(y) v jejich zemõch, a\nvedeny pránõm prijõmat ve svých státech tato pra-\nvidla kdykoliv je to mozné, a\nvedeny pránõm usnadnit ve svých státech uzõvánõ\nvozidel, zarõzenõ a cástõ, homologovaných dle techto\npravidel prõslusnými orgány jiné smluvnõ strany,\nse dohodly takto:",
+      "paragraphs": [
+        "ským státu m Rady Evropy:\na) kazdý podpis;\nb) ulozenõ kazdé ratifikacnõ listiny, listiny o prijetõ\nnebo schválenõ;\nc) kazdé datum vstupu tohoto protokolu v platnost\nv souladu s clánkem 7;\nd) kazdý jiný úkon, oznámenõ nebo prohlásenõ vzta-\nhujõcõ se k tomuto protokolu.\nNa du kaz toho podepsanõ, kterõ k tomu byli rádne\nzmocneni, podepsali tento protokol.\nDáno v Ř õme dne 6. listopadu 1990 ve francouz-\nstine a anglictine, pricemz obe znenõ majõ stejnou plat-\nnost, v jednom vyhotovenõ, které bude ulozeno v ar-\nchivu Rady Evropy. Jeho overené kopie zasle generálnõ\ntajemnõk Rady Evropy vsem clenským státu m Rady\nEvropy.\nSDE LENI\nMinisterstva zahranicnõch vecõ\nDne 16. cervence 1995 byly v New Yorku prijaty zmeny Dohody o prijetõ jednotných podmõnek pro\nhomologaci (overovánõ shodnosti) a o vzájemném uznávánõ homologace výstroje a soucástõ motorových vozi-\ndel, Ž eneva 20. brezna 1958, vyhlásené pod c. 176/1960 Sb.\nDne 2. cervence 1993 Česká republika oznámila generálnõmu tajemnõkovi Organizace spojených národu ,\ndepozitári Dohody, ze v souladu s platnými zásadami mezinárodnõho práva se jako nástupnický stát České\na Slovenské Federativnõ Republiky povazuje za vázanou Dohodou o prijetõ jednotných podmõnek pro homolo-\ngaci (overovánõ shodnosti) a o vzájemném uznávánõ homologace výstroje a soucástõ motorových vozidel ze dne",
+        "20. brezna 1958, vcetne výhrad s úcinnostõ od 1. ledna 1993.\nZmeny této dohody, prijaté na základe jejõho clánku 13 odst. 1, zahrnujõ téz zmenu názvu Dohody na:\n1Dohoda o prijetõ jednotných technických pravidel pro kolová vozidla, zarõzenõ a cásti, které se mohou montovat\na/nebo uzõvat na kolových vozidlech, a o podmõnkách pro vzájemné uznávánõ homologacõ, udelených na základe\ntechto pravidela.\nZmeny vstoupily v platnost v souladu se znenõm clánku 7 odst. 1 zmenené Dohody dnem 16. rõjna 1995\na tõmto dnem vstoupily v platnost i pro Č eskou republiku.\nČ eský predklad zmenené Dohody se vyhlasuje soucasne.\nDOHODA\no prijetõ jednotných technických pravidel pro kolová vozidla, zarõzenõ a cásti, které se mohou montovat\na/nebo uzõvat na kolových vozidlech, a o podmõnkách pro vzájemné uznávánõ homologacõ,\nudelených na základe techto pravidel*)\nU vodnõ ustanovenõ\nSmluvnõ strany,\nvedeny rozhodnutõm zmenit Dohodu o prijetõ jed-\nnotných podmõnek pro homologaci a o vzájemném\nuznávánõ homologace výstroje a soucástõ motorových\nvozidel, sjednanou v Ž eneve dne 20. brezna 1958, a\nvedeny pránõm definovat jednotná technická pra-\nvidla, jejichz splnenõ u urcitých kolových vozidel, za-\nrõzenõ a cástõ postacõ k tomu, aby mohla(y) být uzõ-\nvána(y) v jejich zemõch, a\nvedeny pránõm prijõmat ve svých státech tato pra-\nvidla kdykoliv je to mozné, a\nvedeny pránõm usnadnit ve svých státech uzõvánõ\nvozidel, zarõzenõ a cástõ, homologovaných dle techto\npravidel prõslusnými orgány jiné smluvnõ strany,\nse dohodly takto:"
+      ]
+    },
+    {
+      "number": 1,
+      "title": "1. Prostrednictvõm Správnõho výboru, vytvore-",
+      "text": "ného vsemi smluvnõmi stranami, pravidly postupu uve-\ndenými v Dodatku 1 a na základe následujõcõch clánku\na odstavcu , stanovõ smluvnõ strany Předpisy pro kolová\nvozidla, zarõzenõ a cásti, které se mohou montovat\na/nebo uzõvat na kolových vozidlech. Kde bude zapo-\ntrebõ, budou technické pozadavky zahrnovat alterna-\ntivy a kdykoliv to bude mozné, budou zamereny na\nvlastnosti a budou urcovat zkusebnõ metody. Pro\nsmluvnõ strany, které se rozhodnou uzõvat Předpisy\nsystémem typových homologacõ, jsou urceny pod-\nmõnky pro udelovánõ typových homologacõ a pro je-\njich vzájemné uznávánõ.\nPro úcely této dohody:\nPojem 1kolová vozidla, zarõzenõ a cástia zahrnuje\nvsechna kolová vozidla, zarõzenõ a cásti, jejichz vlast-\nnosti se podõlejõ na bezpecnosti silnicnõho provozu,\nochrane zivotnõho prostredõ a úspore energie.\n*) Drõvejsõ název Dohody: Dohoda o prijetõ jednotných podmõnek pro homologaci a o vzájemném uznávánõ homologace\nvýstroje a soucástõ motorových vozidel, sjednaná v Ž eneve dne 20. brezna 1958.\nPojem 1typová homologace dle urcitého Předpisua\npredstavuje úrednõ postup, kterým prõslusné orgány\njedné Smluvnõ strany po pozadovaném overenõ pro-\nhlásõ, ze vozidlo, zarõzenõ nebo cásti dodané výrobcem\nplnõ pozadavky daného Předpisu. Následne výrobce\npotvrzuje, ze kazdé vozidlo, zarõzenõ nebo cást, uve-\ndené na trh, byly vyrobeny tak, aby byly shodné\ns homologovaným výrobkem.\nPři aplikaci Předpisu mohou existovat ru zné\núrednõ postupy jako alternativa k typové homologaci.\nJediným obecne známým alternativnõm postupem, uzõ-\nvaným nekterými clenskými státy Evropské hospodár-\nské komise, je autocertifikace, kdy výrobce bez pred-\nchozõ úrednõ kontroly osvedcuje, ze kazdý z výrobku ,\nkteré uvádõ na trh, spln uje daný Předpis; prõslusné\nsprávnõ orgány mohou nahodilým odberem na trhu\noverovat, zda autocertifikované výrobky spln ujõ poza-\ndavky daného Předpisu.\n2. Správnõ výbor se vytvorõ ze vsech smluvnõch\nstran dle procedurálnõch pravidel, uvedených v Do-\ndatku 1. Po vypracovánõ urcitého Předpisu postupem,\nuvedeným v Dodatku 1, zasle jej správnõ výbor gene-\nrálnõmu tajemnõkovi Organizace spojených národu ,\ndále oznacovanému jako 1generálnõ tajemnõka. Potom\nzasle generálnõ tajemnõk oznámenõ o tomto Předpisu co\nnejdrõve smluvnõm stranám.\nPředpis se bude povazovat za prijatý, pokud\nv obdobõ sesti mesõcu od data, kdy jej generálnõ tajem-\nnõk oznámil, neinformuje generálnõho tajemnõka o svém\nnesouhlasu s Předpisem võce nez jedna tretina smluv-\nnõch stran, existujõcõch v dobe oznámenõ.\nPředpis stanovõ následujõcõ:\na) kolová vozidla, zarõzenõ nebo cásti, kterých se\ntýká;\nb) technické pozadavky, které mohou prõpadne za-\nhrnovat alternativy;\nc) zkusebnõ postupy, kterými se prokazuje plnenõ\npozadavku na vlastnosti výrobku;\nd) podmõnky pro udelenõ typové homologace a pro\njejõ vzájemné uznávánõ, vcetne prõpadných homo-\nlogacnõch znacenõ a podmõnek pro zabezpecenõ\nshodnosti výroby;\ne) datum (data), kdy tento Předpis vstupuje v platnost.\nPředpis mu ze prõpadne obsahovat odvolávky na labo-\nratore, poverené prõslusnými orgány, ve kterých se\nmusejõ vykonávat homologacnõ zkousky typu kolo-\nvých vozidel, zarõzenõ a cástõ, predaných k homologaci.\n3. Kdyz byl Předpis prijat, oznámõ to generálnõ\ntajemnõk co mozno nejdrõve vsem smluvnõm stranám\ns údajem, které smluvnõ strany vznesly výhradu a pro\nkteré proto Předpis nevstoupõ v platnost.\n4. Pro vsechny smluvnõ strany, které neoznámily\nsvu j nesouhlas, vstupuje prijatý Předpis v platnost jako\nPředpis, který je prõlohou této dohody, dnem, který je\nv nem uveden.\n5. Kazdá nová smluvnõ strana mu ze pri ulozenõ\nsvé listiny o prõstupu prohlásit, ze nenõ vázána nekte-\nrými Předpisy, které jsou v té dobe prõlohou této do-\nhody, nebo ze nenõ vázána zádným z nich. Probõhá-li\npráve rõzenõ dle odstavcu 2, 3 a 4 tohoto clánku o ná-\nvrhu nebo o prijatém Předpisu, zasle generálnõ tajemnõk\ntakový návrh nebo prijatý Předpis nové smluvnõ strane\na ten vstoupõ pro novou smluvnõ stranu v platnost jako\nPředpis jen za podmõnek, stanovených v odstavci 4\ntohoto clánku. Generálnõ tajemnõk oznámõ vsem smluv-\nnõm stranám datum tohoto vstupu v platnost. Generálnõ\ntajemnõk jim také zasle prohlásenõ o neprijetõ urcitých\nPředpisu , které mu ze ucinit dle tohoto odstavce která-\nkoliv ze smluvnõch stran.\n6. Kazdá smluvnõ strana, aplikujõcõ urcitý Předpis,\nmu ze kdykoliv s jednorocnõ výpovednõ lhu tou oznámit\ngenerálnõmu tajemnõkovi, ze jejõ správnõ orgán má\nv úmyslu prestat tento Předpis aplikovat. Toto ozná-\nmenõ zasle generálnõ tajemnõk ostatnõm smluvnõm stra-\nnám.\nHomologace, udelené touto smluvnõ stranou, zu -\nstávajõ platnými do jejich odejmutõ.\nPokud urcitá smluvnõ strana prestane vystavovat\nhomologace dle nekterého Předpisu, je povinna:\nzachovat rádný dozor nad shodnostõ výroby u vý-\nrobku , kterým drõve udelila typovou homologaci;\nucinit nezbytná opatrenõ dle clánku 4 v prõpade, ze\nji smluvnõ strana, která pokracuje v aplikaci Před-\npisu, oznámõ neshodnost;\noznamovat prõslusným orgánu m ostatnõch smluv-\nnõch stran i nadále rozhodnutõ o odejmutõ homo-\nlogacõ dle clánku 5;\nudelovat i nadále rozsõrenõ k existujõcõm homolo-\ngacõm.\n7. Kazdá smluvnõ strana, která neaplikuje urcitý\nPředpis, mu ze kdykoliv oznámit generálnõmu tajemnõ-\nkovi, ze jej hodlá naprõste aplikovat, a Předpis pro tuto\nstranu vstoupõ v platnost sedesátý den po tomto ozná-\nmenõ. Generálnõ tajemnõk oznámõ vsem smluvnõm stra-\nnám kazdý vstup urcitého Předpisu v platnost pro\nnovou smluvnõ stranu dle tohoto odstavce.\n8. Smluvnõ strany, pro které urcitý Předpis vstou-\npil v platnost, se dále oznacujõ jako 1smluvnõ strany,\nkteré aplikujõ urcitý Předpisa.",
+      "paragraphs": [
+        "ného vsemi smluvnõmi stranami, pravidly postupu uve-\ndenými v Dodatku 1 a na základe následujõcõch clánku\na odstavcu , stanovõ smluvnõ strany Předpisy pro kolová\nvozidla, zarõzenõ a cásti, které se mohou montovat\na/nebo uzõvat na kolových vozidlech. Kde bude zapo-\ntrebõ, budou technické pozadavky zahrnovat alterna-\ntivy a kdykoliv to bude mozné, budou zamereny na\nvlastnosti a budou urcovat zkusebnõ metody. Pro\nsmluvnõ strany, které se rozhodnou uzõvat Předpisy\nsystémem typových homologacõ, jsou urceny pod-\nmõnky pro udelovánõ typových homologacõ a pro je-\njich vzájemné uznávánõ.\nPro úcely této dohody:\nPojem 1kolová vozidla, zarõzenõ a cástia zahrnuje\nvsechna kolová vozidla, zarõzenõ a cásti, jejichz vlast-\nnosti se podõlejõ na bezpecnosti silnicnõho provozu,\nochrane zivotnõho prostredõ a úspore energie.\n*) Drõvejsõ název Dohody: Dohoda o prijetõ jednotných podmõnek pro homologaci a o vzájemném uznávánõ homologace\nvýstroje a soucástõ motorových vozidel, sjednaná v Ž eneve dne 20. brezna 1958.\nPojem 1typová homologace dle urcitého Předpisua\npredstavuje úrednõ postup, kterým prõslusné orgány\njedné Smluvnõ strany po pozadovaném overenõ pro-\nhlásõ, ze vozidlo, zarõzenõ nebo cásti dodané výrobcem\nplnõ pozadavky daného Předpisu. Následne výrobce\npotvrzuje, ze kazdé vozidlo, zarõzenõ nebo cást, uve-\ndené na trh, byly vyrobeny tak, aby byly shodné\ns homologovaným výrobkem.\nPři aplikaci Předpisu mohou existovat ru zné\núrednõ postupy jako alternativa k typové homologaci.\nJediným obecne známým alternativnõm postupem, uzõ-\nvaným nekterými clenskými státy Evropské hospodár-\nské komise, je autocertifikace, kdy výrobce bez pred-\nchozõ úrednõ kontroly osvedcuje, ze kazdý z výrobku ,\nkteré uvádõ na trh, spln uje daný Předpis; prõslusné\nsprávnõ orgány mohou nahodilým odberem na trhu\noverovat, zda autocertifikované výrobky spln ujõ poza-\ndavky daného Předpisu.",
+        "2. Správnõ výbor se vytvorõ ze vsech smluvnõch\nstran dle procedurálnõch pravidel, uvedených v Do-\ndatku 1. Po vypracovánõ urcitého Předpisu postupem,\nuvedeným v Dodatku 1, zasle jej správnõ výbor gene-\nrálnõmu tajemnõkovi Organizace spojených národu ,\ndále oznacovanému jako 1generálnõ tajemnõka. Potom\nzasle generálnõ tajemnõk oznámenõ o tomto Předpisu co\nnejdrõve smluvnõm stranám.\nPředpis se bude povazovat za prijatý, pokud\nv obdobõ sesti mesõcu od data, kdy jej generálnõ tajem-\nnõk oznámil, neinformuje generálnõho tajemnõka o svém\nnesouhlasu s Předpisem võce nez jedna tretina smluv-\nnõch stran, existujõcõch v dobe oznámenõ.\nPředpis stanovõ následujõcõ:\na) kolová vozidla, zarõzenõ nebo cásti, kterých se\ntýká;\nb) technické pozadavky, které mohou prõpadne za-\nhrnovat alternativy;\nc) zkusebnõ postupy, kterými se prokazuje plnenõ\npozadavku na vlastnosti výrobku;\nd) podmõnky pro udelenõ typové homologace a pro\njejõ vzájemné uznávánõ, vcetne prõpadných homo-\nlogacnõch znacenõ a podmõnek pro zabezpecenõ\nshodnosti výroby;\ne) datum (data), kdy tento Předpis vstupuje v platnost.\nPředpis mu ze prõpadne obsahovat odvolávky na labo-\nratore, poverené prõslusnými orgány, ve kterých se\nmusejõ vykonávat homologacnõ zkousky typu kolo-\nvých vozidel, zarõzenõ a cástõ, predaných k homologaci.",
+        "3. Kdyz byl Předpis prijat, oznámõ to generálnõ\ntajemnõk co mozno nejdrõve vsem smluvnõm stranám\ns údajem, které smluvnõ strany vznesly výhradu a pro\nkteré proto Předpis nevstoupõ v platnost.",
+        "4. Pro vsechny smluvnõ strany, které neoznámily\nsvu j nesouhlas, vstupuje prijatý Předpis v platnost jako\nPředpis, který je prõlohou této dohody, dnem, který je\nv nem uveden.",
+        "5. Kazdá nová smluvnõ strana mu ze pri ulozenõ\nsvé listiny o prõstupu prohlásit, ze nenõ vázána nekte-\nrými Předpisy, které jsou v té dobe prõlohou této do-\nhody, nebo ze nenõ vázána zádným z nich. Probõhá-li\npráve rõzenõ dle odstavcu 2, 3 a 4 tohoto clánku o ná-\nvrhu nebo o prijatém Předpisu, zasle generálnõ tajemnõk\ntakový návrh nebo prijatý Předpis nové smluvnõ strane\na ten vstoupõ pro novou smluvnõ stranu v platnost jako\nPředpis jen za podmõnek, stanovených v odstavci 4\ntohoto clánku. Generálnõ tajemnõk oznámõ vsem smluv-\nnõm stranám datum tohoto vstupu v platnost. Generálnõ\ntajemnõk jim také zasle prohlásenõ o neprijetõ urcitých\nPředpisu , které mu ze ucinit dle tohoto odstavce která-\nkoliv ze smluvnõch stran.",
+        "6. Kazdá smluvnõ strana, aplikujõcõ urcitý Předpis,\nmu ze kdykoliv s jednorocnõ výpovednõ lhu tou oznámit\ngenerálnõmu tajemnõkovi, ze jejõ správnõ orgán má\nv úmyslu prestat tento Předpis aplikovat. Toto ozná-\nmenõ zasle generálnõ tajemnõk ostatnõm smluvnõm stra-\nnám.\nHomologace, udelené touto smluvnõ stranou, zu -\nstávajõ platnými do jejich odejmutõ.\nPokud urcitá smluvnõ strana prestane vystavovat\nhomologace dle nekterého Předpisu, je povinna:\nzachovat rádný dozor nad shodnostõ výroby u vý-\nrobku , kterým drõve udelila typovou homologaci;\nucinit nezbytná opatrenõ dle clánku 4 v prõpade, ze\nji smluvnõ strana, která pokracuje v aplikaci Před-\npisu, oznámõ neshodnost;\noznamovat prõslusným orgánu m ostatnõch smluv-\nnõch stran i nadále rozhodnutõ o odejmutõ homo-\nlogacõ dle clánku 5;\nudelovat i nadále rozsõrenõ k existujõcõm homolo-\ngacõm.",
+        "7. Kazdá smluvnõ strana, která neaplikuje urcitý\nPředpis, mu ze kdykoliv oznámit generálnõmu tajemnõ-\nkovi, ze jej hodlá naprõste aplikovat, a Předpis pro tuto\nstranu vstoupõ v platnost sedesátý den po tomto ozná-\nmenõ. Generálnõ tajemnõk oznámõ vsem smluvnõm stra-\nnám kazdý vstup urcitého Předpisu v platnost pro\nnovou smluvnõ stranu dle tohoto odstavce.",
+        "8. Smluvnõ strany, pro které urcitý Předpis vstou-\npil v platnost, se dále oznacujõ jako 1smluvnõ strany,\nkteré aplikujõ urcitý Předpisa."
+      ]
+    },
+    {
+      "number": 2,
+      "title": "Kazdá smluvnõ strana, která aplikuje Předpisy",
+      "text": "k typové homologaci, je povinna udelovat typové ho-\nmologace a homologacnõ znacenõ dle popisu v kazdém\nPředpisu typu m kolových vozidel, zarõzenõ nebo cástõ,\nna které se Předpis vztahuje, a to za predpokladu, ze je\nk tomu technicky zpu sobilá a ze uznává opatrenõ pro\nzajistenõ shodnosti výrobku s homologovaným typem\ndle ustanovenõ Dodatku 2. Pokud nejsou shora uvedené\npodmõnky splneny, je kazdá smluvnõ strana, která apli-\nkuje urcitý Předpis k typové homologaci, povinna od-\nmõtnout udelenõ typové homologace a homologacnõ\nznacky dle tohoto Předpisu.",
+      "paragraphs": [
+        "k typové homologaci, je povinna udelovat typové ho-\nmologace a homologacnõ znacenõ dle popisu v kazdém\nPředpisu typu m kolových vozidel, zarõzenõ nebo cástõ,\nna které se Předpis vztahuje, a to za predpokladu, ze je\nk tomu technicky zpu sobilá a ze uznává opatrenõ pro\nzajistenõ shodnosti výrobku s homologovaným typem\ndle ustanovenõ Dodatku 2. Pokud nejsou shora uvedené\npodmõnky splneny, je kazdá smluvnõ strana, která apli-\nkuje urcitý Předpis k typové homologaci, povinna od-\nmõtnout udelenõ typové homologace a homologacnõ\nznacky dle tohoto Předpisu."
+      ]
+    },
+    {
+      "number": 3,
+      "title": "U kolových vozidel, zarõzenõ nebo cástõ, kterým",
+      "text": "byly smluvnõ stranou vystaveny typové homologace\ndle clánku 2 této dohody a které jsou vyrábeny bud'\nna územõ prõslusné smluvnõ strany, která aplikuje prõ-\nslusný Předpis, nebo v jiném státu oznaceném smluvnõ\nstranou, která prõslusné typy kolových vozidel, zarõzenõ\nnebo cástõ rádne homologovala, se má za to, ze jsou\nv souladu s právnõmi predpisy vsech smluvnõch stran,\naplikujõcõch uvedený Předpis pri typové homologaci.",
+      "paragraphs": [
+        "byly smluvnõ stranou vystaveny typové homologace\ndle clánku 2 této dohody a které jsou vyrábeny bud'\nna územõ prõslusné smluvnõ strany, která aplikuje prõ-\nslusný Předpis, nebo v jiném státu oznaceném smluvnõ\nstranou, která prõslusné typy kolových vozidel, zarõzenõ\nnebo cástõ rádne homologovala, se má za to, ze jsou\nv souladu s právnõmi predpisy vsech smluvnõch stran,\naplikujõcõch uvedený Předpis pri typové homologaci."
+      ]
+    },
+    {
+      "number": 4,
+      "title": "Zjistõ-li prõslusné orgány smluvnõ strany, která",
+      "text": "aplikuje urcitý Předpis k typové homologaci, ze ne-\nkterá kolová vozidla, zarõzenõ nebo cásti, opatrené ho-\nmologacnõ znackou pridelenou dle prõslusného Před-\npisu jednou ze smluvnõch stran, se neshodujõ s homo-\nlogovanými typy, upozornõ na to prõslusné orgány\nsmluvnõ strany, která homologaci udelila. Tato\nsmluvnõ strana je povinna ucinit nezbytná opatrenõ\nk tomu, aby takovõ výrobci obnovili shodnost vý-\nrobku s homologovanými typy, a je povinna oznámit\nostatnõm smluvnõm stranám, které aplikujõ Předpis\nk typové homologaci, opatrenõ, která ucinila. Tato opa-\ntrenõ mohou v prõpade nezbytnosti zahrnovat odejmutõ\nhomologace. Po obdrzenõ informace o neshodnosti\ns homologovaným typem, a pokud by mohlo dojõt\nk ohrozenõ bezpecnosti silnicnõho provozu nebo\nk ohrozenõ zivotnõho prostredõ, je smluvnõ strana,\nkterá udelila homologaci, povinna o této skutecnosti\ninformovat vsechny ostatnõ smluvnõ strany. Smluvnõ\nstrany mohou na svém územõ zakázat prodej a uzõvánõ\ntakových kolových vozidel, zarõzenõ nebo cástõ.",
+      "paragraphs": [
+        "aplikuje urcitý Předpis k typové homologaci, ze ne-\nkterá kolová vozidla, zarõzenõ nebo cásti, opatrené ho-\nmologacnõ znackou pridelenou dle prõslusného Před-\npisu jednou ze smluvnõch stran, se neshodujõ s homo-\nlogovanými typy, upozornõ na to prõslusné orgány\nsmluvnõ strany, která homologaci udelila. Tato\nsmluvnõ strana je povinna ucinit nezbytná opatrenõ\nk tomu, aby takovõ výrobci obnovili shodnost vý-\nrobku s homologovanými typy, a je povinna oznámit\nostatnõm smluvnõm stranám, které aplikujõ Předpis\nk typové homologaci, opatrenõ, která ucinila. Tato opa-\ntrenõ mohou v prõpade nezbytnosti zahrnovat odejmutõ\nhomologace. Po obdrzenõ informace o neshodnosti\ns homologovaným typem, a pokud by mohlo dojõt\nk ohrozenõ bezpecnosti silnicnõho provozu nebo\nk ohrozenõ zivotnõho prostredõ, je smluvnõ strana,\nkterá udelila homologaci, povinna o této skutecnosti\ninformovat vsechny ostatnõ smluvnõ strany. Smluvnõ\nstrany mohou na svém územõ zakázat prodej a uzõvánõ\ntakových kolových vozidel, zarõzenõ nebo cástõ."
+      ]
+    },
+    {
+      "number": 5,
+      "title": "Přõslusné orgány kazdé smluvnõ strany, která apli-",
+      "text": "kuje urcitý Předpis k typové homologaci, zaslou me-\nsõcne prõslusným orgánu m ostatnõch smluvnõch stran\nseznam kolových vozidel, zarõzenõ nebo cástõ, kterým\nv tom mesõci odmõtly udelit nebo kterým odejmuly\nhomologaci; pokud obdrzõ pozadavek od prõslusného\norgánu jiné smluvnõ strany, která aplikuje urcitý Před-\npis k typové homologaci, je navõc prõslusný orgán po-\nvinen tomuto prõslusnému orgánu ihned zaslat vyhoto-\nvenõ vsech potrebných informacõ, na jejichz základe se\nrozhodl udelit, odmõtnout udelenõ nebo odejmout ho-\nmologaci urcitého kolového vozidla, zarõzenõ nebo cásti\ndle takového Předpisu.",
+      "paragraphs": [
+        "kuje urcitý Předpis k typové homologaci, zaslou me-\nsõcne prõslusným orgánu m ostatnõch smluvnõch stran\nseznam kolových vozidel, zarõzenõ nebo cástõ, kterým\nv tom mesõci odmõtly udelit nebo kterým odejmuly\nhomologaci; pokud obdrzõ pozadavek od prõslusného\norgánu jiné smluvnõ strany, která aplikuje urcitý Před-\npis k typové homologaci, je navõc prõslusný orgán po-\nvinen tomuto prõslusnému orgánu ihned zaslat vyhoto-\nvenõ vsech potrebných informacõ, na jejichz základe se\nrozhodl udelit, odmõtnout udelenõ nebo odejmout ho-\nmologaci urcitého kolového vozidla, zarõzenõ nebo cásti\ndle takového Předpisu."
+      ]
+    },
+    {
+      "number": 6,
+      "title": "1. Státy, které jsou cleny Evropské hospodárské",
+      "text": "komise, státy, pripustené do této komise s poradnõm\nhlasem dle odstavce 8 mandátu této komise a regio-\nnálnõ organizace hospodárské integrace, vytvorené\nclenskými státy Evropské hospodárské komise, na\nkteré jejich clenské státy prevedly pravomoci v oblasti\npu sobnosti této dohody, vcetne pravomoci výkonu\nzávazných rozhodnutõ jménem svých clenských státu ,\nse mohou stát smluvnõmi stranami této dohody.\nPři stanovenõ poctu hlasu dle clánku 1 odst. 2\na clánku 12 odst. 2 hlasujõ regionálnõ organizace hospo-\ndárské integrace poctem hlasu svých clenských státu ,\nkteré jsou cleny Evropské hospodárské komise.\n2. Státy, které jsou cleny Organizace spojených\nnárodu a které se mohou podõlet na urcitých cinnos-\ntech Evropské hospodárské komise dle odstavce 11\nmandátu této komise, a regionálnõ organizace hospo-\ndárské integrace takových státu , na které jejich clenské\nstáty prevedly pravomoci upravené touto dohodou,\nvcetne pravomoci výkonu závazných rozhodnutõ jmé-\nnem svých clenských státu , se mohou stát smluvnõmi\nstranami této dohody.\nPři stanovenõ poctu hlasu dle clánku 1 odst. 2\na clánku 12 odst. 2 hlasujõ regionálnõ organizace hospo-\ndárské integrace poctem hlasu svých clenských státu ,\nkteré jsou cleny Organizace spojených národu .\n3. Po vstupu zmenené Dohody v platnost mohou\nstáty, které nejsou smluvnõmi stranami Dohody z roku\n1958, ke zmenené Dohode pristupovat ulozenõm listiny\nu generálnõho tajemnõka.",
+      "paragraphs": [
+        "komise, státy, pripustené do této komise s poradnõm\nhlasem dle odstavce 8 mandátu této komise a regio-\nnálnõ organizace hospodárské integrace, vytvorené\nclenskými státy Evropské hospodárské komise, na\nkteré jejich clenské státy prevedly pravomoci v oblasti\npu sobnosti této dohody, vcetne pravomoci výkonu\nzávazných rozhodnutõ jménem svých clenských státu ,\nse mohou stát smluvnõmi stranami této dohody.\nPři stanovenõ poctu hlasu dle clánku 1 odst. 2\na clánku 12 odst. 2 hlasujõ regionálnõ organizace hospo-\ndárské integrace poctem hlasu svých clenských státu ,\nkteré jsou cleny Evropské hospodárské komise.",
+        "2. Státy, které jsou cleny Organizace spojených\nnárodu a které se mohou podõlet na urcitých cinnos-\ntech Evropské hospodárské komise dle odstavce 11\nmandátu této komise, a regionálnõ organizace hospo-\ndárské integrace takových státu , na které jejich clenské\nstáty prevedly pravomoci upravené touto dohodou,\nvcetne pravomoci výkonu závazných rozhodnutõ jmé-\nnem svých clenských státu , se mohou stát smluvnõmi\nstranami této dohody.\nPři stanovenõ poctu hlasu dle clánku 1 odst. 2\na clánku 12 odst. 2 hlasujõ regionálnõ organizace hospo-\ndárské integrace poctem hlasu svých clenských státu ,\nkteré jsou cleny Organizace spojených národu .",
+        "3. Po vstupu zmenené Dohody v platnost mohou\nstáty, které nejsou smluvnõmi stranami Dohody z roku\n1958, ke zmenené Dohode pristupovat ulozenõm listiny\nu generálnõho tajemnõka."
+      ]
+    },
+    {
+      "number": 7,
+      "title": "1. Tato zmenená Dohoda se bude povazovat za",
+      "text": "platnou po uplynutõ devõti mesõcu ode dne jejõho roze-\nslánõ generálnõm tajemnõkem vsem smluvnõm stranám\nDohody z roku 1958.\n2. Tato zmenená Dohoda se nebude povazovat za\nplatnou, pokud smluvnõ strany Dohody z roku 1958\nvyslovõ jakoukoliv výhradu v obdobõ sesti mesõcu ode\ndne, kdy jim ji generálnõ tajemnõk zaslal.\n3. Pro kazdou novou smluvnõ stranu, která bude\npristupovat k této zmenené Dohode, vstoupõ tato zme-\nnená Dohoda v platnost sedesátý den po dni, ve kterém\ntato smluvnõ strana ulozila listinu o prõstupu.",
+      "paragraphs": [
+        "platnou po uplynutõ devõti mesõcu ode dne jejõho roze-\nslánõ generálnõm tajemnõkem vsem smluvnõm stranám\nDohody z roku 1958.",
+        "2. Tato zmenená Dohoda se nebude povazovat za\nplatnou, pokud smluvnõ strany Dohody z roku 1958\nvyslovõ jakoukoliv výhradu v obdobõ sesti mesõcu ode\ndne, kdy jim ji generálnõ tajemnõk zaslal.",
+        "3. Pro kazdou novou smluvnõ stranu, která bude\npristupovat k této zmenené Dohode, vstoupõ tato zme-\nnená Dohoda v platnost sedesátý den po dni, ve kterém\ntato smluvnõ strana ulozila listinu o prõstupu."
+      ]
+    },
+    {
+      "number": 8,
+      "title": "1. Kazdá smluvnõ strana mu ze tuto dohodu vypo-",
+      "text": "vedet oznámenõm, které zasle generálnõmu tajemnõkovi.\n2. Výpoved' vstoupõ v platnost po uplynutõ dva-\nnácti mesõcu ode dne, kdy generálnõ tajemnõk obdrzel\ntoto oznámenõ.",
+      "paragraphs": [
+        "vedet oznámenõm, které zasle generálnõmu tajemnõkovi.",
+        "2. Výpoved' vstoupõ v platnost po uplynutõ dva-\nnácti mesõcu ode dne, kdy generálnõ tajemnõk obdrzel\ntoto oznámenõ."
+      ]
+    },
+    {
+      "number": 9,
+      "title": "1. Kazdá nová smluvnõ strana dle clánku 6 této",
+      "text": "dohody mu ze pri prõstupu k této dohode nebo kdyko-\nliv pozdeji oznámenõm adresovaným generálnõmu ta-\njemnõkovi prohlásit, ze tato dohoda bude aplikována\nna vsech nebo na nekterých územõch, za která v mezi-\nnárodnõch vztazõch zodpovõdá. Dohoda se na územõ,\nuvedené nebo uvedená v oznámenõ, rozsõrõ po uplynutõ\n60 dnu ode dne, kdy generálnõ tajemnõk obdrzel toto\noznámenõ.\n2. Kazdá nová smluvnõ strana dle clánku 6 této\ndohody, která dle odstavce 1 tohoto clánku oznámila\nrozsõrenõ platnosti této dohody na kterékoliv územõ, za\nkteré v mezinárodnõch vztazõch zodpovõdá, mu ze Do-\nhodu vypovedet pro tato územõ samostatne dle ustano-\nvenõ clánku 8.",
+      "paragraphs": [
+        "dohody mu ze pri prõstupu k této dohode nebo kdyko-\nliv pozdeji oznámenõm adresovaným generálnõmu ta-\njemnõkovi prohlásit, ze tato dohoda bude aplikována\nna vsech nebo na nekterých územõch, za která v mezi-\nnárodnõch vztazõch zodpovõdá. Dohoda se na územõ,\nuvedené nebo uvedená v oznámenõ, rozsõrõ po uplynutõ\n60 dnu ode dne, kdy generálnõ tajemnõk obdrzel toto\noznámenõ.",
+        "2. Kazdá nová smluvnõ strana dle clánku 6 této\ndohody, která dle odstavce 1 tohoto clánku oznámila\nrozsõrenõ platnosti této dohody na kterékoliv územõ, za\nkteré v mezinárodnõch vztazõch zodpovõdá, mu ze Do-\nhodu vypovedet pro tato územõ samostatne dle ustano-\nvenõ clánku 8."
+      ]
+    },
+    {
+      "number": 10,
+      "title": "1. Kazdý spor mezi dvema nebo võce smluvnõmi",
+      "text": "stranami ve veci výkladu nebo provádenõ této dohody\nbude pokud mozno resen jednánõm mezi nimi.\n2. Kazdý spor, který nebude vyresen jednánõm,\nbude podroben rozhodcõmu rõzenõ, jestlize nekterá ze\nsmluvnõch stran ve sporu o to pozádá, a bude pak\npredlozen jednomu nebo nekolika rozhodcu m, zvole-\nným ve vzájemné dohode stran ve sporu. Jestlize se\nstrany ve sporu do trõ mesõcu od podánõ zádosti o roz-\nhodcõ rõzenõ nedohodnou o jmenovánõ rozhodce nebo\nrozhodcu , mu ze kterákoli z techto stran pozádat gene-\nrálnõho tajemnõka, aby urcil jediného rozhodce, jemuz\nbude spor predlozen k rozhodnutõ.\n3. Výrok rozhodce nebo rozhodcu , urcených po-\ndle odstavce 2 tohoto clánku, je pro smluvnõ strany ve\nsporu závazný.",
+      "paragraphs": [
+        "stranami ve veci výkladu nebo provádenõ této dohody\nbude pokud mozno resen jednánõm mezi nimi.",
+        "2. Kazdý spor, který nebude vyresen jednánõm,\nbude podroben rozhodcõmu rõzenõ, jestlize nekterá ze\nsmluvnõch stran ve sporu o to pozádá, a bude pak\npredlozen jednomu nebo nekolika rozhodcu m, zvole-\nným ve vzájemné dohode stran ve sporu. Jestlize se\nstrany ve sporu do trõ mesõcu od podánõ zádosti o roz-\nhodcõ rõzenõ nedohodnou o jmenovánõ rozhodce nebo\nrozhodcu , mu ze kterákoli z techto stran pozádat gene-\nrálnõho tajemnõka, aby urcil jediného rozhodce, jemuz\nbude spor predlozen k rozhodnutõ.",
+        "3. Výrok rozhodce nebo rozhodcu , urcených po-\ndle odstavce 2 tohoto clánku, je pro smluvnõ strany ve\nsporu závazný."
+      ]
+    },
+    {
+      "number": 11,
+      "title": "1. Kazdá nová smluvnõ strana mu ze pri prõstupu",
+      "text": "k této dohode prohlásit, ze se nepovazuje být vázána\nclánkem 10 této dohody. Ostatnõ smluvnõ strany nebu-\ndou vázány clánkem 10 vu ci kterékoliv nové smluvnõ\nstrane, jez ucinila takovou výhradu.\n2. Kazdá smluvnõ strana, která ucinõ výhradu po-\ndle odstavce 1 tohoto clánku, mu ze tuto výhradu kdy-\nkoliv odvolat oznámenõm, zaslaným generálnõmu ta-\njemnõkovi.\n3. Ž ádná jiná výhrada k této dohode nebo k Před-\npisu m, které jsou k nõ pripojeny, se nepripoustõ; kazdá\nsmluvnõ strana má ale dle clánku 1 moznost prohlásit,\nze nehodlá uzõvat nekteré z techto Předpisu nebo ze\nnehodlá uzõvat zádný z nich.",
+      "paragraphs": [
+        "k této dohode prohlásit, ze se nepovazuje být vázána\nclánkem 10 této dohody. Ostatnõ smluvnõ strany nebu-\ndou vázány clánkem 10 vu ci kterékoliv nové smluvnõ\nstrane, jez ucinila takovou výhradu.",
+        "2. Kazdá smluvnõ strana, která ucinõ výhradu po-\ndle odstavce 1 tohoto clánku, mu ze tuto výhradu kdy-\nkoliv odvolat oznámenõm, zaslaným generálnõmu ta-\njemnõkovi.",
+        "3. Ž ádná jiná výhrada k této dohode nebo k Před-\npisu m, které jsou k nõ pripojeny, se nepripoustõ; kazdá\nsmluvnõ strana má ale dle clánku 1 moznost prohlásit,\nze nehodlá uzõvat nekteré z techto Předpisu nebo ze\nnehodlá uzõvat zádný z nich."
+      ]
+    },
+    {
+      "number": 12,
+      "title": "Předpisy, které jsou pripojeny k této dohode, mo-",
+      "text": "hou být meneny následujõcõm postupem:\n1. Zmeny Předpisu prijõmá správnõ výbor, uve-\ndený v clánku 1 odst. 2, a to postupem dle\nDodatku 1. Pokud je treba, mu ze zmena za-\nhrnovat dosavadnõ pozadavky jako alternativu.\nSmluvnõ strany jsou povinny stanovit, které\nalternativy budou uzõvat. Smluvnõ strany, které\naplikujõ alternativu jednoho Předpisu, nejsou\npovinny uznávat homologace dle predchozõ\nalternativy téhoz Předpisu. Smluvnõ strany,\nkteré aplikujõ pouze nejnovejsõ zmeny, nejsou\npovinny uznávat homologace dle predchozõch\nzmen nebo dle nezmenených Předpisu . Smluvnõ\nstrany, které aplikujõ drõvejsõ sérii zmen nebo\nnezmenený Předpis, jsou povinny uznávat ho-\nmologace, udelené dle pozdejsõ série zmen. Po\nprijetõ zmeny Předpisu ji správnõ výbor zasle\ngenerálnõmu tajemnõkovi. Generálnõ tajemnõk\ntakovou zmenu následne co nejdrõve oznámõ\nsmluvnõm stranám, které aplikujõ tento Předpis.\n2. Zmena Předpisu se povazuje za prijatou, pokud\nv pru behu sesti mesõcu od jejõho oznámenõ ge-\nnerálnõm tajemnõkem neinformuje generálnõho\ntajemnõka võce nez jedna tretina smluvnõch\nstran, které aplikujõ Předpis v dobe oznámenõ,\no svém nesouhlase se zmenou. Jestlize po tomto\nobdobõ generálnõ tajemnõk neobdrzel prohlásenõ\no nesouhlasu od võce nez jedné tretiny smluv-\nnõch stran, které aplikujõ tento Předpis, prohlásõ\nzmenu co nejdrõve za prijatou a za závaznou\npro ty smluvnõ strany, které aplikujõ tento Před-\npis a které nevznesly proti zmene výhrady.\nPokud je Předpis zmenen a nejméne jedna pe-\ntina smluvnõch stran, které aplikujõ nezmenený\nPředpis, následne prohlásõ, ze si prejõ pokraco-\nvat v uzõvánõ nezmeneného Předpisu, povazuje\nse nezmenený Předpis za alternativu zmene-\nného Předpisu a bude jako taková alternativa\nformálne zaclenena do Předpisu s úcinnostõ od\ndata prijetõ zmeny nebo od data jejõho vstupu\nv platnost. V tomto prõpade jsou povinnosti\nsmluvnõch stran, které aplikujõ tento Předpis,\nstejné, jako stanovõ odstavec 1.\n3. Přistoupõ-li nová smluvnõ strana k této dohode\nv obdobõ mezi tõm, kdy generálnõ tajemnõk\noznámõ návrh zmeny Předpisu a vstupem této\nzmeny v platnost, nevstoupõ takový Předpis pro\ntuto smluvnõ stranu v platnost do doby dvou\nmesõcu poté, kdy oficiálne prijme zmenu, nebo\ndo doby dvou mesõcu po uplynutõ sestimesõcnõ\nlhu ty ode dne, kdy této smluvnõ strane gene-\nrálnõ tajemnõk zaslal návrh zmeny.",
+      "paragraphs": [
+        "hou být meneny následujõcõm postupem:",
+        "1. Zmeny Předpisu prijõmá správnõ výbor, uve-\ndený v clánku 1 odst. 2, a to postupem dle\nDodatku 1. Pokud je treba, mu ze zmena za-\nhrnovat dosavadnõ pozadavky jako alternativu.\nSmluvnõ strany jsou povinny stanovit, které\nalternativy budou uzõvat. Smluvnõ strany, které\naplikujõ alternativu jednoho Předpisu, nejsou\npovinny uznávat homologace dle predchozõ\nalternativy téhoz Předpisu. Smluvnõ strany,\nkteré aplikujõ pouze nejnovejsõ zmeny, nejsou\npovinny uznávat homologace dle predchozõch\nzmen nebo dle nezmenených Předpisu . Smluvnõ\nstrany, které aplikujõ drõvejsõ sérii zmen nebo\nnezmenený Předpis, jsou povinny uznávat ho-\nmologace, udelené dle pozdejsõ série zmen. Po\nprijetõ zmeny Předpisu ji správnõ výbor zasle\ngenerálnõmu tajemnõkovi. Generálnõ tajemnõk\ntakovou zmenu následne co nejdrõve oznámõ\nsmluvnõm stranám, které aplikujõ tento Předpis.",
+        "2. Zmena Předpisu se povazuje za prijatou, pokud\nv pru behu sesti mesõcu od jejõho oznámenõ ge-\nnerálnõm tajemnõkem neinformuje generálnõho\ntajemnõka võce nez jedna tretina smluvnõch\nstran, které aplikujõ Předpis v dobe oznámenõ,\no svém nesouhlase se zmenou. Jestlize po tomto\nobdobõ generálnõ tajemnõk neobdrzel prohlásenõ\no nesouhlasu od võce nez jedné tretiny smluv-\nnõch stran, které aplikujõ tento Předpis, prohlásõ\nzmenu co nejdrõve za prijatou a za závaznou\npro ty smluvnõ strany, které aplikujõ tento Před-\npis a které nevznesly proti zmene výhrady.\nPokud je Předpis zmenen a nejméne jedna pe-\ntina smluvnõch stran, které aplikujõ nezmenený\nPředpis, následne prohlásõ, ze si prejõ pokraco-\nvat v uzõvánõ nezmeneného Předpisu, povazuje\nse nezmenený Předpis za alternativu zmene-\nného Předpisu a bude jako taková alternativa\nformálne zaclenena do Předpisu s úcinnostõ od\ndata prijetõ zmeny nebo od data jejõho vstupu\nv platnost. V tomto prõpade jsou povinnosti\nsmluvnõch stran, které aplikujõ tento Předpis,\nstejné, jako stanovõ odstavec 1.",
+        "3. Přistoupõ-li nová smluvnõ strana k této dohode\nv obdobõ mezi tõm, kdy generálnõ tajemnõk\noznámõ návrh zmeny Předpisu a vstupem této\nzmeny v platnost, nevstoupõ takový Předpis pro\ntuto smluvnõ stranu v platnost do doby dvou\nmesõcu poté, kdy oficiálne prijme zmenu, nebo\ndo doby dvou mesõcu po uplynutõ sestimesõcnõ\nlhu ty ode dne, kdy této smluvnõ strane gene-\nrálnõ tajemnõk zaslal návrh zmeny."
+      ]
+    },
+    {
+      "number": 13,
+      "title": "Text vlastnõ Dohody a jejõch dodatku se mu ze",
+      "text": "zmenit následujõcõm postupem:\n1. Kazdá smluvnõ strana mu ze navrhnout jednu\nnebo nekolik zmen této dohody a jejõch do-\ndatku . Znenõ kazdého návrhu na zmenu Do-\nhody a jejõch dodatku se zasle generálnõmu ta-\njemnõkovi Organizace spojených národu , který\njej rozesle vsem smluvnõm stranám a uvedomõ\no nem ostatnõ státy uvedené v clánku 6 odst. 1\ntéto dohody.\n2. Kazdý návrh zmeny, který bude rozeslán dle\nodstavce 1 tohoto clánku, se povazuje za pri-\njatý, pokud zádná smluvnõ strana nesdelõ vý-\nhrady do sesti mesõcu ode dne, kdy generálnõ\ntajemnõk rozeslal návrh zmeny.\n3. Generálnõ tajemnõk oznámõ co nejdrõve vsem\nsmluvnõm stranám, zda byla k návrhu zmeny\nsdelena výhrada. Je-li k návrhu zmeny sdelena\nvýhrada, má se za to, ze zmena nebyla prijata\na ze zmena nevstoupõ v platnost. Nebudou-li\nsdeleny zádné takové výhrady, vstoupõ zmena\nv platnost pro vsechny smluvnõ strany za tri\nmesõce po uplynutõ sestimesõcnõ lhu ty, stano-\nvené v odstavci 2 tohoto clánku.",
+      "paragraphs": [
+        "zmenit následujõcõm postupem:",
+        "1. Kazdá smluvnõ strana mu ze navrhnout jednu\nnebo nekolik zmen této dohody a jejõch do-\ndatku . Znenõ kazdého návrhu na zmenu Do-\nhody a jejõch dodatku se zasle generálnõmu ta-\njemnõkovi Organizace spojených národu , který\njej rozesle vsem smluvnõm stranám a uvedomõ\no nem ostatnõ státy uvedené v clánku 6 odst. 1\ntéto dohody.",
+        "2. Kazdý návrh zmeny, který bude rozeslán dle\nodstavce 1 tohoto clánku, se povazuje za pri-\njatý, pokud zádná smluvnõ strana nesdelõ vý-\nhrady do sesti mesõcu ode dne, kdy generálnõ\ntajemnõk rozeslal návrh zmeny.",
+        "3. Generálnõ tajemnõk oznámõ co nejdrõve vsem\nsmluvnõm stranám, zda byla k návrhu zmeny\nsdelena výhrada. Je-li k návrhu zmeny sdelena\nvýhrada, má se za to, ze zmena nebyla prijata\na ze zmena nevstoupõ v platnost. Nebudou-li\nsdeleny zádné takové výhrady, vstoupõ zmena\nv platnost pro vsechny smluvnõ strany za tri\nmesõce po uplynutõ sestimesõcnõ lhu ty, stano-\nvené v odstavci 2 tohoto clánku."
+      ]
+    },
+    {
+      "number": 14,
+      "title": "Krome sdelenõ na základe clánku 1, 12 a 13 této",
+      "text": "dohody oznámõ generálnõ tajemnõk smluvnõm stranám:\na) prõstup dle clánku 6;\nb) data, kdy tato dohoda vstoupõ v platnost dle clán-\nku 7;\nc) výpovedi dle clánku 8;\nd) oznámenõ, obdrzená dle clánku 9;\ne) prohlásenõ a oznámenõ, která obdrzel dle clánku 11\nodst. 1 a 2;\nf) vstup kazdé zmeny dle clánku 12 odst. 1 a 2\nv platnost;\ng) vstup kazdé zmeny dle clánku 13 odst. 3 v platnost.",
+      "paragraphs": [
+        "dohody oznámõ generálnõ tajemnõk smluvnõm stranám:\na) prõstup dle clánku 6;\nb) data, kdy tato dohoda vstoupõ v platnost dle clán-\nku 7;\nc) výpovedi dle clánku 8;\nd) oznámenõ, obdrzená dle clánku 9;\ne) prohlásenõ a oznámenõ, která obdrzel dle clánku 11\nodst. 1 a 2;\nf) vstup kazdé zmeny dle clánku 12 odst. 1 a 2\nv platnost;\ng) vstup kazdé zmeny dle clánku 13 odst. 3 v platnost."
+      ]
+    },
+    {
+      "number": 15,
+      "title": "1. Jestlize v dobe, kdy shora uvedená ustanovenõ",
+      "text": "vstupujõ v platnost, probõhá prijõmánõ nového Předpisu\npostupem dle clánku 1 odst. 3 a 4 nezmenené Dohody,\nvstoupõ tento nový Předpis v platnost dle ustanovenõ\nodstavce 5 uvedeného clánku.\n2. Jestlize v dobe, kdy shora uvedená ustanovenõ\nvstupujõ v platnost, probõhá postup prijõmánõ zmeny\nurcitého Předpisu dle clánku 12 odst. 1 nezmenené\nDohody, vstoupõ tato zmena v platnost dle ustanovenõ\nzmõneného odstavce.\n3. Se souhlasem vsech smluvnõch stran Dohody\nmu ze být kterýkoliv Předpis, prijatý dle nezmenené\nDohody, povazován za Předpis, prijatý za podmõnek\nvýse uvedených ustanovenõ.\nDODATEK 1\nSlozenõ a jednacõ rád Správnõho výboru",
+      "paragraphs": [
+        "vstupujõ v platnost, probõhá prijõmánõ nového Předpisu\npostupem dle clánku 1 odst. 3 a 4 nezmenené Dohody,\nvstoupõ tento nový Předpis v platnost dle ustanovenõ\nodstavce 5 uvedeného clánku.",
+        "2. Jestlize v dobe, kdy shora uvedená ustanovenõ\nvstupujõ v platnost, probõhá postup prijõmánõ zmeny\nurcitého Předpisu dle clánku 12 odst. 1 nezmenené\nDohody, vstoupõ tato zmena v platnost dle ustanovenõ\nzmõneného odstavce.",
+        "3. Se souhlasem vsech smluvnõch stran Dohody\nmu ze být kterýkoliv Předpis, prijatý dle nezmenené\nDohody, povazován za Předpis, prijatý za podmõnek\nvýse uvedených ustanovenõ.\nDODATEK 1\nSlozenõ a jednacõ rád Správnõho výboru"
+      ]
+    },
+    {
+      "number": 1,
+      "title": "Správnõ výbor je tvoren cleny ze vsech smluvnõch",
+      "text": "stran zmenené Dohody.",
+      "paragraphs": [
+        "stran zmenené Dohody."
+      ]
+    },
+    {
+      "number": 2,
+      "title": "Výkonný tajemnõk Evropské hospodárské komise",
+      "text": "Organizace spojených národu zabezpecuje Správnõmu\nvýboru sluzby sekretariátu.",
+      "paragraphs": [
+        "Organizace spojených národu zabezpecuje Správnõmu\nvýboru sluzby sekretariátu."
+      ]
+    },
+    {
+      "number": 3,
+      "title": "Při svém prvém zasedánõ v kazdém roce volõ Vý-",
+      "text": "bor predsedu a mõstopredsedu.",
+      "paragraphs": [
+        "bor predsedu a mõstopredsedu."
+      ]
+    },
+    {
+      "number": 4,
+      "title": "Generálnõ tajemnõk Organizace spojených národu",
+      "text": "svolá pod zástitou Evropské hospodárské komise Vý-\nbor vzdy, kdyz se pozaduje vypracovánõ nového Před-\npisu nebo zmena urcitého Předpisu.",
+      "paragraphs": [
+        "svolá pod zástitou Evropské hospodárské komise Vý-\nbor vzdy, kdyz se pozaduje vypracovánõ nového Před-\npisu nebo zmena urcitého Předpisu."
+      ]
+    },
+    {
+      "number": 5,
+      "title": "O návrzõch nových Předpisu se hlasuje. Kazdý",
+      "text": "stát, smluvnõ strana Dohody, má jeden hlas. Pro prijetõ\nrozhodnutõ je potrebný pocet hlasu nejméne jedné po-\nloviny smluvnõch stran. Při stanovovánõ potrebného\npoctu hlasu hlasujõ regionálnõ organizace hospodárské\nintegrace, které jsou smluvnõmi stranami Dohody, po-\nctem hlasu svých clenských státu . Představitel regio-\nnálnõ organizace hospodárské integrace mu ze vyjádrit\nhlasy svrchovaných státu , které organizaci vytvárejõ.\nNávrhy nových Předpisu se prijõmajõ dvoutretinovou\nvetsinou prõtomných a hlasujõcõch.",
+      "paragraphs": [
+        "stát, smluvnõ strana Dohody, má jeden hlas. Pro prijetõ\nrozhodnutõ je potrebný pocet hlasu nejméne jedné po-\nloviny smluvnõch stran. Při stanovovánõ potrebného\npoctu hlasu hlasujõ regionálnõ organizace hospodárské\nintegrace, které jsou smluvnõmi stranami Dohody, po-\nctem hlasu svých clenských státu . Představitel regio-\nnálnõ organizace hospodárské integrace mu ze vyjádrit\nhlasy svrchovaných státu , které organizaci vytvárejõ.\nNávrhy nových Předpisu se prijõmajõ dvoutretinovou\nvetsinou prõtomných a hlasujõcõch."
+      ]
+    },
+    {
+      "number": 6,
+      "title": "O návrzõch zmen Předpisu se hlasuje. Kazdý stát,",
+      "text": "který je smluvnõ stranou Dohody a aplikuje takový\nPředpis, má jeden hlas. Pro prijetõ rozhodnutõ jsou\npotrebné hlasy nejméne jedné poloviny smluvnõch\nstran, aplikujõcõch takový Předpis. Regionálnõ organi-\nzace hospodárské integrace, které jsou smluvnõmi stra-\nnami Dohody, hlasujõ pri stanovovánõ poctu odevzda-\nných hlasu poctem hlasu svých clenských státu . Před-\nstavitel regionálnõ organizace hospodárské integrace\nmu ze vyjádrit hlasy svrchovaných státu , které aplikujõ\ntakový Předpis a které organizaci vytvárejõ. Zmeny\nPředpisu se prijõmajõ dvoutretinovou vetsinou prõtom-\nných a hlasujõcõch.\nDODATEK 2\nShodnost výroby\n1. U VODNI HODNOCENI\n1.1. Drõve nez udelõ homologaci, je homologujõcõ\norgán smluvnõ strany povinen overit, zda exi-\nstujõ vyhovujõcõ opatrenõ a postupy k zajistenõ\núcinného rõzenõ, aby vyrábená vozidla, zarõzenõ\nnebo cásti byly shodné s homologovaným ty-\npem.\n1.2. Orgán, který udeluje typové homologace, musõ\noverit, ze byly splneny pozadavky dle odstavce\n1.1.; tyto pozadavky si ale také mu ze jménem\na na zádost orgánu, který udeluje homologaci,\noverit homologujõcõ orgán jiné smluvnõ strany.\nV takovém prõpade tento druhý homologujõcõ\norgán vydá prohlásenõ o vyhovenõ s uvedenõm\noblastõ a výrobnõch zarõzenõ, které shledal jako\nodpovõdajõcõ z hlediska výrobku , které majõ být\ntypove homologovány.\n1.3. Homologujõcõ orgán je rovnez povinen akcepto-\nvat výrobcovu registraci dle harmonizované\nnormy ISO 9002 (jejõz rozsah platnosti se vzta-\nhuje na výrobky, které majõ být homologovány)\nnebo dle jiné odpovõdajõcõ akreditacnõ normy\njako splnenõ pozadavku odstavce 1.1. Výrobce\nje povinen o registraci poskytnout podrobnosti\na zavázat se, ze bude homologujõcõ orgán infor-\nmovat o jakýchkoli zmenách platnosti registrace\nnebo jejõho rozsahu.\n1.4. Po obdrzenõ zádosti od orgánu jiné smluvnõ\nstrany zasle mu homologujõcõ orgán ihned pro-\nhlásenõ o vyhovenõ, o kterém je zmõnka v po-\nslednõ vete odstavce 1.2., nebo mu oznámõ, ze\nnemu ze takové prohlásenõ vystavit.\n2. SHODNOST VY ROBY\n2.1. Kazdé vozidlo, zarõzenõ nebo cást, homologo-\nvané dle Předpisu, který je prõlohou této do-\nhody, musõ být vyrobeno tak, aby odpovõdalo\nhomologovanému typu tõm, ze spln uje poza-\ndavky tohoto dodatku a uvazovaného Předpisu.\n2.2. Homologujõcõ orgán smluvnõ strany, který ude-\nluje typovou homologaci dle urcitého Předpisu,\nkterý je prõlohou této dohody, je povinen overit,\nzda existujõ odpovõdajõcõ opatrenõ, a ke kazdé\nhomologaci je povinen s výrobcem odsouhlasit\ndokladované kontrolnõ plány zkousek nebo sou-\nvisejõcõch kontrol, které jsou nezbytné k overenõ\ntrvajõcõ shodnosti s homologovaným typem ve\nstanovených lhu tách a které musejõ prõpadne za-\nhrnovat zkousky, stanovené v uvazovaném\nPředpisu.\n2.3. Drzitel homologace je povinen zvláste:\n2.3.1. zajistit existenci postupu úcinného rõzenõ shod-\nnostõ výrobku (vozidel, zarõzenõ nebo cástõ)\ns typovou homologacõ;\n2.3.2. mõt prõstup ke kontrolnõmu vybavenõ, nezbyt-\nnému pro overovánõ shodnosti kazdého homo-\nlogovaného typu;\n2.3.3. zajistit, aby se zaznamenávaly údaje výsledku\nzkousek a aby po dobu stanovenou v dohode\ns homologujõcõm orgánem byly dostupné prilo-\nzené doklady. Tato doba nesmõ prekrocit 10 let;\n2.3.4. analyzovat výsledky kazdého druhu zkousky\ntak, aby se overila a zajistila stabilita vlastnostõ\nvýrobku v prõpustných tolerancõch pru myslové\nvýroby;\n2.3.5. zajistit, aby se pro kazdý typ výrobku provádely\nnejméne zkousky predepsané v tomto dodatku\na zkousky stanovené v prõslusných Předpisech;\n2.3.6. zajistit, aby po jakémkoliv odberu vzorku nebo\nzkusebnõch dõlu , který vykazuje pri uvazovaném\ndruhu zkousky neshodnost, následoval nový od-\nber a zkousky. Musejõ se ucinit veskerá nezbytná\nopatrenõ k obnovenõ shodnosti prõslusné výroby.\n2.4. Orgán, který udelil typovou homologaci, mu ze\nkdykoliv overit metody rõzenõ shodnosti, vyuzõ-\nvané v kazdé výrobnõ jednotce. Obvyklá cetnost\ntakových overovánõ musõ být ve shode s (prõ-\npadnými) opatrenõmi, prijatými dle odstavce\n1.2. nebo 1.3. tohoto dodatku a musõ být ta-\nková, aby zajistila, ze prõslusné kontroly probõ-\nhajõ v periode, odpovõdajõcõ stavu du very ze\nstrany homologujõcõho orgánu.\n2.4.1. Při kazdé inspekci musejõ být prõtomnému in-\nspektorovi zprõstupneny zkusebnõ a výrobnõ zá-\nznamy.\n2.4.2. Tam, kde tomu odpovõdá podstata zkousky,\nmu ze inspektor nahodile odebõrat vzorky pro\nzkousenõ v laboratori výrobce (nebo v Tech-\nnické organizaci, pokud to stanovuje Předpis,\nkterý je prõlohou této dohody). Minimálnõ pocet\nvzorku má být stanoven dle výsledku vlastnõch\nkontrol výrobce.\n2.4.3. Pokud se jevõ úroven kontrol neuspokojivá nebo\npokud se jevõ potrebným overit platnost zkousek\ndle ustanovenõ odstavce 2.4.2., je inspektor povi-\nnen odebrat vzorky, které se zaslou Technické\norganizaci, která zajist'uje zkousky typové ho-\nmologace.\n2.4.4. Homologujõcõ orgán mu ze provádet jakékoliv\noverenõ nebo zkousku, predepsanou tõmto do-\ndatkem nebo v prõslusném Předpisu, který je\nprõlohou této dohody.\n2.4.5. V prõpadech, kdy jsou behem nekteré z techto\ninspekcõ zjisteny neuspokojivé výsledky, je ho-\nmologujõcõ orgán povinen zajistit, aby se co nej-\nrychleji ucinila veskerá nezbytná opatrenõ k ob-\nnovenõ shodnosti výroby.\nSDE LENI\nMinisterstva zahranicnõch vecõ\nMinisterstvo zahranicnõch vecõ sdeluje, ze dne 2. prosince 1994 byla podepsána Smlouva mezi Č eskou\nrepublikou a Finskou republikou o zamezenõ dvojõho zdanenõ a zabránenõ dan ovému úniku v oboru danõ z prõjmu.\nSe Smlouvou vyslovil souhlas Parlament České republiky a prezident republiky ji ratifikoval.\nTato smlouva na základe svého clánku 27 odst. 2 vstoupila v platnost dnem 12. prosince 1995. Podle odstav-\nce 3 téhoz clánku se prestane uplatn ovat Smlouva mezi vládou Č eskoslovenské socialistické republiky a vládou\nFinské republiky o zamezenõ dvojõho zdanenõ a zabránenõ dan ovému úniku v oboru danõ z prõjmu a z majetku,\npodepsaná v Helsinkách 31. ledna 1975, vyhlásená pod c. 134/1976 Sb., pokud jde o dane, na které se vztahuje tato\nsmlouva v souladu s ustanovenõm odstavce 2. Ukoncenõ platnosti Smlouvy z roku 1975 nastane poslednõ den, kdy\ntato smlouva bude v úcinnosti v souladu s predchozõmi ustanovenõmi tohoto odstavce.\nČ eský preklad Smlouvy se vyhlasuje soucasne. Do anglického znenõ, jez je pro jejõ výklad rozhodné, lze\nnahlédnout na Ministerstvu zahranicnõch vecõ a Ministerstvu financõ.\nSM LOUVA\nmezi\nČ eskou republikou a Finskou republikou\no zamezenõ dvojõho zdanenõ a zabránenõ dan ovému úniku v oboru danõ z prõjmu\nVláda České republiky a vláda Finské republiky,\nprejõce si uzavrõt smlouvu o zamezenõ dvojõho\nzdanenõ a zabránenõ dan ovému úniku v oboru danõ\nz prõjmu,\nse dohodly takto:",
+      "paragraphs": [
+        "který je smluvnõ stranou Dohody a aplikuje takový\nPředpis, má jeden hlas. Pro prijetõ rozhodnutõ jsou\npotrebné hlasy nejméne jedné poloviny smluvnõch\nstran, aplikujõcõch takový Předpis. Regionálnõ organi-\nzace hospodárské integrace, které jsou smluvnõmi stra-\nnami Dohody, hlasujõ pri stanovovánõ poctu odevzda-\nných hlasu poctem hlasu svých clenských státu . Před-\nstavitel regionálnõ organizace hospodárské integrace\nmu ze vyjádrit hlasy svrchovaných státu , které aplikujõ\ntakový Předpis a které organizaci vytvárejõ. Zmeny\nPředpisu se prijõmajõ dvoutretinovou vetsinou prõtom-\nných a hlasujõcõch.\nDODATEK 2\nShodnost výroby",
+        "1. U VODNI HODNOCENI\n1.1. Drõve nez udelõ homologaci, je homologujõcõ\norgán smluvnõ strany povinen overit, zda exi-\nstujõ vyhovujõcõ opatrenõ a postupy k zajistenõ\núcinného rõzenõ, aby vyrábená vozidla, zarõzenõ\nnebo cásti byly shodné s homologovaným ty-\npem.\n1.2. Orgán, který udeluje typové homologace, musõ\noverit, ze byly splneny pozadavky dle odstavce\n1.1.; tyto pozadavky si ale také mu ze jménem\na na zádost orgánu, který udeluje homologaci,\noverit homologujõcõ orgán jiné smluvnõ strany.\nV takovém prõpade tento druhý homologujõcõ\norgán vydá prohlásenõ o vyhovenõ s uvedenõm\noblastõ a výrobnõch zarõzenõ, které shledal jako\nodpovõdajõcõ z hlediska výrobku , které majõ být\ntypove homologovány.\n1.3. Homologujõcõ orgán je rovnez povinen akcepto-\nvat výrobcovu registraci dle harmonizované\nnormy ISO 9002 (jejõz rozsah platnosti se vzta-\nhuje na výrobky, které majõ být homologovány)\nnebo dle jiné odpovõdajõcõ akreditacnõ normy\njako splnenõ pozadavku odstavce 1.1. Výrobce\nje povinen o registraci poskytnout podrobnosti\na zavázat se, ze bude homologujõcõ orgán infor-\nmovat o jakýchkoli zmenách platnosti registrace\nnebo jejõho rozsahu.\n1.4. Po obdrzenõ zádosti od orgánu jiné smluvnõ\nstrany zasle mu homologujõcõ orgán ihned pro-\nhlásenõ o vyhovenõ, o kterém je zmõnka v po-\nslednõ vete odstavce 1.2., nebo mu oznámõ, ze\nnemu ze takové prohlásenõ vystavit.",
+        "2. SHODNOST VY ROBY\n2.1. Kazdé vozidlo, zarõzenõ nebo cást, homologo-\nvané dle Předpisu, který je prõlohou této do-\nhody, musõ být vyrobeno tak, aby odpovõdalo\nhomologovanému typu tõm, ze spln uje poza-\ndavky tohoto dodatku a uvazovaného Předpisu.\n2.2. Homologujõcõ orgán smluvnõ strany, který ude-\nluje typovou homologaci dle urcitého Předpisu,\nkterý je prõlohou této dohody, je povinen overit,\nzda existujõ odpovõdajõcõ opatrenõ, a ke kazdé\nhomologaci je povinen s výrobcem odsouhlasit\ndokladované kontrolnõ plány zkousek nebo sou-\nvisejõcõch kontrol, které jsou nezbytné k overenõ\ntrvajõcõ shodnosti s homologovaným typem ve\nstanovených lhu tách a které musejõ prõpadne za-\nhrnovat zkousky, stanovené v uvazovaném\nPředpisu.\n2.3. Drzitel homologace je povinen zvláste:\n2.3.1. zajistit existenci postupu úcinného rõzenõ shod-\nnostõ výrobku (vozidel, zarõzenõ nebo cástõ)\ns typovou homologacõ;\n2.3.2. mõt prõstup ke kontrolnõmu vybavenõ, nezbyt-\nnému pro overovánõ shodnosti kazdého homo-\nlogovaného typu;\n2.3.3. zajistit, aby se zaznamenávaly údaje výsledku\nzkousek a aby po dobu stanovenou v dohode\ns homologujõcõm orgánem byly dostupné prilo-\nzené doklady. Tato doba nesmõ prekrocit 10 let;\n2.3.4. analyzovat výsledky kazdého druhu zkousky\ntak, aby se overila a zajistila stabilita vlastnostõ\nvýrobku v prõpustných tolerancõch pru myslové\nvýroby;\n2.3.5. zajistit, aby se pro kazdý typ výrobku provádely\nnejméne zkousky predepsané v tomto dodatku\na zkousky stanovené v prõslusných Předpisech;\n2.3.6. zajistit, aby po jakémkoliv odberu vzorku nebo\nzkusebnõch dõlu , který vykazuje pri uvazovaném\ndruhu zkousky neshodnost, následoval nový od-\nber a zkousky. Musejõ se ucinit veskerá nezbytná\nopatrenõ k obnovenõ shodnosti prõslusné výroby.\n2.4. Orgán, který udelil typovou homologaci, mu ze\nkdykoliv overit metody rõzenõ shodnosti, vyuzõ-\nvané v kazdé výrobnõ jednotce. Obvyklá cetnost\ntakových overovánõ musõ být ve shode s (prõ-\npadnými) opatrenõmi, prijatými dle odstavce\n1.2. nebo 1.3. tohoto dodatku a musõ být ta-\nková, aby zajistila, ze prõslusné kontroly probõ-\nhajõ v periode, odpovõdajõcõ stavu du very ze\nstrany homologujõcõho orgánu.\n2.4.1. Při kazdé inspekci musejõ být prõtomnému in-\nspektorovi zprõstupneny zkusebnõ a výrobnõ zá-\nznamy.\n2.4.2. Tam, kde tomu odpovõdá podstata zkousky,\nmu ze inspektor nahodile odebõrat vzorky pro\nzkousenõ v laboratori výrobce (nebo v Tech-\nnické organizaci, pokud to stanovuje Předpis,\nkterý je prõlohou této dohody). Minimálnõ pocet\nvzorku má být stanoven dle výsledku vlastnõch\nkontrol výrobce.\n2.4.3. Pokud se jevõ úroven kontrol neuspokojivá nebo\npokud se jevõ potrebným overit platnost zkousek\ndle ustanovenõ odstavce 2.4.2., je inspektor povi-\nnen odebrat vzorky, které se zaslou Technické\norganizaci, která zajist'uje zkousky typové ho-\nmologace.\n2.4.4. Homologujõcõ orgán mu ze provádet jakékoliv\noverenõ nebo zkousku, predepsanou tõmto do-\ndatkem nebo v prõslusném Předpisu, který je\nprõlohou této dohody.\n2.4.5. V prõpadech, kdy jsou behem nekteré z techto\ninspekcõ zjisteny neuspokojivé výsledky, je ho-\nmologujõcõ orgán povinen zajistit, aby se co nej-\nrychleji ucinila veskerá nezbytná opatrenõ k ob-\nnovenõ shodnosti výroby.\nSDE LENI\nMinisterstva zahranicnõch vecõ\nMinisterstvo zahranicnõch vecõ sdeluje, ze dne 2. prosince 1994 byla podepsána Smlouva mezi Č eskou\nrepublikou a Finskou republikou o zamezenõ dvojõho zdanenõ a zabránenõ dan ovému úniku v oboru danõ z prõjmu.\nSe Smlouvou vyslovil souhlas Parlament České republiky a prezident republiky ji ratifikoval.\nTato smlouva na základe svého clánku 27 odst. 2 vstoupila v platnost dnem 12. prosince 1995. Podle odstav-\nce 3 téhoz clánku se prestane uplatn ovat Smlouva mezi vládou Č eskoslovenské socialistické republiky a vládou\nFinské republiky o zamezenõ dvojõho zdanenõ a zabránenõ dan ovému úniku v oboru danõ z prõjmu a z majetku,\npodepsaná v Helsinkách 31. ledna 1975, vyhlásená pod c. 134/1976 Sb., pokud jde o dane, na které se vztahuje tato\nsmlouva v souladu s ustanovenõm odstavce 2. Ukoncenõ platnosti Smlouvy z roku 1975 nastane poslednõ den, kdy\ntato smlouva bude v úcinnosti v souladu s predchozõmi ustanovenõmi tohoto odstavce.\nČ eský preklad Smlouvy se vyhlasuje soucasne. Do anglického znenõ, jez je pro jejõ výklad rozhodné, lze\nnahlédnout na Ministerstvu zahranicnõch vecõ a Ministerstvu financõ.\nSM LOUVA\nmezi\nČ eskou republikou a Finskou republikou\no zamezenõ dvojõho zdanenõ a zabránenõ dan ovému úniku v oboru danõ z prõjmu\nVláda České republiky a vláda Finské republiky,\nprejõce si uzavrõt smlouvu o zamezenõ dvojõho\nzdanenõ a zabránenõ dan ovému úniku v oboru danõ\nz prõjmu,\nse dohodly takto:"
+      ]
+    },
     {
       "number": 1,
       "title": "Osoby, na které se Smlouva vztahuje",

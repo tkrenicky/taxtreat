@@ -3,6 +3,121 @@
   "source_title": "224/1998 Sb.",
   "source_path": "data/raw/treaty/3be1f7b6380ccffd.pdf",
   "start_page": 8,
+  "identity_validation": {
+    "expected_country": "Singapur",
+    "status": "validated",
+    "reason": "counterparty_matched",
+    "matched_alias": "singapur",
+    "matched_method": "exact_alias",
+    "publication_reference": "224/1998",
+    "publication_reference_found": false,
+    "warnings": [
+      "publication_reference_not_found"
+    ]
+  },
+  "text_extraction": {
+    "method": "pypdf",
+    "score": 2050,
+    "page_count": 24,
+    "attempts": [
+      {
+        "method": "pypdf",
+        "score": 2050,
+        "total_characters": 89886,
+        "substantive_pages": 24,
+        "article_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28
+        ],
+        "error": null
+      },
+      {
+        "method": "pdftotext",
+        "score": 672,
+        "total_characters": 89490,
+        "substantive_pages": 24,
+        "article_numbers": [
+          2,
+          11,
+          18,
+          20
+        ],
+        "error": null
+      },
+      {
+        "method": "hybrid",
+        "score": 2042,
+        "total_characters": 89902,
+        "substantive_pages": 24,
+        "article_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28
+        ],
+        "error": null
+      }
+    ]
+  },
+  "source_resolution": {
+    "status": "fallback",
+    "method": "whole_document",
+    "start_page": 1,
+    "end_page": 24,
+    "effective_title": "224/1998 Sb.",
+    "metadata_mismatch": false,
+    "candidate_count": 0
+  },
   "articles": [
     {
       "number": 1,

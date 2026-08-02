@@ -3,6 +3,116 @@
   "source_title": "132/2003 Sb.m.s.",
   "source_path": "data/raw/treaty/d1b5a6bffa834699.pdf",
   "start_page": 5,
+  "identity_validation": {
+    "expected_country": "Filipíny",
+    "status": "validated",
+    "reason": "counterparty_matched",
+    "matched_alias": "filipiny",
+    "matched_method": "exact_alias",
+    "publication_reference": "132/2003",
+    "publication_reference_found": false,
+    "warnings": [
+      "publication_reference_not_found"
+    ]
+  },
+  "text_extraction": {
+    "method": "pdftotext",
+    "score": 1952,
+    "page_count": 49,
+    "attempts": [
+      {
+        "method": "pypdf",
+        "score": -550,
+        "total_characters": 237783,
+        "substantive_pages": 48,
+        "article_numbers": [],
+        "error": null
+      },
+      {
+        "method": "pdftotext",
+        "score": 1952,
+        "total_characters": 46480,
+        "substantive_pages": 25,
+        "article_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28
+        ],
+        "error": null
+      },
+      {
+        "method": "hybrid",
+        "score": 1952,
+        "total_characters": 46480,
+        "substantive_pages": 25,
+        "article_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28
+        ],
+        "error": null
+      }
+    ]
+  },
+  "source_resolution": {
+    "status": "fallback",
+    "method": "whole_document",
+    "start_page": 1,
+    "end_page": 49,
+    "effective_title": "132/2003 Sb.m.s.",
+    "metadata_mismatch": false,
+    "candidate_count": 0
+  },
   "articles": [
     {
       "number": 1,

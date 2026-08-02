@@ -3,6 +3,116 @@
   "source_title": "40/2007 Sb.m.s.",
   "source_path": "data/raw/treaty/e6279bf8653f735a.pdf",
   "start_page": 2,
+  "identity_validation": {
+    "expected_country": "Gruzie",
+    "status": "validated",
+    "reason": "counterparty_matched",
+    "matched_alias": "gruzie",
+    "matched_method": "exact_alias",
+    "publication_reference": "40/2007",
+    "publication_reference_found": false,
+    "warnings": [
+      "publication_reference_not_found"
+    ]
+  },
+  "text_extraction": {
+    "method": "pdftotext",
+    "score": 1922,
+    "page_count": 33,
+    "attempts": [
+      {
+        "method": "pypdf",
+        "score": -550,
+        "total_characters": 218845,
+        "substantive_pages": 32,
+        "article_numbers": [],
+        "error": null
+      },
+      {
+        "method": "pdftotext",
+        "score": 1922,
+        "total_characters": 43542,
+        "substantive_pages": 12,
+        "article_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28
+        ],
+        "error": null
+      },
+      {
+        "method": "hybrid",
+        "score": 1922,
+        "total_characters": 43542,
+        "substantive_pages": 12,
+        "article_numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28
+        ],
+        "error": null
+      }
+    ]
+  },
+  "source_resolution": {
+    "status": "fallback",
+    "method": "whole_document",
+    "start_page": 1,
+    "end_page": 33,
+    "effective_title": "40/2007 Sb.m.s.",
+    "metadata_mismatch": false,
+    "candidate_count": 0
+  },
   "articles": [
     {
       "number": 1,
