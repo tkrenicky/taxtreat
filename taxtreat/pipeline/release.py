@@ -23,6 +23,12 @@ RULE_DIR = ROOT / "data" / "legal_rules"
 LEGAL_SOURCE_DIR = ROOT / "data" / "legal_sources"
 LEGAL_FACT_DIR = ROOT / "data" / "legal_facts"
 GOLDEN_DIR = ROOT / "data" / "golden_cases"
+LEGAL_CONSOLIDATION_DIR = ROOT / "data" / "legal_consolidation"
+MF_INVENTORY = LEGAL_CONSOLIDATION_DIR / "mf_inventory.json"
+BASE_CANDIDATES = (
+    LEGAL_CONSOLIDATION_DIR / "remaining_294_base_candidates.json"
+)
+MLI_EFFECTS = LEGAL_CONSOLIDATION_DIR / "mli_wht_effects.json"
 MANIFEST_DIR = ROOT / "data" / "manifests"
 REGISTRY_DIR = ROOT / "data" / "registries"
 SOURCE_MANIFEST = MANIFEST_DIR / "source_manifest.json"
@@ -97,6 +103,26 @@ def build_source_manifest() -> dict[str, Any]:
 
 
 def build_legal_registry() -> dict[str, Any]:
+    inventory = _read_json(MF_INVENTORY)
+    inventory_by_code = {
+        row["iso2"]: row for row in inventory.get("partners", [])
+    }
+    if len(inventory_by_code) != 100:
+        raise ValueError("Official MF instrument inventory must cover 100 partners.")
+    base_candidates_payload = _read_json(BASE_CANDIDATES)
+    base_candidates = {
+        (row["recipient_country"], row["income_type"]): row
+        for row in base_candidates_payload.get("scopes", [])
+    }
+    if len(base_candidates) != 294:
+        raise ValueError("Base-treaty candidate registry must cover 294 scopes.")
+    mli_effects_payload = _read_json(MLI_EFFECTS)
+    mli_effects = {
+        row["recipient_country"]: row
+        for row in mli_effects_payload.get("effects", [])
+    }
+    if len(mli_effects) != 62:
+        raise ValueError("Official MLI WHT effect registry must cover 62 partners.")
     legal_sources = {}
     for source_path in sorted(LEGAL_SOURCE_DIR.glob("*.json")):
         legal_sources.update(load_legal_sources(source_path))
@@ -151,6 +177,48 @@ def build_legal_registry() -> dict[str, Any]:
             "missing_legal_layers": [],
             "dataset_releases": [],
             "scope_status": "pending_consolidation",
+            "instrument_inventory_status": inventory_by_code[
+                expected["recipient_country"]
+            ]["inventory_status"],
+            "base_candidate_status": (
+                "pilot_consolidated"
+                if expected["recipient_country"] in {"AT", "CH"}
+                else base_candidates[
+                    (
+                        expected["recipient_country"],
+                        expected["income_type"],
+                    )
+                ]["candidate_status"]
+            ),
+            "base_candidate_rates": (
+                []
+                if expected["recipient_country"] in {"AT", "CH"}
+                else sorted(
+                    {
+                        candidate["rate"]
+                        for candidate in base_candidates[
+                            (
+                                expected["recipient_country"],
+                                expected["income_type"],
+                            )
+                        ]["rate_candidates"]
+                    }
+                )
+            ),
+            "preconsolidation_risk_flags": (
+                []
+                if expected["recipient_country"] in {"AT", "CH"}
+                else base_candidates[
+                    (
+                        expected["recipient_country"],
+                        expected["income_type"],
+                    )
+                ]["risk_flags"]
+            ),
+            "mli_wht_effect_candidate_from": (
+                mli_effects.get(expected["recipient_country"], {})
+                .get("effective_from")
+            ),
         }
 
     for path in sorted(RULE_DIR.glob("*.json")):
@@ -253,6 +321,12 @@ def build_release_manifest() -> dict[str, Any]:
         for scope in scopes
         if scope["scope_status"] == "pending_consolidation"
     ]
+    inventory = _read_json(MF_INVENTORY)
+    base_candidates = _read_json(BASE_CANDIDATES)["scopes"]
+    mli_effects = _read_json(MLI_EFFECTS)["effects"]
+    base_candidate_scopes_with_rates = sum(
+        bool(scope["rate_candidates"]) for scope in base_candidates
+    )
     source_artifacts_available = sum(
         source["artifact_available"] and bool(source["sha256"])
         for source in sources
@@ -285,6 +359,17 @@ def build_release_manifest() -> dict[str, Any]:
             "verified_scopes": len(verified_scopes),
             "review_ready_scopes": len(review_ready_scopes),
             "pending_consolidation_scopes": len(pending_scopes),
+            "instrument_inventory_partners": len(inventory["partners"]),
+            "base_candidate_scopes": len(base_candidates),
+            "base_candidate_scopes_with_rates": base_candidate_scopes_with_rates,
+            "base_candidate_scopes_without_rates": (
+                len(base_candidates) - base_candidate_scopes_with_rates
+            ),
+            "mli_wht_effect_candidate_partners": len(mli_effects),
+            "remaining_mli_wht_effect_candidate_partners": sum(
+                effect["recipient_country"] not in {"AT", "CH"}
+                for effect in mli_effects
+            ),
             "production_coverage_percent": (
                 round(len(verified_scopes) / len(scopes) * 100, 2)
                 if scopes

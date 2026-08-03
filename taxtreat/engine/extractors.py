@@ -8,7 +8,8 @@ PERCENT_RE = re.compile(
     r"(?:(?P<value>\d+(?:[.,]\d+)?)|"
     r"(?P<word>zero|five|ten|fifteen|twenty(?:[-\s]five)?|"
     r"nula|p[eě]t|deset|patn[aá]ct|dvacet(?:\s+p[eě]t)?))\s*"
-    r"(?:%|o/o|°/o|percent|per\s+cent|procent(?:a|o|u|y)?|proc\.)",
+    r"(?:%|o/o|°/o|percent|per(?:\s*-\s*|\s+)cent|"
+    r"pro(?:\s*-\s*)?cent(?:a|o|u|y)?|proc\.)",
     re.IGNORECASE,
 )
 
@@ -37,7 +38,8 @@ OWNERSHIP_AFTER_RE = re.compile(
 
 ZERO_RATE_RE = re.compile(
     r"(?:taxable\s+only|shall\s+be\s+taxable\s+only|"
-    r"podl\w*\s+zdan\w*\s+jen|zdan\w*\s+jen)",
+    r"podl\w*\s+zdan\w*\s+(?:jen|pou(?:\s*-\s*)?ze)|"
+    r"zdan\w*\s+(?:jen|pou(?:\s*-\s*)?ze))",
     re.IGNORECASE,
 )
 

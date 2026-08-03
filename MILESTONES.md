@@ -70,6 +70,20 @@ All-country scope baseline completed:
 - no automatically extracted base-treaty rate is promoted into the canonical
   decision engine before protocol/effective-date review.
 
+Remaining-294 consolidation baseline completed:
+
+- official MF treaty inventory captured for all 100 partners as at 4 February
+  2026, including base publications, protocols, corrections and MLI notices;
+- all 294 non-pilot Articles 10-12 stored as hashed review candidates;
+- rate candidates extracted for 293/294 scopes; Greek dividends correctly
+  remain without a treaty rate cap;
+- known semantic false positives are quarantined (including the Chilean 50%
+  financing condition) and cannot enter the active rule engine;
+- 62 official Czech MLI WHT effect notices captured with hashed excerpts and
+  dates, including 60 partners outside the AT/CH pilot;
+- all 294 scopes remain `pending_consolidation` until protocol, special-rule,
+  domestic/EU relief and independent-review gates are completed.
+
 ## 🟡 Phase 4 — Deterministic WHT engine
 
 Layered engine and complete AT/CH pilot country rules exist.

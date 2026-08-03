@@ -24,6 +24,9 @@ withholding-tax rate.
 | Registered country-income scopes | 300/300 |
 | Review-ready legal scopes | 6/300 (AT/CH; independent approval pending) |
 | Pending legal consolidation | 294/300 |
+| Official MF instrument inventory | 100/100 treaty partners |
+| Remaining base-treaty review candidates | 294/294; 293 with rate candidates |
+| Official MLI WHT effect candidates | 62 partners; 60 outside AT/CH |
 | Fully approved legal scopes | 0/300 |
 | Executable golden cases | 8 (all intentionally `REVIEW_REQUIRED`) |
 | Production readiness | blocked by source and legal approval gates |
@@ -62,6 +65,13 @@ recorded. The remaining 98 treaty partners and their 294 country-income scopes
 are registered and exposed by the API, but deliberately return no candidate
 rate until their protocol, MLI, domestic-law and EU-law layers are
 consolidated.
+
+The remaining 294 scopes now have a separate pre-consolidation evidence layer.
+It contains the official MF instrument chain, the complete hashed Article
+10-12 text, quarantined extractor output and official Czech MLI WHT effective
+dates where published. This layer is visible in release metrics but is not
+loaded as active legal rules, so unfinished protocol or semantic review cannot
+produce a client-facing candidate rate.
 
 ## Important legal boundary
 

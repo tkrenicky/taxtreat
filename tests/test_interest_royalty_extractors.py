@@ -48,6 +48,15 @@ def test_interest_rule_extracts_source_state_exemption():
     assert rule.rates[0].legal_basis == "Article 11"
 
 
+def test_czech_source_state_exemption_with_pouze_is_zero_rate():
+    rule = interest_rule(
+        "Úroky mající zdroj v jednom smluvním státě podléhají zdanění "
+        "pouze v druhém smluvním státě."
+    )
+
+    assert [rate.rate for rate in rule.rates] == [0.0]
+
+
 def test_royalty_rule_extracts_five_percent_rate():
     text = """
     Royalties arising in one Contracting State may also be taxed in

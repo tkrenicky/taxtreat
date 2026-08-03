@@ -15,6 +15,13 @@ def render() -> str:
         f"Source auditability: {sources['auditability']} "
         f"({sources['artifacts_with_hash']}/{sources['total']})",
         f"Registered legal scopes: {legal['scopes']}/300",
+        "Official instrument inventories: "
+        f"{legal['instrument_inventory_partners']}/100",
+        "Remaining base-treaty candidates: "
+        f"{legal['base_candidate_scopes']}/294 "
+        f"({legal['base_candidate_scopes_with_rates']} with rates)",
+        "Official MLI WHT effect candidates: "
+        f"{legal['mli_wht_effect_candidate_partners']}/62",
         f"Review-ready legal scopes: {legal['review_ready_scopes']}/300",
         "Pending legal consolidation: "
         f"{legal['pending_consolidation_scopes']}/300",
