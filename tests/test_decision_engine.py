@@ -443,6 +443,32 @@ def test_missing_ownership_fact():
     assert "ownership" in result.missing_facts
 
 
+def test_missing_preference_fact_keeps_default_rate_non_final():
+    rule = Rule(
+        rates=[
+            WHTRate(
+                rate=5,
+                conditions=[
+                    WHTCondition(
+                        condition_type=ConditionType.minimum_ownership,
+                        operator=">=",
+                        value="10",
+                        unit="%",
+                    )
+                ],
+            ),
+            WHTRate(rate=15, conditions=[], legal_basis="default"),
+        ]
+    )
+
+    result = evaluate(rule, {})
+
+    assert result.withholding_rate == 15
+    assert result.eligible is False
+    assert result.requires_review is True
+    assert result.missing_facts == ["ownership"]
+
+
 def test_no_rates():
     result = evaluate(Rule(rates=[]), {})
 

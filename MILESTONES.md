@@ -2,14 +2,14 @@
 
 Status date: **3 August 2026**
 
-## ✅ Phase 1 — Source ingestion and identity
+## 🟡 Phase 1 — Source ingestion and identity
 
 Completed:
 
 - Czech treaty-partner registry
 - official-document discovery and download
-- immutable local source paths and SHA-256 evidence
-- JSON document manifest
+- deterministic source IDs and official URL candidates
+- JSON source manifest
 - SQLite source registry
 - country and legal-act identity validation
 - safe handling of shared and multi-act publications
@@ -31,6 +31,12 @@ Completed:
 - 600 passing automated tests
 - repository cleanup and removal of obsolete implementation paths
 
+Still blocked:
+
+- 100/100 raw artifacts are unavailable in a clean clone;
+- full source SHA-256 evidence is therefore not yet reproducible;
+- 89/100 datasets retain a publication-reference warning.
+
 ## 🟡 Phase 3 — Legal consolidation and effective dates
 
 Current phase.
@@ -48,6 +54,16 @@ Required work:
 ## 🟡 Phase 4 — Deterministic WHT engine
 
 Initial framework and pilot country rules exist.
+
+Reliability baseline completed:
+
+- one canonical decision service and API path;
+- mandatory transaction date in canonical core;
+- transaction facts separated from legal facts;
+- fail-closed unverified rules and legal facts;
+- explicit `FINAL`, `REVIEW_REQUIRED` and `OUT_OF_SCOPE` states;
+- executable CZ–CH golden case;
+- deterministic source, legal-scope and release manifests.
 
 Required work:
 

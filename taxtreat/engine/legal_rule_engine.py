@@ -2,7 +2,15 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from datetime import date
+from enum import Enum
 from typing import Any
+
+
+class DecisionStatus(str, Enum):
+    FINAL = "FINAL"
+    CONDITIONAL = "CONDITIONAL"
+    REVIEW_REQUIRED = "REVIEW_REQUIRED"
+    OUT_OF_SCOPE = "OUT_OF_SCOPE"
 
 
 @dataclass(frozen=True)
@@ -10,6 +18,7 @@ class LegalCondition:
     fact: str
     operator: str
     value: Any
+    fact_source: str = "transaction"
 
 
 @dataclass
@@ -30,15 +39,24 @@ class LegalRule:
     overrides_rule_id: str | None = None
     verification_status: str = "needs_review"
     source_text: str | None = None
+    source_id: str | None = None
+    source_url: str | None = None
+    source_excerpt_hash: str | None = None
+    reviewer_id: str | None = None
+    reviewed_at: date | None = None
+    approved_by: str | None = None
+    approved_at: date | None = None
+    dataset_release: str | None = None
 
 
 @dataclass
 class LegalDecisionResult:
+    status: DecisionStatus = DecisionStatus.REVIEW_REQUIRED
     rate: float | None = None
     selected_rule_id: str | None = None
     overridden_rule_id: str | None = None
     eligible: bool = False
-    requires_review: bool = False
+    requires_review: bool = True
     missing_facts: list[str] = field(default_factory=list)
     failed_conditions: list[str] = field(default_factory=list)
     explanation: list[str] = field(default_factory=list)
@@ -82,9 +100,12 @@ def _matches_scope(rule: LegalRule, facts: dict[str, Any]) -> bool:
 def _evaluate_condition(
     condition: LegalCondition,
     facts: dict[str, Any],
+    legal_facts: dict[str, Any],
 ) -> tuple[bool | None, str | None]:
-    if condition.fact not in facts or facts[condition.fact] is None:
-        return None, condition.fact
+    fact_store = legal_facts if condition.fact_source == "legal" else facts
+    if condition.fact not in fact_store or fact_store[condition.fact] is None:
+        prefix = "legal_fact:" if condition.fact_source == "legal" else ""
+        return None, prefix + condition.fact
 
     operator = _SUPPORTED_OPERATORS.get(condition.operator)
     if operator is None:
@@ -93,7 +114,7 @@ def _evaluate_condition(
         )
 
     try:
-        return bool(operator(facts[condition.fact], condition.value)), None
+        return bool(operator(fact_store[condition.fact], condition.value)), None
     except TypeError:
         return False, None
 
@@ -101,12 +122,17 @@ def _evaluate_condition(
 def _evaluate_rule(
     rule: LegalRule,
     facts: dict[str, Any],
+    legal_facts: dict[str, Any],
 ) -> tuple[bool, list[str], list[str]]:
     missing: list[str] = []
     failed: list[str] = []
 
     for condition in rule.conditions:
-        satisfied, missing_fact = _evaluate_condition(condition, facts)
+        satisfied, missing_fact = _evaluate_condition(
+            condition,
+            facts,
+            legal_facts,
+        )
 
         if missing_fact is not None:
             missing.append(missing_fact)
@@ -122,9 +148,15 @@ def evaluate_legal_rules(
     facts: dict[str, Any],
     *,
     as_of: date | None = None,
+    legal_facts: dict[str, Any] | None = None,
 ) -> LegalDecisionResult:
     result = LegalDecisionResult()
-    evaluation_date = as_of or date.today()
+    if as_of is None:
+        result.missing_facts = ["transaction_date"]
+        result.explanation.append("A transaction date is required.")
+        return result
+    evaluation_date = as_of
+    legal_facts = legal_facts or {}
 
     required_scope_facts = (
         "income_type",
@@ -150,24 +182,10 @@ def evaluate_legal_rules(
     ]
 
     if not relevant_rules:
-        result.requires_review = True
+        result.status = DecisionStatus.OUT_OF_SCOPE
+        result.requires_review = False
         result.explanation.append(
             "No effective legal rule matches the transaction scope."
-        )
-        return result
-
-    relevant_rule_ids = {rule.rule_id for rule in relevant_rules}
-    broken_overrides = sorted(
-        rule.rule_id
-        for rule in relevant_rules
-        if rule.overrides_rule_id is not None
-        and rule.overrides_rule_id not in relevant_rule_ids
-    )
-    if broken_overrides:
-        result.requires_review = True
-        result.explanation.append(
-            "Legal rules reference missing overridden rules: "
-            + ", ".join(broken_overrides)
         )
         return result
 
@@ -207,7 +225,7 @@ def evaluate_legal_rules(
     ] = []
 
     for rule in relevant_rules:
-        matches, missing, failed = _evaluate_rule(rule, facts)
+        matches, missing, failed = _evaluate_rule(rule, facts, legal_facts)
         evaluated.append((rule, matches, missing, failed))
 
     matching_rules = [
@@ -282,6 +300,7 @@ def evaluate_legal_rules(
         if selected.effect == "exclude":
             result.eligible = False
             result.requires_review = False
+            result.status = DecisionStatus.FINAL
             result.explanation.append(
                 f"Rule {selected.rule_id} excludes application of the "
                 "withholding-tax rate."
@@ -305,6 +324,7 @@ def evaluate_legal_rules(
         result.rate = selected.rate
         result.eligible = True
         result.requires_review = False
+        result.status = DecisionStatus.FINAL
         result.explanation.append(
             f"Selected legal rule {selected.rule_id} with rate "
             f"{selected.rate}."
@@ -341,4 +361,5 @@ def evaluate_legal_rules(
     result.explanation.append(
         "No effective legal rule satisfies the supplied facts."
     )
+    result.requires_review = True
     return result

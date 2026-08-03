@@ -1,0 +1,1 @@
+"""TaxTreat FastAPI application package."""

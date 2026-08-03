@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "taxtreat"
+version = "0.2.0"
+description = "Deterministic, source-backed withholding-tax analysis"
+requires-python = ">=3.12"
+dependencies = [
+  "beautifulsoup4==4.12.3",
+  "fastapi>=0.115,<1.0",
+  "lxml==5.3.0",
+  "pydantic==2.10.6",
+  "pypdf==5.9.0",
+  "python-dateutil==2.9.0.post0",
+  "PyYAML>=6.0,<7.0",
+  "requests==2.32.3",
+  "SQLAlchemy>=2.0,<3.0",
+  "uvicorn>=0.30,<1.0",
+]
+
+[tool.setuptools.packages.find]
+where = [".", "src"]
+include = ["app*", "taxtreat*", "taxtreat_cz*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

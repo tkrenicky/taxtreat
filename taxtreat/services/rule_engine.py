@@ -1,3 +1,5 @@
+"""Legacy extraction engine; production decisions use services.decision."""
+
 from collections.abc import Callable
 
 from taxtreat.db.repository import TreatyRepository

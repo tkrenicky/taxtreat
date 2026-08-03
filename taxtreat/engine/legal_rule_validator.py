@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import re
+
 from taxtreat.engine.legal_rule_engine import LegalRule, _SUPPORTED_OPERATORS
 
 
@@ -7,6 +9,18 @@ _ALLOWED_EFFECTS = {"rate", "exclude"}
 _ALLOWED_INCOME_TYPES = {"dividend", "interest", "royalty"}
 _ALLOWED_INSTRUMENTS = {"treaty", "protocol", "domestic_law", "eu_directive"}
 _ALLOWED_STATUSES = {"verified", "needs_review", "rejected"}
+_ALLOWED_FACT_SOURCES = {"transaction", "legal"}
+_VERIFICATION_FIELDS = (
+    "effective_from",
+    "source_id",
+    "source_url",
+    "source_excerpt_hash",
+    "reviewer_id",
+    "reviewed_at",
+    "approved_by",
+    "approved_at",
+    "dataset_release",
+)
 
 
 def validate_legal_rules(rules: list[LegalRule]) -> list[str]:
@@ -33,6 +47,31 @@ def validate_legal_rules(rules: list[LegalRule]) -> list[str]:
             issues.append(f"{prefix} unsupported effect.")
         if rule.verification_status not in _ALLOWED_STATUSES:
             issues.append(f"{prefix} unsupported verification_status.")
+        if rule.verification_status == "verified":
+            missing_verification = [
+                field_name
+                for field_name in _VERIFICATION_FIELDS
+                if getattr(rule, field_name) in (None, "")
+            ]
+            if missing_verification:
+                issues.append(
+                    f"{prefix} verified rule lacks provenance/approval: "
+                    + ", ".join(missing_verification)
+                    + "."
+                )
+            if rule.reviewer_id == rule.approved_by:
+                issues.append(
+                    f"{prefix} reviewer and approver must be independent."
+                )
+            if rule.source_excerpt_hash and not re.fullmatch(
+                r"[0-9a-fA-F]{64}",
+                rule.source_excerpt_hash,
+            ):
+                issues.append(
+                    f"{prefix} source_excerpt_hash must be full SHA-256."
+                )
+            if rule.source_url and not rule.source_url.startswith("https://"):
+                issues.append(f"{prefix} source_url must use HTTPS.")
 
         if not isinstance(rule.priority, int) or isinstance(rule.priority, bool):
             issues.append(f"{prefix} priority must be an integer.")
@@ -65,6 +104,11 @@ def validate_legal_rules(rules: list[LegalRule]) -> list[str]:
                 issues.append(
                     f"{prefix} unsupported condition operator "
                     f"{condition.operator!r}."
+                )
+            if condition.fact_source not in _ALLOWED_FACT_SOURCES:
+                issues.append(
+                    f"{prefix} unsupported condition fact_source "
+                    f"{condition.fact_source!r}."
                 )
 
         if rule.overrides_rule_id is None:

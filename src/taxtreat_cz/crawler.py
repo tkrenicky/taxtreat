@@ -22,6 +22,8 @@ _ALLOWED_HOSTS = (
     "aplikace.mv.gov.cz",
     "aplikace.mvcr.cz",
     "e-sbirka.gov.cz",
+    "oecd.org",
+    "eur-lex.europa.eu",
 )
 _DATE_RE = re.compile(r"^\s*\d{1,2}\.\d{1,2}\.\d{4}\s*$")
 _ARCHIVE_YEAR_RE = re.compile(r"^(?:19|20)\d{2}$")
@@ -59,9 +61,24 @@ class Crawler:
         return self._get_with_timeout(url)
 
     def _get_with_timeout(self, url: str) -> requests.Response:
+        if not self._host_allowed(url):
+            raise ValueError(f"Host is not allowed: {urlparse(url).hostname}")
         response = self.session.get(url, timeout=(15, 60), allow_redirects=True)
         response.raise_for_status()
+        if not self._host_allowed(response.url):
+            raise ValueError(
+                "Redirect target host is not allowed: "
+                f"{urlparse(response.url).hostname}"
+            )
         return response
+
+    @staticmethod
+    def _host_allowed(url: str) -> bool:
+        host = (urlparse(url).hostname or "").casefold().rstrip(".")
+        return any(
+            host == allowed or host.endswith("." + allowed)
+            for allowed in _ALLOWED_HOSTS
+        )
 
     @staticmethod
     def classify(title: str, url: str, relation: str | None = None) -> str:
@@ -99,8 +116,7 @@ class Crawler:
         if not clean_title or _ARCHIVE_YEAR_RE.fullmatch(clean_title):
             return False
 
-        host = urlparse(href).netloc.casefold()
-        if not host or not any(domain in host for domain in _ALLOWED_HOSTS):
+        if not Crawler._host_allowed(href):
             return False
 
         path = urlparse(href).path.casefold().rstrip("/")

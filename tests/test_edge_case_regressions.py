@@ -130,30 +130,48 @@ def test_generate_all_cases_and_pipeline_helpers(monkeypatch, tmp_path, capsys):
     generate_all_cases.main()
     assert "Treaty partners: 1" in capsys.readouterr().out
 
-    source = tmp_path / "parsed"
-    target = tmp_path / "generated"
-    source.mkdir()
-    (source / "one.json").write_text('{"payer":"CZ","recipient":"DE"}', encoding="utf-8")
-    monkeypatch.setattr(build_database, "SOURCE_DIR", source)
-    monkeypatch.setattr(build_database, "OUTPUT_DIR", target)
-    target.mkdir()
-    records = build_database.load_records()
-    build_database.export_csv(records)
-    build_database.export_json(records)
-    assert (target / "taxtreat_master.csv").exists()
-    assert json.loads((target / "taxtreat_master.json").read_text()) == records
+    build_calls = []
+    monkeypatch.setattr(
+        build_database,
+        "build_source_manifest",
+        lambda: build_calls.append("sources"),
+    )
+    monkeypatch.setattr(
+        build_database,
+        "build_legal_registry",
+        lambda: build_calls.append("registry"),
+    )
+    monkeypatch.setattr(
+        build_database,
+        "build_release_manifest",
+        lambda: build_calls.append("release"),
+    )
     build_database.main()
-    assert "1 records exported" in capsys.readouterr().out
+    assert build_calls == ["sources", "registry", "release"]
+    assert "Canonical manifests exported" in capsys.readouterr().out
 
-    monkeypatch.setattr(run_pipeline, "STEPS", [("one", "cmd1"), ("two", "cmd2")])
-    monkeypatch.setattr(run_pipeline.subprocess, "run", lambda *a, **k: SimpleNamespace(returncode=0))
-    run_pipeline.main()
+    calls = []
+    monkeypatch.setattr(
+        run_pipeline,
+        "STEPS",
+        [("one", lambda: calls.append("one")), ("two", lambda: calls.append("two"))],
+    )
+    monkeypatch.setattr(
+        run_pipeline,
+        "validate_release",
+        lambda **kwargs: calls.append(kwargs),
+    )
+    run_pipeline.main([])
+    assert calls == ["one", "two", {"production": False}]
     assert "finished successfully" in capsys.readouterr().out
 
-    calls = iter([SimpleNamespace(returncode=1)])
-    monkeypatch.setattr(run_pipeline.subprocess, "run", lambda *a, **k: next(calls))
+    monkeypatch.setattr(
+        run_pipeline,
+        "STEPS",
+        [("broken", lambda: (_ for _ in ()).throw(RuntimeError("boom")))],
+    )
     with pytest.raises(SystemExit) as exc:
-        run_pipeline.main()
+        run_pipeline.main([])
     assert exc.value.code == 1
 
 

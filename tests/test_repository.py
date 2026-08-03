@@ -1,7 +1,10 @@
 import sqlite3
 from pathlib import Path
 
+import pytest
+
 from taxtreat.db.repository import (
+    AmbiguousArticleError,
     TreatyRepository,
     connect_db,
     get_article_paragraph_texts,
@@ -57,6 +60,7 @@ def test_repository_reads_article_and_paragraphs(tmp_path):
     create_test_database(db_path)
 
     repository = TreatyRepository(db_path)
+    assert repository.conn.execute("PRAGMA foreign_keys").fetchone()[0] == 1
 
     article = repository.get_article(10)
     paragraphs = repository.get_article_paragraphs(10)
@@ -124,6 +128,7 @@ def test_connect_db_with_explicit_path(tmp_path):
     db_path = tmp_path / "explicit.db"
 
     conn = connect_db(db_path)
+    assert conn.execute("PRAGMA foreign_keys").fetchone()[0] == 1
     conn.execute("CREATE TABLE example (id INTEGER PRIMARY KEY)")
     conn.commit()
     conn.close()
@@ -161,3 +166,30 @@ def test_get_article_paragraph_texts(tmp_path):
     assert get_article_paragraph_texts(conn, 99) == []
 
     conn.close()
+
+
+def test_repository_never_mixes_same_numbered_articles_between_treaties(tmp_path):
+    db_path = tmp_path / "multiple-treaties.db"
+    create_test_database(db_path)
+    conn = sqlite3.connect(db_path)
+    conn.execute(
+        "INSERT INTO articles (id, treaty_version_id, article_number, title) "
+        "VALUES (3, 200, 10, 'Dividends other treaty')"
+    )
+    conn.execute(
+        "INSERT INTO paragraphs (id, article_id, paragraph_number, text) "
+        "VALUES (4, 3, '1', 'OTHER TREATY')"
+    )
+    conn.commit()
+    conn.close()
+
+    repository = TreatyRepository(db_path)
+    with pytest.raises(AmbiguousArticleError):
+        repository.get_full_article_text(10)
+
+    assert repository.get_full_article_text(
+        10,
+        treaty_version_id=100,
+    ) == "First dividend paragraph\nSecond dividend paragraph"
+    assert repository.get_full_article_text(article_id=3) == "OTHER TREATY"
+    repository.close()

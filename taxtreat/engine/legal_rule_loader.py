@@ -35,6 +35,7 @@ def load_legal_rules(path: str | Path) -> list[LegalRule]:
                 fact=condition["fact"],
                 operator=condition["operator"],
                 value=condition.get("value"),
+                fact_source=condition.get("fact_source", "transaction"),
             )
             for condition in raw_rule.get("conditions", [])
         ]
@@ -60,8 +61,26 @@ def load_legal_rules(path: str | Path) -> list[LegalRule]:
                     "needs_review",
                 ),
                 source_text=raw_rule.get("source_text"),
+                source_id=raw_rule.get("source_id"),
+                source_url=raw_rule.get("source_url"),
+                source_excerpt_hash=raw_rule.get("source_excerpt_hash"),
+                reviewer_id=raw_rule.get("reviewer_id"),
+                reviewed_at=_parse_date(raw_rule.get("reviewed_at")),
+                approved_by=raw_rule.get("approved_by"),
+                approved_at=_parse_date(raw_rule.get("approved_at")),
+                dataset_release=raw_rule.get("dataset_release"),
             )
         )
+
+    country_pair = payload.get("country_pair") or {}
+    for rule in rules:
+        if (
+            rule.source_country != country_pair.get("source_country")
+            or rule.recipient_country != country_pair.get("recipient_country")
+        ):
+            raise ValueError(
+                f"Rule {rule.rule_id} does not match top-level country_pair."
+            )
 
     issues = validate_legal_rules(rules)
     if issues:

@@ -1,5 +1,11 @@
 from __future__ import annotations
 
+"""Legacy parser-analysis adapter.
+
+Do not use this module for production decisions. New requests must use
+``taxtreat.services.decision.analyze_transaction``.
+"""
+
 from dataclasses import dataclass, field
 from typing import Any
 

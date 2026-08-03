@@ -1,3 +1,5 @@
+"""Legacy article-extraction helpers; not a legal decision interface."""
+
 from taxtreat.db.repository import TreatyRepository
 from taxtreat.engine.extractors import dividend_rule, interest_rule, royalty_rule
 from taxtreat.engine.models import Rule
