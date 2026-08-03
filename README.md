@@ -73,6 +73,14 @@ dates where published. This layer is visible in release metrics but is not
 loaded as active legal rules, so unfinished protocol or semantic review cannot
 produce a client-facing candidate rate.
 
+The protocol overlay is now consolidated as a review-only candidate layer for
+all 11 non-pilot partners whose MF inventory lists a protocol: 12 official
+protocol instruments and 33 country-income scopes. It records explicit rate,
+exemption, definition and no-WHT-effect conclusions, with source-document
+hashes and candidate effective dates. Later status instruments for Belarus and
+Russia remain explicit blockers. No protocol candidate is loaded into the
+active decision engine before MLI/status, domestic/EU and four-eyes review.
+
 ## Important legal boundary
 
 The completed parser phase demonstrates that the relevant base-treaty articles can be reliably identified and extracted.
@@ -91,6 +99,7 @@ Until these layers are completed and validated, unresolved cases must not be pre
 - `data/legal_rules/` — structured legal-rule datasets
 - `data/legal_sources/` — official legal-source registry
 - `data/legal_facts/` — date-sensitive legal facts
+- `data/legal_consolidation/` — fail-closed treaty, MLI and protocol candidates
 - `data/golden_cases/` — executable end-to-end legal cases
 - `knowledge_base/` — country-pair knowledge records
 - `taxtreat/parser/` — extraction and article-selection logic

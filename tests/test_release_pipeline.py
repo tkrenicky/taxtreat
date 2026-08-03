@@ -36,6 +36,9 @@ def test_committed_baseline_manifest_is_honest_and_consistent():
     assert manifest["legal"]["base_candidate_scopes"] == 294
     assert manifest["legal"]["base_candidate_scopes_with_rates"] == 293
     assert manifest["legal"]["base_candidate_scopes_without_rates"] == 1
+    assert manifest["legal"]["protocol_effect_candidate_documents"] == 12
+    assert manifest["legal"]["protocol_effect_candidate_partners"] == 11
+    assert manifest["legal"]["protocol_effect_candidate_scopes"] == 33
     assert manifest["legal"]["mli_wht_effect_candidate_partners"] == 62
     assert manifest["legal"]["remaining_mli_wht_effect_candidate_partners"] == 60
     assert manifest["golden_cases"] == 8

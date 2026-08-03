@@ -20,6 +20,10 @@ def render() -> str:
         "Remaining base-treaty candidates: "
         f"{legal['base_candidate_scopes']}/294 "
         f"({legal['base_candidate_scopes_with_rates']} with rates)",
+        "Protocol candidates: "
+        f"{legal['protocol_effect_candidate_scopes']} scopes / "
+        f"{legal['protocol_effect_candidate_partners']} partners / "
+        f"{legal['protocol_effect_candidate_documents']} instruments",
         "Official MLI WHT effect candidates: "
         f"{legal['mli_wht_effect_candidate_partners']}/62",
         f"Review-ready legal scopes: {legal['review_ready_scopes']}/300",

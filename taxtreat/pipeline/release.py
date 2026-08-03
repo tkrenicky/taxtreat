@@ -29,6 +29,7 @@ BASE_CANDIDATES = (
     LEGAL_CONSOLIDATION_DIR / "remaining_294_base_candidates.json"
 )
 MLI_EFFECTS = LEGAL_CONSOLIDATION_DIR / "mli_wht_effects.json"
+PROTOCOL_EFFECTS = LEGAL_CONSOLIDATION_DIR / "protocol_effect_candidates.json"
 MANIFEST_DIR = ROOT / "data" / "manifests"
 REGISTRY_DIR = ROOT / "data" / "registries"
 SOURCE_MANIFEST = MANIFEST_DIR / "source_manifest.json"
@@ -123,6 +124,13 @@ def build_legal_registry() -> dict[str, Any]:
     }
     if len(mli_effects) != 62:
         raise ValueError("Official MLI WHT effect registry must cover 62 partners.")
+    protocol_effects_payload = _read_json(PROTOCOL_EFFECTS)
+    protocol_effects = {
+        (row["recipient_country"], row["income_type"]): row
+        for row in protocol_effects_payload.get("scopes", [])
+    }
+    if len(protocol_effects) != 33:
+        raise ValueError("Protocol-effect candidate registry must cover 33 scopes.")
     legal_sources = {}
     for source_path in sorted(LEGAL_SOURCE_DIR.glob("*.json")):
         legal_sources.update(load_legal_sources(source_path))
@@ -219,6 +227,50 @@ def build_legal_registry() -> dict[str, Any]:
                 mli_effects.get(expected["recipient_country"], {})
                 .get("effective_from")
             ),
+            "protocol_candidate_status": (
+                "pilot_consolidated"
+                if expected["recipient_country"] in {"AT", "CH"}
+                else protocol_effects.get(
+                    (
+                        expected["recipient_country"],
+                        expected["income_type"],
+                    ),
+                    {},
+                ).get("candidate_status", "not_listed")
+            ),
+            "protocol_effect_kind": protocol_effects.get(
+                (
+                    expected["recipient_country"],
+                    expected["income_type"],
+                ),
+                {},
+            ).get("effect_kind"),
+            "protocol_candidate_rates": sorted(
+                {
+                    row["rate"]
+                    for row in protocol_effects.get(
+                        (
+                            expected["recipient_country"],
+                            expected["income_type"],
+                        ),
+                        {},
+                    ).get("protocol_rate_candidates", [])
+                }
+            ),
+            "protocol_candidate_effective_from": protocol_effects.get(
+                (
+                    expected["recipient_country"],
+                    expected["income_type"],
+                ),
+                {},
+            ).get("protocol_candidate_effective_from"),
+            "post_protocol_status_source_id": protocol_effects.get(
+                (
+                    expected["recipient_country"],
+                    expected["income_type"],
+                ),
+                {},
+            ).get("later_status_source_id"),
         }
 
     for path in sorted(RULE_DIR.glob("*.json")):
@@ -324,6 +376,7 @@ def build_release_manifest() -> dict[str, Any]:
     inventory = _read_json(MF_INVENTORY)
     base_candidates = _read_json(BASE_CANDIDATES)["scopes"]
     mli_effects = _read_json(MLI_EFFECTS)["effects"]
+    protocol_effects = _read_json(PROTOCOL_EFFECTS)
     base_candidate_scopes_with_rates = sum(
         bool(scope["rate_candidates"]) for scope in base_candidates
     )
@@ -369,6 +422,18 @@ def build_release_manifest() -> dict[str, Any]:
             "remaining_mli_wht_effect_candidate_partners": sum(
                 effect["recipient_country"] not in {"AT", "CH"}
                 for effect in mli_effects
+            ),
+            "protocol_effect_candidate_documents": len(
+                protocol_effects["documents"]
+            ),
+            "protocol_effect_candidate_partners": len(
+                {
+                    scope["recipient_country"]
+                    for scope in protocol_effects["scopes"]
+                }
+            ),
+            "protocol_effect_candidate_scopes": len(
+                protocol_effects["scopes"]
             ),
             "production_coverage_percent": (
                 round(len(verified_scopes) / len(scopes) * 100, 2)

@@ -84,6 +84,18 @@ Remaining-294 consolidation baseline completed:
 - all 294 scopes remain `pending_consolidation` until protocol, special-rule,
   domestic/EU relief and independent-review gates are completed.
 
+Protocol candidate consolidation completed:
+
+- all 12 protocol instruments for the 11 non-pilot protocol partners captured
+  from official publications and hashed;
+- all 33 affected country-income scopes classified as rate replacement,
+  conditional exemption, definition/scope change or confirmed no WHT change;
+- known BY, RU, SG and UZ rate effects represented as structured candidates;
+- later Belarus and Russia status instruments remain blocking and prevent a
+  historical protocol rate from being presented as current;
+- all 33 scopes remain `pending_consolidation` pending MLI/status,
+  domestic/EU relief and independent legal approval.
+
 ## 🟡 Phase 4 — Deterministic WHT engine
 
 Layered engine and complete AT/CH pilot country rules exist.
