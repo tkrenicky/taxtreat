@@ -144,6 +144,13 @@ protocol amendments, special-rate conditions, EU/domestic relief and four-eyes
 approval must still be consolidated before a candidate can enter the canonical
 calculation path.
 
+For the 11 non-pilot partners with protocols, the protocol layer is now stored
+as 33 structured review candidates based on 12 official instruments. These
+records distinguish rate replacements, conditional exemptions, definition or
+scope changes and protocols with no Article 10-12 effect. They remain outside
+the active engine; Belarus and Russia additionally retain blockers for later
+status instruments.
+
 ## 7. Definition of core completion
 
 The legal and calculation core is complete only when:

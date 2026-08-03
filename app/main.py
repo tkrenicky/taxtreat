@@ -88,6 +88,12 @@ def list_jurisdictions():
         if scope["base_candidate_status"]
         == "base_rate_candidate_extracted"
     }
+    protocol_candidate = {
+        (scope["recipient_country"], scope["income_type"])
+        for scope in registry["scopes"]
+        if scope["protocol_candidate_status"]
+        == "protocol_effect_candidate_consolidated"
+    }
     manual_rate_extraction = {
         (scope["recipient_country"], scope["income_type"])
         for scope in registry["scopes"]
@@ -110,6 +116,11 @@ def list_jurisdictions():
                     income_type
                     for income_type in ("dividend", "interest", "royalty")
                     if (partner["iso2"], income_type) in base_candidate
+                ],
+                "protocol_candidate_income_types": [
+                    income_type
+                    for income_type in ("dividend", "interest", "royalty")
+                    if (partner["iso2"], income_type) in protocol_candidate
                 ],
                 "manual_rate_extraction_income_types": [
                     income_type
