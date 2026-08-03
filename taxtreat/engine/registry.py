@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Callable, Dict, Optional
 
-from taxtreat.engine.extractors import dividend_rule
+from taxtreat.engine.extractors import dividend_rule, interest_rule, royalty_rule
 
 Extractor = Callable[[str], object]
 
@@ -23,6 +23,8 @@ class ExtractorRegistry:
 
 DEFAULT_EXTRACTORS = {
     "dividend": dividend_rule,
+    "interest": interest_rule,
+    "royalty": royalty_rule,
 }
 
 

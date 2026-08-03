@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "country_pair": {
+    "source_country": "CZ",
+    "recipient_country": "AT"
+  },
+  "rules": [
+    {
+      "rule_id": "CZ-AT-INT-BASE",
+      "income_type": "interest",
+      "source_country": "CZ",
+      "recipient_country": "AT",
+      "legal_instrument": "treaty",
+      "article": 11,
+      "paragraph": "1",
+      "rate": 0.0,
+      "priority": 100,
+      "conditions": [
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "verification_status": "verified"
+    },
+    {
+      "rule_id": "CZ-AT-ROY-INDUSTRIAL",
+      "income_type": "royalty",
+      "source_country": "CZ",
+      "recipient_country": "AT",
+      "legal_instrument": "treaty",
+      "article": 12,
+      "paragraph": "2 and 3(a)",
+      "rate": 5.0,
+      "priority": 10,
+      "conditions": [
+        {
+          "fact": "royalty_category",
+          "operator": "==",
+          "value": "industrial"
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "verification_status": "verified"
+    },
+    {
+      "rule_id": "CZ-AT-ROY-COPYRIGHT",
+      "income_type": "royalty",
+      "source_country": "CZ",
+      "recipient_country": "AT",
+      "legal_instrument": "treaty",
+      "article": 12,
+      "paragraph": "1 and 3(b)",
+      "rate": 0.0,
+      "priority": 10,
+      "conditions": [
+        {
+          "fact": "royalty_category",
+          "operator": "==",
+          "value": "copyright"
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "verification_status": "verified"
+    }
+  ]
+}

@@ -299,11 +299,41 @@ def _ocr_target_reached(
         return False
 
     try:
-        treaty_text, _ = extract_treaty(candidate_pages[start:])
+        treaty_text, relative_start_page = extract_treaty(candidate_pages[start:])
         articles = parse_articles(treaty_text)
     except RuntimeError:
         return False
-    return select_best_article_sequence(articles).is_complete
+    article_selection = select_best_article_sequence(articles)
+    if not article_selection.is_complete:
+        return False
+
+    if expected_country:
+        selected_text = "\n".join(
+            article.title + "\n" + article.text
+            for article in article_selection.articles
+        )
+        identity = validate_treaty_identity(
+            expected_country=expected_country,
+            text=selected_text,
+            source_title=None,
+            minimum_text_length=100,
+        )
+        if not identity.is_valid:
+            context_identity = validate_treaty_identity(
+                expected_country=expected_country,
+                text=candidate_pages[start] + "\n" + selected_text,
+                source_title=None,
+                minimum_text_length=30,
+            )
+            if not context_identity.is_valid:
+                return False
+
+            # For an unresolved publication, accept the country marker only
+            # when the treaty begins on that page or the immediately next page.
+            if selection.status != "resolved" and relative_start_page > 2:
+                return False
+
+    return True
 
 
 def _extract_with_ocr(

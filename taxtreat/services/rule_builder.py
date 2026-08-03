@@ -27,7 +27,13 @@ class RuleBuilder:
         ).fetchall()
 
         for article in articles:
-            article_type = classify_article(article["title"] or "")
+            article_text = self.repository.get_full_article_text(
+                article["article_number"]
+            )
+            article_type = classify_article(
+                article["title"] or "",
+                article_text,
+            )
             if article_type == "other":
                 continue
 
@@ -35,7 +41,6 @@ class RuleBuilder:
             if extractor is None:
                 continue
 
-            article_text = self.repository.get_full_article_text(article["article_number"])
             rule = extractor(article_text)
             if isinstance(rule, Rule):
                 rules.append(rule)
