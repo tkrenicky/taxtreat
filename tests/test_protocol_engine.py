@@ -1,5 +1,7 @@
 from datetime import date
 
+import pytest
+
 from taxtreat.engine.models import ConditionType, Protocol, ProtocolChange, Rule, WHTCondition, WHTRate
 from taxtreat.engine.protocol_engine import ProtocolEngine
 
@@ -206,6 +208,17 @@ def test_protocol_engine_returns_copy_when_protocol_list_is_empty():
 
     assert result is not rule
     assert result.rate == rule.rate
+
+
+def test_protocol_engine_requires_explicit_date():
+    protocol = Protocol(
+        name="Protocol",
+        effective_date=date(2024, 1, 1),
+        changes=[ProtocolChange(rate=5.0)],
+    )
+
+    with pytest.raises(ValueError, match="effective_date is required"):
+        ProtocolEngine().apply(build_base_rule(), [protocol])
 
 
 def test_protocol_engine_paragraph_filter():

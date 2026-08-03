@@ -11,7 +11,8 @@ class ProtocolEngine:
         if not protocols:
             return deepcopy(rule)
 
-        effective_date = effective_date or date.today()
+        if effective_date is None:
+            raise ValueError("effective_date is required when applying protocols")
         applicable_protocols = [
             protocol
             for protocol in protocols

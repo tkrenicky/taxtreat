@@ -1,16 +1,17 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "case_id": "CZ-CH-ROYALTIES-001",
   "title": "Czech payer – Swiss beneficial owner – royalties",
   "verification": {
-    "status": "verified",
+    "status": "needs_review",
     "verified_on": "2026-08-02",
     "scope": "treaty_rate_selection"
   },
   "transaction": {
     "payer_country": "CZ",
     "recipient_country": "CH",
-    "transaction_type": "royalties"
+    "transaction_type": "royalties",
+    "transaction_date": "2026-08-03"
   },
   "facts": {
     "recipient_is_treaty_resident": true,
@@ -19,18 +20,21 @@
     "arm_length_amount": true,
     "residence_certificate_available": true,
     "beneficial_owner_confirmation_available": true,
-    "switzerland_imposes_source_wht_on_royalties_paid_to_nonresidents": false,
     "ppt_satisfied": true
   },
   "expected": {
     "domestic_rate": 15.0,
     "treaty_article_rate": 10.0,
-    "applicable_rate": 5.0,
+    "applicable_rate": null,
     "article": 12,
     "paragraph": "2",
     "protocol_reference": "Protocol, point 2 to Article 12",
-    "eligible": true,
-    "requires_review": false
+    "eligible": false,
+    "requires_review": true,
+    "status": "REVIEW_REQUIRED",
+    "missing_facts": [
+      "legal_fact:recipient_country_imposes_royalty_wht_on_nonresidents"
+    ]
   },
   "sources": [
     {

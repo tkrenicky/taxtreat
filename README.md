@@ -10,22 +10,33 @@ Supported transaction types:
 
 The intended product combines verified legal sources, date-sensitive legal rules, deterministic calculations and reviewable professional reports.
 
-## Current verified baseline
+## Current reliability baseline
 
-The source-ingestion and base-treaty parser phase was completed on 3 August 2026.
+The structural base-treaty parser phase was completed on 3 August 2026. This
+does not by itself establish source auditability or the correctness of a final
+withholding-tax rate.
 
 | Area | Status |
 |---|---:|
-| Czech source registry and document identity | Complete |
-| Parsed treaty-country datasets | 100 |
-| Dividend, interest and royalty article checks | 300/300 |
-| Missing relevant article blocks | 0 |
-| Structural parser issues | 0 |
-| Base-act comparisons at least 99.5% | 100/100 |
-| Automated tests | 600 passed |
-| Known parser defects within the completed scope | 0 |
+| Parsed treaty-country datasets | 100/100 structurally complete |
+| Dividend, interest and royalty article checks | 300/300 structurally present |
+| Reproducible raw source artifacts and hashes | 0/100 available in a clean clone — blocked |
+| Structured legal scopes | 4/300 |
+| Fully approved legal scopes | 0/300 |
+| Executable golden cases | 1 (currently `REVIEW_REQUIRED`) |
+| Production readiness | blocked by source and legal approval gates |
 
 Zákony pro lidi is used as a readable verification mirror for the relevant published Czech act. It is not treated as the sole authoritative source for the current legal position.
+
+## Canonical decision path
+
+All new decisions run through `taxtreat.services.decision`. The API and golden
+cases use that same public service. Legacy extraction engines remain only for
+parser compatibility and must not be used to issue a final report.
+
+The canonical path requires a transaction date, separates transaction facts
+from date-sensitive legal facts, returns `OUT_OF_SCOPE` for unsupported cases,
+and fails closed whenever legal provenance or approval is incomplete.
 
 ## Current development phase
 
@@ -75,13 +86,16 @@ Until these layers are completed and validated, unresolved cases must not be pre
 
 ## Local verification
 
-Run:
+Install and run:
 
+    python -m pip install -r requirements-dev.txt
     python -m pytest -q
+    python -m taxtreat.pipeline.run_pipeline
 
-Accepted baseline at the close of this phase:
+The production release gate is intentionally red until source artifacts with
+full hashes and at least one independently approved legal scope are present:
 
-    600 passed
+    python -m taxtreat.pipeline.run_pipeline --production
 
 ## Source ingestion
 

@@ -4,7 +4,7 @@ from taxtreat.pipeline.build_database import OUTPUT_DIR
 
 
 def test_output_directory_exists():
-    assert OUTPUT_DIR.name == "generated"
+    assert OUTPUT_DIR.name == "manifests"
 
 
 def test_pipeline_module_exists():

@@ -1,10 +1,19 @@
 from datetime import date
 
 from taxtreat.engine.legal_rule_engine import (
+    DecisionStatus,
     LegalCondition,
     LegalRule,
     evaluate_legal_rules,
 )
+
+
+def test_legal_engine_requires_explicit_transaction_date():
+    result = evaluate_legal_rules([], {})
+
+    assert result.status == DecisionStatus.REVIEW_REQUIRED
+    assert result.requires_review is True
+    assert result.missing_facts == ["transaction_date"]
 
 
 def rule(

@@ -1,5 +1,13 @@
 import json
+from datetime import date
 from pathlib import Path
+
+from taxtreat.engine.legal_rule_engine import DecisionStatus
+from taxtreat.services.decision import (
+    CanonicalAnalysisRequest,
+    analyze_transaction,
+)
+
 
 GOLDEN_CASES = Path("data/golden_cases")
 
@@ -17,43 +25,53 @@ def test_golden_cases_have_valid_structure():
 
     ids = []
     for case in cases:
-        assert case["schema_version"] == 1
-        assert case["verification"]["status"] == "verified"
-        assert case["transaction"]["payer_country"]
-        assert case["transaction"]["recipient_country"]
-        assert case["transaction"]["transaction_type"] in {
+        assert case["schema_version"] == 2
+        assert case["verification"]["status"] in {
+            "needs_review",
+            "verified",
+        }
+        transaction = case["transaction"]
+        assert transaction["payer_country"]
+        assert transaction["recipient_country"]
+        assert transaction["transaction_type"] in {
             "dividends",
             "interest",
             "royalties",
         }
+        date.fromisoformat(transaction["transaction_date"])
 
         expected = case["expected"]
-        assert 0 <= expected["applicable_rate"] <= 100
+        if expected["applicable_rate"] is not None:
+            assert 0 <= expected["applicable_rate"] <= 100
         assert expected["article"] in {10, 11, 12}
         assert case["sources"]
-
         ids.append(case["case_id"])
 
     assert len(ids) == len(set(ids))
 
 
-def test_cz_ch_royalties_protocol_rate():
+def test_cz_ch_royalties_case_runs_through_canonical_engine():
     case = next(
         case
         for case in load_cases()
         if case["case_id"] == "CZ-CH-ROYALTIES-001"
     )
+    transaction = case["transaction"]
+    result = analyze_transaction(
+        CanonicalAnalysisRequest(
+            source_country=transaction["payer_country"],
+            recipient_country=transaction["recipient_country"],
+            income_type=transaction["transaction_type"],
+            transaction_date=date.fromisoformat(
+                transaction["transaction_date"]
+            ),
+            facts=case["facts"],
+        )
+    )
 
-    assert case["facts"]["beneficial_owner"] is True
-    assert case["facts"]["permanent_establishment_connection"] is False
-    assert (
-        case["facts"][
-            "switzerland_imposes_source_wht_on_royalties_paid_to_nonresidents"
-        ]
-        is False
-    )
-    assert case["expected"]["treaty_article_rate"] == 10.0
-    assert case["expected"]["applicable_rate"] == 5.0
-    assert case["expected"]["protocol_reference"] == (
-        "Protocol, point 2 to Article 12"
-    )
+    expected = case["expected"]
+    assert result.status == DecisionStatus(expected["status"])
+    assert result.rate == expected["applicable_rate"]
+    assert result.eligible is expected["eligible"]
+    assert result.requires_review is expected["requires_review"]
+    assert result.missing_facts == expected["missing_facts"]

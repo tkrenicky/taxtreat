@@ -21,11 +21,16 @@ class DomesticLawResult:
 class DomesticLawEngine:
     def evaluate(self, rule: Rule, facts: dict[str, Any], effective_date: date | None = None) -> DomesticLawResult:
         result = DomesticLawResult()
-        effective_date = effective_date or date.today()
 
         if not rule.rates:
             result.requires_review = True
             result.explanation.append("No domestic withholding rates available")
+            return result
+
+        if effective_date is None:
+            result.requires_review = True
+            result.missing_facts.append("transaction_date")
+            result.explanation.append("A transaction date is required")
             return result
 
         if getattr(rule, "effective_date", None) is not None and getattr(rule, "effective_date") > effective_date:

@@ -134,7 +134,7 @@ def test_domestic_engine_no_rates():
     engine = DomesticLawEngine()
     rule = Rule(article=1, transaction_type="dividend")
 
-    result = engine.evaluate(rule, {})
+    result = engine.evaluate(rule, {}, effective_date=date(2024, 1, 1))
 
     assert result.requires_review is True
     assert result.eligible is False
@@ -144,7 +144,7 @@ def test_domestic_engine_zero_rate_rule():
     engine = DomesticLawEngine()
     rule = Rule(article=1, transaction_type="dividend", rate=0, rates=[WHTRate(rate=0)])
 
-    result = engine.evaluate(rule, {})
+    result = engine.evaluate(rule, {}, effective_date=date(2024, 1, 1))
 
     assert result.rate == 0.0
     assert result.eligible is True
@@ -154,7 +154,7 @@ def test_domestic_engine_invalid_article():
     engine = DomesticLawEngine()
     rule = Rule(article=0, transaction_type="dividend", rates=[WHTRate(rate=15)])
 
-    result = engine.evaluate(rule, {})
+    result = engine.evaluate(rule, {}, effective_date=date(2024, 1, 1))
 
     assert result.requires_review is True
 
@@ -177,7 +177,7 @@ def test_domestic_engine_recipient_type():
         ],
     )
 
-    result = engine.evaluate(rule, {"entity_type": "company"})
+    result = engine.evaluate(rule, {"entity_type": "company"}, effective_date=date(2024, 1, 1))
 
     assert result.eligible
     assert result.rate == 5
@@ -200,7 +200,7 @@ def test_domestic_engine_pe_connection():
         ],
     )
 
-    result = engine.evaluate(rule, {"permanent_establishment": True})
+    result = engine.evaluate(rule, {"permanent_establishment": True}, effective_date=date(2024, 1, 1))
 
     assert result.eligible
     assert result.rate == 5
@@ -242,7 +242,7 @@ def test_domestic_engine_missing_entity_type():
         ],
     )
 
-    result = engine.evaluate(rule, {})
+    result = engine.evaluate(rule, {}, effective_date=date(2024, 1, 1))
 
     assert "entity_type" in result.missing_facts
 
@@ -264,7 +264,7 @@ def test_domestic_engine_missing_pe():
         ],
     )
 
-    result = engine.evaluate(rule, {})
+    result = engine.evaluate(rule, {}, effective_date=date(2024, 1, 1))
 
     assert "permanent_establishment" in result.missing_facts
 

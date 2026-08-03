@@ -1,49 +1,48 @@
 from __future__ import annotations
 
-import subprocess
+import argparse
+from collections.abc import Callable
 import sys
-from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
+from taxtreat.pipeline.release import (
+    build_legal_registry,
+    build_release_manifest,
+    build_source_manifest,
+    validate_release,
+)
 
 
-STEPS = [
-    ("Archive official sources", "python -m taxtreat.tools.fetch_official_sources"),
-    ("Parse treaties", "python -m taxtreat.parsers.parse_all"),
-    ("Extract structured data", "python -m taxtreat.extractors.extract_all"),
-    ("Validate records", "python -m taxtreat.validation.validate_all"),
-    ("Calculate confidence", "python -m taxtreat.validation.score_all"),
-    ("Quality gate", "python -m taxtreat.validation.quality_gate_all"),
-    ("Build database", "python -m taxtreat.pipeline.build_database"),
+Step = tuple[str, Callable[[], object]]
+STEPS: list[Step] = [
+    ("Build source manifest", build_source_manifest),
+    ("Build canonical legal registry", build_legal_registry),
+    ("Build release manifest", build_release_manifest),
 ]
 
 
-def main():
-    failures = []
-
-    for name, command in STEPS:
-        print(f"\n{'=' * 70}")
-        print(name)
-        print('=' * 70)
-
-        result = subprocess.run(
-            command,
-            shell=True,
-            cwd=ROOT,
-        )
-
-        if result.returncode:
-            failures.append(name)
-            break
-
-    if failures:
-        print("\nPipeline failed:")
-        for step in failures:
-            print(f" - {step}")
-        sys.exit(1)
-
-    print("\nPipeline finished successfully.")
+def run(*, production: bool = False) -> None:
+    for name, step in STEPS:
+        print(f"RUN  {name}")
+        step()
+        print(f"OK   {name}")
+    validate_release(production=production)
+    print("Pipeline finished successfully.")
 
 
-if __name__ == "__main__":
+def main(argv: list[str] | None = None) -> None:
+    parser = argparse.ArgumentParser(description="Build a TaxTreat dataset release.")
+    parser.add_argument(
+        "--production",
+        action="store_true",
+        help="Require all production source and legal approval gates.",
+    )
+    args = parser.parse_args(argv)
+    try:
+        run(production=args.production)
+    except (OSError, RuntimeError, ValueError) as exc:
+        print(f"Pipeline failed: {exc}", file=sys.stderr)
+        raise SystemExit(1) from exc
+
+
+if __name__ == "__main__":  # pragma: no cover - exercised via module smoke test
     main()

@@ -1,0 +1,44 @@
+{
+  "canonical_source": "data/legal_rules/*.json",
+  "schema_version": 1,
+  "scopes": [
+    {
+      "income_type": "interest",
+      "recipient_country": "AT",
+      "rule_ids": [
+        "CZ-AT-INT-BASE"
+      ],
+      "source_country": "CZ",
+      "verification_status": "needs_review"
+    },
+    {
+      "income_type": "royalty",
+      "recipient_country": "AT",
+      "rule_ids": [
+        "CZ-AT-ROY-INDUSTRIAL",
+        "CZ-AT-ROY-COPYRIGHT"
+      ],
+      "source_country": "CZ",
+      "verification_status": "needs_review"
+    },
+    {
+      "income_type": "interest",
+      "recipient_country": "CH",
+      "rule_ids": [
+        "CZ-CH-INT-BASE"
+      ],
+      "source_country": "CZ",
+      "verification_status": "needs_review"
+    },
+    {
+      "income_type": "royalty",
+      "recipient_country": "CH",
+      "rule_ids": [
+        "CZ-CH-ROY-BASE",
+        "CZ-CH-ROY-PROTOCOL"
+      ],
+      "source_country": "CZ",
+      "verification_status": "needs_review"
+    }
+  ]
+}

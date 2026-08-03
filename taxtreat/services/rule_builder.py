@@ -28,7 +28,7 @@ class RuleBuilder:
 
         for article in articles:
             article_text = self.repository.get_full_article_text(
-                article["article_number"]
+                article_id=article["id"]
             )
             article_type = classify_article(
                 article["title"] or "",

@@ -185,7 +185,8 @@ def evaluate(rule: Any, facts: dict[str, Any]) -> DecisionResult:
         if default_rate is not None:
             selected_rate = default_rate
             result.explanation.append(
-                f"Selected default rate {getattr(default_rate, 'rate', None)}"
+                f"Default rate {getattr(default_rate, 'rate', None)} is a "
+                "conservative withholding option, not a final conclusion"
             )
         else:
             result.eligible = False
@@ -195,6 +196,16 @@ def evaluate(rule: Any, facts: dict[str, Any]) -> DecisionResult:
 
     result.withholding_rate = getattr(selected_rate, "rate", None)
     result.selected_legal_basis = getattr(selected_rate, "legal_basis", None)
+    if result.missing_facts:
+        result.eligible = False
+        result.requires_review = True
+        result.missing_facts = sorted(set(result.missing_facts))
+        result.explanation.append(
+            "A preferential rate may apply; missing material facts prevent "
+            "a definitive result"
+        )
+        return result
+
     result.eligible = True
     result.requires_review = False
     result.explanation.append(
