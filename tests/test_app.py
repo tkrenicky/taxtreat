@@ -87,7 +87,16 @@ def test_all_registered_jurisdictions_are_exposed():
         "interest",
         "royalty",
     ]
+    assert by_code["AT"]["base_candidate_income_types"] == []
     assert by_code["DE"]["review_ready_income_types"] == []
+    assert by_code["DE"]["base_candidate_income_types"] == [
+        "dividend",
+        "interest",
+        "royalty",
+    ]
+    assert by_code["GR"]["manual_rate_extraction_income_types"] == [
+        "dividend"
+    ]
 
 
 def test_pending_registered_scope_fails_closed_without_candidate_rate():

@@ -32,6 +32,12 @@ def test_committed_baseline_manifest_is_honest_and_consistent():
     assert manifest["legal"]["verified_scopes"] == 0
     assert manifest["legal"]["review_ready_scopes"] == 6
     assert manifest["legal"]["pending_consolidation_scopes"] == 294
+    assert manifest["legal"]["instrument_inventory_partners"] == 100
+    assert manifest["legal"]["base_candidate_scopes"] == 294
+    assert manifest["legal"]["base_candidate_scopes_with_rates"] == 293
+    assert manifest["legal"]["base_candidate_scopes_without_rates"] == 1
+    assert manifest["legal"]["mli_wht_effect_candidate_partners"] == 62
+    assert manifest["legal"]["remaining_mli_wht_effect_candidate_partners"] == 60
     assert manifest["golden_cases"] == 8
     assert manifest["production_ready"] is False
     assert len(manifest["manifest_sha256"]) == 64

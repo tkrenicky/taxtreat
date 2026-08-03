@@ -103,6 +103,9 @@ The source-ingestion and base-treaty parser phases were closed on 3 August 2026.
 | Registered country-income scopes | 300/300 |
 | Review-ready AT/CH legal scopes | 6/6 |
 | Pending legal consolidation | 294/300 |
+| Official MF instrument inventories | 100/100 partners |
+| Remaining base-treaty candidate scopes | 294/294; 293 with rate candidates |
+| Official MLI WHT effect candidates | 62 partners; 60 outside AT/CH |
 | Independently approved legal scopes | 0/300 |
 | Exact tracked duplicates | 0 |
 
@@ -119,6 +122,9 @@ These percentages are planning estimates, not legal-quality scores.
 | Base-treaty text QA | 100% |
 | Protocol and effective-date mapping | AT/CH pilot complete |
 | MLI layer | AT/CH pilot complete |
+| All-country instrument inventory | 100/100 official MF rows captured |
+| Remaining base-treaty candidates | 294/294 captured; semantic review pending |
+| Remaining MLI WHT effect dates | 60 official candidates captured; approval pending |
 | Registered legal scope | 300/300 scopes |
 | Structured legal rules | 6/300 scopes; AT/CH pilot complete |
 | Deterministic rule engine | AT/CH layered path complete |
@@ -130,6 +136,13 @@ These percentages are planning estimates, not legal-quality scores.
 The AT/CH calculation pilot is review-ready but not legally releasable. Overall
 production readiness remains blocked by missing raw-source artifacts and by
 the absence of independently approved legal scopes.
+
+For the remaining 98 treaty partners, the official Czech instrument inventory
+and all 294 relevant base-treaty articles are now stored as hashed review
+candidates. These records are deliberately separate from active legal rules:
+protocol amendments, special-rate conditions, EU/domestic relief and four-eyes
+approval must still be consolidated before a candidate can enter the canonical
+calculation path.
 
 ## 7. Definition of core completion
 
