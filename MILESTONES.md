@@ -59,9 +59,24 @@ AT/CH pilot completed as review-ready candidate data:
 - source excerpt hashes and immutable dataset release identifier;
 - independent legal approval still required before any rule becomes `verified`.
 
+All-country scope baseline completed:
+
+- canonical ISO-like registry for all 100 Czech treaty partners;
+- all 300 country-income scopes registered with their parsed base-treaty source;
+- six AT/CH scopes marked `review_ready` and 294 scopes marked
+  `pending_consolidation`;
+- pending scopes return `REVIEW_REQUIRED` without a candidate rate and list the
+  missing legal layers;
+- no automatically extracted base-treaty rate is promoted into the canonical
+  decision engine before protocol/effective-date review.
+
 ## 🟡 Phase 4 — Deterministic WHT engine
 
 Layered engine and complete AT/CH pilot country rules exist.
+
+The API recognizes every registered treaty partner. Legal calculation remains
+enabled only for AT/CH; the other countries fail closed as pending legal
+consolidation rather than being misclassified as out of scope.
 
 Reliability baseline completed:
 

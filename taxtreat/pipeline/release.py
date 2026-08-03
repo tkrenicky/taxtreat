@@ -14,6 +14,7 @@ from taxtreat.engine.legal_sources import (
     validate_evidence_references,
 )
 from taxtreat.parser.official_source import official_source_urls
+from taxtreat.registry.legal_scope import expected_legal_scopes
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -115,6 +116,43 @@ def build_legal_registry() -> dict[str, Any]:
                     f"Legal fact {fact.fact_id} is not review-ready."
                 )
     scopes: dict[tuple[str, str, str], dict[str, Any]] = {}
+    for expected in expected_legal_scopes():
+        key = (
+            expected["source_country"],
+            expected["recipient_country"],
+            expected["income_type"],
+        )
+        parsed_path = PARSED_DIR / expected["parsed_file"]
+        if not parsed_path.is_file():
+            raise ValueError(
+                "Treaty-partner registry references a missing parsed dataset: "
+                f"{expected['parsed_file']}"
+            )
+        parsed = _read_json(parsed_path)
+        if parsed.get("country") != expected["recipient_country_name"]:
+            raise ValueError(
+                "Treaty-partner name does not match its parsed dataset: "
+                f"{expected['recipient_country']}"
+            )
+        scopes[key] = {
+            "source_country": expected["source_country"],
+            "recipient_country": expected["recipient_country"],
+            "recipient_country_name": expected["recipient_country_name"],
+            "income_type": expected["income_type"],
+            "parsed_path": str(parsed_path.relative_to(ROOT)),
+            "base_treaty_source_id": _stable_source_id(
+                parsed.get("country", parsed_path.stem),
+                parsed.get("source_title") or "",
+            ),
+            "rule_ids": [],
+            "verification_status": "verified",
+            "review_ready": True,
+            "legal_layers": [],
+            "missing_legal_layers": [],
+            "dataset_releases": [],
+            "scope_status": "pending_consolidation",
+        }
+
     for path in sorted(RULE_DIR.glob("*.json")):
         for rule in load_legal_rules(path):
             unknown_sources = validate_evidence_references(
@@ -127,19 +165,12 @@ def build_legal_registry() -> dict[str, Any]:
                     + ", ".join(unknown_sources)
                 )
             key = (rule.source_country, rule.recipient_country, rule.income_type)
-            scope = scopes.setdefault(
-                key,
-                {
-                    "source_country": rule.source_country,
-                    "recipient_country": rule.recipient_country,
-                    "income_type": rule.income_type,
-                    "rule_ids": [],
-                    "verification_status": "verified",
-                    "review_ready": True,
-                    "legal_layers": [],
-                    "dataset_releases": [],
-                },
-            )
+            if key not in scopes:
+                raise ValueError(
+                    "Legal rule references a country-income scope outside "
+                    f"the canonical Czech treaty registry: {key!r}"
+                )
+            scope = scopes[key]
             scope["rule_ids"].append(rule.rule_id)
             scope["legal_layers"].append(rule.legal_layer)
             if rule.dataset_release:
@@ -153,12 +184,27 @@ def build_legal_registry() -> dict[str, Any]:
         scope["legal_layers"] = sorted(set(scope["legal_layers"]))
         scope["dataset_releases"] = sorted(set(scope["dataset_releases"]))
         required_layers = {"domestic", "mli", "eu_relief"}
-        if not required_layers.issubset(scope["legal_layers"]):
-            scope["review_ready"] = False
+        missing_layers = sorted(
+            required_layers.difference(scope["legal_layers"])
+        )
         if not {"treaty", "protocol"}.intersection(scope["legal_layers"]):
+            missing_layers.append("treaty_or_protocol")
+        scope["missing_legal_layers"] = missing_layers
+        if missing_layers:
             scope["review_ready"] = False
         if len(scope["dataset_releases"]) != 1:
             scope["review_ready"] = False
+        if not scope["rule_ids"]:
+            scope["verification_status"] = "needs_review"
+            scope["review_ready"] = False
+        scope["scope_status"] = (
+            "verified"
+            if scope["verification_status"] == "verified"
+            and scope["review_ready"]
+            else "review_ready"
+            if scope["review_ready"]
+            else "pending_consolidation"
+        )
 
     payload = {
         "schema_version": 1,
@@ -199,9 +245,14 @@ def build_release_manifest() -> dict[str, Any]:
     sources = source_manifest["sources"]
     scopes = legal_registry["scopes"]
     verified_scopes = [
-        scope for scope in scopes if scope["verification_status"] == "verified"
+        scope for scope in scopes if scope["scope_status"] == "verified"
     ]
     review_ready_scopes = [scope for scope in scopes if scope["review_ready"]]
+    pending_scopes = [
+        scope
+        for scope in scopes
+        if scope["scope_status"] == "pending_consolidation"
+    ]
     source_artifacts_available = sum(
         source["artifact_available"] and bool(source["sha256"])
         for source in sources
@@ -233,8 +284,11 @@ def build_release_manifest() -> dict[str, Any]:
             "scopes": len(scopes),
             "verified_scopes": len(verified_scopes),
             "review_ready_scopes": len(review_ready_scopes),
+            "pending_consolidation_scopes": len(pending_scopes),
             "production_coverage_percent": (
-                round(len(verified_scopes) / 300 * 100, 2)
+                round(len(verified_scopes) / len(scopes) * 100, 2)
+                if scopes
+                else 0.0
             ),
         },
         "golden_cases": len(list(GOLDEN_DIR.glob("*.json"))),
@@ -253,6 +307,10 @@ def validate_release(*, production: bool = False) -> dict[str, Any]:
         errors.append("Parser datasets do not contain all three income articles.")
     if manifest["parser"]["datasets"] != manifest["sources"]["total"]:
         errors.append("Every parsed dataset must have one source-manifest entry.")
+    if manifest["legal"]["scopes"] != manifest["parser"]["datasets"] * 3:
+        errors.append(
+            "Every parsed treaty partner must have three registered legal scopes."
+        )
     if production and not manifest["production_ready"]:
         errors.append(
             "Production gate failed: source artifacts/hashes and at least one "

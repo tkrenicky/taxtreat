@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 import csv
+import json
 import sqlite3
 from pathlib import Path
 
 DB = Path("data/processed/taxtreat_cz.sqlite")
 OUTPUT = Path("data/generated/cz_all_cases.csv")
+REGISTRY = Path("data/cz_treaty_partners.json")
 
 INCOME_TYPES = (
     "dividend",
@@ -33,18 +35,40 @@ def load_partners(db_path: Path = DB) -> list[str]:
     return [row[0] for row in rows]
 
 
-def generate(db_path: Path = DB) -> list[dict[str, object]]:
+def load_registry_partners(
+    registry_path: Path = REGISTRY,
+) -> list[dict[str, str]]:
+    payload = json.loads(registry_path.read_text(encoding="utf-8"))
+    return [
+        {"country": row["country"], "iso2": row["iso2"]}
+        for row in payload
+    ]
+
+
+def generate(
+    db_path: Path | None = None,
+    *,
+    registry_path: Path = REGISTRY,
+) -> list[dict[str, object]]:
     rows: list[dict[str, object]] = []
 
-    for country_cs in load_partners(db_path):
+    partners = (
+        [
+            {"country": country, "iso2": ""}
+            for country in load_partners(db_path)
+        ]
+        if db_path is not None
+        else load_registry_partners(registry_path)
+    )
+    for partner in partners:
         for income_type in INCOME_TYPES:
             rows.append(
                 {
                     "payer": "CZ",
-                    "recipient_country_cs": country_cs,
-                    "recipient_iso2": "",
+                    "recipient_country_cs": partner["country"],
+                    "recipient_iso2": partner["iso2"],
                     "income_type": income_type,
-                    "status": "PENDING",
+                    "status": "PENDING_CONSOLIDATION",
                     "confidence": 0,
                     "manual_review": True,
                 }
@@ -60,7 +84,11 @@ def write_csv(rows: list[dict[str, object]], output: Path = OUTPUT) -> None:
     output.parent.mkdir(parents=True, exist_ok=True)
 
     with output.open("w", newline="", encoding="utf-8-sig") as file:
-        writer = csv.DictWriter(file, fieldnames=list(rows[0].keys()))
+        writer = csv.DictWriter(
+            file,
+            fieldnames=list(rows[0].keys()),
+            lineterminator="\n",
+        )
         writer.writeheader()
         writer.writerows(rows)
 
@@ -72,7 +100,7 @@ def main() -> None:
     partners = len({row["recipient_country_cs"] for row in rows})
 
     print(f"Treaty partners: {partners}")
-    print(f"Production cases: {len(rows)}")
+    print(f"Registered scopes: {len(rows)}")
     print(f"Saved to: {OUTPUT}")
 
 

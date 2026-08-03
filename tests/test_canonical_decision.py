@@ -39,15 +39,28 @@ def test_canonical_decision_ignores_user_supplied_legal_conclusion():
     assert result.candidate_rule_id == "CZ-CH-ROY-PROTOCOL-5"
 
 
-def test_canonical_decision_returns_out_of_scope_explicitly():
-    unsupported_country = analyze_transaction(
+def test_canonical_decision_distinguishes_pending_from_out_of_scope():
+    pending_country = analyze_transaction(
         request(recipient_country="DE")
+    )
+    unsupported_country = analyze_transaction(
+        request(recipient_country="ZZ")
     )
     unsupported_income = analyze_transaction(
         request(income_type="service_fee")
     )
 
+    assert pending_country.status == DecisionStatus.REVIEW_REQUIRED
+    assert pending_country.requires_review is True
+    assert pending_country.candidate_rate is None
+    assert pending_country.missing_legal_layers == [
+        "domestic",
+        "eu_relief",
+        "mli",
+        "treaty_or_protocol",
+    ]
     assert unsupported_country.status == DecisionStatus.OUT_OF_SCOPE
+    assert unsupported_country.requires_review is False
     assert unsupported_country.requires_review is False
     assert unsupported_income.status == DecisionStatus.OUT_OF_SCOPE
     assert unsupported_income.requires_review is False

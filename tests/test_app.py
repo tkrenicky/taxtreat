@@ -75,6 +75,44 @@ def test_analysis_requires_transaction_date():
     assert response.status_code == 422
 
 
+def test_all_registered_jurisdictions_are_exposed():
+    response = client.get("/jurisdictions")
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["total"] == 100
+    by_code = {row["iso2"]: row for row in payload["jurisdictions"]}
+    assert len(by_code) == 100
+    assert by_code["AT"]["review_ready_income_types"] == [
+        "dividend",
+        "interest",
+        "royalty",
+    ]
+    assert by_code["DE"]["review_ready_income_types"] == []
+
+
+def test_pending_registered_scope_fails_closed_without_candidate_rate():
+    response = client.post(
+        "/analysis",
+        json={
+            "source_country": "CZ",
+            "recipient_country": "DE",
+            "income_type": "interest",
+            "transaction_date": "2026-08-03",
+        },
+    )
+    assert response.status_code == 200
+    result = response.json()
+    assert result["status"] == "REVIEW_REQUIRED"
+    assert result["rate"] is None
+    assert result["candidate_rate"] is None
+    assert result["missing_legal_layers"] == [
+        "domestic",
+        "eu_relief",
+        "mli",
+        "treaty_or_protocol",
+    ]
+
+
 def test_analysis_without_release_manifest_uses_unreleased(monkeypatch, tmp_path):
     monkeypatch.setattr(api, "RELEASE_MANIFEST", tmp_path / "missing.json")
     response = client.post(

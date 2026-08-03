@@ -1,7 +1,11 @@
 import sqlite3
 from pathlib import Path
 
-from taxtreat.generator.generate_all_cases import generate, load_partners
+from taxtreat.generator.generate_all_cases import (
+    generate,
+    load_partners,
+    load_registry_partners,
+)
 
 
 def create_registry_database(path: Path) -> None:
@@ -51,3 +55,14 @@ def test_generate_creates_three_cases_per_partner(tmp_path):
         "Švýcarsko",
     }
     assert all(row["manual_review"] is True for row in rows)
+
+
+def test_canonical_registry_generates_all_scopes_with_codes():
+    partners = load_registry_partners()
+    rows = generate()
+
+    assert len(partners) == 100
+    assert len(rows) == 300
+    assert len({row["recipient_iso2"] for row in rows}) == 100
+    assert all(row["recipient_iso2"] for row in rows)
+    assert {row["status"] for row in rows} == {"PENDING_CONSOLIDATION"}

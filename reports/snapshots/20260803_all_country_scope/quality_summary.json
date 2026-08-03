@@ -1,0 +1,23 @@
+{
+  "snapshot_type": "all_czech_treaty_partner_scope_worktree",
+  "base_commit": "5f0fd9f4335134b5b68916545d01dad66a105330",
+  "scope_cutoff": "2026-08-03",
+  "parser_datasets": 100,
+  "relevant_articles": 300,
+  "registered_treaty_partners": 100,
+  "registered_legal_scopes": 300,
+  "review_ready_legal_scopes": 6,
+  "pending_consolidation_scopes": 294,
+  "verified_legal_scopes": 0,
+  "raw_source_artifacts_with_hash": 0,
+  "executable_golden_cases": 8,
+  "automated_tests": 648,
+  "project_branch_coverage_percent": 96.97,
+  "canonical_core_branch_coverage_percent": 100.0,
+  "production_ready": false,
+  "blockers": [
+    "raw treaty source artifacts and full SHA-256 evidence unavailable in a clean clone",
+    "AT/CH candidate legal data still requires independent four-eyes approval",
+    "294 country-income scopes still require protocol, effective-date, MLI, domestic-law and EU-law consolidation"
+  ]
+}

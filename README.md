@@ -21,8 +21,9 @@ withholding-tax rate.
 | Parsed treaty-country datasets | 100/100 structurally complete |
 | Dividend, interest and royalty article checks | 300/300 structurally present |
 | Reproducible raw source artifacts and hashes | 0/100 available in a clean clone — blocked |
-| Structured legal scopes | 6/300 |
-| Review-ready AT/CH pilot scopes | 6/6 (independent approval pending) |
+| Registered country-income scopes | 300/300 |
+| Review-ready legal scopes | 6/300 (AT/CH; independent approval pending) |
+| Pending legal consolidation | 294/300 |
 | Fully approved legal scopes | 0/300 |
 | Executable golden cases | 8 (all intentionally `REVIEW_REQUIRED`) |
 | Production readiness | blocked by source and legal approval gates |
@@ -36,8 +37,10 @@ cases use that same public service. Legacy extraction engines remain only for
 parser compatibility and must not be used to issue a final report.
 
 The canonical path requires a transaction date, separates transaction facts
-from date-sensitive legal facts, returns `OUT_OF_SCOPE` for unsupported cases,
-and fails closed whenever legal provenance or approval is incomplete.
+from date-sensitive legal facts, returns `REVIEW_REQUIRED` for a registered
+scope whose legal consolidation is incomplete, returns `OUT_OF_SCOPE` only
+outside the registered product scope, and fails closed whenever legal
+provenance or approval is incomplete.
 
 ## Current development phase
 
@@ -55,7 +58,10 @@ The AT/CH pilot now covers:
 
 All pilot rules remain `needs_review`: the engine exposes a traceable candidate
 rate but cannot publish a `FINAL` rate until independent approval metadata is
-recorded. The remaining 98 treaty partners are outside this pilot scope.
+recorded. The remaining 98 treaty partners and their 294 country-income scopes
+are registered and exposed by the API, but deliberately return no candidate
+rate until their protocol, MLI, domestic-law and EU-law layers are
+consolidated.
 
 ## Important legal boundary
 
@@ -70,6 +76,7 @@ Until these layers are completed and validated, unresolved cases must not be pre
 - `data/raw/` — stored source documents
 - `data/processed/` — document manifest and SQLite registry
 - `data/parsed/` — parsed treaty datasets
+- `data/cz_treaty_partners.json` — canonical 100-partner/ISO registry
 - `data/audits/` — parser and source-quality audits
 - `data/legal_rules/` — structured legal-rule datasets
 - `data/legal_sources/` — official legal-source registry
@@ -81,6 +88,9 @@ Until these layers are completed and validated, unresolved cases must not be pre
 - `taxtreat/services/` — analysis services
 - `reference_cases/` — independently reviewable golden cases
 - `app/` — initial API layer
+
+`GET /jurisdictions` exposes the complete 100-country registry and separates
+review-ready income types from scopes still awaiting legal consolidation.
 
 ## Documentation
 

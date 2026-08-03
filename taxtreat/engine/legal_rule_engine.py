@@ -64,6 +64,7 @@ class LegalDecisionResult:
     eligible: bool = False
     requires_review: bool = True
     missing_facts: list[str] = field(default_factory=list)
+    missing_legal_layers: list[str] = field(default_factory=list)
     failed_conditions: list[str] = field(default_factory=list)
     explanation: list[str] = field(default_factory=list)
     citations: list[dict[str, str | None]] = field(default_factory=list)
