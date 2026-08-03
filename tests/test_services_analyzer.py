@@ -22,7 +22,7 @@ def test_royalties_rule():
     rule = royalties_rule("dummy")
 
     assert rule.article == 12
-    assert rule.transaction_type == "royalties"
+    assert rule.transaction_type == "royalty"
 
 
 def test_analyze_dividends(monkeypatch):
@@ -58,4 +58,4 @@ def test_analyze_royalties():
     rule = analyzer.analyze_royalties()
 
     assert rule.article == 12
-    assert rule.transaction_type == "royalties"
+    assert rule.transaction_type == "royalty"

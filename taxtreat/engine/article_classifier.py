@@ -1,9 +1,15 @@
 import re
 
+from taxtreat.parser.article_selection import article_type
 
-def classify_article(title: str) -> str:
+
+def classify_article(title: str, text: str = "") -> str:
     if not title:
         return "other"
+
+    income_type = article_type({"title": title, "text": text})
+    if income_type is not None:
+        return income_type
 
     text = title.lower()
     normalized = re.sub(r"[^a-záčďéěíňóřšťúůýž\s]", " ", text)

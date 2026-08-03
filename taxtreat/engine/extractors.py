@@ -331,3 +331,97 @@ def dividend_rule(article_text: str) -> Rule:
     rule.conditions = global_conditions
     rule.extraction_status = "confirmed" if rates else "incomplete"
     return rule
+
+def _income_rule(
+    article_text: str,
+    *,
+    article: int,
+    transaction_type: str,
+) -> Rule:
+    rule = Rule(
+        article=article,
+        transaction_type=transaction_type,
+        extraction_status="needs_review",
+        source_text=article_text,
+    )
+
+    if not article_text or not article_text.strip():
+        rule.extraction_status = "incomplete"
+        return rule
+
+    extracted = _extract_rate_clauses(article_text)
+
+    if not extracted and ZERO_RATE_RE.search(article_text):
+        extracted = [(0.0, article_text.strip())]
+
+    if not extracted:
+        rule.extraction_status = "incomplete"
+        return rule
+
+    global_conditions = extract_conditions(article_text)
+    global_beneficial_owner = [
+        condition
+        for condition in global_conditions
+        if condition.condition_type == ConditionType.beneficial_owner
+    ]
+
+    rates: list[WHTRate] = []
+    seen: set[tuple] = set()
+
+    for rate, clause in extracted:
+        local_conditions = extract_conditions(clause)
+
+        if global_beneficial_owner and not any(
+            condition.condition_type == ConditionType.beneficial_owner
+            for condition in local_conditions
+        ):
+            local_conditions.extend(global_beneficial_owner)
+
+        local_conditions = _deduplicate_conditions(local_conditions)
+        signature = tuple(
+            (
+                condition.condition_type,
+                condition.operator,
+                str(condition.value),
+                condition.unit,
+            )
+            for condition in local_conditions
+        )
+
+        key = (rate, signature)
+        if key in seen:
+            continue
+        seen.add(key)
+
+        rates.append(
+            WHTRate(
+                rate=rate,
+                conditions=local_conditions,
+                legal_basis=f"Article {article}",
+                source_text=clause,
+                priority=len(rates),
+            )
+        )
+
+    rule.rates = rates
+    rule.rate = rates[0].rate if rates else None
+    rule.conditions = global_conditions
+    rule.legal_basis = f"Article {article}"
+    rule.extraction_status = "confirmed" if rates else "incomplete"
+    return rule
+
+
+def interest_rule(article_text: str) -> Rule:
+    return _income_rule(
+        article_text,
+        article=11,
+        transaction_type="interest",
+    )
+
+
+def royalty_rule(article_text: str) -> Rule:
+    return _income_rule(
+        article_text,
+        article=12,
+        transaction_type="royalty",
+    )

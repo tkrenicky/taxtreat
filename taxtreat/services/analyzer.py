@@ -1,14 +1,11 @@
 from taxtreat.db.repository import TreatyRepository
-from taxtreat.engine.extractors import dividend_rule
+from taxtreat.engine.extractors import dividend_rule, interest_rule, royalty_rule
 from taxtreat.engine.models import Rule
 
 
-def interest_rule(article_text: str) -> Rule:
-    return Rule(article=11, transaction_type="interest")
-
-
 def royalties_rule(article_text: str) -> Rule:
-    return Rule(article=12, transaction_type="royalties")
+    """Backward-compatible alias for the royalty extractor."""
+    return royalty_rule(article_text)
 
 
 class TreatyAnalyzer:
@@ -25,4 +22,4 @@ class TreatyAnalyzer:
 
     def analyze_royalties(self) -> Rule:
         article_text = self.repository.get_full_article_text(12)
-        return royalties_rule(article_text)
+        return royalty_rule(article_text)

@@ -154,12 +154,12 @@ def test_extract_dividend_rule():
     assert result["beneficial_owner_required"] is True
 
 
-def test_registry_has_default_dividend():
+def test_registry_has_default_income_extractors():
     registry = build_default_registry()
 
-    assert registry.has("dividend")
     assert registry.get("dividend") is not None
-    assert registry.get("interest") is None
+    assert registry.get("interest") is not None
+    assert registry.get("royalty") is not None
 
 
 def test_split_paragraphs_empty_text():

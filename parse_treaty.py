@@ -80,6 +80,27 @@ def _parse_extraction(
     treaty_text, relative_start_page = extract_treaty(selected_pages)
     parsed_articles = parse_articles(treaty_text)
     article_selection = select_best_article_sequence(parsed_articles)
+
+    validated_article_sequence = False
+    if selection.method == "whole_document":
+        selected_text = "\n".join(
+            article.title + "\n" + article.text
+            for article in article_selection.articles
+        )
+        selected_identity = validate_treaty_identity(
+            expected_country=country,
+            source_title=None,
+            text=selected_text,
+            minimum_text_length=100,
+        )
+        if not selected_identity.is_valid:
+            raise RuntimeError(
+                "Ambiguous multi-treaty publication does not contain "
+                "a validated selected treaty sequence."
+            )
+        identity = selected_identity
+        validated_article_sequence = True
+
     articles = article_selection.articles
 
     absolute_start_page = selection.start_page + relative_start_page - 1
@@ -91,6 +112,14 @@ def _parse_extraction(
             "article_semantic_score": article_selection.semantic_score,
         }
     )
+    if validated_article_sequence:
+        source_resolution.update(
+            {
+                "status": "resolved",
+                "method": "validated_article_sequence",
+            }
+        )
+
     if official_url:
         source_resolution.update(
             {

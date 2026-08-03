@@ -22,7 +22,7 @@ def build(root: Path):
         );
         CREATE TABLE documents(
           id INTEGER PRIMARY KEY,
-          url TEXT NOT NULL UNIQUE,
+          url TEXT NOT NULL,
           source_page TEXT,
           title TEXT,
           kind TEXT,
@@ -31,7 +31,8 @@ def build(root: Path):
           local_path TEXT,
           downloaded_at TEXT,
           status TEXT,
-          error TEXT
+          error TEXT,
+          UNIQUE(url, title)
         );
         CREATE TABLE country_documents(
           id INTEGER PRIMARY KEY,
@@ -61,18 +62,24 @@ def build(root: Path):
     manifest = root / "data" / "processed" / "document_manifest.json"
     if manifest.exists():
         records = json.loads(manifest.read_text(encoding="utf-8"))
-        documents_by_url: dict[str, dict] = {}
+        documents_by_key: dict[tuple[str, str], dict] = {}
         for record in records:
-            documents_by_url.setdefault(record["url"], record)
+            document_key = (record["url"], record.get("title") or "")
+            documents_by_key.setdefault(document_key, record)
 
         con.executemany(
             """
             INSERT INTO documents(url,source_page,title,kind,mime_type,sha256,local_path,downloaded_at,status,error)
             VALUES(:url,:source_page,:title,:kind,:mime_type,:sha256,:local_path,:downloaded_at,:status,:error)
             """,
-            documents_by_url.values(),
+            documents_by_key.values(),
         )
-        document_ids = dict(con.execute("SELECT url,id FROM documents"))
+        document_ids = {
+            (url, title or ""): document_id
+            for url, title, document_id in con.execute(
+                "SELECT url,title,id FROM documents"
+            )
+        }
 
         associations = []
         seen = set()
@@ -80,14 +87,19 @@ def build(root: Path):
             country = record.get("country_cs")
             if not country:
                 continue
-            key = (country, document_ids[record["url"]], record.get("relation"))
+            document_key = (record["url"], record.get("title") or "")
+            key = (
+                country,
+                document_ids[document_key],
+                record.get("relation"),
+            )
             if key in seen:
                 continue
             seen.add(key)
             associations.append(
                 {
                     "country_cs": country,
-                    "document_id": document_ids[record["url"]],
+                    "document_id": document_ids[document_key],
                     "relation": record.get("relation"),
                     "effective_from": record.get("effective_from"),
                 }

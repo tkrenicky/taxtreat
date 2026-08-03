@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "country_pair": {
+    "source_country": "CZ",
+    "recipient_country": "CH"
+  },
+  "rules": [
+    {
+      "rule_id": "CZ-CH-INT-BASE",
+      "income_type": "interest",
+      "source_country": "CZ",
+      "recipient_country": "CH",
+      "legal_instrument": "treaty",
+      "article": 11,
+      "paragraph": "1",
+      "rate": 0.0,
+      "priority": 100,
+      "conditions": [
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "verification_status": "verified"
+    },
+    {
+      "rule_id": "CZ-CH-ROY-BASE",
+      "income_type": "royalty",
+      "source_country": "CZ",
+      "recipient_country": "CH",
+      "legal_instrument": "treaty",
+      "article": 12,
+      "paragraph": "2",
+      "rate": 10.0,
+      "priority": 100,
+      "conditions": [
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "verification_status": "verified"
+    },
+    {
+      "rule_id": "CZ-CH-ROY-PROTOCOL",
+      "income_type": "royalty",
+      "source_country": "CZ",
+      "recipient_country": "CH",
+      "legal_instrument": "protocol",
+      "article": 12,
+      "paragraph": "Protocol point 2 to Article 12",
+      "rate": 5.0,
+      "priority": 10,
+      "effective_from": "1996-01-01",
+      "overrides_rule_id": "CZ-CH-ROY-BASE",
+      "conditions": [
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        },
+        {
+          "fact": "recipient_country_imposes_royalty_wht_on_nonresidents",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "verification_status": "verified"
+    }
+  ]
+}
