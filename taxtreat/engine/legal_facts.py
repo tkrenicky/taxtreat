@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
@@ -19,6 +20,8 @@ class LegalFact:
     source_id: str | None
     source_url: str | None
     source_excerpt_hash: str | None
+    source_text: str | None
+    evidence_source_ids: tuple[str, ...]
     reviewer_id: str | None
     reviewed_at: date | None
     approved_by: str | None
@@ -38,6 +41,22 @@ class LegalFact:
             self.dataset_release,
         )
         return self.verification_status == "verified" and all(required)
+
+    @property
+    def is_review_ready(self) -> bool:
+        required = (
+            self.source_id,
+            self.source_url,
+            self.source_excerpt_hash,
+            self.source_text,
+            self.dataset_release,
+            self.evidence_source_ids,
+        )
+        if not all(required):
+            return False
+        return hashlib.sha256(
+            self.source_text.encode("utf-8")
+        ).hexdigest() == self.source_excerpt_hash.lower()
 
     def is_effective(self, as_of: date) -> bool:
         return self.effective_from <= as_of and (
@@ -83,6 +102,8 @@ def load_legal_facts(path: str | Path) -> list[LegalFact]:
             source_id=raw.get("source_id"),
             source_url=raw.get("source_url"),
             source_excerpt_hash=raw.get("source_excerpt_hash"),
+            source_text=raw.get("source_text"),
+            evidence_source_ids=tuple(raw.get("evidence_source_ids", [])),
             reviewer_id=raw.get("reviewer_id"),
             reviewed_at=_parse_date(raw.get("reviewed_at")),
             approved_by=raw.get("approved_by"),
@@ -122,3 +143,40 @@ def resolve_legal_facts(
         else:
             unresolved.append(name)
     return resolved, sorted(unresolved)
+
+
+def resolve_legal_fact_candidates(
+    facts: list[LegalFact],
+    *,
+    country: str,
+    as_of: date,
+) -> tuple[dict[str, Any], list[str]]:
+    """Return unambiguous review-ready values and names not yet verified.
+
+    Candidate values may drive a visible candidate calculation, but callers
+    must keep the result in REVIEW_REQUIRED until ``unverified`` is empty.
+    """
+
+    effective = [
+        fact
+        for fact in facts
+        if fact.country == country and fact.is_effective(as_of)
+    ]
+    values: dict[str, Any] = {}
+    unverified: list[str] = []
+    by_name: dict[str, list[LegalFact]] = {}
+    for fact in effective:
+        by_name.setdefault(fact.name, []).append(fact)
+
+    for name, candidates in by_name.items():
+        review_ready = [fact for fact in candidates if fact.is_review_ready]
+        serialized = {
+            json.dumps(fact.value, sort_keys=True) for fact in review_ready
+        }
+        if len(serialized) == 1:
+            values[name] = review_ready[0].value
+            if not any(fact.is_verified for fact in review_ready):
+                unverified.append(name)
+        else:
+            unverified.append(name)
+    return values, sorted(unverified)

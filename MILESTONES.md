@@ -51,9 +51,17 @@ Required work:
 - consolidate date-sensitive legal rules
 - retain legal provenance for every resulting rule
 
+AT/CH pilot completed as review-ready candidate data:
+
+- official Czech, Austrian, Swiss and EU source registry;
+- treaty/protocol effective dates for all three WHT income types;
+- bilateral MLI/PPT withholding dates (AT 2021-01-01, CH 2022-01-01);
+- source excerpt hashes and immutable dataset release identifier;
+- independent legal approval still required before any rule becomes `verified`.
+
 ## 🟡 Phase 4 — Deterministic WHT engine
 
-Initial framework and pilot country rules exist.
+Layered engine and complete AT/CH pilot country rules exist.
 
 Reliability baseline completed:
 
@@ -62,8 +70,18 @@ Reliability baseline completed:
 - transaction facts separated from legal facts;
 - fail-closed unverified rules and legal facts;
 - explicit `FINAL`, `REVIEW_REQUIRED` and `OUT_OF_SCOPE` states;
-- executable CZ–CH golden case;
+- eight executable AT/CH golden cases;
 - deterministic source, legal-scope and release manifests.
+
+AT/CH pilot completed:
+
+- all six country-income scopes have domestic, treaty/protocol, MLI and
+  Czech/EU-relief paths;
+- candidate and final rates are separate fields;
+- MLI effective-date boundary and failed-PPT regressions are executable;
+- every candidate result carries rule IDs, layer outcomes, citations and a
+  legal dataset release;
+- all candidate scopes remain fail-closed pending four-eyes approval.
 
 Required work:
 

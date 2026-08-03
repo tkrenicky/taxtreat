@@ -37,10 +37,14 @@ def test_analysis_uses_canonical_fail_closed_path():
             "income_type": "royalties",
             "transaction_date": "2026-08-03",
             "facts": {
+                "recipient_is_treaty_resident": True,
                 "beneficial_owner": True,
                 "permanent_establishment_connection": False,
+                "arm_length_amount": True,
+                "recipient_is_qualifying_company": False,
                 "recipient_country_imposes_royalty_wht_on_nonresidents": False,
             },
+            "determinations": {"treaty_ppt_passed": True},
         },
     )
 
@@ -48,6 +52,13 @@ def test_analysis_uses_canonical_fail_closed_path():
     result = response.json()
     assert result["status"] == "REVIEW_REQUIRED"
     assert result["rate"] is None
+    assert result["candidate_rate"] == 5.0
+    assert result["candidate_rule_id"] == "CZ-CH-ROY-PROTOCOL-5"
+    assert result["legal_dataset_release"] == (
+        "pilot-at-ch-2026-08-03-candidate.1"
+    )
+    assert result["citations"]
+    assert any(row["layer"] == "mli" for row in result["layer_results"])
     assert result["requires_review"] is True
     assert result["dataset_version"] == "unreleased"
 

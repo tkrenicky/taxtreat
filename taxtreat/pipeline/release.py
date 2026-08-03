@@ -7,13 +7,20 @@ from pathlib import Path
 from typing import Any
 
 from taxtreat.engine.article_classifier import classify_article
+from taxtreat.engine.legal_facts import load_legal_facts
 from taxtreat.engine.legal_rule_loader import load_legal_rules
+from taxtreat.engine.legal_sources import (
+    load_legal_sources,
+    validate_evidence_references,
+)
 from taxtreat.parser.official_source import official_source_urls
 
 
 ROOT = Path(__file__).resolve().parents[2]
 PARSED_DIR = ROOT / "data" / "parsed"
 RULE_DIR = ROOT / "data" / "legal_rules"
+LEGAL_SOURCE_DIR = ROOT / "data" / "legal_sources"
+LEGAL_FACT_DIR = ROOT / "data" / "legal_facts"
 GOLDEN_DIR = ROOT / "data" / "golden_cases"
 MANIFEST_DIR = ROOT / "data" / "manifests"
 REGISTRY_DIR = ROOT / "data" / "registries"
@@ -89,9 +96,36 @@ def build_source_manifest() -> dict[str, Any]:
 
 
 def build_legal_registry() -> dict[str, Any]:
+    legal_sources = {}
+    for source_path in sorted(LEGAL_SOURCE_DIR.glob("*.json")):
+        legal_sources.update(load_legal_sources(source_path))
+    for fact_path in sorted(LEGAL_FACT_DIR.glob("*.json")):
+        for fact in load_legal_facts(fact_path):
+            unknown_sources = validate_evidence_references(
+                [fact.source_id, *fact.evidence_source_ids],
+                legal_sources,
+            )
+            if unknown_sources:
+                raise ValueError(
+                    f"Legal fact {fact.fact_id} references unknown sources: "
+                    + ", ".join(unknown_sources)
+                )
+            if fact.verification_status == "needs_review" and not fact.is_review_ready:
+                raise ValueError(
+                    f"Legal fact {fact.fact_id} is not review-ready."
+                )
     scopes: dict[tuple[str, str, str], dict[str, Any]] = {}
     for path in sorted(RULE_DIR.glob("*.json")):
         for rule in load_legal_rules(path):
+            unknown_sources = validate_evidence_references(
+                [rule.source_id, *rule.evidence_source_ids],
+                legal_sources,
+            )
+            if unknown_sources:
+                raise ValueError(
+                    f"Rule {rule.rule_id} references unknown legal sources: "
+                    + ", ".join(unknown_sources)
+                )
             key = (rule.source_country, rule.recipient_country, rule.income_type)
             scope = scopes.setdefault(
                 key,
@@ -101,11 +135,30 @@ def build_legal_registry() -> dict[str, Any]:
                     "income_type": rule.income_type,
                     "rule_ids": [],
                     "verification_status": "verified",
+                    "review_ready": True,
+                    "legal_layers": [],
+                    "dataset_releases": [],
                 },
             )
             scope["rule_ids"].append(rule.rule_id)
+            scope["legal_layers"].append(rule.legal_layer)
+            if rule.dataset_release:
+                scope["dataset_releases"].append(rule.dataset_release)
             if rule.verification_status != "verified":
                 scope["verification_status"] = "needs_review"
+            if rule.verification_status not in {"verified", "needs_review"}:
+                scope["review_ready"] = False
+
+    for scope in scopes.values():
+        scope["legal_layers"] = sorted(set(scope["legal_layers"]))
+        scope["dataset_releases"] = sorted(set(scope["dataset_releases"]))
+        required_layers = {"domestic", "mli", "eu_relief"}
+        if not required_layers.issubset(scope["legal_layers"]):
+            scope["review_ready"] = False
+        if not {"treaty", "protocol"}.intersection(scope["legal_layers"]):
+            scope["review_ready"] = False
+        if len(scope["dataset_releases"]) != 1:
+            scope["review_ready"] = False
 
     payload = {
         "schema_version": 1,
@@ -136,16 +189,8 @@ def _structural_article_count(parsed: dict[str, Any]) -> int:
 
 
 def build_release_manifest() -> dict[str, Any]:
-    source_manifest = (
-        _read_json(SOURCE_MANIFEST)
-        if SOURCE_MANIFEST.exists()
-        else build_source_manifest()
-    )
-    legal_registry = (
-        _read_json(LEGAL_REGISTRY)
-        if LEGAL_REGISTRY.exists()
-        else build_legal_registry()
-    )
+    source_manifest = build_source_manifest()
+    legal_registry = build_legal_registry()
     parsed_files = sorted(PARSED_DIR.glob("*.json"))
     parsed_payloads = [_read_json(path) for path in parsed_files]
     relevant_articles = sum(
@@ -156,6 +201,7 @@ def build_release_manifest() -> dict[str, Any]:
     verified_scopes = [
         scope for scope in scopes if scope["verification_status"] == "verified"
     ]
+    review_ready_scopes = [scope for scope in scopes if scope["review_ready"]]
     source_artifacts_available = sum(
         source["artifact_available"] and bool(source["sha256"])
         for source in sources
@@ -186,6 +232,7 @@ def build_release_manifest() -> dict[str, Any]:
         "legal": {
             "scopes": len(scopes),
             "verified_scopes": len(verified_scopes),
+            "review_ready_scopes": len(review_ready_scopes),
             "production_coverage_percent": (
                 round(len(verified_scopes) / 300 * 100, 2)
             ),

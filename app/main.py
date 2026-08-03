@@ -26,6 +26,7 @@ class AnalysisPayload(BaseModel):
     income_type: str
     transaction_date: date
     facts: dict[str, Any] = Field(default_factory=dict)
+    determinations: dict[str, Any] = Field(default_factory=dict)
 
 
 def get_db_connection() -> sqlite3.Connection:
@@ -72,6 +73,7 @@ def analyze(payload: AnalysisPayload):
             income_type=payload.income_type,
             transaction_date=payload.transaction_date,
             facts=payload.facts,
+            determinations=payload.determinations,
         )
     )
     dataset_version = "unreleased"
@@ -82,13 +84,19 @@ def analyze(payload: AnalysisPayload):
     return {
         "status": result.status.value,
         "rate": result.rate,
+        "candidate_rate": result.candidate_rate,
         "eligible": result.eligible,
         "requires_review": result.requires_review,
         "selected_rule_id": result.selected_rule_id,
+        "candidate_rule_id": result.candidate_rule_id,
+        "applied_rule_ids": result.applied_rule_ids,
         "overridden_rule_id": result.overridden_rule_id,
         "missing_facts": result.missing_facts,
         "failed_conditions": result.failed_conditions,
         "explanation": result.explanation,
+        "citations": result.citations,
+        "layer_results": result.layer_results,
+        "legal_dataset_release": result.dataset_release,
         "dataset_version": dataset_version,
     }
 

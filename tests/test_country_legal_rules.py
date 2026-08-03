@@ -1,16 +1,20 @@
 from datetime import date
-from pathlib import Path
 
-from taxtreat.engine.legal_rule_engine import DecisionStatus, evaluate_legal_rules
-from taxtreat.engine.legal_rule_loader import load_legal_rules
+from taxtreat.engine.legal_rule_engine import DecisionStatus
+from taxtreat.services.decision import CanonicalAnalysisRequest, analyze_transaction
 
-
-RULE_DIR = Path("data/legal_rules")
-
-
-def decide(country: str, facts: dict):
-    rules = load_legal_rules(RULE_DIR / f"{country}.json")
-    return evaluate_legal_rules(rules, facts, as_of=date(2026, 8, 3))
+def decide(country: str, facts: dict, determinations: dict | None = None):
+    recipient = {"rakousko": "AT", "svycarsko": "CH"}[country]
+    return analyze_transaction(
+        CanonicalAnalysisRequest(
+            source_country="CZ",
+            recipient_country=recipient,
+            income_type=facts["income_type"],
+            transaction_date=date(2026, 8, 3),
+            facts=facts,
+            determinations=determinations or {},
+        )
+    )
 
 
 def test_austria_interest_candidate_is_not_final_before_approval():
@@ -18,40 +22,48 @@ def test_austria_interest_candidate_is_not_final_before_approval():
         "rakousko",
         {
             "income_type": "interest",
-            "source_country": "CZ",
-            "recipient_country": "AT",
+            "recipient_is_treaty_resident": True,
             "beneficial_owner": True,
             "permanent_establishment_connection": False,
+            "arm_length_amount": True,
+            "recipient_is_qualifying_company": False,
         },
+        {"treaty_ppt_passed": True},
     )
 
     assert result.status == DecisionStatus.REVIEW_REQUIRED
     assert result.eligible is False
     assert result.rate is None
+    assert result.candidate_rate == 0.0
 
 
 def test_austria_royalty_candidates_are_not_final_before_approval():
     common = {
         "income_type": "royalty",
-        "source_country": "CZ",
-        "recipient_country": "AT",
+        "recipient_is_treaty_resident": True,
         "beneficial_owner": True,
         "permanent_establishment_connection": False,
+        "arm_length_amount": True,
+        "recipient_is_qualifying_company": False,
     }
 
     industrial = decide(
         "rakousko",
         {**common, "royalty_category": "industrial"},
+        {"treaty_ppt_passed": True},
     )
     copyright_result = decide(
         "rakousko",
         {**common, "royalty_category": "copyright"},
+        {"treaty_ppt_passed": True},
     )
 
     assert industrial.status == DecisionStatus.REVIEW_REQUIRED
     assert industrial.rate is None
+    assert industrial.candidate_rate == 5.0
     assert copyright_result.status == DecisionStatus.REVIEW_REQUIRED
     assert copyright_result.rate is None
+    assert copyright_result.candidate_rate == 0.0
 
 
 def test_switzerland_interest_candidate_is_not_final_before_approval():
@@ -59,16 +71,19 @@ def test_switzerland_interest_candidate_is_not_final_before_approval():
         "svycarsko",
         {
             "income_type": "interest",
-            "source_country": "CZ",
-            "recipient_country": "CH",
+            "recipient_is_treaty_resident": True,
             "beneficial_owner": True,
             "permanent_establishment_connection": False,
+            "arm_length_amount": True,
+            "recipient_is_qualifying_company": False,
         },
+        {"treaty_ppt_passed": True},
     )
 
     assert result.status == DecisionStatus.REVIEW_REQUIRED
     assert result.eligible is False
     assert result.rate is None
+    assert result.candidate_rate == 0.0
 
 
 def test_switzerland_legal_fact_cannot_be_supplied_as_transaction_fact():
@@ -76,12 +91,14 @@ def test_switzerland_legal_fact_cannot_be_supplied_as_transaction_fact():
         "svycarsko",
         {
             "income_type": "royalty",
-            "source_country": "CZ",
-            "recipient_country": "CH",
+            "recipient_is_treaty_resident": True,
             "beneficial_owner": True,
             "permanent_establishment_connection": False,
+            "arm_length_amount": True,
+            "recipient_is_qualifying_company": False,
             "recipient_country_imposes_royalty_wht_on_nonresidents": False,
         },
+        {"treaty_ppt_passed": True},
     )
 
     assert result.status == DecisionStatus.REVIEW_REQUIRED
@@ -90,6 +107,7 @@ def test_switzerland_legal_fact_cannot_be_supplied_as_transaction_fact():
     assert result.missing_facts == [
         "legal_fact:recipient_country_imposes_royalty_wht_on_nonresidents"
     ]
+    assert result.candidate_rate == 5.0
 
 
 def test_switzerland_royalty_missing_protocol_fact_requires_review():
@@ -97,11 +115,13 @@ def test_switzerland_royalty_missing_protocol_fact_requires_review():
         "svycarsko",
         {
             "income_type": "royalty",
-            "source_country": "CZ",
-            "recipient_country": "CH",
+            "recipient_is_treaty_resident": True,
             "beneficial_owner": True,
             "permanent_establishment_connection": False,
+            "arm_length_amount": True,
+            "recipient_is_qualifying_company": False,
         },
+        {"treaty_ppt_passed": True},
     )
 
     assert result.eligible is False
@@ -110,3 +130,4 @@ def test_switzerland_royalty_missing_protocol_fact_requires_review():
     assert result.missing_facts == [
         "legal_fact:recipient_country_imposes_royalty_wht_on_nonresidents"
     ]
+    assert result.candidate_rate == 5.0

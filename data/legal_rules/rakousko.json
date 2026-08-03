@@ -1,21 +1,97 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "country_pair": {
     "source_country": "CZ",
     "recipient_country": "AT"
   },
   "rules": [
     {
-      "rule_id": "CZ-AT-INT-BASE",
+      "rule_id": "CZ-AT-DIV-DOMESTIC-15",
+      "income_type": "dividend",
+      "source_country": "CZ",
+      "recipient_country": "AT",
+      "legal_instrument": "domestic_law",
+      "legal_layer": "domestic",
+      "article": 36,
+      "paragraph": "1(a) and 2(a)",
+      "rate": 15.0,
+      "priority": 100,
+      "effective_from": "2026-08-01",
+      "conditions": [],
+      "verification_status": "needs_review",
+      "source_id": "CZ-ZDP-2026-08-01",
+      "source_url": "https://e-sbirka.gov.cz/sb/1992/586?zalozka=text",
+      "source_text": "The Czech domestic withholding-tax rate represented by this candidate rule is 15 per cent.",
+      "source_excerpt_hash": "0d41755b78683dbd6257c523bc5e32810411b0997ca73614a233551ae3bb915a",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-08-01"
+      ],
+      "dataset_release": "pilot-at-ch-2026-08-03-candidate.1"
+    },
+    {
+      "rule_id": "CZ-AT-INT-DOMESTIC-15",
       "income_type": "interest",
       "source_country": "CZ",
       "recipient_country": "AT",
-      "legal_instrument": "treaty",
-      "article": 11,
-      "paragraph": "1",
-      "rate": 0.0,
+      "legal_instrument": "domestic_law",
+      "legal_layer": "domestic",
+      "article": 36,
+      "paragraph": "1(a)",
+      "rate": 15.0,
       "priority": 100,
+      "effective_from": "2026-08-01",
+      "conditions": [],
+      "verification_status": "needs_review",
+      "source_id": "CZ-ZDP-2026-08-01",
+      "source_url": "https://e-sbirka.gov.cz/sb/1992/586?zalozka=text",
+      "source_text": "The Czech domestic withholding-tax rate represented by this candidate rule is 15 per cent.",
+      "source_excerpt_hash": "0d41755b78683dbd6257c523bc5e32810411b0997ca73614a233551ae3bb915a",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-08-01"
+      ],
+      "dataset_release": "pilot-at-ch-2026-08-03-candidate.1"
+    },
+    {
+      "rule_id": "CZ-AT-ROY-DOMESTIC-15",
+      "income_type": "royalty",
+      "source_country": "CZ",
+      "recipient_country": "AT",
+      "legal_instrument": "domestic_law",
+      "legal_layer": "domestic",
+      "article": 36,
+      "paragraph": "1(a)",
+      "rate": 15.0,
+      "priority": 100,
+      "effective_from": "2026-08-01",
+      "conditions": [],
+      "verification_status": "needs_review",
+      "source_id": "CZ-ZDP-2026-08-01",
+      "source_url": "https://e-sbirka.gov.cz/sb/1992/586?zalozka=text",
+      "source_text": "The Czech domestic withholding-tax rate represented by this candidate rule is 15 per cent.",
+      "source_excerpt_hash": "0d41755b78683dbd6257c523bc5e32810411b0997ca73614a233551ae3bb915a",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-08-01"
+      ],
+      "dataset_release": "pilot-at-ch-2026-08-03-candidate.1"
+    },
+    {
+      "rule_id": "CZ-AT-DIV-TREATY-STANDARD",
+      "income_type": "dividend",
+      "source_country": "CZ",
+      "recipient_country": "AT",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": 10,
+      "paragraph": "2(a)",
+      "rate": 10.0,
+      "priority": 100,
+      "effective_from": "2008-01-01",
       "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "operator": "==",
+          "value": true
+        },
         {
           "fact": "beneficial_owner",
           "operator": "==",
@@ -27,19 +103,130 @@
           "value": false
         }
       ],
-      "verification_status": "needs_review"
+      "verification_status": "needs_review",
+      "source_id": "AT-BMF-CZ-DTT-MLI-SYNTH",
+      "source_url": "https://www.bmf.gv.at/dam/jcr:8100aa41-e177-4705-8b4b-5f1178ffc0b1/MLI%20Tschechien%20englisch.pdf",
+      "source_text": "The treaty dividend ceiling represented by this candidate rule is 10 per cent of the gross amount.",
+      "source_excerpt_hash": "5c14f331fce40de8668a8b371a1edd36ec4416f0330563f7aa7493b02598af02",
+      "evidence_source_ids": [
+        "AT-BMF-CZ-DTT-MLI-SYNTH",
+        "CZ-MF-DTT-INVENTORY-2026"
+      ],
+      "dataset_release": "pilot-at-ch-2026-08-03-candidate.1"
     },
     {
-      "rule_id": "CZ-AT-ROY-INDUSTRIAL",
+      "rule_id": "CZ-AT-DIV-TREATY-PARTICIPATION",
+      "income_type": "dividend",
+      "source_country": "CZ",
+      "recipient_country": "AT",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": 10,
+      "paragraph": "2(b)",
+      "rate": 0.0,
+      "priority": 10,
+      "effective_from": "2008-01-01",
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_entity_type",
+          "operator": "==",
+          "value": "company"
+        },
+        {
+          "fact": "ownership_percent",
+          "operator": ">=",
+          "value": 10
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "verification_status": "needs_review",
+      "source_id": "AT-BMF-CZ-DTT-MLI-SYNTH",
+      "source_url": "https://www.bmf.gv.at/dam/jcr:8100aa41-e177-4705-8b4b-5f1178ffc0b1/MLI%20Tschechien%20englisch.pdf",
+      "source_text": "The treaty participation exemption represented by this candidate rule starts at a 10 per cent capital holding.",
+      "source_excerpt_hash": "4f160cecbd9a1ef4946989b22473504357fb3e28d37adae30ca9e172d29d3dbc",
+      "evidence_source_ids": [
+        "AT-BMF-CZ-DTT-MLI-SYNTH",
+        "CZ-MF-DTT-INVENTORY-2026"
+      ],
+      "dataset_release": "pilot-at-ch-2026-08-03-candidate.1"
+    },
+    {
+      "rule_id": "CZ-AT-INT-TREATY",
+      "income_type": "interest",
+      "source_country": "CZ",
+      "recipient_country": "AT",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": 11,
+      "paragraph": "1",
+      "rate": 0.0,
+      "priority": 10,
+      "effective_from": "2008-01-01",
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        },
+        {
+          "fact": "arm_length_amount",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "verification_status": "needs_review",
+      "source_id": "AT-BMF-CZ-DTT-MLI-SYNTH",
+      "source_url": "https://www.bmf.gv.at/dam/jcr:8100aa41-e177-4705-8b4b-5f1178ffc0b1/MLI%20Tschechien%20englisch.pdf",
+      "source_text": "Qualifying interest is taxable only in the state of residence of its beneficial owner.",
+      "source_excerpt_hash": "5ab8d4c07226b2507fe2ad2b93303376145867ada38f63f3b6008aa2bbae8464",
+      "evidence_source_ids": [
+        "AT-BMF-CZ-DTT-MLI-SYNTH",
+        "CZ-MF-DTT-INVENTORY-2026"
+      ],
+      "dataset_release": "pilot-at-ch-2026-08-03-candidate.1"
+    },
+    {
+      "rule_id": "CZ-AT-ROY-TREATY-INDUSTRIAL",
       "income_type": "royalty",
       "source_country": "CZ",
       "recipient_country": "AT",
       "legal_instrument": "treaty",
+      "legal_layer": "treaty",
       "article": 12,
       "paragraph": "2 and 3(a)",
       "rate": 5.0,
       "priority": 10,
+      "effective_from": "2008-01-01",
       "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "operator": "==",
+          "value": true
+        },
         {
           "fact": "royalty_category",
           "operator": "==",
@@ -54,21 +241,42 @@
           "fact": "permanent_establishment_connection",
           "operator": "==",
           "value": false
+        },
+        {
+          "fact": "arm_length_amount",
+          "operator": "==",
+          "value": true
         }
       ],
-      "verification_status": "needs_review"
+      "verification_status": "needs_review",
+      "source_id": "AT-BMF-CZ-DTT-MLI-SYNTH",
+      "source_url": "https://www.bmf.gv.at/dam/jcr:8100aa41-e177-4705-8b4b-5f1178ffc0b1/MLI%20Tschechien%20englisch.pdf",
+      "source_text": "The treaty ceiling for Article 12(3)(a) royalties represented by this candidate rule is 5 per cent.",
+      "source_excerpt_hash": "fe11de2c9f4e6e480ee11aea1c42f31e4c1bf13e7fc7163c994b08d4e1e52172",
+      "evidence_source_ids": [
+        "AT-BMF-CZ-DTT-MLI-SYNTH",
+        "CZ-MF-DTT-INVENTORY-2026"
+      ],
+      "dataset_release": "pilot-at-ch-2026-08-03-candidate.1"
     },
     {
-      "rule_id": "CZ-AT-ROY-COPYRIGHT",
+      "rule_id": "CZ-AT-ROY-TREATY-COPYRIGHT",
       "income_type": "royalty",
       "source_country": "CZ",
       "recipient_country": "AT",
       "legal_instrument": "treaty",
+      "legal_layer": "treaty",
       "article": 12,
       "paragraph": "1 and 3(b)",
       "rate": 0.0,
       "priority": 10,
+      "effective_from": "2008-01-01",
       "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "operator": "==",
+          "value": true
+        },
         {
           "fact": "royalty_category",
           "operator": "==",
@@ -83,9 +291,329 @@
           "fact": "permanent_establishment_connection",
           "operator": "==",
           "value": false
+        },
+        {
+          "fact": "arm_length_amount",
+          "operator": "==",
+          "value": true
         }
       ],
-      "verification_status": "needs_review"
+      "verification_status": "needs_review",
+      "source_id": "AT-BMF-CZ-DTT-MLI-SYNTH",
+      "source_url": "https://www.bmf.gv.at/dam/jcr:8100aa41-e177-4705-8b4b-5f1178ffc0b1/MLI%20Tschechien%20englisch.pdf",
+      "source_text": "Article 12(2) reserves Czech source taxation to the royalty category described in Article 12(3)(a).",
+      "source_excerpt_hash": "6bc69f3f3145f3d7ac46d8383ecacac1b0057b8b663edcc29d36b095591a404c",
+      "evidence_source_ids": [
+        "AT-BMF-CZ-DTT-MLI-SYNTH",
+        "CZ-MF-DTT-INVENTORY-2026"
+      ],
+      "dataset_release": "pilot-at-ch-2026-08-03-candidate.1"
+    },
+    {
+      "rule_id": "CZ-AT-DIV-EU-EXEMPTION",
+      "income_type": "dividend",
+      "source_country": "CZ",
+      "recipient_country": "AT",
+      "legal_instrument": "eu_directive",
+      "legal_layer": "eu_relief",
+      "article": 5,
+      "paragraph": "Directive 2011/96/EU; Czech Income Taxes Act section 19",
+      "rate": 0.0,
+      "priority": 5,
+      "effective_from": "2026-08-01",
+      "conditions": [
+        {
+          "fact": "recipient_is_qualifying_company",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_subject_to_corporate_tax",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "ownership_percent",
+          "operator": ">=",
+          "value": 10
+        },
+        {
+          "fact": "holding_period_months",
+          "operator": ">=",
+          "value": 12
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "payer_in_liquidation",
+          "operator": "==",
+          "value": false
+        },
+        {
+          "fact": "distribution_deductible_by_payer",
+          "operator": "==",
+          "value": false
+        },
+        {
+          "fact": "domestic_anti_abuse_cleared",
+          "operator": "==",
+          "value": true,
+          "fact_source": "determination"
+        }
+      ],
+      "verification_status": "needs_review",
+      "source_id": "EU-PSD-2011-96-CONSOLIDATED",
+      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02011L0096-20150217",
+      "source_text": "Profits which a subsidiary distributes to its parent company shall be exempt from withholding tax.",
+      "source_excerpt_hash": "1dd6805a70ce53ea1f877a315c0b1ba5937d631ab864c6ef20f7bce605f12607",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-08-01",
+        "EU-PSD-2011-96-CONSOLIDATED"
+      ],
+      "dataset_release": "pilot-at-ch-2026-08-03-candidate.1"
+    },
+    {
+      "rule_id": "CZ-AT-INT-EU-EXEMPTION",
+      "income_type": "interest",
+      "source_country": "CZ",
+      "recipient_country": "AT",
+      "legal_instrument": "eu_directive",
+      "legal_layer": "eu_relief",
+      "article": 1,
+      "paragraph": "Directive 2003/49/EC; Czech Income Taxes Act sections 19 and 38nb",
+      "rate": 0.0,
+      "priority": 5,
+      "effective_from": "2026-08-01",
+      "conditions": [
+        {
+          "fact": "recipient_is_qualifying_company",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_subject_to_corporate_tax",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "direct_ownership_percent",
+          "operator": ">=",
+          "value": 25
+        },
+        {
+          "fact": "direct_association_months",
+          "operator": ">=",
+          "value": 24
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        },
+        {
+          "fact": "section_38nb_decision_available",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "domestic_anti_abuse_cleared",
+          "operator": "==",
+          "value": true,
+          "fact_source": "determination"
+        }
+      ],
+      "verification_status": "needs_review",
+      "source_id": "EU-IRD-2003-49-CONSOLIDATED",
+      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02003L0049-20130701",
+      "source_text": "Qualifying interest payments between associated companies of different Member States are exempt from tax in the source State.",
+      "source_excerpt_hash": "dab76a1ff6163b40b60bd60481c2d04d5cdfe35aef405b4d643e504d40f3257a",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-08-01",
+        "EU-IRD-2003-49-CONSOLIDATED"
+      ],
+      "dataset_release": "pilot-at-ch-2026-08-03-candidate.1"
+    },
+    {
+      "rule_id": "CZ-AT-ROY-EU-EXEMPTION",
+      "income_type": "royalty",
+      "source_country": "CZ",
+      "recipient_country": "AT",
+      "legal_instrument": "eu_directive",
+      "legal_layer": "eu_relief",
+      "article": 1,
+      "paragraph": "Directive 2003/49/EC; Czech Income Taxes Act sections 19 and 38nb",
+      "rate": 0.0,
+      "priority": 5,
+      "effective_from": "2026-08-01",
+      "conditions": [
+        {
+          "fact": "recipient_is_qualifying_company",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_subject_to_corporate_tax",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "direct_ownership_percent",
+          "operator": ">=",
+          "value": 25
+        },
+        {
+          "fact": "direct_association_months",
+          "operator": ">=",
+          "value": 24
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        },
+        {
+          "fact": "section_38nb_decision_available",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "domestic_anti_abuse_cleared",
+          "operator": "==",
+          "value": true,
+          "fact_source": "determination"
+        }
+      ],
+      "verification_status": "needs_review",
+      "source_id": "EU-IRD-2003-49-CONSOLIDATED",
+      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02003L0049-20130701",
+      "source_text": "Qualifying royalty payments between associated companies of different Member States are exempt from tax in the source State.",
+      "source_excerpt_hash": "df04bda81d47770fc9b4d100af298cc7f293341f5cf4fc6521981ed24ef72b73",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-08-01",
+        "EU-IRD-2003-49-CONSOLIDATED"
+      ],
+      "dataset_release": "pilot-at-ch-2026-08-03-candidate.1"
+    },
+    {
+      "rule_id": "CZ-AT-DIV-MLI-PPT",
+      "income_type": "dividend",
+      "source_country": "CZ",
+      "recipient_country": "AT",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": 7,
+      "paragraph": "MLI Article 7(1)",
+      "effect": "eligibility_gate",
+      "rate": null,
+      "priority": 1,
+      "effective_from": "2021-01-01",
+      "applies_to_layers": [
+        "treaty",
+        "protocol"
+      ],
+      "conditions": [
+        {
+          "fact": "treaty_ppt_passed",
+          "operator": "==",
+          "value": true,
+          "fact_source": "determination"
+        }
+      ],
+      "verification_status": "needs_review",
+      "source_id": "AT-BMF-CZ-DTT-MLI-SYNTH",
+      "source_url": "https://www.bmf.gv.at/dam/jcr:8100aa41-e177-4705-8b4b-5f1178ffc0b1/MLI%20Tschechien%20englisch.pdf",
+      "source_text": "A treaty benefit may be denied where obtaining it was one of the principal purposes of an arrangement or transaction.",
+      "source_excerpt_hash": "99d52ba580ac92bc5064f4f5a153f3027f3bf13c52d5557b1636f99b3ade6b35",
+      "evidence_source_ids": [
+        "AT-BMF-CZ-DTT-MLI-SYNTH",
+        "CZ-MLI-32-2020"
+      ],
+      "dataset_release": "pilot-at-ch-2026-08-03-candidate.1"
+    },
+    {
+      "rule_id": "CZ-AT-INT-MLI-PPT",
+      "income_type": "interest",
+      "source_country": "CZ",
+      "recipient_country": "AT",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": 7,
+      "paragraph": "MLI Article 7(1)",
+      "effect": "eligibility_gate",
+      "rate": null,
+      "priority": 1,
+      "effective_from": "2021-01-01",
+      "applies_to_layers": [
+        "treaty",
+        "protocol"
+      ],
+      "conditions": [
+        {
+          "fact": "treaty_ppt_passed",
+          "operator": "==",
+          "value": true,
+          "fact_source": "determination"
+        }
+      ],
+      "verification_status": "needs_review",
+      "source_id": "AT-BMF-CZ-DTT-MLI-SYNTH",
+      "source_url": "https://www.bmf.gv.at/dam/jcr:8100aa41-e177-4705-8b4b-5f1178ffc0b1/MLI%20Tschechien%20englisch.pdf",
+      "source_text": "A treaty benefit may be denied where obtaining it was one of the principal purposes of an arrangement or transaction.",
+      "source_excerpt_hash": "99d52ba580ac92bc5064f4f5a153f3027f3bf13c52d5557b1636f99b3ade6b35",
+      "evidence_source_ids": [
+        "AT-BMF-CZ-DTT-MLI-SYNTH",
+        "CZ-MLI-32-2020"
+      ],
+      "dataset_release": "pilot-at-ch-2026-08-03-candidate.1"
+    },
+    {
+      "rule_id": "CZ-AT-ROY-MLI-PPT",
+      "income_type": "royalty",
+      "source_country": "CZ",
+      "recipient_country": "AT",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": 7,
+      "paragraph": "MLI Article 7(1)",
+      "effect": "eligibility_gate",
+      "rate": null,
+      "priority": 1,
+      "effective_from": "2021-01-01",
+      "applies_to_layers": [
+        "treaty",
+        "protocol"
+      ],
+      "conditions": [
+        {
+          "fact": "treaty_ppt_passed",
+          "operator": "==",
+          "value": true,
+          "fact_source": "determination"
+        }
+      ],
+      "verification_status": "needs_review",
+      "source_id": "AT-BMF-CZ-DTT-MLI-SYNTH",
+      "source_url": "https://www.bmf.gv.at/dam/jcr:8100aa41-e177-4705-8b4b-5f1178ffc0b1/MLI%20Tschechien%20englisch.pdf",
+      "source_text": "A treaty benefit may be denied where obtaining it was one of the principal purposes of an arrangement or transaction.",
+      "source_excerpt_hash": "99d52ba580ac92bc5064f4f5a153f3027f3bf13c52d5557b1636f99b3ade6b35",
+      "evidence_source_ids": [
+        "AT-BMF-CZ-DTT-MLI-SYNTH",
+        "CZ-MLI-32-2020"
+      ],
+      "dataset_release": "pilot-at-ch-2026-08-03-candidate.1"
     }
   ]
 }

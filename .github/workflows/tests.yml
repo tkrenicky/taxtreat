@@ -48,10 +48,14 @@ jobs:
             tests/test_legal_rule_reliability.py \
             tests/test_legal_facts.py \
             tests/test_canonical_decision.py \
+            tests/test_layered_decision.py \
+            tests/test_legal_sources.py \
             --cov=taxtreat.engine.legal_rule_engine \
             --cov=taxtreat.engine.legal_rule_loader \
             --cov=taxtreat.engine.legal_rule_validator \
             --cov=taxtreat.engine.legal_facts \
+            --cov=taxtreat.engine.layered_decision \
+            --cov=taxtreat.engine.legal_sources \
             --cov=taxtreat.services.decision \
             --cov-branch \
             --cov-fail-under=100 \

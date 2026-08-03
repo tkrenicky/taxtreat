@@ -1,0 +1,29 @@
+{
+  "schema_version": 3,
+  "case_id": "CZ-CH-DIVIDENDS-001",
+  "title": "Czech payer – qualifying Swiss corporate shareholder",
+  "verification": {"status": "needs_review", "scope": "layered_candidate"},
+  "transaction": {"payer_country": "CZ", "recipient_country": "CH", "transaction_type": "dividends", "transaction_date": "2026-08-03"},
+  "facts": {
+    "recipient_is_treaty_resident": true,
+    "beneficial_owner": true,
+    "permanent_establishment_connection": false,
+    "recipient_entity_type": "company",
+    "recipient_is_partnership": false,
+    "ownership_percent": 10,
+    "holding_period_months": 12,
+    "recipient_is_qualifying_company": false
+  },
+  "determinations": {"treaty_ppt_passed": true},
+  "expected": {
+    "status": "REVIEW_REQUIRED",
+    "applicable_rate": null,
+    "candidate_rate": 0.0,
+    "candidate_rule_id": "CZ-CH-DIV-TREATY-PARTICIPATION",
+    "requires_review": true,
+    "missing_facts": [],
+    "dataset_release": "pilot-at-ch-2026-08-03-candidate.1",
+    "required_citation_rule_ids": ["CZ-CH-DIV-TREATY-PARTICIPATION", "CZ-CH-DIV-MLI-PPT"]
+  },
+  "sources": ["CH-FEDLEX-PROTOCOL-2012", "CH-ESTV-CZ-RATE-OVERVIEW-2022"]
+}

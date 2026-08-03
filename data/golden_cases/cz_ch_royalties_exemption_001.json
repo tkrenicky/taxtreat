@@ -1,0 +1,30 @@
+{
+  "schema_version": 3,
+  "case_id": "CZ-CH-ROYALTIES-EXEMPTION-001",
+  "title": "Czech payer – associated Swiss company – Czech statutory exemption",
+  "verification": {"status": "needs_review", "scope": "layered_candidate"},
+  "transaction": {"payer_country": "CZ", "recipient_country": "CH", "transaction_type": "royalties", "transaction_date": "2026-08-03"},
+  "facts": {
+    "recipient_is_treaty_resident": true,
+    "beneficial_owner": true,
+    "permanent_establishment_connection": false,
+    "arm_length_amount": true,
+    "recipient_is_qualifying_company": true,
+    "recipient_subject_to_corporate_tax": true,
+    "direct_ownership_percent": 100,
+    "direct_association_months": 36,
+    "section_38nb_decision_available": true
+  },
+  "determinations": {"treaty_ppt_passed": true, "domestic_anti_abuse_cleared": true},
+  "expected": {
+    "status": "REVIEW_REQUIRED",
+    "applicable_rate": null,
+    "candidate_rate": 0.0,
+    "candidate_rule_id": "CZ-CH-ROY-DOMESTIC-EXEMPTION",
+    "requires_review": true,
+    "missing_facts": [],
+    "dataset_release": "pilot-at-ch-2026-08-03-candidate.1",
+    "required_citation_rule_ids": ["CZ-CH-ROY-DOMESTIC-EXEMPTION"]
+  },
+  "sources": ["CZ-ZDP-2026-08-01"]
+}

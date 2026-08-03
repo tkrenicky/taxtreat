@@ -15,6 +15,7 @@ def render() -> str:
         f"Source auditability: {sources['auditability']} "
         f"({sources['artifacts_with_hash']}/{sources['total']})",
         f"Structured legal scopes: {legal['scopes']}/300",
+        f"Review-ready pilot scopes: {legal['review_ready_scopes']}/6",
         f"Verified legal scopes: {legal['verified_scopes']}/300",
         f"Golden cases: {manifest['golden_cases']}",
         f"Production ready: {manifest['production_ready']}",

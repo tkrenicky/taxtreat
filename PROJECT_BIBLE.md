@@ -98,9 +98,10 @@ The source-ingestion and base-treaty parser phases were closed on 3 August 2026.
 | Missing relevant article blocks | 0 |
 | Structural parser issues | 0 |
 | Base-act comparisons at least 99.5% | 100/100 |
-| Automated tests | 600 passed |
-| Broken source references | 0 |
-| Unreferenced raw files | 0 |
+| Automated tests | 634 passed |
+| Raw source artifacts reproducible in a clean clone | 0/100 |
+| Review-ready AT/CH legal scopes | 6/6 |
+| Independently approved legal scopes | 0/300 |
 | Exact tracked duplicates | 0 |
 
 The parser phase therefore has zero known defects within its defined scope.
@@ -114,16 +115,18 @@ These percentages are planning estimates, not legal-quality scores.
 | Source ingestion and identity | 100% |
 | Base-treaty parser and article identification | 100% |
 | Base-treaty text QA | 100% |
-| Protocol and effective-date mapping | 20% |
-| MLI layer | 15% |
-| Structured legal rules | 12% |
-| Deterministic rule engine | 55% |
-| Golden cases and legal QA | 20% |
+| Protocol and effective-date mapping | AT/CH pilot complete |
+| MLI layer | AT/CH pilot complete |
+| Structured legal rules | 6/300 scopes; AT/CH pilot complete |
+| Deterministic rule engine | AT/CH layered path complete |
+| Golden cases and legal QA | 8 executable candidate cases |
 | Professional reports | 10% |
 | Demo API | 10% |
 | Demo web interface | 0% |
 
-Estimated overall readiness for an end-to-end demo is approximately **30%**.
+The AT/CH calculation pilot is review-ready but not legally releasable. Overall
+production readiness remains blocked by missing raw-source artifacts and by
+the absence of independently approved legal scopes.
 
 ## 7. Definition of core completion
 

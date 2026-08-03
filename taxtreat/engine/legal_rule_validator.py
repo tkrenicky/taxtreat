@@ -1,15 +1,29 @@
 from __future__ import annotations
 
+import hashlib
 import re
 
 from taxtreat.engine.legal_rule_engine import LegalRule, _SUPPORTED_OPERATORS
 
 
-_ALLOWED_EFFECTS = {"rate", "exclude"}
+_ALLOWED_EFFECTS = {"rate", "exclude", "eligibility_gate"}
 _ALLOWED_INCOME_TYPES = {"dividend", "interest", "royalty"}
-_ALLOWED_INSTRUMENTS = {"treaty", "protocol", "domestic_law", "eu_directive"}
+_ALLOWED_INSTRUMENTS = {
+    "treaty",
+    "protocol",
+    "mli",
+    "domestic_law",
+    "eu_directive",
+}
+_ALLOWED_LAYERS = {
+    "domestic",
+    "treaty",
+    "protocol",
+    "mli",
+    "eu_relief",
+}
 _ALLOWED_STATUSES = {"verified", "needs_review", "rejected"}
-_ALLOWED_FACT_SOURCES = {"transaction", "legal"}
+_ALLOWED_FACT_SOURCES = {"transaction", "legal", "determination"}
 _VERIFICATION_FIELDS = (
     "effective_from",
     "source_id",
@@ -43,6 +57,8 @@ def validate_legal_rules(rules: list[LegalRule]) -> list[str]:
             issues.append(f"{prefix} country scope is incomplete.")
         if rule.legal_instrument not in _ALLOWED_INSTRUMENTS:
             issues.append(f"{prefix} unsupported legal_instrument.")
+        if rule.legal_layer not in _ALLOWED_LAYERS:
+            issues.append(f"{prefix} unsupported legal_layer.")
         if rule.effect not in _ALLOWED_EFFECTS:
             issues.append(f"{prefix} unsupported effect.")
         if rule.verification_status not in _ALLOWED_STATUSES:
@@ -89,6 +105,55 @@ def validate_legal_rules(rules: list[LegalRule]) -> list[str]:
 
         if rule.effect == "exclude" and rule.rate is not None:
             issues.append(f"{prefix} exclusion rule must not contain a rate.")
+
+        if rule.effect == "eligibility_gate":
+            if rule.rate is not None:
+                issues.append(f"{prefix} eligibility gate must not contain a rate.")
+            if not rule.applies_to_layers:
+                issues.append(
+                    f"{prefix} eligibility gate must identify affected layers."
+                )
+            invalid_layers = sorted(
+                set(rule.applies_to_layers).difference(_ALLOWED_LAYERS)
+            )
+            if invalid_layers:
+                issues.append(
+                    f"{prefix} eligibility gate has unsupported target layers."
+                )
+
+        if rule.verification_status in {"verified", "needs_review"}:
+            candidate_fields = (
+                "effective_from",
+                "source_id",
+                "source_url",
+                "source_text",
+                "source_excerpt_hash",
+                "dataset_release",
+            )
+            missing_candidate_fields = [
+                name
+                for name in candidate_fields
+                if getattr(rule, name) in (None, "")
+            ]
+            if missing_candidate_fields:
+                issues.append(
+                    f"{prefix} reviewable rule lacks date/provenance: "
+                    + ", ".join(missing_candidate_fields)
+                    + "."
+                )
+            if not rule.evidence_source_ids:
+                issues.append(
+                    f"{prefix} reviewable rule lacks evidence_source_ids."
+                )
+
+        if rule.source_text and rule.source_excerpt_hash:
+            actual_hash = hashlib.sha256(
+                rule.source_text.encode("utf-8")
+            ).hexdigest()
+            if actual_hash != rule.source_excerpt_hash.lower():
+                issues.append(
+                    f"{prefix} source_excerpt_hash does not match source_text."
+                )
 
         if (
             rule.effective_from is not None

@@ -47,6 +47,10 @@ def load_legal_rules(path: str | Path) -> list[LegalRule]:
                 source_country=raw_rule["source_country"],
                 recipient_country=raw_rule["recipient_country"],
                 legal_instrument=raw_rule["legal_instrument"],
+                legal_layer=raw_rule.get(
+                    "legal_layer",
+                    raw_rule["legal_instrument"],
+                ),
                 article=raw_rule.get("article"),
                 paragraph=raw_rule.get("paragraph"),
                 rate=raw_rule.get("rate"),
@@ -69,6 +73,12 @@ def load_legal_rules(path: str | Path) -> list[LegalRule]:
                 approved_by=raw_rule.get("approved_by"),
                 approved_at=_parse_date(raw_rule.get("approved_at")),
                 dataset_release=raw_rule.get("dataset_release"),
+                evidence_source_ids=list(
+                    raw_rule.get("evidence_source_ids", [])
+                ),
+                applies_to_layers=list(
+                    raw_rule.get("applies_to_layers", [])
+                ),
             )
         )
 

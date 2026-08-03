@@ -1,4 +1,5 @@
 import json
+import hashlib
 from datetime import date
 
 import pytest
@@ -31,12 +32,14 @@ def legal_rule(rule_id="RULE", **overrides):
         "verification_status": "verified",
         "source_id": "SRC-1",
         "source_url": "https://example.test/source",
-        "source_excerpt_hash": "a" * 64,
+        "source_text": "excerpt",
+        "source_excerpt_hash": hashlib.sha256(b"excerpt").hexdigest(),
         "reviewer_id": "reviewer-1",
         "reviewed_at": date(2026, 8, 1),
         "approved_by": "approver-2",
         "approved_at": date(2026, 8, 2),
         "dataset_release": "2026.08.1",
+        "evidence_source_ids": ["SRC-1"],
     }
     values.update(overrides)
     return LegalRule(**values)
@@ -116,6 +119,7 @@ def test_validator_enforces_complete_schema_and_approval():
         source_country="",
         recipient_country="",
         legal_instrument="unknown",
+        legal_layer="unknown",
         effect="unknown",
         verification_status="invalid",
         priority=True,
@@ -130,6 +134,7 @@ def test_validator_enforces_complete_schema_and_approval():
         "unsupported income_type",
         "country scope is incomplete",
         "unsupported legal_instrument",
+        "unsupported legal_layer",
         "unsupported effect",
         "unsupported verification_status",
         "priority must be an integer",
@@ -162,6 +167,19 @@ def test_validator_enforces_complete_schema_and_approval():
         legal_rule("RANGE", rate=101),
         legal_rule("EXCLUDE", effect="exclude", rate=1),
         legal_rule(
+            "GATE-RATE",
+            effect="eligibility_gate",
+            rate=1,
+            applies_to_layers=[],
+        ),
+        legal_rule(
+            "GATE-LAYER",
+            effect="eligibility_gate",
+            rate=None,
+            applies_to_layers=["unsupported"],
+        ),
+        legal_rule("HASH", source_excerpt_hash="b" * 64),
+        legal_rule(
             "DATES",
             effective_from=date(2026, 1, 2),
             effective_to=date(2026, 1, 1),
@@ -172,6 +190,10 @@ def test_validator_enforces_complete_schema_and_approval():
     assert "rate must be numeric" in extra_issues
     assert "rate must be between" in extra_issues
     assert "exclusion rule must not contain a rate" in extra_issues
+    assert "eligibility gate must not contain a rate" in extra_issues
+    assert "eligibility gate must identify affected layers" in extra_issues
+    assert "eligibility gate has unsupported target layers" in extra_issues
+    assert "source_excerpt_hash does not match source_text" in extra_issues
     assert "effective_to precedes" in extra_issues
 
 
@@ -185,8 +207,13 @@ def test_validator_rejects_invalid_override_relationships():
         overrides_rule_id="BASE",
         priority=20,
     )
+    valid_override = legal_rule(
+        "VALID", overrides_rule_id="BASE", priority=5
+    )
     issues = "\n".join(
-        validate_legal_rules([base, missing, self_override, wrong_scope])
+        validate_legal_rules(
+            [base, missing, self_override, wrong_scope, valid_override]
+        )
     )
     assert "overridden rule does not exist" in issues
     assert "rule cannot override itself" in issues

@@ -21,9 +21,10 @@ withholding-tax rate.
 | Parsed treaty-country datasets | 100/100 structurally complete |
 | Dividend, interest and royalty article checks | 300/300 structurally present |
 | Reproducible raw source artifacts and hashes | 0/100 available in a clean clone — blocked |
-| Structured legal scopes | 4/300 |
+| Structured legal scopes | 6/300 |
+| Review-ready AT/CH pilot scopes | 6/6 (independent approval pending) |
 | Fully approved legal scopes | 0/300 |
-| Executable golden cases | 1 (currently `REVIEW_REQUIRED`) |
+| Executable golden cases | 8 (all intentionally `REVIEW_REQUIRED`) |
 | Production readiness | blocked by source and legal approval gates |
 
 Zákony pro lidi is used as a readable verification mirror for the relevant published Czech act. It is not treated as the sole authoritative source for the current legal position.
@@ -42,19 +43,19 @@ and fails closed whenever legal provenance or approval is incomplete.
 
 Development now moves from reliable base-treaty extraction to legal consolidation and date-sensitive calculation.
 
-The next phase covers:
+The AT/CH pilot now covers:
 
-- protocols and amending instruments,
-- entry-into-force and effective dates,
-- treaty replacement and termination,
-- bilateral MLI matching,
-- Czech domestic-law rules,
-- relevant EU directives,
-- structured dividend, interest and royalty rules,
-- deterministic selection of the applicable rule,
-- golden cases and fail-closed validation.
+- Czech domestic withholding and statutory exemptions;
+- treaty and protocol rates for dividends, interest and royalties;
+- AT MLI/PPT withholding effect from 2021-01-01;
+- CH MLI/PPT withholding effect from 2022-01-01;
+- Parent–Subsidiary and Interest–Royalties Directive paths;
+- official-source registry, excerpt hashes and dataset release IDs;
+- deterministic layered calculation and eight executable golden cases.
 
-The repository already contains the initial deterministic legal-rule framework and pilot structured rules. This is groundwork, not complete legal coverage.
+All pilot rules remain `needs_review`: the engine exposes a traceable candidate
+rate but cannot publish a `FINAL` rate until independent approval metadata is
+recorded. The remaining 98 treaty partners are outside this pilot scope.
 
 ## Important legal boundary
 
@@ -71,6 +72,9 @@ Until these layers are completed and validated, unresolved cases must not be pre
 - `data/parsed/` — parsed treaty datasets
 - `data/audits/` — parser and source-quality audits
 - `data/legal_rules/` — structured legal-rule datasets
+- `data/legal_sources/` — official legal-source registry
+- `data/legal_facts/` — date-sensitive legal facts
+- `data/golden_cases/` — executable end-to-end legal cases
 - `knowledge_base/` — country-pair knowledge records
 - `taxtreat/parser/` — extraction and article-selection logic
 - `taxtreat/engine/` — deterministic rule extraction and evaluation
