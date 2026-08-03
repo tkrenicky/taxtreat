@@ -125,6 +125,9 @@ These percentages are planning estimates, not legal-quality scores.
 | All-country instrument inventory | 100/100 official MF rows captured |
 | Remaining base-treaty candidates | 294/294 captured; semantic review pending |
 | Remaining MLI WHT effect dates | 60 official candidates captured; approval pending |
+| Protocol-effect candidates | 33 scopes / 11 partners / 12 instruments |
+| Czech domestic-law candidates | 300/300 scopes; 294 outside pilot |
+| Section 19 relief candidates | 90 scopes / 30 partners; 84 outside pilot |
 | Registered legal scope | 300/300 scopes |
 | Structured legal rules | 6/300 scopes; AT/CH pilot complete |
 | Deterministic rule engine | AT/CH layered path complete |
@@ -150,6 +153,13 @@ records distinguish rate replacements, conditional exemptions, definition or
 scope changes and protocols with no Article 10-12 effect. They remain outside
 the active engine; Belarus and Russia additionally retain blockers for later
 status instruments.
+
+The Czech domestic-law candidate layer now covers all 300 scopes and keeps the
+standard 15% rate separate from the protective 35% path. Section 19 relief is
+represented for 30 eligible partner jurisdictions and 90 scopes, including 84
+outside the pilot. These records preserve statutory ownership, duration,
+beneficial-owner, section 38nb and anti-abuse conditions and remain outside the
+active engine pending four-eyes approval.
 
 ## 7. Definition of core completion
 

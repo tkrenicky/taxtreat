@@ -96,6 +96,20 @@ Protocol candidate consolidation completed:
 - all 33 scopes remain `pending_consolidation` pending MLI/status,
   domestic/EU relief and independent legal approval.
 
+Czech domestic and section 19 relief candidate consolidation completed:
+
+- all 300 country-income scopes contain structured Czech domestic-rate
+  candidates, with the standard 15% and protective 35% paths kept separate;
+- current ZDP provenance and pilot effective-date anchors corrected to the
+  official expression effective from 1 April 2026;
+- section 19 relief candidates captured for 30 partner jurisdictions and 90
+  scopes, including 84 scopes outside the AT/CH pilot;
+- dividend candidates retain the 10%/12-month conditions and interest/royalty
+  candidates retain all three 25% association paths, the 24-month period and
+  section 38nb decision requirement;
+- all new records remain review-only and cannot enter the active engine before
+  full-chain and independent legal approval.
+
 ## 🟡 Phase 4 — Deterministic WHT engine
 
 Layered engine and complete AT/CH pilot country rules exist.

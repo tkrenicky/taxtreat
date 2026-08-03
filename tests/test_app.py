@@ -94,6 +94,17 @@ def test_all_registered_jurisdictions_are_exposed():
         "interest",
         "royalty",
     ]
+    assert by_code["DE"]["domestic_candidate_income_types"] == [
+        "dividend",
+        "interest",
+        "royalty",
+    ]
+    assert by_code["DE"]["eu_relief_candidate_income_types"] == [
+        "dividend",
+        "interest",
+        "royalty",
+    ]
+    assert by_code["GB"]["eu_relief_candidate_income_types"] == []
     assert by_code["BY"]["protocol_candidate_income_types"] == [
         "dividend",
         "interest",

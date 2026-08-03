@@ -94,6 +94,18 @@ def list_jurisdictions():
         if scope["protocol_candidate_status"]
         == "protocol_effect_candidate_consolidated"
     }
+    domestic_candidate = {
+        (scope["recipient_country"], scope["income_type"])
+        for scope in registry["scopes"]
+        if scope["domestic_candidate_status"]
+        == "domestic_and_relief_candidate_consolidated"
+    }
+    eu_relief_candidate = {
+        (scope["recipient_country"], scope["income_type"])
+        for scope in registry["scopes"]
+        if scope["eu_relief_candidate_status"]
+        == "relief_candidate_consolidated"
+    }
     manual_rate_extraction = {
         (scope["recipient_country"], scope["income_type"])
         for scope in registry["scopes"]
@@ -121,6 +133,16 @@ def list_jurisdictions():
                     income_type
                     for income_type in ("dividend", "interest", "royalty")
                     if (partner["iso2"], income_type) in protocol_candidate
+                ],
+                "domestic_candidate_income_types": [
+                    income_type
+                    for income_type in ("dividend", "interest", "royalty")
+                    if (partner["iso2"], income_type) in domestic_candidate
+                ],
+                "eu_relief_candidate_income_types": [
+                    income_type
+                    for income_type in ("dividend", "interest", "royalty")
+                    if (partner["iso2"], income_type) in eu_relief_candidate
                 ],
                 "manual_rate_extraction_income_types": [
                     income_type

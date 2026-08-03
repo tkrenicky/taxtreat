@@ -24,6 +24,13 @@ def render() -> str:
         f"{legal['protocol_effect_candidate_scopes']} scopes / "
         f"{legal['protocol_effect_candidate_partners']} partners / "
         f"{legal['protocol_effect_candidate_documents']} instruments",
+        "Czech domestic-law candidates: "
+        f"{legal['domestic_candidate_scopes']}/300 "
+        f"({legal['remaining_domestic_candidate_scopes']}/294 remaining scopes)",
+        "Section 19 relief candidates: "
+        f"{legal['eu_relief_candidate_scopes']} scopes / "
+        f"{legal['eu_relief_candidate_partners']} partners "
+        f"({legal['remaining_eu_relief_candidate_scopes']} remaining scopes)",
         "Official MLI WHT effect candidates: "
         f"{legal['mli_wht_effect_candidate_partners']}/62",
         f"Review-ready legal scopes: {legal['review_ready_scopes']}/300",

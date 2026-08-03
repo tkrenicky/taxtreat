@@ -30,6 +30,9 @@ BASE_CANDIDATES = (
 )
 MLI_EFFECTS = LEGAL_CONSOLIDATION_DIR / "mli_wht_effects.json"
 PROTOCOL_EFFECTS = LEGAL_CONSOLIDATION_DIR / "protocol_effect_candidates.json"
+DOMESTIC_EU_CANDIDATES = (
+    LEGAL_CONSOLIDATION_DIR / "cz_domestic_eu_candidates.json"
+)
 MANIFEST_DIR = ROOT / "data" / "manifests"
 REGISTRY_DIR = ROOT / "data" / "registries"
 SOURCE_MANIFEST = MANIFEST_DIR / "source_manifest.json"
@@ -131,6 +134,15 @@ def build_legal_registry() -> dict[str, Any]:
     }
     if len(protocol_effects) != 33:
         raise ValueError("Protocol-effect candidate registry must cover 33 scopes.")
+    domestic_eu_payload = _read_json(DOMESTIC_EU_CANDIDATES)
+    domestic_eu_candidates = {
+        (row["recipient_country"], row["income_type"]): row
+        for row in domestic_eu_payload.get("scopes", [])
+    }
+    if len(domestic_eu_candidates) != 300:
+        raise ValueError(
+            "Czech domestic/EU candidate registry must cover 300 scopes."
+        )
     legal_sources = {}
     for source_path in sorted(LEGAL_SOURCE_DIR.glob("*.json")):
         legal_sources.update(load_legal_sources(source_path))
@@ -271,6 +283,56 @@ def build_legal_registry() -> dict[str, Any]:
                 ),
                 {},
             ).get("later_status_source_id"),
+            "domestic_candidate_status": domestic_eu_candidates[
+                (
+                    expected["recipient_country"],
+                    expected["income_type"],
+                )
+            ]["candidate_status"],
+            "domestic_candidate_effective_from": domestic_eu_candidates[
+                (
+                    expected["recipient_country"],
+                    expected["income_type"],
+                )
+            ]["domestic_rate_candidate"]["effective_from"],
+            "domestic_candidate_rates": sorted(
+                {
+                    domestic_eu_candidates[
+                        (
+                            expected["recipient_country"],
+                            expected["income_type"],
+                        )
+                    ]["domestic_rate_candidate"]["standard_rate"],
+                    domestic_eu_candidates[
+                        (
+                            expected["recipient_country"],
+                            expected["income_type"],
+                        )
+                    ]["domestic_rate_candidate"]["protective_rate"],
+                }
+            ),
+            "eu_relief_candidate_status": domestic_eu_candidates[
+                (
+                    expected["recipient_country"],
+                    expected["income_type"],
+                )
+            ]["relief_candidate_status"],
+            "eu_relief_candidate_rate": (
+                domestic_eu_candidates[
+                    (
+                        expected["recipient_country"],
+                        expected["income_type"],
+                    )
+                ]["relief_candidate"] or {}
+            ).get("rate"),
+            "eu_relief_candidate_regime": (
+                domestic_eu_candidates[
+                    (
+                        expected["recipient_country"],
+                        expected["income_type"],
+                    )
+                ]["relief_candidate"] or {}
+            ).get("regime"),
         }
 
     for path in sorted(RULE_DIR.glob("*.json")):
@@ -377,6 +439,7 @@ def build_release_manifest() -> dict[str, Any]:
     base_candidates = _read_json(BASE_CANDIDATES)["scopes"]
     mli_effects = _read_json(MLI_EFFECTS)["effects"]
     protocol_effects = _read_json(PROTOCOL_EFFECTS)
+    domestic_eu_candidates = _read_json(DOMESTIC_EU_CANDIDATES)
     base_candidate_scopes_with_rates = sum(
         bool(scope["rate_candidates"]) for scope in base_candidates
     )
@@ -434,6 +497,29 @@ def build_release_manifest() -> dict[str, Any]:
             ),
             "protocol_effect_candidate_scopes": len(
                 protocol_effects["scopes"]
+            ),
+            "domestic_candidate_scopes": len(
+                domestic_eu_candidates["scopes"]
+            ),
+            "remaining_domestic_candidate_scopes": sum(
+                scope["recipient_country"] not in {"AT", "CH"}
+                for scope in domestic_eu_candidates["scopes"]
+            ),
+            "eu_relief_candidate_partners": len(
+                {
+                    scope["recipient_country"]
+                    for scope in domestic_eu_candidates["scopes"]
+                    if scope["relief_candidate"] is not None
+                }
+            ),
+            "eu_relief_candidate_scopes": sum(
+                scope["relief_candidate"] is not None
+                for scope in domestic_eu_candidates["scopes"]
+            ),
+            "remaining_eu_relief_candidate_scopes": sum(
+                scope["relief_candidate"] is not None
+                and scope["recipient_country"] not in {"AT", "CH"}
+                for scope in domestic_eu_candidates["scopes"]
             ),
             "production_coverage_percent": (
                 round(len(verified_scopes) / len(scopes) * 100, 2)
