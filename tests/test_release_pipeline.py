@@ -15,7 +15,8 @@ def test_committed_baseline_manifest_is_honest_and_consistent():
         source["source_id"].startswith("SRC-")
         for source in source_manifest["sources"]
     )
-    assert len(legal_registry["scopes"]) == 4
+    assert len(legal_registry["scopes"]) == 6
+    assert all(scope["review_ready"] for scope in legal_registry["scopes"])
     assert manifest["parser"] == {
         "datasets": 100,
         "relevant_articles": 300,
@@ -23,6 +24,8 @@ def test_committed_baseline_manifest_is_honest_and_consistent():
     }
     assert manifest["sources"]["auditability"] == "blocked"
     assert manifest["legal"]["verified_scopes"] == 0
+    assert manifest["legal"]["review_ready_scopes"] == 6
+    assert manifest["golden_cases"] == 8
     assert manifest["production_ready"] is False
     assert len(manifest["manifest_sha256"]) == 64
 

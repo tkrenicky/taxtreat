@@ -28,6 +28,7 @@ class LegalRule:
     source_country: str
     recipient_country: str
     legal_instrument: str
+    legal_layer: str = "treaty"
     article: int | None = None
     paragraph: str | None = None
     rate: float | None = None
@@ -47,6 +48,8 @@ class LegalRule:
     approved_by: str | None = None
     approved_at: date | None = None
     dataset_release: str | None = None
+    evidence_source_ids: list[str] = field(default_factory=list)
+    applies_to_layers: list[str] = field(default_factory=list)
 
 
 @dataclass
@@ -54,12 +57,18 @@ class LegalDecisionResult:
     status: DecisionStatus = DecisionStatus.REVIEW_REQUIRED
     rate: float | None = None
     selected_rule_id: str | None = None
+    candidate_rate: float | None = None
+    candidate_rule_id: str | None = None
+    applied_rule_ids: list[str] = field(default_factory=list)
     overridden_rule_id: str | None = None
     eligible: bool = False
     requires_review: bool = True
     missing_facts: list[str] = field(default_factory=list)
     failed_conditions: list[str] = field(default_factory=list)
     explanation: list[str] = field(default_factory=list)
+    citations: list[dict[str, str | None]] = field(default_factory=list)
+    layer_results: list[dict[str, Any]] = field(default_factory=list)
+    dataset_release: str | None = None
 
 
 _SUPPORTED_OPERATORS = {

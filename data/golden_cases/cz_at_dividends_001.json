@@ -1,0 +1,27 @@
+{
+  "schema_version": 3,
+  "case_id": "CZ-AT-DIVIDENDS-001",
+  "title": "Czech payer – Austrian portfolio corporate shareholder",
+  "verification": {"status": "needs_review", "scope": "layered_candidate"},
+  "transaction": {"payer_country": "CZ", "recipient_country": "AT", "transaction_type": "dividends", "transaction_date": "2026-08-03"},
+  "facts": {
+    "recipient_is_treaty_resident": true,
+    "beneficial_owner": true,
+    "permanent_establishment_connection": false,
+    "recipient_entity_type": "company",
+    "ownership_percent": 5,
+    "recipient_is_qualifying_company": false
+  },
+  "determinations": {"treaty_ppt_passed": true},
+  "expected": {
+    "status": "REVIEW_REQUIRED",
+    "applicable_rate": null,
+    "candidate_rate": 10.0,
+    "candidate_rule_id": "CZ-AT-DIV-TREATY-STANDARD",
+    "requires_review": true,
+    "missing_facts": [],
+    "dataset_release": "pilot-at-ch-2026-08-03-candidate.1",
+    "required_citation_rule_ids": ["CZ-AT-DIV-TREATY-STANDARD", "CZ-AT-DIV-MLI-PPT"]
+  },
+  "sources": ["AT-BMF-CZ-DTT-MLI-SYNTH", "CZ-ZDP-2026-08-01"]
+}

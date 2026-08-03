@@ -1,5 +1,6 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
+  "dataset_release": "pilot-at-ch-2026-08-03-candidate.1",
   "country": "CH",
   "facts": [
     {
@@ -9,8 +10,14 @@
       "value": false,
       "effective_from": "1996-01-01",
       "verification_status": "needs_review",
-      "source_id": "CH-ESTV-RATE-OVERVIEW",
+      "source_id": "CH-ESTV-CZ-RATE-OVERVIEW-2022",
       "source_url": "https://www.estv.admin.ch/dam/de/sd-web/WMpOK0qkvPEB/int-laender-tschechien-de.pdf",
+      "source_text": "The Swiss official treaty overview states that Switzerland does not levy withholding tax on royalties paid to non-residents.",
+      "source_excerpt_hash": "fd9e93311562693aff28038154d1b476b05d049cb18739fefd4b627ee06f7451",
+      "evidence_source_ids": [
+        "CH-ESTV-CZ-RATE-OVERVIEW-2022"
+      ],
+      "dataset_release": "pilot-at-ch-2026-08-03-candidate.1",
       "note": "Candidate legal fact only. Independent approval and immutable source hash are still required."
     }
   ]

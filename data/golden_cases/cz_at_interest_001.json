@@ -1,0 +1,26 @@
+{
+  "schema_version": 3,
+  "case_id": "CZ-AT-INTEREST-001",
+  "title": "Czech payer – Austrian beneficial owner – arm's-length interest",
+  "verification": {"status": "needs_review", "scope": "layered_candidate"},
+  "transaction": {"payer_country": "CZ", "recipient_country": "AT", "transaction_type": "interest", "transaction_date": "2026-08-03"},
+  "facts": {
+    "recipient_is_treaty_resident": true,
+    "beneficial_owner": true,
+    "permanent_establishment_connection": false,
+    "arm_length_amount": true,
+    "recipient_is_qualifying_company": false
+  },
+  "determinations": {"treaty_ppt_passed": true},
+  "expected": {
+    "status": "REVIEW_REQUIRED",
+    "applicable_rate": null,
+    "candidate_rate": 0.0,
+    "candidate_rule_id": "CZ-AT-INT-TREATY",
+    "requires_review": true,
+    "missing_facts": [],
+    "dataset_release": "pilot-at-ch-2026-08-03-candidate.1",
+    "required_citation_rule_ids": ["CZ-AT-INT-TREATY", "CZ-AT-INT-MLI-PPT"]
+  },
+  "sources": ["AT-BMF-CZ-DTT-MLI-SYNTH", "CZ-ZDP-2026-08-01"]
+}

@@ -3,39 +3,140 @@
   "schema_version": 1,
   "scopes": [
     {
-      "income_type": "interest",
+      "dataset_releases": [
+        "pilot-at-ch-2026-08-03-candidate.1"
+      ],
+      "income_type": "dividend",
+      "legal_layers": [
+        "domestic",
+        "eu_relief",
+        "mli",
+        "treaty"
+      ],
       "recipient_country": "AT",
+      "review_ready": true,
       "rule_ids": [
-        "CZ-AT-INT-BASE"
+        "CZ-AT-DIV-DOMESTIC-15",
+        "CZ-AT-DIV-TREATY-STANDARD",
+        "CZ-AT-DIV-TREATY-PARTICIPATION",
+        "CZ-AT-DIV-EU-EXEMPTION",
+        "CZ-AT-DIV-MLI-PPT"
       ],
       "source_country": "CZ",
       "verification_status": "needs_review"
     },
     {
-      "income_type": "royalty",
-      "recipient_country": "AT",
-      "rule_ids": [
-        "CZ-AT-ROY-INDUSTRIAL",
-        "CZ-AT-ROY-COPYRIGHT"
+      "dataset_releases": [
+        "pilot-at-ch-2026-08-03-candidate.1"
       ],
-      "source_country": "CZ",
-      "verification_status": "needs_review"
-    },
-    {
       "income_type": "interest",
-      "recipient_country": "CH",
+      "legal_layers": [
+        "domestic",
+        "eu_relief",
+        "mli",
+        "treaty"
+      ],
+      "recipient_country": "AT",
+      "review_ready": true,
       "rule_ids": [
-        "CZ-CH-INT-BASE"
+        "CZ-AT-INT-DOMESTIC-15",
+        "CZ-AT-INT-TREATY",
+        "CZ-AT-INT-EU-EXEMPTION",
+        "CZ-AT-INT-MLI-PPT"
       ],
       "source_country": "CZ",
       "verification_status": "needs_review"
     },
     {
+      "dataset_releases": [
+        "pilot-at-ch-2026-08-03-candidate.1"
+      ],
       "income_type": "royalty",
-      "recipient_country": "CH",
+      "legal_layers": [
+        "domestic",
+        "eu_relief",
+        "mli",
+        "treaty"
+      ],
+      "recipient_country": "AT",
+      "review_ready": true,
       "rule_ids": [
-        "CZ-CH-ROY-BASE",
-        "CZ-CH-ROY-PROTOCOL"
+        "CZ-AT-ROY-DOMESTIC-15",
+        "CZ-AT-ROY-TREATY-INDUSTRIAL",
+        "CZ-AT-ROY-TREATY-COPYRIGHT",
+        "CZ-AT-ROY-EU-EXEMPTION",
+        "CZ-AT-ROY-MLI-PPT"
+      ],
+      "source_country": "CZ",
+      "verification_status": "needs_review"
+    },
+    {
+      "dataset_releases": [
+        "pilot-at-ch-2026-08-03-candidate.1"
+      ],
+      "income_type": "dividend",
+      "legal_layers": [
+        "domestic",
+        "eu_relief",
+        "mli",
+        "protocol"
+      ],
+      "recipient_country": "CH",
+      "review_ready": true,
+      "rule_ids": [
+        "CZ-CH-DIV-DOMESTIC-15",
+        "CZ-CH-DIV-TREATY-STANDARD",
+        "CZ-CH-DIV-TREATY-PARTICIPATION",
+        "CZ-CH-DIV-TREATY-PENSION",
+        "CZ-CH-DIV-TREATY-CENTRAL-BANK",
+        "CZ-CH-DIV-DOMESTIC-EXEMPTION",
+        "CZ-CH-DIV-MLI-PPT"
+      ],
+      "source_country": "CZ",
+      "verification_status": "needs_review"
+    },
+    {
+      "dataset_releases": [
+        "pilot-at-ch-2026-08-03-candidate.1"
+      ],
+      "income_type": "interest",
+      "legal_layers": [
+        "domestic",
+        "eu_relief",
+        "mli",
+        "treaty"
+      ],
+      "recipient_country": "CH",
+      "review_ready": true,
+      "rule_ids": [
+        "CZ-CH-INT-DOMESTIC-15",
+        "CZ-CH-INT-TREATY",
+        "CZ-CH-INT-DOMESTIC-EXEMPTION",
+        "CZ-CH-INT-MLI-PPT"
+      ],
+      "source_country": "CZ",
+      "verification_status": "needs_review"
+    },
+    {
+      "dataset_releases": [
+        "pilot-at-ch-2026-08-03-candidate.1"
+      ],
+      "income_type": "royalty",
+      "legal_layers": [
+        "domestic",
+        "eu_relief",
+        "mli",
+        "protocol",
+        "treaty"
+      ],
+      "recipient_country": "CH",
+      "review_ready": true,
+      "rule_ids": [
+        "CZ-CH-ROY-DOMESTIC-15",
+        "CZ-CH-ROY-TREATY-BASE",
+        "CZ-CH-ROY-PROTOCOL-5",
+        "CZ-CH-ROY-DOMESTIC-EXEMPTION",
+        "CZ-CH-ROY-MLI-PPT"
       ],
       "source_country": "CZ",
       "verification_status": "needs_review"

@@ -1,21 +1,289 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "country_pair": {
     "source_country": "CZ",
     "recipient_country": "CH"
   },
   "rules": [
     {
-      "rule_id": "CZ-CH-INT-BASE",
+      "rule_id": "CZ-CH-DIV-DOMESTIC-15",
+      "income_type": "dividend",
+      "source_country": "CZ",
+      "recipient_country": "CH",
+      "legal_instrument": "domestic_law",
+      "legal_layer": "domestic",
+      "article": 36,
+      "paragraph": "1(a) and 2(a)",
+      "rate": 15.0,
+      "priority": 100,
+      "effective_from": "2026-08-01",
+      "conditions": [],
+      "verification_status": "needs_review",
+      "source_id": "CZ-ZDP-2026-08-01",
+      "source_url": "https://e-sbirka.gov.cz/sb/1992/586?zalozka=text",
+      "source_text": "The Czech domestic withholding-tax rate represented by this candidate rule is 15 per cent.",
+      "source_excerpt_hash": "0d41755b78683dbd6257c523bc5e32810411b0997ca73614a233551ae3bb915a",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-08-01"
+      ],
+      "dataset_release": "pilot-at-ch-2026-08-03-candidate.1"
+    },
+    {
+      "rule_id": "CZ-CH-INT-DOMESTIC-15",
+      "income_type": "interest",
+      "source_country": "CZ",
+      "recipient_country": "CH",
+      "legal_instrument": "domestic_law",
+      "legal_layer": "domestic",
+      "article": 36,
+      "paragraph": "1(a)",
+      "rate": 15.0,
+      "priority": 100,
+      "effective_from": "2026-08-01",
+      "conditions": [],
+      "verification_status": "needs_review",
+      "source_id": "CZ-ZDP-2026-08-01",
+      "source_url": "https://e-sbirka.gov.cz/sb/1992/586?zalozka=text",
+      "source_text": "The Czech domestic withholding-tax rate represented by this candidate rule is 15 per cent.",
+      "source_excerpt_hash": "0d41755b78683dbd6257c523bc5e32810411b0997ca73614a233551ae3bb915a",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-08-01"
+      ],
+      "dataset_release": "pilot-at-ch-2026-08-03-candidate.1"
+    },
+    {
+      "rule_id": "CZ-CH-ROY-DOMESTIC-15",
+      "income_type": "royalty",
+      "source_country": "CZ",
+      "recipient_country": "CH",
+      "legal_instrument": "domestic_law",
+      "legal_layer": "domestic",
+      "article": 36,
+      "paragraph": "1(a)",
+      "rate": 15.0,
+      "priority": 100,
+      "effective_from": "2026-08-01",
+      "conditions": [],
+      "verification_status": "needs_review",
+      "source_id": "CZ-ZDP-2026-08-01",
+      "source_url": "https://e-sbirka.gov.cz/sb/1992/586?zalozka=text",
+      "source_text": "The Czech domestic withholding-tax rate represented by this candidate rule is 15 per cent.",
+      "source_excerpt_hash": "0d41755b78683dbd6257c523bc5e32810411b0997ca73614a233551ae3bb915a",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-08-01"
+      ],
+      "dataset_release": "pilot-at-ch-2026-08-03-candidate.1"
+    },
+    {
+      "rule_id": "CZ-CH-DIV-TREATY-STANDARD",
+      "income_type": "dividend",
+      "source_country": "CZ",
+      "recipient_country": "CH",
+      "legal_instrument": "protocol",
+      "legal_layer": "protocol",
+      "article": 10,
+      "paragraph": "2 as replaced by the 2012 Protocol",
+      "rate": 15.0,
+      "priority": 100,
+      "effective_from": "2014-01-01",
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "verification_status": "needs_review",
+      "source_id": "CH-FEDLEX-PROTOCOL-2012",
+      "source_url": "https://www.fedlex.admin.ch/eli/oc/2013/678/de",
+      "source_text": "The amended treaty dividend ceiling represented by this candidate rule is 15 per cent of the gross amount.",
+      "source_excerpt_hash": "d166e8a810fcb3a9d14fe28de6894ea3c39f1a03a277f06e419587af5aff0060",
+      "evidence_source_ids": [
+        "CH-FEDLEX-PROTOCOL-2012",
+        "CH-ESTV-CZ-RATE-OVERVIEW-2022",
+        "CZ-MF-DTT-INVENTORY-2026"
+      ],
+      "dataset_release": "pilot-at-ch-2026-08-03-candidate.1"
+    },
+    {
+      "rule_id": "CZ-CH-DIV-TREATY-PARTICIPATION",
+      "income_type": "dividend",
+      "source_country": "CZ",
+      "recipient_country": "CH",
+      "legal_instrument": "protocol",
+      "legal_layer": "protocol",
+      "article": 10,
+      "paragraph": "3(a) as inserted by the 2012 Protocol",
+      "rate": 0.0,
+      "priority": 10,
+      "effective_from": "2014-01-01",
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_entity_type",
+          "operator": "==",
+          "value": "company"
+        },
+        {
+          "fact": "recipient_is_partnership",
+          "operator": "==",
+          "value": false
+        },
+        {
+          "fact": "ownership_percent",
+          "operator": ">=",
+          "value": 10
+        },
+        {
+          "fact": "holding_period_months",
+          "operator": ">=",
+          "value": 12
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "verification_status": "needs_review",
+      "source_id": "CH-FEDLEX-PROTOCOL-2012",
+      "source_url": "https://www.fedlex.admin.ch/eli/oc/2013/678/de",
+      "source_text": "The amended participation exemption requires at least 10 per cent of capital to be held continuously for at least one year.",
+      "source_excerpt_hash": "b65862a97c3eda4d1d1f74d5e8649d6bf35faba9c152291d1226dd69c267a74e",
+      "evidence_source_ids": [
+        "CH-FEDLEX-PROTOCOL-2012",
+        "CH-ESTV-CZ-RATE-OVERVIEW-2022",
+        "CZ-MF-DTT-INVENTORY-2026"
+      ],
+      "dataset_release": "pilot-at-ch-2026-08-03-candidate.1"
+    },
+    {
+      "rule_id": "CZ-CH-DIV-TREATY-PENSION",
+      "income_type": "dividend",
+      "source_country": "CZ",
+      "recipient_country": "CH",
+      "legal_instrument": "protocol",
+      "legal_layer": "protocol",
+      "article": 10,
+      "paragraph": "3(b) as inserted by the 2012 Protocol",
+      "rate": 0.0,
+      "priority": 10,
+      "effective_from": "2014-01-01",
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_entity_type",
+          "operator": "==",
+          "value": "qualifying_pension_fund"
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "verification_status": "needs_review",
+      "source_id": "CH-FEDLEX-PROTOCOL-2012",
+      "source_url": "https://www.fedlex.admin.ch/eli/oc/2013/678/de",
+      "source_text": "The amended treaty provides a source-state dividend exemption for a qualifying pension fund or similar institution.",
+      "source_excerpt_hash": "a3caea5061b39b8ba4403007d85332dbffb65ae4851389053411293e3740b4e7",
+      "evidence_source_ids": [
+        "CH-FEDLEX-PROTOCOL-2012",
+        "CH-ESTV-CZ-RATE-OVERVIEW-2022"
+      ],
+      "dataset_release": "pilot-at-ch-2026-08-03-candidate.1"
+    },
+    {
+      "rule_id": "CZ-CH-DIV-TREATY-CENTRAL-BANK",
+      "income_type": "dividend",
+      "source_country": "CZ",
+      "recipient_country": "CH",
+      "legal_instrument": "protocol",
+      "legal_layer": "protocol",
+      "article": 10,
+      "paragraph": "3(c) as inserted by the 2012 Protocol",
+      "rate": 0.0,
+      "priority": 10,
+      "effective_from": "2014-01-01",
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_entity_type",
+          "operator": "==",
+          "value": "central_bank"
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "verification_status": "needs_review",
+      "source_id": "CH-FEDLEX-PROTOCOL-2012",
+      "source_url": "https://www.fedlex.admin.ch/eli/oc/2013/678/de",
+      "source_text": "The amended treaty provides a source-state dividend exemption for the central bank of the other state.",
+      "source_excerpt_hash": "27718005c90d18c6b4c154e872cb84ed0a8a476f3b7db562734e2c4c8a28a815",
+      "evidence_source_ids": [
+        "CH-FEDLEX-PROTOCOL-2012",
+        "CH-ESTV-CZ-RATE-OVERVIEW-2022"
+      ],
+      "dataset_release": "pilot-at-ch-2026-08-03-candidate.1"
+    },
+    {
+      "rule_id": "CZ-CH-INT-TREATY",
       "income_type": "interest",
       "source_country": "CZ",
       "recipient_country": "CH",
       "legal_instrument": "treaty",
+      "legal_layer": "treaty",
       "article": 11,
       "paragraph": "1",
       "rate": 0.0,
-      "priority": 100,
+      "priority": 10,
+      "effective_from": "1997-01-01",
       "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "operator": "==",
+          "value": true
+        },
         {
           "fact": "beneficial_owner",
           "operator": "==",
@@ -25,21 +293,43 @@
           "fact": "permanent_establishment_connection",
           "operator": "==",
           "value": false
+        },
+        {
+          "fact": "arm_length_amount",
+          "operator": "==",
+          "value": true
         }
       ],
-      "verification_status": "needs_review"
+      "verification_status": "needs_review",
+      "source_id": "CH-FEDLEX-DTT-1995-CONSOLIDATED",
+      "source_url": "https://www.fedlex.admin.ch/eli/cc/1997/961_961_961/de",
+      "source_text": "Qualifying interest is taxable only in the state of residence of its beneficial owner.",
+      "source_excerpt_hash": "5ab8d4c07226b2507fe2ad2b93303376145867ada38f63f3b6008aa2bbae8464",
+      "evidence_source_ids": [
+        "CH-FEDLEX-DTT-1995-CONSOLIDATED",
+        "CH-ESTV-CZ-RATE-OVERVIEW-2022",
+        "CZ-MF-DTT-INVENTORY-2026"
+      ],
+      "dataset_release": "pilot-at-ch-2026-08-03-candidate.1"
     },
     {
-      "rule_id": "CZ-CH-ROY-BASE",
+      "rule_id": "CZ-CH-ROY-TREATY-BASE",
       "income_type": "royalty",
       "source_country": "CZ",
       "recipient_country": "CH",
       "legal_instrument": "treaty",
+      "legal_layer": "treaty",
       "article": 12,
       "paragraph": "2",
       "rate": 10.0,
       "priority": 100,
+      "effective_from": "1997-01-01",
       "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "operator": "==",
+          "value": true
+        },
         {
           "fact": "beneficial_owner",
           "operator": "==",
@@ -49,23 +339,42 @@
           "fact": "permanent_establishment_connection",
           "operator": "==",
           "value": false
+        },
+        {
+          "fact": "arm_length_amount",
+          "operator": "==",
+          "value": true
         }
       ],
-      "verification_status": "needs_review"
+      "verification_status": "needs_review",
+      "source_id": "CH-FEDLEX-DTT-1995-CONSOLIDATED",
+      "source_url": "https://www.fedlex.admin.ch/eli/cc/1997/961_961_961/de",
+      "source_text": "The base treaty royalty ceiling represented by this candidate rule is 10 per cent of the gross amount.",
+      "source_excerpt_hash": "122239825fecb9547aadd1270f3e54075fcca146ed4d5da5191cab4b273fa7ee",
+      "evidence_source_ids": [
+        "CH-FEDLEX-DTT-1995-CONSOLIDATED",
+        "CZ-MF-DTT-INVENTORY-2026"
+      ],
+      "dataset_release": "pilot-at-ch-2026-08-03-candidate.1"
     },
     {
-      "rule_id": "CZ-CH-ROY-PROTOCOL",
+      "rule_id": "CZ-CH-ROY-PROTOCOL-5",
       "income_type": "royalty",
       "source_country": "CZ",
       "recipient_country": "CH",
       "legal_instrument": "protocol",
+      "legal_layer": "protocol",
       "article": 12,
       "paragraph": "Protocol point 2 to Article 12",
       "rate": 5.0,
       "priority": 10,
-      "effective_from": "1996-01-01",
-      "overrides_rule_id": "CZ-CH-ROY-BASE",
+      "effective_from": "1997-01-01",
       "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "operator": "==",
+          "value": true
+        },
         {
           "fact": "beneficial_owner",
           "operator": "==",
@@ -75,6 +384,11 @@
           "fact": "permanent_establishment_connection",
           "operator": "==",
           "value": false
+        },
+        {
+          "fact": "arm_length_amount",
+          "operator": "==",
+          "value": true
         },
         {
           "fact": "recipient_country_imposes_royalty_wht_on_nonresidents",
@@ -83,7 +397,320 @@
           "fact_source": "legal"
         }
       ],
-      "verification_status": "needs_review"
+      "verification_status": "needs_review",
+      "source_id": "CH-FEDLEX-DTT-1995-CONSOLIDATED",
+      "source_url": "https://www.fedlex.admin.ch/eli/cc/1997/961_961_961/de",
+      "source_text": "The protocol reduces the source-state royalty ceiling to 5 per cent while Switzerland levies no royalty withholding tax on nonresidents.",
+      "source_excerpt_hash": "cb1e64103b08e50f518685c6d374d410107a16d300a7827d65cb908fd185243f",
+      "evidence_source_ids": [
+        "CH-FEDLEX-DTT-1995-CONSOLIDATED",
+        "CH-ESTV-CZ-RATE-OVERVIEW-2022"
+      ],
+      "dataset_release": "pilot-at-ch-2026-08-03-candidate.1"
+    },
+    {
+      "rule_id": "CZ-CH-DIV-DOMESTIC-EXEMPTION",
+      "income_type": "dividend",
+      "source_country": "CZ",
+      "recipient_country": "CH",
+      "legal_instrument": "domestic_law",
+      "legal_layer": "eu_relief",
+      "article": 19,
+      "paragraph": "1(ze), 3, 4, 6 and 8",
+      "rate": 0.0,
+      "priority": 5,
+      "effective_from": "2026-08-01",
+      "conditions": [
+        {
+          "fact": "recipient_is_qualifying_company",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_subject_to_corporate_tax",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "ownership_percent",
+          "operator": ">=",
+          "value": 10
+        },
+        {
+          "fact": "holding_period_months",
+          "operator": ">=",
+          "value": 12
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "payer_in_liquidation",
+          "operator": "==",
+          "value": false
+        },
+        {
+          "fact": "distribution_deductible_by_payer",
+          "operator": "==",
+          "value": false
+        },
+        {
+          "fact": "domestic_anti_abuse_cleared",
+          "operator": "==",
+          "value": true,
+          "fact_source": "determination"
+        }
+      ],
+      "verification_status": "needs_review",
+      "source_id": "CZ-ZDP-2026-08-01",
+      "source_url": "https://e-sbirka.gov.cz/sb/1992/586?zalozka=text",
+      "source_text": "Czech section 19 extends qualifying participation exemptions to certain payments made to Swiss resident companies.",
+      "source_excerpt_hash": "487b85db7eec20f40c6b664c92833f4d37892190ef60f06d15df6ef321cd34f9",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-08-01",
+        "CH-FEDLEX-PROTOCOL-2012"
+      ],
+      "dataset_release": "pilot-at-ch-2026-08-03-candidate.1"
+    },
+    {
+      "rule_id": "CZ-CH-INT-DOMESTIC-EXEMPTION",
+      "income_type": "interest",
+      "source_country": "CZ",
+      "recipient_country": "CH",
+      "legal_instrument": "domestic_law",
+      "legal_layer": "eu_relief",
+      "article": 19,
+      "paragraph": "1(zk), 5, 6 and 8; section 38nb",
+      "rate": 0.0,
+      "priority": 5,
+      "effective_from": "2026-08-01",
+      "conditions": [
+        {
+          "fact": "recipient_is_qualifying_company",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_subject_to_corporate_tax",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "direct_ownership_percent",
+          "operator": ">=",
+          "value": 25
+        },
+        {
+          "fact": "direct_association_months",
+          "operator": ">=",
+          "value": 24
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        },
+        {
+          "fact": "section_38nb_decision_available",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "domestic_anti_abuse_cleared",
+          "operator": "==",
+          "value": true,
+          "fact_source": "determination"
+        }
+      ],
+      "verification_status": "needs_review",
+      "source_id": "CZ-ZDP-2026-08-01",
+      "source_url": "https://e-sbirka.gov.cz/sb/1992/586?zalozka=text",
+      "source_text": "Czech section 19 extends qualifying interest exemptions to certain payments made to Swiss resident companies.",
+      "source_excerpt_hash": "0bed217e827878a63a8c617de22be047662c3007c150cecefb2e3e40ff1d00b8",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-08-01"
+      ],
+      "dataset_release": "pilot-at-ch-2026-08-03-candidate.1"
+    },
+    {
+      "rule_id": "CZ-CH-ROY-DOMESTIC-EXEMPTION",
+      "income_type": "royalty",
+      "source_country": "CZ",
+      "recipient_country": "CH",
+      "legal_instrument": "domestic_law",
+      "legal_layer": "eu_relief",
+      "article": 19,
+      "paragraph": "1(zj), 5, 6 and 8; section 38nb",
+      "rate": 0.0,
+      "priority": 5,
+      "effective_from": "2026-08-01",
+      "conditions": [
+        {
+          "fact": "recipient_is_qualifying_company",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_subject_to_corporate_tax",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "direct_ownership_percent",
+          "operator": ">=",
+          "value": 25
+        },
+        {
+          "fact": "direct_association_months",
+          "operator": ">=",
+          "value": 24
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        },
+        {
+          "fact": "section_38nb_decision_available",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "domestic_anti_abuse_cleared",
+          "operator": "==",
+          "value": true,
+          "fact_source": "determination"
+        }
+      ],
+      "verification_status": "needs_review",
+      "source_id": "CZ-ZDP-2026-08-01",
+      "source_url": "https://e-sbirka.gov.cz/sb/1992/586?zalozka=text",
+      "source_text": "Czech section 19 extends qualifying royalty exemptions to certain payments made to Swiss resident companies.",
+      "source_excerpt_hash": "fe70b62f48e5301b8662c17a29089be886db93379f74dd8207e578ac14a6ab83",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-08-01"
+      ],
+      "dataset_release": "pilot-at-ch-2026-08-03-candidate.1"
+    },
+    {
+      "rule_id": "CZ-CH-DIV-MLI-PPT",
+      "income_type": "dividend",
+      "source_country": "CZ",
+      "recipient_country": "CH",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": 7,
+      "paragraph": "MLI Article 7(1), replacing Protocol point 8",
+      "effect": "eligibility_gate",
+      "rate": null,
+      "priority": 1,
+      "effective_from": "2022-01-01",
+      "applies_to_layers": [
+        "treaty",
+        "protocol"
+      ],
+      "conditions": [
+        {
+          "fact": "treaty_ppt_passed",
+          "operator": "==",
+          "value": true,
+          "fact_source": "determination"
+        }
+      ],
+      "verification_status": "needs_review",
+      "source_id": "CZ-MF-CH-MLI-FZ-3-2021",
+      "source_url": "https://www.mfcr.cz/assets/attachments/Financni-zpravodaj_2021-c-03.pdf",
+      "source_text": "A treaty benefit may be denied where obtaining it was one of the principal purposes of an arrangement or transaction.",
+      "source_excerpt_hash": "99d52ba580ac92bc5064f4f5a153f3027f3bf13c52d5557b1636f99b3ade6b35",
+      "evidence_source_ids": [
+        "CZ-MF-CH-MLI-FZ-3-2021",
+        "CZ-MLI-32-2020"
+      ],
+      "dataset_release": "pilot-at-ch-2026-08-03-candidate.1"
+    },
+    {
+      "rule_id": "CZ-CH-INT-MLI-PPT",
+      "income_type": "interest",
+      "source_country": "CZ",
+      "recipient_country": "CH",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": 7,
+      "paragraph": "MLI Article 7(1), replacing Protocol point 8",
+      "effect": "eligibility_gate",
+      "rate": null,
+      "priority": 1,
+      "effective_from": "2022-01-01",
+      "applies_to_layers": [
+        "treaty",
+        "protocol"
+      ],
+      "conditions": [
+        {
+          "fact": "treaty_ppt_passed",
+          "operator": "==",
+          "value": true,
+          "fact_source": "determination"
+        }
+      ],
+      "verification_status": "needs_review",
+      "source_id": "CZ-MF-CH-MLI-FZ-3-2021",
+      "source_url": "https://www.mfcr.cz/assets/attachments/Financni-zpravodaj_2021-c-03.pdf",
+      "source_text": "A treaty benefit may be denied where obtaining it was one of the principal purposes of an arrangement or transaction.",
+      "source_excerpt_hash": "99d52ba580ac92bc5064f4f5a153f3027f3bf13c52d5557b1636f99b3ade6b35",
+      "evidence_source_ids": [
+        "CZ-MF-CH-MLI-FZ-3-2021",
+        "CZ-MLI-32-2020"
+      ],
+      "dataset_release": "pilot-at-ch-2026-08-03-candidate.1"
+    },
+    {
+      "rule_id": "CZ-CH-ROY-MLI-PPT",
+      "income_type": "royalty",
+      "source_country": "CZ",
+      "recipient_country": "CH",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": 7,
+      "paragraph": "MLI Article 7(1), replacing Protocol point 8",
+      "effect": "eligibility_gate",
+      "rate": null,
+      "priority": 1,
+      "effective_from": "2022-01-01",
+      "applies_to_layers": [
+        "treaty",
+        "protocol"
+      ],
+      "conditions": [
+        {
+          "fact": "treaty_ppt_passed",
+          "operator": "==",
+          "value": true,
+          "fact_source": "determination"
+        }
+      ],
+      "verification_status": "needs_review",
+      "source_id": "CZ-MF-CH-MLI-FZ-3-2021",
+      "source_url": "https://www.mfcr.cz/assets/attachments/Financni-zpravodaj_2021-c-03.pdf",
+      "source_text": "A treaty benefit may be denied where obtaining it was one of the principal purposes of an arrangement or transaction.",
+      "source_excerpt_hash": "99d52ba580ac92bc5064f4f5a153f3027f3bf13c52d5557b1636f99b3ade6b35",
+      "evidence_source_ids": [
+        "CZ-MF-CH-MLI-FZ-3-2021",
+        "CZ-MLI-32-2020"
+      ],
+      "dataset_release": "pilot-at-ch-2026-08-03-candidate.1"
     }
   ]
 }

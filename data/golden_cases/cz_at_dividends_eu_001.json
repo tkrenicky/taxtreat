@@ -1,0 +1,31 @@
+{
+  "schema_version": 3,
+  "case_id": "CZ-AT-DIVIDENDS-EU-001",
+  "title": "Czech payer – Austrian parent – domestic implementation of EU exemption",
+  "verification": {"status": "needs_review", "scope": "layered_candidate"},
+  "transaction": {"payer_country": "CZ", "recipient_country": "AT", "transaction_type": "dividends", "transaction_date": "2026-08-03"},
+  "facts": {
+    "recipient_is_treaty_resident": true,
+    "beneficial_owner": true,
+    "permanent_establishment_connection": false,
+    "recipient_entity_type": "company",
+    "ownership_percent": 100,
+    "holding_period_months": 24,
+    "recipient_is_qualifying_company": true,
+    "recipient_subject_to_corporate_tax": true,
+    "payer_in_liquidation": false,
+    "distribution_deductible_by_payer": false
+  },
+  "determinations": {"treaty_ppt_passed": true, "domestic_anti_abuse_cleared": true},
+  "expected": {
+    "status": "REVIEW_REQUIRED",
+    "applicable_rate": null,
+    "candidate_rate": 0.0,
+    "candidate_rule_id": "CZ-AT-DIV-EU-EXEMPTION",
+    "requires_review": true,
+    "missing_facts": [],
+    "dataset_release": "pilot-at-ch-2026-08-03-candidate.1",
+    "required_citation_rule_ids": ["CZ-AT-DIV-EU-EXEMPTION"]
+  },
+  "sources": ["CZ-ZDP-2026-08-01", "EU-PSD-2011-96-CONSOLIDATED"]
+}

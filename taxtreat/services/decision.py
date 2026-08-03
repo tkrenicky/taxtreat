@@ -5,14 +5,17 @@ from datetime import date
 from pathlib import Path
 from typing import Any
 
-from taxtreat.engine.legal_facts import load_legal_facts, resolve_legal_facts
+from taxtreat.engine.legal_facts import (
+    load_legal_facts,
+    resolve_legal_fact_candidates,
+)
 from taxtreat.engine.legal_rule_engine import (
     DecisionStatus,
     LegalDecisionResult,
     LegalRule,
-    evaluate_legal_rules,
 )
 from taxtreat.engine.legal_rule_loader import load_legal_rules
+from taxtreat.engine.layered_decision import evaluate_layered_rules
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -34,6 +37,7 @@ class CanonicalAnalysisRequest:
     income_type: str
     transaction_date: date
     facts: dict[str, Any] = field(default_factory=dict)
+    determinations: dict[str, Any] = field(default_factory=dict)
 
 
 def load_rule_catalog(rule_dir: str | Path = DEFAULT_RULE_DIR) -> list[LegalRule]:
@@ -98,19 +102,29 @@ def analyze_transaction(
     legal_fact_records = []
     for path in sorted(Path(legal_fact_dir).glob("*.json")):
         legal_fact_records.extend(load_legal_facts(path))
-    legal_facts, unresolved_legal_facts = resolve_legal_facts(
+    legal_facts, unresolved_legal_facts = resolve_legal_fact_candidates(
         legal_fact_records,
         country=request.recipient_country,
         as_of=request.transaction_date,
     )
 
-    result = evaluate_legal_rules(
+    result = evaluate_layered_rules(
         scoped_rules,
         transaction_facts,
         as_of=request.transaction_date,
         legal_facts=legal_facts,
+        determinations=request.determinations,
     )
-    required_legal_facts = legal_condition_names
+    selected_path_ids = set(result.applied_rule_ids)
+    if result.candidate_rule_id:
+        selected_path_ids.add(result.candidate_rule_id)
+    required_legal_facts = {
+        condition.fact
+        for rule in scoped_rules
+        if rule.rule_id in selected_path_ids
+        for condition in rule.conditions
+        if condition.fact_source == "legal"
+    }
     unresolved_required = sorted(
         required_legal_facts.intersection(unresolved_legal_facts)
     )

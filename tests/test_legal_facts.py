@@ -6,6 +6,7 @@ import pytest
 
 from taxtreat.engine.legal_facts import (
     load_legal_facts,
+    resolve_legal_fact_candidates,
     resolve_legal_facts,
 )
 
@@ -28,6 +29,8 @@ def approved_fact(**overrides):
         "source_id": "SRC-1",
         "source_url": "https://example.test/source",
         "source_excerpt_hash": hashlib.sha256(b"excerpt").hexdigest(),
+        "source_text": "excerpt",
+        "evidence_source_ids": ["SRC-1"],
         "reviewer_id": "reviewer-1",
         "reviewed_at": "2026-08-01",
         "approved_by": "approver-2",
@@ -98,3 +101,38 @@ def test_legal_fact_loader_rejects_invalid_data(tmp_path):
     )
     with pytest.raises(ValueError, match="invalid date interval"):
         load_legal_facts(interval)
+
+
+def test_candidate_legal_fact_resolution_covers_approval_and_conflict(tmp_path):
+    path = tmp_path / "candidates.json"
+    write_facts(path, [approved_fact()])
+    approved = load_legal_facts(path)
+    values, unverified = resolve_legal_fact_candidates(
+        approved, country="CH", as_of=date(2026, 8, 3)
+    )
+    assert values == {"royalty_wht": False}
+    assert unverified == []
+
+    write_facts(
+        path,
+        [
+            approved_fact(verification_status="needs_review"),
+            approved_fact(
+                fact_id="CH-FACT-2",
+                value=True,
+                verification_status="needs_review",
+            ),
+        ],
+    )
+    values, unverified = resolve_legal_fact_candidates(
+        load_legal_facts(path), country="CH", as_of=date(2026, 8, 3)
+    )
+    assert values == {}
+    assert unverified == ["royalty_wht"]
+
+    write_facts(
+        path,
+        [approved_fact(verification_status="needs_review", source_text=None)],
+    )
+    fact = load_legal_facts(path)[0]
+    assert fact.is_review_ready is False
