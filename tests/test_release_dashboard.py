@@ -5,7 +5,8 @@ def test_release_dashboard_separates_quality_dimensions():
     output = render()
     assert "Parser datasets: 100" in output
     assert "Source auditability: blocked (0/100)" in output
-    assert "Structured legal scopes: 6/300" in output
-    assert "Review-ready pilot scopes: 6/6" in output
+    assert "Registered legal scopes: 300/300" in output
+    assert "Review-ready legal scopes: 6/300" in output
+    assert "Pending legal consolidation: 294/300" in output
     assert "Verified legal scopes: 0/300" in output
     assert "Production ready: False" in output

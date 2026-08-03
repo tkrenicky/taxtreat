@@ -98,9 +98,11 @@ The source-ingestion and base-treaty parser phases were closed on 3 August 2026.
 | Missing relevant article blocks | 0 |
 | Structural parser issues | 0 |
 | Base-act comparisons at least 99.5% | 100/100 |
-| Automated tests | 634 passed |
+| Automated tests | enforced by CI |
 | Raw source artifacts reproducible in a clean clone | 0/100 |
+| Registered country-income scopes | 300/300 |
 | Review-ready AT/CH legal scopes | 6/6 |
+| Pending legal consolidation | 294/300 |
 | Independently approved legal scopes | 0/300 |
 | Exact tracked duplicates | 0 |
 
@@ -117,6 +119,7 @@ These percentages are planning estimates, not legal-quality scores.
 | Base-treaty text QA | 100% |
 | Protocol and effective-date mapping | AT/CH pilot complete |
 | MLI layer | AT/CH pilot complete |
+| Registered legal scope | 300/300 scopes |
 | Structured legal rules | 6/300 scopes; AT/CH pilot complete |
 | Deterministic rule engine | AT/CH layered path complete |
 | Golden cases and legal QA | 8 executable candidate cases |

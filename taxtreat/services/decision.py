@@ -16,6 +16,7 @@ from taxtreat.engine.legal_rule_engine import (
 )
 from taxtreat.engine.legal_rule_loader import load_legal_rules
 from taxtreat.engine.layered_decision import evaluate_layered_rules
+from taxtreat.registry.legal_scope import supported_scope_keys
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -79,6 +80,27 @@ def analyze_transaction(
         and rule.income_type == normalized_income
     ]
     if not scoped_rules:
+        scope_key = (
+            request.source_country,
+            request.recipient_country,
+            normalized_income,
+        )
+        if scope_key in supported_scope_keys():
+            return LegalDecisionResult(
+                status=DecisionStatus.REVIEW_REQUIRED,
+                requires_review=True,
+                missing_legal_layers=[
+                    "domestic",
+                    "eu_relief",
+                    "mli",
+                    "treaty_or_protocol",
+                ],
+                explanation=[
+                    "The requested scope is registered, but its consolidated "
+                    "legal rules have not completed source, effective-date, "
+                    "protocol/MLI and independent-approval gates."
+                ],
+            )
         return LegalDecisionResult(
             status=DecisionStatus.OUT_OF_SCOPE,
             requires_review=False,

@@ -9,7 +9,13 @@ from typing import Any
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
-from taxtreat.pipeline.release import RELEASE_MANIFEST, validate_release
+from taxtreat.pipeline.release import (
+    LEGAL_REGISTRY,
+    RELEASE_MANIFEST,
+    build_legal_registry,
+    validate_release,
+)
+from taxtreat.registry.legal_scope import load_partner_registry
 from taxtreat.services.decision import (
     CanonicalAnalysisRequest,
     analyze_transaction,
@@ -64,6 +70,35 @@ def health_check():
     return liveness()
 
 
+@app.get("/jurisdictions")
+def list_jurisdictions():
+    registry = (
+        json.loads(LEGAL_REGISTRY.read_text(encoding="utf-8"))
+        if LEGAL_REGISTRY.exists()
+        else build_legal_registry()
+    )
+    review_ready = {
+        (scope["recipient_country"], scope["income_type"])
+        for scope in registry["scopes"]
+        if scope["review_ready"]
+    }
+    jurisdictions = []
+    for partner in load_partner_registry():
+        jurisdictions.append(
+            {
+                "country": partner["country"],
+                "iso2": partner["iso2"],
+                "income_types": ["dividend", "interest", "royalty"],
+                "review_ready_income_types": [
+                    income_type
+                    for income_type in ("dividend", "interest", "royalty")
+                    if (partner["iso2"], income_type) in review_ready
+                ],
+            }
+        )
+    return {"total": len(jurisdictions), "jurisdictions": jurisdictions}
+
+
 @app.post("/analysis")
 def analyze(payload: AnalysisPayload):
     result = analyze_transaction(
@@ -92,6 +127,7 @@ def analyze(payload: AnalysisPayload):
         "applied_rule_ids": result.applied_rule_ids,
         "overridden_rule_id": result.overridden_rule_id,
         "missing_facts": result.missing_facts,
+        "missing_legal_layers": result.missing_legal_layers,
         "failed_conditions": result.failed_conditions,
         "explanation": result.explanation,
         "citations": result.citations,
