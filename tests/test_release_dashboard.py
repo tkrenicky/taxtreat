@@ -16,6 +16,11 @@ def test_release_dashboard_separates_quality_dimensions():
     assert "Section 19 relief candidates: 90 scopes / 30 partners (84 remaining scopes)" in output
     assert "Remaining instrument chains: 294 assembled / 0 blocked (0 partners)" in output
     assert (
+        "Candidate legal-review queue: 294/294 packets; "
+        "294 awaiting primary review; 0 independently approved; 0 promotable"
+        in output
+    )
+    assert (
         "Official MLI WHT effect candidates: 64/64; "
         "signed without current effect: 7"
         in output

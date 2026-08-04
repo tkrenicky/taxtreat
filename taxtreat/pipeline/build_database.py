@@ -5,6 +5,10 @@ the parsed treaty schema.  All generated release data now comes from
 ``taxtreat.pipeline.release``.
 """
 
+from taxtreat.consolidation.legal_review_queue import (
+    build_legal_review_queue,
+    write_legal_review_queue,
+)
 from taxtreat.pipeline.release import (
     MANIFEST_DIR as OUTPUT_DIR,
     build_legal_registry,
@@ -15,6 +19,7 @@ from taxtreat.pipeline.release import (
 
 def main() -> None:
     build_source_manifest()
+    write_legal_review_queue(build_legal_review_queue())
     build_legal_registry()
     build_release_manifest()
     print("Canonical manifests exported.")

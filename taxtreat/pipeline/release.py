@@ -37,6 +37,8 @@ INSTRUMENT_CHAINS = (
     LEGAL_CONSOLIDATION_DIR / "remaining_294_instrument_chains.json"
 )
 BLOCKER_RESOLUTIONS = LEGAL_CONSOLIDATION_DIR / "blocker_resolutions.json"
+LEGAL_REVIEW_DIR = ROOT / "data" / "legal_reviews"
+REVIEW_QUEUE = LEGAL_REVIEW_DIR / "remaining_294_review_queue.json"
 MANIFEST_DIR = ROOT / "data" / "manifests"
 REGISTRY_DIR = ROOT / "data" / "registries"
 SOURCE_MANIFEST = MANIFEST_DIR / "source_manifest.json"
@@ -163,6 +165,24 @@ def build_legal_registry() -> dict[str, Any]:
         raise ValueError(
             "Instrument-chain candidate registry must cover 294 scopes."
         )
+    review_queue_payload = _read_json(REVIEW_QUEUE)
+    review_packets = {
+        (row["recipient_country"], row["income_type"]): row
+        for row in review_queue_payload.get("packets", [])
+    }
+    if len(review_packets) != 294:
+        raise ValueError("Legal-review queue must cover 294 scopes.")
+    if set(review_packets) != set(instrument_chains):
+        raise ValueError(
+            "Legal-review queue does not match the instrument-chain scopes."
+        )
+    for key, packet in review_packets.items():
+        if packet["candidate_sha256"] != instrument_chains[key][
+            "candidate_sha256"
+        ]:
+            raise ValueError(
+                f"Legal-review packet {packet['packet_id']} has a stale candidate hash."
+            )
     legal_sources = {}
     for source_path in sorted(LEGAL_SOURCE_DIR.glob("*.json")):
         legal_sources.update(load_legal_sources(source_path))
@@ -429,6 +449,46 @@ def build_legal_registry() -> dict[str, Any]:
                     )
                 ]["treaty_status_instrument"]["source_id"]
             ),
+            "candidate_review_packet_id": (
+                None
+                if expected["recipient_country"] in {"AT", "CH"}
+                else review_packets[
+                    (
+                        expected["recipient_country"],
+                        expected["income_type"],
+                    )
+                ]["packet_id"]
+            ),
+            "candidate_review_packet_status": (
+                "pilot_rule_review_ready"
+                if expected["recipient_country"] in {"AT", "CH"}
+                else review_packets[
+                    (
+                        expected["recipient_country"],
+                        expected["income_type"],
+                    )
+                ]["packet_status"]
+            ),
+            "candidate_review_approval_eligible": (
+                False
+                if expected["recipient_country"] in {"AT", "CH"}
+                else review_packets[
+                    (
+                        expected["recipient_country"],
+                        expected["income_type"],
+                    )
+                ]["approval_eligible"]
+            ),
+            "candidate_review_promotable": (
+                False
+                if expected["recipient_country"] in {"AT", "CH"}
+                else review_packets[
+                    (
+                        expected["recipient_country"],
+                        expected["income_type"],
+                    )
+                ]["promotable_to_active_rules"]
+            ),
         }
 
     for path in sorted(RULE_DIR.glob("*.json")):
@@ -538,6 +598,7 @@ def build_release_manifest() -> dict[str, Any]:
     protocol_effects = _read_json(PROTOCOL_EFFECTS)
     domestic_eu_candidates = _read_json(DOMESTIC_EU_CANDIDATES)
     instrument_chains = _read_json(INSTRUMENT_CHAINS)
+    review_queue = _read_json(REVIEW_QUEUE)
     base_candidate_scopes_with_rates = sum(
         bool(scope["rate_candidates"]) for scope in base_candidates
     )
@@ -661,6 +722,24 @@ def build_release_manifest() -> dict[str, Any]:
             "instrument_chain_blocked_partners": instrument_chains[
                 "summary"
             ]["blocked_partners"],
+            "candidate_review_packets": review_queue["summary"][
+                "total_packets"
+            ],
+            "candidate_review_awaiting_primary": review_queue["summary"][
+                "awaiting_primary_review"
+            ],
+            "candidate_review_awaiting_independent_approval": review_queue[
+                "summary"
+            ]["awaiting_independent_approval"],
+            "candidate_review_independently_approved": review_queue[
+                "summary"
+            ]["independently_approved"],
+            "candidate_review_approval_eligible": review_queue["summary"][
+                "approval_eligible_packets"
+            ],
+            "candidate_review_promotable": review_queue["summary"][
+                "promotable_packets"
+            ],
             "production_coverage_percent": (
                 round(len(verified_scopes) / len(scopes) * 100, 2)
                 if scopes

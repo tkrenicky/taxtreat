@@ -138,6 +138,16 @@ def test_generate_all_cases_and_pipeline_helpers(monkeypatch, tmp_path, capsys):
     )
     monkeypatch.setattr(
         build_database,
+        "build_legal_review_queue",
+        lambda: build_calls.append("review_payload") or {},
+    )
+    monkeypatch.setattr(
+        build_database,
+        "write_legal_review_queue",
+        lambda value: build_calls.append("review_write"),
+    )
+    monkeypatch.setattr(
+        build_database,
         "build_legal_registry",
         lambda: build_calls.append("registry"),
     )
@@ -147,7 +157,13 @@ def test_generate_all_cases_and_pipeline_helpers(monkeypatch, tmp_path, capsys):
         lambda: build_calls.append("release"),
     )
     build_database.main()
-    assert build_calls == ["sources", "registry", "release"]
+    assert build_calls == [
+        "sources",
+        "review_payload",
+        "review_write",
+        "registry",
+        "release",
+    ]
     assert "Canonical manifests exported" in capsys.readouterr().out
 
     calls = []

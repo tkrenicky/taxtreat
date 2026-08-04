@@ -36,6 +36,11 @@ def render() -> str:
         f"{legal['instrument_chain_assembled_scopes']} assembled / "
         f"{legal['instrument_chain_blocked_scopes']} blocked "
         f"({legal['instrument_chain_blocked_partners']} partners)",
+        "Candidate legal-review queue: "
+        f"{legal['candidate_review_packets']}/294 packets; "
+        f"{legal['candidate_review_awaiting_primary']} awaiting primary review; "
+        f"{legal['candidate_review_independently_approved']} independently approved; "
+        f"{legal['candidate_review_promotable']} promotable",
         "Official MLI WHT effect candidates: "
         f"{legal['mli_wht_effect_candidate_partners']}/64; "
         "signed without current effect: "
