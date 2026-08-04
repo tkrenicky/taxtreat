@@ -19,7 +19,8 @@ def render() -> str:
         f"{legal['instrument_inventory_partners']}/100",
         "Remaining base-treaty candidates: "
         f"{legal['base_candidate_scopes']}/294 "
-        f"({legal['base_candidate_scopes_with_rates']} with rates)",
+        f"({legal['base_candidate_scopes_with_rates']} with rates; "
+        f"{legal['base_candidate_no_numeric_cap_scopes']} no-cap)",
         "Protocol candidates: "
         f"{legal['protocol_effect_candidate_scopes']} scopes / "
         f"{legal['protocol_effect_candidate_partners']} partners / "
@@ -36,7 +37,11 @@ def render() -> str:
         f"{legal['instrument_chain_blocked_scopes']} blocked "
         f"({legal['instrument_chain_blocked_partners']} partners)",
         "Official MLI WHT effect candidates: "
-        f"{legal['mli_wht_effect_candidate_partners']}/62",
+        f"{legal['mli_wht_effect_candidate_partners']}/64; "
+        "signed without current effect: "
+        f"{legal['mli_no_current_effect_determinations']}",
+        "Status-instrument candidates: "
+        f"{legal['status_instrument_candidate_partners']} partners",
         f"Review-ready legal scopes: {legal['review_ready_scopes']}/300",
         "Pending legal consolidation: "
         f"{legal['pending_consolidation_scopes']}/300",

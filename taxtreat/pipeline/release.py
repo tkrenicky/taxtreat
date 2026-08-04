@@ -36,6 +36,7 @@ DOMESTIC_EU_CANDIDATES = (
 INSTRUMENT_CHAINS = (
     LEGAL_CONSOLIDATION_DIR / "remaining_294_instrument_chains.json"
 )
+BLOCKER_RESOLUTIONS = LEGAL_CONSOLIDATION_DIR / "blocker_resolutions.json"
 MANIFEST_DIR = ROOT / "data" / "manifests"
 REGISTRY_DIR = ROOT / "data" / "registries"
 SOURCE_MANIFEST = MANIFEST_DIR / "source_manifest.json"
@@ -130,6 +131,13 @@ def build_legal_registry() -> dict[str, Any]:
     }
     if len(mli_effects) != 62:
         raise ValueError("Official MLI WHT effect registry must cover 62 partners.")
+    blocker_resolutions_payload = _read_json(BLOCKER_RESOLUTIONS)
+    mli_resolutions = {
+        row["recipient_country"]: row
+        for row in blocker_resolutions_payload.get("mli_resolutions", [])
+    }
+    if len(mli_resolutions) != 9:
+        raise ValueError("MLI blocker resolutions must cover 9 partners.")
     protocol_effects_payload = _read_json(PROTOCOL_EFFECTS)
     protocol_effects = {
         (row["recipient_country"], row["income_type"]): row
@@ -237,6 +245,16 @@ def build_legal_registry() -> dict[str, Any]:
                     }
                 )
             ),
+            "base_candidate_rate_cap_status": (
+                "pilot_consolidated"
+                if expected["recipient_country"] in {"AT", "CH"}
+                else base_candidates[
+                    (
+                        expected["recipient_country"],
+                        expected["income_type"],
+                    )
+                ].get("treaty_rate_cap_status", "unresolved")
+            ),
             "preconsolidation_risk_flags": (
                 []
                 if expected["recipient_country"] in {"AT", "CH"}
@@ -248,9 +266,15 @@ def build_legal_registry() -> dict[str, Any]:
                 ]["risk_flags"]
             ),
             "mli_wht_effect_candidate_from": (
-                mli_effects.get(expected["recipient_country"], {})
-                .get("effective_from")
+                (
+                    mli_effects.get(expected["recipient_country"])
+                    or mli_resolutions.get(expected["recipient_country"])
+                    or {}
+                ).get("effective_from")
             ),
+            "mli_resolution_status": mli_resolutions.get(
+                expected["recipient_country"], {}
+            ).get("resolution_status"),
             "protocol_candidate_status": (
                 "pilot_consolidated"
                 if expected["recipient_country"] in {"AT", "CH"}
@@ -385,6 +409,26 @@ def build_legal_registry() -> dict[str, Any]:
                     )
                 ]["legal_review_tasks"]
             ),
+            "treaty_status_candidate_status": (
+                "not_listed"
+                if expected["recipient_country"] in {"AT", "CH"}
+                else instrument_chains[
+                    (
+                        expected["recipient_country"],
+                        expected["income_type"],
+                    )
+                ]["treaty_status_instrument"]["candidate_status"]
+            ),
+            "treaty_status_candidate_source_id": (
+                None
+                if expected["recipient_country"] in {"AT", "CH"}
+                else instrument_chains[
+                    (
+                        expected["recipient_country"],
+                        expected["income_type"],
+                    )
+                ]["treaty_status_instrument"]["source_id"]
+            ),
         }
 
     for path in sorted(RULE_DIR.glob("*.json")):
@@ -490,12 +534,22 @@ def build_release_manifest() -> dict[str, Any]:
     inventory = _read_json(MF_INVENTORY)
     base_candidates = _read_json(BASE_CANDIDATES)["scopes"]
     mli_effects = _read_json(MLI_EFFECTS)["effects"]
+    blocker_resolutions = _read_json(BLOCKER_RESOLUTIONS)
     protocol_effects = _read_json(PROTOCOL_EFFECTS)
     domestic_eu_candidates = _read_json(DOMESTIC_EU_CANDIDATES)
     instrument_chains = _read_json(INSTRUMENT_CHAINS)
     base_candidate_scopes_with_rates = sum(
         bool(scope["rate_candidates"]) for scope in base_candidates
     )
+    base_candidate_no_cap_scopes = sum(
+        scope.get("treaty_rate_cap_status") == "no_numeric_cap"
+        for scope in base_candidates
+    )
+    supplemental_mli_effects = [
+        row
+        for row in blocker_resolutions["mli_resolutions"]
+        if row["resolution_status"] == "wht_effect_candidate_available"
+    ]
     source_artifacts_available = sum(
         source["artifact_available"] and bool(source["sha256"])
         for source in sources
@@ -534,10 +588,31 @@ def build_release_manifest() -> dict[str, Any]:
             "base_candidate_scopes_without_rates": (
                 len(base_candidates) - base_candidate_scopes_with_rates
             ),
-            "mli_wht_effect_candidate_partners": len(mli_effects),
+            "base_candidate_no_numeric_cap_scopes": (
+                base_candidate_no_cap_scopes
+            ),
+            "base_candidate_unresolved_scopes": (
+                len(base_candidates)
+                - base_candidate_scopes_with_rates
+                - base_candidate_no_cap_scopes
+            ),
+            "mli_wht_effect_candidate_partners": (
+                len(mli_effects) + len(supplemental_mli_effects)
+            ),
             "remaining_mli_wht_effect_candidate_partners": sum(
                 effect["recipient_country"] not in {"AT", "CH"}
                 for effect in mli_effects
+            ) + len(supplemental_mli_effects),
+            "mli_no_current_effect_determinations": (
+                blocker_resolutions["summary"][
+                    "mli_no_current_effect_determinations"
+                ]
+            ),
+            "status_instrument_candidate_partners": (
+                blocker_resolutions["summary"]["status_instruments"]
+            ),
+            "resolved_instrument_chain_blocker_scopes": (
+                blocker_resolutions["summary"]["resolved_scopes"]
             ),
             "protocol_effect_candidate_documents": len(
                 protocol_effects["documents"]

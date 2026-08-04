@@ -36,6 +36,8 @@ def test_committed_baseline_manifest_is_honest_and_consistent():
     assert manifest["legal"]["base_candidate_scopes"] == 294
     assert manifest["legal"]["base_candidate_scopes_with_rates"] == 293
     assert manifest["legal"]["base_candidate_scopes_without_rates"] == 1
+    assert manifest["legal"]["base_candidate_no_numeric_cap_scopes"] == 1
+    assert manifest["legal"]["base_candidate_unresolved_scopes"] == 0
     assert manifest["legal"]["protocol_effect_candidate_documents"] == 12
     assert manifest["legal"]["protocol_effect_candidate_partners"] == 11
     assert manifest["legal"]["protocol_effect_candidate_scopes"] == 33
@@ -45,11 +47,14 @@ def test_committed_baseline_manifest_is_honest_and_consistent():
     assert manifest["legal"]["eu_relief_candidate_scopes"] == 90
     assert manifest["legal"]["remaining_eu_relief_candidate_scopes"] == 84
     assert manifest["legal"]["instrument_chain_candidate_scopes"] == 294
-    assert manifest["legal"]["instrument_chain_assembled_scopes"] == 260
-    assert manifest["legal"]["instrument_chain_blocked_scopes"] == 34
-    assert manifest["legal"]["instrument_chain_blocked_partners"] == 12
-    assert manifest["legal"]["mli_wht_effect_candidate_partners"] == 62
-    assert manifest["legal"]["remaining_mli_wht_effect_candidate_partners"] == 60
+    assert manifest["legal"]["instrument_chain_assembled_scopes"] == 294
+    assert manifest["legal"]["instrument_chain_blocked_scopes"] == 0
+    assert manifest["legal"]["instrument_chain_blocked_partners"] == 0
+    assert manifest["legal"]["mli_wht_effect_candidate_partners"] == 64
+    assert manifest["legal"]["remaining_mli_wht_effect_candidate_partners"] == 62
+    assert manifest["legal"]["mli_no_current_effect_determinations"] == 7
+    assert manifest["legal"]["status_instrument_candidate_partners"] == 2
+    assert manifest["legal"]["resolved_instrument_chain_blocker_scopes"] == 34
     assert manifest["golden_cases"] == 8
     assert manifest["production_ready"] is False
     assert len(manifest["manifest_sha256"]) == 64

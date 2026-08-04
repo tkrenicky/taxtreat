@@ -25,9 +25,9 @@ withholding-tax rate.
 | Review-ready legal scopes | 6/300 (AT/CH; independent approval pending) |
 | Pending legal consolidation | 294/300 |
 | Official MF instrument inventory | 100/100 treaty partners |
-| Remaining base-treaty review candidates | 294/294; 293 with rate candidates |
-| Official MLI WHT effect candidates | 62 partners; 60 outside AT/CH |
-| Remaining instrument-chain candidates | 260 assembled; 34 blocked across 12 partners |
+| Remaining base-treaty review candidates | 294/294; 293 numeric-rate candidates + 1 explicit no-cap conclusion |
+| Official MLI WHT effect candidates | 64 partners; 62 outside AT/CH; 7 signed/no-current-effect determinations |
+| Remaining instrument-chain candidates | 294 assembled; 0 hard-blocked |
 | Fully approved legal scopes | 0/300 |
 | Executable golden cases | 8 (all intentionally `REVIEW_REQUIRED`) |
 | Production readiness | blocked by source and legal approval gates |
@@ -78,9 +78,10 @@ The protocol overlay is now consolidated as a review-only candidate layer for
 all 11 non-pilot partners whose MF inventory lists a protocol: 12 official
 protocol instruments and 33 country-income scopes. It records explicit rate,
 exemption, definition and no-WHT-effect conclusions, with source-document
-hashes and candidate effective dates. Later status instruments for Belarus and
-Russia remain explicit blockers. No protocol candidate is loaded into the
-active decision engine before MLI/status, domestic/EU and four-eyes review.
+hashes and candidate effective dates. The later Belarus and Russia status
+instruments are now represented as article-specific, date-sensitive review
+candidates. No protocol or status candidate is loaded into the active decision
+engine before full-chain and four-eyes review.
 
 The Czech domestic-law layer now covers all 300 scopes as review-only
 candidates. It distinguishes the standard 15% withholding rate from the
@@ -94,13 +95,14 @@ blockers. The 84 non-pilot relief scopes remain outside the active engine until
 four-eyes approval.
 
 The candidate layers are now joined by a deterministic instrument-chain
-registry for all 294 non-pilot scopes. It records 260 mechanically assembled
-chains and 34 chains with hard pre-review gaps. The blocked queue is explicit:
-27 scopes across nine partners still require an MLI WHT effect determination,
-six Belarus/Russia scopes require post-protocol status consolidation, and Greek
-dividends require manual consolidation because the treaty has no rate cap. An
-assembled chain is not a legal approval: all 294 records remain `needs_review`,
-outside active legal rules and unable to produce a client-facing rate.
+registry for all 294 non-pilot scopes. The former 34-scope blocker queue is now
+resolved at candidate level: Estonia and Sweden have explicit MLI WHT dates;
+seven signed-but-unratified partners have explicit no-current-effect records;
+Belarus and Russia have article-specific suspension overlays; and Greek
+dividends are represented as source-state taxation without a numeric treaty
+ceiling. All 294 chains are mechanically assembled. Assembly is not legal
+approval: every record remains `needs_review`, outside active legal rules and
+unable to produce a client-facing rate.
 
 ## Important legal boundary
 

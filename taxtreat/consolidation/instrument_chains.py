@@ -20,6 +20,7 @@ DEFAULT_MLI_EFFECTS = CONSOLIDATION_DIR / "mli_wht_effects.json"
 DEFAULT_DOMESTIC_EU = (
     CONSOLIDATION_DIR / "cz_domestic_eu_candidates.json"
 )
+DEFAULT_BLOCKER_RESOLUTIONS = CONSOLIDATION_DIR / "blocker_resolutions.json"
 DEFAULT_OUTPUT = (
     CONSOLIDATION_DIR / "remaining_294_instrument_chains.json"
 )
@@ -63,11 +64,14 @@ def _candidate_sha256(scope: dict[str, Any]) -> str:
 def _mli_status(
     inventory: dict[str, Any],
     effect: dict[str, Any] | None,
+    resolution: dict[str, Any] | None,
 ) -> str:
     if not inventory["mli_listed"]:
         return "not_listed"
     if effect is not None:
         return "wht_effect_candidate_available"
+    if resolution is not None:
+        return resolution["resolution_status"]
     if inventory["mli_notice_available"]:
         return "official_notice_requires_wht_effect_extraction"
     return "matching_and_effective_date_required"
@@ -79,17 +83,32 @@ def _build_scope(
     base: dict[str, Any],
     protocol: dict[str, Any] | None,
     mli_effect: dict[str, Any] | None,
+    mli_resolution: dict[str, Any] | None,
+    status_instrument: dict[str, Any] | None,
+    base_resolution: dict[str, Any] | None,
     domestic: dict[str, Any],
     dataset_releases: dict[str, str],
 ) -> dict[str, Any]:
     country = base["recipient_country"]
     income_type = base["income_type"]
     protocol_required = inventory["protocol_listed"]
-    mli_status = _mli_status(inventory, mli_effect)
+    mli_status = _mli_status(inventory, mli_effect, mli_resolution)
     relief = domestic["relief_candidate"]
+    mli_candidate = mli_effect or mli_resolution
+    status_article_suspended = (
+        status_instrument is not None
+        and base["article_number"] in status_instrument["suspended_articles"]
+    )
 
     hard_blockers: list[str] = []
-    if not base["rate_candidates"]:
+    no_cap_resolved = (
+        not base["rate_candidates"]
+        and base.get("treaty_rate_cap_status") == "no_numeric_cap"
+        and base_resolution is not None
+        and base_resolution["article_text_sha256"]
+        == base["article_text_sha256"]
+    )
+    if not base["rate_candidates"] and not no_cap_resolved:
         hard_blockers.append("base_treaty_rate_manual_consolidation")
     if protocol_required and protocol is None:
         hard_blockers.append("protocol_effect_candidate_missing")
@@ -97,7 +116,7 @@ def _build_scope(
         hard_blockers.append("mli_wht_effect_extraction")
     elif mli_status == "matching_and_effective_date_required":
         hard_blockers.append("mli_matching_and_effective_date")
-    if country in {"BY", "RU"}:
+    if country in {"BY", "RU"} and status_instrument is None:
         hard_blockers.append("post_protocol_status_instrument_consolidation")
 
     review_tasks = {
@@ -111,6 +130,14 @@ def _build_scope(
         review_tasks.add("protocol_effect_candidate_review")
     if mli_effect is not None:
         review_tasks.add("mli_wht_effect_candidate_review")
+    if mli_resolution is not None:
+        review_tasks.add("mli_status_resolution_candidate_review")
+    if status_instrument is not None:
+        review_tasks.add("status_instrument_candidate_review")
+    if status_article_suspended:
+        review_tasks.add("domestic_law_fallback_review")
+    if no_cap_resolved:
+        review_tasks.add("base_treaty_no_cap_candidate_review")
     if relief is not None:
         review_tasks.update(
             {
@@ -144,6 +171,17 @@ def _build_scope(
             "article_text_sha256": base["article_text_sha256"],
             "candidate_rates": sorted(
                 {candidate["rate"] for candidate in base["rate_candidates"]}
+            ),
+            "treaty_rate_cap_status": base.get(
+                "treaty_rate_cap_status", "unresolved"
+            ),
+            "source_state_taxation_candidate": base.get(
+                "source_state_taxation_candidate"
+            ),
+            "semantic_resolution_status": (
+                base_resolution["resolution_status"]
+                if base_resolution is not None
+                else None
             ),
             "candidate_status": base["candidate_status"],
             "risk_flags": base["risk_flags"],
@@ -182,11 +220,13 @@ def _build_scope(
         "mli": {
             "status": mli_status,
             "effect_id": (
-                mli_effect.get("effect_id") if mli_effect is not None else None
+                mli_candidate.get("effect_id")
+                if mli_candidate is not None
+                else None
             ),
             "effective_from": (
-                mli_effect.get("effective_from")
-                if mli_effect is not None
+                mli_candidate.get("effective_from")
+                if mli_candidate is not None
                 else None
             ),
             "source_page_id": (
@@ -199,7 +239,42 @@ def _build_scope(
                 if mli_effect is not None
                 else None
             ),
+            "resolution_source_ids": (
+                mli_resolution.get("source_ids", [])
+                if mli_resolution is not None
+                else []
+            ),
+            "checked_as_of": (
+                mli_resolution.get("checked_as_of")
+                if mli_resolution is not None
+                else None
+            ),
         },
+        "treaty_status_instrument": (
+            {
+                "candidate_status": (
+                    "article_application_suspended"
+                    if status_article_suspended
+                    else "article_not_suspended_by_notice"
+                ),
+                "effect_kind": status_instrument["effect_kind"],
+                "source_id": status_instrument["source_id"],
+                "effective_from": status_instrument["effective_from"],
+                "effective_to": status_instrument["effective_to"],
+                "suspended_articles": status_instrument[
+                    "suspended_articles"
+                ],
+            }
+            if status_instrument is not None
+            else {
+                "candidate_status": "not_listed",
+                "effect_kind": None,
+                "source_id": None,
+                "effective_from": None,
+                "effective_to": None,
+                "suspended_articles": [],
+            }
+        ),
         "czech_domestic_law": {
             "candidate_status": domestic["candidate_status"],
             "effective_from": domestic["domestic_rate_candidate"][
@@ -245,12 +320,14 @@ def build_instrument_chains(
     protocol_effects_path: str | Path = DEFAULT_PROTOCOL_EFFECTS,
     mli_effects_path: str | Path = DEFAULT_MLI_EFFECTS,
     domestic_eu_path: str | Path = DEFAULT_DOMESTIC_EU,
+    blocker_resolutions_path: str | Path = DEFAULT_BLOCKER_RESOLUTIONS,
 ) -> dict[str, Any]:
     inventory_payload = _read_json(inventory_path)
     base_payload = _read_json(base_candidates_path)
     protocol_payload = _read_json(protocol_effects_path)
     mli_payload = _read_json(mli_effects_path)
     domestic_payload = _read_json(domestic_eu_path)
+    resolutions_payload = _read_json(blocker_resolutions_path)
 
     inventory = {
         row["iso2"]: row for row in inventory_payload.get("partners", [])
@@ -278,6 +355,24 @@ def build_instrument_chains(
     }
     if len(mli_effects) != 62:
         raise ValueError("MLI WHT effect registry must cover 62 partners.")
+    mli_resolutions = {
+        row["recipient_country"]: row
+        for row in resolutions_payload.get("mli_resolutions", [])
+    }
+    if len(mli_resolutions) != 9:
+        raise ValueError("MLI blocker resolutions must cover 9 partners.")
+    status_instruments = {
+        row["recipient_country"]: row
+        for row in resolutions_payload.get("status_instruments", [])
+    }
+    if set(status_instruments) != {"BY", "RU"}:
+        raise ValueError("Status-instrument resolutions must cover BY and RU.")
+    base_resolutions = {
+        (row["recipient_country"], row["income_type"]): row
+        for row in resolutions_payload.get("base_treaty_resolutions", [])
+    }
+    if set(base_resolutions) != {("GR", "dividend")}:
+        raise ValueError("Base-treaty resolutions must cover Greek dividends.")
 
     expected_keys = {
         (country, income_type)
@@ -297,6 +392,7 @@ def build_instrument_chains(
         "protocol": protocol_payload["dataset_release"],
         "mli": mli_payload["dataset_release"],
         "domestic_eu": domestic_payload["dataset_release"],
+        "blocker_resolutions": resolutions_payload["dataset_release"],
     }
     scopes = []
     for country, income_type in sorted(expected_keys):
@@ -306,6 +402,9 @@ def build_instrument_chains(
                 base=base[(country, income_type)],
                 protocol=protocols.get((country, income_type)),
                 mli_effect=mli_effects.get(country),
+                mli_resolution=mli_resolutions.get(country),
+                status_instrument=status_instruments.get(country),
+                base_resolution=base_resolutions.get((country, income_type)),
                 domestic=domestic[(country, income_type)],
                 dataset_releases=dataset_releases,
             )
@@ -331,15 +430,15 @@ def build_instrument_chains(
 
     assembled = sum(scope["candidate_chain_complete"] for scope in scopes)
     blocked = len(scopes) - assembled
-    if (assembled, blocked) != (260, 34):
+    if (assembled, blocked) != (294, 0):
         raise ValueError(
-            "Expected 260 assembled and 34 blocked candidate chains; "
+            "Expected all 294 candidate chains to be assembled; "
             f"found {assembled} and {blocked}."
         )
 
     return {
         "schema_version": 1,
-        "dataset_release": "remaining-294-instrument-chains-2026-08-04.1",
+        "dataset_release": "remaining-294-instrument-chains-2026-08-04.2",
         "source_cutoffs": {
             "mf_instrument_inventory": inventory_payload["source_page"][
                 "legal_data_cutoff"
@@ -351,6 +450,9 @@ def build_instrument_chains(
             "mli_wht_effect_candidates": mli_payload["legal_data_cutoff"],
             "czech_domestic_eu_candidates": domestic_payload[
                 "legal_data_cutoff"
+            ],
+            "blocker_resolution_status": resolutions_payload[
+                "legal_status_as_of"
             ],
         },
         "scope_exclusions": {
