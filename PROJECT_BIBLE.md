@@ -104,9 +104,9 @@ The source-ingestion and base-treaty parser phases were closed on 3 August 2026.
 | Review-ready AT/CH legal scopes | 6/6 |
 | Pending legal consolidation | 294/300 |
 | Official MF instrument inventories | 100/100 partners |
-| Remaining base-treaty candidate scopes | 294/294; 293 with rate candidates |
-| Official MLI WHT effect candidates | 62 partners; 60 outside AT/CH |
-| Remaining instrument-chain candidates | 260 assembled; 34 blocked |
+| Remaining base-treaty candidate scopes | 294/294; 293 numeric-rate candidates + 1 explicit no-cap conclusion |
+| Official MLI WHT effect candidates | 64 partners; 62 outside AT/CH; 7 signed/no-current-effect determinations |
+| Remaining instrument-chain candidates | 294 assembled; 0 hard-blocked |
 | Independently approved legal scopes | 0/300 |
 | Exact tracked duplicates | 0 |
 
@@ -125,11 +125,11 @@ These percentages are planning estimates, not legal-quality scores.
 | MLI layer | AT/CH pilot complete |
 | All-country instrument inventory | 100/100 official MF rows captured |
 | Remaining base-treaty candidates | 294/294 captured; semantic review pending |
-| Remaining MLI WHT effect dates | 60 official candidates captured; approval pending |
+| Remaining MLI WHT effect dates | 62 effect candidates plus 7 explicit no-current-effect determinations; approval pending |
 | Protocol-effect candidates | 33 scopes / 11 partners / 12 instruments |
 | Czech domestic-law candidates | 300/300 scopes; 294 outside pilot |
 | Section 19 relief candidates | 90 scopes / 30 partners; 84 outside pilot |
-| Remaining instrument-chain candidates | 260/294 assembled; 34 blocked across 12 partners |
+| Remaining instrument-chain candidates | 294/294 assembled; 0 hard-blocked |
 | Registered legal scope | 300/300 scopes |
 | Structured legal rules | 6/300 scopes; AT/CH pilot complete |
 | Deterministic rule engine | AT/CH layered path complete |
@@ -152,9 +152,9 @@ calculation path.
 For the 11 non-pilot partners with protocols, the protocol layer is now stored
 as 33 structured review candidates based on 12 official instruments. These
 records distinguish rate replacements, conditional exemptions, definition or
-scope changes and protocols with no Article 10-12 effect. They remain outside
-the active engine; Belarus and Russia additionally retain blockers for later
-status instruments.
+scope changes and protocols with no Article 10-12 effect. Belarus and Russia
+now also have article-specific, date-sensitive status-instrument candidates.
+All records remain outside the active engine.
 
 The Czech domestic-law candidate layer now covers all 300 scopes and keeps the
 standard 15% rate separate from the protective 35% path. Section 19 relief is
@@ -163,14 +163,13 @@ outside the pilot. These records preserve statutory ownership, duration,
 beneficial-owner, section 38nb and anti-abuse conditions and remain outside the
 active engine pending four-eyes approval.
 
-The four review-only candidate layers are now joined in one deterministic
-instrument-chain registry for the remaining 294 scopes. It identifies 260
-mechanically assembled chains and 34 hard-blocked chains across 12 partners:
-27 scopes lack a completed MLI WHT effect determination, six Belarus/Russia
-scopes require later-status consolidation, and Greek dividends require manual
-base-rate treatment because the treaty contains no source-state rate cap.
-Assembly does not promote a scope to `review_ready`; every non-pilot chain still
-requires semantic and independent legal review.
+The review-only candidate layers are now joined in one deterministic
+instrument-chain registry for the remaining 294 scopes. All 294 are
+mechanically assembled. The former 34 gaps are represented explicitly: two
+additional MLI WHT effect candidates, seven signed-but-unratified no-effect
+determinations, two status-instrument overlays and one Greek dividend no-cap
+conclusion. Assembly does not promote a scope to `review_ready`; every
+non-pilot chain still requires semantic and independent legal review.
 
 ## 7. Definition of core completion
 

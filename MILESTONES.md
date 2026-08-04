@@ -114,10 +114,11 @@ Remaining instrument-chain assembly completed:
 
 - all 294 non-pilot scopes deterministically join the official inventory,
   base-treaty, protocol, MLI, Czech domestic and section 19 candidate layers;
-- 260 scopes have every mechanically required candidate layer assembled;
-- 34 scopes across 12 partners retain explicit hard blockers: 27 MLI WHT
-  effect gaps, six Belarus/Russia later-status gaps and Greek dividends without
-  a treaty rate cap;
+- all 294 scopes have every mechanically required candidate layer assembled;
+- the former 34-scope blocker queue is resolved through two additional MLI WHT
+  effect candidates, seven signed-but-unratified no-current-effect records,
+  article-specific BY/RU suspension overlays and an explicit Greek dividend
+  no-numeric-cap conclusion;
 - layer-specific rates remain separate and no chain contains or selects a final
   rate;
 - all 294 chains remain `needs_review`, outside active legal rules and subject

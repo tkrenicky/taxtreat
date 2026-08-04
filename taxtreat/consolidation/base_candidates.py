@@ -10,6 +10,9 @@ from taxtreat.engine.extractors import dividend_rule, interest_rule, royalty_rul
 from taxtreat.engine.models import Rule
 from taxtreat.engine.article_classifier import classify_article
 from taxtreat.registry.legal_scope import load_partner_registry
+from taxtreat.consolidation.blocker_resolutions import (
+    GREEK_DIVIDEND_ARTICLE_SHA256,
+)
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -117,6 +120,31 @@ def _rate_candidates(
     return rows, discarded
 
 
+def _source_state_taxation_candidate(
+    *,
+    iso2: str,
+    income_type: str,
+    article_text: str,
+) -> dict[str, Any] | None:
+    if (iso2, income_type) != ("GR", "dividend"):
+        return None
+    article_hash = _sha256(article_text)
+    if article_hash != GREEK_DIVIDEND_ARTICLE_SHA256:
+        raise ValueError(
+            "Greek dividend Article 10 changed; the no-cap resolution must "
+            "be reviewed again."
+        )
+    first_paragraph = article_text.split("\n2.", maxsplit=1)[0]
+    return {
+        "candidate_status": "source_state_taxation_without_numeric_treaty_cap",
+        "rate_cap_status": "no_numeric_cap",
+        "source_state_taxation": "permitted_under_domestic_law",
+        "legal_basis": "Article 10(1)",
+        "source_text": first_paragraph,
+        "source_text_sha256": _sha256(first_paragraph),
+    }
+
+
 def build_base_candidates(
     *,
     inventory_path: str | Path = DEFAULT_INVENTORY,
@@ -152,12 +180,22 @@ def build_base_candidates(
                 extracted,
                 income_type=income_type,
             )
+            source_state_taxation_candidate = _source_state_taxation_candidate(
+                iso2=iso2,
+                income_type=income_type,
+                article_text=article_text,
+            )
             flags = _risk_flags(
                 income_type,
                 article_text,
                 candidates,
                 discarded_candidates,
             )
+            if source_state_taxation_candidate is not None:
+                flags = sorted(
+                    (set(flags) - {"no_rate_candidate"})
+                    | {"no_numeric_treaty_cap"}
+                )
             blockers = ["independent_legal_review"]
             if inventory_row["protocol_listed"]:
                 blockers.append("protocol_consolidation")
@@ -190,6 +228,16 @@ def build_base_candidates(
                     "article_text": article_text,
                     "article_text_sha256": _sha256(article_text),
                     "rate_candidates": candidates,
+                    "treaty_rate_cap_status": (
+                        source_state_taxation_candidate["rate_cap_status"]
+                        if source_state_taxation_candidate is not None
+                        else "numeric_candidates_extracted"
+                        if candidates
+                        else "unresolved"
+                    ),
+                    "source_state_taxation_candidate": (
+                        source_state_taxation_candidate
+                    ),
                     "discarded_rate_candidates": discarded_candidates,
                     "extractor_status": extracted.extraction_status,
                     "risk_flags": flags,
@@ -197,6 +245,10 @@ def build_base_candidates(
                     "candidate_status": (
                         "base_rate_candidate_extracted"
                         if candidates
+                        else source_state_taxation_candidate[
+                            "candidate_status"
+                        ]
+                        if source_state_taxation_candidate is not None
                         else "manual_rate_extraction_required"
                     ),
                     "verification_status": "needs_review",
@@ -207,7 +259,7 @@ def build_base_candidates(
         raise ValueError(f"Expected 294 remaining scopes, found {len(scopes)}.")
     return {
         "schema_version": 1,
-        "dataset_release": "remaining-294-base-candidates-2026-08-03.1",
+        "dataset_release": "remaining-294-base-candidates-2026-08-04.2",
         "legal_data_cutoff": inventory["source_page"]["legal_data_cutoff"],
         "canonical_source": "data/parsed/*.json",
         "scope_exclusions": {

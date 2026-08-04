@@ -5,7 +5,10 @@ import json
 from pathlib import Path
 import pytest
 
-from taxtreat.consolidation.base_candidates import build_base_candidates
+from taxtreat.consolidation.base_candidates import (
+    _source_state_taxation_candidate,
+    build_base_candidates,
+)
 from taxtreat.consolidation import mf_inventory, mli_effects
 from taxtreat.consolidation.mf_inventory import build_inventory
 
@@ -94,6 +97,35 @@ def test_known_false_percentages_are_quarantined_not_promoted():
         20.0,
     }
     assert "dividend_special_cases_not_fully_structured" in germany_dividend["risk_flags"]
+
+
+def test_greek_dividends_are_explicitly_uncapped_not_missing():
+    scopes = json.loads(CANDIDATES.read_text(encoding="utf-8"))["scopes"]
+    greek = next(
+        scope
+        for scope in scopes
+        if scope["recipient_country"] == "GR"
+        and scope["income_type"] == "dividend"
+    )
+
+    assert greek["rate_candidates"] == []
+    assert greek["candidate_status"] == (
+        "source_state_taxation_without_numeric_treaty_cap"
+    )
+    assert greek["treaty_rate_cap_status"] == "no_numeric_cap"
+    assert greek["source_state_taxation_candidate"]["legal_basis"] == (
+        "Article 10(1)"
+    )
+    assert greek["risk_flags"] == ["no_numeric_treaty_cap"]
+
+
+def test_greek_no_cap_resolution_rejects_article_text_drift():
+    with pytest.raises(ValueError, match="changed"):
+        _source_state_taxation_candidate(
+            iso2="GR",
+            income_type="dividend",
+            article_text="changed official text",
+        )
 
 
 def test_candidate_generation_is_deterministic():
