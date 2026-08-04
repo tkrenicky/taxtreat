@@ -27,6 +27,7 @@ withholding-tax rate.
 | Official MF instrument inventory | 100/100 treaty partners |
 | Remaining base-treaty review candidates | 294/294; 293 with rate candidates |
 | Official MLI WHT effect candidates | 62 partners; 60 outside AT/CH |
+| Remaining instrument-chain candidates | 260 assembled; 34 blocked across 12 partners |
 | Fully approved legal scopes | 0/300 |
 | Executable golden cases | 8 (all intentionally `REVIEW_REQUIRED`) |
 | Production readiness | blocked by source and legal approval gates |
@@ -92,6 +93,15 @@ connection, beneficial-owner and section 38nb conditions, and anti-abuse
 blockers. The 84 non-pilot relief scopes remain outside the active engine until
 four-eyes approval.
 
+The candidate layers are now joined by a deterministic instrument-chain
+registry for all 294 non-pilot scopes. It records 260 mechanically assembled
+chains and 34 chains with hard pre-review gaps. The blocked queue is explicit:
+27 scopes across nine partners still require an MLI WHT effect determination,
+six Belarus/Russia scopes require post-protocol status consolidation, and Greek
+dividends require manual consolidation because the treaty has no rate cap. An
+assembled chain is not a legal approval: all 294 records remain `needs_review`,
+outside active legal rules and unable to produce a client-facing rate.
+
 ## Important legal boundary
 
 The completed parser phase demonstrates that the relevant base-treaty articles can be reliably identified and extracted.
@@ -110,7 +120,7 @@ Until these layers are completed and validated, unresolved cases must not be pre
 - `data/legal_rules/` — structured legal-rule datasets
 - `data/legal_sources/` — official legal-source registry
 - `data/legal_facts/` — date-sensitive legal facts
-- `data/legal_consolidation/` — fail-closed treaty, MLI and protocol candidates
+- `data/legal_consolidation/` — fail-closed layer and instrument-chain candidates
 - `data/golden_cases/` — executable end-to-end legal cases
 - `knowledge_base/` — country-pair knowledge records
 - `taxtreat/parser/` — extraction and article-selection logic

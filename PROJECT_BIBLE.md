@@ -1,6 +1,6 @@
 # TaxTreat Project Bible
 
-Status date: **3 August 2026**
+Status date: **4 August 2026**
 
 This document defines the product scope, architecture, quality standard and current development status of TaxTreat.
 
@@ -106,6 +106,7 @@ The source-ingestion and base-treaty parser phases were closed on 3 August 2026.
 | Official MF instrument inventories | 100/100 partners |
 | Remaining base-treaty candidate scopes | 294/294; 293 with rate candidates |
 | Official MLI WHT effect candidates | 62 partners; 60 outside AT/CH |
+| Remaining instrument-chain candidates | 260 assembled; 34 blocked |
 | Independently approved legal scopes | 0/300 |
 | Exact tracked duplicates | 0 |
 
@@ -128,6 +129,7 @@ These percentages are planning estimates, not legal-quality scores.
 | Protocol-effect candidates | 33 scopes / 11 partners / 12 instruments |
 | Czech domestic-law candidates | 300/300 scopes; 294 outside pilot |
 | Section 19 relief candidates | 90 scopes / 30 partners; 84 outside pilot |
+| Remaining instrument-chain candidates | 260/294 assembled; 34 blocked across 12 partners |
 | Registered legal scope | 300/300 scopes |
 | Structured legal rules | 6/300 scopes; AT/CH pilot complete |
 | Deterministic rule engine | AT/CH layered path complete |
@@ -160,6 +162,15 @@ represented for 30 eligible partner jurisdictions and 90 scopes, including 84
 outside the pilot. These records preserve statutory ownership, duration,
 beneficial-owner, section 38nb and anti-abuse conditions and remain outside the
 active engine pending four-eyes approval.
+
+The four review-only candidate layers are now joined in one deterministic
+instrument-chain registry for the remaining 294 scopes. It identifies 260
+mechanically assembled chains and 34 hard-blocked chains across 12 partners:
+27 scopes lack a completed MLI WHT effect determination, six Belarus/Russia
+scopes require later-status consolidation, and Greek dividends require manual
+base-rate treatment because the treaty contains no source-state rate cap.
+Assembly does not promote a scope to `review_ready`; every non-pilot chain still
+requires semantic and independent legal review.
 
 ## 7. Definition of core completion
 

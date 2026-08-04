@@ -33,6 +33,9 @@ PROTOCOL_EFFECTS = LEGAL_CONSOLIDATION_DIR / "protocol_effect_candidates.json"
 DOMESTIC_EU_CANDIDATES = (
     LEGAL_CONSOLIDATION_DIR / "cz_domestic_eu_candidates.json"
 )
+INSTRUMENT_CHAINS = (
+    LEGAL_CONSOLIDATION_DIR / "remaining_294_instrument_chains.json"
+)
 MANIFEST_DIR = ROOT / "data" / "manifests"
 REGISTRY_DIR = ROOT / "data" / "registries"
 SOURCE_MANIFEST = MANIFEST_DIR / "source_manifest.json"
@@ -142,6 +145,15 @@ def build_legal_registry() -> dict[str, Any]:
     if len(domestic_eu_candidates) != 300:
         raise ValueError(
             "Czech domestic/EU candidate registry must cover 300 scopes."
+        )
+    instrument_chains_payload = _read_json(INSTRUMENT_CHAINS)
+    instrument_chains = {
+        (row["recipient_country"], row["income_type"]): row
+        for row in instrument_chains_payload.get("scopes", [])
+    }
+    if len(instrument_chains) != 294:
+        raise ValueError(
+            "Instrument-chain candidate registry must cover 294 scopes."
         )
     legal_sources = {}
     for source_path in sorted(LEGAL_SOURCE_DIR.glob("*.json")):
@@ -333,6 +345,46 @@ def build_legal_registry() -> dict[str, Any]:
                     )
                 ]["relief_candidate"] or {}
             ).get("regime"),
+            "candidate_chain_status": (
+                "pilot_consolidated"
+                if expected["recipient_country"] in {"AT", "CH"}
+                else instrument_chains[
+                    (
+                        expected["recipient_country"],
+                        expected["income_type"],
+                    )
+                ]["chain_status"]
+            ),
+            "candidate_chain_complete": (
+                True
+                if expected["recipient_country"] in {"AT", "CH"}
+                else instrument_chains[
+                    (
+                        expected["recipient_country"],
+                        expected["income_type"],
+                    )
+                ]["candidate_chain_complete"]
+            ),
+            "candidate_chain_blockers": (
+                []
+                if expected["recipient_country"] in {"AT", "CH"}
+                else instrument_chains[
+                    (
+                        expected["recipient_country"],
+                        expected["income_type"],
+                    )
+                ]["hard_blockers"]
+            ),
+            "candidate_chain_review_tasks": (
+                ["independent_legal_review"]
+                if expected["recipient_country"] in {"AT", "CH"}
+                else instrument_chains[
+                    (
+                        expected["recipient_country"],
+                        expected["income_type"],
+                    )
+                ]["legal_review_tasks"]
+            ),
         }
 
     for path in sorted(RULE_DIR.glob("*.json")):
@@ -440,6 +492,7 @@ def build_release_manifest() -> dict[str, Any]:
     mli_effects = _read_json(MLI_EFFECTS)["effects"]
     protocol_effects = _read_json(PROTOCOL_EFFECTS)
     domestic_eu_candidates = _read_json(DOMESTIC_EU_CANDIDATES)
+    instrument_chains = _read_json(INSTRUMENT_CHAINS)
     base_candidate_scopes_with_rates = sum(
         bool(scope["rate_candidates"]) for scope in base_candidates
     )
@@ -521,6 +574,18 @@ def build_release_manifest() -> dict[str, Any]:
                 and scope["recipient_country"] not in {"AT", "CH"}
                 for scope in domestic_eu_candidates["scopes"]
             ),
+            "instrument_chain_candidate_scopes": instrument_chains[
+                "summary"
+            ]["total_scopes"],
+            "instrument_chain_assembled_scopes": instrument_chains[
+                "summary"
+            ]["candidate_chain_assembled_scopes"],
+            "instrument_chain_blocked_scopes": instrument_chains[
+                "summary"
+            ]["candidate_chain_blocked_scopes"],
+            "instrument_chain_blocked_partners": instrument_chains[
+                "summary"
+            ]["blocked_partners"],
             "production_coverage_percent": (
                 round(len(verified_scopes) / len(scopes) * 100, 2)
                 if scopes

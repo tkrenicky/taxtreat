@@ -44,6 +44,10 @@ def test_committed_baseline_manifest_is_honest_and_consistent():
     assert manifest["legal"]["eu_relief_candidate_partners"] == 30
     assert manifest["legal"]["eu_relief_candidate_scopes"] == 90
     assert manifest["legal"]["remaining_eu_relief_candidate_scopes"] == 84
+    assert manifest["legal"]["instrument_chain_candidate_scopes"] == 294
+    assert manifest["legal"]["instrument_chain_assembled_scopes"] == 260
+    assert manifest["legal"]["instrument_chain_blocked_scopes"] == 34
+    assert manifest["legal"]["instrument_chain_blocked_partners"] == 12
     assert manifest["legal"]["mli_wht_effect_candidate_partners"] == 62
     assert manifest["legal"]["remaining_mli_wht_effect_candidate_partners"] == 60
     assert manifest["golden_cases"] == 8

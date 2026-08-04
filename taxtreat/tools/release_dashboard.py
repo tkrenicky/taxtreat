@@ -31,6 +31,10 @@ def render() -> str:
         f"{legal['eu_relief_candidate_scopes']} scopes / "
         f"{legal['eu_relief_candidate_partners']} partners "
         f"({legal['remaining_eu_relief_candidate_scopes']} remaining scopes)",
+        "Remaining instrument chains: "
+        f"{legal['instrument_chain_assembled_scopes']} assembled / "
+        f"{legal['instrument_chain_blocked_scopes']} blocked "
+        f"({legal['instrument_chain_blocked_partners']} partners)",
         "Official MLI WHT effect candidates: "
         f"{legal['mli_wht_effect_candidate_partners']}/62",
         f"Review-ready legal scopes: {legal['review_ready_scopes']}/300",

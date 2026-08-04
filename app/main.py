@@ -112,6 +112,17 @@ def list_jurisdictions():
         if scope["base_candidate_status"]
         == "manual_rate_extraction_required"
     }
+    candidate_chain_assembled = {
+        (scope["recipient_country"], scope["income_type"])
+        for scope in registry["scopes"]
+        if scope["candidate_chain_status"]
+        in {"candidate_chain_assembled", "pilot_consolidated"}
+    }
+    candidate_chain_blocked = {
+        (scope["recipient_country"], scope["income_type"])
+        for scope in registry["scopes"]
+        if scope["candidate_chain_status"] == "candidate_chain_blocked"
+    }
     jurisdictions = []
     for partner in load_partner_registry():
         jurisdictions.append(
@@ -149,6 +160,18 @@ def list_jurisdictions():
                     for income_type in ("dividend", "interest", "royalty")
                     if (partner["iso2"], income_type)
                     in manual_rate_extraction
+                ],
+                "candidate_chain_assembled_income_types": [
+                    income_type
+                    for income_type in ("dividend", "interest", "royalty")
+                    if (partner["iso2"], income_type)
+                    in candidate_chain_assembled
+                ],
+                "candidate_chain_blocked_income_types": [
+                    income_type
+                    for income_type in ("dividend", "interest", "royalty")
+                    if (partner["iso2"], income_type)
+                    in candidate_chain_blocked
                 ],
             }
         )
