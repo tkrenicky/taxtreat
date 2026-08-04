@@ -91,8 +91,9 @@ Protocol candidate consolidation completed:
 - all 33 affected country-income scopes classified as rate replacement,
   conditional exemption, definition/scope change or confirmed no WHT change;
 - known BY, RU, SG and UZ rate effects represented as structured candidates;
-- later Belarus and Russia status instruments remain blocking and prevent a
-  historical protocol rate from being presented as current;
+- later Belarus and Russia status instruments are represented as
+  article-specific suspension overlays, resolving the former blocker without
+  presenting a historical protocol rate as current;
 - all 33 scopes remain `pending_consolidation` pending MLI/status,
   domestic/EU relief and independent legal approval.
 
@@ -123,6 +124,19 @@ Remaining instrument-chain assembly completed:
   rate;
 - all 294 chains remain `needs_review`, outside active legal rules and subject
   to semantic and independent legal approval.
+
+Legal-review queue baseline completed:
+
+- deterministic review packets cover all 294 non-pilot country-income scopes;
+- every packet is bound to the immutable instrument-chain candidate hash and
+  records all evidence source IDs and scope-specific legal-review tasks;
+- primary review, rule-snapshot binding and independent approval are modeled as
+  separate states;
+- approval fails closed if the candidate hash is stale, any evidence artifact
+  hash is missing, no canonical rule snapshot exists, or reviewer and approver
+  are the same person;
+- all 294 packets currently await primary review and 0 are independently
+  approved or promotable into active legal rules.
 
 ## 🟡 Phase 4 — Deterministic WHT engine
 

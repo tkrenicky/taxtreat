@@ -117,6 +117,13 @@ def test_all_registered_jurisdictions_are_exposed():
         "royalty",
     ]
     assert by_code["DE"]["candidate_chain_blocked_income_types"] == []
+    assert by_code["DE"]["candidate_review_queued_income_types"] == [
+        "dividend",
+        "interest",
+        "royalty",
+    ]
+    assert by_code["DE"]["candidate_review_approved_income_types"] == []
+    assert by_code["AT"]["candidate_review_queued_income_types"] == []
     assert by_code["GR"]["manual_rate_extraction_income_types"] == []
     assert by_code["GR"]["candidate_chain_blocked_income_types"] == []
     assert by_code["GR"]["candidate_chain_assembled_income_types"] == [

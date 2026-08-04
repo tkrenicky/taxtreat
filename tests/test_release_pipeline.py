@@ -55,6 +55,15 @@ def test_committed_baseline_manifest_is_honest_and_consistent():
     assert manifest["legal"]["mli_no_current_effect_determinations"] == 7
     assert manifest["legal"]["status_instrument_candidate_partners"] == 2
     assert manifest["legal"]["resolved_instrument_chain_blocker_scopes"] == 34
+    assert manifest["legal"]["candidate_review_packets"] == 294
+    assert manifest["legal"]["candidate_review_awaiting_primary"] == 294
+    assert (
+        manifest["legal"]["candidate_review_awaiting_independent_approval"]
+        == 0
+    )
+    assert manifest["legal"]["candidate_review_independently_approved"] == 0
+    assert manifest["legal"]["candidate_review_approval_eligible"] == 0
+    assert manifest["legal"]["candidate_review_promotable"] == 0
     assert manifest["golden_cases"] == 8
     assert manifest["production_ready"] is False
     assert len(manifest["manifest_sha256"]) == 64
@@ -75,3 +84,32 @@ def test_release_manifest_files_are_valid_json():
         release.RELEASE_MANIFEST,
     ):
         assert json.loads(path.read_text(encoding="utf-8"))
+
+
+@pytest.mark.parametrize(
+    ("mutation", "match"),
+    [
+        ("missing", "must cover 294 scopes"),
+        ("scope_drift", "does not match the instrument-chain scopes"),
+        ("stale_hash", "has a stale candidate hash"),
+    ],
+)
+def test_release_registry_rejects_invalid_review_queue(
+    monkeypatch,
+    tmp_path,
+    mutation,
+    match,
+):
+    payload = json.loads(release.REVIEW_QUEUE.read_text(encoding="utf-8"))
+    if mutation == "missing":
+        payload["packets"].pop()
+    elif mutation == "scope_drift":
+        payload["packets"][0]["recipient_country"] = "AT"
+    else:
+        payload["packets"][0]["candidate_sha256"] = "0" * 64
+    target = tmp_path / "review-queue.json"
+    target.write_text(json.dumps(payload), encoding="utf-8")
+    monkeypatch.setattr(release, "REVIEW_QUEUE", target)
+
+    with pytest.raises(ValueError, match=match):
+        release.build_legal_registry()

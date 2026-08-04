@@ -4,6 +4,10 @@ import argparse
 from collections.abc import Callable
 import sys
 
+from taxtreat.consolidation.legal_review_queue import (
+    build_legal_review_queue,
+    write_legal_review_queue,
+)
 from taxtreat.pipeline.release import (
     build_legal_registry,
     build_release_manifest,
@@ -13,8 +17,15 @@ from taxtreat.pipeline.release import (
 
 
 Step = tuple[str, Callable[[], object]]
+
+
+def build_review_queue() -> None:
+    write_legal_review_queue(build_legal_review_queue())
+
+
 STEPS: list[Step] = [
     ("Build source manifest", build_source_manifest),
+    ("Build legal-review queue", build_review_queue),
     ("Build canonical legal registry", build_legal_registry),
     ("Build release manifest", build_release_manifest),
 ]

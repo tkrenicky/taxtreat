@@ -28,6 +28,7 @@ withholding-tax rate.
 | Remaining base-treaty review candidates | 294/294; 293 numeric-rate candidates + 1 explicit no-cap conclusion |
 | Official MLI WHT effect candidates | 64 partners; 62 outside AT/CH; 7 signed/no-current-effect determinations |
 | Remaining instrument-chain candidates | 294 assembled; 0 hard-blocked |
+| Candidate legal-review queue | 294/294 packets; 294 awaiting primary review; 0 approved/promotable |
 | Fully approved legal scopes | 0/300 |
 | Executable golden cases | 8 (all intentionally `REVIEW_REQUIRED`) |
 | Production readiness | blocked by source and legal approval gates |
@@ -104,6 +105,14 @@ ceiling. All 294 chains are mechanically assembled. Assembly is not legal
 approval: every record remains `needs_review`, outside active legal rules and
 unable to produce a client-facing rate.
 
+The 294 assembled chains now also have deterministic legal-review packets.
+Each packet is bound to the exact candidate hash and lists its evidence source
+IDs and required legal checks. The queue enforces separate reviewer and
+approver identities and rejects approval unless a canonical rule snapshot and
+SHA-256 hashes for every evidence artifact are attached. All 294 packets are
+currently `awaiting_primary_review`; none is approval-eligible, independently
+approved or promotable into the active engine.
+
 ## Important legal boundary
 
 The completed parser phase demonstrates that the relevant base-treaty articles can be reliably identified and extracted.
@@ -123,6 +132,7 @@ Until these layers are completed and validated, unresolved cases must not be pre
 - `data/legal_sources/` — official legal-source registry
 - `data/legal_facts/` — date-sensitive legal facts
 - `data/legal_consolidation/` — fail-closed layer and instrument-chain candidates
+- `data/legal_reviews/` — hash-bound review packets and four-eyes decisions
 - `data/golden_cases/` — executable end-to-end legal cases
 - `knowledge_base/` — country-pair knowledge records
 - `taxtreat/parser/` — extraction and article-selection logic

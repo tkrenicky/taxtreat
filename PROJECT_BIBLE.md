@@ -79,6 +79,8 @@ Zákony pro lidi is used as a readable verification mirror for Czech published a
             ↓
     Date-sensitive structured legal rules
             ↓
+    Hash-bound review packet and four-eyes approval
+            ↓
     Deterministic WHT engine
             ↓
     Golden-case and completeness validation
@@ -107,6 +109,7 @@ The source-ingestion and base-treaty parser phases were closed on 3 August 2026.
 | Remaining base-treaty candidate scopes | 294/294; 293 numeric-rate candidates + 1 explicit no-cap conclusion |
 | Official MLI WHT effect candidates | 64 partners; 62 outside AT/CH; 7 signed/no-current-effect determinations |
 | Remaining instrument-chain candidates | 294 assembled; 0 hard-blocked |
+| Candidate legal-review packets | 294/294 queued; 0 approved/promotable |
 | Independently approved legal scopes | 0/300 |
 | Exact tracked duplicates | 0 |
 
@@ -130,6 +133,7 @@ These percentages are planning estimates, not legal-quality scores.
 | Czech domestic-law candidates | 300/300 scopes; 294 outside pilot |
 | Section 19 relief candidates | 90 scopes / 30 partners; 84 outside pilot |
 | Remaining instrument-chain candidates | 294/294 assembled; 0 hard-blocked |
+| Candidate legal-review queue | 294/294 packets awaiting primary review; 0 approved/promotable |
 | Registered legal scope | 300/300 scopes |
 | Structured legal rules | 6/300 scopes; AT/CH pilot complete |
 | Deterministic rule engine | AT/CH layered path complete |
@@ -170,6 +174,15 @@ additional MLI WHT effect candidates, seven signed-but-unratified no-effect
 determinations, two status-instrument overlays and one Greek dividend no-cap
 conclusion. Assembly does not promote a scope to `review_ready`; every
 non-pilot chain still requires semantic and independent legal review.
+
+Every non-pilot chain now has a deterministic legal-review packet bound to its
+candidate SHA-256. The packet identifies the complete evidence-source set and
+all scope-specific review tasks. A primary reviewer may return the candidate or
+accept it for independent approval, but the approval gate remains closed until
+all evidence artifacts are bound by SHA-256 and a canonical rule snapshot is
+recorded. The reviewer and approver must be different identities. At the
+current baseline all 294 packets await primary review and no packet can be
+promoted into active legal rules.
 
 ## 7. Definition of core completion
 
