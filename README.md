@@ -62,9 +62,9 @@ The AT/CH pilot now covers:
 All pilot rules remain `needs_review`: the engine exposes a traceable candidate
 rate but cannot publish a `FINAL` rate until independent approval metadata is
 recorded. The remaining 98 treaty partners and their 294 country-income scopes
-are registered and exposed by the API, but deliberately return no candidate
-rate until their protocol, MLI, domestic-law and EU-law layers are
-consolidated.
+are registered and exposed by the API, but deliberately return no active
+calculation rate until their complete instrument chains and independent legal
+reviews are finished.
 
 The remaining 294 scopes now have a separate pre-consolidation evidence layer.
 It contains the official MF instrument chain, the complete hashed Article
@@ -80,6 +80,17 @@ exemption, definition and no-WHT-effect conclusions, with source-document
 hashes and candidate effective dates. Later status instruments for Belarus and
 Russia remain explicit blockers. No protocol candidate is loaded into the
 active decision engine before MLI/status, domestic/EU and four-eyes review.
+
+The Czech domestic-law layer now covers all 300 scopes as review-only
+candidates. It distinguishes the standard 15% withholding rate from the
+protective 35% rate and anchors the current rules to the official ZDP expression
+effective from 1 April 2026. Section 19 relief candidates cover 30 eligible
+partner jurisdictions and 90 scopes: the 26 other EU Member States plus
+Switzerland, Iceland, Liechtenstein and Norway. The model retains the 12- and
+24-month timing alternatives, all three statutory forms of direct capital
+connection, beneficial-owner and section 38nb conditions, and anti-abuse
+blockers. The 84 non-pilot relief scopes remain outside the active engine until
+four-eyes approval.
 
 ## Important legal boundary
 
