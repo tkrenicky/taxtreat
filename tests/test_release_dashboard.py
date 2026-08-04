@@ -4,7 +4,7 @@ from taxtreat.tools.release_dashboard import render
 def test_release_dashboard_separates_quality_dimensions():
     output = render()
     assert "Parser datasets: 100" in output
-    assert "Source auditability: blocked (0/100)" in output
+    assert "Source auditability: complete (100/100)" in output
     assert "Registered legal scopes: 300/300" in output
     assert "Official instrument inventories: 100/100" in output
     assert (

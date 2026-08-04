@@ -28,7 +28,7 @@ def test_committed_baseline_manifest_is_honest_and_consistent():
         "relevant_articles": 300,
         "structurally_complete": True,
     }
-    assert manifest["sources"]["auditability"] == "blocked"
+    assert manifest["sources"]["auditability"] == "complete"
     assert manifest["legal"]["verified_scopes"] == 0
     assert manifest["legal"]["review_ready_scopes"] == 6
     assert manifest["legal"]["pending_consolidation_scopes"] == 294
