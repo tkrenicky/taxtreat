@@ -1,6 +1,6 @@
 # TaxTreat Roadmap
 
-Status date: **3 August 2026**
+Status date: **4 August 2026**
 
 ## 🟡 Phase 1 — Source ingestion and identity
 
@@ -109,6 +109,19 @@ Czech domestic and section 19 relief candidate consolidation completed:
   section 38nb decision requirement;
 - all new records remain review-only and cannot enter the active engine before
   full-chain and independent legal approval.
+
+Remaining instrument-chain assembly completed:
+
+- all 294 non-pilot scopes deterministically join the official inventory,
+  base-treaty, protocol, MLI, Czech domestic and section 19 candidate layers;
+- 260 scopes have every mechanically required candidate layer assembled;
+- 34 scopes across 12 partners retain explicit hard blockers: 27 MLI WHT
+  effect gaps, six Belarus/Russia later-status gaps and Greek dividends without
+  a treaty rate cap;
+- layer-specific rates remain separate and no chain contains or selects a final
+  rate;
+- all 294 chains remain `needs_review`, outside active legal rules and subject
+  to semantic and independent legal approval.
 
 ## 🟡 Phase 4 — Deterministic WHT engine
 
