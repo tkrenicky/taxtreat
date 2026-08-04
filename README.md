@@ -20,7 +20,9 @@ withholding-tax rate.
 |---|---:|
 | Parsed treaty-country datasets | 100/100 structurally complete |
 | Dividend, interest and royalty article checks | 300/300 structurally present |
-| Reproducible raw source artifacts and hashes | 0/100 available in a clean clone — blocked |
+| Raw treaty source artifacts in a clean clone | 100/100 available |
+| Recorded SHA-256 hashes for raw treaty artifacts | 100/100 recorded |
+| Source auditability | complete; no longer a production blocker |
 | Registered country-income scopes | 300/300 |
 | Review-ready legal scopes | 6/300 (AT/CH; independent approval pending) |
 | Pending legal consolidation | 294/300 |
@@ -31,7 +33,7 @@ withholding-tax rate.
 | Candidate legal-review queue | 294/294 packets; 294 awaiting primary review; 0 approved/promotable |
 | Fully approved legal scopes | 0/300 |
 | Executable golden cases | 8 (all intentionally `REVIEW_REQUIRED`) |
-| Production readiness | blocked by source and legal approval gates |
+| Production readiness | blocked by pending primary review and independent four-eyes approval |
 
 Zákony pro lidi is used as a readable verification mirror for the relevant published Czech act. It is not treated as the sole authoritative source for the current legal position.
 
@@ -158,8 +160,11 @@ Install and run:
     python -m pytest -q
     python -m taxtreat.pipeline.run_pipeline
 
-The production release gate is intentionally red until source artifacts with
-full hashes and at least one independently approved legal scope are present:
+The current full test suite reports 732 passing tests.
+
+The production release gate remains red until at least one legal scope has
+completed primary review and independent four-eyes approval. No scope may be
+presented as FINAL before those gates are satisfied:
 
     python -m taxtreat.pipeline.run_pipeline --production
 

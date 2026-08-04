@@ -31,11 +31,12 @@ Completed:
 - 600 passing automated tests
 - repository cleanup and removal of obsolete implementation paths
 
-Still blocked:
+Completed:
 
-- 100/100 raw artifacts are unavailable in a clean clone;
-- full source SHA-256 evidence is therefore not yet reproducible;
-- 89/100 datasets retain a publication-reference warning.
+- 100/100 raw treaty source artifacts are available in a clean clone;
+- all 100 artifacts have recorded SHA-256 hashes;
+- source auditability is complete and no longer a production blocker;
+- the full automated test suite currently reports 732 passing tests.
 
 ## 🟡 Phase 3 — Legal consolidation and effective dates
 
@@ -135,8 +136,11 @@ Legal-review queue baseline completed:
 - approval fails closed if the candidate hash is stale, any evidence artifact
   hash is missing, no canonical rule snapshot exists, or reviewer and approver
   are the same person;
-- all 294 packets currently await primary review and 0 are independently
-  approved or promotable into active legal rules.
+- 294 non-pilot packets remain awaiting primary review and 0 are
+  independently approved or promotable into active legal rules;
+- production readiness remains blocked because no legal scope has yet completed
+  primary review and independent four-eyes approval, and no scope may be
+  presented as FINAL before those gates are satisfied.
 
 ## 🟡 Phase 4 — Deterministic WHT engine
 

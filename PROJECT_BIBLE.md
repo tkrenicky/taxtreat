@@ -100,8 +100,10 @@ The source-ingestion and base-treaty parser phases were closed on 3 August 2026.
 | Missing relevant article blocks | 0 |
 | Structural parser issues | 0 |
 | Base-act comparisons at least 99.5% | 100/100 |
-| Automated tests | enforced by CI |
-| Raw source artifacts reproducible in a clean clone | 0/100 |
+| Automated tests | 732 passing |
+| Raw source artifacts reproducible in a clean clone | 100/100 |
+| Recorded SHA-256 hashes for raw treaty artifacts | 100/100 |
+| Source auditability | complete (no longer a production blocker) |
 | Registered country-income scopes | 300/300 |
 | Review-ready AT/CH legal scopes | 6/6 |
 | Pending legal consolidation | 294/300 |
@@ -114,6 +116,11 @@ The source-ingestion and base-treaty parser phases were closed on 3 August 2026.
 | Exact tracked duplicates | 0 |
 
 The parser phase therefore has zero known defects within its defined scope.
+Source auditability is complete and is no longer a production blocker. The
+remaining production gate is legal approval: no legal scope has yet completed
+primary review and independent four-eyes approval, 294 non-pilot review packets
+remain awaiting primary review, and no scope may be presented as FINAL before
+those approval gates are satisfied.
 
 ## 6. Current readiness estimate
 
@@ -143,8 +150,9 @@ These percentages are planning estimates, not legal-quality scores.
 | Demo web interface | 0% |
 
 The AT/CH calculation pilot is review-ready but not legally releasable. Overall
-production readiness remains blocked by missing raw-source artifacts and by
-the absence of independently approved legal scopes.
+production readiness remains blocked by the absence of a legal scope that has
+completed primary review and independent four-eyes approval. No scope may be
+presented as FINAL before those gates are satisfied.
 
 For the remaining 98 treaty partners, the official Czech instrument inventory
 and all 294 relevant base-treaty articles are now stored as hashed review
@@ -181,8 +189,8 @@ all scope-specific review tasks. A primary reviewer may return the candidate or
 accept it for independent approval, but the approval gate remains closed until
 all evidence artifacts are bound by SHA-256 and a canonical rule snapshot is
 recorded. The reviewer and approver must be different identities. At the
-current baseline all 294 packets await primary review and no packet can be
-promoted into active legal rules.
+current baseline all 294 packets await primary review and none can be promoted
+into active legal rules until the existing approval gates are satisfied.
 
 ## 7. Definition of core completion
 
