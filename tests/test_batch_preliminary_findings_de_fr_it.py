@@ -21,45 +21,53 @@ def test_registry_contains_twenty_two_findings() -> None:
     assert payload["summary"]["preliminary_completion_percent"] == 73.3
 
 
-def test_nl_dividend_missing_zero_rate_is_corrected() -> None:
+def test_de_royalty_general_five_percent() -> None:
     _, index = findings_index()
 
-    finding = index["CZ-NL-DIV-LEGAL-REVIEW"]
+    finding = index["CZ-DE-ROY-LEGAL-REVIEW"]
     rates = finding["treaty_findings"]["rates"]
 
-    assert [item["rate"] for item in rates] == [0.0, 10.0]
-    assert finding["candidate_extraction_correction"]["missing_rate"] == 0.0
-
-    assert any(
-        issue["code"] == "participation_exemption_not_extracted"
-        and issue["severity"] == "critical"
-        for issue in finding["data_quality_issues"]
-    )
-
-
-def test_pl_interest_general_and_exempt_rates() -> None:
-    _, index = findings_index()
-
-    finding = index["CZ-PL-INT-LEGAL-REVIEW"]
-    rates = finding["treaty_findings"]["rates"]
-
-    assert [item["rate"] for item in rates] == [5.0, 0.0]
-    assert "loans or credits granted by a bank" in rates[1]["categories"]
-    assert finding["treaty_findings"]["pe_exception_applies"] is True
-
-
-def test_se_interest_does_not_invent_beneficial_owner() -> None:
-    _, index = findings_index()
-
-    finding = index["CZ-SE-INT-LEGAL-REVIEW"]
-
-    assert finding["treaty_findings"]["source_state_rate"] == 0.0
+    assert [item["rate"] for item in rates] == [5.0]
     assert (
         finding["treaty_findings"][
             "beneficial_owner_wording_explicit"
         ]
         is False
     )
+    assert finding["mli_preliminary_finding"]["effective_from"] == (
+        "2026-01-01"
+    )
+
+
+def test_fr_dividend_rates_and_legacy_refund() -> None:
+    _, index = findings_index()
+
+    finding = index["CZ-FR-DIV-LEGAL-REVIEW"]
+    rates = finding["treaty_findings"]["rates"]
+
+    assert [item["rate"] for item in rates] == [0.0, 10.0]
+    assert (
+        finding["treaty_findings"][
+            "legacy_refund_rule"
+        ]["refund_treated_as_dividend"]
+        is True
+    )
+    assert (
+        finding["treaty_findings"][
+            "legacy_refund_rule"
+        ]["current_applicability_requires_confirmation"]
+        is True
+    )
+
+
+def test_it_dividend_general_fifteen_percent() -> None:
+    _, index = findings_index()
+
+    finding = index["CZ-IT-DIV-LEGAL-REVIEW"]
+    rates = finding["treaty_findings"]["rates"]
+
+    assert [item["rate"] for item in rates] == [15.0]
+    assert finding["treaty_findings"]["rate_scope"] == "general"
     assert (
         finding["mli_preliminary_finding"][
             "requires_separate_verification"
@@ -74,9 +82,9 @@ def test_new_findings_remain_fail_closed() -> None:
     assert payload["policy"]["fail_closed"] is True
 
     for packet_id in (
-        "CZ-NL-DIV-LEGAL-REVIEW",
-        "CZ-PL-INT-LEGAL-REVIEW",
-        "CZ-SE-INT-LEGAL-REVIEW",
+        "CZ-DE-ROY-LEGAL-REVIEW",
+        "CZ-FR-DIV-LEGAL-REVIEW",
+        "CZ-IT-DIV-LEGAL-REVIEW",
     ):
         finding = index[packet_id]
 

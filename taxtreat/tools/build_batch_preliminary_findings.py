@@ -1095,6 +1095,180 @@ def build_findings() -> dict[str, Any]:
     )
 
 
+    findings.extend(
+        [
+            {
+                "packet_id": "CZ-DE-ROY-LEGAL-REVIEW",
+                "recipient_country": "DE",
+                "income_type": "royalty",
+                "treaty_findings": {
+                    "rates": [
+                        {
+                            "rate": 5.0,
+                            "categories": [
+                                "copyright",
+                                "cinematographic films",
+                                "patents",
+                                "trademarks",
+                                "designs or models",
+                                "plans",
+                                "secret formulas or processes",
+                                (
+                                    "industrial, commercial or scientific "
+                                    "equipment"
+                                ),
+                                (
+                                    "industrial, commercial or scientific "
+                                    "know-how"
+                                ),
+                            ],
+                            "conditions": [],
+                        },
+                    ],
+                    "beneficial_owner_wording_explicit": False,
+                    "pe_exception_applies": True,
+                    "excess_payment_limitation": True,
+                },
+                "protocol_preliminary_finding": {
+                    "effect": "no_protocol_effect_recorded",
+                },
+                "mli_preliminary_finding": {
+                    "effect": "Article 7(1) PPT",
+                    "effective_from": "2026-01-01",
+                    "source_id": "CZ-MF-DE-B5236226B2AF",
+                },
+                "data_quality_issues": [
+                    {
+                        "code": "beneficial_owner_wording_not_explicit",
+                        "severity": "medium",
+                        "detail": (
+                            "Article 12 does not expressly state a "
+                            "beneficial-owner condition; it must not be "
+                            "added automatically."
+                        ),
+                        "affects_rate_conclusion": False,
+                    },
+                    {
+                        "code": "article_cross_reference_split",
+                        "severity": "low",
+                        "detail": (
+                            "The Article 7 cross-reference is split into "
+                            "a separate parsed paragraph."
+                        ),
+                        "affects_rate_conclusion": False,
+                    },
+                ],
+                "domestic_and_eu_review_required": True,
+                "human_confirmation_required": True,
+                "review_outcome": None,
+                "status": "preliminary_findings_only",
+            },
+            {
+                "packet_id": "CZ-FR-DIV-LEGAL-REVIEW",
+                "recipient_country": "FR",
+                "income_type": "dividend",
+                "treaty_findings": {
+                    "rates": [
+                        {
+                            "rate": 0.0,
+                            "conditions": [
+                                "recipient is the beneficial owner",
+                                (
+                                    "recipient is a company directly holding "
+                                    "at least 25% of the capital of the paying "
+                                    "company"
+                                ),
+                            ],
+                        },
+                        {
+                            "rate": 10.0,
+                            "conditions": [
+                                "recipient is the beneficial owner",
+                                "all other cases",
+                            ],
+                        },
+                    ],
+                    "legacy_refund_rule": {
+                        "description": (
+                            "A Czech resident receiving dividends from a "
+                            "French company may obtain a refund of the French "
+                            "advance payment to the extent effectively paid "
+                            "by the company in respect of those dividends."
+                        ),
+                        "refund_treated_as_dividend": True,
+                        "source_state_taxation_reference": "Article 10(2)",
+                        "current_applicability_requires_confirmation": True,
+                    },
+                    "pe_or_fixed_base_exception_applies": True,
+                },
+                "protocol_preliminary_finding": {
+                    "effect": "no_protocol_effect_recorded",
+                },
+                "mli_preliminary_finding": {
+                    "effect": "Article 7(1) PPT",
+                    "effective_from": "2021-01-01",
+                    "source_id": "CZ-MF-FR-F51BC9297EF7",
+                },
+                "data_quality_issues": [
+                    {
+                        "code": "legacy_advance_payment_refund_rule",
+                        "severity": "medium",
+                        "detail": (
+                            "Article 10(3) contains a historical French "
+                            "advance-payment refund mechanism. It must be "
+                            "kept separate from ordinary dividend rates and "
+                            "its current practical relevance confirmed."
+                        ),
+                        "affects_rate_conclusion": False,
+                    },
+                    {
+                        "code": "article_cross_references_split",
+                        "severity": "low",
+                        "detail": (
+                            "References to Article 10(2) and Article 16 are "
+                            "split across parsed paragraphs."
+                        ),
+                        "affects_rate_conclusion": False,
+                    },
+                ],
+                "domestic_and_eu_review_required": True,
+                "human_confirmation_required": True,
+                "review_outcome": None,
+                "status": "preliminary_findings_only",
+            },
+            {
+                "packet_id": "CZ-IT-DIV-LEGAL-REVIEW",
+                "recipient_country": "IT",
+                "income_type": "dividend",
+                "treaty_findings": {
+                    "rates": [
+                        {
+                            "rate": 15.0,
+                            "conditions": [
+                                "recipient is the beneficial owner",
+                            ],
+                        },
+                    ],
+                    "rate_scope": "general",
+                    "pe_or_fixed_base_exception_applies": True,
+                },
+                "protocol_preliminary_finding": {
+                    "effect": "no_protocol_effect_recorded",
+                },
+                "mli_preliminary_finding": {
+                    "effect": "no_mli_effect_recorded",
+                    "requires_separate_verification": True,
+                },
+                "data_quality_issues": [],
+                "domestic_and_eu_review_required": True,
+                "human_confirmation_required": True,
+                "review_outcome": None,
+                "status": "preliminary_findings_only",
+            },
+        ]
+    )
+
+
     payload = {
         "schema_version": 1,
         "dataset_release": (
