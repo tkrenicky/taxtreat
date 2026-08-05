@@ -1,0 +1,1461 @@
+{
+  "dataset_release": "legal-review-batch-01-preliminary-findings-2026-08-05.1",
+  "findings": [
+    {
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "dividend",
+      "mli_preliminary_finding": "Article 7(1) PPT applies to Czech-source withholding tax from 1 January 2021.",
+      "packet_id": "CZ-BE-DIV-LEGAL-REVIEW",
+      "protocol_preliminary_finding": "The 2015 protocol candidate indicates no amendment to Article 10.",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "excess_payment_limitation": false,
+        "general_structure": "Source-state taxation is permitted, subject to reduced treaty ceilings where the recipient is the beneficial owner.",
+        "pe_exception_applies": true,
+        "rates": [
+          {
+            "conditions": [
+              "recipient is the beneficial owner",
+              "recipient is a company, including a partnership, directly or indirectly holding at least 25% of the capital of the paying company"
+            ],
+            "rate": 5.0
+          },
+          {
+            "conditions": [
+              "recipient is the beneficial owner",
+              "residual rate for cases not qualifying for the 5% participation rate"
+            ],
+            "rate": 15.0
+          }
+        ]
+      }
+    },
+    {
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "interest",
+      "mli_preliminary_finding": "Article 7(1) PPT applies to Czech-source withholding tax from 1 January 2021.",
+      "packet_id": "CZ-BE-INT-LEGAL-REVIEW",
+      "protocol_preliminary_finding": "The 2015 protocol candidate indicates no amendment to Article 11.",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "excess_payment_limitation": true,
+        "general_rate": 10.0,
+        "general_rate_conditions": [
+          "recipient is the beneficial owner"
+        ],
+        "pe_exception_applies": true,
+        "source_state_exemption_rate": 0.0,
+        "source_state_exemptions": [
+          "interest on trade receivables arising from deferred payment for goods or services",
+          "interest on loans or credits provided, guaranteed or insured by public export-support bodies",
+          "interest on non-bearer loans provided by a banking enterprise",
+          "interest on non-bearer deposits with a banking enterprise",
+          "interest paid to the other contracting state, its political subdivisions or local authorities"
+        ]
+      }
+    },
+    {
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "royalty",
+      "mli_preliminary_finding": "Article 7(1) PPT applies to Czech-source withholding tax from 1 January 2021.",
+      "packet_id": "CZ-BE-ROY-LEGAL-REVIEW",
+      "protocol_preliminary_finding": "The 2015 protocol candidate indicates no amendment to Article 12.",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "excess_payment_limitation": true,
+        "pe_exception_applies": true,
+        "rates": [
+          {
+            "categories": [
+              "use of, or right to use, industrial, commercial or scientific equipment"
+            ],
+            "conditions": [
+              "recipient is the beneficial owner"
+            ],
+            "rate": 5.0
+          },
+          {
+            "categories": [
+              "copyright",
+              "literary, artistic or scientific works",
+              "films and broadcasting recordings",
+              "software",
+              "patents",
+              "trademarks",
+              "designs or models",
+              "plans",
+              "secret formulas or processes",
+              "know-how"
+            ],
+            "conditions": [
+              "recipient is the beneficial owner"
+            ],
+            "rate": 10.0
+          }
+        ]
+      }
+    },
+    {
+      "data_quality_issues": [
+        {
+          "affects_general_rate_conclusion": false,
+          "code": "article_text_truncated",
+          "detail": "Stored Article 11 paragraph 3 ends after 'V takovém případě se použije'. The complete cross-reference must be checked against the official instrument before final approval.",
+          "severity": "medium"
+        }
+      ],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "interest",
+      "mli_preliminary_finding": {
+        "effect": "Article 7(1) PPT",
+        "effective_from": "2021-01-01",
+        "source_id": "CZ-MF-NL-0210508FF125"
+      },
+      "packet_id": "CZ-NL-INT-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "definition_change_only",
+        "rate_effect": "none identified",
+        "source_ids": [
+          "CZ-MF-NL-45D279EE7770",
+          "CZ-MF-NL-7CAD483C3F1A"
+        ]
+      },
+      "recipient_country": "NL",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "conditions": [
+          "recipient is resident in the other contracting state",
+          "the debt claim is not effectively connected with a permanent establishment in the source state"
+        ],
+        "pe_exception_applies": true,
+        "rate_scope": "general",
+        "source_state_rate": 0.0,
+        "taxing_right": "Interest arising in one contracting state and paid to a resident of the other contracting state is taxable only in the recipient state."
+      }
+    },
+    {
+      "data_quality_issues": [
+        {
+          "affects_rate_conclusion": false,
+          "code": "article_cross_reference_split",
+          "detail": "The Article 7 cross-reference is split into a separate parsed paragraph.",
+          "severity": "low"
+        }
+      ],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "dividend",
+      "mli_preliminary_finding": {
+        "effect": "Article 7(1) PPT",
+        "effective_from": "2021-01-01",
+        "source_id": "CZ-MF-DK-6D5DDFC81601"
+      },
+      "packet_id": "CZ-DK-DIV-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_protocol_effect_recorded"
+      },
+      "recipient_country": "DK",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "pe_exception_applies": true,
+        "rates": [
+          {
+            "conditions": [
+              "recipient is the beneficial owner",
+              "recipient is a company other than a partnership",
+              "recipient directly holds at least 10% of the capital of the paying company"
+            ],
+            "rate": 0.0
+          },
+          {
+            "conditions": [
+              "recipient is the beneficial owner",
+              "recipient is a qualifying pension fund or similar institution",
+              "the pension plan is recognized for tax purposes in the recipient state under Article 17(2)"
+            ],
+            "rate": 0.0
+          },
+          {
+            "conditions": [
+              "recipient is the beneficial owner",
+              "all other cases"
+            ],
+            "rate": 15.0
+          }
+        ]
+      }
+    },
+    {
+      "data_quality_issues": [],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "royalty",
+      "mli_preliminary_finding": {
+        "effect": "no_mli_effect_recorded",
+        "requires_separate_verification": true
+      },
+      "packet_id": "CZ-IT-ROY-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_protocol_effect_recorded"
+      },
+      "recipient_country": "IT",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "excess_payment_limitation": true,
+        "pe_exception_applies": true,
+        "rates": [
+          {
+            "categories": [
+              "copyright in literary, artistic or scientific works",
+              "cinematographic and television films"
+            ],
+            "conditions": [
+              "recipient is the beneficial owner"
+            ],
+            "rate": 0.0
+          },
+          {
+            "categories": [
+              "patents",
+              "trademarks",
+              "designs or models",
+              "plans",
+              "secret formulas or processes",
+              "industrial, commercial or scientific equipment",
+              "industrial, commercial or scientific know-how"
+            ],
+            "conditions": [
+              "recipient is the beneficial owner"
+            ],
+            "rate": 5.0
+          }
+        ]
+      }
+    },
+    {
+      "data_quality_issues": [
+        {
+          "affects_rate_conclusion": false,
+          "code": "beneficial_owner_wording_not_explicit",
+          "detail": "The extracted treaty text does not expressly state a beneficial-owner condition in Article 12; this must not be added automatically.",
+          "severity": "medium"
+        }
+      ],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "royalty",
+      "mli_preliminary_finding": {
+        "effect": "no_mli_effect_recorded",
+        "requires_separate_verification": true
+      },
+      "packet_id": "CZ-SE-ROY-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_protocol_effect_recorded"
+      },
+      "recipient_country": "SE",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "excess_payment_limitation": true,
+        "pe_exception_applies": true,
+        "rates": [
+          {
+            "categories": [
+              "copyright in literary, artistic or scientific works"
+            ],
+            "conditions": [
+              "recipient is resident in the other contracting state"
+            ],
+            "rate": 0.0
+          },
+          {
+            "categories": [
+              "patents",
+              "trademarks",
+              "designs or models",
+              "plans",
+              "secret formulas or processes",
+              "industrial, commercial or scientific equipment",
+              "industrial, commercial or scientific know-how",
+              "copyright categories not falling within the specific source-state exemption"
+            ],
+            "conditions": [],
+            "rate": 5.0
+          }
+        ]
+      }
+    },
+    {
+      "candidate_extraction_correction": {
+        "base_candidate_must_not_be_promoted": true,
+        "correct_source_text_rate": 25.0,
+        "incorrect_extracted_rate": 20.0,
+        "reason": "The value 20% is the minimum tax-rate differential condition, not the withholding-tax ceiling."
+      },
+      "data_quality_issues": [
+        {
+          "affects_rate_conclusion": true,
+          "code": "rate_condition_misclassified_as_rate",
+          "detail": "The extractor stored 20% as a dividend rate, although Article 10(3) states a 25% ceiling and uses 20% only as a tax-rate differential trigger.",
+          "severity": "critical"
+        },
+        {
+          "affects_rate_conclusion": false,
+          "code": "article_cross_reference_split",
+          "detail": "The Article 7 cross-reference is split into a separate parsed paragraph.",
+          "severity": "low"
+        }
+      ],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "dividend",
+      "mli_preliminary_finding": {
+        "effect": "Article 7(1) PPT",
+        "effective_from": "2026-01-01",
+        "source_id": "CZ-MF-DE-B5236226B2AF"
+      },
+      "packet_id": "CZ-DE-DIV-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_protocol_effect_recorded"
+      },
+      "recipient_country": "DE",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "pe_exception_applies": true,
+        "rates": [
+          {
+            "conditions": [
+              "recipient is a company directly holding at least 25% of the capital of the paying company"
+            ],
+            "rate": 5.0
+          },
+          {
+            "conditions": [
+              "all other cases"
+            ],
+            "rate": 15.0
+          },
+          {
+            "conditions": [
+              "the corporate income tax rate in the source state is lower for distributed profits than for undistributed profits",
+              "the difference between those rates is at least 20 percentage points",
+              "the recipient company, alone or together with associated persons, directly or indirectly holds at least 25% of the voting interests in the paying company"
+            ],
+            "current_applicability_requires_confirmation": true,
+            "rate": 25.0,
+            "special_historical_rule": true
+          }
+        ]
+      }
+    },
+    {
+      "data_quality_issues": [
+        {
+          "affects_rate_conclusion": false,
+          "code": "article_cross_reference_split",
+          "detail": "The Article 7 cross-reference is split into a separate parsed paragraph.",
+          "severity": "low"
+        }
+      ],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "interest",
+      "mli_preliminary_finding": {
+        "effect": "Article 7(1) PPT",
+        "effective_from": "2026-01-01",
+        "source_id": "CZ-MF-DE-B5236226B2AF"
+      },
+      "packet_id": "CZ-DE-INT-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_protocol_effect_recorded"
+      },
+      "recipient_country": "DE",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "conditions": [
+          "recipient has residence or registered office in the other contracting state",
+          "the debt claim is not effectively connected with a permanent establishment in the source state"
+        ],
+        "excess_payment_limitation": true,
+        "pe_exception_applies": true,
+        "rate_scope": "general",
+        "source_state_rate": 0.0,
+        "taxing_right": "Interest arising in one contracting state and paid to a resident of the other contracting state is taxable only in the recipient state."
+      }
+    },
+    {
+      "data_quality_issues": [
+        {
+          "affects_rate_conclusion": false,
+          "code": "article_10_cross_reference_split",
+          "detail": "The Article 10 cross-reference in the interest definition is split across parsed paragraphs.",
+          "severity": "low"
+        }
+      ],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "interest",
+      "mli_preliminary_finding": {
+        "effect": "Article 7(1) PPT",
+        "effective_from": "2021-01-01",
+        "source_id": "CZ-MF-FR-F51BC9297EF7"
+      },
+      "packet_id": "CZ-FR-INT-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_protocol_effect_recorded"
+      },
+      "recipient_country": "FR",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "beneficial_owner_required": true,
+        "conditions": [
+          "recipient is resident in the other contracting state",
+          "recipient is the beneficial owner of the interest",
+          "the debt claim is not effectively connected with a permanent establishment or fixed base in the source state"
+        ],
+        "excess_payment_limitation": true,
+        "pe_exception_applies": true,
+        "rate_scope": "general",
+        "source_state_rate": 0.0,
+        "taxing_right": "Interest arising in one contracting state and beneficially owned by a resident of the other contracting state is taxable only in that other state."
+      }
+    },
+    {
+      "data_quality_issues": [
+        {
+          "affects_rate_conclusion": false,
+          "code": "article_cross_references_split",
+          "detail": "References to Article 10(3) and Article 7 are split across parsed paragraphs.",
+          "severity": "low"
+        }
+      ],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "interest",
+      "mli_preliminary_finding": {
+        "effect": "Article 7(1) PPT",
+        "effective_from": "2021-01-01",
+        "source_id": "CZ-MF-DK-6D5DDFC81601"
+      },
+      "packet_id": "CZ-DK-INT-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_protocol_effect_recorded"
+      },
+      "recipient_country": "DK",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "beneficial_owner_required": true,
+        "conditions": [
+          "recipient is resident in the other contracting state",
+          "recipient is the beneficial owner of the interest",
+          "the debt claim is not effectively connected with a permanent establishment in the source state"
+        ],
+        "excess_payment_limitation": true,
+        "pe_exception_applies": true,
+        "rate_scope": "general",
+        "source_state_rate": 0.0,
+        "taxing_right": "Interest arising in one contracting state and beneficially owned by a resident of the other contracting state is taxable only in that other state."
+      }
+    },
+    {
+      "data_quality_issues": [
+        {
+          "affects_rate_conclusion": true,
+          "code": "zero_rate_category_requires_narrow_mapping",
+          "detail": "The 0% rule is limited to specified copyright works and expressly excludes films and certain television recordings.",
+          "severity": "high"
+        },
+        {
+          "affects_rate_conclusion": true,
+          "code": "subject_to_tax_condition_required",
+          "detail": "Both the general 5% ceiling and the specific 0% copyright rule depend on taxation in the recipient state.",
+          "severity": "high"
+        },
+        {
+          "affects_rate_conclusion": false,
+          "code": "beneficial_owner_wording_not_explicit",
+          "detail": "The extracted Article 12 text does not expressly state a beneficial-owner condition.",
+          "severity": "medium"
+        }
+      ],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "royalty",
+      "mli_preliminary_finding": {
+        "effect": "Article 7(1) PPT",
+        "effective_from": "2023-01-01",
+        "source_id": "CZ-MF-ES-ED9522D43DFC"
+      },
+      "packet_id": "CZ-ES-ROY-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_protocol_effect_recorded"
+      },
+      "recipient_country": "ES",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "beneficial_owner_wording_explicit": false,
+        "excess_payment_limitation": true,
+        "pe_or_fixed_base_exception_applies": true,
+        "rates": [
+          {
+            "categories": [
+              "royalties generally falling within Article 12"
+            ],
+            "conditions": [
+              "royalties are subject to tax in the recipient state"
+            ],
+            "rate": 5.0
+          },
+          {
+            "categories": [
+              "copyright royalties and similar payments for the performance or reproduction of literary, dramatic, musical or artistic works"
+            ],
+            "conditions": [
+              "recipient is subject to tax on the royalties in the recipient state"
+            ],
+            "excluded_categories": [
+              "cinematographic films",
+              "works recorded on film or television tape for television broadcasting"
+            ],
+            "rate": 0.0
+          }
+        ]
+      }
+    },
+    {
+      "data_quality_issues": [],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "interest",
+      "mli_preliminary_finding": {
+        "effect": "no_mli_effect_recorded",
+        "requires_separate_verification": true
+      },
+      "packet_id": "CZ-IT-INT-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_protocol_effect_recorded"
+      },
+      "recipient_country": "IT",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "beneficial_owner_required": true,
+        "conditions": [
+          "recipient is resident in the other contracting state",
+          "recipient is the beneficial owner of the interest",
+          "the debt claim is not effectively connected with a permanent establishment or fixed base in the source state"
+        ],
+        "excess_payment_limitation": true,
+        "pe_or_fixed_base_exception_applies": true,
+        "rate_scope": "general",
+        "source_state_rate": 0.0,
+        "taxing_right": "Interest arising in one contracting state and paid to a resident of the other contracting state is taxable only in that other state where the recipient is the beneficial owner."
+      }
+    },
+    {
+      "data_quality_issues": [
+        {
+          "affects_rate_conclusion": false,
+          "code": "beneficial_owner_wording_not_explicit",
+          "detail": "Article 11 does not expressly state a beneficial-owner condition; it must not be added automatically.",
+          "severity": "medium"
+        }
+      ],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "interest",
+      "mli_preliminary_finding": {
+        "effect": "Article 7(1) PPT",
+        "effective_from": "2023-01-01",
+        "source_id": "CZ-MF-ES-ED9522D43DFC"
+      },
+      "packet_id": "CZ-ES-INT-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_protocol_effect_recorded"
+      },
+      "recipient_country": "ES",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "beneficial_owner_wording_explicit": false,
+        "conditions": [
+          "recipient is resident in the other contracting state",
+          "the debt claim is not effectively connected with a permanent establishment or fixed base in the source state"
+        ],
+        "excess_payment_limitation": true,
+        "pe_or_fixed_base_exception_applies": true,
+        "rate_scope": "general",
+        "source_state_rate": 0.0,
+        "taxing_right": "Interest arising in one contracting state and paid to a resident of the other contracting state is taxable only in that other state."
+      }
+    },
+    {
+      "data_quality_issues": [
+        {
+          "affects_rate_conclusion": true,
+          "code": "zero_rate_not_extracted",
+          "detail": "The candidate extractor returned only 5% and 10%, although Article 12 excludes paragraph 3(a) copyright payments from source-state taxation.",
+          "severity": "high"
+        },
+        {
+          "affects_rate_conclusion": false,
+          "code": "article_cross_reference_split",
+          "detail": "The reference to paragraph 3 is split into a separate parsed paragraph.",
+          "severity": "low"
+        }
+      ],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "royalty",
+      "mli_preliminary_finding": {
+        "effect": "Article 7(1) PPT",
+        "effective_from": "2021-01-01",
+        "source_id": "CZ-MF-FR-F51BC9297EF7"
+      },
+      "packet_id": "CZ-FR-ROY-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_protocol_effect_recorded"
+      },
+      "recipient_country": "FR",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "excess_payment_limitation": true,
+        "pe_or_fixed_base_exception_applies": true,
+        "rates": [
+          {
+            "categories": [
+              "copyright in literary, artistic or scientific works",
+              "cinematographic films",
+              "films or recordings for television or radio broadcasting"
+            ],
+            "conditions": [
+              "recipient is resident in the other state"
+            ],
+            "excluded_categories": [
+              "computer software"
+            ],
+            "rate": 0.0
+          },
+          {
+            "categories": [
+              "industrial, commercial or scientific equipment"
+            ],
+            "conditions": [
+              "recipient is the beneficial owner"
+            ],
+            "rate": 5.0
+          },
+          {
+            "categories": [
+              "patents",
+              "trademarks",
+              "designs or models",
+              "plans",
+              "secret formulas or processes",
+              "computer software",
+              "industrial, commercial or scientific know-how"
+            ],
+            "conditions": [
+              "recipient is the beneficial owner"
+            ],
+            "rate": 10.0
+          }
+        ]
+      }
+    },
+    {
+      "data_quality_issues": [
+        {
+          "affects_rate_conclusion": false,
+          "code": "article_cross_references_split",
+          "detail": "References to Article 10 and Article 7 are split across parsed paragraphs.",
+          "severity": "low"
+        }
+      ],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "interest",
+      "mli_preliminary_finding": {
+        "effect": "Article 7(1) PPT",
+        "effective_from": "2021-01-01",
+        "source_id": "CZ-MF-SK-0054E687E82B"
+      },
+      "packet_id": "CZ-SK-INT-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_protocol_effect_recorded"
+      },
+      "recipient_country": "SK",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "beneficial_owner_required": true,
+        "conditions": [
+          "recipient is resident in the other contracting state",
+          "recipient is the beneficial owner of the interest",
+          "the debt claim is not effectively connected with a permanent establishment in the source state"
+        ],
+        "excess_payment_limitation": true,
+        "pe_exception_applies": true,
+        "rate_scope": "general",
+        "source_state_rate": 0.0,
+        "taxing_right": "Interest arising in one contracting state and beneficially owned by a resident of the other contracting state is taxable only in that other state."
+      }
+    },
+    {
+      "candidate_extraction_correction": {
+        "base_candidate_must_not_be_promoted_without_correction": true,
+        "missing_rate": 0.0,
+        "reason": "Article 10(3) exempts qualifying direct participation dividends from source-state tax."
+      },
+      "data_quality_issues": [
+        {
+          "affects_rate_conclusion": true,
+          "code": "participation_exemption_not_extracted",
+          "detail": "The extractor returned only the 10% residual rate and omitted the 0% direct-participation rule in Article 10(3).",
+          "severity": "critical"
+        },
+        {
+          "affects_rate_conclusion": false,
+          "code": "article_cross_references_split",
+          "detail": "References to paragraph 3 and Article 7 are split across parsed paragraphs.",
+          "severity": "low"
+        }
+      ],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "dividend",
+      "mli_preliminary_finding": {
+        "effect": "Article 7(1) PPT",
+        "effective_from": "2021-01-01",
+        "source_id": "CZ-MF-NL-0210508FF125"
+      },
+      "packet_id": "CZ-NL-DIV-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_article_10_change",
+        "source_ids": [
+          "CZ-MF-NL-45D279EE7770",
+          "CZ-MF-NL-7CAD483C3F1A"
+        ]
+      },
+      "recipient_country": "NL",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "pe_exception_applies": true,
+        "rates": [
+          {
+            "conditions": [
+              "recipient is a company whose capital is wholly or partly divided into shares",
+              "recipient directly holds at least 25% of the capital of the paying company"
+            ],
+            "rate": 0.0
+          },
+          {
+            "conditions": [
+              "all other cases"
+            ],
+            "rate": 10.0
+          }
+        ]
+      }
+    },
+    {
+      "data_quality_issues": [
+        {
+          "affects_rate_conclusion": true,
+          "code": "zero_rate_requires_category_mapping",
+          "detail": "The 0% rate applies only to the categories enumerated in Article 11(3).",
+          "severity": "high"
+        },
+        {
+          "affects_rate_conclusion": false,
+          "code": "article_cross_references_split",
+          "detail": "References to Article 10(3) and Article 7 are split across parsed paragraphs.",
+          "severity": "low"
+        }
+      ],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "interest",
+      "mli_preliminary_finding": {
+        "effect": "Article 7(1) PPT",
+        "effective_from": "2021-01-01",
+        "source_id": "CZ-MF-PL-B4A96328539C"
+      },
+      "packet_id": "CZ-PL-INT-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_protocol_effect_recorded"
+      },
+      "recipient_country": "PL",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "excess_payment_limitation": true,
+        "pe_exception_applies": true,
+        "rates": [
+          {
+            "conditions": [
+              "recipient is the beneficial owner",
+              "general residual treaty rate"
+            ],
+            "rate": 5.0
+          },
+          {
+            "categories": [
+              "loans or credits granted by a bank",
+              "interest paid to the other contracting state, its subdivisions, local authorities or central bank",
+              "interest paid to a financial institution owned or controlled by that government",
+              "loans or credits guaranteed by those governmental or public institutions"
+            ],
+            "conditions": [
+              "recipient is the beneficial owner"
+            ],
+            "rate": 0.0
+          }
+        ]
+      }
+    },
+    {
+      "data_quality_issues": [
+        {
+          "affects_rate_conclusion": false,
+          "code": "beneficial_owner_wording_not_explicit",
+          "detail": "Article 11 does not expressly state a beneficial-owner condition.",
+          "severity": "medium"
+        }
+      ],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "interest",
+      "mli_preliminary_finding": {
+        "effect": "no_mli_effect_recorded",
+        "requires_separate_verification": true
+      },
+      "packet_id": "CZ-SE-INT-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_protocol_effect_recorded"
+      },
+      "recipient_country": "SE",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "beneficial_owner_wording_explicit": false,
+        "conditions": [
+          "recipient is resident in the other contracting state",
+          "the debt claim is not effectively connected with a permanent establishment or fixed base in the source state"
+        ],
+        "excess_payment_limitation": true,
+        "pe_or_fixed_base_exception_applies": true,
+        "rate_scope": "general",
+        "source_state_rate": 0.0,
+        "taxing_right": "Interest arising in one contracting state and paid to a resident of the other contracting state is taxable only in that other state."
+      }
+    },
+    {
+      "data_quality_issues": [
+        {
+          "affects_rate_conclusion": false,
+          "code": "beneficial_owner_wording_not_explicit",
+          "detail": "Article 12 does not expressly state a beneficial-owner condition; it must not be added automatically.",
+          "severity": "medium"
+        },
+        {
+          "affects_rate_conclusion": false,
+          "code": "article_cross_reference_split",
+          "detail": "The Article 7 cross-reference is split into a separate parsed paragraph.",
+          "severity": "low"
+        }
+      ],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "royalty",
+      "mli_preliminary_finding": {
+        "effect": "Article 7(1) PPT",
+        "effective_from": "2026-01-01",
+        "source_id": "CZ-MF-DE-B5236226B2AF"
+      },
+      "packet_id": "CZ-DE-ROY-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_protocol_effect_recorded"
+      },
+      "recipient_country": "DE",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "beneficial_owner_wording_explicit": false,
+        "excess_payment_limitation": true,
+        "pe_exception_applies": true,
+        "rates": [
+          {
+            "categories": [
+              "copyright",
+              "cinematographic films",
+              "patents",
+              "trademarks",
+              "designs or models",
+              "plans",
+              "secret formulas or processes",
+              "industrial, commercial or scientific equipment",
+              "industrial, commercial or scientific know-how"
+            ],
+            "conditions": [],
+            "rate": 5.0
+          }
+        ]
+      }
+    },
+    {
+      "data_quality_issues": [
+        {
+          "affects_rate_conclusion": false,
+          "code": "legacy_advance_payment_refund_rule",
+          "detail": "Article 10(3) contains a historical French advance-payment refund mechanism. It must be kept separate from ordinary dividend rates and its current practical relevance confirmed.",
+          "severity": "medium"
+        },
+        {
+          "affects_rate_conclusion": false,
+          "code": "article_cross_references_split",
+          "detail": "References to Article 10(2) and Article 16 are split across parsed paragraphs.",
+          "severity": "low"
+        }
+      ],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "dividend",
+      "mli_preliminary_finding": {
+        "effect": "Article 7(1) PPT",
+        "effective_from": "2021-01-01",
+        "source_id": "CZ-MF-FR-F51BC9297EF7"
+      },
+      "packet_id": "CZ-FR-DIV-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_protocol_effect_recorded"
+      },
+      "recipient_country": "FR",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "legacy_refund_rule": {
+          "current_applicability_requires_confirmation": true,
+          "description": "A Czech resident receiving dividends from a French company may obtain a refund of the French advance payment to the extent effectively paid by the company in respect of those dividends.",
+          "refund_treated_as_dividend": true,
+          "source_state_taxation_reference": "Article 10(2)"
+        },
+        "pe_or_fixed_base_exception_applies": true,
+        "rates": [
+          {
+            "conditions": [
+              "recipient is the beneficial owner",
+              "recipient is a company directly holding at least 25% of the capital of the paying company"
+            ],
+            "rate": 0.0
+          },
+          {
+            "conditions": [
+              "recipient is the beneficial owner",
+              "all other cases"
+            ],
+            "rate": 10.0
+          }
+        ]
+      }
+    },
+    {
+      "data_quality_issues": [],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "dividend",
+      "mli_preliminary_finding": {
+        "effect": "no_mli_effect_recorded",
+        "requires_separate_verification": true
+      },
+      "packet_id": "CZ-IT-DIV-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_protocol_effect_recorded"
+      },
+      "recipient_country": "IT",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "pe_or_fixed_base_exception_applies": true,
+        "rate_scope": "general",
+        "rates": [
+          {
+            "conditions": [
+              "recipient is the beneficial owner"
+            ],
+            "rate": 15.0
+          }
+        ]
+      }
+    },
+    {
+      "candidate_extraction_correction": {
+        "base_candidate_must_not_be_promoted_without_correction": true,
+        "missing_rate": 0.0,
+        "reason": "Article 12(2) permits source-state taxation only for royalties listed in Article 12(3)(a). Copyright royalties under Article 12(3)(b) remain taxable only in the recipient state under Article 12(1)."
+      },
+      "data_quality_issues": [
+        {
+          "affects_rate_conclusion": true,
+          "code": "copyright_zero_rate_not_extracted",
+          "detail": "The extractor returned only the 10% rate and did not capture exclusive residence-state taxation for Article 12(3)(b) copyright royalties.",
+          "severity": "critical"
+        },
+        {
+          "affects_rate_conclusion": false,
+          "code": "article_cross_references_split",
+          "detail": "References to Articles 8 and 7 are split across parsed paragraphs.",
+          "severity": "low"
+        }
+      ],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "royalty",
+      "mli_preliminary_finding": {
+        "effect": "Article 7(1) PPT",
+        "effective_from": "2021-01-01",
+        "source_id": "CZ-MF-DK-6D5DDFC81601"
+      },
+      "packet_id": "CZ-DK-ROY-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_protocol_effect_recorded"
+      },
+      "recipient_country": "DK",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "excess_payment_limitation": true,
+        "pe_exception_applies": true,
+        "rates": [
+          {
+            "categories": [
+              "patents",
+              "trademarks",
+              "designs or models",
+              "plans",
+              "secret formulas or processes",
+              "computer software",
+              "industrial, commercial or scientific equipment",
+              "industrial, commercial or scientific know-how"
+            ],
+            "conditions": [
+              "recipient is the beneficial owner"
+            ],
+            "rate": 10.0
+          },
+          {
+            "categories": [
+              "copyright in literary, artistic or scientific works",
+              "cinematographic films",
+              "films or recordings for television or radio broadcasting"
+            ],
+            "conditions": [
+              "recipient is resident in the other state"
+            ],
+            "rate": 0.0
+          }
+        ]
+      }
+    },
+    {
+      "data_quality_issues": [
+        {
+          "affects_rate_conclusion": false,
+          "code": "paragraph_reference_split",
+          "detail": "The mutual-agreement reference to paragraph 2 is split into a separate parsed paragraph.",
+          "severity": "low"
+        }
+      ],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "dividend",
+      "mli_preliminary_finding": {
+        "effect": "Article 7(1) PPT",
+        "effective_from": "2023-01-01",
+        "source_id": "CZ-MF-ES-ED9522D43DFC"
+      },
+      "packet_id": "CZ-ES-DIV-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_protocol_effect_recorded"
+      },
+      "recipient_country": "ES",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "pe_or_fixed_base_exception_applies": true,
+        "rates": [
+          {
+            "conditions": [
+              "recipient is the beneficial owner",
+              "recipient is a company other than a partnership without legal personality",
+              "recipient directly holds at least 25% of the capital of the paying company"
+            ],
+            "rate": 5.0
+          },
+          {
+            "conditions": [
+              "recipient is the beneficial owner",
+              "all other cases"
+            ],
+            "rate": 15.0
+          }
+        ]
+      }
+    },
+    {
+      "data_quality_issues": [
+        {
+          "affects_rate_conclusion": false,
+          "code": "beneficial_owner_wording_not_explicit",
+          "detail": "Article 12 does not expressly state a beneficial-owner condition; it must not be added automatically.",
+          "severity": "medium"
+        },
+        {
+          "affects_rate_conclusion": false,
+          "code": "article_cross_references_split",
+          "detail": "References to paragraph 2 and Article 7 are split across parsed paragraphs.",
+          "severity": "low"
+        }
+      ],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "royalty",
+      "mli_preliminary_finding": {
+        "effect": "Article 7(1) PPT",
+        "effective_from": "2021-01-01",
+        "source_id": "CZ-MF-NL-0210508FF125"
+      },
+      "packet_id": "CZ-NL-ROY-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_article_12_change",
+        "source_ids": [
+          "CZ-MF-NL-45D279EE7770",
+          "CZ-MF-NL-7CAD483C3F1A"
+        ]
+      },
+      "recipient_country": "NL",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "beneficial_owner_wording_explicit": false,
+        "excess_payment_limitation": true,
+        "pe_exception_applies": true,
+        "rates": [
+          {
+            "categories": [
+              "copyright",
+              "cinematographic films",
+              "patents",
+              "trademarks",
+              "designs or models",
+              "plans",
+              "secret formulas or processes",
+              "industrial, commercial or scientific equipment",
+              "industrial, commercial or scientific know-how"
+            ],
+            "conditions": [],
+            "rate": 5.0
+          }
+        ]
+      }
+    },
+    {
+      "data_quality_issues": [
+        {
+          "affects_rate_conclusion": false,
+          "code": "article_cross_reference_split",
+          "detail": "The Article 7 cross-reference is split into a separate parsed paragraph.",
+          "severity": "low"
+        }
+      ],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "dividend",
+      "mli_preliminary_finding": {
+        "effect": "Article 7(1) PPT",
+        "effective_from": "2021-01-01",
+        "source_id": "CZ-MF-PL-B4A96328539C"
+      },
+      "packet_id": "CZ-PL-DIV-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_protocol_effect_recorded"
+      },
+      "recipient_country": "PL",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "pe_exception_applies": true,
+        "rate_scope": "general",
+        "rates": [
+          {
+            "conditions": [
+              "recipient is the beneficial owner"
+            ],
+            "rate": 5.0
+          }
+        ]
+      }
+    },
+    {
+      "data_quality_issues": [
+        {
+          "affects_rate_conclusion": false,
+          "code": "article_cross_reference_split",
+          "detail": "The Article 7 cross-reference is split into a separate parsed paragraph.",
+          "severity": "low"
+        }
+      ],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "royalty",
+      "mli_preliminary_finding": {
+        "effect": "Article 7(1) PPT",
+        "effective_from": "2021-01-01",
+        "source_id": "CZ-MF-PL-B4A96328539C"
+      },
+      "packet_id": "CZ-PL-ROY-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_protocol_effect_recorded"
+      },
+      "recipient_country": "PL",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "excess_payment_limitation": true,
+        "pe_exception_applies": true,
+        "rate_scope": "general",
+        "rates": [
+          {
+            "categories": [
+              "copyright",
+              "broadcasting films or recordings",
+              "patents",
+              "trademarks",
+              "designs or models",
+              "plans",
+              "secret formulas or processes",
+              "industrial, commercial or scientific equipment",
+              "industrial, commercial or scientific know-how"
+            ],
+            "conditions": [
+              "recipient is the beneficial owner"
+            ],
+            "rate": 10.0
+          }
+        ]
+      }
+    },
+    {
+      "candidate_extraction_correction": {
+        "base_candidate_must_not_be_promoted_without_correction": true,
+        "missing_rate": 0.0,
+        "reason": "Article 10(3) exempts qualifying direct participation dividends from source-state tax."
+      },
+      "data_quality_issues": [
+        {
+          "affects_rate_conclusion": true,
+          "code": "participation_exemption_not_extracted",
+          "detail": "The extractor returned only the 10% residual rate and omitted the 0% direct-participation rule in Article 10(3).",
+          "severity": "critical"
+        },
+        {
+          "affects_rate_conclusion": false,
+          "code": "beneficial_owner_wording_not_explicit",
+          "detail": "Article 10 does not expressly state a beneficial-owner condition.",
+          "severity": "medium"
+        },
+        {
+          "affects_rate_conclusion": false,
+          "code": "paragraph_reference_split",
+          "detail": "The mutual-agreement reference to paragraph 3 is split into a separate parsed paragraph.",
+          "severity": "low"
+        }
+      ],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "dividend",
+      "mli_preliminary_finding": {
+        "effect": "no_mli_effect_recorded",
+        "requires_separate_verification": true
+      },
+      "packet_id": "CZ-SE-DIV-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_protocol_effect_recorded"
+      },
+      "recipient_country": "SE",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "beneficial_owner_wording_explicit": false,
+        "pe_or_fixed_base_exception_applies": true,
+        "rates": [
+          {
+            "conditions": [
+              "recipient is a company whose capital is wholly or partly divided into shares",
+              "recipient directly holds at least 25% of the capital of the paying company"
+            ],
+            "rate": 0.0
+          },
+          {
+            "conditions": [
+              "all other cases"
+            ],
+            "rate": 10.0
+          }
+        ],
+        "residence_state_participation_relief": {
+          "current_application_requires_confirmation": true,
+          "description": "Corporate dividends are exempt in the recipient state to the extent comparable domestic dividends would be exempt."
+        }
+      }
+    },
+    {
+      "data_quality_issues": [
+        {
+          "affects_rate_conclusion": false,
+          "code": "article_cross_reference_split",
+          "detail": "The Article 7 cross-reference is split into a separate parsed paragraph.",
+          "severity": "low"
+        }
+      ],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "dividend",
+      "mli_preliminary_finding": {
+        "effect": "Article 7(1) PPT",
+        "effective_from": "2021-01-01",
+        "source_id": "CZ-MF-SK-0054E687E82B"
+      },
+      "packet_id": "CZ-SK-DIV-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_protocol_effect_recorded"
+      },
+      "recipient_country": "SK",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "pe_exception_applies": true,
+        "rates": [
+          {
+            "conditions": [
+              "recipient is the beneficial owner",
+              "recipient is a company other than a partnership",
+              "recipient directly owns at least 10% of the capital of the paying company"
+            ],
+            "rate": 5.0
+          },
+          {
+            "conditions": [
+              "recipient is the beneficial owner",
+              "all other cases"
+            ],
+            "rate": 15.0
+          }
+        ]
+      }
+    },
+    {
+      "candidate_extraction_correction": {
+        "base_candidate_must_not_be_promoted_without_correction": true,
+        "missing_rate": 0.0,
+        "reason": "Article 12(2) permits source-state taxation only for royalties listed in Article 12(3)(a). Copyright royalties under Article 12(3)(b) remain taxable only in the recipient state."
+      },
+      "data_quality_issues": [
+        {
+          "affects_rate_conclusion": true,
+          "code": "copyright_zero_rate_not_extracted",
+          "detail": "The extractor returned only the 10% rate and did not capture exclusive residence-state taxation for Article 12(3)(b) copyright royalties.",
+          "severity": "critical"
+        },
+        {
+          "affects_rate_conclusion": false,
+          "code": "article_cross_reference_split",
+          "detail": "The Article 7 cross-reference is split into a separate parsed paragraph.",
+          "severity": "low"
+        }
+      ],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "royalty",
+      "mli_preliminary_finding": {
+        "effect": "Article 7(1) PPT",
+        "effective_from": "2021-01-01",
+        "source_id": "CZ-MF-SK-0054E687E82B"
+      },
+      "packet_id": "CZ-SK-ROY-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_protocol_effect_recorded"
+      },
+      "recipient_country": "SK",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "excess_payment_limitation": true,
+        "pe_exception_applies": true,
+        "rates": [
+          {
+            "categories": [
+              "patents",
+              "trademarks",
+              "designs or models",
+              "plans",
+              "secret formulas or processes",
+              "computer software",
+              "industrial, commercial or scientific equipment",
+              "industrial, commercial or scientific know-how"
+            ],
+            "conditions": [
+              "recipient is the beneficial owner"
+            ],
+            "rate": 10.0
+          },
+          {
+            "categories": [
+              "copyright in literary, artistic or scientific works",
+              "cinematographic films",
+              "recordings and other audiovisual or audio reproduction media used for television or radio broadcasting"
+            ],
+            "conditions": [
+              "recipient is resident in the other state"
+            ],
+            "excluded_categories": [
+              "computer software"
+            ],
+            "rate": 0.0
+          }
+        ]
+      }
+    }
+  ],
+  "policy": {
+    "fail_closed": true,
+    "independent_approval_required": true,
+    "not_a_completed_legal_review": true,
+    "source_derived_preliminary_findings": true
+  },
+  "schema_version": 1,
+  "summary": {
+    "approved_scopes": 0,
+    "completed_primary_reviews": 0,
+    "preliminary_completion_percent": 100.0,
+    "preliminary_findings_completed": 30,
+    "total_scopes": 30
+  }
+}
