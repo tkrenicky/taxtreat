@@ -159,8 +159,17 @@ def build_legal_evidence_registry() -> dict[str, Any]:
         for source_id in required_ids
     }
 
+    excluded_paths = {
+        REVIEW_QUEUE,
+        OUTPUT,
+        DATA_DIR / "manifests" / "legal_evidence_artifacts.json",
+        DATA_DIR
+        / "legal_reviews"
+        / "remaining_294_evidence_readiness.json",
+    }
+
     for path in sorted(DATA_DIR.rglob("*.json")):
-        if path in {REVIEW_QUEUE, OUTPUT}:
+        if path in excluded_paths:
             continue
 
         try:
