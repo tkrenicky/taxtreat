@@ -1496,6 +1496,353 @@ def build_findings() -> dict[str, Any]:
     )
 
 
+    findings.extend(
+        [
+            {
+                "packet_id": "CZ-PL-DIV-LEGAL-REVIEW",
+                "recipient_country": "PL",
+                "income_type": "dividend",
+                "treaty_findings": {
+                    "rates": [
+                        {
+                            "rate": 5.0,
+                            "conditions": [
+                                "recipient is the beneficial owner",
+                            ],
+                        },
+                    ],
+                    "rate_scope": "general",
+                    "pe_exception_applies": True,
+                },
+                "protocol_preliminary_finding": {
+                    "effect": "no_protocol_effect_recorded",
+                },
+                "mli_preliminary_finding": {
+                    "effect": "Article 7(1) PPT",
+                    "effective_from": "2021-01-01",
+                    "source_id": "CZ-MF-PL-B4A96328539C",
+                },
+                "data_quality_issues": [
+                    {
+                        "code": "article_cross_reference_split",
+                        "severity": "low",
+                        "detail": (
+                            "The Article 7 cross-reference is split into "
+                            "a separate parsed paragraph."
+                        ),
+                        "affects_rate_conclusion": False,
+                    }
+                ],
+                "domestic_and_eu_review_required": True,
+                "human_confirmation_required": True,
+                "review_outcome": None,
+                "status": "preliminary_findings_only",
+            },
+            {
+                "packet_id": "CZ-PL-ROY-LEGAL-REVIEW",
+                "recipient_country": "PL",
+                "income_type": "royalty",
+                "treaty_findings": {
+                    "rates": [
+                        {
+                            "rate": 10.0,
+                            "categories": [
+                                "copyright",
+                                "broadcasting films or recordings",
+                                "patents",
+                                "trademarks",
+                                "designs or models",
+                                "plans",
+                                "secret formulas or processes",
+                                (
+                                    "industrial, commercial or scientific "
+                                    "equipment"
+                                ),
+                                (
+                                    "industrial, commercial or scientific "
+                                    "know-how"
+                                ),
+                            ],
+                            "conditions": [
+                                "recipient is the beneficial owner",
+                            ],
+                        },
+                    ],
+                    "rate_scope": "general",
+                    "pe_exception_applies": True,
+                    "excess_payment_limitation": True,
+                },
+                "protocol_preliminary_finding": {
+                    "effect": "no_protocol_effect_recorded",
+                },
+                "mli_preliminary_finding": {
+                    "effect": "Article 7(1) PPT",
+                    "effective_from": "2021-01-01",
+                    "source_id": "CZ-MF-PL-B4A96328539C",
+                },
+                "data_quality_issues": [
+                    {
+                        "code": "article_cross_reference_split",
+                        "severity": "low",
+                        "detail": (
+                            "The Article 7 cross-reference is split into "
+                            "a separate parsed paragraph."
+                        ),
+                        "affects_rate_conclusion": False,
+                    }
+                ],
+                "domestic_and_eu_review_required": True,
+                "human_confirmation_required": True,
+                "review_outcome": None,
+                "status": "preliminary_findings_only",
+            },
+            {
+                "packet_id": "CZ-SE-DIV-LEGAL-REVIEW",
+                "recipient_country": "SE",
+                "income_type": "dividend",
+                "treaty_findings": {
+                    "rates": [
+                        {
+                            "rate": 0.0,
+                            "conditions": [
+                                (
+                                    "recipient is a company whose capital is "
+                                    "wholly or partly divided into shares"
+                                ),
+                                (
+                                    "recipient directly holds at least 25% "
+                                    "of the capital of the paying company"
+                                ),
+                            ],
+                        },
+                        {
+                            "rate": 10.0,
+                            "conditions": [
+                                "all other cases",
+                            ],
+                        },
+                    ],
+                    "beneficial_owner_wording_explicit": False,
+                    "residence_state_participation_relief": {
+                        "description": (
+                            "Corporate dividends are exempt in the recipient "
+                            "state to the extent comparable domestic "
+                            "dividends would be exempt."
+                        ),
+                        "current_application_requires_confirmation": True,
+                    },
+                    "pe_or_fixed_base_exception_applies": True,
+                },
+                "candidate_extraction_correction": {
+                    "missing_rate": 0.0,
+                    "reason": (
+                        "Article 10(3) exempts qualifying direct "
+                        "participation dividends from source-state tax."
+                    ),
+                    "base_candidate_must_not_be_promoted_without_correction": (
+                        True
+                    ),
+                },
+                "protocol_preliminary_finding": {
+                    "effect": "no_protocol_effect_recorded",
+                },
+                "mli_preliminary_finding": {
+                    "effect": "no_mli_effect_recorded",
+                    "requires_separate_verification": True,
+                },
+                "data_quality_issues": [
+                    {
+                        "code": "participation_exemption_not_extracted",
+                        "severity": "critical",
+                        "detail": (
+                            "The extractor returned only the 10% residual "
+                            "rate and omitted the 0% direct-participation "
+                            "rule in Article 10(3)."
+                        ),
+                        "affects_rate_conclusion": True,
+                    },
+                    {
+                        "code": "beneficial_owner_wording_not_explicit",
+                        "severity": "medium",
+                        "detail": (
+                            "Article 10 does not expressly state a "
+                            "beneficial-owner condition."
+                        ),
+                        "affects_rate_conclusion": False,
+                    },
+                    {
+                        "code": "paragraph_reference_split",
+                        "severity": "low",
+                        "detail": (
+                            "The mutual-agreement reference to paragraph 3 "
+                            "is split into a separate parsed paragraph."
+                        ),
+                        "affects_rate_conclusion": False,
+                    },
+                ],
+                "domestic_and_eu_review_required": True,
+                "human_confirmation_required": True,
+                "review_outcome": None,
+                "status": "preliminary_findings_only",
+            },
+            {
+                "packet_id": "CZ-SK-DIV-LEGAL-REVIEW",
+                "recipient_country": "SK",
+                "income_type": "dividend",
+                "treaty_findings": {
+                    "rates": [
+                        {
+                            "rate": 5.0,
+                            "conditions": [
+                                "recipient is the beneficial owner",
+                                (
+                                    "recipient is a company other than a "
+                                    "partnership"
+                                ),
+                                (
+                                    "recipient directly owns at least 10% "
+                                    "of the capital of the paying company"
+                                ),
+                            ],
+                        },
+                        {
+                            "rate": 15.0,
+                            "conditions": [
+                                "recipient is the beneficial owner",
+                                "all other cases",
+                            ],
+                        },
+                    ],
+                    "pe_exception_applies": True,
+                },
+                "protocol_preliminary_finding": {
+                    "effect": "no_protocol_effect_recorded",
+                },
+                "mli_preliminary_finding": {
+                    "effect": "Article 7(1) PPT",
+                    "effective_from": "2021-01-01",
+                    "source_id": "CZ-MF-SK-0054E687E82B",
+                },
+                "data_quality_issues": [
+                    {
+                        "code": "article_cross_reference_split",
+                        "severity": "low",
+                        "detail": (
+                            "The Article 7 cross-reference is split into "
+                            "a separate parsed paragraph."
+                        ),
+                        "affects_rate_conclusion": False,
+                    }
+                ],
+                "domestic_and_eu_review_required": True,
+                "human_confirmation_required": True,
+                "review_outcome": None,
+                "status": "preliminary_findings_only",
+            },
+            {
+                "packet_id": "CZ-SK-ROY-LEGAL-REVIEW",
+                "recipient_country": "SK",
+                "income_type": "royalty",
+                "treaty_findings": {
+                    "rates": [
+                        {
+                            "rate": 10.0,
+                            "categories": [
+                                "patents",
+                                "trademarks",
+                                "designs or models",
+                                "plans",
+                                "secret formulas or processes",
+                                "computer software",
+                                (
+                                    "industrial, commercial or scientific "
+                                    "equipment"
+                                ),
+                                (
+                                    "industrial, commercial or scientific "
+                                    "know-how"
+                                ),
+                            ],
+                            "conditions": [
+                                "recipient is the beneficial owner",
+                            ],
+                        },
+                        {
+                            "rate": 0.0,
+                            "categories": [
+                                (
+                                    "copyright in literary, artistic or "
+                                    "scientific works"
+                                ),
+                                "cinematographic films",
+                                (
+                                    "recordings and other audiovisual or "
+                                    "audio reproduction media used for "
+                                    "television or radio broadcasting"
+                                ),
+                            ],
+                            "excluded_categories": [
+                                "computer software",
+                            ],
+                            "conditions": [
+                                "recipient is resident in the other state",
+                            ],
+                        },
+                    ],
+                    "pe_exception_applies": True,
+                    "excess_payment_limitation": True,
+                },
+                "candidate_extraction_correction": {
+                    "missing_rate": 0.0,
+                    "reason": (
+                        "Article 12(2) permits source-state taxation only "
+                        "for royalties listed in Article 12(3)(a). "
+                        "Copyright royalties under Article 12(3)(b) remain "
+                        "taxable only in the recipient state."
+                    ),
+                    "base_candidate_must_not_be_promoted_without_correction": (
+                        True
+                    ),
+                },
+                "protocol_preliminary_finding": {
+                    "effect": "no_protocol_effect_recorded",
+                },
+                "mli_preliminary_finding": {
+                    "effect": "Article 7(1) PPT",
+                    "effective_from": "2021-01-01",
+                    "source_id": "CZ-MF-SK-0054E687E82B",
+                },
+                "data_quality_issues": [
+                    {
+                        "code": "copyright_zero_rate_not_extracted",
+                        "severity": "critical",
+                        "detail": (
+                            "The extractor returned only the 10% rate and "
+                            "did not capture exclusive residence-state "
+                            "taxation for Article 12(3)(b) copyright "
+                            "royalties."
+                        ),
+                        "affects_rate_conclusion": True,
+                    },
+                    {
+                        "code": "article_cross_reference_split",
+                        "severity": "low",
+                        "detail": (
+                            "The Article 7 cross-reference is split into "
+                            "a separate parsed paragraph."
+                        ),
+                        "affects_rate_conclusion": False,
+                    },
+                ],
+                "domestic_and_eu_review_required": True,
+                "human_confirmation_required": True,
+                "review_outcome": None,
+                "status": "preliminary_findings_only",
+            },
+        ]
+    )
+
+
     payload = {
         "schema_version": 1,
         "dataset_release": (
