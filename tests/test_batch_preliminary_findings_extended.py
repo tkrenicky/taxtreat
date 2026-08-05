@@ -13,11 +13,11 @@ def index_findings():
     }
 
 
-def test_registry_contains_seven_findings() -> None:
+def test_registry_contains_ten_findings() -> None:
     payload, _ = index_findings()
 
-    assert payload["summary"]["preliminary_findings_completed"] == 7
-    assert payload["summary"]["preliminary_completion_percent"] == 23.3
+    assert payload["summary"]["preliminary_findings_completed"] == 10
+    assert payload["summary"]["preliminary_completion_percent"] == 33.3
 
 
 def test_dk_dividend_zero_rates_are_distinct() -> None:

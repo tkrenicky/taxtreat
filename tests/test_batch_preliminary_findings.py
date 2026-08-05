@@ -5,12 +5,12 @@ from taxtreat.tools.build_batch_preliminary_findings import (
 )
 
 
-def test_registry_contains_seven_findings() -> None:
+def test_registry_contains_ten_findings() -> None:
     payload = build_findings()
 
     assert payload["summary"]["total_scopes"] == 30
-    assert payload["summary"]["preliminary_findings_completed"] == 7
-    assert payload["summary"]["preliminary_completion_percent"] == 23.3
+    assert payload["summary"]["preliminary_findings_completed"] == 10
+    assert payload["summary"]["preliminary_completion_percent"] == 33.3
 
 
 def test_nl_interest_general_zero_rate_is_recorded() -> None:

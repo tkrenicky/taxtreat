@@ -310,6 +310,201 @@ def build_findings() -> dict[str, Any]:
     )
 
 
+    findings.extend(
+        [
+            {
+                "packet_id": "CZ-DE-DIV-LEGAL-REVIEW",
+                "recipient_country": "DE",
+                "income_type": "dividend",
+                "treaty_findings": {
+                    "rates": [
+                        {
+                            "rate": 5.0,
+                            "conditions": [
+                                (
+                                    "recipient is a company directly holding "
+                                    "at least 25% of the capital of the paying "
+                                    "company"
+                                ),
+                            ],
+                        },
+                        {
+                            "rate": 15.0,
+                            "conditions": [
+                                "all other cases",
+                            ],
+                        },
+                        {
+                            "rate": 25.0,
+                            "conditions": [
+                                (
+                                    "the corporate income tax rate in the "
+                                    "source state is lower for distributed "
+                                    "profits than for undistributed profits"
+                                ),
+                                (
+                                    "the difference between those rates is "
+                                    "at least 20 percentage points"
+                                ),
+                                (
+                                    "the recipient company, alone or together "
+                                    "with associated persons, directly or "
+                                    "indirectly holds at least 25% of the "
+                                    "voting interests in the paying company"
+                                ),
+                            ],
+                            "special_historical_rule": True,
+                            "current_applicability_requires_confirmation": True,
+                        },
+                    ],
+                    "pe_exception_applies": True,
+                },
+                "candidate_extraction_correction": {
+                    "incorrect_extracted_rate": 20.0,
+                    "correct_source_text_rate": 25.0,
+                    "reason": (
+                        "The value 20% is the minimum tax-rate differential "
+                        "condition, not the withholding-tax ceiling."
+                    ),
+                    "base_candidate_must_not_be_promoted": True,
+                },
+                "protocol_preliminary_finding": {
+                    "effect": "no_protocol_effect_recorded",
+                },
+                "mli_preliminary_finding": {
+                    "effect": "Article 7(1) PPT",
+                    "effective_from": "2026-01-01",
+                    "source_id": "CZ-MF-DE-B5236226B2AF",
+                },
+                "data_quality_issues": [
+                    {
+                        "code": "rate_condition_misclassified_as_rate",
+                        "severity": "critical",
+                        "detail": (
+                            "The extractor stored 20% as a dividend rate, "
+                            "although Article 10(3) states a 25% ceiling and "
+                            "uses 20% only as a tax-rate differential trigger."
+                        ),
+                        "affects_rate_conclusion": True,
+                    },
+                    {
+                        "code": "article_cross_reference_split",
+                        "severity": "low",
+                        "detail": (
+                            "The Article 7 cross-reference is split into a "
+                            "separate parsed paragraph."
+                        ),
+                        "affects_rate_conclusion": False,
+                    },
+                ],
+                "domestic_and_eu_review_required": True,
+                "human_confirmation_required": True,
+                "review_outcome": None,
+                "status": "preliminary_findings_only",
+            },
+            {
+                "packet_id": "CZ-DE-INT-LEGAL-REVIEW",
+                "recipient_country": "DE",
+                "income_type": "interest",
+                "treaty_findings": {
+                    "source_state_rate": 0.0,
+                    "taxing_right": (
+                        "Interest arising in one contracting state and paid "
+                        "to a resident of the other contracting state is "
+                        "taxable only in the recipient state."
+                    ),
+                    "rate_scope": "general",
+                    "conditions": [
+                        (
+                            "recipient has residence or registered office in "
+                            "the other contracting state"
+                        ),
+                        (
+                            "the debt claim is not effectively connected with "
+                            "a permanent establishment in the source state"
+                        ),
+                    ],
+                    "pe_exception_applies": True,
+                    "excess_payment_limitation": True,
+                },
+                "protocol_preliminary_finding": {
+                    "effect": "no_protocol_effect_recorded",
+                },
+                "mli_preliminary_finding": {
+                    "effect": "Article 7(1) PPT",
+                    "effective_from": "2026-01-01",
+                    "source_id": "CZ-MF-DE-B5236226B2AF",
+                },
+                "data_quality_issues": [
+                    {
+                        "code": "article_cross_reference_split",
+                        "severity": "low",
+                        "detail": (
+                            "The Article 7 cross-reference is split into a "
+                            "separate parsed paragraph."
+                        ),
+                        "affects_rate_conclusion": False,
+                    }
+                ],
+                "domestic_and_eu_review_required": True,
+                "human_confirmation_required": True,
+                "review_outcome": None,
+                "status": "preliminary_findings_only",
+            },
+            {
+                "packet_id": "CZ-FR-INT-LEGAL-REVIEW",
+                "recipient_country": "FR",
+                "income_type": "interest",
+                "treaty_findings": {
+                    "source_state_rate": 0.0,
+                    "taxing_right": (
+                        "Interest arising in one contracting state and "
+                        "beneficially owned by a resident of the other "
+                        "contracting state is taxable only in that other "
+                        "state."
+                    ),
+                    "rate_scope": "general",
+                    "conditions": [
+                        "recipient is resident in the other contracting state",
+                        "recipient is the beneficial owner of the interest",
+                        (
+                            "the debt claim is not effectively connected with "
+                            "a permanent establishment or fixed base in the "
+                            "source state"
+                        ),
+                    ],
+                    "beneficial_owner_required": True,
+                    "pe_exception_applies": True,
+                    "excess_payment_limitation": True,
+                },
+                "protocol_preliminary_finding": {
+                    "effect": "no_protocol_effect_recorded",
+                },
+                "mli_preliminary_finding": {
+                    "effect": "Article 7(1) PPT",
+                    "effective_from": "2021-01-01",
+                    "source_id": "CZ-MF-FR-F51BC9297EF7",
+                },
+                "data_quality_issues": [
+                    {
+                        "code": "article_10_cross_reference_split",
+                        "severity": "low",
+                        "detail": (
+                            "The Article 10 cross-reference in the interest "
+                            "definition is split across parsed paragraphs."
+                        ),
+                        "affects_rate_conclusion": False,
+                    }
+                ],
+                "domestic_and_eu_review_required": True,
+                "human_confirmation_required": True,
+                "review_outcome": None,
+                "status": "preliminary_findings_only",
+            },
+        ]
+    )
+
+
     payload = {
         "schema_version": 1,
         "dataset_release": (
