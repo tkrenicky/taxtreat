@@ -1,0 +1,114 @@
+{
+  "country": "BE",
+  "dataset_release": "batch-01-belgium-primary-review-queue-2026-08-05.1",
+  "packets": [
+    {
+      "available_source_ids": [
+        "CZ-MF-BE-D0E145875613",
+        "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "EU-PSD-2011-96-CONSOLIDATED",
+        "SRC-E16828A7660D9797"
+      ],
+      "confirmations": null,
+      "income_type": "dividend",
+      "independent_approval_completed": false,
+      "packet_id": "CZ-BE-DIV-LEGAL-REVIEW",
+      "primary_review_completed": false,
+      "primary_review_packet_sha256": "9cb1b29b7c2cbafaeead4493bc80f919cde87164899f34dad9023bf2f350d332",
+      "promotable_to_active_rules": false,
+      "proposed_rule_snapshot": null,
+      "question_responses": null,
+      "recipient_country": "BE",
+      "review_outcome": null,
+      "review_questions": [
+        "Does the 5% rate require direct or direct/indirect ownership of at least 25%?",
+        "Is the 15% rate the residual rate for all other beneficial owners?",
+        "Does the protocol leave Article 10 unchanged?",
+        "Are the Czech PSD conditions correctly represented, including the 12-month holding-period rule?"
+      ],
+      "review_row_sha256": "f445a97fff44b14aedd291b6d8693f36553095b51c632c2d289959ad09d283c6",
+      "reviewed_at": null,
+      "reviewer_id": null,
+      "reviewer_notes": null,
+      "status": "awaiting_primary_review",
+      "supporting_source_ids": []
+    },
+    {
+      "available_source_ids": [
+        "CZ-MF-BE-D0E145875613",
+        "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "EU-IRD-2003-49-CONSOLIDATED",
+        "SRC-E16828A7660D9797"
+      ],
+      "confirmations": null,
+      "income_type": "interest",
+      "independent_approval_completed": false,
+      "packet_id": "CZ-BE-INT-LEGAL-REVIEW",
+      "primary_review_completed": false,
+      "primary_review_packet_sha256": "3ec2c41f3c54b83e1016e5d2b69b077874c1c257ae41db17a7be883dc448d61e",
+      "promotable_to_active_rules": false,
+      "proposed_rule_snapshot": null,
+      "question_responses": null,
+      "recipient_country": "BE",
+      "review_outcome": null,
+      "review_questions": [
+        "Is 10% the general treaty ceiling subject to beneficial ownership?",
+        "Which Article 11(3) categories qualify for a 0% source-state exemption?",
+        "Are bank loans, deposits, trade credits, export finance and government payments represented correctly?",
+        "Are the Czech IRD conditions and section 38nb requirement correctly represented?"
+      ],
+      "review_row_sha256": "5351a32562527dc124c8338da5b631d8191a39518c6f90b213b32475b44f300d",
+      "reviewed_at": null,
+      "reviewer_id": null,
+      "reviewer_notes": null,
+      "status": "awaiting_primary_review",
+      "supporting_source_ids": []
+    },
+    {
+      "available_source_ids": [
+        "CZ-MF-BE-D0E145875613",
+        "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "EU-IRD-2003-49-CONSOLIDATED",
+        "SRC-E16828A7660D9797"
+      ],
+      "confirmations": null,
+      "income_type": "royalty",
+      "independent_approval_completed": false,
+      "packet_id": "CZ-BE-ROY-LEGAL-REVIEW",
+      "primary_review_completed": false,
+      "primary_review_packet_sha256": "6f42e64b1840d0c6ef131266a5416322df2c4077a9869faa9196c12914594d14",
+      "promotable_to_active_rules": false,
+      "proposed_rule_snapshot": null,
+      "question_responses": null,
+      "recipient_country": "BE",
+      "review_outcome": null,
+      "review_questions": [
+        "Which royalty categories are subject to the 5% rate?",
+        "Which royalty categories are subject to the 10% rate?",
+        "Does the treaty definition include software, know-how, industrial equipment or copyright separately?",
+        "Does the protocol leave Article 12 unchanged?",
+        "Are the Czech IRD conditions and section 38nb requirement correctly represented?"
+      ],
+      "review_row_sha256": "656a3b80e1602e09889a081aecef0c49847296fbbfb84a4df6b0d91370d8b047",
+      "reviewed_at": null,
+      "reviewer_id": null,
+      "reviewer_notes": null,
+      "status": "awaiting_primary_review",
+      "supporting_source_ids": []
+    }
+  ],
+  "policy": {
+    "automatic_promotion_prohibited": true,
+    "fail_closed": true,
+    "human_primary_review_required": true,
+    "independent_approval_required": true
+  },
+  "schema_version": 1,
+  "summary": {
+    "awaiting_independent_approval": 0,
+    "awaiting_primary_review": 3,
+    "promotable_packets": 0,
+    "returned_for_correction": 0,
+    "total_packets": 3
+  }
+}
