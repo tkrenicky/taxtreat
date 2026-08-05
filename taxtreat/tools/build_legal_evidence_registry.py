@@ -11,6 +11,9 @@ DATA_DIR = ROOT / "data"
 
 REVIEW_QUEUE = DATA_DIR / "legal_reviews" / "remaining_294_review_queue.json"
 SOURCE_MANIFEST = DATA_DIR / "manifests" / "source_manifest.json"
+ARTIFACT_MANIFEST = (
+    DATA_DIR / "manifests" / "legal_evidence_artifacts.json"
+)
 OUTPUT = DATA_DIR / "registries" / "legal_evidence_sources.json"
 
 URL_KEYS = {
@@ -146,6 +149,23 @@ def _load_treaty_manifest() -> dict[str, dict[str, Any]]:
     }
 
 
+def _load_existing_verified_artifacts() -> dict[str, dict[str, Any]]:
+    """Load stable artifact bindings committed to the repository.
+
+    The source manifest is rebuilt by the release pipeline and reflects
+    whether ignored raw files exist in the current checkout. The artifact
+    manifest preserves the previously verified bindings needed for
+    deterministic clean-install and CI results.
+    """
+    manifest = _read_json(ARTIFACT_MANIFEST)
+
+    return {
+        artifact["source_id"]: artifact
+        for artifact in manifest.get("artifacts", [])
+        if artifact.get("status") == "existing_verified_artifact"
+    }
+
+
 def build_legal_evidence_registry() -> dict[str, Any]:
     usage = _required_source_usage()
     required_ids = set(usage)
@@ -185,6 +205,7 @@ def build_legal_evidence_registry() -> dict[str, Any]:
         )
 
     treaty_manifest = _load_treaty_manifest()
+    verified_artifacts = _load_existing_verified_artifacts()
     sources = []
 
     for source_id in sorted(required_ids):
@@ -204,6 +225,24 @@ def build_legal_evidence_registry() -> dict[str, Any]:
                 str(SOURCE_MANIFEST.relative_to(ROOT))
             )
 
+        verified_artifact = verified_artifacts.get(source_id)
+
+        if verified_artifact:
+            collected["official_urls"].update(
+                verified_artifact.get("official_urls", [])
+            )
+            collected["registry_origins"].add(
+                str(ARTIFACT_MANIFEST.relative_to(ROOT))
+            )
+
+            artifact_uri = verified_artifact.get("artifact_uri")
+            artifact_sha256 = verified_artifact.get("sha256")
+            artifact_available = bool(
+                artifact_uri
+                and artifact_sha256
+            )
+
+        elif treaty_source:
             artifact_uri = treaty_source.get("artifact_uri")
             artifact_sha256 = treaty_source.get("sha256")
             artifact_available = bool(
@@ -212,8 +251,8 @@ def build_legal_evidence_registry() -> dict[str, Any]:
                 and artifact_sha256
             )
 
-            if artifact_available:
-                artifact_status = "verified"
+        if artifact_available:
+            artifact_status = "verified"
 
         official_urls = sorted(collected["official_urls"])
 
