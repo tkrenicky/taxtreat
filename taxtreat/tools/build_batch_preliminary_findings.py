@@ -694,6 +694,206 @@ def build_findings() -> dict[str, Any]:
     )
 
 
+    findings.extend(
+        [
+            {
+                "packet_id": "CZ-ES-INT-LEGAL-REVIEW",
+                "recipient_country": "ES",
+                "income_type": "interest",
+                "treaty_findings": {
+                    "source_state_rate": 0.0,
+                    "taxing_right": (
+                        "Interest arising in one contracting state and paid "
+                        "to a resident of the other contracting state is "
+                        "taxable only in that other state."
+                    ),
+                    "rate_scope": "general",
+                    "conditions": [
+                        "recipient is resident in the other contracting state",
+                        (
+                            "the debt claim is not effectively connected "
+                            "with a permanent establishment or fixed base "
+                            "in the source state"
+                        ),
+                    ],
+                    "beneficial_owner_wording_explicit": False,
+                    "pe_or_fixed_base_exception_applies": True,
+                    "excess_payment_limitation": True,
+                },
+                "protocol_preliminary_finding": {
+                    "effect": "no_protocol_effect_recorded",
+                },
+                "mli_preliminary_finding": {
+                    "effect": "Article 7(1) PPT",
+                    "effective_from": "2023-01-01",
+                    "source_id": "CZ-MF-ES-ED9522D43DFC",
+                },
+                "data_quality_issues": [
+                    {
+                        "code": "beneficial_owner_wording_not_explicit",
+                        "severity": "medium",
+                        "detail": (
+                            "Article 11 does not expressly state a "
+                            "beneficial-owner condition; it must not be "
+                            "added automatically."
+                        ),
+                        "affects_rate_conclusion": False,
+                    }
+                ],
+                "domestic_and_eu_review_required": True,
+                "human_confirmation_required": True,
+                "review_outcome": None,
+                "status": "preliminary_findings_only",
+            },
+            {
+                "packet_id": "CZ-FR-ROY-LEGAL-REVIEW",
+                "recipient_country": "FR",
+                "income_type": "royalty",
+                "treaty_findings": {
+                    "rates": [
+                        {
+                            "rate": 0.0,
+                            "categories": [
+                                (
+                                    "copyright in literary, artistic or "
+                                    "scientific works"
+                                ),
+                                "cinematographic films",
+                                (
+                                    "films or recordings for television "
+                                    "or radio broadcasting"
+                                ),
+                            ],
+                            "excluded_categories": [
+                                "computer software",
+                            ],
+                            "conditions": [
+                                "recipient is resident in the other state",
+                            ],
+                        },
+                        {
+                            "rate": 5.0,
+                            "categories": [
+                                (
+                                    "industrial, commercial or scientific "
+                                    "equipment"
+                                ),
+                            ],
+                            "conditions": [
+                                "recipient is the beneficial owner",
+                            ],
+                        },
+                        {
+                            "rate": 10.0,
+                            "categories": [
+                                "patents",
+                                "trademarks",
+                                "designs or models",
+                                "plans",
+                                "secret formulas or processes",
+                                "computer software",
+                                (
+                                    "industrial, commercial or scientific "
+                                    "know-how"
+                                ),
+                            ],
+                            "conditions": [
+                                "recipient is the beneficial owner",
+                            ],
+                        },
+                    ],
+                    "pe_or_fixed_base_exception_applies": True,
+                    "excess_payment_limitation": True,
+                },
+                "protocol_preliminary_finding": {
+                    "effect": "no_protocol_effect_recorded",
+                },
+                "mli_preliminary_finding": {
+                    "effect": "Article 7(1) PPT",
+                    "effective_from": "2021-01-01",
+                    "source_id": "CZ-MF-FR-F51BC9297EF7",
+                },
+                "data_quality_issues": [
+                    {
+                        "code": "zero_rate_not_extracted",
+                        "severity": "high",
+                        "detail": (
+                            "The candidate extractor returned only 5% and "
+                            "10%, although Article 12 excludes paragraph "
+                            "3(a) copyright payments from source-state "
+                            "taxation."
+                        ),
+                        "affects_rate_conclusion": True,
+                    },
+                    {
+                        "code": "article_cross_reference_split",
+                        "severity": "low",
+                        "detail": (
+                            "The reference to paragraph 3 is split into "
+                            "a separate parsed paragraph."
+                        ),
+                        "affects_rate_conclusion": False,
+                    },
+                ],
+                "domestic_and_eu_review_required": True,
+                "human_confirmation_required": True,
+                "review_outcome": None,
+                "status": "preliminary_findings_only",
+            },
+            {
+                "packet_id": "CZ-SK-INT-LEGAL-REVIEW",
+                "recipient_country": "SK",
+                "income_type": "interest",
+                "treaty_findings": {
+                    "source_state_rate": 0.0,
+                    "taxing_right": (
+                        "Interest arising in one contracting state and "
+                        "beneficially owned by a resident of the other "
+                        "contracting state is taxable only in that other "
+                        "state."
+                    ),
+                    "rate_scope": "general",
+                    "conditions": [
+                        "recipient is resident in the other contracting state",
+                        "recipient is the beneficial owner of the interest",
+                        (
+                            "the debt claim is not effectively connected "
+                            "with a permanent establishment in the source "
+                            "state"
+                        ),
+                    ],
+                    "beneficial_owner_required": True,
+                    "pe_exception_applies": True,
+                    "excess_payment_limitation": True,
+                },
+                "protocol_preliminary_finding": {
+                    "effect": "no_protocol_effect_recorded",
+                },
+                "mli_preliminary_finding": {
+                    "effect": "Article 7(1) PPT",
+                    "effective_from": "2021-01-01",
+                    "source_id": "CZ-MF-SK-0054E687E82B",
+                },
+                "data_quality_issues": [
+                    {
+                        "code": "article_cross_references_split",
+                        "severity": "low",
+                        "detail": (
+                            "References to Article 10 and Article 7 are "
+                            "split across parsed paragraphs."
+                        ),
+                        "affects_rate_conclusion": False,
+                    }
+                ],
+                "domestic_and_eu_review_required": True,
+                "human_confirmation_required": True,
+                "review_outcome": None,
+                "status": "preliminary_findings_only",
+            },
+        ]
+    )
+
+
     payload = {
         "schema_version": 1,
         "dataset_release": (

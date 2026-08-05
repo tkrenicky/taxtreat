@@ -14,11 +14,11 @@ def findings_index():
     }
 
 
-def test_registry_contains_thirteen_findings() -> None:
+def test_registry_contains_sixteen_findings() -> None:
     payload, _ = findings_index()
 
-    assert payload["summary"]["preliminary_findings_completed"] == 13
-    assert payload["summary"]["preliminary_completion_percent"] == 43.3
+    assert payload["summary"]["preliminary_findings_completed"] == 16
+    assert payload["summary"]["preliminary_completion_percent"] == 53.3
 
 
 def test_dk_interest_general_zero_rate() -> None:

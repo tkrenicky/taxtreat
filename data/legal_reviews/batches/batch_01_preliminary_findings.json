@@ -566,6 +566,156 @@
         "source_state_rate": 0.0,
         "taxing_right": "Interest arising in one contracting state and paid to a resident of the other contracting state is taxable only in that other state where the recipient is the beneficial owner."
       }
+    },
+    {
+      "data_quality_issues": [
+        {
+          "affects_rate_conclusion": false,
+          "code": "beneficial_owner_wording_not_explicit",
+          "detail": "Article 11 does not expressly state a beneficial-owner condition; it must not be added automatically.",
+          "severity": "medium"
+        }
+      ],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "interest",
+      "mli_preliminary_finding": {
+        "effect": "Article 7(1) PPT",
+        "effective_from": "2023-01-01",
+        "source_id": "CZ-MF-ES-ED9522D43DFC"
+      },
+      "packet_id": "CZ-ES-INT-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_protocol_effect_recorded"
+      },
+      "recipient_country": "ES",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "beneficial_owner_wording_explicit": false,
+        "conditions": [
+          "recipient is resident in the other contracting state",
+          "the debt claim is not effectively connected with a permanent establishment or fixed base in the source state"
+        ],
+        "excess_payment_limitation": true,
+        "pe_or_fixed_base_exception_applies": true,
+        "rate_scope": "general",
+        "source_state_rate": 0.0,
+        "taxing_right": "Interest arising in one contracting state and paid to a resident of the other contracting state is taxable only in that other state."
+      }
+    },
+    {
+      "data_quality_issues": [
+        {
+          "affects_rate_conclusion": true,
+          "code": "zero_rate_not_extracted",
+          "detail": "The candidate extractor returned only 5% and 10%, although Article 12 excludes paragraph 3(a) copyright payments from source-state taxation.",
+          "severity": "high"
+        },
+        {
+          "affects_rate_conclusion": false,
+          "code": "article_cross_reference_split",
+          "detail": "The reference to paragraph 3 is split into a separate parsed paragraph.",
+          "severity": "low"
+        }
+      ],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "royalty",
+      "mli_preliminary_finding": {
+        "effect": "Article 7(1) PPT",
+        "effective_from": "2021-01-01",
+        "source_id": "CZ-MF-FR-F51BC9297EF7"
+      },
+      "packet_id": "CZ-FR-ROY-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_protocol_effect_recorded"
+      },
+      "recipient_country": "FR",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "excess_payment_limitation": true,
+        "pe_or_fixed_base_exception_applies": true,
+        "rates": [
+          {
+            "categories": [
+              "copyright in literary, artistic or scientific works",
+              "cinematographic films",
+              "films or recordings for television or radio broadcasting"
+            ],
+            "conditions": [
+              "recipient is resident in the other state"
+            ],
+            "excluded_categories": [
+              "computer software"
+            ],
+            "rate": 0.0
+          },
+          {
+            "categories": [
+              "industrial, commercial or scientific equipment"
+            ],
+            "conditions": [
+              "recipient is the beneficial owner"
+            ],
+            "rate": 5.0
+          },
+          {
+            "categories": [
+              "patents",
+              "trademarks",
+              "designs or models",
+              "plans",
+              "secret formulas or processes",
+              "computer software",
+              "industrial, commercial or scientific know-how"
+            ],
+            "conditions": [
+              "recipient is the beneficial owner"
+            ],
+            "rate": 10.0
+          }
+        ]
+      }
+    },
+    {
+      "data_quality_issues": [
+        {
+          "affects_rate_conclusion": false,
+          "code": "article_cross_references_split",
+          "detail": "References to Article 10 and Article 7 are split across parsed paragraphs.",
+          "severity": "low"
+        }
+      ],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "interest",
+      "mli_preliminary_finding": {
+        "effect": "Article 7(1) PPT",
+        "effective_from": "2021-01-01",
+        "source_id": "CZ-MF-SK-0054E687E82B"
+      },
+      "packet_id": "CZ-SK-INT-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_protocol_effect_recorded"
+      },
+      "recipient_country": "SK",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "beneficial_owner_required": true,
+        "conditions": [
+          "recipient is resident in the other contracting state",
+          "recipient is the beneficial owner of the interest",
+          "the debt claim is not effectively connected with a permanent establishment in the source state"
+        ],
+        "excess_payment_limitation": true,
+        "pe_exception_applies": true,
+        "rate_scope": "general",
+        "source_state_rate": 0.0,
+        "taxing_right": "Interest arising in one contracting state and beneficially owned by a resident of the other contracting state is taxable only in that other state."
+      }
     }
   ],
   "policy": {
@@ -578,8 +728,8 @@
   "summary": {
     "approved_scopes": 0,
     "completed_primary_reviews": 0,
-    "preliminary_completion_percent": 43.3,
-    "preliminary_findings_completed": 13,
+    "preliminary_completion_percent": 53.3,
+    "preliminary_findings_completed": 16,
     "total_scopes": 30
   }
 }

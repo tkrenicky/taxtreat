@@ -21,46 +21,45 @@ def test_registry_contains_sixteen_findings() -> None:
     assert payload["summary"]["preliminary_completion_percent"] == 53.3
 
 
-def test_de_dividend_extraction_error_is_corrected() -> None:
+def test_es_interest_does_not_invent_beneficial_owner() -> None:
     _, index = findings_index()
 
-    finding = index["CZ-DE-DIV-LEGAL-REVIEW"]
+    finding = index["CZ-ES-INT-LEGAL-REVIEW"]
+
+    assert finding["treaty_findings"]["source_state_rate"] == 0.0
+    assert (
+        finding["treaty_findings"][
+            "beneficial_owner_wording_explicit"
+        ]
+        is False
+    )
+
+
+def test_fr_royalty_contains_zero_five_and_ten() -> None:
+    _, index = findings_index()
+
+    finding = index["CZ-FR-ROY-LEGAL-REVIEW"]
     rates = finding["treaty_findings"]["rates"]
 
     assert [item["rate"] for item in rates] == [
+        0.0,
         5.0,
-        15.0,
-        25.0,
+        10.0,
     ]
 
-    correction = finding["candidate_extraction_correction"]
-
-    assert correction["incorrect_extracted_rate"] == 20.0
-    assert correction["correct_source_text_rate"] == 25.0
-    assert correction["base_candidate_must_not_be_promoted"] is True
+    assert "computer software" in rates[0]["excluded_categories"]
+    assert "computer software" in rates[2]["categories"]
 
     assert any(
-        issue["code"] == "rate_condition_misclassified_as_rate"
-        and issue["severity"] == "critical"
+        issue["code"] == "zero_rate_not_extracted"
         for issue in finding["data_quality_issues"]
     )
 
 
-def test_de_interest_general_zero_rate_is_recorded() -> None:
+def test_sk_interest_general_zero_rate() -> None:
     _, index = findings_index()
 
-    finding = index["CZ-DE-INT-LEGAL-REVIEW"]
-
-    assert finding["treaty_findings"]["source_state_rate"] == 0.0
-    assert finding["treaty_findings"]["rate_scope"] == "general"
-    assert finding["treaty_findings"]["pe_exception_applies"] is True
-    assert finding["treaty_findings"]["excess_payment_limitation"] is True
-
-
-def test_fr_interest_requires_beneficial_owner() -> None:
-    _, index = findings_index()
-
-    finding = index["CZ-FR-INT-LEGAL-REVIEW"]
+    finding = index["CZ-SK-INT-LEGAL-REVIEW"]
 
     assert finding["treaty_findings"]["source_state_rate"] == 0.0
     assert finding["treaty_findings"]["beneficial_owner_required"] is True
@@ -75,9 +74,9 @@ def test_new_findings_remain_fail_closed() -> None:
     assert payload["policy"]["fail_closed"] is True
 
     for packet_id in (
-        "CZ-DE-DIV-LEGAL-REVIEW",
-        "CZ-DE-INT-LEGAL-REVIEW",
-        "CZ-FR-INT-LEGAL-REVIEW",
+        "CZ-ES-INT-LEGAL-REVIEW",
+        "CZ-FR-ROY-LEGAL-REVIEW",
+        "CZ-SK-INT-LEGAL-REVIEW",
     ):
         finding = index[packet_id]
 
