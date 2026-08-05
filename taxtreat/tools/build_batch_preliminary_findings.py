@@ -1269,6 +1269,233 @@ def build_findings() -> dict[str, Any]:
     )
 
 
+    findings.extend(
+        [
+            {
+                "packet_id": "CZ-DK-ROY-LEGAL-REVIEW",
+                "recipient_country": "DK",
+                "income_type": "royalty",
+                "treaty_findings": {
+                    "rates": [
+                        {
+                            "rate": 10.0,
+                            "categories": [
+                                "patents",
+                                "trademarks",
+                                "designs or models",
+                                "plans",
+                                "secret formulas or processes",
+                                "computer software",
+                                (
+                                    "industrial, commercial or scientific "
+                                    "equipment"
+                                ),
+                                (
+                                    "industrial, commercial or scientific "
+                                    "know-how"
+                                ),
+                            ],
+                            "conditions": [
+                                "recipient is the beneficial owner",
+                            ],
+                        },
+                        {
+                            "rate": 0.0,
+                            "categories": [
+                                (
+                                    "copyright in literary, artistic or "
+                                    "scientific works"
+                                ),
+                                "cinematographic films",
+                                (
+                                    "films or recordings for television "
+                                    "or radio broadcasting"
+                                ),
+                            ],
+                            "conditions": [
+                                "recipient is resident in the other state",
+                            ],
+                        },
+                    ],
+                    "pe_exception_applies": True,
+                    "excess_payment_limitation": True,
+                },
+                "candidate_extraction_correction": {
+                    "missing_rate": 0.0,
+                    "reason": (
+                        "Article 12(2) permits source-state taxation only "
+                        "for royalties listed in Article 12(3)(a). "
+                        "Copyright royalties under Article 12(3)(b) remain "
+                        "taxable only in the recipient state under "
+                        "Article 12(1)."
+                    ),
+                    "base_candidate_must_not_be_promoted_without_correction": (
+                        True
+                    ),
+                },
+                "protocol_preliminary_finding": {
+                    "effect": "no_protocol_effect_recorded",
+                },
+                "mli_preliminary_finding": {
+                    "effect": "Article 7(1) PPT",
+                    "effective_from": "2021-01-01",
+                    "source_id": "CZ-MF-DK-6D5DDFC81601",
+                },
+                "data_quality_issues": [
+                    {
+                        "code": "copyright_zero_rate_not_extracted",
+                        "severity": "critical",
+                        "detail": (
+                            "The extractor returned only the 10% rate and "
+                            "did not capture exclusive residence-state "
+                            "taxation for Article 12(3)(b) copyright "
+                            "royalties."
+                        ),
+                        "affects_rate_conclusion": True,
+                    },
+                    {
+                        "code": "article_cross_references_split",
+                        "severity": "low",
+                        "detail": (
+                            "References to Articles 8 and 7 are split "
+                            "across parsed paragraphs."
+                        ),
+                        "affects_rate_conclusion": False,
+                    },
+                ],
+                "domestic_and_eu_review_required": True,
+                "human_confirmation_required": True,
+                "review_outcome": None,
+                "status": "preliminary_findings_only",
+            },
+            {
+                "packet_id": "CZ-ES-DIV-LEGAL-REVIEW",
+                "recipient_country": "ES",
+                "income_type": "dividend",
+                "treaty_findings": {
+                    "rates": [
+                        {
+                            "rate": 5.0,
+                            "conditions": [
+                                "recipient is the beneficial owner",
+                                (
+                                    "recipient is a company other than a "
+                                    "partnership without legal personality"
+                                ),
+                                (
+                                    "recipient directly holds at least 25% "
+                                    "of the capital of the paying company"
+                                ),
+                            ],
+                        },
+                        {
+                            "rate": 15.0,
+                            "conditions": [
+                                "recipient is the beneficial owner",
+                                "all other cases",
+                            ],
+                        },
+                    ],
+                    "pe_or_fixed_base_exception_applies": True,
+                },
+                "protocol_preliminary_finding": {
+                    "effect": "no_protocol_effect_recorded",
+                },
+                "mli_preliminary_finding": {
+                    "effect": "Article 7(1) PPT",
+                    "effective_from": "2023-01-01",
+                    "source_id": "CZ-MF-ES-ED9522D43DFC",
+                },
+                "data_quality_issues": [
+                    {
+                        "code": "paragraph_reference_split",
+                        "severity": "low",
+                        "detail": (
+                            "The mutual-agreement reference to paragraph 2 "
+                            "is split into a separate parsed paragraph."
+                        ),
+                        "affects_rate_conclusion": False,
+                    }
+                ],
+                "domestic_and_eu_review_required": True,
+                "human_confirmation_required": True,
+                "review_outcome": None,
+                "status": "preliminary_findings_only",
+            },
+            {
+                "packet_id": "CZ-NL-ROY-LEGAL-REVIEW",
+                "recipient_country": "NL",
+                "income_type": "royalty",
+                "treaty_findings": {
+                    "rates": [
+                        {
+                            "rate": 5.0,
+                            "categories": [
+                                "copyright",
+                                "cinematographic films",
+                                "patents",
+                                "trademarks",
+                                "designs or models",
+                                "plans",
+                                "secret formulas or processes",
+                                (
+                                    "industrial, commercial or scientific "
+                                    "equipment"
+                                ),
+                                (
+                                    "industrial, commercial or scientific "
+                                    "know-how"
+                                ),
+                            ],
+                            "conditions": [],
+                        },
+                    ],
+                    "beneficial_owner_wording_explicit": False,
+                    "pe_exception_applies": True,
+                    "excess_payment_limitation": True,
+                },
+                "protocol_preliminary_finding": {
+                    "effect": "no_article_12_change",
+                    "source_ids": [
+                        "CZ-MF-NL-45D279EE7770",
+                        "CZ-MF-NL-7CAD483C3F1A",
+                    ],
+                },
+                "mli_preliminary_finding": {
+                    "effect": "Article 7(1) PPT",
+                    "effective_from": "2021-01-01",
+                    "source_id": "CZ-MF-NL-0210508FF125",
+                },
+                "data_quality_issues": [
+                    {
+                        "code": "beneficial_owner_wording_not_explicit",
+                        "severity": "medium",
+                        "detail": (
+                            "Article 12 does not expressly state a "
+                            "beneficial-owner condition; it must not be "
+                            "added automatically."
+                        ),
+                        "affects_rate_conclusion": False,
+                    },
+                    {
+                        "code": "article_cross_references_split",
+                        "severity": "low",
+                        "detail": (
+                            "References to paragraph 2 and Article 7 are "
+                            "split across parsed paragraphs."
+                        ),
+                        "affects_rate_conclusion": False,
+                    },
+                ],
+                "domestic_and_eu_review_required": True,
+                "human_confirmation_required": True,
+                "review_outcome": None,
+                "status": "preliminary_findings_only",
+            },
+        ]
+    )
+
+
     payload = {
         "schema_version": 1,
         "dataset_release": (

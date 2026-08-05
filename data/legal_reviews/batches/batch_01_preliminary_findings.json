@@ -1004,6 +1004,177 @@
           }
         ]
       }
+    },
+    {
+      "candidate_extraction_correction": {
+        "base_candidate_must_not_be_promoted_without_correction": true,
+        "missing_rate": 0.0,
+        "reason": "Article 12(2) permits source-state taxation only for royalties listed in Article 12(3)(a). Copyright royalties under Article 12(3)(b) remain taxable only in the recipient state under Article 12(1)."
+      },
+      "data_quality_issues": [
+        {
+          "affects_rate_conclusion": true,
+          "code": "copyright_zero_rate_not_extracted",
+          "detail": "The extractor returned only the 10% rate and did not capture exclusive residence-state taxation for Article 12(3)(b) copyright royalties.",
+          "severity": "critical"
+        },
+        {
+          "affects_rate_conclusion": false,
+          "code": "article_cross_references_split",
+          "detail": "References to Articles 8 and 7 are split across parsed paragraphs.",
+          "severity": "low"
+        }
+      ],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "royalty",
+      "mli_preliminary_finding": {
+        "effect": "Article 7(1) PPT",
+        "effective_from": "2021-01-01",
+        "source_id": "CZ-MF-DK-6D5DDFC81601"
+      },
+      "packet_id": "CZ-DK-ROY-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_protocol_effect_recorded"
+      },
+      "recipient_country": "DK",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "excess_payment_limitation": true,
+        "pe_exception_applies": true,
+        "rates": [
+          {
+            "categories": [
+              "patents",
+              "trademarks",
+              "designs or models",
+              "plans",
+              "secret formulas or processes",
+              "computer software",
+              "industrial, commercial or scientific equipment",
+              "industrial, commercial or scientific know-how"
+            ],
+            "conditions": [
+              "recipient is the beneficial owner"
+            ],
+            "rate": 10.0
+          },
+          {
+            "categories": [
+              "copyright in literary, artistic or scientific works",
+              "cinematographic films",
+              "films or recordings for television or radio broadcasting"
+            ],
+            "conditions": [
+              "recipient is resident in the other state"
+            ],
+            "rate": 0.0
+          }
+        ]
+      }
+    },
+    {
+      "data_quality_issues": [
+        {
+          "affects_rate_conclusion": false,
+          "code": "paragraph_reference_split",
+          "detail": "The mutual-agreement reference to paragraph 2 is split into a separate parsed paragraph.",
+          "severity": "low"
+        }
+      ],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "dividend",
+      "mli_preliminary_finding": {
+        "effect": "Article 7(1) PPT",
+        "effective_from": "2023-01-01",
+        "source_id": "CZ-MF-ES-ED9522D43DFC"
+      },
+      "packet_id": "CZ-ES-DIV-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_protocol_effect_recorded"
+      },
+      "recipient_country": "ES",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "pe_or_fixed_base_exception_applies": true,
+        "rates": [
+          {
+            "conditions": [
+              "recipient is the beneficial owner",
+              "recipient is a company other than a partnership without legal personality",
+              "recipient directly holds at least 25% of the capital of the paying company"
+            ],
+            "rate": 5.0
+          },
+          {
+            "conditions": [
+              "recipient is the beneficial owner",
+              "all other cases"
+            ],
+            "rate": 15.0
+          }
+        ]
+      }
+    },
+    {
+      "data_quality_issues": [
+        {
+          "affects_rate_conclusion": false,
+          "code": "beneficial_owner_wording_not_explicit",
+          "detail": "Article 12 does not expressly state a beneficial-owner condition; it must not be added automatically.",
+          "severity": "medium"
+        },
+        {
+          "affects_rate_conclusion": false,
+          "code": "article_cross_references_split",
+          "detail": "References to paragraph 2 and Article 7 are split across parsed paragraphs.",
+          "severity": "low"
+        }
+      ],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "royalty",
+      "mli_preliminary_finding": {
+        "effect": "Article 7(1) PPT",
+        "effective_from": "2021-01-01",
+        "source_id": "CZ-MF-NL-0210508FF125"
+      },
+      "packet_id": "CZ-NL-ROY-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_article_12_change",
+        "source_ids": [
+          "CZ-MF-NL-45D279EE7770",
+          "CZ-MF-NL-7CAD483C3F1A"
+        ]
+      },
+      "recipient_country": "NL",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "beneficial_owner_wording_explicit": false,
+        "excess_payment_limitation": true,
+        "pe_exception_applies": true,
+        "rates": [
+          {
+            "categories": [
+              "copyright",
+              "cinematographic films",
+              "patents",
+              "trademarks",
+              "designs or models",
+              "plans",
+              "secret formulas or processes",
+              "industrial, commercial or scientific equipment",
+              "industrial, commercial or scientific know-how"
+            ],
+            "conditions": [],
+            "rate": 5.0
+          }
+        ]
+      }
     }
   ],
   "policy": {
@@ -1016,8 +1187,8 @@
   "summary": {
     "approved_scopes": 0,
     "completed_primary_reviews": 0,
-    "preliminary_completion_percent": 73.3,
-    "preliminary_findings_completed": 22,
+    "preliminary_completion_percent": 83.3,
+    "preliminary_findings_completed": 25,
     "total_scopes": 30
   }
 }

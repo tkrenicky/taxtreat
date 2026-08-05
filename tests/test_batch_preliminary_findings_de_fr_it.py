@@ -14,11 +14,11 @@ def findings_index():
     }
 
 
-def test_registry_contains_twenty_two_findings() -> None:
+def test_registry_contains_twenty_five_findings() -> None:
     payload, _ = findings_index()
 
-    assert payload["summary"]["preliminary_findings_completed"] == 22
-    assert payload["summary"]["preliminary_completion_percent"] == 73.3
+    assert payload["summary"]["preliminary_findings_completed"] == 25
+    assert payload["summary"]["preliminary_completion_percent"] == 83.3
 
 
 def test_de_royalty_general_five_percent() -> None:
