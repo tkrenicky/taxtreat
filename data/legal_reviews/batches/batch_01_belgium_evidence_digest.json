@@ -1,0 +1,485 @@
+{
+  "country": "BE",
+  "country_name": "Belgie",
+  "dataset_release": "legal-review-batch-01-belgium-evidence-digest-2026-08-05.1",
+  "policy": {
+    "fail_closed": true,
+    "human_primary_review_required": true,
+    "no_automatic_legal_conclusion": true,
+    "source_excerpts_only": true
+  },
+  "schema_version": 1,
+  "scopes": [
+    {
+      "article_number": 10,
+      "article_text_sha256": "cc78445cbac3c292ed8f4bbc453f6edeb9468d0c7767a33a70f69ef3ae221496",
+      "article_title": "DIVIDENDY",
+      "candidate_rates": [
+        {
+          "conditions": [
+            {
+              "condition_type": "minimum_ownership",
+              "operator": ">=",
+              "unit": "%",
+              "value": "25"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "legal_basis": "Article 10",
+          "priority": 0,
+          "rate": 5.0,
+          "source_text": "5 procent hrubé cástky dividend, jestlize skutecným vlastnõkem je spolecnost, vcetne osobnõ spolecnosti,\nkterá prõmo nebo neprõmo vlastnõ nejméne 25 procent jmenõ spolecnosti vyplácejõcõ dividendy;",
+          "source_text_sha256": "7f97eec8e13043fe4aa600c9f7f90a660a8acae216f9f284a8680e9b9ccf5c3f"
+        },
+        {
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "legal_basis": "Article 10",
+          "priority": 1,
+          "rate": 15.0,
+          "source_text": "15 procent hrubé cástky dividend ve vsech ostatnõch prõpadech.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti, z nichz jsou dividendy vypláceny.",
+          "source_text_sha256": "8210ea38639be7207a7f92399a89e003ed88a48d8723819cc3118f1b77024f0b"
+        }
+      ],
+      "income_type": "dividend",
+      "mli_effects": [
+        {
+          "applies_to_income_types": [
+            "dividend",
+            "interest",
+            "royalty"
+          ],
+          "effect_id": "CZ-BE-MLI-WHT-PPT",
+          "effective_from": "2021-01-01",
+          "mli_article": "Article 7(1) PPT",
+          "recipient_country": "BE",
+          "recipient_country_name": "Belgie",
+          "source_country": "CZ",
+          "source_excerpt": "Článek 2 Výše uvedené změny Smlouvy se v obou smluvních státech provádějí následovně: 1) pokud jde o daně vybírané srážkou u zdroje z částek vyplácených nebo připisovaných nerezidentům, jestliže skutečnost dávající vzniknout takovým daním nastala k 1. lednu 2021 nebo později; 2) pokud jde o všechny ostatní daně, na daně ukládané za zdaňovací období začínající",
+          "source_excerpt_sha256": "514b559c36618b0160d8cb64a3c5dd1a73ec669da0ea1c6ca9cc2a8f600af51a",
+          "source_page_id": "CZ-MF-BE-FC7B1E3B8535",
+          "source_page_url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2020/financni-zpravodaj-cislo-23-2020-39686",
+          "source_pdf_url": "https://mf.gov.cz/assets/cs/media/Financni-zpravodaj_2020-c-23.pdf",
+          "verification_status": "needs_review"
+        }
+      ],
+      "packet_id": "CZ-BE-DIV-LEGAL-REVIEW",
+      "preliminary_findings": {
+        "beneficial_owner_requirement": null,
+        "general_rate_structure": null,
+        "issues_requiring_human_confirmation": [],
+        "mli_effect": null,
+        "protocol_effect": null,
+        "special_exemptions_or_categories": null
+      },
+      "protocol_scope_effects": [
+        {
+          "base_rate_candidates": [
+            {
+              "conditions": [
+                {
+                  "condition_type": "minimum_ownership",
+                  "operator": ">=",
+                  "unit": "%",
+                  "value": "25"
+                },
+                {
+                  "condition_type": "beneficial_owner",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                }
+              ],
+              "rate": 5.0
+            },
+            {
+              "conditions": [
+                {
+                  "condition_type": "beneficial_owner",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                }
+              ],
+              "rate": 15.0
+            }
+          ],
+          "candidate_sha256": "a468ca1de37a68a176e5fc69ff2f69e0df1386ce0609a68ba47e8aecd4dbd7bf",
+          "candidate_status": "protocol_effect_candidate_consolidated",
+          "consolidation_blockers": [
+            "domestic_and_parent_subsidiary_relief_consolidation",
+            "independent_legal_review",
+            "mli_effect_candidate_review",
+            "protocol_effect_candidate_review"
+          ],
+          "effect_kind": "confirmed_no_article_10_12_change",
+          "evidence_anchor": "Protocol Article I amends treaty Article 26 only",
+          "income_type": "dividend",
+          "later_status_source_id": null,
+          "protocol_candidate_effective_from": "2016-01-01",
+          "protocol_rate_candidates": [],
+          "protocol_source_ids": [
+            "CZ-MF-BE-D0E145875613"
+          ],
+          "recipient_country": "BE",
+          "source_country": "CZ",
+          "verification_status": "needs_review"
+        }
+      ],
+      "relevant_article_paragraphs": [
+        {
+          "matched_markers": [
+            "spolecnost"
+          ],
+          "sequence": 1,
+          "text": "1. Dividendy vyplácené spolecnostõ, která je rezidentem jednoho smluvnõho státu, rezidentu druhého smluvnõho státu mohou být zdaneny v tomo druhém státe."
+        },
+        {
+          "matched_markers": [
+            "procent",
+            "vlastn",
+            "skutecn",
+            "spolecnost"
+          ],
+          "sequence": 2,
+          "text": "2. Tyto dividendy vsak mohou být rovnez zdaneny ve smluvnõm státe, jehoz je spolecnost, která je vyplácõ, rezidentem, a to podle právnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk dividend je rezidentem druhého smluvnõho státu, dan takto ulozená nepresáhne: a) 5 procent hrubé cástky dividend, jestlize skutecným vlastnõkem je spolecnost, vcetne osobnõ spolecnosti, která prõmo nebo neprõmo vlastnõ nejméne 25 procent jmenõ spolecnosti vyplácejõcõ dividendy; b) 15 procent hrubé cástky dividend ve vsech ostatnõch prõpadech. Tento odstavec se nedotýká zdanenõ zisku spolecnosti, z nichz jsou dividendy vypláceny."
+        },
+        {
+          "matched_markers": [
+            "spolecnost"
+          ],
+          "sequence": 3,
+          "text": "3. Výraz 1dividendya pouzitý v tomto clánku oznacuje prõjmy z akciõ, pozitkových akciõ nebo pozitkových práv, kuksu, zakladatelských podõlu nebo jiných práv, s výjimkou pohledávek, s podõlem na zisku, jakoz i prõjmy ± vyplácené i formou úroku ± které jsou povazovány za prõjmy z akciõ podle vnitrostátnõch danových predpisu státu, jehoz je vyplácejõcõ spolecnost rezidentem."
+        },
+        {
+          "matched_markers": [
+            "vlastn",
+            "skutecn",
+            "spolecnost"
+          ],
+          "sequence": 4,
+          "text": "4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize skutecný vlastnõk dividend, který je rezidentem jednoho smluvnõho státu, vykonává v druhém smluvnõm státe, jehoz je rezidentem spolecnost vyplácejõcõ dividendy, prumyslovou nebo obchodnõ cinnost prostrednictvõm stálé provozovny, která je tam umõstena, nebo vykonává v tomto druhém státe nezávislé povolánõ ze stálé základny tam umõstené a jestlize úcast, pro kterou se dividendy vyplácejõ, se skutecne váze k této stálé provozovne nebo stálé základne. V takovém prõpade se pouzijõ ustanovenõ clánku 7 nebo clánku 14 podle toho, o jaký prõpad jde."
+        },
+        {
+          "matched_markers": [
+            "skutecn",
+            "spolecnost"
+          ],
+          "sequence": 5,
+          "text": "5. Jestlize spolecnost, která je rezidentem jednoho smluvnõho státu, dosahuje zisky nebo prõjmy z druhého smluvnõho státu, nemuze tento druhý stát zdanit dividendy vyplácené spolecnostõ, ledaze tyto dividendy jsou vypláceny rezidentu tohoto druhého státu nebo ze úcast, pro kterou se dividendy vyplácejõ, se skutecne váze ke stálé provozovne nebo stálé základne, která je umõstena v tomto druhém státe, ani podrobit nerozdelené zisky spolecnosti dani z nerozdelených zisku spolecnosti, i kdyz vyplácené dividendy nebo nerozdelené zisky pozu- stávajõ zcela nebo zcásti ze zisku nebo z prõjmu majõcõch zdroj v tomto druhém státe."
+        }
+      ],
+      "review_questions": [
+        "Does the 5% rate require direct or direct/indirect ownership of at least 25%?",
+        "Is the 15% rate the residual rate for all other beneficial owners?",
+        "Does the protocol leave Article 10 unchanged?",
+        "Are the Czech PSD conditions correctly represented, including the 12-month holding-period rule?"
+      ],
+      "status": "awaiting_primary_review"
+    },
+    {
+      "article_number": 11,
+      "article_text_sha256": "d646691e60e479eeb46e144ea3b8700a54326ed3fe4157f1ceaacf4746a7119e",
+      "article_title": "UROKY",
+      "candidate_rates": [
+        {
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "legal_basis": "Article 11",
+          "priority": 0,
+          "rate": 10.0,
+          "source_text": "Tyto úroky vsak mohou být rovnez zdaneny ve smluvnõm státe, v nemz majõ zdroj, a to podle právnõch\npredpisu tohoto státu, avsak jestlize skutecný vlastnõk úroku je rezidentem druhého smluvnõho státu, dan takto\nulozená nepresáhne 10 procent hrubé cástky úroku.",
+          "source_text_sha256": "09b8600d80dab91d7ab256c10d754eb9149184a09134be8816b199ca14139a36"
+        }
+      ],
+      "income_type": "interest",
+      "mli_effects": [
+        {
+          "applies_to_income_types": [
+            "dividend",
+            "interest",
+            "royalty"
+          ],
+          "effect_id": "CZ-BE-MLI-WHT-PPT",
+          "effective_from": "2021-01-01",
+          "mli_article": "Article 7(1) PPT",
+          "recipient_country": "BE",
+          "recipient_country_name": "Belgie",
+          "source_country": "CZ",
+          "source_excerpt": "Článek 2 Výše uvedené změny Smlouvy se v obou smluvních státech provádějí následovně: 1) pokud jde o daně vybírané srážkou u zdroje z částek vyplácených nebo připisovaných nerezidentům, jestliže skutečnost dávající vzniknout takovým daním nastala k 1. lednu 2021 nebo později; 2) pokud jde o všechny ostatní daně, na daně ukládané za zdaňovací období začínající",
+          "source_excerpt_sha256": "514b559c36618b0160d8cb64a3c5dd1a73ec669da0ea1c6ca9cc2a8f600af51a",
+          "source_page_id": "CZ-MF-BE-FC7B1E3B8535",
+          "source_page_url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2020/financni-zpravodaj-cislo-23-2020-39686",
+          "source_pdf_url": "https://mf.gov.cz/assets/cs/media/Financni-zpravodaj_2020-c-23.pdf",
+          "verification_status": "needs_review"
+        }
+      ],
+      "packet_id": "CZ-BE-INT-LEGAL-REVIEW",
+      "preliminary_findings": {
+        "beneficial_owner_requirement": null,
+        "general_rate_structure": null,
+        "issues_requiring_human_confirmation": [],
+        "mli_effect": null,
+        "protocol_effect": null,
+        "special_exemptions_or_categories": null
+      },
+      "protocol_scope_effects": [
+        {
+          "base_rate_candidates": [
+            {
+              "conditions": [
+                {
+                  "condition_type": "beneficial_owner",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                }
+              ],
+              "rate": 10.0
+            }
+          ],
+          "candidate_sha256": "a40ca0b38f5b1196814e5aeac701c11f0fb525c3798625f8773beb869d43b772",
+          "candidate_status": "protocol_effect_candidate_consolidated",
+          "consolidation_blockers": [
+            "domestic_and_eu_relief_consolidation",
+            "independent_legal_review",
+            "mli_effect_candidate_review",
+            "protocol_effect_candidate_review"
+          ],
+          "effect_kind": "confirmed_no_article_10_12_change",
+          "evidence_anchor": "Protocol Article I amends treaty Article 26 only",
+          "income_type": "interest",
+          "later_status_source_id": null,
+          "protocol_candidate_effective_from": "2016-01-01",
+          "protocol_rate_candidates": [],
+          "protocol_source_ids": [
+            "CZ-MF-BE-D0E145875613"
+          ],
+          "recipient_country": "BE",
+          "source_country": "CZ",
+          "verification_status": "needs_review"
+        }
+      ],
+      "relevant_article_paragraphs": [
+        {
+          "matched_markers": [
+            "procent"
+          ],
+          "sequence": 2,
+          "text": "2. Tyto úroky vsak mohou být rovnez zdaneny ve smluvnõm státe, v nemz majõ zdroj, a to podle právnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk úroku je rezidentem druhého smluvnõho státu, dan takto ulozená nepresáhne 10 procent hrubé cástky úroku."
+        },
+        {
+          "matched_markers": [
+            "osvobozen",
+            "obchodn",
+            "bankovn",
+            "vklad",
+            "pujc"
+          ],
+          "sequence": 3,
+          "text": "3. Bez ohledu na ustanovenõ odstavce 2 budou úroky osvobozeny od zdanenõ ve smluvnõm státe, v nemz majõ zdroj, jestlize to jsou: a) úroky z obchodnõch pohledávek ± vcetne pohledávek predstavovaných obchodnõmi cennými papõry ± vy- plývajõcõ z odlozených plateb za zbozõ nebo sluzby poskytované podnikem; b) úroky placené z duvodu pujcky nebo úveru, které jsou poskytovány, garantovány nebo pojist'ovány ve- rejnými subjekty, jejichz cõlem je podpora exportu; c) úroky z pujcek jakéhokoliv druhu ± nepredstavovaných cennými papõry na dorucitele ± které poskytuje bankovnõ podnik; d) úroky z vkladu ± nepredstavovaných cennými papõry na dorucitele ± u bankovnõho podniku; e) úroky placené druhému smluvnõmu státu nebo nizsõmu správnõmu útvaru nebo mõstnõmu úradu tohoto státu."
+        },
+        {
+          "matched_markers": [
+            "obchodn"
+          ],
+          "sequence": 6,
+          "text": "5. Ustanovenõ odstavcu 1, 2 a 3 se nepouzijõ, jestlize skutecný vlastnõk úroku, který je rezidentem jednoho smluvnõho státu, vykonává v druhém smluvnõm státe, ve kterém majõ úroky zdroj, prumyslovou nebo obchodnõ cinnost prostrednictvõm stálé provozovny, která je tam umõstena, nebo vykonává v tomto druhém státe nezávislé povolánõ ze stálé základny tam umõstené a jestlize pohledávka, ze které jsou úroky placeny, se skutecne váze k této stálé provozovne nebo stálé základne. V takovém prõpade se pouzijõ ustanovenõ clánku 7 nebo clánku 14 podle toho, o jaký prõpad jde."
+        }
+      ],
+      "review_questions": [
+        "Is 10% the general treaty ceiling subject to beneficial ownership?",
+        "Which Article 11(3) categories qualify for a 0% source-state exemption?",
+        "Are bank loans, deposits, trade credits, export finance and government payments represented correctly?",
+        "Are the Czech IRD conditions and section 38nb requirement correctly represented?"
+      ],
+      "status": "awaiting_primary_review"
+    },
+    {
+      "article_number": 12,
+      "article_text_sha256": "50e8e1550255bb25a5c558d15ecd96f5ca376674744cf08abe59339686c10a81",
+      "article_title": "LICENČNI POPLATKY",
+      "candidate_rates": [
+        {
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "legal_basis": "Article 12",
+          "priority": 0,
+          "rate": 5.0,
+          "source_text": "5 procent hrubé cástky licencnõch poplatku placených za uzitõ nebo za právo na uzitõ jakéhokoliv pru-\nmyslového, obchodnõho nebo vedeckého zarõzenõ;",
+          "source_text_sha256": "8349cc15ceea99f1abcc4fa55bc0cab56fd4e84f4452ace3493880a9d677256d"
+        },
+        {
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "legal_basis": "Article 12",
+          "priority": 1,
+          "rate": 10.0,
+          "source_text": "10 procent hrubé cástky licencnõch poplatku placených za uzitõ nebo za právo na uzitõ jakéhokoliv autor-\nského práva k dõlu literárnõmu, umeleckému nebo vedeckému, vcetne kinematografických filmu a filmu\nnebo nahrávek pro televiznõ nebo rozhlasové vysõlánõ, jakéhokoliv softwaru, patentu, ochranné známky,\nnávrhu nebo modelu, plánu, tajného vzorce nebo výrobnõho postupu, nebo za informace, které se vztahujõ\nna zkusenosti nabyté v oblasti prumyslové, obchodnõ nebo vedecké.",
+          "source_text_sha256": "7a7579e86e651e872de329e9db9b752fd282aef215fa7457be4d5bbbbbe25447"
+        }
+      ],
+      "income_type": "royalty",
+      "mli_effects": [
+        {
+          "applies_to_income_types": [
+            "dividend",
+            "interest",
+            "royalty"
+          ],
+          "effect_id": "CZ-BE-MLI-WHT-PPT",
+          "effective_from": "2021-01-01",
+          "mli_article": "Article 7(1) PPT",
+          "recipient_country": "BE",
+          "recipient_country_name": "Belgie",
+          "source_country": "CZ",
+          "source_excerpt": "Článek 2 Výše uvedené změny Smlouvy se v obou smluvních státech provádějí následovně: 1) pokud jde o daně vybírané srážkou u zdroje z částek vyplácených nebo připisovaných nerezidentům, jestliže skutečnost dávající vzniknout takovým daním nastala k 1. lednu 2021 nebo později; 2) pokud jde o všechny ostatní daně, na daně ukládané za zdaňovací období začínající",
+          "source_excerpt_sha256": "514b559c36618b0160d8cb64a3c5dd1a73ec669da0ea1c6ca9cc2a8f600af51a",
+          "source_page_id": "CZ-MF-BE-FC7B1E3B8535",
+          "source_page_url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2020/financni-zpravodaj-cislo-23-2020-39686",
+          "source_pdf_url": "https://mf.gov.cz/assets/cs/media/Financni-zpravodaj_2020-c-23.pdf",
+          "verification_status": "needs_review"
+        }
+      ],
+      "packet_id": "CZ-BE-ROY-LEGAL-REVIEW",
+      "preliminary_findings": {
+        "beneficial_owner_requirement": null,
+        "general_rate_structure": null,
+        "issues_requiring_human_confirmation": [],
+        "mli_effect": null,
+        "protocol_effect": null,
+        "special_exemptions_or_categories": null
+      },
+      "protocol_scope_effects": [
+        {
+          "base_rate_candidates": [
+            {
+              "conditions": [
+                {
+                  "condition_type": "beneficial_owner",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                }
+              ],
+              "rate": 5.0
+            },
+            {
+              "conditions": [
+                {
+                  "condition_type": "beneficial_owner",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                }
+              ],
+              "rate": 10.0
+            }
+          ],
+          "candidate_sha256": "bb63cb850dfa743569e85d9f40427e2b9aaa0cf10fdb071bb121579cc1447356",
+          "candidate_status": "protocol_effect_candidate_consolidated",
+          "consolidation_blockers": [
+            "domestic_and_eu_relief_consolidation",
+            "independent_legal_review",
+            "mli_effect_candidate_review",
+            "protocol_effect_candidate_review"
+          ],
+          "effect_kind": "confirmed_no_article_10_12_change",
+          "evidence_anchor": "Protocol Article I amends treaty Article 26 only",
+          "income_type": "royalty",
+          "later_status_source_id": null,
+          "protocol_candidate_effective_from": "2016-01-01",
+          "protocol_rate_candidates": [],
+          "protocol_source_ids": [
+            "CZ-MF-BE-D0E145875613"
+          ],
+          "recipient_country": "BE",
+          "source_country": "CZ",
+          "verification_status": "needs_review"
+        }
+      ],
+      "relevant_article_paragraphs": [
+        {
+          "matched_markers": [
+            "licenc"
+          ],
+          "sequence": 1,
+          "text": "1. Licencnõ poplatky majõcõ zdroj v jednom smluvnõm státe a vyplácené rezidentu druhého smluvnõho státu mohou být zdaneny v tomto druhém státe."
+        },
+        {
+          "matched_markers": [
+            "procent",
+            "licenc",
+            "patent",
+            "ochrann"
+          ],
+          "sequence": 2,
+          "text": "2. Tyto licencnõ poplatky vsak mohou být rovnez zdaneny ve smluvnõm státe, v nemz majõ zdroj, a to podle právnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk licencnõch poplatku je rezidentem druhého smluvnõho státu, dan takto ulozená nepresáhne: a) 5 procent hrubé cástky licencnõch poplatku placených za uzitõ nebo za právo na uzitõ jakéhokoliv pru- myslového, obchodnõho nebo vedeckého zarõzenõ; b) 10 procent hrubé cástky licencnõch poplatku placených za uzitõ nebo za právo na uzitõ jakéhokoliv autor- ského práva k dõlu literárnõmu, umeleckému nebo vedeckému, vcetne kinematografických filmu a filmu nebo nahrávek pro televiznõ nebo rozhlasové vysõlánõ, jakéhokoliv softwaru, patentu, ochranné známky, návrhu nebo modelu, plánu, tajného vzorce nebo výrobnõho postupu, nebo za informace, které se vztahujõ na zkusenosti nabyté v oblasti prumyslové, obchodnõ nebo vedecké."
+        },
+        {
+          "matched_markers": [
+            "licenc"
+          ],
+          "sequence": 3,
+          "text": "3. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize skutecný vlastnõk licencnõch poplatku, který je rezidentem jednoho smluvnõho státu, vykonává v druhém smluvnõm státe, ve kterém majõ licencnõ poplatky zdroj, pru- myslovou nebo obchodnõ cinnost prostrednictvõm stálé provozovny, která je tam umõstena, nebo vykonává v tomto druhém státe nezávislé povolánõ ze stálé základny tam umõstené, a jestlize právo nebo majetek, které dávajõ vznik licencnõm poplatkum, se skutecne vázou k této stálé provozovne nebo stálé základne. V takovém prõpade se pouzijõ ustanovenõ clánku 7 nebo clánku 14 podle toho, o jaký prõpad jde."
+        },
+        {
+          "matched_markers": [
+            "licenc"
+          ],
+          "sequence": 4,
+          "text": "4. Předpokládá se, ze licencnõ poplatky majõ zdroj ve smluvnõm státe, jestlize plátcem je tento stát sám, nizsõ správnõ útvar, mõstnõ úrad nebo rezident tohoto státu. Jestlize vsak plátce licencnõch poplatku, at' je, nebo nenõ rezidentem nekterého smluvnõho státu, má ve smluvnõm státe stálou provozovnu nebo stálou základnu, ve spojenõ s nõz vznikla povinnost platit licencnõ poplatky, a tyto licencnõ poplatky jdou k tõzi takové stálé pro- vozovny nebo stálé základny, predpokládá se, ze tyto licencnõ poplatky majõ zdroj v tom státe, ve kterém je stálá provozovna nebo stálá základna umõstena."
+        },
+        {
+          "matched_markers": [
+            "licenc"
+          ],
+          "sequence": 5,
+          "text": "5. Jestlize cástka licencnõch poplatku, které se vztahujõ k uzitõ, právu nebo informaci, za které jsou placeny, presahuje, v dusledku zvlástnõch vztahu mezi plátcem a skutecným vlastnõkem nebo mezi obema z nich a nejakou dalsõ osobou, cástku, kterou by byl smluvil plátce se skutecným vlastnõkem, kdyby nebylo takových vztahu, pouzijõ se ustanovenõ tohoto clánku jen na tuto posledne zmõnenou cástku. Částka plateb, která ji presahuje, bude v tomto prõpade zdanena ve smluvnõm státe, ve kterém majõ licencnõ poplatky zdroj, a to v souladu s právnõmi predpisy tohoto státu."
+        }
+      ],
+      "review_questions": [
+        "Which royalty categories are subject to the 5% rate?",
+        "Which royalty categories are subject to the 10% rate?",
+        "Does the treaty definition include software, know-how, industrial equipment or copyright separately?",
+        "Does the protocol leave Article 12 unchanged?",
+        "Are the Czech IRD conditions and section 38nb requirement correctly represented?"
+      ],
+      "status": "awaiting_primary_review"
+    }
+  ],
+  "summary": {
+    "approved_scopes": 0,
+    "preliminary_findings_completed": 0,
+    "scopes": 3
+  }
+}
