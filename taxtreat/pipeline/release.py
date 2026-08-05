@@ -72,25 +72,71 @@ def _stable_source_id(country: str, source_title: str) -> str:
 
 
 def build_source_manifest() -> dict[str, Any]:
+    existing_sources: dict[str, dict[str, Any]] = {}
+
+    if SOURCE_MANIFEST.is_file():
+        existing_payload = _read_json(SOURCE_MANIFEST)
+        existing_sources = {
+            source["source_id"]: source
+            for source in existing_payload.get("sources", [])
+            if source.get("source_id")
+        }
+
     sources = []
+
     for parsed_path in sorted(PARSED_DIR.glob("*.json")):
         parsed = _read_json(parsed_path)
-        raw_path = ROOT / parsed.get("source_path", "")
-        artifact_available = raw_path.is_file()
         source_title = parsed.get("source_title") or ""
-        resolution_method = (parsed.get("source_resolution") or {}).get("method")
+        source_id = _stable_source_id(
+            parsed.get("country", parsed_path.stem),
+            source_title,
+        )
+
+        raw_path = ROOT / parsed.get("source_path", "")
+        raw_available = raw_path.is_file()
+        existing_source = existing_sources.get(source_id, {})
+
+        existing_sha256 = existing_source.get("sha256")
+        existing_artifact_uri = existing_source.get("artifact_uri")
+
+        committed_binding_available = bool(
+            existing_source.get("artifact_available")
+            and existing_artifact_uri
+            and isinstance(existing_sha256, str)
+            and len(existing_sha256) == 64
+        )
+
+        artifact_available = bool(
+            raw_available or committed_binding_available
+        )
+        artifact_uri = (
+            parsed.get("source_path")
+            if raw_available
+            else existing_artifact_uri
+            if committed_binding_available
+            else None
+        )
+        artifact_sha256 = (
+            _sha256(raw_path)
+            if raw_available
+            else existing_sha256
+            if committed_binding_available
+            else None
+        )
+
+        resolution_method = (
+            parsed.get("source_resolution") or {}
+        ).get("method")
+
         sources.append(
             {
-                "source_id": _stable_source_id(
-                    parsed.get("country", parsed_path.stem),
-                    source_title,
-                ),
+                "source_id": source_id,
                 "country": parsed.get("country"),
                 "source_title": source_title,
                 "parsed_path": str(parsed_path.relative_to(ROOT)),
-                "artifact_uri": parsed.get("source_path"),
+                "artifact_uri": artifact_uri,
                 "artifact_available": artifact_available,
-                "sha256": _sha256(raw_path) if artifact_available else None,
+                "sha256": artifact_sha256,
                 "official_urls": list(official_source_urls(source_title)),
                 "authority_class": "official",
                 "extraction_authority_class": (
