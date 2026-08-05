@@ -1,0 +1,726 @@
+{
+  "dataset_release": "legal-review-batch-01-priorities-2026-08-05.1",
+  "policy": {
+    "fail_closed": true,
+    "human_review_required": true,
+    "priority_is_not_legal_conclusion": true
+  },
+  "review_order": [
+    {
+      "flags": [
+        {
+          "code": "treaty_zero_rate",
+          "message": "A zero-rate treaty candidate must be tied to its precise legal conditions or exemption category.",
+          "severity": "medium"
+        },
+        {
+          "code": "multiple_protocol_documents",
+          "message": "Multiple protocol documents require chronological consolidation and confirmation of cumulative effects.",
+          "severity": "high"
+        },
+        {
+          "code": "interest_full_exemption_candidate",
+          "message": "The extracted interest result is 0%; confirm whether the article grants a general exemption or only category-specific exemptions.",
+          "severity": "high"
+        }
+      ],
+      "income_type": "interest",
+      "mli_effect_count": 1,
+      "packet_id": "CZ-NL-INT-LEGAL-REVIEW",
+      "priority_score": 12,
+      "protocol_document_count": 2,
+      "rate_candidates": [
+        0.0
+      ],
+      "recipient_country": "NL",
+      "recipient_country_name": "Nizozemí",
+      "review_status": "awaiting_primary_review"
+    },
+    {
+      "flags": [
+        {
+          "code": "multiple_rate_candidates",
+          "message": "Multiple treaty rates require confirmation of the applicable categories and conditions.",
+          "severity": "medium"
+        },
+        {
+          "code": "treaty_zero_rate",
+          "message": "A zero-rate treaty candidate must be tied to its precise legal conditions or exemption category.",
+          "severity": "medium"
+        },
+        {
+          "code": "no_mli_effect_recorded",
+          "message": "No MLI withholding-tax effect is recorded; treaty coverage and effective dates require confirmation.",
+          "severity": "medium"
+        },
+        {
+          "code": "royalty_category_mapping_required",
+          "message": "Royalty rates must be mapped to the precise categories of rights, property or information.",
+          "severity": "high"
+        }
+      ],
+      "income_type": "royalty",
+      "mli_effect_count": 0,
+      "packet_id": "CZ-IT-ROY-LEGAL-REVIEW",
+      "priority_score": 11,
+      "protocol_document_count": 0,
+      "rate_candidates": [
+        0.0,
+        5.0
+      ],
+      "recipient_country": "IT",
+      "recipient_country_name": "Itálie",
+      "review_status": "awaiting_primary_review"
+    },
+    {
+      "flags": [
+        {
+          "code": "multiple_rate_candidates",
+          "message": "Multiple treaty rates require confirmation of the applicable categories and conditions.",
+          "severity": "medium"
+        },
+        {
+          "code": "treaty_zero_rate",
+          "message": "A zero-rate treaty candidate must be tied to its precise legal conditions or exemption category.",
+          "severity": "medium"
+        },
+        {
+          "code": "no_mli_effect_recorded",
+          "message": "No MLI withholding-tax effect is recorded; treaty coverage and effective dates require confirmation.",
+          "severity": "medium"
+        },
+        {
+          "code": "royalty_category_mapping_required",
+          "message": "Royalty rates must be mapped to the precise categories of rights, property or information.",
+          "severity": "high"
+        }
+      ],
+      "income_type": "royalty",
+      "mli_effect_count": 0,
+      "packet_id": "CZ-SE-ROY-LEGAL-REVIEW",
+      "priority_score": 11,
+      "protocol_document_count": 0,
+      "rate_candidates": [
+        5.0,
+        0.0
+      ],
+      "recipient_country": "SE",
+      "recipient_country_name": "Švédsko",
+      "review_status": "awaiting_primary_review"
+    },
+    {
+      "flags": [
+        {
+          "code": "multiple_rate_candidates",
+          "message": "Multiple treaty rates require confirmation of the applicable categories and conditions.",
+          "severity": "medium"
+        },
+        {
+          "code": "multiple_zero_rate_candidates",
+          "message": "Multiple zero-rate candidates may represent separate exemptions or duplicate extraction.",
+          "severity": "high"
+        },
+        {
+          "code": "treaty_zero_rate",
+          "message": "A zero-rate treaty candidate must be tied to its precise legal conditions or exemption category.",
+          "severity": "medium"
+        }
+      ],
+      "income_type": "dividend",
+      "mli_effect_count": 1,
+      "packet_id": "CZ-DK-DIV-LEGAL-REVIEW",
+      "priority_score": 9,
+      "protocol_document_count": 0,
+      "rate_candidates": [
+        0.0,
+        0.0,
+        15.0
+      ],
+      "recipient_country": "DK",
+      "recipient_country_name": "Dánsko",
+      "review_status": "awaiting_primary_review"
+    },
+    {
+      "flags": [
+        {
+          "code": "multiple_rate_candidates",
+          "message": "Multiple treaty rates require confirmation of the applicable categories and conditions.",
+          "severity": "medium"
+        },
+        {
+          "code": "treaty_zero_rate",
+          "message": "A zero-rate treaty candidate must be tied to its precise legal conditions or exemption category.",
+          "severity": "medium"
+        },
+        {
+          "code": "royalty_category_mapping_required",
+          "message": "Royalty rates must be mapped to the precise categories of rights, property or information.",
+          "severity": "high"
+        }
+      ],
+      "income_type": "royalty",
+      "mli_effect_count": 1,
+      "packet_id": "CZ-ES-ROY-LEGAL-REVIEW",
+      "priority_score": 9,
+      "protocol_document_count": 0,
+      "rate_candidates": [
+        5.0,
+        0.0
+      ],
+      "recipient_country": "ES",
+      "recipient_country_name": "Španělsko",
+      "review_status": "awaiting_primary_review"
+    },
+    {
+      "flags": [
+        {
+          "code": "treaty_zero_rate",
+          "message": "A zero-rate treaty candidate must be tied to its precise legal conditions or exemption category.",
+          "severity": "medium"
+        },
+        {
+          "code": "no_mli_effect_recorded",
+          "message": "No MLI withholding-tax effect is recorded; treaty coverage and effective dates require confirmation.",
+          "severity": "medium"
+        },
+        {
+          "code": "interest_full_exemption_candidate",
+          "message": "The extracted interest result is 0%; confirm whether the article grants a general exemption or only category-specific exemptions.",
+          "severity": "high"
+        }
+      ],
+      "income_type": "interest",
+      "mli_effect_count": 0,
+      "packet_id": "CZ-IT-INT-LEGAL-REVIEW",
+      "priority_score": 9,
+      "protocol_document_count": 0,
+      "rate_candidates": [
+        0.0
+      ],
+      "recipient_country": "IT",
+      "recipient_country_name": "Itálie",
+      "review_status": "awaiting_primary_review"
+    },
+    {
+      "flags": [
+        {
+          "code": "treaty_zero_rate",
+          "message": "A zero-rate treaty candidate must be tied to its precise legal conditions or exemption category.",
+          "severity": "medium"
+        },
+        {
+          "code": "no_mli_effect_recorded",
+          "message": "No MLI withholding-tax effect is recorded; treaty coverage and effective dates require confirmation.",
+          "severity": "medium"
+        },
+        {
+          "code": "interest_full_exemption_candidate",
+          "message": "The extracted interest result is 0%; confirm whether the article grants a general exemption or only category-specific exemptions.",
+          "severity": "high"
+        }
+      ],
+      "income_type": "interest",
+      "mli_effect_count": 0,
+      "packet_id": "CZ-SE-INT-LEGAL-REVIEW",
+      "priority_score": 9,
+      "protocol_document_count": 0,
+      "rate_candidates": [
+        0.0
+      ],
+      "recipient_country": "SE",
+      "recipient_country_name": "Švédsko",
+      "review_status": "awaiting_primary_review"
+    },
+    {
+      "flags": [
+        {
+          "code": "multiple_rate_candidates",
+          "message": "Multiple treaty rates require confirmation of the applicable categories and conditions.",
+          "severity": "medium"
+        },
+        {
+          "code": "royalty_category_mapping_required",
+          "message": "Royalty rates must be mapped to the precise categories of rights, property or information.",
+          "severity": "high"
+        }
+      ],
+      "income_type": "royalty",
+      "mli_effect_count": 1,
+      "packet_id": "CZ-BE-ROY-LEGAL-REVIEW",
+      "priority_score": 7,
+      "protocol_document_count": 1,
+      "rate_candidates": [
+        5.0,
+        10.0
+      ],
+      "recipient_country": "BE",
+      "recipient_country_name": "Belgie",
+      "review_status": "awaiting_primary_review"
+    },
+    {
+      "flags": [
+        {
+          "code": "multiple_rate_candidates",
+          "message": "Multiple treaty rates require confirmation of the applicable categories and conditions.",
+          "severity": "medium"
+        },
+        {
+          "code": "dividend_20_percent_candidate",
+          "message": "The 20% dividend candidate is unusual for the batch and requires precise category and historical-effect confirmation.",
+          "severity": "high"
+        }
+      ],
+      "income_type": "dividend",
+      "mli_effect_count": 1,
+      "packet_id": "CZ-DE-DIV-LEGAL-REVIEW",
+      "priority_score": 7,
+      "protocol_document_count": 0,
+      "rate_candidates": [
+        5.0,
+        15.0,
+        20.0
+      ],
+      "recipient_country": "DE",
+      "recipient_country_name": "Německo",
+      "review_status": "awaiting_primary_review"
+    },
+    {
+      "flags": [
+        {
+          "code": "treaty_zero_rate",
+          "message": "A zero-rate treaty candidate must be tied to its precise legal conditions or exemption category.",
+          "severity": "medium"
+        },
+        {
+          "code": "interest_full_exemption_candidate",
+          "message": "The extracted interest result is 0%; confirm whether the article grants a general exemption or only category-specific exemptions.",
+          "severity": "high"
+        }
+      ],
+      "income_type": "interest",
+      "mli_effect_count": 1,
+      "packet_id": "CZ-DE-INT-LEGAL-REVIEW",
+      "priority_score": 7,
+      "protocol_document_count": 0,
+      "rate_candidates": [
+        0.0
+      ],
+      "recipient_country": "DE",
+      "recipient_country_name": "Německo",
+      "review_status": "awaiting_primary_review"
+    },
+    {
+      "flags": [
+        {
+          "code": "treaty_zero_rate",
+          "message": "A zero-rate treaty candidate must be tied to its precise legal conditions or exemption category.",
+          "severity": "medium"
+        },
+        {
+          "code": "interest_full_exemption_candidate",
+          "message": "The extracted interest result is 0%; confirm whether the article grants a general exemption or only category-specific exemptions.",
+          "severity": "high"
+        }
+      ],
+      "income_type": "interest",
+      "mli_effect_count": 1,
+      "packet_id": "CZ-DK-INT-LEGAL-REVIEW",
+      "priority_score": 7,
+      "protocol_document_count": 0,
+      "rate_candidates": [
+        0.0
+      ],
+      "recipient_country": "DK",
+      "recipient_country_name": "Dánsko",
+      "review_status": "awaiting_primary_review"
+    },
+    {
+      "flags": [
+        {
+          "code": "treaty_zero_rate",
+          "message": "A zero-rate treaty candidate must be tied to its precise legal conditions or exemption category.",
+          "severity": "medium"
+        },
+        {
+          "code": "interest_full_exemption_candidate",
+          "message": "The extracted interest result is 0%; confirm whether the article grants a general exemption or only category-specific exemptions.",
+          "severity": "high"
+        }
+      ],
+      "income_type": "interest",
+      "mli_effect_count": 1,
+      "packet_id": "CZ-ES-INT-LEGAL-REVIEW",
+      "priority_score": 7,
+      "protocol_document_count": 0,
+      "rate_candidates": [
+        0.0
+      ],
+      "recipient_country": "ES",
+      "recipient_country_name": "Španělsko",
+      "review_status": "awaiting_primary_review"
+    },
+    {
+      "flags": [
+        {
+          "code": "treaty_zero_rate",
+          "message": "A zero-rate treaty candidate must be tied to its precise legal conditions or exemption category.",
+          "severity": "medium"
+        },
+        {
+          "code": "interest_full_exemption_candidate",
+          "message": "The extracted interest result is 0%; confirm whether the article grants a general exemption or only category-specific exemptions.",
+          "severity": "high"
+        }
+      ],
+      "income_type": "interest",
+      "mli_effect_count": 1,
+      "packet_id": "CZ-FR-INT-LEGAL-REVIEW",
+      "priority_score": 7,
+      "protocol_document_count": 0,
+      "rate_candidates": [
+        0.0
+      ],
+      "recipient_country": "FR",
+      "recipient_country_name": "Francie",
+      "review_status": "awaiting_primary_review"
+    },
+    {
+      "flags": [
+        {
+          "code": "multiple_rate_candidates",
+          "message": "Multiple treaty rates require confirmation of the applicable categories and conditions.",
+          "severity": "medium"
+        },
+        {
+          "code": "royalty_category_mapping_required",
+          "message": "Royalty rates must be mapped to the precise categories of rights, property or information.",
+          "severity": "high"
+        }
+      ],
+      "income_type": "royalty",
+      "mli_effect_count": 1,
+      "packet_id": "CZ-FR-ROY-LEGAL-REVIEW",
+      "priority_score": 7,
+      "protocol_document_count": 0,
+      "rate_candidates": [
+        5.0,
+        10.0
+      ],
+      "recipient_country": "FR",
+      "recipient_country_name": "Francie",
+      "review_status": "awaiting_primary_review"
+    },
+    {
+      "flags": [
+        {
+          "code": "treaty_zero_rate",
+          "message": "A zero-rate treaty candidate must be tied to its precise legal conditions or exemption category.",
+          "severity": "medium"
+        },
+        {
+          "code": "interest_full_exemption_candidate",
+          "message": "The extracted interest result is 0%; confirm whether the article grants a general exemption or only category-specific exemptions.",
+          "severity": "high"
+        }
+      ],
+      "income_type": "interest",
+      "mli_effect_count": 1,
+      "packet_id": "CZ-SK-INT-LEGAL-REVIEW",
+      "priority_score": 7,
+      "protocol_document_count": 0,
+      "rate_candidates": [
+        0.0
+      ],
+      "recipient_country": "SK",
+      "recipient_country_name": "Slovensko",
+      "review_status": "awaiting_primary_review"
+    },
+    {
+      "flags": [
+        {
+          "code": "multiple_protocol_documents",
+          "message": "Multiple protocol documents require chronological consolidation and confirmation of cumulative effects.",
+          "severity": "high"
+        }
+      ],
+      "income_type": "dividend",
+      "mli_effect_count": 1,
+      "packet_id": "CZ-NL-DIV-LEGAL-REVIEW",
+      "priority_score": 5,
+      "protocol_document_count": 2,
+      "rate_candidates": [
+        10.0
+      ],
+      "recipient_country": "NL",
+      "recipient_country_name": "Nizozemí",
+      "review_status": "awaiting_primary_review"
+    },
+    {
+      "flags": [
+        {
+          "code": "multiple_protocol_documents",
+          "message": "Multiple protocol documents require chronological consolidation and confirmation of cumulative effects.",
+          "severity": "high"
+        }
+      ],
+      "income_type": "royalty",
+      "mli_effect_count": 1,
+      "packet_id": "CZ-NL-ROY-LEGAL-REVIEW",
+      "priority_score": 5,
+      "protocol_document_count": 2,
+      "rate_candidates": [
+        5.0
+      ],
+      "recipient_country": "NL",
+      "recipient_country_name": "Nizozemí",
+      "review_status": "awaiting_primary_review"
+    },
+    {
+      "flags": [
+        {
+          "code": "multiple_rate_candidates",
+          "message": "Multiple treaty rates require confirmation of the applicable categories and conditions.",
+          "severity": "medium"
+        },
+        {
+          "code": "treaty_zero_rate",
+          "message": "A zero-rate treaty candidate must be tied to its precise legal conditions or exemption category.",
+          "severity": "medium"
+        }
+      ],
+      "income_type": "dividend",
+      "mli_effect_count": 1,
+      "packet_id": "CZ-FR-DIV-LEGAL-REVIEW",
+      "priority_score": 4,
+      "protocol_document_count": 0,
+      "rate_candidates": [
+        0.0,
+        10.0
+      ],
+      "recipient_country": "FR",
+      "recipient_country_name": "Francie",
+      "review_status": "awaiting_primary_review"
+    },
+    {
+      "flags": [
+        {
+          "code": "multiple_rate_candidates",
+          "message": "Multiple treaty rates require confirmation of the applicable categories and conditions.",
+          "severity": "medium"
+        },
+        {
+          "code": "treaty_zero_rate",
+          "message": "A zero-rate treaty candidate must be tied to its precise legal conditions or exemption category.",
+          "severity": "medium"
+        }
+      ],
+      "income_type": "interest",
+      "mli_effect_count": 1,
+      "packet_id": "CZ-PL-INT-LEGAL-REVIEW",
+      "priority_score": 4,
+      "protocol_document_count": 0,
+      "rate_candidates": [
+        5.0,
+        0.0
+      ],
+      "recipient_country": "PL",
+      "recipient_country_name": "Polsko",
+      "review_status": "awaiting_primary_review"
+    },
+    {
+      "flags": [
+        {
+          "code": "multiple_rate_candidates",
+          "message": "Multiple treaty rates require confirmation of the applicable categories and conditions.",
+          "severity": "medium"
+        }
+      ],
+      "income_type": "dividend",
+      "mli_effect_count": 1,
+      "packet_id": "CZ-BE-DIV-LEGAL-REVIEW",
+      "priority_score": 2,
+      "protocol_document_count": 1,
+      "rate_candidates": [
+        5.0,
+        15.0
+      ],
+      "recipient_country": "BE",
+      "recipient_country_name": "Belgie",
+      "review_status": "awaiting_primary_review"
+    },
+    {
+      "flags": [
+        {
+          "code": "multiple_rate_candidates",
+          "message": "Multiple treaty rates require confirmation of the applicable categories and conditions.",
+          "severity": "medium"
+        }
+      ],
+      "income_type": "dividend",
+      "mli_effect_count": 1,
+      "packet_id": "CZ-ES-DIV-LEGAL-REVIEW",
+      "priority_score": 2,
+      "protocol_document_count": 0,
+      "rate_candidates": [
+        5.0,
+        15.0
+      ],
+      "recipient_country": "ES",
+      "recipient_country_name": "Španělsko",
+      "review_status": "awaiting_primary_review"
+    },
+    {
+      "flags": [
+        {
+          "code": "no_mli_effect_recorded",
+          "message": "No MLI withholding-tax effect is recorded; treaty coverage and effective dates require confirmation.",
+          "severity": "medium"
+        }
+      ],
+      "income_type": "dividend",
+      "mli_effect_count": 0,
+      "packet_id": "CZ-IT-DIV-LEGAL-REVIEW",
+      "priority_score": 2,
+      "protocol_document_count": 0,
+      "rate_candidates": [
+        15.0
+      ],
+      "recipient_country": "IT",
+      "recipient_country_name": "Itálie",
+      "review_status": "awaiting_primary_review"
+    },
+    {
+      "flags": [
+        {
+          "code": "no_mli_effect_recorded",
+          "message": "No MLI withholding-tax effect is recorded; treaty coverage and effective dates require confirmation.",
+          "severity": "medium"
+        }
+      ],
+      "income_type": "dividend",
+      "mli_effect_count": 0,
+      "packet_id": "CZ-SE-DIV-LEGAL-REVIEW",
+      "priority_score": 2,
+      "protocol_document_count": 0,
+      "rate_candidates": [
+        10.0
+      ],
+      "recipient_country": "SE",
+      "recipient_country_name": "Švédsko",
+      "review_status": "awaiting_primary_review"
+    },
+    {
+      "flags": [
+        {
+          "code": "multiple_rate_candidates",
+          "message": "Multiple treaty rates require confirmation of the applicable categories and conditions.",
+          "severity": "medium"
+        }
+      ],
+      "income_type": "dividend",
+      "mli_effect_count": 1,
+      "packet_id": "CZ-SK-DIV-LEGAL-REVIEW",
+      "priority_score": 2,
+      "protocol_document_count": 0,
+      "rate_candidates": [
+        5.0,
+        15.0
+      ],
+      "recipient_country": "SK",
+      "recipient_country_name": "Slovensko",
+      "review_status": "awaiting_primary_review"
+    },
+    {
+      "flags": [],
+      "income_type": "interest",
+      "mli_effect_count": 1,
+      "packet_id": "CZ-BE-INT-LEGAL-REVIEW",
+      "priority_score": 0,
+      "protocol_document_count": 1,
+      "rate_candidates": [
+        10.0
+      ],
+      "recipient_country": "BE",
+      "recipient_country_name": "Belgie",
+      "review_status": "awaiting_primary_review"
+    },
+    {
+      "flags": [],
+      "income_type": "royalty",
+      "mli_effect_count": 1,
+      "packet_id": "CZ-DE-ROY-LEGAL-REVIEW",
+      "priority_score": 0,
+      "protocol_document_count": 0,
+      "rate_candidates": [
+        5.0
+      ],
+      "recipient_country": "DE",
+      "recipient_country_name": "Německo",
+      "review_status": "awaiting_primary_review"
+    },
+    {
+      "flags": [],
+      "income_type": "royalty",
+      "mli_effect_count": 1,
+      "packet_id": "CZ-DK-ROY-LEGAL-REVIEW",
+      "priority_score": 0,
+      "protocol_document_count": 0,
+      "rate_candidates": [
+        10.0
+      ],
+      "recipient_country": "DK",
+      "recipient_country_name": "Dánsko",
+      "review_status": "awaiting_primary_review"
+    },
+    {
+      "flags": [],
+      "income_type": "dividend",
+      "mli_effect_count": 1,
+      "packet_id": "CZ-PL-DIV-LEGAL-REVIEW",
+      "priority_score": 0,
+      "protocol_document_count": 0,
+      "rate_candidates": [
+        5.0
+      ],
+      "recipient_country": "PL",
+      "recipient_country_name": "Polsko",
+      "review_status": "awaiting_primary_review"
+    },
+    {
+      "flags": [],
+      "income_type": "royalty",
+      "mli_effect_count": 1,
+      "packet_id": "CZ-PL-ROY-LEGAL-REVIEW",
+      "priority_score": 0,
+      "protocol_document_count": 0,
+      "rate_candidates": [
+        10.0
+      ],
+      "recipient_country": "PL",
+      "recipient_country_name": "Polsko",
+      "review_status": "awaiting_primary_review"
+    },
+    {
+      "flags": [],
+      "income_type": "royalty",
+      "mli_effect_count": 1,
+      "packet_id": "CZ-SK-ROY-LEGAL-REVIEW",
+      "priority_score": 0,
+      "protocol_document_count": 0,
+      "rate_candidates": [
+        10.0
+      ],
+      "recipient_country": "SK",
+      "recipient_country_name": "Slovensko",
+      "review_status": "awaiting_primary_review"
+    }
+  ],
+  "schema_version": 1,
+  "summary": {
+    "completed_primary_reviews": 0,
+    "high_priority": 15,
+    "low_priority": 11,
+    "medium_priority": 4,
+    "scopes": 30
+  }
+}
