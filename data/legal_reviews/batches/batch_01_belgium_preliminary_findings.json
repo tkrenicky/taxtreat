@@ -1,0 +1,120 @@
+{
+  "country": "BE",
+  "country_name": "Belgie",
+  "dataset_release": "legal-review-batch-01-belgium-preliminary-findings-2026-08-05.1",
+  "findings": [
+    {
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "dividend",
+      "mli_preliminary_finding": "Article 7(1) PPT applies to Czech-source withholding tax from 1 January 2021.",
+      "packet_id": "CZ-BE-DIV-LEGAL-REVIEW",
+      "protocol_preliminary_finding": "The 2015 protocol candidate indicates no amendment to Article 10.",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "excess_payment_limitation": false,
+        "general_structure": "Source-state taxation is permitted, subject to reduced treaty ceilings where the recipient is the beneficial owner.",
+        "pe_exception_applies": true,
+        "rates": [
+          {
+            "conditions": [
+              "recipient is the beneficial owner",
+              "recipient is a company, including a partnership, directly or indirectly holding at least 25% of the capital of the paying company"
+            ],
+            "rate": 5.0
+          },
+          {
+            "conditions": [
+              "recipient is the beneficial owner",
+              "residual rate for cases not qualifying for the 5% participation rate"
+            ],
+            "rate": 15.0
+          }
+        ]
+      }
+    },
+    {
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "interest",
+      "mli_preliminary_finding": "Article 7(1) PPT applies to Czech-source withholding tax from 1 January 2021.",
+      "packet_id": "CZ-BE-INT-LEGAL-REVIEW",
+      "protocol_preliminary_finding": "The 2015 protocol candidate indicates no amendment to Article 11.",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "excess_payment_limitation": true,
+        "general_rate": 10.0,
+        "general_rate_conditions": [
+          "recipient is the beneficial owner"
+        ],
+        "pe_exception_applies": true,
+        "source_state_exemption_rate": 0.0,
+        "source_state_exemptions": [
+          "interest on trade receivables arising from deferred payment for goods or services",
+          "interest on loans or credits provided, guaranteed or insured by public export-support bodies",
+          "interest on non-bearer loans provided by a banking enterprise",
+          "interest on non-bearer deposits with a banking enterprise",
+          "interest paid to the other contracting state, its political subdivisions or local authorities"
+        ]
+      }
+    },
+    {
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "royalty",
+      "mli_preliminary_finding": "Article 7(1) PPT applies to Czech-source withholding tax from 1 January 2021.",
+      "packet_id": "CZ-BE-ROY-LEGAL-REVIEW",
+      "protocol_preliminary_finding": "The 2015 protocol candidate indicates no amendment to Article 12.",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "excess_payment_limitation": true,
+        "pe_exception_applies": true,
+        "rates": [
+          {
+            "categories": [
+              "use of, or right to use, industrial, commercial or scientific equipment"
+            ],
+            "conditions": [
+              "recipient is the beneficial owner"
+            ],
+            "rate": 5.0
+          },
+          {
+            "categories": [
+              "copyright",
+              "literary, artistic or scientific works",
+              "films and broadcasting recordings",
+              "software",
+              "patents",
+              "trademarks",
+              "designs or models",
+              "plans",
+              "secret formulas or processes",
+              "know-how"
+            ],
+            "conditions": [
+              "recipient is the beneficial owner"
+            ],
+            "rate": 10.0
+          }
+        ]
+      }
+    }
+  ],
+  "policy": {
+    "fail_closed": true,
+    "independent_approval_required": true,
+    "not_a_completed_legal_review": true,
+    "source_derived_preliminary_findings": true
+  },
+  "schema_version": 1,
+  "summary": {
+    "approved_scopes": 0,
+    "completed_primary_reviews": 0,
+    "preliminary_findings_completed": 3,
+    "scopes": 3
+  }
+}
