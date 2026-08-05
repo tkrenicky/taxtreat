@@ -894,6 +894,207 @@ def build_findings() -> dict[str, Any]:
     )
 
 
+    findings.extend(
+        [
+            {
+                "packet_id": "CZ-NL-DIV-LEGAL-REVIEW",
+                "recipient_country": "NL",
+                "income_type": "dividend",
+                "treaty_findings": {
+                    "rates": [
+                        {
+                            "rate": 0.0,
+                            "conditions": [
+                                (
+                                    "recipient is a company whose capital is "
+                                    "wholly or partly divided into shares"
+                                ),
+                                (
+                                    "recipient directly holds at least 25% "
+                                    "of the capital of the paying company"
+                                ),
+                            ],
+                        },
+                        {
+                            "rate": 10.0,
+                            "conditions": [
+                                "all other cases",
+                            ],
+                        },
+                    ],
+                    "pe_exception_applies": True,
+                },
+                "candidate_extraction_correction": {
+                    "missing_rate": 0.0,
+                    "reason": (
+                        "Article 10(3) exempts qualifying direct "
+                        "participation dividends from source-state tax."
+                    ),
+                    "base_candidate_must_not_be_promoted_without_correction": (
+                        True
+                    ),
+                },
+                "protocol_preliminary_finding": {
+                    "effect": "no_article_10_change",
+                    "source_ids": [
+                        "CZ-MF-NL-45D279EE7770",
+                        "CZ-MF-NL-7CAD483C3F1A",
+                    ],
+                },
+                "mli_preliminary_finding": {
+                    "effect": "Article 7(1) PPT",
+                    "effective_from": "2021-01-01",
+                    "source_id": "CZ-MF-NL-0210508FF125",
+                },
+                "data_quality_issues": [
+                    {
+                        "code": "participation_exemption_not_extracted",
+                        "severity": "critical",
+                        "detail": (
+                            "The extractor returned only the 10% residual "
+                            "rate and omitted the 0% direct-participation "
+                            "rule in Article 10(3)."
+                        ),
+                        "affects_rate_conclusion": True,
+                    },
+                    {
+                        "code": "article_cross_references_split",
+                        "severity": "low",
+                        "detail": (
+                            "References to paragraph 3 and Article 7 are "
+                            "split across parsed paragraphs."
+                        ),
+                        "affects_rate_conclusion": False,
+                    },
+                ],
+                "domestic_and_eu_review_required": True,
+                "human_confirmation_required": True,
+                "review_outcome": None,
+                "status": "preliminary_findings_only",
+            },
+            {
+                "packet_id": "CZ-PL-INT-LEGAL-REVIEW",
+                "recipient_country": "PL",
+                "income_type": "interest",
+                "treaty_findings": {
+                    "rates": [
+                        {
+                            "rate": 5.0,
+                            "conditions": [
+                                "recipient is the beneficial owner",
+                                "general residual treaty rate",
+                            ],
+                        },
+                        {
+                            "rate": 0.0,
+                            "categories": [
+                                "loans or credits granted by a bank",
+                                (
+                                    "interest paid to the other contracting "
+                                    "state, its subdivisions, local "
+                                    "authorities or central bank"
+                                ),
+                                (
+                                    "interest paid to a financial institution "
+                                    "owned or controlled by that government"
+                                ),
+                                (
+                                    "loans or credits guaranteed by those "
+                                    "governmental or public institutions"
+                                ),
+                            ],
+                            "conditions": [
+                                "recipient is the beneficial owner",
+                            ],
+                        },
+                    ],
+                    "pe_exception_applies": True,
+                    "excess_payment_limitation": True,
+                },
+                "protocol_preliminary_finding": {
+                    "effect": "no_protocol_effect_recorded",
+                },
+                "mli_preliminary_finding": {
+                    "effect": "Article 7(1) PPT",
+                    "effective_from": "2021-01-01",
+                    "source_id": "CZ-MF-PL-B4A96328539C",
+                },
+                "data_quality_issues": [
+                    {
+                        "code": "zero_rate_requires_category_mapping",
+                        "severity": "high",
+                        "detail": (
+                            "The 0% rate applies only to the categories "
+                            "enumerated in Article 11(3)."
+                        ),
+                        "affects_rate_conclusion": True,
+                    },
+                    {
+                        "code": "article_cross_references_split",
+                        "severity": "low",
+                        "detail": (
+                            "References to Article 10(3) and Article 7 are "
+                            "split across parsed paragraphs."
+                        ),
+                        "affects_rate_conclusion": False,
+                    },
+                ],
+                "domestic_and_eu_review_required": True,
+                "human_confirmation_required": True,
+                "review_outcome": None,
+                "status": "preliminary_findings_only",
+            },
+            {
+                "packet_id": "CZ-SE-INT-LEGAL-REVIEW",
+                "recipient_country": "SE",
+                "income_type": "interest",
+                "treaty_findings": {
+                    "source_state_rate": 0.0,
+                    "taxing_right": (
+                        "Interest arising in one contracting state and paid "
+                        "to a resident of the other contracting state is "
+                        "taxable only in that other state."
+                    ),
+                    "rate_scope": "general",
+                    "conditions": [
+                        "recipient is resident in the other contracting state",
+                        (
+                            "the debt claim is not effectively connected "
+                            "with a permanent establishment or fixed base "
+                            "in the source state"
+                        ),
+                    ],
+                    "beneficial_owner_wording_explicit": False,
+                    "pe_or_fixed_base_exception_applies": True,
+                    "excess_payment_limitation": True,
+                },
+                "protocol_preliminary_finding": {
+                    "effect": "no_protocol_effect_recorded",
+                },
+                "mli_preliminary_finding": {
+                    "effect": "no_mli_effect_recorded",
+                    "requires_separate_verification": True,
+                },
+                "data_quality_issues": [
+                    {
+                        "code": "beneficial_owner_wording_not_explicit",
+                        "severity": "medium",
+                        "detail": (
+                            "Article 11 does not expressly state a "
+                            "beneficial-owner condition."
+                        ),
+                        "affects_rate_conclusion": False,
+                    }
+                ],
+                "domestic_and_eu_review_required": True,
+                "human_confirmation_required": True,
+                "review_outcome": None,
+                "status": "preliminary_findings_only",
+            },
+        ]
+    )
+
+
     payload = {
         "schema_version": 1,
         "dataset_release": (

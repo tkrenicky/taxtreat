@@ -14,11 +14,11 @@ def findings_index():
     }
 
 
-def test_registry_contains_sixteen_findings() -> None:
+def test_registry_contains_nineteen_findings() -> None:
     payload, _ = findings_index()
 
-    assert payload["summary"]["preliminary_findings_completed"] == 16
-    assert payload["summary"]["preliminary_completion_percent"] == 53.3
+    assert payload["summary"]["preliminary_findings_completed"] == 19
+    assert payload["summary"]["preliminary_completion_percent"] == 63.3
 
 
 def test_es_interest_does_not_invent_beneficial_owner() -> None:
