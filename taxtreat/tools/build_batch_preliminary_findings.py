@@ -505,6 +505,195 @@ def build_findings() -> dict[str, Any]:
     )
 
 
+    findings.extend(
+        [
+            {
+                "packet_id": "CZ-DK-INT-LEGAL-REVIEW",
+                "recipient_country": "DK",
+                "income_type": "interest",
+                "treaty_findings": {
+                    "source_state_rate": 0.0,
+                    "taxing_right": (
+                        "Interest arising in one contracting state and "
+                        "beneficially owned by a resident of the other "
+                        "contracting state is taxable only in that other "
+                        "state."
+                    ),
+                    "rate_scope": "general",
+                    "conditions": [
+                        "recipient is resident in the other contracting state",
+                        "recipient is the beneficial owner of the interest",
+                        (
+                            "the debt claim is not effectively connected "
+                            "with a permanent establishment in the source "
+                            "state"
+                        ),
+                    ],
+                    "beneficial_owner_required": True,
+                    "pe_exception_applies": True,
+                    "excess_payment_limitation": True,
+                },
+                "protocol_preliminary_finding": {
+                    "effect": "no_protocol_effect_recorded",
+                },
+                "mli_preliminary_finding": {
+                    "effect": "Article 7(1) PPT",
+                    "effective_from": "2021-01-01",
+                    "source_id": "CZ-MF-DK-6D5DDFC81601",
+                },
+                "data_quality_issues": [
+                    {
+                        "code": "article_cross_references_split",
+                        "severity": "low",
+                        "detail": (
+                            "References to Article 10(3) and Article 7 are "
+                            "split across parsed paragraphs."
+                        ),
+                        "affects_rate_conclusion": False,
+                    }
+                ],
+                "domestic_and_eu_review_required": True,
+                "human_confirmation_required": True,
+                "review_outcome": None,
+                "status": "preliminary_findings_only",
+            },
+            {
+                "packet_id": "CZ-ES-ROY-LEGAL-REVIEW",
+                "recipient_country": "ES",
+                "income_type": "royalty",
+                "treaty_findings": {
+                    "rates": [
+                        {
+                            "rate": 5.0,
+                            "categories": [
+                                (
+                                    "royalties generally falling within "
+                                    "Article 12"
+                                ),
+                            ],
+                            "conditions": [
+                                (
+                                    "royalties are subject to tax in the "
+                                    "recipient state"
+                                ),
+                            ],
+                        },
+                        {
+                            "rate": 0.0,
+                            "categories": [
+                                (
+                                    "copyright royalties and similar "
+                                    "payments for the performance or "
+                                    "reproduction of literary, dramatic, "
+                                    "musical or artistic works"
+                                ),
+                            ],
+                            "excluded_categories": [
+                                "cinematographic films",
+                                (
+                                    "works recorded on film or television "
+                                    "tape for television broadcasting"
+                                ),
+                            ],
+                            "conditions": [
+                                (
+                                    "recipient is subject to tax on the "
+                                    "royalties in the recipient state"
+                                ),
+                            ],
+                        },
+                    ],
+                    "beneficial_owner_wording_explicit": False,
+                    "pe_or_fixed_base_exception_applies": True,
+                    "excess_payment_limitation": True,
+                },
+                "protocol_preliminary_finding": {
+                    "effect": "no_protocol_effect_recorded",
+                },
+                "mli_preliminary_finding": {
+                    "effect": "Article 7(1) PPT",
+                    "effective_from": "2023-01-01",
+                    "source_id": "CZ-MF-ES-ED9522D43DFC",
+                },
+                "data_quality_issues": [
+                    {
+                        "code": "zero_rate_category_requires_narrow_mapping",
+                        "severity": "high",
+                        "detail": (
+                            "The 0% rule is limited to specified copyright "
+                            "works and expressly excludes films and certain "
+                            "television recordings."
+                        ),
+                        "affects_rate_conclusion": True,
+                    },
+                    {
+                        "code": "subject_to_tax_condition_required",
+                        "severity": "high",
+                        "detail": (
+                            "Both the general 5% ceiling and the specific "
+                            "0% copyright rule depend on taxation in the "
+                            "recipient state."
+                        ),
+                        "affects_rate_conclusion": True,
+                    },
+                    {
+                        "code": "beneficial_owner_wording_not_explicit",
+                        "severity": "medium",
+                        "detail": (
+                            "The extracted Article 12 text does not expressly "
+                            "state a beneficial-owner condition."
+                        ),
+                        "affects_rate_conclusion": False,
+                    },
+                ],
+                "domestic_and_eu_review_required": True,
+                "human_confirmation_required": True,
+                "review_outcome": None,
+                "status": "preliminary_findings_only",
+            },
+            {
+                "packet_id": "CZ-IT-INT-LEGAL-REVIEW",
+                "recipient_country": "IT",
+                "income_type": "interest",
+                "treaty_findings": {
+                    "source_state_rate": 0.0,
+                    "taxing_right": (
+                        "Interest arising in one contracting state and paid "
+                        "to a resident of the other contracting state is "
+                        "taxable only in that other state where the recipient "
+                        "is the beneficial owner."
+                    ),
+                    "rate_scope": "general",
+                    "conditions": [
+                        "recipient is resident in the other contracting state",
+                        "recipient is the beneficial owner of the interest",
+                        (
+                            "the debt claim is not effectively connected "
+                            "with a permanent establishment or fixed base "
+                            "in the source state"
+                        ),
+                    ],
+                    "beneficial_owner_required": True,
+                    "pe_or_fixed_base_exception_applies": True,
+                    "excess_payment_limitation": True,
+                },
+                "protocol_preliminary_finding": {
+                    "effect": "no_protocol_effect_recorded",
+                },
+                "mli_preliminary_finding": {
+                    "effect": "no_mli_effect_recorded",
+                    "requires_separate_verification": True,
+                },
+                "data_quality_issues": [],
+                "domestic_and_eu_review_required": True,
+                "human_confirmation_required": True,
+                "review_outcome": None,
+                "status": "preliminary_findings_only",
+            },
+        ]
+    )
+
+
     payload = {
         "schema_version": 1,
         "dataset_release": (

@@ -14,11 +14,11 @@ def findings_index():
     }
 
 
-def test_registry_contains_ten_findings() -> None:
+def test_registry_contains_thirteen_findings() -> None:
     payload, _ = findings_index()
 
-    assert payload["summary"]["preliminary_findings_completed"] == 10
-    assert payload["summary"]["preliminary_completion_percent"] == 33.3
+    assert payload["summary"]["preliminary_findings_completed"] == 13
+    assert payload["summary"]["preliminary_completion_percent"] == 43.3
 
 
 def test_de_dividend_extraction_error_is_corrected() -> None:
