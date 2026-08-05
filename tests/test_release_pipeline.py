@@ -113,3 +113,136 @@ def test_release_registry_rejects_invalid_review_queue(
 
     with pytest.raises(ValueError, match=match):
         release.build_legal_registry()
+
+
+def test_source_manifest_preserves_committed_bindings_without_raw_files(
+    monkeypatch,
+    tmp_path,
+):
+    parsed_dir = tmp_path / "parsed"
+    parsed_dir.mkdir()
+
+    parsed_path = parsed_dir / "example.json"
+    parsed_path.write_text(
+        json.dumps(
+            {
+                "country": "Example",
+                "source_title": "123/2026 Sb.",
+                "source_path": "data/raw/treaty/example.pdf",
+                "source_resolution": {"method": "official"},
+                "identity_validation": {
+                    "status": "validated",
+                    "warnings": [],
+                },
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    source_id = release._stable_source_id(
+        "Example",
+        "123/2026 Sb.",
+    )
+    committed_hash = "a" * 64
+
+    manifest_path = tmp_path / "source_manifest.json"
+    manifest_path.write_text(
+        json.dumps(
+            {
+                "schema_version": 1,
+                "sources": [
+                    {
+                        "source_id": source_id,
+                        "artifact_uri": (
+                            "data/raw/treaty/example.pdf"
+                        ),
+                        "artifact_available": True,
+                        "sha256": committed_hash,
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    monkeypatch.setattr(release, "ROOT", tmp_path)
+    monkeypatch.setattr(release, "PARSED_DIR", parsed_dir)
+    monkeypatch.setattr(
+        release,
+        "SOURCE_MANIFEST",
+        manifest_path,
+    )
+
+    payload = release.build_source_manifest()
+    source = payload["sources"][0]
+
+    assert source["source_id"] == source_id
+    assert source["artifact_available"] is True
+    assert source["artifact_uri"] == (
+        "data/raw/treaty/example.pdf"
+    )
+    assert source["sha256"] == committed_hash
+
+
+def test_source_manifest_does_not_preserve_invalid_binding(
+    monkeypatch,
+    tmp_path,
+):
+    parsed_dir = tmp_path / "parsed"
+    parsed_dir.mkdir()
+
+    parsed_path = parsed_dir / "example.json"
+    parsed_path.write_text(
+        json.dumps(
+            {
+                "country": "Example",
+                "source_title": "123/2026 Sb.",
+                "source_path": "data/raw/treaty/example.pdf",
+                "identity_validation": {
+                    "status": "validated",
+                    "warnings": [],
+                },
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    source_id = release._stable_source_id(
+        "Example",
+        "123/2026 Sb.",
+    )
+
+    manifest_path = tmp_path / "source_manifest.json"
+    manifest_path.write_text(
+        json.dumps(
+            {
+                "schema_version": 1,
+                "sources": [
+                    {
+                        "source_id": source_id,
+                        "artifact_uri": (
+                            "data/raw/treaty/example.pdf"
+                        ),
+                        "artifact_available": True,
+                        "sha256": "invalid",
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    monkeypatch.setattr(release, "ROOT", tmp_path)
+    monkeypatch.setattr(release, "PARSED_DIR", parsed_dir)
+    monkeypatch.setattr(
+        release,
+        "SOURCE_MANIFEST",
+        manifest_path,
+    )
+
+    payload = release.build_source_manifest()
+    source = payload["sources"][0]
+
+    assert source["artifact_available"] is False
+    assert source["artifact_uri"] is None
+    assert source["sha256"] is None
