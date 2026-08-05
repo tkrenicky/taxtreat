@@ -112,6 +112,204 @@ def build_findings() -> dict[str, Any]:
         }
     )
 
+    findings.extend(
+        [
+            {
+                "packet_id": "CZ-DK-DIV-LEGAL-REVIEW",
+                "recipient_country": "DK",
+                "income_type": "dividend",
+                "treaty_findings": {
+                    "rates": [
+                        {
+                            "rate": 0.0,
+                            "conditions": [
+                                "recipient is the beneficial owner",
+                                (
+                                    "recipient is a company other than a "
+                                    "partnership"
+                                ),
+                                (
+                                    "recipient directly holds at least 10% "
+                                    "of the capital of the paying company"
+                                ),
+                            ],
+                        },
+                        {
+                            "rate": 0.0,
+                            "conditions": [
+                                "recipient is the beneficial owner",
+                                (
+                                    "recipient is a qualifying pension fund "
+                                    "or similar institution"
+                                ),
+                                (
+                                    "the pension plan is recognized for tax "
+                                    "purposes in the recipient state under "
+                                    "Article 17(2)"
+                                ),
+                            ],
+                        },
+                        {
+                            "rate": 15.0,
+                            "conditions": [
+                                "recipient is the beneficial owner",
+                                "all other cases",
+                            ],
+                        },
+                    ],
+                    "pe_exception_applies": True,
+                },
+                "protocol_preliminary_finding": {
+                    "effect": "no_protocol_effect_recorded",
+                },
+                "mli_preliminary_finding": {
+                    "effect": "Article 7(1) PPT",
+                    "effective_from": "2021-01-01",
+                    "source_id": "CZ-MF-DK-6D5DDFC81601",
+                },
+                "data_quality_issues": [
+                    {
+                        "code": "article_cross_reference_split",
+                        "severity": "low",
+                        "detail": (
+                            "The Article 7 cross-reference is split into a "
+                            "separate parsed paragraph."
+                        ),
+                        "affects_rate_conclusion": False,
+                    }
+                ],
+                "domestic_and_eu_review_required": True,
+                "human_confirmation_required": True,
+                "review_outcome": None,
+                "status": "preliminary_findings_only",
+            },
+            {
+                "packet_id": "CZ-IT-ROY-LEGAL-REVIEW",
+                "recipient_country": "IT",
+                "income_type": "royalty",
+                "treaty_findings": {
+                    "rates": [
+                        {
+                            "rate": 0.0,
+                            "categories": [
+                                (
+                                    "copyright in literary, artistic or "
+                                    "scientific works"
+                                ),
+                                "cinematographic and television films",
+                            ],
+                            "conditions": [
+                                "recipient is the beneficial owner",
+                            ],
+                        },
+                        {
+                            "rate": 5.0,
+                            "categories": [
+                                "patents",
+                                "trademarks",
+                                "designs or models",
+                                "plans",
+                                "secret formulas or processes",
+                                (
+                                    "industrial, commercial or scientific "
+                                    "equipment"
+                                ),
+                                "industrial, commercial or scientific know-how",
+                            ],
+                            "conditions": [
+                                "recipient is the beneficial owner",
+                            ],
+                        },
+                    ],
+                    "pe_exception_applies": True,
+                    "excess_payment_limitation": True,
+                },
+                "protocol_preliminary_finding": {
+                    "effect": "no_protocol_effect_recorded",
+                },
+                "mli_preliminary_finding": {
+                    "effect": "no_mli_effect_recorded",
+                    "requires_separate_verification": True,
+                },
+                "data_quality_issues": [],
+                "domestic_and_eu_review_required": True,
+                "human_confirmation_required": True,
+                "review_outcome": None,
+                "status": "preliminary_findings_only",
+            },
+            {
+                "packet_id": "CZ-SE-ROY-LEGAL-REVIEW",
+                "recipient_country": "SE",
+                "income_type": "royalty",
+                "treaty_findings": {
+                    "rates": [
+                        {
+                            "rate": 0.0,
+                            "categories": [
+                                (
+                                    "copyright in literary, artistic or "
+                                    "scientific works"
+                                ),
+                            ],
+                            "conditions": [
+                                (
+                                    "recipient is resident in the other "
+                                    "contracting state"
+                                ),
+                            ],
+                        },
+                        {
+                            "rate": 5.0,
+                            "categories": [
+                                "patents",
+                                "trademarks",
+                                "designs or models",
+                                "plans",
+                                "secret formulas or processes",
+                                (
+                                    "industrial, commercial or scientific "
+                                    "equipment"
+                                ),
+                                "industrial, commercial or scientific know-how",
+                                (
+                                    "copyright categories not falling within "
+                                    "the specific source-state exemption"
+                                ),
+                            ],
+                            "conditions": [],
+                        },
+                    ],
+                    "pe_exception_applies": True,
+                    "excess_payment_limitation": True,
+                },
+                "protocol_preliminary_finding": {
+                    "effect": "no_protocol_effect_recorded",
+                },
+                "mli_preliminary_finding": {
+                    "effect": "no_mli_effect_recorded",
+                    "requires_separate_verification": True,
+                },
+                "data_quality_issues": [
+                    {
+                        "code": "beneficial_owner_wording_not_explicit",
+                        "severity": "medium",
+                        "detail": (
+                            "The extracted treaty text does not expressly "
+                            "state a beneficial-owner condition in Article 12; "
+                            "this must not be added automatically."
+                        ),
+                        "affects_rate_conclusion": False,
+                    }
+                ],
+                "domestic_and_eu_review_required": True,
+                "human_confirmation_required": True,
+                "review_outcome": None,
+                "status": "preliminary_findings_only",
+            },
+        ]
+    )
+
+
     payload = {
         "schema_version": 1,
         "dataset_release": (

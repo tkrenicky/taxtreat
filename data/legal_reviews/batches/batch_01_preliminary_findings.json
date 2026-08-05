@@ -140,6 +140,160 @@
         "source_state_rate": 0.0,
         "taxing_right": "Interest arising in one contracting state and paid to a resident of the other contracting state is taxable only in the recipient state."
       }
+    },
+    {
+      "data_quality_issues": [
+        {
+          "affects_rate_conclusion": false,
+          "code": "article_cross_reference_split",
+          "detail": "The Article 7 cross-reference is split into a separate parsed paragraph.",
+          "severity": "low"
+        }
+      ],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "dividend",
+      "mli_preliminary_finding": {
+        "effect": "Article 7(1) PPT",
+        "effective_from": "2021-01-01",
+        "source_id": "CZ-MF-DK-6D5DDFC81601"
+      },
+      "packet_id": "CZ-DK-DIV-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_protocol_effect_recorded"
+      },
+      "recipient_country": "DK",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "pe_exception_applies": true,
+        "rates": [
+          {
+            "conditions": [
+              "recipient is the beneficial owner",
+              "recipient is a company other than a partnership",
+              "recipient directly holds at least 10% of the capital of the paying company"
+            ],
+            "rate": 0.0
+          },
+          {
+            "conditions": [
+              "recipient is the beneficial owner",
+              "recipient is a qualifying pension fund or similar institution",
+              "the pension plan is recognized for tax purposes in the recipient state under Article 17(2)"
+            ],
+            "rate": 0.0
+          },
+          {
+            "conditions": [
+              "recipient is the beneficial owner",
+              "all other cases"
+            ],
+            "rate": 15.0
+          }
+        ]
+      }
+    },
+    {
+      "data_quality_issues": [],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "royalty",
+      "mli_preliminary_finding": {
+        "effect": "no_mli_effect_recorded",
+        "requires_separate_verification": true
+      },
+      "packet_id": "CZ-IT-ROY-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_protocol_effect_recorded"
+      },
+      "recipient_country": "IT",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "excess_payment_limitation": true,
+        "pe_exception_applies": true,
+        "rates": [
+          {
+            "categories": [
+              "copyright in literary, artistic or scientific works",
+              "cinematographic and television films"
+            ],
+            "conditions": [
+              "recipient is the beneficial owner"
+            ],
+            "rate": 0.0
+          },
+          {
+            "categories": [
+              "patents",
+              "trademarks",
+              "designs or models",
+              "plans",
+              "secret formulas or processes",
+              "industrial, commercial or scientific equipment",
+              "industrial, commercial or scientific know-how"
+            ],
+            "conditions": [
+              "recipient is the beneficial owner"
+            ],
+            "rate": 5.0
+          }
+        ]
+      }
+    },
+    {
+      "data_quality_issues": [
+        {
+          "affects_rate_conclusion": false,
+          "code": "beneficial_owner_wording_not_explicit",
+          "detail": "The extracted treaty text does not expressly state a beneficial-owner condition in Article 12; this must not be added automatically.",
+          "severity": "medium"
+        }
+      ],
+      "domestic_and_eu_review_required": true,
+      "human_confirmation_required": true,
+      "income_type": "royalty",
+      "mli_preliminary_finding": {
+        "effect": "no_mli_effect_recorded",
+        "requires_separate_verification": true
+      },
+      "packet_id": "CZ-SE-ROY-LEGAL-REVIEW",
+      "protocol_preliminary_finding": {
+        "effect": "no_protocol_effect_recorded"
+      },
+      "recipient_country": "SE",
+      "review_outcome": null,
+      "status": "preliminary_findings_only",
+      "treaty_findings": {
+        "excess_payment_limitation": true,
+        "pe_exception_applies": true,
+        "rates": [
+          {
+            "categories": [
+              "copyright in literary, artistic or scientific works"
+            ],
+            "conditions": [
+              "recipient is resident in the other contracting state"
+            ],
+            "rate": 0.0
+          },
+          {
+            "categories": [
+              "patents",
+              "trademarks",
+              "designs or models",
+              "plans",
+              "secret formulas or processes",
+              "industrial, commercial or scientific equipment",
+              "industrial, commercial or scientific know-how",
+              "copyright categories not falling within the specific source-state exemption"
+            ],
+            "conditions": [],
+            "rate": 5.0
+          }
+        ]
+      }
     }
   ],
   "policy": {
@@ -152,8 +306,8 @@
   "summary": {
     "approved_scopes": 0,
     "completed_primary_reviews": 0,
-    "preliminary_completion_percent": 13.3,
-    "preliminary_findings_completed": 4,
+    "preliminary_completion_percent": 23.3,
+    "preliminary_findings_completed": 7,
     "total_scopes": 30
   }
 }
