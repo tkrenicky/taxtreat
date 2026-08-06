@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "dataset_release": "batch-01-preliminary-findings-2026-08-06.1",
+  "dataset_release": "batch-01-primary-review-conclusions-2026-08-06.1",
   "batch_id": "GLOBAL-CZ-OUTBOUND-BATCH-01",
-  "review_status": "preliminary_findings_compiled",
-  "primary_legal_review_status": "pending_human_confirmation",
+  "review_status": "primary_legal_review_completed",
+  "primary_legal_review_status": "completed",
   "independent_approval_status": "not_started",
   "approval_eligible": false,
   "promotable_to_active_rules": false,
@@ -21,13 +21,16 @@
         "treatment_type": "czech_domestic_law_fallback",
         "standard_rate_candidate": 15.0,
         "standard_reference": "section 36(1)(b)(1), referring to section 22(1)(g)(3)",
-        "protective_rate_candidate": 35.0,
+        "protective_rate_candidate": null,
         "protective_rate_reference": "section 36(1)(c)",
-        "protective_rate_automatically_applied": false,
-        "protective_rate_requires_separate_confirmation": true
+        "resolved_rate": 15.0,
+        "protective_rate_applicable": false,
+        "protective_rate_resolution": "The relevant double-tax treaty remains in force and the treaty information-exchange article remains applicable. Suspension of the income article alone does not trigger section 36(1)(c)."
       },
-      "primary_conclusion": "Article 10 cannot currently be relied upon. Czech domestic-law treatment must be applied, subject to separate verification of whether the conditions for the protective rate are met.",
-      "status": "preliminary_not_approved"
+      "primary_conclusion": "The treaty article governing dividend is currently suspended. The Czech domestic withholding tax rate of 15% applies. The 35% protective rate does not apply because the treaty remains in force and its information-exchange framework remains applicable.",
+      "status": "primary_review_completed_not_approved",
+      "primary_review_status": "completed",
+      "independent_review_status": "not_started"
     },
     {
       "packet_id": "CZ-RU-INT-LEGAL-REVIEW",
@@ -40,13 +43,16 @@
         "treatment_type": "czech_domestic_law_fallback",
         "standard_rate_candidate": 15.0,
         "standard_reference": "section 36(1)(a)(1), referring to section 22(1)(g)(4)",
-        "protective_rate_candidate": 35.0,
+        "protective_rate_candidate": null,
         "protective_rate_reference": "section 36(1)(c)",
-        "protective_rate_automatically_applied": false,
-        "protective_rate_requires_separate_confirmation": true
+        "resolved_rate": 15.0,
+        "protective_rate_applicable": false,
+        "protective_rate_resolution": "The relevant double-tax treaty remains in force and the treaty information-exchange article remains applicable. Suspension of the income article alone does not trigger section 36(1)(c)."
       },
-      "primary_conclusion": "Article 11 cannot currently be relied upon. Czech domestic-law treatment must be applied, subject to separate verification of whether the conditions for the protective rate are met.",
-      "status": "preliminary_not_approved"
+      "primary_conclusion": "The treaty article governing interest is currently suspended. The Czech domestic withholding tax rate of 15% applies. The 35% protective rate does not apply because the treaty remains in force and its information-exchange framework remains applicable.",
+      "status": "primary_review_completed_not_approved",
+      "primary_review_status": "completed",
+      "independent_review_status": "not_started"
     },
     {
       "packet_id": "CZ-RU-ROY-LEGAL-REVIEW",
@@ -59,13 +65,16 @@
         "treatment_type": "czech_domestic_law_fallback",
         "standard_rate_candidate": 15.0,
         "standard_reference": "section 36(1)(a)(1), referring to section 22(1)(g)(1)-(2)",
-        "protective_rate_candidate": 35.0,
+        "protective_rate_candidate": null,
         "protective_rate_reference": "section 36(1)(c)",
-        "protective_rate_automatically_applied": false,
-        "protective_rate_requires_separate_confirmation": true
+        "resolved_rate": 15.0,
+        "protective_rate_applicable": false,
+        "protective_rate_resolution": "The relevant double-tax treaty remains in force and the treaty information-exchange article remains applicable. Suspension of the income article alone does not trigger section 36(1)(c)."
       },
-      "primary_conclusion": "Article 12 cannot currently be relied upon. Czech domestic-law treatment must be applied, subject to separate verification of whether the conditions for the protective rate are met.",
-      "status": "preliminary_not_approved"
+      "primary_conclusion": "The treaty article governing royalty is currently suspended. The Czech domestic withholding tax rate of 15% applies. The 35% protective rate does not apply because the treaty remains in force and its information-exchange framework remains applicable.",
+      "status": "primary_review_completed_not_approved",
+      "primary_review_status": "completed",
+      "independent_review_status": "not_started"
     },
     {
       "packet_id": "CZ-BY-DIV-LEGAL-REVIEW",
@@ -79,13 +88,16 @@
         "treatment_type": "czech_domestic_law_fallback",
         "standard_rate_candidate": 15.0,
         "standard_reference": "section 36(1)(b)(1), referring to section 22(1)(g)(3)",
-        "protective_rate_candidate": 35.0,
+        "protective_rate_candidate": null,
         "protective_rate_reference": "section 36(1)(c)",
-        "protective_rate_automatically_applied": false,
-        "protective_rate_requires_separate_confirmation": true
+        "resolved_rate": 15.0,
+        "protective_rate_applicable": false,
+        "protective_rate_resolution": "The relevant double-tax treaty remains in force and the treaty information-exchange article remains applicable. Suspension of the income article alone does not trigger section 36(1)(c)."
       },
-      "primary_conclusion": "Article 10 is temporarily suspended. Czech domestic-law treatment applies during the suspension period, subject to verification of the protective-rate conditions.",
-      "status": "preliminary_not_approved"
+      "primary_conclusion": "The treaty article governing dividend is currently suspended. The Czech domestic withholding tax rate of 15% applies. The 35% protective rate does not apply because the treaty remains in force and its information-exchange framework remains applicable.",
+      "status": "primary_review_completed_not_approved",
+      "primary_review_status": "completed",
+      "independent_review_status": "not_started"
     },
     {
       "packet_id": "CZ-BY-INT-LEGAL-REVIEW",
@@ -99,13 +111,16 @@
         "treatment_type": "czech_domestic_law_fallback",
         "standard_rate_candidate": 15.0,
         "standard_reference": "section 36(1)(a)(1), referring to section 22(1)(g)(4)",
-        "protective_rate_candidate": 35.0,
+        "protective_rate_candidate": null,
         "protective_rate_reference": "section 36(1)(c)",
-        "protective_rate_automatically_applied": false,
-        "protective_rate_requires_separate_confirmation": true
+        "resolved_rate": 15.0,
+        "protective_rate_applicable": false,
+        "protective_rate_resolution": "The relevant double-tax treaty remains in force and the treaty information-exchange article remains applicable. Suspension of the income article alone does not trigger section 36(1)(c)."
       },
-      "primary_conclusion": "Article 11 is temporarily suspended. Czech domestic-law treatment applies during the suspension period, subject to verification of the protective-rate conditions.",
-      "status": "preliminary_not_approved"
+      "primary_conclusion": "The treaty article governing interest is currently suspended. The Czech domestic withholding tax rate of 15% applies. The 35% protective rate does not apply because the treaty remains in force and its information-exchange framework remains applicable.",
+      "status": "primary_review_completed_not_approved",
+      "primary_review_status": "completed",
+      "independent_review_status": "not_started"
     },
     {
       "packet_id": "CZ-BY-ROY-LEGAL-REVIEW",
@@ -116,42 +131,74 @@
       "protocol_effective_from": "2012-01-01",
       "preliminary_treatment": {
         "treatment_type": "treaty_rate_candidate",
-        "rate_candidate": 5.0,
+        "rate_candidate": null,
         "legal_basis": "Treaty Article 12(2), as replaced by Protocol Article VII(1)",
         "income_scope": "royalties falling within Treaty Article 12",
-        "beneficial_owner_condition": "requires_primary_legal_confirmation",
+        "beneficial_owner_condition": true,
         "residence_documentation_required": true,
         "permanent_establishment_override_review_required": true,
-        "special_relationship_review_required": true
+        "special_relationship_review_required": true,
+        "resolved_rate": 5.0,
+        "article_12_classification_required": true
       },
-      "primary_conclusion": "Article 12 is not included in the temporary suspension notice. The protocol candidate indicates a 5% Czech source-state rate for royalties within Article 12, subject to full treaty-condition review.",
-      "status": "preliminary_not_approved"
+      "primary_conclusion": "Treaty Article 12 remains applicable because it is not included in the temporary suspension. Protocol Article VII reduces the Czech source-state ceiling under Article 12(2) to 5%. Application requires a Belarus resident who is the beneficial owner, a payment classified as royalties under Article 12, no overriding permanent-establishment connection and application of the special-relationship limitation.",
+      "status": "primary_review_completed_not_approved",
+      "primary_review_status": "completed",
+      "independent_review_status": "not_started"
     }
   ],
-  "unresolved_questions": [
+  "unresolved_questions": [],
+  "review_notes": [
+    "Primary legal review conclusions are completed.",
+    "The dataset remains fail-closed pending independent review.",
+    "No conclusion may be promoted before independent approval.",
+    "The 15% domestic rate applies to the five suspended income articles.",
+    "The 5% Belarus royalty ceiling is conditional and must not be applied without verifying all treaty conditions."
+  ],
+  "resolved_questions": [
     {
       "question_id": "RU-PROTECTIVE-RATE",
-      "countries": ["RU"],
-      "question": "Does the continuing existence of non-suspended treaty provisions or another qualifying information-exchange instrument prevent application of section 36(1)(c)?",
-      "required_before_approval": true
+      "resolution": "Section 36(1)(c) does not apply. The treaty remains in force and the information-exchange article is not within the suspended article range.",
+      "resulting_rate": 15.0
     },
     {
       "question_id": "BY-PROTECTIVE-RATE",
-      "countries": ["BY"],
-      "question": "Does the temporary suspension of Articles 10 and 11 satisfy the statutory condition for the protective rate despite the treaty otherwise remaining in force?",
-      "required_before_approval": true
+      "resolution": "Section 36(1)(c) does not apply. The temporary suspension concerns Articles 10, 11 and 13 only; the treaty and its information-exchange article remain applicable.",
+      "resulting_rate": 15.0
     },
     {
       "question_id": "BY-ROYALTY-CONDITIONS",
-      "countries": ["BY"],
-      "question": "Confirm residence, Article 12 income classification, beneficial ownership, permanent-establishment connection and special-relationship limitations.",
-      "required_before_approval": true
+      "resolution": "Article 12 remains applicable. Protocol Article VII reduces the Article 12(2) source-state ceiling to 5%, subject to residence, beneficial ownership, Article 12 classification, permanent-establishment and special-relationship conditions.",
+      "resulting_rate": 5.0
     }
   ],
-  "review_notes": [
-    "The 35% rate is retained only as a conditional candidate and is not automatically applied.",
-    "The findings do not constitute legal approval.",
-    "No finding may be promoted to active rules before primary and independent legal review.",
-    "The conclusions apply only to payments falling within the stated Czech-source income categories."
-  ]
+  "primary_review_evidence": {
+    "czech_income_tax_act": {
+      "publication": "586/1992 Sb.",
+      "effective_version": "2026-04-01",
+      "relevant_provision": "section 36(1)",
+      "official_reference": "https://e-sbirka.gov.cz/sb/1992/586"
+    },
+    "russia_status_notice": {
+      "publication": "36/2023 Sb. m. s.",
+      "suspended_articles": "5-22 and 24",
+      "information_exchange_article": "26",
+      "information_exchange_status": "not_suspended"
+    },
+    "belarus_status_notice": {
+      "publication": "115/2024 Sb.",
+      "suspended_articles": [
+        "10",
+        "11",
+        "13"
+      ],
+      "information_exchange_article": "26",
+      "information_exchange_status": "not_suspended"
+    },
+    "belarus_protocol": {
+      "publication": "99/2011 Sb. m. s.",
+      "relevant_provision": "Protocol Article VII",
+      "effect": "Treaty Article 12(2) rate reduced from 10% to 5%"
+    }
+  }
 }
