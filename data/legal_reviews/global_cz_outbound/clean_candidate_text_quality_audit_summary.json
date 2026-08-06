@@ -1,0 +1,30 @@
+{
+  "article_pack_release": "clean-candidate-article-pack-2026-08-06.1",
+  "article_scope_count": 69,
+  "clean_text_verification_completed": false,
+  "dataset_release": "clean-candidate-text-quality-audit-2026-08-06.1",
+  "fail_closed": true,
+  "finding_code_counts": {
+    "broken_article_reference": 1,
+    "glued_preposition": 5,
+    "isolated_ocr_pipe": 1
+  },
+  "legal_verification_completed": false,
+  "partner_status_counts": {
+    "automated_quality_gate_passed": 18,
+    "manual_text_review_required": 4,
+    "text_remediation_required": 1
+  },
+  "production_ready": false,
+  "promotable_to_active_rules": false,
+  "schema_version": 1,
+  "semantics": {
+    "automated_quality_check_is_legal_verification": false,
+    "automatic_production_promotion_allowed": false,
+    "detected_error_result": "fail_closed",
+    "manual_comparison_with_official_document_required": true,
+    "zero_detected_errors_proves_perfect_text": false
+  },
+  "source_reconciliation_release": "clean-candidate-source-reconciliation-2026-08-06.1",
+  "treaty_partner_count": 23
+}
