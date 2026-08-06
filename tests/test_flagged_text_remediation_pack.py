@@ -109,42 +109,17 @@ def test_pack_contains_all_audit_findings():
 
 
 def test_confirmed_findings_are_removed():
-    pack = load(PACK_PATH)
+    payload = load(PACK_PATH)
 
-    findings = {
-        (
-            partner["treaty_pair_id"],
-            finding["code"],
-            finding["excerpt"],
-        )
-        for partner in pack["treaty_partners"]
-        for article in partner["articles"]
-        for finding in article["findings"]
-    }
+    assert payload["treaty_partner_count"] == 0
+    assert payload["article_scope_count"] == 0
+    assert payload["finding_count"] == 0
+    assert payload["treaty_partners"] == []
 
-    combined = "\n".join(
-        excerpt
-        for _, _, excerpt in findings
-    )
-
-    assert "vyplacejici" not in combined
-    assert "vlasmík" not in combined
-    assert "znerozdělených" not in combined
-    assert "znerozdélenych" not in combined
-    assert "odstavců | a 2" not in combined
-    assert 'státě,"v němž' not in combined
-
-    assert {
-        pair_id
-        for pair_id, code, _ in findings
-        if code == "glued_preposition"
-    } == {
-        "CZ-AD",
-        "CZ-BW",
-        "CZ-GH",
-        "CZ-KR",
-        "CZ-QA",
-    }
+    assert payload["legal_verification_completed"] is False
+    assert payload["production_ready"] is False
+    assert payload["fail_closed"] is True
+    assert payload["promotable_to_active_rules"] is False
 
 
 def test_no_automatic_corrections_are_applied():
