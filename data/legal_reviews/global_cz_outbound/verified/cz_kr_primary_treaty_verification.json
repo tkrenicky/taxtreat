@@ -1,0 +1,100 @@
+{
+  "anti_abuse": {
+    "article_number": 26,
+    "article_text_sha256": "f98375de46fbfe81efce0768c4b1cc9b576a6005a5ee1150369ed53bf83edd59",
+    "domestic_anti_avoidance_preserved": true,
+    "principal_purpose_test_present": true,
+    "verification_status": "primary_treaty_text_verified"
+  },
+  "application": {
+    "czech_other_income_tax_effective_from": "2020-01-01",
+    "czech_withholding_tax_effective_from": "2020-01-01",
+    "verification_status": "primary_publication_verified"
+  },
+  "direction": "CZ_OUTBOUND",
+  "fail_closed": true,
+  "income_articles": {
+    "dividends": {
+      "article_number": 10,
+      "article_text_sha256": "a349957c02aad168b6bb47dfad7c4ce22af7e1afe47ec511a4807a3af70d6999",
+      "treaty_rates": [
+        {
+          "conditions": {
+            "beneficial_owner_required": true,
+            "category": "all dividends",
+            "minimum_direct_holding_percent": null
+          },
+          "rate_percent": 5
+        }
+      ],
+      "verification_status": "primary_treaty_text_verified"
+    },
+    "interest": {
+      "article_number": 11,
+      "article_text_sha256": "65f9649798b16d4f4f6b90d3b3355cdfbc633e82402fadcfdadb156549465f8f",
+      "conditions": {
+        "beneficial_owner_required": true
+      },
+      "exemption_categories": [
+        "government or public authority",
+        "central bank",
+        "government-owned or controlled financial institution",
+        "qualifying guaranteed or insured loan or credit",
+        "credit sale of goods or equipment"
+      ],
+      "exemptions_present": true,
+      "standard_rate_percent": 5,
+      "verification_status": "primary_treaty_text_verified"
+    },
+    "royalties": {
+      "article_number": 12,
+      "article_text_sha256": "493b6afe3a398a109087433d6e949b67f73543576d4eaf8685c0268b02974823",
+      "treaty_rates": [
+        {
+          "beneficial_owner_required": true,
+          "category": "industrial and commercial royalties under Article 12(3)(a)",
+          "rate_percent": 10
+        },
+        {
+          "beneficial_owner_required": true,
+          "category": "copyright royalties under Article 12(3)(b)",
+          "rate_percent": 0
+        }
+      ],
+      "verification_status": "primary_treaty_text_verified"
+    }
+  },
+  "legal_verification_completed": false,
+  "overlay_review": {
+    "czech_domestic_conditions_verified": false,
+    "mli_position_verified": false,
+    "mli_review_status": "pending_pairwise_verification",
+    "protocol_review_status": "pending",
+    "treaty_level_ppt_already_present": true
+  },
+  "partner_country": "KR",
+  "partner_country_name": "Korejská republika",
+  "production_ready": false,
+  "promotable_to_active_rules": false,
+  "schema_version": 1,
+  "source": {
+    "decisive_language_on_divergence": "English",
+    "entry_into_force_date": "2019-12-20",
+    "official_publication_reference": "Sdělení Ministerstva zahraničních věcí č. 1/2020 Sb. m. s.",
+    "parsed_path": "data/parsed/korejska_republika.json",
+    "signature_date": "2018-01-12",
+    "source_title": "1/2020 Sb. m. s."
+  },
+  "treaty_pair_id": "CZ-KR",
+  "verification_id": "CZ-KR-primary-treaty-2026-08-06.1",
+  "verification_scope": {
+    "czech_withholding_effective_date_verified": true,
+    "decisive_language_verified": true,
+    "domestic_conditions_verified": false,
+    "entry_into_force_verified": true,
+    "mli_position_verified": false,
+    "primary_treaty_articles_10_to_12_verified": true,
+    "transaction_decision_ready": false,
+    "treaty_level_ppt_verified": true
+  }
+}
