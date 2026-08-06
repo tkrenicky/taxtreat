@@ -1,0 +1,651 @@
+{
+  "approval_completed_at": null,
+  "approval_eligible": false,
+  "batch_id": "GLOBAL-CZ-OUTBOUND-BATCH-02",
+  "batch_number": 2,
+  "batch_source_sha256": "8c0109c4abae1ccc1e0b9afa5cbc4ae9b7d18c2c563aefdaf7af87bacde0b740",
+  "countries": [
+    "AT",
+    "CH"
+  ],
+  "country_names": [
+    "Rakousko",
+    "Švýcarsko"
+  ],
+  "dossier_sha256": "97b1345d45e3ac3e1e2b224785d655347bf5ef58d7edafa2ac9e176c730813fb",
+  "independent_approver": null,
+  "primary_reviewer": null,
+  "priority_tier": "P1",
+  "promotable_to_active_rules": false,
+  "review_completed_at": null,
+  "review_started_at": null,
+  "schema_version": 1,
+  "scope_count": 6,
+  "scope_dossiers": [
+    {
+      "approval_eligible": false,
+      "income_type": "dividend",
+      "independent_approval_status": "not_started",
+      "packet_id": "CZ-AT-DIV-LEGAL-REVIEW",
+      "primary_review_status": "not_started",
+      "primary_review_workstream": "pilot_structure_reconciliation",
+      "promotable_to_active_rules": false,
+      "recipient_country": "AT",
+      "recipient_country_name": "Rakousko",
+      "review_tasks": [
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "czech_domestic_rate_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm treaty identity and current applicability",
+            "Review Articles 10, 11 and 12",
+            "Confirm ownership or participation thresholds",
+            "Confirm beneficial-owner conditions",
+            "Confirm special exemptions and definitions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "base_treaty_semantic_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "independent_primary_legal_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "eu_or_domestic_relief_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm both jurisdictions' MLI positions",
+            "Confirm covered tax agreement status",
+            "Determine matching MLI provisions",
+            "Confirm entry into effect for withholding taxes",
+            "Assess PPT and other applicable overlays"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "mli_ppt_and_effective_date_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Reconcile pilot and global review-pack structures",
+            "Confirm source-document identity",
+            "Confirm treaty, protocol and MLI layering",
+            "Resolve structural inconsistencies",
+            "Document reusable global pattern"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "pilot_structure_reconciliation"
+        }
+      ],
+      "review_workstreams": [
+        "czech_domestic_rate_review",
+        "base_treaty_semantic_review",
+        "independent_primary_legal_review",
+        "eu_or_domestic_relief_review",
+        "mli_ppt_and_effective_date_review",
+        "pilot_structure_reconciliation"
+      ],
+      "scope_dossier_sha256": "a678d07892603265973f6da282f11826050a386da330219e732cd63d82f42164",
+      "source_workstream_sha256": "37edbe2279190d1ca417183728dcbf767b97c3de8386e401fc3e408165ffd131"
+    },
+    {
+      "approval_eligible": false,
+      "income_type": "interest",
+      "independent_approval_status": "not_started",
+      "packet_id": "CZ-AT-INT-LEGAL-REVIEW",
+      "primary_review_status": "not_started",
+      "primary_review_workstream": "pilot_structure_reconciliation",
+      "promotable_to_active_rules": false,
+      "recipient_country": "AT",
+      "recipient_country_name": "Rakousko",
+      "review_tasks": [
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "czech_domestic_rate_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm treaty identity and current applicability",
+            "Review Articles 10, 11 and 12",
+            "Confirm ownership or participation thresholds",
+            "Confirm beneficial-owner conditions",
+            "Confirm special exemptions and definitions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "base_treaty_semantic_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "independent_primary_legal_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "eu_or_domestic_relief_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm both jurisdictions' MLI positions",
+            "Confirm covered tax agreement status",
+            "Determine matching MLI provisions",
+            "Confirm entry into effect for withholding taxes",
+            "Assess PPT and other applicable overlays"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "mli_ppt_and_effective_date_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Reconcile pilot and global review-pack structures",
+            "Confirm source-document identity",
+            "Confirm treaty, protocol and MLI layering",
+            "Resolve structural inconsistencies",
+            "Document reusable global pattern"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "pilot_structure_reconciliation"
+        }
+      ],
+      "review_workstreams": [
+        "czech_domestic_rate_review",
+        "base_treaty_semantic_review",
+        "independent_primary_legal_review",
+        "eu_or_domestic_relief_review",
+        "mli_ppt_and_effective_date_review",
+        "pilot_structure_reconciliation"
+      ],
+      "scope_dossier_sha256": "349d6a2f2b450632f6447a3fc496848eda76b07d07e527f61674b0b2055d11cd",
+      "source_workstream_sha256": "713cf8d37c9f325c915a61f177762ee2606ddc7e868bd8078cd4cc876e708a7a"
+    },
+    {
+      "approval_eligible": false,
+      "income_type": "royalty",
+      "independent_approval_status": "not_started",
+      "packet_id": "CZ-AT-ROY-LEGAL-REVIEW",
+      "primary_review_status": "not_started",
+      "primary_review_workstream": "pilot_structure_reconciliation",
+      "promotable_to_active_rules": false,
+      "recipient_country": "AT",
+      "recipient_country_name": "Rakousko",
+      "review_tasks": [
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "czech_domestic_rate_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm treaty identity and current applicability",
+            "Review Articles 10, 11 and 12",
+            "Confirm ownership or participation thresholds",
+            "Confirm beneficial-owner conditions",
+            "Confirm special exemptions and definitions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "base_treaty_semantic_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "independent_primary_legal_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "eu_or_domestic_relief_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm both jurisdictions' MLI positions",
+            "Confirm covered tax agreement status",
+            "Determine matching MLI provisions",
+            "Confirm entry into effect for withholding taxes",
+            "Assess PPT and other applicable overlays"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "mli_ppt_and_effective_date_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Reconcile pilot and global review-pack structures",
+            "Confirm source-document identity",
+            "Confirm treaty, protocol and MLI layering",
+            "Resolve structural inconsistencies",
+            "Document reusable global pattern"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "pilot_structure_reconciliation"
+        }
+      ],
+      "review_workstreams": [
+        "czech_domestic_rate_review",
+        "base_treaty_semantic_review",
+        "independent_primary_legal_review",
+        "eu_or_domestic_relief_review",
+        "mli_ppt_and_effective_date_review",
+        "pilot_structure_reconciliation"
+      ],
+      "scope_dossier_sha256": "c18b3a9ade9a5cfbc3c1b5c242812b2ff94fa18890d55a05af8701212fd9e12e",
+      "source_workstream_sha256": "f32709fe6002acb2c0d8c510dd650e5503b64f8125111424e583d52711d50ee4"
+    },
+    {
+      "approval_eligible": false,
+      "income_type": "dividend",
+      "independent_approval_status": "not_started",
+      "packet_id": "CZ-CH-DIV-LEGAL-REVIEW",
+      "primary_review_status": "not_started",
+      "primary_review_workstream": "pilot_structure_reconciliation",
+      "promotable_to_active_rules": false,
+      "recipient_country": "CH",
+      "recipient_country_name": "Švýcarsko",
+      "review_tasks": [
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "czech_domestic_rate_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm treaty identity and current applicability",
+            "Review Articles 10, 11 and 12",
+            "Confirm ownership or participation thresholds",
+            "Confirm beneficial-owner conditions",
+            "Confirm special exemptions and definitions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "base_treaty_semantic_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "independent_primary_legal_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "eu_or_domestic_relief_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm both jurisdictions' MLI positions",
+            "Confirm covered tax agreement status",
+            "Determine matching MLI provisions",
+            "Confirm entry into effect for withholding taxes",
+            "Assess PPT and other applicable overlays"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "mli_ppt_and_effective_date_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Reconcile pilot and global review-pack structures",
+            "Confirm source-document identity",
+            "Confirm treaty, protocol and MLI layering",
+            "Resolve structural inconsistencies",
+            "Document reusable global pattern"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "pilot_structure_reconciliation"
+        }
+      ],
+      "review_workstreams": [
+        "czech_domestic_rate_review",
+        "base_treaty_semantic_review",
+        "independent_primary_legal_review",
+        "eu_or_domestic_relief_review",
+        "mli_ppt_and_effective_date_review",
+        "pilot_structure_reconciliation"
+      ],
+      "scope_dossier_sha256": "838dadf03c894e9de74aa545bee2811a55faecc4f8d17533b90fe1c264da04f9",
+      "source_workstream_sha256": "c26999cba522c095a0410f825c5fdaf475527145eb3954f5d845da41132efafc"
+    },
+    {
+      "approval_eligible": false,
+      "income_type": "interest",
+      "independent_approval_status": "not_started",
+      "packet_id": "CZ-CH-INT-LEGAL-REVIEW",
+      "primary_review_status": "not_started",
+      "primary_review_workstream": "pilot_structure_reconciliation",
+      "promotable_to_active_rules": false,
+      "recipient_country": "CH",
+      "recipient_country_name": "Švýcarsko",
+      "review_tasks": [
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "czech_domestic_rate_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm treaty identity and current applicability",
+            "Review Articles 10, 11 and 12",
+            "Confirm ownership or participation thresholds",
+            "Confirm beneficial-owner conditions",
+            "Confirm special exemptions and definitions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "base_treaty_semantic_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "independent_primary_legal_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "eu_or_domestic_relief_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm both jurisdictions' MLI positions",
+            "Confirm covered tax agreement status",
+            "Determine matching MLI provisions",
+            "Confirm entry into effect for withholding taxes",
+            "Assess PPT and other applicable overlays"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "mli_ppt_and_effective_date_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Reconcile pilot and global review-pack structures",
+            "Confirm source-document identity",
+            "Confirm treaty, protocol and MLI layering",
+            "Resolve structural inconsistencies",
+            "Document reusable global pattern"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "pilot_structure_reconciliation"
+        }
+      ],
+      "review_workstreams": [
+        "czech_domestic_rate_review",
+        "base_treaty_semantic_review",
+        "independent_primary_legal_review",
+        "eu_or_domestic_relief_review",
+        "mli_ppt_and_effective_date_review",
+        "pilot_structure_reconciliation"
+      ],
+      "scope_dossier_sha256": "42f7d8eadafeb0e59c0a2449a7808923801415fe2a54e579c1a35f0860c3e060",
+      "source_workstream_sha256": "58930a484568f7f175c3d8ba55f1fc349d3713828f5a5de8969a1e259309ab6c"
+    },
+    {
+      "approval_eligible": false,
+      "income_type": "royalty",
+      "independent_approval_status": "not_started",
+      "packet_id": "CZ-CH-ROY-LEGAL-REVIEW",
+      "primary_review_status": "not_started",
+      "primary_review_workstream": "pilot_structure_reconciliation",
+      "promotable_to_active_rules": false,
+      "recipient_country": "CH",
+      "recipient_country_name": "Švýcarsko",
+      "review_tasks": [
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "czech_domestic_rate_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm treaty identity and current applicability",
+            "Review Articles 10, 11 and 12",
+            "Confirm ownership or participation thresholds",
+            "Confirm beneficial-owner conditions",
+            "Confirm special exemptions and definitions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "base_treaty_semantic_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "independent_primary_legal_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "eu_or_domestic_relief_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm both jurisdictions' MLI positions",
+            "Confirm covered tax agreement status",
+            "Determine matching MLI provisions",
+            "Confirm entry into effect for withholding taxes",
+            "Assess PPT and other applicable overlays"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "mli_ppt_and_effective_date_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Reconcile pilot and global review-pack structures",
+            "Confirm source-document identity",
+            "Confirm treaty, protocol and MLI layering",
+            "Resolve structural inconsistencies",
+            "Document reusable global pattern"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "pilot_structure_reconciliation"
+        }
+      ],
+      "review_workstreams": [
+        "czech_domestic_rate_review",
+        "base_treaty_semantic_review",
+        "independent_primary_legal_review",
+        "eu_or_domestic_relief_review",
+        "mli_ppt_and_effective_date_review",
+        "pilot_structure_reconciliation"
+      ],
+      "scope_dossier_sha256": "c7f54edc2c9de871955c3992ff9562e3205982bc661acb8eeadcb9a5d8542653",
+      "source_workstream_sha256": "2dddb372562ca652f9cab12be3b617541b3344aef0c7f0f9fb4f24c96555659c"
+    }
+  ],
+  "status": "ready_for_primary_legal_review"
+}

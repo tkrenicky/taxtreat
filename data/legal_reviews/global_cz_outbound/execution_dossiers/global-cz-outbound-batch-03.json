@@ -1,0 +1,1515 @@
+{
+  "approval_completed_at": null,
+  "approval_eligible": false,
+  "batch_id": "GLOBAL-CZ-OUTBOUND-BATCH-03",
+  "batch_number": 3,
+  "batch_source_sha256": "d3693276186095333ce9bdcf65ad7bb197d202b5fff8c21be83b052a9201c4b1",
+  "countries": [
+    "BE",
+    "HR",
+    "NL",
+    "KZ",
+    "RS"
+  ],
+  "country_names": [
+    "Belgie",
+    "Chorvatsko",
+    "Nizozemí",
+    "Kazachstán",
+    "Srbsko"
+  ],
+  "dossier_sha256": "78005d37e1fe0fde31b696ca04133fce2b0841c2035253b6ae563a03cd2d0006",
+  "independent_approver": null,
+  "primary_reviewer": null,
+  "priority_tier": "P2",
+  "promotable_to_active_rules": false,
+  "review_completed_at": null,
+  "review_started_at": null,
+  "schema_version": 1,
+  "scope_count": 15,
+  "scope_dossiers": [
+    {
+      "approval_eligible": false,
+      "income_type": "dividend",
+      "independent_approval_status": "not_started",
+      "packet_id": "CZ-BE-DIV-LEGAL-REVIEW",
+      "primary_review_status": "not_started",
+      "primary_review_workstream": "protocol_effect_review",
+      "promotable_to_active_rules": false,
+      "recipient_country": "BE",
+      "recipient_country_name": "Belgie",
+      "review_tasks": [
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "czech_domestic_rate_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm treaty identity and current applicability",
+            "Review Articles 10, 11 and 12",
+            "Confirm ownership or participation thresholds",
+            "Confirm beneficial-owner conditions",
+            "Confirm special exemptions and definitions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "base_treaty_semantic_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "independent_primary_legal_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "eu_or_domestic_relief_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm both jurisdictions' MLI positions",
+            "Confirm covered tax agreement status",
+            "Determine matching MLI provisions",
+            "Confirm entry into effect for withholding taxes",
+            "Assess PPT and other applicable overlays"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "mli_ppt_and_effective_date_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm protocol identity and legal force",
+            "Map amended treaty provisions",
+            "Confirm entry into force and effective dates",
+            "Validate dividend, interest and royalty impact",
+            "Document unchanged provisions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "protocol_effect_review"
+        }
+      ],
+      "review_workstreams": [
+        "czech_domestic_rate_review",
+        "base_treaty_semantic_review",
+        "independent_primary_legal_review",
+        "eu_or_domestic_relief_review",
+        "mli_ppt_and_effective_date_review",
+        "protocol_effect_review"
+      ],
+      "scope_dossier_sha256": "5b7fab590f9eafd40fbb75009fa2dd6a152ccb1a729bcb1285b849030e5e13eb",
+      "source_workstream_sha256": "7b292978481ccf00edd9646c0a7c51ad0a9c5988dd3bc5d070c496e4a2cc325e"
+    },
+    {
+      "approval_eligible": false,
+      "income_type": "interest",
+      "independent_approval_status": "not_started",
+      "packet_id": "CZ-BE-INT-LEGAL-REVIEW",
+      "primary_review_status": "not_started",
+      "primary_review_workstream": "protocol_effect_review",
+      "promotable_to_active_rules": false,
+      "recipient_country": "BE",
+      "recipient_country_name": "Belgie",
+      "review_tasks": [
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "czech_domestic_rate_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm treaty identity and current applicability",
+            "Review Articles 10, 11 and 12",
+            "Confirm ownership or participation thresholds",
+            "Confirm beneficial-owner conditions",
+            "Confirm special exemptions and definitions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "base_treaty_semantic_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "independent_primary_legal_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "eu_or_domestic_relief_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm both jurisdictions' MLI positions",
+            "Confirm covered tax agreement status",
+            "Determine matching MLI provisions",
+            "Confirm entry into effect for withholding taxes",
+            "Assess PPT and other applicable overlays"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "mli_ppt_and_effective_date_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm protocol identity and legal force",
+            "Map amended treaty provisions",
+            "Confirm entry into force and effective dates",
+            "Validate dividend, interest and royalty impact",
+            "Document unchanged provisions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "protocol_effect_review"
+        }
+      ],
+      "review_workstreams": [
+        "czech_domestic_rate_review",
+        "base_treaty_semantic_review",
+        "independent_primary_legal_review",
+        "eu_or_domestic_relief_review",
+        "mli_ppt_and_effective_date_review",
+        "protocol_effect_review"
+      ],
+      "scope_dossier_sha256": "c5cad36822276bbf8a07ddb42dc15b9f0de5e294a1f99d0cc8d2be2f6ffce828",
+      "source_workstream_sha256": "761f8a06df8e415f7814e3d6871b3e9949a031d95aeba76b80c63a803c5da417"
+    },
+    {
+      "approval_eligible": false,
+      "income_type": "royalty",
+      "independent_approval_status": "not_started",
+      "packet_id": "CZ-BE-ROY-LEGAL-REVIEW",
+      "primary_review_status": "not_started",
+      "primary_review_workstream": "protocol_effect_review",
+      "promotable_to_active_rules": false,
+      "recipient_country": "BE",
+      "recipient_country_name": "Belgie",
+      "review_tasks": [
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "czech_domestic_rate_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm treaty identity and current applicability",
+            "Review Articles 10, 11 and 12",
+            "Confirm ownership or participation thresholds",
+            "Confirm beneficial-owner conditions",
+            "Confirm special exemptions and definitions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "base_treaty_semantic_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "independent_primary_legal_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "eu_or_domestic_relief_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm both jurisdictions' MLI positions",
+            "Confirm covered tax agreement status",
+            "Determine matching MLI provisions",
+            "Confirm entry into effect for withholding taxes",
+            "Assess PPT and other applicable overlays"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "mli_ppt_and_effective_date_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm protocol identity and legal force",
+            "Map amended treaty provisions",
+            "Confirm entry into force and effective dates",
+            "Validate dividend, interest and royalty impact",
+            "Document unchanged provisions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "protocol_effect_review"
+        }
+      ],
+      "review_workstreams": [
+        "czech_domestic_rate_review",
+        "base_treaty_semantic_review",
+        "independent_primary_legal_review",
+        "eu_or_domestic_relief_review",
+        "mli_ppt_and_effective_date_review",
+        "protocol_effect_review"
+      ],
+      "scope_dossier_sha256": "9ef4213c009414fbe002c15e2b8ee02fa8fccd7af7d535b533fa108dc4b45086",
+      "source_workstream_sha256": "e6b5b7a76321eccca76445278f8896cd3d691220197429a708475095bddfa259"
+    },
+    {
+      "approval_eligible": false,
+      "income_type": "dividend",
+      "independent_approval_status": "not_started",
+      "packet_id": "CZ-HR-DIV-LEGAL-REVIEW",
+      "primary_review_status": "not_started",
+      "primary_review_workstream": "protocol_effect_review",
+      "promotable_to_active_rules": false,
+      "recipient_country": "HR",
+      "recipient_country_name": "Chorvatsko",
+      "review_tasks": [
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "czech_domestic_rate_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm treaty identity and current applicability",
+            "Review Articles 10, 11 and 12",
+            "Confirm ownership or participation thresholds",
+            "Confirm beneficial-owner conditions",
+            "Confirm special exemptions and definitions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "base_treaty_semantic_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "independent_primary_legal_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "eu_or_domestic_relief_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm both jurisdictions' MLI positions",
+            "Confirm covered tax agreement status",
+            "Determine matching MLI provisions",
+            "Confirm entry into effect for withholding taxes",
+            "Assess PPT and other applicable overlays"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "mli_ppt_and_effective_date_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm protocol identity and legal force",
+            "Map amended treaty provisions",
+            "Confirm entry into force and effective dates",
+            "Validate dividend, interest and royalty impact",
+            "Document unchanged provisions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "protocol_effect_review"
+        }
+      ],
+      "review_workstreams": [
+        "czech_domestic_rate_review",
+        "base_treaty_semantic_review",
+        "independent_primary_legal_review",
+        "eu_or_domestic_relief_review",
+        "mli_ppt_and_effective_date_review",
+        "protocol_effect_review"
+      ],
+      "scope_dossier_sha256": "9b30318f5d60450c2f7871624d71ad3925ea8431fad5fc24520d2c448a058d40",
+      "source_workstream_sha256": "8ceafa2a612333853e55588221043929d17344c974291b04c4702bb3c46b6079"
+    },
+    {
+      "approval_eligible": false,
+      "income_type": "interest",
+      "independent_approval_status": "not_started",
+      "packet_id": "CZ-HR-INT-LEGAL-REVIEW",
+      "primary_review_status": "not_started",
+      "primary_review_workstream": "protocol_effect_review",
+      "promotable_to_active_rules": false,
+      "recipient_country": "HR",
+      "recipient_country_name": "Chorvatsko",
+      "review_tasks": [
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "czech_domestic_rate_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm treaty identity and current applicability",
+            "Review Articles 10, 11 and 12",
+            "Confirm ownership or participation thresholds",
+            "Confirm beneficial-owner conditions",
+            "Confirm special exemptions and definitions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "base_treaty_semantic_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "independent_primary_legal_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "eu_or_domestic_relief_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm both jurisdictions' MLI positions",
+            "Confirm covered tax agreement status",
+            "Determine matching MLI provisions",
+            "Confirm entry into effect for withholding taxes",
+            "Assess PPT and other applicable overlays"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "mli_ppt_and_effective_date_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm protocol identity and legal force",
+            "Map amended treaty provisions",
+            "Confirm entry into force and effective dates",
+            "Validate dividend, interest and royalty impact",
+            "Document unchanged provisions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "protocol_effect_review"
+        }
+      ],
+      "review_workstreams": [
+        "czech_domestic_rate_review",
+        "base_treaty_semantic_review",
+        "independent_primary_legal_review",
+        "eu_or_domestic_relief_review",
+        "mli_ppt_and_effective_date_review",
+        "protocol_effect_review"
+      ],
+      "scope_dossier_sha256": "2953bc9cc13f8bafee3bf8c7913b5e0aac453754482c2d326a562e8dd35452b2",
+      "source_workstream_sha256": "2b5905d35ec6c9c2a61b35df5eaeeaf85cc86c3a106dc0300e3cee69eddbaf08"
+    },
+    {
+      "approval_eligible": false,
+      "income_type": "royalty",
+      "independent_approval_status": "not_started",
+      "packet_id": "CZ-HR-ROY-LEGAL-REVIEW",
+      "primary_review_status": "not_started",
+      "primary_review_workstream": "protocol_effect_review",
+      "promotable_to_active_rules": false,
+      "recipient_country": "HR",
+      "recipient_country_name": "Chorvatsko",
+      "review_tasks": [
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "czech_domestic_rate_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm treaty identity and current applicability",
+            "Review Articles 10, 11 and 12",
+            "Confirm ownership or participation thresholds",
+            "Confirm beneficial-owner conditions",
+            "Confirm special exemptions and definitions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "base_treaty_semantic_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "independent_primary_legal_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "eu_or_domestic_relief_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm both jurisdictions' MLI positions",
+            "Confirm covered tax agreement status",
+            "Determine matching MLI provisions",
+            "Confirm entry into effect for withholding taxes",
+            "Assess PPT and other applicable overlays"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "mli_ppt_and_effective_date_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm protocol identity and legal force",
+            "Map amended treaty provisions",
+            "Confirm entry into force and effective dates",
+            "Validate dividend, interest and royalty impact",
+            "Document unchanged provisions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "protocol_effect_review"
+        }
+      ],
+      "review_workstreams": [
+        "czech_domestic_rate_review",
+        "base_treaty_semantic_review",
+        "independent_primary_legal_review",
+        "eu_or_domestic_relief_review",
+        "mli_ppt_and_effective_date_review",
+        "protocol_effect_review"
+      ],
+      "scope_dossier_sha256": "900f2e10c8727f7d1dc90256bc7b46f6df3b150d4ee8c9ce82c8502c3aa84652",
+      "source_workstream_sha256": "60d64c928b46758407fd355ae0eeb795d04a13dcc23216780bdffdb661d6a73b"
+    },
+    {
+      "approval_eligible": false,
+      "income_type": "dividend",
+      "independent_approval_status": "not_started",
+      "packet_id": "CZ-NL-DIV-LEGAL-REVIEW",
+      "primary_review_status": "not_started",
+      "primary_review_workstream": "protocol_effect_review",
+      "promotable_to_active_rules": false,
+      "recipient_country": "NL",
+      "recipient_country_name": "Nizozemí",
+      "review_tasks": [
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "czech_domestic_rate_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm treaty identity and current applicability",
+            "Review Articles 10, 11 and 12",
+            "Confirm ownership or participation thresholds",
+            "Confirm beneficial-owner conditions",
+            "Confirm special exemptions and definitions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "base_treaty_semantic_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "independent_primary_legal_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "eu_or_domestic_relief_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm both jurisdictions' MLI positions",
+            "Confirm covered tax agreement status",
+            "Determine matching MLI provisions",
+            "Confirm entry into effect for withholding taxes",
+            "Assess PPT and other applicable overlays"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "mli_ppt_and_effective_date_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm protocol identity and legal force",
+            "Map amended treaty provisions",
+            "Confirm entry into force and effective dates",
+            "Validate dividend, interest and royalty impact",
+            "Document unchanged provisions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "protocol_effect_review"
+        }
+      ],
+      "review_workstreams": [
+        "czech_domestic_rate_review",
+        "base_treaty_semantic_review",
+        "independent_primary_legal_review",
+        "eu_or_domestic_relief_review",
+        "mli_ppt_and_effective_date_review",
+        "protocol_effect_review"
+      ],
+      "scope_dossier_sha256": "fc5746e77ee082ee7ef1b7f84f2aed1fad66909315f20bbe0e01a2df0e355047",
+      "source_workstream_sha256": "de5d9b6c3b15f932fc8b21cb488ffbb9903b5f34e60f9d28172771f7ac3a58d4"
+    },
+    {
+      "approval_eligible": false,
+      "income_type": "interest",
+      "independent_approval_status": "not_started",
+      "packet_id": "CZ-NL-INT-LEGAL-REVIEW",
+      "primary_review_status": "not_started",
+      "primary_review_workstream": "protocol_effect_review",
+      "promotable_to_active_rules": false,
+      "recipient_country": "NL",
+      "recipient_country_name": "Nizozemí",
+      "review_tasks": [
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "czech_domestic_rate_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm treaty identity and current applicability",
+            "Review Articles 10, 11 and 12",
+            "Confirm ownership or participation thresholds",
+            "Confirm beneficial-owner conditions",
+            "Confirm special exemptions and definitions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "base_treaty_semantic_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "independent_primary_legal_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "eu_or_domestic_relief_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm both jurisdictions' MLI positions",
+            "Confirm covered tax agreement status",
+            "Determine matching MLI provisions",
+            "Confirm entry into effect for withholding taxes",
+            "Assess PPT and other applicable overlays"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "mli_ppt_and_effective_date_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm protocol identity and legal force",
+            "Map amended treaty provisions",
+            "Confirm entry into force and effective dates",
+            "Validate dividend, interest and royalty impact",
+            "Document unchanged provisions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "protocol_effect_review"
+        }
+      ],
+      "review_workstreams": [
+        "czech_domestic_rate_review",
+        "base_treaty_semantic_review",
+        "independent_primary_legal_review",
+        "eu_or_domestic_relief_review",
+        "mli_ppt_and_effective_date_review",
+        "protocol_effect_review"
+      ],
+      "scope_dossier_sha256": "f57857087a8129899bfaae5c5b9025afcd2dea02793d4fb4ef16e3351ee4c0fb",
+      "source_workstream_sha256": "e37f18f2cc6715397c210dbf97baaf2d8bd2b535f07c3d39f01136115250ef88"
+    },
+    {
+      "approval_eligible": false,
+      "income_type": "royalty",
+      "independent_approval_status": "not_started",
+      "packet_id": "CZ-NL-ROY-LEGAL-REVIEW",
+      "primary_review_status": "not_started",
+      "primary_review_workstream": "protocol_effect_review",
+      "promotable_to_active_rules": false,
+      "recipient_country": "NL",
+      "recipient_country_name": "Nizozemí",
+      "review_tasks": [
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "czech_domestic_rate_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm treaty identity and current applicability",
+            "Review Articles 10, 11 and 12",
+            "Confirm ownership or participation thresholds",
+            "Confirm beneficial-owner conditions",
+            "Confirm special exemptions and definitions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "base_treaty_semantic_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "independent_primary_legal_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "eu_or_domestic_relief_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm both jurisdictions' MLI positions",
+            "Confirm covered tax agreement status",
+            "Determine matching MLI provisions",
+            "Confirm entry into effect for withholding taxes",
+            "Assess PPT and other applicable overlays"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "mli_ppt_and_effective_date_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm protocol identity and legal force",
+            "Map amended treaty provisions",
+            "Confirm entry into force and effective dates",
+            "Validate dividend, interest and royalty impact",
+            "Document unchanged provisions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "protocol_effect_review"
+        }
+      ],
+      "review_workstreams": [
+        "czech_domestic_rate_review",
+        "base_treaty_semantic_review",
+        "independent_primary_legal_review",
+        "eu_or_domestic_relief_review",
+        "mli_ppt_and_effective_date_review",
+        "protocol_effect_review"
+      ],
+      "scope_dossier_sha256": "cb641338c3c269df507ed05d536e0d1f780b2baf02f03c150825f817f7486ab9",
+      "source_workstream_sha256": "fb0d48ef52e739006eed38618cb37191abf9d9b5fe84523a27de369206f5a02d"
+    },
+    {
+      "approval_eligible": false,
+      "income_type": "dividend",
+      "independent_approval_status": "not_started",
+      "packet_id": "CZ-KZ-DIV-LEGAL-REVIEW",
+      "primary_review_status": "not_started",
+      "primary_review_workstream": "protocol_effect_review",
+      "promotable_to_active_rules": false,
+      "recipient_country": "KZ",
+      "recipient_country_name": "Kazachstán",
+      "review_tasks": [
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "czech_domestic_rate_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm treaty identity and current applicability",
+            "Review Articles 10, 11 and 12",
+            "Confirm ownership or participation thresholds",
+            "Confirm beneficial-owner conditions",
+            "Confirm special exemptions and definitions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "base_treaty_semantic_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "independent_primary_legal_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm both jurisdictions' MLI positions",
+            "Confirm covered tax agreement status",
+            "Determine matching MLI provisions",
+            "Confirm entry into effect for withholding taxes",
+            "Assess PPT and other applicable overlays"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "mli_ppt_and_effective_date_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm protocol identity and legal force",
+            "Map amended treaty provisions",
+            "Confirm entry into force and effective dates",
+            "Validate dividend, interest and royalty impact",
+            "Document unchanged provisions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "protocol_effect_review"
+        }
+      ],
+      "review_workstreams": [
+        "czech_domestic_rate_review",
+        "base_treaty_semantic_review",
+        "independent_primary_legal_review",
+        "mli_ppt_and_effective_date_review",
+        "protocol_effect_review"
+      ],
+      "scope_dossier_sha256": "16ee3fcca268285abe4c1ff2346dfc61e3d3327f4bf2a22d63f6c57ff0ac8962",
+      "source_workstream_sha256": "43794ebbf9eb87074bca7045ff0042e3b5a7383e9e1f0a4c0b7fb6e6a9497ba7"
+    },
+    {
+      "approval_eligible": false,
+      "income_type": "interest",
+      "independent_approval_status": "not_started",
+      "packet_id": "CZ-KZ-INT-LEGAL-REVIEW",
+      "primary_review_status": "not_started",
+      "primary_review_workstream": "protocol_effect_review",
+      "promotable_to_active_rules": false,
+      "recipient_country": "KZ",
+      "recipient_country_name": "Kazachstán",
+      "review_tasks": [
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "czech_domestic_rate_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm treaty identity and current applicability",
+            "Review Articles 10, 11 and 12",
+            "Confirm ownership or participation thresholds",
+            "Confirm beneficial-owner conditions",
+            "Confirm special exemptions and definitions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "base_treaty_semantic_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "independent_primary_legal_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm both jurisdictions' MLI positions",
+            "Confirm covered tax agreement status",
+            "Determine matching MLI provisions",
+            "Confirm entry into effect for withholding taxes",
+            "Assess PPT and other applicable overlays"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "mli_ppt_and_effective_date_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm protocol identity and legal force",
+            "Map amended treaty provisions",
+            "Confirm entry into force and effective dates",
+            "Validate dividend, interest and royalty impact",
+            "Document unchanged provisions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "protocol_effect_review"
+        }
+      ],
+      "review_workstreams": [
+        "czech_domestic_rate_review",
+        "base_treaty_semantic_review",
+        "independent_primary_legal_review",
+        "mli_ppt_and_effective_date_review",
+        "protocol_effect_review"
+      ],
+      "scope_dossier_sha256": "1747f023d053e722e7c7173a81421c30e1096c63959d4d7947bbeadc02c75634",
+      "source_workstream_sha256": "56d386f5b4098c3a5ef6f187010360f936484f9035f153d6f857cb6d2e4201be"
+    },
+    {
+      "approval_eligible": false,
+      "income_type": "royalty",
+      "independent_approval_status": "not_started",
+      "packet_id": "CZ-KZ-ROY-LEGAL-REVIEW",
+      "primary_review_status": "not_started",
+      "primary_review_workstream": "protocol_effect_review",
+      "promotable_to_active_rules": false,
+      "recipient_country": "KZ",
+      "recipient_country_name": "Kazachstán",
+      "review_tasks": [
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "czech_domestic_rate_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm treaty identity and current applicability",
+            "Review Articles 10, 11 and 12",
+            "Confirm ownership or participation thresholds",
+            "Confirm beneficial-owner conditions",
+            "Confirm special exemptions and definitions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "base_treaty_semantic_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "independent_primary_legal_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm both jurisdictions' MLI positions",
+            "Confirm covered tax agreement status",
+            "Determine matching MLI provisions",
+            "Confirm entry into effect for withholding taxes",
+            "Assess PPT and other applicable overlays"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "mli_ppt_and_effective_date_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm protocol identity and legal force",
+            "Map amended treaty provisions",
+            "Confirm entry into force and effective dates",
+            "Validate dividend, interest and royalty impact",
+            "Document unchanged provisions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "protocol_effect_review"
+        }
+      ],
+      "review_workstreams": [
+        "czech_domestic_rate_review",
+        "base_treaty_semantic_review",
+        "independent_primary_legal_review",
+        "mli_ppt_and_effective_date_review",
+        "protocol_effect_review"
+      ],
+      "scope_dossier_sha256": "5062ab05824ebea26d90b37f6fa58721039ecad786aa653c13be101beac361b0",
+      "source_workstream_sha256": "fbbb710010d448560e8b78015a35cd822117a2db071415bb2ebc04cfbb1db72c"
+    },
+    {
+      "approval_eligible": false,
+      "income_type": "dividend",
+      "independent_approval_status": "not_started",
+      "packet_id": "CZ-RS-DIV-LEGAL-REVIEW",
+      "primary_review_status": "not_started",
+      "primary_review_workstream": "protocol_effect_review",
+      "promotable_to_active_rules": false,
+      "recipient_country": "RS",
+      "recipient_country_name": "Srbsko",
+      "review_tasks": [
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "czech_domestic_rate_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm treaty identity and current applicability",
+            "Review Articles 10, 11 and 12",
+            "Confirm ownership or participation thresholds",
+            "Confirm beneficial-owner conditions",
+            "Confirm special exemptions and definitions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "base_treaty_semantic_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "independent_primary_legal_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm both jurisdictions' MLI positions",
+            "Confirm covered tax agreement status",
+            "Determine matching MLI provisions",
+            "Confirm entry into effect for withholding taxes",
+            "Assess PPT and other applicable overlays"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "mli_ppt_and_effective_date_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm protocol identity and legal force",
+            "Map amended treaty provisions",
+            "Confirm entry into force and effective dates",
+            "Validate dividend, interest and royalty impact",
+            "Document unchanged provisions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "protocol_effect_review"
+        }
+      ],
+      "review_workstreams": [
+        "czech_domestic_rate_review",
+        "base_treaty_semantic_review",
+        "independent_primary_legal_review",
+        "mli_ppt_and_effective_date_review",
+        "protocol_effect_review"
+      ],
+      "scope_dossier_sha256": "f6ef39d7f1f6d9f3d8e26e92b3edafb70530b776aa41e05735657f88a23b4843",
+      "source_workstream_sha256": "ca7256d632101f6b26f3a01a087f3bfb3d6d8cfee5193381500365aeca9295f4"
+    },
+    {
+      "approval_eligible": false,
+      "income_type": "interest",
+      "independent_approval_status": "not_started",
+      "packet_id": "CZ-RS-INT-LEGAL-REVIEW",
+      "primary_review_status": "not_started",
+      "primary_review_workstream": "protocol_effect_review",
+      "promotable_to_active_rules": false,
+      "recipient_country": "RS",
+      "recipient_country_name": "Srbsko",
+      "review_tasks": [
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "czech_domestic_rate_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm treaty identity and current applicability",
+            "Review Articles 10, 11 and 12",
+            "Confirm ownership or participation thresholds",
+            "Confirm beneficial-owner conditions",
+            "Confirm special exemptions and definitions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "base_treaty_semantic_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "independent_primary_legal_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm both jurisdictions' MLI positions",
+            "Confirm covered tax agreement status",
+            "Determine matching MLI provisions",
+            "Confirm entry into effect for withholding taxes",
+            "Assess PPT and other applicable overlays"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "mli_ppt_and_effective_date_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm protocol identity and legal force",
+            "Map amended treaty provisions",
+            "Confirm entry into force and effective dates",
+            "Validate dividend, interest and royalty impact",
+            "Document unchanged provisions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "protocol_effect_review"
+        }
+      ],
+      "review_workstreams": [
+        "czech_domestic_rate_review",
+        "base_treaty_semantic_review",
+        "independent_primary_legal_review",
+        "mli_ppt_and_effective_date_review",
+        "protocol_effect_review"
+      ],
+      "scope_dossier_sha256": "619d0191f17c4254598714d66e852b0d47209c77ef76360e8228520162b579b0",
+      "source_workstream_sha256": "eab2a0526728a0e400381294c25ab5945cd04882440d50bb8a6d866c32669812"
+    },
+    {
+      "approval_eligible": false,
+      "income_type": "royalty",
+      "independent_approval_status": "not_started",
+      "packet_id": "CZ-RS-ROY-LEGAL-REVIEW",
+      "primary_review_status": "not_started",
+      "primary_review_workstream": "protocol_effect_review",
+      "promotable_to_active_rules": false,
+      "recipient_country": "RS",
+      "recipient_country_name": "Srbsko",
+      "review_tasks": [
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "czech_domestic_rate_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm treaty identity and current applicability",
+            "Review Articles 10, 11 and 12",
+            "Confirm ownership or participation thresholds",
+            "Confirm beneficial-owner conditions",
+            "Confirm special exemptions and definitions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "base_treaty_semantic_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Complete legal review",
+            "Document evidence and conclusion"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "independent_primary_legal_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm both jurisdictions' MLI positions",
+            "Confirm covered tax agreement status",
+            "Determine matching MLI provisions",
+            "Confirm entry into effect for withholding taxes",
+            "Assess PPT and other applicable overlays"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "mli_ppt_and_effective_date_review"
+        },
+        {
+          "conclusion": null,
+          "evidence_references": [],
+          "requirements": [
+            "Confirm protocol identity and legal force",
+            "Map amended treaty provisions",
+            "Confirm entry into force and effective dates",
+            "Validate dividend, interest and royalty impact",
+            "Document unchanged provisions"
+          ],
+          "reviewed_at": null,
+          "reviewer": null,
+          "status": "not_started",
+          "workstream": "protocol_effect_review"
+        }
+      ],
+      "review_workstreams": [
+        "czech_domestic_rate_review",
+        "base_treaty_semantic_review",
+        "independent_primary_legal_review",
+        "mli_ppt_and_effective_date_review",
+        "protocol_effect_review"
+      ],
+      "scope_dossier_sha256": "42492df2c86c120f321698ca11a353df7b399fb37ce4aee5af9515e09525c1cf",
+      "source_workstream_sha256": "ab81aa5c63aaaa415626adcea0e63715eed02e9a054a80914ac941a4eb8ba29b"
+    }
+  ],
+  "status": "ready_for_primary_legal_review"
+}
