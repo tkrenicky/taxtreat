@@ -1,0 +1,87 @@
+{
+  "application": {
+    "czech_withholding_tax_effective_from": "2021-01-01",
+    "effective_date_verification_status": "primary_publication_verified"
+  },
+  "direction": "CZ_OUTBOUND",
+  "fail_closed": true,
+  "income_articles": {
+    "dividends": {
+      "article_number": 10,
+      "article_text_sha256": "c841920a6e4fc906971ad8cb59449a3a11575b9f99be52b0f793d11599d26ecc",
+      "treaty_rates": [
+        {
+          "conditions": {
+            "beneficial_owner_required": true,
+            "category": "all dividends",
+            "minimum_direct_holding_percent": null
+          },
+          "rate_percent": 5
+        }
+      ],
+      "verification_status": "primary_treaty_text_verified"
+    },
+    "interest": {
+      "article_number": 11,
+      "article_text_sha256": "496a1c7e553af89c44ca8d3c0511f1ef2ec205244455c0ca20b250e0ed0cad60",
+      "conditions": {
+        "beneficial_owner_required": true
+      },
+      "exemption_categories": [
+        "credit sale of goods or equipment",
+        "loan or credit provided by a bank",
+        "qualifying government and public bodies",
+        "central bank",
+        "qualifying export-support institution",
+        "qualifying guaranteed loan or credit"
+      ],
+      "exemptions_present": true,
+      "standard_rate_percent": 7.5,
+      "verification_status": "primary_treaty_text_verified"
+    },
+    "royalties_and_technical_services": {
+      "article_number": 12,
+      "article_text_sha256": "c5eb504ca183c4f15941a53c6114d033c315a008841484001137bbe186a212dd",
+      "conditions": {
+        "beneficial_owner_required": true
+      },
+      "covered_categories": [
+        "royalties",
+        "technical services",
+        "consultancy services",
+        "managerial services"
+      ],
+      "standard_rate_percent": 7.5,
+      "verification_status": "primary_treaty_text_verified"
+    }
+  },
+  "legal_verification_completed": false,
+  "overlay_review": {
+    "czech_domestic_conditions_verified": false,
+    "mli_position_verified": false,
+    "mli_review_status": "pending_pairwise_verification",
+    "protocol_review_status": "pending"
+  },
+  "partner_country": "BW",
+  "partner_country_name": "Botswana",
+  "production_ready": false,
+  "promotable_to_active_rules": false,
+  "schema_version": 1,
+  "source": {
+    "entry_into_force_date": "2020-11-26",
+    "official_publication_reference": "Sdělení Ministerstva zahraničních věcí č. 49/2020 Sb. m. s.",
+    "parsed_path": "data/parsed/botswana.json",
+    "signature_date": "2019-10-29",
+    "source_title": "49/2020 Sb. m. s."
+  },
+  "treaty_pair_id": "CZ-BW",
+  "verification_id": "CZ-BW-primary-treaty-2026-08-06.1",
+  "verification_scope": {
+    "czech_withholding_effective_date_verified": true,
+    "domestic_conditions_verified": false,
+    "entry_into_force_verified": true,
+    "mli_position_verified": false,
+    "primary_treaty_articles_10_to_12_verified": true,
+    "transaction_decision_ready": false
+  }
+}
