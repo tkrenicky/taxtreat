@@ -1,0 +1,86 @@
+{
+  "application": {
+    "czech_withholding_tax_effective_from": null,
+    "entry_into_force_date": null,
+    "verification_status": "pending_primary_publication_review"
+  },
+  "direction": "CZ_OUTBOUND",
+  "fail_closed": true,
+  "income_articles": {
+    "dividends": {
+      "article_number": 10,
+      "article_text_sha256": "7cdb390dcd3e34d166ac1099b90578a05fb8d0b10366aff4ff72c673c09c4b16",
+      "treaty_rates": [
+        {
+          "conditions": {
+            "beneficial_owner_required": true,
+            "category": "all dividends",
+            "minimum_direct_holding_percent": null
+          },
+          "rate_percent": 6
+        }
+      ],
+      "verification_status": "primary_treaty_text_verified"
+    },
+    "interest": {
+      "article_number": 11,
+      "article_text_sha256": "c4ccb51cbb721e358a71ebd53ea577f160199e74a8d18a733b03010aa1b2eb95",
+      "conditions": {
+        "beneficial_owner_required": true
+      },
+      "exemption_categories": [
+        "credit sale of goods or equipment",
+        "loan or credit provided by a bank",
+        "qualifying government and public bodies",
+        "central bank",
+        "qualifying government-owned financial institution",
+        "qualifying guaranteed loan or credit"
+      ],
+      "exemptions_present": true,
+      "standard_rate_percent": 10,
+      "verification_status": "primary_treaty_text_verified"
+    },
+    "royalties_and_services": {
+      "article_number": 12,
+      "article_text_sha256": "05546287fcc0330100ae4665a467a0e19d843fb1748fd846e13c2d147a6a76af",
+      "conditions": {
+        "beneficial_owner_required": true
+      },
+      "covered_categories": [
+        "royalties",
+        "technical services",
+        "consultancy services",
+        "managerial services"
+      ],
+      "standard_rate_percent": 8,
+      "verification_status": "primary_treaty_text_verified"
+    }
+  },
+  "legal_verification_completed": false,
+  "overlay_review": {
+    "czech_domestic_conditions_verified": false,
+    "mli_position_verified": false,
+    "mli_review_status": "pending_pairwise_verification",
+    "protocol_review_status": "pending"
+  },
+  "partner_country": "GH",
+  "partner_country_name": "Ghana",
+  "production_ready": false,
+  "promotable_to_active_rules": false,
+  "schema_version": 1,
+  "source": {
+    "official_publication_reference": "Sdělení Ministerstva zahraničních věcí č. 38/2020 Sb. m. s.",
+    "parsed_path": "data/parsed/ghana.json",
+    "source_title": "38/2020 Sb. m. s."
+  },
+  "treaty_pair_id": "CZ-GH",
+  "verification_id": "CZ-GH-primary-treaty-2026-08-06.1",
+  "verification_scope": {
+    "czech_withholding_effective_date_verified": false,
+    "domestic_conditions_verified": false,
+    "entry_into_force_verified": false,
+    "mli_position_verified": false,
+    "primary_treaty_articles_10_to_12_verified": true,
+    "transaction_decision_ready": false
+  }
+}
