@@ -1,0 +1,4064 @@
+{
+  "schema_version": 1,
+  "dataset_release": "at-ch-clean-source-inventory-2026-08-06.1",
+  "countries": [
+    "AT",
+    "CH"
+  ],
+  "purpose": "Inventory existing repository evidence before replacing rejected OCR sources.",
+  "repository_matches": [
+    {
+      "path": "README.md",
+      "matched_patterns": [
+        "switzerland"
+      ],
+      "matching_lines": [
+        {
+          "line": 94,
+          "text": "Switzerland, Iceland, Liechtenstein and Norway. The model retains the 12- and"
+        }
+      ]
+    },
+    {
+      "path": "MILESTONES.md",
+      "matched_patterns": [
+        "austria",
+        "swiss",
+        "austrian"
+      ],
+      "matching_lines": [
+        {
+          "line": 57,
+          "text": "- official Czech, Austrian, Swiss and EU source registry;"
+        }
+      ]
+    },
+    {
+      "path": "imports/example.json",
+      "matched_patterns": [
+        "switzerland"
+      ],
+      "matching_lines": [
+        {
+          "line": 29,
+          "text": "        \"title\":\"Czech-Switzerland DTT\","
+        }
+      ]
+    },
+    {
+      "path": "data/cz_treaty_partners.json",
+      "matched_patterns": [
+        "rakous",
+        "švýcar"
+      ],
+      "matching_lines": [
+        {
+          "line": 73,
+          "text": "  {\"country\": \"Rakousko\", \"iso2\": \"AT\", \"parsed_file\": \"rakousko.json\"},"
+        },
+        {
+          "line": 89,
+          "text": "  {\"country\": \"Švýcarsko\", \"iso2\": \"CH\", \"parsed_file\": \"svycarsko.json\"},"
+        }
+      ]
+    },
+    {
+      "path": "tests/test_legal_rule_engine.py",
+      "matched_patterns": [
+        "cz-at",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 51,
+          "text": "            \"CZ-CH-INT-BASE\","
+        },
+        {
+          "line": 76,
+          "text": "    assert result.selected_rule_id == \"CZ-CH-INT-BASE\""
+        },
+        {
+          "line": 82,
+          "text": "            \"CZ-CH-INT-PE\","
+        },
+        {
+          "line": 91,
+          "text": "            \"CZ-CH-INT-BASE\","
+        },
+        {
+          "line": 116,
+          "text": "    assert result.selected_rule_id == \"CZ-CH-INT-PE\""
+        },
+        {
+          "line": 122,
+          "text": "            \"CZ-CH-INT-BASE\","
+        },
+        {
+          "line": 151,
+          "text": "            \"CZ-AT-ROY-INDUSTRIAL\","
+        },
+        {
+          "line": 161,
+          "text": "            \"CZ-AT-ROY-COPYRIGHT\","
+        },
+        {
+          "line": 196,
+          "text": "    assert industrial.selected_rule_id == \"CZ-AT-ROY-INDUSTRIAL\""
+        },
+        {
+          "line": 198,
+          "text": "    assert copyright_result.selected_rule_id == \"CZ-AT-ROY-COPYRIGHT\""
+        },
+        {
+          "line": 204,
+          "text": "            \"CZ-CH-ROY-BASE\","
+        },
+        {
+          "line": 211,
+          "text": "            \"CZ-CH-ROY-PROTOCOL\","
+        },
+        {
+          "line": 216,
+          "text": "            overrides_rule_id=\"CZ-CH-ROY-BASE\","
+        },
+        {
+          "line": 241,
+          "text": "    assert result.selected_rule_id == \"CZ-CH-ROY-PROTOCOL\""
+        },
+        {
+          "line": 242,
+          "text": "    assert result.overridden_rule_id == \"CZ-CH-ROY-BASE\""
+        },
+        {
+          "line": 248,
+          "text": "            \"CZ-CH-ROY-BASE\","
+        },
+        {
+          "line": 255,
+          "text": "            \"CZ-CH-ROY-PROTOCOL\","
+        },
+        {
+          "line": 260,
+          "text": "            overrides_rule_id=\"CZ-CH-ROY-BASE\","
+        },
+        {
+          "line": 294,
+          "text": "            \"CZ-CH-INT-BASE\","
+        },
+        {
+          "line": 319,
+          "text": "        rule_id=\"CZ-CH-INT-DRAFT\","
+        },
+        {
+          "line": 351,
+          "text": "            \"CZ-CH-INT-UNKNOWN-OPERATOR\","
+        },
+        {
+          "line": 377,
+          "text": "            \"CZ-CH-ROY-PROTOCOL\","
+        },
+        {
+          "line": 381,
+          "text": "            overrides_rule_id=\"CZ-CH-ROY-MISSING\","
+        }
+      ]
+    },
+    {
+      "path": "tests/conftest.py",
+      "matched_patterns": [
+        "switzerland",
+        "švýcar"
+      ],
+      "matching_lines": [
+        {
+          "line": 20,
+          "text": "            (2, \"CH\", \"CHE\", \"Switzerland\", \"Švýcarsko\"),"
+        }
+      ]
+    },
+    {
+      "path": "tests/test_applied_source_exception_resolutions.py",
+      "matched_patterns": [
+        "cz-at",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 29,
+          "text": "        \"CZ-AT-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 30,
+          "text": "        \"CZ-AT-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 31,
+          "text": "        \"CZ-AT-ROY-LEGAL-REVIEW\","
+        },
+        {
+          "line": 32,
+          "text": "        \"CZ-CH-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 33,
+          "text": "        \"CZ-CH-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 34,
+          "text": "        \"CZ-CH-ROY-LEGAL-REVIEW\","
+        }
+      ]
+    },
+    {
+      "path": "tests/test_source_remediation_batches.py",
+      "matched_patterns": [
+        "austria",
+        "switzerland"
+      ],
+      "matching_lines": [
+        {
+          "line": 51,
+          "text": "def test_austria_and_switzerland_are_priority_one():"
+        }
+      ]
+    },
+    {
+      "path": "tests/test_legal_sources.py",
+      "matched_patterns": [
+        "swiss"
+      ],
+      "matching_lines": [
+        {
+          "line": 32,
+          "text": "def test_swiss_legal_fact_is_review_ready_but_not_verified():"
+        }
+      ]
+    },
+    {
+      "path": "tests/test_austria_extracted_rules.py",
+      "matched_patterns": [
+        "austria",
+        "austrian"
+      ],
+      "matching_lines": [
+        {
+          "line": 6,
+          "text": "    path = Path(\"data/extracted/austria.json\")"
+        },
+        {
+          "line": 10,
+          "text": "def test_austrian_dividend_rules():"
+        },
+        {
+          "line": 22,
+          "text": "def test_austrian_interest_rule():"
+        },
+        {
+          "line": 29,
+          "text": "def test_austrian_royalty_categories():"
+        }
+      ]
+    },
+    {
+      "path": "tests/test_generate_all_cases.py",
+      "matched_patterns": [
+        "švýcar"
+      ],
+      "matching_lines": [
+        {
+          "line": 27,
+          "text": "                ('Švýcarsko', 3, 'treaty'),"
+        },
+        {
+          "line": 28,
+          "text": "                ('Švýcarsko', 4, 'protocol');"
+        },
+        {
+          "line": 37,
+          "text": "    assert load_partners(db_path) == [\"Německo\", \"Švýcarsko\"]"
+        },
+        {
+          "line": 55,
+          "text": "        \"Švýcarsko\","
+        }
+      ]
+    },
+    {
+      "path": "tests/test_document_identity.py",
+      "matched_patterns": [
+        "rakous"
+      ],
+      "matching_lines": [
+        {
+          "line": 95,
+          "text": "    result = validate_treaty_identity(expected_country=\"Rakousko\", text=\"\")"
+        }
+      ]
+    },
+    {
+      "path": "tests/test_domestic_eu_consolidation.py",
+      "matched_patterns": [
+        "rakous"
+      ],
+      "matching_lines": [
+        {
+          "line": 129,
+          "text": "    for filename in (\"rakousko.json\", \"svycarsko.json\"):"
+        }
+      ]
+    },
+    {
+      "path": "tests/test_dividend_extractor.py",
+      "matched_patterns": [
+        "austria",
+        "austrian"
+      ],
+      "matching_lines": [
+        {
+          "line": 145,
+          "text": "def test_austrian_exemption_without_explicit_zero_percentage():"
+        }
+      ]
+    },
+    {
+      "path": "tests/test_app.py",
+      "matched_patterns": [
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 56,
+          "text": "    assert result[\"candidate_rule_id\"] == \"CZ-CH-ROY-PROTOCOL-5\""
+        }
+      ]
+    },
+    {
+      "path": "tests/test_rule_extractor.py",
+      "matched_patterns": [
+        "austria",
+        "rakous"
+      ],
+      "matching_lines": [
+        {
+          "line": 6,
+          "text": "def test_extract_austria_dividend_rules():"
+        },
+        {
+          "line": 7,
+          "text": "    data = json.load(open(\"data/parsed/rakousko.json\", encoding=\"utf-8\"))"
+        }
+      ]
+    },
+    {
+      "path": "tests/test_country_legal_rules.py",
+      "matched_patterns": [
+        "austria",
+        "switzerland",
+        "rakous"
+      ],
+      "matching_lines": [
+        {
+          "line": 7,
+          "text": "    recipient = {\"rakousko\": \"AT\", \"svycarsko\": \"CH\"}[country]"
+        },
+        {
+          "line": 20,
+          "text": "def test_austria_interest_candidate_is_not_final_before_approval():"
+        },
+        {
+          "line": 22,
+          "text": "        \"rakousko\","
+        },
+        {
+          "line": 40,
+          "text": "def test_austria_royalty_candidates_are_not_final_before_approval():"
+        },
+        {
+          "line": 51,
+          "text": "        \"rakousko\","
+        },
+        {
+          "line": 56,
+          "text": "        \"rakousko\","
+        },
+        {
+          "line": 69,
+          "text": "def test_switzerland_interest_candidate_is_not_final_before_approval():"
+        },
+        {
+          "line": 89,
+          "text": "def test_switzerland_legal_fact_cannot_be_supplied_as_transaction_fact():"
+        },
+        {
+          "line": 113,
+          "text": "def test_switzerland_royalty_missing_protocol_fact_requires_review():"
+        }
+      ]
+    },
+    {
+      "path": "tests/test_extract_income_articles.py",
+      "matched_patterns": [
+        "austria"
+      ],
+      "matching_lines": [
+        {
+          "line": 5,
+          "text": "def test_austria_contains_income_articles():"
+        },
+        {
+          "line": 6,
+          "text": "    path = Path(\"data/extracted/austria.json\")"
+        }
+      ]
+    },
+    {
+      "path": "tests/test_switzerland_dividends_integration.py",
+      "matched_patterns": [
+        "switzerland"
+      ],
+      "matching_lines": [
+        {
+          "line": 13,
+          "text": "def test_switzerland_dividends_integration(seeded_treaty_db):"
+        },
+        {
+          "line": 17,
+          "text": "    assert article is not None, \"Expected the Switzerland dividend article to be present in the database\""
+        }
+      ]
+    },
+    {
+      "path": "tests/test_layered_decision.py",
+      "matched_patterns": [
+        "rakous"
+      ],
+      "matching_lines": [
+        {
+          "line": 30,
+          "text": "        (\"rakousko\", \"AT\", date(2020, 12, 31), date(2021, 1, 1)),"
+        },
+        {
+          "line": 65,
+          "text": "    rules = load_legal_rules(\"data/legal_rules/rakousko.json\")"
+        }
+      ]
+    },
+    {
+      "path": "tests/test_publication_selection.py",
+      "matched_patterns": [
+        "rakous"
+      ],
+      "matching_lines": [
+        {
+          "line": 40,
+          "text": "        expected_country=\"Rakousko\","
+        }
+      ]
+    },
+    {
+      "path": "tests/test_db_models.py",
+      "matched_patterns": [
+        "switzerland",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 38,
+          "text": "            name_en=\"Switzerland\","
+        },
+        {
+          "line": 57,
+          "text": "            source_file=\"cz-ch-dtt.pdf\","
+        },
+        {
+          "line": 98,
+          "text": "        assert stored_version.source_file == \"cz-ch-dtt.pdf\""
+        }
+      ]
+    },
+    {
+      "path": "tests/test_canonical_decision.py",
+      "matched_patterns": [
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 39,
+          "text": "    assert result.candidate_rule_id == \"CZ-CH-ROY-PROTOCOL-5\""
+        }
+      ]
+    },
+    {
+      "path": "tests/test_source_exception_resolutions.py",
+      "matched_patterns": [
+        "cz-at",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 76,
+          "text": "            (\"CZ-AT-\", \"CZ-CH-\")"
+        }
+      ]
+    },
+    {
+      "path": "tests/test_parse_treaty_identity_gate.py",
+      "matched_patterns": [
+        "austria",
+        "rakous"
+      ],
+      "matching_lines": [
+        {
+          "line": 55,
+          "text": "        lambda path: ExtractionResult(_pages(\"Rakouskou republikou\"), \"test\", 100),"
+        },
+        {
+          "line": 59,
+          "text": "        \"austria.pdf\","
+        },
+        {
+          "line": 60,
+          "text": "        country=\"Rakousko\","
+        },
+        {
+          "line": 66,
+          "text": "    assert parsed.identity_validation[\"expected_country\"] == \"Rakousko\""
+        },
+        {
+          "line": 71,
+          "text": "    output = tmp_path / \"nested\" / \"austria.json\""
+        }
+      ]
+    },
+    {
+      "path": "taxtreat/services/importer.py",
+      "matched_patterns": [
+        "switzerland"
+      ],
+      "matching_lines": [
+        {
+          "line": 21,
+          "text": "        (\"CH\", \"Switzerland\"),"
+        }
+      ]
+    },
+    {
+      "path": "taxtreat/tools/build_global_blocker_classification.py",
+      "matched_patterns": [
+        "cz-at",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 339,
+          "text": "                \"CZ-AT-DIV\","
+        },
+        {
+          "line": 340,
+          "text": "                \"CZ-AT-INT\","
+        },
+        {
+          "line": 341,
+          "text": "                \"CZ-AT-ROY\","
+        },
+        {
+          "line": 342,
+          "text": "                \"CZ-CH-DIV\","
+        },
+        {
+          "line": 343,
+          "text": "                \"CZ-CH-INT\","
+        },
+        {
+          "line": 344,
+          "text": "                \"CZ-CH-ROY\","
+        }
+      ]
+    },
+    {
+      "path": "taxtreat/parser/normalize.py",
+      "matched_patterns": [
+        "švýcar"
+      ],
+      "matching_lines": [
+        {
+          "line": 13,
+          "text": "    \"SÏvyÂcars\": \"Švýcars\","
+        }
+      ]
+    },
+    {
+      "path": "knowledge_base/countries/CZ/AT-dividends.yaml",
+      "matched_patterns": [
+        "cz-at"
+      ],
+      "matching_lines": [
+        {
+          "line": 1,
+          "text": "id: CZ-AT-DIV"
+        }
+      ]
+    },
+    {
+      "path": "knowledge_base/countries/CZ/CH-dividends.yaml",
+      "matched_patterns": [
+        "switzerland",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 1,
+          "text": "id: CZ-CH-DIV"
+        },
+        {
+          "line": 36,
+          "text": "- title: Czech-Switzerland DTT"
+        }
+      ]
+    },
+    {
+      "path": "knowledge_base/countries/CZ/CH-interest.yaml",
+      "matched_patterns": [
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 1,
+          "text": "id: CZ-CH-INT"
+        }
+      ]
+    },
+    {
+      "path": "knowledge_base/countries/CZ/CH-royalties.yaml",
+      "matched_patterns": [
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 1,
+          "text": "id: CZ-CH-ROY"
+        }
+      ]
+    },
+    {
+      "path": "knowledge_base/countries/CZ/AT-royalties.yaml",
+      "matched_patterns": [
+        "cz-at"
+      ],
+      "matching_lines": [
+        {
+          "line": 1,
+          "text": "id: CZ-AT-ROY"
+        }
+      ]
+    },
+    {
+      "path": "knowledge_base/countries/CZ/AT-interest.yaml",
+      "matched_patterns": [
+        "cz-at"
+      ],
+      "matching_lines": [
+        {
+          "line": 1,
+          "text": "id: CZ-AT-INT"
+        }
+      ]
+    },
+    {
+      "path": "reference_cases/dividends/cz_ch_dividend_001.yaml",
+      "matched_patterns": [
+        "switzerland",
+        "swiss",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 1,
+          "text": "id: CZ-CH-DIV-001"
+        },
+        {
+          "line": 3,
+          "text": "description: Czech company pays dividends to Swiss parent."
+        },
+        {
+          "line": 38,
+          "text": "  - Czech-Switzerland DTT"
+        }
+      ]
+    },
+    {
+      "path": "data/manifests/source_manifest.json",
+      "matched_patterns": [
+        "rakous",
+        "švýcar"
+      ],
+      "matching_lines": [
+        {
+          "line": 1771,
+          "text": "      \"country\": \"Rakousko\","
+        },
+        {
+          "line": 1787,
+          "text": "      \"parsed_path\": \"data/parsed/rakousko.json\","
+        },
+        {
+          "line": 2163,
+          "text": "      \"country\": \"Švýcarsko\","
+        }
+      ]
+    },
+    {
+      "path": "data/processed/document_manifest.json",
+      "matched_patterns": [
+        "rakous",
+        "švýcar"
+      ],
+      "matching_lines": [
+        {
+          "line": 4117,
+          "text": "    \"country_cs\": \"Rakousko\","
+        },
+        {
+          "line": 4132,
+          "text": "    \"country_cs\": \"Rakousko\","
+        },
+        {
+          "line": 4147,
+          "text": "    \"country_cs\": \"Rakousko\","
+        },
+        {
+          "line": 4162,
+          "text": "    \"country_cs\": \"Rakousko\","
+        },
+        {
+          "line": 4177,
+          "text": "    \"country_cs\": \"Rakousko\","
+        },
+        {
+          "line": 4192,
+          "text": "    \"country_cs\": \"Rakousko\","
+        },
+        {
+          "line": 4207,
+          "text": "    \"country_cs\": \"Rakousko\","
+        },
+        {
+          "line": 5122,
+          "text": "    \"country_cs\": \"Švýcarsko\","
+        },
+        {
+          "line": 5137,
+          "text": "    \"country_cs\": \"Švýcarsko\","
+        },
+        {
+          "line": 5152,
+          "text": "    \"country_cs\": \"Švýcarsko\","
+        },
+        {
+          "line": 5167,
+          "text": "    \"country_cs\": \"Švýcarsko\","
+        },
+        {
+          "line": 5182,
+          "text": "    \"country_cs\": \"Švýcarsko\","
+        },
+        {
+          "line": 5197,
+          "text": "    \"country_cs\": \"Švýcarsko\","
+        },
+        {
+          "line": 5212,
+          "text": "    \"country_cs\": \"Švýcarsko\","
+        }
+      ]
+    },
+    {
+      "path": "data/audits/zpl_base_article_comparison_v2.json",
+      "matched_patterns": [
+        "rakous",
+        "švýcar"
+      ],
+      "matching_lines": [
+        {
+          "line": 2417,
+          "text": "    \"slug\": \"rakousko\","
+        },
+        {
+          "line": 2418,
+          "text": "    \"country\": \"Rakousko\","
+        },
+        {
+          "line": 2962,
+          "text": "    \"country\": \"Švýcarsko\","
+        }
+      ]
+    },
+    {
+      "path": "data/parsed/svycarsko.json",
+      "matched_patterns": [
+        "švýcar"
+      ],
+      "matching_lines": [
+        {
+          "line": 2,
+          "text": "  \"country\": \"Švýcarsko\","
+        },
+        {
+          "line": 7,
+          "text": "    \"expected_country\": \"Švýcarsko\","
+        },
+        {
+          "line": 138,
+          "text": "      \"text\": \"1. Tato smlouva se uplatn uje na dane z prõjmu\\na z majetku, ukládané jménem kazdého ze smluvnõch\\nstátu nebo jeho nizsõch správnõch útvaru nebo mõstnõch\\núradu , at' je zpu sob vybõránõ jakýkoliv.\\n2. Za dane z prõjmu a z majetku se povazujõ vsech-\\nny dane vybõrané z celkového prõjmu, z veskerého\\nmajetku nebo z cástõ prõjmu nebo majetku, vcetne\\ndanõ ze zisku ze zcizenõ movitého nebo nemovitého\\nmajetku, danõ z celkového objemu mezd ci platu vy-\\nplácených podniky a rovnez danõ z prõru stku majetku.\\n3. Soucasné dane, na které se Smlouva vztahuje,\\njsou zejména:\\na) v České republice:\\n(i) dan z prõjmu fyzických osob;\\n(ii) dan z prõjmu právnických osob;\\n(iii) dan z nemovitostõ;\\n(dále nazývané 1ceská dan a);\\nb) ve Švýcarsku:\\nspolkové, kantonálnõ a obecnõ dane\\n(i) z prõjmu (celkového prõjmu, prõjmu z výdelku,\\nprõjmu z kapitálu, pru myslových a obchod-\\nnõch zisku , kapitálových zisku a ostatnõch\\ncástõ prõjmu);\\n(ii) z majetku (celkového majetku, movitého\\na nemo"
+        },
+        {
+          "line": 142,
+          "text": "        \"3. Soucasné dane, na které se Smlouva vztahuje,\\njsou zejména:\\na) v České republice:\\n(i) dan z prõjmu fyzických osob;\\n(ii) dan z prõjmu právnických osob;\\n(iii) dan z nemovitostõ;\\n(dále nazývané 1ceská dan a);\\nb) ve Švýcarsku:\\nspolkové, kantonálnõ a obecnõ dane\\n(i) z prõjmu (celkového prõjmu, prõjmu z výdelku,\\nprõjmu z kapitálu, pru myslových a obchod-\\nnõch zisku , kapitálových zisku a ostatnõch\\ncástõ prõjmu);\\n(ii) z majetku (celkového majetku, movitého\\na nemovitého majetku, obchodnõch aktiv, vy-\\nplaceného majetku a rezerv a ostatnõch cástõ\\nmajetku);\\n(dále nazývané 1svýcarská dan a).\","
+        },
+        {
+          "line": 150,
+          "text": "      \"text\": \"1. Pro úcely této smlouvy, pokud souvislost ne-\\nvyzaduje odlisný výklad:\\na) výrazy 1jeden smluvnõ státa a 1druhý smluvnõ\\nstáta oznacujõ podle souvislosti Č eskou repu-\\nbliku nebo Švýcarsko;\\nb) výraz 1osobaa zahrnuje fyzickou osobu, spolec-\\nnost a vsechna jiná sdruzenõ osob;\\nc) výraz 1spolecnosta oznacuje jakoukoliv právnic-\\nkou osobu nebo nositele práv, povazovaného pro\\núcely zdanenõ za právnickou osobu;\\nd) výrazy 1podnik jednoho smluvnõho státua\\na 1podnik druhého smluvnõho státua oznacujõ\\npodnik provozovaný rezidentem jednoho smluv-\\nnõho státu a podnik provozovaný rezidentem dru-\\nhého smluvnõho státu;\\ne) výraz 1státnõ prõslusnõka oznacuje:\\n(i) kazdou fyzickou osobu, která má státnõ ob-\\ncanstvõ nekterého smluvnõho státu;\\n(ii) kazdou právnickou osobu, osobnõ spolecnost\\na sdruzenõ zrõzené podle práva platného\\nv nekterém smluvnõm státe;\\nf) výraz 1mezinárodnõ dopravaa oznacuje jakouko-\\nliv dopravu lodõ, clunem nebo letadlem, která je\\nprovozována podnik"
+        },
+        {
+          "line": 152,
+          "text": "        \"1. Pro úcely této smlouvy, pokud souvislost ne-\\nvyzaduje odlisný výklad:\\na) výrazy 1jeden smluvnõ státa a 1druhý smluvnõ\\nstáta oznacujõ podle souvislosti Č eskou repu-\\nbliku nebo Švýcarsko;\\nb) výraz 1osobaa zahrnuje fyzickou osobu, spolec-\\nnost a vsechna jiná sdruzenõ osob;\\nc) výraz 1spolecnosta oznacuje jakoukoliv právnic-\\nkou osobu nebo nositele práv, povazovaného pro\\núcely zdanenõ za právnickou osobu;\\nd) výrazy 1podnik jednoho smluvnõho státua\\na 1podnik druhého smluvnõho státua oznacujõ\\npodnik provozovaný rezidentem jednoho smluv-\\nnõho státu a podnik provozovaný rezidentem dru-\\nhého smluvnõho státu;\\ne) výraz 1státnõ prõslusnõka oznacuje:\\n(i) kazdou fyzickou osobu, která má státnõ ob-\\ncanstvõ nekterého smluvnõho státu;\\n(ii) kazdou právnickou osobu, osobnõ spolecnost\\na sdruzenõ zrõzené podle práva platného\\nv nekterém smluvnõm státe;\\nf) výraz 1mezinárodnõ dopravaa oznacuje jakouko-\\nliv dopravu lodõ, clunem nebo letadlem, která je\\nprovozována podnikem, je"
+        },
+        {
+          "line": 359,
+          "text": "      \"text\": \"1. V prõpade České republiky bude dvojõmu zda-\\nnenõ zamezeno následovne:\\nČeská republika mu ze pri ukládánõ danõ svým\\nrezidentu m zahrnout do dan ového základu, ze kte-\\nrého jsou tyto dane ukládány, cásti prõjmu nebo ma-\\njetku, které v souladu s ustanovenõmi této smlouvy\\nmohou být zdaneny také ve Švýcarsku, avsak povolõ\\nsnõzit cástku dane vypoctené z tohoto základu o cástku\\nrovnajõcõ se dani zaplacené ve Švýcarsku. Č ástka, o kte-\\nrou se dan snõzõ, vsak nepresáhne tu cást ceské dane\\nvypoctené pred jejõm snõzenõm, která pomerne pripadá\\nna prõjmy nebo majetek, které mohou být v souladu\\ns ustanovenõmi této smlouvy zdaneny ve Švýcarsku.\\nJestlize jsou v souladu s jakýmkoliv ustanovenõm\\ntéto smlouvy prõjmy, které pobõrá, nebo majetek, který\\nvlastnõ rezident České republiky, vyjmuty ze zdanenõ,\\nmu ze Česká republika pri výpoctu cástky dane z ostat-\\nnõch prõjmu nebo z majetku takového rezidenta zo-\\nhlednit vyn até prõjmy nebo majetek.\\n2. V prõpade Švýcarska bu"
+        },
+        {
+          "line": 361,
+          "text": "        \"1. V prõpade České republiky bude dvojõmu zda-\\nnenõ zamezeno následovne:\\nČeská republika mu ze pri ukládánõ danõ svým\\nrezidentu m zahrnout do dan ového základu, ze kte-\\nrého jsou tyto dane ukládány, cásti prõjmu nebo ma-\\njetku, které v souladu s ustanovenõmi této smlouvy\\nmohou být zdaneny také ve Švýcarsku, avsak povolõ\\nsnõzit cástku dane vypoctené z tohoto základu o cástku\\nrovnajõcõ se dani zaplacené ve Švýcarsku. Č ástka, o kte-\\nrou se dan snõzõ, vsak nepresáhne tu cást ceské dane\\nvypoctené pred jejõm snõzenõm, která pomerne pripadá\\nna prõjmy nebo majetek, které mohou být v souladu\\ns ustanovenõmi této smlouvy zdaneny ve Švýcarsku.\\nJestlize jsou v souladu s jakýmkoliv ustanovenõm\\ntéto smlouvy prõjmy, které pobõrá, nebo majetek, který\\nvlastnõ rezident České republiky, vyjmuty ze zdanenõ,\\nmu ze Česká republika pri výpoctu cástky dane z ostat-\\nnõch prõjmu nebo z majetku takového rezidenta zo-\\nhlednit vyn até prõjmy nebo majetek.\","
+        },
+        {
+          "line": 362,
+          "text": "        \"2. V prõpade Švýcarska bude dvojõmu zdanenõ\\nzamezeno následovne:\\na) Jestlize rezident Švýcarska pobõrá prõjmy nebo\\nvlastnõ majetek, který v souladu s ustanovenõmi\\ntéto smlouvy mu ze být zdanen v České repu-\\nblice, Švýcarsko vyjme s výhradou ustanovenõ\\npõsmene b) takové prõjmy nebo majetek ze zda-\\nnenõ, mu ze vsak pri výpoctu cástky dane z ostat-\\nnõch prõjmu nebo z majetku takového rezidenta\\npouzõt sazbu dane, která by byla pouzita, kdyby\\nvyjmuté prõjmy nebo majetek nebyly takto vy-\\njmuty. Avsak za predpokladu, ze se vynetõ pouzi-\\nje na penze, které jsou uvedeny v clánku 19, pouze\\npokud je zdanenõ techto penzõ Č eskou republikou\\nprokázáno.\\nb) Jestlize rezident Švýcarska pobõrá dividendy nebo\\nlicencnõ poplatky, které v souladu s ustanovenõmi\\nclánku 10 nebo 12 mohou být zdaneny v České\\nrepublice, povolõ Švýcarsko na základe zádosti\\núlevu tomuto rezidentu. U leva mu ze sestávat z:\\n(i) odpoctu z dane z prõjmu tohoto rezidenta\\nv cástce rovnajõcõ se dani ukládané"
+        },
+        {
+          "line": 410,
+          "text": "      \"text\": \"1. Tato smlouva podléhá ratifikaci a ratifikacnõ\\nlistiny budou vymeneny v Bernu co nejdrõve.\\n2. Smlouva vstoupõ v platnost výmenou ratifikac-\\nnõch listin a jejõ ustanovenõ budou provádena,\\na) pokud jde o dane vybõrané srázkou u zdroje, na\\ncástky vyplácené nebo pripisované k prvnõmu dni\\nnebo pozdeji druhého mesõce následujõcõho po\\ndni, v nemz Smlouva vstoupõ v platnost;\\nb) pokud jde o ostatnõ dane, pro dan ová obdobõ po-\\ncõnajõcõ prvnõm dnem nebo po prvnõm dni ledna\\nroku, v nemz Smlouva vstoupõ v platnost.\\n3. Ustanovenõ diplomatických nót vymenených\\n26. dubna 1960 mezi Č eskoslovenskem a Švýcarskou\\nkonfederacõ o zamezenõ dvojõho zdanenõ podniku pro-\\nvozujõcõch leteckou dopravu se ve vztahu mezi Č eskou\\nrepublikou a Švýcarskem prestanou uplatn ovat ode\\ndne, kterým se zacnou uplatn ovat ustanovenõ této\\nsmlouvy.\","
+        },
+        {
+          "line": 415,
+          "text": "        \"26. dubna 1960 mezi Č eskoslovenskem a Švýcarskou\\nkonfederacõ o zamezenõ dvojõho zdanenõ podniku pro-\\nvozujõcõch leteckou dopravu se ve vztahu mezi Č eskou\\nrepublikou a Švýcarskem prestanou uplatn ovat ode\\ndne, kterým se zacnou uplatn ovat ustanovenõ této\\nsmlouvy.\""
+        },
+        {
+          "line": 421,
+          "text": "      \"text\": \"Tato smlouva zu stane v platnosti, dokud nebude\\nvypovezena nekterým smluvnõm státem. Kazdý\\nsmluvnõ stát mu ze Smlouvu põsemne vypovedet diplo-\\nmatickou cestou nejméne sest mesõcu pred koncem\\nkazdého kalendárnõho roku. V takovém prõpade se\\nSmlouva prestane uplatn ovat:\\na) pokud jde o dane vybõrané srázkou u zdroje, na\\ncástky vyplácené nebo pripisované k 1. lednu nebo\\npozdeji v kalendárnõm roce následujõcõm po roce,\\nv nemz byla dána výpoved';\\nb) pokud jde o ostatnõ dane, pro dan ová obdobõ po-\\ncõnajõcõ 1. ledna nebo pozdeji v kalendárnõm roce\\nnásledujõcõm po roce, v nemz byla dána výpoved'.\\nNa du kaz toho podepsanõ, k tomu rádne zmoc-\\nneni, podepsali tuto smlouvu.\\nDáno v Praze ve dvojõm vyhotovenõ dne 4. pro-\\nsince 1995 v ceském, nemeckém a anglickém jazyce,\\npricemz vsechny texty jsou autentické. V prõpade ja-\\nkýchkoliv rozdõlnostõ výkladu mezi ceským a nemec-\\nkým textem bude rozhodujõcõ anglický text.\\nZa vládu České republiky: Za Švýcarskou spolkovou r"
+        },
+        {
+          "line": 423,
+          "text": "        \"Tato smlouva zu stane v platnosti, dokud nebude\\nvypovezena nekterým smluvnõm státem. Kazdý\\nsmluvnõ stát mu ze Smlouvu põsemne vypovedet diplo-\\nmatickou cestou nejméne sest mesõcu pred koncem\\nkazdého kalendárnõho roku. V takovém prõpade se\\nSmlouva prestane uplatn ovat:\\na) pokud jde o dane vybõrané srázkou u zdroje, na\\ncástky vyplácené nebo pripisované k 1. lednu nebo\\npozdeji v kalendárnõm roce následujõcõm po roce,\\nv nemz byla dána výpoved';\\nb) pokud jde o ostatnõ dane, pro dan ová obdobõ po-\\ncõnajõcõ 1. ledna nebo pozdeji v kalendárnõm roce\\nnásledujõcõm po roce, v nemz byla dána výpoved'.\\nNa du kaz toho podepsanõ, k tomu rádne zmoc-\\nneni, podepsali tuto smlouvu.\\nDáno v Praze ve dvojõm vyhotovenõ dne 4. pro-\\nsince 1995 v ceském, nemeckém a anglickém jazyce,\\npricemz vsechny texty jsou autentické. V prõpade ja-\\nkýchkoliv rozdõlnostõ výkladu mezi ceským a nemec-\\nkým textem bude rozhodujõcõ anglický text.\\nZa vládu České republiky: Za Švýcarskou spolkovou radu:\\n"
+        },
+        {
+          "line": 425,
+          "text": "        \"2. K clánku 12\\nPokud jde o odstavec 2, rozumõ se, ze pokud\\nŠvýcarsko nevybõrá podle svých vnitrostátnõch práv-\\nnõch predpisu dan u zdroje z licencnõch poplatku vy-\\nplácených nerezidentu m, ustanovenõ odstavce 2 se ne-\\npouzijõ a dan stanovená ve smluvnõm státe, ve kterém\\nmajõ licencnõ poplatky zdroj, nepresáhne 5 procent\\nhrubé cástky licencnõch poplatku .\\nDáno v Praze ve dvojõm vyhotovenõ dne 4. pro-\\nsince 1995 v ceském, nemeckém a anglickém jazyce,\\npricemz vsechny texty jsou autentické. V prõpade ja-\\nkýchkoliv rozdõlnostõ výkladu mezi nemeckým a ces-\\nkým textem bude rozhodujõcõ anglický text.\\nZa vládu České republiky: Za Švýcarskou spolkovou radu:\\nIng. Ivan Kocárnõk CSc. v. r. Sylvia Pauli v. r.\\nmõstopredseda vlády velvyslankyne\\na ministr financõ\\nO PAT Ř E N I U S T Ř E D N I C H O R G A N U\\nMinisterstvo financõ\\nvydalo podle § 4 odst. 2 zákona c. 563/1991 Sb., o úcetnictvõ, opatrenõ c. j. 282/66185/1996, kterým se\\nstanovõ usporádánõ a obsahové vymezenõ polo"
+        }
+      ]
+    },
+    {
+      "path": "data/parsed/rakousko.json",
+      "matched_patterns": [
+        "rakous"
+      ],
+      "matching_lines": [
+        {
+          "line": 2,
+          "text": "  \"country\": \"Rakousko\","
+        },
+        {
+          "line": 7,
+          "text": "    \"expected_country\": \"Rakousko\","
+        },
+        {
+          "line": 10,
+          "text": "    \"matched_alias\": \"rakousko\","
+        },
+        {
+          "line": 131,
+          "text": "      \"text\": \"1. Tato smlouva se vztahuje na dane z prõjmu a z majetku ukládané jménem kazdého ze smluvnõch státu\\nnebo jeho nizsõch správnõch útvaru nebo mõstnõch úradu, at' je zpusob vybõránõ jakýkoli.\\n2. Za dane z prõjmu a z majetku se povazujõ vsechny dane vybõrané z celkového prõjmu, z celkového\\nmajetku nebo z cástõ prõjmu nebo majetku, vcetne danõ ze zisku ze zcizenõ movitého nebo nemovitého majetku,\\ndanõ z celkového objemu mezd ci platu vyplácených podniky a rovnez danõ z prõrustku majetku.\\n3. Soucasné dane, na které se Smlouva vztahuje, jsou zejména:\\na) v Rakousku:\\n(i) dan z prõjmu;\\n(ii) dan spolecnostõ;\\n(iii) pozemková dan;\\n(iv) dan zemedelských a lesnických podniku;\\n(v) dan z hodnoty nevyuzitých pozemku;\\n(dále nazývané 1rakouská dana);\\nb) v České republice:\\n(i) dan z prõjmu fyzických osob;\\n(ii) dan z prõjmu právnických osob;\\n(iii) dan z nemovitostõ;\\n(dále nazývané 1ceská dana).\\n4. Smlouva se bude rovnez vztahovat na jakékoliv dane stejného nebo v zásade podo"
+        },
+        {
+          "line": 135,
+          "text": "        \"3. Soucasné dane, na které se Smlouva vztahuje, jsou zejména:\\na) v Rakousku:\\n(i) dan z prõjmu;\\n(ii) dan spolecnostõ;\\n(iii) pozemková dan;\\n(iv) dan zemedelských a lesnických podniku;\\n(v) dan z hodnoty nevyuzitých pozemku;\\n(dále nazývané 1rakouská dana);\\nb) v České republice:\\n(i) dan z prõjmu fyzických osob;\\n(ii) dan z prõjmu právnických osob;\\n(iii) dan z nemovitostõ;\\n(dále nazývané 1ceská dana).\","
+        },
+        {
+          "line": 142,
+          "text": "      \"text\": \"1. Pro úcely této smlouvy, pokud souvislost nevyzaduje odlisný výklad:\\na) výraz 1Česká republikaa oznacuje územõ České republiky, na kterém jsou, podle ceských právnõch predpisu\\na v souladu s mezinárodnõm právem, vykonávána svrchovaná práva České republiky;\\nb) výraz 1Rakouskoa oznacuje Rakouskou republiku;\\nc) výrazy 1jeden smluvnõ státa a 1druhý smluvnõ státa oznacujõ, podle souvislosti, Českou republiku nebo\\nRakouskou republiku;\\nd) výraz 1osobaa zahrnuje fyzickou osobu, spolecnost a vsechna jiná sdruzenõ osob;\\ne) výraz 1spolecnosta oznacuje jakoukoliv právnickou osobu nebo jakéhokoliv nositele práv povazovaného\\npro úcely zdanenõ za právnickou osobu;\\nf) výraz 1podnika se vztahuje k vykonávánõ jakékoliv cinnosti;\\ng) výrazy 1podnik jednoho smluvnõho státua a 1podnik druhého smluvnõho státua oznacujõ, podle souvislosti,\\npodnik provozovaný rezidentem jednoho smluvnõho státu a podnik provozovaný rezidentem druhého\\nsmluvnõho státu;\\nh) výraz 1mezinárodnõ dopravaa o"
+        },
+        {
+          "line": 144,
+          "text": "        \"1. Pro úcely této smlouvy, pokud souvislost nevyzaduje odlisný výklad:\\na) výraz 1Česká republikaa oznacuje územõ České republiky, na kterém jsou, podle ceských právnõch predpisu\\na v souladu s mezinárodnõm právem, vykonávána svrchovaná práva České republiky;\\nb) výraz 1Rakouskoa oznacuje Rakouskou republiku;\\nc) výrazy 1jeden smluvnõ státa a 1druhý smluvnõ státa oznacujõ, podle souvislosti, Českou republiku nebo\\nRakouskou republiku;\\nd) výraz 1osobaa zahrnuje fyzickou osobu, spolecnost a vsechna jiná sdruzenõ osob;\\ne) výraz 1spolecnosta oznacuje jakoukoliv právnickou osobu nebo jakéhokoliv nositele práv povazovaného\\npro úcely zdanenõ za právnickou osobu;\\nf) výraz 1podnika se vztahuje k vykonávánõ jakékoliv cinnosti;\\ng) výrazy 1podnik jednoho smluvnõho státua a 1podnik druhého smluvnõho státua oznacujõ, podle souvislosti,\\npodnik provozovaný rezidentem jednoho smluvnõho státu a podnik provozovaný rezidentem druhého\\nsmluvnõho státu;\\nh) výraz 1mezinárodnõ dopravaa oznacuj"
+        },
+        {
+          "line": 349,
+          "text": "      \"text\": \"1. V prõpade rezidenta Rakouska bude dvojõ zdanenõ vylouceno následovne:\\na) Jestlize rezident Rakouska pobõrá prõjem nebo vlastnõ majetek, který muze být v souladu s ustanovenõmi této\\nsmlouvy zdanen v České republice, Rakousko osvobodõ, s výhradou ustanovenõ põsmene b) a odstavce 3,\\ntakový prõjem nebo majetek od zdanenõ.\\nb) Jestlize rezident Rakouska pobõrá cásti prõjmu, které mohou být v souladu s ustanovenõmi clánku 10 a 12\\nzdaneny v České republice, Rakousko povolõ snõzit dan z prõjmu tohoto rezidenta o cástku rovnajõcõ se dani\\nzaplacené v České republice. Částka, o kterou se dan snõzõ, vsak nepresáhne tu cást dane vypoctené pred\\njejõm snõzenõm, která pomerne pripadá na takové cásti prõjmu pobõrané z České republiky.\\nc) Ustanovenõ põsmene a) se nepouzijõ na prõjem pobõraný nebo majetek vlastnený rezidentem Rakouska,\\njestlize Česká republika provádõ ustanovenõ této smlouvy tak, ze osvobozuje takový prõjem nebo majetek\\nod zdanenõ nebo ve vztahu k takovému prõj"
+        },
+        {
+          "line": 351,
+          "text": "        \"1. V prõpade rezidenta Rakouska bude dvojõ zdanenõ vylouceno následovne:\\na) Jestlize rezident Rakouska pobõrá prõjem nebo vlastnõ majetek, který muze být v souladu s ustanovenõmi této\\nsmlouvy zdanen v České republice, Rakousko osvobodõ, s výhradou ustanovenõ põsmene b) a odstavce 3,\\ntakový prõjem nebo majetek od zdanenõ.\\nb) Jestlize rezident Rakouska pobõrá cásti prõjmu, které mohou být v souladu s ustanovenõmi clánku 10 a 12\\nzdaneny v České republice, Rakousko povolõ snõzit dan z prõjmu tohoto rezidenta o cástku rovnajõcõ se dani\\nzaplacené v České republice. Částka, o kterou se dan snõzõ, vsak nepresáhne tu cást dane vypoctené pred\\njejõm snõzenõm, která pomerne pripadá na takové cásti prõjmu pobõrané z České republiky.\\nc) Ustanovenõ põsmene a) se nepouzijõ na prõjem pobõraný nebo majetek vlastnený rezidentem Rakouska,\\njestlize Česká republika provádõ ustanovenõ této smlouvy tak, ze osvobozuje takový prõjem nebo majetek\\nod zdanenõ nebo ve vztahu k takovému prõjmu pro"
+        },
+        {
+          "line": 352,
+          "text": "        \"2. V prõpade rezidenta České republiky bude dvojõ zdanenõ vylouceno následovne:\\nČeská republika muze pri ukládánõ danõ svým rezidentum zahrnout do danového základu, ze kterého se takové\\ndane ukládajõ, cásti prõjmu nebo majetku, které mohou být v souladu s ustanovenõmi této smlouvy rovnez\\nzdaneny v Rakousku, avsak povolõ snõzit cástku dane vypoctenou z takového základu o cástku rovnajõcõ se dani\\nzaplacené v Rakousku. Částka, o kterou se dan snõzõ, vsak nepresáhne tu cást ceské dane vypoctené pred\\njejõm snõzenõm, která pomerne pripadá na prõjem nebo majetek, který muze být v souladu s ustanovenõmi této\\nsmlouvy zdanen v Rakousku.\","
+        },
+        {
+          "line": 401,
+          "text": "      \"text\": \"1. Smluvnõ státy si vzájemne oznámõ diplomatickou cestou splnenõ postupu pozadovaných jejich vnitro-\\nstátnõmi právnõmi predpisy pro vstup této smlouvy v platnost. Tato smlouva vstoupõ v platnost dnem pozdejsõho\\nz techto oznámenõ a jejõ ustanovenõ se budou provádet:\\na) pokud jde o dane vybõrané srázkou u zdroje, na prõjmy vyplácené nebo pripisované k 1. lednu v kalendárnõm\\nroce následujõcõm po roce, v nemz Smlouva vstoupõ v platnost, nebo pozdeji;\\nb) pokud jde o ostatnõ dane z prõjmu a dane z majetku, na prõjmy nebo majetek za kazdý danový rok zacõnajõcõ\\n1. ledna v kalendárnõm roce následujõcõm po roce, v nemz Smlouva vstoupõ v platnost, nebo pozdeji.\\n2. Smlouva mezi Československou socialistickou republikou a Rakouskou republikou o zamezenõ dvojõho\\nzdanenõ v oboru danõ z prõjmu a z majetku, která byla podepsána ve Võdni dne 7. brezna 1978, prestane být\\nv platnosti a prestane se provádet v relaci mezi Českou republikou a Rakouskou republikou dnem, kterým se\\nzacn"
+        },
+        {
+          "line": 405,
+          "text": "        \"2. Smlouva mezi Československou socialistickou republikou a Rakouskou republikou o zamezenõ dvojõho\\nzdanenõ v oboru danõ z prõjmu a z majetku, která byla podepsána ve Võdni dne 7. brezna 1978, prestane být\\nv platnosti a prestane se provádet v relaci mezi Českou republikou a Rakouskou republikou dnem, kterým se\\nzacne provádet tato smlouva.\""
+        },
+        {
+          "line": 411,
+          "text": "      \"text\": \"Tato smlouva zustane v platnosti, dokud nebude vypovezena nekterým smluvnõm státem. Kazdý smluvnõ\\nstát muze diplomatickou cestou, podánõm výpovedi Smlouvu vypovedet nejméne sest mesõcu pred koncem\\nkazdého kalendárnõho roku následujõcõho po obdobõ peti let ode dne vstupu Smlouvy v platnost. V takovém\\nprõpade se Smlouva prestane provádet:\\na) pokud jde o dane vybõrané srázkou u zdroje, na prõjmy vyplácené nebo pripisované k 1. lednu v kalendárnõm\\nroce následujõcõm po roce, v nemz byla dána výpoved', nebo pozdeji;\\nb) pokud jde o ostatnõ dane z prõjmu a dane z majetku, na prõjmy nebo majetek za kazdý danový rok zacõnajõcõ\\n1. ledna v kalendárnõm roce následujõcõm po roce, v nemz byla dána výpoved', nebo pozdeji.\\nNa dukaz toho podepsanõ, k tomu rádne zmocneni, podepsali tuto smlouvu.\\nDáno v Praze dne 8. cervna 2006 ve dvou puvodnõch vyhotovenõch v anglickém jazyce.\\nZa Českou republiku: Za Rakouskou republiku:\\nBohuslav Sobotka v. r. Margot Klestil-LoÈffler v. r.\\nmini"
+        },
+        {
+          "line": 414,
+          "text": "        \"1. ledna v kalendárnõm roce následujõcõm po roce, v nemz byla dána výpoved', nebo pozdeji.\\nNa dukaz toho podepsanõ, k tomu rádne zmocneni, podepsali tuto smlouvu.\\nDáno v Praze dne 8. cervna 2006 ve dvou puvodnõch vyhotovenõch v anglickém jazyce.\\nZa Českou republiku: Za Rakouskou republiku:\\nBohuslav Sobotka v. r. Margot Klestil-LoÈffler v. r.\\nministr financõ mimorádná a zplnomocnená\\nvelvyslankyne\\nP R O T O K OL\\nPři podpisu Smlouvy mezi Českou republikou a Rakouskou republikou o zamezenõ dvojõmu zdanenõ a za-\\nbránenõ danovému úniku v oboru danõ z prõjmu a z majetku se nõze podepsanõ dohodli, ze následujõcõ ustanovenõ\\ntvorõ nedõlnou soucást Smlouvy:\","
+        },
+        {
+          "line": 417,
+          "text": "        \"3. Pokud jde o clánek 22\\nNa základe narõzenõ, které je zalozeno na cásti 48 rakouského spolkového zákona o danovém rõzenõ (Bun-\\ndesabgabenordnung), muze Rakousko v presne stanovených prõpadech uplatnit metodu zápoctu k zamezenõ\\ndvojõmu zdanenõ s prihlédnutõm k zásadám stanoveným v clánku 23 B Vzorové danové smlouvy OECD, jestlize\\nreciprocnõ uplatnenõ metody zápoctu je ve verejném zájmu Rakouska. Je dohodnuto, ze takovýto prechod na\\nmetodu zápoctu se uskutecnõ jen po predcházejõcõ notifikaci prõslusnému úradu České republiky.\\nNa dukaz toho podepsanõ, k tomu rádne zmocneni, podepsali tento protokol.\\nDáno v Praze dne 8. cervna 2006 ve dvou puvodnõch vyhotovenõch v anglickém jazyce.\\nZa Českou republiku: Za Rakouskou republiku:\\nBohuslav Sobotka v. r. Margot Klestil-LoÈffler v. r.\\nministr financõ mimorádná a zplnomocnená\\nvelvyslankyne\\nIS S N 1 8 0 1 -0 3 9 3\\nVydává a tiskne: Tiskárna Ministerstva vnitra, p. o., Bartunkova 4, post. schr. 10, 149 01 Praha 415, telefon: 27"
+        }
+      ]
+    },
+    {
+      "path": "data/registries/legal_evidence_sources.json",
+      "matched_patterns": [
+        "rakous"
+      ],
+      "matching_lines": [
+        {
+          "line": 5451,
+          "text": "        \"data/legal_rules/rakousko.json\","
+        },
+        {
+          "line": 5477,
+          "text": "        \"data/legal_rules/rakousko.json\","
+        },
+        {
+          "line": 5502,
+          "text": "        \"data/legal_rules/rakousko.json\","
+        }
+      ]
+    },
+    {
+      "path": "data/registries/legal_scope.json",
+      "matched_patterns": [
+        "rakous",
+        "švýcar",
+        "cz-at",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 750,
+          "text": "      \"parsed_path\": \"data/parsed/rakousko.json\","
+        },
+        {
+          "line": 758,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 761,
+          "text": "        \"CZ-AT-DIV-DOMESTIC-15\","
+        },
+        {
+          "line": 762,
+          "text": "        \"CZ-AT-DIV-TREATY-STANDARD\","
+        },
+        {
+          "line": 763,
+          "text": "        \"CZ-AT-DIV-TREATY-PARTICIPATION\","
+        },
+        {
+          "line": 764,
+          "text": "        \"CZ-AT-DIV-EU-EXEMPTION\","
+        },
+        {
+          "line": 765,
+          "text": "        \"CZ-AT-DIV-MLI-PPT\""
+        },
+        {
+          "line": 811,
+          "text": "      \"parsed_path\": \"data/parsed/rakousko.json\","
+        },
+        {
+          "line": 819,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 822,
+          "text": "        \"CZ-AT-INT-DOMESTIC-15\","
+        },
+        {
+          "line": 823,
+          "text": "        \"CZ-AT-INT-TREATY\","
+        },
+        {
+          "line": 824,
+          "text": "        \"CZ-AT-INT-EU-EXEMPTION\","
+        },
+        {
+          "line": 825,
+          "text": "        \"CZ-AT-INT-MLI-PPT\""
+        },
+        {
+          "line": 871,
+          "text": "      \"parsed_path\": \"data/parsed/rakousko.json\","
+        },
+        {
+          "line": 879,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 882,
+          "text": "        \"CZ-AT-ROY-DOMESTIC-15\","
+        },
+        {
+          "line": 883,
+          "text": "        \"CZ-AT-ROY-TREATY-INDUSTRIAL\","
+        },
+        {
+          "line": 884,
+          "text": "        \"CZ-AT-ROY-TREATY-COPYRIGHT\","
+        },
+        {
+          "line": 885,
+          "text": "        \"CZ-AT-ROY-EU-EXEMPTION\","
+        },
+        {
+          "line": 886,
+          "text": "        \"CZ-AT-ROY-MLI-PPT\""
+        },
+        {
+          "line": 3108,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        },
+        {
+          "line": 3111,
+          "text": "        \"CZ-CH-DIV-DOMESTIC-15\","
+        },
+        {
+          "line": 3112,
+          "text": "        \"CZ-CH-DIV-TREATY-STANDARD\","
+        },
+        {
+          "line": 3113,
+          "text": "        \"CZ-CH-DIV-TREATY-PARTICIPATION\","
+        },
+        {
+          "line": 3114,
+          "text": "        \"CZ-CH-DIV-TREATY-PENSION\","
+        },
+        {
+          "line": 3115,
+          "text": "        \"CZ-CH-DIV-TREATY-CENTRAL-BANK\","
+        },
+        {
+          "line": 3116,
+          "text": "        \"CZ-CH-DIV-DOMESTIC-EXEMPTION\","
+        },
+        {
+          "line": 3117,
+          "text": "        \"CZ-CH-DIV-MLI-PPT\""
+        },
+        {
+          "line": 3171,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        },
+        {
+          "line": 3174,
+          "text": "        \"CZ-CH-INT-DOMESTIC-15\","
+        },
+        {
+          "line": 3175,
+          "text": "        \"CZ-CH-INT-TREATY\","
+        },
+        {
+          "line": 3176,
+          "text": "        \"CZ-CH-INT-DOMESTIC-EXEMPTION\","
+        },
+        {
+          "line": 3177,
+          "text": "        \"CZ-CH-INT-MLI-PPT\""
+        },
+        {
+          "line": 3232,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        },
+        {
+          "line": 3235,
+          "text": "        \"CZ-CH-ROY-DOMESTIC-15\","
+        },
+        {
+          "line": 3236,
+          "text": "        \"CZ-CH-ROY-TREATY-BASE\","
+        },
+        {
+          "line": 3237,
+          "text": "        \"CZ-CH-ROY-PROTOCOL-5\","
+        },
+        {
+          "line": 3238,
+          "text": "        \"CZ-CH-ROY-DOMESTIC-EXEMPTION\","
+        },
+        {
+          "line": 3239,
+          "text": "        \"CZ-CH-ROY-MLI-PPT\""
+        }
+      ]
+    },
+    {
+      "path": "data/legal_rules/svycarsko.json",
+      "matched_patterns": [
+        "switzerland",
+        "swiss",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 9,
+          "text": "      \"rule_id\": \"CZ-CH-DIV-DOMESTIC-15\","
+        },
+        {
+          "line": 32,
+          "text": "      \"rule_id\": \"CZ-CH-INT-DOMESTIC-15\","
+        },
+        {
+          "line": 55,
+          "text": "      \"rule_id\": \"CZ-CH-ROY-DOMESTIC-15\","
+        },
+        {
+          "line": 78,
+          "text": "      \"rule_id\": \"CZ-CH-DIV-TREATY-STANDARD\","
+        },
+        {
+          "line": 119,
+          "text": "      \"rule_id\": \"CZ-CH-DIV-TREATY-PARTICIPATION\","
+        },
+        {
+          "line": 180,
+          "text": "      \"rule_id\": \"CZ-CH-DIV-TREATY-PENSION\","
+        },
+        {
+          "line": 225,
+          "text": "      \"rule_id\": \"CZ-CH-DIV-TREATY-CENTRAL-BANK\","
+        },
+        {
+          "line": 270,
+          "text": "      \"rule_id\": \"CZ-CH-INT-TREATY\","
+        },
+        {
+          "line": 316,
+          "text": "      \"rule_id\": \"CZ-CH-ROY-TREATY-BASE\","
+        },
+        {
+          "line": 361,
+          "text": "      \"rule_id\": \"CZ-CH-ROY-PROTOCOL-5\","
+        },
+        {
+          "line": 403,
+          "text": "      \"source_text\": \"The protocol reduces the source-state royalty ceiling to 5 per cent while Switzerland levies no royalty withholding tax on nonresidents.\","
+        },
+        {
+          "line": 412,
+          "text": "      \"rule_id\": \"CZ-CH-DIV-DOMESTIC-EXEMPTION\","
+        },
+        {
+          "line": 469,
+          "text": "      \"source_text\": \"Czech section 19 extends qualifying participation exemptions to certain payments made to Swiss resident companies.\","
+        },
+        {
+          "line": 478,
+          "text": "      \"rule_id\": \"CZ-CH-INT-DOMESTIC-EXEMPTION\","
+        },
+        {
+          "line": 535,
+          "text": "      \"source_text\": \"Czech section 19 extends qualifying interest exemptions to certain payments made to Swiss resident companies.\","
+        },
+        {
+          "line": 543,
+          "text": "      \"rule_id\": \"CZ-CH-ROY-DOMESTIC-EXEMPTION\","
+        },
+        {
+          "line": 600,
+          "text": "      \"source_text\": \"Czech section 19 extends qualifying royalty exemptions to certain payments made to Swiss resident companies.\","
+        },
+        {
+          "line": 608,
+          "text": "      \"rule_id\": \"CZ-CH-DIV-MLI-PPT\","
+        },
+        {
+          "line": 644,
+          "text": "      \"rule_id\": \"CZ-CH-INT-MLI-PPT\","
+        },
+        {
+          "line": 680,
+          "text": "      \"rule_id\": \"CZ-CH-ROY-MLI-PPT\","
+        }
+      ]
+    },
+    {
+      "path": "data/legal_rules/rakousko.json",
+      "matched_patterns": [
+        "cz-at"
+      ],
+      "matching_lines": [
+        {
+          "line": 9,
+          "text": "      \"rule_id\": \"CZ-AT-DIV-DOMESTIC-15\","
+        },
+        {
+          "line": 32,
+          "text": "      \"rule_id\": \"CZ-AT-INT-DOMESTIC-15\","
+        },
+        {
+          "line": 55,
+          "text": "      \"rule_id\": \"CZ-AT-ROY-DOMESTIC-15\","
+        },
+        {
+          "line": 78,
+          "text": "      \"rule_id\": \"CZ-AT-DIV-TREATY-STANDARD\","
+        },
+        {
+          "line": 118,
+          "text": "      \"rule_id\": \"CZ-AT-DIV-TREATY-PARTICIPATION\","
+        },
+        {
+          "line": 168,
+          "text": "      \"rule_id\": \"CZ-AT-INT-TREATY\","
+        },
+        {
+          "line": 213,
+          "text": "      \"rule_id\": \"CZ-AT-ROY-TREATY-INDUSTRIAL\","
+        },
+        {
+          "line": 263,
+          "text": "      \"rule_id\": \"CZ-AT-ROY-TREATY-COPYRIGHT\","
+        },
+        {
+          "line": 313,
+          "text": "      \"rule_id\": \"CZ-AT-DIV-EU-EXEMPTION\","
+        },
+        {
+          "line": 379,
+          "text": "      \"rule_id\": \"CZ-AT-INT-EU-EXEMPTION\","
+        },
+        {
+          "line": 445,
+          "text": "      \"rule_id\": \"CZ-AT-ROY-EU-EXEMPTION\","
+        },
+        {
+          "line": 511,
+          "text": "      \"rule_id\": \"CZ-AT-DIV-MLI-PPT\","
+        },
+        {
+          "line": 547,
+          "text": "      \"rule_id\": \"CZ-AT-INT-MLI-PPT\","
+        },
+        {
+          "line": 583,
+          "text": "      \"rule_id\": \"CZ-AT-ROY-MLI-PPT\","
+        }
+      ]
+    },
+    {
+      "path": "data/extracted/switzerland.json",
+      "matched_patterns": [
+        "switzerland"
+      ],
+      "matching_lines": [
+        {
+          "line": 2,
+          "text": "  \"country\": \"Switzerland\","
+        }
+      ]
+    },
+    {
+      "path": "data/generated/cz_all_cases.csv",
+      "matched_patterns": [
+        "rakous",
+        "švýcar"
+      ],
+      "matching_lines": [
+        {
+          "line": 215,
+          "text": "CZ,Rakousko,AT,dividend,PENDING_CONSOLIDATION,0,True"
+        },
+        {
+          "line": 216,
+          "text": "CZ,Rakousko,AT,interest,PENDING_CONSOLIDATION,0,True"
+        },
+        {
+          "line": 217,
+          "text": "CZ,Rakousko,AT,royalty,PENDING_CONSOLIDATION,0,True"
+        },
+        {
+          "line": 263,
+          "text": "CZ,Švýcarsko,CH,dividend,PENDING_CONSOLIDATION,0,True"
+        },
+        {
+          "line": 264,
+          "text": "CZ,Švýcarsko,CH,interest,PENDING_CONSOLIDATION,0,True"
+        },
+        {
+          "line": 265,
+          "text": "CZ,Švýcarsko,CH,royalty,PENDING_CONSOLIDATION,0,True"
+        }
+      ]
+    },
+    {
+      "path": "data/legal_sources/pilot_at_ch.json",
+      "matched_patterns": [
+        "austria",
+        "switzerland",
+        "swiss",
+        "austrian"
+      ],
+      "matching_lines": [
+        {
+          "line": 22,
+          "text": "      \"effective_note\": \"Official inventory linking the Austria and Switzerland treaty instruments and MLI notices.\""
+        },
+        {
+          "line": 35,
+          "text": "      \"title\": \"Synthesised text of the Austria-Czech Republic tax treaty as modified by the MLI\","
+        },
+        {
+          "line": 36,
+          "text": "      \"authority\": \"Austrian Federal Ministry of Finance\","
+        },
+        {
+          "line": 62,
+          "text": "      \"title\": \"Switzerland-Czech Republic double-tax treaty, consolidated text\","
+        },
+        {
+          "line": 63,
+          "text": "      \"authority\": \"Swiss Confederation, Fedlex\","
+        },
+        {
+          "line": 71,
+          "text": "      \"title\": \"2012 protocol amending the Switzerland-Czech Republic tax treaty\","
+        },
+        {
+          "line": 72,
+          "text": "      \"authority\": \"Swiss Confederation, Fedlex\","
+        },
+        {
+          "line": 81,
+          "text": "      \"authority\": \"Swiss Federal Tax Administration\","
+        },
+        {
+          "line": 89,
+          "text": "      \"title\": \"Synthesised text and MLI effective-date notice for the Czech-Swiss treaty\","
+        }
+      ]
+    },
+    {
+      "path": "data/golden_cases/cz_at_royalties_001.json",
+      "matched_patterns": [
+        "austria",
+        "austrian",
+        "cz-at"
+      ],
+      "matching_lines": [
+        {
+          "line": 3,
+          "text": "  \"case_id\": \"CZ-AT-ROYALTIES-001\","
+        },
+        {
+          "line": 4,
+          "text": "  \"title\": \"Czech payer – Austrian beneficial owner – industrial royalties\","
+        },
+        {
+          "line": 20,
+          "text": "    \"candidate_rule_id\": \"CZ-AT-ROY-TREATY-INDUSTRIAL\","
+        },
+        {
+          "line": 24,
+          "text": "    \"required_citation_rule_ids\": [\"CZ-AT-ROY-TREATY-INDUSTRIAL\", \"CZ-AT-ROY-MLI-PPT\"]"
+        }
+      ]
+    },
+    {
+      "path": "data/golden_cases/cz_ch_royalties_001.json",
+      "matched_patterns": [
+        "swiss",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 3,
+          "text": "  \"case_id\": \"CZ-CH-ROYALTIES-001\","
+        },
+        {
+          "line": 4,
+          "text": "  \"title\": \"Czech payer – Swiss beneficial owner – royalties\","
+        },
+        {
+          "line": 19,
+          "text": "    \"candidate_rule_id\": \"CZ-CH-ROY-PROTOCOL-5\","
+        },
+        {
+          "line": 23,
+          "text": "    \"required_citation_rule_ids\": [\"CZ-CH-ROY-PROTOCOL-5\", \"CZ-CH-ROY-MLI-PPT\"]"
+        }
+      ]
+    },
+    {
+      "path": "data/golden_cases/cz_ch_royalties_exemption_001.json",
+      "matched_patterns": [
+        "swiss",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 3,
+          "text": "  \"case_id\": \"CZ-CH-ROYALTIES-EXEMPTION-001\","
+        },
+        {
+          "line": 4,
+          "text": "  \"title\": \"Czech payer – associated Swiss company – Czech statutory exemption\","
+        },
+        {
+          "line": 23,
+          "text": "    \"candidate_rule_id\": \"CZ-CH-ROY-DOMESTIC-EXEMPTION\","
+        },
+        {
+          "line": 27,
+          "text": "    \"required_citation_rule_ids\": [\"CZ-CH-ROY-DOMESTIC-EXEMPTION\"]"
+        }
+      ]
+    },
+    {
+      "path": "data/golden_cases/cz_ch_interest_001.json",
+      "matched_patterns": [
+        "swiss",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 3,
+          "text": "  \"case_id\": \"CZ-CH-INTEREST-001\","
+        },
+        {
+          "line": 4,
+          "text": "  \"title\": \"Czech payer – Swiss beneficial owner – arm's-length interest\","
+        },
+        {
+          "line": 19,
+          "text": "    \"candidate_rule_id\": \"CZ-CH-INT-TREATY\","
+        },
+        {
+          "line": 23,
+          "text": "    \"required_citation_rule_ids\": [\"CZ-CH-INT-TREATY\", \"CZ-CH-INT-MLI-PPT\"]"
+        }
+      ]
+    },
+    {
+      "path": "data/golden_cases/cz_at_dividends_001.json",
+      "matched_patterns": [
+        "austria",
+        "austrian",
+        "cz-at"
+      ],
+      "matching_lines": [
+        {
+          "line": 3,
+          "text": "  \"case_id\": \"CZ-AT-DIVIDENDS-001\","
+        },
+        {
+          "line": 4,
+          "text": "  \"title\": \"Czech payer – Austrian portfolio corporate shareholder\","
+        },
+        {
+          "line": 20,
+          "text": "    \"candidate_rule_id\": \"CZ-AT-DIV-TREATY-STANDARD\","
+        },
+        {
+          "line": 24,
+          "text": "    \"required_citation_rule_ids\": [\"CZ-AT-DIV-TREATY-STANDARD\", \"CZ-AT-DIV-MLI-PPT\"]"
+        }
+      ]
+    },
+    {
+      "path": "data/golden_cases/cz_at_dividends_eu_001.json",
+      "matched_patterns": [
+        "austria",
+        "austrian",
+        "cz-at"
+      ],
+      "matching_lines": [
+        {
+          "line": 3,
+          "text": "  \"case_id\": \"CZ-AT-DIVIDENDS-EU-001\","
+        },
+        {
+          "line": 4,
+          "text": "  \"title\": \"Czech payer – Austrian parent – domestic implementation of EU exemption\","
+        },
+        {
+          "line": 24,
+          "text": "    \"candidate_rule_id\": \"CZ-AT-DIV-EU-EXEMPTION\","
+        },
+        {
+          "line": 28,
+          "text": "    \"required_citation_rule_ids\": [\"CZ-AT-DIV-EU-EXEMPTION\"]"
+        }
+      ]
+    },
+    {
+      "path": "data/golden_cases/cz_ch_dividends_001.json",
+      "matched_patterns": [
+        "swiss",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 3,
+          "text": "  \"case_id\": \"CZ-CH-DIVIDENDS-001\","
+        },
+        {
+          "line": 4,
+          "text": "  \"title\": \"Czech payer – qualifying Swiss corporate shareholder\","
+        },
+        {
+          "line": 22,
+          "text": "    \"candidate_rule_id\": \"CZ-CH-DIV-TREATY-PARTICIPATION\","
+        },
+        {
+          "line": 26,
+          "text": "    \"required_citation_rule_ids\": [\"CZ-CH-DIV-TREATY-PARTICIPATION\", \"CZ-CH-DIV-MLI-PPT\"]"
+        }
+      ]
+    },
+    {
+      "path": "data/golden_cases/cz_at_interest_001.json",
+      "matched_patterns": [
+        "austria",
+        "austrian",
+        "cz-at"
+      ],
+      "matching_lines": [
+        {
+          "line": 3,
+          "text": "  \"case_id\": \"CZ-AT-INTEREST-001\","
+        },
+        {
+          "line": 4,
+          "text": "  \"title\": \"Czech payer – Austrian beneficial owner – arm's-length interest\","
+        },
+        {
+          "line": 19,
+          "text": "    \"candidate_rule_id\": \"CZ-AT-INT-TREATY\","
+        },
+        {
+          "line": 23,
+          "text": "    \"required_citation_rule_ids\": [\"CZ-AT-INT-TREATY\", \"CZ-AT-INT-MLI-PPT\"]"
+        }
+      ]
+    },
+    {
+      "path": "data/legal_facts/svycarsko.json",
+      "matched_patterns": [
+        "switzerland",
+        "swiss"
+      ],
+      "matching_lines": [
+        {
+          "line": 15,
+          "text": "      \"source_text\": \"The Swiss official treaty overview states that Switzerland does not levy withholding tax on royalties paid to non-residents.\","
+        }
+      ]
+    },
+    {
+      "path": "data/legal_consolidation/cz_domestic_eu_candidates.json",
+      "matched_patterns": [
+        "rakous",
+        "švýcar"
+      ],
+      "matching_lines": [
+        {
+          "line": 378,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 466,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 569,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 2043,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        },
+        {
+          "line": 2131,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        },
+        {
+          "line": 2234,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        }
+      ]
+    },
+    {
+      "path": "data/legal_consolidation/mf_inventory.json",
+      "matched_patterns": [
+        "rakous",
+        "švýcar"
+      ],
+      "matching_lines": [
+        {
+          "line": 157,
+          "text": "      \"country\": \"Rakousko\","
+        },
+        {
+          "line": 733,
+          "text": "      \"country\": \"Švýcarsko\","
+        }
+      ]
+    },
+    {
+      "path": "data/legal_consolidation/mli_wht_effects.json",
+      "matched_patterns": [
+        "rakous",
+        "švýcar",
+        "cz-at",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 48,
+          "text": "      \"effect_id\": \"CZ-AT-MLI-WHT-PPT\","
+        },
+        {
+          "line": 52,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 219,
+          "text": "      \"effect_id\": \"CZ-CH-MLI-WHT-PPT\","
+        },
+        {
+          "line": 223,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        }
+      ]
+    },
+    {
+      "path": "data/legal_reviews/global_cz_outbound/global_primary_review_candidates.json",
+      "matched_patterns": [
+        "rakous",
+        "švýcar",
+        "cz-at",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 781,
+          "text": "      \"packet_id\": \"CZ-AT-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 783,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 785,
+          "text": "      \"source_pack\": \"data/legal_reviews/global_cz_outbound/packs/cz-at-div-legal-review.json\","
+        },
+        {
+          "line": 890,
+          "text": "      \"packet_id\": \"CZ-AT-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 892,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 894,
+          "text": "      \"source_pack\": \"data/legal_reviews/global_cz_outbound/packs/cz-at-int-legal-review.json\","
+        },
+        {
+          "line": 1014,
+          "text": "      \"packet_id\": \"CZ-AT-ROY-LEGAL-REVIEW\","
+        },
+        {
+          "line": 1016,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 1018,
+          "text": "      \"source_pack\": \"data/legal_reviews/global_cz_outbound/packs/cz-at-roy-legal-review.json\","
+        },
+        {
+          "line": 3741,
+          "text": "      \"packet_id\": \"CZ-CH-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 3743,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        },
+        {
+          "line": 3745,
+          "text": "      \"source_pack\": \"data/legal_reviews/global_cz_outbound/packs/cz-ch-div-legal-review.json\","
+        },
+        {
+          "line": 3850,
+          "text": "      \"packet_id\": \"CZ-CH-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 3852,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        },
+        {
+          "line": 3854,
+          "text": "      \"source_pack\": \"data/legal_reviews/global_cz_outbound/packs/cz-ch-int-legal-review.json\","
+        },
+        {
+          "line": 3974,
+          "text": "      \"packet_id\": \"CZ-CH-ROY-LEGAL-REVIEW\","
+        },
+        {
+          "line": 3976,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        },
+        {
+          "line": 3978,
+          "text": "      \"source_pack\": \"data/legal_reviews/global_cz_outbound/packs/cz-ch-roy-legal-review.json\","
+        }
+      ]
+    },
+    {
+      "path": "data/legal_reviews/global_cz_outbound/global_review_index.json",
+      "matched_patterns": [
+        "cz-at",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 121,
+          "text": "      \"packet_id\": \"CZ-AT-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 122,
+          "text": "      \"path\": \"packs/cz-at-div-legal-review.json\","
+        },
+        {
+          "line": 130,
+          "text": "      \"packet_id\": \"CZ-AT-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 131,
+          "text": "      \"path\": \"packs/cz-at-int-legal-review.json\","
+        },
+        {
+          "line": 139,
+          "text": "      \"packet_id\": \"CZ-AT-ROY-LEGAL-REVIEW\","
+        },
+        {
+          "line": 140,
+          "text": "      \"path\": \"packs/cz-at-roy-legal-review.json\","
+        },
+        {
+          "line": 472,
+          "text": "      \"packet_id\": \"CZ-CH-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 473,
+          "text": "      \"path\": \"packs/cz-ch-div-legal-review.json\","
+        },
+        {
+          "line": 481,
+          "text": "      \"packet_id\": \"CZ-CH-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 482,
+          "text": "      \"path\": \"packs/cz-ch-int-legal-review.json\","
+        },
+        {
+          "line": 490,
+          "text": "      \"packet_id\": \"CZ-CH-ROY-LEGAL-REVIEW\","
+        },
+        {
+          "line": 491,
+          "text": "      \"path\": \"packs/cz-ch-roy-legal-review.json\","
+        }
+      ]
+    },
+    {
+      "path": "data/legal_reviews/global_cz_outbound/global_review_priority_queue_summary.json",
+      "matched_patterns": [
+        "cz-at",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 13,
+          "text": "    \"CZ-AT-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 14,
+          "text": "    \"CZ-AT-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 15,
+          "text": "    \"CZ-AT-ROY-LEGAL-REVIEW\","
+        },
+        {
+          "line": 16,
+          "text": "    \"CZ-CH-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 17,
+          "text": "    \"CZ-CH-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 18,
+          "text": "    \"CZ-CH-ROY-LEGAL-REVIEW\""
+        }
+      ]
+    },
+    {
+      "path": "data/legal_reviews/global_cz_outbound/global_source_quality_audit.json",
+      "matched_patterns": [
+        "rakous",
+        "švýcar",
+        "cz-at",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 375,
+          "text": "      \"packet_id\": \"CZ-AT-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 377,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 412,
+          "text": "      \"packet_id\": \"CZ-AT-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 414,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 447,
+          "text": "      \"packet_id\": \"CZ-AT-ROY-LEGAL-REVIEW\","
+        },
+        {
+          "line": 449,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 1507,
+          "text": "      \"packet_id\": \"CZ-CH-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 1509,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        },
+        {
+          "line": 1544,
+          "text": "      \"packet_id\": \"CZ-CH-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 1546,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        },
+        {
+          "line": 1579,
+          "text": "      \"packet_id\": \"CZ-CH-ROY-LEGAL-REVIEW\","
+        },
+        {
+          "line": 1581,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        }
+      ]
+    },
+    {
+      "path": "data/legal_reviews/global_cz_outbound/single_rate_review_pack.json",
+      "matched_patterns": [
+        "rakous",
+        "švýcar",
+        "cz-at",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 456,
+          "text": "      \"packet_id\": \"CZ-AT-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 458,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 460,
+          "text": "      \"source_pack\": \"data/legal_reviews/global_cz_outbound/packs/cz-at-int-legal-review.json\","
+        },
+        {
+          "line": 575,
+          "text": "        \"packet_id\": \"CZ-AT-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 2175,
+          "text": "      \"packet_id\": \"CZ-CH-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 2177,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        },
+        {
+          "line": 2179,
+          "text": "      \"source_pack\": \"data/legal_reviews/global_cz_outbound/packs/cz-ch-int-legal-review.json\","
+        },
+        {
+          "line": 2294,
+          "text": "        \"packet_id\": \"CZ-CH-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 2322,
+          "text": "      \"packet_id\": \"CZ-CH-ROY-LEGAL-REVIEW\","
+        },
+        {
+          "line": 2324,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        },
+        {
+          "line": 2326,
+          "text": "      \"source_pack\": \"data/legal_reviews/global_cz_outbound/packs/cz-ch-roy-legal-review.json\","
+        },
+        {
+          "line": 2441,
+          "text": "        \"packet_id\": \"CZ-CH-ROY-LEGAL-REVIEW\","
+        }
+      ]
+    },
+    {
+      "path": "data/legal_reviews/global_cz_outbound/treaty_source_manifest.json",
+      "matched_patterns": [
+        "rakous",
+        "švýcar",
+        "cz-at",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 504,
+          "text": "      \"treaty_pair_id\": \"CZ-AT\","
+        },
+        {
+          "line": 507,
+          "text": "      \"partner_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 509,
+          "text": "        \"CZ-AT-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 510,
+          "text": "        \"CZ-AT-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 511,
+          "text": "        \"CZ-AT-ROY-LEGAL-REVIEW\""
+        },
+        {
+          "line": 1960,
+          "text": "      \"treaty_pair_id\": \"CZ-CH\","
+        },
+        {
+          "line": 1963,
+          "text": "      \"partner_country_name\": \"Švýcarsko\","
+        },
+        {
+          "line": 1965,
+          "text": "        \"CZ-CH-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 1966,
+          "text": "        \"CZ-CH-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 1967,
+          "text": "        \"CZ-CH-ROY-LEGAL-REVIEW\""
+        }
+      ]
+    },
+    {
+      "path": "data/legal_reviews/global_cz_outbound/source_exception_resolutions.json",
+      "matched_patterns": [
+        "cz-at",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 10,
+          "text": "      \"packet_id\": \"CZ-AT-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 35,
+          "text": "      \"packet_id\": \"CZ-AT-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 52,
+          "text": "      \"packet_id\": \"CZ-AT-ROY-LEGAL-REVIEW\","
+        },
+        {
+          "line": 78,
+          "text": "      \"packet_id\": \"CZ-CH-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 104,
+          "text": "      \"packet_id\": \"CZ-CH-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 121,
+          "text": "      \"packet_id\": \"CZ-CH-ROY-LEGAL-REVIEW\","
+        }
+      ]
+    },
+    {
+      "path": "data/legal_reviews/global_cz_outbound/global_review_workstreams.json",
+      "matched_patterns": [
+        "rakous",
+        "švýcar",
+        "cz-at",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 376,
+          "text": "      \"pack_file\": \"cz-at-div-legal-review.json\","
+        },
+        {
+          "line": 377,
+          "text": "      \"packet_id\": \"CZ-AT-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 383,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 408,
+          "text": "      \"pack_file\": \"cz-at-int-legal-review.json\","
+        },
+        {
+          "line": 409,
+          "text": "      \"packet_id\": \"CZ-AT-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 415,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 440,
+          "text": "      \"pack_file\": \"cz-at-roy-legal-review.json\","
+        },
+        {
+          "line": 441,
+          "text": "      \"packet_id\": \"CZ-AT-ROY-LEGAL-REVIEW\","
+        },
+        {
+          "line": 447,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 1555,
+          "text": "      \"pack_file\": \"cz-ch-div-legal-review.json\","
+        },
+        {
+          "line": 1556,
+          "text": "      \"packet_id\": \"CZ-CH-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 1562,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        },
+        {
+          "line": 1587,
+          "text": "      \"pack_file\": \"cz-ch-int-legal-review.json\","
+        },
+        {
+          "line": 1588,
+          "text": "      \"packet_id\": \"CZ-CH-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 1594,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        },
+        {
+          "line": 1619,
+          "text": "      \"pack_file\": \"cz-ch-roy-legal-review.json\","
+        },
+        {
+          "line": 1620,
+          "text": "      \"packet_id\": \"CZ-CH-ROY-LEGAL-REVIEW\","
+        },
+        {
+          "line": 1626,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        }
+      ]
+    },
+    {
+      "path": "data/legal_reviews/global_cz_outbound/global_review_queue.json",
+      "matched_patterns": [
+        "cz-at",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 104,
+          "text": "      \"packet_id\": \"CZ-AT-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 112,
+          "text": "      \"packet_id\": \"CZ-AT-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 120,
+          "text": "      \"packet_id\": \"CZ-AT-ROY-LEGAL-REVIEW\","
+        },
+        {
+          "line": 416,
+          "text": "      \"packet_id\": \"CZ-CH-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 424,
+          "text": "      \"packet_id\": \"CZ-CH-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 432,
+          "text": "      \"packet_id\": \"CZ-CH-ROY-LEGAL-REVIEW\","
+        }
+      ]
+    },
+    {
+      "path": "data/legal_reviews/global_cz_outbound/source_remediation_batches.json",
+      "matched_patterns": [
+        "rakous",
+        "švýcar",
+        "cz-at",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 20,
+          "text": "          \"treaty_pair_id\": \"CZ-AT\","
+        },
+        {
+          "line": 22,
+          "text": "          \"partner_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 55,
+          "text": "          \"treaty_pair_id\": \"CZ-CH\","
+        },
+        {
+          "line": 57,
+          "text": "          \"partner_country_name\": \"Švýcarsko\","
+        }
+      ]
+    },
+    {
+      "path": "data/legal_reviews/global_cz_outbound/global_review_batches.json",
+      "matched_patterns": [
+        "rakous",
+        "švýcar",
+        "cz-at",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 47,
+          "text": "        \"Rakousko\","
+        },
+        {
+          "line": 48,
+          "text": "        \"Švýcarsko\""
+        },
+        {
+          "line": 53,
+          "text": "        \"CZ-AT-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 54,
+          "text": "        \"CZ-AT-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 55,
+          "text": "        \"CZ-AT-ROY-LEGAL-REVIEW\","
+        },
+        {
+          "line": 56,
+          "text": "        \"CZ-CH-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 57,
+          "text": "        \"CZ-CH-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 58,
+          "text": "        \"CZ-CH-ROY-LEGAL-REVIEW\""
+        }
+      ]
+    },
+    {
+      "path": "data/legal_reviews/global_cz_outbound/global_review_priority_queue.json",
+      "matched_patterns": [
+        "rakous",
+        "švýcar",
+        "cz-at",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 188,
+          "text": "      \"packet_id\": \"CZ-AT-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 196,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 216,
+          "text": "      \"packet_id\": \"CZ-AT-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 224,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 244,
+          "text": "      \"packet_id\": \"CZ-AT-ROY-LEGAL-REVIEW\","
+        },
+        {
+          "line": 252,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 272,
+          "text": "      \"packet_id\": \"CZ-CH-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 280,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        },
+        {
+          "line": 300,
+          "text": "      \"packet_id\": \"CZ-CH-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 308,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        },
+        {
+          "line": 328,
+          "text": "      \"packet_id\": \"CZ-CH-ROY-LEGAL-REVIEW\","
+        },
+        {
+          "line": 336,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        }
+      ]
+    },
+    {
+      "path": "data/legal_reviews/global_cz_outbound/conditional_rate_review_pack.json",
+      "matched_patterns": [
+        "rakous",
+        "švýcar",
+        "cz-at",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 355,
+          "text": "      \"packet_id\": \"CZ-AT-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 357,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 359,
+          "text": "      \"source_pack\": \"data/legal_reviews/global_cz_outbound/packs/cz-at-div-legal-review.json\","
+        },
+        {
+          "line": 461,
+          "text": "        \"packet_id\": \"CZ-AT-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 505,
+          "text": "      \"packet_id\": \"CZ-AT-ROY-LEGAL-REVIEW\","
+        },
+        {
+          "line": 507,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 509,
+          "text": "      \"source_pack\": \"data/legal_reviews/global_cz_outbound/packs/cz-at-roy-legal-review.json\","
+        },
+        {
+          "line": 626,
+          "text": "        \"packet_id\": \"CZ-AT-ROY-LEGAL-REVIEW\","
+        },
+        {
+          "line": 1703,
+          "text": "      \"packet_id\": \"CZ-CH-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 1705,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        },
+        {
+          "line": 1707,
+          "text": "      \"source_pack\": \"data/legal_reviews/global_cz_outbound/packs/cz-ch-div-legal-review.json\","
+        },
+        {
+          "line": 1809,
+          "text": "        \"packet_id\": \"CZ-CH-DIV-LEGAL-REVIEW\","
+        }
+      ]
+    },
+    {
+      "path": "data/legal_reviews/global_cz_outbound/global_blocker_summary.json",
+      "matched_patterns": [
+        "cz-at",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 514,
+          "text": "    \"CZ-AT-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 515,
+          "text": "    \"CZ-AT-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 516,
+          "text": "    \"CZ-AT-ROY-LEGAL-REVIEW\","
+        },
+        {
+          "line": 517,
+          "text": "    \"CZ-CH-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 518,
+          "text": "    \"CZ-CH-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 519,
+          "text": "    \"CZ-CH-ROY-LEGAL-REVIEW\""
+        }
+      ]
+    },
+    {
+      "path": "data/legal_reviews/global_cz_outbound/conditional_decision_branches.json",
+      "matched_patterns": [
+        "rakous",
+        "švýcar",
+        "cz-at",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 235,
+          "text": "      \"packet_id\": \"CZ-AT-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 237,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 243,
+          "text": "          \"branch_id\": \"CZ-AT-DIV-LEGAL-REVIEW-BRANCH-01\","
+        },
+        {
+          "line": 273,
+          "text": "          \"branch_id\": \"CZ-AT-DIV-LEGAL-REVIEW-BRANCH-02\","
+        },
+        {
+          "line": 300,
+          "text": "      \"source_pack\": \"data/legal_reviews/global_cz_outbound/packs/cz-at-div-legal-review.json\","
+        },
+        {
+          "line": 305,
+          "text": "      \"packet_id\": \"CZ-AT-ROY-LEGAL-REVIEW\","
+        },
+        {
+          "line": 307,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 313,
+          "text": "          \"branch_id\": \"CZ-AT-ROY-LEGAL-REVIEW-BRANCH-01\","
+        },
+        {
+          "line": 343,
+          "text": "          \"branch_id\": \"CZ-AT-ROY-LEGAL-REVIEW-BRANCH-02\","
+        },
+        {
+          "line": 376,
+          "text": "      \"source_pack\": \"data/legal_reviews/global_cz_outbound/packs/cz-at-roy-legal-review.json\","
+        },
+        {
+          "line": 967,
+          "text": "      \"packet_id\": \"CZ-CH-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 969,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        },
+        {
+          "line": 975,
+          "text": "          \"branch_id\": \"CZ-CH-DIV-LEGAL-REVIEW-BRANCH-01\","
+        },
+        {
+          "line": 1011,
+          "text": "          \"branch_id\": \"CZ-CH-DIV-LEGAL-REVIEW-BRANCH-02\","
+        },
+        {
+          "line": 1038,
+          "text": "      \"source_pack\": \"data/legal_reviews/global_cz_outbound/packs/cz-ch-div-legal-review.json\","
+        }
+      ]
+    },
+    {
+      "path": "data/legal_reviews/global_cz_outbound/global_primary_review_candidates_resolved.json",
+      "matched_patterns": [
+        "rakous",
+        "švýcar",
+        "cz-at",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 781,
+          "text": "      \"packet_id\": \"CZ-AT-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 783,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 785,
+          "text": "      \"source_pack\": \"data/legal_reviews/global_cz_outbound/packs/cz-at-div-legal-review.json\","
+        },
+        {
+          "line": 887,
+          "text": "        \"packet_id\": \"CZ-AT-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 931,
+          "text": "      \"packet_id\": \"CZ-AT-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 933,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 935,
+          "text": "      \"source_pack\": \"data/legal_reviews/global_cz_outbound/packs/cz-at-int-legal-review.json\","
+        },
+        {
+          "line": 1050,
+          "text": "        \"packet_id\": \"CZ-AT-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 1078,
+          "text": "      \"packet_id\": \"CZ-AT-ROY-LEGAL-REVIEW\","
+        },
+        {
+          "line": 1080,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 1082,
+          "text": "      \"source_pack\": \"data/legal_reviews/global_cz_outbound/packs/cz-at-roy-legal-review.json\","
+        },
+        {
+          "line": 1199,
+          "text": "        \"packet_id\": \"CZ-AT-ROY-LEGAL-REVIEW\","
+        },
+        {
+          "line": 3848,
+          "text": "      \"packet_id\": \"CZ-CH-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 3850,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        },
+        {
+          "line": 3852,
+          "text": "      \"source_pack\": \"data/legal_reviews/global_cz_outbound/packs/cz-ch-div-legal-review.json\","
+        },
+        {
+          "line": 3954,
+          "text": "        \"packet_id\": \"CZ-CH-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 4000,
+          "text": "      \"packet_id\": \"CZ-CH-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 4002,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        },
+        {
+          "line": 4004,
+          "text": "      \"source_pack\": \"data/legal_reviews/global_cz_outbound/packs/cz-ch-int-legal-review.json\","
+        },
+        {
+          "line": 4119,
+          "text": "        \"packet_id\": \"CZ-CH-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 4147,
+          "text": "      \"packet_id\": \"CZ-CH-ROY-LEGAL-REVIEW\","
+        },
+        {
+          "line": 4149,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        },
+        {
+          "line": 4151,
+          "text": "      \"source_pack\": \"data/legal_reviews/global_cz_outbound/packs/cz-ch-roy-legal-review.json\","
+        },
+        {
+          "line": 4266,
+          "text": "        \"packet_id\": \"CZ-CH-ROY-LEGAL-REVIEW\","
+        }
+      ]
+    },
+    {
+      "path": "data/legal_reviews/global_cz_outbound/global_blocker_classification.json",
+      "matched_patterns": [
+        "rakous",
+        "švýcar",
+        "cz-at",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 7,
+          "text": "      \"CZ-AT-DIV\","
+        },
+        {
+          "line": 8,
+          "text": "      \"CZ-AT-INT\","
+        },
+        {
+          "line": 9,
+          "text": "      \"CZ-AT-ROY\","
+        },
+        {
+          "line": 10,
+          "text": "      \"CZ-CH-DIV\","
+        },
+        {
+          "line": 11,
+          "text": "      \"CZ-CH-INT\","
+        },
+        {
+          "line": 12,
+          "text": "      \"CZ-CH-ROY\""
+        },
+        {
+          "line": 420,
+          "text": "      \"pack_file\": \"cz-at-div-legal-review.json\","
+        },
+        {
+          "line": 421,
+          "text": "      \"packet_id\": \"CZ-AT-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 426,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 456,
+          "text": "      \"pack_file\": \"cz-at-int-legal-review.json\","
+        },
+        {
+          "line": 457,
+          "text": "      \"packet_id\": \"CZ-AT-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 462,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 492,
+          "text": "      \"pack_file\": \"cz-at-roy-legal-review.json\","
+        },
+        {
+          "line": 493,
+          "text": "      \"packet_id\": \"CZ-AT-ROY-LEGAL-REVIEW\","
+        },
+        {
+          "line": 498,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 1668,
+          "text": "      \"pack_file\": \"cz-ch-div-legal-review.json\","
+        },
+        {
+          "line": 1669,
+          "text": "      \"packet_id\": \"CZ-CH-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 1674,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        },
+        {
+          "line": 1704,
+          "text": "      \"pack_file\": \"cz-ch-int-legal-review.json\","
+        },
+        {
+          "line": 1705,
+          "text": "      \"packet_id\": \"CZ-CH-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 1710,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        },
+        {
+          "line": 1740,
+          "text": "      \"pack_file\": \"cz-ch-roy-legal-review.json\","
+        },
+        {
+          "line": 1741,
+          "text": "      \"packet_id\": \"CZ-CH-ROY-LEGAL-REVIEW\","
+        },
+        {
+          "line": 1746,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        }
+      ]
+    },
+    {
+      "path": "data/legal_reviews/global_cz_outbound/execution_dossiers/global-cz-outbound-batch-02.json",
+      "matched_patterns": [
+        "rakous",
+        "švýcar",
+        "cz-at",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 12,
+          "text": "    \"Rakousko\","
+        },
+        {
+          "line": 13,
+          "text": "    \"Švýcarsko\""
+        },
+        {
+          "line": 29,
+          "text": "      \"packet_id\": \"CZ-AT-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 34,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 133,
+          "text": "      \"packet_id\": \"CZ-AT-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 138,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 237,
+          "text": "      \"packet_id\": \"CZ-AT-ROY-LEGAL-REVIEW\","
+        },
+        {
+          "line": 242,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 341,
+          "text": "      \"packet_id\": \"CZ-CH-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 346,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        },
+        {
+          "line": 445,
+          "text": "      \"packet_id\": \"CZ-CH-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 450,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        },
+        {
+          "line": 549,
+          "text": "      \"packet_id\": \"CZ-CH-ROY-LEGAL-REVIEW\","
+        },
+        {
+          "line": 554,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        }
+      ]
+    },
+    {
+      "path": "data/legal_reviews/global_cz_outbound/packs/cz-ch-int-legal-review.json",
+      "matched_patterns": [
+        "švýcar",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 36,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        },
+        {
+          "line": 125,
+          "text": "        \"effect_id\": \"CZ-CH-MLI-WHT-PPT\","
+        },
+        {
+          "line": 129,
+          "text": "        \"recipient_country_name\": \"Švýcarsko\","
+        },
+        {
+          "line": 142,
+          "text": "  \"packet_id\": \"CZ-CH-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 145,
+          "text": "  \"recipient_country_name\": \"Švýcarsko\","
+        }
+      ]
+    },
+    {
+      "path": "data/legal_reviews/global_cz_outbound/packs/cz-ch-roy-legal-review.json",
+      "matched_patterns": [
+        "švýcar",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 36,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        },
+        {
+          "line": 125,
+          "text": "        \"effect_id\": \"CZ-CH-MLI-WHT-PPT\","
+        },
+        {
+          "line": 129,
+          "text": "        \"recipient_country_name\": \"Švýcarsko\","
+        },
+        {
+          "line": 142,
+          "text": "  \"packet_id\": \"CZ-CH-ROY-LEGAL-REVIEW\","
+        },
+        {
+          "line": 145,
+          "text": "  \"recipient_country_name\": \"Švýcarsko\","
+        }
+      ]
+    },
+    {
+      "path": "data/legal_reviews/global_cz_outbound/packs/cz-at-roy-legal-review.json",
+      "matched_patterns": [
+        "rakous",
+        "cz-at"
+      ],
+      "matching_lines": [
+        {
+          "line": 36,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 125,
+          "text": "        \"effect_id\": \"CZ-AT-MLI-WHT-PPT\","
+        },
+        {
+          "line": 129,
+          "text": "        \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 142,
+          "text": "  \"packet_id\": \"CZ-AT-ROY-LEGAL-REVIEW\","
+        },
+        {
+          "line": 145,
+          "text": "  \"recipient_country_name\": \"Rakousko\","
+        }
+      ]
+    },
+    {
+      "path": "data/legal_reviews/global_cz_outbound/packs/cz-at-div-legal-review.json",
+      "matched_patterns": [
+        "rakous",
+        "cz-at"
+      ],
+      "matching_lines": [
+        {
+          "line": 36,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 110,
+          "text": "        \"effect_id\": \"CZ-AT-MLI-WHT-PPT\","
+        },
+        {
+          "line": 114,
+          "text": "        \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 127,
+          "text": "  \"packet_id\": \"CZ-AT-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 130,
+          "text": "  \"recipient_country_name\": \"Rakousko\","
+        }
+      ]
+    },
+    {
+      "path": "data/legal_reviews/global_cz_outbound/packs/cz-at-int-legal-review.json",
+      "matched_patterns": [
+        "rakous",
+        "cz-at"
+      ],
+      "matching_lines": [
+        {
+          "line": 36,
+          "text": "      \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 125,
+          "text": "        \"effect_id\": \"CZ-AT-MLI-WHT-PPT\","
+        },
+        {
+          "line": 129,
+          "text": "        \"recipient_country_name\": \"Rakousko\","
+        },
+        {
+          "line": 142,
+          "text": "  \"packet_id\": \"CZ-AT-INT-LEGAL-REVIEW\","
+        },
+        {
+          "line": 145,
+          "text": "  \"recipient_country_name\": \"Rakousko\","
+        }
+      ]
+    },
+    {
+      "path": "data/legal_reviews/global_cz_outbound/packs/cz-ch-div-legal-review.json",
+      "matched_patterns": [
+        "švýcar",
+        "cz-ch"
+      ],
+      "matching_lines": [
+        {
+          "line": 36,
+          "text": "      \"recipient_country_name\": \"Švýcarsko\","
+        },
+        {
+          "line": 110,
+          "text": "        \"effect_id\": \"CZ-CH-MLI-WHT-PPT\","
+        },
+        {
+          "line": 114,
+          "text": "        \"recipient_country_name\": \"Švýcarsko\","
+        },
+        {
+          "line": 127,
+          "text": "  \"packet_id\": \"CZ-CH-DIV-LEGAL-REVIEW\","
+        },
+        {
+          "line": 130,
+          "text": "  \"recipient_country_name\": \"Švýcarsko\","
+        }
+      ]
+    },
+    {
+      "path": "reports/snapshots/20260802_110706/treaty_extraction_benchmark.csv",
+      "matched_patterns": [
+        "rakous",
+        "švýcar"
+      ],
+      "matching_lines": [
+        {
+          "line": 105,
+          "text": "Rakousko,31/2007 Sb.m.s.,data/raw/treaty/790847066c210f8b.pdf,data/parsed/rakousko.json,ok,validated,counterparty_matched,pdftotext,1939,fallback,whole_document,31/2007 Sb.m.s.,False,28,True,True,True,confirmed,10.0|0.0,beneficial_owner:true|minimum_ownership:10|beneficial_owner:true,"
+        },
+        {
+          "line": 238,
+          "text": "Švýcarsko,281/1996 Sb.,data/raw/treaty/e2b4649db40a2bec.pdf,data/parsed/svycarsko.json,ok,validated,counterparty_matched,pypdf,2070,fallback,whole_document,281/1996 Sb.,False,29,True,True,True,confirmed,5.0|15.0,beneficial_owner:true|beneficial_owner:true,"
+        }
+      ]
+    }
+  ],
+  "manifest_entries": {
+    "AT": {
+      "treaty_pair_id": "CZ-AT",
+      "source_country": "CZ",
+      "partner_country": "AT",
+      "partner_country_name": "Rakousko",
+      "covered_packet_ids": [
+        "CZ-AT-DIV-LEGAL-REVIEW",
+        "CZ-AT-INT-LEGAL-REVIEW",
+        "CZ-AT-ROY-LEGAL-REVIEW"
+      ],
+      "covered_income_types": [
+        "dividend",
+        "interest",
+        "royalty"
+      ],
+      "instrument_chain": {
+        "instrument_ids": [],
+        "instrument_types": [],
+        "base_treaty": {
+          "instrument_id": null,
+          "official_source_url": null,
+          "official_document_hash": null,
+          "publication_reference": null,
+          "signed_date": null,
+          "entry_into_force_date": null,
+          "effective_from_date": null
+        },
+        "protocols": [],
+        "mli": {
+          "applicable": null,
+          "instrument_id": null,
+          "official_source_url": null,
+          "official_document_hash": null,
+          "entry_into_force_date": null,
+          "effective_from_date": null,
+          "matched_agreement_status": null
+        },
+        "other_status_instruments": [],
+        "discovered_entry_into_force_dates": [],
+        "discovered_effective_from_dates": []
+      },
+      "source_registration": {
+        "existing_source_urls": [],
+        "existing_source_ids": [],
+        "official_source_url": null,
+        "official_source_domain": null,
+        "official_document_hash": null,
+        "retrieved_at": null,
+        "retrieval_method": null,
+        "source_identity_verified": false
+      },
+      "language_authority": {
+        "existing_language_values": [
+          "cs"
+        ],
+        "official_languages": [],
+        "authentic_languages": [],
+        "working_language": null,
+        "english_version_available": null,
+        "english_version_official": null,
+        "prevailing_language_rule": null,
+        "language_clause_reference": null,
+        "language_status_verified": false
+      },
+      "text_quality": {
+        "clean_source_text_available": false,
+        "extraction_method": null,
+        "ocr_used": null,
+        "ocr_quality_status": null,
+        "damaged_ocr_detected": false,
+        "text_hash": null,
+        "page_count": null,
+        "article_boundaries_verified": false
+      },
+      "article_mapping": {
+        "article_10": {
+          "mapped": false,
+          "page_reference": null,
+          "paragraph_references": [],
+          "excerpt_hashes": []
+        },
+        "article_11": {
+          "mapped": false,
+          "page_reference": null,
+          "paragraph_references": [],
+          "excerpt_hashes": []
+        },
+        "article_12": {
+          "mapped": false,
+          "page_reference": null,
+          "paragraph_references": [],
+          "excerpt_hashes": []
+        }
+      },
+      "effective_date_evidence": {
+        "existing_effective_dates": [],
+        "treaty_effective_date_verified": false,
+        "protocol_effective_dates_verified": false,
+        "mli_effective_dates_verified": false,
+        "withholding_tax_effective_date": null
+      },
+      "current_audit_issues": [
+        "authentic_language_status_not_recorded",
+        "effective_date_not_recorded",
+        "missing_official_source_reference",
+        "official_english_text_not_recorded"
+      ],
+      "production_blockers": [
+        "authentic_and_prevailing_languages_not_assessed",
+        "instrument_effective_dates_incomplete",
+        "official_english_version_not_assessed",
+        "official_source_not_registered"
+      ],
+      "manifest_status": "source_remediation_required",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    "CH": {
+      "treaty_pair_id": "CZ-CH",
+      "source_country": "CZ",
+      "partner_country": "CH",
+      "partner_country_name": "Švýcarsko",
+      "covered_packet_ids": [
+        "CZ-CH-DIV-LEGAL-REVIEW",
+        "CZ-CH-INT-LEGAL-REVIEW",
+        "CZ-CH-ROY-LEGAL-REVIEW"
+      ],
+      "covered_income_types": [
+        "dividend",
+        "interest",
+        "royalty"
+      ],
+      "instrument_chain": {
+        "instrument_ids": [],
+        "instrument_types": [],
+        "base_treaty": {
+          "instrument_id": null,
+          "official_source_url": null,
+          "official_document_hash": null,
+          "publication_reference": null,
+          "signed_date": null,
+          "entry_into_force_date": null,
+          "effective_from_date": null
+        },
+        "protocols": [],
+        "mli": {
+          "applicable": null,
+          "instrument_id": null,
+          "official_source_url": null,
+          "official_document_hash": null,
+          "entry_into_force_date": null,
+          "effective_from_date": null,
+          "matched_agreement_status": null
+        },
+        "other_status_instruments": [],
+        "discovered_entry_into_force_dates": [],
+        "discovered_effective_from_dates": []
+      },
+      "source_registration": {
+        "existing_source_urls": [],
+        "existing_source_ids": [],
+        "official_source_url": null,
+        "official_source_domain": null,
+        "official_document_hash": null,
+        "retrieved_at": null,
+        "retrieval_method": null,
+        "source_identity_verified": false
+      },
+      "language_authority": {
+        "existing_language_values": [
+          "cs"
+        ],
+        "official_languages": [],
+        "authentic_languages": [],
+        "working_language": null,
+        "english_version_available": null,
+        "english_version_official": null,
+        "prevailing_language_rule": null,
+        "language_clause_reference": null,
+        "language_status_verified": false
+      },
+      "text_quality": {
+        "clean_source_text_available": false,
+        "extraction_method": null,
+        "ocr_used": null,
+        "ocr_quality_status": null,
+        "damaged_ocr_detected": false,
+        "text_hash": null,
+        "page_count": null,
+        "article_boundaries_verified": false
+      },
+      "article_mapping": {
+        "article_10": {
+          "mapped": false,
+          "page_reference": null,
+          "paragraph_references": [],
+          "excerpt_hashes": []
+        },
+        "article_11": {
+          "mapped": false,
+          "page_reference": null,
+          "paragraph_references": [],
+          "excerpt_hashes": []
+        },
+        "article_12": {
+          "mapped": false,
+          "page_reference": null,
+          "paragraph_references": [],
+          "excerpt_hashes": []
+        }
+      },
+      "effective_date_evidence": {
+        "existing_effective_dates": [],
+        "treaty_effective_date_verified": false,
+        "protocol_effective_dates_verified": false,
+        "mli_effective_dates_verified": false,
+        "withholding_tax_effective_date": null
+      },
+      "current_audit_issues": [
+        "authentic_language_status_not_recorded",
+        "effective_date_not_recorded",
+        "missing_official_source_reference",
+        "official_english_text_not_recorded"
+      ],
+      "production_blockers": [
+        "authentic_and_prevailing_languages_not_assessed",
+        "instrument_effective_dates_incomplete",
+        "official_english_version_not_assessed",
+        "official_source_not_registered"
+      ],
+      "manifest_status": "source_remediation_required",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    }
+  },
+  "resolved_scopes": [
+    {
+      "packet_id": "CZ-AT-DIV-LEGAL-REVIEW",
+      "recipient_country": "AT",
+      "recipient_country_name": "Rakousko",
+      "income_type": "dividend",
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-at-div-legal-review.json",
+      "base_treaty_article": null,
+      "base_rate_candidates": [],
+      "protocol_rate_candidates": [],
+      "protocol_effect_rate_candidates": [],
+      "resolved_rate_candidate": null,
+      "rate_condition_count": 0,
+      "domestic_standard_rate_candidate": 15.0,
+      "domestic_protective_rate_candidate": 35.0,
+      "relief_candidate": {
+        "all_of": [
+          {
+            "fact": "recipient_is_qualifying_company_form",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_is_tax_resident_in_eligible_jurisdiction",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_subject_to_qualifying_corporate_tax",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_has_no_tax_exemption_or_zero_rate_option",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "ownership_percent",
+            "operator": ">=",
+            "value": 10
+          },
+          {
+            "fact": "recipient_is_parent_company",
+            "operator": "==",
+            "value": true
+          }
+        ],
+        "anti_abuse_review_required": true,
+        "directive_source_id": "EU-PSD-2011-96-CONSOLIDATED",
+        "holding_period_one_of": [
+          {
+            "fact": "holding_period_months",
+            "operator": ">=",
+            "value": 12
+          },
+          {
+            "all_of": [
+              {
+                "fact": "holding_period_will_reach_months",
+                "operator": ">=",
+                "value": 12
+              },
+              {
+                "fact": "statutory_clawback_acknowledged",
+                "operator": "==",
+                "value": true
+              }
+            ]
+          }
+        ],
+        "legal_reference": "section 19(1)(ze), (3), (4), (6), (8) and (11)",
+        "rate": 0.0,
+        "regime": "eu_directive_domestic_implementation"
+      },
+      "article_suspended": false,
+      "status_instrument": {},
+      "mli": {},
+      "protocol": {},
+      "existing_blockers": [
+        "anti_abuse_determination",
+        "domestic_rate_candidate_review",
+        "independent_legal_review",
+        "missing_instrument_chain_or_priority_review_row",
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "unresolved_codes": [
+        "missing_base_treaty",
+        "missing_instrument_chain_or_priority_review_row",
+        "missing_rate_candidate",
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "resolution_class": "conditional_mapping_required",
+      "owner_approval_status": "not_started",
+      "promotable_to_active_rules": false,
+      "fail_closed": true,
+      "hard_unresolved_codes": [],
+      "conditional_codes": [
+        "multiple_rate_conditions"
+      ],
+      "process_review_codes": [
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "primary_review_candidate_status": "source_data_exception",
+      "source_exception_resolution": {
+        "packet_id": "CZ-AT-DIV-LEGAL-REVIEW",
+        "resolution_type": "pilot_source_mapping",
+        "candidate_rates": [
+          {
+            "rate": 0.0,
+            "legal_basis": "Article 10(2)(b)",
+            "conditions": {
+              "minimum_ownership_percent": 10,
+              "beneficial_owner": true
+            }
+          },
+          {
+            "rate": 10.0,
+            "legal_basis": "Article 10(2)(a)",
+            "conditions": {
+              "beneficial_owner": true
+            }
+          }
+        ],
+        "classification": "conditional_mapping_required",
+        "source_language": "cs",
+        "text_quality_status": "ocr_rejected",
+        "clean_english_source_required": true
+      },
+      "resolved_rate_candidates": [
+        {
+          "rate": 0.0,
+          "legal_basis": "Article 10(2)(b)",
+          "conditions": {
+            "minimum_ownership_percent": 10,
+            "beneficial_owner": true
+          }
+        },
+        {
+          "rate": 10.0,
+          "legal_basis": "Article 10(2)(a)",
+          "conditions": {
+            "beneficial_owner": true
+          }
+        }
+      ],
+      "exception_resolution_applied": true
+    },
+    {
+      "packet_id": "CZ-AT-INT-LEGAL-REVIEW",
+      "recipient_country": "AT",
+      "recipient_country_name": "Rakousko",
+      "income_type": "interest",
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-at-int-legal-review.json",
+      "base_treaty_article": null,
+      "base_rate_candidates": [],
+      "protocol_rate_candidates": [],
+      "protocol_effect_rate_candidates": [],
+      "resolved_rate_candidate": 0.0,
+      "rate_condition_count": 0,
+      "domestic_standard_rate_candidate": 15.0,
+      "domestic_protective_rate_candidate": 35.0,
+      "relief_candidate": {
+        "all_of": [
+          {
+            "fact": "recipient_is_qualifying_company_form",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_is_tax_resident_in_eligible_jurisdiction",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_subject_to_qualifying_corporate_tax",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_has_no_tax_exemption_or_zero_rate_option",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "beneficial_owner",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "payment_is_arm_length_amount",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "section_38nb_decision_effective",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "payment_not_attributable_to_disqualifying_pe",
+            "operator": "==",
+            "value": true
+          }
+        ],
+        "anti_abuse_review_required": true,
+        "association_one_of": [
+          "payer directly holds at least 25% of recipient capital or voting rights",
+          "recipient directly holds at least 25% of payer capital or voting rights",
+          "one person directly holds at least 25% of both payer and recipient capital or voting rights"
+        ],
+        "association_period_one_of": [
+          {
+            "fact": "holding_period_months",
+            "operator": ">=",
+            "value": 24
+          },
+          {
+            "all_of": [
+              {
+                "fact": "holding_period_will_reach_months",
+                "operator": ">=",
+                "value": 24
+              },
+              {
+                "fact": "statutory_clawback_acknowledged",
+                "operator": "==",
+                "value": true
+              }
+            ]
+          }
+        ],
+        "directive_source_id": "EU-IRD-2003-49-CONSOLIDATED",
+        "legal_reference": "section 19(1)(zk), (3), (5), (6), (8) and section 38nb",
+        "rate": 0.0,
+        "regime": "eu_directive_domestic_implementation"
+      },
+      "article_suspended": false,
+      "status_instrument": {},
+      "mli": {},
+      "protocol": {},
+      "existing_blockers": [
+        "anti_abuse_determination",
+        "domestic_rate_candidate_review",
+        "independent_legal_review",
+        "missing_instrument_chain_or_priority_review_row",
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "unresolved_codes": [
+        "missing_base_treaty",
+        "missing_instrument_chain_or_priority_review_row",
+        "missing_rate_candidate",
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "resolution_class": "candidate_ready_for_owner_review",
+      "owner_approval_status": "not_started",
+      "promotable_to_active_rules": false,
+      "fail_closed": true,
+      "hard_unresolved_codes": [],
+      "conditional_codes": [],
+      "process_review_codes": [
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "primary_review_candidate_status": "source_data_exception",
+      "source_exception_resolution": {
+        "packet_id": "CZ-AT-INT-LEGAL-REVIEW",
+        "resolution_type": "pilot_source_mapping",
+        "candidate_rates": [
+          {
+            "rate": 0.0,
+            "legal_basis": "Article 11(1)",
+            "conditions": {
+              "beneficial_owner": true
+            }
+          }
+        ],
+        "classification": "candidate_ready_for_owner_review",
+        "source_language": "cs",
+        "text_quality_status": "ocr_rejected",
+        "clean_english_source_required": true
+      },
+      "resolved_rate_candidates": [
+        {
+          "rate": 0.0,
+          "legal_basis": "Article 11(1)",
+          "conditions": {
+            "beneficial_owner": true
+          }
+        }
+      ],
+      "exception_resolution_applied": true
+    },
+    {
+      "packet_id": "CZ-AT-ROY-LEGAL-REVIEW",
+      "recipient_country": "AT",
+      "recipient_country_name": "Rakousko",
+      "income_type": "royalty",
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-at-roy-legal-review.json",
+      "base_treaty_article": null,
+      "base_rate_candidates": [],
+      "protocol_rate_candidates": [],
+      "protocol_effect_rate_candidates": [],
+      "resolved_rate_candidate": null,
+      "rate_condition_count": 0,
+      "domestic_standard_rate_candidate": 15.0,
+      "domestic_protective_rate_candidate": 35.0,
+      "relief_candidate": {
+        "all_of": [
+          {
+            "fact": "recipient_is_qualifying_company_form",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_is_tax_resident_in_eligible_jurisdiction",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_subject_to_qualifying_corporate_tax",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_has_no_tax_exemption_or_zero_rate_option",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "beneficial_owner",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "payment_is_arm_length_amount",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "section_38nb_decision_effective",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "payment_not_attributable_to_disqualifying_pe",
+            "operator": "==",
+            "value": true
+          }
+        ],
+        "anti_abuse_review_required": true,
+        "association_one_of": [
+          "payer directly holds at least 25% of recipient capital or voting rights",
+          "recipient directly holds at least 25% of payer capital or voting rights",
+          "one person directly holds at least 25% of both payer and recipient capital or voting rights"
+        ],
+        "association_period_one_of": [
+          {
+            "fact": "holding_period_months",
+            "operator": ">=",
+            "value": 24
+          },
+          {
+            "all_of": [
+              {
+                "fact": "holding_period_will_reach_months",
+                "operator": ">=",
+                "value": 24
+              },
+              {
+                "fact": "statutory_clawback_acknowledged",
+                "operator": "==",
+                "value": true
+              }
+            ]
+          }
+        ],
+        "directive_source_id": "EU-IRD-2003-49-CONSOLIDATED",
+        "legal_reference": "section 19(1)(zj), (3), (5)-(8) and section 38nb",
+        "rate": 0.0,
+        "regime": "eu_directive_domestic_implementation"
+      },
+      "article_suspended": false,
+      "status_instrument": {},
+      "mli": {},
+      "protocol": {},
+      "existing_blockers": [
+        "anti_abuse_determination",
+        "domestic_rate_candidate_review",
+        "independent_legal_review",
+        "missing_instrument_chain_or_priority_review_row",
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "unresolved_codes": [
+        "missing_base_treaty",
+        "missing_instrument_chain_or_priority_review_row",
+        "missing_rate_candidate",
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "resolution_class": "conditional_mapping_required",
+      "owner_approval_status": "not_started",
+      "promotable_to_active_rules": false,
+      "fail_closed": true,
+      "hard_unresolved_codes": [],
+      "conditional_codes": [
+        "multiple_rate_conditions"
+      ],
+      "process_review_codes": [
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "primary_review_candidate_status": "source_data_exception",
+      "source_exception_resolution": {
+        "packet_id": "CZ-AT-ROY-LEGAL-REVIEW",
+        "resolution_type": "pilot_source_mapping",
+        "candidate_rates": [
+          {
+            "rate": 5.0,
+            "legal_basis": "Article 12(2)",
+            "conditions": {
+              "royalty_category": "Article 12(3)(a)",
+              "beneficial_owner": true
+            }
+          },
+          {
+            "rate": 0.0,
+            "legal_basis": "Article 12(1) read with Article 12(2)",
+            "conditions": {
+              "royalty_category": "Article 12(3)(b)",
+              "beneficial_owner": true
+            }
+          }
+        ],
+        "classification": "conditional_mapping_required",
+        "source_language": "cs",
+        "text_quality_status": "ocr_rejected",
+        "clean_english_source_required": true
+      },
+      "resolved_rate_candidates": [
+        {
+          "rate": 5.0,
+          "legal_basis": "Article 12(2)",
+          "conditions": {
+            "royalty_category": "Article 12(3)(a)",
+            "beneficial_owner": true
+          }
+        },
+        {
+          "rate": 0.0,
+          "legal_basis": "Article 12(1) read with Article 12(2)",
+          "conditions": {
+            "royalty_category": "Article 12(3)(b)",
+            "beneficial_owner": true
+          }
+        }
+      ],
+      "exception_resolution_applied": true
+    },
+    {
+      "packet_id": "CZ-CH-DIV-LEGAL-REVIEW",
+      "recipient_country": "CH",
+      "recipient_country_name": "Švýcarsko",
+      "income_type": "dividend",
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-ch-div-legal-review.json",
+      "base_treaty_article": null,
+      "base_rate_candidates": [],
+      "protocol_rate_candidates": [],
+      "protocol_effect_rate_candidates": [],
+      "resolved_rate_candidate": null,
+      "rate_condition_count": 0,
+      "domestic_standard_rate_candidate": 15.0,
+      "domestic_protective_rate_candidate": 35.0,
+      "relief_candidate": {
+        "all_of": [
+          {
+            "fact": "recipient_is_qualifying_company_form",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_is_tax_resident_in_eligible_jurisdiction",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_subject_to_qualifying_corporate_tax",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_has_no_tax_exemption_or_zero_rate_option",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "ownership_percent",
+            "operator": ">=",
+            "value": 10
+          },
+          {
+            "fact": "recipient_is_parent_company",
+            "operator": "==",
+            "value": true
+          }
+        ],
+        "anti_abuse_review_required": true,
+        "directive_source_id": null,
+        "holding_period_one_of": [
+          {
+            "fact": "holding_period_months",
+            "operator": ">=",
+            "value": 12
+          },
+          {
+            "all_of": [
+              {
+                "fact": "holding_period_will_reach_months",
+                "operator": ">=",
+                "value": 12
+              },
+              {
+                "fact": "statutory_clawback_acknowledged",
+                "operator": "==",
+                "value": true
+              }
+            ]
+          }
+        ],
+        "legal_reference": "section 19(1)(ze), (3), (4), (6), (8) and (11)",
+        "rate": 0.0,
+        "regime": "section_19_8_extension"
+      },
+      "article_suspended": false,
+      "status_instrument": {},
+      "mli": {},
+      "protocol": {},
+      "existing_blockers": [
+        "anti_abuse_determination",
+        "domestic_rate_candidate_review",
+        "independent_legal_review",
+        "missing_instrument_chain_or_priority_review_row",
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "unresolved_codes": [
+        "missing_base_treaty",
+        "missing_instrument_chain_or_priority_review_row",
+        "missing_rate_candidate",
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "resolution_class": "conditional_mapping_required",
+      "owner_approval_status": "not_started",
+      "promotable_to_active_rules": false,
+      "fail_closed": true,
+      "hard_unresolved_codes": [],
+      "conditional_codes": [
+        "multiple_rate_conditions"
+      ],
+      "process_review_codes": [
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "primary_review_candidate_status": "source_data_exception",
+      "source_exception_resolution": {
+        "packet_id": "CZ-CH-DIV-LEGAL-REVIEW",
+        "resolution_type": "pilot_source_mapping",
+        "candidate_rates": [
+          {
+            "rate": 5.0,
+            "legal_basis": "Article 10(2)(a)",
+            "conditions": {
+              "minimum_direct_ownership_percent": 25,
+              "recipient_is_company_other_than_partnership": true,
+              "beneficial_owner": true
+            }
+          },
+          {
+            "rate": 15.0,
+            "legal_basis": "Article 10(2)(b)",
+            "conditions": {
+              "beneficial_owner": true
+            }
+          }
+        ],
+        "classification": "conditional_mapping_required",
+        "source_language": "cs",
+        "text_quality_status": "ocr_rejected",
+        "clean_english_source_required": true
+      },
+      "resolved_rate_candidates": [
+        {
+          "rate": 5.0,
+          "legal_basis": "Article 10(2)(a)",
+          "conditions": {
+            "minimum_direct_ownership_percent": 25,
+            "recipient_is_company_other_than_partnership": true,
+            "beneficial_owner": true
+          }
+        },
+        {
+          "rate": 15.0,
+          "legal_basis": "Article 10(2)(b)",
+          "conditions": {
+            "beneficial_owner": true
+          }
+        }
+      ],
+      "exception_resolution_applied": true
+    },
+    {
+      "packet_id": "CZ-CH-INT-LEGAL-REVIEW",
+      "recipient_country": "CH",
+      "recipient_country_name": "Švýcarsko",
+      "income_type": "interest",
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-ch-int-legal-review.json",
+      "base_treaty_article": null,
+      "base_rate_candidates": [],
+      "protocol_rate_candidates": [],
+      "protocol_effect_rate_candidates": [],
+      "resolved_rate_candidate": 0.0,
+      "rate_condition_count": 0,
+      "domestic_standard_rate_candidate": 15.0,
+      "domestic_protective_rate_candidate": 35.0,
+      "relief_candidate": {
+        "all_of": [
+          {
+            "fact": "recipient_is_qualifying_company_form",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_is_tax_resident_in_eligible_jurisdiction",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_subject_to_qualifying_corporate_tax",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_has_no_tax_exemption_or_zero_rate_option",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "beneficial_owner",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "payment_is_arm_length_amount",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "section_38nb_decision_effective",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "payment_not_attributable_to_disqualifying_pe",
+            "operator": "==",
+            "value": true
+          }
+        ],
+        "anti_abuse_review_required": true,
+        "association_one_of": [
+          "payer directly holds at least 25% of recipient capital or voting rights",
+          "recipient directly holds at least 25% of payer capital or voting rights",
+          "one person directly holds at least 25% of both payer and recipient capital or voting rights"
+        ],
+        "association_period_one_of": [
+          {
+            "fact": "holding_period_months",
+            "operator": ">=",
+            "value": 24
+          },
+          {
+            "all_of": [
+              {
+                "fact": "holding_period_will_reach_months",
+                "operator": ">=",
+                "value": 24
+              },
+              {
+                "fact": "statutory_clawback_acknowledged",
+                "operator": "==",
+                "value": true
+              }
+            ]
+          }
+        ],
+        "directive_source_id": null,
+        "legal_reference": "section 19(1)(zk), (3), (5), (6), (8) and section 38nb",
+        "rate": 0.0,
+        "regime": "section_19_8_extension"
+      },
+      "article_suspended": false,
+      "status_instrument": {},
+      "mli": {},
+      "protocol": {},
+      "existing_blockers": [
+        "anti_abuse_determination",
+        "domestic_rate_candidate_review",
+        "independent_legal_review",
+        "missing_instrument_chain_or_priority_review_row",
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "unresolved_codes": [
+        "missing_base_treaty",
+        "missing_instrument_chain_or_priority_review_row",
+        "missing_rate_candidate",
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "resolution_class": "candidate_ready_for_owner_review",
+      "owner_approval_status": "not_started",
+      "promotable_to_active_rules": false,
+      "fail_closed": true,
+      "hard_unresolved_codes": [],
+      "conditional_codes": [],
+      "process_review_codes": [
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "primary_review_candidate_status": "source_data_exception",
+      "source_exception_resolution": {
+        "packet_id": "CZ-CH-INT-LEGAL-REVIEW",
+        "resolution_type": "pilot_source_mapping",
+        "candidate_rates": [
+          {
+            "rate": 0.0,
+            "legal_basis": "Article 11(1)",
+            "conditions": {
+              "beneficial_owner": true
+            }
+          }
+        ],
+        "classification": "candidate_ready_for_owner_review",
+        "source_language": "cs",
+        "text_quality_status": "ocr_rejected",
+        "clean_english_source_required": true
+      },
+      "resolved_rate_candidates": [
+        {
+          "rate": 0.0,
+          "legal_basis": "Article 11(1)",
+          "conditions": {
+            "beneficial_owner": true
+          }
+        }
+      ],
+      "exception_resolution_applied": true
+    },
+    {
+      "packet_id": "CZ-CH-ROY-LEGAL-REVIEW",
+      "recipient_country": "CH",
+      "recipient_country_name": "Švýcarsko",
+      "income_type": "royalty",
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-ch-roy-legal-review.json",
+      "base_treaty_article": null,
+      "base_rate_candidates": [],
+      "protocol_rate_candidates": [],
+      "protocol_effect_rate_candidates": [],
+      "resolved_rate_candidate": 10.0,
+      "rate_condition_count": 0,
+      "domestic_standard_rate_candidate": 15.0,
+      "domestic_protective_rate_candidate": 35.0,
+      "relief_candidate": {
+        "all_of": [
+          {
+            "fact": "recipient_is_qualifying_company_form",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_is_tax_resident_in_eligible_jurisdiction",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_subject_to_qualifying_corporate_tax",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_has_no_tax_exemption_or_zero_rate_option",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "beneficial_owner",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "payment_is_arm_length_amount",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "section_38nb_decision_effective",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "payment_not_attributable_to_disqualifying_pe",
+            "operator": "==",
+            "value": true
+          }
+        ],
+        "anti_abuse_review_required": true,
+        "association_one_of": [
+          "payer directly holds at least 25% of recipient capital or voting rights",
+          "recipient directly holds at least 25% of payer capital or voting rights",
+          "one person directly holds at least 25% of both payer and recipient capital or voting rights"
+        ],
+        "association_period_one_of": [
+          {
+            "fact": "holding_period_months",
+            "operator": ">=",
+            "value": 24
+          },
+          {
+            "all_of": [
+              {
+                "fact": "holding_period_will_reach_months",
+                "operator": ">=",
+                "value": 24
+              },
+              {
+                "fact": "statutory_clawback_acknowledged",
+                "operator": "==",
+                "value": true
+              }
+            ]
+          }
+        ],
+        "directive_source_id": null,
+        "legal_reference": "section 19(1)(zj), (3), (5)-(8) and section 38nb",
+        "rate": 0.0,
+        "regime": "section_19_8_extension"
+      },
+      "article_suspended": false,
+      "status_instrument": {},
+      "mli": {},
+      "protocol": {},
+      "existing_blockers": [
+        "anti_abuse_determination",
+        "domestic_rate_candidate_review",
+        "independent_legal_review",
+        "missing_instrument_chain_or_priority_review_row",
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "unresolved_codes": [
+        "missing_base_treaty",
+        "missing_instrument_chain_or_priority_review_row",
+        "missing_rate_candidate",
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "resolution_class": "candidate_ready_for_owner_review",
+      "owner_approval_status": "not_started",
+      "promotable_to_active_rules": false,
+      "fail_closed": true,
+      "hard_unresolved_codes": [],
+      "conditional_codes": [],
+      "process_review_codes": [
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "primary_review_candidate_status": "source_data_exception",
+      "source_exception_resolution": {
+        "packet_id": "CZ-CH-ROY-LEGAL-REVIEW",
+        "resolution_type": "pilot_source_mapping",
+        "candidate_rates": [
+          {
+            "rate": 10.0,
+            "legal_basis": "Article 12(2)",
+            "conditions": {
+              "beneficial_owner": true
+            }
+          }
+        ],
+        "classification": "candidate_ready_for_owner_review",
+        "source_language": "cs",
+        "text_quality_status": "ocr_rejected",
+        "clean_english_source_required": true
+      },
+      "resolved_rate_candidates": [
+        {
+          "rate": 10.0,
+          "legal_basis": "Article 12(2)",
+          "conditions": {
+            "beneficial_owner": true
+          }
+        }
+      ],
+      "exception_resolution_applied": true
+    }
+  ],
+  "inventory_status": "evidence_collection_only",
+  "legal_conclusions_confirmed": false,
+  "clean_official_sources_confirmed": false,
+  "fail_closed": true,
+  "promotable_to_active_rules": false
+}
