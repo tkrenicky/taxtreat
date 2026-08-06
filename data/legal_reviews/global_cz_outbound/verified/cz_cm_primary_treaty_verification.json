@@ -1,0 +1,77 @@
+{
+  "application": {
+    "czech_withholding_tax_effective_from": null,
+    "verification_status": "pending_article_application_review"
+  },
+  "direction": "CZ_OUTBOUND",
+  "fail_closed": true,
+  "income_articles": {
+    "dividends": {
+      "article_number": 10,
+      "article_text_sha256": "972abf7f213c8433a7a854f3468e24f9ff9113eba74ee7bc65f37a98a2d135c8",
+      "treaty_rates": [
+        {
+          "conditions": {
+            "beneficial_owner_required": true,
+            "category": "all dividends"
+          },
+          "rate_percent": 10
+        }
+      ],
+      "verification_status": "primary_treaty_text_verified"
+    },
+    "interest": {
+      "article_number": 11,
+      "article_text_sha256": "5793a538dcb7ce11eda3ed4d35e7418a23dac86e8a05772d6fa1540e7ff6be29",
+      "conditions": {
+        "beneficial_owner_required": true
+      },
+      "standard_rate_percent": 10,
+      "verification_status": "primary_treaty_text_verified"
+    },
+    "royalties_and_technical_services": {
+      "article_number": 12,
+      "article_text_sha256": "a61091bc0069e641e46669e118f27fec462d61951eea8a11e0c230d9bdc29531",
+      "conditions": {
+        "beneficial_owner_required": true
+      },
+      "covered_categories": [
+        "royalties",
+        "technical services"
+      ],
+      "standard_rate_percent": 10,
+      "verification_status": "primary_treaty_text_verified"
+    }
+  },
+  "legal_verification_completed": false,
+  "overlay_review": {
+    "czech_domestic_conditions_verified": false,
+    "mli_position_verified": false,
+    "mli_review_status": "pending_pairwise_verification",
+    "protocol_review_status": "pending"
+  },
+  "partner_country": "CM",
+  "partner_country_name": "Kamerun",
+  "production_ready": false,
+  "promotable_to_active_rules": false,
+  "schema_version": 1,
+  "source": {
+    "decisive_language_on_divergence": "English",
+    "entry_into_force_date": "2025-07-07",
+    "entry_into_force_verification_status": "official_publication_verified",
+    "parsed_path": "data/parsed/kamerun.json",
+    "signature_date": "2023-02-07",
+    "source_title": "415/2025 Sb."
+  },
+  "treaty_pair_id": "CZ-CM",
+  "verification_id": "CZ-CM-primary-treaty-2026-08-06.1",
+  "verification_scope": {
+    "czech_withholding_effective_date_verified": false,
+    "domestic_conditions_verified": false,
+    "entry_into_force_verified": true,
+    "mli_position_verified": false,
+    "primary_treaty_articles_10_to_12_verified": true,
+    "protocol_position_verified": false,
+    "transaction_decision_ready": false
+  }
+}
