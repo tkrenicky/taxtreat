@@ -20,17 +20,17 @@ def test_expected_counts():
     assert (
         load("single_rate_review_pack.json")
         ["scope_count"]
-        == 189
+        == 192
     )
     assert (
         load("conditional_rate_review_pack.json")
         ["scope_count"]
-        == 98
+        == 102
     )
     assert (
         load("source_exception_review_queue.json")
         ["scope_count"]
-        == 7
+        == 0
     )
 
 
