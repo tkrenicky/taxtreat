@@ -64,17 +64,13 @@ def test_mf_sources_are_locally_preserved():
             assert url_path.exists()
 
             assert hashlib.sha256(
-                html_path.read_text(
-                    encoding="utf-8"
-                ).encode("utf-8")
+                html_path.read_bytes()
             ).hexdigest() == document[
                 "html_sha256"
             ]
 
             assert hashlib.sha256(
-                text_path.read_text(
-                    encoding="utf-8"
-                ).encode("utf-8")
+                text_path.read_bytes()
             ).hexdigest() == document[
                 "text_sha256"
             ]
