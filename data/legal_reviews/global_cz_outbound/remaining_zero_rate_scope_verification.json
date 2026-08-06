@@ -1,0 +1,236 @@
+{
+  "dataset_release": "remaining-zero-rate-scope-verification-2026-08-06.1",
+  "fail_closed": true,
+  "legal_verification_completed": false,
+  "production_ready": false,
+  "promotable_to_active_rules": false,
+  "records": [
+    {
+      "domestic_conditions_status": "pending",
+      "effective_date_status": "pending",
+      "fail_closed": true,
+      "mli_status": "pending",
+      "parsed_path": "data/parsed/kypr.json",
+      "partner_country_name": "Kypr",
+      "production_ready": false,
+      "protocol_status": "pending",
+      "transaction_decision_ready": false,
+      "treaty_pair_id": "CZ-CY",
+      "verified_zero_rate_scopes": {
+        "dividends": {
+          "article_number": 10,
+          "article_text_sha256": "1da760593beaee3f8f0b2b61e90e299c06641f5e2e74f58368c94b3c5f2008eb",
+          "basis_type": "explicit_numeric_zero_rate",
+          "legal_basis": "0% where the beneficial owner is a company directly holding at least 10% of the payer's capital continuously for at least one year.",
+          "primary_article_identity_verified": true,
+          "rate_percent": 0,
+          "verification_status": "zero_rate_scope_verified",
+          "zero_rate_legal_basis_verified": true
+        },
+        "interest": {
+          "article_number": 11,
+          "article_text_sha256": "66c996db81c40fcfb1362bb4ca04acae913f23079cfc0f07a39b51f721233776",
+          "basis_type": "exclusive_residence_state_taxation",
+          "legal_basis": "Interest beneficially owned by a resident of the other contracting state is taxable only in that other state.",
+          "primary_article_identity_verified": true,
+          "rate_percent": 0,
+          "verification_status": "zero_rate_scope_verified",
+          "zero_rate_legal_basis_verified": true
+        },
+        "royalties": {
+          "article_number": 12,
+          "article_text_sha256": "bebcc20b959acd016616efdef5997365b0f1e6ed87aac9ea243b3094e827d459",
+          "basis_type": "category_specific_residence_state_taxation",
+          "legal_basis": "Only the Article 12(3)(a) royalty category is subject to the 10% source-state ceiling; the remaining treaty category is taxable only in the residence state.",
+          "primary_article_identity_verified": true,
+          "rate_percent": 0,
+          "verification_status": "zero_rate_scope_verified",
+          "zero_rate_legal_basis_verified": true
+        }
+      },
+      "zero_rate_scope_count": 3
+    },
+    {
+      "domestic_conditions_status": "pending",
+      "effective_date_status": "pending",
+      "fail_closed": true,
+      "mli_status": "pending",
+      "parsed_path": "data/parsed/velka_britanie_spojene_kralovstvi_velke_britanie_a_severniho_irska.json",
+      "partner_country_name": "Spojené království",
+      "production_ready": false,
+      "protocol_status": "pending",
+      "transaction_decision_ready": false,
+      "treaty_pair_id": "CZ-GB",
+      "verified_zero_rate_scopes": {
+        "interest": {
+          "article_number": 11,
+          "article_text_sha256": "f9ce3c2e6aa899361fc98c511a87b7e1313f36b1cc9a08483ca19cda047ee352",
+          "basis_type": "exclusive_residence_state_taxation",
+          "legal_basis": "Interest beneficially owned by a resident of the other contracting state is taxable only in that other state.",
+          "primary_article_identity_verified": true,
+          "rate_percent": 0,
+          "verification_status": "zero_rate_scope_verified",
+          "zero_rate_legal_basis_verified": true
+        },
+        "royalties": {
+          "article_number": 12,
+          "article_text_sha256": "64ca5b1fa56027d61bf2a511747386165ca40108db778eb8a3251db7f0095273",
+          "basis_type": "category_specific_source_exemption",
+          "legal_basis": "The 10% source-state ceiling applies only to the Article 12(3)(a) category; the remaining royalty category is exempt in the source state.",
+          "primary_article_identity_verified": true,
+          "rate_percent": 0,
+          "verification_status": "zero_rate_scope_verified",
+          "zero_rate_legal_basis_verified": true
+        }
+      },
+      "zero_rate_scope_count": 2
+    },
+    {
+      "domestic_conditions_status": "pending",
+      "effective_date_status": "pending",
+      "fail_closed": true,
+      "mli_status": "pending",
+      "parsed_path": "data/parsed/hongkong.json",
+      "partner_country_name": "Hongkong",
+      "production_ready": false,
+      "protocol_status": "pending",
+      "transaction_decision_ready": false,
+      "treaty_pair_id": "CZ-HK",
+      "verified_zero_rate_scopes": {
+        "interest": {
+          "article_number": 11,
+          "article_text_sha256": "eb0e2a492d0318435ffd5872d720a77ee5f5e64e20e45729310ab2e504f12ea6",
+          "basis_type": "exclusive_residence_side_taxation",
+          "legal_basis": "Interest beneficially owned by a resident of the other contracting side is taxable only in that other side.",
+          "primary_article_identity_verified": true,
+          "rate_percent": 0,
+          "verification_status": "zero_rate_scope_verified",
+          "zero_rate_legal_basis_verified": true
+        }
+      },
+      "zero_rate_scope_count": 1
+    },
+    {
+      "domestic_conditions_status": "pending",
+      "effective_date_status": "pending",
+      "fail_closed": true,
+      "mli_status": "pending",
+      "parsed_path": "data/parsed/japonsko.json",
+      "partner_country_name": "Japonsko",
+      "production_ready": false,
+      "protocol_status": "pending",
+      "transaction_decision_ready": false,
+      "treaty_pair_id": "CZ-JP",
+      "verified_zero_rate_scopes": {
+        "royalties": {
+          "article_number": 12,
+          "article_text_sha256": "91757852e289183c97ee1e9e5761e777704fd2490946d0f371be731af68d8cf3",
+          "basis_type": "category_specific_source_exemption",
+          "legal_basis": "Cultural royalties are exempt from tax in the contracting state in which they arise; industrial royalties remain subject to the 10% source-state ceiling.",
+          "primary_article_identity_verified": true,
+          "rate_percent": 0,
+          "verification_status": "zero_rate_scope_verified",
+          "zero_rate_legal_basis_verified": true
+        }
+      },
+      "zero_rate_scope_count": 1
+    },
+    {
+      "domestic_conditions_status": "pending",
+      "effective_date_status": "pending",
+      "fail_closed": true,
+      "mli_status": "pending",
+      "parsed_path": "data/parsed/lucembursko.json",
+      "partner_country_name": "Lucembursko",
+      "production_ready": false,
+      "protocol_status": "pending",
+      "transaction_decision_ready": false,
+      "treaty_pair_id": "CZ-LU",
+      "verified_zero_rate_scopes": {
+        "dividends": {
+          "article_number": 10,
+          "article_text_sha256": "1d71f0c86db1e3bb24280045553070cd8b28a383d707d108f2060f8359b573c5",
+          "basis_type": "explicit_numeric_zero_rate",
+          "legal_basis": "0% where the beneficial owner is a company directly holding at least 10% of the payer's capital continuously for at least one year.",
+          "primary_article_identity_verified": true,
+          "rate_percent": 0,
+          "verification_status": "zero_rate_scope_verified",
+          "zero_rate_legal_basis_verified": true
+        },
+        "interest": {
+          "article_number": 11,
+          "article_text_sha256": "ad09de119530bc3d2ff06a26058b516a47e435689cf713f38d20ad2a9b634014",
+          "basis_type": "exclusive_residence_state_taxation",
+          "legal_basis": "Interest beneficially owned by a resident of the other contracting state is taxable only in that other state.",
+          "primary_article_identity_verified": true,
+          "rate_percent": 0,
+          "verification_status": "zero_rate_scope_verified",
+          "zero_rate_legal_basis_verified": true
+        },
+        "royalties": {
+          "article_number": 12,
+          "article_text_sha256": "1600f02a5a27baa377334f5c2b09d36d56d4e3f5c646b1f9dfdafd9dcc30d3eb",
+          "basis_type": "category_specific_residence_state_taxation",
+          "legal_basis": "The source-state 10% ceiling excludes the Article 12(3)(a) payment category, which is taxable only in the residence state.",
+          "primary_article_identity_verified": true,
+          "rate_percent": 0,
+          "verification_status": "zero_rate_scope_verified",
+          "zero_rate_legal_basis_verified": true
+        }
+      },
+      "zero_rate_scope_count": 3
+    },
+    {
+      "domestic_conditions_status": "pending",
+      "effective_date_status": "pending",
+      "fail_closed": true,
+      "mli_status": "pending",
+      "parsed_path": "data/parsed/kosovo.json",
+      "partner_country_name": "Kosovo",
+      "production_ready": false,
+      "protocol_status": "pending",
+      "transaction_decision_ready": false,
+      "treaty_pair_id": "CZ-XK",
+      "verified_zero_rate_scopes": {
+        "interest": {
+          "article_number": 11,
+          "article_text_sha256": "ad09de119530bc3d2ff06a26058b516a47e435689cf713f38d20ad2a9b634014",
+          "basis_type": "exclusive_residence_state_taxation",
+          "legal_basis": "Interest beneficially owned by a resident of the other contracting state is taxable only in that other state.",
+          "primary_article_identity_verified": true,
+          "rate_percent": 0,
+          "verification_status": "zero_rate_scope_verified",
+          "zero_rate_legal_basis_verified": true
+        },
+        "royalties": {
+          "article_number": 12,
+          "article_text_sha256": "5ae7b8dbb6b200fa39ce4a201e358c4375d20ae017c1072ed3b38c88964ddf2c",
+          "basis_type": "category_specific_residence_state_taxation",
+          "legal_basis": "Only royalties within Article 12(3)(a) are subject to the 10% source-state ceiling; the remaining category is taxable only in the residence state.",
+          "primary_article_identity_verified": true,
+          "rate_percent": 0,
+          "verification_status": "zero_rate_scope_verified",
+          "zero_rate_legal_basis_verified": true
+        }
+      },
+      "zero_rate_scope_count": 2
+    }
+  ],
+  "schema_version": 1,
+  "semantics": {
+    "automatic_production_promotion_allowed": false,
+    "domestic_law_review_completed": false,
+    "effective_date_review_completed": false,
+    "mli_review_completed": false,
+    "primary_rate_comparison_completed": true,
+    "protocol_review_completed": false
+  },
+  "treaty_partner_count": 6,
+  "verification_summary": {
+    "completed_article_scopes_total": 39,
+    "newly_completed_zero_rate_scopes": 12,
+    "previously_completed_nonzero_scopes": 27,
+    "remaining_primary_rate_scopes": 0
+  },
+  "zero_rate_scope_count": 12
+}
