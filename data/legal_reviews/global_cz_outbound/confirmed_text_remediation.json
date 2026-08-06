@@ -2,9 +2,11 @@
   "affected_treaty_pairs": [
     "CZ-AD",
     "CZ-BW",
-    "CZ-KR"
+    "CZ-GH",
+    "CZ-KR",
+    "CZ-QA"
   ],
-  "correction_count": 6,
+  "correction_count": 11,
   "corrections": [
     {
       "article_number": 10,
@@ -95,6 +97,71 @@
       "parsed_path": "data/parsed/korejska_republika.json",
       "rate_changed": false,
       "verification_method": "targeted_ocr_of_archived_official_publication"
+    },
+    {
+      "article_number": 10,
+      "legal_rule_changed": false,
+      "new_article_text_sha256": "aebe7d4a018b84b99e5f2920ca85452a0f72975dea8f441227d5f91f49b38d4a",
+      "new_parsed_file_sha256": "0b1492598eb8293d402fda13cd1af9dcdad20e2acd2ac86dd47bd922c8cac5e0",
+      "new_text": "v tomto druhém státě",
+      "old_article_text_sha256": "a4577f5a3b4300392712e690f12ec1254b3f7e23bff89452db15428bac9e45f8",
+      "old_parsed_file_sha256": "8d62e822d50836cdaa349b634313454ee4236abd151d7c3635a9bd8d8a3f8d9a",
+      "old_text": "vtomto druhém státě",
+      "parsed_path": "data/parsed/andorra.json",
+      "rate_changed": false,
+      "verification_basis": "published Czech treaty text comparison"
+    },
+    {
+      "article_number": 10,
+      "legal_rule_changed": false,
+      "new_article_text_sha256": "c841920a6e4fc906971ad8cb59449a3a11575b9f99be52b0f793d11599d26ecc",
+      "new_parsed_file_sha256": "b73b6720d947b4e7368f6745eff53005a478c8e532d257294a6d3cd6afbd3ef7",
+      "new_text": "v tomto druhém státě",
+      "old_article_text_sha256": "610606e33fd36f3d04bd5fce10770323cd666052b8677dc9adbfbf0d680e7c62",
+      "old_parsed_file_sha256": "07fbf39722afb3fc2a2d53955cee0722435c6f57ce0a52b0d2aa5bfaad026e9b",
+      "old_text": "vtomto druhém státě",
+      "parsed_path": "data/parsed/botswana.json",
+      "rate_changed": false,
+      "verification_basis": "published Czech treaty text comparison"
+    },
+    {
+      "article_number": 12,
+      "legal_rule_changed": false,
+      "new_article_text_sha256": "05546287fcc0330100ae4665a467a0e19d843fb1748fd846e13c2d147a6a76af",
+      "new_parsed_file_sha256": "0b8b29cb7e1d26c74dba81aeb723b559b69c33492c6e5329eb5ab699f5a78135",
+      "new_text": "použitý v tomto článku",
+      "old_article_text_sha256": "ce6fb17d899e3c2cf13eb009f202ef58aa87505a7d968d592474a0b1e6db7114",
+      "old_parsed_file_sha256": "f6a717127a5559c0d4ea203f0953cd4335eb9aebe552b151778ca56a2f89d0e7",
+      "old_text": "použitý vtomto článku",
+      "parsed_path": "data/parsed/ghana.json",
+      "rate_changed": false,
+      "verification_basis": "published Czech treaty text comparison"
+    },
+    {
+      "article_number": 10,
+      "legal_rule_changed": false,
+      "new_article_text_sha256": "a349957c02aad168b6bb47dfad7c4ce22af7e1afe47ec511a4807a3af70d6999",
+      "new_parsed_file_sha256": "2948485bae9db708e072087f71cd04f7e9703b57e89f8f8582ca310c258fce8d",
+      "new_text": "v tomto druhém státě",
+      "old_article_text_sha256": "a0572cd2713b1ba2c7727fa5d606452a8f9520b83715012bcc60cdf396f2d887",
+      "old_parsed_file_sha256": "cc4b3bfe317f17588211c61a769cf3ffdef86dd92448cdb35da3e9c08cd7b907",
+      "old_text": "vtomto druhém státě",
+      "parsed_path": "data/parsed/korejska_republika.json",
+      "rate_changed": false,
+      "verification_basis": "published Czech treaty text comparison"
+    },
+    {
+      "article_number": 10,
+      "legal_rule_changed": false,
+      "new_article_text_sha256": "22de052262188e713f810951e60adb9f41dea1f149a4cdb8dbfe2720c8fa66d3",
+      "new_parsed_file_sha256": "5ec9dfa02f5cdd446e0257fbf8993986e8ce59a9ec8d8e03e94bb0954b5c4073",
+      "new_text": "v tomto druhém státě",
+      "old_article_text_sha256": "d3111206cd5a213db9d670bd4c38532ca8370a32fa9a89ac2e0f3f0b29cad5a8",
+      "old_parsed_file_sha256": "b16a7fd7530aa06e12869359ea51b4ed35035256529fd363221f145c04c6ae7b",
+      "old_text": "vtomto druhém státě",
+      "parsed_path": "data/parsed/katar.json",
+      "rate_changed": false,
+      "verification_basis": "published Czech treaty text comparison"
     }
   ],
   "dataset_release": "confirmed-text-remediation-2026-08-06.1",
@@ -103,14 +170,6 @@
   "production_ready": false,
   "promotable_to_active_rules": false,
   "schema_version": 1,
-  "unresolved_findings": {
-    "glued_vtomto": [
-      "CZ-AD Article 10",
-      "CZ-BW Article 10",
-      "CZ-GH Article 12",
-      "CZ-KR Article 10",
-      "CZ-QA Article 10"
-    ],
-    "reason": "targeted OCR reproduces the joined form; visual confirmation remains required"
-  }
+  "text_remediation_completed": true,
+  "unresolved_findings": {}
 }
