@@ -1,0 +1,215 @@
+{
+  "approval_eligible": false,
+  "blockers": [
+    "current_treaty_status_review",
+    "domestic_rate_candidate_review",
+    "independent_legal_review"
+  ],
+  "candidate_readiness": "blocked",
+  "income_type": "dividend",
+  "legal_layers": {
+    "domestic_and_eu": {
+      "candidate_sha256": "eca257a9e33e0d351b2079ed905542abc8a303905566693393d63de1ec670593",
+      "candidate_status": "domestic_and_relief_candidate_consolidated",
+      "consolidation_blockers": [
+        "current_treaty_status_review",
+        "domestic_rate_candidate_review",
+        "independent_legal_review"
+      ],
+      "domestic_rate_candidate": {
+        "effective_from": "2026-04-01",
+        "income_scope_reference": "section 22(1)(g)(3)",
+        "protective_rate": 35.0,
+        "protective_rate_condition": "recipient is outside the EU/EEA and no qualifying treaty or tax-information-exchange instrument is applied",
+        "protective_rate_reference": "section 36(1)(c)",
+        "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "standard_rate": 15.0,
+        "standard_reference": "section 36(1)(b)(1), referring to section 22(1)(g)(3)"
+      },
+      "income_type": "dividend",
+      "recipient_country": "BY",
+      "recipient_country_name": "Bělorusko",
+      "relief_candidate": null,
+      "relief_candidate_status": "not_applicable_by_recipient_jurisdiction",
+      "relief_eligible_by_jurisdiction": false,
+      "source_country": "CZ",
+      "verification_status": "needs_review"
+    },
+    "instrument_chain": {
+      "base_treaty": {
+        "article_number": 10,
+        "article_text_sha256": "5491071d63b49916e62ba0829026c015f103f6b1d8377e2c44c539429b0cbf83",
+        "candidate_rates": [
+          10.0
+        ],
+        "candidate_status": "base_rate_candidate_extracted",
+        "risk_flags": [],
+        "semantic_resolution_status": null,
+        "source_id": "SRC-9A8D6161227A3BB3",
+        "source_state_taxation_candidate": null,
+        "treaty_rate_cap_status": "numeric_candidates_extracted"
+      },
+      "candidate_chain_complete": true,
+      "candidate_dataset_releases": {
+        "base_treaty": "remaining-294-base-candidates-2026-08-04.2",
+        "blocker_resolutions": "remaining-blocker-resolutions-2026-08-04.1",
+        "domestic_eu": "cz-domestic-eu-candidates-2026-08-04.1",
+        "mli": "cz-mli-wht-effects-2026-08-03-candidate.1",
+        "protocol": "remaining-294-protocol-effects-2026-08-03.1"
+      },
+      "candidate_sha256": "81604b393056ebfae87a1d6e138cd665e2fb250b9b91052e04aa8b20b674d92e",
+      "chain_status": "candidate_chain_assembled",
+      "czech_domestic_law": {
+        "candidate_status": "domestic_and_relief_candidate_consolidated",
+        "effective_from": "2026-04-01",
+        "protective_rate": 35.0,
+        "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "standard_rate": 15.0
+      },
+      "hard_blockers": [],
+      "income_type": "dividend",
+      "instrument_inventory": {
+        "base_source_ids": [
+          "CZ-MF-BY-A6202CAF22BF"
+        ],
+        "entry_into_force": "1998-01-15",
+        "mli_listed": false,
+        "protocol_listed": true,
+        "related_source_ids": [
+          "CZ-MF-BY-20E71B213E43",
+          "CZ-MF-BY-852FD44A9622",
+          "CZ-MF-BY-9FB15934EDD7"
+        ]
+      },
+      "legal_review_tasks": [
+        "base_treaty_candidate_review",
+        "domestic_law_fallback_review",
+        "domestic_rate_candidate_review",
+        "independent_legal_review",
+        "protocol_effect_candidate_review",
+        "status_instrument_candidate_review"
+      ],
+      "mli": {
+        "checked_as_of": null,
+        "effect_id": null,
+        "effective_from": null,
+        "resolution_source_ids": [],
+        "source_excerpt_sha256": null,
+        "source_page_id": null,
+        "status": "not_listed"
+      },
+      "protocol": {
+        "candidate_effective_from": "2012-01-01",
+        "candidate_rates": [
+          5.0,
+          10.0
+        ],
+        "candidate_status": "protocol_effect_candidate_consolidated",
+        "effect_kind": "replace_rates",
+        "required": true,
+        "source_ids": [
+          "CZ-MF-BY-9FB15934EDD7"
+        ]
+      },
+      "recipient_country": "BY",
+      "recipient_country_name": "Bělorusko",
+      "review_ready": false,
+      "section_19_relief": {
+        "candidate_rate": null,
+        "candidate_status": "not_applicable_by_recipient_jurisdiction",
+        "jurisdiction_eligible": false,
+        "legal_reference": null,
+        "regime": null
+      },
+      "source_country": "CZ",
+      "treaty_status_instrument": {
+        "candidate_status": "article_application_suspended",
+        "effect_kind": "temporary_partial_suspension",
+        "effective_from": "2024-06-01",
+        "effective_to": "2026-12-31",
+        "source_id": "CZ-MF-BY-852FD44A9622",
+        "suspended_articles": [
+          10,
+          11,
+          13
+        ]
+      },
+      "verification_status": "needs_review"
+    },
+    "mli_effects": [],
+    "priority_review_row": null,
+    "protocol_effect": {
+      "base_rate_candidates": [
+        {
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "rate": 10.0
+        }
+      ],
+      "candidate_sha256": "c533dbff59ffac9b19675d619ac0cd90aacb499d622789e37067a987c8bb73fb",
+      "candidate_status": "protocol_effect_candidate_consolidated",
+      "consolidation_blockers": [
+        "domestic_and_parent_subsidiary_relief_consolidation",
+        "independent_legal_review",
+        "post_protocol_status_instrument_consolidation",
+        "protocol_effect_candidate_review"
+      ],
+      "effect_kind": "replace_rates",
+      "evidence_anchor": "Protocol Article V(1), treaty Article 10(2)",
+      "income_type": "dividend",
+      "later_status_source_id": "CZ-MF-BY-852FD44A9622",
+      "protocol_candidate_effective_from": "2012-01-01",
+      "protocol_rate_candidates": [
+        {
+          "condition_summary": "beneficial-owner company directly holds at least 25% of payer capital",
+          "rate": 5.0
+        },
+        {
+          "condition_summary": "all other cases",
+          "rate": 10.0
+        }
+      ],
+      "protocol_source_ids": [
+        "CZ-MF-BY-9FB15934EDD7"
+      ],
+      "recipient_country": "BY",
+      "source_country": "CZ",
+      "verification_status": "needs_review"
+    }
+  },
+  "packet_id": "CZ-BY-DIV-LEGAL-REVIEW",
+  "promotable_to_active_rules": false,
+  "recipient_country": "BY",
+  "recipient_country_name": "Bělorusko",
+  "review": {
+    "confirmations": {
+      "anti_abuse_review_completed": null,
+      "domestic_law_confirmed": null,
+      "effective_dates_confirmed": null,
+      "eu_relief_confirmed": null,
+      "mli_effects_confirmed": null,
+      "protocol_effects_confirmed": null,
+      "treaty_rules_confirmed": null
+    },
+    "proposed_rule_snapshot": null,
+    "question_responses": [],
+    "review_outcome": null,
+    "reviewed_at": null,
+    "reviewer_id": null
+  },
+  "review_pack_sha256": "3b3d39c393a639d57e8589bd86bc1ce9bc07232b3b72d20a2e871b9fa0206beb",
+  "schema_version": 1,
+  "source_country": "CZ",
+  "status": "awaiting_primary_review",
+  "supporting_source_ids": [
+    "CZ-MF-BY-9FB15934EDD7",
+    "CZ-ZDP-2026-04-01-OPEN-DATA",
+    "SRC-9A8D6161227A3BB3"
+  ]
+}
