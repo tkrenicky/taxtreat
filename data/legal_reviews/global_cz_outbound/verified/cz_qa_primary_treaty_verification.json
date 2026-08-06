@@ -1,0 +1,102 @@
+{
+  "anti_abuse": {
+    "article_number": 25,
+    "article_text_sha256": "447236d92a6481c5ef2942ba5d5c67e7c06a3afa18e47be02750291e10b95b90",
+    "competent_authority_relief_present": true,
+    "principal_purpose_test_present": true,
+    "verification_status": "primary_treaty_text_verified"
+  },
+  "application": {
+    "czech_other_income_tax_effective_from": "2023-01-01",
+    "czech_withholding_tax_effective_from": "2023-01-01",
+    "verification_status": "primary_publication_verified"
+  },
+  "direction": "CZ_OUTBOUND",
+  "fail_closed": true,
+  "income_articles": {
+    "dividends": {
+      "article_number": 10,
+      "article_text_sha256": "22de052262188e713f810951e60adb9f41dea1f149a4cdb8dbfe2720c8fa66d3",
+      "public_entity_exemption_present": true,
+      "treaty_rates": [
+        {
+          "conditions": {
+            "beneficial_owner_required": true,
+            "minimum_direct_holding_percent": 10,
+            "recipient_type": "company"
+          },
+          "rate_percent": 5
+        },
+        {
+          "conditions": {
+            "beneficial_owner_required": true,
+            "category": "all other cases"
+          },
+          "rate_percent": 10
+        }
+      ],
+      "verification_status": "primary_treaty_text_verified"
+    },
+    "interest": {
+      "article_number": 11,
+      "article_text_sha256": "ba5b033b97554f6a3083db3e9649f26f35611e29c4b628ab82eefd6cf76c2efd",
+      "treaty_rates": [
+        {
+          "conditions": {
+            "basis": "taxable only in residence state",
+            "beneficial_owner_required": true
+          },
+          "rate_percent": 0
+        }
+      ],
+      "verification_status": "primary_treaty_text_verified"
+    },
+    "royalties": {
+      "article_number": 12,
+      "article_text_sha256": "5393e6f17334610f92a2e952d880297bd478d715fce5d8f216e941dd2c32a45f",
+      "treaty_rates": [
+        {
+          "conditions": {
+            "beneficial_owner_required": true,
+            "category": "all covered royalties"
+          },
+          "rate_percent": 10
+        }
+      ],
+      "verification_status": "primary_treaty_text_verified"
+    }
+  },
+  "legal_verification_completed": false,
+  "overlay_review": {
+    "czech_domestic_conditions_verified": false,
+    "mli_position_verified": false,
+    "mli_review_status": "pending_pairwise_verification",
+    "protocol_review_status": "pending",
+    "treaty_level_ppt_already_present": true
+  },
+  "partner_country": "QA",
+  "partner_country_name": "Katar",
+  "production_ready": false,
+  "promotable_to_active_rules": false,
+  "schema_version": 1,
+  "source": {
+    "decisive_language_on_divergence": "English",
+    "entry_into_force_date": "2022-10-25",
+    "official_publication_reference": "Sdělení Ministerstva zahraničních věcí č. 45/2022 Sb. m. s.",
+    "parsed_path": "data/parsed/katar.json",
+    "signature_date": "2022-06-21",
+    "source_title": "45/2022 Sb. m. s."
+  },
+  "treaty_pair_id": "CZ-QA",
+  "verification_id": "CZ-QA-primary-treaty-2026-08-06.1",
+  "verification_scope": {
+    "czech_withholding_effective_date_verified": true,
+    "decisive_language_verified": true,
+    "domestic_conditions_verified": false,
+    "entry_into_force_verified": true,
+    "mli_position_verified": false,
+    "primary_treaty_articles_10_to_12_verified": true,
+    "transaction_decision_ready": false,
+    "treaty_level_ppt_verified": true
+  }
+}
