@@ -1,0 +1,111 @@
+{
+  "anti_abuse": {
+    "article_number": 27,
+    "note": "Treaty-level entitlement limitation must be evaluated for each transaction.",
+    "treaty_contains_entitlement_limitation": true,
+    "verification_status": "primary_treaty_text_verified"
+  },
+  "application": {
+    "basis": "Article 28 applies the treaty from 1 January of the calendar year following the year of entry into force.",
+    "other_income_tax_effective_from": "2024-01-01",
+    "withholding_tax_effective_from": "2024-01-01"
+  },
+  "direction": "CZ_OUTBOUND",
+  "fail_closed": true,
+  "income_articles": {
+    "dividends": {
+      "article_number": 10,
+      "article_text_sha256": "aebe7d4a018b84b99e5f2920ca85452a0f72975dea8f441227d5f91f49b38d4a",
+      "article_title": "DIVIDENDY",
+      "treaty_rates": [
+        {
+          "conditions": {
+            "beneficial_owner_required": true,
+            "minimum_direct_holding_percent": 10,
+            "minimum_holding_period_days": null,
+            "recipient_type": "company other than partnership"
+          },
+          "rate_percent": 5
+        },
+        {
+          "conditions": {
+            "beneficial_owner_required": true,
+            "category": "all other cases"
+          },
+          "rate_percent": 10
+        }
+      ],
+      "verification_status": "primary_treaty_text_verified"
+    },
+    "interest": {
+      "article_number": 11,
+      "article_text_sha256": "fdf02214b2a970e2fcc51558bbc63ab10bd97f7dce507233b09ba9d3a1bdb6a9",
+      "article_title": "ÚROKY",
+      "treaty_rates": [
+        {
+          "conditions": {
+            "basis": "taxable only in residence state",
+            "beneficial_owner_required": true
+          },
+          "rate_percent": 0
+        }
+      ],
+      "verification_status": "primary_treaty_text_verified"
+    },
+    "royalties": {
+      "article_number": 12,
+      "article_text_sha256": "02fd1df0979c9363fea4265d74e66b68dcc27f86c7543edabae5b63be497357f",
+      "article_title": "LICENČNÍ POPLATKY",
+      "treaty_rates": [
+        {
+          "conditions": {
+            "beneficial_owner_required": true,
+            "category": "Article 12(3)(a) copyright royalties"
+          },
+          "rate_percent": 5
+        },
+        {
+          "conditions": {
+            "beneficial_owner_required": true,
+            "category": "Article 12(3)(b) other royalties"
+          },
+          "rate_percent": 10
+        }
+      ],
+      "verification_status": "primary_treaty_text_verified"
+    }
+  },
+  "legal_verification_completed": false,
+  "overlay_review": {
+    "domestic_law_override_review_status": "pending",
+    "eu_directive_review_status": "not_applicable_to_andorra",
+    "mli_overlay_applied": null,
+    "mli_review_status": "pending_pairwise_verification",
+    "protocol_review_status": "no_separate_protocol_identified_in_primary_publication"
+  },
+  "partner_country": "AD",
+  "partner_country_name": "Andorra",
+  "production_ready": false,
+  "promotable_to_active_rules": false,
+  "schema_version": 1,
+  "source": {
+    "decisive_language_on_divergence": "English",
+    "entry_into_force_date": "2023-10-31",
+    "official_publication_reference": "Sdělení Ministerstva zahraničních věcí č. 46/2023 Sb. m. s.",
+    "official_publication_url": "https://www.zakonyprolidi.cz/ms/2023-46",
+    "parsed_path": "data/parsed/andorra.json",
+    "signature_date": "2022-11-23",
+    "source_title": "46/2023 Sb. m. s."
+  },
+  "treaty_pair_id": "CZ-AD",
+  "verification_id": "CZ-AD-primary-treaty-2026-08-06.1",
+  "verification_scope": {
+    "decisive_language_verified": true,
+    "domestic_conditions_verified": false,
+    "entry_into_force_verified": true,
+    "mli_position_verified": false,
+    "primary_treaty_articles_10_to_12_verified": true,
+    "transaction_decision_ready": false,
+    "withholding_effective_date_verified": true
+  }
+}
