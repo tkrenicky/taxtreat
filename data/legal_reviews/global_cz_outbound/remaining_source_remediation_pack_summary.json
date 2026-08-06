@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "dataset_release": "remaining-source-remediation-pack-2026-08-06.1",
+  "source_plan_release": "global-source-acquisition-plan-2026-08-06.1",
+  "treaty_partner_count": 75,
+  "batch_count": 3,
+  "execution_order": [
+    "CZ-SOURCE-P1-IDENTITY",
+    "CZ-SOURCE-P2-DAMAGED-TEXT",
+    "CZ-SOURCE-P3-MISSING-SOURCE"
+  ],
+  "status_counts": {
+    "acquire_official_source": 36,
+    "replace_damaged_text_source": 38,
+    "resolve_source_identity": 1
+  },
+  "production_blocker_counts": {
+    "articles_10_12_not_legally_verified": 75,
+    "authentic_language_status_not_verified": 75,
+    "mli_overlay_not_verified": 75,
+    "official_english_version_not_verified": 75,
+    "official_source_not_registered": 36,
+    "parsed_text_encoding_damaged": 38,
+    "parsed_text_missing": 37,
+    "protocol_overlay_not_verified": 75,
+    "source_identity_ambiguous": 1,
+    "withholding_effective_date_not_verified": 75
+  },
+  "completion_gate": {
+    "official_source_identity_required": true,
+    "official_document_hash_required": true,
+    "clean_text_required": true,
+    "articles_10_12_required": true,
+    "protocol_overlay_required": true,
+    "mli_overlay_required": true,
+    "language_authority_required": true,
+    "withholding_effective_date_required": true,
+    "damaged_ocr_permitted": false,
+    "missing_requirement_result": "fail_closed"
+  },
+  "legal_verification_completed": false,
+  "production_ready": false,
+  "fail_closed": true,
+  "promotable_to_active_rules": false
+}
