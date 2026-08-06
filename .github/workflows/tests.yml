@@ -38,7 +38,7 @@ jobs:
             --cov=taxtreat \
             --cov=app \
             --cov-branch \
-            --cov-fail-under=96 \
+            --cov-fail-under=97 \
             --cov-report=term-missing
 
       - name: Canonical decision core 100% branch coverage
