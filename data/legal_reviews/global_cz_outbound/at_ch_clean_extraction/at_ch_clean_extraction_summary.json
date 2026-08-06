@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "dataset_release": "at-ch-clean-article-extraction-2026-08-06.1",
+  "countries": {
+    "AT": {
+      "country": "AT",
+      "source_title": "31/2007 Sb.m.s.",
+      "source_pdf": "data/raw/treaty/790847066c210f8b.pdf",
+      "extracted_text_path": "data/clean_sources/CZ/AT/base_treaty_pdftotext.txt",
+      "extraction_method": "pdftotext-layout-utf8",
+      "source_pdf_sha256": "790847066c210f8b6b273358cdc43d3416ae06f8d892debc633b4edd97ccb0f8",
+      "extracted_text_sha256": "8587ed0abf97c83e66fb6ce5b20eaef8f99c525729740c2fd4936e5572fb655d",
+      "text_character_count": 63117,
+      "non_whitespace_character_count": 47016,
+      "replacement_character_count": 0,
+      "suspicious_character_counts": {
+        "õ": 1367
+      },
+      "articles": {
+        "10": {
+          "article_number": 10,
+          "found": false,
+          "heading": null,
+          "sha256": null,
+          "character_count": 0
+        },
+        "11": {
+          "article_number": 11,
+          "found": false,
+          "heading": null,
+          "sha256": null,
+          "character_count": 0
+        },
+        "12": {
+          "article_number": 12,
+          "found": false,
+          "heading": null,
+          "sha256": null,
+          "character_count": 0
+        }
+      },
+      "all_articles_found": false,
+      "automated_text_quality_passed": false,
+      "visual_source_comparison_completed": false,
+      "protocol_overlay_completed": false,
+      "mli_overlay_completed": false,
+      "legal_text_verified": false,
+      "production_ready": false,
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    "CH": {
+      "country": "CH",
+      "source_title": "281/1996 Sb.",
+      "source_pdf": "data/raw/treaty/e2b4649db40a2bec.pdf",
+      "extracted_text_path": "data/clean_sources/CZ/CH/base_treaty_pdftotext.txt",
+      "extraction_method": "pdftotext-layout-utf8",
+      "source_pdf_sha256": "e2b4649db40a2becbbda996fdf725a7138a2aa2083fe3af607afc5464339b796",
+      "extracted_text_sha256": "da85e9bc42205deae553bb97741c96122befbe3ecb019b5b72e278734118685b",
+      "text_character_count": 99925,
+      "non_whitespace_character_count": 70158,
+      "replacement_character_count": 0,
+      "suspicious_character_counts": {
+        "õ": 2073
+      },
+      "articles": {
+        "10": {
+          "article_number": 10,
+          "found": false,
+          "heading": null,
+          "sha256": null,
+          "character_count": 0
+        },
+        "11": {
+          "article_number": 11,
+          "found": false,
+          "heading": null,
+          "sha256": null,
+          "character_count": 0
+        },
+        "12": {
+          "article_number": 12,
+          "found": false,
+          "heading": null,
+          "sha256": null,
+          "character_count": 0
+        }
+      },
+      "all_articles_found": false,
+      "automated_text_quality_passed": false,
+      "visual_source_comparison_completed": false,
+      "protocol_overlay_completed": false,
+      "mli_overlay_completed": false,
+      "legal_text_verified": false,
+      "production_ready": false,
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    }
+  },
+  "quality_semantics": {
+    "automated_quality_pass_is_legal_verification": false,
+    "pdftotext_output_is_authoritative": false,
+    "visual_comparison_required": true,
+    "protocol_overlay_required": true,
+    "mli_overlay_required": true,
+    "failed_requirement_result": "fail_closed"
+  },
+  "legal_verification_completed": false,
+  "production_ready": false,
+  "fail_closed": true,
+  "promotable_to_active_rules": false
+}
