@@ -25903,9 +25903,10 @@
     "manual_exception_review": 7
   },
   "triage_method": {
-    "single_rate": "candidate_ready_for_owner_review",
-    "multiple_conditional_rates": "conditional_mapping_required",
-    "missing_source_or_rate": "manual_exception_review",
-    "process_markers": "retained as review metadata but do not automatically create a legal exception"
+    "manual_status_review": "Treaty article is suspended.",
+    "manual_exception_review": "Essential source, instrument chain or rate is missing.",
+    "conditional_mapping_required": "Several treaty rates apply depending on conditions.",
+    "candidate_ready_for_owner_review": "A single rate candidate has been compiled.",
+    "process_markers": "Retained as metadata and do not alone create an exception."
   }
 }

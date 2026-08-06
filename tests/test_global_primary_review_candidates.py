@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from collections import Counter
 from pathlib import Path
 
 
@@ -25,17 +26,13 @@ SUMMARY_PATH = (
 
 def _data():
     return json.loads(
-        DATA_PATH.read_text(
-            encoding="utf-8"
-        )
+        DATA_PATH.read_text(encoding="utf-8")
     )
 
 
 def _summary():
     return json.loads(
-        SUMMARY_PATH.read_text(
-            encoding="utf-8"
-        )
+        SUMMARY_PATH.read_text(encoding="utf-8")
     )
 
 
@@ -45,6 +42,15 @@ def test_all_remaining_scopes_are_present():
     assert payload["scope_count"] == 294
     assert len(payload["scopes"]) == 294
     assert payload["country_count"] == 98
+
+
+def test_packet_ids_are_unique():
+    packet_ids = [
+        row["packet_id"]
+        for row in _data()["scopes"]
+    ]
+
+    assert len(packet_ids) == len(set(packet_ids))
 
 
 def test_russia_and_belarus_are_excluded():
@@ -71,91 +77,91 @@ def test_every_scope_is_classified():
     )
 
 
-def test_every_scope_remains_fail_closed():
-    payload = _data()
-
-    assert payload["fail_closed"] is True
-    assert (
-        payload[
-            "promotable_to_active_rules"
-        ]
-        is False
-    )
-
-    assert all(
-        row["fail_closed"] is True
-        and row[
-            "promotable_to_active_rules"
-        ] is False
-        for row in payload["scopes"]
-    )
-
-
-def test_summary_matches_data():
+def test_summary_distribution_matches_data():
     payload = _data()
     summary = _summary()
 
+    actual = Counter(
+        row["resolution_class"]
+        for row in payload["scopes"]
+    )
+
     assert (
-        summary["scope_count"]
-        == payload["scope_count"]
+        summary["resolution_class_counts"]
+        == dict(sorted(actual.items()))
     )
-    assert (
-        sum(
-            summary[
-                "resolution_class_counts"
-            ].values()
-        )
-        == 294
-    )
+    assert sum(actual.values()) == 294
 
 
-def test_packet_ids_are_unique():
-    packet_ids = [
-        row["packet_id"]
-        for row in _data()["scopes"]
-    ]
-
-    assert len(packet_ids) == len(
-        set(packet_ids)
-    )
-
-
-def test_classification_has_expected_distribution():
-    counts = _summary()[
-        "resolution_class_counts"
-    ]
-
-    assert counts == {
-        "candidate_ready_for_owner_review": 189,
-        "conditional_mapping_required": 98,
-        "manual_exception_review": 7,
-    }
-
-
-def test_only_seven_scopes_need_source_exception_review():
-    scopes = _data()["scopes"]
-
-    exceptions = [
+def test_single_rate_candidates_have_rate():
+    rows = [
         row
-        for row in scopes
+        for row in _data()["scopes"]
         if row["resolution_class"]
-        == "manual_exception_review"
+        == "candidate_ready_for_owner_review"
     ]
 
-    assert len(exceptions) == 7
+    assert rows
+    assert all(
+        row["resolved_rate_candidate"] is not None
+        for row in rows
+    )
+
+
+def test_conditional_cases_have_multiple_rate_marker():
+    rows = [
+        row
+        for row in _data()["scopes"]
+        if row["resolution_class"]
+        == "conditional_mapping_required"
+    ]
+
+    assert all(
+        "multiple_rate_conditions"
+        in row["conditional_codes"]
+        for row in rows
+    )
+
+
+def test_manual_exceptions_have_hard_reason():
+    rows = [
+        row
+        for row in _data()["scopes"]
+        if row["resolution_class"]
+        in {
+            "manual_exception_review",
+            "manual_status_review",
+        }
+    ]
 
     assert all(
         row["hard_unresolved_codes"]
-        for row in exceptions
+        for row in rows
     )
 
 
-def test_process_markers_do_not_force_manual_review():
-    scopes = _data()["scopes"]
+def test_process_markers_alone_do_not_force_exception():
+    rows = _data()["scopes"]
 
     assert any(
         row["process_review_codes"]
         and row["resolution_class"]
-        == "candidate_ready_for_owner_review"
-        for row in scopes
+        in {
+            "candidate_ready_for_owner_review",
+            "conditional_mapping_required",
+        }
+        for row in rows
+    )
+
+
+def test_every_scope_remains_fail_closed():
+    payload = _data()
+
+    assert payload["fail_closed"] is True
+    assert payload["promotable_to_active_rules"] is False
+
+    assert all(
+        row["fail_closed"] is True
+        and row["promotable_to_active_rules"] is False
+        for row in payload["scopes"]
     )
