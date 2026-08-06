@@ -1,0 +1,180 @@
+{
+  "approval_eligible": false,
+  "blockers": [
+    "domestic_rate_candidate_review",
+    "independent_legal_review"
+  ],
+  "candidate_readiness": "blocked",
+  "income_type": "interest",
+  "legal_layers": {
+    "domestic_and_eu": {
+      "candidate_sha256": "6cb3c3b82d5221fc1639434885dd05810612b1f268988b7c9cfc0fa70e6673ad",
+      "candidate_status": "domestic_and_relief_candidate_consolidated",
+      "consolidation_blockers": [
+        "domestic_rate_candidate_review",
+        "independent_legal_review"
+      ],
+      "domestic_rate_candidate": {
+        "effective_from": "2026-04-01",
+        "income_scope_reference": "section 22(1)(g)(4)",
+        "protective_rate": 35.0,
+        "protective_rate_condition": "recipient is outside the EU/EEA and no qualifying treaty or tax-information-exchange instrument is applied",
+        "protective_rate_reference": "section 36(1)(c)",
+        "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "standard_rate": 15.0,
+        "standard_reference": "section 36(1)(a)(1), referring to section 22(1)(g)(4)"
+      },
+      "income_type": "interest",
+      "recipient_country": "AZ",
+      "recipient_country_name": "Ázerbájdžán",
+      "relief_candidate": null,
+      "relief_candidate_status": "not_applicable_by_recipient_jurisdiction",
+      "relief_eligible_by_jurisdiction": false,
+      "source_country": "CZ",
+      "verification_status": "needs_review"
+    },
+    "instrument_chain": {
+      "base_treaty": {
+        "article_number": 11,
+        "article_text_sha256": "dd2a58d59867f8f1d5e6a1c7e73f6f43235eeec86b90bee000ee3edb276802e4",
+        "candidate_rates": [
+          5.0,
+          10.0
+        ],
+        "candidate_status": "base_rate_candidate_extracted",
+        "risk_flags": [],
+        "semantic_resolution_status": null,
+        "source_id": "SRC-AB6FB846EB7DC442",
+        "source_state_taxation_candidate": null,
+        "treaty_rate_cap_status": "numeric_candidates_extracted"
+      },
+      "candidate_chain_complete": true,
+      "candidate_dataset_releases": {
+        "base_treaty": "remaining-294-base-candidates-2026-08-04.2",
+        "blocker_resolutions": "remaining-blocker-resolutions-2026-08-04.1",
+        "domestic_eu": "cz-domestic-eu-candidates-2026-08-04.1",
+        "mli": "cz-mli-wht-effects-2026-08-03-candidate.1",
+        "protocol": "remaining-294-protocol-effects-2026-08-03.1"
+      },
+      "candidate_sha256": "d033a6a8cb9bc452a6778aaf9a6e4b27f8426e08997727d1cef1d0e07b01294f",
+      "chain_status": "candidate_chain_assembled",
+      "czech_domestic_law": {
+        "candidate_status": "domestic_and_relief_candidate_consolidated",
+        "effective_from": "2026-04-01",
+        "protective_rate": 35.0,
+        "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "standard_rate": 15.0
+      },
+      "hard_blockers": [],
+      "income_type": "interest",
+      "instrument_inventory": {
+        "base_source_ids": [
+          "CZ-MF-AZ-AE552B0A2711"
+        ],
+        "entry_into_force": "2006-06-16",
+        "mli_listed": true,
+        "protocol_listed": false,
+        "related_source_ids": [
+          "CZ-MF-AZ-4BFA9C438516",
+          "CZ-MF-AZ-5CBDF064DB2D",
+          "CZ-MF-AZ-8EDCA5C9B4A5"
+        ]
+      },
+      "legal_review_tasks": [
+        "base_treaty_candidate_review",
+        "domestic_rate_candidate_review",
+        "independent_legal_review",
+        "mli_wht_effect_candidate_review"
+      ],
+      "mli": {
+        "checked_as_of": null,
+        "effect_id": "CZ-AZ-MLI-WHT-PPT",
+        "effective_from": "2025-01-01",
+        "resolution_source_ids": [],
+        "source_excerpt_sha256": "e00c3d299987e84eb04a5f4bd35ddd6737e023029e82eed660d29bc76241b47d",
+        "source_page_id": "CZ-MF-AZ-5CBDF064DB2D",
+        "status": "wht_effect_candidate_available"
+      },
+      "protocol": {
+        "candidate_effective_from": null,
+        "candidate_rates": [],
+        "candidate_status": "not_listed",
+        "effect_kind": null,
+        "required": false,
+        "source_ids": []
+      },
+      "recipient_country": "AZ",
+      "recipient_country_name": "Ázerbájdžán",
+      "review_ready": false,
+      "section_19_relief": {
+        "candidate_rate": null,
+        "candidate_status": "not_applicable_by_recipient_jurisdiction",
+        "jurisdiction_eligible": false,
+        "legal_reference": null,
+        "regime": null
+      },
+      "source_country": "CZ",
+      "treaty_status_instrument": {
+        "candidate_status": "not_listed",
+        "effect_kind": null,
+        "effective_from": null,
+        "effective_to": null,
+        "source_id": null,
+        "suspended_articles": []
+      },
+      "verification_status": "needs_review"
+    },
+    "mli_effects": [
+      {
+        "applies_to_income_types": [
+          "dividend",
+          "interest",
+          "royalty"
+        ],
+        "effect_id": "CZ-AZ-MLI-WHT-PPT",
+        "effective_from": "2025-01-01",
+        "mli_article": "Article 7(1) PPT",
+        "recipient_country": "AZ",
+        "recipient_country_name": "Ázerbájdžán",
+        "source_country": "CZ",
+        "source_excerpt": "Článek 2 Výše uvedené změny Smlouvy se v obou smluvních státech provádějí následovně: 1) pokud jde o daně vybírané srážkou u zdroje z částek vyplácených nebo připisovaných nerezidentům, jestliže skutečnost dávající vzniknout takovým daním nastala k 1. lednu 2025 nebo později; 2) pokud jde o všechny ostatní daně, na daně ukládané za zdaňovací období začínající",
+        "source_excerpt_sha256": "e00c3d299987e84eb04a5f4bd35ddd6737e023029e82eed660d29bc76241b47d",
+        "source_page_id": "CZ-MF-AZ-5CBDF064DB2D",
+        "source_page_url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2024/financni-zpravodaj-cislo-10-2024-57612",
+        "source_pdf_url": "https://mf.gov.cz/assets/attachments/2024-11-06_Financni-zpravodaj-cislo-10-2024.pdf",
+        "verification_status": "needs_review"
+      }
+    ],
+    "priority_review_row": null,
+    "protocol_effect": null
+  },
+  "packet_id": "CZ-AZ-INT-LEGAL-REVIEW",
+  "promotable_to_active_rules": false,
+  "recipient_country": "AZ",
+  "recipient_country_name": "Ázerbájdžán",
+  "review": {
+    "confirmations": {
+      "anti_abuse_review_completed": null,
+      "domestic_law_confirmed": null,
+      "effective_dates_confirmed": null,
+      "eu_relief_confirmed": null,
+      "mli_effects_confirmed": null,
+      "protocol_effects_confirmed": null,
+      "treaty_rules_confirmed": null
+    },
+    "proposed_rule_snapshot": null,
+    "question_responses": [],
+    "review_outcome": null,
+    "reviewed_at": null,
+    "reviewer_id": null
+  },
+  "review_pack_sha256": "ebf1a1e3b7b3e2e4fd7fe1ac4699a3b609bc3ce7f58e6f31ba433bdaa60b79e1",
+  "schema_version": 1,
+  "source_country": "CZ",
+  "status": "awaiting_primary_review",
+  "supporting_source_ids": [
+    "CZ-MF-AZ-5CBDF064DB2D",
+    "CZ-ZDP-2026-04-01-OPEN-DATA",
+    "SRC-AB6FB846EB7DC442"
+  ]
+}

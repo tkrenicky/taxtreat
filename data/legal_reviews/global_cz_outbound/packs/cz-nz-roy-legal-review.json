@@ -1,0 +1,178 @@
+{
+  "approval_eligible": false,
+  "blockers": [
+    "domestic_rate_candidate_review",
+    "independent_legal_review"
+  ],
+  "candidate_readiness": "blocked",
+  "income_type": "royalty",
+  "legal_layers": {
+    "domestic_and_eu": {
+      "candidate_sha256": "b34d48bc5169bc7540595ab539667b7a7b56bbf2d8954d31217634ebc83fcd09",
+      "candidate_status": "domestic_and_relief_candidate_consolidated",
+      "consolidation_blockers": [
+        "domestic_rate_candidate_review",
+        "independent_legal_review"
+      ],
+      "domestic_rate_candidate": {
+        "effective_from": "2026-04-01",
+        "income_scope_reference": "section 22(1)(g)(1)-(2)",
+        "protective_rate": 35.0,
+        "protective_rate_condition": "recipient is outside the EU/EEA and no qualifying treaty or tax-information-exchange instrument is applied",
+        "protective_rate_reference": "section 36(1)(c)",
+        "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "standard_rate": 15.0,
+        "standard_reference": "section 36(1)(a)(1), referring to section 22(1)(g)(1)-(2)"
+      },
+      "income_type": "royalty",
+      "recipient_country": "NZ",
+      "recipient_country_name": "Nový Zéland",
+      "relief_candidate": null,
+      "relief_candidate_status": "not_applicable_by_recipient_jurisdiction",
+      "relief_eligible_by_jurisdiction": false,
+      "source_country": "CZ",
+      "verification_status": "needs_review"
+    },
+    "instrument_chain": {
+      "base_treaty": {
+        "article_number": 12,
+        "article_text_sha256": "e0164a697886eb10d8a6f56b5b20c29db569747d22cbecaa90a9cf8438be24c2",
+        "candidate_rates": [
+          10.0
+        ],
+        "candidate_status": "base_rate_candidate_extracted",
+        "risk_flags": [],
+        "semantic_resolution_status": null,
+        "source_id": "SRC-C1601E1A015A0D97",
+        "source_state_taxation_candidate": null,
+        "treaty_rate_cap_status": "numeric_candidates_extracted"
+      },
+      "candidate_chain_complete": true,
+      "candidate_dataset_releases": {
+        "base_treaty": "remaining-294-base-candidates-2026-08-04.2",
+        "blocker_resolutions": "remaining-blocker-resolutions-2026-08-04.1",
+        "domestic_eu": "cz-domestic-eu-candidates-2026-08-04.1",
+        "mli": "cz-mli-wht-effects-2026-08-03-candidate.1",
+        "protocol": "remaining-294-protocol-effects-2026-08-03.1"
+      },
+      "candidate_sha256": "da47ffc020df424e7380d7835b35f606a025830b69f6af420aaee6e578030fe4",
+      "chain_status": "candidate_chain_assembled",
+      "czech_domestic_law": {
+        "candidate_status": "domestic_and_relief_candidate_consolidated",
+        "effective_from": "2026-04-01",
+        "protective_rate": 35.0,
+        "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "standard_rate": 15.0
+      },
+      "hard_blockers": [],
+      "income_type": "royalty",
+      "instrument_inventory": {
+        "base_source_ids": [
+          "CZ-MF-NZ-067F1B7CF1D8"
+        ],
+        "entry_into_force": "2008-08-29",
+        "mli_listed": true,
+        "protocol_listed": false,
+        "related_source_ids": [
+          "CZ-MF-NZ-A62DF3BDDF37",
+          "CZ-MF-NZ-D470ECE021E5"
+        ]
+      },
+      "legal_review_tasks": [
+        "base_treaty_candidate_review",
+        "domestic_rate_candidate_review",
+        "independent_legal_review",
+        "mli_wht_effect_candidate_review"
+      ],
+      "mli": {
+        "checked_as_of": null,
+        "effect_id": "CZ-NZ-MLI-WHT-PPT",
+        "effective_from": "2021-01-01",
+        "resolution_source_ids": [],
+        "source_excerpt_sha256": "514b559c36618b0160d8cb64a3c5dd1a73ec669da0ea1c6ca9cc2a8f600af51a",
+        "source_page_id": "CZ-MF-NZ-D470ECE021E5",
+        "status": "wht_effect_candidate_available"
+      },
+      "protocol": {
+        "candidate_effective_from": null,
+        "candidate_rates": [],
+        "candidate_status": "not_listed",
+        "effect_kind": null,
+        "required": false,
+        "source_ids": []
+      },
+      "recipient_country": "NZ",
+      "recipient_country_name": "Nový Zéland",
+      "review_ready": false,
+      "section_19_relief": {
+        "candidate_rate": null,
+        "candidate_status": "not_applicable_by_recipient_jurisdiction",
+        "jurisdiction_eligible": false,
+        "legal_reference": null,
+        "regime": null
+      },
+      "source_country": "CZ",
+      "treaty_status_instrument": {
+        "candidate_status": "not_listed",
+        "effect_kind": null,
+        "effective_from": null,
+        "effective_to": null,
+        "source_id": null,
+        "suspended_articles": []
+      },
+      "verification_status": "needs_review"
+    },
+    "mli_effects": [
+      {
+        "applies_to_income_types": [
+          "dividend",
+          "interest",
+          "royalty"
+        ],
+        "effect_id": "CZ-NZ-MLI-WHT-PPT",
+        "effective_from": "2021-01-01",
+        "mli_article": "Article 7(1) PPT",
+        "recipient_country": "NZ",
+        "recipient_country_name": "Nový Zéland",
+        "source_country": "CZ",
+        "source_excerpt": "Článek 2 Výše uvedené změny Smlouvy se v obou smluvních státech provádějí následovně: 1) pokud jde o daně vybírané srážkou u zdroje z částek vyplácených nebo připisovaných nerezidentům, jestliže skutečnost dávající vzniknout takovým daním nastala k 1. lednu 2021 nebo později; 2) pokud jde o všechny ostatní daně, na daně ukládané za zdaňovací období začínající",
+        "source_excerpt_sha256": "514b559c36618b0160d8cb64a3c5dd1a73ec669da0ea1c6ca9cc2a8f600af51a",
+        "source_page_id": "CZ-MF-NZ-D470ECE021E5",
+        "source_page_url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2020/financni-zpravodaj-cislo-32-2020-40155",
+        "source_pdf_url": "https://mf.gov.cz/assets/cs/media/Financni-zpravodaj_2020-c-32.pdf",
+        "verification_status": "needs_review"
+      }
+    ],
+    "priority_review_row": null,
+    "protocol_effect": null
+  },
+  "packet_id": "CZ-NZ-ROY-LEGAL-REVIEW",
+  "promotable_to_active_rules": false,
+  "recipient_country": "NZ",
+  "recipient_country_name": "Nový Zéland",
+  "review": {
+    "confirmations": {
+      "anti_abuse_review_completed": null,
+      "domestic_law_confirmed": null,
+      "effective_dates_confirmed": null,
+      "eu_relief_confirmed": null,
+      "mli_effects_confirmed": null,
+      "protocol_effects_confirmed": null,
+      "treaty_rules_confirmed": null
+    },
+    "proposed_rule_snapshot": null,
+    "question_responses": [],
+    "review_outcome": null,
+    "reviewed_at": null,
+    "reviewer_id": null
+  },
+  "review_pack_sha256": "378c74f02394f153bdd1e0623feb09768d06557f57147ad1f35534e029fa5659",
+  "schema_version": 1,
+  "source_country": "CZ",
+  "status": "awaiting_primary_review",
+  "supporting_source_ids": [
+    "CZ-MF-NZ-D470ECE021E5",
+    "CZ-ZDP-2026-04-01-OPEN-DATA",
+    "SRC-C1601E1A015A0D97"
+  ]
+}

@@ -1,0 +1,192 @@
+{
+  "approval_eligible": false,
+  "blockers": [
+    "domestic_rate_candidate_review",
+    "independent_legal_review"
+  ],
+  "candidate_readiness": "blocked",
+  "income_type": "interest",
+  "legal_layers": {
+    "domestic_and_eu": {
+      "candidate_sha256": "bc120705bef0fa03f20708fc5294a8e499c81a4be04e5a226d4204fabf3bb105",
+      "candidate_status": "domestic_and_relief_candidate_consolidated",
+      "consolidation_blockers": [
+        "domestic_rate_candidate_review",
+        "independent_legal_review"
+      ],
+      "domestic_rate_candidate": {
+        "effective_from": "2026-04-01",
+        "income_scope_reference": "section 22(1)(g)(4)",
+        "protective_rate": 35.0,
+        "protective_rate_condition": "recipient is outside the EU/EEA and no qualifying treaty or tax-information-exchange instrument is applied",
+        "protective_rate_reference": "section 36(1)(c)",
+        "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "standard_rate": 15.0,
+        "standard_reference": "section 36(1)(a)(1), referring to section 22(1)(g)(4)"
+      },
+      "income_type": "interest",
+      "recipient_country": "MD",
+      "recipient_country_name": "Moldávie",
+      "relief_candidate": null,
+      "relief_candidate_status": "not_applicable_by_recipient_jurisdiction",
+      "relief_eligible_by_jurisdiction": false,
+      "source_country": "CZ",
+      "verification_status": "needs_review"
+    },
+    "instrument_chain": {
+      "base_treaty": {
+        "article_number": 11,
+        "article_text_sha256": "30f970df350d77e7bea404126681f7808a37584bd7ed23f2dd2c9d91a334aff7",
+        "candidate_rates": [
+          5.0
+        ],
+        "candidate_status": "base_rate_candidate_extracted",
+        "risk_flags": [],
+        "semantic_resolution_status": null,
+        "source_id": "SRC-57AEF14CD7032586",
+        "source_state_taxation_candidate": null,
+        "treaty_rate_cap_status": "numeric_candidates_extracted"
+      },
+      "candidate_chain_complete": true,
+      "candidate_dataset_releases": {
+        "base_treaty": "remaining-294-base-candidates-2026-08-04.2",
+        "blocker_resolutions": "remaining-blocker-resolutions-2026-08-04.1",
+        "domestic_eu": "cz-domestic-eu-candidates-2026-08-04.1",
+        "mli": "cz-mli-wht-effects-2026-08-03-candidate.1",
+        "protocol": "remaining-294-protocol-effects-2026-08-03.1"
+      },
+      "candidate_sha256": "67d7614ce61b38df049a11a76e15bbcb27898bee916ddc7f583cc16586952fa5",
+      "chain_status": "candidate_chain_assembled",
+      "czech_domestic_law": {
+        "candidate_status": "domestic_and_relief_candidate_consolidated",
+        "effective_from": "2026-04-01",
+        "protective_rate": 35.0,
+        "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "standard_rate": 15.0
+      },
+      "hard_blockers": [],
+      "income_type": "interest",
+      "instrument_inventory": {
+        "base_source_ids": [
+          "CZ-MF-MD-AE9A070FEC04"
+        ],
+        "entry_into_force": "2000-04-26",
+        "mli_listed": false,
+        "protocol_listed": true,
+        "related_source_ids": [
+          "CZ-MF-MD-4CDF66434EF2"
+        ]
+      },
+      "legal_review_tasks": [
+        "base_treaty_candidate_review",
+        "domestic_rate_candidate_review",
+        "independent_legal_review",
+        "protocol_effect_candidate_review"
+      ],
+      "mli": {
+        "checked_as_of": null,
+        "effect_id": null,
+        "effective_from": null,
+        "resolution_source_ids": [],
+        "source_excerpt_sha256": null,
+        "source_page_id": null,
+        "status": "not_listed"
+      },
+      "protocol": {
+        "candidate_effective_from": "2006-01-01",
+        "candidate_rates": [],
+        "candidate_status": "protocol_effect_candidate_consolidated",
+        "effect_kind": "confirmed_no_article_10_12_change",
+        "required": true,
+        "source_ids": [
+          "CZ-MF-MD-4CDF66434EF2"
+        ]
+      },
+      "recipient_country": "MD",
+      "recipient_country_name": "Moldávie",
+      "review_ready": false,
+      "section_19_relief": {
+        "candidate_rate": null,
+        "candidate_status": "not_applicable_by_recipient_jurisdiction",
+        "jurisdiction_eligible": false,
+        "legal_reference": null,
+        "regime": null
+      },
+      "source_country": "CZ",
+      "treaty_status_instrument": {
+        "candidate_status": "not_listed",
+        "effect_kind": null,
+        "effective_from": null,
+        "effective_to": null,
+        "source_id": null,
+        "suspended_articles": []
+      },
+      "verification_status": "needs_review"
+    },
+    "mli_effects": [],
+    "priority_review_row": null,
+    "protocol_effect": {
+      "base_rate_candidates": [
+        {
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "rate": 5.0
+        }
+      ],
+      "candidate_sha256": "fb4324e1b0a0b08b736e5a15e988efe5bb114690bea2ca54c3934a28452b6a40",
+      "candidate_status": "protocol_effect_candidate_consolidated",
+      "consolidation_blockers": [
+        "domestic_and_eu_relief_consolidation",
+        "independent_legal_review",
+        "protocol_effect_candidate_review"
+      ],
+      "effect_kind": "confirmed_no_article_10_12_change",
+      "evidence_anchor": "Protocol Articles I-VI do not amend treaty Articles 10-12",
+      "income_type": "interest",
+      "later_status_source_id": null,
+      "protocol_candidate_effective_from": "2006-01-01",
+      "protocol_rate_candidates": [],
+      "protocol_source_ids": [
+        "CZ-MF-MD-4CDF66434EF2"
+      ],
+      "recipient_country": "MD",
+      "source_country": "CZ",
+      "verification_status": "needs_review"
+    }
+  },
+  "packet_id": "CZ-MD-INT-LEGAL-REVIEW",
+  "promotable_to_active_rules": false,
+  "recipient_country": "MD",
+  "recipient_country_name": "Moldávie",
+  "review": {
+    "confirmations": {
+      "anti_abuse_review_completed": null,
+      "domestic_law_confirmed": null,
+      "effective_dates_confirmed": null,
+      "eu_relief_confirmed": null,
+      "mli_effects_confirmed": null,
+      "protocol_effects_confirmed": null,
+      "treaty_rules_confirmed": null
+    },
+    "proposed_rule_snapshot": null,
+    "question_responses": [],
+    "review_outcome": null,
+    "reviewed_at": null,
+    "reviewer_id": null
+  },
+  "review_pack_sha256": "44d31070da520cd36d963327abd4de8da9182ff2adf19772ebe611863bf3d6f7",
+  "schema_version": 1,
+  "source_country": "CZ",
+  "status": "awaiting_primary_review",
+  "supporting_source_ids": [
+    "CZ-MF-MD-4CDF66434EF2",
+    "CZ-ZDP-2026-04-01-OPEN-DATA",
+    "SRC-57AEF14CD7032586"
+  ]
+}

@@ -1,0 +1,156 @@
+{
+  "approval_eligible": false,
+  "blockers": [
+    "anti_abuse_determination",
+    "domestic_rate_candidate_review",
+    "independent_legal_review",
+    "missing_instrument_chain_or_priority_review_row",
+    "recipient_qualification_fact_review",
+    "relief_candidate_review"
+  ],
+  "candidate_readiness": "blocked",
+  "income_type": "dividend",
+  "legal_layers": {
+    "domestic_and_eu": {
+      "candidate_sha256": "a5c519044171134b0b323bb75f132730273c38982a5deccf0b54048401fc7545",
+      "candidate_status": "domestic_and_relief_candidate_consolidated",
+      "consolidation_blockers": [
+        "anti_abuse_determination",
+        "domestic_rate_candidate_review",
+        "independent_legal_review",
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "domestic_rate_candidate": {
+        "effective_from": "2026-04-01",
+        "income_scope_reference": "section 22(1)(g)(3)",
+        "protective_rate": 35.0,
+        "protective_rate_condition": "recipient is outside the EU/EEA and no qualifying treaty or tax-information-exchange instrument is applied",
+        "protective_rate_reference": "section 36(1)(c)",
+        "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "standard_rate": 15.0,
+        "standard_reference": "section 36(1)(b)(1), referring to section 22(1)(g)(3)"
+      },
+      "income_type": "dividend",
+      "recipient_country": "AT",
+      "recipient_country_name": "Rakousko",
+      "relief_candidate": {
+        "all_of": [
+          {
+            "fact": "recipient_is_qualifying_company_form",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_is_tax_resident_in_eligible_jurisdiction",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_subject_to_qualifying_corporate_tax",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_has_no_tax_exemption_or_zero_rate_option",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "ownership_percent",
+            "operator": ">=",
+            "value": 10
+          },
+          {
+            "fact": "recipient_is_parent_company",
+            "operator": "==",
+            "value": true
+          }
+        ],
+        "anti_abuse_review_required": true,
+        "directive_source_id": "EU-PSD-2011-96-CONSOLIDATED",
+        "holding_period_one_of": [
+          {
+            "fact": "holding_period_months",
+            "operator": ">=",
+            "value": 12
+          },
+          {
+            "all_of": [
+              {
+                "fact": "holding_period_will_reach_months",
+                "operator": ">=",
+                "value": 12
+              },
+              {
+                "fact": "statutory_clawback_acknowledged",
+                "operator": "==",
+                "value": true
+              }
+            ]
+          }
+        ],
+        "legal_reference": "section 19(1)(ze), (3), (4), (6), (8) and (11)",
+        "rate": 0.0,
+        "regime": "eu_directive_domestic_implementation"
+      },
+      "relief_candidate_status": "relief_candidate_consolidated",
+      "relief_eligible_by_jurisdiction": true,
+      "source_country": "CZ",
+      "verification_status": "needs_review"
+    },
+    "instrument_chain": null,
+    "mli_effects": [
+      {
+        "applies_to_income_types": [
+          "dividend",
+          "interest",
+          "royalty"
+        ],
+        "effect_id": "CZ-AT-MLI-WHT-PPT",
+        "effective_from": "2021-01-01",
+        "mli_article": "Article 7(1) PPT",
+        "recipient_country": "AT",
+        "recipient_country_name": "Rakousko",
+        "source_country": "CZ",
+        "source_excerpt": "/2020 Sb.m.s. Finanční zpravodaj 18/2020 3 1) pokud jde o daně vybírané srážkou u zdroje z částek vyplácených nebo připisovaných nerezidentům, jestliže skutečnost dávající vzniknout takovým daním nastala k 1. lednu 2021 nebo později; a 2) pokud jde o všechny ostatní daně, na daně ukládané za zdaňovací období začínají",
+        "source_excerpt_sha256": "17602f0f74e8e0afca59b17c50eed0cbc2e182eb4e8bc5822fc2e95955a75449",
+        "source_page_id": "CZ-MF-AT-59493A199498",
+        "source_page_url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2020/financni-zpravodaj-cislo-18-2020-39557",
+        "source_pdf_url": "https://mf.gov.cz/assets/cs/media/Financni-zpravodaj_2020-c-18.pdf",
+        "verification_status": "needs_review"
+      }
+    ],
+    "priority_review_row": null,
+    "protocol_effect": null
+  },
+  "packet_id": "CZ-AT-DIV-LEGAL-REVIEW",
+  "promotable_to_active_rules": false,
+  "recipient_country": "AT",
+  "recipient_country_name": "Rakousko",
+  "review": {
+    "confirmations": {
+      "anti_abuse_review_completed": null,
+      "domestic_law_confirmed": null,
+      "effective_dates_confirmed": null,
+      "eu_relief_confirmed": null,
+      "mli_effects_confirmed": null,
+      "protocol_effects_confirmed": null,
+      "treaty_rules_confirmed": null
+    },
+    "proposed_rule_snapshot": null,
+    "question_responses": [],
+    "review_outcome": null,
+    "reviewed_at": null,
+    "reviewer_id": null
+  },
+  "review_pack_sha256": "908999a7bd31dab0559fae912f38fa6ff83f7785be064ad5566815dc0c0908ae",
+  "schema_version": 1,
+  "source_country": "CZ",
+  "status": "awaiting_primary_review",
+  "supporting_source_ids": [
+    "CZ-MF-AT-59493A199498",
+    "CZ-ZDP-2026-04-01-OPEN-DATA",
+    "EU-PSD-2011-96-CONSOLIDATED"
+  ]
+}

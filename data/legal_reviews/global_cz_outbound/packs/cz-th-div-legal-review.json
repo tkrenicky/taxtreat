@@ -1,0 +1,179 @@
+{
+  "approval_eligible": false,
+  "blockers": [
+    "domestic_rate_candidate_review",
+    "independent_legal_review"
+  ],
+  "candidate_readiness": "blocked",
+  "income_type": "dividend",
+  "legal_layers": {
+    "domestic_and_eu": {
+      "candidate_sha256": "91b4c015020f041c3af5009662113d7cd7051de8bdc4a3a156cac8482a3d0bc9",
+      "candidate_status": "domestic_and_relief_candidate_consolidated",
+      "consolidation_blockers": [
+        "domestic_rate_candidate_review",
+        "independent_legal_review"
+      ],
+      "domestic_rate_candidate": {
+        "effective_from": "2026-04-01",
+        "income_scope_reference": "section 22(1)(g)(3)",
+        "protective_rate": 35.0,
+        "protective_rate_condition": "recipient is outside the EU/EEA and no qualifying treaty or tax-information-exchange instrument is applied",
+        "protective_rate_reference": "section 36(1)(c)",
+        "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "standard_rate": 15.0,
+        "standard_reference": "section 36(1)(b)(1), referring to section 22(1)(g)(3)"
+      },
+      "income_type": "dividend",
+      "recipient_country": "TH",
+      "recipient_country_name": "Thajsko",
+      "relief_candidate": null,
+      "relief_candidate_status": "not_applicable_by_recipient_jurisdiction",
+      "relief_eligible_by_jurisdiction": false,
+      "source_country": "CZ",
+      "verification_status": "needs_review"
+    },
+    "instrument_chain": {
+      "base_treaty": {
+        "article_number": 10,
+        "article_text_sha256": "ee397cb1b4e1554741d33fad6e68f72abdcf869d19d24757212c711158ca3e14",
+        "candidate_rates": [
+          10.0
+        ],
+        "candidate_status": "base_rate_candidate_extracted",
+        "risk_flags": [],
+        "semantic_resolution_status": null,
+        "source_id": "SRC-99A3868144A44E85",
+        "source_state_taxation_candidate": null,
+        "treaty_rate_cap_status": "numeric_candidates_extracted"
+      },
+      "candidate_chain_complete": true,
+      "candidate_dataset_releases": {
+        "base_treaty": "remaining-294-base-candidates-2026-08-04.2",
+        "blocker_resolutions": "remaining-blocker-resolutions-2026-08-04.1",
+        "domestic_eu": "cz-domestic-eu-candidates-2026-08-04.1",
+        "mli": "cz-mli-wht-effects-2026-08-03-candidate.1",
+        "protocol": "remaining-294-protocol-effects-2026-08-03.1"
+      },
+      "candidate_sha256": "dda13ad286df3fb5cc7e053293c06ba995751db6abf4b9ac87356e752af20ad3",
+      "chain_status": "candidate_chain_assembled",
+      "czech_domestic_law": {
+        "candidate_status": "domestic_and_relief_candidate_consolidated",
+        "effective_from": "2026-04-01",
+        "protective_rate": 35.0,
+        "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "standard_rate": 15.0
+      },
+      "hard_blockers": [],
+      "income_type": "dividend",
+      "instrument_inventory": {
+        "base_source_ids": [
+          "CZ-MF-TH-6B9872FD8FA6"
+        ],
+        "entry_into_force": "1995-08-14",
+        "mli_listed": true,
+        "protocol_listed": false,
+        "related_source_ids": [
+          "CZ-MF-TH-4E4264F24C08",
+          "CZ-MF-TH-5DE88466CFC1",
+          "CZ-MF-TH-6CFCD2643B9F"
+        ]
+      },
+      "legal_review_tasks": [
+        "base_treaty_candidate_review",
+        "domestic_rate_candidate_review",
+        "independent_legal_review",
+        "mli_wht_effect_candidate_review"
+      ],
+      "mli": {
+        "checked_as_of": null,
+        "effect_id": "CZ-TH-MLI-WHT-PPT",
+        "effective_from": "2025-01-01",
+        "resolution_source_ids": [],
+        "source_excerpt_sha256": "150783f75f0d8c0d46c305fa6268f6007547e0b0bc76fa51d8482c766e49a82a",
+        "source_page_id": "CZ-MF-TH-6CFCD2643B9F",
+        "status": "wht_effect_candidate_available"
+      },
+      "protocol": {
+        "candidate_effective_from": null,
+        "candidate_rates": [],
+        "candidate_status": "not_listed",
+        "effect_kind": null,
+        "required": false,
+        "source_ids": []
+      },
+      "recipient_country": "TH",
+      "recipient_country_name": "Thajsko",
+      "review_ready": false,
+      "section_19_relief": {
+        "candidate_rate": null,
+        "candidate_status": "not_applicable_by_recipient_jurisdiction",
+        "jurisdiction_eligible": false,
+        "legal_reference": null,
+        "regime": null
+      },
+      "source_country": "CZ",
+      "treaty_status_instrument": {
+        "candidate_status": "not_listed",
+        "effect_kind": null,
+        "effective_from": null,
+        "effective_to": null,
+        "source_id": null,
+        "suspended_articles": []
+      },
+      "verification_status": "needs_review"
+    },
+    "mli_effects": [
+      {
+        "applies_to_income_types": [
+          "dividend",
+          "interest",
+          "royalty"
+        ],
+        "effect_id": "CZ-TH-MLI-WHT-PPT",
+        "effective_from": "2025-01-01",
+        "mli_article": "Article 7(1) PPT",
+        "recipient_country": "TH",
+        "recipient_country_name": "Thajsko",
+        "source_country": "CZ",
+        "source_excerpt": "Článek 2 Výše uvedené změny Smlouvy se v obou smluvních státech provádějí následovně: 1) pokud jde o daně vybírané srážkou u zdroje z částek vyplácených nebo připisovaných nerezidentům, jestliže skutečnost dávající vzniknout takovým daním nastala k 1. lednu 2025 nebo později; a 2) pokud jde o všechny ostatní daně, na daně ukládané za zdaňovací období začínají",
+        "source_excerpt_sha256": "150783f75f0d8c0d46c305fa6268f6007547e0b0bc76fa51d8482c766e49a82a",
+        "source_page_id": "CZ-MF-TH-6CFCD2643B9F",
+        "source_page_url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2024/financni-zpravodaj-cislo-18-2024-58135",
+        "source_pdf_url": "https://mf.gov.cz/assets/attachments/2024-12-12_Financni-zpravodaj-cislo-18-2024.pdf",
+        "verification_status": "needs_review"
+      }
+    ],
+    "priority_review_row": null,
+    "protocol_effect": null
+  },
+  "packet_id": "CZ-TH-DIV-LEGAL-REVIEW",
+  "promotable_to_active_rules": false,
+  "recipient_country": "TH",
+  "recipient_country_name": "Thajsko",
+  "review": {
+    "confirmations": {
+      "anti_abuse_review_completed": null,
+      "domestic_law_confirmed": null,
+      "effective_dates_confirmed": null,
+      "eu_relief_confirmed": null,
+      "mli_effects_confirmed": null,
+      "protocol_effects_confirmed": null,
+      "treaty_rules_confirmed": null
+    },
+    "proposed_rule_snapshot": null,
+    "question_responses": [],
+    "review_outcome": null,
+    "reviewed_at": null,
+    "reviewer_id": null
+  },
+  "review_pack_sha256": "71066727b045da53dbca1cfc3ad809c7edf3381bfe92c2b454f3fa939ca58c29",
+  "schema_version": 1,
+  "source_country": "CZ",
+  "status": "awaiting_primary_review",
+  "supporting_source_ids": [
+    "CZ-MF-TH-6CFCD2643B9F",
+    "CZ-ZDP-2026-04-01-OPEN-DATA",
+    "SRC-99A3868144A44E85"
+  ]
+}

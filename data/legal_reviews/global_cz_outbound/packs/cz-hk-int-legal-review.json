@@ -1,0 +1,181 @@
+{
+  "approval_eligible": false,
+  "blockers": [
+    "domestic_rate_candidate_review",
+    "independent_legal_review"
+  ],
+  "candidate_readiness": "blocked",
+  "income_type": "interest",
+  "legal_layers": {
+    "domestic_and_eu": {
+      "candidate_sha256": "2738ba2a2e6653f2cef4ea80e9740b1dd17de199f46d707b32874f2adf62086e",
+      "candidate_status": "domestic_and_relief_candidate_consolidated",
+      "consolidation_blockers": [
+        "domestic_rate_candidate_review",
+        "independent_legal_review"
+      ],
+      "domestic_rate_candidate": {
+        "effective_from": "2026-04-01",
+        "income_scope_reference": "section 22(1)(g)(4)",
+        "protective_rate": 35.0,
+        "protective_rate_condition": "recipient is outside the EU/EEA and no qualifying treaty or tax-information-exchange instrument is applied",
+        "protective_rate_reference": "section 36(1)(c)",
+        "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "standard_rate": 15.0,
+        "standard_reference": "section 36(1)(a)(1), referring to section 22(1)(g)(4)"
+      },
+      "income_type": "interest",
+      "recipient_country": "HK",
+      "recipient_country_name": "Hongkong",
+      "relief_candidate": null,
+      "relief_candidate_status": "not_applicable_by_recipient_jurisdiction",
+      "relief_eligible_by_jurisdiction": false,
+      "source_country": "CZ",
+      "verification_status": "needs_review"
+    },
+    "instrument_chain": {
+      "base_treaty": {
+        "article_number": 11,
+        "article_text_sha256": "eb0e2a492d0318435ffd5872d720a77ee5f5e64e20e45729310ab2e504f12ea6",
+        "candidate_rates": [
+          0.0
+        ],
+        "candidate_status": "base_rate_candidate_extracted",
+        "risk_flags": [
+          "government_or_institution_exemption_requires_review"
+        ],
+        "semantic_resolution_status": null,
+        "source_id": "SRC-D025022024F9F174",
+        "source_state_taxation_candidate": null,
+        "treaty_rate_cap_status": "numeric_candidates_extracted"
+      },
+      "candidate_chain_complete": true,
+      "candidate_dataset_releases": {
+        "base_treaty": "remaining-294-base-candidates-2026-08-04.2",
+        "blocker_resolutions": "remaining-blocker-resolutions-2026-08-04.1",
+        "domestic_eu": "cz-domestic-eu-candidates-2026-08-04.1",
+        "mli": "cz-mli-wht-effects-2026-08-03-candidate.1",
+        "protocol": "remaining-294-protocol-effects-2026-08-03.1"
+      },
+      "candidate_sha256": "d6c91194210dc9b6a0df0b5ebe0e65fca2db94f05eaeefc15076135d722a71ee",
+      "chain_status": "candidate_chain_assembled",
+      "czech_domestic_law": {
+        "candidate_status": "domestic_and_relief_candidate_consolidated",
+        "effective_from": "2026-04-01",
+        "protective_rate": 35.0,
+        "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "standard_rate": 15.0
+      },
+      "hard_blockers": [],
+      "income_type": "interest",
+      "instrument_inventory": {
+        "base_source_ids": [
+          "CZ-MF-HK-1CE5A1AB6961"
+        ],
+        "entry_into_force": "2012-01-24",
+        "mli_listed": true,
+        "protocol_listed": false,
+        "related_source_ids": [
+          "CZ-MF-HK-2E00616C828C",
+          "CZ-MF-HK-470B3F2FC2E2"
+        ]
+      },
+      "legal_review_tasks": [
+        "base_treaty_candidate_review",
+        "domestic_rate_candidate_review",
+        "independent_legal_review",
+        "mli_wht_effect_candidate_review",
+        "semantic_rate_review"
+      ],
+      "mli": {
+        "checked_as_of": null,
+        "effect_id": "CZ-HK-MLI-WHT-PPT",
+        "effective_from": "2024-01-01",
+        "resolution_source_ids": [],
+        "source_excerpt_sha256": "a6b22170edf724f748bacbca38f68f4da924b8768c39528bb00b3483a2a3671d",
+        "source_page_id": "CZ-MF-HK-2E00616C828C",
+        "status": "wht_effect_candidate_available"
+      },
+      "protocol": {
+        "candidate_effective_from": null,
+        "candidate_rates": [],
+        "candidate_status": "not_listed",
+        "effect_kind": null,
+        "required": false,
+        "source_ids": []
+      },
+      "recipient_country": "HK",
+      "recipient_country_name": "Hongkong",
+      "review_ready": false,
+      "section_19_relief": {
+        "candidate_rate": null,
+        "candidate_status": "not_applicable_by_recipient_jurisdiction",
+        "jurisdiction_eligible": false,
+        "legal_reference": null,
+        "regime": null
+      },
+      "source_country": "CZ",
+      "treaty_status_instrument": {
+        "candidate_status": "not_listed",
+        "effect_kind": null,
+        "effective_from": null,
+        "effective_to": null,
+        "source_id": null,
+        "suspended_articles": []
+      },
+      "verification_status": "needs_review"
+    },
+    "mli_effects": [
+      {
+        "applies_to_income_types": [
+          "dividend",
+          "interest",
+          "royalty"
+        ],
+        "effect_id": "CZ-HK-MLI-WHT-PPT",
+        "effective_from": "2024-01-01",
+        "mli_article": "Article 7(1) PPT",
+        "recipient_country": "HK",
+        "recipient_country_name": "Hongkong",
+        "source_country": "CZ",
+        "source_excerpt": "Článek 2 Výše uvedené změny Smlouvy se provádějí následovně: 1) a) v České republice, pokud jde o daně vybírané srážkou u zdroje z částek vyplácených nebo připisovaných nerezidentům, jestliže skutečnost dávající vzniknout takovým daním nastala k 1. lednu 2024 nebo později; b) v Hongkongu - zvláštní administrativní oblasti Čínské lidové republiky, pokud jde",
+        "source_excerpt_sha256": "a6b22170edf724f748bacbca38f68f4da924b8768c39528bb00b3483a2a3671d",
+        "source_page_id": "CZ-MF-HK-2E00616C828C",
+        "source_page_url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2023/financni-zpravodaj-cislo-3-2023-50422",
+        "source_pdf_url": "https://mf.gov.cz/assets/attachments/2023-02-24_Financni-zpravodaj-cislo-3-2023.pdf",
+        "verification_status": "needs_review"
+      }
+    ],
+    "priority_review_row": null,
+    "protocol_effect": null
+  },
+  "packet_id": "CZ-HK-INT-LEGAL-REVIEW",
+  "promotable_to_active_rules": false,
+  "recipient_country": "HK",
+  "recipient_country_name": "Hongkong",
+  "review": {
+    "confirmations": {
+      "anti_abuse_review_completed": null,
+      "domestic_law_confirmed": null,
+      "effective_dates_confirmed": null,
+      "eu_relief_confirmed": null,
+      "mli_effects_confirmed": null,
+      "protocol_effects_confirmed": null,
+      "treaty_rules_confirmed": null
+    },
+    "proposed_rule_snapshot": null,
+    "question_responses": [],
+    "review_outcome": null,
+    "reviewed_at": null,
+    "reviewer_id": null
+  },
+  "review_pack_sha256": "53ee2cfc1907d220f64c94c3ab85aa71b86d77a244d6e5a0c8d1466254e67d3b",
+  "schema_version": 1,
+  "source_country": "CZ",
+  "status": "awaiting_primary_review",
+  "supporting_source_ids": [
+    "CZ-MF-HK-2E00616C828C",
+    "CZ-ZDP-2026-04-01-OPEN-DATA",
+    "SRC-D025022024F9F174"
+  ]
+}

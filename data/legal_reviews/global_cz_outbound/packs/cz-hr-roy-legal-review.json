@@ -1,0 +1,301 @@
+{
+  "approval_eligible": false,
+  "blockers": [
+    "anti_abuse_determination",
+    "domestic_rate_candidate_review",
+    "independent_legal_review",
+    "recipient_qualification_fact_review",
+    "relief_candidate_review"
+  ],
+  "candidate_readiness": "blocked",
+  "income_type": "royalty",
+  "legal_layers": {
+    "domestic_and_eu": {
+      "candidate_sha256": "a0f1180dbc45011fc33beb0f4c16fd4532edbe50e09ba22ef77ca2c981aa7787",
+      "candidate_status": "domestic_and_relief_candidate_consolidated",
+      "consolidation_blockers": [
+        "anti_abuse_determination",
+        "domestic_rate_candidate_review",
+        "independent_legal_review",
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "domestic_rate_candidate": {
+        "effective_from": "2026-04-01",
+        "income_scope_reference": "section 22(1)(g)(1)-(2)",
+        "protective_rate": 35.0,
+        "protective_rate_condition": "recipient is outside the EU/EEA and no qualifying treaty or tax-information-exchange instrument is applied",
+        "protective_rate_reference": "section 36(1)(c)",
+        "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "standard_rate": 15.0,
+        "standard_reference": "section 36(1)(a)(1), referring to section 22(1)(g)(1)-(2)"
+      },
+      "income_type": "royalty",
+      "recipient_country": "HR",
+      "recipient_country_name": "Chorvatsko",
+      "relief_candidate": {
+        "all_of": [
+          {
+            "fact": "recipient_is_qualifying_company_form",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_is_tax_resident_in_eligible_jurisdiction",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_subject_to_qualifying_corporate_tax",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_has_no_tax_exemption_or_zero_rate_option",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "beneficial_owner",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "payment_is_arm_length_amount",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "section_38nb_decision_effective",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "payment_not_attributable_to_disqualifying_pe",
+            "operator": "==",
+            "value": true
+          }
+        ],
+        "anti_abuse_review_required": true,
+        "association_one_of": [
+          "payer directly holds at least 25% of recipient capital or voting rights",
+          "recipient directly holds at least 25% of payer capital or voting rights",
+          "one person directly holds at least 25% of both payer and recipient capital or voting rights"
+        ],
+        "association_period_one_of": [
+          {
+            "fact": "holding_period_months",
+            "operator": ">=",
+            "value": 24
+          },
+          {
+            "all_of": [
+              {
+                "fact": "holding_period_will_reach_months",
+                "operator": ">=",
+                "value": 24
+              },
+              {
+                "fact": "statutory_clawback_acknowledged",
+                "operator": "==",
+                "value": true
+              }
+            ]
+          }
+        ],
+        "directive_source_id": "EU-IRD-2003-49-CONSOLIDATED",
+        "legal_reference": "section 19(1)(zj), (3), (5)-(8) and section 38nb",
+        "rate": 0.0,
+        "regime": "eu_directive_domestic_implementation"
+      },
+      "relief_candidate_status": "relief_candidate_consolidated",
+      "relief_eligible_by_jurisdiction": true,
+      "source_country": "CZ",
+      "verification_status": "needs_review"
+    },
+    "instrument_chain": {
+      "base_treaty": {
+        "article_number": 12,
+        "article_text_sha256": "1882c844a68a2e931bcfed28fd17ab6723c87baceec95bc86dedb86fd2b6a20e",
+        "candidate_rates": [
+          10.0
+        ],
+        "candidate_status": "base_rate_candidate_extracted",
+        "risk_flags": [],
+        "semantic_resolution_status": null,
+        "source_id": "SRC-2026EC8F5E96A9CC",
+        "source_state_taxation_candidate": null,
+        "treaty_rate_cap_status": "numeric_candidates_extracted"
+      },
+      "candidate_chain_complete": true,
+      "candidate_dataset_releases": {
+        "base_treaty": "remaining-294-base-candidates-2026-08-04.2",
+        "blocker_resolutions": "remaining-blocker-resolutions-2026-08-04.1",
+        "domestic_eu": "cz-domestic-eu-candidates-2026-08-04.1",
+        "mli": "cz-mli-wht-effects-2026-08-03-candidate.1",
+        "protocol": "remaining-294-protocol-effects-2026-08-03.1"
+      },
+      "candidate_sha256": "5ef218ebf4eca816e58fefcab56fd38407ef7a2abbbe0deaee91948cbd05b36d",
+      "chain_status": "candidate_chain_assembled",
+      "czech_domestic_law": {
+        "candidate_status": "domestic_and_relief_candidate_consolidated",
+        "effective_from": "2026-04-01",
+        "protective_rate": 35.0,
+        "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "standard_rate": 15.0
+      },
+      "hard_blockers": [],
+      "income_type": "royalty",
+      "instrument_inventory": {
+        "base_source_ids": [
+          "CZ-MF-HR-4904801EEC5E"
+        ],
+        "entry_into_force": "1999-12-28",
+        "mli_listed": true,
+        "protocol_listed": true,
+        "related_source_ids": [
+          "CZ-MF-HR-81BFD8AAACFA",
+          "CZ-MF-HR-C8A005DF4E65",
+          "CZ-MF-HR-FF7645967F85"
+        ]
+      },
+      "legal_review_tasks": [
+        "anti_abuse_determination",
+        "base_treaty_candidate_review",
+        "domestic_rate_candidate_review",
+        "independent_legal_review",
+        "mli_wht_effect_candidate_review",
+        "protocol_effect_candidate_review",
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "mli": {
+        "checked_as_of": null,
+        "effect_id": "CZ-HR-MLI-WHT-PPT",
+        "effective_from": "2022-01-01",
+        "resolution_source_ids": [],
+        "source_excerpt_sha256": "ae83bf66316fb725e3f8faf4ec599a9dca4b8bbca0f93c29dc1d3fc87e2b39eb",
+        "source_page_id": "CZ-MF-HR-81BFD8AAACFA",
+        "status": "wht_effect_candidate_available"
+      },
+      "protocol": {
+        "candidate_effective_from": "2013-01-01",
+        "candidate_rates": [],
+        "candidate_status": "protocol_effect_candidate_consolidated",
+        "effect_kind": "confirmed_no_article_12_change",
+        "required": true,
+        "source_ids": [
+          "CZ-MF-HR-FF7645967F85"
+        ]
+      },
+      "recipient_country": "HR",
+      "recipient_country_name": "Chorvatsko",
+      "review_ready": false,
+      "section_19_relief": {
+        "candidate_rate": 0.0,
+        "candidate_status": "relief_candidate_consolidated",
+        "jurisdiction_eligible": true,
+        "legal_reference": "section 19(1)(zj), (3), (5)-(8) and section 38nb",
+        "regime": "eu_directive_domestic_implementation"
+      },
+      "source_country": "CZ",
+      "treaty_status_instrument": {
+        "candidate_status": "not_listed",
+        "effect_kind": null,
+        "effective_from": null,
+        "effective_to": null,
+        "source_id": null,
+        "suspended_articles": []
+      },
+      "verification_status": "needs_review"
+    },
+    "mli_effects": [
+      {
+        "applies_to_income_types": [
+          "dividend",
+          "interest",
+          "royalty"
+        ],
+        "effect_id": "CZ-HR-MLI-WHT-PPT",
+        "effective_from": "2022-01-01",
+        "mli_article": "Article 7(1) PPT",
+        "recipient_country": "HR",
+        "recipient_country_name": "Chorvatsko",
+        "source_country": "CZ",
+        "source_excerpt": "/2020 Sb.m.s. Finanční zpravodaj 28/2021 3 1) pokud jde o daně vybírané srážkou u zdroje z částek vyplácených nebo připisovaných nerezidentům, jestliže skutečnost dávající vzniknout takovým daním nastala k 1. lednu 2022 nebo později; a 2) pokud jde o všechny ostatní daně, na daně ukládané za zdaňovací období začínají",
+        "source_excerpt_sha256": "ae83bf66316fb725e3f8faf4ec599a9dca4b8bbca0f93c29dc1d3fc87e2b39eb",
+        "source_page_id": "CZ-MF-HR-81BFD8AAACFA",
+        "source_page_url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2021/financni-zpravodaj-cislo-28-2021-42478",
+        "source_pdf_url": "https://mf.gov.cz/assets/cs/media/Financni-zpravodaj_2021-c-28.pdf",
+        "verification_status": "needs_review"
+      }
+    ],
+    "priority_review_row": null,
+    "protocol_effect": {
+      "base_rate_candidates": [
+        {
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "rate": 10.0
+        }
+      ],
+      "candidate_sha256": "2a9910890c50132352cd6898e1c6f34e0b343fde385ee40bee56ec606a78f0cf",
+      "candidate_status": "protocol_effect_candidate_consolidated",
+      "consolidation_blockers": [
+        "domestic_and_eu_relief_consolidation",
+        "independent_legal_review",
+        "mli_effect_candidate_review",
+        "protocol_effect_candidate_review"
+      ],
+      "effect_kind": "confirmed_no_article_12_change",
+      "evidence_anchor": "Protocol contains no amendment to treaty Article 12",
+      "income_type": "royalty",
+      "later_status_source_id": null,
+      "protocol_candidate_effective_from": "2013-01-01",
+      "protocol_rate_candidates": [],
+      "protocol_source_ids": [
+        "CZ-MF-HR-FF7645967F85"
+      ],
+      "recipient_country": "HR",
+      "source_country": "CZ",
+      "verification_status": "needs_review"
+    }
+  },
+  "packet_id": "CZ-HR-ROY-LEGAL-REVIEW",
+  "promotable_to_active_rules": false,
+  "recipient_country": "HR",
+  "recipient_country_name": "Chorvatsko",
+  "review": {
+    "confirmations": {
+      "anti_abuse_review_completed": null,
+      "domestic_law_confirmed": null,
+      "effective_dates_confirmed": null,
+      "eu_relief_confirmed": null,
+      "mli_effects_confirmed": null,
+      "protocol_effects_confirmed": null,
+      "treaty_rules_confirmed": null
+    },
+    "proposed_rule_snapshot": null,
+    "question_responses": [],
+    "review_outcome": null,
+    "reviewed_at": null,
+    "reviewer_id": null
+  },
+  "review_pack_sha256": "c1f74a24cca297c41ecd91eb381bc564f75dc38ac38c055e70a61342b23f0c2e",
+  "schema_version": 1,
+  "source_country": "CZ",
+  "status": "awaiting_primary_review",
+  "supporting_source_ids": [
+    "CZ-MF-HR-81BFD8AAACFA",
+    "CZ-MF-HR-FF7645967F85",
+    "CZ-ZDP-2026-04-01-OPEN-DATA",
+    "EU-IRD-2003-49-CONSOLIDATED",
+    "SRC-2026EC8F5E96A9CC"
+  ]
+}

@@ -1,0 +1,463 @@
+{
+  "approval_eligible": false,
+  "blockers": [
+    "anti_abuse_determination",
+    "domestic_rate_candidate_review",
+    "independent_legal_review",
+    "recipient_qualification_fact_review",
+    "relief_candidate_review"
+  ],
+  "candidate_readiness": "blocked",
+  "income_type": "dividend",
+  "legal_layers": {
+    "domestic_and_eu": {
+      "candidate_sha256": "a30d1dc202f911c9ef26feb863f744770685fe5ba598c743a2098e53602a766d",
+      "candidate_status": "domestic_and_relief_candidate_consolidated",
+      "consolidation_blockers": [
+        "anti_abuse_determination",
+        "domestic_rate_candidate_review",
+        "independent_legal_review",
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "domestic_rate_candidate": {
+        "effective_from": "2026-04-01",
+        "income_scope_reference": "section 22(1)(g)(3)",
+        "protective_rate": 35.0,
+        "protective_rate_condition": "recipient is outside the EU/EEA and no qualifying treaty or tax-information-exchange instrument is applied",
+        "protective_rate_reference": "section 36(1)(c)",
+        "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "standard_rate": 15.0,
+        "standard_reference": "section 36(1)(b)(1), referring to section 22(1)(g)(3)"
+      },
+      "income_type": "dividend",
+      "recipient_country": "DK",
+      "recipient_country_name": "Dánsko",
+      "relief_candidate": {
+        "all_of": [
+          {
+            "fact": "recipient_is_qualifying_company_form",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_is_tax_resident_in_eligible_jurisdiction",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_subject_to_qualifying_corporate_tax",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_has_no_tax_exemption_or_zero_rate_option",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "ownership_percent",
+            "operator": ">=",
+            "value": 10
+          },
+          {
+            "fact": "recipient_is_parent_company",
+            "operator": "==",
+            "value": true
+          }
+        ],
+        "anti_abuse_review_required": true,
+        "directive_source_id": "EU-PSD-2011-96-CONSOLIDATED",
+        "holding_period_one_of": [
+          {
+            "fact": "holding_period_months",
+            "operator": ">=",
+            "value": 12
+          },
+          {
+            "all_of": [
+              {
+                "fact": "holding_period_will_reach_months",
+                "operator": ">=",
+                "value": 12
+              },
+              {
+                "fact": "statutory_clawback_acknowledged",
+                "operator": "==",
+                "value": true
+              }
+            ]
+          }
+        ],
+        "legal_reference": "section 19(1)(ze), (3), (4), (6), (8) and (11)",
+        "rate": 0.0,
+        "regime": "eu_directive_domestic_implementation"
+      },
+      "relief_candidate_status": "relief_candidate_consolidated",
+      "relief_eligible_by_jurisdiction": true,
+      "source_country": "CZ",
+      "verification_status": "needs_review"
+    },
+    "instrument_chain": {
+      "base_treaty": {
+        "article_number": 10,
+        "article_text_sha256": "70ece32df9aeabd3e8ce3a37b903140356cb57029d9c7f7bc75850e121aec868",
+        "candidate_rates": [
+          0.0,
+          15.0
+        ],
+        "candidate_status": "base_rate_candidate_extracted",
+        "risk_flags": [
+          "dividend_special_cases_not_fully_structured",
+          "government_or_institution_exemption_requires_review",
+          "zero_rate_special_conditions_require_review"
+        ],
+        "semantic_resolution_status": null,
+        "source_id": "SRC-B9AEA532E5B126CC",
+        "source_state_taxation_candidate": null,
+        "treaty_rate_cap_status": "numeric_candidates_extracted"
+      },
+      "candidate_chain_complete": true,
+      "candidate_dataset_releases": {
+        "base_treaty": "remaining-294-base-candidates-2026-08-04.2",
+        "blocker_resolutions": "remaining-blocker-resolutions-2026-08-04.1",
+        "domestic_eu": "cz-domestic-eu-candidates-2026-08-04.1",
+        "mli": "cz-mli-wht-effects-2026-08-03-candidate.1",
+        "protocol": "remaining-294-protocol-effects-2026-08-03.1"
+      },
+      "candidate_sha256": "9b0c1189eab09fa8b4e50a79c7791000f3f9a89fe44c818a8ae4607689419adb",
+      "chain_status": "candidate_chain_assembled",
+      "czech_domestic_law": {
+        "candidate_status": "domestic_and_relief_candidate_consolidated",
+        "effective_from": "2026-04-01",
+        "protective_rate": 35.0,
+        "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "standard_rate": 15.0
+      },
+      "hard_blockers": [],
+      "income_type": "dividend",
+      "instrument_inventory": {
+        "base_source_ids": [
+          "CZ-MF-DK-9B26668B5D36"
+        ],
+        "entry_into_force": "2012-12-17",
+        "mli_listed": true,
+        "protocol_listed": false,
+        "related_source_ids": [
+          "CZ-MF-DK-6D5DDFC81601",
+          "CZ-MF-DK-72979B0765FE"
+        ]
+      },
+      "legal_review_tasks": [
+        "anti_abuse_determination",
+        "base_treaty_candidate_review",
+        "domestic_rate_candidate_review",
+        "independent_legal_review",
+        "mli_wht_effect_candidate_review",
+        "recipient_qualification_fact_review",
+        "relief_candidate_review",
+        "semantic_rate_review"
+      ],
+      "mli": {
+        "checked_as_of": null,
+        "effect_id": "CZ-DK-MLI-WHT-PPT",
+        "effective_from": "2021-01-01",
+        "resolution_source_ids": [],
+        "source_excerpt_sha256": "f95ae266d1e0c26f6e2ecb8bf334c6c0222537fb7983ff9a7cf62b69d56bf44e",
+        "source_page_id": "CZ-MF-DK-6D5DDFC81601",
+        "status": "wht_effect_candidate_available"
+      },
+      "protocol": {
+        "candidate_effective_from": null,
+        "candidate_rates": [],
+        "candidate_status": "not_listed",
+        "effect_kind": null,
+        "required": false,
+        "source_ids": []
+      },
+      "recipient_country": "DK",
+      "recipient_country_name": "Dánsko",
+      "review_ready": false,
+      "section_19_relief": {
+        "candidate_rate": 0.0,
+        "candidate_status": "relief_candidate_consolidated",
+        "jurisdiction_eligible": true,
+        "legal_reference": "section 19(1)(ze), (3), (4), (6), (8) and (11)",
+        "regime": "eu_directive_domestic_implementation"
+      },
+      "source_country": "CZ",
+      "treaty_status_instrument": {
+        "candidate_status": "not_listed",
+        "effect_kind": null,
+        "effective_from": null,
+        "effective_to": null,
+        "source_id": null,
+        "suspended_articles": []
+      },
+      "verification_status": "needs_review"
+    },
+    "mli_effects": [
+      {
+        "applies_to_income_types": [
+          "dividend",
+          "interest",
+          "royalty"
+        ],
+        "effect_id": "CZ-DK-MLI-WHT-PPT",
+        "effective_from": "2021-01-01",
+        "mli_article": "Article 7(1) PPT",
+        "recipient_country": "DK",
+        "recipient_country_name": "Dánsko",
+        "source_country": "CZ",
+        "source_excerpt": "Článek 2 Výše uvedené změny Smlouvy se provádějí následovně: 1) v obou smluvních státech, pokud jde o daně vybírané srážkou u zdroje z částek vyplácených nebo připisovaných nerezidentům, jestliže skutečnost dávající vzniknout takovým daním nastala k 1. lednu 2021 nebo později; 2) a) v České republice, pokud jde o všechny ostatní daně, na daně ukládané za zdaň",
+        "source_excerpt_sha256": "f95ae266d1e0c26f6e2ecb8bf334c6c0222537fb7983ff9a7cf62b69d56bf44e",
+        "source_page_id": "CZ-MF-DK-6D5DDFC81601",
+        "source_page_url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2020/financni-zpravodaj-cislo-34-2020-40170",
+        "source_pdf_url": "https://mf.gov.cz/assets/cs/media/Financni-zpravodaj_2020-c-34.pdf",
+        "verification_status": "needs_review"
+      }
+    ],
+    "priority_review_row": {
+      "approval_eligible": false,
+      "base_treaty": {
+        "article_number": 10,
+        "article_text_sha256": "70ece32df9aeabd3e8ce3a37b903140356cb57029d9c7f7bc75850e121aec868",
+        "article_title": "DIVIDENDY",
+        "candidate_status": "base_rate_candidate_extracted",
+        "consolidation_blockers": [
+          "domestic_and_parent_subsidiary_relief_consolidation",
+          "independent_legal_review",
+          "mli_effect_candidate_review",
+          "semantic_rate_review"
+        ],
+        "discarded_rate_candidates": [],
+        "publication": "14/2013 Sb.m.s.",
+        "rate_candidates": [
+          {
+            "conditions": [
+              {
+                "condition_type": "minimum_ownership",
+                "operator": ">=",
+                "unit": "%",
+                "value": "10"
+              },
+              {
+                "condition_type": "beneficial_owner",
+                "operator": "==",
+                "unit": null,
+                "value": "true"
+              }
+            ],
+            "legal_basis": "Article 10",
+            "priority": 0,
+            "rate": 0.0,
+            "source_text": "0 procent hrubé Částky dividend, jestliže skutečným vlastníkem je společnost (jiná než osobní společnost), která přímo drží alespoň 10 procent kapitálu společnosti, která dividendy vyplácí;",
+            "source_text_sha256": "777a7d3bdc3e8792837329991eef04b4aa92ce073d200b4c8f2aa6733adea495"
+          },
+          {
+            "conditions": [
+              {
+                "condition_type": "beneficial_owner",
+                "operator": "==",
+                "unit": null,
+                "value": "true"
+              }
+            ],
+            "legal_basis": "Article 10",
+            "priority": 1,
+            "rate": 0.0,
+            "source_text": "0 procent hrubé částky dividend, jestliže skutečným vlastníkem je penzijní fond nebo jiná podobná instituce poskytující penzijní plán, na kterém se mohou účastnit fyzické osoby za účelem zajištění důchodových dávek, pokud takový penzijní fond nebo jiná podobná instituce poskytuje plán v tomto druhém státě uznávaný pro daňové účely v souladu s článkem 17 odstavcem 2;",
+            "source_text_sha256": "999ae14601ef8c604300d9726f4c89ab37f05a7bcfe8a5f89207d6f4cc75dea1"
+          },
+          {
+            "conditions": [
+              {
+                "condition_type": "beneficial_owner",
+                "operator": "==",
+                "unit": null,
+                "value": "true"
+              }
+            ],
+            "legal_basis": "Article 10",
+            "priority": 2,
+            "rate": 15.0,
+            "source_text": "15 procent hrubé částky dividend ve všech ostatních případech.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace těchto omezení.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.",
+            "source_text_sha256": "472bb474b07967f2554cea936301265b5d3c61fb21eee3409042d5a5fcb67fcf"
+          }
+        ],
+        "risk_flags": [
+          "dividend_special_cases_not_fully_structured",
+          "government_or_institution_exemption_requires_review",
+          "zero_rate_special_conditions_require_review"
+        ],
+        "source_id": "SRC-B9AEA532E5B126CC",
+        "source_state_taxation_candidate": null,
+        "treaty_rate_cap_status": "numeric_candidates_extracted",
+        "verification_status": "needs_review"
+      },
+      "blocker_resolution": null,
+      "domestic_and_eu": {
+        "candidate_status": "domestic_and_relief_candidate_consolidated",
+        "consolidation_blockers": [
+          "anti_abuse_determination",
+          "domestic_rate_candidate_review",
+          "independent_legal_review",
+          "recipient_qualification_fact_review",
+          "relief_candidate_review"
+        ],
+        "domestic_rate_candidate": {
+          "effective_from": "2026-04-01",
+          "income_scope_reference": "section 22(1)(g)(3)",
+          "protective_rate": 35.0,
+          "protective_rate_condition": "recipient is outside the EU/EEA and no qualifying treaty or tax-information-exchange instrument is applied",
+          "protective_rate_reference": "section 36(1)(c)",
+          "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+          "standard_rate": 15.0,
+          "standard_reference": "section 36(1)(b)(1), referring to section 22(1)(g)(3)"
+        },
+        "relief_candidate": {
+          "all_of": [
+            {
+              "fact": "recipient_is_qualifying_company_form",
+              "operator": "==",
+              "value": true
+            },
+            {
+              "fact": "recipient_is_tax_resident_in_eligible_jurisdiction",
+              "operator": "==",
+              "value": true
+            },
+            {
+              "fact": "recipient_subject_to_qualifying_corporate_tax",
+              "operator": "==",
+              "value": true
+            },
+            {
+              "fact": "recipient_has_no_tax_exemption_or_zero_rate_option",
+              "operator": "==",
+              "value": true
+            },
+            {
+              "fact": "ownership_percent",
+              "operator": ">=",
+              "value": 10
+            },
+            {
+              "fact": "recipient_is_parent_company",
+              "operator": "==",
+              "value": true
+            }
+          ],
+          "anti_abuse_review_required": true,
+          "directive_source_id": "EU-PSD-2011-96-CONSOLIDATED",
+          "holding_period_one_of": [
+            {
+              "fact": "holding_period_months",
+              "operator": ">=",
+              "value": 12
+            },
+            {
+              "all_of": [
+                {
+                  "fact": "holding_period_will_reach_months",
+                  "operator": ">=",
+                  "value": 12
+                },
+                {
+                  "fact": "statutory_clawback_acknowledged",
+                  "operator": "==",
+                  "value": true
+                }
+              ]
+            }
+          ],
+          "legal_reference": "section 19(1)(ze), (3), (4), (6), (8) and (11)",
+          "rate": 0.0,
+          "regime": "eu_directive_domestic_implementation"
+        },
+        "relief_candidate_status": "relief_candidate_consolidated",
+        "relief_eligible_by_jurisdiction": true,
+        "verification_status": "needs_review"
+      },
+      "income_type": "dividend",
+      "mli_effects": [
+        {
+          "applies_to_income_types": [
+            "dividend",
+            "interest",
+            "royalty"
+          ],
+          "effect_id": "CZ-DK-MLI-WHT-PPT",
+          "effective_from": "2021-01-01",
+          "mli_article": "Article 7(1) PPT",
+          "recipient_country": "DK",
+          "recipient_country_name": "Dánsko",
+          "source_country": "CZ",
+          "source_excerpt": "Článek 2 Výše uvedené změny Smlouvy se provádějí následovně: 1) v obou smluvních státech, pokud jde o daně vybírané srážkou u zdroje z částek vyplácených nebo připisovaných nerezidentům, jestliže skutečnost dávající vzniknout takovým daním nastala k 1. lednu 2021 nebo později; 2) a) v České republice, pokud jde o všechny ostatní daně, na daně ukládané za zdaň",
+          "source_excerpt_sha256": "f95ae266d1e0c26f6e2ecb8bf334c6c0222537fb7983ff9a7cf62b69d56bf44e",
+          "source_page_id": "CZ-MF-DK-6D5DDFC81601",
+          "source_page_url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2020/financni-zpravodaj-cislo-34-2020-40170",
+          "source_pdf_url": "https://mf.gov.cz/assets/cs/media/Financni-zpravodaj_2020-c-34.pdf",
+          "verification_status": "needs_review"
+        }
+      ],
+      "packet_id": "CZ-DK-DIV-LEGAL-REVIEW",
+      "promotable_to_active_rules": false,
+      "protocols": {
+        "documents": [],
+        "scope_effects": []
+      },
+      "recipient_country": "DK",
+      "recipient_country_name": "Dánsko",
+      "review": {
+        "anti_abuse_review_completed": null,
+        "beneficial_owner_requirement_confirmed": null,
+        "domestic_rate_confirmed": null,
+        "effective_date_confirmed": null,
+        "eu_relief_confirmed": null,
+        "mli_effects_confirmed": null,
+        "proposed_rule_snapshot": null,
+        "protocol_effects_confirmed": null,
+        "review_outcome": null,
+        "reviewed_at": null,
+        "reviewer_id": null,
+        "reviewer_notes": null,
+        "supporting_source_ids": [],
+        "treaty_rate_candidates_confirmed": null
+      },
+      "review_row_sha256": "417bffaae76727d0c861a5d6268faa24e40ad84e21a6f6144b939cda17303d8d",
+      "status": "awaiting_primary_review"
+    },
+    "protocol_effect": null
+  },
+  "packet_id": "CZ-DK-DIV-LEGAL-REVIEW",
+  "promotable_to_active_rules": false,
+  "recipient_country": "DK",
+  "recipient_country_name": "Dánsko",
+  "review": {
+    "confirmations": {
+      "anti_abuse_review_completed": null,
+      "domestic_law_confirmed": null,
+      "effective_dates_confirmed": null,
+      "eu_relief_confirmed": null,
+      "mli_effects_confirmed": null,
+      "protocol_effects_confirmed": null,
+      "treaty_rules_confirmed": null
+    },
+    "proposed_rule_snapshot": null,
+    "question_responses": [],
+    "review_outcome": null,
+    "reviewed_at": null,
+    "reviewer_id": null
+  },
+  "review_pack_sha256": "02ac0f5ad0b7adb40dc26f172e5bca308302807cfabfa5dc718eb9c5c6e5601a",
+  "schema_version": 1,
+  "source_country": "CZ",
+  "status": "awaiting_primary_review",
+  "supporting_source_ids": [
+    "CZ-MF-DK-6D5DDFC81601",
+    "CZ-ZDP-2026-04-01-OPEN-DATA",
+    "EU-PSD-2011-96-CONSOLIDATED",
+    "SRC-B9AEA532E5B126CC"
+  ]
+}

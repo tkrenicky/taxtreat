@@ -1,0 +1,529 @@
+{
+  "approval_eligible": false,
+  "blockers": [
+    "anti_abuse_determination",
+    "domestic_rate_candidate_review",
+    "independent_legal_review",
+    "recipient_qualification_fact_review",
+    "relief_candidate_review"
+  ],
+  "candidate_readiness": "blocked",
+  "income_type": "royalty",
+  "legal_layers": {
+    "domestic_and_eu": {
+      "candidate_sha256": "b27b1ee6635f050185fce9a2569bc86d1398b1716f8d061feaf98d667ac94b32",
+      "candidate_status": "domestic_and_relief_candidate_consolidated",
+      "consolidation_blockers": [
+        "anti_abuse_determination",
+        "domestic_rate_candidate_review",
+        "independent_legal_review",
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "domestic_rate_candidate": {
+        "effective_from": "2026-04-01",
+        "income_scope_reference": "section 22(1)(g)(1)-(2)",
+        "protective_rate": 35.0,
+        "protective_rate_condition": "recipient is outside the EU/EEA and no qualifying treaty or tax-information-exchange instrument is applied",
+        "protective_rate_reference": "section 36(1)(c)",
+        "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "standard_rate": 15.0,
+        "standard_reference": "section 36(1)(a)(1), referring to section 22(1)(g)(1)-(2)"
+      },
+      "income_type": "royalty",
+      "recipient_country": "NL",
+      "recipient_country_name": "Nizozemí",
+      "relief_candidate": {
+        "all_of": [
+          {
+            "fact": "recipient_is_qualifying_company_form",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_is_tax_resident_in_eligible_jurisdiction",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_subject_to_qualifying_corporate_tax",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_has_no_tax_exemption_or_zero_rate_option",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "beneficial_owner",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "payment_is_arm_length_amount",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "section_38nb_decision_effective",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "payment_not_attributable_to_disqualifying_pe",
+            "operator": "==",
+            "value": true
+          }
+        ],
+        "anti_abuse_review_required": true,
+        "association_one_of": [
+          "payer directly holds at least 25% of recipient capital or voting rights",
+          "recipient directly holds at least 25% of payer capital or voting rights",
+          "one person directly holds at least 25% of both payer and recipient capital or voting rights"
+        ],
+        "association_period_one_of": [
+          {
+            "fact": "holding_period_months",
+            "operator": ">=",
+            "value": 24
+          },
+          {
+            "all_of": [
+              {
+                "fact": "holding_period_will_reach_months",
+                "operator": ">=",
+                "value": 24
+              },
+              {
+                "fact": "statutory_clawback_acknowledged",
+                "operator": "==",
+                "value": true
+              }
+            ]
+          }
+        ],
+        "directive_source_id": "EU-IRD-2003-49-CONSOLIDATED",
+        "legal_reference": "section 19(1)(zj), (3), (5)-(8) and section 38nb",
+        "rate": 0.0,
+        "regime": "eu_directive_domestic_implementation"
+      },
+      "relief_candidate_status": "relief_candidate_consolidated",
+      "relief_eligible_by_jurisdiction": true,
+      "source_country": "CZ",
+      "verification_status": "needs_review"
+    },
+    "instrument_chain": {
+      "base_treaty": {
+        "article_number": 12,
+        "article_text_sha256": "c19a7ab3418c7f12eb43c6d410213d0059a315d2d3592da9271abaf8943ed49c",
+        "candidate_rates": [
+          5.0
+        ],
+        "candidate_status": "base_rate_candidate_extracted",
+        "risk_flags": [],
+        "semantic_resolution_status": null,
+        "source_id": "SRC-449F6D668FCB55D8",
+        "source_state_taxation_candidate": null,
+        "treaty_rate_cap_status": "numeric_candidates_extracted"
+      },
+      "candidate_chain_complete": true,
+      "candidate_dataset_releases": {
+        "base_treaty": "remaining-294-base-candidates-2026-08-04.2",
+        "blocker_resolutions": "remaining-blocker-resolutions-2026-08-04.1",
+        "domestic_eu": "cz-domestic-eu-candidates-2026-08-04.1",
+        "mli": "cz-mli-wht-effects-2026-08-03-candidate.1",
+        "protocol": "remaining-294-protocol-effects-2026-08-03.1"
+      },
+      "candidate_sha256": "98a6607f13f8011f92dbfb1c988cf0ac0862a4d6a342f15feab51a5474071e76",
+      "chain_status": "candidate_chain_assembled",
+      "czech_domestic_law": {
+        "candidate_status": "domestic_and_relief_candidate_consolidated",
+        "effective_from": "2026-04-01",
+        "protective_rate": 35.0,
+        "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "standard_rate": 15.0
+      },
+      "hard_blockers": [],
+      "income_type": "royalty",
+      "instrument_inventory": {
+        "base_source_ids": [
+          "CZ-MF-NL-0B0DB5907DE0"
+        ],
+        "entry_into_force": "1974-11-05",
+        "mli_listed": true,
+        "protocol_listed": true,
+        "related_source_ids": [
+          "CZ-MF-NL-0210508FF125",
+          "CZ-MF-NL-45D279EE7770",
+          "CZ-MF-NL-7CAD483C3F1A",
+          "CZ-MF-NL-DECEAC6F2C23"
+        ]
+      },
+      "legal_review_tasks": [
+        "anti_abuse_determination",
+        "base_treaty_candidate_review",
+        "domestic_rate_candidate_review",
+        "independent_legal_review",
+        "mli_wht_effect_candidate_review",
+        "protocol_effect_candidate_review",
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "mli": {
+        "checked_as_of": null,
+        "effect_id": "CZ-NL-MLI-WHT-PPT",
+        "effective_from": "2021-01-01",
+        "resolution_source_ids": [],
+        "source_excerpt_sha256": "f95ae266d1e0c26f6e2ecb8bf334c6c0222537fb7983ff9a7cf62b69d56bf44e",
+        "source_page_id": "CZ-MF-NL-0210508FF125",
+        "status": "wht_effect_candidate_available"
+      },
+      "protocol": {
+        "candidate_effective_from": "2014-01-01",
+        "candidate_rates": [],
+        "candidate_status": "protocol_effect_candidate_consolidated",
+        "effect_kind": "confirmed_no_article_12_change",
+        "required": true,
+        "source_ids": [
+          "CZ-MF-NL-45D279EE7770",
+          "CZ-MF-NL-7CAD483C3F1A"
+        ]
+      },
+      "recipient_country": "NL",
+      "recipient_country_name": "Nizozemí",
+      "review_ready": false,
+      "section_19_relief": {
+        "candidate_rate": 0.0,
+        "candidate_status": "relief_candidate_consolidated",
+        "jurisdiction_eligible": true,
+        "legal_reference": "section 19(1)(zj), (3), (5)-(8) and section 38nb",
+        "regime": "eu_directive_domestic_implementation"
+      },
+      "source_country": "CZ",
+      "treaty_status_instrument": {
+        "candidate_status": "not_listed",
+        "effect_kind": null,
+        "effective_from": null,
+        "effective_to": null,
+        "source_id": null,
+        "suspended_articles": []
+      },
+      "verification_status": "needs_review"
+    },
+    "mli_effects": [
+      {
+        "applies_to_income_types": [
+          "dividend",
+          "interest",
+          "royalty"
+        ],
+        "effect_id": "CZ-NL-MLI-WHT-PPT",
+        "effective_from": "2021-01-01",
+        "mli_article": "Article 7(1) PPT",
+        "recipient_country": "NL",
+        "recipient_country_name": "Nizozemí",
+        "source_country": "CZ",
+        "source_excerpt": "Článek 2 Výše uvedené změny Smlouvy se provádějí následovně: 1) v obou smluvních státech, pokud jde o daně vybírané srážkou u zdroje z částek vyplácených nebo připisovaných nerezidentům, jestliže skutečnost dávající vzniknout takovým daním nastala k 1. lednu 2021 nebo později; 2) a) v České republice, pokud jde o všechny ostatní daně, na daně ukládané za zdaň",
+        "source_excerpt_sha256": "f95ae266d1e0c26f6e2ecb8bf334c6c0222537fb7983ff9a7cf62b69d56bf44e",
+        "source_page_id": "CZ-MF-NL-0210508FF125",
+        "source_page_url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2020/financni-zpravodaj-cislo-34-2020-40170",
+        "source_pdf_url": "https://mf.gov.cz/assets/cs/media/Financni-zpravodaj_2020-c-34.pdf",
+        "verification_status": "needs_review"
+      }
+    ],
+    "priority_review_row": {
+      "approval_eligible": false,
+      "base_treaty": {
+        "article_number": 12,
+        "article_text_sha256": "c19a7ab3418c7f12eb43c6d410213d0059a315d2d3592da9271abaf8943ed49c",
+        "article_title": "Licenční poplatky",
+        "candidate_status": "base_rate_candidate_extracted",
+        "consolidation_blockers": [
+          "domestic_and_eu_relief_consolidation",
+          "independent_legal_review",
+          "mli_effect_candidate_review",
+          "protocol_consolidation"
+        ],
+        "discarded_rate_candidates": [],
+        "publication": "138/1974 Sb.",
+        "rate_candidates": [
+          {
+            "conditions": [],
+            "legal_basis": "Article 12",
+            "priority": 0,
+            "rate": 5.0,
+            "source_text": "Takové licenční poplatky však mohou být zdaněny ve státě, ve kterém je jejich zdroj, a to podle právních předpisů tohoto státu. Daň takto stanovená však nepřekročí 5 % částky licenčních poplatků.",
+            "source_text_sha256": "86d764be6849ba8f95e2ac882f9865a330a0ebbff039831351ccc8a2ff81d11f"
+          }
+        ],
+        "risk_flags": [],
+        "source_id": "SRC-449F6D668FCB55D8",
+        "source_state_taxation_candidate": null,
+        "treaty_rate_cap_status": "numeric_candidates_extracted",
+        "verification_status": "needs_review"
+      },
+      "blocker_resolution": null,
+      "domestic_and_eu": {
+        "candidate_status": "domestic_and_relief_candidate_consolidated",
+        "consolidation_blockers": [
+          "anti_abuse_determination",
+          "domestic_rate_candidate_review",
+          "independent_legal_review",
+          "recipient_qualification_fact_review",
+          "relief_candidate_review"
+        ],
+        "domestic_rate_candidate": {
+          "effective_from": "2026-04-01",
+          "income_scope_reference": "section 22(1)(g)(1)-(2)",
+          "protective_rate": 35.0,
+          "protective_rate_condition": "recipient is outside the EU/EEA and no qualifying treaty or tax-information-exchange instrument is applied",
+          "protective_rate_reference": "section 36(1)(c)",
+          "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+          "standard_rate": 15.0,
+          "standard_reference": "section 36(1)(a)(1), referring to section 22(1)(g)(1)-(2)"
+        },
+        "relief_candidate": {
+          "all_of": [
+            {
+              "fact": "recipient_is_qualifying_company_form",
+              "operator": "==",
+              "value": true
+            },
+            {
+              "fact": "recipient_is_tax_resident_in_eligible_jurisdiction",
+              "operator": "==",
+              "value": true
+            },
+            {
+              "fact": "recipient_subject_to_qualifying_corporate_tax",
+              "operator": "==",
+              "value": true
+            },
+            {
+              "fact": "recipient_has_no_tax_exemption_or_zero_rate_option",
+              "operator": "==",
+              "value": true
+            },
+            {
+              "fact": "beneficial_owner",
+              "operator": "==",
+              "value": true
+            },
+            {
+              "fact": "payment_is_arm_length_amount",
+              "operator": "==",
+              "value": true
+            },
+            {
+              "fact": "section_38nb_decision_effective",
+              "operator": "==",
+              "value": true
+            },
+            {
+              "fact": "payment_not_attributable_to_disqualifying_pe",
+              "operator": "==",
+              "value": true
+            }
+          ],
+          "anti_abuse_review_required": true,
+          "association_one_of": [
+            "payer directly holds at least 25% of recipient capital or voting rights",
+            "recipient directly holds at least 25% of payer capital or voting rights",
+            "one person directly holds at least 25% of both payer and recipient capital or voting rights"
+          ],
+          "association_period_one_of": [
+            {
+              "fact": "holding_period_months",
+              "operator": ">=",
+              "value": 24
+            },
+            {
+              "all_of": [
+                {
+                  "fact": "holding_period_will_reach_months",
+                  "operator": ">=",
+                  "value": 24
+                },
+                {
+                  "fact": "statutory_clawback_acknowledged",
+                  "operator": "==",
+                  "value": true
+                }
+              ]
+            }
+          ],
+          "directive_source_id": "EU-IRD-2003-49-CONSOLIDATED",
+          "legal_reference": "section 19(1)(zj), (3), (5)-(8) and section 38nb",
+          "rate": 0.0,
+          "regime": "eu_directive_domestic_implementation"
+        },
+        "relief_candidate_status": "relief_candidate_consolidated",
+        "relief_eligible_by_jurisdiction": true,
+        "verification_status": "needs_review"
+      },
+      "income_type": "royalty",
+      "mli_effects": [
+        {
+          "applies_to_income_types": [
+            "dividend",
+            "interest",
+            "royalty"
+          ],
+          "effect_id": "CZ-NL-MLI-WHT-PPT",
+          "effective_from": "2021-01-01",
+          "mli_article": "Article 7(1) PPT",
+          "recipient_country": "NL",
+          "recipient_country_name": "Nizozemí",
+          "source_country": "CZ",
+          "source_excerpt": "Článek 2 Výše uvedené změny Smlouvy se provádějí následovně: 1) v obou smluvních státech, pokud jde o daně vybírané srážkou u zdroje z částek vyplácených nebo připisovaných nerezidentům, jestliže skutečnost dávající vzniknout takovým daním nastala k 1. lednu 2021 nebo později; 2) a) v České republice, pokud jde o všechny ostatní daně, na daně ukládané za zdaň",
+          "source_excerpt_sha256": "f95ae266d1e0c26f6e2ecb8bf334c6c0222537fb7983ff9a7cf62b69d56bf44e",
+          "source_page_id": "CZ-MF-NL-0210508FF125",
+          "source_page_url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2020/financni-zpravodaj-cislo-34-2020-40170",
+          "source_pdf_url": "https://mf.gov.cz/assets/cs/media/Financni-zpravodaj_2020-c-34.pdf",
+          "verification_status": "needs_review"
+        }
+      ],
+      "packet_id": "CZ-NL-ROY-LEGAL-REVIEW",
+      "promotable_to_active_rules": false,
+      "protocols": {
+        "documents": [
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "candidate_effective_from": "1998-01-01",
+            "entry_into_force": "1997-04-11",
+            "label": "Protokol č. 112/1997 Sb.",
+            "recipient_country": "NL",
+            "source_document_sha256": "46302e1d53791277d487b197fa8924a6cf7a52381e524bb84c58969f84356017",
+            "source_id": "CZ-MF-NL-45D279EE7770",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=3029",
+            "verification_status": "needs_review"
+          },
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "candidate_effective_from": "2014-01-01",
+            "entry_into_force": "2013-05-31",
+            "label": "Protokol č. 58/2013 Sb.m.s.",
+            "recipient_country": "NL",
+            "source_document_sha256": "d1cad7bfa1f4854fdddd36bdbc5585b2d25c3aa8fa15594063b2a5f0ee1e6595",
+            "source_id": "CZ-MF-NL-7CAD483C3F1A",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=26074",
+            "verification_status": "needs_review"
+          }
+        ],
+        "scope_effects": [
+          {
+            "base_rate_candidates": [
+              {
+                "conditions": [],
+                "rate": 5.0
+              }
+            ],
+            "candidate_sha256": "dfbd4436077665f2e881555a241bb65d405a231a56517e545a257e5c323609f1",
+            "candidate_status": "protocol_effect_candidate_consolidated",
+            "consolidation_blockers": [
+              "domestic_and_eu_relief_consolidation",
+              "independent_legal_review",
+              "mli_effect_candidate_review",
+              "protocol_effect_candidate_review"
+            ],
+            "effect_kind": "confirmed_no_article_12_change",
+            "evidence_anchor": "1996 and 2012 Protocols contain no amendment to treaty Article 12",
+            "income_type": "royalty",
+            "later_status_source_id": null,
+            "protocol_candidate_effective_from": "2014-01-01",
+            "protocol_rate_candidates": [],
+            "protocol_source_ids": [
+              "CZ-MF-NL-45D279EE7770",
+              "CZ-MF-NL-7CAD483C3F1A"
+            ],
+            "recipient_country": "NL",
+            "source_country": "CZ",
+            "verification_status": "needs_review"
+          }
+        ]
+      },
+      "recipient_country": "NL",
+      "recipient_country_name": "Nizozemí",
+      "review": {
+        "anti_abuse_review_completed": null,
+        "beneficial_owner_requirement_confirmed": null,
+        "domestic_rate_confirmed": null,
+        "effective_date_confirmed": null,
+        "eu_relief_confirmed": null,
+        "mli_effects_confirmed": null,
+        "proposed_rule_snapshot": null,
+        "protocol_effects_confirmed": null,
+        "review_outcome": null,
+        "reviewed_at": null,
+        "reviewer_id": null,
+        "reviewer_notes": null,
+        "supporting_source_ids": [],
+        "treaty_rate_candidates_confirmed": null
+      },
+      "review_row_sha256": "51f413c20edde2647f7496e92d3e86b9b79d3b29340c8fa07b8e6182ea0ba51d",
+      "status": "awaiting_primary_review"
+    },
+    "protocol_effect": {
+      "base_rate_candidates": [
+        {
+          "conditions": [],
+          "rate": 5.0
+        }
+      ],
+      "candidate_sha256": "dfbd4436077665f2e881555a241bb65d405a231a56517e545a257e5c323609f1",
+      "candidate_status": "protocol_effect_candidate_consolidated",
+      "consolidation_blockers": [
+        "domestic_and_eu_relief_consolidation",
+        "independent_legal_review",
+        "mli_effect_candidate_review",
+        "protocol_effect_candidate_review"
+      ],
+      "effect_kind": "confirmed_no_article_12_change",
+      "evidence_anchor": "1996 and 2012 Protocols contain no amendment to treaty Article 12",
+      "income_type": "royalty",
+      "later_status_source_id": null,
+      "protocol_candidate_effective_from": "2014-01-01",
+      "protocol_rate_candidates": [],
+      "protocol_source_ids": [
+        "CZ-MF-NL-45D279EE7770",
+        "CZ-MF-NL-7CAD483C3F1A"
+      ],
+      "recipient_country": "NL",
+      "source_country": "CZ",
+      "verification_status": "needs_review"
+    }
+  },
+  "packet_id": "CZ-NL-ROY-LEGAL-REVIEW",
+  "promotable_to_active_rules": false,
+  "recipient_country": "NL",
+  "recipient_country_name": "Nizozemí",
+  "review": {
+    "confirmations": {
+      "anti_abuse_review_completed": null,
+      "domestic_law_confirmed": null,
+      "effective_dates_confirmed": null,
+      "eu_relief_confirmed": null,
+      "mli_effects_confirmed": null,
+      "protocol_effects_confirmed": null,
+      "treaty_rules_confirmed": null
+    },
+    "proposed_rule_snapshot": null,
+    "question_responses": [],
+    "review_outcome": null,
+    "reviewed_at": null,
+    "reviewer_id": null
+  },
+  "review_pack_sha256": "b3bbc5df31dc0a376505263dc23ba5d20f0470ac7a4d047802c3a52ed6b956e5",
+  "schema_version": 1,
+  "source_country": "CZ",
+  "status": "awaiting_primary_review",
+  "supporting_source_ids": [
+    "CZ-MF-NL-0210508FF125",
+    "CZ-MF-NL-45D279EE7770",
+    "CZ-MF-NL-7CAD483C3F1A",
+    "CZ-ZDP-2026-04-01-OPEN-DATA",
+    "EU-IRD-2003-49-CONSOLIDATED",
+    "SRC-449F6D668FCB55D8"
+  ]
+}

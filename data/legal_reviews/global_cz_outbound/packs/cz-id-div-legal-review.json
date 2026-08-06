@@ -1,0 +1,184 @@
+{
+  "approval_eligible": false,
+  "blockers": [
+    "domestic_rate_candidate_review",
+    "independent_legal_review"
+  ],
+  "candidate_readiness": "blocked",
+  "income_type": "dividend",
+  "legal_layers": {
+    "domestic_and_eu": {
+      "candidate_sha256": "e8513ea2b8f386dec1967a93bff2dac8b8f19a4aaa3608b88ee94ef02bbe43d6",
+      "candidate_status": "domestic_and_relief_candidate_consolidated",
+      "consolidation_blockers": [
+        "domestic_rate_candidate_review",
+        "independent_legal_review"
+      ],
+      "domestic_rate_candidate": {
+        "effective_from": "2026-04-01",
+        "income_scope_reference": "section 22(1)(g)(3)",
+        "protective_rate": 35.0,
+        "protective_rate_condition": "recipient is outside the EU/EEA and no qualifying treaty or tax-information-exchange instrument is applied",
+        "protective_rate_reference": "section 36(1)(c)",
+        "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "standard_rate": 15.0,
+        "standard_reference": "section 36(1)(b)(1), referring to section 22(1)(g)(3)"
+      },
+      "income_type": "dividend",
+      "recipient_country": "ID",
+      "recipient_country_name": "Indonésie",
+      "relief_candidate": null,
+      "relief_candidate_status": "not_applicable_by_recipient_jurisdiction",
+      "relief_eligible_by_jurisdiction": false,
+      "source_country": "CZ",
+      "verification_status": "needs_review"
+    },
+    "instrument_chain": {
+      "base_treaty": {
+        "article_number": 10,
+        "article_text_sha256": "e54d5aa2056c9f73cd909e3929f238ac51b214be0400b53b4d2c2fdf044fab3c",
+        "candidate_rates": [
+          10.0,
+          12.5,
+          15.0
+        ],
+        "candidate_status": "base_rate_candidate_extracted",
+        "risk_flags": [
+          "dividend_special_cases_not_fully_structured"
+        ],
+        "semantic_resolution_status": null,
+        "source_id": "SRC-98C2BE2C9B6D6F49",
+        "source_state_taxation_candidate": null,
+        "treaty_rate_cap_status": "numeric_candidates_extracted"
+      },
+      "candidate_chain_complete": true,
+      "candidate_dataset_releases": {
+        "base_treaty": "remaining-294-base-candidates-2026-08-04.2",
+        "blocker_resolutions": "remaining-blocker-resolutions-2026-08-04.1",
+        "domestic_eu": "cz-domestic-eu-candidates-2026-08-04.1",
+        "mli": "cz-mli-wht-effects-2026-08-03-candidate.1",
+        "protocol": "remaining-294-protocol-effects-2026-08-03.1"
+      },
+      "candidate_sha256": "62944bb2e8c8c78802f30c9bdd102dd091a7de95e8bd550abed0fbfd9bd643fa",
+      "chain_status": "candidate_chain_assembled",
+      "czech_domestic_law": {
+        "candidate_status": "domestic_and_relief_candidate_consolidated",
+        "effective_from": "2026-04-01",
+        "protective_rate": 35.0,
+        "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "standard_rate": 15.0
+      },
+      "hard_blockers": [],
+      "income_type": "dividend",
+      "instrument_inventory": {
+        "base_source_ids": [
+          "CZ-MF-ID-7439A9AE8F63"
+        ],
+        "entry_into_force": "1996-01-26",
+        "mli_listed": true,
+        "protocol_listed": false,
+        "related_source_ids": [
+          "CZ-MF-ID-0AA231BB4D4B",
+          "CZ-MF-ID-0BCEBF8B0856",
+          "CZ-MF-ID-C2FEE851164B"
+        ]
+      },
+      "legal_review_tasks": [
+        "base_treaty_candidate_review",
+        "domestic_rate_candidate_review",
+        "independent_legal_review",
+        "mli_wht_effect_candidate_review",
+        "semantic_rate_review"
+      ],
+      "mli": {
+        "checked_as_of": null,
+        "effect_id": "CZ-ID-MLI-WHT-PPT",
+        "effective_from": "2027-01-01",
+        "resolution_source_ids": [],
+        "source_excerpt_sha256": "9a653184fbf6bf3c97e7fc568166aa22c6519e1351903d6eaca11b207ccd2abd",
+        "source_page_id": "CZ-MF-ID-C2FEE851164B",
+        "status": "wht_effect_candidate_available"
+      },
+      "protocol": {
+        "candidate_effective_from": null,
+        "candidate_rates": [],
+        "candidate_status": "not_listed",
+        "effect_kind": null,
+        "required": false,
+        "source_ids": []
+      },
+      "recipient_country": "ID",
+      "recipient_country_name": "Indonésie",
+      "review_ready": false,
+      "section_19_relief": {
+        "candidate_rate": null,
+        "candidate_status": "not_applicable_by_recipient_jurisdiction",
+        "jurisdiction_eligible": false,
+        "legal_reference": null,
+        "regime": null
+      },
+      "source_country": "CZ",
+      "treaty_status_instrument": {
+        "candidate_status": "not_listed",
+        "effect_kind": null,
+        "effective_from": null,
+        "effective_to": null,
+        "source_id": null,
+        "suspended_articles": []
+      },
+      "verification_status": "needs_review"
+    },
+    "mli_effects": [
+      {
+        "applies_to_income_types": [
+          "dividend",
+          "interest",
+          "royalty"
+        ],
+        "effect_id": "CZ-ID-MLI-WHT-PPT",
+        "effective_from": "2027-01-01",
+        "mli_article": "Article 7(1) PPT",
+        "recipient_country": "ID",
+        "recipient_country_name": "Indonésie",
+        "source_country": "CZ",
+        "source_excerpt": "Článek 2 Výše uvedené změny Smlouvy se provádějí následovně: 1) v obou smluvních státech, pokud jde o daně vybírané srážkou u zdroje z částek vyplácených nebo připisovaných nerezidentům, jestliže skutečnost dávající vzniknout takovým daním nastala k 1. lednu 2027 nebo později; 2) a) v České republice, pokud jde o všechny ostatní daně, na daně ukládané za zdaň",
+        "source_excerpt_sha256": "9a653184fbf6bf3c97e7fc568166aa22c6519e1351903d6eaca11b207ccd2abd",
+        "source_page_id": "CZ-MF-ID-C2FEE851164B",
+        "source_page_url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2026/financni-zpravodaj-cislo-3-2026-62787",
+        "source_pdf_url": "https://mf.gov.cz/assets/attachments/2026-02-04_Financni-zpravodaj-cislo-3-2026.pdf",
+        "verification_status": "needs_review"
+      }
+    ],
+    "priority_review_row": null,
+    "protocol_effect": null
+  },
+  "packet_id": "CZ-ID-DIV-LEGAL-REVIEW",
+  "promotable_to_active_rules": false,
+  "recipient_country": "ID",
+  "recipient_country_name": "Indonésie",
+  "review": {
+    "confirmations": {
+      "anti_abuse_review_completed": null,
+      "domestic_law_confirmed": null,
+      "effective_dates_confirmed": null,
+      "eu_relief_confirmed": null,
+      "mli_effects_confirmed": null,
+      "protocol_effects_confirmed": null,
+      "treaty_rules_confirmed": null
+    },
+    "proposed_rule_snapshot": null,
+    "question_responses": [],
+    "review_outcome": null,
+    "reviewed_at": null,
+    "reviewer_id": null
+  },
+  "review_pack_sha256": "67c7eaf3de3f3d9b2b2a62610e5aa810353a7ead45b8a28147d2e0a11a9509eb",
+  "schema_version": 1,
+  "source_country": "CZ",
+  "status": "awaiting_primary_review",
+  "supporting_source_ids": [
+    "CZ-MF-ID-C2FEE851164B",
+    "CZ-ZDP-2026-04-01-OPEN-DATA",
+    "SRC-98C2BE2C9B6D6F49"
+  ]
+}

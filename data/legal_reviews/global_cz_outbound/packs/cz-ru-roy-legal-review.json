@@ -1,0 +1,250 @@
+{
+  "approval_eligible": false,
+  "blockers": [
+    "current_treaty_status_review",
+    "domestic_rate_candidate_review",
+    "independent_legal_review"
+  ],
+  "candidate_readiness": "blocked",
+  "income_type": "royalty",
+  "legal_layers": {
+    "domestic_and_eu": {
+      "candidate_sha256": "b78aedfa0137e5327c2b5fa2932582fc134c0de0e999e7dffe1824e49be8e32d",
+      "candidate_status": "domestic_and_relief_candidate_consolidated",
+      "consolidation_blockers": [
+        "current_treaty_status_review",
+        "domestic_rate_candidate_review",
+        "independent_legal_review"
+      ],
+      "domestic_rate_candidate": {
+        "effective_from": "2026-04-01",
+        "income_scope_reference": "section 22(1)(g)(1)-(2)",
+        "protective_rate": 35.0,
+        "protective_rate_condition": "recipient is outside the EU/EEA and no qualifying treaty or tax-information-exchange instrument is applied",
+        "protective_rate_reference": "section 36(1)(c)",
+        "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "standard_rate": 15.0,
+        "standard_reference": "section 36(1)(a)(1), referring to section 22(1)(g)(1)-(2)"
+      },
+      "income_type": "royalty",
+      "recipient_country": "RU",
+      "recipient_country_name": "Rusko",
+      "relief_candidate": null,
+      "relief_candidate_status": "not_applicable_by_recipient_jurisdiction",
+      "relief_eligible_by_jurisdiction": false,
+      "source_country": "CZ",
+      "verification_status": "needs_review"
+    },
+    "instrument_chain": {
+      "base_treaty": {
+        "article_number": 12,
+        "article_text_sha256": "0ca06a25bad6155e651d8e95e62a3f8dea7fc1e3516bb3b9aa38edbea61201ce",
+        "candidate_rates": [
+          10.0
+        ],
+        "candidate_status": "base_rate_candidate_extracted",
+        "risk_flags": [],
+        "semantic_resolution_status": null,
+        "source_id": "SRC-5B60ADE50F43E63E",
+        "source_state_taxation_candidate": null,
+        "treaty_rate_cap_status": "numeric_candidates_extracted"
+      },
+      "candidate_chain_complete": true,
+      "candidate_dataset_releases": {
+        "base_treaty": "remaining-294-base-candidates-2026-08-04.2",
+        "blocker_resolutions": "remaining-blocker-resolutions-2026-08-04.1",
+        "domestic_eu": "cz-domestic-eu-candidates-2026-08-04.1",
+        "mli": "cz-mli-wht-effects-2026-08-03-candidate.1",
+        "protocol": "remaining-294-protocol-effects-2026-08-03.1"
+      },
+      "candidate_sha256": "07fb7dc36c748fb3195acea7a6894a6d7d18352f7aab470680f2238fdcb768ca",
+      "chain_status": "candidate_chain_assembled",
+      "czech_domestic_law": {
+        "candidate_status": "domestic_and_relief_candidate_consolidated",
+        "effective_from": "2026-04-01",
+        "protective_rate": 35.0,
+        "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "standard_rate": 15.0
+      },
+      "hard_blockers": [],
+      "income_type": "royalty",
+      "instrument_inventory": {
+        "base_source_ids": [
+          "CZ-MF-RU-E1F9108FB49F"
+        ],
+        "entry_into_force": "1997-07-18",
+        "mli_listed": true,
+        "protocol_listed": true,
+        "related_source_ids": [
+          "CZ-MF-RU-2647E9E83753",
+          "CZ-MF-RU-4F72F907462B",
+          "CZ-MF-RU-A19927F57D57",
+          "CZ-MF-RU-DA04F609C3BC"
+        ]
+      },
+      "legal_review_tasks": [
+        "base_treaty_candidate_review",
+        "domestic_law_fallback_review",
+        "domestic_rate_candidate_review",
+        "independent_legal_review",
+        "mli_wht_effect_candidate_review",
+        "protocol_effect_candidate_review",
+        "status_instrument_candidate_review"
+      ],
+      "mli": {
+        "checked_as_of": null,
+        "effect_id": "CZ-RU-MLI-WHT-PPT",
+        "effective_from": "2021-01-01",
+        "resolution_source_ids": [],
+        "source_excerpt_sha256": "76e7f062ee438a42a81d8ee5f6d55be5ad0dce064abc51083f5ba372414b7666",
+        "source_page_id": "CZ-MF-RU-DA04F609C3BC",
+        "status": "wht_effect_candidate_available"
+      },
+      "protocol": {
+        "candidate_effective_from": "2010-01-01",
+        "candidate_rates": [
+          10.0
+        ],
+        "candidate_status": "protocol_effect_candidate_consolidated",
+        "effect_kind": "replace_rates",
+        "required": true,
+        "source_ids": [
+          "CZ-MF-RU-2647E9E83753"
+        ]
+      },
+      "recipient_country": "RU",
+      "recipient_country_name": "Rusko",
+      "review_ready": false,
+      "section_19_relief": {
+        "candidate_rate": null,
+        "candidate_status": "not_applicable_by_recipient_jurisdiction",
+        "jurisdiction_eligible": false,
+        "legal_reference": null,
+        "regime": null
+      },
+      "source_country": "CZ",
+      "treaty_status_instrument": {
+        "candidate_status": "article_application_suspended",
+        "effect_kind": "partial_suspension",
+        "effective_from": "2023-08-11",
+        "effective_to": null,
+        "source_id": "CZ-MF-RU-4F72F907462B",
+        "suspended_articles": [
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          24
+        ]
+      },
+      "verification_status": "needs_review"
+    },
+    "mli_effects": [
+      {
+        "applies_to_income_types": [
+          "dividend",
+          "interest",
+          "royalty"
+        ],
+        "effect_id": "CZ-RU-MLI-WHT-PPT",
+        "effective_from": "2021-01-01",
+        "mli_article": "Article 7(1) PPT",
+        "recipient_country": "RU",
+        "recipient_country_name": "Rusko",
+        "source_country": "CZ",
+        "source_excerpt": "Článek 2 Výše uvedené změny Smlouvy se v obou smluvních státech provádějí následovně: 1) pokud jde o daně vybírané srážkou u zdroje z částek vyplácených nebo připisovaných nerezidentům, jestliže skutečnost dávající vzniknout takovým daním nastala k 1. lednu 2021 nebo později; a 2) pokud jde o všechny ostatní daně, na daně ukládané za zdaňovací období začínají",
+        "source_excerpt_sha256": "76e7f062ee438a42a81d8ee5f6d55be5ad0dce064abc51083f5ba372414b7666",
+        "source_page_id": "CZ-MF-RU-DA04F609C3BC",
+        "source_page_url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2021/financni-zpravodaj-cislo-2-2021-40424",
+        "source_pdf_url": "https://mf.gov.cz/assets/cs/media/Financni-zpravodaj_2021-c-02.pdf",
+        "verification_status": "needs_review"
+      }
+    ],
+    "priority_review_row": null,
+    "protocol_effect": {
+      "base_rate_candidates": [
+        {
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "rate": 10.0
+        }
+      ],
+      "candidate_sha256": "95591c9d5b442fe87112b0a8ca6628241c668e19df65fc04cdfa23dc58cd1580",
+      "candidate_status": "protocol_effect_candidate_consolidated",
+      "consolidation_blockers": [
+        "domestic_and_eu_relief_consolidation",
+        "independent_legal_review",
+        "mli_effect_candidate_review",
+        "post_protocol_status_instrument_consolidation",
+        "protocol_effect_candidate_review"
+      ],
+      "effect_kind": "replace_rates",
+      "evidence_anchor": "Protocol Article V, treaty Article 12(2)",
+      "income_type": "royalty",
+      "later_status_source_id": "CZ-MF-RU-4F72F907462B",
+      "protocol_candidate_effective_from": "2010-01-01",
+      "protocol_rate_candidates": [
+        {
+          "condition_summary": "all royalties within treaty Article 12",
+          "rate": 10.0
+        }
+      ],
+      "protocol_source_ids": [
+        "CZ-MF-RU-2647E9E83753"
+      ],
+      "recipient_country": "RU",
+      "source_country": "CZ",
+      "verification_status": "needs_review"
+    }
+  },
+  "packet_id": "CZ-RU-ROY-LEGAL-REVIEW",
+  "promotable_to_active_rules": false,
+  "recipient_country": "RU",
+  "recipient_country_name": "Rusko",
+  "review": {
+    "confirmations": {
+      "anti_abuse_review_completed": null,
+      "domestic_law_confirmed": null,
+      "effective_dates_confirmed": null,
+      "eu_relief_confirmed": null,
+      "mli_effects_confirmed": null,
+      "protocol_effects_confirmed": null,
+      "treaty_rules_confirmed": null
+    },
+    "proposed_rule_snapshot": null,
+    "question_responses": [],
+    "review_outcome": null,
+    "reviewed_at": null,
+    "reviewer_id": null
+  },
+  "review_pack_sha256": "4cd2136d17db7ebd457d091b109995b79ee7dd3334bb62f793efa2b382587ede",
+  "schema_version": 1,
+  "source_country": "CZ",
+  "status": "awaiting_primary_review",
+  "supporting_source_ids": [
+    "CZ-MF-RU-2647E9E83753",
+    "CZ-MF-RU-DA04F609C3BC",
+    "CZ-ZDP-2026-04-01-OPEN-DATA",
+    "SRC-5B60ADE50F43E63E"
+  ]
+}
