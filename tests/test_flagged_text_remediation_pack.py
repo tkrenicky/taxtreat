@@ -108,43 +108,43 @@ def test_pack_contains_all_audit_findings():
     assert pack_findings == audit_findings
 
 
-def test_known_expanded_findings_are_present():
+def test_confirmed_findings_are_removed():
     pack = load(PACK_PATH)
 
     findings = {
         (
             partner["treaty_pair_id"],
             finding["code"],
+            finding["excerpt"],
         )
         for partner in pack["treaty_partners"]
         for article in partner["articles"]
         for finding in article["findings"]
     }
 
-    assert (
-        "CZ-AD",
-        "likely_ocr_word_substitution",
-    ) in findings
+    combined = "\n".join(
+        excerpt
+        for _, _, excerpt in findings
+    )
 
-    assert (
-        "CZ-AD",
-        "glued_words",
-    ) in findings
+    assert "vyplacejici" not in combined
+    assert "vlasmík" not in combined
+    assert "znerozdělených" not in combined
+    assert "znerozdélenych" not in combined
+    assert "odstavců | a 2" not in combined
+    assert 'státě,"v němž' not in combined
 
-    assert (
+    assert {
+        pair_id
+        for pair_id, code, _ in findings
+        if code == "glued_preposition"
+    } == {
+        "CZ-AD",
         "CZ-BW",
-        "stray_quote_inside_sentence",
-    ) in findings
-
-    assert (
+        "CZ-GH",
         "CZ-KR",
-        "likely_ocr_word_substitution",
-    ) in findings
-
-    assert (
-        "CZ-KR",
-        "glued_words",
-    ) in findings
+        "CZ-QA",
+    }
 
 
 def test_no_automatic_corrections_are_applied():

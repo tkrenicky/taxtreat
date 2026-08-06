@@ -1,9 +1,9 @@
 {
-  "article_scope_count": 7,
+  "article_scope_count": 5,
   "clean_text_verification_completed": false,
   "dataset_release": "flagged-text-remediation-pack-2026-08-06.2",
   "fail_closed": true,
-  "finding_count": 12,
+  "finding_count": 5,
   "legal_verification_completed": false,
   "production_ready": false,
   "promotable_to_active_rules": false,
@@ -28,68 +28,29 @@
           "comparison_completed": false,
           "corrected_text": null,
           "corrected_text_sha256": null,
-          "current_text_sha256": "66deef841500a35561922c4562f0725c321ac8d9019c4fe7dbbeded24f6dc080",
-          "error_count": 2,
+          "current_text_sha256": "a4577f5a3b4300392712e690f12ec1254b3f7e23bff89452db15428bac9e45f8",
+          "error_count": 0,
           "findings": [
-            {
-              "code": "likely_ocr_word_substitution",
-              "excerpt": "druhém smluvním státě, jehož je rezidentem společnost vyplacejici dividendy, svoji činnost prostřednictvím st",
-              "offset": 1406,
-              "severity": "error"
-            },
             {
               "code": "glued_preposition",
               "excerpt": "e skutečně váže ke stálé provozovně, která je umístěna vtomto druhém státě, ani podrobit nerozdělené zisky spo",
               "offset": 2006,
               "severity": "warning"
-            },
-            {
-              "code": "glued_words",
-              "excerpt": "státě, ani podrobit nerozdělené zisky společnosti dani znerozdélenych zisků společnosti, i když vyplácené divi",
-              "offset": 2075,
-              "severity": "error"
             }
           ],
           "legal_text_verified": false,
           "required_action": "compare_with_official_artifact",
           "warning_count": 1
-        },
-        {
-          "article_number": 12,
-          "article_title": "LICENČNÍ POPLATKY",
-          "clean_text_verified": false,
-          "comparison_completed": false,
-          "corrected_text": null,
-          "corrected_text_sha256": null,
-          "current_text_sha256": "3194d21be290b5f3942ac16e3752efa6dc396c0a42e8f82a3b963a9c6c002ec9",
-          "error_count": 2,
-          "findings": [
-            {
-              "code": "broken_article_reference",
-              "excerpt": "lasti průmyslové, obchodní nebo vědecké, 4. Ustanovení odstavců | a 2 se nepoužijí, jestliže skutečný vlastník",
-              "offset": 1164,
-              "severity": "error"
-            },
-            {
-              "code": "isolated_ocr_pipe",
-              "excerpt": "myslové, obchodní nebo vědecké, 4. Ustanovení odstavců | a 2 se nepoužijí, jestliže skutečný vlastník licenční",
-              "offset": 1173,
-              "severity": "error"
-            }
-          ],
-          "legal_text_verified": false,
-          "required_action": "compare_with_official_artifact",
-          "warning_count": 0
         }
       ],
       "fail_closed": true,
       "partner_country": "AD",
       "partner_country_name": "Andorra",
       "production_ready": false,
-      "quality_status": "text_remediation_required",
+      "quality_status": "manual_text_review_required",
       "remediation_status": "official_comparison_required",
       "source_title": "46/2023 Sb.m.s.",
-      "total_error_count": 4,
+      "total_error_count": 0,
       "total_warning_count": 1,
       "treaty_pair_id": "CZ-AD"
     },
@@ -115,27 +76,6 @@
           "legal_text_verified": false,
           "required_action": "compare_with_official_artifact",
           "warning_count": 1
-        },
-        {
-          "article_number": 12,
-          "article_title": "LICENČNÍ POPLATKY A POPLATKY ZA TECHNICKÉ SLUŽBY",
-          "clean_text_verified": false,
-          "comparison_completed": false,
-          "corrected_text": null,
-          "corrected_text_sha256": null,
-          "current_text_sha256": "8b73eabe91c08ea9e827504a9698f2ed397bfacf73dfb078a0663bd865dbd443",
-          "error_count": 0,
-          "findings": [
-            {
-              "code": "stray_quote_inside_sentence",
-              "excerpt": "služby však mohou být rovněž zdaněny ve smluvním státě,\"v němž mají zdroj, a to podle právních předpisů tohot",
-              "offset": 279,
-              "severity": "warning"
-            }
-          ],
-          "legal_text_verified": false,
-          "required_action": "compare_with_official_artifact",
-          "warning_count": 1
         }
       ],
       "fail_closed": true,
@@ -146,7 +86,7 @@
       "remediation_status": "official_comparison_required",
       "source_title": "49/2020 Sb.m.s.",
       "total_error_count": 0,
-      "total_warning_count": 2,
+      "total_warning_count": 1,
       "treaty_pair_id": "CZ-BW"
     },
     {
@@ -193,26 +133,14 @@
           "comparison_completed": false,
           "corrected_text": null,
           "corrected_text_sha256": null,
-          "current_text_sha256": "46f8b2d89b5e772daca743314180775db45acf7d9aadb7c804ce35679a55042e",
-          "error_count": 2,
+          "current_text_sha256": "a0572cd2713b1ba2c7727fa5d606452a8f9520b83715012bcc60cdf396f2d887",
+          "error_count": 0,
           "findings": [
-            {
-              "code": "likely_ocr_word_substitution",
-              "excerpt": "rávních předpisů tohoto státu, avšak jestliže skutečný vlasmík dividend je rezidentem druhého smluvního státu,",
-              "offset": 349,
-              "severity": "error"
-            },
             {
               "code": "glued_preposition",
               "excerpt": "e skutečně váže ke stálé provozovně, která je umístěna vtomto druhém státě, ani podrobit nerozdělené zisky spo",
-              "offset": 1736,
+              "offset": 1737,
               "severity": "warning"
-            },
-            {
-              "code": "glued_words",
-              "excerpt": "státě, ani podrobit nerozdělené zisky společnosti dani znerozdělených zisků společnosti, i když vyplácené divi",
-              "offset": 1805,
-              "severity": "error"
             }
           ],
           "legal_text_verified": false,
@@ -224,10 +152,10 @@
       "partner_country": "KR",
       "partner_country_name": "Korejská republika",
       "production_ready": false,
-      "quality_status": "text_remediation_required",
+      "quality_status": "manual_text_review_required",
       "remediation_status": "official_comparison_required",
       "source_title": "1/2020 Sb.m.s.",
-      "total_error_count": 2,
+      "total_error_count": 0,
       "total_warning_count": 1,
       "treaty_pair_id": "CZ-KR"
     },
