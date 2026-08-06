@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "dataset_release": "batch-01-preliminary-findings-2026-08-06.1",
+  "batch_id": "GLOBAL-CZ-OUTBOUND-BATCH-01",
+  "review_status": "preliminary_findings_compiled",
+  "primary_legal_review_status": "pending_human_confirmation",
+  "independent_approval_status": "not_started",
+  "approval_eligible": false,
+  "promotable_to_active_rules": false,
+  "fail_closed": true,
+  "review_date": "2026-08-06",
+  "findings": [
+    {
+      "packet_id": "CZ-RU-DIV-LEGAL-REVIEW",
+      "recipient_country": "RU",
+      "income_type": "dividend",
+      "treaty_article": "10",
+      "treaty_application_status": "suspended",
+      "suspension_effective_from": "2023-08-11",
+      "preliminary_treatment": {
+        "treatment_type": "czech_domestic_law_fallback",
+        "standard_rate_candidate": 15.0,
+        "standard_reference": "section 36(1)(b)(1), referring to section 22(1)(g)(3)",
+        "protective_rate_candidate": 35.0,
+        "protective_rate_reference": "section 36(1)(c)",
+        "protective_rate_automatically_applied": false,
+        "protective_rate_requires_separate_confirmation": true
+      },
+      "primary_conclusion": "Article 10 cannot currently be relied upon. Czech domestic-law treatment must be applied, subject to separate verification of whether the conditions for the protective rate are met.",
+      "status": "preliminary_not_approved"
+    },
+    {
+      "packet_id": "CZ-RU-INT-LEGAL-REVIEW",
+      "recipient_country": "RU",
+      "income_type": "interest",
+      "treaty_article": "11",
+      "treaty_application_status": "suspended",
+      "suspension_effective_from": "2023-08-11",
+      "preliminary_treatment": {
+        "treatment_type": "czech_domestic_law_fallback",
+        "standard_rate_candidate": 15.0,
+        "standard_reference": "section 36(1)(a)(1), referring to section 22(1)(g)(4)",
+        "protective_rate_candidate": 35.0,
+        "protective_rate_reference": "section 36(1)(c)",
+        "protective_rate_automatically_applied": false,
+        "protective_rate_requires_separate_confirmation": true
+      },
+      "primary_conclusion": "Article 11 cannot currently be relied upon. Czech domestic-law treatment must be applied, subject to separate verification of whether the conditions for the protective rate are met.",
+      "status": "preliminary_not_approved"
+    },
+    {
+      "packet_id": "CZ-RU-ROY-LEGAL-REVIEW",
+      "recipient_country": "RU",
+      "income_type": "royalty",
+      "treaty_article": "12",
+      "treaty_application_status": "suspended",
+      "suspension_effective_from": "2023-08-11",
+      "preliminary_treatment": {
+        "treatment_type": "czech_domestic_law_fallback",
+        "standard_rate_candidate": 15.0,
+        "standard_reference": "section 36(1)(a)(1), referring to section 22(1)(g)(1)-(2)",
+        "protective_rate_candidate": 35.0,
+        "protective_rate_reference": "section 36(1)(c)",
+        "protective_rate_automatically_applied": false,
+        "protective_rate_requires_separate_confirmation": true
+      },
+      "primary_conclusion": "Article 12 cannot currently be relied upon. Czech domestic-law treatment must be applied, subject to separate verification of whether the conditions for the protective rate are met.",
+      "status": "preliminary_not_approved"
+    },
+    {
+      "packet_id": "CZ-BY-DIV-LEGAL-REVIEW",
+      "recipient_country": "BY",
+      "income_type": "dividend",
+      "treaty_article": "10",
+      "treaty_application_status": "temporarily_suspended",
+      "suspension_effective_from": "2024-06-01",
+      "suspension_effective_to": "2026-12-31",
+      "preliminary_treatment": {
+        "treatment_type": "czech_domestic_law_fallback",
+        "standard_rate_candidate": 15.0,
+        "standard_reference": "section 36(1)(b)(1), referring to section 22(1)(g)(3)",
+        "protective_rate_candidate": 35.0,
+        "protective_rate_reference": "section 36(1)(c)",
+        "protective_rate_automatically_applied": false,
+        "protective_rate_requires_separate_confirmation": true
+      },
+      "primary_conclusion": "Article 10 is temporarily suspended. Czech domestic-law treatment applies during the suspension period, subject to verification of the protective-rate conditions.",
+      "status": "preliminary_not_approved"
+    },
+    {
+      "packet_id": "CZ-BY-INT-LEGAL-REVIEW",
+      "recipient_country": "BY",
+      "income_type": "interest",
+      "treaty_article": "11",
+      "treaty_application_status": "temporarily_suspended",
+      "suspension_effective_from": "2024-06-01",
+      "suspension_effective_to": "2026-12-31",
+      "preliminary_treatment": {
+        "treatment_type": "czech_domestic_law_fallback",
+        "standard_rate_candidate": 15.0,
+        "standard_reference": "section 36(1)(a)(1), referring to section 22(1)(g)(4)",
+        "protective_rate_candidate": 35.0,
+        "protective_rate_reference": "section 36(1)(c)",
+        "protective_rate_automatically_applied": false,
+        "protective_rate_requires_separate_confirmation": true
+      },
+      "primary_conclusion": "Article 11 is temporarily suspended. Czech domestic-law treatment applies during the suspension period, subject to verification of the protective-rate conditions.",
+      "status": "preliminary_not_approved"
+    },
+    {
+      "packet_id": "CZ-BY-ROY-LEGAL-REVIEW",
+      "recipient_country": "BY",
+      "income_type": "royalty",
+      "treaty_article": "12",
+      "treaty_application_status": "not_suspended",
+      "protocol_effective_from": "2012-01-01",
+      "preliminary_treatment": {
+        "treatment_type": "treaty_rate_candidate",
+        "rate_candidate": 5.0,
+        "legal_basis": "Treaty Article 12(2), as replaced by Protocol Article VII(1)",
+        "income_scope": "royalties falling within Treaty Article 12",
+        "beneficial_owner_condition": "requires_primary_legal_confirmation",
+        "residence_documentation_required": true,
+        "permanent_establishment_override_review_required": true,
+        "special_relationship_review_required": true
+      },
+      "primary_conclusion": "Article 12 is not included in the temporary suspension notice. The protocol candidate indicates a 5% Czech source-state rate for royalties within Article 12, subject to full treaty-condition review.",
+      "status": "preliminary_not_approved"
+    }
+  ],
+  "unresolved_questions": [
+    {
+      "question_id": "RU-PROTECTIVE-RATE",
+      "countries": ["RU"],
+      "question": "Does the continuing existence of non-suspended treaty provisions or another qualifying information-exchange instrument prevent application of section 36(1)(c)?",
+      "required_before_approval": true
+    },
+    {
+      "question_id": "BY-PROTECTIVE-RATE",
+      "countries": ["BY"],
+      "question": "Does the temporary suspension of Articles 10 and 11 satisfy the statutory condition for the protective rate despite the treaty otherwise remaining in force?",
+      "required_before_approval": true
+    },
+    {
+      "question_id": "BY-ROYALTY-CONDITIONS",
+      "countries": ["BY"],
+      "question": "Confirm residence, Article 12 income classification, beneficial ownership, permanent-establishment connection and special-relationship limitations.",
+      "required_before_approval": true
+    }
+  ],
+  "review_notes": [
+    "The 35% rate is retained only as a conditional candidate and is not automatically applied.",
+    "The findings do not constitute legal approval.",
+    "No finding may be promoted to active rules before primary and independent legal review.",
+    "The conclusions apply only to payments falling within the stated Czech-source income categories."
+  ]
+}
