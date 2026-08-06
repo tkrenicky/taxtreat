@@ -65,6 +65,42 @@ PATTERNS = (
             r"d\s+i\s+v\s+i\s+d\s+e\s+n\s+d\s+y)\b"
         ),
     ),
+    (
+        "glued_words",
+        "error",
+        re.compile(
+            r"(?iu)\b(?:"
+            r"použitýv|použitav|použitév|"
+            r"uvedenýv|uvedenav|uvedenév|"
+            r"rezidenttohoto|rezidenttomto|"
+            r"státěani|státěnebo|"
+            r"částkaplateb|"
+            r"znerozdělených|znerozdélenych|"
+            r"přihlédnutímk|prihlednutimk"
+            r")\b"
+        ),
+    ),
+    (
+        "likely_ocr_word_substitution",
+        "error",
+        re.compile(
+            r"(?iu)\b(?:"
+            r"vlasmík|vlasmik|"
+            r"vlastmík|vlastmik|"
+            r"vyplacejici|"
+            r"nerozdélenych"
+            r")\b"
+        ),
+    ),
+    (
+        "stray_quote_inside_sentence",
+        "warning",
+        re.compile(
+            r'(?u),\s*["”](?=\s*'
+            r'(?:v|ve|a|nebo|který|která|které)\b)'
+        ),
+    ),
+
 )
 
 
