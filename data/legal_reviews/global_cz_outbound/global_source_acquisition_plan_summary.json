@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "dataset_release": "global-source-acquisition-plan-2026-08-06.1",
+  "treaty_partner_count": 98,
+  "source_manifest_record_count": 100,
+  "document_manifest_record_count": 392,
+  "acquisition_status_counts": {
+    "acquire_official_source": 36,
+    "replace_damaged_text_source": 38,
+    "resolve_source_identity": 1,
+    "verify_existing_clean_candidate": 23
+  },
+  "parsed_text_quality_counts": {
+    "candidate_clean_text": 23,
+    "not_assessed": 37,
+    "rejected_encoding_damage": 38
+  },
+  "production_blocker_counts": {
+    "articles_10_12_not_legally_verified": 98,
+    "authentic_language_status_not_verified": 98,
+    "mli_overlay_not_verified": 98,
+    "official_english_version_not_verified": 98,
+    "official_source_not_registered": 36,
+    "parsed_text_encoding_damaged": 38,
+    "parsed_text_missing": 37,
+    "protocol_overlay_not_verified": 98,
+    "source_identity_ambiguous": 1,
+    "withholding_effective_date_not_verified": 98
+  },
+  "semantics": {
+    "hash_match_confirms_identity_only": true,
+    "candidate_clean_text_is_legally_verified": false,
+    "damaged_text_may_support_active_rule": false,
+    "all_unverified_entries_fail_closed": true
+  },
+  "production_ready": false,
+  "fail_closed": true,
+  "promotable_to_active_rules": false
+}
