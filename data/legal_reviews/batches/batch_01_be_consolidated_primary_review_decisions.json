@@ -1,0 +1,210 @@
+{
+  "country": "BE",
+  "country_name": "Belgie",
+  "dataset_release": "batch-01-be-consolidated-primary-review-2026-08-06.1",
+  "policy": {
+    "all_scopes_fail_closed": true,
+    "automatic_legal_confirmation_prohibited": true,
+    "human_primary_review_required": true,
+    "independent_approval_required": true
+  },
+  "schema_version": 1,
+  "scope_count": 3,
+  "scopes": [
+    {
+      "confirmations": {
+        "anti_abuse_review_completed": null,
+        "beneficial_owner_requirement_confirmed": null,
+        "domestic_rate_confirmed": null,
+        "effective_date_confirmed": null,
+        "eu_relief_confirmed": null,
+        "mli_effects_confirmed": null,
+        "protocol_effects_confirmed": null,
+        "treaty_rate_candidates_confirmed": null
+      },
+      "income_type": "dividend",
+      "packet_id": "CZ-BE-DIV-LEGAL-REVIEW",
+      "promotable_to_active_rules": false,
+      "proposed_rule_snapshot": null,
+      "recipient_country": "BE",
+      "review_outcome": null,
+      "review_questions": [
+        {
+          "answer": null,
+          "legal_reasoning": null,
+          "question": "Does the 5% rate require direct or direct/indirect ownership of at least 25%?",
+          "supporting_source_ids": []
+        },
+        {
+          "answer": null,
+          "legal_reasoning": null,
+          "question": "Is the 15% rate the residual rate for all other beneficial owners?",
+          "supporting_source_ids": []
+        },
+        {
+          "answer": null,
+          "legal_reasoning": null,
+          "question": "Does the protocol leave Article 10 unchanged?",
+          "supporting_source_ids": []
+        },
+        {
+          "answer": null,
+          "legal_reasoning": null,
+          "question": "Are the Czech PSD conditions correctly represented, including the 12-month holding-period rule?",
+          "supporting_source_ids": []
+        }
+      ],
+      "review_row_sha256": "f445a97fff44b14aedd291b6d8693f36553095b51c632c2d289959ad09d283c6",
+      "reviewer": {
+        "reviewed_at": null,
+        "reviewer_id": null
+      },
+      "source_material": {
+        "directive_source_id": "EU-PSD-2011-96-CONSOLIDATED",
+        "domestic_source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "mli_source_ids": [
+          "CZ-MF-BE-FC7B1E3B8535"
+        ],
+        "protocol_source_ids": [
+          "CZ-MF-BE-D0E145875613"
+        ],
+        "treaty_source_id": "SRC-E16828A7660D9797"
+      },
+      "status": "awaiting_primary_review"
+    },
+    {
+      "confirmations": {
+        "anti_abuse_review_completed": null,
+        "beneficial_owner_requirement_confirmed": null,
+        "domestic_rate_confirmed": null,
+        "effective_date_confirmed": null,
+        "eu_relief_confirmed": null,
+        "mli_effects_confirmed": null,
+        "protocol_effects_confirmed": null,
+        "treaty_rate_candidates_confirmed": null
+      },
+      "income_type": "interest",
+      "packet_id": "CZ-BE-INT-LEGAL-REVIEW",
+      "promotable_to_active_rules": false,
+      "proposed_rule_snapshot": null,
+      "recipient_country": "BE",
+      "review_outcome": null,
+      "review_questions": [
+        {
+          "answer": null,
+          "legal_reasoning": null,
+          "question": "Is 10% the general treaty ceiling subject to beneficial ownership?",
+          "supporting_source_ids": []
+        },
+        {
+          "answer": null,
+          "legal_reasoning": null,
+          "question": "Which Article 11(3) categories qualify for a 0% source-state exemption?",
+          "supporting_source_ids": []
+        },
+        {
+          "answer": null,
+          "legal_reasoning": null,
+          "question": "Are bank loans, deposits, trade credits, export finance and government payments represented correctly?",
+          "supporting_source_ids": []
+        },
+        {
+          "answer": null,
+          "legal_reasoning": null,
+          "question": "Are the Czech IRD conditions and section 38nb requirement correctly represented?",
+          "supporting_source_ids": []
+        }
+      ],
+      "review_row_sha256": "5351a32562527dc124c8338da5b631d8191a39518c6f90b213b32475b44f300d",
+      "reviewer": {
+        "reviewed_at": null,
+        "reviewer_id": null
+      },
+      "source_material": {
+        "directive_source_id": "EU-IRD-2003-49-CONSOLIDATED",
+        "domestic_source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "mli_source_ids": [
+          "CZ-MF-BE-FC7B1E3B8535"
+        ],
+        "protocol_source_ids": [
+          "CZ-MF-BE-D0E145875613"
+        ],
+        "treaty_source_id": "SRC-E16828A7660D9797"
+      },
+      "status": "awaiting_primary_review"
+    },
+    {
+      "confirmations": {
+        "anti_abuse_review_completed": null,
+        "beneficial_owner_requirement_confirmed": null,
+        "domestic_rate_confirmed": null,
+        "effective_date_confirmed": null,
+        "eu_relief_confirmed": null,
+        "mli_effects_confirmed": null,
+        "protocol_effects_confirmed": null,
+        "treaty_rate_candidates_confirmed": null
+      },
+      "income_type": "royalty",
+      "packet_id": "CZ-BE-ROY-LEGAL-REVIEW",
+      "promotable_to_active_rules": false,
+      "proposed_rule_snapshot": null,
+      "recipient_country": "BE",
+      "review_outcome": null,
+      "review_questions": [
+        {
+          "answer": null,
+          "legal_reasoning": null,
+          "question": "Which royalty categories are subject to the 5% rate?",
+          "supporting_source_ids": []
+        },
+        {
+          "answer": null,
+          "legal_reasoning": null,
+          "question": "Which royalty categories are subject to the 10% rate?",
+          "supporting_source_ids": []
+        },
+        {
+          "answer": null,
+          "legal_reasoning": null,
+          "question": "Does the treaty definition include software, know-how, industrial equipment or copyright separately?",
+          "supporting_source_ids": []
+        },
+        {
+          "answer": null,
+          "legal_reasoning": null,
+          "question": "Does the protocol leave Article 12 unchanged?",
+          "supporting_source_ids": []
+        },
+        {
+          "answer": null,
+          "legal_reasoning": null,
+          "question": "Are the Czech IRD conditions and section 38nb requirement correctly represented?",
+          "supporting_source_ids": []
+        }
+      ],
+      "review_row_sha256": "656a3b80e1602e09889a081aecef0c49847296fbbfb84a4df6b0d91370d8b047",
+      "reviewer": {
+        "reviewed_at": null,
+        "reviewer_id": null
+      },
+      "source_material": {
+        "directive_source_id": "EU-IRD-2003-49-CONSOLIDATED",
+        "domestic_source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "mli_source_ids": [
+          "CZ-MF-BE-FC7B1E3B8535"
+        ],
+        "protocol_source_ids": [
+          "CZ-MF-BE-D0E145875613"
+        ],
+        "treaty_source_id": "SRC-E16828A7660D9797"
+      },
+      "status": "awaiting_primary_review"
+    }
+  ],
+  "summary": {
+    "awaiting_independent_approval": 0,
+    "awaiting_primary_review": 3,
+    "promotable_scopes": 0,
+    "returned_for_correction": 0
+  }
+}
