@@ -1,11 +1,15 @@
 {
-  "article_scope_count": 6,
-  "dataset_release": "flagged-text-remediation-pack-2026-08-06.1",
+  "article_scope_count": 7,
+  "clean_text_verification_completed": false,
+  "dataset_release": "flagged-text-remediation-pack-2026-08-06.2",
   "fail_closed": true,
+  "finding_count": 12,
   "legal_verification_completed": false,
   "production_ready": false,
-  "schema_version": 1,
+  "promotable_to_active_rules": false,
+  "schema_version": 2,
   "semantics": {
+    "automated_quality_pass_is_verification": false,
     "automatic_text_replacement_allowed": false,
     "corrected_text_requires_new_hash": true,
     "finding_is_legal_conclusion": false,
@@ -25,15 +29,28 @@
           "corrected_text": null,
           "corrected_text_sha256": null,
           "current_text_sha256": "66deef841500a35561922c4562f0725c321ac8d9019c4fe7dbbeded24f6dc080",
-          "error_count": 0,
+          "error_count": 2,
           "findings": [
+            {
+              "code": "likely_ocr_word_substitution",
+              "excerpt": "druhém smluvním státě, jehož je rezidentem společnost vyplacejici dividendy, svoji činnost prostřednictvím st",
+              "offset": 1406,
+              "severity": "error"
+            },
             {
               "code": "glued_preposition",
               "excerpt": "e skutečně váže ke stálé provozovně, která je umístěna vtomto druhém státě, ani podrobit nerozdělené zisky spo",
               "offset": 2006,
               "severity": "warning"
+            },
+            {
+              "code": "glued_words",
+              "excerpt": "státě, ani podrobit nerozdělené zisky společnosti dani znerozdélenych zisků společnosti, i když vyplácené divi",
+              "offset": 2075,
+              "severity": "error"
             }
           ],
+          "legal_text_verified": false,
           "required_action": "compare_with_official_artifact",
           "warning_count": 1
         },
@@ -60,6 +77,7 @@
               "severity": "error"
             }
           ],
+          "legal_text_verified": false,
           "required_action": "compare_with_official_artifact",
           "warning_count": 0
         }
@@ -71,7 +89,7 @@
       "quality_status": "text_remediation_required",
       "remediation_status": "official_comparison_required",
       "source_title": "46/2023 Sb.m.s.",
-      "total_error_count": 2,
+      "total_error_count": 4,
       "total_warning_count": 1,
       "treaty_pair_id": "CZ-AD"
     },
@@ -94,6 +112,28 @@
               "severity": "warning"
             }
           ],
+          "legal_text_verified": false,
+          "required_action": "compare_with_official_artifact",
+          "warning_count": 1
+        },
+        {
+          "article_number": 12,
+          "article_title": "LICENČNÍ POPLATKY A POPLATKY ZA TECHNICKÉ SLUŽBY",
+          "clean_text_verified": false,
+          "comparison_completed": false,
+          "corrected_text": null,
+          "corrected_text_sha256": null,
+          "current_text_sha256": "8b73eabe91c08ea9e827504a9698f2ed397bfacf73dfb078a0663bd865dbd443",
+          "error_count": 0,
+          "findings": [
+            {
+              "code": "stray_quote_inside_sentence",
+              "excerpt": "služby však mohou být rovněž zdaněny ve smluvním státě,\"v němž mají zdroj, a to podle právních předpisů tohot",
+              "offset": 279,
+              "severity": "warning"
+            }
+          ],
+          "legal_text_verified": false,
           "required_action": "compare_with_official_artifact",
           "warning_count": 1
         }
@@ -106,7 +146,7 @@
       "remediation_status": "official_comparison_required",
       "source_title": "49/2020 Sb.m.s.",
       "total_error_count": 0,
-      "total_warning_count": 1,
+      "total_warning_count": 2,
       "treaty_pair_id": "CZ-BW"
     },
     {
@@ -128,6 +168,7 @@
               "severity": "warning"
             }
           ],
+          "legal_text_verified": false,
           "required_action": "compare_with_official_artifact",
           "warning_count": 1
         }
@@ -153,15 +194,28 @@
           "corrected_text": null,
           "corrected_text_sha256": null,
           "current_text_sha256": "46f8b2d89b5e772daca743314180775db45acf7d9aadb7c804ce35679a55042e",
-          "error_count": 0,
+          "error_count": 2,
           "findings": [
+            {
+              "code": "likely_ocr_word_substitution",
+              "excerpt": "rávních předpisů tohoto státu, avšak jestliže skutečný vlasmík dividend je rezidentem druhého smluvního státu,",
+              "offset": 349,
+              "severity": "error"
+            },
             {
               "code": "glued_preposition",
               "excerpt": "e skutečně váže ke stálé provozovně, která je umístěna vtomto druhém státě, ani podrobit nerozdělené zisky spo",
               "offset": 1736,
               "severity": "warning"
+            },
+            {
+              "code": "glued_words",
+              "excerpt": "státě, ani podrobit nerozdělené zisky společnosti dani znerozdělených zisků společnosti, i když vyplácené divi",
+              "offset": 1805,
+              "severity": "error"
             }
           ],
+          "legal_text_verified": false,
           "required_action": "compare_with_official_artifact",
           "warning_count": 1
         }
@@ -170,10 +224,10 @@
       "partner_country": "KR",
       "partner_country_name": "Korejská republika",
       "production_ready": false,
-      "quality_status": "manual_text_review_required",
+      "quality_status": "text_remediation_required",
       "remediation_status": "official_comparison_required",
       "source_title": "1/2020 Sb.m.s.",
-      "total_error_count": 0,
+      "total_error_count": 2,
       "total_warning_count": 1,
       "treaty_pair_id": "CZ-KR"
     },
@@ -196,6 +250,7 @@
               "severity": "warning"
             }
           ],
+          "legal_text_verified": false,
           "required_action": "compare_with_official_artifact",
           "warning_count": 1
         }
