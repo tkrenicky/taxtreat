@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "dataset_release": "global-source-exception-resolutions-2026-08-06.1",
+  "source_language_policy_id": "TAXTREAT-SOURCE-LANGUAGE-POLICY-1",
+  "resolution_status": "candidate_overlay_pending_clean_source_verification",
+  "fail_closed": true,
+  "promotable_to_active_rules": false,
+  "resolutions": [
+    {
+      "packet_id": "CZ-AT-DIV-LEGAL-REVIEW",
+      "resolution_type": "pilot_source_mapping",
+      "candidate_rates": [
+        {
+          "rate": 0.0,
+          "legal_basis": "Article 10(2)(b)",
+          "conditions": {
+            "minimum_ownership_percent": 10,
+            "beneficial_owner": true
+          }
+        },
+        {
+          "rate": 10.0,
+          "legal_basis": "Article 10(2)(a)",
+          "conditions": {
+            "beneficial_owner": true
+          }
+        }
+      ],
+      "classification": "conditional_mapping_required",
+      "source_language": "cs",
+      "text_quality_status": "ocr_rejected",
+      "clean_english_source_required": true
+    },
+    {
+      "packet_id": "CZ-AT-INT-LEGAL-REVIEW",
+      "resolution_type": "pilot_source_mapping",
+      "candidate_rates": [
+        {
+          "rate": 0.0,
+          "legal_basis": "Article 11(1)",
+          "conditions": {
+            "beneficial_owner": true
+          }
+        }
+      ],
+      "classification": "candidate_ready_for_owner_review",
+      "source_language": "cs",
+      "text_quality_status": "ocr_rejected",
+      "clean_english_source_required": true
+    },
+    {
+      "packet_id": "CZ-AT-ROY-LEGAL-REVIEW",
+      "resolution_type": "pilot_source_mapping",
+      "candidate_rates": [
+        {
+          "rate": 5.0,
+          "legal_basis": "Article 12(2)",
+          "conditions": {
+            "royalty_category": "Article 12(3)(a)",
+            "beneficial_owner": true
+          }
+        },
+        {
+          "rate": 0.0,
+          "legal_basis": "Article 12(1) read with Article 12(2)",
+          "conditions": {
+            "royalty_category": "Article 12(3)(b)",
+            "beneficial_owner": true
+          }
+        }
+      ],
+      "classification": "conditional_mapping_required",
+      "source_language": "cs",
+      "text_quality_status": "ocr_rejected",
+      "clean_english_source_required": true
+    },
+    {
+      "packet_id": "CZ-CH-DIV-LEGAL-REVIEW",
+      "resolution_type": "pilot_source_mapping",
+      "candidate_rates": [
+        {
+          "rate": 5.0,
+          "legal_basis": "Article 10(2)(a)",
+          "conditions": {
+            "minimum_direct_ownership_percent": 25,
+            "recipient_is_company_other_than_partnership": true,
+            "beneficial_owner": true
+          }
+        },
+        {
+          "rate": 15.0,
+          "legal_basis": "Article 10(2)(b)",
+          "conditions": {
+            "beneficial_owner": true
+          }
+        }
+      ],
+      "classification": "conditional_mapping_required",
+      "source_language": "cs",
+      "text_quality_status": "ocr_rejected",
+      "clean_english_source_required": true
+    },
+    {
+      "packet_id": "CZ-CH-INT-LEGAL-REVIEW",
+      "resolution_type": "pilot_source_mapping",
+      "candidate_rates": [
+        {
+          "rate": 0.0,
+          "legal_basis": "Article 11(1)",
+          "conditions": {
+            "beneficial_owner": true
+          }
+        }
+      ],
+      "classification": "candidate_ready_for_owner_review",
+      "source_language": "cs",
+      "text_quality_status": "ocr_rejected",
+      "clean_english_source_required": true
+    },
+    {
+      "packet_id": "CZ-CH-ROY-LEGAL-REVIEW",
+      "resolution_type": "pilot_source_mapping",
+      "candidate_rates": [
+        {
+          "rate": 10.0,
+          "legal_basis": "Article 12(2)",
+          "conditions": {
+            "beneficial_owner": true
+          }
+        }
+      ],
+      "classification": "candidate_ready_for_owner_review",
+      "source_language": "cs",
+      "text_quality_status": "ocr_rejected",
+      "clean_english_source_required": true
+    },
+    {
+      "packet_id": "CZ-GR-DIV-LEGAL-REVIEW",
+      "resolution_type": "no_numeric_treaty_cap_mapping",
+      "candidate_rates": [
+        {
+          "rate": 0.0,
+          "legal_basis": "section 19 Czech domestic EU relief",
+          "conditions": {
+            "qualifying_eu_parent_relief": true
+          }
+        },
+        {
+          "rate": 15.0,
+          "legal_basis": "section 36 Czech domestic standard rate",
+          "conditions": {
+            "qualifying_eu_parent_relief": false
+          }
+        }
+      ],
+      "classification": "conditional_mapping_required",
+      "treaty_rate_cap_status": "no_numeric_cap",
+      "clean_english_source_required": true
+    }
+  ]
+}
