@@ -1,17 +1,31 @@
 import json
+import subprocess
+import sys
 from pathlib import Path
 
-ROOT = (
-    Path(__file__).parents[1]
+
+ROOT = Path(__file__).parents[1]
+
+REVIEW_ROOT = (
+    ROOT
     / "data"
     / "legal_reviews"
     / "global_cz_outbound"
 )
 
-PACK = ROOT / "flagged_text_remediation_pack.json"
-SUMMARY = (
-    ROOT
+PACK_PATH = (
+    REVIEW_ROOT
+    / "flagged_text_remediation_pack.json"
+)
+
+SUMMARY_PATH = (
+    REVIEW_ROOT
     / "flagged_text_remediation_pack_summary.json"
+)
+
+AUDIT_PATH = (
+    REVIEW_ROOT
+    / "clean_candidate_text_quality_audit.json"
 )
 
 
@@ -21,37 +35,142 @@ def load(path):
     )
 
 
-def test_pack_contains_all_flagged_partners():
-    payload = load(PACK)
+def test_builder_runs():
+    subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            (
+                "taxtreat.tools."
+                "build_flagged_text_remediation_pack"
+            ),
+        ],
+        cwd=ROOT,
+        check=True,
+    )
 
-    assert payload[
-        "treaty_partner_count"
-    ] == 5
+    assert PACK_PATH.is_file()
+    assert SUMMARY_PATH.is_file()
 
-    assert {
+
+def test_pack_matches_current_audit():
+    pack = load(PACK_PATH)
+    audit = load(AUDIT_PATH)
+
+    expected = {
         row["treaty_pair_id"]
-        for row in payload["treaty_partners"]
-    } == {
-        "CZ-AD",
-        "CZ-BW",
-        "CZ-GH",
-        "CZ-KR",
-        "CZ-QA",
+        for row in audit["treaty_partners"]
+        if (
+            row["quality_status"]
+            != "automated_quality_gate_passed"
+        )
     }
 
+    actual = {
+        row["treaty_pair_id"]
+        for row in pack["treaty_partners"]
+    }
 
-def test_every_entry_has_actionable_findings():
-    payload = load(PACK)
+    assert actual == expected
+    assert pack["treaty_partner_count"] == len(expected)
 
-    for partner in payload["treaty_partners"]:
-        assert partner["articles"]
+
+def test_pack_contains_all_audit_findings():
+    pack = load(PACK_PATH)
+    audit = load(AUDIT_PATH)
+
+    pack_findings = {
+        (
+            partner["treaty_pair_id"],
+            article["article_number"],
+            finding["code"],
+            finding["offset"],
+        )
+        for partner in pack["treaty_partners"]
+        for article in partner["articles"]
+        for finding in article["findings"]
+    }
+
+    audit_findings = {
+        (
+            partner["treaty_pair_id"],
+            int(article_number),
+            finding["code"],
+            finding["offset"],
+        )
+        for partner in audit["treaty_partners"]
+        for article_number, article in (
+            partner["article_results"].items()
+        )
+        for finding in article["findings"]
+    }
+
+    assert pack_findings == audit_findings
+
+
+def test_known_expanded_findings_are_present():
+    pack = load(PACK_PATH)
+
+    findings = {
+        (
+            partner["treaty_pair_id"],
+            finding["code"],
+        )
+        for partner in pack["treaty_partners"]
+        for article in partner["articles"]
+        for finding in article["findings"]
+    }
+
+    assert (
+        "CZ-AD",
+        "likely_ocr_word_substitution",
+    ) in findings
+
+    assert (
+        "CZ-AD",
+        "glued_words",
+    ) in findings
+
+    assert (
+        "CZ-BW",
+        "stray_quote_inside_sentence",
+    ) in findings
+
+    assert (
+        "CZ-KR",
+        "likely_ocr_word_substitution",
+    ) in findings
+
+    assert (
+        "CZ-KR",
+        "glued_words",
+    ) in findings
+
+
+def test_no_automatic_corrections_are_applied():
+    pack = load(PACK_PATH)
+
+    assert (
+        pack["semantics"][
+            "automatic_text_replacement_allowed"
+        ]
+        is False
+    )
+
+    assert pack["production_ready"] is False
+    assert pack["fail_closed"] is True
+
+    for partner in pack["treaty_partners"]:
+        assert partner["production_ready"] is False
+        assert partner["fail_closed"] is True
 
         for article in partner["articles"]:
-            assert article["findings"]
+            assert article["corrected_text"] is None
 
-            assert article[
-                "required_action"
-            ] == "compare_with_official_artifact"
+            assert (
+                article["corrected_text_sha256"]
+                is None
+            )
 
             assert (
                 article["comparison_completed"]
@@ -63,61 +182,38 @@ def test_every_entry_has_actionable_findings():
                 is False
             )
 
-
-def test_pack_never_applies_automatic_correction():
-    payload = load(PACK)
-
-    assert payload["semantics"][
-        "automatic_text_replacement_allowed"
-    ] is False
-
-    for partner in payload["treaty_partners"]:
-        assert partner["production_ready"] is False
-        assert partner["fail_closed"] is True
-
-        for article in partner["articles"]:
-            assert article["corrected_text"] is None
-
             assert (
-                article[
-                    "corrected_text_sha256"
-                ]
-                is None
+                article["legal_text_verified"]
+                is False
             )
 
 
-def test_andorra_contains_error_findings():
-    payload = load(PACK)
+def test_summary_matches_pack():
+    pack = load(PACK_PATH)
+    summary = load(SUMMARY_PATH)
 
-    andorra = next(
-        row
-        for row in payload["treaty_partners"]
-        if row["treaty_pair_id"] == "CZ-AD"
+    assert (
+        summary["treaty_partner_count"]
+        == len(pack["treaty_partners"])
     )
 
-    assert andorra["total_error_count"] == 2
+    assert (
+        summary["article_scope_count"]
+        == sum(
+            len(partner["articles"])
+            for partner in pack[
+                "treaty_partners"
+            ]
+        )
+    )
 
-    codes = {
-        finding["code"]
-        for article in andorra["articles"]
-        for finding in article["findings"]
-    }
-
-    assert "isolated_ocr_pipe" in codes
-    assert "broken_article_reference" in codes
-
-
-def test_summary_matches_pack():
-    payload = load(PACK)
-    summary = load(SUMMARY)
-
-    assert summary[
-        "treaty_partner_count"
-    ] == len(payload["treaty_partners"])
-
-    assert summary[
-        "article_scope_count"
-    ] == sum(
-        len(row["articles"])
-        for row in payload["treaty_partners"]
+    assert (
+        summary["finding_count"]
+        == sum(
+            len(article["findings"])
+            for partner in pack[
+                "treaty_partners"
+            ]
+            for article in partner["articles"]
+        )
     )

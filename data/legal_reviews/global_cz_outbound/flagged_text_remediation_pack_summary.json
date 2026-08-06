@@ -1,11 +1,15 @@
 {
-  "article_scope_count": 6,
-  "dataset_release": "flagged-text-remediation-pack-2026-08-06.1",
+  "article_scope_count": 7,
+  "clean_text_verification_completed": false,
+  "dataset_release": "flagged-text-remediation-pack-2026-08-06.2",
   "fail_closed": true,
+  "finding_count": 12,
   "legal_verification_completed": false,
   "production_ready": false,
-  "schema_version": 1,
+  "promotable_to_active_rules": false,
+  "schema_version": 2,
   "semantics": {
+    "automated_quality_pass_is_verification": false,
     "automatic_text_replacement_allowed": false,
     "corrected_text_requires_new_hash": true,
     "finding_is_legal_conclusion": false,
