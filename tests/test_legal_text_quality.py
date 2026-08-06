@@ -56,3 +56,42 @@ def test_clean_sample_passes_automatic_gate_only():
 
     assert result["clean_text_verified"] is False
     assert result["legal_text_verified"] is False
+
+
+def test_detects_glued_used_in_phrase():
+    result = quality_result(
+        "Výraz použitýv tomto článku označuje příjmy."
+    )
+
+    assert result["error_count"] >= 1
+
+    assert "glued_words" in {
+        finding["code"]
+        for finding in result["findings"]
+    }
+
+
+def test_detects_likely_owner_ocr_error():
+    result = quality_result(
+        "Skutečný vlasmík dividend je rezidentem."
+    )
+
+    assert result["error_count"] >= 1
+
+    assert "likely_ocr_word_substitution" in {
+        finding["code"]
+        for finding in result["findings"]
+    }
+
+
+def test_detects_stray_quote_after_comma():
+    result = quality_result(
+        'Poplatky jsou zdaněny ve státě,"v němž mají zdroj.'
+    )
+
+    assert result["warning_count"] >= 1
+
+    assert "stray_quote_inside_sentence" in {
+        finding["code"]
+        for finding in result["findings"]
+    }
