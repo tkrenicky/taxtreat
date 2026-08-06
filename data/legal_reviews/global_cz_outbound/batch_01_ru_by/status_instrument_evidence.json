@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "dataset_release": "batch-01-status-evidence-2026-08-06.1",
+  "batch_id": "GLOBAL-CZ-OUTBOUND-BATCH-01",
+  "review_status": "preliminary_evidence_compiled",
+  "legal_approval_status": "not_started",
+  "independent_approval_status": "not_started",
+  "approval_eligible": false,
+  "promotable_to_active_rules": false,
+  "fail_closed": true,
+  "countries": {
+    "RU": {
+      "country_name": "Rusko",
+      "base_treaty": {
+        "publication": "278/1997 Sb.",
+        "signed_on": "1995-11-17",
+        "entered_into_force_on": "1997-07-18",
+        "official_reference": "https://www.zakonyprolidi.cz/cs/1997-278"
+      },
+      "protocol": {
+        "publication": "56/2009 Sb. m. s.",
+        "signed_on": "2007-04-27",
+        "entered_into_force_on": "2009-04-17",
+        "official_reference": "https://www.zakonyprolidi.cz/ms/2009-56"
+      },
+      "status_instrument": {
+        "publication": "36/2023 Sb. m. s.",
+        "notification_date": "2023-08-08",
+        "effective_from": "2023-08-11",
+        "effective_to": null,
+        "effect_type": "suspension_of_application",
+        "affected_articles": [
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20",
+          "21",
+          "22",
+          "24"
+        ],
+        "official_reference": "https://www.zakonyprolidi.cz/ms/2023-36"
+      },
+      "preliminary_scope_effects": {
+        "dividend": {
+          "treaty_article": "10",
+          "article_application_status": "suspended",
+          "requires_domestic_fallback_review": true
+        },
+        "interest": {
+          "treaty_article": "11",
+          "article_application_status": "suspended",
+          "requires_domestic_fallback_review": true
+        },
+        "royalty": {
+          "treaty_article": "12",
+          "article_application_status": "suspended",
+          "requires_domestic_fallback_review": true
+        }
+      }
+    },
+    "BY": {
+      "country_name": "Bělorusko",
+      "base_treaty": {
+        "publication": "31/1998 Sb.",
+        "signed_on": "1996-10-14",
+        "official_reference": "https://www.zakonyprolidi.cz/cs/1998-31"
+      },
+      "protocol": {
+        "publication": "99/2011 Sb. m. s.",
+        "signed_on": "2010-08-11",
+        "entered_into_force_on": "2011-05-31",
+        "official_reference": "https://www.zakonyprolidi.cz/ms/2011-99"
+      },
+      "status_instrument": {
+        "publication": "115/2024 Sb.",
+        "notification_date": "2024-03-21",
+        "effective_from": "2024-06-01",
+        "effective_to": "2026-12-31",
+        "effect_type": "suspension_of_application",
+        "affected_articles": [
+          "10",
+          "11",
+          "13"
+        ],
+        "official_reference": "https://www.zakonyprolidi.cz/cs/2024-115"
+      },
+      "preliminary_scope_effects": {
+        "dividend": {
+          "treaty_article": "10",
+          "article_application_status": "suspended",
+          "requires_domestic_fallback_review": true
+        },
+        "interest": {
+          "treaty_article": "11",
+          "article_application_status": "suspended",
+          "requires_domestic_fallback_review": true
+        },
+        "royalty": {
+          "treaty_article": "12",
+          "article_application_status": "not_listed_as_suspended",
+          "requires_full_treaty_review": true,
+          "requires_domestic_fallback_review": false,
+          "caution": "This is a preliminary instrument-scope finding, not a final legal conclusion."
+        }
+      }
+    }
+  },
+  "review_notes": [
+    "The inventory records the express scope of the published status instruments.",
+    "No scope is legally approved by creation of this file.",
+    "Domestic Czech withholding-tax treatment remains subject to separate review.",
+    "The Belarus royalty scope requires treaty, protocol and anti-abuse review because Article 12 is not expressly listed in the suspension instrument.",
+    "All six scopes remain non-promotable pending primary and independent legal review."
+  ]
+}
