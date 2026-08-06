@@ -1,0 +1,71 @@
+{
+  "branch_profit_tax": null,
+  "direction": "CZ_OUTBOUND",
+  "fail_closed": true,
+  "income_articles": {
+    "dividends": {
+      "article_number": 10,
+      "article_text_sha256": "1da760593beaee3f8f0b2b61e90e299c06641f5e2e74f58368c94b3c5f2008eb",
+      "detected_nonzero_rates": [
+        5
+      ],
+      "official_instrument_comparison_completed": false,
+      "rate_evidence_status": "nonzero_rates_confirmed_against_extracted_text",
+      "rates": [
+        0,
+        5
+      ],
+      "zero_rate_evidence_status": "article_structure_recorded_pending_official_comparison",
+      "zero_rate_present": true
+    },
+    "interest": {
+      "article_number": 11,
+      "article_text_sha256": "66c996db81c40fcfb1362bb4ca04acae913f23079cfc0f07a39b51f721233776",
+      "detected_nonzero_rates": [],
+      "official_instrument_comparison_completed": false,
+      "rate_evidence_status": "nonzero_rates_confirmed_against_extracted_text",
+      "rates": [
+        0
+      ],
+      "zero_rate_evidence_status": "article_structure_recorded_pending_official_comparison",
+      "zero_rate_present": true
+    },
+    "royalties": {
+      "article_number": 12,
+      "article_text_sha256": "bebcc20b959acd016616efdef5997365b0f1e6ed87aac9ea243b3094e827d459",
+      "detected_nonzero_rates": [
+        10
+      ],
+      "official_instrument_comparison_completed": false,
+      "rate_evidence_status": "nonzero_rates_confirmed_against_extracted_text",
+      "rates": [
+        0,
+        10
+      ],
+      "zero_rate_evidence_status": "article_structure_recorded_pending_official_comparison",
+      "zero_rate_present": true
+    }
+  },
+  "legal_verification_completed": false,
+  "partner_country_name": "Kypr",
+  "production_ready": false,
+  "promotable_to_active_rules": false,
+  "schema_version": 1,
+  "source": {
+    "parsed_path": "data/parsed/kypr.json",
+    "source_reconciliation_status": "candidate_matches_official_artifact"
+  },
+  "special_reviews": {},
+  "treaty_pair_id": "CZ-CY",
+  "verification_id": "CZ-CY-rate-confirmation-2026-08-06.3",
+  "verification_scope": {
+    "domestic_conditions_verified": false,
+    "effective_date_verified": false,
+    "mli_position_verified": false,
+    "nonzero_rate_evidence_confirmed": true,
+    "official_instrument_comparison_completed": false,
+    "protocol_position_verified": false,
+    "transaction_decision_ready": false,
+    "zero_rate_article_structure_recorded": true
+  }
+}

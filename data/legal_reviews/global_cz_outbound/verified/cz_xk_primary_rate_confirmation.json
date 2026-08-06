@@ -1,0 +1,72 @@
+{
+  "branch_profit_tax": null,
+  "direction": "CZ_OUTBOUND",
+  "fail_closed": true,
+  "income_articles": {
+    "dividends": {
+      "article_number": 10,
+      "article_text_sha256": "17b31bbe635499355013673ee13ffc0f191c498a6f0d7b630ad66aac37273f11",
+      "detected_nonzero_rates": [
+        5,
+        15
+      ],
+      "official_instrument_comparison_completed": false,
+      "rate_evidence_status": "nonzero_rates_confirmed_against_extracted_text",
+      "rates": [
+        5,
+        15
+      ],
+      "zero_rate_evidence_status": "not_applicable",
+      "zero_rate_present": false
+    },
+    "interest": {
+      "article_number": 11,
+      "article_text_sha256": "ad09de119530bc3d2ff06a26058b516a47e435689cf713f38d20ad2a9b634014",
+      "detected_nonzero_rates": [],
+      "official_instrument_comparison_completed": false,
+      "rate_evidence_status": "nonzero_rates_confirmed_against_extracted_text",
+      "rates": [
+        0
+      ],
+      "zero_rate_evidence_status": "article_structure_recorded_pending_official_comparison",
+      "zero_rate_present": true
+    },
+    "royalties": {
+      "article_number": 12,
+      "article_text_sha256": "5ae7b8dbb6b200fa39ce4a201e358c4375d20ae017c1072ed3b38c88964ddf2c",
+      "detected_nonzero_rates": [
+        10
+      ],
+      "official_instrument_comparison_completed": false,
+      "rate_evidence_status": "nonzero_rates_confirmed_against_extracted_text",
+      "rates": [
+        0,
+        10
+      ],
+      "zero_rate_evidence_status": "article_structure_recorded_pending_official_comparison",
+      "zero_rate_present": true
+    }
+  },
+  "legal_verification_completed": false,
+  "partner_country_name": "Kosovo",
+  "production_ready": false,
+  "promotable_to_active_rules": false,
+  "schema_version": 1,
+  "source": {
+    "parsed_path": "data/parsed/kosovo.json",
+    "source_reconciliation_status": "candidate_matches_official_artifact"
+  },
+  "special_reviews": {},
+  "treaty_pair_id": "CZ-XK",
+  "verification_id": "CZ-XK-rate-confirmation-2026-08-06.3",
+  "verification_scope": {
+    "domestic_conditions_verified": false,
+    "effective_date_verified": false,
+    "mli_position_verified": false,
+    "nonzero_rate_evidence_confirmed": true,
+    "official_instrument_comparison_completed": false,
+    "protocol_position_verified": false,
+    "transaction_decision_ready": false,
+    "zero_rate_article_structure_recorded": true
+  }
+}

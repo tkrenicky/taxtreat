@@ -1,0 +1,80 @@
+{
+  "branch_profit_tax": null,
+  "direction": "CZ_OUTBOUND",
+  "fail_closed": true,
+  "income_articles": {
+    "dividends": {
+      "article_number": 10,
+      "article_text_sha256": "ea0cf4c4395d4f51e04dc0f24fa5124a2d5385dc0d4708d5a43d04f03860181f",
+      "detected_nonzero_rates": [
+        15
+      ],
+      "official_instrument_comparison_completed": false,
+      "rate_evidence_status": "nonzero_rates_confirmed_against_extracted_text",
+      "rates": [
+        15
+      ],
+      "zero_rate_evidence_status": "not_applicable",
+      "zero_rate_present": false
+    },
+    "interest": {
+      "article_number": 11,
+      "article_text_sha256": "89eb243985bf114797165e2838fe895be5ba5263412b51ae9c5968ef08404956",
+      "detected_nonzero_rates": [
+        4,
+        15
+      ],
+      "excluded_numeric_conditions": [
+        50
+      ],
+      "official_instrument_comparison_completed": false,
+      "rate_evidence_status": "nonzero_rates_confirmed_against_extracted_text",
+      "rates": [
+        4,
+        15
+      ],
+      "zero_rate_evidence_status": "not_applicable",
+      "zero_rate_present": false
+    },
+    "royalties": {
+      "article_number": 12,
+      "article_text_sha256": "0897f19727a97384ab8bf6acff3b7738f96af67f1ea74d28a682b4ba5a5038a2",
+      "detected_nonzero_rates": [
+        5,
+        10
+      ],
+      "official_instrument_comparison_completed": false,
+      "rate_evidence_status": "nonzero_rates_confirmed_against_extracted_text",
+      "rates": [
+        5,
+        10
+      ],
+      "zero_rate_evidence_status": "not_applicable",
+      "zero_rate_present": false
+    }
+  },
+  "legal_verification_completed": false,
+  "partner_country_name": "Chile",
+  "production_ready": false,
+  "promotable_to_active_rules": false,
+  "schema_version": 1,
+  "source": {
+    "parsed_path": "data/parsed/chile.json",
+    "source_reconciliation_status": "candidate_matches_official_artifact"
+  },
+  "special_reviews": {
+    "mfn_review_required": true
+  },
+  "treaty_pair_id": "CZ-CL",
+  "verification_id": "CZ-CL-rate-confirmation-2026-08-06.3",
+  "verification_scope": {
+    "domestic_conditions_verified": false,
+    "effective_date_verified": false,
+    "mli_position_verified": false,
+    "nonzero_rate_evidence_confirmed": true,
+    "official_instrument_comparison_completed": false,
+    "protocol_position_verified": false,
+    "transaction_decision_ready": false,
+    "zero_rate_article_structure_recorded": true
+  }
+}

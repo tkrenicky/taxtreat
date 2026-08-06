@@ -1,0 +1,76 @@
+{
+  "branch_profit_tax": {
+    "not_dividend_rate": true,
+    "rate_percent": 5
+  },
+  "direction": "CZ_OUTBOUND",
+  "fail_closed": true,
+  "income_articles": {
+    "dividends": {
+      "article_number": 10,
+      "article_text_sha256": "1bebd50d5b75630e8f6ff5f669f025eb07ae8cb97494ac48a82b5bea0bea7b20",
+      "detected_nonzero_rates": [
+        10
+      ],
+      "official_instrument_comparison_completed": false,
+      "rate_evidence_status": "nonzero_rates_confirmed_against_extracted_text",
+      "rates": [
+        10
+      ],
+      "zero_rate_evidence_status": "not_applicable",
+      "zero_rate_present": false
+    },
+    "interest": {
+      "article_number": 11,
+      "article_text_sha256": "5e7aee35d2081d1e2f765e891dd6266a0dec650929a8e04aa04a85b356b396bd",
+      "detected_nonzero_rates": [
+        5,
+        10
+      ],
+      "official_instrument_comparison_completed": false,
+      "rate_evidence_status": "nonzero_rates_confirmed_against_extracted_text",
+      "rates": [
+        5,
+        10
+      ],
+      "zero_rate_evidence_status": "not_applicable",
+      "zero_rate_present": false
+    },
+    "royalties": {
+      "article_number": 12,
+      "article_text_sha256": "6d1c81ce351d4ed2ba7245f66e5b523ce36e1706fb847c42a5df4af665cacb3a",
+      "detected_nonzero_rates": [
+        10
+      ],
+      "official_instrument_comparison_completed": false,
+      "rate_evidence_status": "nonzero_rates_confirmed_against_extracted_text",
+      "rates": [
+        10
+      ],
+      "zero_rate_evidence_status": "not_applicable",
+      "zero_rate_present": false
+    }
+  },
+  "legal_verification_completed": false,
+  "partner_country_name": "Panama",
+  "production_ready": false,
+  "promotable_to_active_rules": false,
+  "schema_version": 1,
+  "source": {
+    "parsed_path": "data/parsed/panama.json",
+    "source_reconciliation_status": "candidate_matches_official_artifact"
+  },
+  "special_reviews": {},
+  "treaty_pair_id": "CZ-PA",
+  "verification_id": "CZ-PA-rate-confirmation-2026-08-06.3",
+  "verification_scope": {
+    "domestic_conditions_verified": false,
+    "effective_date_verified": false,
+    "mli_position_verified": false,
+    "nonzero_rate_evidence_confirmed": true,
+    "official_instrument_comparison_completed": false,
+    "protocol_position_verified": false,
+    "transaction_decision_ready": false,
+    "zero_rate_article_structure_recorded": true
+  }
+}

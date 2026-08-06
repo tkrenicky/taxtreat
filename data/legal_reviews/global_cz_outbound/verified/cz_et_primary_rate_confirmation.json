@@ -1,0 +1,71 @@
+{
+  "branch_profit_tax": null,
+  "direction": "CZ_OUTBOUND",
+  "fail_closed": true,
+  "income_articles": {
+    "dividends": {
+      "article_number": 10,
+      "article_text_sha256": "284985974ef0a9980a0441f22d6d03638db4c9c5d10736302a52925cc99ca202",
+      "detected_nonzero_rates": [
+        10
+      ],
+      "official_instrument_comparison_completed": false,
+      "rate_evidence_status": "nonzero_rates_confirmed_against_extracted_text",
+      "rates": [
+        10
+      ],
+      "zero_rate_evidence_status": "not_applicable",
+      "zero_rate_present": false
+    },
+    "interest": {
+      "article_number": 11,
+      "article_text_sha256": "f56235834146df7b2d34641a05005bd0f039df91ccbcab8441ee38beaba96772",
+      "detected_nonzero_rates": [
+        10
+      ],
+      "official_instrument_comparison_completed": false,
+      "rate_evidence_status": "nonzero_rates_confirmed_against_extracted_text",
+      "rates": [
+        10
+      ],
+      "zero_rate_evidence_status": "not_applicable",
+      "zero_rate_present": false
+    },
+    "royalties": {
+      "article_number": 12,
+      "article_text_sha256": "a4bc4e2e20a3375e2ffc248fab4d91095556abfb9227073ec250c3faf17f9ed8",
+      "detected_nonzero_rates": [
+        10
+      ],
+      "official_instrument_comparison_completed": false,
+      "rate_evidence_status": "nonzero_rates_confirmed_against_extracted_text",
+      "rates": [
+        10
+      ],
+      "zero_rate_evidence_status": "not_applicable",
+      "zero_rate_present": false
+    }
+  },
+  "legal_verification_completed": false,
+  "partner_country_name": "Etiopie",
+  "production_ready": false,
+  "promotable_to_active_rules": false,
+  "schema_version": 1,
+  "source": {
+    "parsed_path": "data/parsed/etiopie.json",
+    "source_reconciliation_status": "candidate_matches_official_artifact"
+  },
+  "special_reviews": {},
+  "treaty_pair_id": "CZ-ET",
+  "verification_id": "CZ-ET-rate-confirmation-2026-08-06.3",
+  "verification_scope": {
+    "domestic_conditions_verified": false,
+    "effective_date_verified": false,
+    "mli_position_verified": false,
+    "nonzero_rate_evidence_confirmed": true,
+    "official_instrument_comparison_completed": false,
+    "protocol_position_verified": false,
+    "transaction_decision_ready": false,
+    "zero_rate_article_structure_recorded": true
+  }
+}

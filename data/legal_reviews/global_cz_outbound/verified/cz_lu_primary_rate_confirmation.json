@@ -1,0 +1,71 @@
+{
+  "branch_profit_tax": null,
+  "direction": "CZ_OUTBOUND",
+  "fail_closed": true,
+  "income_articles": {
+    "dividends": {
+      "article_number": 10,
+      "article_text_sha256": "1d71f0c86db1e3bb24280045553070cd8b28a383d707d108f2060f8359b573c5",
+      "detected_nonzero_rates": [
+        10
+      ],
+      "official_instrument_comparison_completed": false,
+      "rate_evidence_status": "nonzero_rates_confirmed_against_extracted_text",
+      "rates": [
+        0,
+        10
+      ],
+      "zero_rate_evidence_status": "article_structure_recorded_pending_official_comparison",
+      "zero_rate_present": true
+    },
+    "interest": {
+      "article_number": 11,
+      "article_text_sha256": "ad09de119530bc3d2ff06a26058b516a47e435689cf713f38d20ad2a9b634014",
+      "detected_nonzero_rates": [],
+      "official_instrument_comparison_completed": false,
+      "rate_evidence_status": "nonzero_rates_confirmed_against_extracted_text",
+      "rates": [
+        0
+      ],
+      "zero_rate_evidence_status": "article_structure_recorded_pending_official_comparison",
+      "zero_rate_present": true
+    },
+    "royalties": {
+      "article_number": 12,
+      "article_text_sha256": "1600f02a5a27baa377334f5c2b09d36d56d4e3f5c646b1f9dfdafd9dcc30d3eb",
+      "detected_nonzero_rates": [
+        10
+      ],
+      "official_instrument_comparison_completed": false,
+      "rate_evidence_status": "nonzero_rates_confirmed_against_extracted_text",
+      "rates": [
+        0,
+        10
+      ],
+      "zero_rate_evidence_status": "article_structure_recorded_pending_official_comparison",
+      "zero_rate_present": true
+    }
+  },
+  "legal_verification_completed": false,
+  "partner_country_name": "Lucembursko",
+  "production_ready": false,
+  "promotable_to_active_rules": false,
+  "schema_version": 1,
+  "source": {
+    "parsed_path": "data/parsed/lucembursko.json",
+    "source_reconciliation_status": "candidate_matches_official_artifact"
+  },
+  "special_reviews": {},
+  "treaty_pair_id": "CZ-LU",
+  "verification_id": "CZ-LU-rate-confirmation-2026-08-06.3",
+  "verification_scope": {
+    "domestic_conditions_verified": false,
+    "effective_date_verified": false,
+    "mli_position_verified": false,
+    "nonzero_rate_evidence_confirmed": true,
+    "official_instrument_comparison_completed": false,
+    "protocol_position_verified": false,
+    "transaction_decision_ready": false,
+    "zero_rate_article_structure_recorded": true
+  }
+}
