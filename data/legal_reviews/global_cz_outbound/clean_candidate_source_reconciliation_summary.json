@@ -1,0 +1,27 @@
+{
+  "clean_candidate_pack_release": "clean-candidate-article-pack-2026-08-06.1",
+  "dataset_release": "clean-candidate-source-reconciliation-2026-08-06.1",
+  "fail_closed": true,
+  "hash_relation_counts": {
+    "identical": 23
+  },
+  "legal_evidence_artifact_release": "legal-evidence-artifacts-2026-08-05.1",
+  "legal_evidence_registry_release": "legal-evidence-source-registry-2026-08-05.1",
+  "legal_verification_completed": false,
+  "production_ready": false,
+  "promotable_to_active_rules": false,
+  "reconciliation_status_counts": {
+    "candidate_matches_official_artifact": 23
+  },
+  "schema_version": 1,
+  "semantics": {
+    "automatic_production_promotion_allowed": false,
+    "different_hash_requires_fresh_extraction": true,
+    "matching_hash_is_legal_verification": false,
+    "matching_hash_proves_file_identity_only": true,
+    "official_article_comparison_required": true,
+    "protocol_and_mli_review_required": true,
+    "unverified_result": "fail_closed"
+  },
+  "treaty_partner_count": 23
+}
