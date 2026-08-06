@@ -23,8 +23,7 @@ def _payload():
 
 
 def test_all_six_scopes_are_present():
-    payload = _payload()
-    findings = payload["findings"]
+    findings = _payload()["findings"]
 
     assert len(findings) == 6
     assert len({
@@ -42,11 +41,9 @@ def test_dataset_remains_fail_closed():
         payload["promotable_to_active_rules"]
         is False
     )
-
-    assert all(
-        row["status"]
-        == "preliminary_not_approved"
-        for row in payload["findings"]
+    assert (
+        payload["independent_approval_status"]
+        == "not_started"
     )
 
 
@@ -60,23 +57,25 @@ def test_russia_uses_domestic_fallback():
     assert len(rows) == 3
 
     for row in rows:
+        treatment = row[
+            "preliminary_treatment"
+        ]
+
         assert (
             row["treaty_application_status"]
             == "suspended"
         )
         assert (
-            row["preliminary_treatment"]
-            ["treatment_type"]
+            treatment["treatment_type"]
             == "czech_domestic_law_fallback"
         )
         assert (
-            row["preliminary_treatment"]
-            ["standard_rate_candidate"]
+            treatment["standard_rate_candidate"]
             == 15.0
         )
+        assert treatment["resolved_rate"] == 15.0
         assert (
-            row["preliminary_treatment"]
-            ["protective_rate_automatically_applied"]
+            treatment["protective_rate_applicable"]
             is False
         )
 
@@ -90,19 +89,22 @@ def test_belarus_dividend_and_interest_use_fallback():
 
     for income_type in ("dividend", "interest"):
         row = rows[income_type]
+        treatment = row[
+            "preliminary_treatment"
+        ]
 
         assert (
             row["treaty_application_status"]
             == "temporarily_suspended"
         )
+        assert treatment["resolved_rate"] == 15.0
         assert (
-            row["preliminary_treatment"]
-            ["standard_rate_candidate"]
-            == 15.0
+            treatment["protective_rate_applicable"]
+            is False
         )
 
 
-def test_belarus_royalty_retains_treaty_candidate():
+def test_belarus_royalty_retains_treaty_treatment():
     row = next(
         row
         for row in _payload()["findings"]
@@ -110,60 +112,49 @@ def test_belarus_royalty_retains_treaty_candidate():
         == "CZ-BY-ROY-LEGAL-REVIEW"
     )
 
+    treatment = row[
+        "preliminary_treatment"
+    ]
+
     assert (
         row["treaty_application_status"]
         == "not_suspended"
     )
     assert (
-        row["preliminary_treatment"]
-        ["treatment_type"]
+        treatment["treatment_type"]
         == "treaty_rate_candidate"
     )
+    assert treatment["resolved_rate"] == 5.0
     assert (
-        row["preliminary_treatment"]
-        ["rate_candidate"]
-        == 5.0
+        treatment["beneficial_owner_condition"]
+        is True
     )
 
 
-def test_protective_rate_never_applied_automatically():
-    domestic_rows = [
-        row
-        for row in _payload()["findings"]
-        if (
-            row["preliminary_treatment"]
-            ["treatment_type"]
-            == "czech_domestic_law_fallback"
-        )
-    ]
+def test_primary_questions_are_resolved():
+    payload = _payload()
 
-    assert len(domestic_rows) == 5
-
-    for row in domestic_rows:
-        treatment = row[
-            "preliminary_treatment"
-        ]
-
-        assert (
-            treatment["protective_rate_candidate"]
-            == 35.0
-        )
-        assert (
-            treatment[
-                "protective_rate_automatically_applied"
-            ]
-            is False
-        )
+    assert payload["unresolved_questions"] == []
+    assert len(
+        payload["resolved_questions"]
+    ) == 3
 
 
-def test_open_questions_block_approval():
-    questions = _payload()[
-        "unresolved_questions"
-    ]
+def test_independent_review_still_blocks_approval():
+    findings = _payload()["findings"]
 
-    assert len(questions) == 3
     assert all(
-        row["required_before_approval"]
-        is True
-        for row in questions
+        row["primary_review_status"]
+        == "completed"
+        for row in findings
+    )
+    assert all(
+        row["independent_review_status"]
+        == "not_started"
+        for row in findings
+    )
+    assert all(
+        row["status"]
+        == "primary_review_completed_not_approved"
+        for row in findings
     )
