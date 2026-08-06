@@ -1,0 +1,3808 @@
+{
+  "schema_version": 1,
+  "dataset_release": "cz-source-remediation-batches-2026-08-06.1",
+  "source_manifest_release": "cz-treaty-source-manifest-2026-08-06.1",
+  "treaty_partner_count": 98,
+  "batch_count": 3,
+  "execution_order": [
+    "CZ-SOURCE-REMEDIATION-P1",
+    "CZ-SOURCE-REMEDIATION-P2",
+    "CZ-SOURCE-REMEDIATION-P4"
+  ],
+  "batches": [
+    {
+      "batch_id": "CZ-SOURCE-REMEDIATION-P1",
+      "priority": 1,
+      "batch_type": "rejected_ocr_source_replacement",
+      "treaty_partner_count": 2,
+      "treaty_pairs": [
+        {
+          "treaty_pair_id": "CZ-AT",
+          "partner_country": "AT",
+          "partner_country_name": "Rakousko",
+          "priority": 1,
+          "batch_type": "rejected_ocr_source_replacement",
+          "production_blockers": [
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "obtain_clean_official_source",
+            "reject_existing_damaged_ocr",
+            "register_official_english_version_if_available",
+            "determine_authentic_and_prevailing_languages",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-CH",
+          "partner_country": "CH",
+          "partner_country_name": "Švýcarsko",
+          "priority": 1,
+          "batch_type": "rejected_ocr_source_replacement",
+          "production_blockers": [
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "obtain_clean_official_source",
+            "reject_existing_damaged_ocr",
+            "register_official_english_version_if_available",
+            "determine_authentic_and_prevailing_languages",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "status": "not_started",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "batch_id": "CZ-SOURCE-REMEDIATION-P2",
+      "priority": 2,
+      "batch_type": "official_source_acquisition",
+      "treaty_partner_count": 35,
+      "treaty_pairs": [
+        {
+          "treaty_pair_id": "CZ-AD",
+          "partner_country": "AD",
+          "partner_country_name": "Andorra",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-AE",
+          "partner_country": "AE",
+          "partner_country_name": "Spojené arabské emiráty",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-BD",
+          "partner_country": "BD",
+          "partner_country_name": "Bangladéš",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-BR",
+          "partner_country": "BR",
+          "partner_country_name": "Brazílie",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-BW",
+          "partner_country": "BW",
+          "partner_country_name": "Botswana",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-CM",
+          "partner_country": "CM",
+          "partner_country_name": "Kamerun",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-CO",
+          "partner_country": "CO",
+          "partner_country_name": "Kolumbie",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-EE",
+          "partner_country": "EE",
+          "partner_country_name": "Estonsko",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-ET",
+          "partner_country": "ET",
+          "partner_country_name": "Etiopie",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-GH",
+          "partner_country": "GH",
+          "partner_country_name": "Ghana",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-IR",
+          "partner_country": "IR",
+          "partner_country_name": "Írán",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-IT",
+          "partner_country": "IT",
+          "partner_country_name": "Itálie",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-KG",
+          "partner_country": "KG",
+          "partner_country_name": "Kyrgyzstán",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-KP",
+          "partner_country": "KP",
+          "partner_country_name": "KLDR (Korejská lidově demokratická republika)",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-KR",
+          "partner_country": "KR",
+          "partner_country_name": "Korejská republika",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-KW",
+          "partner_country": "KW",
+          "partner_country_name": "Kuvajt",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-LB",
+          "partner_country": "LB",
+          "partner_country_name": "Libanon",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-LK",
+          "partner_country": "LK",
+          "partner_country_name": "Srí Lanka",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-MA",
+          "partner_country": "MA",
+          "partner_country_name": "Maroko",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-ME",
+          "partner_country": "ME",
+          "partner_country_name": "Černá Hora",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-MK",
+          "partner_country": "MK",
+          "partner_country_name": "Makedonie",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-NG",
+          "partner_country": "NG",
+          "partner_country_name": "Nigérie",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-PH",
+          "partner_country": "PH",
+          "partner_country_name": "Filipíny",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-QA",
+          "partner_country": "QA",
+          "partner_country_name": "Katar",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-RW",
+          "partner_country": "RW",
+          "partner_country_name": "Rwanda",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-SE",
+          "partner_country": "SE",
+          "partner_country_name": "Švédsko",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-SM",
+          "partner_country": "SM",
+          "partner_country_name": "San Marino",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-SN",
+          "partner_country": "SN",
+          "partner_country_name": "Senegal",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-SY",
+          "partner_country": "SY",
+          "partner_country_name": "Sýrie",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-TJ",
+          "partner_country": "TJ",
+          "partner_country_name": "Tádžikistán",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-TM",
+          "partner_country": "TM",
+          "partner_country_name": "Turkmenistán",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-TR",
+          "partner_country": "TR",
+          "partner_country_name": "Turecko",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-US",
+          "partner_country": "US",
+          "partner_country_name": "USA (Spojené státy americké)",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-VE",
+          "partner_country": "VE",
+          "partner_country_name": "Venezuela",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-XK",
+          "partner_country": "XK",
+          "partner_country_name": "Kosovo",
+          "priority": 2,
+          "batch_type": "official_source_acquisition",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "instrument_effective_dates_incomplete",
+            "official_english_version_not_assessed",
+            "official_source_not_registered",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [],
+          "required_actions": [
+            "locate_official_base_treaty",
+            "locate_all_official_protocols",
+            "verify_mli_status",
+            "register_source_urls_and_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "verify_instrument_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "status": "not_started",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "batch_id": "CZ-SOURCE-REMEDIATION-P4",
+      "priority": 4,
+      "batch_type": "registered_source_metadata_completion",
+      "treaty_partner_count": 61,
+      "treaty_pairs": [
+        {
+          "treaty_pair_id": "CZ-AL",
+          "partner_country": "AL",
+          "partner_country_name": "Albánie",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-AL-F835DE477A17"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-AM",
+          "partner_country": "AM",
+          "partner_country_name": "Arménie",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-AM-406B25000F64"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-AU",
+          "partner_country": "AU",
+          "partner_country_name": "Austrálie",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-AU-9A4E285B29BA"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-AZ",
+          "partner_country": "AZ",
+          "partner_country_name": "Ázerbájdžán",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-AZ-5CBDF064DB2D"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-BA",
+          "partner_country": "BA",
+          "partner_country_name": "Bosna a Hercegovina",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-BA-E56FA1202C35"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-BB",
+          "partner_country": "BB",
+          "partner_country_name": "Barbados",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-BB-6B5E1E2DBF6F"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-BE",
+          "partner_country": "BE",
+          "partner_country_name": "Belgie",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-BE-FC7B1E3B8535",
+            "CZ-MF-BE-D0E145875613"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-BG",
+          "partner_country": "BG",
+          "partner_country_name": "Bulharsko",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-BG-2B03FD0A06D0"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-BH",
+          "partner_country": "BH",
+          "partner_country_name": "Bahrajn",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-BH-62B8900E104A"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-CA",
+          "partner_country": "CA",
+          "partner_country_name": "Kanada",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-CA-CE8284ABA7EE"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-CL",
+          "partner_country": "CL",
+          "partner_country_name": "Chile",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-CL-B91DD4F8C770"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-CN",
+          "partner_country": "CN",
+          "partner_country_name": "Čína",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-CN-284995C74AC0"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-CY",
+          "partner_country": "CY",
+          "partner_country_name": "Kypr",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-CY-75584BE2226C"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-DE",
+          "partner_country": "DE",
+          "partner_country_name": "Německo",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-DE-B5236226B2AF"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-DK",
+          "partner_country": "DK",
+          "partner_country_name": "Dánsko",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-DK-6D5DDFC81601"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-EG",
+          "partner_country": "EG",
+          "partner_country_name": "Egypt",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-EG-CFD0E7D5834F"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-ES",
+          "partner_country": "ES",
+          "partner_country_name": "Španělsko",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-ES-ED9522D43DFC"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-FI",
+          "partner_country": "FI",
+          "partner_country_name": "Finsko",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-FI-8D7079FE1141"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-FR",
+          "partner_country": "FR",
+          "partner_country_name": "Francie",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-FR-F51BC9297EF7"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-GB",
+          "partner_country": "GB",
+          "partner_country_name": "Velká Británie (Spojené království Velké Británie a Severního Irska)",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-GB-EC3DC0D02CFD"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-GE",
+          "partner_country": "GE",
+          "partner_country_name": "Gruzie",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-GE-69AA0F743A30"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-GR",
+          "partner_country": "GR",
+          "partner_country_name": "Řecko",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-GR-C662B1ECC40D"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-HK",
+          "partner_country": "HK",
+          "partner_country_name": "Hongkong",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-HK-2E00616C828C"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-HR",
+          "partner_country": "HR",
+          "partner_country_name": "Chorvatsko",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-HR-81BFD8AAACFA",
+            "CZ-MF-HR-FF7645967F85"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-HU",
+          "partner_country": "HU",
+          "partner_country_name": "Maďarsko",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-HU-AC33402CD46E"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-ID",
+          "partner_country": "ID",
+          "partner_country_name": "Indonésie",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-ID-C2FEE851164B"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-IE",
+          "partner_country": "IE",
+          "partner_country_name": "Irsko",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-IE-E1C5A3B84AE9"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-IL",
+          "partner_country": "IL",
+          "partner_country_name": "Izrael",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-IL-DBD7B4F992AD"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-IN",
+          "partner_country": "IN",
+          "partner_country_name": "Indie",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-IN-57442BF5B4B5"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-IS",
+          "partner_country": "IS",
+          "partner_country_name": "Island",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-IS-89AC2536E9BA"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-JO",
+          "partner_country": "JO",
+          "partner_country_name": "Jordánsko",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-JO-892899B9E87E"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-JP",
+          "partner_country": "JP",
+          "partner_country_name": "Japonsko",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-JP-4344B37716FA"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-KZ",
+          "partner_country": "KZ",
+          "partner_country_name": "Kazachstán",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-KZ-A3943A2404DE",
+            "CZ-MF-KZ-1510692CA08E"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-LI",
+          "partner_country": "LI",
+          "partner_country_name": "Lichtenštejnsko",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-LI-FDF7D3C4B90F"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-LT",
+          "partner_country": "LT",
+          "partner_country_name": "Litva",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-LT-C2B9E7CD909C"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-LU",
+          "partner_country": "LU",
+          "partner_country_name": "Lucembursko",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-LU-8790A263C4D9"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-LV",
+          "partner_country": "LV",
+          "partner_country_name": "Lotyšsko",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-LV-AA47C3976F1E"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-MD",
+          "partner_country": "MD",
+          "partner_country_name": "Moldávie",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-MD-4CDF66434EF2"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-MN",
+          "partner_country": "MN",
+          "partner_country_name": "Mongolsko",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-MN-E7914739AD5F"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-MT",
+          "partner_country": "MT",
+          "partner_country_name": "Malta",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-MT-0CA5D5B98CAC"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-MX",
+          "partner_country": "MX",
+          "partner_country_name": "Mexiko",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-MX-C775FAB8FC8D"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-MY",
+          "partner_country": "MY",
+          "partner_country_name": "Malajsie",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-MY-725D91C75498"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-NL",
+          "partner_country": "NL",
+          "partner_country_name": "Nizozemí",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-NL-0210508FF125",
+            "CZ-MF-NL-45D279EE7770",
+            "CZ-MF-NL-7CAD483C3F1A"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-NO",
+          "partner_country": "NO",
+          "partner_country_name": "Norsko",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-NO-A041206560CE"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-NZ",
+          "partner_country": "NZ",
+          "partner_country_name": "Nový Zéland",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-NZ-D470ECE021E5"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-PA",
+          "partner_country": "PA",
+          "partner_country_name": "Panama",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-PA-D61EE94F4B1C"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-PK",
+          "partner_country": "PK",
+          "partner_country_name": "Pákistán",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-PK-1DBAD90EAC15"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-PL",
+          "partner_country": "PL",
+          "partner_country_name": "Polsko",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-PL-B4A96328539C"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-PT",
+          "partner_country": "PT",
+          "partner_country_name": "Portugalsko",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-PT-48F0B330E956"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-RO",
+          "partner_country": "RO",
+          "partner_country_name": "Rumunsko",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-RO-9E6FFEFBE879"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-RS",
+          "partner_country": "RS",
+          "partner_country_name": "Srbsko",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-RS-0459B301532C",
+            "CZ-MF-RS-7987A53E3798"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-SA",
+          "partner_country": "SA",
+          "partner_country_name": "Saúdská Arábie",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-SA-4A568C20DA68"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-SG",
+          "partner_country": "SG",
+          "partner_country_name": "Singapur",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-SG-434FB13B550B",
+            "CZ-MF-SG-D1E21A71E463"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-SI",
+          "partner_country": "SI",
+          "partner_country_name": "Slovinsko",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-SI-75CD9147F351"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-SK",
+          "partner_country": "SK",
+          "partner_country_name": "Slovensko",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-SK-0054E687E82B"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-TH",
+          "partner_country": "TH",
+          "partner_country_name": "Thajsko",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-TH-6CFCD2643B9F"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-TN",
+          "partner_country": "TN",
+          "partner_country_name": "Tunisko",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-TN-2BF1DC642BE0"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-UA",
+          "partner_country": "UA",
+          "partner_country_name": "Ukrajina",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-UA-32E5022AB79A",
+            "CZ-MF-UA-5F98838DA169"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-UZ",
+          "partner_country": "UZ",
+          "partner_country_name": "Uzbekistán",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-UZ-91E56630154D"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-VN",
+          "partner_country": "VN",
+          "partner_country_name": "Vietnam",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-VN-A0AEF554D064"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "treaty_pair_id": "CZ-ZA",
+          "partner_country": "ZA",
+          "partner_country_name": "JAR (Jihoafrická republika)",
+          "priority": 4,
+          "batch_type": "registered_source_metadata_completion",
+          "production_blockers": [
+            "articles_10_12_not_precisely_mapped",
+            "authentic_and_prevailing_languages_not_assessed",
+            "official_english_version_not_assessed",
+            "source_languages_not_registered",
+            "text_quality_not_assessed"
+          ],
+          "existing_source_urls": [],
+          "existing_source_ids": [
+            "CZ-MF-ZA-508F6FB725BE"
+          ],
+          "required_actions": [
+            "verify_existing_source_identity",
+            "register_document_hashes",
+            "determine_language_authority",
+            "extract_clean_articles_10_12",
+            "assess_text_quality",
+            "verify_existing_effective_dates"
+          ],
+          "completion_criteria": {
+            "official_source_identity_verified": true,
+            "official_document_hash_recorded": true,
+            "language_authority_verified": true,
+            "clean_source_text_available": true,
+            "articles_10_12_mapped": true,
+            "effective_dates_verified": true,
+            "damaged_ocr_removed": true
+          },
+          "status": "not_started",
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "status": "not_started",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    }
+  ],
+  "fail_closed": true,
+  "promotable_to_active_rules": false
+}
