@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "dataset_release": "at-ch-rejected-text-layers-2026-08-06.1",
+  "countries": {
+    "AT": {
+      "country": "AT",
+      "source_title": "31/2007 Sb.m.s.",
+      "source_pdf": "data/raw/treaty/790847066c210f8b.pdf",
+      "source_pdf_sha256": "790847066c210f8b6b273358cdc43d3416ae06f8d892debc633b4edd97ccb0f8",
+      "attempted_extraction_method": "pdftotext-layout-utf8",
+      "extracted_character_count": 63117,
+      "suspicious_character_counts": {
+        "õ": 1367
+      },
+      "articles_10_12_found": [],
+      "extraction_result": "rejected_damaged_pdf_text_layer",
+      "rejection_reasons": [
+        "systematic_character_encoding_damage",
+        "articles_10_12_not_reliably_detectable",
+        "text_layer_not_suitable_for_legal_source"
+      ],
+      "rejected_output_may_support_active_rule": false,
+      "required_replacement_source": {
+        "preferred_format": "official_html_or_digitally_generated_pdf",
+        "official_source_required": true,
+        "clean_text_layer_required": true,
+        "document_identity_verification_required": true,
+        "document_hash_required": true,
+        "articles_10_12_comparison_required": true,
+        "protocol_overlay_required": true,
+        "mli_overlay_required": true,
+        "language_authority_required": true,
+        "effective_date_verification_required": true
+      },
+      "remediation_status": "clean_official_source_required",
+      "legal_text_verified": false,
+      "production_ready": false,
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    "CH": {
+      "country": "CH",
+      "source_title": "281/1996 Sb.",
+      "source_pdf": "data/raw/treaty/e2b4649db40a2bec.pdf",
+      "source_pdf_sha256": "e2b4649db40a2becbbda996fdf725a7138a2aa2083fe3af607afc5464339b796",
+      "attempted_extraction_method": "pdftotext-layout-utf8",
+      "extracted_character_count": 99925,
+      "suspicious_character_counts": {
+        "õ": 2073
+      },
+      "articles_10_12_found": [],
+      "extraction_result": "rejected_damaged_pdf_text_layer",
+      "rejection_reasons": [
+        "systematic_character_encoding_damage",
+        "articles_10_12_not_reliably_detectable",
+        "text_layer_not_suitable_for_legal_source"
+      ],
+      "rejected_output_may_support_active_rule": false,
+      "required_replacement_source": {
+        "preferred_format": "official_html_or_digitally_generated_pdf",
+        "official_source_required": true,
+        "clean_text_layer_required": true,
+        "document_identity_verification_required": true,
+        "document_hash_required": true,
+        "articles_10_12_comparison_required": true,
+        "protocol_overlay_required": true,
+        "mli_overlay_required": true,
+        "language_authority_required": true,
+        "effective_date_verification_required": true
+      },
+      "remediation_status": "clean_official_source_required",
+      "legal_text_verified": false,
+      "production_ready": false,
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    }
+  },
+  "country_count": 2,
+  "rejected_text_layer_count": 2,
+  "accepted_text_layer_count": 0,
+  "decision": "Do not continue extracting legal rules from the current Austrian or Swiss PDF text layers.",
+  "next_required_action": "Obtain clean official HTML or digitally generated documents and rebuild Articles 10–12 from those sources.",
+  "existing_parsed_files_rejected_as_authoritative": [
+    "data/parsed/rakousko.json",
+    "data/parsed/svycarsko.json"
+  ],
+  "legal_verification_completed": false,
+  "production_ready": false,
+  "fail_closed": true,
+  "promotable_to_active_rules": false
+}
