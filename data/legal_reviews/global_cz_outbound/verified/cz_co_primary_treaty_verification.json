@@ -1,0 +1,89 @@
+{
+  "application": {
+    "czech_withholding_tax_effective_from": null,
+    "verification_status": "pending_article_application_review"
+  },
+  "direction": "CZ_OUTBOUND",
+  "fail_closed": true,
+  "income_articles": {
+    "dividends": {
+      "article_number": 10,
+      "article_text_sha256": "3fa0dbf1dc800ec4a6a6b36cbe85d62ba07ac78b75ff77c96af3f889159acdd9",
+      "source_state_special_rule": {
+        "article_paragraph": "10(3)",
+        "condition": "dividends paid from profits not taxed in Colombia under Colombian domestic law",
+        "country": "CO",
+        "direction_relevance": "not ordinarily applicable to CZ outbound payments",
+        "rate_percent": 25
+      },
+      "treaty_rates": [
+        {
+          "conditions": {
+            "beneficial_owner_required": true,
+            "category": "ordinary Article 10(2)(a) rate",
+            "minimum_direct_holding_percent": 25,
+            "recipient_type": "company other than partnership"
+          },
+          "rate_percent": 5
+        },
+        {
+          "conditions": {
+            "beneficial_owner_required": true,
+            "category": "ordinary all other cases"
+          },
+          "rate_percent": 15
+        }
+      ],
+      "verification_status": "primary_treaty_text_verified"
+    },
+    "interest": {
+      "article_number": 11,
+      "article_text_sha256": "0633d71ddac647846733a9954604018c2d949a10169cdc92a7f0da38cd2871e3",
+      "conditions": {
+        "beneficial_owner_required": true
+      },
+      "standard_rate_percent": 10,
+      "verification_status": "primary_treaty_text_verified"
+    },
+    "royalties": {
+      "article_number": 12,
+      "article_text_sha256": "5b10f165840c915d6acc04738a5d31b06d62955a5007a612e5c7dd7c77787e36",
+      "conditions": {
+        "beneficial_owner_required": true
+      },
+      "standard_rate_percent": 10,
+      "verification_status": "primary_treaty_text_verified"
+    }
+  },
+  "legal_verification_completed": false,
+  "overlay_review": {
+    "czech_domestic_conditions_verified": false,
+    "mli_position_verified": false,
+    "mli_review_status": "pending_pairwise_verification",
+    "protocol_review_status": "pending"
+  },
+  "partner_country": "CO",
+  "partner_country_name": "Kolumbie",
+  "production_ready": false,
+  "promotable_to_active_rules": false,
+  "schema_version": 1,
+  "source": {
+    "decisive_language_on_divergence": "English",
+    "entry_into_force_date": "2015-05-06",
+    "entry_into_force_verification_status": "official_publication_verified",
+    "parsed_path": "data/parsed/kolumbie.json",
+    "signature_date": "2012-03-22",
+    "source_title": "39/2015 Sb. m. s."
+  },
+  "treaty_pair_id": "CZ-CO",
+  "verification_id": "CZ-CO-primary-treaty-2026-08-06.1",
+  "verification_scope": {
+    "czech_withholding_effective_date_verified": false,
+    "domestic_conditions_verified": false,
+    "entry_into_force_verified": true,
+    "mli_position_verified": false,
+    "primary_treaty_articles_10_to_12_verified": true,
+    "protocol_position_verified": false,
+    "transaction_decision_ready": false
+  }
+}
