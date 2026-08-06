@@ -1,0 +1,84 @@
+{
+  "application": {
+    "czech_withholding_tax_effective_from": null,
+    "verification_status": "pending_article_application_review"
+  },
+  "direction": "CZ_OUTBOUND",
+  "fail_closed": true,
+  "income_articles": {
+    "dividends": {
+      "article_number": 10,
+      "article_text_sha256": "4aadeb04f7e35b717bfac5aade844fda1ba86bf5c93af1430d5b48448c58ad77",
+      "treaty_rates": [
+        {
+          "conditions": {
+            "beneficial_owner_required": true,
+            "category": "all dividends"
+          },
+          "rate_percent": 5
+        }
+      ],
+      "verification_status": "primary_treaty_text_verified"
+    },
+    "interest": {
+      "article_number": 11,
+      "article_text_sha256": "b30a84e2ba59fa03b047e16a77f081a4dae62c7ade941f578c40c6aada176b12",
+      "treaty_rates": [
+        {
+          "conditions": {
+            "basis": "taxable only in residence state",
+            "beneficial_owner_required": true
+          },
+          "rate_percent": 0
+        }
+      ],
+      "verification_status": "primary_treaty_text_verified"
+    },
+    "royalties": {
+      "article_number": 12,
+      "article_text_sha256": "46ba8e5f47eea2e215c1e3a8cf57022faca21e9aebec4702ced584812eed9e3a",
+      "treaty_rates": [
+        {
+          "beneficial_owner_required": true,
+          "category": "Article 12(3)(a) copyright royalties",
+          "rate_percent": 0
+        },
+        {
+          "beneficial_owner_required": true,
+          "category": "Article 12(3)(b) other royalties",
+          "rate_percent": 10
+        }
+      ],
+      "verification_status": "primary_treaty_text_verified"
+    }
+  },
+  "legal_verification_completed": false,
+  "overlay_review": {
+    "czech_domestic_conditions_verified": false,
+    "mli_position_verified": false,
+    "mli_review_status": "pending_pairwise_verification",
+    "protocol_review_status": "pending"
+  },
+  "partner_country": "BA",
+  "partner_country_name": "Bosna a Hercegovina",
+  "production_ready": false,
+  "promotable_to_active_rules": false,
+  "schema_version": 1,
+  "source": {
+    "entry_into_force_date": "2010-05-12",
+    "entry_into_force_verification_status": "official_publication_verified",
+    "parsed_path": "data/parsed/bosna_a_hercegovina.json",
+    "source_title": "58/2010 Sb. m. s."
+  },
+  "treaty_pair_id": "CZ-BA",
+  "verification_id": "CZ-BA-primary-treaty-2026-08-06.1",
+  "verification_scope": {
+    "czech_withholding_effective_date_verified": false,
+    "domestic_conditions_verified": false,
+    "entry_into_force_verified": true,
+    "mli_position_verified": false,
+    "primary_treaty_articles_10_to_12_verified": true,
+    "protocol_position_verified": false,
+    "transaction_decision_ready": false
+  }
+}

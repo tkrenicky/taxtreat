@@ -1,0 +1,82 @@
+{
+  "application": {
+    "czech_withholding_tax_effective_from": null,
+    "verification_status": "pending_article_application_review"
+  },
+  "direction": "CZ_OUTBOUND",
+  "fail_closed": true,
+  "income_articles": {
+    "dividends": {
+      "article_number": 10,
+      "article_text_sha256": "9ca7dba9febd027ab574c3046482f66b55d164c23f1cfb0e55c1fbd3a8aecf95",
+      "treaty_rates": [
+        {
+          "conditions": {
+            "beneficial_owner_required": true,
+            "category": "all dividends"
+          },
+          "rate_percent": 5
+        }
+      ],
+      "verification_status": "primary_treaty_text_verified"
+    },
+    "interest": {
+      "article_number": 11,
+      "article_text_sha256": "e84d452aaddaf90a91e244993eefe747de79e8184c932744781e816e130b61b8",
+      "treaty_rates": [
+        {
+          "conditions": {
+            "basis": "taxable only in residence state",
+            "beneficial_owner_required": true
+          },
+          "rate_percent": 0
+        }
+      ],
+      "treaty_term": "income from debt claims",
+      "verification_status": "primary_treaty_text_verified"
+    },
+    "royalties": {
+      "article_number": 12,
+      "article_text_sha256": "a048c7d24d3e6ac0edf5a246dda6381def3198be6f2df17dae63d6a060816465",
+      "treaty_rates": [
+        {
+          "conditions": {
+            "beneficial_owner_required": true,
+            "category": "all covered royalties"
+          },
+          "rate_percent": 10
+        }
+      ],
+      "verification_status": "primary_treaty_text_verified"
+    }
+  },
+  "legal_verification_completed": false,
+  "overlay_review": {
+    "czech_domestic_conditions_verified": false,
+    "mli_position_verified": false,
+    "mli_review_status": "pending_pairwise_verification",
+    "protocol_review_status": "pending"
+  },
+  "partner_country": "BH",
+  "partner_country_name": "Bahrajn",
+  "production_ready": false,
+  "promotable_to_active_rules": false,
+  "schema_version": 1,
+  "source": {
+    "entry_into_force_date": "2012-04-10",
+    "entry_into_force_verification_status": "official_publication_verified",
+    "parsed_path": "data/parsed/bahrajn.json",
+    "source_title": "59/2012 Sb. m. s."
+  },
+  "treaty_pair_id": "CZ-BH",
+  "verification_id": "CZ-BH-primary-treaty-2026-08-06.1",
+  "verification_scope": {
+    "czech_withholding_effective_date_verified": false,
+    "domestic_conditions_verified": false,
+    "entry_into_force_verified": true,
+    "mli_position_verified": false,
+    "primary_treaty_articles_10_to_12_verified": true,
+    "protocol_position_verified": false,
+    "transaction_decision_ready": false
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "application": {
+    "czech_withholding_tax_effective_from": null,
+    "verification_status": "pending_article_application_review"
+  },
+  "direction": "CZ_OUTBOUND",
+  "fail_closed": true,
+  "income_articles": {
+    "dividends": {
+      "article_number": 10,
+      "article_text_sha256": "bed44e06e8f8f76dc30c0f73f90b93258dfc0e07bfef019d8ddedea8b20c1c7e",
+      "treaty_rates": [
+        {
+          "conditions": {
+            "beneficial_owner_required": true,
+            "minimum_direct_holding_percent": 25,
+            "recipient_type": "company other than partnership"
+          },
+          "rate_percent": 5
+        },
+        {
+          "conditions": {
+            "beneficial_owner_required": true,
+            "category": "all other cases"
+          },
+          "rate_percent": 15
+        }
+      ],
+      "verification_status": "primary_treaty_text_verified"
+    },
+    "interest": {
+      "article_number": 11,
+      "article_text_sha256": "414f3c052a08fd80c75937646533f8171c0f84666c01c102252dbdc158445866",
+      "conditions": {
+        "beneficial_owner_required": true
+      },
+      "standard_rate_percent": 5,
+      "verification_status": "primary_treaty_text_verified"
+    },
+    "royalties": {
+      "article_number": 12,
+      "article_text_sha256": "06c9b268e9597ef97481e75f2ba38cc870b17d98e9c0bebfbd2fe5fbaa702cc4",
+      "treaty_rates": [
+        {
+          "beneficial_owner_required": true,
+          "category": "Article 12(3)(a) copyright royalties",
+          "rate_percent": 5
+        },
+        {
+          "beneficial_owner_required": true,
+          "category": "Article 12(3)(b) other royalties",
+          "rate_percent": 10
+        }
+      ],
+      "verification_status": "primary_treaty_text_verified"
+    }
+  },
+  "legal_verification_completed": false,
+  "overlay_review": {
+    "czech_domestic_conditions_verified": false,
+    "mli_position_verified": false,
+    "mli_review_status": "pending_pairwise_verification",
+    "protocol_review_status": "pending"
+  },
+  "partner_country": "BB",
+  "partner_country_name": "Barbados",
+  "production_ready": false,
+  "promotable_to_active_rules": false,
+  "schema_version": 1,
+  "source": {
+    "entry_into_force_date": "2012-06-06",
+    "entry_into_force_verification_status": "official_publication_verified",
+    "parsed_path": "data/parsed/barbados.json",
+    "source_title": "69/2012 Sb. m. s."
+  },
+  "treaty_pair_id": "CZ-BB",
+  "verification_id": "CZ-BB-primary-treaty-2026-08-06.1",
+  "verification_scope": {
+    "czech_withholding_effective_date_verified": false,
+    "domestic_conditions_verified": false,
+    "entry_into_force_verified": true,
+    "mli_position_verified": false,
+    "primary_treaty_articles_10_to_12_verified": true,
+    "protocol_position_verified": false,
+    "transaction_decision_ready": false
+  }
+}
