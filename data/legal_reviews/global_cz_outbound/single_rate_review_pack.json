@@ -1,13 +1,16 @@
 {
   "schema_version": 1,
-  "dataset_release": "global-review-work-packs-2026-08-06.1",
+  "dataset_release": "global-review-work-packs-2026-08-06.2",
+  "source_dataset_release": "global-primary-review-candidates-2026-08-06.2",
   "pack_type": "single_rate_candidates",
-  "scope_count": 189,
-  "country_count": 94,
+  "scope_count": 192,
+  "country_count": 96,
   "fail_closed": true,
   "promotable_to_active_rules": false,
   "required_checks": [
     "source_identity",
+    "authentic_language_status",
+    "text_quality",
     "effective_date",
     "recipient_residence",
     "beneficial_ownership_where_relevant",
@@ -448,6 +451,153 @@
         "status_instrument_review"
       ],
       "primary_review_candidate_status": "single_rate_candidate_compiled"
+    },
+    {
+      "packet_id": "CZ-AT-INT-LEGAL-REVIEW",
+      "recipient_country": "AT",
+      "recipient_country_name": "Rakousko",
+      "income_type": "interest",
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-at-int-legal-review.json",
+      "base_treaty_article": null,
+      "base_rate_candidates": [],
+      "protocol_rate_candidates": [],
+      "protocol_effect_rate_candidates": [],
+      "resolved_rate_candidate": 0.0,
+      "rate_condition_count": 0,
+      "domestic_standard_rate_candidate": 15.0,
+      "domestic_protective_rate_candidate": 35.0,
+      "relief_candidate": {
+        "all_of": [
+          {
+            "fact": "recipient_is_qualifying_company_form",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_is_tax_resident_in_eligible_jurisdiction",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_subject_to_qualifying_corporate_tax",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_has_no_tax_exemption_or_zero_rate_option",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "beneficial_owner",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "payment_is_arm_length_amount",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "section_38nb_decision_effective",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "payment_not_attributable_to_disqualifying_pe",
+            "operator": "==",
+            "value": true
+          }
+        ],
+        "anti_abuse_review_required": true,
+        "association_one_of": [
+          "payer directly holds at least 25% of recipient capital or voting rights",
+          "recipient directly holds at least 25% of payer capital or voting rights",
+          "one person directly holds at least 25% of both payer and recipient capital or voting rights"
+        ],
+        "association_period_one_of": [
+          {
+            "fact": "holding_period_months",
+            "operator": ">=",
+            "value": 24
+          },
+          {
+            "all_of": [
+              {
+                "fact": "holding_period_will_reach_months",
+                "operator": ">=",
+                "value": 24
+              },
+              {
+                "fact": "statutory_clawback_acknowledged",
+                "operator": "==",
+                "value": true
+              }
+            ]
+          }
+        ],
+        "directive_source_id": "EU-IRD-2003-49-CONSOLIDATED",
+        "legal_reference": "section 19(1)(zk), (3), (5), (6), (8) and section 38nb",
+        "rate": 0.0,
+        "regime": "eu_directive_domestic_implementation"
+      },
+      "article_suspended": false,
+      "status_instrument": {},
+      "mli": {},
+      "protocol": {},
+      "existing_blockers": [
+        "anti_abuse_determination",
+        "domestic_rate_candidate_review",
+        "independent_legal_review",
+        "missing_instrument_chain_or_priority_review_row",
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "unresolved_codes": [
+        "missing_base_treaty",
+        "missing_instrument_chain_or_priority_review_row",
+        "missing_rate_candidate",
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "resolution_class": "candidate_ready_for_owner_review",
+      "owner_approval_status": "not_started",
+      "promotable_to_active_rules": false,
+      "fail_closed": true,
+      "hard_unresolved_codes": [],
+      "conditional_codes": [],
+      "process_review_codes": [
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "primary_review_candidate_status": "source_data_exception",
+      "source_exception_resolution": {
+        "packet_id": "CZ-AT-INT-LEGAL-REVIEW",
+        "resolution_type": "pilot_source_mapping",
+        "candidate_rates": [
+          {
+            "rate": 0.0,
+            "legal_basis": "Article 11(1)",
+            "conditions": {
+              "beneficial_owner": true
+            }
+          }
+        ],
+        "classification": "candidate_ready_for_owner_review",
+        "source_language": "cs",
+        "text_quality_status": "ocr_rejected",
+        "clean_english_source_required": true
+      },
+      "resolved_rate_candidates": [
+        {
+          "rate": 0.0,
+          "legal_basis": "Article 11(1)",
+          "conditions": {
+            "beneficial_owner": true
+          }
+        }
+      ],
+      "exception_resolution_applied": true
     },
     {
       "packet_id": "CZ-AU-DIV-LEGAL-REVIEW",
@@ -2020,6 +2170,300 @@
         "status_instrument_review"
       ],
       "primary_review_candidate_status": "single_rate_candidate_compiled"
+    },
+    {
+      "packet_id": "CZ-CH-INT-LEGAL-REVIEW",
+      "recipient_country": "CH",
+      "recipient_country_name": "Švýcarsko",
+      "income_type": "interest",
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-ch-int-legal-review.json",
+      "base_treaty_article": null,
+      "base_rate_candidates": [],
+      "protocol_rate_candidates": [],
+      "protocol_effect_rate_candidates": [],
+      "resolved_rate_candidate": 0.0,
+      "rate_condition_count": 0,
+      "domestic_standard_rate_candidate": 15.0,
+      "domestic_protective_rate_candidate": 35.0,
+      "relief_candidate": {
+        "all_of": [
+          {
+            "fact": "recipient_is_qualifying_company_form",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_is_tax_resident_in_eligible_jurisdiction",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_subject_to_qualifying_corporate_tax",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_has_no_tax_exemption_or_zero_rate_option",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "beneficial_owner",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "payment_is_arm_length_amount",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "section_38nb_decision_effective",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "payment_not_attributable_to_disqualifying_pe",
+            "operator": "==",
+            "value": true
+          }
+        ],
+        "anti_abuse_review_required": true,
+        "association_one_of": [
+          "payer directly holds at least 25% of recipient capital or voting rights",
+          "recipient directly holds at least 25% of payer capital or voting rights",
+          "one person directly holds at least 25% of both payer and recipient capital or voting rights"
+        ],
+        "association_period_one_of": [
+          {
+            "fact": "holding_period_months",
+            "operator": ">=",
+            "value": 24
+          },
+          {
+            "all_of": [
+              {
+                "fact": "holding_period_will_reach_months",
+                "operator": ">=",
+                "value": 24
+              },
+              {
+                "fact": "statutory_clawback_acknowledged",
+                "operator": "==",
+                "value": true
+              }
+            ]
+          }
+        ],
+        "directive_source_id": null,
+        "legal_reference": "section 19(1)(zk), (3), (5), (6), (8) and section 38nb",
+        "rate": 0.0,
+        "regime": "section_19_8_extension"
+      },
+      "article_suspended": false,
+      "status_instrument": {},
+      "mli": {},
+      "protocol": {},
+      "existing_blockers": [
+        "anti_abuse_determination",
+        "domestic_rate_candidate_review",
+        "independent_legal_review",
+        "missing_instrument_chain_or_priority_review_row",
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "unresolved_codes": [
+        "missing_base_treaty",
+        "missing_instrument_chain_or_priority_review_row",
+        "missing_rate_candidate",
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "resolution_class": "candidate_ready_for_owner_review",
+      "owner_approval_status": "not_started",
+      "promotable_to_active_rules": false,
+      "fail_closed": true,
+      "hard_unresolved_codes": [],
+      "conditional_codes": [],
+      "process_review_codes": [
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "primary_review_candidate_status": "source_data_exception",
+      "source_exception_resolution": {
+        "packet_id": "CZ-CH-INT-LEGAL-REVIEW",
+        "resolution_type": "pilot_source_mapping",
+        "candidate_rates": [
+          {
+            "rate": 0.0,
+            "legal_basis": "Article 11(1)",
+            "conditions": {
+              "beneficial_owner": true
+            }
+          }
+        ],
+        "classification": "candidate_ready_for_owner_review",
+        "source_language": "cs",
+        "text_quality_status": "ocr_rejected",
+        "clean_english_source_required": true
+      },
+      "resolved_rate_candidates": [
+        {
+          "rate": 0.0,
+          "legal_basis": "Article 11(1)",
+          "conditions": {
+            "beneficial_owner": true
+          }
+        }
+      ],
+      "exception_resolution_applied": true
+    },
+    {
+      "packet_id": "CZ-CH-ROY-LEGAL-REVIEW",
+      "recipient_country": "CH",
+      "recipient_country_name": "Švýcarsko",
+      "income_type": "royalty",
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-ch-roy-legal-review.json",
+      "base_treaty_article": null,
+      "base_rate_candidates": [],
+      "protocol_rate_candidates": [],
+      "protocol_effect_rate_candidates": [],
+      "resolved_rate_candidate": 10.0,
+      "rate_condition_count": 0,
+      "domestic_standard_rate_candidate": 15.0,
+      "domestic_protective_rate_candidate": 35.0,
+      "relief_candidate": {
+        "all_of": [
+          {
+            "fact": "recipient_is_qualifying_company_form",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_is_tax_resident_in_eligible_jurisdiction",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_subject_to_qualifying_corporate_tax",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "recipient_has_no_tax_exemption_or_zero_rate_option",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "beneficial_owner",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "payment_is_arm_length_amount",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "section_38nb_decision_effective",
+            "operator": "==",
+            "value": true
+          },
+          {
+            "fact": "payment_not_attributable_to_disqualifying_pe",
+            "operator": "==",
+            "value": true
+          }
+        ],
+        "anti_abuse_review_required": true,
+        "association_one_of": [
+          "payer directly holds at least 25% of recipient capital or voting rights",
+          "recipient directly holds at least 25% of payer capital or voting rights",
+          "one person directly holds at least 25% of both payer and recipient capital or voting rights"
+        ],
+        "association_period_one_of": [
+          {
+            "fact": "holding_period_months",
+            "operator": ">=",
+            "value": 24
+          },
+          {
+            "all_of": [
+              {
+                "fact": "holding_period_will_reach_months",
+                "operator": ">=",
+                "value": 24
+              },
+              {
+                "fact": "statutory_clawback_acknowledged",
+                "operator": "==",
+                "value": true
+              }
+            ]
+          }
+        ],
+        "directive_source_id": null,
+        "legal_reference": "section 19(1)(zj), (3), (5)-(8) and section 38nb",
+        "rate": 0.0,
+        "regime": "section_19_8_extension"
+      },
+      "article_suspended": false,
+      "status_instrument": {},
+      "mli": {},
+      "protocol": {},
+      "existing_blockers": [
+        "anti_abuse_determination",
+        "domestic_rate_candidate_review",
+        "independent_legal_review",
+        "missing_instrument_chain_or_priority_review_row",
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "unresolved_codes": [
+        "missing_base_treaty",
+        "missing_instrument_chain_or_priority_review_row",
+        "missing_rate_candidate",
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "resolution_class": "candidate_ready_for_owner_review",
+      "owner_approval_status": "not_started",
+      "promotable_to_active_rules": false,
+      "fail_closed": true,
+      "hard_unresolved_codes": [],
+      "conditional_codes": [],
+      "process_review_codes": [
+        "recipient_qualification_fact_review",
+        "relief_candidate_review"
+      ],
+      "primary_review_candidate_status": "source_data_exception",
+      "source_exception_resolution": {
+        "packet_id": "CZ-CH-ROY-LEGAL-REVIEW",
+        "resolution_type": "pilot_source_mapping",
+        "candidate_rates": [
+          {
+            "rate": 10.0,
+            "legal_basis": "Article 12(2)",
+            "conditions": {
+              "beneficial_owner": true
+            }
+          }
+        ],
+        "classification": "candidate_ready_for_owner_review",
+        "source_language": "cs",
+        "text_quality_status": "ocr_rejected",
+        "clean_english_source_required": true
+      },
+      "resolved_rate_candidates": [
+        {
+          "rate": 10.0,
+          "legal_basis": "Article 12(2)",
+          "conditions": {
+            "beneficial_owner": true
+          }
+        }
+      ],
+      "exception_resolution_applied": true
     },
     {
       "packet_id": "CZ-CL-DIV-LEGAL-REVIEW",

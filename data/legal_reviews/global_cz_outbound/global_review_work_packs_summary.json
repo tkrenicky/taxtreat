@@ -1,17 +1,14 @@
 {
   "schema_version": 1,
-  "dataset_release": "global-review-work-packs-2026-08-06.1",
+  "dataset_release": "global-review-work-packs-2026-08-06.2",
+  "source_dataset_release": "global-primary-review-candidates-2026-08-06.2",
   "total_scope_count": 294,
   "work_pack_counts": {
-    "single_rate": 189,
-    "conditional": 98,
-    "exceptions": 7
+    "single_rate": 192,
+    "conditional": 102,
+    "exceptions": 0
   },
-  "exception_reason_counts": {
-    "missing_base_treaty": 6,
-    "missing_instrument_chain_or_priority_review_row": 6,
-    "missing_rate_candidate": 7
-  },
+  "all_source_exceptions_resolved": true,
   "fail_closed": true,
   "promotable_to_active_rules": false
 }
