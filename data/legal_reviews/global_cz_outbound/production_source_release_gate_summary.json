@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "dataset_release": "production-source-release-gate-2026-08-06.1",
+  "source_plan_release": "global-source-acquisition-plan-2026-08-06.1",
+  "clean_candidate_pack_release": "clean-candidate-article-pack-2026-08-06.1",
+  "remediation_pack_release": "remaining-source-remediation-pack-2026-08-06.1",
+  "treaty_partner_count": 98,
+  "release_status_counts": {
+    "blocked": 98
+  },
+  "release_blocker_counts": {
+    "article_10_verified": 98,
+    "article_11_verified": 98,
+    "article_12_verified": 98,
+    "authentic_languages_verified": 98,
+    "clean_text_verified": 98,
+    "end_to_end_tests_passed": 98,
+    "legal_rule_mapping_verified": 98,
+    "mli_overlay_verified": 98,
+    "mli_status_verified": 98,
+    "official_document_hash_verified": 98,
+    "official_english_version_assessed": 98,
+    "official_source_identity_verified": 98,
+    "prevailing_language_rule_verified": 98,
+    "protocol_inventory_complete": 98,
+    "protocol_overlay_verified": 98,
+    "withholding_effective_date_verified": 98
+  },
+  "gate_semantics": {
+    "all_gate_fields_required": true,
+    "partial_completion_allows_active_rule": false,
+    "missing_evidence_allows_active_rule": false,
+    "automated_extraction_is_legal_verification": false,
+    "hash_match_is_legal_verification": false,
+    "blocked_entry_result": "fail_closed"
+  },
+  "active_rule_count": 0,
+  "production_ready_count": 0,
+  "legal_verification_completed": false,
+  "production_ready": false,
+  "fail_closed": true
+}
