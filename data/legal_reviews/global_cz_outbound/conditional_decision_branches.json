@@ -1,0 +1,4741 @@
+{
+  "schema_version": 1,
+  "dataset_release": "conditional-decision-branches-2026-08-06.1",
+  "source_dataset_release": "global-review-work-packs-2026-08-06.2",
+  "scope_count": 102,
+  "decision_semantics": {
+    "branch_order_is_final": false,
+    "first_match_wins": false,
+    "missing_fact_result": "fail_closed",
+    "no_matching_branch_result": "fail_closed",
+    "candidate_rates_are_active_rules": false
+  },
+  "scopes": [
+    {
+      "packet_id": "CZ-AD-DIV-LEGAL-REVIEW",
+      "recipient_country": "AD",
+      "recipient_country_name": "Andorra",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-AD-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-AD-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-ad-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-AD-ROY-LEGAL-REVIEW",
+      "recipient_country": "AD",
+      "recipient_country_name": "Andorra",
+      "income_type": "royalty",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-AD-ROY-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-AD-ROY-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-ad-roy-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-AL-DIV-LEGAL-REVIEW",
+      "recipient_country": "AL",
+      "recipient_country_name": "Albánie",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-AL-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-AL-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-al-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-AM-INT-LEGAL-REVIEW",
+      "recipient_country": "AM",
+      "recipient_country_name": "Arménie",
+      "income_type": "interest",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-AM-INT-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-AM-INT-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-am-int-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-AM-ROY-LEGAL-REVIEW",
+      "recipient_country": "AM",
+      "recipient_country_name": "Arménie",
+      "income_type": "royalty",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-AM-ROY-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-AM-ROY-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-am-roy-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-AT-DIV-LEGAL-REVIEW",
+      "recipient_country": "AT",
+      "recipient_country_name": "Rakousko",
+      "income_type": "dividend",
+      "scope_status": "normalized_candidate_branches",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-AT-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": "Article 10(2)(b)",
+          "conditions": [
+            {
+              "fact": "beneficial_owner",
+              "operator": "==",
+              "value": true
+            },
+            {
+              "fact": "minimum_ownership_percent",
+              "operator": "==",
+              "value": 10
+            }
+          ],
+          "condition_count": 2,
+          "branch_status": "candidate_branch",
+          "source_candidate": {
+            "rate": 0.0,
+            "legal_basis": "Article 10(2)(b)",
+            "conditions": {
+              "minimum_ownership_percent": 10,
+              "beneficial_owner": true
+            }
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-AT-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": "Article 10(2)(a)",
+          "conditions": [
+            {
+              "fact": "beneficial_owner",
+              "operator": "==",
+              "value": true
+            }
+          ],
+          "condition_count": 1,
+          "branch_status": "candidate_branch",
+          "source_candidate": {
+            "rate": 10.0,
+            "legal_basis": "Article 10(2)(a)",
+            "conditions": {
+              "beneficial_owner": true
+            }
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-at-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-AT-ROY-LEGAL-REVIEW",
+      "recipient_country": "AT",
+      "recipient_country_name": "Rakousko",
+      "income_type": "royalty",
+      "scope_status": "normalized_candidate_branches",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-AT-ROY-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": "Article 12(2)",
+          "conditions": [
+            {
+              "fact": "beneficial_owner",
+              "operator": "==",
+              "value": true
+            },
+            {
+              "fact": "royalty_category",
+              "operator": "==",
+              "value": "Article 12(3)(a)"
+            }
+          ],
+          "condition_count": 2,
+          "branch_status": "candidate_branch",
+          "source_candidate": {
+            "rate": 5.0,
+            "legal_basis": "Article 12(2)",
+            "conditions": {
+              "royalty_category": "Article 12(3)(a)",
+              "beneficial_owner": true
+            }
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-AT-ROY-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 0.0,
+          "legal_basis": "Article 12(1) read with Article 12(2)",
+          "conditions": [
+            {
+              "fact": "beneficial_owner",
+              "operator": "==",
+              "value": true
+            },
+            {
+              "fact": "royalty_category",
+              "operator": "==",
+              "value": "Article 12(3)(b)"
+            }
+          ],
+          "condition_count": 2,
+          "branch_status": "candidate_branch",
+          "source_candidate": {
+            "rate": 0.0,
+            "legal_basis": "Article 12(1) read with Article 12(2)",
+            "conditions": {
+              "royalty_category": "Article 12(3)(b)",
+              "beneficial_owner": true
+            }
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-at-roy-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-AZ-INT-LEGAL-REVIEW",
+      "recipient_country": "AZ",
+      "recipient_country_name": "Ázerbájdžán",
+      "income_type": "interest",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-AZ-INT-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-AZ-INT-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-az-int-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-BB-DIV-LEGAL-REVIEW",
+      "recipient_country": "BB",
+      "recipient_country_name": "Barbados",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-BB-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-BB-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-bb-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-BB-INT-LEGAL-REVIEW",
+      "recipient_country": "BB",
+      "recipient_country_name": "Barbados",
+      "income_type": "interest",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-BB-INT-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-BB-INT-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-bb-int-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-BB-ROY-LEGAL-REVIEW",
+      "recipient_country": "BB",
+      "recipient_country_name": "Barbados",
+      "income_type": "royalty",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-BB-ROY-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-BB-ROY-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-bb-roy-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-BD-DIV-LEGAL-REVIEW",
+      "recipient_country": "BD",
+      "recipient_country_name": "Bangladéš",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-BD-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-BD-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-bd-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-BD-INT-LEGAL-REVIEW",
+      "recipient_country": "BD",
+      "recipient_country_name": "Bangladéš",
+      "income_type": "interest",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-BD-INT-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-BD-INT-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-bd-int-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-BE-DIV-LEGAL-REVIEW",
+      "recipient_country": "BE",
+      "recipient_country_name": "Belgie",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-BE-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-BE-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-be-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-BE-ROY-LEGAL-REVIEW",
+      "recipient_country": "BE",
+      "recipient_country_name": "Belgie",
+      "income_type": "royalty",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-BE-ROY-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-BE-ROY-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-be-roy-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-BR-INT-LEGAL-REVIEW",
+      "recipient_country": "BR",
+      "recipient_country_name": "Brazílie",
+      "income_type": "interest",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 3,
+      "branches": [
+        {
+          "branch_id": "CZ-BR-INT-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-BR-INT-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-BR-INT-LEGAL-REVIEW-BRANCH-03",
+          "priority": 3,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-br-int-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-BR-ROY-LEGAL-REVIEW",
+      "recipient_country": "BR",
+      "recipient_country_name": "Brazílie",
+      "income_type": "royalty",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-BR-ROY-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-BR-ROY-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 25.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 25.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-br-roy-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-BW-INT-LEGAL-REVIEW",
+      "recipient_country": "BW",
+      "recipient_country_name": "Botswana",
+      "income_type": "interest",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-BW-INT-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-BW-INT-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 7.5,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 7.5
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-bw-int-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-CA-DIV-LEGAL-REVIEW",
+      "recipient_country": "CA",
+      "recipient_country_name": "Kanada",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-CA-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-CA-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-ca-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-CA-INT-LEGAL-REVIEW",
+      "recipient_country": "CA",
+      "recipient_country_name": "Kanada",
+      "income_type": "interest",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-CA-INT-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-CA-INT-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-ca-int-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-CH-DIV-LEGAL-REVIEW",
+      "recipient_country": "CH",
+      "recipient_country_name": "Švýcarsko",
+      "income_type": "dividend",
+      "scope_status": "normalized_candidate_branches",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-CH-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": "Article 10(2)(a)",
+          "conditions": [
+            {
+              "fact": "beneficial_owner",
+              "operator": "==",
+              "value": true
+            },
+            {
+              "fact": "minimum_direct_ownership_percent",
+              "operator": "==",
+              "value": 25
+            },
+            {
+              "fact": "recipient_is_company_other_than_partnership",
+              "operator": "==",
+              "value": true
+            }
+          ],
+          "condition_count": 3,
+          "branch_status": "candidate_branch",
+          "source_candidate": {
+            "rate": 5.0,
+            "legal_basis": "Article 10(2)(a)",
+            "conditions": {
+              "minimum_direct_ownership_percent": 25,
+              "recipient_is_company_other_than_partnership": true,
+              "beneficial_owner": true
+            }
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-CH-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": "Article 10(2)(b)",
+          "conditions": [
+            {
+              "fact": "beneficial_owner",
+              "operator": "==",
+              "value": true
+            }
+          ],
+          "condition_count": 1,
+          "branch_status": "candidate_branch",
+          "source_candidate": {
+            "rate": 15.0,
+            "legal_basis": "Article 10(2)(b)",
+            "conditions": {
+              "beneficial_owner": true
+            }
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-ch-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-CL-INT-LEGAL-REVIEW",
+      "recipient_country": "CL",
+      "recipient_country_name": "Chile",
+      "income_type": "interest",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-CL-INT-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 4.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 4.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-CL-INT-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-cl-int-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-CL-ROY-LEGAL-REVIEW",
+      "recipient_country": "CL",
+      "recipient_country_name": "Chile",
+      "income_type": "royalty",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-CL-ROY-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-CL-ROY-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-cl-roy-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-CM-INT-LEGAL-REVIEW",
+      "recipient_country": "CM",
+      "recipient_country_name": "Kamerun",
+      "income_type": "interest",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-CM-INT-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-CM-INT-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-cm-int-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-CN-DIV-LEGAL-REVIEW",
+      "recipient_country": "CN",
+      "recipient_country_name": "Čína",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-CN-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-CN-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-cn-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-CO-DIV-LEGAL-REVIEW",
+      "recipient_country": "CO",
+      "recipient_country_name": "Kolumbie",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 3,
+      "branches": [
+        {
+          "branch_id": "CZ-CO-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-CO-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-CO-DIV-LEGAL-REVIEW-BRANCH-03",
+          "priority": 3,
+          "candidate_rate": 25.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 25.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-co-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-CO-INT-LEGAL-REVIEW",
+      "recipient_country": "CO",
+      "recipient_country_name": "Kolumbie",
+      "income_type": "interest",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-CO-INT-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-CO-INT-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-co-int-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-CY-DIV-LEGAL-REVIEW",
+      "recipient_country": "CY",
+      "recipient_country_name": "Kypr",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-CY-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-CY-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-cy-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-DE-DIV-LEGAL-REVIEW",
+      "recipient_country": "DE",
+      "recipient_country_name": "Německo",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 3,
+      "branches": [
+        {
+          "branch_id": "CZ-DE-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-DE-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-DE-DIV-LEGAL-REVIEW-BRANCH-03",
+          "priority": 3,
+          "candidate_rate": 20.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 20.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-de-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-DK-DIV-LEGAL-REVIEW",
+      "recipient_country": "DK",
+      "recipient_country_name": "Dánsko",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-DK-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-DK-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-dk-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-EE-DIV-LEGAL-REVIEW",
+      "recipient_country": "EE",
+      "recipient_country_name": "Estonsko",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-EE-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-EE-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-ee-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-EG-DIV-LEGAL-REVIEW",
+      "recipient_country": "EG",
+      "recipient_country_name": "Egypt",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-EG-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-EG-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-eg-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-ES-DIV-LEGAL-REVIEW",
+      "recipient_country": "ES",
+      "recipient_country_name": "Španělsko",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-ES-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-ES-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-es-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-ES-ROY-LEGAL-REVIEW",
+      "recipient_country": "ES",
+      "recipient_country_name": "Španělsko",
+      "income_type": "royalty",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-ES-ROY-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-ES-ROY-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-es-roy-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-FI-DIV-LEGAL-REVIEW",
+      "recipient_country": "FI",
+      "recipient_country_name": "Finsko",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 3,
+      "branches": [
+        {
+          "branch_id": "CZ-FI-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-FI-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-FI-DIV-LEGAL-REVIEW-BRANCH-03",
+          "priority": 3,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-fi-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-FI-ROY-LEGAL-REVIEW",
+      "recipient_country": "FI",
+      "recipient_country_name": "Finsko",
+      "income_type": "royalty",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 3,
+      "branches": [
+        {
+          "branch_id": "CZ-FI-ROY-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 1.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 1.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-FI-ROY-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-FI-ROY-LEGAL-REVIEW-BRANCH-03",
+          "priority": 3,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-fi-roy-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-FR-DIV-LEGAL-REVIEW",
+      "recipient_country": "FR",
+      "recipient_country_name": "Francie",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-FR-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-FR-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-fr-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-FR-ROY-LEGAL-REVIEW",
+      "recipient_country": "FR",
+      "recipient_country_name": "Francie",
+      "income_type": "royalty",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-FR-ROY-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-FR-ROY-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-fr-roy-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-GB-DIV-LEGAL-REVIEW",
+      "recipient_country": "GB",
+      "recipient_country_name": "Velká Británie (Spojené království Velké Británie a Severního Irska)",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-GB-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-GB-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-gb-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-GB-ROY-LEGAL-REVIEW",
+      "recipient_country": "GB",
+      "recipient_country_name": "Velká Británie (Spojené království Velké Británie a Severního Irska)",
+      "income_type": "royalty",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-GB-ROY-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-GB-ROY-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-gb-roy-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-GE-DIV-LEGAL-REVIEW",
+      "recipient_country": "GE",
+      "recipient_country_name": "Gruzie",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-GE-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-GE-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-ge-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-GE-ROY-LEGAL-REVIEW",
+      "recipient_country": "GE",
+      "recipient_country_name": "Gruzie",
+      "income_type": "royalty",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-GE-ROY-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-GE-ROY-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-ge-roy-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-GH-INT-LEGAL-REVIEW",
+      "recipient_country": "GH",
+      "recipient_country_name": "Ghana",
+      "income_type": "interest",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-GH-INT-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-GH-INT-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-gh-int-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-GR-DIV-LEGAL-REVIEW",
+      "recipient_country": "GR",
+      "recipient_country_name": "Řecko",
+      "income_type": "dividend",
+      "scope_status": "normalized_candidate_branches",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-GR-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": "section 19 Czech domestic EU relief",
+          "conditions": [
+            {
+              "fact": "qualifying_eu_parent_relief",
+              "operator": "==",
+              "value": true
+            }
+          ],
+          "condition_count": 1,
+          "branch_status": "candidate_branch",
+          "source_candidate": {
+            "rate": 0.0,
+            "legal_basis": "section 19 Czech domestic EU relief",
+            "conditions": {
+              "qualifying_eu_parent_relief": true
+            }
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-GR-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": "section 36 Czech domestic standard rate",
+          "conditions": [
+            {
+              "fact": "qualifying_eu_parent_relief",
+              "operator": "==",
+              "value": false
+            }
+          ],
+          "condition_count": 1,
+          "branch_status": "candidate_branch",
+          "source_candidate": {
+            "rate": 15.0,
+            "legal_basis": "section 36 Czech domestic standard rate",
+            "conditions": {
+              "qualifying_eu_parent_relief": false
+            }
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-gr-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-GR-INT-LEGAL-REVIEW",
+      "recipient_country": "GR",
+      "recipient_country_name": "Řecko",
+      "income_type": "interest",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-GR-INT-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-GR-INT-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-gr-int-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-HU-DIV-LEGAL-REVIEW",
+      "recipient_country": "HU",
+      "recipient_country_name": "Maďarsko",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-HU-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-HU-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-hu-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-ID-DIV-LEGAL-REVIEW",
+      "recipient_country": "ID",
+      "recipient_country_name": "Indonésie",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 3,
+      "branches": [
+        {
+          "branch_id": "CZ-ID-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-ID-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 12.5,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 12.5
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-ID-DIV-LEGAL-REVIEW-BRANCH-03",
+          "priority": 3,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-id-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-IE-DIV-LEGAL-REVIEW",
+      "recipient_country": "IE",
+      "recipient_country_name": "Irsko",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-IE-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-IE-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-ie-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-IL-DIV-LEGAL-REVIEW",
+      "recipient_country": "IL",
+      "recipient_country_name": "Izrael",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-IL-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-IL-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-il-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-IL-INT-LEGAL-REVIEW",
+      "recipient_country": "IL",
+      "recipient_country_name": "Izrael",
+      "income_type": "interest",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-IL-INT-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-IL-INT-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-il-int-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-IR-INT-LEGAL-REVIEW",
+      "recipient_country": "IR",
+      "recipient_country_name": "Írán",
+      "income_type": "interest",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-IR-INT-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-IR-INT-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-ir-int-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-IS-DIV-LEGAL-REVIEW",
+      "recipient_country": "IS",
+      "recipient_country_name": "Island",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-IS-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-IS-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-is-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-IT-ROY-LEGAL-REVIEW",
+      "recipient_country": "IT",
+      "recipient_country_name": "Itálie",
+      "income_type": "royalty",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-IT-ROY-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-IT-ROY-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-it-roy-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-KG-DIV-LEGAL-REVIEW",
+      "recipient_country": "KG",
+      "recipient_country_name": "Kyrgyzstán",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-KG-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-KG-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-kg-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-KG-INT-LEGAL-REVIEW",
+      "recipient_country": "KG",
+      "recipient_country_name": "Kyrgyzstán",
+      "income_type": "interest",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-KG-INT-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-KG-INT-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-kg-int-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-KR-ROY-LEGAL-REVIEW",
+      "recipient_country": "KR",
+      "recipient_country_name": "Korejská republika",
+      "income_type": "royalty",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-KR-ROY-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-KR-ROY-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-kr-roy-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-KZ-DIV-LEGAL-REVIEW",
+      "recipient_country": "KZ",
+      "recipient_country_name": "Kazachstán",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-KZ-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-KZ-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-kz-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-LB-ROY-LEGAL-REVIEW",
+      "recipient_country": "LB",
+      "recipient_country_name": "Libanon",
+      "income_type": "royalty",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-LB-ROY-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-LB-ROY-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-lb-roy-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-LI-DIV-LEGAL-REVIEW",
+      "recipient_country": "LI",
+      "recipient_country_name": "Lichtenštejnsko",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-LI-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-LI-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-li-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-LI-ROY-LEGAL-REVIEW",
+      "recipient_country": "LI",
+      "recipient_country_name": "Lichtenštejnsko",
+      "income_type": "royalty",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-LI-ROY-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-LI-ROY-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-li-roy-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-LK-DIV-LEGAL-REVIEW",
+      "recipient_country": "LK",
+      "recipient_country_name": "Srí Lanka",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-LK-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 7.5,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 7.5
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-LK-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-lk-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-LK-INT-LEGAL-REVIEW",
+      "recipient_country": "LK",
+      "recipient_country_name": "Srí Lanka",
+      "income_type": "interest",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-LK-INT-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-LK-INT-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-lk-int-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-LT-DIV-LEGAL-REVIEW",
+      "recipient_country": "LT",
+      "recipient_country_name": "Litva",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-LT-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-LT-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-lt-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-LU-DIV-LEGAL-REVIEW",
+      "recipient_country": "LU",
+      "recipient_country_name": "Lucembursko",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-LU-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-LU-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-lu-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-LV-DIV-LEGAL-REVIEW",
+      "recipient_country": "LV",
+      "recipient_country_name": "Lotyšsko",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-LV-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-LV-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-lv-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-MA-DIV-LEGAL-REVIEW",
+      "recipient_country": "MA",
+      "recipient_country_name": "Maroko",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-MA-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-MA-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-ma-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-MD-DIV-LEGAL-REVIEW",
+      "recipient_country": "MD",
+      "recipient_country_name": "Moldávie",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-MD-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-MD-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-md-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-ME-ROY-LEGAL-REVIEW",
+      "recipient_country": "ME",
+      "recipient_country_name": "Černá Hora",
+      "income_type": "royalty",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-ME-ROY-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-ME-ROY-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-me-roy-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-MK-DIV-LEGAL-REVIEW",
+      "recipient_country": "MK",
+      "recipient_country_name": "Makedonie",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-MK-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-MK-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-mk-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-NG-DIV-LEGAL-REVIEW",
+      "recipient_country": "NG",
+      "recipient_country_name": "Nigérie",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-NG-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 12.5,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 12.5
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-NG-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-ng-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-NO-DIV-LEGAL-REVIEW",
+      "recipient_country": "NO",
+      "recipient_country_name": "Norsko",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-NO-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-NO-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-no-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-NO-ROY-LEGAL-REVIEW",
+      "recipient_country": "NO",
+      "recipient_country_name": "Norsko",
+      "income_type": "royalty",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-NO-ROY-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-NO-ROY-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-no-roy-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-PA-DIV-LEGAL-REVIEW",
+      "recipient_country": "PA",
+      "recipient_country_name": "Panama",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-PA-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-PA-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-pa-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-PA-INT-LEGAL-REVIEW",
+      "recipient_country": "PA",
+      "recipient_country_name": "Panama",
+      "income_type": "interest",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 3,
+      "branches": [
+        {
+          "branch_id": "CZ-PA-INT-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-PA-INT-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-PA-INT-LEGAL-REVIEW-BRANCH-03",
+          "priority": 3,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-pa-int-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-PH-DIV-LEGAL-REVIEW",
+      "recipient_country": "PH",
+      "recipient_country_name": "Filipíny",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-PH-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-PH-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-ph-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-PH-ROY-LEGAL-REVIEW",
+      "recipient_country": "PH",
+      "recipient_country_name": "Filipíny",
+      "income_type": "royalty",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-PH-ROY-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-PH-ROY-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-ph-roy-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-PK-DIV-LEGAL-REVIEW",
+      "recipient_country": "PK",
+      "recipient_country_name": "Pákistán",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-PK-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-PK-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-pk-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-PL-INT-LEGAL-REVIEW",
+      "recipient_country": "PL",
+      "recipient_country_name": "Polsko",
+      "income_type": "interest",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-PL-INT-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-PL-INT-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-pl-int-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-PT-DIV-LEGAL-REVIEW",
+      "recipient_country": "PT",
+      "recipient_country_name": "Portugalsko",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-PT-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-PT-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-pt-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-QA-DIV-LEGAL-REVIEW",
+      "recipient_country": "QA",
+      "recipient_country_name": "Katar",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-QA-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-QA-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-qa-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-RS-ROY-LEGAL-REVIEW",
+      "recipient_country": "RS",
+      "recipient_country_name": "Srbsko",
+      "income_type": "royalty",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-RS-ROY-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-RS-ROY-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-rs-roy-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-RW-INT-LEGAL-REVIEW",
+      "recipient_country": "RW",
+      "recipient_country_name": "Rwanda",
+      "income_type": "interest",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-RW-INT-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-RW-INT-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-rw-int-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-SE-ROY-LEGAL-REVIEW",
+      "recipient_country": "SE",
+      "recipient_country_name": "Švédsko",
+      "income_type": "royalty",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-SE-ROY-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-SE-ROY-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-se-roy-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-SG-ROY-LEGAL-REVIEW",
+      "recipient_country": "SG",
+      "recipient_country_name": "Singapur",
+      "income_type": "royalty",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 3,
+      "branches": [
+        {
+          "branch_id": "CZ-SG-ROY-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-SG-ROY-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-SG-ROY-LEGAL-REVIEW-BRANCH-03",
+          "priority": 3,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-sg-roy-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-SI-DIV-LEGAL-REVIEW",
+      "recipient_country": "SI",
+      "recipient_country_name": "Slovinsko",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-SI-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-SI-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-si-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-SK-DIV-LEGAL-REVIEW",
+      "recipient_country": "SK",
+      "recipient_country_name": "Slovensko",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-SK-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-SK-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-sk-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-SM-INT-LEGAL-REVIEW",
+      "recipient_country": "SM",
+      "recipient_country_name": "San Marino",
+      "income_type": "interest",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-SM-INT-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-SM-INT-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-sm-int-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-SN-DIV-LEGAL-REVIEW",
+      "recipient_country": "SN",
+      "recipient_country_name": "Senegal",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-SN-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-SN-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-sn-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-SN-INT-LEGAL-REVIEW",
+      "recipient_country": "SN",
+      "recipient_country_name": "Senegal",
+      "income_type": "interest",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-SN-INT-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-SN-INT-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-sn-int-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-TH-ROY-LEGAL-REVIEW",
+      "recipient_country": "TH",
+      "recipient_country_name": "Thajsko",
+      "income_type": "royalty",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 3,
+      "branches": [
+        {
+          "branch_id": "CZ-TH-ROY-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-TH-ROY-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-TH-ROY-LEGAL-REVIEW-BRANCH-03",
+          "priority": 3,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-th-roy-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-TJ-INT-LEGAL-REVIEW",
+      "recipient_country": "TJ",
+      "recipient_country_name": "Tádžikistán",
+      "income_type": "interest",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-TJ-INT-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-TJ-INT-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 7.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 7.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-tj-int-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-TM-INT-LEGAL-REVIEW",
+      "recipient_country": "TM",
+      "recipient_country_name": "Turkmenistán",
+      "income_type": "interest",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-TM-INT-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-TM-INT-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-tm-int-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-TN-DIV-LEGAL-REVIEW",
+      "recipient_country": "TN",
+      "recipient_country_name": "Tunisko",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-TN-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-TN-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-tn-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-TN-INT-LEGAL-REVIEW",
+      "recipient_country": "TN",
+      "recipient_country_name": "Tunisko",
+      "income_type": "interest",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-TN-INT-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-TN-INT-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 12.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 12.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-tn-int-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-TN-ROY-LEGAL-REVIEW",
+      "recipient_country": "TN",
+      "recipient_country_name": "Tunisko",
+      "income_type": "royalty",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-TN-ROY-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-TN-ROY-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-tn-roy-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-UA-DIV-LEGAL-REVIEW",
+      "recipient_country": "UA",
+      "recipient_country_name": "Ukrajina",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-UA-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-UA-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-ua-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-US-DIV-LEGAL-REVIEW",
+      "recipient_country": "US",
+      "recipient_country_name": "USA (Spojené státy americké)",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-US-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-US-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-us-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-UZ-DIV-LEGAL-REVIEW",
+      "recipient_country": "UZ",
+      "recipient_country_name": "Uzbekistán",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-UZ-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-UZ-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-uz-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-VE-DIV-LEGAL-REVIEW",
+      "recipient_country": "VE",
+      "recipient_country_name": "Venezuela",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-VE-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-VE-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-ve-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-VE-INT-LEGAL-REVIEW",
+      "recipient_country": "VE",
+      "recipient_country_name": "Venezuela",
+      "income_type": "interest",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-VE-INT-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 0.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 0.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-VE-INT-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 10.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 10.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-ve-int-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-XK-DIV-LEGAL-REVIEW",
+      "recipient_country": "XK",
+      "recipient_country_name": "Kosovo",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-XK-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-XK-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-xk-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    },
+    {
+      "packet_id": "CZ-ZA-DIV-LEGAL-REVIEW",
+      "recipient_country": "ZA",
+      "recipient_country_name": "JAR (Jihoafrická republika)",
+      "income_type": "dividend",
+      "scope_status": "manual_condition_mapping_required",
+      "branch_count": 2,
+      "branches": [
+        {
+          "branch_id": "CZ-ZA-DIV-LEGAL-REVIEW-BRANCH-01",
+          "priority": 1,
+          "candidate_rate": 5.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 5.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        },
+        {
+          "branch_id": "CZ-ZA-DIV-LEGAL-REVIEW-BRANCH-02",
+          "priority": 2,
+          "candidate_rate": 15.0,
+          "legal_basis": null,
+          "conditions": [],
+          "condition_count": 0,
+          "branch_status": "incomplete_candidate_branch",
+          "source_candidate": {
+            "rate": 15.0
+          },
+          "fail_closed": true,
+          "promotable_to_active_rules": false
+        }
+      ],
+      "unresolved_condition_codes": [
+        "multiple_rate_conditions"
+      ],
+      "source_pack": "data/legal_reviews/global_cz_outbound/packs/cz-za-div-legal-review.json",
+      "fail_closed": true,
+      "promotable_to_active_rules": false
+    }
+  ],
+  "fail_closed": true,
+  "promotable_to_active_rules": false
+}

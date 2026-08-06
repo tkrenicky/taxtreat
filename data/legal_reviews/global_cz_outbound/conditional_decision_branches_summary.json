@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "dataset_release": "conditional-decision-branches-2026-08-06.1",
+  "scope_count": 102,
+  "scope_status_counts": {
+    "manual_condition_mapping_required": 98,
+    "normalized_candidate_branches": 4
+  },
+  "branch_status_counts": {
+    "candidate_branch": 8,
+    "incomplete_candidate_branch": 205
+  },
+  "income_type_counts": {
+    "dividend": 53,
+    "interest": 25,
+    "royalty": 24
+  },
+  "condition_fact_counts": {
+    "beneficial_owner": 6,
+    "minimum_direct_ownership_percent": 1,
+    "minimum_ownership_percent": 1,
+    "qualifying_eu_parent_relief": 2,
+    "recipient_is_company_other_than_partnership": 1,
+    "royalty_category": 2
+  },
+  "fail_closed": true,
+  "promotable_to_active_rules": false
+}
