@@ -15,6 +15,10 @@ from taxtreat.pipeline.release import (
     build_legal_registry,
     validate_release,
 )
+from taxtreat.engine.source_release_gate import (
+    SourceNotReleasedError,
+    get_source_release,
+)
 from taxtreat.registry.legal_scope import load_partner_registry
 from taxtreat.services.decision import (
     CanonicalAnalysisRequest,
@@ -200,12 +204,68 @@ def list_jurisdictions():
     return {"total": len(jurisdictions), "jurisdictions": jurisdictions}
 
 
+def require_analysis_source_release(
+    source_country: str,
+    recipient_country: str,
+):
+    source = source_country.upper()
+    recipient = recipient_country.upper()
+
+    if source != "CZ":
+        return None
+
+    treaty_pair_id = f"{source}-{recipient}"
+
+    try:
+        release = get_source_release(treaty_pair_id)
+    except SourceNotReleasedError as exc:
+        raise HTTPException(
+            status_code=409,
+            detail={
+                "code": "SOURCE_NOT_RELEASED",
+                "treaty_pair_id": treaty_pair_id,
+                "message": str(exc),
+                "release_status": "not_registered",
+                "release_blockers": [
+                    "production_source_release_missing"
+                ],
+            },
+        ) from exc
+
+    if not release.is_released:
+        raise HTTPException(
+            status_code=409,
+            detail={
+                "code": "SOURCE_NOT_RELEASED",
+                "treaty_pair_id": treaty_pair_id,
+                "message": (
+                    "The legal source package has not completed "
+                    "the production release gate."
+                ),
+                "release_status": release.release_status,
+                "release_blockers": list(
+                    release.release_blockers
+                ),
+            },
+        )
+
+    return release
+
+
 @app.post("/analysis")
 def analyze(payload: AnalysisPayload):
+    source_country = payload.source_country.upper()
+    recipient_country = payload.recipient_country.upper()
+
+    require_analysis_source_release(
+        source_country,
+        recipient_country,
+    )
+
     result = analyze_transaction(
         CanonicalAnalysisRequest(
-            source_country=payload.source_country.upper(),
-            recipient_country=payload.recipient_country.upper(),
+            source_country=source_country,
+            recipient_country=recipient_country,
             income_type=payload.income_type,
             transaction_date=payload.transaction_date,
             facts=payload.facts,
