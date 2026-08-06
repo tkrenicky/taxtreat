@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "policy_id": "TAXTREAT-SOURCE-LANGUAGE-POLICY-1",
+  "working_language": "en",
+  "principles": {
+    "preferred_extraction_source": "official English text where available",
+    "legal_authority_rule": "Authority and prevailing language must be determined from the language clause of each individual instrument.",
+    "parallel_local_texts_retained": true,
+    "machine_translation_is_authoritative": false,
+    "damaged_ocr_may_support_active_rule": false
+  },
+  "required_source_metadata": [
+    "language",
+    "is_official",
+    "is_authentic",
+    "prevails_on_divergence",
+    "source_url",
+    "document_sha256",
+    "text_sha256",
+    "extraction_method",
+    "text_quality_status"
+  ],
+  "text_quality_statuses": [
+    "verified_text_layer",
+    "clean_official_html",
+    "ocr_review_required",
+    "ocr_rejected"
+  ],
+  "activation_requirements": [
+    "official source identified",
+    "authentic language status recorded",
+    "prevailing language rule recorded",
+    "text quality not marked ocr_rejected",
+    "relevant treaty article verified"
+  ],
+  "fail_closed": true
+}
