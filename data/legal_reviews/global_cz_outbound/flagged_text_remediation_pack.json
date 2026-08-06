@@ -1,0 +1,215 @@
+{
+  "article_scope_count": 6,
+  "dataset_release": "flagged-text-remediation-pack-2026-08-06.1",
+  "fail_closed": true,
+  "legal_verification_completed": false,
+  "production_ready": false,
+  "schema_version": 1,
+  "semantics": {
+    "automatic_text_replacement_allowed": false,
+    "corrected_text_requires_new_hash": true,
+    "finding_is_legal_conclusion": false,
+    "official_document_comparison_required": true,
+    "unresolved_result": "fail_closed"
+  },
+  "source_audit_release": "clean-candidate-text-quality-audit-2026-08-06.1",
+  "treaty_partner_count": 5,
+  "treaty_partners": [
+    {
+      "articles": [
+        {
+          "article_number": 10,
+          "article_title": "DIVIDENDY",
+          "clean_text_verified": false,
+          "comparison_completed": false,
+          "corrected_text": null,
+          "corrected_text_sha256": null,
+          "current_text_sha256": "66deef841500a35561922c4562f0725c321ac8d9019c4fe7dbbeded24f6dc080",
+          "error_count": 0,
+          "findings": [
+            {
+              "code": "glued_preposition",
+              "excerpt": "e skutečně váže ke stálé provozovně, která je umístěna vtomto druhém státě, ani podrobit nerozdělené zisky spo",
+              "offset": 2006,
+              "severity": "warning"
+            }
+          ],
+          "required_action": "compare_with_official_artifact",
+          "warning_count": 1
+        },
+        {
+          "article_number": 12,
+          "article_title": "LICENČNÍ POPLATKY",
+          "clean_text_verified": false,
+          "comparison_completed": false,
+          "corrected_text": null,
+          "corrected_text_sha256": null,
+          "current_text_sha256": "3194d21be290b5f3942ac16e3752efa6dc396c0a42e8f82a3b963a9c6c002ec9",
+          "error_count": 2,
+          "findings": [
+            {
+              "code": "broken_article_reference",
+              "excerpt": "lasti průmyslové, obchodní nebo vědecké, 4. Ustanovení odstavců | a 2 se nepoužijí, jestliže skutečný vlastník",
+              "offset": 1164,
+              "severity": "error"
+            },
+            {
+              "code": "isolated_ocr_pipe",
+              "excerpt": "myslové, obchodní nebo vědecké, 4. Ustanovení odstavců | a 2 se nepoužijí, jestliže skutečný vlastník licenční",
+              "offset": 1173,
+              "severity": "error"
+            }
+          ],
+          "required_action": "compare_with_official_artifact",
+          "warning_count": 0
+        }
+      ],
+      "fail_closed": true,
+      "partner_country": "AD",
+      "partner_country_name": "Andorra",
+      "production_ready": false,
+      "quality_status": "text_remediation_required",
+      "remediation_status": "official_comparison_required",
+      "source_title": "46/2023 Sb.m.s.",
+      "total_error_count": 2,
+      "total_warning_count": 1,
+      "treaty_pair_id": "CZ-AD"
+    },
+    {
+      "articles": [
+        {
+          "article_number": 10,
+          "article_title": "DIVIDENDY",
+          "clean_text_verified": false,
+          "comparison_completed": false,
+          "corrected_text": null,
+          "corrected_text_sha256": null,
+          "current_text_sha256": "610606e33fd36f3d04bd5fce10770323cd666052b8677dc9adbfbf0d680e7c62",
+          "error_count": 0,
+          "findings": [
+            {
+              "code": "glued_preposition",
+              "excerpt": "e skutečně váže ke stálé provozovně, která je umístěna vtomto druhém státě, ani podrobit nerozdělené zisky spo",
+              "offset": 1811,
+              "severity": "warning"
+            }
+          ],
+          "required_action": "compare_with_official_artifact",
+          "warning_count": 1
+        }
+      ],
+      "fail_closed": true,
+      "partner_country": "BW",
+      "partner_country_name": "Botswana",
+      "production_ready": false,
+      "quality_status": "manual_text_review_required",
+      "remediation_status": "official_comparison_required",
+      "source_title": "49/2020 Sb.m.s.",
+      "total_error_count": 0,
+      "total_warning_count": 1,
+      "treaty_pair_id": "CZ-BW"
+    },
+    {
+      "articles": [
+        {
+          "article_number": 12,
+          "article_title": "LICENČNÍ POPLATKY A POPLATKY ZA SLUŽBY",
+          "clean_text_verified": false,
+          "comparison_completed": false,
+          "corrected_text": null,
+          "corrected_text_sha256": null,
+          "current_text_sha256": "ce6fb17d899e3c2cf13eb009f202ef58aa87505a7d968d592474a0b1e6db7114",
+          "error_count": 0,
+          "findings": [
+            {
+              "code": "glued_preposition",
+              "excerpt": "ohoto omezení. 3. a) Výraz „licenční poplatky“ použitý vtomto článku označuje platby jakéhokoliv druhu obdržen",
+              "offset": 665,
+              "severity": "warning"
+            }
+          ],
+          "required_action": "compare_with_official_artifact",
+          "warning_count": 1
+        }
+      ],
+      "fail_closed": true,
+      "partner_country": "GH",
+      "partner_country_name": "Ghana",
+      "production_ready": false,
+      "quality_status": "manual_text_review_required",
+      "remediation_status": "official_comparison_required",
+      "source_title": "38/2020 Sb.m.s.",
+      "total_error_count": 0,
+      "total_warning_count": 1,
+      "treaty_pair_id": "CZ-GH"
+    },
+    {
+      "articles": [
+        {
+          "article_number": 10,
+          "article_title": "DIVIDENDY",
+          "clean_text_verified": false,
+          "comparison_completed": false,
+          "corrected_text": null,
+          "corrected_text_sha256": null,
+          "current_text_sha256": "46f8b2d89b5e772daca743314180775db45acf7d9aadb7c804ce35679a55042e",
+          "error_count": 0,
+          "findings": [
+            {
+              "code": "glued_preposition",
+              "excerpt": "e skutečně váže ke stálé provozovně, která je umístěna vtomto druhém státě, ani podrobit nerozdělené zisky spo",
+              "offset": 1736,
+              "severity": "warning"
+            }
+          ],
+          "required_action": "compare_with_official_artifact",
+          "warning_count": 1
+        }
+      ],
+      "fail_closed": true,
+      "partner_country": "KR",
+      "partner_country_name": "Korejská republika",
+      "production_ready": false,
+      "quality_status": "manual_text_review_required",
+      "remediation_status": "official_comparison_required",
+      "source_title": "1/2020 Sb.m.s.",
+      "total_error_count": 0,
+      "total_warning_count": 1,
+      "treaty_pair_id": "CZ-KR"
+    },
+    {
+      "articles": [
+        {
+          "article_number": 10,
+          "article_title": "DIVIDENDY",
+          "clean_text_verified": false,
+          "comparison_completed": false,
+          "corrected_text": null,
+          "corrected_text_sha256": null,
+          "current_text_sha256": "d3111206cd5a213db9d670bd4c38532ca8370a32fa9a89ac2e0f3f0b29cad5a8",
+          "error_count": 0,
+          "findings": [
+            {
+              "code": "glued_preposition",
+              "excerpt": "e skutečně váže ke stálé provozovně, která je umístěna vtomto druhém státě, ani podrobit nerozdělené zisky spo",
+              "offset": 2602,
+              "severity": "warning"
+            }
+          ],
+          "required_action": "compare_with_official_artifact",
+          "warning_count": 1
+        }
+      ],
+      "fail_closed": true,
+      "partner_country": "QA",
+      "partner_country_name": "Katar",
+      "production_ready": false,
+      "quality_status": "manual_text_review_required",
+      "remediation_status": "official_comparison_required",
+      "source_title": "45/2022 Sb.m.s.",
+      "total_error_count": 0,
+      "total_warning_count": 1,
+      "treaty_pair_id": "CZ-QA"
+    }
+  ]
+}
