@@ -1,0 +1,1773 @@
+{
+  "clean_candidate_pack_release": "clean-candidate-article-pack-2026-08-06.1",
+  "dataset_release": "clean-candidate-source-reconciliation-2026-08-06.1",
+  "fail_closed": true,
+  "hash_relation_counts": {
+    "identical": 23
+  },
+  "legal_evidence_artifact_release": "legal-evidence-artifacts-2026-08-05.1",
+  "legal_evidence_registry_release": "legal-evidence-source-registry-2026-08-05.1",
+  "legal_verification_completed": false,
+  "production_ready": false,
+  "promotable_to_active_rules": false,
+  "reconciliation_status_counts": {
+    "candidate_matches_official_artifact": 23
+  },
+  "schema_version": 1,
+  "semantics": {
+    "automatic_production_promotion_allowed": false,
+    "different_hash_requires_fresh_extraction": true,
+    "matching_hash_is_legal_verification": false,
+    "matching_hash_proves_file_identity_only": true,
+    "official_article_comparison_required": true,
+    "protocol_and_mli_review_required": true,
+    "unverified_result": "fail_closed"
+  },
+  "treaty_partner_count": 23,
+  "treaty_partners": [
+    {
+      "articles_10_12_legally_verified": false,
+      "candidate_actual_sha256": "092da06b2629bd656af0b36bfc0be1a46613cf98d4c8c03ae4b612c14a984411",
+      "candidate_article_hashes": {
+        "10": "66deef841500a35561922c4562f0725c321ac8d9019c4fe7dbbeded24f6dc080",
+        "11": "fdf02214b2a970e2fcc51558bbc63ab10bd97f7dce507233b09ba9d3a1bdb6a9",
+        "12": "3194d21be290b5f3942ac16e3752efa6dc396c0a42e8f82a3b963a9c6c002ec9"
+      },
+      "candidate_artifact_exists": true,
+      "candidate_artifact_uri": "data/raw/treaty/092da06b2629bd65.pdf",
+      "candidate_hash_valid": true,
+      "candidate_manifest_sha256": "092da06b2629bd656af0b36bfc0be1a46613cf98d4c8c03ae4b612c14a984411",
+      "candidate_source_id": "SRC-3F28A5AADC1AA47E",
+      "existing_article_extraction_reusable": true,
+      "fail_closed": true,
+      "hash_relation": "identical",
+      "official_artifact_match_count": 2,
+      "official_document_content_verified": false,
+      "official_registry_match_count": 2,
+      "official_source_identity_verified": false,
+      "official_sources": [
+        {
+          "artifact_actual_sha256": "b80953ac25d4a9571727e194a0b08c5f707450472d5451f7cc26246595c88e29",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "b80953ac25d4a9571727e194a0b08c5f707450472d5451f7cc26246595c88e29",
+          "artifact_status": "verified_pdf",
+          "artifact_uri": "data/raw/legal_evidence/b80953ac25d4a9571727e194a0b08c5f707450472d5451f7cc26246595c88e29.pdf",
+          "final_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39732",
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39732",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39732"
+          ],
+          "source_id": "CZ-MF-AD-4E4709CD92E5",
+          "source_label": "46/2023 Sb.m.s.",
+          "source_type": "base_treaty"
+        },
+        {
+          "artifact_actual_sha256": "092da06b2629bd656af0b36bfc0be1a46613cf98d4c8c03ae4b612c14a984411",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "092da06b2629bd656af0b36bfc0be1a46613cf98d4c8c03ae4b612c14a984411",
+          "artifact_status": "existing_verified_artifact",
+          "artifact_uri": "data/raw/treaty/092da06b2629bd65.pdf",
+          "final_url": null,
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39732",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39732",
+            "https://e-sbirka.gov.cz/sb/2023/46",
+            "https://e-sbirka.gov.cz/sb/2023/46/0000-00-00",
+            "https://e-sbirka.gov.cz/sb/2023/46/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sb/2023/46?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2023/46",
+            "https://e-sbirka.gov.cz/sm/2023/46/0000-00-00",
+            "https://e-sbirka.gov.cz/sm/2023/46/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2023/46?zalozka=text"
+          ],
+          "source_id": "SRC-3F28A5AADC1AA47E",
+          "source_label": "46/2023 Sb.m.s.",
+          "source_type": null
+        }
+      ],
+      "partner_country": "AD",
+      "partner_country_name": "Andorra",
+      "production_ready": false,
+      "promotable_to_active_rules": false,
+      "reconciliation_status": "candidate_matches_official_artifact",
+      "requires_fresh_official_extraction": false,
+      "source_title": "46/2023 Sb.m.s.",
+      "treaty_pair_id": "CZ-AD",
+      "valid_official_artifact_count": 2,
+      "valid_official_artifact_hashes": [
+        "092da06b2629bd656af0b36bfc0be1a46613cf98d4c8c03ae4b612c14a984411",
+        "b80953ac25d4a9571727e194a0b08c5f707450472d5451f7cc26246595c88e29"
+      ]
+    },
+    {
+      "articles_10_12_legally_verified": false,
+      "candidate_actual_sha256": "b20676ce0a24b3d5eb09ed17208c799a13d3c79d22f62fab1286c0e8d6287f4a",
+      "candidate_article_hashes": {
+        "10": "4aadeb04f7e35b717bfac5aade844fda1ba86bf5c93af1430d5b48448c58ad77",
+        "11": "b30a84e2ba59fa03b047e16a77f081a4dae62c7ade941f578c40c6aada176b12",
+        "12": "46ba8e5f47eea2e215c1e3a8cf57022faca21e9aebec4702ced584812eed9e3a"
+      },
+      "candidate_artifact_exists": true,
+      "candidate_artifact_uri": "data/raw/treaty/b20676ce0a24b3d5.pdf",
+      "candidate_hash_valid": true,
+      "candidate_manifest_sha256": "b20676ce0a24b3d5eb09ed17208c799a13d3c79d22f62fab1286c0e8d6287f4a",
+      "candidate_source_id": "SRC-0EC50FE04A08917D",
+      "existing_article_extraction_reusable": true,
+      "fail_closed": true,
+      "hash_relation": "identical",
+      "official_artifact_match_count": 2,
+      "official_document_content_verified": false,
+      "official_registry_match_count": 2,
+      "official_source_identity_verified": false,
+      "official_sources": [
+        {
+          "artifact_actual_sha256": "a6daf0930d81c7c76392cea83e30297344053c3df92b0300e8f7484b09f98150",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "a6daf0930d81c7c76392cea83e30297344053c3df92b0300e8f7484b09f98150",
+          "artifact_status": "verified_pdf",
+          "artifact_uri": "data/raw/legal_evidence/a6daf0930d81c7c76392cea83e30297344053c3df92b0300e8f7484b09f98150.pdf",
+          "final_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=5761",
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=5761",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=5761"
+          ],
+          "source_id": "CZ-MF-BA-1D7A7E1A386F",
+          "source_label": "58/2010 Sb. m.s.",
+          "source_type": "base_treaty"
+        },
+        {
+          "artifact_actual_sha256": "b20676ce0a24b3d5eb09ed17208c799a13d3c79d22f62fab1286c0e8d6287f4a",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "b20676ce0a24b3d5eb09ed17208c799a13d3c79d22f62fab1286c0e8d6287f4a",
+          "artifact_status": "existing_verified_artifact",
+          "artifact_uri": "data/raw/treaty/b20676ce0a24b3d5.pdf",
+          "final_url": null,
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=5761",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=5761",
+            "https://e-sbirka.gov.cz/sb/2010/58",
+            "https://e-sbirka.gov.cz/sb/2010/58/0000-00-00",
+            "https://e-sbirka.gov.cz/sb/2010/58/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sb/2010/58?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2010/58",
+            "https://e-sbirka.gov.cz/sm/2010/58/0000-00-00",
+            "https://e-sbirka.gov.cz/sm/2010/58/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2010/58?zalozka=text"
+          ],
+          "source_id": "SRC-0EC50FE04A08917D",
+          "source_label": "58/2010 Sb. m.s.",
+          "source_type": null
+        }
+      ],
+      "partner_country": "BA",
+      "partner_country_name": "Bosna a Hercegovina",
+      "production_ready": false,
+      "promotable_to_active_rules": false,
+      "reconciliation_status": "candidate_matches_official_artifact",
+      "requires_fresh_official_extraction": false,
+      "source_title": "58/2010 Sb. m.s.",
+      "treaty_pair_id": "CZ-BA",
+      "valid_official_artifact_count": 2,
+      "valid_official_artifact_hashes": [
+        "a6daf0930d81c7c76392cea83e30297344053c3df92b0300e8f7484b09f98150",
+        "b20676ce0a24b3d5eb09ed17208c799a13d3c79d22f62fab1286c0e8d6287f4a"
+      ]
+    },
+    {
+      "articles_10_12_legally_verified": false,
+      "candidate_actual_sha256": "dc25d4bd803712c2abc58732305ad4d7e75fa36a4d25776f2c351877f84c566f",
+      "candidate_article_hashes": {
+        "10": "bed44e06e8f8f76dc30c0f73f90b93258dfc0e07bfef019d8ddedea8b20c1c7e",
+        "11": "414f3c052a08fd80c75937646533f8171c0f84666c01c102252dbdc158445866",
+        "12": "06c9b268e9597ef97481e75f2ba38cc870b17d98e9c0bebfbd2fe5fbaa702cc4"
+      },
+      "candidate_artifact_exists": true,
+      "candidate_artifact_uri": "data/raw/treaty/dc25d4bd803712c2.pdf",
+      "candidate_hash_valid": true,
+      "candidate_manifest_sha256": "dc25d4bd803712c2abc58732305ad4d7e75fa36a4d25776f2c351877f84c566f",
+      "candidate_source_id": "SRC-ED86E5FFEF1EF27E",
+      "existing_article_extraction_reusable": true,
+      "fail_closed": true,
+      "hash_relation": "identical",
+      "official_artifact_match_count": 2,
+      "official_document_content_verified": false,
+      "official_registry_match_count": 2,
+      "official_source_identity_verified": false,
+      "official_sources": [
+        {
+          "artifact_actual_sha256": "22b30e6833467b576c548be8d5b76732de6f7c948745e0f58ab8f6b195c117ba",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "22b30e6833467b576c548be8d5b76732de6f7c948745e0f58ab8f6b195c117ba",
+          "artifact_status": "verified_pdf",
+          "artifact_uri": "data/raw/legal_evidence/22b30e6833467b576c548be8d5b76732de6f7c948745e0f58ab8f6b195c117ba.pdf",
+          "final_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=6223",
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=6223",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=6223"
+          ],
+          "source_id": "CZ-MF-BB-A039667A69CE",
+          "source_label": "69/2012 Sb.m.s.",
+          "source_type": "base_treaty"
+        },
+        {
+          "artifact_actual_sha256": "dc25d4bd803712c2abc58732305ad4d7e75fa36a4d25776f2c351877f84c566f",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "dc25d4bd803712c2abc58732305ad4d7e75fa36a4d25776f2c351877f84c566f",
+          "artifact_status": "existing_verified_artifact",
+          "artifact_uri": "data/raw/treaty/dc25d4bd803712c2.pdf",
+          "final_url": null,
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=6223",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=6223",
+            "https://e-sbirka.gov.cz/sb/2012/69",
+            "https://e-sbirka.gov.cz/sb/2012/69/0000-00-00",
+            "https://e-sbirka.gov.cz/sb/2012/69/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sb/2012/69?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2012/69",
+            "https://e-sbirka.gov.cz/sm/2012/69/0000-00-00",
+            "https://e-sbirka.gov.cz/sm/2012/69/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2012/69?zalozka=text"
+          ],
+          "source_id": "SRC-ED86E5FFEF1EF27E",
+          "source_label": "69/2012 Sb.m.s.",
+          "source_type": null
+        }
+      ],
+      "partner_country": "BB",
+      "partner_country_name": "Barbados",
+      "production_ready": false,
+      "promotable_to_active_rules": false,
+      "reconciliation_status": "candidate_matches_official_artifact",
+      "requires_fresh_official_extraction": false,
+      "source_title": "69/2012 Sb.m.s.",
+      "treaty_pair_id": "CZ-BB",
+      "valid_official_artifact_count": 2,
+      "valid_official_artifact_hashes": [
+        "22b30e6833467b576c548be8d5b76732de6f7c948745e0f58ab8f6b195c117ba",
+        "dc25d4bd803712c2abc58732305ad4d7e75fa36a4d25776f2c351877f84c566f"
+      ]
+    },
+    {
+      "articles_10_12_legally_verified": false,
+      "candidate_actual_sha256": "2f630ebaba348ee1554114de154a06a5418649094a1576814030047f45ccc22d",
+      "candidate_article_hashes": {
+        "10": "9ca7dba9febd027ab574c3046482f66b55d164c23f1cfb0e55c1fbd3a8aecf95",
+        "11": "e84d452aaddaf90a91e244993eefe747de79e8184c932744781e816e130b61b8",
+        "12": "a048c7d24d3e6ac0edf5a246dda6381def3198be6f2df17dae63d6a060816465"
+      },
+      "candidate_artifact_exists": true,
+      "candidate_artifact_uri": "data/raw/treaty/2f630ebaba348ee1.pdf",
+      "candidate_hash_valid": true,
+      "candidate_manifest_sha256": "2f630ebaba348ee1554114de154a06a5418649094a1576814030047f45ccc22d",
+      "candidate_source_id": "SRC-023262E3EBEE0E28",
+      "existing_article_extraction_reusable": true,
+      "fail_closed": true,
+      "hash_relation": "identical",
+      "official_artifact_match_count": 2,
+      "official_document_content_verified": false,
+      "official_registry_match_count": 2,
+      "official_source_identity_verified": false,
+      "official_sources": [
+        {
+          "artifact_actual_sha256": "de5b879317419d298b0da636bb9f18807eac11874402f9d9c8cc3a2a96145711",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "de5b879317419d298b0da636bb9f18807eac11874402f9d9c8cc3a2a96145711",
+          "artifact_status": "verified_pdf",
+          "artifact_uri": "data/raw/legal_evidence/de5b879317419d298b0da636bb9f18807eac11874402f9d9c8cc3a2a96145711.pdf",
+          "final_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=6190",
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=6190",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=6190"
+          ],
+          "source_id": "CZ-MF-BH-B85EFF2EA26C",
+          "source_label": "59/2012 Sb.m.s.",
+          "source_type": "base_treaty"
+        },
+        {
+          "artifact_actual_sha256": "2f630ebaba348ee1554114de154a06a5418649094a1576814030047f45ccc22d",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "2f630ebaba348ee1554114de154a06a5418649094a1576814030047f45ccc22d",
+          "artifact_status": "existing_verified_artifact",
+          "artifact_uri": "data/raw/treaty/2f630ebaba348ee1.pdf",
+          "final_url": null,
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=6190",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=6190",
+            "https://e-sbirka.gov.cz/sb/2012/59",
+            "https://e-sbirka.gov.cz/sb/2012/59/0000-00-00",
+            "https://e-sbirka.gov.cz/sb/2012/59/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sb/2012/59?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2012/59",
+            "https://e-sbirka.gov.cz/sm/2012/59/0000-00-00",
+            "https://e-sbirka.gov.cz/sm/2012/59/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2012/59?zalozka=text"
+          ],
+          "source_id": "SRC-023262E3EBEE0E28",
+          "source_label": "59/2012 Sb.m.s.",
+          "source_type": null
+        }
+      ],
+      "partner_country": "BH",
+      "partner_country_name": "Bahrajn",
+      "production_ready": false,
+      "promotable_to_active_rules": false,
+      "reconciliation_status": "candidate_matches_official_artifact",
+      "requires_fresh_official_extraction": false,
+      "source_title": "59/2012 Sb.m.s.",
+      "treaty_pair_id": "CZ-BH",
+      "valid_official_artifact_count": 2,
+      "valid_official_artifact_hashes": [
+        "2f630ebaba348ee1554114de154a06a5418649094a1576814030047f45ccc22d",
+        "de5b879317419d298b0da636bb9f18807eac11874402f9d9c8cc3a2a96145711"
+      ]
+    },
+    {
+      "articles_10_12_legally_verified": false,
+      "candidate_actual_sha256": "495f56cefd553f3e41d9a0b041eb7390463ea3a72a3fe2b1388eabf799ab5cb4",
+      "candidate_article_hashes": {
+        "10": "610606e33fd36f3d04bd5fce10770323cd666052b8677dc9adbfbf0d680e7c62",
+        "11": "496a1c7e553af89c44ca8d3c0511f1ef2ec205244455c0ca20b250e0ed0cad60",
+        "12": "8b73eabe91c08ea9e827504a9698f2ed397bfacf73dfb078a0663bd865dbd443"
+      },
+      "candidate_artifact_exists": true,
+      "candidate_artifact_uri": "data/raw/treaty/495f56cefd553f3e.pdf",
+      "candidate_hash_valid": true,
+      "candidate_manifest_sha256": "495f56cefd553f3e41d9a0b041eb7390463ea3a72a3fe2b1388eabf799ab5cb4",
+      "candidate_source_id": "SRC-906AECF6EEA9F28C",
+      "existing_article_extraction_reusable": true,
+      "fail_closed": true,
+      "hash_relation": "identical",
+      "official_artifact_match_count": 2,
+      "official_document_content_verified": false,
+      "official_registry_match_count": 2,
+      "official_source_identity_verified": false,
+      "official_sources": [
+        {
+          "artifact_actual_sha256": "6206d7c92a60114c41366fa6f228c4740d730398ec9cda4b38ee356218c5f095",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "6206d7c92a60114c41366fa6f228c4740d730398ec9cda4b38ee356218c5f095",
+          "artifact_status": "verified_pdf",
+          "artifact_uri": "data/raw/legal_evidence/6206d7c92a60114c41366fa6f228c4740d730398ec9cda4b38ee356218c5f095.pdf",
+          "final_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39019",
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39019",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39019"
+          ],
+          "source_id": "CZ-MF-BW-515CF22F9E72",
+          "source_label": "49/2020 Sb.m.s.",
+          "source_type": "base_treaty"
+        },
+        {
+          "artifact_actual_sha256": "495f56cefd553f3e41d9a0b041eb7390463ea3a72a3fe2b1388eabf799ab5cb4",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "495f56cefd553f3e41d9a0b041eb7390463ea3a72a3fe2b1388eabf799ab5cb4",
+          "artifact_status": "existing_verified_artifact",
+          "artifact_uri": "data/raw/treaty/495f56cefd553f3e.pdf",
+          "final_url": null,
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39019",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39019",
+            "https://e-sbirka.gov.cz/sb/2020/49",
+            "https://e-sbirka.gov.cz/sb/2020/49/0000-00-00",
+            "https://e-sbirka.gov.cz/sb/2020/49/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sb/2020/49?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2020/49",
+            "https://e-sbirka.gov.cz/sm/2020/49/0000-00-00",
+            "https://e-sbirka.gov.cz/sm/2020/49/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2020/49?zalozka=text"
+          ],
+          "source_id": "SRC-906AECF6EEA9F28C",
+          "source_label": "49/2020 Sb.m.s.",
+          "source_type": null
+        }
+      ],
+      "partner_country": "BW",
+      "partner_country_name": "Botswana",
+      "production_ready": false,
+      "promotable_to_active_rules": false,
+      "reconciliation_status": "candidate_matches_official_artifact",
+      "requires_fresh_official_extraction": false,
+      "source_title": "49/2020 Sb.m.s.",
+      "treaty_pair_id": "CZ-BW",
+      "valid_official_artifact_count": 2,
+      "valid_official_artifact_hashes": [
+        "495f56cefd553f3e41d9a0b041eb7390463ea3a72a3fe2b1388eabf799ab5cb4",
+        "6206d7c92a60114c41366fa6f228c4740d730398ec9cda4b38ee356218c5f095"
+      ]
+    },
+    {
+      "articles_10_12_legally_verified": false,
+      "candidate_actual_sha256": "3f6037dbe4761499c87f93e9600e7800cead2652bf0b9d8c37608b8794bba8e7",
+      "candidate_article_hashes": {
+        "10": "ea0cf4c4395d4f51e04dc0f24fa5124a2d5385dc0d4708d5a43d04f03860181f",
+        "11": "89eb243985bf114797165e2838fe895be5ba5263412b51ae9c5968ef08404956",
+        "12": "0897f19727a97384ab8bf6acff3b7738f96af67f1ea74d28a682b4ba5a5038a2"
+      },
+      "candidate_artifact_exists": true,
+      "candidate_artifact_uri": "data/raw/treaty/3f6037dbe4761499.pdf",
+      "candidate_hash_valid": true,
+      "candidate_manifest_sha256": "3f6037dbe4761499c87f93e9600e7800cead2652bf0b9d8c37608b8794bba8e7",
+      "candidate_source_id": "SRC-CE747E586B47529F",
+      "existing_article_extraction_reusable": true,
+      "fail_closed": true,
+      "hash_relation": "identical",
+      "official_artifact_match_count": 2,
+      "official_document_content_verified": false,
+      "official_registry_match_count": 2,
+      "official_source_identity_verified": false,
+      "official_sources": [
+        {
+          "artifact_actual_sha256": "b95c3c9dc82c002ccfc62e7c25d660d24011145485cb2dfbe633ccae4a520276",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "b95c3c9dc82c002ccfc62e7c25d660d24011145485cb2dfbe633ccae4a520276",
+          "artifact_status": "verified_pdf",
+          "artifact_uri": "data/raw/legal_evidence/b95c3c9dc82c002ccfc62e7c25d660d24011145485cb2dfbe633ccae4a520276.pdf",
+          "final_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38164",
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38164",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38164"
+          ],
+          "source_id": "CZ-MF-CL-28FE5017E981",
+          "source_label": "5/2017 Sb.m.s.",
+          "source_type": "base_treaty"
+        },
+        {
+          "artifact_actual_sha256": "3f6037dbe4761499c87f93e9600e7800cead2652bf0b9d8c37608b8794bba8e7",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "3f6037dbe4761499c87f93e9600e7800cead2652bf0b9d8c37608b8794bba8e7",
+          "artifact_status": "existing_verified_artifact",
+          "artifact_uri": "data/raw/treaty/3f6037dbe4761499.pdf",
+          "final_url": null,
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38164",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38164",
+            "https://e-sbirka.gov.cz/sb/2017/5",
+            "https://e-sbirka.gov.cz/sb/2017/5/0000-00-00",
+            "https://e-sbirka.gov.cz/sb/2017/5/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sb/2017/5?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2017/5",
+            "https://e-sbirka.gov.cz/sm/2017/5/0000-00-00",
+            "https://e-sbirka.gov.cz/sm/2017/5/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2017/5?zalozka=text"
+          ],
+          "source_id": "SRC-CE747E586B47529F",
+          "source_label": "5/2017 Sb.m.s.",
+          "source_type": null
+        }
+      ],
+      "partner_country": "CL",
+      "partner_country_name": "Chile",
+      "production_ready": false,
+      "promotable_to_active_rules": false,
+      "reconciliation_status": "candidate_matches_official_artifact",
+      "requires_fresh_official_extraction": false,
+      "source_title": "5/2017 Sb.m.s.",
+      "treaty_pair_id": "CZ-CL",
+      "valid_official_artifact_count": 2,
+      "valid_official_artifact_hashes": [
+        "3f6037dbe4761499c87f93e9600e7800cead2652bf0b9d8c37608b8794bba8e7",
+        "b95c3c9dc82c002ccfc62e7c25d660d24011145485cb2dfbe633ccae4a520276"
+      ]
+    },
+    {
+      "articles_10_12_legally_verified": false,
+      "candidate_actual_sha256": "d23391e2d6c6387263e25d63787e595b0f97dcffefa4d438005a682f31744500",
+      "candidate_article_hashes": {
+        "10": "972abf7f213c8433a7a854f3468e24f9ff9113eba74ee7bc65f37a98a2d135c8",
+        "11": "5793a538dcb7ce11eda3ed4d35e7418a23dac86e8a05772d6fa1540e7ff6be29",
+        "12": "a61091bc0069e641e46669e118f27fec462d61951eea8a11e0c230d9bdc29531"
+      },
+      "candidate_artifact_exists": true,
+      "candidate_artifact_uri": "data/raw/treaty/d23391e2d6c63872.html",
+      "candidate_hash_valid": true,
+      "candidate_manifest_sha256": "d23391e2d6c6387263e25d63787e595b0f97dcffefa4d438005a682f31744500",
+      "candidate_source_id": "SRC-C9A0B1B633A5AAD3",
+      "existing_article_extraction_reusable": true,
+      "fail_closed": true,
+      "hash_relation": "identical",
+      "official_artifact_match_count": 2,
+      "official_document_content_verified": false,
+      "official_registry_match_count": 2,
+      "official_source_identity_verified": false,
+      "official_sources": [
+        {
+          "artifact_actual_sha256": null,
+          "artifact_exists": false,
+          "artifact_hash_valid": false,
+          "artifact_manifest_sha256": null,
+          "artifact_status": "html_only_unresolved",
+          "artifact_uri": null,
+          "final_url": null,
+          "official_url": null,
+          "official_urls": [
+            "https://e-sbirka.gov.cz/sb/2025/415?zalozka=text"
+          ],
+          "source_id": "CZ-MF-CM-C43C6674A5B5",
+          "source_label": "415/2025 Sb.",
+          "source_type": "base_treaty"
+        },
+        {
+          "artifact_actual_sha256": "d23391e2d6c6387263e25d63787e595b0f97dcffefa4d438005a682f31744500",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "d23391e2d6c6387263e25d63787e595b0f97dcffefa4d438005a682f31744500",
+          "artifact_status": "existing_verified_artifact",
+          "artifact_uri": "data/raw/treaty/d23391e2d6c63872.html",
+          "final_url": null,
+          "official_url": "https://e-sbirka.gov.cz/sb/2025/415",
+          "official_urls": [
+            "https://e-sbirka.gov.cz/sb/2025/415",
+            "https://e-sbirka.gov.cz/sb/2025/415/0000-00-00",
+            "https://e-sbirka.gov.cz/sb/2025/415/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sb/2025/415?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2025/415",
+            "https://e-sbirka.gov.cz/sm/2025/415/0000-00-00",
+            "https://e-sbirka.gov.cz/sm/2025/415/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2025/415?zalozka=text"
+          ],
+          "source_id": "SRC-C9A0B1B633A5AAD3",
+          "source_label": "415/2025 Sb.",
+          "source_type": null
+        }
+      ],
+      "partner_country": "CM",
+      "partner_country_name": "Kamerun",
+      "production_ready": false,
+      "promotable_to_active_rules": false,
+      "reconciliation_status": "candidate_matches_official_artifact",
+      "requires_fresh_official_extraction": false,
+      "source_title": "415/2025 Sb.",
+      "treaty_pair_id": "CZ-CM",
+      "valid_official_artifact_count": 1,
+      "valid_official_artifact_hashes": [
+        "d23391e2d6c6387263e25d63787e595b0f97dcffefa4d438005a682f31744500"
+      ]
+    },
+    {
+      "articles_10_12_legally_verified": false,
+      "candidate_actual_sha256": "ec7716e89b45db9aa070ceca20e7e34903651afaf7ffa7f5dbdfd438685b835b",
+      "candidate_article_hashes": {
+        "10": "3fa0dbf1dc800ec4a6a6b36cbe85d62ba07ac78b75ff77c96af3f889159acdd9",
+        "11": "0633d71ddac647846733a9954604018c2d949a10169cdc92a7f0da38cd2871e3",
+        "12": "5b10f165840c915d6acc04738a5d31b06d62955a5007a612e5c7dd7c77787e36"
+      },
+      "candidate_artifact_exists": true,
+      "candidate_artifact_uri": "data/raw/treaty/ec7716e89b45db9a.pdf",
+      "candidate_hash_valid": true,
+      "candidate_manifest_sha256": "ec7716e89b45db9aa070ceca20e7e34903651afaf7ffa7f5dbdfd438685b835b",
+      "candidate_source_id": "SRC-C8C9A9DAD91A0DEF",
+      "existing_article_extraction_reusable": true,
+      "fail_closed": true,
+      "hash_relation": "identical",
+      "official_artifact_match_count": 2,
+      "official_document_content_verified": false,
+      "official_registry_match_count": 2,
+      "official_source_identity_verified": false,
+      "official_sources": [
+        {
+          "artifact_actual_sha256": "385669c2e864ced374d84243bc6132a6d52cc5535aa9f1c3bbab5b07185b913d",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "385669c2e864ced374d84243bc6132a6d52cc5535aa9f1c3bbab5b07185b913d",
+          "artifact_status": "verified_pdf",
+          "artifact_uri": "data/raw/legal_evidence/385669c2e864ced374d84243bc6132a6d52cc5535aa9f1c3bbab5b07185b913d.pdf",
+          "final_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=29960",
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=29960",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=29960"
+          ],
+          "source_id": "CZ-MF-CO-18C665BBDD85",
+          "source_label": "39/2015 Sb.m.s.",
+          "source_type": "base_treaty"
+        },
+        {
+          "artifact_actual_sha256": "ec7716e89b45db9aa070ceca20e7e34903651afaf7ffa7f5dbdfd438685b835b",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "ec7716e89b45db9aa070ceca20e7e34903651afaf7ffa7f5dbdfd438685b835b",
+          "artifact_status": "existing_verified_artifact",
+          "artifact_uri": "data/raw/treaty/ec7716e89b45db9a.pdf",
+          "final_url": null,
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=29960",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=29960",
+            "https://e-sbirka.gov.cz/sb/2015/39",
+            "https://e-sbirka.gov.cz/sb/2015/39/0000-00-00",
+            "https://e-sbirka.gov.cz/sb/2015/39/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sb/2015/39?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2015/39",
+            "https://e-sbirka.gov.cz/sm/2015/39/0000-00-00",
+            "https://e-sbirka.gov.cz/sm/2015/39/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2015/39?zalozka=text"
+          ],
+          "source_id": "SRC-C8C9A9DAD91A0DEF",
+          "source_label": "39/2015 Sb.m.s.",
+          "source_type": null
+        }
+      ],
+      "partner_country": "CO",
+      "partner_country_name": "Kolumbie",
+      "production_ready": false,
+      "promotable_to_active_rules": false,
+      "reconciliation_status": "candidate_matches_official_artifact",
+      "requires_fresh_official_extraction": false,
+      "source_title": "39/2015 Sb.m.s.",
+      "treaty_pair_id": "CZ-CO",
+      "valid_official_artifact_count": 2,
+      "valid_official_artifact_hashes": [
+        "385669c2e864ced374d84243bc6132a6d52cc5535aa9f1c3bbab5b07185b913d",
+        "ec7716e89b45db9aa070ceca20e7e34903651afaf7ffa7f5dbdfd438685b835b"
+      ]
+    },
+    {
+      "articles_10_12_legally_verified": false,
+      "candidate_actual_sha256": "5a67898259fa2243fc700dba00cd2fe7db4d1ee9cb04d33e004e0a7fbb25e5ea",
+      "candidate_article_hashes": {
+        "10": "1da760593beaee3f8f0b2b61e90e299c06641f5e2e74f58368c94b3c5f2008eb",
+        "11": "66c996db81c40fcfb1362bb4ca04acae913f23079cfc0f07a39b51f721233776",
+        "12": "bebcc20b959acd016616efdef5997365b0f1e6ed87aac9ea243b3094e827d459"
+      },
+      "candidate_artifact_exists": true,
+      "candidate_artifact_uri": "data/raw/treaty/5a67898259fa2243.pdf",
+      "candidate_hash_valid": true,
+      "candidate_manifest_sha256": "5a67898259fa2243fc700dba00cd2fe7db4d1ee9cb04d33e004e0a7fbb25e5ea",
+      "candidate_source_id": "SRC-64413DE58345F47A",
+      "existing_article_extraction_reusable": true,
+      "fail_closed": true,
+      "hash_relation": "identical",
+      "official_artifact_match_count": 2,
+      "official_document_content_verified": false,
+      "official_registry_match_count": 2,
+      "official_source_identity_verified": false,
+      "official_sources": [
+        {
+          "artifact_actual_sha256": "6b66cda2218963a472caadefb6e8e4bb44061f2ce90c148de57059dfef0f4362",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "6b66cda2218963a472caadefb6e8e4bb44061f2ce90c148de57059dfef0f4362",
+          "artifact_status": "verified_pdf",
+          "artifact_uri": "data/raw/legal_evidence/6b66cda2218963a472caadefb6e8e4bb44061f2ce90c148de57059dfef0f4362.pdf",
+          "final_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=5629",
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=5629",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=5629"
+          ],
+          "source_id": "CZ-MF-CY-8BB5EAB88412",
+          "source_label": "120/2009 Sb.m.s.",
+          "source_type": "base_treaty"
+        },
+        {
+          "artifact_actual_sha256": "5a67898259fa2243fc700dba00cd2fe7db4d1ee9cb04d33e004e0a7fbb25e5ea",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "5a67898259fa2243fc700dba00cd2fe7db4d1ee9cb04d33e004e0a7fbb25e5ea",
+          "artifact_status": "existing_verified_artifact",
+          "artifact_uri": "data/raw/treaty/5a67898259fa2243.pdf",
+          "final_url": null,
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=5629",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=5629",
+            "https://e-sbirka.gov.cz/sb/2009/120",
+            "https://e-sbirka.gov.cz/sb/2009/120/0000-00-00",
+            "https://e-sbirka.gov.cz/sb/2009/120/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sb/2009/120?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2009/120",
+            "https://e-sbirka.gov.cz/sm/2009/120/0000-00-00",
+            "https://e-sbirka.gov.cz/sm/2009/120/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2009/120?zalozka=text"
+          ],
+          "source_id": "SRC-64413DE58345F47A",
+          "source_label": "120/2009 Sb.m.s.",
+          "source_type": null
+        }
+      ],
+      "partner_country": "CY",
+      "partner_country_name": "Kypr",
+      "production_ready": false,
+      "promotable_to_active_rules": false,
+      "reconciliation_status": "candidate_matches_official_artifact",
+      "requires_fresh_official_extraction": false,
+      "source_title": "120/2009 Sb.m.s.",
+      "treaty_pair_id": "CZ-CY",
+      "valid_official_artifact_count": 2,
+      "valid_official_artifact_hashes": [
+        "5a67898259fa2243fc700dba00cd2fe7db4d1ee9cb04d33e004e0a7fbb25e5ea",
+        "6b66cda2218963a472caadefb6e8e4bb44061f2ce90c148de57059dfef0f4362"
+      ]
+    },
+    {
+      "articles_10_12_legally_verified": false,
+      "candidate_actual_sha256": "e01aa470fbf085b3a4e6974732a6444db188274ca520176c066b6a239dcf59a5",
+      "candidate_article_hashes": {
+        "10": "284985974ef0a9980a0441f22d6d03638db4c9c5d10736302a52925cc99ca202",
+        "11": "f56235834146df7b2d34641a05005bd0f039df91ccbcab8441ee38beaba96772",
+        "12": "a4bc4e2e20a3375e2ffc248fab4d91095556abfb9227073ec250c3faf17f9ed8"
+      },
+      "candidate_artifact_exists": true,
+      "candidate_artifact_uri": "data/raw/treaty/e01aa470fbf085b3.pdf",
+      "candidate_hash_valid": true,
+      "candidate_manifest_sha256": "e01aa470fbf085b3a4e6974732a6444db188274ca520176c066b6a239dcf59a5",
+      "candidate_source_id": "SRC-11D26C3B71907693",
+      "existing_article_extraction_reusable": true,
+      "fail_closed": true,
+      "hash_relation": "identical",
+      "official_artifact_match_count": 2,
+      "official_document_content_verified": false,
+      "official_registry_match_count": 2,
+      "official_source_identity_verified": false,
+      "official_sources": [
+        {
+          "artifact_actual_sha256": "b91c49897f7a5120aec32ffe49383bf0ee9d0f0df89d2bd8d665072e6a26b0ec",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "b91c49897f7a5120aec32ffe49383bf0ee9d0f0df89d2bd8d665072e6a26b0ec",
+          "artifact_status": "verified_pdf",
+          "artifact_uri": "data/raw/legal_evidence/b91c49897f7a5120aec32ffe49383bf0ee9d0f0df89d2bd8d665072e6a26b0ec.pdf",
+          "final_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=5443",
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=5443",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=5443"
+          ],
+          "source_id": "CZ-MF-ET-B77B48F3EEAB",
+          "source_label": "54/2008 Sb.m.s.",
+          "source_type": "base_treaty"
+        },
+        {
+          "artifact_actual_sha256": "e01aa470fbf085b3a4e6974732a6444db188274ca520176c066b6a239dcf59a5",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "e01aa470fbf085b3a4e6974732a6444db188274ca520176c066b6a239dcf59a5",
+          "artifact_status": "existing_verified_artifact",
+          "artifact_uri": "data/raw/treaty/e01aa470fbf085b3.pdf",
+          "final_url": null,
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=5443",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=5443",
+            "https://e-sbirka.gov.cz/sb/2008/54",
+            "https://e-sbirka.gov.cz/sb/2008/54/0000-00-00",
+            "https://e-sbirka.gov.cz/sb/2008/54/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sb/2008/54?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2008/54",
+            "https://e-sbirka.gov.cz/sm/2008/54/0000-00-00",
+            "https://e-sbirka.gov.cz/sm/2008/54/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2008/54?zalozka=text"
+          ],
+          "source_id": "SRC-11D26C3B71907693",
+          "source_label": "54/2008 Sb.m.s.",
+          "source_type": null
+        }
+      ],
+      "partner_country": "ET",
+      "partner_country_name": "Etiopie",
+      "production_ready": false,
+      "promotable_to_active_rules": false,
+      "reconciliation_status": "candidate_matches_official_artifact",
+      "requires_fresh_official_extraction": false,
+      "source_title": "54/2008 Sb.m.s.",
+      "treaty_pair_id": "CZ-ET",
+      "valid_official_artifact_count": 2,
+      "valid_official_artifact_hashes": [
+        "b91c49897f7a5120aec32ffe49383bf0ee9d0f0df89d2bd8d665072e6a26b0ec",
+        "e01aa470fbf085b3a4e6974732a6444db188274ca520176c066b6a239dcf59a5"
+      ]
+    },
+    {
+      "articles_10_12_legally_verified": false,
+      "candidate_actual_sha256": "3351e6135071e2476d81ddbda9df8904d4bcaab107ff89947274fe9f959b94d9",
+      "candidate_article_hashes": {
+        "10": "1ed11c4c0726435c5db978945bfa554fda00aa23403db02bc074c45df5cdda47",
+        "11": "f9ce3c2e6aa899361fc98c511a87b7e1313f36b1cc9a08483ca19cda047ee352",
+        "12": "64ca5b1fa56027d61bf2a511747386165ca40108db778eb8a3251db7f0095273"
+      },
+      "candidate_artifact_exists": true,
+      "candidate_artifact_uri": "data/raw/treaty/3351e6135071e247.pdf",
+      "candidate_hash_valid": true,
+      "candidate_manifest_sha256": "3351e6135071e2476d81ddbda9df8904d4bcaab107ff89947274fe9f959b94d9",
+      "candidate_source_id": "SRC-4253A70D066D161D",
+      "existing_article_extraction_reusable": true,
+      "fail_closed": true,
+      "hash_relation": "identical",
+      "official_artifact_match_count": 2,
+      "official_document_content_verified": false,
+      "official_registry_match_count": 2,
+      "official_source_identity_verified": false,
+      "official_sources": [
+        {
+          "artifact_actual_sha256": "008793996e7481c3ad48e00a0a96a94539c5f7f8ebf698d4045e68a29c4f9c91",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "008793996e7481c3ad48e00a0a96a94539c5f7f8ebf698d4045e68a29c4f9c91",
+          "artifact_status": "verified_pdf",
+          "artifact_uri": "data/raw/legal_evidence/008793996e7481c3ad48e00a0a96a94539c5f7f8ebf698d4045e68a29c4f9c91.pdf",
+          "final_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=2545",
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=2545",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=2545"
+          ],
+          "source_id": "CZ-MF-GB-F8517326AD47",
+          "source_label": "89/1992 Sb.",
+          "source_type": "base_treaty"
+        },
+        {
+          "artifact_actual_sha256": "3351e6135071e2476d81ddbda9df8904d4bcaab107ff89947274fe9f959b94d9",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "3351e6135071e2476d81ddbda9df8904d4bcaab107ff89947274fe9f959b94d9",
+          "artifact_status": "existing_verified_artifact",
+          "artifact_uri": "data/raw/treaty/3351e6135071e247.pdf",
+          "final_url": null,
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=2545",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=2545",
+            "https://e-sbirka.gov.cz/sb/1992/89",
+            "https://e-sbirka.gov.cz/sb/1992/89/0000-00-00",
+            "https://e-sbirka.gov.cz/sb/1992/89/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sb/1992/89?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/1992/89",
+            "https://e-sbirka.gov.cz/sm/1992/89/0000-00-00",
+            "https://e-sbirka.gov.cz/sm/1992/89/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/1992/89?zalozka=text"
+          ],
+          "source_id": "SRC-4253A70D066D161D",
+          "source_label": "89/1992 Sb.",
+          "source_type": null
+        }
+      ],
+      "partner_country": "GB",
+      "partner_country_name": "Velká Británie (Spojené království Velké Británie a Severního Irska)",
+      "production_ready": false,
+      "promotable_to_active_rules": false,
+      "reconciliation_status": "candidate_matches_official_artifact",
+      "requires_fresh_official_extraction": false,
+      "source_title": "89/1992 Sb.",
+      "treaty_pair_id": "CZ-GB",
+      "valid_official_artifact_count": 2,
+      "valid_official_artifact_hashes": [
+        "008793996e7481c3ad48e00a0a96a94539c5f7f8ebf698d4045e68a29c4f9c91",
+        "3351e6135071e2476d81ddbda9df8904d4bcaab107ff89947274fe9f959b94d9"
+      ]
+    },
+    {
+      "articles_10_12_legally_verified": false,
+      "candidate_actual_sha256": "19938cb5a1fe7fbc7f0c5258fd85b64942303570223906b9a0babf42107cc909",
+      "candidate_article_hashes": {
+        "10": "7cdb390dcd3e34d166ac1099b90578a05fb8d0b10366aff4ff72c673c09c4b16",
+        "11": "c4ccb51cbb721e358a71ebd53ea577f160199e74a8d18a733b03010aa1b2eb95",
+        "12": "ce6fb17d899e3c2cf13eb009f202ef58aa87505a7d968d592474a0b1e6db7114"
+      },
+      "candidate_artifact_exists": true,
+      "candidate_artifact_uri": "data/raw/treaty/19938cb5a1fe7fbc.pdf",
+      "candidate_hash_valid": true,
+      "candidate_manifest_sha256": "19938cb5a1fe7fbc7f0c5258fd85b64942303570223906b9a0babf42107cc909",
+      "candidate_source_id": "SRC-0CAA69D6B9F619E5",
+      "existing_article_extraction_reusable": true,
+      "fail_closed": true,
+      "hash_relation": "identical",
+      "official_artifact_match_count": 2,
+      "official_document_content_verified": false,
+      "official_registry_match_count": 2,
+      "official_source_identity_verified": false,
+      "official_sources": [
+        {
+          "artifact_actual_sha256": "4434647e841a4124625964a9afdf45316c16fc51851a3429a83ca65bb6c90cf3",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "4434647e841a4124625964a9afdf45316c16fc51851a3429a83ca65bb6c90cf3",
+          "artifact_status": "verified_pdf",
+          "artifact_uri": "data/raw/legal_evidence/4434647e841a4124625964a9afdf45316c16fc51851a3429a83ca65bb6c90cf3.pdf",
+          "final_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38941",
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38941",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38941"
+          ],
+          "source_id": "CZ-MF-GH-8890289B0BBF",
+          "source_label": "38/2020 Sb.m.s.",
+          "source_type": "base_treaty"
+        },
+        {
+          "artifact_actual_sha256": "19938cb5a1fe7fbc7f0c5258fd85b64942303570223906b9a0babf42107cc909",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "19938cb5a1fe7fbc7f0c5258fd85b64942303570223906b9a0babf42107cc909",
+          "artifact_status": "existing_verified_artifact",
+          "artifact_uri": "data/raw/treaty/19938cb5a1fe7fbc.pdf",
+          "final_url": null,
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38941",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38941",
+            "https://e-sbirka.gov.cz/sb/2020/38",
+            "https://e-sbirka.gov.cz/sb/2020/38/0000-00-00",
+            "https://e-sbirka.gov.cz/sb/2020/38/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sb/2020/38?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2020/38",
+            "https://e-sbirka.gov.cz/sm/2020/38/0000-00-00",
+            "https://e-sbirka.gov.cz/sm/2020/38/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2020/38?zalozka=text"
+          ],
+          "source_id": "SRC-0CAA69D6B9F619E5",
+          "source_label": "38/2020 Sb.m.s.",
+          "source_type": null
+        }
+      ],
+      "partner_country": "GH",
+      "partner_country_name": "Ghana",
+      "production_ready": false,
+      "promotable_to_active_rules": false,
+      "reconciliation_status": "candidate_matches_official_artifact",
+      "requires_fresh_official_extraction": false,
+      "source_title": "38/2020 Sb.m.s.",
+      "treaty_pair_id": "CZ-GH",
+      "valid_official_artifact_count": 2,
+      "valid_official_artifact_hashes": [
+        "19938cb5a1fe7fbc7f0c5258fd85b64942303570223906b9a0babf42107cc909",
+        "4434647e841a4124625964a9afdf45316c16fc51851a3429a83ca65bb6c90cf3"
+      ]
+    },
+    {
+      "articles_10_12_legally_verified": false,
+      "candidate_actual_sha256": "635ec7202906789fbd74279f6fe29622fddd22aeb3408149fe320a9f1686f282",
+      "candidate_article_hashes": {
+        "10": "747f78e7ccbcc1f51952cfbb6bb76dce59b937c711d7a384dd260693b61ff266",
+        "11": "eb0e2a492d0318435ffd5872d720a77ee5f5e64e20e45729310ab2e504f12ea6",
+        "12": "83bd1cf7ddc67f2ea432fcc5b68bcdca724d066b80420c062f91d0f80f3d63b5"
+      },
+      "candidate_artifact_exists": true,
+      "candidate_artifact_uri": "data/raw/treaty/635ec7202906789f.pdf",
+      "candidate_hash_valid": true,
+      "candidate_manifest_sha256": "635ec7202906789fbd74279f6fe29622fddd22aeb3408149fe320a9f1686f282",
+      "candidate_source_id": "SRC-D025022024F9F174",
+      "existing_article_extraction_reusable": true,
+      "fail_closed": true,
+      "hash_relation": "identical",
+      "official_artifact_match_count": 2,
+      "official_document_content_verified": false,
+      "official_registry_match_count": 2,
+      "official_source_identity_verified": false,
+      "official_sources": [
+        {
+          "artifact_actual_sha256": "c41f2e4f096a76f466023db51c104beed2909b691500a9e422a33b1b58a18ad1",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "c41f2e4f096a76f466023db51c104beed2909b691500a9e422a33b1b58a18ad1",
+          "artifact_status": "verified_pdf",
+          "artifact_uri": "data/raw/legal_evidence/c41f2e4f096a76f466023db51c104beed2909b691500a9e422a33b1b58a18ad1.pdf",
+          "final_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=24174",
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=24174",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=24174"
+          ],
+          "source_id": "CZ-MF-HK-1CE5A1AB6961",
+          "source_label": "49/2012 Sb.m.s.",
+          "source_type": "base_treaty"
+        },
+        {
+          "artifact_actual_sha256": "635ec7202906789fbd74279f6fe29622fddd22aeb3408149fe320a9f1686f282",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "635ec7202906789fbd74279f6fe29622fddd22aeb3408149fe320a9f1686f282",
+          "artifact_status": "existing_verified_artifact",
+          "artifact_uri": "data/raw/treaty/635ec7202906789f.pdf",
+          "final_url": null,
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=24174",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=24174",
+            "https://e-sbirka.gov.cz/sb/2012/49",
+            "https://e-sbirka.gov.cz/sb/2012/49/0000-00-00",
+            "https://e-sbirka.gov.cz/sb/2012/49/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sb/2012/49?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2012/49",
+            "https://e-sbirka.gov.cz/sm/2012/49/0000-00-00",
+            "https://e-sbirka.gov.cz/sm/2012/49/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2012/49?zalozka=text"
+          ],
+          "source_id": "SRC-D025022024F9F174",
+          "source_label": "49/2012 Sb.m.s.",
+          "source_type": null
+        }
+      ],
+      "partner_country": "HK",
+      "partner_country_name": "Hongkong",
+      "production_ready": false,
+      "promotable_to_active_rules": false,
+      "reconciliation_status": "candidate_matches_official_artifact",
+      "requires_fresh_official_extraction": false,
+      "source_title": "49/2012 Sb.m.s.",
+      "treaty_pair_id": "CZ-HK",
+      "valid_official_artifact_count": 2,
+      "valid_official_artifact_hashes": [
+        "635ec7202906789fbd74279f6fe29622fddd22aeb3408149fe320a9f1686f282",
+        "c41f2e4f096a76f466023db51c104beed2909b691500a9e422a33b1b58a18ad1"
+      ]
+    },
+    {
+      "articles_10_12_legally_verified": false,
+      "candidate_actual_sha256": "643db08248ebc8bcef24dfe6a3606e960aeb03fe91e1f9c813df54c6d94b00f9",
+      "candidate_article_hashes": {
+        "10": "ed33c1dce5612689a1ec1c1408cf1f2bb376b1ce2c2e6272eeeba91614d53f72",
+        "11": "ac42f4c20749e11f09a1cb8085e45f9eb66e25b7748320315389dcb37e745a55",
+        "12": "91757852e289183c97ee1e9e5761e777704fd2490946d0f371be731af68d8cf3"
+      },
+      "candidate_artifact_exists": true,
+      "candidate_artifact_uri": "data/raw/treaty/643db08248ebc8bc.pdf",
+      "candidate_hash_valid": true,
+      "candidate_manifest_sha256": "643db08248ebc8bcef24dfe6a3606e960aeb03fe91e1f9c813df54c6d94b00f9",
+      "candidate_source_id": "SRC-DAF33E409B334A94",
+      "existing_article_extraction_reusable": true,
+      "fail_closed": true,
+      "hash_relation": "identical",
+      "official_artifact_match_count": 2,
+      "official_document_content_verified": false,
+      "official_registry_match_count": 2,
+      "official_source_identity_verified": false,
+      "official_sources": [
+        {
+          "artifact_actual_sha256": "9f255c5d6ec1e35fb3b79a46955325ab5f3b10bfa4ce7ee38bbbf1fd176a40d1",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "9f255c5d6ec1e35fb3b79a46955325ab5f3b10bfa4ce7ee38bbbf1fd176a40d1",
+          "artifact_status": "verified_pdf",
+          "artifact_uri": "data/raw/legal_evidence/9f255c5d6ec1e35fb3b79a46955325ab5f3b10bfa4ce7ee38bbbf1fd176a40d1.pdf",
+          "final_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=1928",
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=1928",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=1928"
+          ],
+          "source_id": "CZ-MF-JP-DFDDFD35DCB3",
+          "source_label": "46/1979 Sb.",
+          "source_type": "base_treaty"
+        },
+        {
+          "artifact_actual_sha256": "643db08248ebc8bcef24dfe6a3606e960aeb03fe91e1f9c813df54c6d94b00f9",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "643db08248ebc8bcef24dfe6a3606e960aeb03fe91e1f9c813df54c6d94b00f9",
+          "artifact_status": "existing_verified_artifact",
+          "artifact_uri": "data/raw/treaty/643db08248ebc8bc.pdf",
+          "final_url": null,
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=1928",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=1928",
+            "https://e-sbirka.gov.cz/sb/1979/46",
+            "https://e-sbirka.gov.cz/sb/1979/46/0000-00-00",
+            "https://e-sbirka.gov.cz/sb/1979/46/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sb/1979/46?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/1979/46",
+            "https://e-sbirka.gov.cz/sm/1979/46/0000-00-00",
+            "https://e-sbirka.gov.cz/sm/1979/46/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/1979/46?zalozka=text"
+          ],
+          "source_id": "SRC-DAF33E409B334A94",
+          "source_label": "46/1979 Sb.",
+          "source_type": null
+        }
+      ],
+      "partner_country": "JP",
+      "partner_country_name": "Japonsko",
+      "production_ready": false,
+      "promotable_to_active_rules": false,
+      "reconciliation_status": "candidate_matches_official_artifact",
+      "requires_fresh_official_extraction": false,
+      "source_title": "46/1979 Sb.",
+      "treaty_pair_id": "CZ-JP",
+      "valid_official_artifact_count": 2,
+      "valid_official_artifact_hashes": [
+        "643db08248ebc8bcef24dfe6a3606e960aeb03fe91e1f9c813df54c6d94b00f9",
+        "9f255c5d6ec1e35fb3b79a46955325ab5f3b10bfa4ce7ee38bbbf1fd176a40d1"
+      ]
+    },
+    {
+      "articles_10_12_legally_verified": false,
+      "candidate_actual_sha256": "4cdc1ac2bdd58c3e6ce0280ac5bff9318aa26419919f0eefa411c236752fdb90",
+      "candidate_article_hashes": {
+        "10": "46f8b2d89b5e772daca743314180775db45acf7d9aadb7c804ce35679a55042e",
+        "11": "65f9649798b16d4f4f6b90d3b3355cdfbc633e82402fadcfdadb156549465f8f",
+        "12": "493b6afe3a398a109087433d6e949b67f73543576d4eaf8685c0268b02974823"
+      },
+      "candidate_artifact_exists": true,
+      "candidate_artifact_uri": "data/raw/treaty/4cdc1ac2bdd58c3e.pdf",
+      "candidate_hash_valid": true,
+      "candidate_manifest_sha256": "4cdc1ac2bdd58c3e6ce0280ac5bff9318aa26419919f0eefa411c236752fdb90",
+      "candidate_source_id": "SRC-23CD4C7925E15101",
+      "existing_article_extraction_reusable": true,
+      "fail_closed": true,
+      "hash_relation": "identical",
+      "official_artifact_match_count": 2,
+      "official_document_content_verified": false,
+      "official_registry_match_count": 2,
+      "official_source_identity_verified": false,
+      "official_sources": [
+        {
+          "artifact_actual_sha256": "964eb09ee28b58d8b15c3e764662ecef8cc19f14812f4eee4f454897ff87561d",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "964eb09ee28b58d8b15c3e764662ecef8cc19f14812f4eee4f454897ff87561d",
+          "artifact_status": "verified_pdf",
+          "artifact_uri": "data/raw/legal_evidence/964eb09ee28b58d8b15c3e764662ecef8cc19f14812f4eee4f454897ff87561d.pdf",
+          "final_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38771",
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38771",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38771"
+          ],
+          "source_id": "CZ-MF-KR-A635635AD2FF",
+          "source_label": "1/2020 Sb.m.s.",
+          "source_type": "base_treaty"
+        },
+        {
+          "artifact_actual_sha256": "4cdc1ac2bdd58c3e6ce0280ac5bff9318aa26419919f0eefa411c236752fdb90",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "4cdc1ac2bdd58c3e6ce0280ac5bff9318aa26419919f0eefa411c236752fdb90",
+          "artifact_status": "existing_verified_artifact",
+          "artifact_uri": "data/raw/treaty/4cdc1ac2bdd58c3e.pdf",
+          "final_url": null,
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38771",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38771",
+            "https://e-sbirka.gov.cz/sb/2020/1",
+            "https://e-sbirka.gov.cz/sb/2020/1/0000-00-00",
+            "https://e-sbirka.gov.cz/sb/2020/1/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sb/2020/1?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2020/1",
+            "https://e-sbirka.gov.cz/sm/2020/1/0000-00-00",
+            "https://e-sbirka.gov.cz/sm/2020/1/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2020/1?zalozka=text"
+          ],
+          "source_id": "SRC-23CD4C7925E15101",
+          "source_label": "1/2020 Sb.m.s.",
+          "source_type": null
+        }
+      ],
+      "partner_country": "KR",
+      "partner_country_name": "Korejská republika",
+      "production_ready": false,
+      "promotable_to_active_rules": false,
+      "reconciliation_status": "candidate_matches_official_artifact",
+      "requires_fresh_official_extraction": false,
+      "source_title": "1/2020 Sb.m.s.",
+      "treaty_pair_id": "CZ-KR",
+      "valid_official_artifact_count": 2,
+      "valid_official_artifact_hashes": [
+        "4cdc1ac2bdd58c3e6ce0280ac5bff9318aa26419919f0eefa411c236752fdb90",
+        "964eb09ee28b58d8b15c3e764662ecef8cc19f14812f4eee4f454897ff87561d"
+      ]
+    },
+    {
+      "articles_10_12_legally_verified": false,
+      "candidate_actual_sha256": "e0c6c6938586cf35449e7f7abc83f2185b9380f9d24a89e3e3c0920b611d997e",
+      "candidate_article_hashes": {
+        "10": "1d71f0c86db1e3bb24280045553070cd8b28a383d707d108f2060f8359b573c5",
+        "11": "ad09de119530bc3d2ff06a26058b516a47e435689cf713f38d20ad2a9b634014",
+        "12": "1600f02a5a27baa377334f5c2b09d36d56d4e3f5c646b1f9dfdafd9dcc30d3eb"
+      },
+      "candidate_artifact_exists": true,
+      "candidate_artifact_uri": "data/raw/treaty/e0c6c6938586cf35.pdf",
+      "candidate_hash_valid": true,
+      "candidate_manifest_sha256": "e0c6c6938586cf35449e7f7abc83f2185b9380f9d24a89e3e3c0920b611d997e",
+      "candidate_source_id": "SRC-D1DA8B0150E7B80D",
+      "existing_article_extraction_reusable": true,
+      "fail_closed": true,
+      "hash_relation": "identical",
+      "official_artifact_match_count": 2,
+      "official_document_content_verified": false,
+      "official_registry_match_count": 2,
+      "official_source_identity_verified": false,
+      "official_sources": [
+        {
+          "artifact_actual_sha256": "d6ebb0838e4ef9f4df210b26d82d9441b841c589c392cc14edd3cd1d763c443a",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "d6ebb0838e4ef9f4df210b26d82d9441b841c589c392cc14edd3cd1d763c443a",
+          "artifact_status": "verified_pdf",
+          "artifact_uri": "data/raw/legal_evidence/d6ebb0838e4ef9f4df210b26d82d9441b841c589c392cc14edd3cd1d763c443a.pdf",
+          "final_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=27103",
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=27103",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=27103"
+          ],
+          "source_id": "CZ-MF-LU-6EE9D2F5BD55",
+          "source_label": "51/2014 Sb.m.s.",
+          "source_type": "base_treaty"
+        },
+        {
+          "artifact_actual_sha256": "e0c6c6938586cf35449e7f7abc83f2185b9380f9d24a89e3e3c0920b611d997e",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "e0c6c6938586cf35449e7f7abc83f2185b9380f9d24a89e3e3c0920b611d997e",
+          "artifact_status": "existing_verified_artifact",
+          "artifact_uri": "data/raw/treaty/e0c6c6938586cf35.pdf",
+          "final_url": null,
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=27103",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=27103",
+            "https://e-sbirka.gov.cz/sb/2014/51",
+            "https://e-sbirka.gov.cz/sb/2014/51/0000-00-00",
+            "https://e-sbirka.gov.cz/sb/2014/51/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sb/2014/51?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2014/51",
+            "https://e-sbirka.gov.cz/sm/2014/51/0000-00-00",
+            "https://e-sbirka.gov.cz/sm/2014/51/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2014/51?zalozka=text"
+          ],
+          "source_id": "SRC-D1DA8B0150E7B80D",
+          "source_label": "51/2014 Sb.m.s.",
+          "source_type": null
+        }
+      ],
+      "partner_country": "LU",
+      "partner_country_name": "Lucembursko",
+      "production_ready": false,
+      "promotable_to_active_rules": false,
+      "reconciliation_status": "candidate_matches_official_artifact",
+      "requires_fresh_official_extraction": false,
+      "source_title": "51/2014 Sb.m.s.",
+      "treaty_pair_id": "CZ-LU",
+      "valid_official_artifact_count": 2,
+      "valid_official_artifact_hashes": [
+        "d6ebb0838e4ef9f4df210b26d82d9441b841c589c392cc14edd3cd1d763c443a",
+        "e0c6c6938586cf35449e7f7abc83f2185b9380f9d24a89e3e3c0920b611d997e"
+      ]
+    },
+    {
+      "articles_10_12_legally_verified": false,
+      "candidate_actual_sha256": "552ba1bd84d021897f503222818f95c3abda18b4c0971460059451cc1bf89f88",
+      "candidate_article_hashes": {
+        "10": "1bebd50d5b75630e8f6ff5f669f025eb07ae8cb97494ac48a82b5bea0bea7b20",
+        "11": "5e7aee35d2081d1e2f765e891dd6266a0dec650929a8e04aa04a85b356b396bd",
+        "12": "6d1c81ce351d4ed2ba7245f66e5b523ce36e1706fb847c42a5df4af665cacb3a"
+      },
+      "candidate_artifact_exists": true,
+      "candidate_artifact_uri": "data/raw/treaty/552ba1bd84d02189.pdf",
+      "candidate_hash_valid": true,
+      "candidate_manifest_sha256": "552ba1bd84d021897f503222818f95c3abda18b4c0971460059451cc1bf89f88",
+      "candidate_source_id": "SRC-82F15B2AF261EB4D",
+      "existing_article_extraction_reusable": true,
+      "fail_closed": true,
+      "hash_relation": "identical",
+      "official_artifact_match_count": 2,
+      "official_document_content_verified": false,
+      "official_registry_match_count": 2,
+      "official_source_identity_verified": false,
+      "official_sources": [
+        {
+          "artifact_actual_sha256": "f8699fd0326df0025d20e6e8c6751ce7c435adf069b9bc96909fa25f44b7b805",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "f8699fd0326df0025d20e6e8c6751ce7c435adf069b9bc96909fa25f44b7b805",
+          "artifact_status": "verified_pdf",
+          "artifact_uri": "data/raw/legal_evidence/f8699fd0326df0025d20e6e8c6751ce7c435adf069b9bc96909fa25f44b7b805.pdf",
+          "final_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=6543",
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=6543",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=6543"
+          ],
+          "source_id": "CZ-MF-PA-F440E8364ADD",
+          "source_label": "91/2013 Sb.m.s.",
+          "source_type": "base_treaty"
+        },
+        {
+          "artifact_actual_sha256": "552ba1bd84d021897f503222818f95c3abda18b4c0971460059451cc1bf89f88",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "552ba1bd84d021897f503222818f95c3abda18b4c0971460059451cc1bf89f88",
+          "artifact_status": "existing_verified_artifact",
+          "artifact_uri": "data/raw/treaty/552ba1bd84d02189.pdf",
+          "final_url": null,
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=6543",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=6543",
+            "https://e-sbirka.gov.cz/sb/2013/91",
+            "https://e-sbirka.gov.cz/sb/2013/91/0000-00-00",
+            "https://e-sbirka.gov.cz/sb/2013/91/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sb/2013/91?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2013/91",
+            "https://e-sbirka.gov.cz/sm/2013/91/0000-00-00",
+            "https://e-sbirka.gov.cz/sm/2013/91/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2013/91?zalozka=text"
+          ],
+          "source_id": "SRC-82F15B2AF261EB4D",
+          "source_label": "91/2013 Sb.m.s.",
+          "source_type": null
+        }
+      ],
+      "partner_country": "PA",
+      "partner_country_name": "Panama",
+      "production_ready": false,
+      "promotable_to_active_rules": false,
+      "reconciliation_status": "candidate_matches_official_artifact",
+      "requires_fresh_official_extraction": false,
+      "source_title": "91/2013 Sb.m.s.",
+      "treaty_pair_id": "CZ-PA",
+      "valid_official_artifact_count": 2,
+      "valid_official_artifact_hashes": [
+        "552ba1bd84d021897f503222818f95c3abda18b4c0971460059451cc1bf89f88",
+        "f8699fd0326df0025d20e6e8c6751ce7c435adf069b9bc96909fa25f44b7b805"
+      ]
+    },
+    {
+      "articles_10_12_legally_verified": false,
+      "candidate_actual_sha256": "eb350622b0da7c4b12e9fc4355cca8c54f82bd4b9fc3d9e9b4985482e21e3118",
+      "candidate_article_hashes": {
+        "10": "ef684f3691fbf5173975ec20e4c001c2ed6fda6816d34b21079d6cee209cbbe2",
+        "11": "c68aebb7e1a8c460d8e7660daf45e9f10e2b7fb92eb3d2ad7776904c57d213d9",
+        "12": "2bc958f7a3f63c744dffd1f5b282b179a7edf6b7543490e81eb330d563355c5a"
+      },
+      "candidate_artifact_exists": true,
+      "candidate_artifact_uri": "data/raw/treaty/eb350622b0da7c4b.pdf",
+      "candidate_hash_valid": true,
+      "candidate_manifest_sha256": "eb350622b0da7c4b12e9fc4355cca8c54f82bd4b9fc3d9e9b4985482e21e3118",
+      "candidate_source_id": "SRC-6449FD410AC2BC33",
+      "existing_article_extraction_reusable": true,
+      "fail_closed": true,
+      "hash_relation": "identical",
+      "official_artifact_match_count": 2,
+      "official_document_content_verified": false,
+      "official_registry_match_count": 2,
+      "official_source_identity_verified": false,
+      "official_sources": [
+        {
+          "artifact_actual_sha256": "79e66b5954ba4979ef4f45e7611d42fe2ab43e8aa8bf8c32a32d43f8bffb70d0",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "79e66b5954ba4979ef4f45e7611d42fe2ab43e8aa8bf8c32a32d43f8bffb70d0",
+          "artifact_status": "verified_pdf",
+          "artifact_uri": "data/raw/legal_evidence/79e66b5954ba4979ef4f45e7611d42fe2ab43e8aa8bf8c32a32d43f8bffb70d0.pdf",
+          "final_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=6330",
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=6330",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=6330"
+          ],
+          "source_id": "CZ-MF-PL-9A0DFEB991D6",
+          "source_label": "102/2012 Sb.m.s.",
+          "source_type": "base_treaty"
+        },
+        {
+          "artifact_actual_sha256": "eb350622b0da7c4b12e9fc4355cca8c54f82bd4b9fc3d9e9b4985482e21e3118",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "eb350622b0da7c4b12e9fc4355cca8c54f82bd4b9fc3d9e9b4985482e21e3118",
+          "artifact_status": "existing_verified_artifact",
+          "artifact_uri": "data/raw/treaty/eb350622b0da7c4b.pdf",
+          "final_url": null,
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=6330",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=6330",
+            "https://e-sbirka.gov.cz/sb/2012/102",
+            "https://e-sbirka.gov.cz/sb/2012/102/0000-00-00",
+            "https://e-sbirka.gov.cz/sb/2012/102/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sb/2012/102?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2012/102",
+            "https://e-sbirka.gov.cz/sm/2012/102/0000-00-00",
+            "https://e-sbirka.gov.cz/sm/2012/102/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2012/102?zalozka=text"
+          ],
+          "source_id": "SRC-6449FD410AC2BC33",
+          "source_label": "102/2012 Sb.m.s.",
+          "source_type": null
+        }
+      ],
+      "partner_country": "PL",
+      "partner_country_name": "Polsko",
+      "production_ready": false,
+      "promotable_to_active_rules": false,
+      "reconciliation_status": "candidate_matches_official_artifact",
+      "requires_fresh_official_extraction": false,
+      "source_title": "102/2012 Sb.m.s.",
+      "treaty_pair_id": "CZ-PL",
+      "valid_official_artifact_count": 2,
+      "valid_official_artifact_hashes": [
+        "79e66b5954ba4979ef4f45e7611d42fe2ab43e8aa8bf8c32a32d43f8bffb70d0",
+        "eb350622b0da7c4b12e9fc4355cca8c54f82bd4b9fc3d9e9b4985482e21e3118"
+      ]
+    },
+    {
+      "articles_10_12_legally_verified": false,
+      "candidate_actual_sha256": "5ce6ddcd8517709a76873be928c9f2702153c51b68b2cc5f8f524233e08015fb",
+      "candidate_article_hashes": {
+        "10": "d3111206cd5a213db9d670bd4c38532ca8370a32fa9a89ac2e0f3f0b29cad5a8",
+        "11": "ba5b033b97554f6a3083db3e9649f26f35611e29c4b628ab82eefd6cf76c2efd",
+        "12": "5393e6f17334610f92a2e952d880297bd478d715fce5d8f216e941dd2c32a45f"
+      },
+      "candidate_artifact_exists": true,
+      "candidate_artifact_uri": "data/raw/treaty/5ce6ddcd8517709a.pdf",
+      "candidate_hash_valid": true,
+      "candidate_manifest_sha256": "5ce6ddcd8517709a76873be928c9f2702153c51b68b2cc5f8f524233e08015fb",
+      "candidate_source_id": "SRC-A4B3C2125350DA5C",
+      "existing_article_extraction_reusable": true,
+      "fail_closed": true,
+      "hash_relation": "identical",
+      "official_artifact_match_count": 2,
+      "official_document_content_verified": false,
+      "official_registry_match_count": 2,
+      "official_source_identity_verified": false,
+      "official_sources": [
+        {
+          "artifact_actual_sha256": "91f5b490edd108ecf71b72652be4c4084fab51b2336e762fa952bd16209794d5",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "91f5b490edd108ecf71b72652be4c4084fab51b2336e762fa952bd16209794d5",
+          "artifact_status": "verified_pdf",
+          "artifact_uri": "data/raw/legal_evidence/91f5b490edd108ecf71b72652be4c4084fab51b2336e762fa952bd16209794d5.pdf",
+          "final_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39503",
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39503",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39503"
+          ],
+          "source_id": "CZ-MF-QA-61D0B62D233E",
+          "source_label": "45/2022 Sb.m.s.",
+          "source_type": "base_treaty"
+        },
+        {
+          "artifact_actual_sha256": "5ce6ddcd8517709a76873be928c9f2702153c51b68b2cc5f8f524233e08015fb",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "5ce6ddcd8517709a76873be928c9f2702153c51b68b2cc5f8f524233e08015fb",
+          "artifact_status": "existing_verified_artifact",
+          "artifact_uri": "data/raw/treaty/5ce6ddcd8517709a.pdf",
+          "final_url": null,
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39503",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39503",
+            "https://e-sbirka.gov.cz/sb/2022/45",
+            "https://e-sbirka.gov.cz/sb/2022/45/0000-00-00",
+            "https://e-sbirka.gov.cz/sb/2022/45/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sb/2022/45?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2022/45",
+            "https://e-sbirka.gov.cz/sm/2022/45/0000-00-00",
+            "https://e-sbirka.gov.cz/sm/2022/45/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2022/45?zalozka=text"
+          ],
+          "source_id": "SRC-A4B3C2125350DA5C",
+          "source_label": "45/2022 Sb.m.s.",
+          "source_type": null
+        }
+      ],
+      "partner_country": "QA",
+      "partner_country_name": "Katar",
+      "production_ready": false,
+      "promotable_to_active_rules": false,
+      "reconciliation_status": "candidate_matches_official_artifact",
+      "requires_fresh_official_extraction": false,
+      "source_title": "45/2022 Sb.m.s.",
+      "treaty_pair_id": "CZ-QA",
+      "valid_official_artifact_count": 2,
+      "valid_official_artifact_hashes": [
+        "5ce6ddcd8517709a76873be928c9f2702153c51b68b2cc5f8f524233e08015fb",
+        "91f5b490edd108ecf71b72652be4c4084fab51b2336e762fa952bd16209794d5"
+      ]
+    },
+    {
+      "articles_10_12_legally_verified": false,
+      "candidate_actual_sha256": "d23391e2d6c6387263e25d63787e595b0f97dcffefa4d438005a682f31744500",
+      "candidate_article_hashes": {
+        "10": "7abb89d1a538a13308c655ba59ef0699e9f749a307d2750b8fd2d45a487c6ad3",
+        "11": "8b192852a053d284fc28ce061fd68207754a4598414b9e1902cb20a8ba99a628",
+        "12": "0ab0dfd5b644e088c003432cae92354a614898b8744c60a781dc43fc12d1081a"
+      },
+      "candidate_artifact_exists": true,
+      "candidate_artifact_uri": "data/raw/treaty/d23391e2d6c63872.html",
+      "candidate_hash_valid": true,
+      "candidate_manifest_sha256": "d23391e2d6c6387263e25d63787e595b0f97dcffefa4d438005a682f31744500",
+      "candidate_source_id": "SRC-511CFDDE4F94358B",
+      "existing_article_extraction_reusable": true,
+      "fail_closed": true,
+      "hash_relation": "identical",
+      "official_artifact_match_count": 2,
+      "official_document_content_verified": false,
+      "official_registry_match_count": 2,
+      "official_source_identity_verified": false,
+      "official_sources": [
+        {
+          "artifact_actual_sha256": null,
+          "artifact_exists": false,
+          "artifact_hash_valid": false,
+          "artifact_manifest_sha256": null,
+          "artifact_status": "html_only_unresolved",
+          "artifact_uri": null,
+          "final_url": null,
+          "official_url": null,
+          "official_urls": [
+            "https://e-sbirka.gov.cz/sb/2024/482?zalozka=text"
+          ],
+          "source_id": "CZ-MF-RW-C022EDDD7CEA",
+          "source_label": "482/2024 Sb.",
+          "source_type": "base_treaty"
+        },
+        {
+          "artifact_actual_sha256": "d23391e2d6c6387263e25d63787e595b0f97dcffefa4d438005a682f31744500",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "d23391e2d6c6387263e25d63787e595b0f97dcffefa4d438005a682f31744500",
+          "artifact_status": "existing_verified_artifact",
+          "artifact_uri": "data/raw/treaty/d23391e2d6c63872.html",
+          "final_url": null,
+          "official_url": "https://e-sbirka.gov.cz/sb/2024/482",
+          "official_urls": [
+            "https://e-sbirka.gov.cz/sb/2024/482",
+            "https://e-sbirka.gov.cz/sb/2024/482/0000-00-00",
+            "https://e-sbirka.gov.cz/sb/2024/482/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sb/2024/482?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2024/482",
+            "https://e-sbirka.gov.cz/sm/2024/482/0000-00-00",
+            "https://e-sbirka.gov.cz/sm/2024/482/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2024/482?zalozka=text"
+          ],
+          "source_id": "SRC-511CFDDE4F94358B",
+          "source_label": "482/2024 Sb.",
+          "source_type": null
+        }
+      ],
+      "partner_country": "RW",
+      "partner_country_name": "Rwanda",
+      "production_ready": false,
+      "promotable_to_active_rules": false,
+      "reconciliation_status": "candidate_matches_official_artifact",
+      "requires_fresh_official_extraction": false,
+      "source_title": "482/2024 Sb.",
+      "treaty_pair_id": "CZ-RW",
+      "valid_official_artifact_count": 1,
+      "valid_official_artifact_hashes": [
+        "d23391e2d6c6387263e25d63787e595b0f97dcffefa4d438005a682f31744500"
+      ]
+    },
+    {
+      "articles_10_12_legally_verified": false,
+      "candidate_actual_sha256": "ae57ee9ce600b3debfbd42662a3b49247490780abf3535b713e606f9536248aa",
+      "candidate_article_hashes": {
+        "10": "c7c905d9f0d2672b2b1e751483c3209ee1a466ded11015e3b1bf28f919638442",
+        "11": "6402f7b2d086b12f74cd4cd5d481863a712f2b02836120d37d10f11b37791f08",
+        "12": "07eaa19011c8a9d203b7bf2202ad334441afa240995770ba62e09210dbc6e64e"
+      },
+      "candidate_artifact_exists": true,
+      "candidate_artifact_uri": "data/raw/treaty/ae57ee9ce600b3de.pdf",
+      "candidate_hash_valid": true,
+      "candidate_manifest_sha256": "ae57ee9ce600b3debfbd42662a3b49247490780abf3535b713e606f9536248aa",
+      "candidate_source_id": "SRC-9EE7AEF0A808EE36",
+      "existing_article_extraction_reusable": true,
+      "fail_closed": true,
+      "hash_relation": "identical",
+      "official_artifact_match_count": 2,
+      "official_document_content_verified": false,
+      "official_registry_match_count": 2,
+      "official_source_identity_verified": false,
+      "official_sources": [
+        {
+          "artifact_actual_sha256": "326b946b2444788a03ec7c14c5b3a314de47a2b12b37c5843b3cdb934eaf2795",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "326b946b2444788a03ec7c14c5b3a314de47a2b12b37c5843b3cdb934eaf2795",
+          "artifact_status": "verified_pdf",
+          "artifact_uri": "data/raw/legal_evidence/326b946b2444788a03ec7c14c5b3a314de47a2b12b37c5843b3cdb934eaf2795.pdf",
+          "final_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39429",
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39429",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39429"
+          ],
+          "source_id": "CZ-MF-SM-91DEEF93556A",
+          "source_label": "27/2022 Sb.m.s.",
+          "source_type": "base_treaty"
+        },
+        {
+          "artifact_actual_sha256": "ae57ee9ce600b3debfbd42662a3b49247490780abf3535b713e606f9536248aa",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "ae57ee9ce600b3debfbd42662a3b49247490780abf3535b713e606f9536248aa",
+          "artifact_status": "existing_verified_artifact",
+          "artifact_uri": "data/raw/treaty/ae57ee9ce600b3de.pdf",
+          "final_url": null,
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39429",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39429",
+            "https://e-sbirka.gov.cz/sb/2022/27",
+            "https://e-sbirka.gov.cz/sb/2022/27/0000-00-00",
+            "https://e-sbirka.gov.cz/sb/2022/27/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sb/2022/27?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2022/27",
+            "https://e-sbirka.gov.cz/sm/2022/27/0000-00-00",
+            "https://e-sbirka.gov.cz/sm/2022/27/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2022/27?zalozka=text"
+          ],
+          "source_id": "SRC-9EE7AEF0A808EE36",
+          "source_label": "27/2022 Sb.m.s.",
+          "source_type": null
+        }
+      ],
+      "partner_country": "SM",
+      "partner_country_name": "San Marino",
+      "production_ready": false,
+      "promotable_to_active_rules": false,
+      "reconciliation_status": "candidate_matches_official_artifact",
+      "requires_fresh_official_extraction": false,
+      "source_title": "27/2022 Sb.m.s.",
+      "treaty_pair_id": "CZ-SM",
+      "valid_official_artifact_count": 2,
+      "valid_official_artifact_hashes": [
+        "326b946b2444788a03ec7c14c5b3a314de47a2b12b37c5843b3cdb934eaf2795",
+        "ae57ee9ce600b3debfbd42662a3b49247490780abf3535b713e606f9536248aa"
+      ]
+    },
+    {
+      "articles_10_12_legally_verified": false,
+      "candidate_actual_sha256": "062cd7a52ac4f0f1fa9198f904d1d5302b4794d9332b65e984469809b6e60295",
+      "candidate_article_hashes": {
+        "10": "6c4d05f4e11a438fa1e447bb9e7e4555334577a8d10618c4b9e86cb6317b8291",
+        "11": "4495916e4a49901b19b75935f0ad3bc017515e62c12b3989fb8a5994fb5e77cb",
+        "12": "2a2dcc424f1a2045276bf5f7d445bf6441c59c81d2be9a9a78a596c6bb076c82"
+      },
+      "candidate_artifact_exists": true,
+      "candidate_artifact_uri": "data/raw/treaty/062cd7a52ac4f0f1.pdf",
+      "candidate_hash_valid": true,
+      "candidate_manifest_sha256": "062cd7a52ac4f0f1fa9198f904d1d5302b4794d9332b65e984469809b6e60295",
+      "candidate_source_id": "SRC-39F35329AC919FCC",
+      "existing_article_extraction_reusable": true,
+      "fail_closed": true,
+      "hash_relation": "identical",
+      "official_artifact_match_count": 2,
+      "official_document_content_verified": false,
+      "official_registry_match_count": 2,
+      "official_source_identity_verified": false,
+      "official_sources": [
+        {
+          "artifact_actual_sha256": "7e42c7ca8d4dbfe313433985bb648211db42f2b76399654ebedc149ede2a4501",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "7e42c7ca8d4dbfe313433985bb648211db42f2b76399654ebedc149ede2a4501",
+          "artifact_status": "verified_pdf",
+          "artifact_uri": "data/raw/legal_evidence/7e42c7ca8d4dbfe313433985bb648211db42f2b76399654ebedc149ede2a4501.pdf",
+          "final_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39454",
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39454",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39454"
+          ],
+          "source_id": "CZ-MF-SN-2589C3B16B70",
+          "source_label": "32/2022 Sb.m.s.",
+          "source_type": "base_treaty"
+        },
+        {
+          "artifact_actual_sha256": "062cd7a52ac4f0f1fa9198f904d1d5302b4794d9332b65e984469809b6e60295",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "062cd7a52ac4f0f1fa9198f904d1d5302b4794d9332b65e984469809b6e60295",
+          "artifact_status": "existing_verified_artifact",
+          "artifact_uri": "data/raw/treaty/062cd7a52ac4f0f1.pdf",
+          "final_url": null,
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39454",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39454",
+            "https://e-sbirka.gov.cz/sb/2022/32",
+            "https://e-sbirka.gov.cz/sb/2022/32/0000-00-00",
+            "https://e-sbirka.gov.cz/sb/2022/32/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sb/2022/32?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2022/32",
+            "https://e-sbirka.gov.cz/sm/2022/32/0000-00-00",
+            "https://e-sbirka.gov.cz/sm/2022/32/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2022/32?zalozka=text"
+          ],
+          "source_id": "SRC-39F35329AC919FCC",
+          "source_label": "32/2022 Sb.m.s.",
+          "source_type": null
+        }
+      ],
+      "partner_country": "SN",
+      "partner_country_name": "Senegal",
+      "production_ready": false,
+      "promotable_to_active_rules": false,
+      "reconciliation_status": "candidate_matches_official_artifact",
+      "requires_fresh_official_extraction": false,
+      "source_title": "32/2022 Sb.m.s.",
+      "treaty_pair_id": "CZ-SN",
+      "valid_official_artifact_count": 2,
+      "valid_official_artifact_hashes": [
+        "062cd7a52ac4f0f1fa9198f904d1d5302b4794d9332b65e984469809b6e60295",
+        "7e42c7ca8d4dbfe313433985bb648211db42f2b76399654ebedc149ede2a4501"
+      ]
+    },
+    {
+      "articles_10_12_legally_verified": false,
+      "candidate_actual_sha256": "83f4f3cd9b52c07ee22050793407c46365076348395013aec9b1b1d122c0e8e5",
+      "candidate_article_hashes": {
+        "10": "17b31bbe635499355013673ee13ffc0f191c498a6f0d7b630ad66aac37273f11",
+        "11": "ad09de119530bc3d2ff06a26058b516a47e435689cf713f38d20ad2a9b634014",
+        "12": "5ae7b8dbb6b200fa39ce4a201e358c4375d20ae017c1072ed3b38c88964ddf2c"
+      },
+      "candidate_artifact_exists": true,
+      "candidate_artifact_uri": "data/raw/treaty/83f4f3cd9b52c07e.pdf",
+      "candidate_hash_valid": true,
+      "candidate_manifest_sha256": "83f4f3cd9b52c07ee22050793407c46365076348395013aec9b1b1d122c0e8e5",
+      "candidate_source_id": "SRC-CD01C24D2AD80F3A",
+      "existing_article_extraction_reusable": true,
+      "fail_closed": true,
+      "hash_relation": "identical",
+      "official_artifact_match_count": 2,
+      "official_document_content_verified": false,
+      "official_registry_match_count": 2,
+      "official_source_identity_verified": false,
+      "official_sources": [
+        {
+          "artifact_actual_sha256": "1c426f5d8a2038707079f83493f8a2ac945bf7c13238cebce579f1658bb865b4",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "1c426f5d8a2038707079f83493f8a2ac945bf7c13238cebce579f1658bb865b4",
+          "artifact_status": "verified_pdf",
+          "artifact_uri": "data/raw/legal_evidence/1c426f5d8a2038707079f83493f8a2ac945bf7c13238cebce579f1658bb865b4.pdf",
+          "final_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39710",
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39710",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39710"
+          ],
+          "source_id": "CZ-MF-XK-DC9B8BA17652",
+          "source_label": "38/2023 Sb.m.s.",
+          "source_type": "base_treaty"
+        },
+        {
+          "artifact_actual_sha256": "83f4f3cd9b52c07ee22050793407c46365076348395013aec9b1b1d122c0e8e5",
+          "artifact_exists": true,
+          "artifact_hash_valid": true,
+          "artifact_manifest_sha256": "83f4f3cd9b52c07ee22050793407c46365076348395013aec9b1b1d122c0e8e5",
+          "artifact_status": "existing_verified_artifact",
+          "artifact_uri": "data/raw/treaty/83f4f3cd9b52c07e.pdf",
+          "final_url": null,
+          "official_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39710",
+          "official_urls": [
+            "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39710",
+            "https://e-sbirka.gov.cz/sb/2023/38",
+            "https://e-sbirka.gov.cz/sb/2023/38/0000-00-00",
+            "https://e-sbirka.gov.cz/sb/2023/38/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sb/2023/38?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2023/38",
+            "https://e-sbirka.gov.cz/sm/2023/38/0000-00-00",
+            "https://e-sbirka.gov.cz/sm/2023/38/0000-00-00?zalozka=text",
+            "https://e-sbirka.gov.cz/sm/2023/38?zalozka=text"
+          ],
+          "source_id": "SRC-CD01C24D2AD80F3A",
+          "source_label": "38/2023 Sb.m.s.",
+          "source_type": null
+        }
+      ],
+      "partner_country": "XK",
+      "partner_country_name": "Kosovo",
+      "production_ready": false,
+      "promotable_to_active_rules": false,
+      "reconciliation_status": "candidate_matches_official_artifact",
+      "requires_fresh_official_extraction": false,
+      "source_title": "38/2023 Sb.m.s.",
+      "treaty_pair_id": "CZ-XK",
+      "valid_official_artifact_count": 2,
+      "valid_official_artifact_hashes": [
+        "1c426f5d8a2038707079f83493f8a2ac945bf7c13238cebce579f1658bb865b4",
+        "83f4f3cd9b52c07ee22050793407c46365076348395013aec9b1b1d122c0e8e5"
+      ]
+    }
+  ]
+}
