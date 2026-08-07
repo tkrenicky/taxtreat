@@ -17,6 +17,14 @@ DEFAULT_FINAL_LEGAL_REVIEW = (
     / "all_23_final_legal_consolidation.json"
 )
 
+DEFAULT_STATUS_RECONCILIATION = (
+    ROOT
+    / "data"
+    / "legal_reviews"
+    / "global_cz_outbound"
+    / "all_23_status_instrument_reconciliation.json"
+)
+
 
 @dataclass(frozen=True)
 class RuntimeGateResult:
@@ -37,6 +45,71 @@ def _load_final_legal_review(
     return json.loads(
         review_path.read_text(encoding="utf-8")
     )
+
+
+def _load_status_reconciliation(
+    path: str | Path = DEFAULT_STATUS_RECONCILIATION,
+) -> dict[str, Any]:
+    reconciliation_path = Path(path)
+
+    if not reconciliation_path.is_file():
+        return {}
+
+    return json.loads(
+        reconciliation_path.read_text(encoding="utf-8")
+    )
+
+
+def _status_instrument_block(
+    *,
+    pair_id: str,
+    income_type: str,
+    transaction_date: date,
+    path: str | Path = DEFAULT_STATUS_RECONCILIATION,
+) -> RuntimeGateResult | None:
+    data = _load_status_reconciliation(path)
+
+    income_key = income_type.lower()
+    if income_key == "dividends":
+        income_key = "dividend"
+    elif income_key == "royalties":
+        income_key = "royalty"
+
+    for record in data.get("records", []):
+        if record.get("treaty_pair_id") != pair_id:
+            continue
+
+        if record.get("income_type") != income_key:
+            continue
+
+        if record.get("candidate_status") != "article_application_suspended":
+            continue
+
+        effective_from = record.get("effective_from")
+        effective_to = record.get("effective_to")
+
+        if effective_from:
+            start = date.fromisoformat(effective_from)
+            if transaction_date < start:
+                continue
+
+        if effective_to:
+            end = date.fromisoformat(effective_to)
+            if transaction_date > end:
+                continue
+
+        return RuntimeGateResult(
+            applies=True,
+            allowed=False,
+            missing_facts=[],
+            explanation=(
+                f"Treaty benefits for {pair_id} / {income_key} are blocked "
+                "for this transaction date because the relevant treaty "
+                "article is suspended by a status instrument."
+            ),
+        )
+
+    return None
 
 
 def _pair_id(
@@ -106,6 +179,15 @@ def evaluate_runtime_gate(
             allowed=True,
             missing_facts=[],
         )
+
+    status_block = _status_instrument_block(
+        pair_id=pair_id,
+        income_type=income_type,
+        transaction_date=transaction_date,
+    )
+
+    if status_block is not None:
+        return status_block
 
     protocol = (
         record.get("protocol_conclusion")

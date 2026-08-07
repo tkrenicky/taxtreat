@@ -16,7 +16,7 @@ def test_dividend_requires_income_specific_facts():
         source_country="CZ",
         recipient_country="BY",
         income_type="dividend",
-        transaction_date=date(2026, 1, 15),
+        transaction_date=date(2024, 5, 31),
         facts=COMMON,
     )
 
@@ -34,7 +34,7 @@ def test_dividend_passes_income_specific_gate():
         source_country="CZ",
         recipient_country="BY",
         income_type="dividend",
-        transaction_date=date(2026, 1, 15),
+        transaction_date=date(2024, 5, 31),
         facts={
             **COMMON,
             "ownership_percent": 100,
