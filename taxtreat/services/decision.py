@@ -17,6 +17,7 @@ from taxtreat.engine.legal_rule_engine import (
 from taxtreat.engine.legal_rule_loader import load_legal_rules
 from taxtreat.engine.layered_decision import evaluate_layered_rules
 from taxtreat.registry.legal_scope import supported_scope_keys
+from taxtreat.services.runtime_gate import evaluate_runtime_gate
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -69,6 +70,33 @@ def analyze_transaction(
             status=DecisionStatus.OUT_OF_SCOPE,
             requires_review=False,
             explanation=[f"Unsupported income type: {request.income_type!r}."],
+        )
+
+    runtime_gate = evaluate_runtime_gate(
+        source_country=request.source_country,
+        recipient_country=request.recipient_country,
+        income_type=normalized_income,
+        transaction_date=request.transaction_date,
+        facts=request.facts,
+    )
+
+    if (
+        runtime_gate.applies
+        and not runtime_gate.allowed
+    ):
+        return LegalDecisionResult(
+            status=DecisionStatus.REVIEW_REQUIRED,
+            requires_review=True,
+            rate=None,
+            eligible=False,
+            missing_facts=runtime_gate.missing_facts,
+            explanation=[
+                runtime_gate.explanation
+                or (
+                    "Transaction-level legal eligibility "
+                    "is unresolved."
+                )
+            ],
         )
 
     catalog = load_rule_catalog(rule_dir)
