@@ -179,6 +179,76 @@ def evaluate_runtime_gate(
             ),
         )
 
+    income_key = income_type.lower()
+
+    if income_key in {"dividend", "dividends"}:
+        dividend_fields = [
+            "ownership_percent",
+            "holding_period_months",
+            "recipient_is_qualifying_company",
+        ]
+
+        dividend_missing = sorted(
+            field
+            for field in dividend_fields
+            if facts.get(field) is None
+        )
+
+        if dividend_missing:
+            return RuntimeGateResult(
+                applies=True,
+                allowed=False,
+                missing_facts=dividend_missing,
+                explanation=(
+                    "Dividend treatment requires transaction-specific "
+                    "ownership, holding-period and qualifying-company facts."
+                ),
+            )
+
+    elif income_key == "interest":
+        interest_fields = [
+            "related_party_status",
+        ]
+
+        interest_missing = sorted(
+            field
+            for field in interest_fields
+            if facts.get(field) is None
+        )
+
+        if interest_missing:
+            return RuntimeGateResult(
+                applies=True,
+                allowed=False,
+                missing_facts=interest_missing,
+                explanation=(
+                    "Interest treatment requires transaction-specific "
+                    "related-party eligibility facts."
+                ),
+            )
+
+    elif income_key in {"royalty", "royalties"}:
+        royalty_fields = [
+            "royalty_classification",
+        ]
+
+        royalty_missing = sorted(
+            field
+            for field in royalty_fields
+            if facts.get(field) is None
+        )
+
+        if royalty_missing:
+            return RuntimeGateResult(
+                applies=True,
+                allowed=False,
+                missing_facts=royalty_missing,
+                explanation=(
+                    "Royalty treatment requires a transaction-specific "
+                    "royalty classification."
+                ),
+            )
+
     return RuntimeGateResult(
         applies=True,
         allowed=True,
