@@ -1,4 +1,5 @@
 {
+  "active_rule_generation_allowed": false,
   "automatic_unconditional_rate_allowed": false,
   "country_level_legal_review_complete_count": 23,
   "country_level_legal_verification_completed": true,
@@ -73,12 +74,15 @@
   "legal_review_semantics": {
     "belarus_protocol_overlay_required_from_2012_01_01": true,
     "country_level_legal_review_complete": true,
+    "country_level_review_is_not_source_release_approval": true,
     "missing_transaction_inputs_fail_closed": true,
+    "runtime_gate_integration_does_not_replace_source_release": true,
     "russia_treaty_rates_blocked_from_2023_08_11": true,
     "serbia_protocol_has_no_articles_10_12_rate_effect": true,
-    "transaction_specific_eligibility_still_required": true
+    "transaction_specific_eligibility_still_required": true,
+    "verified_legal_text_required_before_active_rule_generation": true
   },
-  "production_ready_after_runtime_gate_integration": true,
+  "production_ready_after_runtime_gate_integration": false,
   "protocol_review": {
     "complete": true,
     "no_wht_rate_impact_pairs": [
@@ -622,6 +626,7 @@
   ],
   "runtime_transaction_gate_required": true,
   "schema_version": 1,
+  "source_release_verification_required": true,
   "status_blocked_pair_count": 1,
   "status_blocked_pairs": [
     "CZ-RU"
