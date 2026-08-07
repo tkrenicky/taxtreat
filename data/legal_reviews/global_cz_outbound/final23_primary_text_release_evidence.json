@@ -1,9 +1,9 @@
 {
-  "dataset_release": "final23-primary-text-release-evidence-2026-08-07.1",
+  "dataset_release": "final23-primary-text-release-evidence-2026-08-07.2",
   "fail_closed": true,
   "pair_count": 18,
-  "primary_text_pending_pair_count": 8,
-  "primary_text_verified_pair_count": 10,
+  "primary_text_pending_pair_count": 0,
+  "primary_text_verified_pair_count": 18,
   "production_ready_count": 0,
   "records": [
     {
@@ -353,9 +353,32 @@
     },
     {
       "active_rule_allowed": false,
-      "article_evidence": {},
-      "completed_gate_count": 7,
+      "article_evidence": {
+        "10": {
+          "article_text_sha256": "ea0cf4c4395d4f51e04dc0f24fa5124a2d5385dc0d4708d5a43d04f03860181f",
+          "comparison_status": "official_source_artifact_comparison_completed",
+          "nonzero_rates_verified": true,
+          "zero_rate_verified": "not_applicable"
+        },
+        "11": {
+          "article_text_sha256": "89eb243985bf114797165e2838fe895be5ba5263412b51ae9c5968ef08404956",
+          "comparison_status": "official_source_artifact_comparison_completed",
+          "nonzero_rates_verified": true,
+          "zero_rate_verified": "not_applicable"
+        },
+        "12": {
+          "article_text_sha256": "0897f19727a97384ab8bf6acff3b7738f96af67f1ea74d28a682b4ba5a5038a2",
+          "comparison_status": "official_source_artifact_comparison_completed",
+          "nonzero_rates_verified": true,
+          "zero_rate_verified": "not_applicable"
+        }
+      },
+      "completed_gate_count": 11,
       "completed_release_gates": [
+        "article_10_verified",
+        "article_11_verified",
+        "article_12_verified",
+        "clean_text_verified",
         "mli_overlay_verified",
         "mli_status_verified",
         "official_document_hash_verified",
@@ -365,14 +388,14 @@
         "withholding_effective_date_verified"
       ],
       "fail_closed": true,
-      "primary_text_release_verified": false,
+      "primary_text_release_verified": true,
       "production_ready": false,
       "release_gate": {
-        "article_10_verified": false,
-        "article_11_verified": false,
-        "article_12_verified": false,
+        "article_10_verified": true,
+        "article_11_verified": true,
+        "article_12_verified": true,
         "authentic_languages_verified": false,
-        "clean_text_verified": false,
+        "clean_text_verified": true,
         "end_to_end_tests_passed": false,
         "legal_rule_mapping_verified": false,
         "mli_overlay_verified": true,
@@ -386,13 +409,9 @@
         "withholding_effective_date_verified": true
       },
       "release_status": "blocked",
-      "remaining_gate_count": 9,
+      "remaining_gate_count": 5,
       "remaining_release_gates": [
-        "article_10_verified",
-        "article_11_verified",
-        "article_12_verified",
         "authentic_languages_verified",
-        "clean_text_verified",
         "end_to_end_tests_passed",
         "legal_rule_mapping_verified",
         "official_english_version_assessed",
@@ -541,9 +560,38 @@
     },
     {
       "active_rule_allowed": false,
-      "article_evidence": {},
-      "completed_gate_count": 7,
+      "article_evidence": {
+        "10": {
+          "article_text_sha256": "1da760593beaee3f8f0b2b61e90e299c06641f5e2e74f58368c94b3c5f2008eb",
+          "comparison_status": "nonzero_components_verified_zero_rate_pending",
+          "nonzero_rates_verified": true,
+          "zero_rate_basis_type": "explicit_numeric_zero_rate",
+          "zero_rate_verification_status": "zero_rate_scope_verified",
+          "zero_rate_verified": true
+        },
+        "11": {
+          "article_text_sha256": "66c996db81c40fcfb1362bb4ca04acae913f23079cfc0f07a39b51f721233776",
+          "comparison_status": "nonzero_components_verified_zero_rate_pending",
+          "nonzero_rates_verified": true,
+          "zero_rate_basis_type": "exclusive_residence_state_taxation",
+          "zero_rate_verification_status": "zero_rate_scope_verified",
+          "zero_rate_verified": true
+        },
+        "12": {
+          "article_text_sha256": "bebcc20b959acd016616efdef5997365b0f1e6ed87aac9ea243b3094e827d459",
+          "comparison_status": "nonzero_components_verified_zero_rate_pending",
+          "nonzero_rates_verified": true,
+          "zero_rate_basis_type": "category_specific_residence_state_taxation",
+          "zero_rate_verification_status": "zero_rate_scope_verified",
+          "zero_rate_verified": true
+        }
+      },
+      "completed_gate_count": 11,
       "completed_release_gates": [
+        "article_10_verified",
+        "article_11_verified",
+        "article_12_verified",
+        "clean_text_verified",
         "mli_overlay_verified",
         "mli_status_verified",
         "official_document_hash_verified",
@@ -553,14 +601,14 @@
         "withholding_effective_date_verified"
       ],
       "fail_closed": true,
-      "primary_text_release_verified": false,
+      "primary_text_release_verified": true,
       "production_ready": false,
       "release_gate": {
-        "article_10_verified": false,
-        "article_11_verified": false,
-        "article_12_verified": false,
+        "article_10_verified": true,
+        "article_11_verified": true,
+        "article_12_verified": true,
         "authentic_languages_verified": false,
-        "clean_text_verified": false,
+        "clean_text_verified": true,
         "end_to_end_tests_passed": false,
         "legal_rule_mapping_verified": false,
         "mli_overlay_verified": true,
@@ -574,13 +622,9 @@
         "withholding_effective_date_verified": true
       },
       "release_status": "blocked",
-      "remaining_gate_count": 9,
+      "remaining_gate_count": 5,
       "remaining_release_gates": [
-        "article_10_verified",
-        "article_11_verified",
-        "article_12_verified",
         "authentic_languages_verified",
-        "clean_text_verified",
         "end_to_end_tests_passed",
         "legal_rule_mapping_verified",
         "official_english_version_assessed",
@@ -591,9 +635,36 @@
     },
     {
       "active_rule_allowed": false,
-      "article_evidence": {},
-      "completed_gate_count": 7,
+      "article_evidence": {
+        "10": {
+          "article_text_sha256": "1ed11c4c0726435c5db978945bfa554fda00aa23403db02bc074c45df5cdda47",
+          "comparison_status": "official_source_artifact_comparison_completed",
+          "nonzero_rates_verified": true,
+          "zero_rate_verified": "not_applicable"
+        },
+        "11": {
+          "article_text_sha256": "f9ce3c2e6aa899361fc98c511a87b7e1313f36b1cc9a08483ca19cda047ee352",
+          "comparison_status": "nonzero_components_verified_zero_rate_pending",
+          "nonzero_rates_verified": true,
+          "zero_rate_basis_type": "exclusive_residence_state_taxation",
+          "zero_rate_verification_status": "zero_rate_scope_verified",
+          "zero_rate_verified": true
+        },
+        "12": {
+          "article_text_sha256": "64ca5b1fa56027d61bf2a511747386165ca40108db778eb8a3251db7f0095273",
+          "comparison_status": "nonzero_components_verified_zero_rate_pending",
+          "nonzero_rates_verified": true,
+          "zero_rate_basis_type": "category_specific_source_exemption",
+          "zero_rate_verification_status": "zero_rate_scope_verified",
+          "zero_rate_verified": true
+        }
+      },
+      "completed_gate_count": 11,
       "completed_release_gates": [
+        "article_10_verified",
+        "article_11_verified",
+        "article_12_verified",
+        "clean_text_verified",
         "mli_overlay_verified",
         "mli_status_verified",
         "official_document_hash_verified",
@@ -603,14 +674,14 @@
         "withholding_effective_date_verified"
       ],
       "fail_closed": true,
-      "primary_text_release_verified": false,
+      "primary_text_release_verified": true,
       "production_ready": false,
       "release_gate": {
-        "article_10_verified": false,
-        "article_11_verified": false,
-        "article_12_verified": false,
+        "article_10_verified": true,
+        "article_11_verified": true,
+        "article_12_verified": true,
         "authentic_languages_verified": false,
-        "clean_text_verified": false,
+        "clean_text_verified": true,
         "end_to_end_tests_passed": false,
         "legal_rule_mapping_verified": false,
         "mli_overlay_verified": true,
@@ -624,13 +695,9 @@
         "withholding_effective_date_verified": true
       },
       "release_status": "blocked",
-      "remaining_gate_count": 9,
+      "remaining_gate_count": 5,
       "remaining_release_gates": [
-        "article_10_verified",
-        "article_11_verified",
-        "article_12_verified",
         "authentic_languages_verified",
-        "clean_text_verified",
         "end_to_end_tests_passed",
         "legal_rule_mapping_verified",
         "official_english_version_assessed",
@@ -710,9 +777,34 @@
     },
     {
       "active_rule_allowed": false,
-      "article_evidence": {},
-      "completed_gate_count": 7,
+      "article_evidence": {
+        "10": {
+          "article_text_sha256": "747f78e7ccbcc1f51952cfbb6bb76dce59b937c711d7a384dd260693b61ff266",
+          "comparison_status": "official_source_artifact_comparison_completed",
+          "nonzero_rates_verified": true,
+          "zero_rate_verified": "not_applicable"
+        },
+        "11": {
+          "article_text_sha256": "eb0e2a492d0318435ffd5872d720a77ee5f5e64e20e45729310ab2e504f12ea6",
+          "comparison_status": "nonzero_components_verified_zero_rate_pending",
+          "nonzero_rates_verified": true,
+          "zero_rate_basis_type": "exclusive_residence_side_taxation",
+          "zero_rate_verification_status": "zero_rate_scope_verified",
+          "zero_rate_verified": true
+        },
+        "12": {
+          "article_text_sha256": "83bd1cf7ddc67f2ea432fcc5b68bcdca724d066b80420c062f91d0f80f3d63b5",
+          "comparison_status": "official_source_artifact_comparison_completed",
+          "nonzero_rates_verified": true,
+          "zero_rate_verified": "not_applicable"
+        }
+      },
+      "completed_gate_count": 11,
       "completed_release_gates": [
+        "article_10_verified",
+        "article_11_verified",
+        "article_12_verified",
+        "clean_text_verified",
         "mli_overlay_verified",
         "mli_status_verified",
         "official_document_hash_verified",
@@ -722,14 +814,14 @@
         "withholding_effective_date_verified"
       ],
       "fail_closed": true,
-      "primary_text_release_verified": false,
+      "primary_text_release_verified": true,
       "production_ready": false,
       "release_gate": {
-        "article_10_verified": false,
-        "article_11_verified": false,
-        "article_12_verified": false,
+        "article_10_verified": true,
+        "article_11_verified": true,
+        "article_12_verified": true,
         "authentic_languages_verified": false,
-        "clean_text_verified": false,
+        "clean_text_verified": true,
         "end_to_end_tests_passed": false,
         "legal_rule_mapping_verified": false,
         "mli_overlay_verified": true,
@@ -743,13 +835,9 @@
         "withholding_effective_date_verified": true
       },
       "release_status": "blocked",
-      "remaining_gate_count": 9,
+      "remaining_gate_count": 5,
       "remaining_release_gates": [
-        "article_10_verified",
-        "article_11_verified",
-        "article_12_verified",
         "authentic_languages_verified",
-        "clean_text_verified",
         "end_to_end_tests_passed",
         "legal_rule_mapping_verified",
         "official_english_version_assessed",
@@ -760,9 +848,34 @@
     },
     {
       "active_rule_allowed": false,
-      "article_evidence": {},
-      "completed_gate_count": 7,
+      "article_evidence": {
+        "10": {
+          "article_text_sha256": "ed33c1dce5612689a1ec1c1408cf1f2bb376b1ce2c2e6272eeeba91614d53f72",
+          "comparison_status": "official_source_artifact_comparison_completed",
+          "nonzero_rates_verified": true,
+          "zero_rate_verified": "not_applicable"
+        },
+        "11": {
+          "article_text_sha256": "ac42f4c20749e11f09a1cb8085e45f9eb66e25b7748320315389dcb37e745a55",
+          "comparison_status": "official_source_artifact_comparison_completed",
+          "nonzero_rates_verified": true,
+          "zero_rate_verified": "not_applicable"
+        },
+        "12": {
+          "article_text_sha256": "91757852e289183c97ee1e9e5761e777704fd2490946d0f371be731af68d8cf3",
+          "comparison_status": "nonzero_components_verified_zero_rate_pending",
+          "nonzero_rates_verified": true,
+          "zero_rate_basis_type": "category_specific_source_exemption",
+          "zero_rate_verification_status": "zero_rate_scope_verified",
+          "zero_rate_verified": true
+        }
+      },
+      "completed_gate_count": 11,
       "completed_release_gates": [
+        "article_10_verified",
+        "article_11_verified",
+        "article_12_verified",
+        "clean_text_verified",
         "mli_overlay_verified",
         "mli_status_verified",
         "official_document_hash_verified",
@@ -772,14 +885,14 @@
         "withholding_effective_date_verified"
       ],
       "fail_closed": true,
-      "primary_text_release_verified": false,
+      "primary_text_release_verified": true,
       "production_ready": false,
       "release_gate": {
-        "article_10_verified": false,
-        "article_11_verified": false,
-        "article_12_verified": false,
+        "article_10_verified": true,
+        "article_11_verified": true,
+        "article_12_verified": true,
         "authentic_languages_verified": false,
-        "clean_text_verified": false,
+        "clean_text_verified": true,
         "end_to_end_tests_passed": false,
         "legal_rule_mapping_verified": false,
         "mli_overlay_verified": true,
@@ -793,13 +906,9 @@
         "withholding_effective_date_verified": true
       },
       "release_status": "blocked",
-      "remaining_gate_count": 9,
+      "remaining_gate_count": 5,
       "remaining_release_gates": [
-        "article_10_verified",
-        "article_11_verified",
-        "article_12_verified",
         "authentic_languages_verified",
-        "clean_text_verified",
         "end_to_end_tests_passed",
         "legal_rule_mapping_verified",
         "official_english_version_assessed",
@@ -879,9 +988,38 @@
     },
     {
       "active_rule_allowed": false,
-      "article_evidence": {},
-      "completed_gate_count": 7,
+      "article_evidence": {
+        "10": {
+          "article_text_sha256": "1d71f0c86db1e3bb24280045553070cd8b28a383d707d108f2060f8359b573c5",
+          "comparison_status": "nonzero_components_verified_zero_rate_pending",
+          "nonzero_rates_verified": true,
+          "zero_rate_basis_type": "explicit_numeric_zero_rate",
+          "zero_rate_verification_status": "zero_rate_scope_verified",
+          "zero_rate_verified": true
+        },
+        "11": {
+          "article_text_sha256": "ad09de119530bc3d2ff06a26058b516a47e435689cf713f38d20ad2a9b634014",
+          "comparison_status": "nonzero_components_verified_zero_rate_pending",
+          "nonzero_rates_verified": true,
+          "zero_rate_basis_type": "exclusive_residence_state_taxation",
+          "zero_rate_verification_status": "zero_rate_scope_verified",
+          "zero_rate_verified": true
+        },
+        "12": {
+          "article_text_sha256": "1600f02a5a27baa377334f5c2b09d36d56d4e3f5c646b1f9dfdafd9dcc30d3eb",
+          "comparison_status": "nonzero_components_verified_zero_rate_pending",
+          "nonzero_rates_verified": true,
+          "zero_rate_basis_type": "category_specific_residence_state_taxation",
+          "zero_rate_verification_status": "zero_rate_scope_verified",
+          "zero_rate_verified": true
+        }
+      },
+      "completed_gate_count": 11,
       "completed_release_gates": [
+        "article_10_verified",
+        "article_11_verified",
+        "article_12_verified",
+        "clean_text_verified",
         "mli_overlay_verified",
         "mli_status_verified",
         "official_document_hash_verified",
@@ -891,14 +1029,14 @@
         "withholding_effective_date_verified"
       ],
       "fail_closed": true,
-      "primary_text_release_verified": false,
+      "primary_text_release_verified": true,
       "production_ready": false,
       "release_gate": {
-        "article_10_verified": false,
-        "article_11_verified": false,
-        "article_12_verified": false,
+        "article_10_verified": true,
+        "article_11_verified": true,
+        "article_12_verified": true,
         "authentic_languages_verified": false,
-        "clean_text_verified": false,
+        "clean_text_verified": true,
         "end_to_end_tests_passed": false,
         "legal_rule_mapping_verified": false,
         "mli_overlay_verified": true,
@@ -912,13 +1050,9 @@
         "withholding_effective_date_verified": true
       },
       "release_status": "blocked",
-      "remaining_gate_count": 9,
+      "remaining_gate_count": 5,
       "remaining_release_gates": [
-        "article_10_verified",
-        "article_11_verified",
-        "article_12_verified",
         "authentic_languages_verified",
-        "clean_text_verified",
         "end_to_end_tests_passed",
         "legal_rule_mapping_verified",
         "official_english_version_assessed",
@@ -929,9 +1063,32 @@
     },
     {
       "active_rule_allowed": false,
-      "article_evidence": {},
-      "completed_gate_count": 7,
+      "article_evidence": {
+        "10": {
+          "article_text_sha256": "1bebd50d5b75630e8f6ff5f669f025eb07ae8cb97494ac48a82b5bea0bea7b20",
+          "comparison_status": "official_source_artifact_comparison_completed",
+          "nonzero_rates_verified": true,
+          "zero_rate_verified": "not_applicable"
+        },
+        "11": {
+          "article_text_sha256": "5e7aee35d2081d1e2f765e891dd6266a0dec650929a8e04aa04a85b356b396bd",
+          "comparison_status": "official_source_artifact_comparison_completed",
+          "nonzero_rates_verified": true,
+          "zero_rate_verified": "not_applicable"
+        },
+        "12": {
+          "article_text_sha256": "6d1c81ce351d4ed2ba7245f66e5b523ce36e1706fb847c42a5df4af665cacb3a",
+          "comparison_status": "official_source_artifact_comparison_completed",
+          "nonzero_rates_verified": true,
+          "zero_rate_verified": "not_applicable"
+        }
+      },
+      "completed_gate_count": 11,
       "completed_release_gates": [
+        "article_10_verified",
+        "article_11_verified",
+        "article_12_verified",
+        "clean_text_verified",
         "mli_overlay_verified",
         "mli_status_verified",
         "official_document_hash_verified",
@@ -941,14 +1098,14 @@
         "withholding_effective_date_verified"
       ],
       "fail_closed": true,
-      "primary_text_release_verified": false,
+      "primary_text_release_verified": true,
       "production_ready": false,
       "release_gate": {
-        "article_10_verified": false,
-        "article_11_verified": false,
-        "article_12_verified": false,
+        "article_10_verified": true,
+        "article_11_verified": true,
+        "article_12_verified": true,
         "authentic_languages_verified": false,
-        "clean_text_verified": false,
+        "clean_text_verified": true,
         "end_to_end_tests_passed": false,
         "legal_rule_mapping_verified": false,
         "mli_overlay_verified": true,
@@ -962,13 +1119,9 @@
         "withholding_effective_date_verified": true
       },
       "release_status": "blocked",
-      "remaining_gate_count": 9,
+      "remaining_gate_count": 5,
       "remaining_release_gates": [
-        "article_10_verified",
-        "article_11_verified",
-        "article_12_verified",
         "authentic_languages_verified",
-        "clean_text_verified",
         "end_to_end_tests_passed",
         "legal_rule_mapping_verified",
         "official_english_version_assessed",
@@ -979,9 +1132,32 @@
     },
     {
       "active_rule_allowed": false,
-      "article_evidence": {},
-      "completed_gate_count": 7,
+      "article_evidence": {
+        "10": {
+          "article_text_sha256": "ef684f3691fbf5173975ec20e4c001c2ed6fda6816d34b21079d6cee209cbbe2",
+          "comparison_status": "official_source_artifact_comparison_completed",
+          "nonzero_rates_verified": true,
+          "zero_rate_verified": "not_applicable"
+        },
+        "11": {
+          "article_text_sha256": "c68aebb7e1a8c460d8e7660daf45e9f10e2b7fb92eb3d2ad7776904c57d213d9",
+          "comparison_status": "official_source_artifact_comparison_completed",
+          "nonzero_rates_verified": true,
+          "zero_rate_verified": "not_applicable"
+        },
+        "12": {
+          "article_text_sha256": "2bc958f7a3f63c744dffd1f5b282b179a7edf6b7543490e81eb330d563355c5a",
+          "comparison_status": "official_source_artifact_comparison_completed",
+          "nonzero_rates_verified": true,
+          "zero_rate_verified": "not_applicable"
+        }
+      },
+      "completed_gate_count": 11,
       "completed_release_gates": [
+        "article_10_verified",
+        "article_11_verified",
+        "article_12_verified",
+        "clean_text_verified",
         "mli_overlay_verified",
         "mli_status_verified",
         "official_document_hash_verified",
@@ -991,14 +1167,14 @@
         "withholding_effective_date_verified"
       ],
       "fail_closed": true,
-      "primary_text_release_verified": false,
+      "primary_text_release_verified": true,
       "production_ready": false,
       "release_gate": {
-        "article_10_verified": false,
-        "article_11_verified": false,
-        "article_12_verified": false,
+        "article_10_verified": true,
+        "article_11_verified": true,
+        "article_12_verified": true,
         "authentic_languages_verified": false,
-        "clean_text_verified": false,
+        "clean_text_verified": true,
         "end_to_end_tests_passed": false,
         "legal_rule_mapping_verified": false,
         "mli_overlay_verified": true,
@@ -1012,13 +1188,9 @@
         "withholding_effective_date_verified": true
       },
       "release_status": "blocked",
-      "remaining_gate_count": 9,
+      "remaining_gate_count": 5,
       "remaining_release_gates": [
-        "article_10_verified",
-        "article_11_verified",
-        "article_12_verified",
         "authentic_languages_verified",
-        "clean_text_verified",
         "end_to_end_tests_passed",
         "legal_rule_mapping_verified",
         "official_english_version_assessed",
@@ -1098,5 +1270,11 @@
     }
   ],
   "released_pair_count": 0,
-  "schema_version": 1
+  "schema_version": 1,
+  "semantics": {
+    "all_clean_final23_primary_articles_verified": true,
+    "effective_date_protocol_mli_and_rule_mapping_remain_separate_release_layers": true,
+    "full_transaction_legal_verification_complete": false,
+    "primary_rate_comparison_complete": true
+  }
 }

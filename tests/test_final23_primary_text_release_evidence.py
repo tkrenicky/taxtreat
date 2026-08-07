@@ -34,8 +34,8 @@ def test_primary_text_release_split():
     data = load()
 
     assert data["pair_count"] == 18
-    assert data["primary_text_verified_pair_count"] == 10
-    assert data["primary_text_pending_pair_count"] == 8
+    assert data["primary_text_verified_pair_count"] == 18
+    assert data["primary_text_pending_pair_count"] == 0
 
 
 def test_verified_pairs_close_four_text_gates():
@@ -69,23 +69,20 @@ def test_verified_pairs_close_four_text_gates():
             )
 
 
-def test_pending_pairs_remain_at_seven_gates():
+def test_every_pair_has_all_primary_text_gates():
     data = load()
 
     for row in data["records"]:
-        if row["treaty_pair_id"] in VERIFIED:
-            continue
-
         gate = row["release_gate"]
 
-        assert row["primary_text_release_verified"] is False
-        assert gate["clean_text_verified"] is False
-        assert gate["article_10_verified"] is False
-        assert gate["article_11_verified"] is False
-        assert gate["article_12_verified"] is False
+        assert row["primary_text_release_verified"] is True
+        assert gate["clean_text_verified"] is True
+        assert gate["article_10_verified"] is True
+        assert gate["article_11_verified"] is True
+        assert gate["article_12_verified"] is True
 
-        assert row["completed_gate_count"] == 7
-        assert row["remaining_gate_count"] == 9
+        assert row["completed_gate_count"] == 11
+        assert row["remaining_gate_count"] == 5
 
 
 def test_every_pair_remains_fail_closed():
