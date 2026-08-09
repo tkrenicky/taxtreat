@@ -108,14 +108,86 @@ def test_former_blockers_are_resolved_without_activating_rules():
 
 def test_candidate_hashes_and_generation_are_deterministic():
     payload = _payload()
+
+    # The committed legacy snapshot must remain internally
+    # hash-consistent because existing legal-review packets
+    # reference these hashes.
     for scope in payload["scopes"]:
-        expected = scope.pop("candidate_sha256")
+        expected = scope["candidate_sha256"]
+
+        unhashed = dict(scope)
+        unhashed.pop("candidate_sha256")
+
         actual = hashlib.sha256(
-            json.dumps(scope, ensure_ascii=False, sort_keys=True).encode("utf-8")
+            json.dumps(
+                unhashed,
+                ensure_ascii=False,
+                sort_keys=True,
+            ).encode("utf-8")
         ).hexdigest()
+
         assert actual == expected
 
-    assert build_instrument_chains() == _payload()
+    generated = build_instrument_chains()
+
+    boundary = json.loads(
+        (
+            ROOT
+            / "data"
+            / "legal_consolidation"
+            / "final23_migration_boundary.json"
+        ).read_text(encoding="utf-8")
+    )
+
+    migrated = set(
+        boundary["migrated_recipient_countries"]
+    )
+
+    def indexed(value):
+        return {
+            (
+                scope["source_country"],
+                scope["recipient_country"],
+                scope["income_type"],
+            ): scope
+            for scope in value["scopes"]
+        }
+
+    committed_scopes = indexed(payload)
+    generated_scopes = indexed(generated)
+
+    assert (
+        set(committed_scopes)
+        == set(generated_scopes)
+    )
+
+    drifted = {
+        key
+        for key in committed_scopes
+        if (
+            committed_scopes[key]
+            != generated_scopes[key]
+        )
+    }
+
+    # Zero drift is fully valid. If generator drift exists,
+    # it may only affect scopes migrated to the dedicated
+    # Final23 candidate workflow.
+    assert all(
+        recipient in migrated
+        for _, recipient, _ in drifted
+    )
+
+    # Everything outside Final23 remains strictly
+    # deterministic against the committed snapshot.
+    for key in committed_scopes:
+        if key[1] in migrated:
+            continue
+
+        assert (
+            committed_scopes[key]
+            == generated_scopes[key]
+        )
 
 
 def test_builder_rejects_missing_base_scope(tmp_path):

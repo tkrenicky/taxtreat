@@ -1,6 +1,6 @@
 {
   "country_pair": {
-    "recipient_country": "JP",
+    "recipient_country": "HK",
     "source_country": "CZ"
   },
   "dataset_release": "final23-runtime-catalog-2026-08-09.3",
@@ -27,22 +27,24 @@
       ],
       "dataset_release": "final23-runtime-catalog-2026-08-09.3",
       "effect": "rate",
+      "effective_from": "2013-01-01",
       "evidence_source_ids": [
-        "CZ-MF-JP-4344B37716FA",
+        "CZ-MF-HK-2E00616C828C",
         "CZ-ZDP-2026-04-01-OPEN-DATA",
-        "SRC-DAF33E409B334A94"
+        "SRC-D025022024F9F174"
       ],
       "income_type": "dividend",
       "legal_instrument": "treaty",
       "legal_layer": "treaty",
       "priority": 101,
-      "rate": 10.0,
-      "recipient_country": "JP",
-      "rule_id": "CZ-JP-DIVIDEND-TREATY-1",
+      "rate": 5.0,
+      "recipient_country": "HK",
+      "rule_id": "CZ-HK-DIVIDEND-TREATY-1",
       "source_country": "CZ",
-      "source_excerpt_hash": "9d1264e72eb78279ade335d84047e96982f63e86a0d1b25b45449ac4cc939242",
-      "source_id": "SRC-DAF33E409B334A94",
-      "source_text": "10% hrubé částky dividend, jestliže příjemce\nje společností, která vlastní nejméně 25 % po-\ndílů spojených s hlasovacím právem na spo-\nlečnosti vyplácející dividendy po dobu šesti\nměsíců bezprostředně předcházejících datum\nvýplaty takových dividend,\n15% hrubé částky dividend ve všech ostat-\nních případech.\nTento odstavec se nedotkne zdanění získu spo-\nlečnosli, ze kterého jsou dividendy vypláceny.",
+      "source_excerpt_hash": "91015f28c551b8c1ae080a48d4a9514bbdbaec7a2a7c2675cc9d7ddc82589cad",
+      "source_id": "SRC-D025022024F9F174",
+      "source_text": "Tyto dividendy však mohou být rovněž zdaněny ve smluvní straně, jejíž je společnost, která je vyplácí, rezidentem, a to podle právních předpisů této strany, avšak jestliže skutečný vlastník dividend je rezidentem druhé smluvní strany, daň takto uložená nepřesáhne 5 procent hrubé částky dividend.\nPříslušné úřady smluvních stran upraví vzájemnou dohodou způsob aplikace tohoto omezení.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.",
+      "source_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=24174",
       "verification_status": "needs_review"
     },
     {
@@ -66,22 +68,24 @@
       ],
       "dataset_release": "final23-runtime-catalog-2026-08-09.3",
       "effect": "rate",
+      "effective_from": "2013-01-01",
       "evidence_source_ids": [
-        "CZ-MF-JP-4344B37716FA",
+        "CZ-MF-HK-2E00616C828C",
         "CZ-ZDP-2026-04-01-OPEN-DATA",
-        "SRC-DAF33E409B334A94"
+        "SRC-D025022024F9F174"
       ],
       "income_type": "interest",
       "legal_instrument": "treaty",
       "legal_layer": "treaty",
       "priority": 101,
-      "rate": 10.0,
-      "recipient_country": "JP",
-      "rule_id": "CZ-JP-INTEREST-TREATY-1",
+      "rate": 0.0,
+      "recipient_country": "HK",
+      "rule_id": "CZ-HK-INTEREST-TREATY-1",
       "source_country": "CZ",
-      "source_excerpt_hash": "ab425a2a0a00e4584aa055bc121814d87efeb3fd2901194c7caea3539b474884",
-      "source_id": "SRC-DAF33E409B334A94",
-      "source_text": "Tyto úroky však mohou být zdaněny ve smluvním státě, ve kterém je jejich zdroj, a to podle právních předpisů tohoto smluvního státu. Daň takto stanovená však nepřesáhne 10 % hrubé částky úroků.",
+      "source_excerpt_hash": "81f51471f20443019422e90f14f197a66a789d353da7508f149e23d4f75b80d8",
+      "source_id": "SRC-D025022024F9F174",
+      "source_text": "Úroky mající zdroj v jedné smluvní straně a skutečně vlastněné rezidentem druhé smluvní strany podléhají zdanění jen v této druhé straně.",
+      "source_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=24174",
       "verification_status": "needs_review"
     },
     {
@@ -105,22 +109,24 @@
       ],
       "dataset_release": "final23-runtime-catalog-2026-08-09.3",
       "effect": "rate",
+      "effective_from": "2013-01-01",
       "evidence_source_ids": [
-        "CZ-MF-JP-4344B37716FA",
+        "CZ-MF-HK-2E00616C828C",
         "CZ-ZDP-2026-04-01-OPEN-DATA",
-        "SRC-DAF33E409B334A94"
+        "SRC-D025022024F9F174"
       ],
       "income_type": "royalty",
       "legal_instrument": "treaty",
       "legal_layer": "treaty",
       "priority": 101,
       "rate": 10.0,
-      "recipient_country": "JP",
-      "rule_id": "CZ-JP-ROYALTY-TREATY-1",
+      "recipient_country": "HK",
+      "rule_id": "CZ-HK-ROYALTY-TREATY-1",
       "source_country": "CZ",
-      "source_excerpt_hash": "417c56aef7d4d665553125328c7c89a9b4232517ad4f2c19b89e16c0510add23",
-      "source_id": "SRC-DAF33E409B334A94",
-      "source_text": "a) Průmyslové ličenční poplatky mohou být.\nzdaněny ve smluvním státě, ve kterém je jejich\nzdroj, a to podle právních předpisů tohoto smluv-\nního státu. Daň takto stanovená však nepřesáhne\n10 % hrubé částky licenčních poplatků.",
+      "source_excerpt_hash": "41a542562ae4dc3cc8a4e14dcdb9876ad1a1976fb01e2359918c7dd780ef92f3",
+      "source_id": "SRC-D025022024F9F174",
+      "source_text": "Tyto licenční poplatky však mohou být rovněž zdaněny ve smluvní straně, ve které mají zdroj, a to podle právních předpisů této strany, avšak jestliže skutečný vlastník licenčních poplatků je rezidentem druhé smluvní strany, daň takto uložená nepřesáhne 10 procent hrubé částky licenčních poplatků.\nPříslušné úřady smluvních stran upraví vzájemnou dohodou způsob aplikace tohoto omezení.",
+      "source_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=24174",
       "verification_status": "needs_review"
     }
   ],

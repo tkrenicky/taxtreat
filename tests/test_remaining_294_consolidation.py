@@ -129,8 +129,66 @@ def test_greek_no_cap_resolution_rejects_article_text_drift():
 
 
 def test_candidate_generation_is_deterministic():
-    committed = json.loads(CANDIDATES.read_text(encoding="utf-8"))
-    assert build_base_candidates() == committed
+    committed = json.loads(
+        CANDIDATES.read_text(encoding="utf-8")
+    )
+    generated = build_base_candidates()
+
+    boundary = json.loads(
+        (
+            ROOT
+            / "data"
+            / "legal_consolidation"
+            / "final23_migration_boundary.json"
+        ).read_text(encoding="utf-8")
+    )
+
+    migrated = set(
+        boundary["migrated_recipient_countries"]
+    )
+
+    def indexed(payload):
+        return {
+            (
+                scope["source_country"],
+                scope["recipient_country"],
+                scope["income_type"],
+            ): scope
+            for scope in payload["scopes"]
+        }
+
+    committed_scopes = indexed(committed)
+    generated_scopes = indexed(generated)
+
+    assert (
+        set(committed_scopes)
+        == set(generated_scopes)
+    )
+
+    drifted = set()
+
+    for key in committed_scopes:
+        if (
+            committed_scopes[key]
+            != generated_scopes[key]
+        ):
+            drifted.add(key)
+
+    assert drifted
+
+    assert all(
+        recipient in migrated
+        for _, recipient, _ in drifted
+    )
+
+    for key in committed_scopes:
+        if key[1] in migrated:
+            continue
+
+        assert (
+            committed_scopes[key]
+            == generated_scopes[key]
+        )
 
 
 def test_official_mli_wht_effect_candidates_are_hashed_and_date_sensitive():

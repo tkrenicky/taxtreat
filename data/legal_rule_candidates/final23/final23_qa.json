@@ -1,6 +1,6 @@
 {
   "country_pair": {
-    "recipient_country": "BW",
+    "recipient_country": "QA",
     "source_country": "CZ"
   },
   "dataset_release": "final23-runtime-catalog-2026-08-09.3",
@@ -27,21 +27,63 @@
       ],
       "dataset_release": "final23-runtime-catalog-2026-08-09.3",
       "effect": "rate",
+      "effective_from": "2023-01-01",
       "evidence_source_ids": [
         "CZ-ZDP-2026-04-01-OPEN-DATA",
-        "SRC-906AECF6EEA9F28C"
+        "SRC-A4B3C2125350DA5C"
       ],
       "income_type": "dividend",
       "legal_instrument": "treaty",
       "legal_layer": "treaty",
       "priority": 101,
       "rate": 5.0,
-      "recipient_country": "BW",
-      "rule_id": "CZ-BW-DIVIDEND-TREATY-1",
+      "recipient_country": "QA",
+      "rule_id": "CZ-QA-DIVIDEND-TREATY-1",
       "source_country": "CZ",
-      "source_excerpt_hash": "c13d44b3a539f087c414a90d5ecb2fbb74ddffc755af5080f50975743b72a399",
-      "source_id": "SRC-906AECF6EEA9F28C",
-      "source_text": "Tyto dividendy však mohou být rovněž zdaněny ve smluvním státě, jehož je společnost,\nkterá je vyplácí, rezidentem, a to podle právních předpisů tohoto státu, avšak jestliže skutečný\nvlastník dividend je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne 5\nprocent hrubé částky dividend.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace tohoto omezení.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.",
+      "source_excerpt_hash": "1fe84e4239a807ceecee92e6b36734153b775947e76818708eb70002e60c3dad",
+      "source_id": "SRC-A4B3C2125350DA5C",
+      "source_text": "5 procent hrubé částky dividend, jestliže skutečným vlastníkem je společnost, která přímo\ndrží alespoň 10 procent kapitálu společnosti, která dividendy vyplácí;",
+      "source_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39503",
+      "verification_status": "needs_review"
+    },
+    {
+      "article": 10,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "dataset_release": "final23-runtime-catalog-2026-08-09.3",
+      "effect": "rate",
+      "effective_from": "2023-01-01",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "SRC-A4B3C2125350DA5C"
+      ],
+      "income_type": "dividend",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "priority": 102,
+      "rate": 10.0,
+      "recipient_country": "QA",
+      "rule_id": "CZ-QA-DIVIDEND-TREATY-2",
+      "source_country": "CZ",
+      "source_excerpt_hash": "9082a1b6d1125d4be8ac0a7d47c07787405456d3008df7f71edda83f6438bad1",
+      "source_id": "SRC-A4B3C2125350DA5C",
+      "source_text": "10 procent hrubé částky dividend ve všech ostatních případech.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace těchto omezení.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.",
+      "source_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39503",
       "verification_status": "needs_review"
     },
     {
@@ -65,59 +107,23 @@
       ],
       "dataset_release": "final23-runtime-catalog-2026-08-09.3",
       "effect": "rate",
+      "effective_from": "2023-01-01",
       "evidence_source_ids": [
         "CZ-ZDP-2026-04-01-OPEN-DATA",
-        "SRC-906AECF6EEA9F28C"
+        "SRC-A4B3C2125350DA5C"
       ],
       "income_type": "interest",
       "legal_instrument": "treaty",
       "legal_layer": "treaty",
       "priority": 101,
       "rate": 0.0,
-      "recipient_country": "BW",
-      "rule_id": "CZ-BW-INTEREST-TREATY-1",
+      "recipient_country": "QA",
+      "rule_id": "CZ-QA-INTEREST-TREATY-1",
       "source_country": "CZ",
-      "source_excerpt_hash": "13b3328e25ef407c86f9cfd5a8a39d0e63bdf00f4a1d85282cfcd2798449f7f9",
-      "source_id": "SRC-906AECF6EEA9F28C",
-      "source_text": "Úroky mající zdroj v jednom smluvním státě a skutečně vlastněné rezidentem druhého\nsmluvního státu podléhají bez ohledu na ustanovení odstavce 2 zdanění jen v tomto druhém\nstátě, jestliže jsou tyto úroky vypláceny:",
-      "verification_status": "needs_review"
-    },
-    {
-      "article": 11,
-      "conditions": [
-        {
-          "fact": "recipient_is_treaty_resident",
-          "operator": "==",
-          "value": true
-        },
-        {
-          "fact": "beneficial_owner",
-          "operator": "==",
-          "value": true
-        },
-        {
-          "fact": "permanent_establishment_connection",
-          "operator": "==",
-          "value": false
-        }
-      ],
-      "dataset_release": "final23-runtime-catalog-2026-08-09.3",
-      "effect": "rate",
-      "evidence_source_ids": [
-        "CZ-ZDP-2026-04-01-OPEN-DATA",
-        "SRC-906AECF6EEA9F28C"
-      ],
-      "income_type": "interest",
-      "legal_instrument": "treaty",
-      "legal_layer": "treaty",
-      "priority": 102,
-      "rate": 7.5,
-      "recipient_country": "BW",
-      "rule_id": "CZ-BW-INTEREST-TREATY-2",
-      "source_country": "CZ",
-      "source_excerpt_hash": "e6391f4ce621b36777aff53202d7b3d467151c000c5f3f9d477a5958947f76f0",
-      "source_id": "SRC-906AECF6EEA9F28C",
-      "source_text": "Tyto úroky však mohou být rovněž zdaněny ve smluvním státě, v němž mají zdroj, a to\npodle právních předpisů tohoto státu, avšak jestliže skutečný vlastník úroků je rezidentem\ndruhého smluvního státu, daň takto uložená nepřesáhne 7,5 procent hrubé částky úroků.",
+      "source_excerpt_hash": "526568f96ee06aef569c7dc04d1c912081a8f2d4484009268c6144b900b23b44",
+      "source_id": "SRC-A4B3C2125350DA5C",
+      "source_text": "Úroky mající zdroj v jednom smluvním státě a skutečně vlastněné rezidentem druhého\nsmluvního státu podléhají zdanění jen v tomto druhém státě.",
+      "source_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39503",
       "verification_status": "needs_review"
     },
     {
@@ -141,21 +147,23 @@
       ],
       "dataset_release": "final23-runtime-catalog-2026-08-09.3",
       "effect": "rate",
+      "effective_from": "2023-01-01",
       "evidence_source_ids": [
         "CZ-ZDP-2026-04-01-OPEN-DATA",
-        "SRC-906AECF6EEA9F28C"
+        "SRC-A4B3C2125350DA5C"
       ],
       "income_type": "royalty",
       "legal_instrument": "treaty",
       "legal_layer": "treaty",
       "priority": 101,
-      "rate": 7.5,
-      "recipient_country": "BW",
-      "rule_id": "CZ-BW-ROYALTY-TREATY-1",
+      "rate": 10.0,
+      "recipient_country": "QA",
+      "rule_id": "CZ-QA-ROYALTY-TREATY-1",
       "source_country": "CZ",
-      "source_excerpt_hash": "eb7ec0b70660eec47b6983883e84843b14a6aefea3d5cea3f8e9cd8105f70a6b",
-      "source_id": "SRC-906AECF6EEA9F28C",
-      "source_text": "Tyto licenční poplatky a poplatky za technické služby však mohou být rovněž zdaněny ve\nsmluvním státě,\"v němž mají zdroj, a to podle právních předpisů tohoto státu, avšak jestliže\nskutečný vlastník licenčních poplatků nebo poplatků za technické služby je rezidentem\ndruhého smluvního státu, daň takto uložená nepřesáhne 7,5 procent hrubé částky licenčních\npoplatků nebo poplatků za technické služby.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace tohoto omezení.",
+      "source_excerpt_hash": "d3dec2fe6f297fd9c9224585e5b96f06f2365d2874c7f472598b50d0647b32db",
+      "source_id": "SRC-A4B3C2125350DA5C",
+      "source_text": "Tyto licenční poplatky však mohou být rovněž zdaněny ve smluvním státě, v němž mají\nzdroj, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník licenčních\npoplatků je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne 10 procent\nhrubé částky licenčních poplatků.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace tohoto omezení.",
+      "source_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39503",
       "verification_status": "needs_review"
     }
   ],

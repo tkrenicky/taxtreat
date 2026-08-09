@@ -8,7 +8,7 @@ from taxtreat.engine.legal_rule_engine import (
     evaluate_legal_rules,
 )
 
-RULE_DIR = Path("data/legal_rules")
+RULE_DIR = Path("data/legal_rule_candidates/final23")
 AUDIT_PATH = Path(
     "data/legal_reviews/global_cz_outbound/"
     "final23_runtime_catalog_integration.json"
@@ -120,3 +120,18 @@ def test_no_candidate_is_marked_active_or_verified():
 
     assert audit["verified_rule_count"] == 0
     assert audit["active_rule_count"] == 0
+
+
+def test_final23_candidates_are_isolated_from_production_catalog():
+    production_dir = Path("data/legal_rules")
+    candidate_dir = Path(
+        "data/legal_rule_candidates/final23"
+    )
+
+    assert len(
+        list(candidate_dir.glob("final23_*.json"))
+    ) == 18
+
+    assert not list(
+        production_dir.glob("final23_*.json")
+    )

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "migration_id": "final23-stage4-runtime-candidate-migration-2026-08-09",
+  "migrated_recipient_countries": [
+    "AD",
+    "BA",
+    "BB",
+    "BH",
+    "BW",
+    "CL",
+    "CM",
+    "CO",
+    "CY",
+    "GB",
+    "GH",
+    "HK",
+    "JP",
+    "KR",
+    "LU",
+    "PA",
+    "PL",
+    "QA"
+  ],
+  "income_types": [
+    "dividend",
+    "interest",
+    "royalty"
+  ],
+  "migrated_scope_count": 54,
+  "legacy_snapshot": {
+    "base_candidates": "data/legal_consolidation/remaining_294_base_candidates.json",
+    "instrument_chains": "data/legal_consolidation/remaining_294_instrument_chains.json",
+    "status": "frozen",
+    "reason": "Preserve existing legal-review candidate hashes and review provenance."
+  },
+  "current_candidate_catalog": {
+    "path": "data/legal_rule_candidates/final23",
+    "verification_status": "needs_review",
+    "production_autoload": false
+  },
+  "integrity_rules": {
+    "legacy_review_hashes_must_not_be_rewritten": true,
+    "generator_drift_allowed_only_for_migrated_final23_scopes": true,
+    "non_migrated_scopes_must_remain_deterministic": true,
+    "migration_does_not_constitute_legal_approval": true
+  }
+}

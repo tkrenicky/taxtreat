@@ -217,9 +217,34 @@ def require_analysis_source_release(
     treaty_pair_id = f"{source}-{recipient}"
 
     try:
-        return get_source_release(treaty_pair_id)
-    except SourceNotReleasedError:
-        return None
+        release = get_source_release(treaty_pair_id)
+    except SourceNotReleasedError as exc:
+        raise HTTPException(
+            status_code=409,
+            detail={
+                "code": "SOURCE_NOT_RELEASED",
+                "treaty_pair_id": treaty_pair_id,
+                "release_status": "not_registered",
+                "release_blockers": [
+                    "production_source_release_missing"
+                ],
+            },
+        ) from exc
+
+    if not release.is_released:
+        raise HTTPException(
+            status_code=409,
+            detail={
+                "code": "SOURCE_NOT_RELEASED",
+                "treaty_pair_id": treaty_pair_id,
+                "release_status":
+                    release.release_status,
+                "release_blockers":
+                    list(release.release_blockers),
+            },
+        )
+
+    return release
 
 
 @app.post("/analysis")

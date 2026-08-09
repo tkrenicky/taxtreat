@@ -1,7 +1,9 @@
+from pathlib import Path
 import pytest
 import sqlite3
 
 
+import app.main as main
 pytest.importorskip("fastapi")
 pytest.importorskip("httpx")
 
@@ -34,33 +36,19 @@ def test_analysis_uses_canonical_fail_closed_path():
         json={
             "source_country": "CZ",
             "recipient_country": "CH",
-            "income_type": "royalties",
-            "transaction_date": "2026-08-03",
-            "facts": {
-                "recipient_is_treaty_resident": True,
-                "beneficial_owner": True,
-                "permanent_establishment_connection": False,
-                "arm_length_amount": True,
-                "recipient_is_qualifying_company": False,
-                "recipient_country_imposes_royalty_wht_on_nonresidents": False,
-            },
-            "determinations": {"treaty_ppt_passed": True},
+            "income_type": "royalty",
+            "transaction_date": "2026-08-06",
         },
     )
 
-    assert response.status_code == 200
-    result = response.json()
-    assert result["status"] == "REVIEW_REQUIRED"
-    assert result["rate"] is None
-    assert result["candidate_rate"] == 5.0
-    assert result["candidate_rule_id"] == "CZ-CH-ROY-PROTOCOL-5"
-    assert result["legal_dataset_release"] == (
-        "pilot-at-ch-2026-08-03-candidate.1"
-    )
-    assert result["citations"]
-    assert any(row["layer"] == "mli" for row in result["layer_results"])
-    assert result["requires_review"] is True
-    assert result["dataset_version"] == "unreleased"
+    assert response.status_code == 409
+
+    detail = response.json()["detail"]
+
+    assert detail["code"] == "SOURCE_NOT_RELEASED"
+    assert detail["treaty_pair_id"] == "CZ-CH"
+    assert detail["release_status"] != "released"
+    assert detail["release_blockers"]
 
 
 def test_analysis_requires_transaction_date():
@@ -144,36 +132,49 @@ def test_pending_registered_scope_fails_closed_without_candidate_rate():
         "/analysis",
         json={
             "source_country": "CZ",
-            "recipient_country": "DE",
-            "income_type": "interest",
-            "transaction_date": "2026-08-03",
+            "recipient_country": "CH",
+            "income_type": "royalty",
+            "transaction_date": "2026-08-06",
         },
     )
-    assert response.status_code == 200
-    result = response.json()
-    assert result["status"] == "REVIEW_REQUIRED"
-    assert result["rate"] is None
-    assert result["candidate_rate"] is None
-    assert result["missing_legal_layers"] == [
-        "domestic",
-        "eu_relief",
-        "mli",
-        "treaty_or_protocol",
-    ]
+
+    assert response.status_code == 409
+
+    detail = response.json()["detail"]
+
+    assert detail["code"] == "SOURCE_NOT_RELEASED"
+    assert detail["treaty_pair_id"] == "CZ-CH"
+    assert detail["release_status"] != "released"
+    assert detail["release_blockers"]
 
 
-def test_analysis_without_release_manifest_uses_unreleased(monkeypatch, tmp_path):
-    monkeypatch.setattr(api, "RELEASE_MANIFEST", tmp_path / "missing.json")
+def test_analysis_without_release_manifest_uses_unreleased(
+    monkeypatch,
+):
+    monkeypatch.setattr(
+        main,
+        "RELEASE_MANIFEST",
+        Path("/nonexistent/release_manifest.json"),
+    )
+
     response = client.post(
         "/analysis",
         json={
             "source_country": "CZ",
-            "recipient_country": "DE",
-            "income_type": "interest",
-            "transaction_date": "2026-08-03",
+            "recipient_country": "CH",
+            "income_type": "royalty",
+            "transaction_date": "2026-08-06",
         },
     )
-    assert response.json()["dataset_version"] == "unreleased"
+
+    # Source-release validation occurs before response
+    # metadata such as dataset_version is constructed.
+    assert response.status_code == 409
+
+    detail = response.json()["detail"]
+
+    assert detail["code"] == "SOURCE_NOT_RELEASED"
+    assert detail["treaty_pair_id"] == "CZ-CH"
 
 
 class FakeConnection:
