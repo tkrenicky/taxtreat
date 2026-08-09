@@ -66,21 +66,34 @@ def test_reconciliation_covers_all_candidates():
     }) == 23
 
 
-def test_candidate_artifact_hashes_are_valid():
+def test_candidate_artifact_integrity_is_fail_closed_when_archive_missing():
     payload = load(OUTPUT)
 
     for row in payload["treaty_partners"]:
-        assert (
-            row[
-                "candidate_artifact_exists"
+        if row["candidate_artifact_exists"]:
+            assert row["candidate_actual_sha256"] == row[
+                "candidate_manifest_sha256"
             ]
-            is True
-        )
+            assert row["candidate_hash_valid"] is True
+        else:
+            assert row["candidate_actual_sha256"] is None
+            assert row["candidate_hash_valid"] is False
+            assert row["hash_relation"] == "not_comparable"
+            assert row["existing_article_extraction_reusable"] is False
+            assert row["requires_fresh_official_extraction"] is True
+            assert row["official_document_content_verified"] is False
+            assert row["production_ready"] is False
+            assert row["fail_closed"] is True
 
-        assert (
-            row["candidate_hash_valid"]
-            is True
-        )
+        for source in row["official_sources"]:
+            if source["artifact_exists"]:
+                assert source["artifact_actual_sha256"] == source[
+                    "artifact_manifest_sha256"
+                ]
+                assert source["artifact_hash_valid"] is True
+            else:
+                assert source["artifact_actual_sha256"] is None
+                assert source["artifact_hash_valid"] is False
 
 
 def test_article_hashes_are_preserved():

@@ -131,3 +131,69 @@ def test_analysis_stops_before_decision_engine(
 
     assert exc_info.value.status_code == 409
     assert called is False
+
+
+def test_released_source_handoff_preserves_needs_review(
+    monkeypatch,
+    tmp_path,
+):
+    captured = {}
+
+    def candidate_analysis(request):
+        captured["request"] = request
+        return SimpleNamespace(
+            status=SimpleNamespace(value="needs_review"),
+            rate=None,
+            candidate_rate=None,
+            eligible=None,
+            requires_review=True,
+            selected_rule_id=None,
+            candidate_rule_id=None,
+            applied_rule_ids=[],
+            overridden_rule_id=None,
+            missing_facts=[],
+            missing_legal_layers=["human_primary_legal_review"],
+            failed_conditions=[],
+            explanation="Candidate evidence remains under review.",
+            citations=[],
+            layer_results=[],
+            dataset_release="candidate-test-release",
+        )
+
+    manifest = tmp_path / "release_manifest.json"
+    manifest.write_text(
+        '{"dataset_version": "test-manifest"}',
+        encoding="utf-8",
+    )
+
+    monkeypatch.setattr(
+        main,
+        "require_analysis_source_release",
+        lambda source, recipient: None,
+    )
+    monkeypatch.setattr(
+        main,
+        "analyze_transaction",
+        candidate_analysis,
+    )
+    monkeypatch.setattr(
+        main,
+        "RELEASE_MANIFEST",
+        manifest,
+    )
+
+    response = main.analyze(
+        main.AnalysisPayload(
+            source_country="cz",
+            recipient_country="ae",
+            income_type="dividend",
+            transaction_date="2026-08-09",
+        )
+    )
+
+    assert captured["request"].source_country == "CZ"
+    assert captured["request"].recipient_country == "AE"
+    assert response["status"] == "needs_review"
+    assert response["rate"] is None
+    assert response["requires_review"] is True
+    assert response["dataset_version"] == "test-manifest"

@@ -108,8 +108,13 @@ def test_all_10_canonical_parsed_sources_resolve():
         )
 
 
-def test_all_10_sources_have_manifest_identity():
+def test_all_10_sources_have_manifest_identity_and_strict_hash_binding():
     intake = load(INTAKE)
+    manifest = load(SOURCE_MANIFEST)
+    manifest_by_source_id = {
+        row["source_id"]: row
+        for row in manifest["sources"]
+    }
 
     for entry in intake["entries"]:
 
@@ -127,12 +132,19 @@ def test_all_10_sources_have_manifest_identity():
             ROOT / source["artifact_uri"]
         )
 
-        assert artifact.is_file()
+        manifest_source = manifest_by_source_id[source["source_id"]]
 
-        assert (
-            digest(artifact)
-            == source["artifact_sha256"]
-        )
+        assert manifest_source["artifact_uri"] == source["artifact_uri"]
+        assert manifest_source["sha256"] == source["artifact_sha256"]
+        assert manifest_source["authority_class"] == "official"
+        assert manifest_source["official_urls"] == source["official_urls"]
+
+        # data/raw is a local evidence archive and is intentionally not
+        # committed. A clean clone therefore validates the tracked manifest
+        # binding. Whenever archived bytes are present, they must match the
+        # bound digest exactly; there is no permissive mismatch path.
+        if artifact.is_file():
+            assert digest(artifact) == source["artifact_sha256"]
 
 
 def test_source_manifest_itself_is_hash_bound():

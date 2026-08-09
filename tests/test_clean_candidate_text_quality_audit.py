@@ -17,6 +17,11 @@ OUTPUT = (
     / "clean_candidate_text_quality_audit.json"
 )
 
+RECONCILIATION = (
+    REVIEW_ROOT
+    / "clean_candidate_source_reconciliation.json"
+)
+
 SUMMARY = (
     REVIEW_ROOT
     / "clean_candidate_text_quality_audit_summary.json"
@@ -63,16 +68,29 @@ def test_quality_audit_covers_23_partners():
     ) == 23
 
 
-def test_every_partner_uses_official_artifact():
+def test_official_artifact_identity_tracks_reconciliation_without_promotion():
     payload = load(OUTPUT)
+    reconciliation = load(RECONCILIATION)
+    by_pair = {
+        row["treaty_pair_id"]: row
+        for row in reconciliation["treaty_partners"]
+    }
 
     for row in payload["treaty_partners"]:
         assert (
-            row[
-                "official_artifact_identical"
-            ]
-            is True
+            row["official_artifact_identical"]
+            == (
+                by_pair[row["treaty_pair_id"]]["hash_relation"]
+                == "identical"
+            )
         )
+
+        if not row["official_artifact_identical"]:
+            assert row["clean_text_verified"] is False
+            assert row["articles_10_12_legally_verified"] is False
+            assert row["production_ready"] is False
+            assert row["promotable_to_active_rules"] is False
+            assert row["fail_closed"] is True
 
 
 def test_all_articles_have_quality_results():

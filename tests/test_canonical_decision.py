@@ -5,6 +5,8 @@ from taxtreat.services.decision import (
     CanonicalAnalysisRequest,
     analyze_transaction,
 )
+from taxtreat.services.runtime_gate import RuntimeGateResult
+import taxtreat.services.decision as decision_service
 
 
 def request(**overrides):
@@ -107,3 +109,27 @@ def test_canonical_scoped_result_can_have_no_candidate_rate():
 
     assert result.candidate_rule_id is None
     assert result.missing_facts == ["determination:treaty_ppt_passed"]
+
+
+def test_runtime_gate_block_remains_review_required(monkeypatch):
+    monkeypatch.setattr(
+        decision_service,
+        "evaluate_runtime_gate",
+        lambda **kwargs: RuntimeGateResult(
+            applies=True,
+            allowed=False,
+            missing_facts=["official_status_instrument_effect"],
+            explanation="Status-instrument effect requires legal review.",
+        ),
+    )
+
+    result = analyze_transaction(request())
+
+    assert result.status == DecisionStatus.REVIEW_REQUIRED
+    assert result.requires_review is True
+    assert result.rate is None
+    assert result.eligible is False
+    assert result.missing_facts == ["official_status_instrument_effect"]
+    assert result.explanation == [
+        "Status-instrument effect requires legal review."
+    ]
