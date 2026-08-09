@@ -1,0 +1,1532 @@
+{
+  "batch": {
+    "batch_id": "stage5_remaining80_batch_01",
+    "countries": [
+      "AE",
+      "BE",
+      "BY",
+      "EE",
+      "GR",
+      "HR",
+      "KZ",
+      "MD",
+      "NG",
+      "NL"
+    ],
+    "country_count": 10,
+    "scope_count": 30
+  },
+  "canonical_base_treaty_source_resolution": {
+    "resolved": 10,
+    "unresolved": 0
+  },
+  "dataset_release": "stage5-remaining80-batch01-intake-2026-08-09.2",
+  "entries": [
+    {
+      "canonical_base_treaty_source": {
+        "artifact_sha256": "d23391e2d6c6387263e25d63787e595b0f97dcffefa4d438005a682f31744500",
+        "artifact_uri": "data/raw/treaty/d23391e2d6c63872.html",
+        "authority_class": "official",
+        "extraction_authority_class": "mirror",
+        "identity_status": "validated",
+        "identity_warnings": [],
+        "official_urls": [
+          "https://e-sbirka.gov.cz/sb/2024/206/0000-00-00",
+          "https://e-sbirka.gov.cz/sb/2024/206/0000-00-00?zalozka=text",
+          "https://e-sbirka.gov.cz/sb/2024/206?zalozka=text",
+          "https://e-sbirka.gov.cz/sb/2024/206",
+          "https://e-sbirka.gov.cz/sm/2024/206/0000-00-00",
+          "https://e-sbirka.gov.cz/sm/2024/206/0000-00-00?zalozka=text",
+          "https://e-sbirka.gov.cz/sm/2024/206?zalozka=text",
+          "https://e-sbirka.gov.cz/sm/2024/206"
+        ],
+        "parsed_path": "data/parsed/spojene_arabske_emiraty.json",
+        "parsed_sha256": "fcc7785e16b066e121ff9cc8d3b6bb43cea8acb3ef151d74d24ca98d1221d116",
+        "resolution_method": "base_instrument_title",
+        "resolution_status": "resolved_via_source_manifest",
+        "source_id": "SRC-15E5956B6144D75B",
+        "source_manifest_country": "Spojené arabské emiráty",
+        "source_manifest_dataset": "data/manifests/source_manifest.json",
+        "source_title": "206/2024 Sb."
+      },
+      "country": "AE",
+      "country_name": "Spojené arabské emiráty",
+      "intake_evidence_gaps": [],
+      "mli_effect_reference_present": false,
+      "official_instrument_inventory": {
+        "base_instruments": [
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "206/2024 Sb.",
+            "source_id": "CZ-MF-AE-3815248CC9B8",
+            "source_type": "base_treaty",
+            "url": "https://e-sbirka.gov.cz/sb/2024/206?zalozka=text"
+          }
+        ],
+        "dataset": "data/legal_consolidation/mf_inventory.json",
+        "entry_into_force": "2024-05-29",
+        "inventory_status": "official_inventory_captured",
+        "mli_listed": false,
+        "mli_notice_available": false,
+        "protocol_listed": false,
+        "related_instruments": [
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "Smlouva č. 276/1997 Sb.",
+            "source_id": "CZ-MF-AE-AB7B049A1951",
+            "source_type": "other_related_instrument",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=3082"
+          },
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "(Sdělení č. 122/2004 Sb.m.s.)",
+            "source_id": "CZ-MF-AE-FA58958A5F09",
+            "source_type": "status_or_amendment_notice",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=4296"
+          }
+        ],
+        "source_types": [
+          "base_treaty",
+          "other_related_instrument",
+          "status_or_amendment_notice"
+        ]
+      },
+      "production_releasable": false,
+      "scopes": [
+        {
+          "domestic_eu_candidate_reference_present": true,
+          "human_primary_review_complete": false,
+          "income_type": "dividend",
+          "independent_approval_complete": false,
+          "intake_evidence_gaps": [],
+          "legacy_remaining_294_reference_present": true,
+          "production_releasable": false,
+          "recipient_country": "AE",
+          "scope_id": "CZ-AE-dividend",
+          "source_country": "CZ",
+          "stage5_terminal_status": "pending",
+          "verification_status": "needs_review"
+        },
+        {
+          "domestic_eu_candidate_reference_present": true,
+          "human_primary_review_complete": false,
+          "income_type": "interest",
+          "independent_approval_complete": false,
+          "intake_evidence_gaps": [],
+          "legacy_remaining_294_reference_present": true,
+          "production_releasable": false,
+          "recipient_country": "AE",
+          "scope_id": "CZ-AE-interest",
+          "source_country": "CZ",
+          "stage5_terminal_status": "pending",
+          "verification_status": "needs_review"
+        },
+        {
+          "domestic_eu_candidate_reference_present": true,
+          "human_primary_review_complete": false,
+          "income_type": "royalty",
+          "independent_approval_complete": false,
+          "intake_evidence_gaps": [],
+          "legacy_remaining_294_reference_present": true,
+          "production_releasable": false,
+          "recipient_country": "AE",
+          "scope_id": "CZ-AE-royalty",
+          "source_country": "CZ",
+          "stage5_terminal_status": "pending",
+          "verification_status": "needs_review"
+        }
+      ],
+      "stage5_release_status": "needs_review",
+      "stage5_required_legal_gates": [
+        "official_treaty_identity",
+        "official_treaty_document",
+        "article_10",
+        "article_11",
+        "article_12",
+        "protocols_and_amendments",
+        "mli_position",
+        "mli_matching",
+        "mli_effective_dates",
+        "authentic_languages",
+        "prevailing_language_rule",
+        "official_english_version_if_relevant",
+        "withholding_effective_date",
+        "czech_domestic_law_layer",
+        "eu_directive_layer_if_relevant",
+        "structured_rule_mapping",
+        "exact_evidence_and_provenance",
+        "human_primary_legal_review",
+        "independent_approval_before_release"
+      ],
+      "workflow_class": "instrument_overlay"
+    },
+    {
+      "canonical_base_treaty_source": {
+        "artifact_sha256": "b5dce9a7d1cc9e45d0ebdcefa030aaa24a94730f6ee333fa44c081ef78720f68",
+        "artifact_uri": "data/raw/treaty/b5dce9a7d1cc9e45.pdf",
+        "authority_class": "official",
+        "extraction_authority_class": "official",
+        "identity_status": "validated",
+        "identity_warnings": [
+          "publication_reference_not_found"
+        ],
+        "official_urls": [
+          "https://e-sbirka.gov.cz/sm/2000/95/0000-00-00",
+          "https://e-sbirka.gov.cz/sm/2000/95/0000-00-00?zalozka=text",
+          "https://e-sbirka.gov.cz/sm/2000/95?zalozka=text",
+          "https://e-sbirka.gov.cz/sm/2000/95",
+          "https://e-sbirka.gov.cz/sb/2000/95/0000-00-00",
+          "https://e-sbirka.gov.cz/sb/2000/95/0000-00-00?zalozka=text",
+          "https://e-sbirka.gov.cz/sb/2000/95?zalozka=text",
+          "https://e-sbirka.gov.cz/sb/2000/95"
+        ],
+        "parsed_path": "data/parsed/belgie.json",
+        "parsed_sha256": "3e9e09cd1f31959d74ff0543218af0b78ed3de1c180a79185736ad46ac174463",
+        "resolution_method": "base_instrument_title",
+        "resolution_status": "resolved_via_source_manifest",
+        "source_id": "SRC-E16828A7660D9797",
+        "source_manifest_country": "Belgie",
+        "source_manifest_dataset": "data/manifests/source_manifest.json",
+        "source_title": "95/2000 Sb.m.s."
+      },
+      "country": "BE",
+      "country_name": "Belgie",
+      "intake_evidence_gaps": [],
+      "mli_effect_reference_present": true,
+      "official_instrument_inventory": {
+        "base_instruments": [
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "95/2000 Sb.m.s.",
+            "source_id": "CZ-MF-BE-701EA7957FF3",
+            "source_type": "base_treaty",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=3369"
+          }
+        ],
+        "dataset": "data/legal_consolidation/mf_inventory.json",
+        "entry_into_force": "2000-07-24",
+        "inventory_status": "official_inventory_captured",
+        "mli_listed": true,
+        "mli_notice_available": true,
+        "protocol_listed": true,
+        "related_instruments": [
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "Sdělení č. 127/2003 Sb.m.s.",
+            "source_id": "CZ-MF-BE-A1AA51793775",
+            "source_type": "status_or_amendment_notice",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=4078"
+          },
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "Pokyn č. D - 312 (FZ č. 6-7/2007",
+            "source_id": "CZ-MF-BE-6001C36AFDCB",
+            "source_type": "administrative_guidance",
+            "url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2007/financni-zpravodaj-cislo-6-72007-1577"
+          },
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "Protokol č. 17/2015 Sb.m.s.",
+            "source_id": "CZ-MF-BE-D0E145875613",
+            "source_type": "protocol",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=28745"
+          },
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "Úmluva č. 32/2020 Sb.m.s.",
+            "source_id": "CZ-MF-BE-E9EBAF352090",
+            "source_type": "mli_convention",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38924"
+          },
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "FZ č. 23/2020",
+            "source_id": "CZ-MF-BE-FC7B1E3B8535",
+            "source_type": "mli_synthesised_notice",
+            "url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2020/financni-zpravodaj-cislo-23-2020-39686"
+          }
+        ],
+        "source_types": [
+          "administrative_guidance",
+          "base_treaty",
+          "mli_convention",
+          "mli_synthesised_notice",
+          "protocol",
+          "status_or_amendment_notice"
+        ]
+      },
+      "production_releasable": false,
+      "scopes": [
+        {
+          "domestic_eu_candidate_reference_present": true,
+          "human_primary_review_complete": false,
+          "income_type": "dividend",
+          "independent_approval_complete": false,
+          "intake_evidence_gaps": [],
+          "legacy_remaining_294_reference_present": true,
+          "production_releasable": false,
+          "recipient_country": "BE",
+          "scope_id": "CZ-BE-dividend",
+          "source_country": "CZ",
+          "stage5_terminal_status": "pending",
+          "verification_status": "needs_review"
+        },
+        {
+          "domestic_eu_candidate_reference_present": true,
+          "human_primary_review_complete": false,
+          "income_type": "interest",
+          "independent_approval_complete": false,
+          "intake_evidence_gaps": [],
+          "legacy_remaining_294_reference_present": true,
+          "production_releasable": false,
+          "recipient_country": "BE",
+          "scope_id": "CZ-BE-interest",
+          "source_country": "CZ",
+          "stage5_terminal_status": "pending",
+          "verification_status": "needs_review"
+        },
+        {
+          "domestic_eu_candidate_reference_present": true,
+          "human_primary_review_complete": false,
+          "income_type": "royalty",
+          "independent_approval_complete": false,
+          "intake_evidence_gaps": [],
+          "legacy_remaining_294_reference_present": true,
+          "production_releasable": false,
+          "recipient_country": "BE",
+          "scope_id": "CZ-BE-royalty",
+          "source_country": "CZ",
+          "stage5_terminal_status": "pending",
+          "verification_status": "needs_review"
+        }
+      ],
+      "stage5_release_status": "needs_review",
+      "stage5_required_legal_gates": [
+        "official_treaty_identity",
+        "official_treaty_document",
+        "article_10",
+        "article_11",
+        "article_12",
+        "protocols_and_amendments",
+        "mli_position",
+        "mli_matching",
+        "mli_effective_dates",
+        "authentic_languages",
+        "prevailing_language_rule",
+        "official_english_version_if_relevant",
+        "withholding_effective_date",
+        "czech_domestic_law_layer",
+        "eu_directive_layer_if_relevant",
+        "structured_rule_mapping",
+        "exact_evidence_and_provenance",
+        "human_primary_legal_review",
+        "independent_approval_before_release"
+      ],
+      "workflow_class": "instrument_overlay"
+    },
+    {
+      "canonical_base_treaty_source": {
+        "artifact_sha256": "e57bf1e617250a79a4c4312e8eef191a56de073856fb4d25c090e5a7eca3a979",
+        "artifact_uri": "data/raw/treaty/e57bf1e617250a79.pdf",
+        "authority_class": "official",
+        "extraction_authority_class": "official",
+        "identity_status": "validated",
+        "identity_warnings": [
+          "publication_reference_not_found"
+        ],
+        "official_urls": [
+          "https://e-sbirka.gov.cz/sb/1998/31/0000-00-00",
+          "https://e-sbirka.gov.cz/sb/1998/31/0000-00-00?zalozka=text",
+          "https://e-sbirka.gov.cz/sb/1998/31?zalozka=text",
+          "https://e-sbirka.gov.cz/sb/1998/31",
+          "https://e-sbirka.gov.cz/sm/1998/31/0000-00-00",
+          "https://e-sbirka.gov.cz/sm/1998/31/0000-00-00?zalozka=text",
+          "https://e-sbirka.gov.cz/sm/1998/31?zalozka=text",
+          "https://e-sbirka.gov.cz/sm/1998/31"
+        ],
+        "parsed_path": "data/parsed/belorusko.json",
+        "parsed_sha256": "a5a475c1140a1684c44d19ad95da5a39bc9f1b304abadf65b0e301bc80fbf732",
+        "resolution_method": "base_instrument_title",
+        "resolution_status": "resolved_via_source_manifest",
+        "source_id": "SRC-9A8D6161227A3BB3",
+        "source_manifest_country": "Bělorusko",
+        "source_manifest_dataset": "data/manifests/source_manifest.json",
+        "source_title": "31/1998 Sb."
+      },
+      "country": "BY",
+      "country_name": "Bělorusko",
+      "intake_evidence_gaps": [],
+      "mli_effect_reference_present": false,
+      "official_instrument_inventory": {
+        "base_instruments": [
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "31/1998 Sb.",
+            "source_id": "CZ-MF-BY-A6202CAF22BF",
+            "source_type": "base_treaty",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=3121"
+          }
+        ],
+        "dataset": "data/legal_consolidation/mf_inventory.json",
+        "entry_into_force": "1998-01-15",
+        "inventory_status": "official_inventory_captured",
+        "mli_listed": false,
+        "mli_notice_available": false,
+        "protocol_listed": true,
+        "related_instruments": [
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "Redakční oprava část. 74/1998 Sb.",
+            "source_id": "CZ-MF-BY-20E71B213E43",
+            "source_type": "correction",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=3181"
+          },
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "Protokol č. 99/2011 Sb.m.s.",
+            "source_id": "CZ-MF-BY-9FB15934EDD7",
+            "source_type": "protocol",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=23321"
+          },
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "Sdělení č. 115/2024 Sb.",
+            "source_id": "CZ-MF-BY-852FD44A9622",
+            "source_type": "status_or_amendment_notice",
+            "url": "https://e-sbirka.gov.cz/sb/2024/115?zalozka=text"
+          }
+        ],
+        "source_types": [
+          "base_treaty",
+          "correction",
+          "protocol",
+          "status_or_amendment_notice"
+        ]
+      },
+      "production_releasable": false,
+      "scopes": [
+        {
+          "domestic_eu_candidate_reference_present": true,
+          "human_primary_review_complete": false,
+          "income_type": "dividend",
+          "independent_approval_complete": false,
+          "intake_evidence_gaps": [],
+          "legacy_remaining_294_reference_present": true,
+          "production_releasable": false,
+          "recipient_country": "BY",
+          "scope_id": "CZ-BY-dividend",
+          "source_country": "CZ",
+          "stage5_terminal_status": "pending",
+          "verification_status": "needs_review"
+        },
+        {
+          "domestic_eu_candidate_reference_present": true,
+          "human_primary_review_complete": false,
+          "income_type": "interest",
+          "independent_approval_complete": false,
+          "intake_evidence_gaps": [],
+          "legacy_remaining_294_reference_present": true,
+          "production_releasable": false,
+          "recipient_country": "BY",
+          "scope_id": "CZ-BY-interest",
+          "source_country": "CZ",
+          "stage5_terminal_status": "pending",
+          "verification_status": "needs_review"
+        },
+        {
+          "domestic_eu_candidate_reference_present": true,
+          "human_primary_review_complete": false,
+          "income_type": "royalty",
+          "independent_approval_complete": false,
+          "intake_evidence_gaps": [],
+          "legacy_remaining_294_reference_present": true,
+          "production_releasable": false,
+          "recipient_country": "BY",
+          "scope_id": "CZ-BY-royalty",
+          "source_country": "CZ",
+          "stage5_terminal_status": "pending",
+          "verification_status": "needs_review"
+        }
+      ],
+      "stage5_release_status": "needs_review",
+      "stage5_required_legal_gates": [
+        "official_treaty_identity",
+        "official_treaty_document",
+        "article_10",
+        "article_11",
+        "article_12",
+        "protocols_and_amendments",
+        "mli_position",
+        "mli_matching",
+        "mli_effective_dates",
+        "authentic_languages",
+        "prevailing_language_rule",
+        "official_english_version_if_relevant",
+        "withholding_effective_date",
+        "czech_domestic_law_layer",
+        "eu_directive_layer_if_relevant",
+        "structured_rule_mapping",
+        "exact_evidence_and_provenance",
+        "human_primary_legal_review",
+        "independent_approval_before_release"
+      ],
+      "workflow_class": "instrument_overlay"
+    },
+    {
+      "canonical_base_treaty_source": {
+        "artifact_sha256": "4d47d11e60e1773a745d2ab877a11ccaad8d2f53f827fc729229f62c044932a5",
+        "artifact_uri": "data/raw/treaty/4d47d11e60e1773a.pdf",
+        "authority_class": "official",
+        "extraction_authority_class": "official",
+        "identity_status": "validated",
+        "identity_warnings": [
+          "publication_reference_not_found"
+        ],
+        "official_urls": [
+          "https://e-sbirka.gov.cz/sb/1995/184/0000-00-00",
+          "https://e-sbirka.gov.cz/sb/1995/184/0000-00-00?zalozka=text",
+          "https://e-sbirka.gov.cz/sb/1995/184?zalozka=text",
+          "https://e-sbirka.gov.cz/sb/1995/184",
+          "https://e-sbirka.gov.cz/sm/1995/184/0000-00-00",
+          "https://e-sbirka.gov.cz/sm/1995/184/0000-00-00?zalozka=text",
+          "https://e-sbirka.gov.cz/sm/1995/184?zalozka=text",
+          "https://e-sbirka.gov.cz/sm/1995/184"
+        ],
+        "parsed_path": "data/parsed/estonsko.json",
+        "parsed_sha256": "3d528bf3e3023a91376b207cdbe21c3ba4e2ce37992561100df72de4a5cf66de",
+        "resolution_method": "base_instrument_title",
+        "resolution_status": "resolved_via_source_manifest",
+        "source_id": "SRC-BD487F336BE33A13",
+        "source_manifest_country": "Estonsko",
+        "source_manifest_dataset": "data/manifests/source_manifest.json",
+        "source_title": "184/1995 Sb."
+      },
+      "country": "EE",
+      "country_name": "Estonsko",
+      "intake_evidence_gaps": [
+        "mli_effect_reference_not_found"
+      ],
+      "mli_effect_reference_present": false,
+      "official_instrument_inventory": {
+        "base_instruments": [
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "184/1995 Sb.",
+            "source_id": "CZ-MF-EE-0E4ACCFE85A4",
+            "source_type": "base_treaty",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=2860"
+          }
+        ],
+        "dataset": "data/legal_consolidation/mf_inventory.json",
+        "entry_into_force": "1995-05-26",
+        "inventory_status": "official_inventory_captured",
+        "mli_listed": true,
+        "mli_notice_available": true,
+        "protocol_listed": false,
+        "related_instruments": [
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "Úmluva č. 32/2020 Sb.m.s.",
+            "source_id": "CZ-MF-EE-18E385096939",
+            "source_type": "mli_convention",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38924"
+          },
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "Sdělení č. 439/2024 Sb.",
+            "source_id": "CZ-MF-EE-420787A74132",
+            "source_type": "mli_effect_notice",
+            "url": "https://e-sbirka.gov.cz/sb/2024/439?zalozka=text"
+          },
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "Redakční oprava č. 17/2004 Sb.m.s.",
+            "source_id": "CZ-MF-EE-012199987600",
+            "source_type": "correction",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=4248"
+          }
+        ],
+        "source_types": [
+          "base_treaty",
+          "correction",
+          "mli_convention",
+          "mli_effect_notice"
+        ]
+      },
+      "production_releasable": false,
+      "scopes": [
+        {
+          "domestic_eu_candidate_reference_present": true,
+          "human_primary_review_complete": false,
+          "income_type": "dividend",
+          "independent_approval_complete": false,
+          "intake_evidence_gaps": [],
+          "legacy_remaining_294_reference_present": true,
+          "production_releasable": false,
+          "recipient_country": "EE",
+          "scope_id": "CZ-EE-dividend",
+          "source_country": "CZ",
+          "stage5_terminal_status": "pending",
+          "verification_status": "needs_review"
+        },
+        {
+          "domestic_eu_candidate_reference_present": true,
+          "human_primary_review_complete": false,
+          "income_type": "interest",
+          "independent_approval_complete": false,
+          "intake_evidence_gaps": [],
+          "legacy_remaining_294_reference_present": true,
+          "production_releasable": false,
+          "recipient_country": "EE",
+          "scope_id": "CZ-EE-interest",
+          "source_country": "CZ",
+          "stage5_terminal_status": "pending",
+          "verification_status": "needs_review"
+        },
+        {
+          "domestic_eu_candidate_reference_present": true,
+          "human_primary_review_complete": false,
+          "income_type": "royalty",
+          "independent_approval_complete": false,
+          "intake_evidence_gaps": [],
+          "legacy_remaining_294_reference_present": true,
+          "production_releasable": false,
+          "recipient_country": "EE",
+          "scope_id": "CZ-EE-royalty",
+          "source_country": "CZ",
+          "stage5_terminal_status": "pending",
+          "verification_status": "needs_review"
+        }
+      ],
+      "stage5_release_status": "needs_review",
+      "stage5_required_legal_gates": [
+        "official_treaty_identity",
+        "official_treaty_document",
+        "article_10",
+        "article_11",
+        "article_12",
+        "protocols_and_amendments",
+        "mli_position",
+        "mli_matching",
+        "mli_effective_dates",
+        "authentic_languages",
+        "prevailing_language_rule",
+        "official_english_version_if_relevant",
+        "withholding_effective_date",
+        "czech_domestic_law_layer",
+        "eu_directive_layer_if_relevant",
+        "structured_rule_mapping",
+        "exact_evidence_and_provenance",
+        "human_primary_legal_review",
+        "independent_approval_before_release"
+      ],
+      "workflow_class": "instrument_overlay"
+    },
+    {
+      "canonical_base_treaty_source": {
+        "artifact_sha256": "09408abab88f2adadfc59cc885e0e83fcf8e21488e5c68b60c6bc224796b5d43",
+        "artifact_uri": "data/raw/treaty/09408abab88f2ada.pdf",
+        "authority_class": "official",
+        "extraction_authority_class": "official",
+        "identity_status": "validated",
+        "identity_warnings": [],
+        "official_urls": [
+          "https://e-sbirka.gov.cz/sb/1989/98/0000-00-00",
+          "https://e-sbirka.gov.cz/sb/1989/98/0000-00-00?zalozka=text",
+          "https://e-sbirka.gov.cz/sb/1989/98?zalozka=text",
+          "https://e-sbirka.gov.cz/sb/1989/98",
+          "https://e-sbirka.gov.cz/sm/1989/98/0000-00-00",
+          "https://e-sbirka.gov.cz/sm/1989/98/0000-00-00?zalozka=text",
+          "https://e-sbirka.gov.cz/sm/1989/98?zalozka=text",
+          "https://e-sbirka.gov.cz/sm/1989/98"
+        ],
+        "parsed_path": "data/parsed/recko.json",
+        "parsed_sha256": "c6db770f7998ad3d32b1c19e53f7b483f93908e8a19d6ecdcdf679af0d369205",
+        "resolution_method": "base_instrument_title",
+        "resolution_status": "resolved_via_source_manifest",
+        "source_id": "SRC-C5ED2C206EB6D04B",
+        "source_manifest_country": "Řecko",
+        "source_manifest_dataset": "data/manifests/source_manifest.json",
+        "source_title": "98/1989 Sb."
+      },
+      "country": "GR",
+      "country_name": "Řecko",
+      "intake_evidence_gaps": [],
+      "mli_effect_reference_present": true,
+      "official_instrument_inventory": {
+        "base_instruments": [
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "98/1989 Sb.",
+            "source_id": "CZ-MF-GR-31B8B4B101BC",
+            "source_type": "base_treaty",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=2294"
+          }
+        ],
+        "dataset": "data/legal_consolidation/mf_inventory.json",
+        "entry_into_force": "1989-05-23",
+        "inventory_status": "official_inventory_captured",
+        "mli_listed": true,
+        "mli_notice_available": true,
+        "protocol_listed": false,
+        "related_instruments": [
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "Úmluva č. 32/2020 Sb.m.s.",
+            "source_id": "CZ-MF-GR-E977AC713F21",
+            "source_type": "mli_convention",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38924"
+          },
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "FZ č. 22/2021",
+            "source_id": "CZ-MF-GR-C662B1ECC40D",
+            "source_type": "mli_synthesised_notice",
+            "url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2021/financni-zpravodaj-cislo-222021-41877"
+          },
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "Redakční oprava č. 28/2021 Sb.m.s.",
+            "source_id": "CZ-MF-GR-E6F34AA79FC6",
+            "source_type": "correction",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39175"
+          }
+        ],
+        "source_types": [
+          "base_treaty",
+          "correction",
+          "mli_convention",
+          "mli_synthesised_notice"
+        ]
+      },
+      "production_releasable": false,
+      "scopes": [
+        {
+          "domestic_eu_candidate_reference_present": true,
+          "human_primary_review_complete": false,
+          "income_type": "dividend",
+          "independent_approval_complete": false,
+          "intake_evidence_gaps": [],
+          "legacy_remaining_294_reference_present": true,
+          "production_releasable": false,
+          "recipient_country": "GR",
+          "scope_id": "CZ-GR-dividend",
+          "source_country": "CZ",
+          "stage5_terminal_status": "pending",
+          "verification_status": "needs_review"
+        },
+        {
+          "domestic_eu_candidate_reference_present": true,
+          "human_primary_review_complete": false,
+          "income_type": "interest",
+          "independent_approval_complete": false,
+          "intake_evidence_gaps": [],
+          "legacy_remaining_294_reference_present": true,
+          "production_releasable": false,
+          "recipient_country": "GR",
+          "scope_id": "CZ-GR-interest",
+          "source_country": "CZ",
+          "stage5_terminal_status": "pending",
+          "verification_status": "needs_review"
+        },
+        {
+          "domestic_eu_candidate_reference_present": true,
+          "human_primary_review_complete": false,
+          "income_type": "royalty",
+          "independent_approval_complete": false,
+          "intake_evidence_gaps": [],
+          "legacy_remaining_294_reference_present": true,
+          "production_releasable": false,
+          "recipient_country": "GR",
+          "scope_id": "CZ-GR-royalty",
+          "source_country": "CZ",
+          "stage5_terminal_status": "pending",
+          "verification_status": "needs_review"
+        }
+      ],
+      "stage5_release_status": "needs_review",
+      "stage5_required_legal_gates": [
+        "official_treaty_identity",
+        "official_treaty_document",
+        "article_10",
+        "article_11",
+        "article_12",
+        "protocols_and_amendments",
+        "mli_position",
+        "mli_matching",
+        "mli_effective_dates",
+        "authentic_languages",
+        "prevailing_language_rule",
+        "official_english_version_if_relevant",
+        "withholding_effective_date",
+        "czech_domestic_law_layer",
+        "eu_directive_layer_if_relevant",
+        "structured_rule_mapping",
+        "exact_evidence_and_provenance",
+        "human_primary_legal_review",
+        "independent_approval_before_release"
+      ],
+      "workflow_class": "instrument_overlay"
+    },
+    {
+      "canonical_base_treaty_source": {
+        "artifact_sha256": "2ca164a53d4eb996ff01ac08f5ae3443b65b71960e5595867e40dca35cac08fa",
+        "artifact_uri": "data/raw/treaty/2ca164a53d4eb996.pdf",
+        "authority_class": "official",
+        "extraction_authority_class": "official",
+        "identity_status": "validated",
+        "identity_warnings": [
+          "publication_reference_not_found"
+        ],
+        "official_urls": [
+          "https://e-sbirka.gov.cz/sm/2000/42/0000-00-00",
+          "https://e-sbirka.gov.cz/sm/2000/42/0000-00-00?zalozka=text",
+          "https://e-sbirka.gov.cz/sm/2000/42?zalozka=text",
+          "https://e-sbirka.gov.cz/sm/2000/42",
+          "https://e-sbirka.gov.cz/sb/2000/42/0000-00-00",
+          "https://e-sbirka.gov.cz/sb/2000/42/0000-00-00?zalozka=text",
+          "https://e-sbirka.gov.cz/sb/2000/42?zalozka=text",
+          "https://e-sbirka.gov.cz/sb/2000/42"
+        ],
+        "parsed_path": "data/parsed/chorvatsko.json",
+        "parsed_sha256": "f2dd4e774149c2a042a0f5cede0bc1dbd6256c4b88a5b16f6155362070bbcf02",
+        "resolution_method": "base_instrument_title",
+        "resolution_status": "resolved_via_source_manifest",
+        "source_id": "SRC-2026EC8F5E96A9CC",
+        "source_manifest_country": "Chorvatsko",
+        "source_manifest_dataset": "data/manifests/source_manifest.json",
+        "source_title": "42/2000 Sb.m.s."
+      },
+      "country": "HR",
+      "country_name": "Chorvatsko",
+      "intake_evidence_gaps": [],
+      "mli_effect_reference_present": true,
+      "official_instrument_inventory": {
+        "base_instruments": [
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "42/2000 Sb.m.s.",
+            "source_id": "CZ-MF-HR-4904801EEC5E",
+            "source_type": "base_treaty",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=3353"
+          }
+        ],
+        "dataset": "data/legal_consolidation/mf_inventory.json",
+        "entry_into_force": "1999-12-28",
+        "inventory_status": "official_inventory_captured",
+        "mli_listed": true,
+        "mli_notice_available": true,
+        "protocol_listed": true,
+        "related_instruments": [
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "Protokol č. 82/2012 Sb.m.s.",
+            "source_id": "CZ-MF-HR-FF7645967F85",
+            "source_type": "protocol",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=6264"
+          },
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "Úmluva č. 32/2020 Sb.m.s.",
+            "source_id": "CZ-MF-HR-C8A005DF4E65",
+            "source_type": "mli_convention",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38924"
+          },
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "FZ č. 28/2021",
+            "source_id": "CZ-MF-HR-81BFD8AAACFA",
+            "source_type": "mli_synthesised_notice",
+            "url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2021/financni-zpravodaj-cislo-28-2021-42478"
+          }
+        ],
+        "source_types": [
+          "base_treaty",
+          "mli_convention",
+          "mli_synthesised_notice",
+          "protocol"
+        ]
+      },
+      "production_releasable": false,
+      "scopes": [
+        {
+          "domestic_eu_candidate_reference_present": true,
+          "human_primary_review_complete": false,
+          "income_type": "dividend",
+          "independent_approval_complete": false,
+          "intake_evidence_gaps": [],
+          "legacy_remaining_294_reference_present": true,
+          "production_releasable": false,
+          "recipient_country": "HR",
+          "scope_id": "CZ-HR-dividend",
+          "source_country": "CZ",
+          "stage5_terminal_status": "pending",
+          "verification_status": "needs_review"
+        },
+        {
+          "domestic_eu_candidate_reference_present": true,
+          "human_primary_review_complete": false,
+          "income_type": "interest",
+          "independent_approval_complete": false,
+          "intake_evidence_gaps": [],
+          "legacy_remaining_294_reference_present": true,
+          "production_releasable": false,
+          "recipient_country": "HR",
+          "scope_id": "CZ-HR-interest",
+          "source_country": "CZ",
+          "stage5_terminal_status": "pending",
+          "verification_status": "needs_review"
+        },
+        {
+          "domestic_eu_candidate_reference_present": true,
+          "human_primary_review_complete": false,
+          "income_type": "royalty",
+          "independent_approval_complete": false,
+          "intake_evidence_gaps": [],
+          "legacy_remaining_294_reference_present": true,
+          "production_releasable": false,
+          "recipient_country": "HR",
+          "scope_id": "CZ-HR-royalty",
+          "source_country": "CZ",
+          "stage5_terminal_status": "pending",
+          "verification_status": "needs_review"
+        }
+      ],
+      "stage5_release_status": "needs_review",
+      "stage5_required_legal_gates": [
+        "official_treaty_identity",
+        "official_treaty_document",
+        "article_10",
+        "article_11",
+        "article_12",
+        "protocols_and_amendments",
+        "mli_position",
+        "mli_matching",
+        "mli_effective_dates",
+        "authentic_languages",
+        "prevailing_language_rule",
+        "official_english_version_if_relevant",
+        "withholding_effective_date",
+        "czech_domestic_law_layer",
+        "eu_directive_layer_if_relevant",
+        "structured_rule_mapping",
+        "exact_evidence_and_provenance",
+        "human_primary_legal_review",
+        "independent_approval_before_release"
+      ],
+      "workflow_class": "instrument_overlay"
+    },
+    {
+      "canonical_base_treaty_source": {
+        "artifact_sha256": "c93ffd86a6777cd546ee542268ae84575885afe27f403b2b20da60378c38d86a",
+        "artifact_uri": "data/raw/treaty/c93ffd86a6777cd5.pdf",
+        "authority_class": "official",
+        "extraction_authority_class": "official",
+        "identity_status": "validated",
+        "identity_warnings": [
+          "publication_reference_not_found"
+        ],
+        "official_urls": [
+          "https://e-sbirka.gov.cz/sm/2000/3/0000-00-00",
+          "https://e-sbirka.gov.cz/sm/2000/3/0000-00-00?zalozka=text",
+          "https://e-sbirka.gov.cz/sm/2000/3?zalozka=text",
+          "https://e-sbirka.gov.cz/sm/2000/3",
+          "https://e-sbirka.gov.cz/sb/2000/3/0000-00-00",
+          "https://e-sbirka.gov.cz/sb/2000/3/0000-00-00?zalozka=text",
+          "https://e-sbirka.gov.cz/sb/2000/3?zalozka=text",
+          "https://e-sbirka.gov.cz/sb/2000/3"
+        ],
+        "parsed_path": "data/parsed/kazachstan.json",
+        "parsed_sha256": "4a8cf6ac13830bad8df2b4977e26033094350cb56e6ead0fc8cb7103ca6db190",
+        "resolution_method": "base_instrument_title",
+        "resolution_status": "resolved_via_source_manifest",
+        "source_id": "SRC-A4EEB73B59D9CE70",
+        "source_manifest_country": "Kazachstán",
+        "source_manifest_dataset": "data/manifests/source_manifest.json",
+        "source_title": "3/2000 Sb.m.s."
+      },
+      "country": "KZ",
+      "country_name": "Kazachstán",
+      "intake_evidence_gaps": [],
+      "mli_effect_reference_present": true,
+      "official_instrument_inventory": {
+        "base_instruments": [
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "3/2000 Sb.m.s.",
+            "source_id": "CZ-MF-KZ-661BA0177773",
+            "source_type": "base_treaty",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=3332"
+          }
+        ],
+        "dataset": "data/legal_consolidation/mf_inventory.json",
+        "entry_into_force": "1999-10-29",
+        "inventory_status": "official_inventory_captured",
+        "mli_listed": true,
+        "mli_notice_available": true,
+        "protocol_listed": true,
+        "related_instruments": [
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "Úmluva č. 32/2020 Sb.m.s.",
+            "source_id": "CZ-MF-KZ-AE2E8699024D",
+            "source_type": "mli_convention",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38924"
+          },
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "Sdělení č. 439/2024 Sb.",
+            "source_id": "CZ-MF-KZ-666FB648F95A",
+            "source_type": "mli_effect_notice",
+            "url": "https://e-sbirka.gov.cz/sb/2024/439?zalozka=text"
+          },
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "FZ č. 13/2024",
+            "source_id": "CZ-MF-KZ-A3943A2404DE",
+            "source_type": "mli_synthesised_notice",
+            "url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2024/financni-zpravodaj-cislo-13-2024-57849"
+          },
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "Protokol č. 43/2016 Sb. m. s.",
+            "source_id": "CZ-MF-KZ-1510692CA08E",
+            "source_type": "protocol",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=61064"
+          }
+        ],
+        "source_types": [
+          "base_treaty",
+          "mli_convention",
+          "mli_effect_notice",
+          "mli_synthesised_notice",
+          "protocol"
+        ]
+      },
+      "production_releasable": false,
+      "scopes": [
+        {
+          "domestic_eu_candidate_reference_present": true,
+          "human_primary_review_complete": false,
+          "income_type": "dividend",
+          "independent_approval_complete": false,
+          "intake_evidence_gaps": [],
+          "legacy_remaining_294_reference_present": true,
+          "production_releasable": false,
+          "recipient_country": "KZ",
+          "scope_id": "CZ-KZ-dividend",
+          "source_country": "CZ",
+          "stage5_terminal_status": "pending",
+          "verification_status": "needs_review"
+        },
+        {
+          "domestic_eu_candidate_reference_present": true,
+          "human_primary_review_complete": false,
+          "income_type": "interest",
+          "independent_approval_complete": false,
+          "intake_evidence_gaps": [],
+          "legacy_remaining_294_reference_present": true,
+          "production_releasable": false,
+          "recipient_country": "KZ",
+          "scope_id": "CZ-KZ-interest",
+          "source_country": "CZ",
+          "stage5_terminal_status": "pending",
+          "verification_status": "needs_review"
+        },
+        {
+          "domestic_eu_candidate_reference_present": true,
+          "human_primary_review_complete": false,
+          "income_type": "royalty",
+          "independent_approval_complete": false,
+          "intake_evidence_gaps": [],
+          "legacy_remaining_294_reference_present": true,
+          "production_releasable": false,
+          "recipient_country": "KZ",
+          "scope_id": "CZ-KZ-royalty",
+          "source_country": "CZ",
+          "stage5_terminal_status": "pending",
+          "verification_status": "needs_review"
+        }
+      ],
+      "stage5_release_status": "needs_review",
+      "stage5_required_legal_gates": [
+        "official_treaty_identity",
+        "official_treaty_document",
+        "article_10",
+        "article_11",
+        "article_12",
+        "protocols_and_amendments",
+        "mli_position",
+        "mli_matching",
+        "mli_effective_dates",
+        "authentic_languages",
+        "prevailing_language_rule",
+        "official_english_version_if_relevant",
+        "withholding_effective_date",
+        "czech_domestic_law_layer",
+        "eu_directive_layer_if_relevant",
+        "structured_rule_mapping",
+        "exact_evidence_and_provenance",
+        "human_primary_legal_review",
+        "independent_approval_before_release"
+      ],
+      "workflow_class": "instrument_overlay"
+    },
+    {
+      "canonical_base_treaty_source": {
+        "artifact_sha256": "f516b7a298fda39f32090a39b6c80fa9a90dcb7c67778dd3bf9573a375aa6108",
+        "artifact_uri": "data/raw/treaty/f516b7a298fda39f.pdf",
+        "authority_class": "official",
+        "extraction_authority_class": "official",
+        "identity_status": "validated",
+        "identity_warnings": [
+          "publication_reference_not_found"
+        ],
+        "official_urls": [
+          "https://e-sbirka.gov.cz/sm/2000/88/0000-00-00",
+          "https://e-sbirka.gov.cz/sm/2000/88/0000-00-00?zalozka=text",
+          "https://e-sbirka.gov.cz/sm/2000/88?zalozka=text",
+          "https://e-sbirka.gov.cz/sm/2000/88",
+          "https://e-sbirka.gov.cz/sb/2000/88/0000-00-00",
+          "https://e-sbirka.gov.cz/sb/2000/88/0000-00-00?zalozka=text",
+          "https://e-sbirka.gov.cz/sb/2000/88?zalozka=text",
+          "https://e-sbirka.gov.cz/sb/2000/88"
+        ],
+        "parsed_path": "data/parsed/moldavie.json",
+        "parsed_sha256": "5b549babfe274e1fc606a257796292cdee611cf6b6ba6a301a005ff0a11afeff",
+        "resolution_method": "base_instrument_title",
+        "resolution_status": "resolved_via_source_manifest",
+        "source_id": "SRC-57AEF14CD7032586",
+        "source_manifest_country": "Moldávie",
+        "source_manifest_dataset": "data/manifests/source_manifest.json",
+        "source_title": "88/2000 Sb.m.s."
+      },
+      "country": "MD",
+      "country_name": "Moldávie",
+      "intake_evidence_gaps": [],
+      "mli_effect_reference_present": false,
+      "official_instrument_inventory": {
+        "base_instruments": [
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "88/2000 Sb.m.s.",
+            "source_id": "CZ-MF-MD-AE9A070FEC04",
+            "source_type": "base_treaty",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=3366"
+          }
+        ],
+        "dataset": "data/legal_consolidation/mf_inventory.json",
+        "entry_into_force": "2000-04-26",
+        "inventory_status": "official_inventory_captured",
+        "mli_listed": false,
+        "mli_notice_available": false,
+        "protocol_listed": true,
+        "related_instruments": [
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "Protokol č. 97/2005 Sb.m.s.",
+            "source_id": "CZ-MF-MD-4CDF66434EF2",
+            "source_type": "protocol",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=4585"
+          }
+        ],
+        "source_types": [
+          "base_treaty",
+          "protocol"
+        ]
+      },
+      "production_releasable": false,
+      "scopes": [
+        {
+          "domestic_eu_candidate_reference_present": true,
+          "human_primary_review_complete": false,
+          "income_type": "dividend",
+          "independent_approval_complete": false,
+          "intake_evidence_gaps": [],
+          "legacy_remaining_294_reference_present": true,
+          "production_releasable": false,
+          "recipient_country": "MD",
+          "scope_id": "CZ-MD-dividend",
+          "source_country": "CZ",
+          "stage5_terminal_status": "pending",
+          "verification_status": "needs_review"
+        },
+        {
+          "domestic_eu_candidate_reference_present": true,
+          "human_primary_review_complete": false,
+          "income_type": "interest",
+          "independent_approval_complete": false,
+          "intake_evidence_gaps": [],
+          "legacy_remaining_294_reference_present": true,
+          "production_releasable": false,
+          "recipient_country": "MD",
+          "scope_id": "CZ-MD-interest",
+          "source_country": "CZ",
+          "stage5_terminal_status": "pending",
+          "verification_status": "needs_review"
+        },
+        {
+          "domestic_eu_candidate_reference_present": true,
+          "human_primary_review_complete": false,
+          "income_type": "royalty",
+          "independent_approval_complete": false,
+          "intake_evidence_gaps": [],
+          "legacy_remaining_294_reference_present": true,
+          "production_releasable": false,
+          "recipient_country": "MD",
+          "scope_id": "CZ-MD-royalty",
+          "source_country": "CZ",
+          "stage5_terminal_status": "pending",
+          "verification_status": "needs_review"
+        }
+      ],
+      "stage5_release_status": "needs_review",
+      "stage5_required_legal_gates": [
+        "official_treaty_identity",
+        "official_treaty_document",
+        "article_10",
+        "article_11",
+        "article_12",
+        "protocols_and_amendments",
+        "mli_position",
+        "mli_matching",
+        "mli_effective_dates",
+        "authentic_languages",
+        "prevailing_language_rule",
+        "official_english_version_if_relevant",
+        "withholding_effective_date",
+        "czech_domestic_law_layer",
+        "eu_directive_layer_if_relevant",
+        "structured_rule_mapping",
+        "exact_evidence_and_provenance",
+        "human_primary_legal_review",
+        "independent_approval_before_release"
+      ],
+      "workflow_class": "instrument_overlay"
+    },
+    {
+      "canonical_base_treaty_source": {
+        "artifact_sha256": "f041ff7ffb421dc267c554e3e661a97e4d44701e230567bce7416f188b44d5d2",
+        "artifact_uri": "data/raw/treaty/f041ff7ffb421dc2.pdf",
+        "authority_class": "official",
+        "extraction_authority_class": "official",
+        "identity_status": "validated",
+        "identity_warnings": [
+          "publication_reference_not_found"
+        ],
+        "official_urls": [
+          "https://e-sbirka.gov.cz/sb/1991/339/0000-00-00",
+          "https://e-sbirka.gov.cz/sb/1991/339/0000-00-00?zalozka=text",
+          "https://e-sbirka.gov.cz/sb/1991/339?zalozka=text",
+          "https://e-sbirka.gov.cz/sb/1991/339",
+          "https://e-sbirka.gov.cz/sm/1991/339/0000-00-00",
+          "https://e-sbirka.gov.cz/sm/1991/339/0000-00-00?zalozka=text",
+          "https://e-sbirka.gov.cz/sm/1991/339?zalozka=text",
+          "https://e-sbirka.gov.cz/sm/1991/339"
+        ],
+        "parsed_path": "data/parsed/nigerie.json",
+        "parsed_sha256": "9277a9c2c3721d8e12721ea587aa41f3fb77fd2b175e4b8b8f1b0acfdd4d6d23",
+        "resolution_method": "base_instrument_title",
+        "resolution_status": "resolved_via_source_manifest",
+        "source_id": "SRC-3606886A4EB55B88",
+        "source_manifest_country": "Nigérie",
+        "source_manifest_dataset": "data/manifests/source_manifest.json",
+        "source_title": "339/1991 Sb."
+      },
+      "country": "NG",
+      "country_name": "Nigérie",
+      "intake_evidence_gaps": [
+        "mf_inventory_mli_notice_not_available",
+        "mli_effect_reference_not_found"
+      ],
+      "mli_effect_reference_present": false,
+      "official_instrument_inventory": {
+        "base_instruments": [
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "339/1991 Sb.",
+            "source_id": "CZ-MF-NG-553359BE22AD",
+            "source_type": "base_treaty",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=2478"
+          }
+        ],
+        "dataset": "data/legal_consolidation/mf_inventory.json",
+        "entry_into_force": "1990-12-02",
+        "inventory_status": "official_inventory_captured",
+        "mli_listed": true,
+        "mli_notice_available": false,
+        "protocol_listed": false,
+        "related_instruments": [
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "Redakční oprava č. 371/1999 Sb.",
+            "source_id": "CZ-MF-NG-E2D3EECEF1EB",
+            "source_type": "correction",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=3329"
+          },
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "Úmluva č. 32/2020 Sb.m.s.",
+            "source_id": "CZ-MF-NG-0CF8BD75EBC2",
+            "source_type": "mli_convention",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38924"
+          }
+        ],
+        "source_types": [
+          "base_treaty",
+          "correction",
+          "mli_convention"
+        ]
+      },
+      "production_releasable": false,
+      "scopes": [
+        {
+          "domestic_eu_candidate_reference_present": true,
+          "human_primary_review_complete": false,
+          "income_type": "dividend",
+          "independent_approval_complete": false,
+          "intake_evidence_gaps": [],
+          "legacy_remaining_294_reference_present": true,
+          "production_releasable": false,
+          "recipient_country": "NG",
+          "scope_id": "CZ-NG-dividend",
+          "source_country": "CZ",
+          "stage5_terminal_status": "pending",
+          "verification_status": "needs_review"
+        },
+        {
+          "domestic_eu_candidate_reference_present": true,
+          "human_primary_review_complete": false,
+          "income_type": "interest",
+          "independent_approval_complete": false,
+          "intake_evidence_gaps": [],
+          "legacy_remaining_294_reference_present": true,
+          "production_releasable": false,
+          "recipient_country": "NG",
+          "scope_id": "CZ-NG-interest",
+          "source_country": "CZ",
+          "stage5_terminal_status": "pending",
+          "verification_status": "needs_review"
+        },
+        {
+          "domestic_eu_candidate_reference_present": true,
+          "human_primary_review_complete": false,
+          "income_type": "royalty",
+          "independent_approval_complete": false,
+          "intake_evidence_gaps": [],
+          "legacy_remaining_294_reference_present": true,
+          "production_releasable": false,
+          "recipient_country": "NG",
+          "scope_id": "CZ-NG-royalty",
+          "source_country": "CZ",
+          "stage5_terminal_status": "pending",
+          "verification_status": "needs_review"
+        }
+      ],
+      "stage5_release_status": "needs_review",
+      "stage5_required_legal_gates": [
+        "official_treaty_identity",
+        "official_treaty_document",
+        "article_10",
+        "article_11",
+        "article_12",
+        "protocols_and_amendments",
+        "mli_position",
+        "mli_matching",
+        "mli_effective_dates",
+        "authentic_languages",
+        "prevailing_language_rule",
+        "official_english_version_if_relevant",
+        "withholding_effective_date",
+        "czech_domestic_law_layer",
+        "eu_directive_layer_if_relevant",
+        "structured_rule_mapping",
+        "exact_evidence_and_provenance",
+        "human_primary_legal_review",
+        "independent_approval_before_release"
+      ],
+      "workflow_class": "instrument_overlay"
+    },
+    {
+      "canonical_base_treaty_source": {
+        "artifact_sha256": "8cc2573d18d16e57a4d8c5ea206c29414e1d3de72efc320866b07452801edf5e",
+        "artifact_uri": "data/raw/treaty/8cc2573d18d16e57.pdf",
+        "authority_class": "official",
+        "extraction_authority_class": "official",
+        "identity_status": "validated",
+        "identity_warnings": [
+          "publication_reference_not_found"
+        ],
+        "official_urls": [
+          "https://e-sbirka.gov.cz/sb/1974/138/0000-00-00",
+          "https://e-sbirka.gov.cz/sb/1974/138/0000-00-00?zalozka=text",
+          "https://e-sbirka.gov.cz/sb/1974/138?zalozka=text",
+          "https://e-sbirka.gov.cz/sb/1974/138",
+          "https://e-sbirka.gov.cz/sm/1974/138/0000-00-00",
+          "https://e-sbirka.gov.cz/sm/1974/138/0000-00-00?zalozka=text",
+          "https://e-sbirka.gov.cz/sm/1974/138?zalozka=text",
+          "https://e-sbirka.gov.cz/sm/1974/138"
+        ],
+        "parsed_path": "data/parsed/nizozemi.json",
+        "parsed_sha256": "48e2cb0e0eae9f9a0a992cb9c137652f47047da2f60aba2a387160515cb08ec2",
+        "resolution_method": "base_instrument_title",
+        "resolution_status": "resolved_via_source_manifest",
+        "source_id": "SRC-449F6D668FCB55D8",
+        "source_manifest_country": "Nizozemí",
+        "source_manifest_dataset": "data/manifests/source_manifest.json",
+        "source_title": "138/1974 Sb."
+      },
+      "country": "NL",
+      "country_name": "Nizozemí",
+      "intake_evidence_gaps": [],
+      "mli_effect_reference_present": true,
+      "official_instrument_inventory": {
+        "base_instruments": [
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "138/1974 Sb.",
+            "source_id": "CZ-MF-NL-0B0DB5907DE0",
+            "source_type": "base_treaty",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=1782"
+          }
+        ],
+        "dataset": "data/legal_consolidation/mf_inventory.json",
+        "entry_into_force": "1974-11-05",
+        "inventory_status": "official_inventory_captured",
+        "mli_listed": true,
+        "mli_notice_available": true,
+        "protocol_listed": true,
+        "related_instruments": [
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "Protokol č. 112/1997 Sb.",
+            "source_id": "CZ-MF-NL-45D279EE7770",
+            "source_type": "protocol",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=3029"
+          },
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "Protokol č. 58/2013 Sb.m.s.",
+            "source_id": "CZ-MF-NL-7CAD483C3F1A",
+            "source_type": "protocol",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=26074"
+          },
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "Úmluva č. 32/2020 Sb.m.s.",
+            "source_id": "CZ-MF-NL-DECEAC6F2C23",
+            "source_type": "mli_convention",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38924"
+          },
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "FZ č. 34/2020",
+            "source_id": "CZ-MF-NL-0210508FF125",
+            "source_type": "mli_synthesised_notice",
+            "url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2020/financni-zpravodaj-cislo-34-2020-40170"
+          }
+        ],
+        "source_types": [
+          "base_treaty",
+          "mli_convention",
+          "mli_synthesised_notice",
+          "protocol"
+        ]
+      },
+      "production_releasable": false,
+      "scopes": [
+        {
+          "domestic_eu_candidate_reference_present": true,
+          "human_primary_review_complete": false,
+          "income_type": "dividend",
+          "independent_approval_complete": false,
+          "intake_evidence_gaps": [],
+          "legacy_remaining_294_reference_present": true,
+          "production_releasable": false,
+          "recipient_country": "NL",
+          "scope_id": "CZ-NL-dividend",
+          "source_country": "CZ",
+          "stage5_terminal_status": "pending",
+          "verification_status": "needs_review"
+        },
+        {
+          "domestic_eu_candidate_reference_present": true,
+          "human_primary_review_complete": false,
+          "income_type": "interest",
+          "independent_approval_complete": false,
+          "intake_evidence_gaps": [],
+          "legacy_remaining_294_reference_present": true,
+          "production_releasable": false,
+          "recipient_country": "NL",
+          "scope_id": "CZ-NL-interest",
+          "source_country": "CZ",
+          "stage5_terminal_status": "pending",
+          "verification_status": "needs_review"
+        },
+        {
+          "domestic_eu_candidate_reference_present": true,
+          "human_primary_review_complete": false,
+          "income_type": "royalty",
+          "independent_approval_complete": false,
+          "intake_evidence_gaps": [],
+          "legacy_remaining_294_reference_present": true,
+          "production_releasable": false,
+          "recipient_country": "NL",
+          "scope_id": "CZ-NL-royalty",
+          "source_country": "CZ",
+          "stage5_terminal_status": "pending",
+          "verification_status": "needs_review"
+        }
+      ],
+      "stage5_release_status": "needs_review",
+      "stage5_required_legal_gates": [
+        "official_treaty_identity",
+        "official_treaty_document",
+        "article_10",
+        "article_11",
+        "article_12",
+        "protocols_and_amendments",
+        "mli_position",
+        "mli_matching",
+        "mli_effective_dates",
+        "authentic_languages",
+        "prevailing_language_rule",
+        "official_english_version_if_relevant",
+        "withholding_effective_date",
+        "czech_domestic_law_layer",
+        "eu_directive_layer_if_relevant",
+        "structured_rule_mapping",
+        "exact_evidence_and_provenance",
+        "human_primary_legal_review",
+        "independent_approval_before_release"
+      ],
+      "workflow_class": "instrument_overlay"
+    }
+  ],
+  "production_releasable_scope_count": 0,
+  "purpose": "Stage 5 evidence-intake dossier for the first remaining80 batch. Repository-backed source identity and evidence availability only. This dataset is not legal approval and does not create a production legal conclusion.",
+  "safety_boundary": {
+    "candidate_is_not_production_rule": true,
+    "extraction_is_not_verification": true,
+    "human_review_required": true,
+    "independent_approval_required_before_release": true,
+    "legacy_remaining_294_is_frozen_reference_only": true,
+    "official_source_is_authority": true,
+    "production_release_created_by_this_dataset": false,
+    "provenance_is_not_approval": true
+  },
+  "schema_version": 2,
+  "source_dataset_hashes": {
+    "data/legal_consolidation/cz_domestic_eu_candidates.json": "f652dd7d8e8026b03f545c0bebee6fcf36470765de34c2aefdc94c37241cee04",
+    "data/legal_consolidation/mf_inventory.json": "a287aa7ec0044dc85a385aa54151dca4628d164b420227e02cb4307edbeba003",
+    "data/legal_consolidation/mli_wht_effects.json": "a341a227ff9cda01ef0f09572804df596f9e8f12084c4ed11a540f822c36bf7a",
+    "data/legal_consolidation/remaining_294_instrument_chains.json": "a9ef67b6735e82a434dafe952706214bf1d305a5d61f83dee5438168e714c92c",
+    "data/legal_consolidation/stage5_execution_manifest.json": "6406dd09b9cf727aa0c89ca90d9c798722c13446c102f793b9335f476682bb57",
+    "data/manifests/source_manifest.json": "9df6f48e9796ff5f765f671b3fff75d9ddd795eefcae577d1b3a94e023a404bf"
+  },
+  "terminal_status_counts": {
+    "blocked": 0,
+    "pending": 30,
+    "verified": 0
+  }
+}
