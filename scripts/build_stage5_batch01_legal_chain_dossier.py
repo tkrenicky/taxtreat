@@ -54,7 +54,9 @@ OUTPUT = (
 
 ARTICLE_HEADINGS_BY_INCOME = {
     "dividend": {"dividendy"},
-    "interest": {"uroky"},
+    # Some treaties title the interest article by the underlying
+    # debt-claim concept rather than using the Czech word for interest.
+    "interest": {"uroky", "prijmyzpohledavek"},
     # ``licencnopoplatky`` is the stable OCR form in several
     # repository-parsed Czech official publications (``Licencnõ``).
     "royalty": {"licencnipoplatky", "licencnopoplatky"},
@@ -257,8 +259,9 @@ def income_article_evidence(
         ]
 
         if not any(
-            normalized_heading(heading) in expected_headings
+            normalized_heading(heading).startswith(expected_heading)
             for heading in headings
+            for expected_heading in expected_headings
         ):
             continue
 
