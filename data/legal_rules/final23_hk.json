@@ -1,0 +1,125 @@
+{
+  "country_pair": "CZ-HK",
+  "dataset_release": "final23-runtime-catalog-2026-08-09.3",
+  "release_status": "candidate_fail_closed",
+  "rules": [
+    {
+      "article": 10,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "dataset_release": "final23-runtime-catalog-2026-08-09.3",
+      "effect": "rate",
+      "evidence_source_ids": [
+        "CZ-MF-HK-2E00616C828C",
+        "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "SRC-D025022024F9F174"
+      ],
+      "income_type": "dividend",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "priority": 101,
+      "rate": 5.0,
+      "recipient_country": "HK",
+      "rule_id": "CZ-HK-DIVIDEND-TREATY-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "91015f28c551b8c1ae080a48d4a9514bbdbaec7a2a7c2675cc9d7ddc82589cad",
+      "source_id": "SRC-D025022024F9F174",
+      "source_text": "Tyto dividendy však mohou být rovněž zdaněny ve smluvní straně, jejíž je společnost, která je vyplácí, rezidentem, a to podle právních předpisů této strany, avšak jestliže skutečný vlastník dividend je rezidentem druhé smluvní strany, daň takto uložená nepřesáhne 5 procent hrubé částky dividend.\nPříslušné úřady smluvních stran upraví vzájemnou dohodou způsob aplikace tohoto omezení.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.",
+      "verification_status": "needs_review"
+    },
+    {
+      "article": 11,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "dataset_release": "final23-runtime-catalog-2026-08-09.3",
+      "effect": "rate",
+      "evidence_source_ids": [
+        "CZ-MF-HK-2E00616C828C",
+        "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "SRC-D025022024F9F174"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "priority": 101,
+      "rate": 0.0,
+      "recipient_country": "HK",
+      "rule_id": "CZ-HK-INTEREST-TREATY-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "81f51471f20443019422e90f14f197a66a789d353da7508f149e23d4f75b80d8",
+      "source_id": "SRC-D025022024F9F174",
+      "source_text": "Úroky mající zdroj v jedné smluvní straně a skutečně vlastněné rezidentem druhé smluvní strany podléhají zdanění jen v této druhé straně.",
+      "verification_status": "needs_review"
+    },
+    {
+      "article": 12,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "dataset_release": "final23-runtime-catalog-2026-08-09.3",
+      "effect": "rate",
+      "evidence_source_ids": [
+        "CZ-MF-HK-2E00616C828C",
+        "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "SRC-D025022024F9F174"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "priority": 101,
+      "rate": 10.0,
+      "recipient_country": "HK",
+      "rule_id": "CZ-HK-ROYALTY-TREATY-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "41a542562ae4dc3cc8a4e14dcdb9876ad1a1976fb01e2359918c7dd780ef92f3",
+      "source_id": "SRC-D025022024F9F174",
+      "source_text": "Tyto licenční poplatky však mohou být rovněž zdaněny ve smluvní straně, ve které mají zdroj, a to podle právních předpisů této strany, avšak jestliže skutečný vlastník licenčních poplatků je rezidentem druhé smluvní strany, daň takto uložená nepřesáhne 10 procent hrubé částky licenčních poplatků.\nPříslušné úřady smluvních stran upraví vzájemnou dohodou způsob aplikace tohoto omezení.",
+      "verification_status": "needs_review"
+    }
+  ],
+  "schema_version": "1.0"
+}

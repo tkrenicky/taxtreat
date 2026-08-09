@@ -1,0 +1,125 @@
+{
+  "country_pair": "CZ-JP",
+  "dataset_release": "final23-runtime-catalog-2026-08-09.3",
+  "release_status": "candidate_fail_closed",
+  "rules": [
+    {
+      "article": 10,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "dataset_release": "final23-runtime-catalog-2026-08-09.3",
+      "effect": "rate",
+      "evidence_source_ids": [
+        "CZ-MF-JP-4344B37716FA",
+        "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "SRC-DAF33E409B334A94"
+      ],
+      "income_type": "dividend",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "priority": 101,
+      "rate": 10.0,
+      "recipient_country": "JP",
+      "rule_id": "CZ-JP-DIVIDEND-TREATY-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "9d1264e72eb78279ade335d84047e96982f63e86a0d1b25b45449ac4cc939242",
+      "source_id": "SRC-DAF33E409B334A94",
+      "source_text": "10% hrubé částky dividend, jestliže příjemce\nje společností, která vlastní nejméně 25 % po-\ndílů spojených s hlasovacím právem na spo-\nlečnosti vyplácející dividendy po dobu šesti\nměsíců bezprostředně předcházejících datum\nvýplaty takových dividend,\n15% hrubé částky dividend ve všech ostat-\nních případech.\nTento odstavec se nedotkne zdanění získu spo-\nlečnosli, ze kterého jsou dividendy vypláceny.",
+      "verification_status": "needs_review"
+    },
+    {
+      "article": 11,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "dataset_release": "final23-runtime-catalog-2026-08-09.3",
+      "effect": "rate",
+      "evidence_source_ids": [
+        "CZ-MF-JP-4344B37716FA",
+        "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "SRC-DAF33E409B334A94"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "priority": 101,
+      "rate": 10.0,
+      "recipient_country": "JP",
+      "rule_id": "CZ-JP-INTEREST-TREATY-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "ab425a2a0a00e4584aa055bc121814d87efeb3fd2901194c7caea3539b474884",
+      "source_id": "SRC-DAF33E409B334A94",
+      "source_text": "Tyto úroky však mohou být zdaněny ve smluvním státě, ve kterém je jejich zdroj, a to podle právních předpisů tohoto smluvního státu. Daň takto stanovená však nepřesáhne 10 % hrubé částky úroků.",
+      "verification_status": "needs_review"
+    },
+    {
+      "article": 12,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "dataset_release": "final23-runtime-catalog-2026-08-09.3",
+      "effect": "rate",
+      "evidence_source_ids": [
+        "CZ-MF-JP-4344B37716FA",
+        "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "SRC-DAF33E409B334A94"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "priority": 101,
+      "rate": 10.0,
+      "recipient_country": "JP",
+      "rule_id": "CZ-JP-ROYALTY-TREATY-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "417c56aef7d4d665553125328c7c89a9b4232517ad4f2c19b89e16c0510add23",
+      "source_id": "SRC-DAF33E409B334A94",
+      "source_text": "a) Průmyslové ličenční poplatky mohou být.\nzdaněny ve smluvním státě, ve kterém je jejich\nzdroj, a to podle právních předpisů tohoto smluv-\nního státu. Daň takto stanovená však nepřesáhne\n10 % hrubé částky licenčních poplatků.",
+      "verification_status": "needs_review"
+    }
+  ],
+  "schema_version": "1.0"
+}

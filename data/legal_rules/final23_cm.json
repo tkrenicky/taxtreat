@@ -1,0 +1,160 @@
+{
+  "country_pair": "CZ-CM",
+  "dataset_release": "final23-runtime-catalog-2026-08-09.3",
+  "release_status": "candidate_fail_closed",
+  "rules": [
+    {
+      "article": 10,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "dataset_release": "final23-runtime-catalog-2026-08-09.3",
+      "effect": "rate",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "SRC-C9A0B1B633A5AAD3"
+      ],
+      "income_type": "dividend",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "priority": 101,
+      "rate": 10.0,
+      "recipient_country": "CM",
+      "rule_id": "CZ-CM-DIVIDEND-TREATY-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "f99b1ba86373802592e0dc2cc0854745fc6388df4d7e6014643b21556befc1c8",
+      "source_id": "SRC-C9A0B1B633A5AAD3",
+      "source_text": "Tyto dividendy však mohou být rovněž zdaněny ve smluvním státě, jehož je společnost, která je vyplácí, rezidentem, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník dividend je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne 10 procent hrubé částky dividend.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace tohoto omezení.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.",
+      "verification_status": "needs_review"
+    },
+    {
+      "article": 11,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "dataset_release": "final23-runtime-catalog-2026-08-09.3",
+      "effect": "rate",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "SRC-C9A0B1B633A5AAD3"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "priority": 101,
+      "rate": 0.0,
+      "recipient_country": "CM",
+      "rule_id": "CZ-CM-INTEREST-TREATY-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "cab23a2bdafea59d5d905eb2e4391bb26f10a03a413e17e541948ff5eeed1bfc",
+      "source_id": "SRC-C9A0B1B633A5AAD3",
+      "source_text": "Úroky mající zdroj v jednom smluvním státě a skutečně vlastněné rezidentem druhého smluvního státu podléhají bez ohledu na ustanovení odstavce 2 zdanění jen v tomto druhém státě, jestliže jsou tyto úroky vypláceny:",
+      "verification_status": "needs_review"
+    },
+    {
+      "article": 11,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "dataset_release": "final23-runtime-catalog-2026-08-09.3",
+      "effect": "rate",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "SRC-C9A0B1B633A5AAD3"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "priority": 102,
+      "rate": 10.0,
+      "recipient_country": "CM",
+      "rule_id": "CZ-CM-INTEREST-TREATY-2",
+      "source_country": "CZ",
+      "source_excerpt_hash": "260a0de406f0ec26dfe5f4de3f8a602642d8171d9c1a09f3a17b4ac4c0504b12",
+      "source_id": "SRC-C9A0B1B633A5AAD3",
+      "source_text": "Tyto úroky však mohou být rovněž zdaněny ve smluvním státě, v němž mají zdroj, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník úroků je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne 10 procent hrubé částky úroků.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace tohoto omezení.",
+      "verification_status": "needs_review"
+    },
+    {
+      "article": 12,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "dataset_release": "final23-runtime-catalog-2026-08-09.3",
+      "effect": "rate",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "SRC-C9A0B1B633A5AAD3"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "priority": 101,
+      "rate": 10.0,
+      "recipient_country": "CM",
+      "rule_id": "CZ-CM-ROYALTY-TREATY-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "795260b86e37c37329ecbd7a9c8dc291274e26d3e1c4190288ae8f0b682d70a3",
+      "source_id": "SRC-C9A0B1B633A5AAD3",
+      "source_text": "Tyto licenční poplatky a poplatky za technické služby však mohou být rovněž zdaněny ve smluvním státě, v němž mají zdroj, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník licenčních poplatků nebo poplatků za technické služby je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne 10 procent hrubé částky licenčních poplatků nebo poplatků za technické služby.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace tohoto omezení.",
+      "verification_status": "needs_review"
+    }
+  ],
+  "schema_version": "1.0"
+}
