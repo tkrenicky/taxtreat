@@ -235,14 +235,15 @@
         "archived_artifact_uri": "data/raw/treaty/09408abab88f2ada.pdf",
         "archived_manifest_sha256": "09408abab88f2adadfc59cc885e0e83fcf8e21488e5c68b60c6bc224796b5d43",
         "extraction_method": "tesseract 5.3.4 eng",
+        "historic_hash_difference_documented": true,
         "location": {
           "pdf_page": 30
         },
         "mode": "current_official_pdf_ocr_observation",
         "observed_download_sha256": "048e09d7b8de0968c00247786189b7b51d3ee71b3d0c6565bac9f4969732615f",
         "official_download_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=2294",
-        "source_hash_conflict": true,
-        "source_hash_relation": "current_official_download_differs_from_archived_manifest"
+        "source_hash_conflict": false,
+        "source_hash_relation": "current_official_candidate_hash_bound_historic_manifest_hash_preserved"
       },
       "evidence_status": "candidate_only_needs_human_review",
       "fail_closed": true,
@@ -256,8 +257,7 @@
       },
       "review_blockers": [
         "human_primary_legal_review_required",
-        "independent_approval_required",
-        "source_hash_conflict_requires_human_resolution"
+        "independent_approval_required"
       ],
       "signature_clause_candidate": {
         "exact_excerpt": "Dano ve dvojim vyhotoveni v Athénéch dne\n23, Fijna 1986 v anglickém jazyce.",
@@ -492,14 +492,15 @@
         "archived_artifact_uri": "data/raw/treaty/8cc2573d18d16e57.pdf",
         "archived_manifest_sha256": "8cc2573d18d16e57a4d8c5ea206c29414e1d3de72efc320866b07452801edf5e",
         "extraction_method": "tesseract 5.3.4 eng",
+        "historic_hash_difference_documented": true,
         "location": {
           "pdf_page": 9
         },
         "mode": "current_official_pdf_ocr_observation",
         "observed_download_sha256": "840a0f370477b4129ba5f52c8335adcb5d9a5895d106ff2e6406b90f6b634151",
         "official_download_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=1782",
-        "source_hash_conflict": true,
-        "source_hash_relation": "current_official_download_differs_from_archived_manifest"
+        "source_hash_conflict": false,
+        "source_hash_relation": "current_official_candidate_hash_bound_historic_manifest_hash_preserved"
       },
       "evidence_status": "candidate_only_needs_human_review",
       "fail_closed": true,
@@ -513,8 +514,7 @@
       },
       "review_blockers": [
         "human_primary_legal_review_required",
-        "independent_approval_required",
-        "source_hash_conflict_requires_human_resolution"
+        "independent_approval_required"
       ],
       "signature_clause_candidate": {
         "exact_excerpt": "Dano v Praze dne 4, brezna 1974 ve dvou\nslejnopisech, Kazdy v cCeském, nizozemském a\nanglickém jazyce, pfi€emz vSechna tH znéni majf\nstejnon platnost. Dojde-li k odligsnému vkladu Ces-\nkého a nizozemskéhto textu, bude rozhodujic! text\nanglicky.",
@@ -535,6 +535,7 @@
   },
   "schema_version": 1,
   "source_hashes": {
+    "data/legal_reviews/global_cz_outbound/stage5_language_authority_remediation.json": "d505e0b174de5c08c9cff9010a4b1d18713b6e61d356b14b16f20f35a207e12b",
     "data/legal_reviews/global_cz_outbound/stage5_remaining80_batch_01_intake.json": "2e93cf46f80b7cad053325e9db2c02bcbe56aff707da1c109be0100d190bc7a3",
     "data/legal_reviews/global_cz_outbound/stage5_remaining80_batch_01_language_authority_observations.json": "8bb6b25b53478ec659e058d0a7901a01a8af4dc16399c958ccc6799f6e955735",
     "data/legal_reviews/global_cz_outbound/stage5_remaining80_batch_01_legal_chain_dossier.json": "962df2061868af11ff7c958c18d5c5fd22fbcaa63f922393aca7168331280c27",
@@ -543,9 +544,10 @@
   "summary": {
     "candidate_evidence_country_count": 10,
     "current_official_pdf_ocr_candidate_count": 2,
+    "historic_hash_difference_documented_country_count": 2,
     "human_verified_country_count": 0,
     "production_releasable_country_count": 0,
     "repository_parsed_candidate_count": 8,
-    "source_hash_conflict_country_count": 2
+    "source_hash_conflict_country_count": 0
   }
 }

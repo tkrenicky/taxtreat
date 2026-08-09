@@ -1,0 +1,82 @@
+{
+  "batch_files": [
+    {
+      "country_count": 10,
+      "path": "data/legal_reviews/global_cz_outbound/stage5_human_review_package/batch_01.json",
+      "scope_count": 30,
+      "sha256": "7c613b5b49bfef0e998a5efd4f3b4f0c8f7b6dc66743d0ac9f4713ce222fcafa"
+    },
+    {
+      "country_count": 10,
+      "path": "data/legal_reviews/global_cz_outbound/stage5_human_review_package/batch_02.json",
+      "scope_count": 30,
+      "sha256": "361e4b1b25efa933e00483b79aa2fa5d773f82af7e139aaf1054114537ffbf0d"
+    },
+    {
+      "country_count": 10,
+      "path": "data/legal_reviews/global_cz_outbound/stage5_human_review_package/batch_03.json",
+      "scope_count": 30,
+      "sha256": "aee320e133a1c2a9b4b056d3abf0e5a9b4f8638cac7fc2a991966912c400dd50"
+    },
+    {
+      "country_count": 10,
+      "path": "data/legal_reviews/global_cz_outbound/stage5_human_review_package/batch_04.json",
+      "scope_count": 30,
+      "sha256": "7fa981bf18f413e8633c3d9730ed5fb394a3881c16d52bc3bc67b6563e93de19"
+    },
+    {
+      "country_count": 10,
+      "path": "data/legal_reviews/global_cz_outbound/stage5_human_review_package/batch_05.json",
+      "scope_count": 30,
+      "sha256": "3ccfe7823780fec579637e090e961bb61b28ad502f273dad11e3a3c6ec306f8a"
+    },
+    {
+      "country_count": 10,
+      "path": "data/legal_reviews/global_cz_outbound/stage5_human_review_package/batch_06.json",
+      "scope_count": 30,
+      "sha256": "5b4f3f138f94021afcd379b310db54690b59d1a53cac589d2dfcae9688cd4833"
+    },
+    {
+      "country_count": 10,
+      "path": "data/legal_reviews/global_cz_outbound/stage5_human_review_package/batch_07.json",
+      "scope_count": 30,
+      "sha256": "fe4cd072eb89f40a17aff21cf90a556d7e8e5d0a1379065cf007b04d9ff17993"
+    },
+    {
+      "country_count": 10,
+      "path": "data/legal_reviews/global_cz_outbound/stage5_human_review_package/batch_08.json",
+      "scope_count": 30,
+      "sha256": "9965c10900a916793d58303ab3d184d98648edbdc85ac609a7993c582a5ab3c5"
+    },
+    {
+      "country_count": 10,
+      "path": "data/legal_reviews/global_cz_outbound/stage5_human_review_package/batch_09.json",
+      "scope_count": 30,
+      "sha256": "111630e8a8c9117f3220f31dab574832fb8dd788a9599293fb7927c1d36231aa"
+    },
+    {
+      "country_count": 10,
+      "path": "data/legal_reviews/global_cz_outbound/stage5_human_review_package/batch_10.json",
+      "scope_count": 30,
+      "sha256": "825279b0d261c3fcc5c7812a11e778b5272d1545e005db7c7129ec7e8fb58a28"
+    }
+  ],
+  "dataset_release": "stage5-human-review-package-2026-08-09.1",
+  "purpose": "Complete candidate dossier queue for human primary review and independent approval. It contains no new human review or production rule.",
+  "safety_boundary": {
+    "all_scopes_fail_closed": true,
+    "all_scopes_needs_review": true,
+    "all_scopes_pending": true,
+    "automatic_verification_or_release_forbidden": true
+  },
+  "schema_version": 1,
+  "summary": {
+    "country_count": 100,
+    "partition_counts": {
+      "genuine_legal_ambiguity_requires_human_determination": 0,
+      "mechanically_complete_ready_for_human_review": 270,
+      "source_remediation_required": 30
+    },
+    "scope_count": 300
+  }
+}

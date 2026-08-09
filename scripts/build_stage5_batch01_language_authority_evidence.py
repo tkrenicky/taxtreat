@@ -14,6 +14,7 @@ DOSSIER = BASE / "stage5_remaining80_batch_01_legal_chain_dossier.json"
 OBSERVATIONS = BASE / "stage5_remaining80_batch_01_language_authority_observations.json"
 MANIFEST = ROOT / "data/manifests/source_manifest.json"
 OUTPUT = BASE / "stage5_remaining80_batch_01_language_authority_evidence.json"
+REMEDIATION = BASE / "stage5_language_authority_remediation.json"
 
 EXPECTED_COUNTRIES = {"AE", "BE", "BY", "EE", "GR", "HR", "KZ", "MD", "NG", "NL"}
 PARSED_MODE = "repository_parsed_signature_clause"
@@ -76,6 +77,9 @@ def build() -> dict[str, Any]:
     intake = load(INTAKE)
     dossier = load(DOSSIER)
     observations = load(OBSERVATIONS)
+    remediation_by_country = {
+        row["country"]: row for row in load(REMEDIATION)["entries"]
+    } if REMEDIATION.is_file() else {}
     manifest = load(MANIFEST)
 
     intake_by_country = {entry["country"]: entry for entry in intake["entries"]}
@@ -139,15 +143,27 @@ def build() -> dict[str, Any]:
             }
             if observation["official_download_url"] not in inventory_urls:
                 raise RuntimeError(f"Observed official URL not bound to intake for {country}")
-            blockers.append("source_hash_conflict_requires_human_resolution")
+            remediation = remediation_by_country.get(country)
+            remediated = (
+                remediation is not None
+                and remediation["official_source"]["current_download_sha256"] == observed_hash
+                and remediation["official_source"]["url"] == observation["official_download_url"]
+            )
+            if not remediated:
+                blockers.append("source_hash_conflict_requires_human_resolution")
             evidence_source = {
                 "mode": mode,
                 "official_download_url": observation["official_download_url"],
                 "observed_download_sha256": observed_hash,
                 "archived_artifact_uri": source["artifact_uri"],
                 "archived_manifest_sha256": archived_hash,
-                "source_hash_relation": "current_official_download_differs_from_archived_manifest",
-                "source_hash_conflict": True,
+                "source_hash_relation": (
+                    "current_official_candidate_hash_bound_historic_manifest_hash_preserved"
+                    if remediated else
+                    "current_official_download_differs_from_archived_manifest"
+                ),
+                "source_hash_conflict": not remediated,
+                "historic_hash_difference_documented": True,
                 "location": {"pdf_page": observation["pdf_page"]},
                 "extraction_method": observation["ocr_engine"],
             }
@@ -206,7 +222,7 @@ def build() -> dict[str, Any]:
         },
         "source_hashes": {
             str(path.relative_to(ROOT)): sha256_file(path)
-            for path in (INTAKE, DOSSIER, OBSERVATIONS, MANIFEST)
+            for path in (INTAKE, DOSSIER, OBSERVATIONS, MANIFEST, REMEDIATION)
         },
         "summary": {
             "candidate_evidence_country_count": 10,
@@ -218,6 +234,10 @@ def build() -> dict[str, Any]:
             ),
             "source_hash_conflict_country_count": sum(
                 entry["evidence_source"].get("source_hash_conflict") is True
+                for entry in entries
+            ),
+            "historic_hash_difference_documented_country_count": sum(
+                entry["evidence_source"].get("historic_hash_difference_documented") is True
                 for entry in entries
             ),
             "human_verified_country_count": 0,
