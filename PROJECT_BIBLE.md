@@ -301,3 +301,370 @@ A phase may be closed only after:
 6. changes are merged into `main`.
 
 The source-ingestion and parser phases satisfy these conditions subject to the final pull-request merge.
+
+## 11. Current State
+
+**Last updated:** 9 August 2026  
+**Project status:** Stage 4/7 complete; Stage 5/7 ready to start.  
+**Estimated overall project completion:** approximately 82%.
+
+### Repository baseline
+
+- Repository: `tkrenicky/taxtreat`
+- Canonical branch: `main`
+- Stage 4 merge commit: `8df90db`
+- Stage 4 PR: `#110 – Complete Stage 4 fail-closed runtime integration`
+- Full automated suite at Stage 4 closure: **1,329 passed**
+- Post-merge critical verification: **75 passed**
+- Working tree after Stage 4 closure: clean and synchronized with `origin/main`.
+
+### Current Czech outbound treaty universe
+
+The current first-market scope is Czech outbound withholding-tax research for:
+
+- dividends;
+- interest; and
+- royalties.
+
+The repository covers approximately **100 Czech treaty partners**.
+
+The original AT/CH pilot covers:
+
+- 2 treaty partners;
+- 6 income scopes.
+
+The legacy `remaining_294` consolidation dataset represents:
+
+- 98 non-pilot treaty partners;
+- 3 income types per partner;
+- 294 scopes.
+
+The `remaining_294` dataset is a historical legal-review-linked snapshot. It must not be silently regenerated or rehashed where this would invalidate existing review provenance.
+
+### Final23 Stage 4 runtime cohort
+
+Stage 4 migrated the following 18 countries into the dedicated runtime-candidate workflow:
+
+`AD, BA, BB, BH, BW, CL, CM, CO, CY, GB, GH, HK, JP, KR, LU, PA, PL, QA`
+
+Coverage:
+
+- 18 recipient countries;
+- 54 income scopes;
+- 78 runtime candidate rules;
+- semantic mapping: **54/54**;
+- repository-backed provenance: **78/78**.
+
+All Final23 runtime rules remain:
+
+`verification_status = needs_review`
+
+They are intentionally stored in:
+
+`data/legal_rule_candidates/final23/`
+
+and not in:
+
+`data/legal_rules/`
+
+Therefore Final23 candidates are **not production-authoritative legal rules**.
+
+### Production boundary
+
+The following distinction is mandatory:
+
+- `data/legal_rules/` = production legal-rule catalogue;
+- `data/legal_rule_candidates/` = non-production candidate catalogue;
+- candidate data must never become production-authoritative merely because parsing, mapping, provenance or tests succeed.
+
+Stage 4 introduced and tested an explicit migration boundary:
+
+`data/legal_consolidation/final23_migration_boundary.json`
+
+The boundary preserves the existing legal-review provenance of the legacy `remaining_294` snapshot while allowing Final23 scopes to proceed through their own candidate workflow.
+
+Existing legal-review hashes must not be rewritten merely because underlying parsed text has subsequently been corrected.
+
+### Runtime fail-closed status
+
+The `/analysis` runtime path now enforces the production source-release gate before invoking the decision engine for Czech-source transactions.
+
+For an unreleased, unknown, blocked or partially verified Czech treaty pair:
+
+- analysis stops before the decision engine;
+- the API returns HTTP 409;
+- the response uses `SOURCE_NOT_RELEASED`;
+- unresolved legal coverage cannot silently reach a tax result.
+
+Non-Czech source jurisdictions remain outside the current Czech source-release gate.
+
+### Stage 4 completion definition
+
+Stage 4 is technically complete because:
+
+- the runtime candidate architecture is implemented;
+- Final23 semantic mapping is complete;
+- Final23 provenance is complete;
+- candidates are isolated from production autoload;
+- source-release gating is fail-closed;
+- legacy legal-review hashes remain frozen;
+- migration boundaries are explicitly documented and tested;
+- the complete test suite passes.
+
+Stage 4 completion **does not mean that Final23 is legally released for production**.
+
+The Stage 4 gate expressly distinguishes:
+
+- `stage4_complete = true`
+- `production_legal_release_complete = false`
+
+Relevant artifact:
+
+`data/legal_reviews/global_cz_outbound/stage4_final_runtime_release_gate.json`
+
+### Current legal readiness
+
+The project now has a proven technical path from official-source evidence through candidate generation, provenance, review gating and runtime integration.
+
+The primary remaining bottleneck is no longer runtime architecture.
+
+It is **full legal consolidation and legal verification across the Czech treaty universe**.
+
+That is the purpose of Stage 5.
+
+## 12. Roadmap
+
+TaxTreat development follows seven stages.
+
+### Stage 1/7 – Foundations and data model
+
+**Status: Complete**
+
+Established the repository structure, core legal-data model, treaty-pair concepts, directional analysis model and basic application architecture.
+
+### Stage 2/7 – Legal evidence and consolidation infrastructure
+
+**Status: Complete**
+
+Established official-source inventory, evidence handling, hashing, parsing, consolidation artifacts, review records and fail-closed legal-data concepts.
+
+### Stage 3/7 – Pilot legal validation
+
+**Status: Complete**
+
+Validated the legal workflow through the AT/CH pilot and the first larger Czech outbound candidate cohorts.
+
+Established the principle that a numeric extraction is not itself a legal conclusion.
+
+### Stage 4/7 – Runtime decision integration
+
+**Status: Complete – 9 August 2026**
+
+Final23 runtime integration completed.
+
+Key outcome:
+
+- 18 countries;
+- 54 scopes;
+- 78 candidate rules;
+- 54/54 semantic mapping;
+- 78/78 provenance;
+- strict candidate/production separation;
+- source-release fail-closed API gate;
+- frozen legacy review provenance;
+- 1,329 passing tests.
+
+Stage 4 is a technical runtime milestone, not a production legal-release milestone.
+
+### Stage 5/7 – Full legal consolidation
+
+**Status: Current stage**
+
+Objective:
+
+Extend legally verified Czech outbound coverage from the pilot/Final23 work to the full Czech treaty universe.
+
+Stage 5 must consolidate, for every supported country and each of dividends, interest and royalties:
+
+1. official treaty identity;
+2. official treaty text;
+3. Articles 10, 11 and 12;
+4. protocols and amendments;
+5. MLI position and effective dates;
+6. authentic-language status and prevailing-language rules;
+7. official English-version availability where relevant;
+8. withholding-tax effective dates;
+9. domestic-law interaction;
+10. relevant EU-directive interaction;
+11. structured legal-rule mapping;
+12. conditions and unresolved factual requirements;
+13. exact source provenance;
+14. legal-review status;
+15. end-to-end fail-closed behaviour.
+
+A scope may become production-authoritative only after all mandatory legal gates are satisfied and the required human review/approval metadata is present.
+
+**No fabricated reviewer, approver, effective date, source or verification status is permitted.**
+
+Candidate or partially consolidated scopes remain `needs_review` / `REVIEW_REQUIRED`.
+
+#### Stage 5 operating principles
+
+- Official sources only for production legal content.
+- Work in repeatable batches rather than one-off country-specific hacks.
+- Prefer automation for collection, comparison, evidence assembly and deterministic checks.
+- Do not use an LLM to invent production legal content.
+- Fail closed whenever a mandatory legal layer is unresolved.
+- Preserve historical source versions and legal-review provenance.
+- Do not silently rehash or overwrite reviewed snapshots.
+- Keep candidate and production catalogues physically and logically separated.
+- Every batch must have automated integrity tests.
+- Full-suite regressions must be run before merge.
+- Merge only when the relevant tests are green.
+
+#### Stage 5 completion target
+
+Stage 5 is complete only when the intended Czech outbound treaty universe has an explicit, auditable status for all three supported income types.
+
+Every scope must be one of:
+
+- legally verified and eligible for production release; or
+- explicitly blocked with a documented legal reason.
+
+There must be no silent or ambiguous gaps.
+
+### Stage 6/7 – Product, reports, UI and commercial layer
+
+**Status: Planned**
+
+Includes customer analysis workflow, professional research reports, source viewer, credits, account management, admin/review interfaces and commercial product presentation.
+
+### Stage 7/7 – Production QA, security and launch
+
+**Status: Planned**
+
+Includes final regression testing, security review, operational controls, monitoring, release management, legal/commercial launch checks and production deployment.
+
+## 15. AI Handover
+
+You are joining the TaxTreat project after completion of Stage 4/7.
+
+### Mandatory starting state
+
+As of 9 August 2026:
+
+- Stage 4/7 is **100% complete**.
+- Overall project estimate is approximately **82%**.
+- Stage 5/7 – Full legal consolidation is the current stage.
+- Canonical repository branch is `main`.
+- Stage 4 was merged through PR #110.
+- Stage 4 merge commit is `8df90db`.
+- Full test suite at closure: **1,329 passed**.
+- Post-merge critical verification: **75 passed**.
+
+Do not reopen or redesign Stage 4 unless a new regression proves that it is necessary.
+
+### Final23
+
+Final23 consists of:
+
+`AD, BA, BB, BH, BW, CL, CM, CO, CY, GB, GH, HK, JP, KR, LU, PA, PL, QA`
+
+It contains:
+
+- 18 countries;
+- 54 income scopes;
+- 78 runtime candidate rules.
+
+All 78 rules remain `needs_review`.
+
+They are stored under:
+
+`data/legal_rule_candidates/final23/`
+
+They must not be moved back into the production `data/legal_rules/` directory unless they satisfy the production legal-release requirements.
+
+### Critical architecture
+
+Preserve all of the following:
+
+1. Official sources are authoritative.
+2. Extraction is not legal verification.
+3. Provenance is not legal approval.
+4. A candidate rule is not a production rule.
+5. `needs_review` rules cannot produce a final production legal conclusion.
+6. Unknown or incomplete law must fail closed.
+7. Source-release gating must occur before the decision engine for Czech-source analyses.
+8. Existing legal-review provenance and hashes must not be silently rewritten.
+9. Historical legal evidence must remain auditable.
+10. Never fabricate reviewer or approver metadata.
+
+### Legacy remaining_294 boundary
+
+`data/legal_consolidation/remaining_294_base_candidates.json`
+
+and its downstream legal-review-linked artifacts represent a historical snapshot.
+
+Some underlying `data/parsed/*.json` texts were later corrected.
+
+Therefore a regenerated `remaining_294` dataset may legitimately differ from the frozen snapshot.
+
+Do not solve this by automatically replacing legal-review hashes.
+
+Final23 scopes have an explicit migration boundary in:
+
+`data/legal_consolidation/final23_migration_boundary.json`
+
+### Stage 5 mission
+
+The next task is not to build another runtime engine.
+
+The next task is to **scale the legal-consolidation workflow across the complete Czech outbound treaty universe**.
+
+Before making changes:
+
+1. inspect `PROJECT_BIBLE.md`;
+2. inspect the Stage 4 release gate;
+3. inspect the Final23 migration boundary;
+4. inspect current legal-consolidation inventories and review artifacts;
+5. inspect `git status` and recent commits;
+6. identify the exact remaining country/scopes and their blockers.
+
+Then produce an evidence-based Stage 5 execution plan.
+
+### Working style
+
+The project owner is not a developer.
+
+During active implementation:
+
+- provide large executable Bash batches;
+- keep explanations short and operational;
+- commands must be directly copyable;
+- do not use `set -e`, `set -euo pipefail` or `exit`;
+- avoid repeated small diagnostic prompts;
+- prefer one comprehensive batch where safe;
+- never merge if tests fail;
+- report Stage 5 and whole-project progress percentages at the top of every substantive response.
+
+Do not claim legal or production readiness merely because technical tests pass.
+
+Accuracy and legal auditability take priority over speed.
+
+
+## 14. Change Log
+
+### 9 August 2026 – Stage 4 complete
+
+- Completed Stage 4/7 runtime decision integration.
+- Merged PR #110 into `main` at `8df90db`.
+- Full repository suite: 1,329 tests passed.
+- Final23 runtime cohort: 18 countries, 54 scopes and 78 candidate rules.
+- Completed 54/54 semantic mappings and 78/78 repository-backed provenance.
+- Moved Final23 `needs_review` rules out of production `data/legal_rules/` into `data/legal_rule_candidates/final23/`.
+- Enforced strict fail-closed source-release gating before the decision engine.
+- Added explicit Final23 migration boundary.
+- Preserved legacy `remaining_294` legal-review hashes and historical snapshot.
+- Confirmed `stage4_complete = true`.
+- Confirmed `production_legal_release_complete = false`.
+- Opened Stage 5/7: Full legal consolidation across the Czech treaty universe.
