@@ -1,0 +1,116 @@
+{
+  "countries": {
+    "EE": {
+      "candidate_resolution": {
+        "next_required_action": "human_review_of_mli_matching_and_article_35_effect",
+        "production_releasable": false,
+        "reason": "Official MLI/effect-notice evidence exists in repository inventory, but no corresponding structured CZ-EE effect exists in mli_wht_effects.json.",
+        "status": "structured_effect_mapping_pending_review",
+        "verification_status": "needs_review"
+      },
+      "country": "Estonsko",
+      "czechia_current_party_evidence": {
+        "matching_lines": [
+          "28      Czechia                                   07-06-2017                  13-05-2020 4                   01-09-2020                                           16-08-2024 5",
+          "4   The List of Reservations and Notifications (“the MLI Position”) deposited by Czechia at the time of deposit of the instrument of ratification does not follow the standard format: the notifications and",
+          "5   The notifications made by Czechia after the deposit of its instrument of ratification have not been consolidated into its list of reservations and notifications (“the MLI Position”) submitted upon the deposit"
+        ]
+      },
+      "oecd_current_party_evidence": {
+        "deposit_date_evidenced": "2021-01-15",
+        "entry_into_force_evidenced": "2021-05-01",
+        "matching_lines": [
+          "32      Estonia                                   29-06-2018                   15-01-2021                    01-05-2021                 01-06-2022"
+        ]
+      },
+      "repository_inventory": {
+        "mli_effect_reference_present": false,
+        "mli_listed": true,
+        "mli_notice_available": true,
+        "official_mli_instruments": [
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "Úmluva č. 32/2020 Sb.m.s.",
+            "source_id": "CZ-MF-EE-18E385096939",
+            "source_type": "mli_convention",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38924"
+          },
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "Sdělení č. 439/2024 Sb.",
+            "source_id": "CZ-MF-EE-420787A74132",
+            "source_type": "mli_effect_notice",
+            "url": "https://e-sbirka.gov.cz/sb/2024/439?zalozka=text"
+          }
+        ]
+      }
+    },
+    "NG": {
+      "candidate_resolution": {
+        "next_required_action": "human_confirmation_of_current_bilateral_mli_non_effect",
+        "production_releasable": false,
+        "reason": "Current OECD official signatories/parties source contains Nigeria's signature but does not evidence a deposit of ratification or entry into force.",
+        "status": "counterparty_ratification_not_evidenced",
+        "verification_status": "needs_review"
+      },
+      "country": "Nigérie",
+      "oecd_current_signatory_evidence": {
+        "deposit_of_ratification_evidenced": false,
+        "entry_into_force_evidenced": false,
+        "matching_lines": [
+          "75   Nigeria                  17-08-2017"
+        ],
+        "signature_date_evidenced": "2017-08-17"
+      },
+      "repository_inventory": {
+        "mli_effect_reference_present": false,
+        "mli_listed": true,
+        "mli_notice_available": false,
+        "official_mli_instruments": [
+          {
+            "authority": "Czech Ministry of Finance / official publication",
+            "label": "Úmluva č. 32/2020 Sb.m.s.",
+            "source_id": "CZ-MF-NG-0CF8BD75EBC2",
+            "source_type": "mli_convention",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38924"
+          }
+        ]
+      }
+    }
+  },
+  "dataset_release": "stage5-batch01-mli-evidence-2026-08-09.1",
+  "official_source_snapshots": {
+    "czech_mf_treaty_overview": {
+      "html_path": "data/legal_reviews/global_cz_outbound/stage5_batch01_mli_sources/cz_mf_treaty_overview_2026.html",
+      "html_sha256": "898d71dbdd5fd76207a6e1fcbdb2f2ad886438aea19e1e38f684840553337d2f",
+      "official_url": "https://mf.gov.cz/cs/zahranici-a-eu/smlouvy-o-zamezeni-dvojiho-zdaneni/prehled-platnych-smluv",
+      "text_path": "data/legal_reviews/global_cz_outbound/stage5_batch01_mli_sources/cz_mf_treaty_overview_2026.txt",
+      "text_sha256": "576def65c756f5014f482353b073b2481e4bfb827d04cb07d061200f66e94b36"
+    },
+    "oecd_mli_signatories_parties": {
+      "official_url": "https://www.oecd.org/content/dam/oecd/en/topics/policy-sub-issues/beps-mli/beps-mli-signatories-and-parties.pdf/_jcr_content/renditions/original./beps-mli-signatories-and-parties.pdf",
+      "pdf_path": "data/legal_reviews/global_cz_outbound/stage5_batch01_mli_sources/oecd_mli_signatories_parties_2026-06-18.pdf",
+      "pdf_sha256": "d5e4dfc236d1b2680ab9c69f32f8a36e6b61a243e555d4c259840eb0c11eba9f",
+      "status_date": "2026-06-18",
+      "text_path": "data/legal_reviews/global_cz_outbound/stage5_batch01_mli_sources/oecd_mli_signatories_parties_2026-06-18.txt",
+      "text_sha256": "26d8669cf9f632ea2e6810ee49d10faf09ae9ead6d110ce107326dbc164bafe7"
+    }
+  },
+  "production_releasable": false,
+  "purpose": "Repository-backed review evidence resolving the mechanical Batch 01 MLI gaps for EE and NG. This dataset is not a production legal rule and does not constitute human legal approval.",
+  "result": {
+    "original_mechanical_gap_count": 3,
+    "production_rules_created": 0,
+    "unclassified_gap_count": 0,
+    "verified_rules_created": 0
+  },
+  "safety_boundary": {
+    "extraction_is_not_verification": true,
+    "human_review_required": true,
+    "no_automatic_mli_effect_mapping": true,
+    "official_sources_only": true,
+    "provenance_is_not_approval": true
+  },
+  "schema_version": 1,
+  "verification_status": "needs_review"
+}
