@@ -65,6 +65,14 @@ def test_complete_package_and_blocker_registry_reconcile_exactly_to_100_and_300(
         "source_remediation_required": 30,
     }
     assert sum(built["summary"]["partition_counts"].values()) == 300
+    blocker_counts = {}
+    for row in load(BLOCKERS)["scopes"]:
+        for blocker in row["blockers"]:
+            blocker_counts[blocker] = blocker_counts.get(blocker, 0) + 1
+    assert blocker_counts == {
+        "instrument_chain_consolidation_required": 6,
+        "language_authority_primary_source_remediation_required": 30,
+    }
 
 
 def test_committed_human_review_batches_match_the_builder():

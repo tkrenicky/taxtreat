@@ -135,6 +135,7 @@
       "recipient_country_name": "Andorra",
       "scope_id": "CZ-AD-dividend",
       "source_country": "CZ",
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 10,
         "article_text_sha256": "66deef841500a35561922c4562f0725c321ac8d9019c4fe7dbbeded24f6dc080",
@@ -288,6 +289,7 @@
       "recipient_country_name": "Andorra",
       "scope_id": "CZ-AD-interest",
       "source_country": "CZ",
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 11,
         "article_text_sha256": "fdf02214b2a970e2fcc51558bbc63ab10bd97f7dce507233b09ba9d3a1bdb6a9",
@@ -443,6 +445,7 @@
       "recipient_country_name": "Andorra",
       "scope_id": "CZ-AD-royalty",
       "source_country": "CZ",
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 12,
         "article_text_sha256": "3194d21be290b5f3942ac16e3752efa6dc396c0a42e8f82a3b963a9c6c002ec9",
@@ -646,6 +649,7 @@
       "recipient_country_name": "Spojené arabské emiráty",
       "scope_id": "CZ-AE-dividend",
       "source_country": "CZ",
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 11,
         "article_text_sha256": "f834a970024454e699eae35d4d8dd968cd7dde6f6d0f9e26ab84566f65054273",
@@ -847,6 +851,7 @@
       "recipient_country_name": "Spojené arabské emiráty",
       "scope_id": "CZ-AE-interest",
       "source_country": "CZ",
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 12,
         "article_text_sha256": "d092202b39cec62eef93845470e59bb1b085a140b05b517240333d9f07d85fa2",
@@ -1050,6 +1055,7 @@
       "recipient_country_name": "Spojené arabské emiráty",
       "scope_id": "CZ-AE-royalty",
       "source_country": "CZ",
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 13,
         "article_text_sha256": "2aa073622c653cf59a0f44ba916db5ce42fd9b84ce6db6f0592c0d3965522728",
@@ -1240,6 +1246,7 @@
       "recipient_country_name": "Albánie",
       "scope_id": "CZ-AL-dividend",
       "source_country": "CZ",
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 10,
         "article_text_sha256": "74034f14aa068c842b92b92a65f80cbb45c2f82811694d92a428abc154bbc478",
@@ -1431,6 +1438,7 @@
       "recipient_country_name": "Albánie",
       "scope_id": "CZ-AL-interest",
       "source_country": "CZ",
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 11,
         "article_text_sha256": "251bc87ad10608737a7b89f1f41a95e852c2313197de6d13acf8dc5ee49302a5",
@@ -1622,6 +1630,7 @@
       "recipient_country_name": "Albánie",
       "scope_id": "CZ-AL-royalty",
       "source_country": "CZ",
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 12,
         "article_text_sha256": "59713982aab97ccc1e8431dc9fec7548b8877ee412d915a4223f5b92bc447021",
@@ -1806,6 +1815,7 @@
       "recipient_country_name": "Arménie",
       "scope_id": "CZ-AM-dividend",
       "source_country": "CZ",
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 10,
         "article_text_sha256": "71d4e99545e20a0959067d0e95d5a6d136fdeb4ebcd620c58231a00606e64aec",
@@ -1990,6 +2000,7 @@
       "recipient_country_name": "Arménie",
       "scope_id": "CZ-AM-interest",
       "source_country": "CZ",
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 11,
         "article_text_sha256": "c3fa01d668af837cce0fb4d206b1f156e8a587b47987bdfccc8824b1c63a0c1f",
@@ -2174,6 +2185,7 @@
       "recipient_country_name": "Arménie",
       "scope_id": "CZ-AM-royalty",
       "source_country": "CZ",
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 12,
         "article_text_sha256": "0ce6b2c099eda1b22774bb887bc7ba357d4d471e76afdfebdb050f9741ee92ae",
@@ -2410,6 +2422,10 @@
       "recipient_country_name": "Rakousko",
       "scope_id": "CZ-AT-dividend",
       "source_country": "CZ",
+      "source_remediation_blockers": [
+        "language_authority_primary_source_remediation_required",
+        "instrument_chain_consolidation_required"
+      ],
       "treaty_article": {
         "article_number": 10,
         "article_text_sha256": "b7e060d4e3e4ee25d1980de9f98b67ebe1207738140d71d07362b151cc530ab3",
@@ -2659,6 +2675,10 @@
       "recipient_country_name": "Rakousko",
       "scope_id": "CZ-AT-interest",
       "source_country": "CZ",
+      "source_remediation_blockers": [
+        "language_authority_primary_source_remediation_required",
+        "instrument_chain_consolidation_required"
+      ],
       "treaty_article": {
         "article_number": 11,
         "article_text_sha256": "3eb94e90c1612a35fce9c78e362fd2a671f599a4b983b7b02bc2bd05c946c2fa",
@@ -2908,6 +2928,10 @@
       "recipient_country_name": "Rakousko",
       "scope_id": "CZ-AT-royalty",
       "source_country": "CZ",
+      "source_remediation_blockers": [
+        "language_authority_primary_source_remediation_required",
+        "instrument_chain_consolidation_required"
+      ],
       "treaty_article": {
         "article_number": 12,
         "article_text_sha256": "c4f4e32e1646b7abcf77fc744c7b1418b51a574f81e7ee39703771fbdcf2bcce",
@@ -3092,6 +3116,7 @@
       "recipient_country_name": "Austrálie",
       "scope_id": "CZ-AU-dividend",
       "source_country": "CZ",
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 10,
         "article_text_sha256": "ad4116832667abc16d6bd9c883245449326f8fb8c2f004c819a2c31e25373af9",
@@ -3276,6 +3301,7 @@
       "recipient_country_name": "Austrálie",
       "scope_id": "CZ-AU-interest",
       "source_country": "CZ",
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 11,
         "article_text_sha256": "f87db8887e9de6998e577fcab6337d8fb0fb7b0168d790a9de674f71c52fefb2",
@@ -3460,6 +3486,7 @@
       "recipient_country_name": "Austrálie",
       "scope_id": "CZ-AU-royalty",
       "source_country": "CZ",
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 12,
         "article_text_sha256": "23b67cba978c8b9ac1b336bcf28b0889d171d31a4195cea2d29aab1397ef4e47",
@@ -3651,6 +3678,7 @@
       "recipient_country_name": "Ázerbájdžán",
       "scope_id": "CZ-AZ-dividend",
       "source_country": "CZ",
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 10,
         "article_text_sha256": "5e171eda35bc4388fb1dd359d466611612616d21817e2c37a935c5a30956b6ea",
@@ -3842,6 +3870,7 @@
       "recipient_country_name": "Ázerbájdžán",
       "scope_id": "CZ-AZ-interest",
       "source_country": "CZ",
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 11,
         "article_text_sha256": "dd2a58d59867f8f1d5e6a1c7e73f6f43235eeec86b90bee000ee3edb276802e4",
@@ -4033,6 +4062,7 @@
       "recipient_country_name": "Ázerbájdžán",
       "scope_id": "CZ-AZ-royalty",
       "source_country": "CZ",
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 12,
         "article_text_sha256": "c5553afb6d29895e687293a560a2925984a9b1cb7463d6e34697fc095162e021",
@@ -4227,6 +4257,7 @@
       "recipient_country_name": "Bosna a Hercegovina",
       "scope_id": "CZ-BA-dividend",
       "source_country": "CZ",
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 10,
         "article_text_sha256": "4aadeb04f7e35b717bfac5aade844fda1ba86bf5c93af1430d5b48448c58ad77",
@@ -4421,6 +4452,7 @@
       "recipient_country_name": "Bosna a Hercegovina",
       "scope_id": "CZ-BA-interest",
       "source_country": "CZ",
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 11,
         "article_text_sha256": "b30a84e2ba59fa03b047e16a77f081a4dae62c7ade941f578c40c6aada176b12",
@@ -4617,6 +4649,7 @@
       "recipient_country_name": "Bosna a Hercegovina",
       "scope_id": "CZ-BA-royalty",
       "source_country": "CZ",
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 12,
         "article_text_sha256": "46ba8e5f47eea2e215c1e3a8cf57022faca21e9aebec4702ced584812eed9e3a",
@@ -4812,6 +4845,7 @@
       "recipient_country_name": "Barbados",
       "scope_id": "CZ-BB-dividend",
       "source_country": "CZ",
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 10,
         "article_text_sha256": "bed44e06e8f8f76dc30c0f73f90b93258dfc0e07bfef019d8ddedea8b20c1c7e",
@@ -5009,6 +5043,7 @@
       "recipient_country_name": "Barbados",
       "scope_id": "CZ-BB-interest",
       "source_country": "CZ",
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 11,
         "article_text_sha256": "414f3c052a08fd80c75937646533f8171c0f84666c01c102252dbdc158445866",
@@ -5207,6 +5242,7 @@
       "recipient_country_name": "Barbados",
       "scope_id": "CZ-BB-royalty",
       "source_country": "CZ",
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 12,
         "article_text_sha256": "06c9b268e9597ef97481e75f2ba38cc870b17d98e9c0bebfbd2fe5fbaa702cc4",
@@ -5378,6 +5414,7 @@
       "recipient_country_name": "Bangladéš",
       "scope_id": "CZ-BD-dividend",
       "source_country": "CZ",
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 10,
         "article_text_sha256": "8c2c27960628e920e060d46f097930aabedb67dec2d36078daf6e78ba8544006",
@@ -5546,6 +5583,7 @@
       "recipient_country_name": "Bangladéš",
       "scope_id": "CZ-BD-interest",
       "source_country": "CZ",
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 11,
         "article_text_sha256": "21c822af40cbb5aa5bc851c1b9c57235e06b1e05f11d36b4191cade97b490f71",
@@ -5717,6 +5755,7 @@
       "recipient_country_name": "Bangladéš",
       "scope_id": "CZ-BD-royalty",
       "source_country": "CZ",
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 12,
         "article_text_sha256": "85e4315a5a0f4aceaa5fe45d3d6cbbb9eed4644b3f23da1425eb5e97e071805a",
