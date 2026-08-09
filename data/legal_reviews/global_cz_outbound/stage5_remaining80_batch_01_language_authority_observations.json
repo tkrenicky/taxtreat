@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "dataset_release": "stage5-remaining80-batch01-language-observations-2026-08-09.1",
+  "purpose": "Machine-readable candidate observations for Batch 01 treaty signature clauses. These observations are not legal verification and do not satisfy any human-review or production-release gate.",
+  "candidate_only": true,
+  "entries": [
+    {
+      "country": "AE",
+      "evidence_mode": "repository_parsed_signature_clause",
+      "signature_clause_occurrence": 1,
+      "authentic_languages_candidate": ["Czech", "Arabic", "English"],
+      "official_english_version_candidate": true,
+      "prevailing_language_rule_candidate": "english_prevails_all_text_divergences"
+    },
+    {
+      "country": "BE",
+      "evidence_mode": "repository_parsed_signature_clause",
+      "signature_clause_occurrence": 1,
+      "authentic_languages_candidate": ["English"],
+      "official_english_version_candidate": true,
+      "prevailing_language_rule_candidate": "sole_english"
+    },
+    {
+      "country": "BY",
+      "evidence_mode": "repository_parsed_signature_clause",
+      "signature_clause_occurrence": 1,
+      "authentic_languages_candidate": ["Czech", "Belarusian", "English"],
+      "official_english_version_candidate": true,
+      "prevailing_language_rule_candidate": "english_prevails_all_text_divergences"
+    },
+    {
+      "country": "EE",
+      "evidence_mode": "repository_parsed_signature_clause",
+      "signature_clause_occurrence": 1,
+      "authentic_languages_candidate": ["English"],
+      "official_english_version_candidate": true,
+      "prevailing_language_rule_candidate": "sole_english"
+    },
+    {
+      "country": "GR",
+      "evidence_mode": "current_official_pdf_ocr_observation",
+      "authentic_languages_candidate": ["English"],
+      "official_english_version_candidate": true,
+      "prevailing_language_rule_candidate": "sole_english",
+      "official_download_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=2294",
+      "observed_download_sha256": "048e09d7b8de0968c00247786189b7b51d3ee71b3d0c6565bac9f4969732615f",
+      "pdf_page": 30,
+      "ocr_engine": "tesseract 5.3.4 eng",
+      "ocr_excerpt": "Dano ve dvojim vyhotoveni v Athénéch dne\n23, Fijna 1986 v anglickém jazyce."
+    },
+    {
+      "country": "HR",
+      "evidence_mode": "repository_parsed_signature_clause",
+      "signature_clause_occurrence": 1,
+      "authentic_languages_candidate": ["Czech", "Croatian", "English"],
+      "official_english_version_candidate": true,
+      "prevailing_language_rule_candidate": "english_prevails_czech_croatian_divergence"
+    },
+    {
+      "country": "KZ",
+      "evidence_mode": "repository_parsed_signature_clause",
+      "signature_clause_occurrence": 1,
+      "authentic_languages_candidate": ["Czech", "Kazakh", "English", "Russian"],
+      "official_english_version_candidate": true,
+      "prevailing_language_rule_candidate": "english_prevails_all_text_divergences"
+    },
+    {
+      "country": "MD",
+      "evidence_mode": "repository_parsed_signature_clause",
+      "signature_clause_occurrence": 1,
+      "authentic_languages_candidate": ["Czech", "Moldovan", "English"],
+      "official_english_version_candidate": true,
+      "prevailing_language_rule_candidate": "english_prevails_all_text_divergences"
+    },
+    {
+      "country": "NG",
+      "evidence_mode": "repository_parsed_signature_clause",
+      "signature_clause_occurrence": 1,
+      "authentic_languages_candidate": ["English"],
+      "official_english_version_candidate": true,
+      "prevailing_language_rule_candidate": "sole_english"
+    },
+    {
+      "country": "NL",
+      "evidence_mode": "current_official_pdf_ocr_observation",
+      "authentic_languages_candidate": ["Czech", "Dutch", "English"],
+      "official_english_version_candidate": true,
+      "prevailing_language_rule_candidate": "english_prevails_czech_dutch_divergence",
+      "official_download_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=1782",
+      "observed_download_sha256": "840a0f370477b4129ba5f52c8335adcb5d9a5895d106ff2e6406b90f6b634151",
+      "pdf_page": 9,
+      "ocr_engine": "tesseract 5.3.4 eng",
+      "ocr_excerpt": "Dano v Praze dne 4, brezna 1974 ve dvou\nslejnopisech, Kazdy v cCeském, nizozemském a\nanglickém jazyce, pfi€emz vSechna tH znéni majf\nstejnon platnost. Dojde-li k odligsnému vkladu Ces-\nkého a nizozemskéhto textu, bude rozhodujic! text\nanglicky."
+    }
+  ]
+}

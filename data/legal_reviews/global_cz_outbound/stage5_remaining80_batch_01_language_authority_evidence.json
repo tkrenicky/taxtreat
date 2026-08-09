@@ -1,0 +1,551 @@
+{
+  "batch": {
+    "countries": [
+      "AE",
+      "BE",
+      "BY",
+      "EE",
+      "GR",
+      "HR",
+      "KZ",
+      "MD",
+      "NG",
+      "NL"
+    ],
+    "country_count": 10,
+    "scope_count": 30
+  },
+  "dataset_release": "stage5-remaining80-batch01-language-authority-evidence-2026-08-09.1",
+  "entries": [
+    {
+      "authority_class": "official",
+      "candidate_interpretation": {
+        "authentic_languages": [
+          "Czech",
+          "Arabic",
+          "English"
+        ],
+        "official_english_version": true,
+        "prevailing_language_rule": "english_prevails_all_text_divergences"
+      },
+      "country": "AE",
+      "evidence_source": {
+        "archived_artifact_bytes_present": false,
+        "archived_artifact_uri": "data/raw/treaty/d23391e2d6c63872.html",
+        "archived_manifest_sha256": "d23391e2d6c6387263e25d63787e595b0f97dcffefa4d438005a682f31744500",
+        "location": {
+          "article_index": 28,
+          "article_number": 29,
+          "article_title": "UKONČENÍ PLATNOSTI",
+          "json_path": "$.articles[28].text"
+        },
+        "mode": "repository_parsed_signature_clause",
+        "parsed_hash_valid": true,
+        "parsed_path": "data/parsed/spojene_arabske_emiraty.json",
+        "parsed_sha256": "fcc7785e16b066e121ff9cc8d3b6bb43cea8acb3ef151d74d24ca98d1221d116",
+        "source_hash_relation": "parsed_candidate_matches_repository_hash"
+      },
+      "evidence_status": "candidate_only_needs_human_review",
+      "fail_closed": true,
+      "production_releasable": false,
+      "release_gates": {
+        "authentic_languages_verified": false,
+        "human_primary_review_complete": false,
+        "independent_approval_complete": false,
+        "official_english_version_assessed": false,
+        "prevailing_language_rule_verified": false
+      },
+      "review_blockers": [
+        "human_primary_legal_review_required",
+        "independent_approval_required"
+      ],
+      "signature_clause_candidate": {
+        "exact_excerpt": "Dáno v Praze dne 24. května 2023 ve dvou původních vyhotoveních, každé v jazyce českém, arabském a anglickém, přičemž všechny texty jsou autentické. V případě jakéhokoliv rozdílu mezi texty bude rozhodujícím anglický text.",
+        "excerpt_sha256": "789d55d237f8490dc3b399c4f2243373ea6e3c57c589db35267b47b8a83b4a23"
+      },
+      "source_id": "SRC-15E5956B6144D75B",
+      "source_title": "206/2024 Sb.",
+      "stage5_terminal_status": "pending",
+      "treaty_pair_id": "CZ-AE",
+      "verification_status": "needs_review"
+    },
+    {
+      "authority_class": "official",
+      "candidate_interpretation": {
+        "authentic_languages": [
+          "English"
+        ],
+        "official_english_version": true,
+        "prevailing_language_rule": "sole_english"
+      },
+      "country": "BE",
+      "evidence_source": {
+        "archived_artifact_bytes_present": false,
+        "archived_artifact_uri": "data/raw/treaty/b5dce9a7d1cc9e45.pdf",
+        "archived_manifest_sha256": "b5dce9a7d1cc9e45d0ebdcefa030aaa24a94730f6ee333fa44c081ef78720f68",
+        "location": {
+          "article_index": 28,
+          "article_number": 29,
+          "article_title": "VYPOVED",
+          "json_path": "$.articles[28].text"
+        },
+        "mode": "repository_parsed_signature_clause",
+        "parsed_hash_valid": true,
+        "parsed_path": "data/parsed/belgie.json",
+        "parsed_sha256": "3e9e09cd1f31959d74ff0543218af0b78ed3de1c180a79185736ad46ac174463",
+        "source_hash_relation": "parsed_candidate_matches_repository_hash"
+      },
+      "evidence_status": "candidate_only_needs_human_review",
+      "fail_closed": true,
+      "production_releasable": false,
+      "release_gates": {
+        "authentic_languages_verified": false,
+        "human_primary_review_complete": false,
+        "independent_approval_complete": false,
+        "official_english_version_assessed": false,
+        "prevailing_language_rule_verified": false
+      },
+      "review_blockers": [
+        "human_primary_legal_review_required",
+        "independent_approval_required"
+      ],
+      "signature_clause_candidate": {
+        "exact_excerpt": "Dáno v Bruselu dne 16. prosince 1996 ve dvou puvodnõch vyhotovenõch v anglickém jazyce.",
+        "excerpt_sha256": "d6b4f69bbd47e5f1f079cb61669e9a43953fca493a99a25229f3c6bd009d1715"
+      },
+      "source_id": "SRC-E16828A7660D9797",
+      "source_title": "95/2000 Sb.m.s.",
+      "stage5_terminal_status": "pending",
+      "treaty_pair_id": "CZ-BE",
+      "verification_status": "needs_review"
+    },
+    {
+      "authority_class": "official",
+      "candidate_interpretation": {
+        "authentic_languages": [
+          "Czech",
+          "Belarusian",
+          "English"
+        ],
+        "official_english_version": true,
+        "prevailing_language_rule": "english_prevails_all_text_divergences"
+      },
+      "country": "BY",
+      "evidence_source": {
+        "archived_artifact_bytes_present": false,
+        "archived_artifact_uri": "data/raw/treaty/e57bf1e617250a79.pdf",
+        "archived_manifest_sha256": "e57bf1e617250a79a4c4312e8eef191a56de073856fb4d25c090e5a7eca3a979",
+        "location": {
+          "article_index": 28,
+          "article_number": 29,
+          "article_title": "Výpoved'",
+          "json_path": "$.articles[28].text"
+        },
+        "mode": "repository_parsed_signature_clause",
+        "parsed_hash_valid": true,
+        "parsed_path": "data/parsed/belorusko.json",
+        "parsed_sha256": "a5a475c1140a1684c44d19ad95da5a39bc9f1b304abadf65b0e301bc80fbf732",
+        "source_hash_relation": "parsed_candidate_matches_repository_hash"
+      },
+      "evidence_status": "candidate_only_needs_human_review",
+      "fail_closed": true,
+      "production_releasable": false,
+      "release_gates": {
+        "authentic_languages_verified": false,
+        "human_primary_review_complete": false,
+        "independent_approval_complete": false,
+        "official_english_version_assessed": false,
+        "prevailing_language_rule_verified": false
+      },
+      "review_blockers": [
+        "human_primary_legal_review_required",
+        "independent_approval_required"
+      ],
+      "signature_clause_candidate": {
+        "exact_excerpt": "Dáno v Praze dne 14. rõjna 1996 ve dvou pu vod-\nnõch vyhotovenõch, kazdé v jazyce ceském, beloruském\na anglickém, pricemz vsechna tri znenõ jsou autentická.\nV prõpade rozdõlnosti výkladu bude rozhodujõcõ ang-\nlický text.",
+        "excerpt_sha256": "16cd9e1e30b49bd228628976182fb06a0ed4890e1b084fffe18d2e02adddff3a"
+      },
+      "source_id": "SRC-9A8D6161227A3BB3",
+      "source_title": "31/1998 Sb.",
+      "stage5_terminal_status": "pending",
+      "treaty_pair_id": "CZ-BY",
+      "verification_status": "needs_review"
+    },
+    {
+      "authority_class": "official",
+      "candidate_interpretation": {
+        "authentic_languages": [
+          "English"
+        ],
+        "official_english_version": true,
+        "prevailing_language_rule": "sole_english"
+      },
+      "country": "EE",
+      "evidence_source": {
+        "archived_artifact_bytes_present": false,
+        "archived_artifact_uri": "data/raw/treaty/4d47d11e60e1773a.pdf",
+        "archived_manifest_sha256": "4d47d11e60e1773a745d2ab877a11ccaad8d2f53f827fc729229f62c044932a5",
+        "location": {
+          "article_index": 28,
+          "article_number": 29,
+          "article_title": "Výpoved'",
+          "json_path": "$.articles[28].text"
+        },
+        "mode": "repository_parsed_signature_clause",
+        "parsed_hash_valid": true,
+        "parsed_path": "data/parsed/estonsko.json",
+        "parsed_sha256": "3d528bf3e3023a91376b207cdbe21c3ba4e2ce37992561100df72de4a5cf66de",
+        "source_hash_relation": "parsed_candidate_matches_repository_hash"
+      },
+      "evidence_status": "candidate_only_needs_human_review",
+      "fail_closed": true,
+      "production_releasable": false,
+      "release_gates": {
+        "authentic_languages_verified": false,
+        "human_primary_review_complete": false,
+        "independent_approval_complete": false,
+        "official_english_version_assessed": false,
+        "prevailing_language_rule_verified": false
+      },
+      "review_blockers": [
+        "human_primary_legal_review_required",
+        "independent_approval_required"
+      ],
+      "signature_clause_candidate": {
+        "exact_excerpt": "Dáno ve dvojõm vyhotovenõ v Tallinnu dne\n24. rõjna 1994 v anglickém jazyce.",
+        "excerpt_sha256": "7cbbbdedfa0f73272de41d1f2f8cdf97f850f487f99e313758e8f9fdffb078e6"
+      },
+      "source_id": "SRC-BD487F336BE33A13",
+      "source_title": "184/1995 Sb.",
+      "stage5_terminal_status": "pending",
+      "treaty_pair_id": "CZ-EE",
+      "verification_status": "needs_review"
+    },
+    {
+      "authority_class": "official",
+      "candidate_interpretation": {
+        "authentic_languages": [
+          "English"
+        ],
+        "official_english_version": true,
+        "prevailing_language_rule": "sole_english"
+      },
+      "country": "GR",
+      "evidence_source": {
+        "archived_artifact_uri": "data/raw/treaty/09408abab88f2ada.pdf",
+        "archived_manifest_sha256": "09408abab88f2adadfc59cc885e0e83fcf8e21488e5c68b60c6bc224796b5d43",
+        "extraction_method": "tesseract 5.3.4 eng",
+        "location": {
+          "pdf_page": 30
+        },
+        "mode": "current_official_pdf_ocr_observation",
+        "observed_download_sha256": "048e09d7b8de0968c00247786189b7b51d3ee71b3d0c6565bac9f4969732615f",
+        "official_download_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=2294",
+        "source_hash_conflict": true,
+        "source_hash_relation": "current_official_download_differs_from_archived_manifest"
+      },
+      "evidence_status": "candidate_only_needs_human_review",
+      "fail_closed": true,
+      "production_releasable": false,
+      "release_gates": {
+        "authentic_languages_verified": false,
+        "human_primary_review_complete": false,
+        "independent_approval_complete": false,
+        "official_english_version_assessed": false,
+        "prevailing_language_rule_verified": false
+      },
+      "review_blockers": [
+        "human_primary_legal_review_required",
+        "independent_approval_required",
+        "source_hash_conflict_requires_human_resolution"
+      ],
+      "signature_clause_candidate": {
+        "exact_excerpt": "Dano ve dvojim vyhotoveni v Athénéch dne\n23, Fijna 1986 v anglickém jazyce.",
+        "excerpt_sha256": "ef96fc75c12da900852d807624c3c576869095af6fd8d3a5748b64eff4df2c27"
+      },
+      "source_id": "SRC-C5ED2C206EB6D04B",
+      "source_title": "98/1989 Sb.",
+      "stage5_terminal_status": "pending",
+      "treaty_pair_id": "CZ-GR",
+      "verification_status": "needs_review"
+    },
+    {
+      "authority_class": "official",
+      "candidate_interpretation": {
+        "authentic_languages": [
+          "Czech",
+          "Croatian",
+          "English"
+        ],
+        "official_english_version": true,
+        "prevailing_language_rule": "english_prevails_czech_croatian_divergence"
+      },
+      "country": "HR",
+      "evidence_source": {
+        "archived_artifact_bytes_present": false,
+        "archived_artifact_uri": "data/raw/treaty/2ca164a53d4eb996.pdf",
+        "archived_manifest_sha256": "2ca164a53d4eb996ff01ac08f5ae3443b65b71960e5595867e40dca35cac08fa",
+        "location": {
+          "article_index": 28,
+          "article_number": 29,
+          "article_title": "Výpoved'",
+          "json_path": "$.articles[28].text"
+        },
+        "mode": "repository_parsed_signature_clause",
+        "parsed_hash_valid": true,
+        "parsed_path": "data/parsed/chorvatsko.json",
+        "parsed_sha256": "f2dd4e774149c2a042a0f5cede0bc1dbd6256c4b88a5b16f6155362070bbcf02",
+        "source_hash_relation": "parsed_candidate_matches_repository_hash"
+      },
+      "evidence_status": "candidate_only_needs_human_review",
+      "fail_closed": true,
+      "production_releasable": false,
+      "release_gates": {
+        "authentic_languages_verified": false,
+        "human_primary_review_complete": false,
+        "independent_approval_complete": false,
+        "official_english_version_assessed": false,
+        "prevailing_language_rule_verified": false
+      },
+      "review_blockers": [
+        "human_primary_legal_review_required",
+        "independent_approval_required"
+      ],
+      "signature_clause_candidate": {
+        "exact_excerpt": "Dáno v Praze dne 22. 1. 1999 ve dvou puvodnõch vyhotovenõch, kazdé v jazyce ceském, chorvatském\na anglickém, pricemz vsechny texty jsou autentické. V prõpade jakéhokoliv rozdõlu mezi ceským a chorvatským\ntextem bude rozhodujõcõm anglický text.",
+        "excerpt_sha256": "b01c6ae17fbba69a6f58efc7098d7f801c76f6330adb579ffcc66810a06649a5"
+      },
+      "source_id": "SRC-2026EC8F5E96A9CC",
+      "source_title": "42/2000 Sb.m.s.",
+      "stage5_terminal_status": "pending",
+      "treaty_pair_id": "CZ-HR",
+      "verification_status": "needs_review"
+    },
+    {
+      "authority_class": "official",
+      "candidate_interpretation": {
+        "authentic_languages": [
+          "Czech",
+          "Kazakh",
+          "English",
+          "Russian"
+        ],
+        "official_english_version": true,
+        "prevailing_language_rule": "english_prevails_all_text_divergences"
+      },
+      "country": "KZ",
+      "evidence_source": {
+        "archived_artifact_bytes_present": false,
+        "archived_artifact_uri": "data/raw/treaty/c93ffd86a6777cd5.pdf",
+        "archived_manifest_sha256": "c93ffd86a6777cd546ee542268ae84575885afe27f403b2b20da60378c38d86a",
+        "location": {
+          "article_index": 28,
+          "article_number": 29,
+          "article_title": "VY POVE D",
+          "json_path": "$.articles[28].text"
+        },
+        "mode": "repository_parsed_signature_clause",
+        "parsed_hash_valid": true,
+        "parsed_path": "data/parsed/kazachstan.json",
+        "parsed_sha256": "4a8cf6ac13830bad8df2b4977e26033094350cb56e6ead0fc8cb7103ca6db190",
+        "source_hash_relation": "parsed_candidate_matches_repository_hash"
+      },
+      "evidence_status": "candidate_only_needs_human_review",
+      "fail_closed": true,
+      "production_releasable": false,
+      "release_gates": {
+        "authentic_languages_verified": false,
+        "human_primary_review_complete": false,
+        "independent_approval_complete": false,
+        "official_english_version_assessed": false,
+        "prevailing_language_rule_verified": false
+      },
+      "review_blockers": [
+        "human_primary_legal_review_required",
+        "independent_approval_required"
+      ],
+      "signature_clause_candidate": {
+        "exact_excerpt": "Dáno v Almaty dne 9. dubna 1998 ve dvou pu vodnõ ch vyhotovenõ ch, kazdé v jazyce ceském, kazasském,\nanglickém a ruském, pricemzv sechny texty jsou autentické .Vp rõ pade rozdõ lnosti mezi texty bude rozhodujõ cõ m\nanglický text.",
+        "excerpt_sha256": "599ddaca35de5531cebcd312416edc14f0b6f38b49f6967ef6e087ba2fdfed2e"
+      },
+      "source_id": "SRC-A4EEB73B59D9CE70",
+      "source_title": "3/2000 Sb.m.s.",
+      "stage5_terminal_status": "pending",
+      "treaty_pair_id": "CZ-KZ",
+      "verification_status": "needs_review"
+    },
+    {
+      "authority_class": "official",
+      "candidate_interpretation": {
+        "authentic_languages": [
+          "Czech",
+          "Moldovan",
+          "English"
+        ],
+        "official_english_version": true,
+        "prevailing_language_rule": "english_prevails_all_text_divergences"
+      },
+      "country": "MD",
+      "evidence_source": {
+        "archived_artifact_bytes_present": false,
+        "archived_artifact_uri": "data/raw/treaty/f516b7a298fda39f.pdf",
+        "archived_manifest_sha256": "f516b7a298fda39f32090a39b6c80fa9a90dcb7c67778dd3bf9573a375aa6108",
+        "location": {
+          "article_index": 28,
+          "article_number": 29,
+          "article_title": "Výpoved'",
+          "json_path": "$.articles[28].text"
+        },
+        "mode": "repository_parsed_signature_clause",
+        "parsed_hash_valid": true,
+        "parsed_path": "data/parsed/moldavie.json",
+        "parsed_sha256": "5b549babfe274e1fc606a257796292cdee611cf6b6ba6a301a005ff0a11afeff",
+        "source_hash_relation": "parsed_candidate_matches_repository_hash"
+      },
+      "evidence_status": "candidate_only_needs_human_review",
+      "fail_closed": true,
+      "production_releasable": false,
+      "release_gates": {
+        "authentic_languages_verified": false,
+        "human_primary_review_complete": false,
+        "independent_approval_complete": false,
+        "official_english_version_assessed": false,
+        "prevailing_language_rule_verified": false
+      },
+      "review_blockers": [
+        "human_primary_legal_review_required",
+        "independent_approval_required"
+      ],
+      "signature_clause_candidate": {
+        "exact_excerpt": "Dáno v Praze dne 12. kvetna 1999 ve dvou puvodnõch vyhotovenõch, kazdé v jazyce ceském, moldavském\na anglickém, pricemz vsechny texty jsou autentické. V prõpade jakéhokoliv rozdõlu bude rozhodujõcõm anglický\ntext.",
+        "excerpt_sha256": "4217b5480d53a90b54b96848eb3f750f01dd3e175fc3163dca93132d46f01ee7"
+      },
+      "source_id": "SRC-57AEF14CD7032586",
+      "source_title": "88/2000 Sb.m.s.",
+      "stage5_terminal_status": "pending",
+      "treaty_pair_id": "CZ-MD",
+      "verification_status": "needs_review"
+    },
+    {
+      "authority_class": "official",
+      "candidate_interpretation": {
+        "authentic_languages": [
+          "English"
+        ],
+        "official_english_version": true,
+        "prevailing_language_rule": "sole_english"
+      },
+      "country": "NG",
+      "evidence_source": {
+        "archived_artifact_bytes_present": false,
+        "archived_artifact_uri": "data/raw/treaty/f041ff7ffb421dc2.pdf",
+        "archived_manifest_sha256": "f041ff7ffb421dc267c554e3e661a97e4d44701e230567bce7416f188b44d5d2",
+        "location": {
+          "article_index": 27,
+          "article_number": 28,
+          "article_title": "Výpoved'",
+          "json_path": "$.articles[27].text"
+        },
+        "mode": "repository_parsed_signature_clause",
+        "parsed_hash_valid": true,
+        "parsed_path": "data/parsed/nigerie.json",
+        "parsed_sha256": "9277a9c2c3721d8e12721ea587aa41f3fb77fd2b175e4b8b8f1b0acfdd4d6d23",
+        "source_hash_relation": "parsed_candidate_matches_repository_hash"
+      },
+      "evidence_status": "candidate_only_needs_human_review",
+      "fail_closed": true,
+      "production_releasable": false,
+      "release_gates": {
+        "authentic_languages_verified": false,
+        "human_primary_review_complete": false,
+        "independent_approval_complete": false,
+        "official_english_version_assessed": false,
+        "prevailing_language_rule_verified": false
+      },
+      "review_blockers": [
+        "human_primary_legal_review_required",
+        "independent_approval_required"
+      ],
+      "signature_clause_candidate": {
+        "exact_excerpt": "Dáno v Lagosu dne 31. srpna 1989 ve dvou pu vod-\nnõch vyhotovenõch v anglickém jazyce.",
+        "excerpt_sha256": "1b112fc659d953ad4bbb4119e0eda62f1bd67a6fb9ed128eb51c9323c1d7cd4a"
+      },
+      "source_id": "SRC-3606886A4EB55B88",
+      "source_title": "339/1991 Sb.",
+      "stage5_terminal_status": "pending",
+      "treaty_pair_id": "CZ-NG",
+      "verification_status": "needs_review"
+    },
+    {
+      "authority_class": "official",
+      "candidate_interpretation": {
+        "authentic_languages": [
+          "Czech",
+          "Dutch",
+          "English"
+        ],
+        "official_english_version": true,
+        "prevailing_language_rule": "english_prevails_czech_dutch_divergence"
+      },
+      "country": "NL",
+      "evidence_source": {
+        "archived_artifact_uri": "data/raw/treaty/8cc2573d18d16e57.pdf",
+        "archived_manifest_sha256": "8cc2573d18d16e57a4d8c5ea206c29414e1d3de72efc320866b07452801edf5e",
+        "extraction_method": "tesseract 5.3.4 eng",
+        "location": {
+          "pdf_page": 9
+        },
+        "mode": "current_official_pdf_ocr_observation",
+        "observed_download_sha256": "840a0f370477b4129ba5f52c8335adcb5d9a5895d106ff2e6406b90f6b634151",
+        "official_download_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=1782",
+        "source_hash_conflict": true,
+        "source_hash_relation": "current_official_download_differs_from_archived_manifest"
+      },
+      "evidence_status": "candidate_only_needs_human_review",
+      "fail_closed": true,
+      "production_releasable": false,
+      "release_gates": {
+        "authentic_languages_verified": false,
+        "human_primary_review_complete": false,
+        "independent_approval_complete": false,
+        "official_english_version_assessed": false,
+        "prevailing_language_rule_verified": false
+      },
+      "review_blockers": [
+        "human_primary_legal_review_required",
+        "independent_approval_required",
+        "source_hash_conflict_requires_human_resolution"
+      ],
+      "signature_clause_candidate": {
+        "exact_excerpt": "Dano v Praze dne 4, brezna 1974 ve dvou\nslejnopisech, Kazdy v cCeském, nizozemském a\nanglickém jazyce, pfi€emz vSechna tH znéni majf\nstejnon platnost. Dojde-li k odligsnému vkladu Ces-\nkého a nizozemskéhto textu, bude rozhodujic! text\nanglicky.",
+        "excerpt_sha256": "f3831a0e70449c4cc2e060c36ddf724771a9bfc5e8ee4fe0609b778d1a30bb72"
+      },
+      "source_id": "SRC-449F6D668FCB55D8",
+      "source_title": "138/1974 Sb.",
+      "stage5_terminal_status": "pending",
+      "treaty_pair_id": "CZ-NL",
+      "verification_status": "needs_review"
+    }
+  ],
+  "purpose": "Candidate language-authority evidence for human legal review; not a verified production rule or approval record.",
+  "safety_boundary": {
+    "automatic_promotion_forbidden": true,
+    "candidate_evidence_is_not_verification": true,
+    "source_conflicts_fail_closed": true
+  },
+  "schema_version": 1,
+  "source_hashes": {
+    "data/legal_reviews/global_cz_outbound/stage5_remaining80_batch_01_intake.json": "2e93cf46f80b7cad053325e9db2c02bcbe56aff707da1c109be0100d190bc7a3",
+    "data/legal_reviews/global_cz_outbound/stage5_remaining80_batch_01_language_authority_observations.json": "8bb6b25b53478ec659e058d0a7901a01a8af4dc16399c958ccc6799f6e955735",
+    "data/legal_reviews/global_cz_outbound/stage5_remaining80_batch_01_legal_chain_dossier.json": "962df2061868af11ff7c958c18d5c5fd22fbcaa63f922393aca7168331280c27",
+    "data/manifests/source_manifest.json": "9df6f48e9796ff5f765f671b3fff75d9ddd795eefcae577d1b3a94e023a404bf"
+  },
+  "summary": {
+    "candidate_evidence_country_count": 10,
+    "current_official_pdf_ocr_candidate_count": 2,
+    "human_verified_country_count": 0,
+    "production_releasable_country_count": 0,
+    "repository_parsed_candidate_count": 8,
+    "source_hash_conflict_country_count": 2
+  }
+}
