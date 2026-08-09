@@ -1,0 +1,198 @@
+{
+  "country_pair": "CZ-AD",
+  "dataset_release": "final23-runtime-catalog-2026-08-09.3",
+  "release_status": "candidate_fail_closed",
+  "rules": [
+    {
+      "article": 10,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "dataset_release": "final23-runtime-catalog-2026-08-09.3",
+      "effect": "rate",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "SRC-3F28A5AADC1AA47E"
+      ],
+      "income_type": "dividend",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "priority": 101,
+      "rate": 5.0,
+      "recipient_country": "AD",
+      "rule_id": "CZ-AD-DIVIDEND-TREATY-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "4def1d9f380c0798cea836e20a6ac1ab7ba2dccd3c7815d5a2f2bc8fc6596556",
+      "source_id": "SRC-3F28A5AADC1AA47E",
+      "source_text": "5 procent hrubé částky dividend, jestliže skutečným vlastníkem je společnost (jiná než\nosobní společnost), která přímo drží alespoň 10 procent kapitálu společnosti vyplácející\ndividendy;",
+      "verification_status": "needs_review"
+    },
+    {
+      "article": 10,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "dataset_release": "final23-runtime-catalog-2026-08-09.3",
+      "effect": "rate",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "SRC-3F28A5AADC1AA47E"
+      ],
+      "income_type": "dividend",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "priority": 102,
+      "rate": 10.0,
+      "recipient_country": "AD",
+      "rule_id": "CZ-AD-DIVIDEND-TREATY-2",
+      "source_country": "CZ",
+      "source_excerpt_hash": "4dab78f30f8476d5f86b976b808532adcba29b8e1bec31a416af289221647b32",
+      "source_id": "SRC-3F28A5AADC1AA47E",
+      "source_text": "10 procent hrubé částky dividend ve všech ostatních případech.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.",
+      "verification_status": "needs_review"
+    },
+    {
+      "article": 11,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "dataset_release": "final23-runtime-catalog-2026-08-09.3",
+      "effect": "rate",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "SRC-3F28A5AADC1AA47E"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "priority": 101,
+      "rate": 0.0,
+      "recipient_country": "AD",
+      "rule_id": "CZ-AD-INTEREST-TREATY-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "526568f96ee06aef569c7dc04d1c912081a8f2d4484009268c6144b900b23b44",
+      "source_id": "SRC-3F28A5AADC1AA47E",
+      "source_text": "Úroky mající zdroj v jednom smluvním státě a skutečně vlastněné rezidentem druhého\nsmluvního státu podléhají zdanění jen v tomto druhém státě.",
+      "verification_status": "needs_review"
+    },
+    {
+      "article": 12,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "dataset_release": "final23-runtime-catalog-2026-08-09.3",
+      "effect": "rate",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "SRC-3F28A5AADC1AA47E"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "priority": 101,
+      "rate": 5.0,
+      "recipient_country": "AD",
+      "rule_id": "CZ-AD-ROYALTY-TREATY-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "d1bb6255b81bffc704c0e548e31b0bec138b9467ea2a450516d2764411db53e4",
+      "source_id": "SRC-3F28A5AADC1AA47E",
+      "source_text": "5 procent hrubé částky licenčních poplatků, které jsou uvedeny v odstavci 3 písmenu a);",
+      "verification_status": "needs_review"
+    },
+    {
+      "article": 12,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "dataset_release": "final23-runtime-catalog-2026-08-09.3",
+      "effect": "rate",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "SRC-3F28A5AADC1AA47E"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "priority": 102,
+      "rate": 10.0,
+      "recipient_country": "AD",
+      "rule_id": "CZ-AD-ROYALTY-TREATY-2",
+      "source_country": "CZ",
+      "source_excerpt_hash": "aa795aeed5b3ee9a61cc8887999d5c1de28f32af295f7ccd248846431e80def3",
+      "source_id": "SRC-3F28A5AADC1AA47E",
+      "source_text": "10 procent hrubé částky licenčních poplatků, které jsou uvedeny v odstavci 3 písmenu b).",
+      "verification_status": "needs_review"
+    }
+  ],
+  "schema_version": "1.0"
+}

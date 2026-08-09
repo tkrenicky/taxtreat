@@ -1,0 +1,168 @@
+{
+  "country_pair": "CZ-LU",
+  "dataset_release": "final23-runtime-catalog-2026-08-09.3",
+  "release_status": "candidate_fail_closed",
+  "rules": [
+    {
+      "article": 10,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "dataset_release": "final23-runtime-catalog-2026-08-09.3",
+      "effect": "rate",
+      "evidence_source_ids": [
+        "CZ-MF-LU-8790A263C4D9",
+        "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "EU-PSD-2011-96-CONSOLIDATED",
+        "SRC-D1DA8B0150E7B80D"
+      ],
+      "income_type": "dividend",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "priority": 101,
+      "rate": 0.0,
+      "recipient_country": "LU",
+      "rule_id": "CZ-LU-DIVIDEND-TREATY-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "3d8f719444a1bf4693df3ac5365c351c6c2ac32c2db00721b7a63f5412332e73",
+      "source_id": "SRC-D1DA8B0150E7B80D",
+      "source_text": "0 procent hrubé částky dividend, jestliže skutečným vlastníkem je společnost (jiná než osobní společnost), která nepřetržitě přímo drží po období alespoň jednoho roku alespoň 10 procent kapitálu společnosti, která vyplácí dividendy;",
+      "verification_status": "needs_review"
+    },
+    {
+      "article": 10,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "dataset_release": "final23-runtime-catalog-2026-08-09.3",
+      "effect": "rate",
+      "evidence_source_ids": [
+        "CZ-MF-LU-8790A263C4D9",
+        "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "EU-PSD-2011-96-CONSOLIDATED",
+        "SRC-D1DA8B0150E7B80D"
+      ],
+      "income_type": "dividend",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "priority": 102,
+      "rate": 10.0,
+      "recipient_country": "LU",
+      "rule_id": "CZ-LU-DIVIDEND-TREATY-2",
+      "source_country": "CZ",
+      "source_excerpt_hash": "4dab78f30f8476d5f86b976b808532adcba29b8e1bec31a416af289221647b32",
+      "source_id": "SRC-D1DA8B0150E7B80D",
+      "source_text": "10 procent hrubé částky dividend ve všech ostatních případech.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.",
+      "verification_status": "needs_review"
+    },
+    {
+      "article": 11,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "dataset_release": "final23-runtime-catalog-2026-08-09.3",
+      "effect": "rate",
+      "evidence_source_ids": [
+        "CZ-MF-LU-8790A263C4D9",
+        "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "EU-IRD-2003-49-CONSOLIDATED",
+        "SRC-D1DA8B0150E7B80D"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "priority": 101,
+      "rate": 0.0,
+      "recipient_country": "LU",
+      "rule_id": "CZ-LU-INTEREST-TREATY-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "fb8f5c44bd36d296ee8f64229b436d4399d390cf4088264635275285a0fa3e85",
+      "source_id": "SRC-D1DA8B0150E7B80D",
+      "source_text": "Úroky mající zdroj v jednom smluvním státě a skutečně vlastněné rezidentem druhého smluvního státu podléhají zdanění jen v tomto druhém státě.",
+      "verification_status": "needs_review"
+    },
+    {
+      "article": 12,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "dataset_release": "final23-runtime-catalog-2026-08-09.3",
+      "effect": "rate",
+      "evidence_source_ids": [
+        "CZ-MF-LU-8790A263C4D9",
+        "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "EU-IRD-2003-49-CONSOLIDATED",
+        "SRC-D1DA8B0150E7B80D"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "priority": 101,
+      "rate": 10.0,
+      "recipient_country": "LU",
+      "rule_id": "CZ-LU-ROYALTY-TREATY-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "b9d5a956ca07dd6ca00ade4236a3f29c7507d6ae14a67a6fe5c89e14705e4dd5",
+      "source_id": "SRC-D1DA8B0150E7B80D",
+      "source_text": "Tyto licenční poplatky však mohou být, vyjma případu druhu plateb, který je uveden v odstavci 3 písmenu a), rovněž zdaněny ve smluvním státě, v němž mají zdroj, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník licenčních poplatků je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne 10 procent hrubé částky licenčních poplatků.",
+      "verification_status": "needs_review"
+    }
+  ],
+  "schema_version": "1.0"
+}
