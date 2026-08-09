@@ -11,6 +11,10 @@ DOSSIER = (
     "stage5_remaining80_batch_01_legal_chain_dossier.json"
 )
 
+SOURCE_MANIFEST = Path(
+    "data/manifests/source_manifest.json"
+)
+
 EXPECTED_COUNTRIES = {
     "AE",
     "BE",
@@ -68,25 +72,25 @@ def test_batch01_legal_chain_has_exact_coverage():
     ) == 30
 
 
-def test_each_country_has_articles_10_11_12_evidence_slots():
+def test_each_country_has_income_article_evidence_slots():
     data = load(DOSSIER)
 
     for entry in data["entries"]:
 
         assert (
             set(entry["article_evidence"])
-            == {"10", "11", "12"}
+            == {"dividend", "interest", "royalty"}
         )
 
-        for article in ("10", "11", "12"):
+        for income in ("dividend", "interest", "royalty"):
 
             item = entry[
                 "article_evidence"
-            ][article]
+            ][income]
 
             assert (
-                item["article_number"]
-                == int(article)
+                item["income_type"]
+                == income
             )
 
             assert isinstance(
@@ -105,23 +109,31 @@ def test_each_country_has_articles_10_11_12_evidence_slots():
             )
 
 
-def test_income_scope_maps_to_correct_treaty_article():
+def test_income_scope_maps_to_heading_resolved_treaty_article():
     data = load(DOSSIER)
 
-    expected = {
-        "dividend": 10,
-        "interest": 11,
-        "royalty": 12,
+    expected_by_country = {
+        "AE": {"dividend": 11, "interest": 12, "royalty": 13},
+        "BE": {"dividend": 10, "interest": 11, "royalty": 12},
+        "BY": {"dividend": 10, "interest": 11, "royalty": 12},
+        "EE": {"dividend": 10, "interest": 11, "royalty": 12},
+        "GR": {"dividend": 10, "interest": 11, "royalty": 12},
+        "HR": {"dividend": 10, "interest": 11, "royalty": 12},
+        "KZ": {"dividend": 10, "interest": 11, "royalty": 12},
+        "MD": {"dividend": 10, "interest": 11, "royalty": 12},
+        "NG": {"dividend": 9, "interest": 10, "royalty": 11},
+        "NL": {"dividend": 10, "interest": 11, "royalty": 12},
     }
 
     for row in scopes(data):
 
         assert (
             row["treaty_article"]
-            == expected[
-                row["income_type"]
-            ]
+            == expected_by_country[row["recipient_country"]][row["income_type"]]
         )
+
+        assert row["article_evidence"]["resolved"] is True
+        assert row["article_evidence"]["resolution_status"] == "resolved"
 
 
 def test_all_scopes_remain_fail_closed():
@@ -212,6 +224,11 @@ def test_source_dataset_hashes_match_repository():
 
 def test_canonical_parsed_sources_are_hash_bound():
     data = load(DOSSIER)
+    manifest = load(SOURCE_MANIFEST)
+    manifest_by_source_id = {
+        row["source_id"]: row
+        for row in manifest["sources"]
+    }
 
     for entry in data["entries"]:
 
@@ -228,17 +245,24 @@ def test_canonical_parsed_sources_are_hash_bound():
         ]
 
         assert parsed.is_file()
-        assert artifact.is_file()
 
         assert (
             sha256(parsed)
             == source["parsed_sha256"]
         )
 
-        assert (
-            sha256(artifact)
-            == source["artifact_sha256"]
-        )
+        manifest_source = manifest_by_source_id[
+            source["source_id"]
+        ]
+
+        assert manifest_source["artifact_uri"] == source["artifact_uri"]
+        assert manifest_source["sha256"] == source["artifact_sha256"]
+
+        # Raw source artifacts are generated/retained outside Git. If the
+        # artifact is present locally, verify its bytes as an additional
+        # integrity check; the tracked manifest binding is always required.
+        if artifact.is_file():
+            assert sha256(artifact) == source["artifact_sha256"]
 
 
 def test_remaining294_is_explicitly_reference_only():

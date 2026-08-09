@@ -52,10 +52,12 @@ OUTPUT = (
     "stage5_remaining80_batch_01_legal_chain_dossier.json"
 )
 
-ARTICLE_BY_INCOME = {
-    "dividend": 10,
-    "interest": 11,
-    "royalty": 12,
+ARTICLE_HEADINGS_BY_INCOME = {
+    "dividend": {"dividendy"},
+    "interest": {"uroky"},
+    # ``licencnopoplatky`` is the stable OCR form in several
+    # repository-parsed Czech official publications (``Licencnõ``).
+    "royalty": {"licencnipoplatky", "licencnopoplatky"},
 }
 
 ARTICLE_KEYS = {
@@ -179,13 +181,13 @@ def explicit_article_number(
             continue
 
         if isinstance(value, int):
-            if value in {10, 11, 12}:
+            if 1 <= value <= 99:
                 return value
 
         if isinstance(value, str):
 
             match = re.search(
-                r"\b(10|11|12)\b",
+                r"\b([1-9][0-9]?)\b",
                 value,
             )
 
@@ -215,23 +217,49 @@ def article_anchor_match(
     )
 
 
-def article_evidence(
+def normalized_heading(value: Any) -> str:
+    return re.sub(
+        r"[^a-z0-9]",
+        "",
+        normalize(value),
+    )
+
+
+def income_article_evidence(
     parsed: Any,
-    article: int,
+    income: str,
 ) -> dict[str, Any]:
 
     hits = []
 
     seen = set()
 
-    # First preference:
-    # structured object carrying explicit article number.
+    expected_headings = ARTICLE_HEADINGS_BY_INCOME[income]
+
+    # Resolve only a structured article whose explicit number and
+    # income heading agree. Article numbering is treaty-specific:
+    # it must not be inferred from the OECD model sequence.
     for path, value in walk(parsed):
 
         if not isinstance(value, dict):
             continue
 
-        if explicit_article_number(value) != article:
+        article = explicit_article_number(value)
+
+        if article is None:
+            continue
+
+        headings = [
+            item
+            for key, item in value.items()
+            if str(key).casefold() in {"title", "heading"}
+            and isinstance(item, str)
+        ]
+
+        if not any(
+            normalized_heading(heading) in expected_headings
+            for heading in headings
+        ):
             continue
 
         text = collect_text(value)
@@ -250,51 +278,26 @@ def article_evidence(
             {
                 "json_path": path,
                 "resolution_method":
-                    "structured_article_number",
+                    "structured_income_heading_and_article_number",
+                "article_number": article,
+                "heading": headings[0] if headings else None,
                 "excerpt":
                     text[:1500] if text else None,
             }
         )
 
-    # Fallback:
-    # textual article heading / anchor.
-    if not hits:
-
-        for path, value in walk(parsed):
-
-            if not isinstance(value, str):
-                continue
-
-            if not article_anchor_match(
-                value,
-                article,
-            ):
-                continue
-
-            key = (
-                path,
-                value[:1000],
-            )
-
-            if key in seen:
-                continue
-
-            seen.add(key)
-
-            hits.append(
-                {
-                    "json_path": path,
-                    "resolution_method":
-                        "textual_article_anchor",
-                    "excerpt":
-                        value[:1500],
-                }
-            )
+    resolved = len(hits) == 1
 
     return {
-        "article_number": article,
-        "resolved":
-            bool(hits),
+        "income_type": income,
+        "article_number":
+            hits[0]["article_number"] if resolved else None,
+        "resolved": resolved,
+        "resolution_status": (
+            "resolved" if resolved
+            else "unresolved" if not hits
+            else "ambiguous"
+        ),
         "evidence_count":
             len(hits),
         "evidence":
@@ -557,12 +560,12 @@ def main() -> None:
         parsed = load(parsed_path)
 
         article_map = {
-            str(article):
-                article_evidence(
+            income:
+                income_article_evidence(
                     parsed,
-                    article,
+                    income,
                 )
-            for article in (10, 11, 12)
+            for income in ARTICLE_HEADINGS_BY_INCOME
         }
 
         resolved_articles += sum(
@@ -622,13 +625,13 @@ def main() -> None:
 
         country_gaps = []
 
-        for article in (10, 11, 12):
+        for income in ARTICLE_HEADINGS_BY_INCOME:
 
-            if not article_map[str(article)][
+            if not article_map[income][
                 "resolved"
             ]:
                 country_gaps.append(
-                    f"article_{article}_source_location_not_resolved"
+                    f"{income}_article_source_location_not_resolved"
                 )
 
         if not language_evidence:
@@ -689,9 +692,7 @@ def main() -> None:
 
         scopes = []
 
-        for income, article in (
-            ARTICLE_BY_INCOME.items()
-        ):
+        for income in ARTICLE_HEADINGS_BY_INCOME:
 
             scope_id = (
                 f"CZ-{country}-{income}"
@@ -700,12 +701,12 @@ def main() -> None:
             scope_gaps = []
 
             article_info = (
-                article_map[str(article)]
+                article_map[income]
             )
 
             if not article_info["resolved"]:
                 scope_gaps.append(
-                    f"article_{article}_source_location_not_resolved"
+                    f"{income}_article_source_location_not_resolved"
                 )
 
             domestic_present = (
@@ -730,7 +731,7 @@ def main() -> None:
                     "income_type":
                         income,
                     "treaty_article":
-                        article,
+                        article_info["article_number"],
                     "article_evidence":
                         article_info,
                     "domestic_eu_layer_reference_present":
@@ -878,7 +879,8 @@ def main() -> None:
         "purpose": (
             "Review-only legal-chain dossier for Stage 5 "
             "remaining80 Batch 01. It assembles repository-backed "
-            "evidence for treaty Articles 10-12, related instruments, "
+            "evidence for treaty dividend, interest, and royalty "
+            "articles, related instruments, "
             "MLI status, domestic/EU references, language and "
             "effective-date evidence. It does not create a verified "
             "or production legal conclusion."

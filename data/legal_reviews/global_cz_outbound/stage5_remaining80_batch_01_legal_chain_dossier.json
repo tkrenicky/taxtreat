@@ -24,40 +24,52 @@
   "entries": [
     {
       "article_evidence": {
-        "10": {
-          "article_number": 10,
-          "evidence": [
-            {
-              "excerpt": "SDRUŽENÉ PODNIKY\nJestliže\na)\nse podnik jednoho smluvního státu podílí přímo nebo nepřímo na vedení, kontrole nebo kapitálu podniku druhého smluvního státu, nebo\nb)\ntytéž osoby se podílejí přímo nebo nepřímo na vedení, kontrole nebo kapitálu podniku jednoho smluvního státu i podniku druhého smluvního státu\na jestliže v těchto případech jsou oba podniky ve svých obchodních nebo finančních vztazích vázány podmínkami, které sjednaly nebo jim byly uloženy, a které se liší od podmínek, které by byly sjednány mezi nezávislými podniky, mohou jakékoliv zisky, které by, nebýt těchto podmínek, byly docíleny jedním z podniků, ale vzhledem k těmto podmínkám docíleny nebyly, být zahrnuty do zisků tohoto podniku a následně zdaněny.\nJestliže\na)\nse podnik jednoho smluvního státu podílí přímo nebo nepřímo na vedení, kontrole nebo kapitálu podniku druhého smluvního státu, nebo\nb)\ntytéž osoby se podílejí přímo nebo nepřímo na vedení, kontrole nebo kapitálu podniku jednoho smluvního státu i podniku druhého smluvního státu\na jestliže v těchto případech jsou oba podniky ve svých obchodních nebo finančních vztazích vázány podmínkami, které sjednaly nebo jim byly uloženy, a které se liší od podmínek, které by byly sjednány mezi nezávislými podniky, mohou jakékoliv zisky, které by, nebýt těchto podmínek, byly docíleny jedním z podniků, ale vzhledem k těmto podmínkám docíleny nebyly, být zahrnuty do zisků tohoto podniku a následně zdaněny.",
-              "json_path": "$.articles[9]",
-              "resolution_method": "structured_article_number"
-            }
-          ],
-          "evidence_count": 1,
-          "resolved": true
-        },
-        "11": {
+        "dividend": {
           "article_number": 11,
           "evidence": [
             {
+              "article_number": 11,
               "excerpt": "DIVIDENDY\n1.\nDividendy vyplácené společností, která je rezidentem jednoho smluvního státu, rezidentu druhého smluvního státu, mohou být zdaněny v tomto druhém státě.\n2.\nTyto dividendy však mohou být rovněž zdaněny ve smluvním státě, jehož je společnost, která je vyplácí, rezidentem, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník dividend je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne 5 procent hrubé částky dividend.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace tohoto omezení.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.\n3.\nDividendy vyplácené společností, která je rezidentem jednoho smluvního státu, se bez ohledu na ustanovení odstavce 2 osvobozují od zdanění v tomto státě, pokud jsou dividendy skutečně vlastněny:\na)\ndruhým smluvním státem nebo jeho vládou nebo jakýmkoliv nižším správním útvarem nebo místním úřadem tohoto státu; nebo\nb)\ncentrální bankou tohoto druhého státu; nebo\nc)\njakoukoliv entitou přímo nebo nepřímo zcela vlastněnou jednou z entit uvedených v písmenech a) a b) tohoto odstavce nebo vícerými z nich.\n4.\nVýraz „dividendy“ použitý v tomto článku označuje příjmy z akcií nebo jiných práv, s výjimkou pohledávek, s podílem na zisku, jakož i jiné příjmy, které jsou podrobeny stejnému daňovému režimu jako příjmy z akcií podle právních předpisů státu, jehož je společnost, která provádí platbu, rezidentem.\n5.\nUstanovení odstavců 1, 2 a 3 se nepoužij",
+              "heading": "DIVIDENDY",
               "json_path": "$.articles[10]",
-              "resolution_method": "structured_article_number"
+              "resolution_method": "structured_income_heading_and_article_number"
             }
           ],
           "evidence_count": 1,
+          "income_type": "dividend",
+          "resolution_status": "resolved",
           "resolved": true
         },
-        "12": {
+        "interest": {
           "article_number": 12,
           "evidence": [
             {
+              "article_number": 12,
               "excerpt": "ÚROKY\n1.\nÚroky mající zdroj v jednom smluvním státě a skutečně vlastněné rezidentem druhého smluvního státu podléhají zdanění jen v tomto druhém státě.\n2.\nVýraz „úroky“ použitý v tomto článku označuje příjmy z pohledávek jakéhokoliv druhu, ať zajištěných, či nezajištěných zástavním právem na nemovitosti a majících či nemajících právo účasti na zisku dlužníka, a zvláště, příjmy z vládních cenných papírů a příjmy z obligací nebo dluhopisů, včetně prémií a výher, které se vážou k těmto cenným papírům, obligacím nebo dluhopisům. Penále ukládané za pozdní platbu se nepovažuje za úroky pro účely tohoto článku. Výraz „úroky“ nezahrnuje žádnou část příjmu, která je považována za dividendu podle ustanovení článku 11 odstavce 4.\n3.\nUstanovení odstavce 1 se nepoužijí, jestliže skutečný vlastník úroků, který je rezidentem jednoho smluvního státu, vykonává v druhém smluvním státě, ve kterém mají úroky zdroj, svoji činnost prostřednictvím stálé provozovny, která je tam umístěna, a jestliže pohledávka, ze které jsou úroky placeny, se skutečně váže k této stálé provozovně. V takovém případě se použijí ustanovení článku 7.\n4.\nÚroky mají zdroj ve smluvním státě, jestliže plátcem je rezident tohoto státu. Jestliže však plátce úroků, ať je, nebo není rezidentem některého smluvního státu, má ve smluvním státě stálou provozovnu, ve spojení s níž došlo k zadlužení, z něhož jsou úroky placeny, a tyto úroky jdou k tíži takové stálé provozovny, mají tyto úroky zdroj v tom státě, ve kterém je stálá pro",
+              "heading": "ÚROKY",
               "json_path": "$.articles[11]",
-              "resolution_method": "structured_article_number"
+              "resolution_method": "structured_income_heading_and_article_number"
             }
           ],
           "evidence_count": 1,
+          "income_type": "interest",
+          "resolution_status": "resolved",
+          "resolved": true
+        },
+        "royalty": {
+          "article_number": 13,
+          "evidence": [
+            {
+              "article_number": 13,
+              "excerpt": "LICENČNÍ POPLATKY\n1.\nLicenční poplatky mající zdroj v jednom smluvním státě a vyplácené rezidentu druhého smluvního státu mohou být zdaněny v tomto druhém státě.\n2.\nTyto licenční poplatky však mohou být rovněž zdaněny ve smluvním státě, v němž mají zdroj, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník licenčních poplatků je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne 10 procent hrubé částky licenčních poplatků.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace tohoto omezení.\n3.\nVýraz „licenční poplatky“ použitý v tomto článku označuje platby jakéhokoliv druhu obdržené jako náhrada za užití nebo za právo na užití jakéhokoliv autorského práva k dílu literárnímu, uměleckému nebo vědeckému, včetně kinematografických filmů, jakéhokoliv patentu, ochranné známky, návrhu nebo modelu, plánu, tajného vzorce nebo postupu, nebo jakéhokoliv průmyslového, obchodního nebo vědeckého zařízení, nebo za informace, které se vztahují na zkušenosti nabyté v oblasti průmyslové, obchodní nebo vědecké.\n4.\nUstanovení odstavců 1 a 2 se nepoužijí, jestliže skutečný vlastník licenčních poplatků, který je rezidentem jednoho smluvního státu, vykonává v druhém smluvním státě, ve kterém mají licenční poplatky zdroj, svoji činnost prostřednictvím stálé provozovny, která je tam umístěna, a jestliže právo nebo majetek, které dávají vznik licenčním poplatkům, se skutečně vážou k této stálé provozovně. V takovém případě se použijí ustanoven",
+              "heading": "LICENČNÍ POPLATKY",
+              "json_path": "$.articles[12]",
+              "resolution_method": "structured_income_heading_and_article_number"
+            }
+          ],
+          "evidence_count": 1,
+          "income_type": "royalty",
+          "resolution_status": "resolved",
           "resolved": true
         }
       },
@@ -416,15 +428,19 @@
       "scopes": [
         {
           "article_evidence": {
-            "article_number": 10,
+            "article_number": 11,
             "evidence": [
               {
-                "excerpt": "SDRUŽENÉ PODNIKY\nJestliže\na)\nse podnik jednoho smluvního státu podílí přímo nebo nepřímo na vedení, kontrole nebo kapitálu podniku druhého smluvního státu, nebo\nb)\ntytéž osoby se podílejí přímo nebo nepřímo na vedení, kontrole nebo kapitálu podniku jednoho smluvního státu i podniku druhého smluvního státu\na jestliže v těchto případech jsou oba podniky ve svých obchodních nebo finančních vztazích vázány podmínkami, které sjednaly nebo jim byly uloženy, a které se liší od podmínek, které by byly sjednány mezi nezávislými podniky, mohou jakékoliv zisky, které by, nebýt těchto podmínek, byly docíleny jedním z podniků, ale vzhledem k těmto podmínkám docíleny nebyly, být zahrnuty do zisků tohoto podniku a následně zdaněny.\nJestliže\na)\nse podnik jednoho smluvního státu podílí přímo nebo nepřímo na vedení, kontrole nebo kapitálu podniku druhého smluvního státu, nebo\nb)\ntytéž osoby se podílejí přímo nebo nepřímo na vedení, kontrole nebo kapitálu podniku jednoho smluvního státu i podniku druhého smluvního státu\na jestliže v těchto případech jsou oba podniky ve svých obchodních nebo finančních vztazích vázány podmínkami, které sjednaly nebo jim byly uloženy, a které se liší od podmínek, které by byly sjednány mezi nezávislými podniky, mohou jakékoliv zisky, které by, nebýt těchto podmínek, byly docíleny jedním z podniků, ale vzhledem k těmto podmínkám docíleny nebyly, být zahrnuty do zisků tohoto podniku a následně zdaněny.",
-                "json_path": "$.articles[9]",
-                "resolution_method": "structured_article_number"
+                "article_number": 11,
+                "excerpt": "DIVIDENDY\n1.\nDividendy vyplácené společností, která je rezidentem jednoho smluvního státu, rezidentu druhého smluvního státu, mohou být zdaněny v tomto druhém státě.\n2.\nTyto dividendy však mohou být rovněž zdaněny ve smluvním státě, jehož je společnost, která je vyplácí, rezidentem, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník dividend je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne 5 procent hrubé částky dividend.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace tohoto omezení.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.\n3.\nDividendy vyplácené společností, která je rezidentem jednoho smluvního státu, se bez ohledu na ustanovení odstavce 2 osvobozují od zdanění v tomto státě, pokud jsou dividendy skutečně vlastněny:\na)\ndruhým smluvním státem nebo jeho vládou nebo jakýmkoliv nižším správním útvarem nebo místním úřadem tohoto státu; nebo\nb)\ncentrální bankou tohoto druhého státu; nebo\nc)\njakoukoliv entitou přímo nebo nepřímo zcela vlastněnou jednou z entit uvedených v písmenech a) a b) tohoto odstavce nebo vícerými z nich.\n4.\nVýraz „dividendy“ použitý v tomto článku označuje příjmy z akcií nebo jiných práv, s výjimkou pohledávek, s podílem na zisku, jakož i jiné příjmy, které jsou podrobeny stejnému daňovému režimu jako příjmy z akcií podle právních předpisů státu, jehož je společnost, která provádí platbu, rezidentem.\n5.\nUstanovení odstavců 1, 2 a 3 se nepoužij",
+                "heading": "DIVIDENDY",
+                "json_path": "$.articles[10]",
+                "resolution_method": "structured_income_heading_and_article_number"
               }
             ],
             "evidence_count": 1,
+            "income_type": "dividend",
+            "resolution_status": "resolved",
             "resolved": true
           },
           "domestic_eu_layer_reference_present": true,
@@ -436,20 +452,24 @@
           "recipient_country": "AE",
           "scope_id": "CZ-AE-dividend",
           "stage5_terminal_status": "pending",
-          "treaty_article": 10,
+          "treaty_article": 11,
           "verification_status": "needs_review"
         },
         {
           "article_evidence": {
-            "article_number": 11,
+            "article_number": 12,
             "evidence": [
               {
-                "excerpt": "DIVIDENDY\n1.\nDividendy vyplácené společností, která je rezidentem jednoho smluvního státu, rezidentu druhého smluvního státu, mohou být zdaněny v tomto druhém státě.\n2.\nTyto dividendy však mohou být rovněž zdaněny ve smluvním státě, jehož je společnost, která je vyplácí, rezidentem, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník dividend je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne 5 procent hrubé částky dividend.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace tohoto omezení.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.\n3.\nDividendy vyplácené společností, která je rezidentem jednoho smluvního státu, se bez ohledu na ustanovení odstavce 2 osvobozují od zdanění v tomto státě, pokud jsou dividendy skutečně vlastněny:\na)\ndruhým smluvním státem nebo jeho vládou nebo jakýmkoliv nižším správním útvarem nebo místním úřadem tohoto státu; nebo\nb)\ncentrální bankou tohoto druhého státu; nebo\nc)\njakoukoliv entitou přímo nebo nepřímo zcela vlastněnou jednou z entit uvedených v písmenech a) a b) tohoto odstavce nebo vícerými z nich.\n4.\nVýraz „dividendy“ použitý v tomto článku označuje příjmy z akcií nebo jiných práv, s výjimkou pohledávek, s podílem na zisku, jakož i jiné příjmy, které jsou podrobeny stejnému daňovému režimu jako příjmy z akcií podle právních předpisů státu, jehož je společnost, která provádí platbu, rezidentem.\n5.\nUstanovení odstavců 1, 2 a 3 se nepoužij",
-                "json_path": "$.articles[10]",
-                "resolution_method": "structured_article_number"
+                "article_number": 12,
+                "excerpt": "ÚROKY\n1.\nÚroky mající zdroj v jednom smluvním státě a skutečně vlastněné rezidentem druhého smluvního státu podléhají zdanění jen v tomto druhém státě.\n2.\nVýraz „úroky“ použitý v tomto článku označuje příjmy z pohledávek jakéhokoliv druhu, ať zajištěných, či nezajištěných zástavním právem na nemovitosti a majících či nemajících právo účasti na zisku dlužníka, a zvláště, příjmy z vládních cenných papírů a příjmy z obligací nebo dluhopisů, včetně prémií a výher, které se vážou k těmto cenným papírům, obligacím nebo dluhopisům. Penále ukládané za pozdní platbu se nepovažuje za úroky pro účely tohoto článku. Výraz „úroky“ nezahrnuje žádnou část příjmu, která je považována za dividendu podle ustanovení článku 11 odstavce 4.\n3.\nUstanovení odstavce 1 se nepoužijí, jestliže skutečný vlastník úroků, který je rezidentem jednoho smluvního státu, vykonává v druhém smluvním státě, ve kterém mají úroky zdroj, svoji činnost prostřednictvím stálé provozovny, která je tam umístěna, a jestliže pohledávka, ze které jsou úroky placeny, se skutečně váže k této stálé provozovně. V takovém případě se použijí ustanovení článku 7.\n4.\nÚroky mají zdroj ve smluvním státě, jestliže plátcem je rezident tohoto státu. Jestliže však plátce úroků, ať je, nebo není rezidentem některého smluvního státu, má ve smluvním státě stálou provozovnu, ve spojení s níž došlo k zadlužení, z něhož jsou úroky placeny, a tyto úroky jdou k tíži takové stálé provozovny, mají tyto úroky zdroj v tom státě, ve kterém je stálá pro",
+                "heading": "ÚROKY",
+                "json_path": "$.articles[11]",
+                "resolution_method": "structured_income_heading_and_article_number"
               }
             ],
             "evidence_count": 1,
+            "income_type": "interest",
+            "resolution_status": "resolved",
             "resolved": true
           },
           "domestic_eu_layer_reference_present": true,
@@ -461,20 +481,24 @@
           "recipient_country": "AE",
           "scope_id": "CZ-AE-interest",
           "stage5_terminal_status": "pending",
-          "treaty_article": 11,
+          "treaty_article": 12,
           "verification_status": "needs_review"
         },
         {
           "article_evidence": {
-            "article_number": 12,
+            "article_number": 13,
             "evidence": [
               {
-                "excerpt": "ÚROKY\n1.\nÚroky mající zdroj v jednom smluvním státě a skutečně vlastněné rezidentem druhého smluvního státu podléhají zdanění jen v tomto druhém státě.\n2.\nVýraz „úroky“ použitý v tomto článku označuje příjmy z pohledávek jakéhokoliv druhu, ať zajištěných, či nezajištěných zástavním právem na nemovitosti a majících či nemajících právo účasti na zisku dlužníka, a zvláště, příjmy z vládních cenných papírů a příjmy z obligací nebo dluhopisů, včetně prémií a výher, které se vážou k těmto cenným papírům, obligacím nebo dluhopisům. Penále ukládané za pozdní platbu se nepovažuje za úroky pro účely tohoto článku. Výraz „úroky“ nezahrnuje žádnou část příjmu, která je považována za dividendu podle ustanovení článku 11 odstavce 4.\n3.\nUstanovení odstavce 1 se nepoužijí, jestliže skutečný vlastník úroků, který je rezidentem jednoho smluvního státu, vykonává v druhém smluvním státě, ve kterém mají úroky zdroj, svoji činnost prostřednictvím stálé provozovny, která je tam umístěna, a jestliže pohledávka, ze které jsou úroky placeny, se skutečně váže k této stálé provozovně. V takovém případě se použijí ustanovení článku 7.\n4.\nÚroky mají zdroj ve smluvním státě, jestliže plátcem je rezident tohoto státu. Jestliže však plátce úroků, ať je, nebo není rezidentem některého smluvního státu, má ve smluvním státě stálou provozovnu, ve spojení s níž došlo k zadlužení, z něhož jsou úroky placeny, a tyto úroky jdou k tíži takové stálé provozovny, mají tyto úroky zdroj v tom státě, ve kterém je stálá pro",
-                "json_path": "$.articles[11]",
-                "resolution_method": "structured_article_number"
+                "article_number": 13,
+                "excerpt": "LICENČNÍ POPLATKY\n1.\nLicenční poplatky mající zdroj v jednom smluvním státě a vyplácené rezidentu druhého smluvního státu mohou být zdaněny v tomto druhém státě.\n2.\nTyto licenční poplatky však mohou být rovněž zdaněny ve smluvním státě, v němž mají zdroj, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník licenčních poplatků je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne 10 procent hrubé částky licenčních poplatků.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace tohoto omezení.\n3.\nVýraz „licenční poplatky“ použitý v tomto článku označuje platby jakéhokoliv druhu obdržené jako náhrada za užití nebo za právo na užití jakéhokoliv autorského práva k dílu literárnímu, uměleckému nebo vědeckému, včetně kinematografických filmů, jakéhokoliv patentu, ochranné známky, návrhu nebo modelu, plánu, tajného vzorce nebo postupu, nebo jakéhokoliv průmyslového, obchodního nebo vědeckého zařízení, nebo za informace, které se vztahují na zkušenosti nabyté v oblasti průmyslové, obchodní nebo vědecké.\n4.\nUstanovení odstavců 1 a 2 se nepoužijí, jestliže skutečný vlastník licenčních poplatků, který je rezidentem jednoho smluvního státu, vykonává v druhém smluvním státě, ve kterém mají licenční poplatky zdroj, svoji činnost prostřednictvím stálé provozovny, která je tam umístěna, a jestliže právo nebo majetek, které dávají vznik licenčním poplatkům, se skutečně vážou k této stálé provozovně. V takovém případě se použijí ustanoven",
+                "heading": "LICENČNÍ POPLATKY",
+                "json_path": "$.articles[12]",
+                "resolution_method": "structured_income_heading_and_article_number"
               }
             ],
             "evidence_count": 1,
+            "income_type": "royalty",
+            "resolution_status": "resolved",
             "resolved": true
           },
           "domestic_eu_layer_reference_present": true,
@@ -486,7 +510,7 @@
           "recipient_country": "AE",
           "scope_id": "CZ-AE-royalty",
           "stage5_terminal_status": "pending",
-          "treaty_article": 12,
+          "treaty_article": 13,
           "verification_status": "needs_review"
         }
       ],
@@ -495,40 +519,52 @@
     },
     {
       "article_evidence": {
-        "10": {
+        "dividend": {
           "article_number": 10,
           "evidence": [
             {
+              "article_number": 10,
               "excerpt": "DIVIDENDY\n1. Dividendy vyplácené spolecnostõ, která je rezidentem jednoho smluvnõho státu, rezidentu druhého\nsmluvnõho státu mohou být zdaneny v tomo druhém státe.\n2. Tyto dividendy vsak mohou být rovnez zdaneny ve smluvnõm státe, jehoz je spolecnost, která je vyplácõ,\nrezidentem, a to podle právnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk dividend je rezidentem\ndruhého smluvnõho státu, dan takto ulozená nepresáhne:\na) 5 procent hrubé cástky dividend, jestlize skutecným vlastnõkem je spolecnost, vcetne osobnõ spolecnosti,\nkterá prõmo nebo neprõmo vlastnõ nejméne 25 procent jmenõ spolecnosti vyplácejõcõ dividendy;\nb) 15 procent hrubé cástky dividend ve vsech ostatnõch prõpadech.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti, z nichz jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku oznacuje prõjmy z akciõ, pozitkových akciõ nebo pozitkových\npráv, kuksu, zakladatelských podõlu nebo jiných práv, s výjimkou pohledávek, s podõlem na zisku, jakoz i prõjmy\n± vyplácené i formou úroku ± které jsou povazovány za prõjmy z akciõ podle vnitrostátnõch danových predpisu\nstátu, jehoz je vyplácejõcõ spolecnost rezidentem.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize skutecný vlastnõk dividend, který je rezidentem jednoho\nsmluvnõho státu, vykonává v druhém smluvnõm státe, jehoz je rezidentem spolecnost vyplácejõcõ dividendy,\nprumyslovou nebo obchodnõ cinnost prostrednictvõm stálé provozovny, která je tam umõstena, nebo vykonává\nv tomto druhém s",
+              "heading": "DIVIDENDY",
               "json_path": "$.articles[9]",
-              "resolution_method": "structured_article_number"
+              "resolution_method": "structured_income_heading_and_article_number"
             }
           ],
           "evidence_count": 1,
+          "income_type": "dividend",
+          "resolution_status": "resolved",
           "resolved": true
         },
-        "11": {
+        "interest": {
           "article_number": 11,
           "evidence": [
             {
+              "article_number": 11,
               "excerpt": "UROKY\n1. Uroky majõcõ zdroj v jednom smluvnõm státe a vyplácené rezidentu druhého smluvnõho státu mohou být\nzdaneny v tomto druhém státe.\n2. Tyto úroky vsak mohou být rovnez zdaneny ve smluvnõm státe, v nemz majõ zdroj, a to podle právnõch\npredpisu tohoto státu, avsak jestlize skutecný vlastnõk úroku je rezidentem druhého smluvnõho státu, dan takto\nulozená nepresáhne 10 procent hrubé cástky úroku.\n3. Bez ohledu na ustanovenõ odstavce 2 budou úroky osvobozeny od zdanenõ ve smluvnõm státe, v nemz\nmajõ zdroj, jestlize to jsou:\na) úroky z obchodnõch pohledávek ± vcetne pohledávek predstavovaných obchodnõmi cennými papõry ± vy-\nplývajõcõ z odlozených plateb za zbozõ nebo sluzby poskytované podnikem;\nb) úroky placené z duvodu pujcky nebo úveru, které jsou poskytovány, garantovány nebo pojist'ovány ve-\nrejnými subjekty, jejichz cõlem je podpora exportu;\nc) úroky z pujcek jakéhokoliv druhu ± nepredstavovaných cennými papõry na dorucitele ± které poskytuje\nbankovnõ podnik;\nd) úroky z vkladu ± nepredstavovaných cennými papõry na dorucitele ± u bankovnõho podniku;\ne) úroky placené druhému smluvnõmu státu nebo nizsõmu správnõmu útvaru nebo mõstnõmu úradu tohoto\nstátu.\n4. Výraz 1úrokya pouzitý v tomto clánku oznacuje prõjmy z pohledávek jakéhokoliv druhu, at' zajistených,\nci nezajistených zástavnõm právem na nemovitosti nebo majõcõch, ci nemajõcõch právo úcasti na zisku dluznõka,\na zvláste, prõjmy z vládnõch cenných papõru a prõjmy z obligacõ nebo dluhopisu, vcetne prémiõ a výher, které s",
+              "heading": "UROKY",
               "json_path": "$.articles[10]",
-              "resolution_method": "structured_article_number"
+              "resolution_method": "structured_income_heading_and_article_number"
             }
           ],
           "evidence_count": 1,
+          "income_type": "interest",
+          "resolution_status": "resolved",
           "resolved": true
         },
-        "12": {
+        "royalty": {
           "article_number": 12,
           "evidence": [
             {
+              "article_number": 12,
               "excerpt": "LICENČNI POPLATKY\n1. Licencnõ poplatky majõcõ zdroj v jednom smluvnõm státe a vyplácené rezidentu druhého smluvnõho státu\nmohou být zdaneny v tomto druhém státe.\n2. Tyto licencnõ poplatky vsak mohou být rovnez zdaneny ve smluvnõm státe, v nemz majõ zdroj, a to podle\nprávnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk licencnõch poplatku je rezidentem druhého\nsmluvnõho státu, dan takto ulozená nepresáhne:\na) 5 procent hrubé cástky licencnõch poplatku placených za uzitõ nebo za právo na uzitõ jakéhokoliv pru-\nmyslového, obchodnõho nebo vedeckého zarõzenõ;\nb) 10 procent hrubé cástky licencnõch poplatku placených za uzitõ nebo za právo na uzitõ jakéhokoliv autor-\nského práva k dõlu literárnõmu, umeleckému nebo vedeckému, vcetne kinematografických filmu a filmu\nnebo nahrávek pro televiznõ nebo rozhlasové vysõlánõ, jakéhokoliv softwaru, patentu, ochranné známky,\nnávrhu nebo modelu, plánu, tajného vzorce nebo výrobnõho postupu, nebo za informace, které se vztahujõ\nna zkusenosti nabyté v oblasti prumyslové, obchodnõ nebo vedecké.\n3. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize skutecný vlastnõk licencnõch poplatku, který je rezidentem\njednoho smluvnõho státu, vykonává v druhém smluvnõm státe, ve kterém majõ licencnõ poplatky zdroj, pru-\nmyslovou nebo obchodnõ cinnost prostrednictvõm stálé provozovny, která je tam umõstena, nebo vykonává\nv tomto druhém státe nezávislé povolánõ ze stálé základny tam umõstené, a jestlize právo nebo majetek, které\ndávajõ vznik licencnõm ",
+              "heading": "LICENČNI POPLATKY",
               "json_path": "$.articles[11]",
-              "resolution_method": "structured_article_number"
+              "resolution_method": "structured_income_heading_and_article_number"
             }
           ],
           "evidence_count": 1,
+          "income_type": "royalty",
+          "resolution_status": "resolved",
           "resolved": true
         }
       },
@@ -980,12 +1016,16 @@
             "article_number": 10,
             "evidence": [
               {
+                "article_number": 10,
                 "excerpt": "DIVIDENDY\n1. Dividendy vyplácené spolecnostõ, která je rezidentem jednoho smluvnõho státu, rezidentu druhého\nsmluvnõho státu mohou být zdaneny v tomo druhém státe.\n2. Tyto dividendy vsak mohou být rovnez zdaneny ve smluvnõm státe, jehoz je spolecnost, která je vyplácõ,\nrezidentem, a to podle právnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk dividend je rezidentem\ndruhého smluvnõho státu, dan takto ulozená nepresáhne:\na) 5 procent hrubé cástky dividend, jestlize skutecným vlastnõkem je spolecnost, vcetne osobnõ spolecnosti,\nkterá prõmo nebo neprõmo vlastnõ nejméne 25 procent jmenõ spolecnosti vyplácejõcõ dividendy;\nb) 15 procent hrubé cástky dividend ve vsech ostatnõch prõpadech.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti, z nichz jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku oznacuje prõjmy z akciõ, pozitkových akciõ nebo pozitkových\npráv, kuksu, zakladatelských podõlu nebo jiných práv, s výjimkou pohledávek, s podõlem na zisku, jakoz i prõjmy\n± vyplácené i formou úroku ± které jsou povazovány za prõjmy z akciõ podle vnitrostátnõch danových predpisu\nstátu, jehoz je vyplácejõcõ spolecnost rezidentem.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize skutecný vlastnõk dividend, který je rezidentem jednoho\nsmluvnõho státu, vykonává v druhém smluvnõm státe, jehoz je rezidentem spolecnost vyplácejõcõ dividendy,\nprumyslovou nebo obchodnõ cinnost prostrednictvõm stálé provozovny, která je tam umõstena, nebo vykonává\nv tomto druhém s",
+                "heading": "DIVIDENDY",
                 "json_path": "$.articles[9]",
-                "resolution_method": "structured_article_number"
+                "resolution_method": "structured_income_heading_and_article_number"
               }
             ],
             "evidence_count": 1,
+            "income_type": "dividend",
+            "resolution_status": "resolved",
             "resolved": true
           },
           "domestic_eu_layer_reference_present": true,
@@ -1005,12 +1045,16 @@
             "article_number": 11,
             "evidence": [
               {
+                "article_number": 11,
                 "excerpt": "UROKY\n1. Uroky majõcõ zdroj v jednom smluvnõm státe a vyplácené rezidentu druhého smluvnõho státu mohou být\nzdaneny v tomto druhém státe.\n2. Tyto úroky vsak mohou být rovnez zdaneny ve smluvnõm státe, v nemz majõ zdroj, a to podle právnõch\npredpisu tohoto státu, avsak jestlize skutecný vlastnõk úroku je rezidentem druhého smluvnõho státu, dan takto\nulozená nepresáhne 10 procent hrubé cástky úroku.\n3. Bez ohledu na ustanovenõ odstavce 2 budou úroky osvobozeny od zdanenõ ve smluvnõm státe, v nemz\nmajõ zdroj, jestlize to jsou:\na) úroky z obchodnõch pohledávek ± vcetne pohledávek predstavovaných obchodnõmi cennými papõry ± vy-\nplývajõcõ z odlozených plateb za zbozõ nebo sluzby poskytované podnikem;\nb) úroky placené z duvodu pujcky nebo úveru, které jsou poskytovány, garantovány nebo pojist'ovány ve-\nrejnými subjekty, jejichz cõlem je podpora exportu;\nc) úroky z pujcek jakéhokoliv druhu ± nepredstavovaných cennými papõry na dorucitele ± které poskytuje\nbankovnõ podnik;\nd) úroky z vkladu ± nepredstavovaných cennými papõry na dorucitele ± u bankovnõho podniku;\ne) úroky placené druhému smluvnõmu státu nebo nizsõmu správnõmu útvaru nebo mõstnõmu úradu tohoto\nstátu.\n4. Výraz 1úrokya pouzitý v tomto clánku oznacuje prõjmy z pohledávek jakéhokoliv druhu, at' zajistených,\nci nezajistených zástavnõm právem na nemovitosti nebo majõcõch, ci nemajõcõch právo úcasti na zisku dluznõka,\na zvláste, prõjmy z vládnõch cenných papõru a prõjmy z obligacõ nebo dluhopisu, vcetne prémiõ a výher, které s",
+                "heading": "UROKY",
                 "json_path": "$.articles[10]",
-                "resolution_method": "structured_article_number"
+                "resolution_method": "structured_income_heading_and_article_number"
               }
             ],
             "evidence_count": 1,
+            "income_type": "interest",
+            "resolution_status": "resolved",
             "resolved": true
           },
           "domestic_eu_layer_reference_present": true,
@@ -1030,12 +1074,16 @@
             "article_number": 12,
             "evidence": [
               {
+                "article_number": 12,
                 "excerpt": "LICENČNI POPLATKY\n1. Licencnõ poplatky majõcõ zdroj v jednom smluvnõm státe a vyplácené rezidentu druhého smluvnõho státu\nmohou být zdaneny v tomto druhém státe.\n2. Tyto licencnõ poplatky vsak mohou být rovnez zdaneny ve smluvnõm státe, v nemz majõ zdroj, a to podle\nprávnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk licencnõch poplatku je rezidentem druhého\nsmluvnõho státu, dan takto ulozená nepresáhne:\na) 5 procent hrubé cástky licencnõch poplatku placených za uzitõ nebo za právo na uzitõ jakéhokoliv pru-\nmyslového, obchodnõho nebo vedeckého zarõzenõ;\nb) 10 procent hrubé cástky licencnõch poplatku placených za uzitõ nebo za právo na uzitõ jakéhokoliv autor-\nského práva k dõlu literárnõmu, umeleckému nebo vedeckému, vcetne kinematografických filmu a filmu\nnebo nahrávek pro televiznõ nebo rozhlasové vysõlánõ, jakéhokoliv softwaru, patentu, ochranné známky,\nnávrhu nebo modelu, plánu, tajného vzorce nebo výrobnõho postupu, nebo za informace, které se vztahujõ\nna zkusenosti nabyté v oblasti prumyslové, obchodnõ nebo vedecké.\n3. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize skutecný vlastnõk licencnõch poplatku, který je rezidentem\njednoho smluvnõho státu, vykonává v druhém smluvnõm státe, ve kterém majõ licencnõ poplatky zdroj, pru-\nmyslovou nebo obchodnõ cinnost prostrednictvõm stálé provozovny, která je tam umõstena, nebo vykonává\nv tomto druhém státe nezávislé povolánõ ze stálé základny tam umõstené, a jestlize právo nebo majetek, které\ndávajõ vznik licencnõm ",
+                "heading": "LICENČNI POPLATKY",
                 "json_path": "$.articles[11]",
-                "resolution_method": "structured_article_number"
+                "resolution_method": "structured_income_heading_and_article_number"
               }
             ],
             "evidence_count": 1,
+            "income_type": "royalty",
+            "resolution_status": "resolved",
             "resolved": true
           },
           "domestic_eu_layer_reference_present": true,
@@ -1056,40 +1104,52 @@
     },
     {
       "article_evidence": {
-        "10": {
+        "dividend": {
           "article_number": 10,
           "evidence": [
             {
+              "article_number": 10,
               "excerpt": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezi-\ndentem jednoho smluvnõho státu, rezidentu druhého\nsmluvnõho státu mohou být zdaneny v tomto druhém\nstáte.\n2. Tyto dividendy vsak mohou být rovnez zda-\nneny ve smluvnõm státe, jehoz je spolecnost, která je\nvyplácõ, rezidentem, a to podle právnõch predpisu to-\nhoto státu, avsak jestlize skutecný vlastnõk dividend je\nrezidentem druhého smluvnõho státu, dan takto ulo-\nzená nepresáhne 10 % hrubé cástky dividend.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou do-\nhodou zpu sob aplikace tohoto omezenõ.\nTento odstavec se nedotýká zdan ovánõ zisku spolec-\nnosti, z nichz jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku\noznacuje prõjmy z akciõ nebo jiných práv, s výjimkou\npohledávek, s podõlem na zisku, jakoz i prõjmy z jiných\npráv, které jsou podrobeny stejnému dan ovému rezimu\njako prõjmy z akciõ podle dan ových predpisu státu,\njehoz je spolecnost, která rozdõlõ zisk, rezidentem.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk dividend, který je rezidentem jed-\nnoho smluvnõho státu, vykonává v druhém smluvnõm\nstáte, jehoz je rezidentem spolecnost vyplácejõcõ divi-\ndendy, pru myslovou nebo obchodnõ cinnost prostred-\nnictvõm stálé provozovny, která je tam umõstena, nebo\nvykonává v tomto druhém státe nezávislé povolánõ ze\nstálé základny tam umõstené a jestlize úcast, pro kterou\nse dividendy vyplácejõ, se skutecne váze k této stálé\nprovozovne nebo stálé základne. V takovém prõpade\nse ",
+              "heading": "Dividendy",
               "json_path": "$.articles[9]",
-              "resolution_method": "structured_article_number"
+              "resolution_method": "structured_income_heading_and_article_number"
             }
           ],
           "evidence_count": 1,
+          "income_type": "dividend",
+          "resolution_status": "resolved",
           "resolved": true
         },
-        "11": {
+        "interest": {
           "article_number": 11,
           "evidence": [
             {
+              "article_number": 11,
               "excerpt": "U roky\n1. U roky majõcõ zdroj v jednom smluvnõm státe\na vyplácené rezidentu druhého smluvnõho státu mohou\nbýt zdaneny v tomto druhém státe.\n2. Tyto úroky vsak mohou být rovnez zdaneny ve\nsmluvnõm státe, v nemz majõ zdroj, a to podle právnõch\npredpisu tohoto státu, avsak jestlize skutecný vlastnõk\núroku je rezidentem druhého smluvnõho státu, dan\ntakto ulozená nepresáhne 5 % hrubé cástky úroku .\n3. Bez ohledu na ustanovenõ odstavce 2 budou\núroky majõcõ zdroj v jednom smluvnõm státe, které\npobõrá a skutecne vlastnõ vláda druhého smluvnõho\nstátu nebo centrálnõ (národnõ) banka tohoto státu,\nosvobozeny od zdanenõ v prvne zmõneném státe.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou do-\nhodou zpu sob aplikace techto omezenõ.\n4. Výraz 1úrokya pouzitý v tomto clánku ozna-\ncuje prõjmy z pohledávek jakéhokoliv druhu, at' zajis-\ntených ci nezajistených zástavnõm právem na nemovi-\ntosti nebo majõcõch ci nemajõcõch právo úcasti na zisku\ndluznõka, a zvláste prõjmy z vládnõch cenných papõru\na prõjmy z obligacõ nebo dluhopisu , vcetne prémiõ a vý-\nher, které se vázou k temto cenným papõru m, obliga-\ncõm nebo dluhopisu m.\n5. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk úroku , který je rezidentem jednoho\nsmluvnõho státu, vykonává v druhém smluvnõm státe,\nve kterém majõ úroky zdroj, pru myslovou nebo ob-\nchodnõ cinnost prostrednictvõm stálé provozovny,\nkterá je tam umõstena, nebo vykonává v tomto druhém\nstáte nezávislé povolánõ ze stálé základny tam umõstené\na jestlize ",
+              "heading": "U roky",
               "json_path": "$.articles[10]",
-              "resolution_method": "structured_article_number"
+              "resolution_method": "structured_income_heading_and_article_number"
             }
           ],
           "evidence_count": 1,
+          "income_type": "interest",
+          "resolution_status": "resolved",
           "resolved": true
         },
-        "12": {
+        "royalty": {
           "article_number": 12,
           "evidence": [
             {
+              "article_number": 12,
               "excerpt": "Licencnõ poplatky\n1. Licencnõ poplatky majõcõ zdroj v jednom\nsmluvnõm státe a vyplácené rezidentu druhého smluv-\nnõho státu mohou být zdaneny v tomto druhém státe.\n2. Tyto licencnõ poplatky vsak mohou být rovnez\nzdaneny ve smluvnõm státe, v nemz majõ zdroj, a to\npodle právnõch predpisu tohoto státu, avsak jestlize\nskutecný vlastnõk licencnõch poplatku je rezidentem\ndruhého smluvnõho státu, dan takto ulozená nepre-\nsáhne 10 % hrubé cástky licencnõch poplatku .\nPřõslusné úrady smluvnõch státu upravõ vzájemnou do-\nhodou zpu sob aplikace tohoto omezenõ.\n3. Výraz 1licencnõ poplatkya pouzitý v tomto\nclánku oznacuje platby jakéhokoliv druhu obdrzené\njako náhrada za uzitõ nebo za právo na uzitõ jakéhoko-\nliv autorského práva k dõlu literárnõmu, umeleckému\nnebo vedeckému, vcetne kinematografických filmu\na filmu nebo nahrávek pro rozhlasové nebo televiznõ\nvysõlánõ, jakéhokoliv patentu, ochranné známky, ná-\nvrhu nebo modelu, plánu, tajného vzorce nebo výrob-\nnõho postupu nebo jakéhokoliv pru myslového, ob-\nchodnõho nebo vedeckého zarõzenõ nebo jakéhokoliv\ndopravnõho prostredku nebo za informace, které se\nvztahujõ na zkusenosti nabyté v oblasti pru myslové,\nobchodnõ nebo vedecké.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk licencnõch poplatku , který je rezi-\ndentem jednoho smluvnõho státu, vykonává v druhém\nsmluvnõm státe, ve kterém majõ licencnõ poplatky\nzdroj, pru myslovou nebo obchodnõ cinnost prostred-\nnictvõm stálé provozovny, která je tam umõstena, nebo\nv",
+              "heading": "Licencnõ poplatky",
               "json_path": "$.articles[11]",
-              "resolution_method": "structured_article_number"
+              "resolution_method": "structured_income_heading_and_article_number"
             }
           ],
           "evidence_count": 1,
+          "income_type": "royalty",
+          "resolution_status": "resolved",
           "resolved": true
         }
       },
@@ -1536,12 +1596,16 @@
             "article_number": 10,
             "evidence": [
               {
+                "article_number": 10,
                 "excerpt": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezi-\ndentem jednoho smluvnõho státu, rezidentu druhého\nsmluvnõho státu mohou být zdaneny v tomto druhém\nstáte.\n2. Tyto dividendy vsak mohou být rovnez zda-\nneny ve smluvnõm státe, jehoz je spolecnost, která je\nvyplácõ, rezidentem, a to podle právnõch predpisu to-\nhoto státu, avsak jestlize skutecný vlastnõk dividend je\nrezidentem druhého smluvnõho státu, dan takto ulo-\nzená nepresáhne 10 % hrubé cástky dividend.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou do-\nhodou zpu sob aplikace tohoto omezenõ.\nTento odstavec se nedotýká zdan ovánõ zisku spolec-\nnosti, z nichz jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku\noznacuje prõjmy z akciõ nebo jiných práv, s výjimkou\npohledávek, s podõlem na zisku, jakoz i prõjmy z jiných\npráv, které jsou podrobeny stejnému dan ovému rezimu\njako prõjmy z akciõ podle dan ových predpisu státu,\njehoz je spolecnost, která rozdõlõ zisk, rezidentem.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk dividend, který je rezidentem jed-\nnoho smluvnõho státu, vykonává v druhém smluvnõm\nstáte, jehoz je rezidentem spolecnost vyplácejõcõ divi-\ndendy, pru myslovou nebo obchodnõ cinnost prostred-\nnictvõm stálé provozovny, která je tam umõstena, nebo\nvykonává v tomto druhém státe nezávislé povolánõ ze\nstálé základny tam umõstené a jestlize úcast, pro kterou\nse dividendy vyplácejõ, se skutecne váze k této stálé\nprovozovne nebo stálé základne. V takovém prõpade\nse ",
+                "heading": "Dividendy",
                 "json_path": "$.articles[9]",
-                "resolution_method": "structured_article_number"
+                "resolution_method": "structured_income_heading_and_article_number"
               }
             ],
             "evidence_count": 1,
+            "income_type": "dividend",
+            "resolution_status": "resolved",
             "resolved": true
           },
           "domestic_eu_layer_reference_present": true,
@@ -1561,12 +1625,16 @@
             "article_number": 11,
             "evidence": [
               {
+                "article_number": 11,
                 "excerpt": "U roky\n1. U roky majõcõ zdroj v jednom smluvnõm státe\na vyplácené rezidentu druhého smluvnõho státu mohou\nbýt zdaneny v tomto druhém státe.\n2. Tyto úroky vsak mohou být rovnez zdaneny ve\nsmluvnõm státe, v nemz majõ zdroj, a to podle právnõch\npredpisu tohoto státu, avsak jestlize skutecný vlastnõk\núroku je rezidentem druhého smluvnõho státu, dan\ntakto ulozená nepresáhne 5 % hrubé cástky úroku .\n3. Bez ohledu na ustanovenõ odstavce 2 budou\núroky majõcõ zdroj v jednom smluvnõm státe, které\npobõrá a skutecne vlastnõ vláda druhého smluvnõho\nstátu nebo centrálnõ (národnõ) banka tohoto státu,\nosvobozeny od zdanenõ v prvne zmõneném státe.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou do-\nhodou zpu sob aplikace techto omezenõ.\n4. Výraz 1úrokya pouzitý v tomto clánku ozna-\ncuje prõjmy z pohledávek jakéhokoliv druhu, at' zajis-\ntených ci nezajistených zástavnõm právem na nemovi-\ntosti nebo majõcõch ci nemajõcõch právo úcasti na zisku\ndluznõka, a zvláste prõjmy z vládnõch cenných papõru\na prõjmy z obligacõ nebo dluhopisu , vcetne prémiõ a vý-\nher, které se vázou k temto cenným papõru m, obliga-\ncõm nebo dluhopisu m.\n5. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk úroku , který je rezidentem jednoho\nsmluvnõho státu, vykonává v druhém smluvnõm státe,\nve kterém majõ úroky zdroj, pru myslovou nebo ob-\nchodnõ cinnost prostrednictvõm stálé provozovny,\nkterá je tam umõstena, nebo vykonává v tomto druhém\nstáte nezávislé povolánõ ze stálé základny tam umõstené\na jestlize ",
+                "heading": "U roky",
                 "json_path": "$.articles[10]",
-                "resolution_method": "structured_article_number"
+                "resolution_method": "structured_income_heading_and_article_number"
               }
             ],
             "evidence_count": 1,
+            "income_type": "interest",
+            "resolution_status": "resolved",
             "resolved": true
           },
           "domestic_eu_layer_reference_present": true,
@@ -1586,12 +1654,16 @@
             "article_number": 12,
             "evidence": [
               {
+                "article_number": 12,
                 "excerpt": "Licencnõ poplatky\n1. Licencnõ poplatky majõcõ zdroj v jednom\nsmluvnõm státe a vyplácené rezidentu druhého smluv-\nnõho státu mohou být zdaneny v tomto druhém státe.\n2. Tyto licencnõ poplatky vsak mohou být rovnez\nzdaneny ve smluvnõm státe, v nemz majõ zdroj, a to\npodle právnõch predpisu tohoto státu, avsak jestlize\nskutecný vlastnõk licencnõch poplatku je rezidentem\ndruhého smluvnõho státu, dan takto ulozená nepre-\nsáhne 10 % hrubé cástky licencnõch poplatku .\nPřõslusné úrady smluvnõch státu upravõ vzájemnou do-\nhodou zpu sob aplikace tohoto omezenõ.\n3. Výraz 1licencnõ poplatkya pouzitý v tomto\nclánku oznacuje platby jakéhokoliv druhu obdrzené\njako náhrada za uzitõ nebo za právo na uzitõ jakéhoko-\nliv autorského práva k dõlu literárnõmu, umeleckému\nnebo vedeckému, vcetne kinematografických filmu\na filmu nebo nahrávek pro rozhlasové nebo televiznõ\nvysõlánõ, jakéhokoliv patentu, ochranné známky, ná-\nvrhu nebo modelu, plánu, tajného vzorce nebo výrob-\nnõho postupu nebo jakéhokoliv pru myslového, ob-\nchodnõho nebo vedeckého zarõzenõ nebo jakéhokoliv\ndopravnõho prostredku nebo za informace, které se\nvztahujõ na zkusenosti nabyté v oblasti pru myslové,\nobchodnõ nebo vedecké.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk licencnõch poplatku , který je rezi-\ndentem jednoho smluvnõho státu, vykonává v druhém\nsmluvnõm státe, ve kterém majõ licencnõ poplatky\nzdroj, pru myslovou nebo obchodnõ cinnost prostred-\nnictvõm stálé provozovny, která je tam umõstena, nebo\nv",
+                "heading": "Licencnõ poplatky",
                 "json_path": "$.articles[11]",
-                "resolution_method": "structured_article_number"
+                "resolution_method": "structured_income_heading_and_article_number"
               }
             ],
             "evidence_count": 1,
+            "income_type": "royalty",
+            "resolution_status": "resolved",
             "resolved": true
           },
           "domestic_eu_layer_reference_present": true,
@@ -1612,40 +1684,52 @@
     },
     {
       "article_evidence": {
-        "10": {
+        "dividend": {
           "article_number": 10,
           "evidence": [
             {
+              "article_number": 10,
               "excerpt": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezi-\ndentem v jednom smluvnõm státe, rezidentovi druhého\nsmluvnõho státu mohou být zdaneny v tomto druhém\nstáte.\n2. Tyto dividendy vsak mohou být rovnez zda-\nneny ve smluvnõm státe, v nemz je spolecnost, která\nje vyplácõ, rezidentem, a to podle právnõch predpisu\ntohoto státu, avsak jestlize prõjemce je skutecným\nvlastnõkem dividend, dan takto stanovená nepresáhne:\na) 5 % hrubé cástky dividend, jestlize skutecným\nvlastnõkem je spolecnost (jiná nez osobnõ spolec-\nnost), která prõmo vlastnõ nejméne 25 % majetku\nspolecnosti vyplácejõcõ dividendy;\nb) 15 % hrubé cástky dividend ve vsech ostatnõch\nprõpadech.\nPřõslusné úrady smluvnõch státu mohou upravit\nvzájemnou dohodou zpu sob aplikace techto omezenõ.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti,\nze kterých jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku\noznacuje prõjmy z akciõ nebo jiných práv, s výjimkou\npohledávek, s podõlem na zisku, jakoz i prõjmy z práv\nna spolecnosti, které jsou podle dan ových predpisu\nstátu, v nemz je spolecnost, která rozdõlõ zisk, reziden-\ntem, postaveny na roven prõjmu z akciõ.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk dividend, který je rezidentem v jed-\nnom smluvnõm státe, vykonává v druhém smluvnõm\nstáte, v nemz je rezidentem spolecnost vyplácejõcõ di-\nvidendy, pru myslovou nebo obchodnõ cinnost pro-\nstrednictvõm stálé provozovny, která je tam umõstena,\nnebo vykonává v tomto druhém státe",
+              "heading": "Dividendy",
               "json_path": "$.articles[9]",
-              "resolution_method": "structured_article_number"
+              "resolution_method": "structured_income_heading_and_article_number"
             }
           ],
           "evidence_count": 1,
+          "income_type": "dividend",
+          "resolution_status": "resolved",
           "resolved": true
         },
-        "11": {
+        "interest": {
           "article_number": 11,
           "evidence": [
             {
+              "article_number": 11,
               "excerpt": "U roky\n1. U roky majõcõ zdroj v jednom smluvnõm státe,\nkteré pobõrá rezident druhého smluvnõho státu, mohou\nbýt zdaneny v tomto druhém státe.\n2. Avsak úroky uvedené v odstavci 1 tohoto\nclánku mohou být zdaneny rovnez ve smluvnõm\nstáte, v nemz majõ zdroj, a podle právnõch predpisu\ntohoto státu, ale pokud prõjemce je skutecným vlastnõ-\nkem úroku , dan takto ulozená nepresáhne 10 % hrubé\ncástky úroku .\nPřõslusné úrady smluvnõch státu mohou upravit\nvzájemnou dohodou zpu sob aplikace techto omezenõ.\n3. Bez ohledu na ustanovenõ odstavce 2, úroky,\nkteré majõ zdroj v jednom smluvnõm státe a které ply-\nnou a jsou skutecne vlastneny vládou druhého státu,\nvcetne jeho nizsõch správnõch útvaru a mõstnõch úradu ,\nústrednõ bankou nebo jakoukoliv financnõ institucõ\nzcela vlastnenou touto vládou, nebo úroky plynoucõ\nz pu jcek garantovaných touto vládou, budou vyjmuty\nze zdanenõ v prvne zmõneném státe.\n4. Výraz 1úrokya pouzitý v tomto clánku ozna-\ncuje prõjmy z pohledávek jakéhokoliv druhu zajiste-\nných i nezajistených zástavnõm právem na nemovi-\ntosti nebo majõcõch nebo nemajõcõch právo úcasti na\nzisku dluznõka, a zvláste, prõjmy z vládnõch cenných\npapõru a prõjmy z obligacõ nebo dluhopisu vcetne pré-\nmiõ a odmen spojených s temito cennými papõry, ob-\nligacemi nebo dluhopisy. Penále za pozdnõ platbu se\nnepovazujõ za úroky pro úcely tohoto clánku.\n5. Ustanovenõ odstavcu 1, 2 a 3 se nepouzijõ, jest-\nlize skutecný vlastnõk úroku , který je rezidentem\nv jednom smluvnõm státe, vykonává v druhém sm",
+              "heading": "U roky",
               "json_path": "$.articles[10]",
-              "resolution_method": "structured_article_number"
+              "resolution_method": "structured_income_heading_and_article_number"
             }
           ],
           "evidence_count": 1,
+          "income_type": "interest",
+          "resolution_status": "resolved",
           "resolved": true
         },
-        "12": {
+        "royalty": {
           "article_number": 12,
           "evidence": [
             {
+              "article_number": 12,
               "excerpt": "Licencnõ poplatky\n1. Licencnõ poplatky, majõcõ zdroj v jednom\nsmluvnõm státe, vyplácené rezidentu druhého smluv-\nnõho státu, mohou být zdaneny v tomto druhém státe.\n2. Avsak takové licencnõ poplatky mohou být\ntaké zdaneny ve smluvnõm státe, ve kterém je jejich\nzdroj a v souladu s právnõmi predpisy tohoto státu,\navsak je-li prõjemce skuteceným vlastnõkem licencnõch\npoplatku , cástka dane takto stanovená nepresáhne\n10 % hrubé cástky z licencnõch poplatku .\nPřõslusné úrady smluvnõch státu mohou upravit\nvzájemnou dohodou zpu sob aplikace techto omezenõ.\n3. Výraz 1licencnõ poplatkya pouzitý v tomto\nclánku oznacuje platby jakéhokoliv druhu obdrzené\njako náhrada za uzitõ nebo za právo na uzitõ autor-\nského práva k dõlu literárnõmu, umeleckému nebo ve-\ndeckému vcetne kinematografických filmu a filmu\nnebo nahrávek pro rozhlasové nebo televiznõ vysõlánõ,\njakéhokoliv patentu, ochranné známky, návrhu nebo\nmodelu, plánu, tajného vzorce nebo výrobnõho po-\nstupu nebo za uzitõ nebo za právo na uzitõ pru myslo-\nvého, obchodnõho nebo vedeckého zarõzenõ, nebo za\ninformace, které se vztahujõ na zkusenosti nabyté\nv oblasti pru myslové, obchodnõ nebo vedecké.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk licencnõch poplatku , který je rezi-\ndentem v jednom smluvnõm státe, vykonává v druhém\nsmluvnõm státe, ve kterém majõ licencnõ poplatky\nzdroj, pru myslovou nebo obchodnõ cinnost prostred-\nnictvõm stálé provozovny, která je tam umõstena, nebo\nvykonává nezávislé povolánõ pros",
+              "heading": "Licencnõ poplatky",
               "json_path": "$.articles[11]",
-              "resolution_method": "structured_article_number"
+              "resolution_method": "structured_income_heading_and_article_number"
             }
           ],
           "evidence_count": 1,
+          "income_type": "royalty",
+          "resolution_status": "resolved",
           "resolved": true
         }
       },
@@ -2143,12 +2227,16 @@
             "article_number": 10,
             "evidence": [
               {
+                "article_number": 10,
                 "excerpt": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezi-\ndentem v jednom smluvnõm státe, rezidentovi druhého\nsmluvnõho státu mohou být zdaneny v tomto druhém\nstáte.\n2. Tyto dividendy vsak mohou být rovnez zda-\nneny ve smluvnõm státe, v nemz je spolecnost, která\nje vyplácõ, rezidentem, a to podle právnõch predpisu\ntohoto státu, avsak jestlize prõjemce je skutecným\nvlastnõkem dividend, dan takto stanovená nepresáhne:\na) 5 % hrubé cástky dividend, jestlize skutecným\nvlastnõkem je spolecnost (jiná nez osobnõ spolec-\nnost), která prõmo vlastnõ nejméne 25 % majetku\nspolecnosti vyplácejõcõ dividendy;\nb) 15 % hrubé cástky dividend ve vsech ostatnõch\nprõpadech.\nPřõslusné úrady smluvnõch státu mohou upravit\nvzájemnou dohodou zpu sob aplikace techto omezenõ.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti,\nze kterých jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku\noznacuje prõjmy z akciõ nebo jiných práv, s výjimkou\npohledávek, s podõlem na zisku, jakoz i prõjmy z práv\nna spolecnosti, které jsou podle dan ových predpisu\nstátu, v nemz je spolecnost, která rozdõlõ zisk, reziden-\ntem, postaveny na roven prõjmu z akciõ.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk dividend, který je rezidentem v jed-\nnom smluvnõm státe, vykonává v druhém smluvnõm\nstáte, v nemz je rezidentem spolecnost vyplácejõcõ di-\nvidendy, pru myslovou nebo obchodnõ cinnost pro-\nstrednictvõm stálé provozovny, která je tam umõstena,\nnebo vykonává v tomto druhém státe",
+                "heading": "Dividendy",
                 "json_path": "$.articles[9]",
-                "resolution_method": "structured_article_number"
+                "resolution_method": "structured_income_heading_and_article_number"
               }
             ],
             "evidence_count": 1,
+            "income_type": "dividend",
+            "resolution_status": "resolved",
             "resolved": true
           },
           "domestic_eu_layer_reference_present": true,
@@ -2168,12 +2256,16 @@
             "article_number": 11,
             "evidence": [
               {
+                "article_number": 11,
                 "excerpt": "U roky\n1. U roky majõcõ zdroj v jednom smluvnõm státe,\nkteré pobõrá rezident druhého smluvnõho státu, mohou\nbýt zdaneny v tomto druhém státe.\n2. Avsak úroky uvedené v odstavci 1 tohoto\nclánku mohou být zdaneny rovnez ve smluvnõm\nstáte, v nemz majõ zdroj, a podle právnõch predpisu\ntohoto státu, ale pokud prõjemce je skutecným vlastnõ-\nkem úroku , dan takto ulozená nepresáhne 10 % hrubé\ncástky úroku .\nPřõslusné úrady smluvnõch státu mohou upravit\nvzájemnou dohodou zpu sob aplikace techto omezenõ.\n3. Bez ohledu na ustanovenõ odstavce 2, úroky,\nkteré majõ zdroj v jednom smluvnõm státe a které ply-\nnou a jsou skutecne vlastneny vládou druhého státu,\nvcetne jeho nizsõch správnõch útvaru a mõstnõch úradu ,\nústrednõ bankou nebo jakoukoliv financnõ institucõ\nzcela vlastnenou touto vládou, nebo úroky plynoucõ\nz pu jcek garantovaných touto vládou, budou vyjmuty\nze zdanenõ v prvne zmõneném státe.\n4. Výraz 1úrokya pouzitý v tomto clánku ozna-\ncuje prõjmy z pohledávek jakéhokoliv druhu zajiste-\nných i nezajistených zástavnõm právem na nemovi-\ntosti nebo majõcõch nebo nemajõcõch právo úcasti na\nzisku dluznõka, a zvláste, prõjmy z vládnõch cenných\npapõru a prõjmy z obligacõ nebo dluhopisu vcetne pré-\nmiõ a odmen spojených s temito cennými papõry, ob-\nligacemi nebo dluhopisy. Penále za pozdnõ platbu se\nnepovazujõ za úroky pro úcely tohoto clánku.\n5. Ustanovenõ odstavcu 1, 2 a 3 se nepouzijõ, jest-\nlize skutecný vlastnõk úroku , který je rezidentem\nv jednom smluvnõm státe, vykonává v druhém sm",
+                "heading": "U roky",
                 "json_path": "$.articles[10]",
-                "resolution_method": "structured_article_number"
+                "resolution_method": "structured_income_heading_and_article_number"
               }
             ],
             "evidence_count": 1,
+            "income_type": "interest",
+            "resolution_status": "resolved",
             "resolved": true
           },
           "domestic_eu_layer_reference_present": true,
@@ -2193,12 +2285,16 @@
             "article_number": 12,
             "evidence": [
               {
+                "article_number": 12,
                 "excerpt": "Licencnõ poplatky\n1. Licencnõ poplatky, majõcõ zdroj v jednom\nsmluvnõm státe, vyplácené rezidentu druhého smluv-\nnõho státu, mohou být zdaneny v tomto druhém státe.\n2. Avsak takové licencnõ poplatky mohou být\ntaké zdaneny ve smluvnõm státe, ve kterém je jejich\nzdroj a v souladu s právnõmi predpisy tohoto státu,\navsak je-li prõjemce skuteceným vlastnõkem licencnõch\npoplatku , cástka dane takto stanovená nepresáhne\n10 % hrubé cástky z licencnõch poplatku .\nPřõslusné úrady smluvnõch státu mohou upravit\nvzájemnou dohodou zpu sob aplikace techto omezenõ.\n3. Výraz 1licencnõ poplatkya pouzitý v tomto\nclánku oznacuje platby jakéhokoliv druhu obdrzené\njako náhrada za uzitõ nebo za právo na uzitõ autor-\nského práva k dõlu literárnõmu, umeleckému nebo ve-\ndeckému vcetne kinematografických filmu a filmu\nnebo nahrávek pro rozhlasové nebo televiznõ vysõlánõ,\njakéhokoliv patentu, ochranné známky, návrhu nebo\nmodelu, plánu, tajného vzorce nebo výrobnõho po-\nstupu nebo za uzitõ nebo za právo na uzitõ pru myslo-\nvého, obchodnõho nebo vedeckého zarõzenõ, nebo za\ninformace, které se vztahujõ na zkusenosti nabyté\nv oblasti pru myslové, obchodnõ nebo vedecké.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk licencnõch poplatku , který je rezi-\ndentem v jednom smluvnõm státe, vykonává v druhém\nsmluvnõm státe, ve kterém majõ licencnõ poplatky\nzdroj, pru myslovou nebo obchodnõ cinnost prostred-\nnictvõm stálé provozovny, která je tam umõstena, nebo\nvykonává nezávislé povolánõ pros",
+                "heading": "Licencnõ poplatky",
                 "json_path": "$.articles[11]",
-                "resolution_method": "structured_article_number"
+                "resolution_method": "structured_income_heading_and_article_number"
               }
             ],
             "evidence_count": 1,
+            "income_type": "royalty",
+            "resolution_status": "resolved",
             "resolved": true
           },
           "domestic_eu_layer_reference_present": true,
@@ -2219,40 +2315,52 @@
     },
     {
       "article_evidence": {
-        "10": {
+        "dividend": {
           "article_number": 10,
           "evidence": [
             {
+              "article_number": 10,
               "excerpt": "Dividendy\n1. Dividendy vyplácené společností, která je\nrezidentem v jednom smluvním státě, osobě, která\nje rezidentem v druhém smluvním státě, podléhají\nzdanění v obou smluvních státech,\n2. Výraz „dividendy“, použitý v tomto článku,\noznačuje příjmy z akcií, požitkových akcií nebo\npožitkových listů, kuksů, zakladatelských podílů\nnebo jiných práv — s výjimkou pohledávek —\ns podílem na zisku a příjmy z jiných podílů na\nspolečnosti, které jsou podle právních předpisů\nstátů, v němž je společnost, která dividendy vy-\nplácí rezidentem, postaveny na roveň příjmů\nz akcií.\n3. Ustanovení odstavce 1 se nepoužije, jestliže\nskutečný příjemce dividend, který je rezidentem\nv jednom smluvním státě, vykonává v druhém\nsmluvním státě, v němž je rezidentem společnost\nvyplácející dividendy, průmyslovou nebo obchodní\nčinnost prostřednictvím stálé provozovny, která je\ntam umístěna, nebo nezávislé povolání prostřed-\nnictvím stálé základny tam umístěné, a jestliže\núčast, pro kterou se dividendy vyplácejí, se skuteč-\nně váže k této stálé provozovně nebo k této stálé\nzákladně. V takovém případě se použijí ustanovení\nčlánku 7 nebo článku 14.\n4. Jestliže společnost, která je rezidentem\nv jednom smluvním státě dosahuje zisky nebo\npříjmy z druhého smluvního státu, nemůže tento\ndruhý stát zdanit dividendy vyplácené společností,\nledaže tyto dividendy jsou vypláceny osobě, která\nje rezidentem v tomto druhém státě, nebo že účast,\npro kterou se dividendy vyplácejí, skutečně patří\nke stálé provozovně nebo ke stál",
+              "heading": "Dividendy",
               "json_path": "$.articles[3]",
-              "resolution_method": "structured_article_number"
+              "resolution_method": "structured_income_heading_and_article_number"
             }
           ],
           "evidence_count": 1,
+          "income_type": "dividend",
+          "resolution_status": "resolved",
           "resolved": true
         },
-        "11": {
+        "interest": {
           "article_number": 11,
           "evidence": [
             {
+              "article_number": 11,
               "excerpt": "Úroky\n1. Úroky mající zdroj v jednom smluvním stá-\ntě a vyplácené osobě, která je rezidentem v dru-\nhém smluvním státě, mohou být zdaněny v tomto\ndruhém státě,\n2. Takové úroky však mohou být zdaněny také\nve smluvním státě, ve kterém je jejich zdroj, a to\npodle právních předpisů tohoto státu, avšak jestli-\nže příjemce je skutečným vlastníkem úroků, daň\ntakto ukládaná nepřesáhne 10 % hrubé částky\núroků.\nPříslušné úřady smluvních států stanoví ve\nvzájemné dohodě způsob uplatnění tohoto omeze-\nní.\n3. Bez ohledu na ustanovení odstavce 2, úroky\nplynoucí z půjčky poskytnuté vládou jednoho\nsmluvního státu, nebo bankou, nebo jakoukoli ji-\nnou institucí ve jménu nebo na účet této vlády,\nbudou podléhat zdanění pouze ve smluvním státě,\nv němž je příjemce rezidentem.\n4. Výraz „úroky“ použitý v tomto článku\noznačuje příjmy z pohledávek jakéhokoli druhu,\nzajištěných i nezajištěných zástavním právem na\nnemovitosti nebo doložkou o účasti na zisku dluž-\nnika a obzvláště příjmy z vládních dluhopisů a\nobligací, včetně prémií a výher spojených s těmi-\nto cennými papíry, obligacemi nebo dluhopisy.\nPenále za opožděné placení není pro účely to-\nhoto článku považováno za úrok.\n5, Ustanovení odstavců 1 a 2 se nepoužijí, jest-\nHže příjemce úroků, který je rezidentem v jednom\nsmluvním státě, vykonává v druhém smluvním stá-\ntě, ve kterém mají úroky zdroj, průmyslovou nebo\nobchodní činnost prostřednictvím stálé provozov-\nny, která je tam umístěna, nebo nezávislé povolání\nprostřednictvím stálé základny tam",
+              "heading": "Úroky",
               "json_path": "$.articles[4]",
-              "resolution_method": "structured_article_number"
+              "resolution_method": "structured_income_heading_and_article_number"
             }
           ],
           "evidence_count": 1,
+          "income_type": "interest",
+          "resolution_status": "resolved",
           "resolved": true
         },
-        "12": {
+        "royalty": {
           "article_number": 12,
           "evidence": [
             {
+              "article_number": 12,
               "excerpt": "Licenční poplatky\n1.\nLicenční poplatky mající zdroj v jednom smluvním státě a placené osobě, která je rezidentem v druhém smluvním státě, mohou být zdaněny v tomto druhém státě.\n2.\nLicenční poplatky uvedené v odstavci 3a) mohou být však zdaněny také ve smluvním státě, ve kterém je jejich zdroj, a to podle právních předpisů tohoto státu. Daň takto stanovená však nemůže přesáhnout 10 % z hrubé částky licenčních poplatků. Příslušné úřady smluvních států stanoví ve vzájemné dohodě způsob uplatnění tohoto omezení.\n3.\nVýraz \"licenční poplatky\" použitý v tomto článku označuje náhrady jakéhokoli druhu placené za užití nebo za přivolení k užití:\na)\npatentu, ochranné známky, vzoru nebo modelu, plánu, tajného vzorce nebo výrobního postupu nebo průmyslového, obchodního nebo vědeckého zařízení, nebo za informace, které se vztahují na zkušenosti nabyté v oblasti průmyslové, obchodní nebo vědecké;\nb)\npráva autorského k dílu literárnímu, uměleckému nebo vědeckému včetně kinematografických a televizních filmů.\n4.\nUstanovení odstavců 1 a 2 se nepoužijí, jestliže příjemce licenčních poplatků, který je rezidentem v jednom smluvním státě, vykonává v druhém smluvním státě, ve kterém mají licenční poplatky zdroj, buď průmyslovou nebo obchodní činnost prostřednictvím stálé provozovny, která je tam umístěna, nebo nezávislé povolání prostřednictvím stálé základny tam umístěné a jestliže právo nebo majetek, které dávají vznik licenčním poplatkům, jsou s nimi skutečně spojeny. V tomto případě mohou být ",
+              "heading": "Licenční poplatky",
               "json_path": "$.articles[5]",
-              "resolution_method": "structured_article_number"
+              "resolution_method": "structured_income_heading_and_article_number"
             }
           ],
           "evidence_count": 1,
+          "income_type": "royalty",
+          "resolution_status": "resolved",
           "resolved": true
         }
       },
@@ -2683,12 +2791,16 @@
             "article_number": 10,
             "evidence": [
               {
+                "article_number": 10,
                 "excerpt": "Dividendy\n1. Dividendy vyplácené společností, která je\nrezidentem v jednom smluvním státě, osobě, která\nje rezidentem v druhém smluvním státě, podléhají\nzdanění v obou smluvních státech,\n2. Výraz „dividendy“, použitý v tomto článku,\noznačuje příjmy z akcií, požitkových akcií nebo\npožitkových listů, kuksů, zakladatelských podílů\nnebo jiných práv — s výjimkou pohledávek —\ns podílem na zisku a příjmy z jiných podílů na\nspolečnosti, které jsou podle právních předpisů\nstátů, v němž je společnost, která dividendy vy-\nplácí rezidentem, postaveny na roveň příjmů\nz akcií.\n3. Ustanovení odstavce 1 se nepoužije, jestliže\nskutečný příjemce dividend, který je rezidentem\nv jednom smluvním státě, vykonává v druhém\nsmluvním státě, v němž je rezidentem společnost\nvyplácející dividendy, průmyslovou nebo obchodní\nčinnost prostřednictvím stálé provozovny, která je\ntam umístěna, nebo nezávislé povolání prostřed-\nnictvím stálé základny tam umístěné, a jestliže\núčast, pro kterou se dividendy vyplácejí, se skuteč-\nně váže k této stálé provozovně nebo k této stálé\nzákladně. V takovém případě se použijí ustanovení\nčlánku 7 nebo článku 14.\n4. Jestliže společnost, která je rezidentem\nv jednom smluvním státě dosahuje zisky nebo\npříjmy z druhého smluvního státu, nemůže tento\ndruhý stát zdanit dividendy vyplácené společností,\nledaže tyto dividendy jsou vypláceny osobě, která\nje rezidentem v tomto druhém státě, nebo že účast,\npro kterou se dividendy vyplácejí, skutečně patří\nke stálé provozovně nebo ke stál",
+                "heading": "Dividendy",
                 "json_path": "$.articles[3]",
-                "resolution_method": "structured_article_number"
+                "resolution_method": "structured_income_heading_and_article_number"
               }
             ],
             "evidence_count": 1,
+            "income_type": "dividend",
+            "resolution_status": "resolved",
             "resolved": true
           },
           "domestic_eu_layer_reference_present": true,
@@ -2708,12 +2820,16 @@
             "article_number": 11,
             "evidence": [
               {
+                "article_number": 11,
                 "excerpt": "Úroky\n1. Úroky mající zdroj v jednom smluvním stá-\ntě a vyplácené osobě, která je rezidentem v dru-\nhém smluvním státě, mohou být zdaněny v tomto\ndruhém státě,\n2. Takové úroky však mohou být zdaněny také\nve smluvním státě, ve kterém je jejich zdroj, a to\npodle právních předpisů tohoto státu, avšak jestli-\nže příjemce je skutečným vlastníkem úroků, daň\ntakto ukládaná nepřesáhne 10 % hrubé částky\núroků.\nPříslušné úřady smluvních států stanoví ve\nvzájemné dohodě způsob uplatnění tohoto omeze-\nní.\n3. Bez ohledu na ustanovení odstavce 2, úroky\nplynoucí z půjčky poskytnuté vládou jednoho\nsmluvního státu, nebo bankou, nebo jakoukoli ji-\nnou institucí ve jménu nebo na účet této vlády,\nbudou podléhat zdanění pouze ve smluvním státě,\nv němž je příjemce rezidentem.\n4. Výraz „úroky“ použitý v tomto článku\noznačuje příjmy z pohledávek jakéhokoli druhu,\nzajištěných i nezajištěných zástavním právem na\nnemovitosti nebo doložkou o účasti na zisku dluž-\nnika a obzvláště příjmy z vládních dluhopisů a\nobligací, včetně prémií a výher spojených s těmi-\nto cennými papíry, obligacemi nebo dluhopisy.\nPenále za opožděné placení není pro účely to-\nhoto článku považováno za úrok.\n5, Ustanovení odstavců 1 a 2 se nepoužijí, jest-\nHže příjemce úroků, který je rezidentem v jednom\nsmluvním státě, vykonává v druhém smluvním stá-\ntě, ve kterém mají úroky zdroj, průmyslovou nebo\nobchodní činnost prostřednictvím stálé provozov-\nny, která je tam umístěna, nebo nezávislé povolání\nprostřednictvím stálé základny tam",
+                "heading": "Úroky",
                 "json_path": "$.articles[4]",
-                "resolution_method": "structured_article_number"
+                "resolution_method": "structured_income_heading_and_article_number"
               }
             ],
             "evidence_count": 1,
+            "income_type": "interest",
+            "resolution_status": "resolved",
             "resolved": true
           },
           "domestic_eu_layer_reference_present": true,
@@ -2733,12 +2849,16 @@
             "article_number": 12,
             "evidence": [
               {
+                "article_number": 12,
                 "excerpt": "Licenční poplatky\n1.\nLicenční poplatky mající zdroj v jednom smluvním státě a placené osobě, která je rezidentem v druhém smluvním státě, mohou být zdaněny v tomto druhém státě.\n2.\nLicenční poplatky uvedené v odstavci 3a) mohou být však zdaněny také ve smluvním státě, ve kterém je jejich zdroj, a to podle právních předpisů tohoto státu. Daň takto stanovená však nemůže přesáhnout 10 % z hrubé částky licenčních poplatků. Příslušné úřady smluvních států stanoví ve vzájemné dohodě způsob uplatnění tohoto omezení.\n3.\nVýraz \"licenční poplatky\" použitý v tomto článku označuje náhrady jakéhokoli druhu placené za užití nebo za přivolení k užití:\na)\npatentu, ochranné známky, vzoru nebo modelu, plánu, tajného vzorce nebo výrobního postupu nebo průmyslového, obchodního nebo vědeckého zařízení, nebo za informace, které se vztahují na zkušenosti nabyté v oblasti průmyslové, obchodní nebo vědecké;\nb)\npráva autorského k dílu literárnímu, uměleckému nebo vědeckému včetně kinematografických a televizních filmů.\n4.\nUstanovení odstavců 1 a 2 se nepoužijí, jestliže příjemce licenčních poplatků, který je rezidentem v jednom smluvním státě, vykonává v druhém smluvním státě, ve kterém mají licenční poplatky zdroj, buď průmyslovou nebo obchodní činnost prostřednictvím stálé provozovny, která je tam umístěna, nebo nezávislé povolání prostřednictvím stálé základny tam umístěné a jestliže právo nebo majetek, které dávají vznik licenčním poplatkům, jsou s nimi skutečně spojeny. V tomto případě mohou být ",
+                "heading": "Licenční poplatky",
                 "json_path": "$.articles[5]",
-                "resolution_method": "structured_article_number"
+                "resolution_method": "structured_income_heading_and_article_number"
               }
             ],
             "evidence_count": 1,
+            "income_type": "royalty",
+            "resolution_status": "resolved",
             "resolved": true
           },
           "domestic_eu_layer_reference_present": true,
@@ -2759,40 +2879,52 @@
     },
     {
       "article_evidence": {
-        "10": {
+        "dividend": {
           "article_number": 10,
           "evidence": [
             {
+              "article_number": 10,
               "excerpt": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezidentem jednoho smluvnõho státu, rezidentu druhého\nsmluvnõho státu mohou být zdaneny v tomto druhém státe.\n2. Tyto dividendy vsak mohou být rovnez zdaneny ve smluvnõm státe, jehoz je spolecnost, která je vyplácõ,\nrezidentem, a to podle právnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk dividend je rezidentem\ndruhého smluvnõho státu, dan takto ulozená nepresáhne 5 procent hrubé cástky dividend.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou dohodou zpusob aplikace tohoto omezenõ.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti, z nichz jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku oznacuje prõjmy z akciõ nebo jiných práv, s výjimkou pohle-\ndávek, s podõlem na zisku, jakoz i jiné prõjmy, které jsou podrobeny stejnému danovému rezimu jako prõjmy\nz akciõ podle právnõch predpisu státu, jehoz je spolecnost, která rozdõlõ zisk, rezidentem.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize skutecný vlastnõk dividend, který je rezidentem jednoho\nsmluvnõho státu, vykonává v druhém smluvnõm státe, jehoz je rezidentem spolecnost vyplácejõcõ dividendy,\nprumyslovou nebo obchodnõ cinnost prostrednictvõm stálé provozovny, která je tam umõstena, nebo vykonává\nv tomto druhém státe nezávislé povolánõ ze stálé základny tam umõstené a jestlize úcast, pro kterou se dividendy\nvyplácejõ, se skutecne váze k této stálé provozovne nebo stálé základne. V takovém prõpade se pouzijõ ustanovenõ\nclánku 7",
+              "heading": "Dividendy",
               "json_path": "$.articles[9]",
-              "resolution_method": "structured_article_number"
+              "resolution_method": "structured_income_heading_and_article_number"
             }
           ],
           "evidence_count": 1,
+          "income_type": "dividend",
+          "resolution_status": "resolved",
           "resolved": true
         },
-        "11": {
+        "interest": {
           "article_number": 11,
           "evidence": [
             {
+              "article_number": 11,
               "excerpt": "Uroky\n1. Uroky majõcõ zdroj v jednom smluvnõm státe a vyplácené rezidentu druhého smluvnõho státu podléhajõ\nzdanenõ jen v tomto druhém státe, jestlize tento rezident je skutecným vlastnõkem úroku.\n2. Výraz 1úrokya pouzitý v tomto clánku oznacuje prõjmy z pohledávek jakéhokoliv druhu, at' zajistených,\nci nezajistených zástavnõm právem na nemovitosti nebo majõcõch, ci nemajõcõch právo úcasti na zisku dluznõka,\na zvláste, prõjmy z vládnõch cenných papõru a prõjmy z obligacõ nebo dluhopisu, vcetne prémiõ a výher, které se\nvázou k temto cenným papõrum, obligacõm nebo dluhopisum. Penále ukládané za pozdnõ platbu se nepovazuje za\núroky pro úcely tohoto clánku.\n3. Ustanovenõ odstavce 1 se nepouzijõ, jestlize skutecný vlastnõk úroku, který je rezidentem jednoho smluv-\nnõho státu, vykonává v druhém smluvnõm státe, ve kterém majõ úroky zdroj, prumyslovou nebo obchodnõ cinnost\nprostrednictvõm stálé provozovny, která je tam umõstena, nebo vykonává v tomto druhém státe nezávislé povo-\nlánõ ze stálé základny tam umõstené a jestlize pohledávka, ze které jsou úroky placeny, se skutecne váze k této\nstálé provozovne nebo stálé základne. V takovém prõpade se pouzijõ ustanovenõ clánku 7 nebo clánku 14 podle\ntoho, o jaký prõpad jde.\n4. Předpokládá se, ze úroky majõ zdroj ve smluvnõm státe, jestlize plátcem je rezident tohoto státu. Jestlize\nvsak plátce úroku, at' je, nebo nenõ rezidentem nekterého smluvnõho státu, má ve smluvnõm státe stálou pro-\nvozovnu nebo stálou základnu, ve spojenõ s nõz dosl",
+              "heading": "Uroky",
               "json_path": "$.articles[10]",
-              "resolution_method": "structured_article_number"
+              "resolution_method": "structured_income_heading_and_article_number"
             }
           ],
           "evidence_count": 1,
+          "income_type": "interest",
+          "resolution_status": "resolved",
           "resolved": true
         },
-        "12": {
+        "royalty": {
           "article_number": 12,
           "evidence": [
             {
+              "article_number": 12,
               "excerpt": "Licencnõ poplatky\n1. Licencnõ poplatky majõcõ zdroj v jednom smluvnõm státe a vyplácené rezidentu druhého smluvnõho státu\nmohou být zdaneny v tomto druhém státe.\n2. Tyto licencnõ poplatky vsak mohou být rovnez zdaneny ve smluvnõm státe, v nemz majõ zdroj, a to podle\nprávnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk licencnõch poplatku je rezidentem druhého\nsmluvnõho státu, dan takto ulozená nepresáhne 10 procent hrubé cástky licencnõch poplatku.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou dohodou zpusob aplikace tohoto omezenõ.\n3. Výraz 1licencnõ poplatkya pouzitý v tomto clánku oznacuje platby jakéhokoliv druhu obdrzené jako\nnáhrada za uzitõ nebo za právo na uzitõ jakéhokoliv autorského práva k dõlu literárnõmu, umeleckému nebo\nvedeckému, vcetne kinematografických filmu, filmu nebo pásek nebo jiných prostredku reprodukce pro roz-\nhlasové nebo televiznõ vysõlánõ, jakéhokoliv patentu, ochranné známky, návrhu nebo modelu, plánu, tajného\nvzorce nebo výrobnõho postupu nebo jakéhokoliv prumyslového, obchodnõho nebo vedeckého zarõzenõ nebo za\ninformace, které se vztahujõ na zkusenosti nabyté v oblasti prumyslové, obchodnõ nebo vedecké (know-how).\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize skutecný vlastnõk licencnõch poplatku, který je rezidentem\njednoho smluvnõho státu, vykonává v druhém smluvnõm státe, ve kterém majõ licencnõ poplatky zdroj, pru-\nmyslovou nebo obchodnõ cinnost prostrednictvõm stálé provozovny, která je tam umõstena, nebo vykonává\nv to",
+              "heading": "Licencnõ poplatky",
               "json_path": "$.articles[11]",
-              "resolution_method": "structured_article_number"
+              "resolution_method": "structured_income_heading_and_article_number"
             }
           ],
           "evidence_count": 1,
+          "income_type": "royalty",
+          "resolution_status": "resolved",
           "resolved": true
         }
       },
@@ -3221,12 +3353,16 @@
             "article_number": 10,
             "evidence": [
               {
+                "article_number": 10,
                 "excerpt": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezidentem jednoho smluvnõho státu, rezidentu druhého\nsmluvnõho státu mohou být zdaneny v tomto druhém státe.\n2. Tyto dividendy vsak mohou být rovnez zdaneny ve smluvnõm státe, jehoz je spolecnost, která je vyplácõ,\nrezidentem, a to podle právnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk dividend je rezidentem\ndruhého smluvnõho státu, dan takto ulozená nepresáhne 5 procent hrubé cástky dividend.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou dohodou zpusob aplikace tohoto omezenõ.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti, z nichz jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku oznacuje prõjmy z akciõ nebo jiných práv, s výjimkou pohle-\ndávek, s podõlem na zisku, jakoz i jiné prõjmy, které jsou podrobeny stejnému danovému rezimu jako prõjmy\nz akciõ podle právnõch predpisu státu, jehoz je spolecnost, která rozdõlõ zisk, rezidentem.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize skutecný vlastnõk dividend, který je rezidentem jednoho\nsmluvnõho státu, vykonává v druhém smluvnõm státe, jehoz je rezidentem spolecnost vyplácejõcõ dividendy,\nprumyslovou nebo obchodnõ cinnost prostrednictvõm stálé provozovny, která je tam umõstena, nebo vykonává\nv tomto druhém státe nezávislé povolánõ ze stálé základny tam umõstené a jestlize úcast, pro kterou se dividendy\nvyplácejõ, se skutecne váze k této stálé provozovne nebo stálé základne. V takovém prõpade se pouzijõ ustanovenõ\nclánku 7",
+                "heading": "Dividendy",
                 "json_path": "$.articles[9]",
-                "resolution_method": "structured_article_number"
+                "resolution_method": "structured_income_heading_and_article_number"
               }
             ],
             "evidence_count": 1,
+            "income_type": "dividend",
+            "resolution_status": "resolved",
             "resolved": true
           },
           "domestic_eu_layer_reference_present": true,
@@ -3246,12 +3382,16 @@
             "article_number": 11,
             "evidence": [
               {
+                "article_number": 11,
                 "excerpt": "Uroky\n1. Uroky majõcõ zdroj v jednom smluvnõm státe a vyplácené rezidentu druhého smluvnõho státu podléhajõ\nzdanenõ jen v tomto druhém státe, jestlize tento rezident je skutecným vlastnõkem úroku.\n2. Výraz 1úrokya pouzitý v tomto clánku oznacuje prõjmy z pohledávek jakéhokoliv druhu, at' zajistených,\nci nezajistených zástavnõm právem na nemovitosti nebo majõcõch, ci nemajõcõch právo úcasti na zisku dluznõka,\na zvláste, prõjmy z vládnõch cenných papõru a prõjmy z obligacõ nebo dluhopisu, vcetne prémiõ a výher, které se\nvázou k temto cenným papõrum, obligacõm nebo dluhopisum. Penále ukládané za pozdnõ platbu se nepovazuje za\núroky pro úcely tohoto clánku.\n3. Ustanovenõ odstavce 1 se nepouzijõ, jestlize skutecný vlastnõk úroku, který je rezidentem jednoho smluv-\nnõho státu, vykonává v druhém smluvnõm státe, ve kterém majõ úroky zdroj, prumyslovou nebo obchodnõ cinnost\nprostrednictvõm stálé provozovny, která je tam umõstena, nebo vykonává v tomto druhém státe nezávislé povo-\nlánõ ze stálé základny tam umõstené a jestlize pohledávka, ze které jsou úroky placeny, se skutecne váze k této\nstálé provozovne nebo stálé základne. V takovém prõpade se pouzijõ ustanovenõ clánku 7 nebo clánku 14 podle\ntoho, o jaký prõpad jde.\n4. Předpokládá se, ze úroky majõ zdroj ve smluvnõm státe, jestlize plátcem je rezident tohoto státu. Jestlize\nvsak plátce úroku, at' je, nebo nenõ rezidentem nekterého smluvnõho státu, má ve smluvnõm státe stálou pro-\nvozovnu nebo stálou základnu, ve spojenõ s nõz dosl",
+                "heading": "Uroky",
                 "json_path": "$.articles[10]",
-                "resolution_method": "structured_article_number"
+                "resolution_method": "structured_income_heading_and_article_number"
               }
             ],
             "evidence_count": 1,
+            "income_type": "interest",
+            "resolution_status": "resolved",
             "resolved": true
           },
           "domestic_eu_layer_reference_present": true,
@@ -3271,12 +3411,16 @@
             "article_number": 12,
             "evidence": [
               {
+                "article_number": 12,
                 "excerpt": "Licencnõ poplatky\n1. Licencnõ poplatky majõcõ zdroj v jednom smluvnõm státe a vyplácené rezidentu druhého smluvnõho státu\nmohou být zdaneny v tomto druhém státe.\n2. Tyto licencnõ poplatky vsak mohou být rovnez zdaneny ve smluvnõm státe, v nemz majõ zdroj, a to podle\nprávnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk licencnõch poplatku je rezidentem druhého\nsmluvnõho státu, dan takto ulozená nepresáhne 10 procent hrubé cástky licencnõch poplatku.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou dohodou zpusob aplikace tohoto omezenõ.\n3. Výraz 1licencnõ poplatkya pouzitý v tomto clánku oznacuje platby jakéhokoliv druhu obdrzené jako\nnáhrada za uzitõ nebo za právo na uzitõ jakéhokoliv autorského práva k dõlu literárnõmu, umeleckému nebo\nvedeckému, vcetne kinematografických filmu, filmu nebo pásek nebo jiných prostredku reprodukce pro roz-\nhlasové nebo televiznõ vysõlánõ, jakéhokoliv patentu, ochranné známky, návrhu nebo modelu, plánu, tajného\nvzorce nebo výrobnõho postupu nebo jakéhokoliv prumyslového, obchodnõho nebo vedeckého zarõzenõ nebo za\ninformace, které se vztahujõ na zkusenosti nabyté v oblasti prumyslové, obchodnõ nebo vedecké (know-how).\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize skutecný vlastnõk licencnõch poplatku, který je rezidentem\njednoho smluvnõho státu, vykonává v druhém smluvnõm státe, ve kterém majõ licencnõ poplatky zdroj, pru-\nmyslovou nebo obchodnõ cinnost prostrednictvõm stálé provozovny, která je tam umõstena, nebo vykonává\nv to",
+                "heading": "Licencnõ poplatky",
                 "json_path": "$.articles[11]",
-                "resolution_method": "structured_article_number"
+                "resolution_method": "structured_income_heading_and_article_number"
               }
             ],
             "evidence_count": 1,
+            "income_type": "royalty",
+            "resolution_status": "resolved",
             "resolved": true
           },
           "domestic_eu_layer_reference_present": true,
@@ -3297,40 +3441,52 @@
     },
     {
       "article_evidence": {
-        "10": {
+        "dividend": {
           "article_number": 10,
           "evidence": [
             {
+              "article_number": 10,
               "excerpt": "DIVIDENDY\n1.\nDividendy vyplácené společností, která je rezidentem jednoho smluvního státu, rezidentu druhého smluvního státu mohou být zdaněny v tomto druhém státě.\n2.\nTyto dividendy však mohou být rovněž zdaněny ve smluvním státě, jehož je společnost, která je vyplácí, rezidentem, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník dividend je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne 10 procent hrubé částky dividend.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace tohoto omezení.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.\n3.\nVýraz „dividendy“, použitý v tomto článku, označuje příjmy z akcií nebo jiných práv, s výjimkou pohledávek, s podílem na zisku, jakož i příjmy z jiných práv, které jsou podrobeny stejnému daňovému režimu jako příjmy z akcií podle právních předpisů státu, jehož je společnost, která rozdílí zisk, rezidentem.\n4.\nUstanovení odstavců 1 a 2 se nepoužijí, jestliže skutečný vlastník dividend, který je rezidentem jednoho smluvního státu, vykonává v druhém smluvním státě, jehož je rezidentem společnost vyplácející dividendy, průmyslovou nebo obchodní činnost prostřednictvím stálé provozovny, která je tam umístěna, nebo vykonává v tomto druhém státě nezávislé povolání ze stálé základny tam umístěné a jestliže účast, pro kterou se dividendy vyplácejí, se skutečně váže k této stálé provozovně nebo stálé základně. V takovém případě se použijí ustanoven",
+              "heading": "DIVIDENDY",
               "json_path": "$.articles[9]",
-              "resolution_method": "structured_article_number"
+              "resolution_method": "structured_income_heading_and_article_number"
             }
           ],
           "evidence_count": 1,
+          "income_type": "dividend",
+          "resolution_status": "resolved",
           "resolved": true
         },
-        "11": {
+        "interest": {
           "article_number": 11,
           "evidence": [
             {
+              "article_number": 11,
               "excerpt": "ÚROKY\n1.\nÚroky mající zdroj v jednom smluvním státě a vyplácené rezidentu druhého smluvního státu mohou být zdaněny v tomto druhém státě.\n2.\nTyto úroky však mohou být rovněž zdaněny ve smluvním státě, v němž mají zdroj, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník úroků je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne 10 procent hrubé částky úroků.\n3.\nÚroky mající zdroj v jednom smluvním státě a pobírané a skutečně vlastněné vládou druhého smluvního státu, včetně nižších správních útvarů a místních úřadů tohoto státu, centrální bankou nebo jakoukoli finanční institucí zcela vlastněnou touto vládou nebo úroky pobírané z půjček garantovaných touto vládou budou, bez ohledu na ustanovení odstavce 2, osvobozeny od zdanění v prvně zmíněném smluvním státě.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace těchto omezení.\n4.\nVýraz „úroky“, použitý v tomto článku, označuje příjmy z pohledávek jakéhokoliv druhu, ať zajištěných, či nezajištěných zástavním právem na nemovitosti nebo majících, či nemajících právo účasti na zisku dlužníka, a zvláště příjmy z vládních cenných papírů a příjmy z obligací nebo dluhopisů včetně prémií a výher, které se vážou k těmto cenným papírům, obligacím nebo dluhopisům.\n5.\nUstanovení odstavců 1 a 2 se nepoužijí, jestliže skutečný vlastník úroků, který je rezidentem jednoho smluvního státu, vykonává v druhém smluvním státě, ve kterém mají úroky zdroj, průmyslovou nebo obchodní činnost ",
+              "heading": "ÚROKY",
               "json_path": "$.articles[10]",
-              "resolution_method": "structured_article_number"
+              "resolution_method": "structured_income_heading_and_article_number"
             }
           ],
           "evidence_count": 1,
+          "income_type": "interest",
+          "resolution_status": "resolved",
           "resolved": true
         },
-        "12": {
+        "royalty": {
           "article_number": 12,
           "evidence": [
             {
+              "article_number": 12,
               "excerpt": "LICENČNÍ POPLATKY\n1.\nLicenční poplatky mající zdroj v jednom smluvním státě a vyplácené rezidentu druhého smluvního státu mohou být zdaněny v tomto druhém státě.\n2.\nTyto licenční poplatky však mohou být rovněž zdaněny ve smluvním státě, v němž mají zdroj, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník licenčních poplatků je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne 10 procent hrubé částky licenčních poplatků.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace tohoto omezení.\n3.\nVýraz „licenční poplatky“, použitý v tomto článku, označuje platby jakéhokoliv druhu obdržené jako náhrada za užití nebo za právo na užití jakéhokoli autorského práva k dílu literárnímu, uměleckému nebo vědeckému, včetně softwaru, kinematografických filmů a filmů nebo nahrávek pro televizní nebo rozhlasové vysílání, jakéhokoli patentu, ochranné známky, návrhu nebo modelu, plánu, tajného vzorce nebo výrobního postupu nebo za informace, které se vztahují na zkušenosti nabyté v oblasti průmyslové, obchodní nebo vědecké, a platby za užití nebo za právo na užití průmyslového, obchodního nebo vědeckého zařízení.\n4.\nUstanovení odstavců 1 a 2 se nepoužijí, jestliže skutečný vlastník licenčních poplatků, který je rezidentem jednoho smluvního státu, vykonává v druhém smluvním státě, ve kterém mají licenční poplatky zdroj, průmyslovou nebo obchodní činnost prostřednictvím stálé provozovny, která je tam umístěna, nebo vykonává v tomto druhém",
+              "heading": "LICENČNÍ POPLATKY",
               "json_path": "$.articles[11]",
-              "resolution_method": "structured_article_number"
+              "resolution_method": "structured_income_heading_and_article_number"
             }
           ],
           "evidence_count": 1,
+          "income_type": "royalty",
+          "resolution_status": "resolved",
           "resolved": true
         }
       },
@@ -3760,12 +3916,16 @@
             "article_number": 10,
             "evidence": [
               {
+                "article_number": 10,
                 "excerpt": "DIVIDENDY\n1.\nDividendy vyplácené společností, která je rezidentem jednoho smluvního státu, rezidentu druhého smluvního státu mohou být zdaněny v tomto druhém státě.\n2.\nTyto dividendy však mohou být rovněž zdaněny ve smluvním státě, jehož je společnost, která je vyplácí, rezidentem, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník dividend je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne 10 procent hrubé částky dividend.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace tohoto omezení.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.\n3.\nVýraz „dividendy“, použitý v tomto článku, označuje příjmy z akcií nebo jiných práv, s výjimkou pohledávek, s podílem na zisku, jakož i příjmy z jiných práv, které jsou podrobeny stejnému daňovému režimu jako příjmy z akcií podle právních předpisů státu, jehož je společnost, která rozdílí zisk, rezidentem.\n4.\nUstanovení odstavců 1 a 2 se nepoužijí, jestliže skutečný vlastník dividend, který je rezidentem jednoho smluvního státu, vykonává v druhém smluvním státě, jehož je rezidentem společnost vyplácející dividendy, průmyslovou nebo obchodní činnost prostřednictvím stálé provozovny, která je tam umístěna, nebo vykonává v tomto druhém státě nezávislé povolání ze stálé základny tam umístěné a jestliže účast, pro kterou se dividendy vyplácejí, se skutečně váže k této stálé provozovně nebo stálé základně. V takovém případě se použijí ustanoven",
+                "heading": "DIVIDENDY",
                 "json_path": "$.articles[9]",
-                "resolution_method": "structured_article_number"
+                "resolution_method": "structured_income_heading_and_article_number"
               }
             ],
             "evidence_count": 1,
+            "income_type": "dividend",
+            "resolution_status": "resolved",
             "resolved": true
           },
           "domestic_eu_layer_reference_present": true,
@@ -3785,12 +3945,16 @@
             "article_number": 11,
             "evidence": [
               {
+                "article_number": 11,
                 "excerpt": "ÚROKY\n1.\nÚroky mající zdroj v jednom smluvním státě a vyplácené rezidentu druhého smluvního státu mohou být zdaněny v tomto druhém státě.\n2.\nTyto úroky však mohou být rovněž zdaněny ve smluvním státě, v němž mají zdroj, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník úroků je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne 10 procent hrubé částky úroků.\n3.\nÚroky mající zdroj v jednom smluvním státě a pobírané a skutečně vlastněné vládou druhého smluvního státu, včetně nižších správních útvarů a místních úřadů tohoto státu, centrální bankou nebo jakoukoli finanční institucí zcela vlastněnou touto vládou nebo úroky pobírané z půjček garantovaných touto vládou budou, bez ohledu na ustanovení odstavce 2, osvobozeny od zdanění v prvně zmíněném smluvním státě.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace těchto omezení.\n4.\nVýraz „úroky“, použitý v tomto článku, označuje příjmy z pohledávek jakéhokoliv druhu, ať zajištěných, či nezajištěných zástavním právem na nemovitosti nebo majících, či nemajících právo účasti na zisku dlužníka, a zvláště příjmy z vládních cenných papírů a příjmy z obligací nebo dluhopisů včetně prémií a výher, které se vážou k těmto cenným papírům, obligacím nebo dluhopisům.\n5.\nUstanovení odstavců 1 a 2 se nepoužijí, jestliže skutečný vlastník úroků, který je rezidentem jednoho smluvního státu, vykonává v druhém smluvním státě, ve kterém mají úroky zdroj, průmyslovou nebo obchodní činnost ",
+                "heading": "ÚROKY",
                 "json_path": "$.articles[10]",
-                "resolution_method": "structured_article_number"
+                "resolution_method": "structured_income_heading_and_article_number"
               }
             ],
             "evidence_count": 1,
+            "income_type": "interest",
+            "resolution_status": "resolved",
             "resolved": true
           },
           "domestic_eu_layer_reference_present": true,
@@ -3810,12 +3974,16 @@
             "article_number": 12,
             "evidence": [
               {
+                "article_number": 12,
                 "excerpt": "LICENČNÍ POPLATKY\n1.\nLicenční poplatky mající zdroj v jednom smluvním státě a vyplácené rezidentu druhého smluvního státu mohou být zdaněny v tomto druhém státě.\n2.\nTyto licenční poplatky však mohou být rovněž zdaněny ve smluvním státě, v němž mají zdroj, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník licenčních poplatků je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne 10 procent hrubé částky licenčních poplatků.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace tohoto omezení.\n3.\nVýraz „licenční poplatky“, použitý v tomto článku, označuje platby jakéhokoliv druhu obdržené jako náhrada za užití nebo za právo na užití jakéhokoli autorského práva k dílu literárnímu, uměleckému nebo vědeckému, včetně softwaru, kinematografických filmů a filmů nebo nahrávek pro televizní nebo rozhlasové vysílání, jakéhokoli patentu, ochranné známky, návrhu nebo modelu, plánu, tajného vzorce nebo výrobního postupu nebo za informace, které se vztahují na zkušenosti nabyté v oblasti průmyslové, obchodní nebo vědecké, a platby za užití nebo za právo na užití průmyslového, obchodního nebo vědeckého zařízení.\n4.\nUstanovení odstavců 1 a 2 se nepoužijí, jestliže skutečný vlastník licenčních poplatků, který je rezidentem jednoho smluvního státu, vykonává v druhém smluvním státě, ve kterém mají licenční poplatky zdroj, průmyslovou nebo obchodní činnost prostřednictvím stálé provozovny, která je tam umístěna, nebo vykonává v tomto druhém",
+                "heading": "LICENČNÍ POPLATKY",
                 "json_path": "$.articles[11]",
-                "resolution_method": "structured_article_number"
+                "resolution_method": "structured_income_heading_and_article_number"
               }
             ],
             "evidence_count": 1,
+            "income_type": "royalty",
+            "resolution_status": "resolved",
             "resolved": true
           },
           "domestic_eu_layer_reference_present": true,
@@ -3836,40 +4004,52 @@
     },
     {
       "article_evidence": {
-        "10": {
+        "dividend": {
           "article_number": 10,
           "evidence": [
             {
+              "article_number": 10,
               "excerpt": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezidentem jednoho smluvnõho státu, rezidentu druhého\nsmluvnõho státu, mohou být zdaneny v tomto druhém státe.\n2. Tyto dividendy vsak mohou být rovnez zdaneny ve smluvnõm státe, jehoz je spolecnost, která je vyplácõ,\nrezidentem, a to podle právnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk dividend je rezidentem\ndruhého smluvnõho státu, dan takto ulozená nepresáhne:\na) 5 procent hrubé cástky dividend, jestlize skutecným vlastnõkem je spolecnost (jiná nez osobnõ spolecnost),\nkterá prõmo vlastnõ nejméne 25 procent jmenõ spolecnosti vyplácejõcõ dividendy;\nb) 15 procent hrubé cástky dividend ve vsech ostatnõch prõpadech.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou dohodou zpusob aplikace techto omezenõ.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti, z nichz jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku oznacuje prõjmy z akciõ nebo jiných práv, s výjimkou pohle-\ndávek, s podõlem na zisku, jakoz i prõjmy z jiných práv, které jsou podrobeny stejnému danovému rezimu jako\nprõjmy z akciõ podle danových zákonu státu, jehoz je spolecnost, která rozdõlõ zisk, rezidentem.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize skutecný vlastnõk dividend, který je rezidentem jednoho\nsmluvnõho státu, vykonává v druhém smluvnõm státe, jehoz je rezidentem spolecnost vyplácejõcõ dividendy,\nprumyslovou nebo obchodnõ cinnost prostrednictvõm stálé provozovny, která je tam umõstena, nebo vykonává\nv ",
+              "heading": "Dividendy",
               "json_path": "$.articles[9]",
-              "resolution_method": "structured_article_number"
+              "resolution_method": "structured_income_heading_and_article_number"
             }
           ],
           "evidence_count": 1,
+          "income_type": "dividend",
+          "resolution_status": "resolved",
           "resolved": true
         },
-        "11": {
+        "interest": {
           "article_number": 11,
           "evidence": [
             {
+              "article_number": 11,
               "excerpt": "Uroky\n1. Uroky majõcõ zdroj v jednom smluvnõm státe a vyplácené rezidentu druhého smluvnõho státu mohou být\nzdaneny v tomto druhém státe.\n2. Tyto úroky vsak mohou být rovnez zdaneny ve smluvnõm státe, v nemz majõ zdroj, a to podle právnõch\npredpisu tohoto státu, avsak jestlize skutecný vlastnõk úroku je rezidentem druhého smluvnõho státu, dan takto\nulozená nepresáhne 5 procent hrubé cástky úroku.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou dohodou zpusob aplikace tohoto omezenõ.\n3. Výraz 1úrokya pouzitý v tomto clánku oznacuje prõjmy z pohledávek jakéhokoliv druhu, at' zajistených\nci nezajistených zástavnõm právem na nemovitosti nebo majõcõch ci nemajõcõch právo úcasti na zisku dluznõka,\na zvláste, prõjmy z vládnõch cenných papõru a prõjmy z obligacõ nebo dluhopisu, vcetne prémiõ a výher, které se\nvázou k temto cenným papõrum, obligacõm nebo dluhopisum. Penále ukládané za pozdnõ platbu se nepovazuje za\núroky pro úcely tohoto clánku.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize skutecný vlastnõk úroku, který je rezidentem jednoho\nsmluvnõho státu, vykonává v druhém smluvnõm státe, ve kterém majõ úroky zdroj, prumyslovou nebo obchodnõ\ncinnost prostrednictvõm stálé provozovny, která je tam umõstena, nebo vykonává v tomto druhém státe nezávislé\npovolánõ ze stálé základny tam umõstené a jestlize pohledávka, ze které jsou úroky placeny, se skutecne váze\nk této stálé provozovne nebo stálé základne. V takovém prõpade se pouzijõ ustanovenõ clánku 7 nebo clánku 14\npodle toho",
+              "heading": "Uroky",
               "json_path": "$.articles[10]",
-              "resolution_method": "structured_article_number"
+              "resolution_method": "structured_income_heading_and_article_number"
             }
           ],
           "evidence_count": 1,
+          "income_type": "interest",
+          "resolution_status": "resolved",
           "resolved": true
         },
-        "12": {
+        "royalty": {
           "article_number": 12,
           "evidence": [
             {
+              "article_number": 12,
               "excerpt": "Licencnõ poplatky\n1. Licencnõ poplatky majõcõ zdroj v jednom smluvnõm státe a vyplácené rezidentu druhého smluvnõho státu\nmohou být zdaneny v tomto druhém státe.\n2. Tyto licencnõ poplatky vsak mohou být rovnez zdaneny ve smluvnõm státe, v nemz majõ zdroj, a to podle\nprávnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk licencnõch poplatku je rezidentem druhého\nsmluvnõho státu, dan takto ulozená nepresáhne 10 procent hrubé cástky licencnõch poplatku.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou dohodou zpusob aplikace tohoto omezenõ.\n3. Výraz 1licencnõ poplatkya pouzitý v tomto clánku oznacuje platby jakéhokoliv druhu obdrzené jako\nnáhrada za uzitõ nebo za právo na uzitõ jakéhokoliv autorského práva k dõlu literárnõmu, umeleckému nebo\nvedeckému, vcetne kinematografických filmu a filmu nebo nahrávek pro televiznõ nebo rozhlasové vysõlánõ,\njakéhokoliv patentu, ochranné známky, návrhu nebo modelu, plánu, tajného vzorce nebo výrobnõho postupu\nnebo jakéhokoliv prumyslového, obchodnõho nebo vedeckého zarõzenõ nebo za informace, které se vztahujõ na\nzkusenosti nabyté v oblasti prumyslové, obchodnõ nebo vedecké.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize skutecný vlastnõk licencnõch poplatku, který je rezidentem\njednoho smluvnõho státu, vykonává v druhém smluvnõm státe, ve kterém majõ licencnõ poplatky zdroj, pru-\nmyslovou nebo obchodnõ cinnost prostrednictvõm stálé provozovny, která je tam umõstena, nebo vykonává\nv tomto druhém státe nezávislé povolánõ ze stál",
+              "heading": "Licencnõ poplatky",
               "json_path": "$.articles[11]",
-              "resolution_method": "structured_article_number"
+              "resolution_method": "structured_income_heading_and_article_number"
             }
           ],
           "evidence_count": 1,
+          "income_type": "royalty",
+          "resolution_status": "resolved",
           "resolved": true
         }
       },
@@ -4227,12 +4407,16 @@
             "article_number": 10,
             "evidence": [
               {
+                "article_number": 10,
                 "excerpt": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezidentem jednoho smluvnõho státu, rezidentu druhého\nsmluvnõho státu, mohou být zdaneny v tomto druhém státe.\n2. Tyto dividendy vsak mohou být rovnez zdaneny ve smluvnõm státe, jehoz je spolecnost, která je vyplácõ,\nrezidentem, a to podle právnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk dividend je rezidentem\ndruhého smluvnõho státu, dan takto ulozená nepresáhne:\na) 5 procent hrubé cástky dividend, jestlize skutecným vlastnõkem je spolecnost (jiná nez osobnõ spolecnost),\nkterá prõmo vlastnõ nejméne 25 procent jmenõ spolecnosti vyplácejõcõ dividendy;\nb) 15 procent hrubé cástky dividend ve vsech ostatnõch prõpadech.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou dohodou zpusob aplikace techto omezenõ.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti, z nichz jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku oznacuje prõjmy z akciõ nebo jiných práv, s výjimkou pohle-\ndávek, s podõlem na zisku, jakoz i prõjmy z jiných práv, které jsou podrobeny stejnému danovému rezimu jako\nprõjmy z akciõ podle danových zákonu státu, jehoz je spolecnost, která rozdõlõ zisk, rezidentem.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize skutecný vlastnõk dividend, který je rezidentem jednoho\nsmluvnõho státu, vykonává v druhém smluvnõm státe, jehoz je rezidentem spolecnost vyplácejõcõ dividendy,\nprumyslovou nebo obchodnõ cinnost prostrednictvõm stálé provozovny, která je tam umõstena, nebo vykonává\nv ",
+                "heading": "Dividendy",
                 "json_path": "$.articles[9]",
-                "resolution_method": "structured_article_number"
+                "resolution_method": "structured_income_heading_and_article_number"
               }
             ],
             "evidence_count": 1,
+            "income_type": "dividend",
+            "resolution_status": "resolved",
             "resolved": true
           },
           "domestic_eu_layer_reference_present": true,
@@ -4252,12 +4436,16 @@
             "article_number": 11,
             "evidence": [
               {
+                "article_number": 11,
                 "excerpt": "Uroky\n1. Uroky majõcõ zdroj v jednom smluvnõm státe a vyplácené rezidentu druhého smluvnõho státu mohou být\nzdaneny v tomto druhém státe.\n2. Tyto úroky vsak mohou být rovnez zdaneny ve smluvnõm státe, v nemz majõ zdroj, a to podle právnõch\npredpisu tohoto státu, avsak jestlize skutecný vlastnõk úroku je rezidentem druhého smluvnõho státu, dan takto\nulozená nepresáhne 5 procent hrubé cástky úroku.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou dohodou zpusob aplikace tohoto omezenõ.\n3. Výraz 1úrokya pouzitý v tomto clánku oznacuje prõjmy z pohledávek jakéhokoliv druhu, at' zajistených\nci nezajistených zástavnõm právem na nemovitosti nebo majõcõch ci nemajõcõch právo úcasti na zisku dluznõka,\na zvláste, prõjmy z vládnõch cenných papõru a prõjmy z obligacõ nebo dluhopisu, vcetne prémiõ a výher, které se\nvázou k temto cenným papõrum, obligacõm nebo dluhopisum. Penále ukládané za pozdnõ platbu se nepovazuje za\núroky pro úcely tohoto clánku.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize skutecný vlastnõk úroku, který je rezidentem jednoho\nsmluvnõho státu, vykonává v druhém smluvnõm státe, ve kterém majõ úroky zdroj, prumyslovou nebo obchodnõ\ncinnost prostrednictvõm stálé provozovny, která je tam umõstena, nebo vykonává v tomto druhém státe nezávislé\npovolánõ ze stálé základny tam umõstené a jestlize pohledávka, ze které jsou úroky placeny, se skutecne váze\nk této stálé provozovne nebo stálé základne. V takovém prõpade se pouzijõ ustanovenõ clánku 7 nebo clánku 14\npodle toho",
+                "heading": "Uroky",
                 "json_path": "$.articles[10]",
-                "resolution_method": "structured_article_number"
+                "resolution_method": "structured_income_heading_and_article_number"
               }
             ],
             "evidence_count": 1,
+            "income_type": "interest",
+            "resolution_status": "resolved",
             "resolved": true
           },
           "domestic_eu_layer_reference_present": true,
@@ -4277,12 +4465,16 @@
             "article_number": 12,
             "evidence": [
               {
+                "article_number": 12,
                 "excerpt": "Licencnõ poplatky\n1. Licencnõ poplatky majõcõ zdroj v jednom smluvnõm státe a vyplácené rezidentu druhého smluvnõho státu\nmohou být zdaneny v tomto druhém státe.\n2. Tyto licencnõ poplatky vsak mohou být rovnez zdaneny ve smluvnõm státe, v nemz majõ zdroj, a to podle\nprávnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk licencnõch poplatku je rezidentem druhého\nsmluvnõho státu, dan takto ulozená nepresáhne 10 procent hrubé cástky licencnõch poplatku.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou dohodou zpusob aplikace tohoto omezenõ.\n3. Výraz 1licencnõ poplatkya pouzitý v tomto clánku oznacuje platby jakéhokoliv druhu obdrzené jako\nnáhrada za uzitõ nebo za právo na uzitõ jakéhokoliv autorského práva k dõlu literárnõmu, umeleckému nebo\nvedeckému, vcetne kinematografických filmu a filmu nebo nahrávek pro televiznõ nebo rozhlasové vysõlánõ,\njakéhokoliv patentu, ochranné známky, návrhu nebo modelu, plánu, tajného vzorce nebo výrobnõho postupu\nnebo jakéhokoliv prumyslového, obchodnõho nebo vedeckého zarõzenõ nebo za informace, které se vztahujõ na\nzkusenosti nabyté v oblasti prumyslové, obchodnõ nebo vedecké.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize skutecný vlastnõk licencnõch poplatku, který je rezidentem\njednoho smluvnõho státu, vykonává v druhém smluvnõm státe, ve kterém majõ licencnõ poplatky zdroj, pru-\nmyslovou nebo obchodnõ cinnost prostrednictvõm stálé provozovny, která je tam umõstena, nebo vykonává\nv tomto druhém státe nezávislé povolánõ ze stál",
+                "heading": "Licencnõ poplatky",
                 "json_path": "$.articles[11]",
-                "resolution_method": "structured_article_number"
+                "resolution_method": "structured_income_heading_and_article_number"
               }
             ],
             "evidence_count": 1,
+            "income_type": "royalty",
+            "resolution_status": "resolved",
             "resolved": true
           },
           "domestic_eu_layer_reference_present": true,
@@ -4303,40 +4495,52 @@
     },
     {
       "article_evidence": {
-        "10": {
+        "dividend": {
+          "article_number": 9,
+          "evidence": [
+            {
+              "article_number": 9,
+              "excerpt": "Dividendy\n1. Dividendy plynoucõ od spolecnosti, která je re-\nzidentem v jednom smluvnõm státe, osobe, která je re-\nzidentem ve druhém smluvnõm státe, mohou být zda-\nneny v tomto druhém státe.\n2. Tyto dividendy vsak mohou být zdaneny také\nve smluvnõm státe, v nemz je spolecnost, která je vyplá-\ncõ, rezidentem, a to podle právnõch predpisu tohoto\nstátu, avsak jestlize prõjemce je skutecným vlastnõkem\ndividend, dan takto stanovená nepresáhne:\na) 12,5 % hrubé cástky dividend, jestlize prõjemce\nje spolecnost, která vlastnõ prõmo ci ne-\nprõmo nejméne 10 % podõlu s hlasovacõm\nprávem na spolecnosti vyplácejõcõ divi-\ndendy;\nb) 15 % hrubé cástky dividend ve vsech jiných\nprõpadech.\nTento odstavec se nedotkne zdanenõ zisku spolec-\nnosti, ze kterých jsou dividendy vypláceny.\n3. Ustanovenõ odstavcu 1 a 2 tohoto clánku se ne-\npouzijõ, jestlize skutecný vlastnõk dividend, který je re-\nzidentem v jednom smluvnõm státe, má ve druhém\nsmluvnõm státe, kde je spolecnost vyplácejõcõ dividendy\nrezidentem, stálou provozovnu nebo stálou základnu\ntam umõstenou, a jestlize vlastnictvõ akciõ, na jehoz zá-\nklade se dividendy vyplácejõ, je skutecne spojeno s ob-\nchody uskutecn ovanými touto stálou provozovnou ne-\nbo stálou základnou. V takovém prõpade se pouzijõ\nustanovenõ clánku 7 nebo clánku 13 podle toho, o jaký\nprõpad jde.\n4. Jestlize spolecnost, která je rezidentem v jed-\nnom smluvnõm státe, dosahuje zisky nebo prõjmy\nz druhého smluvnõho státu, nemu ze tento druhý stát\nzdanit dividendy vyplácené spole",
+              "heading": "Dividendy",
+              "json_path": "$.articles[8]",
+              "resolution_method": "structured_income_heading_and_article_number"
+            }
+          ],
+          "evidence_count": 1,
+          "income_type": "dividend",
+          "resolution_status": "resolved",
+          "resolved": true
+        },
+        "interest": {
           "article_number": 10,
           "evidence": [
             {
+              "article_number": 10,
               "excerpt": "U roky\n1. U roky plynoucõ z jednoho smluvnõho státu\nosobe, která je rezidentem ve druhém smluvnõm státe,\nmohou být zdaneny v tomto druhém státe.\n2. Takové úroky vsak mohou být zdaneny také\nve smluvnõm státe ve kterém je jejich zdroj, a to podle\nprávnõch predpisu tohoto státu, avsak jestlize prõjemce\nje skutecným vlastnõkem úroku , dan takto ukládaná\nnepresáhne 15 % hrubé cástky úroku .\n3. Bez ohledu na ustanovenõ odstavce 2 tohoto\nclánku, úroky budou osvobozeny od zdanenõ\nve smluvnõm státe, ve kterém je jejich zdroj, jestlize je-\njich prõjemcem a skutecným vlastnõkem je:\na) vláda druhého smluvnõho státu nebo jeho mõstnõ\norgán nebo jakýkoliv úrad ci instituce této vlády\nnebo mõstnõho správnõho útvaru.\nPro úcely tohoto pododstavce se úradem nebo or-\ngánem vlády rozumõ:\ni) v prõpade Č eskoslovenska, Č eskoslovenská\nobchodnõ banka; a\nii) v prõpade Nigérie, U strednõ banka Nigérie;\nb) jakákoliv instituce smluvnõho státu zrõzená vládou\ntohoto státu k financovánõ zahranicnõho obchodu\nza predpokladu, ze pu jcka nebo úver, z nichz úro-\nky plynou, byly schváleny vládami obou smluv-\nnõch státu .\n4. Ustanovenõ odstavcu 1 a 2 tohoto clánku se ne-\npouzijõ, jestlize skutecný vlastnõk úroku , který je rezi-\ndentem v jednom smluvnõm státe, má ve druhém\nsmluvnõm státe, v nemz je osoba platõcõ úroky reziden-\ntem, stálou provozovnu nebo stálou základnu tam\numõstenou a jestlize pohledávka, ze které jsou úroky\nplaceny, je skutecne spojená s obchody provozovaný-\nmi touto stálou provozovnou nebo stá",
+              "heading": "U roky",
               "json_path": "$.articles[9]",
-              "resolution_method": "structured_article_number"
+              "resolution_method": "structured_income_heading_and_article_number"
             }
           ],
           "evidence_count": 1,
+          "income_type": "interest",
+          "resolution_status": "resolved",
           "resolved": true
         },
-        "11": {
+        "royalty": {
           "article_number": 11,
           "evidence": [
             {
+              "article_number": 11,
               "excerpt": "Licencnõ poplatky\n1. Licencnõ poplatky plynoucõ od osoby, která\nje rezidentem v jednom smluvnõm státe, osobe, která\nje rezidentem ve druhém smluvnõm státe, mohou být\nzdaneny v tomto druhém státe.\n2. Takové licencnõ poplatky mohou být vsak také\nzdaneny ve smluvnõm státe, odkud plynou, a to podle\nprávnõch predpisu tohoto státu, avsak jestlize prõjemce\nje skutecným vlastnõkem licencnõch poplatku , dan tak-\nto ukládaná nepresáhne 10 % z hrubé cástky licencnõch\npoplatku .\n3. Ustanovenõ odstavcu 1 a 2 tohoto clánku se ne-\npouzijõ, jestlize skutecný vlastnõk licencnõch poplatku ,\nkterý je rezidentem v jednom smluvnõm státe,\nmá ve druhém smluvnõm státe, v nemz je osoba platõcõ\nlicencnõ poplatky rezidentem, stálou provozovnu nebo\nstálou základnu tam umõstenou a jestlize právo nebo\nmajetek, které dávajõ vznik licencnõm poplatku m, jsou\nskutecne spojeny s obchody provozovanými touto stá-\nlou provozovnou nebo stálou základnou. V tomto prõ-\npade se pouzijõ ustanovenõ clánku 7 nebo clánku\n13 podle toho, o jaký prõpad jde.\n4. Předpokládá se, ze licencnõ poplatky majõ zdroj\nv jednom smluvnõm státe, jestlize plátcem je tento\nsmluvnõ stát sám, jeho správnõ útvar, mõstnõ orgán to-\nhoto státu nebo osoba, která je rezidentem v tomto stá-\nte. Jestlize vsak osoba, která platõ licencnõ poplatky,\nat' je nebo nenõ rezidentem v nekterém smluvnõm státe,\nmá v jednom smluvnõm státe stálou provozovnu nebo\nstálou základnu, ve spojenõ s nõz vznikla povinnost,\nna jejõmz základe se licencnõ poplatky platõ, a k",
+              "heading": "Licencnõ poplatky",
               "json_path": "$.articles[10]",
-              "resolution_method": "structured_article_number"
+              "resolution_method": "structured_income_heading_and_article_number"
             }
           ],
           "evidence_count": 1,
-          "resolved": true
-        },
-        "12": {
-          "article_number": 12,
-          "evidence": [
-            {
-              "excerpt": "Zisky ze zcizenõ majetku\n1. Zisky ze zcizenõ nemovitého majetku, který\nje definován v odstavci 2 clánku 6, mohou být zdaneny\nve smluvnõm státe, ve kterém je tento majetek umõsten.\n2. Zisky ze zcizenõ movitého majetku vcetne podõ-\nlu na spolecnosti, který je cástõ provoznõho majetku\nstálé provozovny, kterou má podnik jednoho smluvnõ-\nho státu ve druhém smluvnõm státe nebo movitého ma-\njetku, který patrõ ke stálé základne, kterou rezident\njednoho smluvnõho státu má k dispozici ve druhém\nsmluvnõm státe k výkonu svobodného povolánõ, vcetne\nzisku ze zcizenõ takovéto stálé provozovny (samotné\nnebo spolu s celým podnikem) nebo takovéto stálé zá-\nkladny, mohou být zdaneny v tomto druhém státe.\n3. Zisky ze zcizenõ lodõ nebo letadel provozova-\nných v mezinárodnõ doprave budou zdaneny jen\nve smluvnõm státe, ve kterém je podnik rezidentem.\n4. Zisky ze zcizenõ jiného majetku, nez který\nje uveden v odstavci 1, 2 a 3 tohoto clánku, budou zda-\nneny pouze ve smluvnõm státe, v nemz je zcizitel rezi-\ndentem.\n1. Zisky ze zcizenõ nemovitého majetku, který\nje definován v odstavci 2 clánku 6, mohou být zdaneny\nve smluvnõm státe, ve kterém je tento majetek umõsten.\n2. Zisky ze zcizenõ movitého majetku vcetne podõ-\nlu na spolecnosti, který je cástõ provoznõho majetku\nstálé provozovny, kterou má podnik jednoho smluvnõ-\nho státu ve druhém smluvnõm státe nebo movitého ma-\njetku, který patrõ ke stálé základne, kterou rezident\njednoho smluvnõho státu má k dispozici ve druhém\nsmluvnõm státe k výkonu svobod",
-              "json_path": "$.articles[11]",
-              "resolution_method": "structured_article_number"
-            }
-          ],
-          "evidence_count": 1,
+          "income_type": "royalty",
+          "resolution_status": "resolved",
           "resolved": true
         }
       },
@@ -4736,15 +4940,19 @@
       "scopes": [
         {
           "article_evidence": {
-            "article_number": 10,
+            "article_number": 9,
             "evidence": [
               {
-                "excerpt": "U roky\n1. U roky plynoucõ z jednoho smluvnõho státu\nosobe, která je rezidentem ve druhém smluvnõm státe,\nmohou být zdaneny v tomto druhém státe.\n2. Takové úroky vsak mohou být zdaneny také\nve smluvnõm státe ve kterém je jejich zdroj, a to podle\nprávnõch predpisu tohoto státu, avsak jestlize prõjemce\nje skutecným vlastnõkem úroku , dan takto ukládaná\nnepresáhne 15 % hrubé cástky úroku .\n3. Bez ohledu na ustanovenõ odstavce 2 tohoto\nclánku, úroky budou osvobozeny od zdanenõ\nve smluvnõm státe, ve kterém je jejich zdroj, jestlize je-\njich prõjemcem a skutecným vlastnõkem je:\na) vláda druhého smluvnõho státu nebo jeho mõstnõ\norgán nebo jakýkoliv úrad ci instituce této vlády\nnebo mõstnõho správnõho útvaru.\nPro úcely tohoto pododstavce se úradem nebo or-\ngánem vlády rozumõ:\ni) v prõpade Č eskoslovenska, Č eskoslovenská\nobchodnõ banka; a\nii) v prõpade Nigérie, U strednõ banka Nigérie;\nb) jakákoliv instituce smluvnõho státu zrõzená vládou\ntohoto státu k financovánõ zahranicnõho obchodu\nza predpokladu, ze pu jcka nebo úver, z nichz úro-\nky plynou, byly schváleny vládami obou smluv-\nnõch státu .\n4. Ustanovenõ odstavcu 1 a 2 tohoto clánku se ne-\npouzijõ, jestlize skutecný vlastnõk úroku , který je rezi-\ndentem v jednom smluvnõm státe, má ve druhém\nsmluvnõm státe, v nemz je osoba platõcõ úroky reziden-\ntem, stálou provozovnu nebo stálou základnu tam\numõstenou a jestlize pohledávka, ze které jsou úroky\nplaceny, je skutecne spojená s obchody provozovaný-\nmi touto stálou provozovnou nebo stá",
-                "json_path": "$.articles[9]",
-                "resolution_method": "structured_article_number"
+                "article_number": 9,
+                "excerpt": "Dividendy\n1. Dividendy plynoucõ od spolecnosti, která je re-\nzidentem v jednom smluvnõm státe, osobe, která je re-\nzidentem ve druhém smluvnõm státe, mohou být zda-\nneny v tomto druhém státe.\n2. Tyto dividendy vsak mohou být zdaneny také\nve smluvnõm státe, v nemz je spolecnost, která je vyplá-\ncõ, rezidentem, a to podle právnõch predpisu tohoto\nstátu, avsak jestlize prõjemce je skutecným vlastnõkem\ndividend, dan takto stanovená nepresáhne:\na) 12,5 % hrubé cástky dividend, jestlize prõjemce\nje spolecnost, která vlastnõ prõmo ci ne-\nprõmo nejméne 10 % podõlu s hlasovacõm\nprávem na spolecnosti vyplácejõcõ divi-\ndendy;\nb) 15 % hrubé cástky dividend ve vsech jiných\nprõpadech.\nTento odstavec se nedotkne zdanenõ zisku spolec-\nnosti, ze kterých jsou dividendy vypláceny.\n3. Ustanovenõ odstavcu 1 a 2 tohoto clánku se ne-\npouzijõ, jestlize skutecný vlastnõk dividend, který je re-\nzidentem v jednom smluvnõm státe, má ve druhém\nsmluvnõm státe, kde je spolecnost vyplácejõcõ dividendy\nrezidentem, stálou provozovnu nebo stálou základnu\ntam umõstenou, a jestlize vlastnictvõ akciõ, na jehoz zá-\nklade se dividendy vyplácejõ, je skutecne spojeno s ob-\nchody uskutecn ovanými touto stálou provozovnou ne-\nbo stálou základnou. V takovém prõpade se pouzijõ\nustanovenõ clánku 7 nebo clánku 13 podle toho, o jaký\nprõpad jde.\n4. Jestlize spolecnost, která je rezidentem v jed-\nnom smluvnõm státe, dosahuje zisky nebo prõjmy\nz druhého smluvnõho státu, nemu ze tento druhý stát\nzdanit dividendy vyplácené spole",
+                "heading": "Dividendy",
+                "json_path": "$.articles[8]",
+                "resolution_method": "structured_income_heading_and_article_number"
               }
             ],
             "evidence_count": 1,
+            "income_type": "dividend",
+            "resolution_status": "resolved",
             "resolved": true
           },
           "domestic_eu_layer_reference_present": true,
@@ -4756,20 +4964,24 @@
           "recipient_country": "NG",
           "scope_id": "CZ-NG-dividend",
           "stage5_terminal_status": "pending",
-          "treaty_article": 10,
+          "treaty_article": 9,
           "verification_status": "needs_review"
         },
         {
           "article_evidence": {
-            "article_number": 11,
+            "article_number": 10,
             "evidence": [
               {
-                "excerpt": "Licencnõ poplatky\n1. Licencnõ poplatky plynoucõ od osoby, která\nje rezidentem v jednom smluvnõm státe, osobe, která\nje rezidentem ve druhém smluvnõm státe, mohou být\nzdaneny v tomto druhém státe.\n2. Takové licencnõ poplatky mohou být vsak také\nzdaneny ve smluvnõm státe, odkud plynou, a to podle\nprávnõch predpisu tohoto státu, avsak jestlize prõjemce\nje skutecným vlastnõkem licencnõch poplatku , dan tak-\nto ukládaná nepresáhne 10 % z hrubé cástky licencnõch\npoplatku .\n3. Ustanovenõ odstavcu 1 a 2 tohoto clánku se ne-\npouzijõ, jestlize skutecný vlastnõk licencnõch poplatku ,\nkterý je rezidentem v jednom smluvnõm státe,\nmá ve druhém smluvnõm státe, v nemz je osoba platõcõ\nlicencnõ poplatky rezidentem, stálou provozovnu nebo\nstálou základnu tam umõstenou a jestlize právo nebo\nmajetek, které dávajõ vznik licencnõm poplatku m, jsou\nskutecne spojeny s obchody provozovanými touto stá-\nlou provozovnou nebo stálou základnou. V tomto prõ-\npade se pouzijõ ustanovenõ clánku 7 nebo clánku\n13 podle toho, o jaký prõpad jde.\n4. Předpokládá se, ze licencnõ poplatky majõ zdroj\nv jednom smluvnõm státe, jestlize plátcem je tento\nsmluvnõ stát sám, jeho správnõ útvar, mõstnõ orgán to-\nhoto státu nebo osoba, která je rezidentem v tomto stá-\nte. Jestlize vsak osoba, která platõ licencnõ poplatky,\nat' je nebo nenõ rezidentem v nekterém smluvnõm státe,\nmá v jednom smluvnõm státe stálou provozovnu nebo\nstálou základnu, ve spojenõ s nõz vznikla povinnost,\nna jejõmz základe se licencnõ poplatky platõ, a k",
-                "json_path": "$.articles[10]",
-                "resolution_method": "structured_article_number"
+                "article_number": 10,
+                "excerpt": "U roky\n1. U roky plynoucõ z jednoho smluvnõho státu\nosobe, která je rezidentem ve druhém smluvnõm státe,\nmohou být zdaneny v tomto druhém státe.\n2. Takové úroky vsak mohou být zdaneny také\nve smluvnõm státe ve kterém je jejich zdroj, a to podle\nprávnõch predpisu tohoto státu, avsak jestlize prõjemce\nje skutecným vlastnõkem úroku , dan takto ukládaná\nnepresáhne 15 % hrubé cástky úroku .\n3. Bez ohledu na ustanovenõ odstavce 2 tohoto\nclánku, úroky budou osvobozeny od zdanenõ\nve smluvnõm státe, ve kterém je jejich zdroj, jestlize je-\njich prõjemcem a skutecným vlastnõkem je:\na) vláda druhého smluvnõho státu nebo jeho mõstnõ\norgán nebo jakýkoliv úrad ci instituce této vlády\nnebo mõstnõho správnõho útvaru.\nPro úcely tohoto pododstavce se úradem nebo or-\ngánem vlády rozumõ:\ni) v prõpade Č eskoslovenska, Č eskoslovenská\nobchodnõ banka; a\nii) v prõpade Nigérie, U strednõ banka Nigérie;\nb) jakákoliv instituce smluvnõho státu zrõzená vládou\ntohoto státu k financovánõ zahranicnõho obchodu\nza predpokladu, ze pu jcka nebo úver, z nichz úro-\nky plynou, byly schváleny vládami obou smluv-\nnõch státu .\n4. Ustanovenõ odstavcu 1 a 2 tohoto clánku se ne-\npouzijõ, jestlize skutecný vlastnõk úroku , který je rezi-\ndentem v jednom smluvnõm státe, má ve druhém\nsmluvnõm státe, v nemz je osoba platõcõ úroky reziden-\ntem, stálou provozovnu nebo stálou základnu tam\numõstenou a jestlize pohledávka, ze které jsou úroky\nplaceny, je skutecne spojená s obchody provozovaný-\nmi touto stálou provozovnou nebo stá",
+                "heading": "U roky",
+                "json_path": "$.articles[9]",
+                "resolution_method": "structured_income_heading_and_article_number"
               }
             ],
             "evidence_count": 1,
+            "income_type": "interest",
+            "resolution_status": "resolved",
             "resolved": true
           },
           "domestic_eu_layer_reference_present": true,
@@ -4781,20 +4993,24 @@
           "recipient_country": "NG",
           "scope_id": "CZ-NG-interest",
           "stage5_terminal_status": "pending",
-          "treaty_article": 11,
+          "treaty_article": 10,
           "verification_status": "needs_review"
         },
         {
           "article_evidence": {
-            "article_number": 12,
+            "article_number": 11,
             "evidence": [
               {
-                "excerpt": "Zisky ze zcizenõ majetku\n1. Zisky ze zcizenõ nemovitého majetku, který\nje definován v odstavci 2 clánku 6, mohou být zdaneny\nve smluvnõm státe, ve kterém je tento majetek umõsten.\n2. Zisky ze zcizenõ movitého majetku vcetne podõ-\nlu na spolecnosti, který je cástõ provoznõho majetku\nstálé provozovny, kterou má podnik jednoho smluvnõ-\nho státu ve druhém smluvnõm státe nebo movitého ma-\njetku, který patrõ ke stálé základne, kterou rezident\njednoho smluvnõho státu má k dispozici ve druhém\nsmluvnõm státe k výkonu svobodného povolánõ, vcetne\nzisku ze zcizenõ takovéto stálé provozovny (samotné\nnebo spolu s celým podnikem) nebo takovéto stálé zá-\nkladny, mohou být zdaneny v tomto druhém státe.\n3. Zisky ze zcizenõ lodõ nebo letadel provozova-\nných v mezinárodnõ doprave budou zdaneny jen\nve smluvnõm státe, ve kterém je podnik rezidentem.\n4. Zisky ze zcizenõ jiného majetku, nez který\nje uveden v odstavci 1, 2 a 3 tohoto clánku, budou zda-\nneny pouze ve smluvnõm státe, v nemz je zcizitel rezi-\ndentem.\n1. Zisky ze zcizenõ nemovitého majetku, který\nje definován v odstavci 2 clánku 6, mohou být zdaneny\nve smluvnõm státe, ve kterém je tento majetek umõsten.\n2. Zisky ze zcizenõ movitého majetku vcetne podõ-\nlu na spolecnosti, který je cástõ provoznõho majetku\nstálé provozovny, kterou má podnik jednoho smluvnõ-\nho státu ve druhém smluvnõm státe nebo movitého ma-\njetku, který patrõ ke stálé základne, kterou rezident\njednoho smluvnõho státu má k dispozici ve druhém\nsmluvnõm státe k výkonu svobod",
-                "json_path": "$.articles[11]",
-                "resolution_method": "structured_article_number"
+                "article_number": 11,
+                "excerpt": "Licencnõ poplatky\n1. Licencnõ poplatky plynoucõ od osoby, která\nje rezidentem v jednom smluvnõm státe, osobe, která\nje rezidentem ve druhém smluvnõm státe, mohou být\nzdaneny v tomto druhém státe.\n2. Takové licencnõ poplatky mohou být vsak také\nzdaneny ve smluvnõm státe, odkud plynou, a to podle\nprávnõch predpisu tohoto státu, avsak jestlize prõjemce\nje skutecným vlastnõkem licencnõch poplatku , dan tak-\nto ukládaná nepresáhne 10 % z hrubé cástky licencnõch\npoplatku .\n3. Ustanovenõ odstavcu 1 a 2 tohoto clánku se ne-\npouzijõ, jestlize skutecný vlastnõk licencnõch poplatku ,\nkterý je rezidentem v jednom smluvnõm státe,\nmá ve druhém smluvnõm státe, v nemz je osoba platõcõ\nlicencnõ poplatky rezidentem, stálou provozovnu nebo\nstálou základnu tam umõstenou a jestlize právo nebo\nmajetek, které dávajõ vznik licencnõm poplatku m, jsou\nskutecne spojeny s obchody provozovanými touto stá-\nlou provozovnou nebo stálou základnou. V tomto prõ-\npade se pouzijõ ustanovenõ clánku 7 nebo clánku\n13 podle toho, o jaký prõpad jde.\n4. Předpokládá se, ze licencnõ poplatky majõ zdroj\nv jednom smluvnõm státe, jestlize plátcem je tento\nsmluvnõ stát sám, jeho správnõ útvar, mõstnõ orgán to-\nhoto státu nebo osoba, která je rezidentem v tomto stá-\nte. Jestlize vsak osoba, která platõ licencnõ poplatky,\nat' je nebo nenõ rezidentem v nekterém smluvnõm státe,\nmá v jednom smluvnõm státe stálou provozovnu nebo\nstálou základnu, ve spojenõ s nõz vznikla povinnost,\nna jejõmz základe se licencnõ poplatky platõ, a k",
+                "heading": "Licencnõ poplatky",
+                "json_path": "$.articles[10]",
+                "resolution_method": "structured_income_heading_and_article_number"
               }
             ],
             "evidence_count": 1,
+            "income_type": "royalty",
+            "resolution_status": "resolved",
             "resolved": true
           },
           "domestic_eu_layer_reference_present": true,
@@ -4806,7 +5022,7 @@
           "recipient_country": "NG",
           "scope_id": "CZ-NG-royalty",
           "stage5_terminal_status": "pending",
-          "treaty_article": 12,
+          "treaty_article": 11,
           "verification_status": "needs_review"
         }
       ],
@@ -4815,40 +5031,52 @@
     },
     {
       "article_evidence": {
-        "10": {
+        "dividend": {
           "article_number": 10,
           "evidence": [
             {
+              "article_number": 10,
               "excerpt": "Dividendy\n1.\nDividendy vyplácené společností, která má sídlo v jednom z obou států, osobě, která má bydliště či sídlo v druhém státě, mohou být zdaněny v tomto druhém státě.\n2.\nNicméně tyto dividendy mohou být zdaněny ve státě, ve kterém má sídlo společnost, která je vyplácí, a to podle zákonů tohoto státu. Daň takto stanovená však nemůže přesáhnout 10 % hrubé částky dividend.\n3.\nStát, ve kterém má sídlo společnost vyplácející dividendy, nezdaní bez ohledu na ustanovení odstavce 2 dividendy, vyplácené touto společností společnosti, jejíž jmění je zcela nebo zčásti rozděleno na akcie a která má sídlo ve druhém státě a vlastní přímo nejméně 25 % jmění společnosti, vyplácející dividendy.\n4.\nPříslušné úřady států upraví vzájemnou dohodou způsob aplikace odstavců 2 a 3.\n5.\nUstanovení odstavců 2 a 3 se nedotknou zdanění zisků společnosti, z nichž jsou dividendy vypláceny.\n6.\nVýraz \"dividendy\", použitý v tomto článku, označuje příjmy z akcií, z požitkových listů nebo práv, kuksů, zakladatelských podílů nebo jiných práv s podílem na ziscích, právě tak jako příjmy z pohledávek s podílem na ziscích a příjmy z jiných společenských práv, které jsou postaveny na roveň příjmům z akcií daňovými předpisy státu, v němž má sídlo společnost vyplácející dividendy.\n7.\nUstanovení odstavců 1, 2 a 3 se nepoužijí, jestliže příjemce dividend mající bydliště či sídlo v jednom z obou států má v druhém státě, v němž má sídlo společnost vyplácející dividendy, stálou provozovnu, s níž je ve skutečnosti spo",
+              "heading": "Dividendy",
               "json_path": "$.articles[8]",
-              "resolution_method": "structured_article_number"
+              "resolution_method": "structured_income_heading_and_article_number"
             }
           ],
           "evidence_count": 1,
+          "income_type": "dividend",
+          "resolution_status": "resolved",
           "resolved": true
         },
-        "11": {
+        "interest": {
           "article_number": 11,
           "evidence": [
             {
+              "article_number": 11,
               "excerpt": "Úroky\n1.\nÚroky, které mají zdroj v jednom z obou států a vyplácejí se osobě mající bydliště či sídlo v druhém státě, budou podléhat zdanění pouze v tomto druhém státě.\n2.\nVýraz „úroky“ použitý v tomto článku označuje příjmy z veřejných dluhopisů, obligací nebo dlužních úpisů zajištěných i nezajištěných zástavním právem na nemovitosti, pokud neposkytují právo na podíl na zisku a z pohledávek jakéhokoli druhu, právě tak jako všechny jiné příjmy postavené na roveň příjmům z půjček daňovými předpisy státu, ve kterém mají tyto příjmy zdroj.\n3.\nUstanovení odstavce 1 se nepoužije, jestliže příjemce úroků, který má bydliště či sídlo v jednom z obou států, má v druhém státě, v němž je zdroj úroků, stálou provozovnu, k níž se ve skutečnosti váže pohledávka, která je zdrojem úroků. V takovém případě se použije\n1.\nÚroky, které mají zdroj v jednom z obou států a vyplácejí se osobě mající bydliště či sídlo v druhém státě, budou podléhat zdanění pouze v tomto druhém státě.\n2.\nVýraz „úroky“ použitý v tomto článku označuje příjmy z veřejných dluhopisů, obligací nebo dlužních úpisů zajištěných i nezajištěných zástavním právem na nemovitosti, pokud neposkytují právo na podíl na zisku a z pohledávek jakéhokoli druhu, právě tak jako všechny jiné příjmy postavené na roveň příjmům z půjček daňovými předpisy státu, ve kterém mají tyto příjmy zdroj.\n3.\nUstanovení odstavce 1 se nepoužije, jestliže příjemce úroků, který má bydliště či sídlo v jednom z obou států, má v druhém státě, v němž je zdroj úrok",
+              "heading": "Úroky",
               "json_path": "$.articles[9]",
-              "resolution_method": "structured_article_number"
+              "resolution_method": "structured_income_heading_and_article_number"
             }
           ],
           "evidence_count": 1,
+          "income_type": "interest",
+          "resolution_status": "resolved",
           "resolved": true
         },
-        "12": {
+        "royalty": {
           "article_number": 12,
           "evidence": [
             {
+              "article_number": 12,
               "excerpt": "Licenční poplatky\n1.\nLicenční poplatky mající zdroj v jednom z obou států a vyplácené osobě mající bydliště či sídlo v druhém státě mohou být zdaněny v tomto druhém státě.\n2.\nTakové licenční poplatky však mohou být zdaněny ve státě, ve kterém je jejich zdroj, a to podle právních předpisů tohoto státu. Daň takto stanovená však nepřekročí 5 % částky licenčních poplatků.\n3.\nPříslušné úřady obou států upraví vzájemnou dohodou způsob aplikace odstavce 2.\n4.\nVýraz \"licenční poplatky\", použitý v tomto článku, označuje platy jakéhokoli druhu, přijaté náhradou za užití nebo za právo na užití jakéhokoli autorského práva k dílu literárnímu, uměleckému nebo vědeckému, včetně kinematografických filmů, jakéhokoli patentu, ochranné známky, návrhu nebo modelu, plánu, tajného návodu nebo výrobního postupu, za užívání nebo právo na užívání průmyslového, obchodního nebo vědeckého zařízení, nebo za informace vztahující se na průmyslové, obchodní nebo vědecké zkušenosti.\n5.\nUstanovení odstavců 1 a 2 se nepoužijí, jestliže příjemce licenčních poplatků, mající bydliště nebo sídlo v jednom z obou států, má v druhém státě, ve kterém je zdroj licenčních poplatků, stálou provozovnu, k níž se ve skutečnosti váže právo nebo majetek, které jsou zdrojem licenčních poplatků. V takovém případě se použijí ustanovení článku 7.\n6.\nPředpokládá se, že licenční poplatky mají zdroj v jednom z obou států, jestliže plátcem je tento stát sám, nižší správní útvar, místní úřad nebo osoba, která má bydliště či sídlo v to",
+              "heading": "Licenční poplatky",
               "json_path": "$.articles[10]",
-              "resolution_method": "structured_article_number"
+              "resolution_method": "structured_income_heading_and_article_number"
             }
           ],
           "evidence_count": 1,
+          "income_type": "royalty",
+          "resolution_status": "resolved",
           "resolved": true
         }
       },
@@ -5290,12 +5518,16 @@
             "article_number": 10,
             "evidence": [
               {
+                "article_number": 10,
                 "excerpt": "Dividendy\n1.\nDividendy vyplácené společností, která má sídlo v jednom z obou států, osobě, která má bydliště či sídlo v druhém státě, mohou být zdaněny v tomto druhém státě.\n2.\nNicméně tyto dividendy mohou být zdaněny ve státě, ve kterém má sídlo společnost, která je vyplácí, a to podle zákonů tohoto státu. Daň takto stanovená však nemůže přesáhnout 10 % hrubé částky dividend.\n3.\nStát, ve kterém má sídlo společnost vyplácející dividendy, nezdaní bez ohledu na ustanovení odstavce 2 dividendy, vyplácené touto společností společnosti, jejíž jmění je zcela nebo zčásti rozděleno na akcie a která má sídlo ve druhém státě a vlastní přímo nejméně 25 % jmění společnosti, vyplácející dividendy.\n4.\nPříslušné úřady států upraví vzájemnou dohodou způsob aplikace odstavců 2 a 3.\n5.\nUstanovení odstavců 2 a 3 se nedotknou zdanění zisků společnosti, z nichž jsou dividendy vypláceny.\n6.\nVýraz \"dividendy\", použitý v tomto článku, označuje příjmy z akcií, z požitkových listů nebo práv, kuksů, zakladatelských podílů nebo jiných práv s podílem na ziscích, právě tak jako příjmy z pohledávek s podílem na ziscích a příjmy z jiných společenských práv, které jsou postaveny na roveň příjmům z akcií daňovými předpisy státu, v němž má sídlo společnost vyplácející dividendy.\n7.\nUstanovení odstavců 1, 2 a 3 se nepoužijí, jestliže příjemce dividend mající bydliště či sídlo v jednom z obou států má v druhém státě, v němž má sídlo společnost vyplácející dividendy, stálou provozovnu, s níž je ve skutečnosti spo",
+                "heading": "Dividendy",
                 "json_path": "$.articles[8]",
-                "resolution_method": "structured_article_number"
+                "resolution_method": "structured_income_heading_and_article_number"
               }
             ],
             "evidence_count": 1,
+            "income_type": "dividend",
+            "resolution_status": "resolved",
             "resolved": true
           },
           "domestic_eu_layer_reference_present": true,
@@ -5315,12 +5547,16 @@
             "article_number": 11,
             "evidence": [
               {
+                "article_number": 11,
                 "excerpt": "Úroky\n1.\nÚroky, které mají zdroj v jednom z obou států a vyplácejí se osobě mající bydliště či sídlo v druhém státě, budou podléhat zdanění pouze v tomto druhém státě.\n2.\nVýraz „úroky“ použitý v tomto článku označuje příjmy z veřejných dluhopisů, obligací nebo dlužních úpisů zajištěných i nezajištěných zástavním právem na nemovitosti, pokud neposkytují právo na podíl na zisku a z pohledávek jakéhokoli druhu, právě tak jako všechny jiné příjmy postavené na roveň příjmům z půjček daňovými předpisy státu, ve kterém mají tyto příjmy zdroj.\n3.\nUstanovení odstavce 1 se nepoužije, jestliže příjemce úroků, který má bydliště či sídlo v jednom z obou států, má v druhém státě, v němž je zdroj úroků, stálou provozovnu, k níž se ve skutečnosti váže pohledávka, která je zdrojem úroků. V takovém případě se použije\n1.\nÚroky, které mají zdroj v jednom z obou států a vyplácejí se osobě mající bydliště či sídlo v druhém státě, budou podléhat zdanění pouze v tomto druhém státě.\n2.\nVýraz „úroky“ použitý v tomto článku označuje příjmy z veřejných dluhopisů, obligací nebo dlužních úpisů zajištěných i nezajištěných zástavním právem na nemovitosti, pokud neposkytují právo na podíl na zisku a z pohledávek jakéhokoli druhu, právě tak jako všechny jiné příjmy postavené na roveň příjmům z půjček daňovými předpisy státu, ve kterém mají tyto příjmy zdroj.\n3.\nUstanovení odstavce 1 se nepoužije, jestliže příjemce úroků, který má bydliště či sídlo v jednom z obou států, má v druhém státě, v němž je zdroj úrok",
+                "heading": "Úroky",
                 "json_path": "$.articles[9]",
-                "resolution_method": "structured_article_number"
+                "resolution_method": "structured_income_heading_and_article_number"
               }
             ],
             "evidence_count": 1,
+            "income_type": "interest",
+            "resolution_status": "resolved",
             "resolved": true
           },
           "domestic_eu_layer_reference_present": true,
@@ -5340,12 +5576,16 @@
             "article_number": 12,
             "evidence": [
               {
+                "article_number": 12,
                 "excerpt": "Licenční poplatky\n1.\nLicenční poplatky mající zdroj v jednom z obou států a vyplácené osobě mající bydliště či sídlo v druhém státě mohou být zdaněny v tomto druhém státě.\n2.\nTakové licenční poplatky však mohou být zdaněny ve státě, ve kterém je jejich zdroj, a to podle právních předpisů tohoto státu. Daň takto stanovená však nepřekročí 5 % částky licenčních poplatků.\n3.\nPříslušné úřady obou států upraví vzájemnou dohodou způsob aplikace odstavce 2.\n4.\nVýraz \"licenční poplatky\", použitý v tomto článku, označuje platy jakéhokoli druhu, přijaté náhradou za užití nebo za právo na užití jakéhokoli autorského práva k dílu literárnímu, uměleckému nebo vědeckému, včetně kinematografických filmů, jakéhokoli patentu, ochranné známky, návrhu nebo modelu, plánu, tajného návodu nebo výrobního postupu, za užívání nebo právo na užívání průmyslového, obchodního nebo vědeckého zařízení, nebo za informace vztahující se na průmyslové, obchodní nebo vědecké zkušenosti.\n5.\nUstanovení odstavců 1 a 2 se nepoužijí, jestliže příjemce licenčních poplatků, mající bydliště nebo sídlo v jednom z obou států, má v druhém státě, ve kterém je zdroj licenčních poplatků, stálou provozovnu, k níž se ve skutečnosti váže právo nebo majetek, které jsou zdrojem licenčních poplatků. V takovém případě se použijí ustanovení článku 7.\n6.\nPředpokládá se, že licenční poplatky mají zdroj v jednom z obou států, jestliže plátcem je tento stát sám, nižší správní útvar, místní úřad nebo osoba, která má bydliště či sídlo v to",
+                "heading": "Licenční poplatky",
                 "json_path": "$.articles[10]",
-                "resolution_method": "structured_article_number"
+                "resolution_method": "structured_income_heading_and_article_number"
               }
             ],
             "evidence_count": 1,
+            "income_type": "royalty",
+            "resolution_status": "resolved",
             "resolved": true
           },
           "domestic_eu_layer_reference_present": true,
@@ -5369,7 +5609,7 @@
     "language_authority_evidence_not_resolved": 10
   },
   "production_releasable_scope_count": 0,
-  "purpose": "Review-only legal-chain dossier for Stage 5 remaining80 Batch 01. It assembles repository-backed evidence for treaty Articles 10-12, related instruments, MLI status, domestic/EU references, language and effective-date evidence. It does not create a verified or production legal conclusion.",
+  "purpose": "Review-only legal-chain dossier for Stage 5 remaining80 Batch 01. It assembles repository-backed evidence for treaty dividend, interest, and royalty articles, related instruments, MLI status, domestic/EU references, language and effective-date evidence. It does not create a verified or production legal conclusion.",
   "safety_boundary": {
     "candidate_is_not_production_rule": true,
     "human_primary_review_required": true,
