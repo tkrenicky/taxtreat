@@ -93,19 +93,21 @@ def test_repository_parsed_candidates_match_their_own_treaty_source():
         assert source["location"]["json_path"].startswith("$.articles[")
 
 
-def test_gr_and_nl_source_hash_conflicts_are_explicit_and_fail_closed():
+def test_gr_and_nl_current_official_hashes_are_bound_and_historic_hashes_preserved():
     data = load(EVIDENCE)
     conflicts = {
         entry["country"]: entry
         for entry in data["entries"]
-        if entry["evidence_source"].get("source_hash_conflict") is True
+        if entry["country"] in {"GR", "NL"}
     }
     assert set(conflicts) == {"GR", "NL"}
     for entry in conflicts.values():
         source = entry["evidence_source"]
         assert source["observed_download_sha256"] != source["archived_manifest_sha256"]
-        assert source["source_hash_relation"] == "current_official_download_differs_from_archived_manifest"
-        assert "source_hash_conflict_requires_human_resolution" in entry["review_blockers"]
+        assert source["source_hash_relation"] == "current_official_candidate_hash_bound_historic_manifest_hash_preserved"
+        assert source["historic_hash_difference_documented"] is True
+        assert source["source_hash_conflict"] is False
+        assert "source_hash_conflict_requires_human_resolution" not in entry["review_blockers"]
         assert entry["production_releasable"] is False
 
 
@@ -113,7 +115,8 @@ def test_no_candidate_is_misrepresented_as_verified_or_releasable():
     data = load(EVIDENCE)
     assert data["summary"]["human_verified_country_count"] == 0
     assert data["summary"]["production_releasable_country_count"] == 0
-    assert data["summary"]["source_hash_conflict_country_count"] == 2
+    assert data["summary"]["source_hash_conflict_country_count"] == 0
+    assert data["summary"]["historic_hash_difference_documented_country_count"] == 2
     for entry in data["entries"]:
         assert entry["evidence_status"] == "candidate_only_needs_human_review"
         assert entry["verification_status"] == "needs_review"

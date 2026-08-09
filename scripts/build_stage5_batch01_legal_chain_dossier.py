@@ -220,11 +220,16 @@ def article_anchor_match(
 
 
 def normalized_heading(value: Any) -> str:
-    return re.sub(
+    normalized = re.sub(
         r"[^a-z0-9]",
         "",
         normalize(value),
     )
+    # Some official OCR parses place the first paragraph number in the
+    # structured title (for example ``1. Dividendy ...``).  Discard only
+    # that leading paragraph marker; the income term still comes from the
+    # treaty's own structured heading/title rather than a model article map.
+    return re.sub(r"^\d+", "", normalized)
 
 
 def income_article_evidence(
@@ -257,6 +262,15 @@ def income_article_evidence(
             if str(key).casefold() in {"title", "heading"}
             and isinstance(item, str)
         ]
+
+        # A small number of OCR parses preserve only ``1.`` as the title and
+        # put the actual income heading at the start of the article text.
+        # Treat that first line as the structured heading candidate only when
+        # the parsed title contains no letters after normalization.
+        if headings and not any(normalized_heading(item) for item in headings):
+            article_text = value.get("text")
+            if isinstance(article_text, str):
+                headings.append(article_text.splitlines()[0][:160])
 
         if not any(
             normalized_heading(heading).startswith(expected_heading)
