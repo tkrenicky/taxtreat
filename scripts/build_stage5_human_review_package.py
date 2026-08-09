@@ -171,6 +171,9 @@ def build() -> dict[str, Any]:
         protocol = chain["protocol"]
         mli = chain["mli"]
         status = chain["treaty_status_instrument"]
+        source_remediation_blockers = list(language["blockers"])
+        if "instrument_chain_consolidation_required" in chain.get("hard_blockers", []):
+            source_remediation_blockers.append("instrument_chain_consolidation_required")
         unresolved = list(dict.fromkeys(
             language["blockers"]
             + chain.get("hard_blockers", [])
@@ -193,6 +196,7 @@ def build() -> dict[str, Any]:
             "recipient_country_name": pack["recipient_country_name"],
             "income_type": income,
             "blocker_partition": classification,
+            "source_remediation_blockers": source_remediation_blockers,
             "canonical_treaty": {
                 "source_id": source_id,
                 "title": source["source_title"],
@@ -284,7 +288,7 @@ def write_outputs(data: dict[str, Any]) -> None:
         files.append({"path": str(path.relative_to(ROOT)), "sha256": digest(path), "country_count": len({r["recipient_country"] for r in rows}), "scope_count": len(rows)})
     index = {key: value for key, value in data.items() if key != "scopes"} | {"batch_files": files}
     INDEX_OUTPUT.write_text(render(index), encoding="utf-8")
-    registry_rows = [{"scope_id": r["scope_id"], "recipient_country": r["recipient_country"], "income_type": r["income_type"], "partition": r["blocker_partition"], "blockers": r["language_authority_evidence"]["blockers"]} for r in data["scopes"]]
+    registry_rows = [{"scope_id": r["scope_id"], "recipient_country": r["recipient_country"], "income_type": r["income_type"], "partition": r["blocker_partition"], "blockers": r["source_remediation_blockers"]} for r in data["scopes"]]
     registry = {"schema_version": 1, "dataset_release": "stage5-global-blocker-registry-2026-08-09.1", "partition_definitions": {"mechanically_complete_ready_for_human_review": "All required machine evidence slots are populated; legal review and four-eyes approval remain mandatory.", "source_remediation_required": "At least one required official-source evidence slot remains unresolved.", "genuine_legal_ambiguity_requires_human_determination": "Sources are present but a documented conflict or ambiguity cannot be resolved mechanically."}, "summary": data["summary"], "scopes": registry_rows}
     BLOCKERS_OUTPUT.write_text(render(registry), encoding="utf-8")
 
