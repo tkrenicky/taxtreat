@@ -2218,7 +2218,7 @@
       ]
     },
     {
-      "blocker_partition": "source_remediation_required",
+      "blocker_partition": "mechanically_complete_ready_for_human_review",
       "candidate_status": {
         "fail_closed": true,
         "production_releasable": false,
@@ -2257,7 +2257,7 @@
       "effective_date_evidence": {
         "interpretation_status": "not_assessed_needs_human_review",
         "inventory_entry_into_force_candidate": "2007-03-22",
-        "mli_candidate_effective_from": null,
+        "mli_candidate_effective_from": "2021-01-01",
         "protocol_candidate_effective_from": null,
         "status_candidate_effective_from": null,
         "status_candidate_effective_to": null
@@ -2338,18 +2338,80 @@
       },
       "income_type": "dividend",
       "language_authority_evidence": {
-        "blockers": [
-          "language_authority_primary_source_remediation_required"
-        ],
-        "evidence": null,
-        "evidence_class": "explicit_blocker",
-        "machine_evidence_located": false,
-        "source_remediation_required": true
+        "blockers": [],
+        "evidence": {
+          "candidate_interpretation": {
+            "authentic_languages": [
+              "English"
+            ],
+            "prevailing_language_rule": "sole_english"
+          },
+          "country": "AT",
+          "evidence_status": "official_primary_candidate_needs_human_review",
+          "fail_closed": true,
+          "human_primary_review_complete": false,
+          "independent_approval_complete": false,
+          "official_source": {
+            "archived_manifest_sha256": "790847066c210f8b6b273358cdc43d3416ae06f8d892debc633b4edd97ccb0f8",
+            "current_download_sha256": "08dffc8820e7ed4f344a5b9eb004772ee2f341ee2d4c2890386456ef7f161bbd",
+            "hash_relation": "current_official_bytes_bound_archived_hash_preserved",
+            "inventory_source_id": "CZ-MF-AT-3DBD1AFA26C3",
+            "manifest_source_id": "SRC-142E073CB800ACCE",
+            "pdf_page": 37,
+            "title": "31/2007 Sb.m.s.",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=5063"
+          },
+          "production_releasable": false,
+          "signature_clause_candidate": {
+            "machine_transcription": "Dáno v Praze dne 8. cervna 2006 ve dvou puvodnõch vyhotovenõch v anglickém jazyce.",
+            "method": "official_pdf_text_layer",
+            "transcription_sha256": "9c6a044d235992fd7ae24742e7f2a9a42bea2bd8995c89be7f6009dddb59d84b"
+          },
+          "treaty_pair_id": "CZ-AT",
+          "verification_status": "needs_review"
+        },
+        "evidence_class": "current_official_pdf_signature_clause_candidate",
+        "machine_evidence_located": true,
+        "source_remediation_required": false
       },
       "mli_evidence": {
         "candidate_effect": {
-          "effective_from": null,
-          "status": "candidate_records_present_needs_human_review"
+          "effect_id": "CZ-AT-MLI-WHT-PPT",
+          "effective_from": "2021-01-01",
+          "official_primary_evidence": {
+            "candidate_effect_record": {
+              "applies_to_income_types": [
+                "dividend",
+                "interest",
+                "royalty"
+              ],
+              "effect_id": "CZ-AT-MLI-WHT-PPT",
+              "effective_from": "2021-01-01",
+              "mli_article": "Article 7(1) PPT",
+              "recipient_country": "AT",
+              "recipient_country_name": "Rakousko",
+              "source_country": "CZ",
+              "source_excerpt": "/2020 Sb.m.s. Finanční zpravodaj 18/2020 3 1) pokud jde o daně vybírané srážkou u zdroje z částek vyplácených nebo připisovaných nerezidentům, jestliže skutečnost dávající vzniknout takovým daním nastala k 1. lednu 2021 nebo později; a 2) pokud jde o všechny ostatní daně, na daně ukládané za zdaňovací období začínají",
+              "source_excerpt_sha256": "17602f0f74e8e0afca59b17c50eed0cbc2e182eb4e8bc5822fc2e95955a75449",
+              "source_page_id": "CZ-MF-AT-59493A199498",
+              "source_page_url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2020/financni-zpravodaj-cislo-18-2020-39557",
+              "source_pdf_url": "https://mf.gov.cz/assets/cs/media/Financni-zpravodaj_2020-c-18.pdf",
+              "verification_status": "needs_review"
+            },
+            "current_official_notice_sha256": "c9819441da103851a07bc1da9a9d0544258ab1fd266fe1a712cb3db0168e3b4c",
+            "inventory": {
+              "authority": "Czech Ministry of Finance / official publication",
+              "label": "FZ č. 18/2020",
+              "source_id": "CZ-MF-AT-59493A199498",
+              "source_type": "mli_synthesised_notice",
+              "url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2020/financni-zpravodaj-cislo-18-2020-39557"
+            },
+            "matching_and_effect_interpretation_status": "candidate_only_needs_human_review"
+          },
+          "resolution_source_ids": [
+            "CZ-MF-AT-59493A199498"
+          ],
+          "status": "official_matching_and_withholding_effect_candidate_needs_human_review"
         },
         "candidate_effect_records": [
           {
@@ -2378,7 +2440,27 @@
       "protocol_overlays": {
         "candidate_effect": {
           "candidate_effective_from": null,
-          "candidate_status": "not_consolidated_needs_human_review"
+          "candidate_status": "official_protocol_relationship_evidence_located_needs_human_review",
+          "official_primary_evidence": {
+            "archived_sha256": "366757d295d0d6fab635857b3be44fc5f616e0d697af42395d725cefc8e7d972",
+            "current_official_download_sha256": "7bae18b222475981a570be470b6d5a7dee05707efa7d64e2f56420db8c79b83c",
+            "effect_interpretation_status": "not_assessed_needs_human_review",
+            "excerpt_sha256": "deedae4abbcf429da71e4e579872e15e89c2c5d98bc67949272d35cd5dd78379",
+            "hash_relation": "current_official_bytes_bound_archived_hash_preserved",
+            "inventory": {
+              "authority": "Czech Ministry of Finance / official publication",
+              "label": "Protokol č. 100/2012 Sb.m.s.",
+              "source_id": "CZ-MF-AT-0D123D780A74",
+              "source_type": "protocol",
+              "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=25325"
+            },
+            "official_notice_page": 1,
+            "relationship_and_entry_into_force_excerpt": "Protokol mezi Českou republikou a Rakouskou republikou, který upravuje Smlouvu ... podepsané dne 8. června 2006 v Praze. Protokol vstoupil v platnost na základě svého článku IV dne 26. listopadu 2012 a jeho ustanovení se budou provádět v souladu se zněním tohoto článku."
+          },
+          "required": true,
+          "source_ids": [
+            "CZ-MF-AT-0D123D780A74"
+          ]
         },
         "inventory_protocol_listed": true,
         "inventory_related_instruments": [
@@ -2413,7 +2495,7 @@
         ]
       },
       "provenance": {
-        "candidate_chain_sha256": null,
+        "candidate_chain_sha256": "f0f5ca146c2573614c0377770c10f329dea5e78f9f7e8eaf209951a5eb996d61",
         "existing_review_pack": "data/legal_reviews/global_cz_outbound/packs/cz-at-div-legal-review.json",
         "existing_review_pack_sha256": "195c22d8b6195e64dc301e167988464d6c8e16b61c7d33331b845f15a5662f77",
         "frozen_remaining_294_reference": null
@@ -2422,10 +2504,7 @@
       "recipient_country_name": "Rakousko",
       "scope_id": "CZ-AT-dividend",
       "source_country": "CZ",
-      "source_remediation_blockers": [
-        "language_authority_primary_source_remediation_required",
-        "instrument_chain_consolidation_required"
-      ],
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 10,
         "article_text_sha256": "b7e060d4e3e4ee25d1980de9f98b67ebe1207738140d71d07362b151cc530ab3",
@@ -2435,13 +2514,13 @@
         "resolution_method": "structured_income_heading_and_article_number"
       },
       "treaty_status_instruments": {
-        "candidate_status": "not_consolidated_needs_human_review",
+        "candidate_status": "official_correction_inventory_reconciled_needs_human_review",
+        "effect_kind": "correction_inventory_candidate",
         "effective_from": null,
-        "effective_to": null
+        "effective_to": null,
+        "source_id": "CZ-MF-AT-DDA7CDC86250"
       },
       "unresolved_legal_questions": [
-        "language_authority_primary_source_remediation_required",
-        "instrument_chain_consolidation_required",
         "base_treaty_candidate_review",
         "protocol_effect_review",
         "mli_effect_review",
@@ -2456,7 +2535,7 @@
       ]
     },
     {
-      "blocker_partition": "source_remediation_required",
+      "blocker_partition": "mechanically_complete_ready_for_human_review",
       "candidate_status": {
         "fail_closed": true,
         "production_releasable": false,
@@ -2495,7 +2574,7 @@
       "effective_date_evidence": {
         "interpretation_status": "not_assessed_needs_human_review",
         "inventory_entry_into_force_candidate": "2007-03-22",
-        "mli_candidate_effective_from": null,
+        "mli_candidate_effective_from": "2021-01-01",
         "protocol_candidate_effective_from": null,
         "status_candidate_effective_from": null,
         "status_candidate_effective_to": null
@@ -2591,18 +2670,80 @@
       },
       "income_type": "interest",
       "language_authority_evidence": {
-        "blockers": [
-          "language_authority_primary_source_remediation_required"
-        ],
-        "evidence": null,
-        "evidence_class": "explicit_blocker",
-        "machine_evidence_located": false,
-        "source_remediation_required": true
+        "blockers": [],
+        "evidence": {
+          "candidate_interpretation": {
+            "authentic_languages": [
+              "English"
+            ],
+            "prevailing_language_rule": "sole_english"
+          },
+          "country": "AT",
+          "evidence_status": "official_primary_candidate_needs_human_review",
+          "fail_closed": true,
+          "human_primary_review_complete": false,
+          "independent_approval_complete": false,
+          "official_source": {
+            "archived_manifest_sha256": "790847066c210f8b6b273358cdc43d3416ae06f8d892debc633b4edd97ccb0f8",
+            "current_download_sha256": "08dffc8820e7ed4f344a5b9eb004772ee2f341ee2d4c2890386456ef7f161bbd",
+            "hash_relation": "current_official_bytes_bound_archived_hash_preserved",
+            "inventory_source_id": "CZ-MF-AT-3DBD1AFA26C3",
+            "manifest_source_id": "SRC-142E073CB800ACCE",
+            "pdf_page": 37,
+            "title": "31/2007 Sb.m.s.",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=5063"
+          },
+          "production_releasable": false,
+          "signature_clause_candidate": {
+            "machine_transcription": "Dáno v Praze dne 8. cervna 2006 ve dvou puvodnõch vyhotovenõch v anglickém jazyce.",
+            "method": "official_pdf_text_layer",
+            "transcription_sha256": "9c6a044d235992fd7ae24742e7f2a9a42bea2bd8995c89be7f6009dddb59d84b"
+          },
+          "treaty_pair_id": "CZ-AT",
+          "verification_status": "needs_review"
+        },
+        "evidence_class": "current_official_pdf_signature_clause_candidate",
+        "machine_evidence_located": true,
+        "source_remediation_required": false
       },
       "mli_evidence": {
         "candidate_effect": {
-          "effective_from": null,
-          "status": "candidate_records_present_needs_human_review"
+          "effect_id": "CZ-AT-MLI-WHT-PPT",
+          "effective_from": "2021-01-01",
+          "official_primary_evidence": {
+            "candidate_effect_record": {
+              "applies_to_income_types": [
+                "dividend",
+                "interest",
+                "royalty"
+              ],
+              "effect_id": "CZ-AT-MLI-WHT-PPT",
+              "effective_from": "2021-01-01",
+              "mli_article": "Article 7(1) PPT",
+              "recipient_country": "AT",
+              "recipient_country_name": "Rakousko",
+              "source_country": "CZ",
+              "source_excerpt": "/2020 Sb.m.s. Finanční zpravodaj 18/2020 3 1) pokud jde o daně vybírané srážkou u zdroje z částek vyplácených nebo připisovaných nerezidentům, jestliže skutečnost dávající vzniknout takovým daním nastala k 1. lednu 2021 nebo později; a 2) pokud jde o všechny ostatní daně, na daně ukládané za zdaňovací období začínají",
+              "source_excerpt_sha256": "17602f0f74e8e0afca59b17c50eed0cbc2e182eb4e8bc5822fc2e95955a75449",
+              "source_page_id": "CZ-MF-AT-59493A199498",
+              "source_page_url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2020/financni-zpravodaj-cislo-18-2020-39557",
+              "source_pdf_url": "https://mf.gov.cz/assets/cs/media/Financni-zpravodaj_2020-c-18.pdf",
+              "verification_status": "needs_review"
+            },
+            "current_official_notice_sha256": "c9819441da103851a07bc1da9a9d0544258ab1fd266fe1a712cb3db0168e3b4c",
+            "inventory": {
+              "authority": "Czech Ministry of Finance / official publication",
+              "label": "FZ č. 18/2020",
+              "source_id": "CZ-MF-AT-59493A199498",
+              "source_type": "mli_synthesised_notice",
+              "url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2020/financni-zpravodaj-cislo-18-2020-39557"
+            },
+            "matching_and_effect_interpretation_status": "candidate_only_needs_human_review"
+          },
+          "resolution_source_ids": [
+            "CZ-MF-AT-59493A199498"
+          ],
+          "status": "official_matching_and_withholding_effect_candidate_needs_human_review"
         },
         "candidate_effect_records": [
           {
@@ -2631,7 +2772,27 @@
       "protocol_overlays": {
         "candidate_effect": {
           "candidate_effective_from": null,
-          "candidate_status": "not_consolidated_needs_human_review"
+          "candidate_status": "official_protocol_relationship_evidence_located_needs_human_review",
+          "official_primary_evidence": {
+            "archived_sha256": "366757d295d0d6fab635857b3be44fc5f616e0d697af42395d725cefc8e7d972",
+            "current_official_download_sha256": "7bae18b222475981a570be470b6d5a7dee05707efa7d64e2f56420db8c79b83c",
+            "effect_interpretation_status": "not_assessed_needs_human_review",
+            "excerpt_sha256": "deedae4abbcf429da71e4e579872e15e89c2c5d98bc67949272d35cd5dd78379",
+            "hash_relation": "current_official_bytes_bound_archived_hash_preserved",
+            "inventory": {
+              "authority": "Czech Ministry of Finance / official publication",
+              "label": "Protokol č. 100/2012 Sb.m.s.",
+              "source_id": "CZ-MF-AT-0D123D780A74",
+              "source_type": "protocol",
+              "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=25325"
+            },
+            "official_notice_page": 1,
+            "relationship_and_entry_into_force_excerpt": "Protokol mezi Českou republikou a Rakouskou republikou, který upravuje Smlouvu ... podepsané dne 8. června 2006 v Praze. Protokol vstoupil v platnost na základě svého článku IV dne 26. listopadu 2012 a jeho ustanovení se budou provádět v souladu se zněním tohoto článku."
+          },
+          "required": true,
+          "source_ids": [
+            "CZ-MF-AT-0D123D780A74"
+          ]
         },
         "inventory_protocol_listed": true,
         "inventory_related_instruments": [
@@ -2666,7 +2827,7 @@
         ]
       },
       "provenance": {
-        "candidate_chain_sha256": null,
+        "candidate_chain_sha256": "f0f5ca146c2573614c0377770c10f329dea5e78f9f7e8eaf209951a5eb996d61",
         "existing_review_pack": "data/legal_reviews/global_cz_outbound/packs/cz-at-int-legal-review.json",
         "existing_review_pack_sha256": "6e9e73178a22b0b75092ff5c615c50cbcad51e2f1d69ce0b0804ed191f37e95b",
         "frozen_remaining_294_reference": null
@@ -2675,10 +2836,7 @@
       "recipient_country_name": "Rakousko",
       "scope_id": "CZ-AT-interest",
       "source_country": "CZ",
-      "source_remediation_blockers": [
-        "language_authority_primary_source_remediation_required",
-        "instrument_chain_consolidation_required"
-      ],
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 11,
         "article_text_sha256": "3eb94e90c1612a35fce9c78e362fd2a671f599a4b983b7b02bc2bd05c946c2fa",
@@ -2688,13 +2846,13 @@
         "resolution_method": "structured_income_heading_and_article_number"
       },
       "treaty_status_instruments": {
-        "candidate_status": "not_consolidated_needs_human_review",
+        "candidate_status": "official_correction_inventory_reconciled_needs_human_review",
+        "effect_kind": "correction_inventory_candidate",
         "effective_from": null,
-        "effective_to": null
+        "effective_to": null,
+        "source_id": "CZ-MF-AT-DDA7CDC86250"
       },
       "unresolved_legal_questions": [
-        "language_authority_primary_source_remediation_required",
-        "instrument_chain_consolidation_required",
         "base_treaty_candidate_review",
         "protocol_effect_review",
         "mli_effect_review",
@@ -2709,7 +2867,7 @@
       ]
     },
     {
-      "blocker_partition": "source_remediation_required",
+      "blocker_partition": "mechanically_complete_ready_for_human_review",
       "candidate_status": {
         "fail_closed": true,
         "production_releasable": false,
@@ -2748,7 +2906,7 @@
       "effective_date_evidence": {
         "interpretation_status": "not_assessed_needs_human_review",
         "inventory_entry_into_force_candidate": "2007-03-22",
-        "mli_candidate_effective_from": null,
+        "mli_candidate_effective_from": "2021-01-01",
         "protocol_candidate_effective_from": null,
         "status_candidate_effective_from": null,
         "status_candidate_effective_to": null
@@ -2844,18 +3002,80 @@
       },
       "income_type": "royalty",
       "language_authority_evidence": {
-        "blockers": [
-          "language_authority_primary_source_remediation_required"
-        ],
-        "evidence": null,
-        "evidence_class": "explicit_blocker",
-        "machine_evidence_located": false,
-        "source_remediation_required": true
+        "blockers": [],
+        "evidence": {
+          "candidate_interpretation": {
+            "authentic_languages": [
+              "English"
+            ],
+            "prevailing_language_rule": "sole_english"
+          },
+          "country": "AT",
+          "evidence_status": "official_primary_candidate_needs_human_review",
+          "fail_closed": true,
+          "human_primary_review_complete": false,
+          "independent_approval_complete": false,
+          "official_source": {
+            "archived_manifest_sha256": "790847066c210f8b6b273358cdc43d3416ae06f8d892debc633b4edd97ccb0f8",
+            "current_download_sha256": "08dffc8820e7ed4f344a5b9eb004772ee2f341ee2d4c2890386456ef7f161bbd",
+            "hash_relation": "current_official_bytes_bound_archived_hash_preserved",
+            "inventory_source_id": "CZ-MF-AT-3DBD1AFA26C3",
+            "manifest_source_id": "SRC-142E073CB800ACCE",
+            "pdf_page": 37,
+            "title": "31/2007 Sb.m.s.",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=5063"
+          },
+          "production_releasable": false,
+          "signature_clause_candidate": {
+            "machine_transcription": "Dáno v Praze dne 8. cervna 2006 ve dvou puvodnõch vyhotovenõch v anglickém jazyce.",
+            "method": "official_pdf_text_layer",
+            "transcription_sha256": "9c6a044d235992fd7ae24742e7f2a9a42bea2bd8995c89be7f6009dddb59d84b"
+          },
+          "treaty_pair_id": "CZ-AT",
+          "verification_status": "needs_review"
+        },
+        "evidence_class": "current_official_pdf_signature_clause_candidate",
+        "machine_evidence_located": true,
+        "source_remediation_required": false
       },
       "mli_evidence": {
         "candidate_effect": {
-          "effective_from": null,
-          "status": "candidate_records_present_needs_human_review"
+          "effect_id": "CZ-AT-MLI-WHT-PPT",
+          "effective_from": "2021-01-01",
+          "official_primary_evidence": {
+            "candidate_effect_record": {
+              "applies_to_income_types": [
+                "dividend",
+                "interest",
+                "royalty"
+              ],
+              "effect_id": "CZ-AT-MLI-WHT-PPT",
+              "effective_from": "2021-01-01",
+              "mli_article": "Article 7(1) PPT",
+              "recipient_country": "AT",
+              "recipient_country_name": "Rakousko",
+              "source_country": "CZ",
+              "source_excerpt": "/2020 Sb.m.s. Finanční zpravodaj 18/2020 3 1) pokud jde o daně vybírané srážkou u zdroje z částek vyplácených nebo připisovaných nerezidentům, jestliže skutečnost dávající vzniknout takovým daním nastala k 1. lednu 2021 nebo později; a 2) pokud jde o všechny ostatní daně, na daně ukládané za zdaňovací období začínají",
+              "source_excerpt_sha256": "17602f0f74e8e0afca59b17c50eed0cbc2e182eb4e8bc5822fc2e95955a75449",
+              "source_page_id": "CZ-MF-AT-59493A199498",
+              "source_page_url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2020/financni-zpravodaj-cislo-18-2020-39557",
+              "source_pdf_url": "https://mf.gov.cz/assets/cs/media/Financni-zpravodaj_2020-c-18.pdf",
+              "verification_status": "needs_review"
+            },
+            "current_official_notice_sha256": "c9819441da103851a07bc1da9a9d0544258ab1fd266fe1a712cb3db0168e3b4c",
+            "inventory": {
+              "authority": "Czech Ministry of Finance / official publication",
+              "label": "FZ č. 18/2020",
+              "source_id": "CZ-MF-AT-59493A199498",
+              "source_type": "mli_synthesised_notice",
+              "url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2020/financni-zpravodaj-cislo-18-2020-39557"
+            },
+            "matching_and_effect_interpretation_status": "candidate_only_needs_human_review"
+          },
+          "resolution_source_ids": [
+            "CZ-MF-AT-59493A199498"
+          ],
+          "status": "official_matching_and_withholding_effect_candidate_needs_human_review"
         },
         "candidate_effect_records": [
           {
@@ -2884,7 +3104,27 @@
       "protocol_overlays": {
         "candidate_effect": {
           "candidate_effective_from": null,
-          "candidate_status": "not_consolidated_needs_human_review"
+          "candidate_status": "official_protocol_relationship_evidence_located_needs_human_review",
+          "official_primary_evidence": {
+            "archived_sha256": "366757d295d0d6fab635857b3be44fc5f616e0d697af42395d725cefc8e7d972",
+            "current_official_download_sha256": "7bae18b222475981a570be470b6d5a7dee05707efa7d64e2f56420db8c79b83c",
+            "effect_interpretation_status": "not_assessed_needs_human_review",
+            "excerpt_sha256": "deedae4abbcf429da71e4e579872e15e89c2c5d98bc67949272d35cd5dd78379",
+            "hash_relation": "current_official_bytes_bound_archived_hash_preserved",
+            "inventory": {
+              "authority": "Czech Ministry of Finance / official publication",
+              "label": "Protokol č. 100/2012 Sb.m.s.",
+              "source_id": "CZ-MF-AT-0D123D780A74",
+              "source_type": "protocol",
+              "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=25325"
+            },
+            "official_notice_page": 1,
+            "relationship_and_entry_into_force_excerpt": "Protokol mezi Českou republikou a Rakouskou republikou, který upravuje Smlouvu ... podepsané dne 8. června 2006 v Praze. Protokol vstoupil v platnost na základě svého článku IV dne 26. listopadu 2012 a jeho ustanovení se budou provádět v souladu se zněním tohoto článku."
+          },
+          "required": true,
+          "source_ids": [
+            "CZ-MF-AT-0D123D780A74"
+          ]
         },
         "inventory_protocol_listed": true,
         "inventory_related_instruments": [
@@ -2919,7 +3159,7 @@
         ]
       },
       "provenance": {
-        "candidate_chain_sha256": null,
+        "candidate_chain_sha256": "f0f5ca146c2573614c0377770c10f329dea5e78f9f7e8eaf209951a5eb996d61",
         "existing_review_pack": "data/legal_reviews/global_cz_outbound/packs/cz-at-roy-legal-review.json",
         "existing_review_pack_sha256": "41fefb1757e41271e1f848a2606ba7c00d676908687b3d84beaaa358592c3312",
         "frozen_remaining_294_reference": null
@@ -2928,10 +3168,7 @@
       "recipient_country_name": "Rakousko",
       "scope_id": "CZ-AT-royalty",
       "source_country": "CZ",
-      "source_remediation_blockers": [
-        "language_authority_primary_source_remediation_required",
-        "instrument_chain_consolidation_required"
-      ],
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 12,
         "article_text_sha256": "c4f4e32e1646b7abcf77fc744c7b1418b51a574f81e7ee39703771fbdcf2bcce",
@@ -2941,13 +3178,13 @@
         "resolution_method": "structured_income_heading_and_article_number"
       },
       "treaty_status_instruments": {
-        "candidate_status": "not_consolidated_needs_human_review",
+        "candidate_status": "official_correction_inventory_reconciled_needs_human_review",
+        "effect_kind": "correction_inventory_candidate",
         "effective_from": null,
-        "effective_to": null
+        "effective_to": null,
+        "source_id": "CZ-MF-AT-DDA7CDC86250"
       },
       "unresolved_legal_questions": [
-        "language_authority_primary_source_remediation_required",
-        "instrument_chain_consolidation_required",
         "base_treaty_candidate_review",
         "protocol_effect_review",
         "mli_effect_review",
@@ -5789,8 +6026,8 @@
     "country_count": 100,
     "partition_counts": {
       "genuine_legal_ambiguity_requires_human_determination": 0,
-      "mechanically_complete_ready_for_human_review": 270,
-      "source_remediation_required": 30
+      "mechanically_complete_ready_for_human_review": 300,
+      "source_remediation_required": 0
     },
     "scope_count": 300
   }

@@ -3826,7 +3826,7 @@
       ]
     },
     {
-      "blocker_partition": "source_remediation_required",
+      "blocker_partition": "mechanically_complete_ready_for_human_review",
       "candidate_status": {
         "fail_closed": true,
         "production_releasable": false,
@@ -3887,27 +3887,41 @@
       },
       "income_type": "dividend",
       "language_authority_evidence": {
-        "blockers": [
-          "language_authority_primary_source_remediation_required"
-        ],
+        "blockers": [],
         "evidence": {
-          "authentic_languages": null,
-          "evidence_basis": "pending_language_source_verification",
-          "fail_closed": true,
-          "language_authority_complete": false,
-          "official_english_version": null,
-          "prevailing_language_rule": null,
-          "release_gates": {
-            "authentic_languages_verified": false,
-            "official_english_version_assessed": false,
-            "prevailing_language_rule_verified": false
+          "candidate_interpretation": {
+            "authentic_languages": [
+              "English"
+            ],
+            "prevailing_language_rule": "sole_english"
           },
-          "source_id": "SRC-DAF33E409B334A94",
-          "treaty_pair_id": "CZ-JP"
+          "country": "JP",
+          "evidence_status": "official_primary_candidate_needs_human_review",
+          "fail_closed": true,
+          "human_primary_review_complete": false,
+          "independent_approval_complete": false,
+          "official_source": {
+            "archived_manifest_sha256": "643db08248ebc8bcef24dfe6a3606e960aeb03fe91e1f9c813df54c6d94b00f9",
+            "current_download_sha256": "06a55be51d08a7a17aed0a4b8e78a53d2576defae8554d5dcff36bcadc9ba1ef",
+            "hash_relation": "current_official_bytes_bound_archived_hash_preserved",
+            "inventory_source_id": "CZ-MF-JP-DFDDFD35DCB3",
+            "manifest_source_id": "SRC-DAF33E409B334A94",
+            "pdf_page": 11,
+            "title": "46/1979 Sb.",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=1928"
+          },
+          "production_releasable": false,
+          "signature_clause_candidate": {
+            "machine_transcription": "Dano ve dvojim vyhotoveni v Praze dne 11. fijna 1977 v anglickém jazyce.",
+            "method": "tesseract_5.3.4_eng_not_human_verified",
+            "transcription_sha256": "c5ef9edb0c7258808dac2cc62c2175ed69b3c1a19aa9180a307cdd810dc666a4"
+          },
+          "treaty_pair_id": "CZ-JP",
+          "verification_status": "needs_review"
         },
-        "evidence_class": "existing_repository_language_record",
-        "machine_evidence_located": false,
-        "source_remediation_required": true
+        "evidence_class": "current_official_pdf_signature_clause_candidate",
+        "machine_evidence_located": true,
+        "source_remediation_required": false
       },
       "mli_evidence": {
         "candidate_effect": {
@@ -3983,9 +3997,7 @@
       "recipient_country_name": "Japonsko",
       "scope_id": "CZ-JP-dividend",
       "source_country": "CZ",
-      "source_remediation_blockers": [
-        "language_authority_primary_source_remediation_required"
-      ],
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 10,
         "article_text_sha256": "ed33c1dce5612689a1ec1c1408cf1f2bb376b1ce2c2e6272eeeba91614d53f72",
@@ -4003,7 +4015,6 @@
         "suspended_articles": []
       },
       "unresolved_legal_questions": [
-        "language_authority_primary_source_remediation_required",
         "base_treaty_candidate_review",
         "domestic_rate_candidate_review",
         "independent_legal_review",
@@ -4017,7 +4028,7 @@
       ]
     },
     {
-      "blocker_partition": "source_remediation_required",
+      "blocker_partition": "mechanically_complete_ready_for_human_review",
       "candidate_status": {
         "fail_closed": true,
         "production_releasable": false,
@@ -4078,27 +4089,41 @@
       },
       "income_type": "interest",
       "language_authority_evidence": {
-        "blockers": [
-          "language_authority_primary_source_remediation_required"
-        ],
+        "blockers": [],
         "evidence": {
-          "authentic_languages": null,
-          "evidence_basis": "pending_language_source_verification",
-          "fail_closed": true,
-          "language_authority_complete": false,
-          "official_english_version": null,
-          "prevailing_language_rule": null,
-          "release_gates": {
-            "authentic_languages_verified": false,
-            "official_english_version_assessed": false,
-            "prevailing_language_rule_verified": false
+          "candidate_interpretation": {
+            "authentic_languages": [
+              "English"
+            ],
+            "prevailing_language_rule": "sole_english"
           },
-          "source_id": "SRC-DAF33E409B334A94",
-          "treaty_pair_id": "CZ-JP"
+          "country": "JP",
+          "evidence_status": "official_primary_candidate_needs_human_review",
+          "fail_closed": true,
+          "human_primary_review_complete": false,
+          "independent_approval_complete": false,
+          "official_source": {
+            "archived_manifest_sha256": "643db08248ebc8bcef24dfe6a3606e960aeb03fe91e1f9c813df54c6d94b00f9",
+            "current_download_sha256": "06a55be51d08a7a17aed0a4b8e78a53d2576defae8554d5dcff36bcadc9ba1ef",
+            "hash_relation": "current_official_bytes_bound_archived_hash_preserved",
+            "inventory_source_id": "CZ-MF-JP-DFDDFD35DCB3",
+            "manifest_source_id": "SRC-DAF33E409B334A94",
+            "pdf_page": 11,
+            "title": "46/1979 Sb.",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=1928"
+          },
+          "production_releasable": false,
+          "signature_clause_candidate": {
+            "machine_transcription": "Dano ve dvojim vyhotoveni v Praze dne 11. fijna 1977 v anglickém jazyce.",
+            "method": "tesseract_5.3.4_eng_not_human_verified",
+            "transcription_sha256": "c5ef9edb0c7258808dac2cc62c2175ed69b3c1a19aa9180a307cdd810dc666a4"
+          },
+          "treaty_pair_id": "CZ-JP",
+          "verification_status": "needs_review"
         },
-        "evidence_class": "existing_repository_language_record",
-        "machine_evidence_located": false,
-        "source_remediation_required": true
+        "evidence_class": "current_official_pdf_signature_clause_candidate",
+        "machine_evidence_located": true,
+        "source_remediation_required": false
       },
       "mli_evidence": {
         "candidate_effect": {
@@ -4174,9 +4199,7 @@
       "recipient_country_name": "Japonsko",
       "scope_id": "CZ-JP-interest",
       "source_country": "CZ",
-      "source_remediation_blockers": [
-        "language_authority_primary_source_remediation_required"
-      ],
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 11,
         "article_text_sha256": "ac42f4c20749e11f09a1cb8085e45f9eb66e25b7748320315389dcb37e745a55",
@@ -4194,7 +4217,6 @@
         "suspended_articles": []
       },
       "unresolved_legal_questions": [
-        "language_authority_primary_source_remediation_required",
         "base_treaty_candidate_review",
         "domestic_rate_candidate_review",
         "independent_legal_review",
@@ -4208,7 +4230,7 @@
       ]
     },
     {
-      "blocker_partition": "source_remediation_required",
+      "blocker_partition": "mechanically_complete_ready_for_human_review",
       "candidate_status": {
         "fail_closed": true,
         "production_releasable": false,
@@ -4269,27 +4291,41 @@
       },
       "income_type": "royalty",
       "language_authority_evidence": {
-        "blockers": [
-          "language_authority_primary_source_remediation_required"
-        ],
+        "blockers": [],
         "evidence": {
-          "authentic_languages": null,
-          "evidence_basis": "pending_language_source_verification",
-          "fail_closed": true,
-          "language_authority_complete": false,
-          "official_english_version": null,
-          "prevailing_language_rule": null,
-          "release_gates": {
-            "authentic_languages_verified": false,
-            "official_english_version_assessed": false,
-            "prevailing_language_rule_verified": false
+          "candidate_interpretation": {
+            "authentic_languages": [
+              "English"
+            ],
+            "prevailing_language_rule": "sole_english"
           },
-          "source_id": "SRC-DAF33E409B334A94",
-          "treaty_pair_id": "CZ-JP"
+          "country": "JP",
+          "evidence_status": "official_primary_candidate_needs_human_review",
+          "fail_closed": true,
+          "human_primary_review_complete": false,
+          "independent_approval_complete": false,
+          "official_source": {
+            "archived_manifest_sha256": "643db08248ebc8bcef24dfe6a3606e960aeb03fe91e1f9c813df54c6d94b00f9",
+            "current_download_sha256": "06a55be51d08a7a17aed0a4b8e78a53d2576defae8554d5dcff36bcadc9ba1ef",
+            "hash_relation": "current_official_bytes_bound_archived_hash_preserved",
+            "inventory_source_id": "CZ-MF-JP-DFDDFD35DCB3",
+            "manifest_source_id": "SRC-DAF33E409B334A94",
+            "pdf_page": 11,
+            "title": "46/1979 Sb.",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=1928"
+          },
+          "production_releasable": false,
+          "signature_clause_candidate": {
+            "machine_transcription": "Dano ve dvojim vyhotoveni v Praze dne 11. fijna 1977 v anglickém jazyce.",
+            "method": "tesseract_5.3.4_eng_not_human_verified",
+            "transcription_sha256": "c5ef9edb0c7258808dac2cc62c2175ed69b3c1a19aa9180a307cdd810dc666a4"
+          },
+          "treaty_pair_id": "CZ-JP",
+          "verification_status": "needs_review"
         },
-        "evidence_class": "existing_repository_language_record",
-        "machine_evidence_located": false,
-        "source_remediation_required": true
+        "evidence_class": "current_official_pdf_signature_clause_candidate",
+        "machine_evidence_located": true,
+        "source_remediation_required": false
       },
       "mli_evidence": {
         "candidate_effect": {
@@ -4365,9 +4401,7 @@
       "recipient_country_name": "Japonsko",
       "scope_id": "CZ-JP-royalty",
       "source_country": "CZ",
-      "source_remediation_blockers": [
-        "language_authority_primary_source_remediation_required"
-      ],
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 12,
         "article_text_sha256": "91757852e289183c97ee1e9e5761e777704fd2490946d0f371be731af68d8cf3",
@@ -4385,7 +4419,6 @@
         "suspended_articles": []
       },
       "unresolved_legal_questions": [
-        "language_authority_primary_source_remediation_required",
         "base_treaty_candidate_review",
         "domestic_rate_candidate_review",
         "independent_legal_review",
@@ -5835,8 +5868,8 @@
     "country_count": 100,
     "partition_counts": {
       "genuine_legal_ambiguity_requires_human_determination": 0,
-      "mechanically_complete_ready_for_human_review": 270,
-      "source_remediation_required": 30
+      "mechanically_complete_ready_for_human_review": 300,
+      "source_remediation_required": 0
     },
     "scope_count": 300
   }

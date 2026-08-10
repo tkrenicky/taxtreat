@@ -27,7 +27,7 @@ FINAL23_LANGUAGE = BASE / "final23_language_authority_verification.json"
 BATCH01_LANGUAGE = BASE / "stage5_remaining80_batch_01_language_authority_evidence.json"
 REMAINING70_INDEX = BASE / "stage5_remaining70_candidate_evidence/index.json"
 REMEDIATION = BASE / "stage5_language_authority_remediation.json"
-AT_CH = BASE / "at_ch_existing_source_evidence.json"
+FINAL10 = BASE / "stage5_final10_source_remediation.json"
 INCOMES = ("dividend", "interest", "royalty")
 
 
@@ -105,6 +105,15 @@ def language_map() -> dict[str, dict[str, Any]]:
             "source_remediation_required": True,
             "blockers": ["language_authority_primary_source_remediation_required"],
         }
+    if FINAL10.is_file():
+        for record in load(FINAL10)["language_authority_entries"]:
+            rows[record["country"]] = {
+                "evidence_class": "current_official_pdf_signature_clause_candidate",
+                "evidence": record,
+                "machine_evidence_located": True,
+                "source_remediation_required": False,
+                "blockers": [],
+            }
     return rows
 
 
@@ -118,7 +127,10 @@ def build() -> dict[str, Any]:
     partners = {row["iso2"]: row for row in load(INVENTORY)["partners"]}
     frozen = {f"CZ-{row['recipient_country']}-{row['income_type']}": row for row in load(FROZEN)["scopes"]}
     languages = language_map()
-    at_ch = load(AT_CH)["countries"]
+    final10_chains = {
+        row["country"]: row
+        for row in load(FINAL10)["instrument_chain_entries"]
+    }
     pack_paths = sorted(PACKS.glob("cz-*-legal-review.json"))
     packs = [load(path) | {"_path": str(path.relative_to(ROOT))} for path in pack_paths]
     if len(packs) != 300:
@@ -131,8 +143,10 @@ def build() -> dict[str, Any]:
         scope_id = f"CZ-{country}-{income}"
         chain = pack["legal_layers"]["instrument_chain"]
         if chain is None:
-            source_id = at_ch[country]["base_treaty"]["source_id"]
+            consolidated = final10_chains[country]
+            source_id = consolidated["base_treaty"]["manifest_source_id"]
             base_article = income_article_evidence(load(ROOT / manifest[source_id]["parsed_path"]), income)
+            mli_effect = consolidated["mli"]["candidate_effect_record"]
             chain = {
                 "base_treaty": {
                     "source_id": source_id,
@@ -143,12 +157,30 @@ def build() -> dict[str, Any]:
                 "instrument_inventory": {
                     "entry_into_force": partners[country]["entry_into_force"],
                 },
-                "protocol": {"candidate_status": "not_consolidated_needs_human_review", "candidate_effective_from": None},
-                "mli": {"status": "candidate_records_present_needs_human_review", "effective_from": None},
-                "treaty_status_instrument": {"candidate_status": "not_consolidated_needs_human_review", "effective_from": None, "effective_to": None},
-                "hard_blockers": ["instrument_chain_consolidation_required"],
+                "protocol": {
+                    "candidate_status": "official_protocol_relationship_evidence_located_needs_human_review",
+                    "candidate_effective_from": None,
+                    "required": True,
+                    "source_ids": [consolidated["protocol"]["inventory"]["source_id"]],
+                    "official_primary_evidence": consolidated["protocol"],
+                },
+                "mli": {
+                    "status": "official_matching_and_withholding_effect_candidate_needs_human_review",
+                    "effective_from": mli_effect["effective_from"],
+                    "effect_id": mli_effect["effect_id"],
+                    "resolution_source_ids": [consolidated["mli"]["inventory"]["source_id"]],
+                    "official_primary_evidence": consolidated["mli"],
+                },
+                "treaty_status_instrument": {
+                    "candidate_status": "official_correction_inventory_reconciled_needs_human_review",
+                    "effect_kind": "correction_inventory_candidate",
+                    "source_id": consolidated["correction_status_instrument"]["source_id"],
+                    "effective_from": None,
+                    "effective_to": None,
+                },
+                "hard_blockers": [],
                 "legal_review_tasks": ["base_treaty_candidate_review", "protocol_effect_review", "mli_effect_review", "domestic_rate_candidate_review", "independent_legal_review"],
-                "candidate_sha256": None,
+                "candidate_sha256": consolidated["candidate_sha256"],
             }
         else:
             source_id = chain["base_treaty"]["source_id"]

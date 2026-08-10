@@ -1961,7 +1961,7 @@
       ]
     },
     {
-      "blocker_partition": "source_remediation_required",
+      "blocker_partition": "mechanically_complete_ready_for_human_review",
       "candidate_status": {
         "fail_closed": true,
         "production_releasable": false,
@@ -2022,27 +2022,42 @@
       },
       "income_type": "dividend",
       "language_authority_evidence": {
-        "blockers": [
-          "language_authority_primary_source_remediation_required"
-        ],
+        "blockers": [],
         "evidence": {
-          "authentic_languages": null,
-          "evidence_basis": "pending_language_source_verification",
-          "fail_closed": true,
-          "language_authority_complete": false,
-          "official_english_version": null,
-          "prevailing_language_rule": null,
-          "release_gates": {
-            "authentic_languages_verified": false,
-            "official_english_version_assessed": false,
-            "prevailing_language_rule_verified": false
+          "candidate_interpretation": {
+            "authentic_languages": [
+              "Czech",
+              "English"
+            ],
+            "prevailing_language_rule": "both_texts_authentic_no_prevailing_clause_stated"
           },
-          "source_id": "SRC-0CAA69D6B9F619E5",
-          "treaty_pair_id": "CZ-GH"
+          "country": "GH",
+          "evidence_status": "official_primary_candidate_needs_human_review",
+          "fail_closed": true,
+          "human_primary_review_complete": false,
+          "independent_approval_complete": false,
+          "official_source": {
+            "archived_manifest_sha256": "19938cb5a1fe7fbc7f0c5258fd85b64942303570223906b9a0babf42107cc909",
+            "current_download_sha256": "ccac4155518ad15429205c394979994da76f4627ed57dba659d6d098c09d078a",
+            "hash_relation": "current_official_bytes_bound_archived_hash_preserved",
+            "inventory_source_id": "CZ-MF-GH-8890289B0BBF",
+            "manifest_source_id": "SRC-0CAA69D6B9F619E5",
+            "pdf_page": 23,
+            "title": "38/2020 Sb.m.s.",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38941"
+          },
+          "production_releasable": false,
+          "signature_clause_candidate": {
+            "machine_transcription": "Dano v Akk#e dne 11. dubna 2017 ve dvou piivodnich vyhotovenich, v éeském a anglickém jazyce, pri¢emZ oba texty jsou autentické.",
+            "method": "tesseract_5.3.4_eng_not_human_verified",
+            "transcription_sha256": "bffcf91f8b05ccffb64eeb538b87bf5e265e77b8af74b7c0e2ad7796a269338d"
+          },
+          "treaty_pair_id": "CZ-GH",
+          "verification_status": "needs_review"
         },
-        "evidence_class": "existing_repository_language_record",
-        "machine_evidence_located": false,
-        "source_remediation_required": true
+        "evidence_class": "current_official_pdf_signature_clause_candidate",
+        "machine_evidence_located": true,
+        "source_remediation_required": false
       },
       "mli_evidence": {
         "candidate_effect": {
@@ -2083,9 +2098,7 @@
       "recipient_country_name": "Ghana",
       "scope_id": "CZ-GH-dividend",
       "source_country": "CZ",
-      "source_remediation_blockers": [
-        "language_authority_primary_source_remediation_required"
-      ],
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 10,
         "article_text_sha256": "7cdb390dcd3e34d166ac1099b90578a05fb8d0b10366aff4ff72c673c09c4b16",
@@ -2103,7 +2116,6 @@
         "suspended_articles": []
       },
       "unresolved_legal_questions": [
-        "language_authority_primary_source_remediation_required",
         "base_treaty_candidate_review",
         "domestic_rate_candidate_review",
         "independent_legal_review",
@@ -2116,7 +2128,7 @@
       ]
     },
     {
-      "blocker_partition": "source_remediation_required",
+      "blocker_partition": "mechanically_complete_ready_for_human_review",
       "candidate_status": {
         "fail_closed": true,
         "production_releasable": false,
@@ -2177,27 +2189,42 @@
       },
       "income_type": "interest",
       "language_authority_evidence": {
-        "blockers": [
-          "language_authority_primary_source_remediation_required"
-        ],
+        "blockers": [],
         "evidence": {
-          "authentic_languages": null,
-          "evidence_basis": "pending_language_source_verification",
-          "fail_closed": true,
-          "language_authority_complete": false,
-          "official_english_version": null,
-          "prevailing_language_rule": null,
-          "release_gates": {
-            "authentic_languages_verified": false,
-            "official_english_version_assessed": false,
-            "prevailing_language_rule_verified": false
+          "candidate_interpretation": {
+            "authentic_languages": [
+              "Czech",
+              "English"
+            ],
+            "prevailing_language_rule": "both_texts_authentic_no_prevailing_clause_stated"
           },
-          "source_id": "SRC-0CAA69D6B9F619E5",
-          "treaty_pair_id": "CZ-GH"
+          "country": "GH",
+          "evidence_status": "official_primary_candidate_needs_human_review",
+          "fail_closed": true,
+          "human_primary_review_complete": false,
+          "independent_approval_complete": false,
+          "official_source": {
+            "archived_manifest_sha256": "19938cb5a1fe7fbc7f0c5258fd85b64942303570223906b9a0babf42107cc909",
+            "current_download_sha256": "ccac4155518ad15429205c394979994da76f4627ed57dba659d6d098c09d078a",
+            "hash_relation": "current_official_bytes_bound_archived_hash_preserved",
+            "inventory_source_id": "CZ-MF-GH-8890289B0BBF",
+            "manifest_source_id": "SRC-0CAA69D6B9F619E5",
+            "pdf_page": 23,
+            "title": "38/2020 Sb.m.s.",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38941"
+          },
+          "production_releasable": false,
+          "signature_clause_candidate": {
+            "machine_transcription": "Dano v Akk#e dne 11. dubna 2017 ve dvou piivodnich vyhotovenich, v éeském a anglickém jazyce, pri¢emZ oba texty jsou autentické.",
+            "method": "tesseract_5.3.4_eng_not_human_verified",
+            "transcription_sha256": "bffcf91f8b05ccffb64eeb538b87bf5e265e77b8af74b7c0e2ad7796a269338d"
+          },
+          "treaty_pair_id": "CZ-GH",
+          "verification_status": "needs_review"
         },
-        "evidence_class": "existing_repository_language_record",
-        "machine_evidence_located": false,
-        "source_remediation_required": true
+        "evidence_class": "current_official_pdf_signature_clause_candidate",
+        "machine_evidence_located": true,
+        "source_remediation_required": false
       },
       "mli_evidence": {
         "candidate_effect": {
@@ -2238,9 +2265,7 @@
       "recipient_country_name": "Ghana",
       "scope_id": "CZ-GH-interest",
       "source_country": "CZ",
-      "source_remediation_blockers": [
-        "language_authority_primary_source_remediation_required"
-      ],
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 11,
         "article_text_sha256": "c4ccb51cbb721e358a71ebd53ea577f160199e74a8d18a733b03010aa1b2eb95",
@@ -2258,7 +2283,6 @@
         "suspended_articles": []
       },
       "unresolved_legal_questions": [
-        "language_authority_primary_source_remediation_required",
         "base_treaty_candidate_review",
         "domestic_rate_candidate_review",
         "independent_legal_review",
@@ -2274,7 +2298,7 @@
       ]
     },
     {
-      "blocker_partition": "source_remediation_required",
+      "blocker_partition": "mechanically_complete_ready_for_human_review",
       "candidate_status": {
         "fail_closed": true,
         "production_releasable": false,
@@ -2335,27 +2359,42 @@
       },
       "income_type": "royalty",
       "language_authority_evidence": {
-        "blockers": [
-          "language_authority_primary_source_remediation_required"
-        ],
+        "blockers": [],
         "evidence": {
-          "authentic_languages": null,
-          "evidence_basis": "pending_language_source_verification",
-          "fail_closed": true,
-          "language_authority_complete": false,
-          "official_english_version": null,
-          "prevailing_language_rule": null,
-          "release_gates": {
-            "authentic_languages_verified": false,
-            "official_english_version_assessed": false,
-            "prevailing_language_rule_verified": false
+          "candidate_interpretation": {
+            "authentic_languages": [
+              "Czech",
+              "English"
+            ],
+            "prevailing_language_rule": "both_texts_authentic_no_prevailing_clause_stated"
           },
-          "source_id": "SRC-0CAA69D6B9F619E5",
-          "treaty_pair_id": "CZ-GH"
+          "country": "GH",
+          "evidence_status": "official_primary_candidate_needs_human_review",
+          "fail_closed": true,
+          "human_primary_review_complete": false,
+          "independent_approval_complete": false,
+          "official_source": {
+            "archived_manifest_sha256": "19938cb5a1fe7fbc7f0c5258fd85b64942303570223906b9a0babf42107cc909",
+            "current_download_sha256": "ccac4155518ad15429205c394979994da76f4627ed57dba659d6d098c09d078a",
+            "hash_relation": "current_official_bytes_bound_archived_hash_preserved",
+            "inventory_source_id": "CZ-MF-GH-8890289B0BBF",
+            "manifest_source_id": "SRC-0CAA69D6B9F619E5",
+            "pdf_page": 23,
+            "title": "38/2020 Sb.m.s.",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38941"
+          },
+          "production_releasable": false,
+          "signature_clause_candidate": {
+            "machine_transcription": "Dano v Akk#e dne 11. dubna 2017 ve dvou piivodnich vyhotovenich, v éeském a anglickém jazyce, pri¢emZ oba texty jsou autentické.",
+            "method": "tesseract_5.3.4_eng_not_human_verified",
+            "transcription_sha256": "bffcf91f8b05ccffb64eeb538b87bf5e265e77b8af74b7c0e2ad7796a269338d"
+          },
+          "treaty_pair_id": "CZ-GH",
+          "verification_status": "needs_review"
         },
-        "evidence_class": "existing_repository_language_record",
-        "machine_evidence_located": false,
-        "source_remediation_required": true
+        "evidence_class": "current_official_pdf_signature_clause_candidate",
+        "machine_evidence_located": true,
+        "source_remediation_required": false
       },
       "mli_evidence": {
         "candidate_effect": {
@@ -2396,9 +2435,7 @@
       "recipient_country_name": "Ghana",
       "scope_id": "CZ-GH-royalty",
       "source_country": "CZ",
-      "source_remediation_blockers": [
-        "language_authority_primary_source_remediation_required"
-      ],
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 12,
         "article_text_sha256": "ce6fb17d899e3c2cf13eb009f202ef58aa87505a7d968d592474a0b1e6db7114",
@@ -2416,7 +2453,6 @@
         "suspended_articles": []
       },
       "unresolved_legal_questions": [
-        "language_authority_primary_source_remediation_required",
         "base_treaty_candidate_review",
         "domestic_rate_candidate_review",
         "independent_legal_review",
@@ -6964,8 +7000,8 @@
     "country_count": 100,
     "partition_counts": {
       "genuine_legal_ambiguity_requires_human_determination": 0,
-      "mechanically_complete_ready_for_human_review": 270,
-      "source_remediation_required": 30
+      "mechanically_complete_ready_for_human_review": 300,
+      "source_remediation_required": 0
     },
     "scope_count": 300
   }

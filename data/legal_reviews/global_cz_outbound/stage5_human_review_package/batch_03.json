@@ -632,7 +632,7 @@
       ]
     },
     {
-      "blocker_partition": "source_remediation_required",
+      "blocker_partition": "mechanically_complete_ready_for_human_review",
       "candidate_status": {
         "fail_closed": true,
         "production_releasable": false,
@@ -693,27 +693,43 @@
       },
       "income_type": "dividend",
       "language_authority_evidence": {
-        "blockers": [
-          "language_authority_primary_source_remediation_required"
-        ],
+        "blockers": [],
         "evidence": {
-          "authentic_languages": null,
-          "evidence_basis": "official_czech_publication_notice",
-          "fail_closed": true,
-          "language_authority_complete": false,
-          "official_english_version": true,
-          "prevailing_language_rule": "english",
-          "release_gates": {
-            "authentic_languages_verified": false,
-            "official_english_version_assessed": true,
-            "prevailing_language_rule_verified": true
+          "candidate_interpretation": {
+            "authentic_languages": [
+              "Czech",
+              "Spanish",
+              "English"
+            ],
+            "prevailing_language_rule": "english_prevails_all_text_divergences"
           },
-          "source_id": "SRC-C8C9A9DAD91A0DEF",
-          "treaty_pair_id": "CZ-CO"
+          "country": "CO",
+          "evidence_status": "official_primary_candidate_needs_human_review",
+          "fail_closed": true,
+          "human_primary_review_complete": false,
+          "independent_approval_complete": false,
+          "official_source": {
+            "archived_manifest_sha256": "ec7716e89b45db9aa070ceca20e7e34903651afaf7ffa7f5dbdfd438685b835b",
+            "current_download_sha256": "0f1b515e56e9a4b695dcf02e6c8757ac4a16bd3621f55d61861f5a14f4652a9c",
+            "hash_relation": "current_official_bytes_bound_archived_hash_preserved",
+            "inventory_source_id": "CZ-MF-CO-18C665BBDD85",
+            "manifest_source_id": "SRC-C8C9A9DAD91A0DEF",
+            "pdf_page": 22,
+            "title": "39/2015 Sb.m.s.",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=29960"
+          },
+          "production_releasable": false,
+          "signature_clause_candidate": {
+            "machine_transcription": "Dano v Bogoté D.C. dne 22. brezna 2012 ve dvou ptivodnich vyhotovenich, v éeském, Spanélském a anglickém jazyce, pri¢emZ vSechny texty jsou autentické. V pripadé jakéhokoliv rozdilu bude rozhodujicim anglicky text.",
+            "method": "tesseract_5.3.4_eng_not_human_verified",
+            "transcription_sha256": "e6cee50e6ecc13a81ada61fb56e059d063a57185be839d5433968373730772be"
+          },
+          "treaty_pair_id": "CZ-CO",
+          "verification_status": "needs_review"
         },
-        "evidence_class": "existing_repository_language_record",
-        "machine_evidence_located": false,
-        "source_remediation_required": true
+        "evidence_class": "current_official_pdf_signature_clause_candidate",
+        "machine_evidence_located": true,
+        "source_remediation_required": false
       },
       "mli_evidence": {
         "candidate_effect": {
@@ -765,9 +781,7 @@
       "recipient_country_name": "Kolumbie",
       "scope_id": "CZ-CO-dividend",
       "source_country": "CZ",
-      "source_remediation_blockers": [
-        "language_authority_primary_source_remediation_required"
-      ],
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 10,
         "article_text_sha256": "3fa0dbf1dc800ec4a6a6b36cbe85d62ba07ac78b75ff77c96af3f889159acdd9",
@@ -785,7 +799,6 @@
         "suspended_articles": []
       },
       "unresolved_legal_questions": [
-        "language_authority_primary_source_remediation_required",
         "base_treaty_candidate_review",
         "domestic_rate_candidate_review",
         "independent_legal_review",
@@ -802,7 +815,7 @@
       ]
     },
     {
-      "blocker_partition": "source_remediation_required",
+      "blocker_partition": "mechanically_complete_ready_for_human_review",
       "candidate_status": {
         "fail_closed": true,
         "production_releasable": false,
@@ -863,27 +876,43 @@
       },
       "income_type": "interest",
       "language_authority_evidence": {
-        "blockers": [
-          "language_authority_primary_source_remediation_required"
-        ],
+        "blockers": [],
         "evidence": {
-          "authentic_languages": null,
-          "evidence_basis": "official_czech_publication_notice",
-          "fail_closed": true,
-          "language_authority_complete": false,
-          "official_english_version": true,
-          "prevailing_language_rule": "english",
-          "release_gates": {
-            "authentic_languages_verified": false,
-            "official_english_version_assessed": true,
-            "prevailing_language_rule_verified": true
+          "candidate_interpretation": {
+            "authentic_languages": [
+              "Czech",
+              "Spanish",
+              "English"
+            ],
+            "prevailing_language_rule": "english_prevails_all_text_divergences"
           },
-          "source_id": "SRC-C8C9A9DAD91A0DEF",
-          "treaty_pair_id": "CZ-CO"
+          "country": "CO",
+          "evidence_status": "official_primary_candidate_needs_human_review",
+          "fail_closed": true,
+          "human_primary_review_complete": false,
+          "independent_approval_complete": false,
+          "official_source": {
+            "archived_manifest_sha256": "ec7716e89b45db9aa070ceca20e7e34903651afaf7ffa7f5dbdfd438685b835b",
+            "current_download_sha256": "0f1b515e56e9a4b695dcf02e6c8757ac4a16bd3621f55d61861f5a14f4652a9c",
+            "hash_relation": "current_official_bytes_bound_archived_hash_preserved",
+            "inventory_source_id": "CZ-MF-CO-18C665BBDD85",
+            "manifest_source_id": "SRC-C8C9A9DAD91A0DEF",
+            "pdf_page": 22,
+            "title": "39/2015 Sb.m.s.",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=29960"
+          },
+          "production_releasable": false,
+          "signature_clause_candidate": {
+            "machine_transcription": "Dano v Bogoté D.C. dne 22. brezna 2012 ve dvou ptivodnich vyhotovenich, v éeském, Spanélském a anglickém jazyce, pri¢emZ vSechny texty jsou autentické. V pripadé jakéhokoliv rozdilu bude rozhodujicim anglicky text.",
+            "method": "tesseract_5.3.4_eng_not_human_verified",
+            "transcription_sha256": "e6cee50e6ecc13a81ada61fb56e059d063a57185be839d5433968373730772be"
+          },
+          "treaty_pair_id": "CZ-CO",
+          "verification_status": "needs_review"
         },
-        "evidence_class": "existing_repository_language_record",
-        "machine_evidence_located": false,
-        "source_remediation_required": true
+        "evidence_class": "current_official_pdf_signature_clause_candidate",
+        "machine_evidence_located": true,
+        "source_remediation_required": false
       },
       "mli_evidence": {
         "candidate_effect": {
@@ -935,9 +964,7 @@
       "recipient_country_name": "Kolumbie",
       "scope_id": "CZ-CO-interest",
       "source_country": "CZ",
-      "source_remediation_blockers": [
-        "language_authority_primary_source_remediation_required"
-      ],
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 11,
         "article_text_sha256": "0633d71ddac647846733a9954604018c2d949a10169cdc92a7f0da38cd2871e3",
@@ -955,7 +982,6 @@
         "suspended_articles": []
       },
       "unresolved_legal_questions": [
-        "language_authority_primary_source_remediation_required",
         "base_treaty_candidate_review",
         "domestic_rate_candidate_review",
         "independent_legal_review",
@@ -972,7 +998,7 @@
       ]
     },
     {
-      "blocker_partition": "source_remediation_required",
+      "blocker_partition": "mechanically_complete_ready_for_human_review",
       "candidate_status": {
         "fail_closed": true,
         "production_releasable": false,
@@ -1033,27 +1059,43 @@
       },
       "income_type": "royalty",
       "language_authority_evidence": {
-        "blockers": [
-          "language_authority_primary_source_remediation_required"
-        ],
+        "blockers": [],
         "evidence": {
-          "authentic_languages": null,
-          "evidence_basis": "official_czech_publication_notice",
-          "fail_closed": true,
-          "language_authority_complete": false,
-          "official_english_version": true,
-          "prevailing_language_rule": "english",
-          "release_gates": {
-            "authentic_languages_verified": false,
-            "official_english_version_assessed": true,
-            "prevailing_language_rule_verified": true
+          "candidate_interpretation": {
+            "authentic_languages": [
+              "Czech",
+              "Spanish",
+              "English"
+            ],
+            "prevailing_language_rule": "english_prevails_all_text_divergences"
           },
-          "source_id": "SRC-C8C9A9DAD91A0DEF",
-          "treaty_pair_id": "CZ-CO"
+          "country": "CO",
+          "evidence_status": "official_primary_candidate_needs_human_review",
+          "fail_closed": true,
+          "human_primary_review_complete": false,
+          "independent_approval_complete": false,
+          "official_source": {
+            "archived_manifest_sha256": "ec7716e89b45db9aa070ceca20e7e34903651afaf7ffa7f5dbdfd438685b835b",
+            "current_download_sha256": "0f1b515e56e9a4b695dcf02e6c8757ac4a16bd3621f55d61861f5a14f4652a9c",
+            "hash_relation": "current_official_bytes_bound_archived_hash_preserved",
+            "inventory_source_id": "CZ-MF-CO-18C665BBDD85",
+            "manifest_source_id": "SRC-C8C9A9DAD91A0DEF",
+            "pdf_page": 22,
+            "title": "39/2015 Sb.m.s.",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=29960"
+          },
+          "production_releasable": false,
+          "signature_clause_candidate": {
+            "machine_transcription": "Dano v Bogoté D.C. dne 22. brezna 2012 ve dvou ptivodnich vyhotovenich, v éeském, Spanélském a anglickém jazyce, pri¢emZ vSechny texty jsou autentické. V pripadé jakéhokoliv rozdilu bude rozhodujicim anglicky text.",
+            "method": "tesseract_5.3.4_eng_not_human_verified",
+            "transcription_sha256": "e6cee50e6ecc13a81ada61fb56e059d063a57185be839d5433968373730772be"
+          },
+          "treaty_pair_id": "CZ-CO",
+          "verification_status": "needs_review"
         },
-        "evidence_class": "existing_repository_language_record",
-        "machine_evidence_located": false,
-        "source_remediation_required": true
+        "evidence_class": "current_official_pdf_signature_clause_candidate",
+        "machine_evidence_located": true,
+        "source_remediation_required": false
       },
       "mli_evidence": {
         "candidate_effect": {
@@ -1105,9 +1147,7 @@
       "recipient_country_name": "Kolumbie",
       "scope_id": "CZ-CO-royalty",
       "source_country": "CZ",
-      "source_remediation_blockers": [
-        "language_authority_primary_source_remediation_required"
-      ],
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 12,
         "article_text_sha256": "5b10f165840c915d6acc04738a5d31b06d62955a5007a612e5c7dd7c77787e36",
@@ -1125,7 +1165,6 @@
         "suspended_articles": []
       },
       "unresolved_legal_questions": [
-        "language_authority_primary_source_remediation_required",
         "base_treaty_candidate_review",
         "domestic_rate_candidate_review",
         "independent_legal_review",
@@ -7080,8 +7119,8 @@
     "country_count": 100,
     "partition_counts": {
       "genuine_legal_ambiguity_requires_human_determination": 0,
-      "mechanically_complete_ready_for_human_review": 270,
-      "source_remediation_required": 30
+      "mechanically_complete_ready_for_human_review": 300,
+      "source_remediation_required": 0
     },
     "scope_count": 300
   }

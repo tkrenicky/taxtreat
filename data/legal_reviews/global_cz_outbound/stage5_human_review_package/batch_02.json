@@ -1735,7 +1735,7 @@
       ]
     },
     {
-      "blocker_partition": "source_remediation_required",
+      "blocker_partition": "mechanically_complete_ready_for_human_review",
       "candidate_status": {
         "fail_closed": true,
         "production_releasable": false,
@@ -1796,27 +1796,43 @@
       },
       "income_type": "dividend",
       "language_authority_evidence": {
-        "blockers": [
-          "language_authority_primary_source_remediation_required"
-        ],
+        "blockers": [],
         "evidence": {
-          "authentic_languages": null,
-          "evidence_basis": "official_czech_publication_notice",
-          "fail_closed": true,
-          "language_authority_complete": false,
-          "official_english_version": true,
-          "prevailing_language_rule": "english",
-          "release_gates": {
-            "authentic_languages_verified": false,
-            "official_english_version_assessed": true,
-            "prevailing_language_rule_verified": true
+          "candidate_interpretation": {
+            "authentic_languages": [
+              "Czech",
+              "Arabic",
+              "English"
+            ],
+            "prevailing_language_rule": "english_prevails_all_text_divergences"
           },
-          "source_id": "SRC-023262E3EBEE0E28",
-          "treaty_pair_id": "CZ-BH"
+          "country": "BH",
+          "evidence_status": "official_primary_candidate_needs_human_review",
+          "fail_closed": true,
+          "human_primary_review_complete": false,
+          "independent_approval_complete": false,
+          "official_source": {
+            "archived_manifest_sha256": "2f630ebaba348ee1554114de154a06a5418649094a1576814030047f45ccc22d",
+            "current_download_sha256": "c14188c1722ddd018fa6d53a33f4a78ff09ad86984409530fd6ef7294b4c17fc",
+            "hash_relation": "current_official_bytes_bound_archived_hash_preserved",
+            "inventory_source_id": "CZ-MF-BH-B85EFF2EA26C",
+            "manifest_source_id": "SRC-023262E3EBEE0E28",
+            "pdf_page": 21,
+            "title": "59/2012 Sb.m.s.",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=6190"
+          },
+          "production_releasable": false,
+          "signature_clause_candidate": {
+            "machine_transcription": "Dano v Praze dne 24. kvétna 2011 ve dvou ptivodnich vyhotovenich, v éeském, arabském a anglickém jazyce, pYitemZ vSechny tii texty jsou autentické. V pripadé jakéhokoliv rozdilu bude rozhodujicim anglicky text.",
+            "method": "tesseract_5.3.4_eng_not_human_verified",
+            "transcription_sha256": "88d1138165e78a3b406857376c3dba74aa91b94e7693b8a5eae8c3617a020a69"
+          },
+          "treaty_pair_id": "CZ-BH",
+          "verification_status": "needs_review"
         },
-        "evidence_class": "existing_repository_language_record",
-        "machine_evidence_located": false,
-        "source_remediation_required": true
+        "evidence_class": "current_official_pdf_signature_clause_candidate",
+        "machine_evidence_located": true,
+        "source_remediation_required": false
       },
       "mli_evidence": {
         "candidate_effect": {
@@ -1899,9 +1915,7 @@
       "recipient_country_name": "Bahrajn",
       "scope_id": "CZ-BH-dividend",
       "source_country": "CZ",
-      "source_remediation_blockers": [
-        "language_authority_primary_source_remediation_required"
-      ],
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 10,
         "article_text_sha256": "9ca7dba9febd027ab574c3046482f66b55d164c23f1cfb0e55c1fbd3a8aecf95",
@@ -1919,7 +1933,6 @@
         "suspended_articles": []
       },
       "unresolved_legal_questions": [
-        "language_authority_primary_source_remediation_required",
         "base_treaty_candidate_review",
         "domestic_rate_candidate_review",
         "independent_legal_review",
@@ -1933,7 +1946,7 @@
       ]
     },
     {
-      "blocker_partition": "source_remediation_required",
+      "blocker_partition": "mechanically_complete_ready_for_human_review",
       "candidate_status": {
         "fail_closed": true,
         "production_releasable": false,
@@ -1994,27 +2007,43 @@
       },
       "income_type": "interest",
       "language_authority_evidence": {
-        "blockers": [
-          "language_authority_primary_source_remediation_required"
-        ],
+        "blockers": [],
         "evidence": {
-          "authentic_languages": null,
-          "evidence_basis": "official_czech_publication_notice",
-          "fail_closed": true,
-          "language_authority_complete": false,
-          "official_english_version": true,
-          "prevailing_language_rule": "english",
-          "release_gates": {
-            "authentic_languages_verified": false,
-            "official_english_version_assessed": true,
-            "prevailing_language_rule_verified": true
+          "candidate_interpretation": {
+            "authentic_languages": [
+              "Czech",
+              "Arabic",
+              "English"
+            ],
+            "prevailing_language_rule": "english_prevails_all_text_divergences"
           },
-          "source_id": "SRC-023262E3EBEE0E28",
-          "treaty_pair_id": "CZ-BH"
+          "country": "BH",
+          "evidence_status": "official_primary_candidate_needs_human_review",
+          "fail_closed": true,
+          "human_primary_review_complete": false,
+          "independent_approval_complete": false,
+          "official_source": {
+            "archived_manifest_sha256": "2f630ebaba348ee1554114de154a06a5418649094a1576814030047f45ccc22d",
+            "current_download_sha256": "c14188c1722ddd018fa6d53a33f4a78ff09ad86984409530fd6ef7294b4c17fc",
+            "hash_relation": "current_official_bytes_bound_archived_hash_preserved",
+            "inventory_source_id": "CZ-MF-BH-B85EFF2EA26C",
+            "manifest_source_id": "SRC-023262E3EBEE0E28",
+            "pdf_page": 21,
+            "title": "59/2012 Sb.m.s.",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=6190"
+          },
+          "production_releasable": false,
+          "signature_clause_candidate": {
+            "machine_transcription": "Dano v Praze dne 24. kvétna 2011 ve dvou ptivodnich vyhotovenich, v éeském, arabském a anglickém jazyce, pYitemZ vSechny tii texty jsou autentické. V pripadé jakéhokoliv rozdilu bude rozhodujicim anglicky text.",
+            "method": "tesseract_5.3.4_eng_not_human_verified",
+            "transcription_sha256": "88d1138165e78a3b406857376c3dba74aa91b94e7693b8a5eae8c3617a020a69"
+          },
+          "treaty_pair_id": "CZ-BH",
+          "verification_status": "needs_review"
         },
-        "evidence_class": "existing_repository_language_record",
-        "machine_evidence_located": false,
-        "source_remediation_required": true
+        "evidence_class": "current_official_pdf_signature_clause_candidate",
+        "machine_evidence_located": true,
+        "source_remediation_required": false
       },
       "mli_evidence": {
         "candidate_effect": {
@@ -2097,9 +2126,7 @@
       "recipient_country_name": "Bahrajn",
       "scope_id": "CZ-BH-interest",
       "source_country": "CZ",
-      "source_remediation_blockers": [
-        "language_authority_primary_source_remediation_required"
-      ],
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 11,
         "article_text_sha256": "e84d452aaddaf90a91e244993eefe747de79e8184c932744781e816e130b61b8",
@@ -2117,7 +2144,6 @@
         "suspended_articles": []
       },
       "unresolved_legal_questions": [
-        "language_authority_primary_source_remediation_required",
         "base_treaty_candidate_review",
         "domestic_rate_candidate_review",
         "independent_legal_review",
@@ -2133,7 +2159,7 @@
       ]
     },
     {
-      "blocker_partition": "source_remediation_required",
+      "blocker_partition": "mechanically_complete_ready_for_human_review",
       "candidate_status": {
         "fail_closed": true,
         "production_releasable": false,
@@ -2194,27 +2220,43 @@
       },
       "income_type": "royalty",
       "language_authority_evidence": {
-        "blockers": [
-          "language_authority_primary_source_remediation_required"
-        ],
+        "blockers": [],
         "evidence": {
-          "authentic_languages": null,
-          "evidence_basis": "official_czech_publication_notice",
-          "fail_closed": true,
-          "language_authority_complete": false,
-          "official_english_version": true,
-          "prevailing_language_rule": "english",
-          "release_gates": {
-            "authentic_languages_verified": false,
-            "official_english_version_assessed": true,
-            "prevailing_language_rule_verified": true
+          "candidate_interpretation": {
+            "authentic_languages": [
+              "Czech",
+              "Arabic",
+              "English"
+            ],
+            "prevailing_language_rule": "english_prevails_all_text_divergences"
           },
-          "source_id": "SRC-023262E3EBEE0E28",
-          "treaty_pair_id": "CZ-BH"
+          "country": "BH",
+          "evidence_status": "official_primary_candidate_needs_human_review",
+          "fail_closed": true,
+          "human_primary_review_complete": false,
+          "independent_approval_complete": false,
+          "official_source": {
+            "archived_manifest_sha256": "2f630ebaba348ee1554114de154a06a5418649094a1576814030047f45ccc22d",
+            "current_download_sha256": "c14188c1722ddd018fa6d53a33f4a78ff09ad86984409530fd6ef7294b4c17fc",
+            "hash_relation": "current_official_bytes_bound_archived_hash_preserved",
+            "inventory_source_id": "CZ-MF-BH-B85EFF2EA26C",
+            "manifest_source_id": "SRC-023262E3EBEE0E28",
+            "pdf_page": 21,
+            "title": "59/2012 Sb.m.s.",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=6190"
+          },
+          "production_releasable": false,
+          "signature_clause_candidate": {
+            "machine_transcription": "Dano v Praze dne 24. kvétna 2011 ve dvou ptivodnich vyhotovenich, v éeském, arabském a anglickém jazyce, pYitemZ vSechny tii texty jsou autentické. V pripadé jakéhokoliv rozdilu bude rozhodujicim anglicky text.",
+            "method": "tesseract_5.3.4_eng_not_human_verified",
+            "transcription_sha256": "88d1138165e78a3b406857376c3dba74aa91b94e7693b8a5eae8c3617a020a69"
+          },
+          "treaty_pair_id": "CZ-BH",
+          "verification_status": "needs_review"
         },
-        "evidence_class": "existing_repository_language_record",
-        "machine_evidence_located": false,
-        "source_remediation_required": true
+        "evidence_class": "current_official_pdf_signature_clause_candidate",
+        "machine_evidence_located": true,
+        "source_remediation_required": false
       },
       "mli_evidence": {
         "candidate_effect": {
@@ -2297,9 +2339,7 @@
       "recipient_country_name": "Bahrajn",
       "scope_id": "CZ-BH-royalty",
       "source_country": "CZ",
-      "source_remediation_blockers": [
-        "language_authority_primary_source_remediation_required"
-      ],
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 12,
         "article_text_sha256": "a048c7d24d3e6ac0edf5a246dda6381def3198be6f2df17dae63d6a060816465",
@@ -2317,7 +2357,6 @@
         "suspended_articles": []
       },
       "unresolved_legal_questions": [
-        "language_authority_primary_source_remediation_required",
         "base_treaty_candidate_review",
         "domestic_rate_candidate_review",
         "independent_legal_review",
@@ -4466,7 +4505,7 @@
       ]
     },
     {
-      "blocker_partition": "source_remediation_required",
+      "blocker_partition": "mechanically_complete_ready_for_human_review",
       "candidate_status": {
         "fail_closed": true,
         "production_releasable": false,
@@ -4505,7 +4544,7 @@
       "effective_date_evidence": {
         "interpretation_status": "not_assessed_needs_human_review",
         "inventory_entry_into_force_candidate": "1996-10-23",
-        "mli_candidate_effective_from": null,
+        "mli_candidate_effective_from": "2022-01-01",
         "protocol_candidate_effective_from": null,
         "status_candidate_effective_from": null,
         "status_candidate_effective_to": null
@@ -4586,18 +4625,82 @@
       },
       "income_type": "dividend",
       "language_authority_evidence": {
-        "blockers": [
-          "language_authority_primary_source_remediation_required"
-        ],
-        "evidence": null,
-        "evidence_class": "explicit_blocker",
-        "machine_evidence_located": false,
-        "source_remediation_required": true
+        "blockers": [],
+        "evidence": {
+          "candidate_interpretation": {
+            "authentic_languages": [
+              "Czech",
+              "German",
+              "English"
+            ],
+            "prevailing_language_rule": "english_prevails_czech_german_interpretive_divergence"
+          },
+          "country": "CH",
+          "evidence_status": "official_primary_candidate_needs_human_review",
+          "fail_closed": true,
+          "human_primary_review_complete": false,
+          "independent_approval_complete": false,
+          "official_source": {
+            "archived_manifest_sha256": "e2b4649db40a2becbbda996fdf725a7138a2aa2083fe3af607afc5464339b796",
+            "current_download_sha256": "f5c19b46bb6e3c4af8537ca8e3369e5948f96611c9fe51fcfdbd246560af619f",
+            "hash_relation": "current_official_bytes_bound_archived_hash_preserved",
+            "inventory_source_id": "CZ-MF-CH-39DC2AC3E71D",
+            "manifest_source_id": "SRC-773D5F8BD93AE73A",
+            "pdf_page": 14,
+            "title": "281/1996 Sb.",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=2979"
+          },
+          "production_releasable": false,
+          "signature_clause_candidate": {
+            "machine_transcription": "Dáno v Praze ve dvojõm vyhotovenõ dne 4. prosince 1995 v ceském, nemeckém a anglickém jazyce, pricemz vsechny texty jsou autentické. V prõpade jakýchkoliv rozdõlnostõ výkladu mezi ceským a nemeckým textem bude rozhodujõcõ anglický text.",
+            "method": "official_pdf_text_layer",
+            "transcription_sha256": "40daaaf202ff688e0d8334eec3765fd4e3f404f606a4cdcdd7232af95bea958c"
+          },
+          "treaty_pair_id": "CZ-CH",
+          "verification_status": "needs_review"
+        },
+        "evidence_class": "current_official_pdf_signature_clause_candidate",
+        "machine_evidence_located": true,
+        "source_remediation_required": false
       },
       "mli_evidence": {
         "candidate_effect": {
-          "effective_from": null,
-          "status": "candidate_records_present_needs_human_review"
+          "effect_id": "CZ-CH-MLI-WHT-PPT",
+          "effective_from": "2022-01-01",
+          "official_primary_evidence": {
+            "candidate_effect_record": {
+              "applies_to_income_types": [
+                "dividend",
+                "interest",
+                "royalty"
+              ],
+              "effect_id": "CZ-CH-MLI-WHT-PPT",
+              "effective_from": "2022-01-01",
+              "mli_article": "Article 7(1) PPT",
+              "recipient_country": "CH",
+              "recipient_country_name": "Švýcarsko",
+              "source_country": "CZ",
+              "source_excerpt": "Článek 2 Výše uvedené změny Smlouvy se v obou smluvních státech provádějí následovně: 1) pokud jde o daně vybírané srážkou u zdroje z částek vyplácených nebo připisovaných nerezidentům, jestliže skutečnost dávající vzniknout takovým daním nastala k 1. lednu 2022 nebo později; 2) pokud jde o všechny ostatní daně, na daně ukládané za zdaňovací období začínající",
+              "source_excerpt_sha256": "7736ef6a754b793e9625f0712a99138e6de8da5c4db5fd19f30d089975e1acc7",
+              "source_page_id": "CZ-MF-CH-A21BB0496B98",
+              "source_page_url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2021/financni-zpravodaj-cislo-3-2021-40496",
+              "source_pdf_url": "https://mf.gov.cz/assets/cs/media/Financni-zpravodaj_2021-c-03.pdf",
+              "verification_status": "needs_review"
+            },
+            "current_official_notice_sha256": "2a4aafcff0330eb2cb94fa0ca684b5e0e8ca3ca30c6f3b8f7e6f00017c0979c3",
+            "inventory": {
+              "authority": "Czech Ministry of Finance / official publication",
+              "label": "FZ č. 3/2021",
+              "source_id": "CZ-MF-CH-A21BB0496B98",
+              "source_type": "mli_synthesised_notice",
+              "url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2021/financni-zpravodaj-cislo-3-2021-40496"
+            },
+            "matching_and_effect_interpretation_status": "candidate_only_needs_human_review"
+          },
+          "resolution_source_ids": [
+            "CZ-MF-CH-A21BB0496B98"
+          ],
+          "status": "official_matching_and_withholding_effect_candidate_needs_human_review"
         },
         "candidate_effect_records": [
           {
@@ -4626,7 +4729,27 @@
       "protocol_overlays": {
         "candidate_effect": {
           "candidate_effective_from": null,
-          "candidate_status": "not_consolidated_needs_human_review"
+          "candidate_status": "official_protocol_relationship_evidence_located_needs_human_review",
+          "official_primary_evidence": {
+            "archived_sha256": "a82e4b44856a2dd18723f6a3dca28e8229bd7e4193f3f2ef711cd6a1e0f5a130",
+            "current_official_download_sha256": "704f5deea8db74ae126781b177310a1ec94b7c0f7bef0ee6f4eabb2aa1ed4998",
+            "effect_interpretation_status": "not_assessed_needs_human_review",
+            "excerpt_sha256": "ab3292d0f27363315d3179ebd93dfc013120a72d0aeee56359ef7b0638f937c3",
+            "hash_relation": "current_official_bytes_bound_archived_hash_preserved",
+            "inventory": {
+              "authority": "Czech Ministry of Finance / official publication",
+              "label": "Protokol č. 99/2013 Sb.m.s.",
+              "source_id": "CZ-MF-CH-7AAD2491663B",
+              "source_type": "protocol",
+              "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=26443"
+            },
+            "official_notice_page": 1,
+            "relationship_and_entry_into_force_excerpt": "Protokol mezi vládou České republiky a Švýcarskou spolkovou radou, který upravuje Smlouvu ... podepsané v Praze dne 4. prosince 1995. Protokol vstoupil v platnost na základě svého článku XII dne 11. října 2013 a jeho ustanovení se budou provádět v souladu se zněním tohoto článku."
+          },
+          "required": true,
+          "source_ids": [
+            "CZ-MF-CH-7AAD2491663B"
+          ]
         },
         "inventory_protocol_listed": true,
         "inventory_related_instruments": [
@@ -4661,7 +4784,7 @@
         ]
       },
       "provenance": {
-        "candidate_chain_sha256": null,
+        "candidate_chain_sha256": "2d6e85b12070ec6f06d359cb88f64ce8ac088b64c6eb1000b0a57f5263c1d299",
         "existing_review_pack": "data/legal_reviews/global_cz_outbound/packs/cz-ch-div-legal-review.json",
         "existing_review_pack_sha256": "55006c13bedb2eb4b260747c8bca2234a418a97b5853de5f281703b2aabf050c",
         "frozen_remaining_294_reference": null
@@ -4670,10 +4793,7 @@
       "recipient_country_name": "Švýcarsko",
       "scope_id": "CZ-CH-dividend",
       "source_country": "CZ",
-      "source_remediation_blockers": [
-        "language_authority_primary_source_remediation_required",
-        "instrument_chain_consolidation_required"
-      ],
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 10,
         "article_text_sha256": "0afbc80194bd521d254dd1f6c948546ac734d738acf8ad629fe391b14d9be5e8",
@@ -4683,13 +4803,13 @@
         "resolution_method": "structured_income_heading_and_article_number"
       },
       "treaty_status_instruments": {
-        "candidate_status": "not_consolidated_needs_human_review",
+        "candidate_status": "official_correction_inventory_reconciled_needs_human_review",
+        "effect_kind": "correction_inventory_candidate",
         "effective_from": null,
-        "effective_to": null
+        "effective_to": null,
+        "source_id": "CZ-MF-CH-8B6FA3FB70A3"
       },
       "unresolved_legal_questions": [
-        "language_authority_primary_source_remediation_required",
-        "instrument_chain_consolidation_required",
         "base_treaty_candidate_review",
         "protocol_effect_review",
         "mli_effect_review",
@@ -4704,7 +4824,7 @@
       ]
     },
     {
-      "blocker_partition": "source_remediation_required",
+      "blocker_partition": "mechanically_complete_ready_for_human_review",
       "candidate_status": {
         "fail_closed": true,
         "production_releasable": false,
@@ -4743,7 +4863,7 @@
       "effective_date_evidence": {
         "interpretation_status": "not_assessed_needs_human_review",
         "inventory_entry_into_force_candidate": "1996-10-23",
-        "mli_candidate_effective_from": null,
+        "mli_candidate_effective_from": "2022-01-01",
         "protocol_candidate_effective_from": null,
         "status_candidate_effective_from": null,
         "status_candidate_effective_to": null
@@ -4839,18 +4959,82 @@
       },
       "income_type": "interest",
       "language_authority_evidence": {
-        "blockers": [
-          "language_authority_primary_source_remediation_required"
-        ],
-        "evidence": null,
-        "evidence_class": "explicit_blocker",
-        "machine_evidence_located": false,
-        "source_remediation_required": true
+        "blockers": [],
+        "evidence": {
+          "candidate_interpretation": {
+            "authentic_languages": [
+              "Czech",
+              "German",
+              "English"
+            ],
+            "prevailing_language_rule": "english_prevails_czech_german_interpretive_divergence"
+          },
+          "country": "CH",
+          "evidence_status": "official_primary_candidate_needs_human_review",
+          "fail_closed": true,
+          "human_primary_review_complete": false,
+          "independent_approval_complete": false,
+          "official_source": {
+            "archived_manifest_sha256": "e2b4649db40a2becbbda996fdf725a7138a2aa2083fe3af607afc5464339b796",
+            "current_download_sha256": "f5c19b46bb6e3c4af8537ca8e3369e5948f96611c9fe51fcfdbd246560af619f",
+            "hash_relation": "current_official_bytes_bound_archived_hash_preserved",
+            "inventory_source_id": "CZ-MF-CH-39DC2AC3E71D",
+            "manifest_source_id": "SRC-773D5F8BD93AE73A",
+            "pdf_page": 14,
+            "title": "281/1996 Sb.",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=2979"
+          },
+          "production_releasable": false,
+          "signature_clause_candidate": {
+            "machine_transcription": "Dáno v Praze ve dvojõm vyhotovenõ dne 4. prosince 1995 v ceském, nemeckém a anglickém jazyce, pricemz vsechny texty jsou autentické. V prõpade jakýchkoliv rozdõlnostõ výkladu mezi ceským a nemeckým textem bude rozhodujõcõ anglický text.",
+            "method": "official_pdf_text_layer",
+            "transcription_sha256": "40daaaf202ff688e0d8334eec3765fd4e3f404f606a4cdcdd7232af95bea958c"
+          },
+          "treaty_pair_id": "CZ-CH",
+          "verification_status": "needs_review"
+        },
+        "evidence_class": "current_official_pdf_signature_clause_candidate",
+        "machine_evidence_located": true,
+        "source_remediation_required": false
       },
       "mli_evidence": {
         "candidate_effect": {
-          "effective_from": null,
-          "status": "candidate_records_present_needs_human_review"
+          "effect_id": "CZ-CH-MLI-WHT-PPT",
+          "effective_from": "2022-01-01",
+          "official_primary_evidence": {
+            "candidate_effect_record": {
+              "applies_to_income_types": [
+                "dividend",
+                "interest",
+                "royalty"
+              ],
+              "effect_id": "CZ-CH-MLI-WHT-PPT",
+              "effective_from": "2022-01-01",
+              "mli_article": "Article 7(1) PPT",
+              "recipient_country": "CH",
+              "recipient_country_name": "Švýcarsko",
+              "source_country": "CZ",
+              "source_excerpt": "Článek 2 Výše uvedené změny Smlouvy se v obou smluvních státech provádějí následovně: 1) pokud jde o daně vybírané srážkou u zdroje z částek vyplácených nebo připisovaných nerezidentům, jestliže skutečnost dávající vzniknout takovým daním nastala k 1. lednu 2022 nebo později; 2) pokud jde o všechny ostatní daně, na daně ukládané za zdaňovací období začínající",
+              "source_excerpt_sha256": "7736ef6a754b793e9625f0712a99138e6de8da5c4db5fd19f30d089975e1acc7",
+              "source_page_id": "CZ-MF-CH-A21BB0496B98",
+              "source_page_url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2021/financni-zpravodaj-cislo-3-2021-40496",
+              "source_pdf_url": "https://mf.gov.cz/assets/cs/media/Financni-zpravodaj_2021-c-03.pdf",
+              "verification_status": "needs_review"
+            },
+            "current_official_notice_sha256": "2a4aafcff0330eb2cb94fa0ca684b5e0e8ca3ca30c6f3b8f7e6f00017c0979c3",
+            "inventory": {
+              "authority": "Czech Ministry of Finance / official publication",
+              "label": "FZ č. 3/2021",
+              "source_id": "CZ-MF-CH-A21BB0496B98",
+              "source_type": "mli_synthesised_notice",
+              "url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2021/financni-zpravodaj-cislo-3-2021-40496"
+            },
+            "matching_and_effect_interpretation_status": "candidate_only_needs_human_review"
+          },
+          "resolution_source_ids": [
+            "CZ-MF-CH-A21BB0496B98"
+          ],
+          "status": "official_matching_and_withholding_effect_candidate_needs_human_review"
         },
         "candidate_effect_records": [
           {
@@ -4879,7 +5063,27 @@
       "protocol_overlays": {
         "candidate_effect": {
           "candidate_effective_from": null,
-          "candidate_status": "not_consolidated_needs_human_review"
+          "candidate_status": "official_protocol_relationship_evidence_located_needs_human_review",
+          "official_primary_evidence": {
+            "archived_sha256": "a82e4b44856a2dd18723f6a3dca28e8229bd7e4193f3f2ef711cd6a1e0f5a130",
+            "current_official_download_sha256": "704f5deea8db74ae126781b177310a1ec94b7c0f7bef0ee6f4eabb2aa1ed4998",
+            "effect_interpretation_status": "not_assessed_needs_human_review",
+            "excerpt_sha256": "ab3292d0f27363315d3179ebd93dfc013120a72d0aeee56359ef7b0638f937c3",
+            "hash_relation": "current_official_bytes_bound_archived_hash_preserved",
+            "inventory": {
+              "authority": "Czech Ministry of Finance / official publication",
+              "label": "Protokol č. 99/2013 Sb.m.s.",
+              "source_id": "CZ-MF-CH-7AAD2491663B",
+              "source_type": "protocol",
+              "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=26443"
+            },
+            "official_notice_page": 1,
+            "relationship_and_entry_into_force_excerpt": "Protokol mezi vládou České republiky a Švýcarskou spolkovou radou, který upravuje Smlouvu ... podepsané v Praze dne 4. prosince 1995. Protokol vstoupil v platnost na základě svého článku XII dne 11. října 2013 a jeho ustanovení se budou provádět v souladu se zněním tohoto článku."
+          },
+          "required": true,
+          "source_ids": [
+            "CZ-MF-CH-7AAD2491663B"
+          ]
         },
         "inventory_protocol_listed": true,
         "inventory_related_instruments": [
@@ -4914,7 +5118,7 @@
         ]
       },
       "provenance": {
-        "candidate_chain_sha256": null,
+        "candidate_chain_sha256": "2d6e85b12070ec6f06d359cb88f64ce8ac088b64c6eb1000b0a57f5263c1d299",
         "existing_review_pack": "data/legal_reviews/global_cz_outbound/packs/cz-ch-int-legal-review.json",
         "existing_review_pack_sha256": "837f6608778004a9fb8395b9f0d2f45a57fcff5e36792e38fb73de63a3807d03",
         "frozen_remaining_294_reference": null
@@ -4923,10 +5127,7 @@
       "recipient_country_name": "Švýcarsko",
       "scope_id": "CZ-CH-interest",
       "source_country": "CZ",
-      "source_remediation_blockers": [
-        "language_authority_primary_source_remediation_required",
-        "instrument_chain_consolidation_required"
-      ],
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 11,
         "article_text_sha256": "75314aa4677b0a2f4c70e9d8c2607b2bb790b446f877b52867241a69ceb8754e",
@@ -4936,13 +5137,13 @@
         "resolution_method": "structured_income_heading_and_article_number"
       },
       "treaty_status_instruments": {
-        "candidate_status": "not_consolidated_needs_human_review",
+        "candidate_status": "official_correction_inventory_reconciled_needs_human_review",
+        "effect_kind": "correction_inventory_candidate",
         "effective_from": null,
-        "effective_to": null
+        "effective_to": null,
+        "source_id": "CZ-MF-CH-8B6FA3FB70A3"
       },
       "unresolved_legal_questions": [
-        "language_authority_primary_source_remediation_required",
-        "instrument_chain_consolidation_required",
         "base_treaty_candidate_review",
         "protocol_effect_review",
         "mli_effect_review",
@@ -4957,7 +5158,7 @@
       ]
     },
     {
-      "blocker_partition": "source_remediation_required",
+      "blocker_partition": "mechanically_complete_ready_for_human_review",
       "candidate_status": {
         "fail_closed": true,
         "production_releasable": false,
@@ -4996,7 +5197,7 @@
       "effective_date_evidence": {
         "interpretation_status": "not_assessed_needs_human_review",
         "inventory_entry_into_force_candidate": "1996-10-23",
-        "mli_candidate_effective_from": null,
+        "mli_candidate_effective_from": "2022-01-01",
         "protocol_candidate_effective_from": null,
         "status_candidate_effective_from": null,
         "status_candidate_effective_to": null
@@ -5092,18 +5293,82 @@
       },
       "income_type": "royalty",
       "language_authority_evidence": {
-        "blockers": [
-          "language_authority_primary_source_remediation_required"
-        ],
-        "evidence": null,
-        "evidence_class": "explicit_blocker",
-        "machine_evidence_located": false,
-        "source_remediation_required": true
+        "blockers": [],
+        "evidence": {
+          "candidate_interpretation": {
+            "authentic_languages": [
+              "Czech",
+              "German",
+              "English"
+            ],
+            "prevailing_language_rule": "english_prevails_czech_german_interpretive_divergence"
+          },
+          "country": "CH",
+          "evidence_status": "official_primary_candidate_needs_human_review",
+          "fail_closed": true,
+          "human_primary_review_complete": false,
+          "independent_approval_complete": false,
+          "official_source": {
+            "archived_manifest_sha256": "e2b4649db40a2becbbda996fdf725a7138a2aa2083fe3af607afc5464339b796",
+            "current_download_sha256": "f5c19b46bb6e3c4af8537ca8e3369e5948f96611c9fe51fcfdbd246560af619f",
+            "hash_relation": "current_official_bytes_bound_archived_hash_preserved",
+            "inventory_source_id": "CZ-MF-CH-39DC2AC3E71D",
+            "manifest_source_id": "SRC-773D5F8BD93AE73A",
+            "pdf_page": 14,
+            "title": "281/1996 Sb.",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=2979"
+          },
+          "production_releasable": false,
+          "signature_clause_candidate": {
+            "machine_transcription": "Dáno v Praze ve dvojõm vyhotovenõ dne 4. prosince 1995 v ceském, nemeckém a anglickém jazyce, pricemz vsechny texty jsou autentické. V prõpade jakýchkoliv rozdõlnostõ výkladu mezi ceským a nemeckým textem bude rozhodujõcõ anglický text.",
+            "method": "official_pdf_text_layer",
+            "transcription_sha256": "40daaaf202ff688e0d8334eec3765fd4e3f404f606a4cdcdd7232af95bea958c"
+          },
+          "treaty_pair_id": "CZ-CH",
+          "verification_status": "needs_review"
+        },
+        "evidence_class": "current_official_pdf_signature_clause_candidate",
+        "machine_evidence_located": true,
+        "source_remediation_required": false
       },
       "mli_evidence": {
         "candidate_effect": {
-          "effective_from": null,
-          "status": "candidate_records_present_needs_human_review"
+          "effect_id": "CZ-CH-MLI-WHT-PPT",
+          "effective_from": "2022-01-01",
+          "official_primary_evidence": {
+            "candidate_effect_record": {
+              "applies_to_income_types": [
+                "dividend",
+                "interest",
+                "royalty"
+              ],
+              "effect_id": "CZ-CH-MLI-WHT-PPT",
+              "effective_from": "2022-01-01",
+              "mli_article": "Article 7(1) PPT",
+              "recipient_country": "CH",
+              "recipient_country_name": "Švýcarsko",
+              "source_country": "CZ",
+              "source_excerpt": "Článek 2 Výše uvedené změny Smlouvy se v obou smluvních státech provádějí následovně: 1) pokud jde o daně vybírané srážkou u zdroje z částek vyplácených nebo připisovaných nerezidentům, jestliže skutečnost dávající vzniknout takovým daním nastala k 1. lednu 2022 nebo později; 2) pokud jde o všechny ostatní daně, na daně ukládané za zdaňovací období začínající",
+              "source_excerpt_sha256": "7736ef6a754b793e9625f0712a99138e6de8da5c4db5fd19f30d089975e1acc7",
+              "source_page_id": "CZ-MF-CH-A21BB0496B98",
+              "source_page_url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2021/financni-zpravodaj-cislo-3-2021-40496",
+              "source_pdf_url": "https://mf.gov.cz/assets/cs/media/Financni-zpravodaj_2021-c-03.pdf",
+              "verification_status": "needs_review"
+            },
+            "current_official_notice_sha256": "2a4aafcff0330eb2cb94fa0ca684b5e0e8ca3ca30c6f3b8f7e6f00017c0979c3",
+            "inventory": {
+              "authority": "Czech Ministry of Finance / official publication",
+              "label": "FZ č. 3/2021",
+              "source_id": "CZ-MF-CH-A21BB0496B98",
+              "source_type": "mli_synthesised_notice",
+              "url": "https://mf.gov.cz/cs/dane-a-ucetnictvi/financni-zpravodaj/2021/financni-zpravodaj-cislo-3-2021-40496"
+            },
+            "matching_and_effect_interpretation_status": "candidate_only_needs_human_review"
+          },
+          "resolution_source_ids": [
+            "CZ-MF-CH-A21BB0496B98"
+          ],
+          "status": "official_matching_and_withholding_effect_candidate_needs_human_review"
         },
         "candidate_effect_records": [
           {
@@ -5132,7 +5397,27 @@
       "protocol_overlays": {
         "candidate_effect": {
           "candidate_effective_from": null,
-          "candidate_status": "not_consolidated_needs_human_review"
+          "candidate_status": "official_protocol_relationship_evidence_located_needs_human_review",
+          "official_primary_evidence": {
+            "archived_sha256": "a82e4b44856a2dd18723f6a3dca28e8229bd7e4193f3f2ef711cd6a1e0f5a130",
+            "current_official_download_sha256": "704f5deea8db74ae126781b177310a1ec94b7c0f7bef0ee6f4eabb2aa1ed4998",
+            "effect_interpretation_status": "not_assessed_needs_human_review",
+            "excerpt_sha256": "ab3292d0f27363315d3179ebd93dfc013120a72d0aeee56359ef7b0638f937c3",
+            "hash_relation": "current_official_bytes_bound_archived_hash_preserved",
+            "inventory": {
+              "authority": "Czech Ministry of Finance / official publication",
+              "label": "Protokol č. 99/2013 Sb.m.s.",
+              "source_id": "CZ-MF-CH-7AAD2491663B",
+              "source_type": "protocol",
+              "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=26443"
+            },
+            "official_notice_page": 1,
+            "relationship_and_entry_into_force_excerpt": "Protokol mezi vládou České republiky a Švýcarskou spolkovou radou, který upravuje Smlouvu ... podepsané v Praze dne 4. prosince 1995. Protokol vstoupil v platnost na základě svého článku XII dne 11. října 2013 a jeho ustanovení se budou provádět v souladu se zněním tohoto článku."
+          },
+          "required": true,
+          "source_ids": [
+            "CZ-MF-CH-7AAD2491663B"
+          ]
         },
         "inventory_protocol_listed": true,
         "inventory_related_instruments": [
@@ -5167,7 +5452,7 @@
         ]
       },
       "provenance": {
-        "candidate_chain_sha256": null,
+        "candidate_chain_sha256": "2d6e85b12070ec6f06d359cb88f64ce8ac088b64c6eb1000b0a57f5263c1d299",
         "existing_review_pack": "data/legal_reviews/global_cz_outbound/packs/cz-ch-roy-legal-review.json",
         "existing_review_pack_sha256": "c3f5c71cc47ddbb3b972ea5424c011c12245d39184dfd4e2bb481d3c58533cb5",
         "frozen_remaining_294_reference": null
@@ -5176,10 +5461,7 @@
       "recipient_country_name": "Švýcarsko",
       "scope_id": "CZ-CH-royalty",
       "source_country": "CZ",
-      "source_remediation_blockers": [
-        "language_authority_primary_source_remediation_required",
-        "instrument_chain_consolidation_required"
-      ],
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 12,
         "article_text_sha256": "62bf6ebc8b5d735fb85c9f38b2fec9b4a946dd2d7643b107ae17a996bb81c797",
@@ -5189,13 +5471,13 @@
         "resolution_method": "structured_income_heading_and_article_number"
       },
       "treaty_status_instruments": {
-        "candidate_status": "not_consolidated_needs_human_review",
+        "candidate_status": "official_correction_inventory_reconciled_needs_human_review",
+        "effect_kind": "correction_inventory_candidate",
         "effective_from": null,
-        "effective_to": null
+        "effective_to": null,
+        "source_id": "CZ-MF-CH-8B6FA3FB70A3"
       },
       "unresolved_legal_questions": [
-        "language_authority_primary_source_remediation_required",
-        "instrument_chain_consolidation_required",
         "base_treaty_candidate_review",
         "protocol_effect_review",
         "mli_effect_review",
@@ -5210,7 +5492,7 @@
       ]
     },
     {
-      "blocker_partition": "source_remediation_required",
+      "blocker_partition": "mechanically_complete_ready_for_human_review",
       "candidate_status": {
         "fail_closed": true,
         "production_releasable": false,
@@ -5271,27 +5553,43 @@
       },
       "income_type": "dividend",
       "language_authority_evidence": {
-        "blockers": [
-          "language_authority_primary_source_remediation_required"
-        ],
+        "blockers": [],
         "evidence": {
-          "authentic_languages": null,
-          "evidence_basis": "official_czech_publication_notice",
-          "fail_closed": true,
-          "language_authority_complete": false,
-          "official_english_version": true,
-          "prevailing_language_rule": "english",
-          "release_gates": {
-            "authentic_languages_verified": false,
-            "official_english_version_assessed": true,
-            "prevailing_language_rule_verified": true
+          "candidate_interpretation": {
+            "authentic_languages": [
+              "Czech",
+              "Spanish",
+              "English"
+            ],
+            "prevailing_language_rule": "english_prevails_all_text_divergences"
           },
-          "source_id": "SRC-CE747E586B47529F",
-          "treaty_pair_id": "CZ-CL"
+          "country": "CL",
+          "evidence_status": "official_primary_candidate_needs_human_review",
+          "fail_closed": true,
+          "human_primary_review_complete": false,
+          "independent_approval_complete": false,
+          "official_source": {
+            "archived_manifest_sha256": "3f6037dbe4761499c87f93e9600e7800cead2652bf0b9d8c37608b8794bba8e7",
+            "current_download_sha256": "03a3e05c8232f71585b6aac9833f279a0eba4623e0dbbac2350ce27b9c33c7b0",
+            "hash_relation": "current_official_bytes_bound_archived_hash_preserved",
+            "inventory_source_id": "CZ-MF-CL-28FE5017E981",
+            "manifest_source_id": "SRC-CE747E586B47529F",
+            "pdf_page": 25,
+            "title": "5/2017 Sb.m.s.",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38164"
+          },
+          "production_releasable": false,
+          "signature_clause_candidate": {
+            "machine_transcription": "Dano v Santiagu de Chile dne 2. prosince 2015 ve dvou piivodnich vyhotovenich, v éeském, Spanélském a anglickém jazyce, priéemZ vSechny texty jsou autentické. V pripadé jakéhokoliv rozdilu bude rozhodujicim anglicky text.",
+            "method": "tesseract_5.3.4_eng_not_human_verified",
+            "transcription_sha256": "3670b847b208d87e0af8cd212fdbeb583750979e73e3fc07bdf9151404e75eff"
+          },
+          "treaty_pair_id": "CZ-CL",
+          "verification_status": "needs_review"
         },
-        "evidence_class": "existing_repository_language_record",
-        "machine_evidence_located": false,
-        "source_remediation_required": true
+        "evidence_class": "current_official_pdf_signature_clause_candidate",
+        "machine_evidence_located": true,
+        "source_remediation_required": false
       },
       "mli_evidence": {
         "candidate_effect": {
@@ -5381,9 +5679,7 @@
       "recipient_country_name": "Chile",
       "scope_id": "CZ-CL-dividend",
       "source_country": "CZ",
-      "source_remediation_blockers": [
-        "language_authority_primary_source_remediation_required"
-      ],
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 10,
         "article_text_sha256": "ea0cf4c4395d4f51e04dc0f24fa5124a2d5385dc0d4708d5a43d04f03860181f",
@@ -5401,7 +5697,6 @@
         "suspended_articles": []
       },
       "unresolved_legal_questions": [
-        "language_authority_primary_source_remediation_required",
         "base_treaty_candidate_review",
         "domestic_rate_candidate_review",
         "independent_legal_review",
@@ -5415,7 +5710,7 @@
       ]
     },
     {
-      "blocker_partition": "source_remediation_required",
+      "blocker_partition": "mechanically_complete_ready_for_human_review",
       "candidate_status": {
         "fail_closed": true,
         "production_releasable": false,
@@ -5476,27 +5771,43 @@
       },
       "income_type": "interest",
       "language_authority_evidence": {
-        "blockers": [
-          "language_authority_primary_source_remediation_required"
-        ],
+        "blockers": [],
         "evidence": {
-          "authentic_languages": null,
-          "evidence_basis": "official_czech_publication_notice",
-          "fail_closed": true,
-          "language_authority_complete": false,
-          "official_english_version": true,
-          "prevailing_language_rule": "english",
-          "release_gates": {
-            "authentic_languages_verified": false,
-            "official_english_version_assessed": true,
-            "prevailing_language_rule_verified": true
+          "candidate_interpretation": {
+            "authentic_languages": [
+              "Czech",
+              "Spanish",
+              "English"
+            ],
+            "prevailing_language_rule": "english_prevails_all_text_divergences"
           },
-          "source_id": "SRC-CE747E586B47529F",
-          "treaty_pair_id": "CZ-CL"
+          "country": "CL",
+          "evidence_status": "official_primary_candidate_needs_human_review",
+          "fail_closed": true,
+          "human_primary_review_complete": false,
+          "independent_approval_complete": false,
+          "official_source": {
+            "archived_manifest_sha256": "3f6037dbe4761499c87f93e9600e7800cead2652bf0b9d8c37608b8794bba8e7",
+            "current_download_sha256": "03a3e05c8232f71585b6aac9833f279a0eba4623e0dbbac2350ce27b9c33c7b0",
+            "hash_relation": "current_official_bytes_bound_archived_hash_preserved",
+            "inventory_source_id": "CZ-MF-CL-28FE5017E981",
+            "manifest_source_id": "SRC-CE747E586B47529F",
+            "pdf_page": 25,
+            "title": "5/2017 Sb.m.s.",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38164"
+          },
+          "production_releasable": false,
+          "signature_clause_candidate": {
+            "machine_transcription": "Dano v Santiagu de Chile dne 2. prosince 2015 ve dvou piivodnich vyhotovenich, v éeském, Spanélském a anglickém jazyce, priéemZ vSechny texty jsou autentické. V pripadé jakéhokoliv rozdilu bude rozhodujicim anglicky text.",
+            "method": "tesseract_5.3.4_eng_not_human_verified",
+            "transcription_sha256": "3670b847b208d87e0af8cd212fdbeb583750979e73e3fc07bdf9151404e75eff"
+          },
+          "treaty_pair_id": "CZ-CL",
+          "verification_status": "needs_review"
         },
-        "evidence_class": "existing_repository_language_record",
-        "machine_evidence_located": false,
-        "source_remediation_required": true
+        "evidence_class": "current_official_pdf_signature_clause_candidate",
+        "machine_evidence_located": true,
+        "source_remediation_required": false
       },
       "mli_evidence": {
         "candidate_effect": {
@@ -5586,9 +5897,7 @@
       "recipient_country_name": "Chile",
       "scope_id": "CZ-CL-interest",
       "source_country": "CZ",
-      "source_remediation_blockers": [
-        "language_authority_primary_source_remediation_required"
-      ],
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 11,
         "article_text_sha256": "89eb243985bf114797165e2838fe895be5ba5263412b51ae9c5968ef08404956",
@@ -5606,7 +5915,6 @@
         "suspended_articles": []
       },
       "unresolved_legal_questions": [
-        "language_authority_primary_source_remediation_required",
         "base_treaty_candidate_review",
         "domestic_rate_candidate_review",
         "independent_legal_review",
@@ -5622,7 +5930,7 @@
       ]
     },
     {
-      "blocker_partition": "source_remediation_required",
+      "blocker_partition": "mechanically_complete_ready_for_human_review",
       "candidate_status": {
         "fail_closed": true,
         "production_releasable": false,
@@ -5683,27 +5991,43 @@
       },
       "income_type": "royalty",
       "language_authority_evidence": {
-        "blockers": [
-          "language_authority_primary_source_remediation_required"
-        ],
+        "blockers": [],
         "evidence": {
-          "authentic_languages": null,
-          "evidence_basis": "official_czech_publication_notice",
-          "fail_closed": true,
-          "language_authority_complete": false,
-          "official_english_version": true,
-          "prevailing_language_rule": "english",
-          "release_gates": {
-            "authentic_languages_verified": false,
-            "official_english_version_assessed": true,
-            "prevailing_language_rule_verified": true
+          "candidate_interpretation": {
+            "authentic_languages": [
+              "Czech",
+              "Spanish",
+              "English"
+            ],
+            "prevailing_language_rule": "english_prevails_all_text_divergences"
           },
-          "source_id": "SRC-CE747E586B47529F",
-          "treaty_pair_id": "CZ-CL"
+          "country": "CL",
+          "evidence_status": "official_primary_candidate_needs_human_review",
+          "fail_closed": true,
+          "human_primary_review_complete": false,
+          "independent_approval_complete": false,
+          "official_source": {
+            "archived_manifest_sha256": "3f6037dbe4761499c87f93e9600e7800cead2652bf0b9d8c37608b8794bba8e7",
+            "current_download_sha256": "03a3e05c8232f71585b6aac9833f279a0eba4623e0dbbac2350ce27b9c33c7b0",
+            "hash_relation": "current_official_bytes_bound_archived_hash_preserved",
+            "inventory_source_id": "CZ-MF-CL-28FE5017E981",
+            "manifest_source_id": "SRC-CE747E586B47529F",
+            "pdf_page": 25,
+            "title": "5/2017 Sb.m.s.",
+            "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38164"
+          },
+          "production_releasable": false,
+          "signature_clause_candidate": {
+            "machine_transcription": "Dano v Santiagu de Chile dne 2. prosince 2015 ve dvou piivodnich vyhotovenich, v éeském, Spanélském a anglickém jazyce, priéemZ vSechny texty jsou autentické. V pripadé jakéhokoliv rozdilu bude rozhodujicim anglicky text.",
+            "method": "tesseract_5.3.4_eng_not_human_verified",
+            "transcription_sha256": "3670b847b208d87e0af8cd212fdbeb583750979e73e3fc07bdf9151404e75eff"
+          },
+          "treaty_pair_id": "CZ-CL",
+          "verification_status": "needs_review"
         },
-        "evidence_class": "existing_repository_language_record",
-        "machine_evidence_located": false,
-        "source_remediation_required": true
+        "evidence_class": "current_official_pdf_signature_clause_candidate",
+        "machine_evidence_located": true,
+        "source_remediation_required": false
       },
       "mli_evidence": {
         "candidate_effect": {
@@ -5793,9 +6117,7 @@
       "recipient_country_name": "Chile",
       "scope_id": "CZ-CL-royalty",
       "source_country": "CZ",
-      "source_remediation_blockers": [
-        "language_authority_primary_source_remediation_required"
-      ],
+      "source_remediation_blockers": [],
       "treaty_article": {
         "article_number": 12,
         "article_text_sha256": "0897f19727a97384ab8bf6acff3b7738f96af67f1ea74d28a682b4ba5a5038a2",
@@ -5813,7 +6135,6 @@
         "suspended_articles": []
       },
       "unresolved_legal_questions": [
-        "language_authority_primary_source_remediation_required",
         "base_treaty_candidate_review",
         "domestic_rate_candidate_review",
         "independent_legal_review",
@@ -6298,8 +6619,8 @@
     "country_count": 100,
     "partition_counts": {
       "genuine_legal_ambiguity_requires_human_determination": 0,
-      "mechanically_complete_ready_for_human_review": 270,
-      "source_remediation_required": 30
+      "mechanically_complete_ready_for_human_review": 300,
+      "source_remediation_required": 0
     },
     "scope_count": 300
   }
