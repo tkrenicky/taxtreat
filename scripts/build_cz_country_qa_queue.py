@@ -21,6 +21,7 @@ MANIFEST = ROOT / "data/manifests/source_manifest.json"
 BASE_CANDIDATES = ROOT / "data/legal_consolidation/remaining_294_base_candidates.json"
 MLI_EFFECTS = ROOT / "data/legal_consolidation/mli_wht_effects.json"
 BLOCKER_RESOLUTIONS = ROOT / "data/legal_consolidation/blocker_resolutions.json"
+TAIWAN_SPECIAL = ROOT / "data/legal_special_jurisdictions/taiwan_45_2020.json"
 AT_CH_RULES = {
     "AT": ROOT / "data/legal_rules/rakousko.json",
     "CH": ROOT / "data/legal_rules/svycarsko.json",
@@ -304,6 +305,97 @@ def build_mli_product_scope() -> dict[str, Any]:
     }
 
 
+
+def build_taiwan_package(sampled_pairs: set[str]) -> dict[str, Any]:
+    source = load(TAIWAN_SPECIAL)
+    domestic = load(OUTPUT)["packages"][0]["czech_domestic_wht"] if OUTPUT.exists() else {
+        "effective_from": "2026-04-01",
+        "standard_rate": 15.0,
+        "protective_rate": 35.0,
+        "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "income_scope_reference": "section 22(1)(g)(3)",
+        "standard_reference": "section 36(1)(b)(1), referring to section 22(1)(g)(3)",
+        "protective_rate_reference": "section 36(1)(c)",
+        "protective_rate_condition": "recipient is outside the EU/EEA and no qualifying treaty or tax-information-exchange instrument is applied",
+    }
+    excerpts = {
+        "dividend": "Article 10(2): source-territory tax does not exceed 10% of the gross dividend where the beneficial owner is resident in the other territory.",
+        "interest": "Article 11(2): 10% general ceiling for beneficial-owner interest; Article 11(3) provides source exemption for specified qualifying cases.",
+        "royalty": "Article 12(2): 5% for industrial, commercial or scientific equipment; 10% in all other cases, subject to beneficial ownership.",
+    }
+    scopes = []
+    for income in INCOMES:
+        node = source["income_scopes"][income]
+        conditions = []
+        for rate in node["rates"]:
+            if income == "interest" and rate == 0.0:
+                cs = [
+                    {"condition_type": "special_article_11_3_exemption", "operator": "==", "value": "true", "unit": None},
+                    {"condition_type": "beneficial_owner", "operator": "==", "value": "true", "unit": None},
+                ]
+            elif income == "royalty" and rate == 5.0:
+                cs = [
+                    {"condition_type": "royalty_category", "operator": "==", "value": "industrial_commercial_scientific_equipment", "unit": None},
+                    {"condition_type": "beneficial_owner", "operator": "==", "value": "true", "unit": None},
+                ]
+            elif income == "royalty" and rate == 10.0:
+                cs = [
+                    {"condition_type": "royalty_category", "operator": "==", "value": "other", "unit": None},
+                    {"condition_type": "beneficial_owner", "operator": "==", "value": "true", "unit": None},
+                ]
+            else:
+                cs = [{"condition_type": "beneficial_owner", "operator": "==", "value": "true", "unit": None}]
+            conditions.append({"rate": rate, "conditions": cs})
+        excerpt = excerpts[income]
+        scopes.append({
+            "income_type": income,
+            "article_number": node["article"],
+            "article_heading": {"dividend":"Dividendy","interest":"Úroky","royalty":"Licenční poplatky"}[income],
+            "candidate_rates": node["rates"],
+            "material_conditions": conditions,
+            "candidate_excerpt": excerpt,
+            "article_text_sha256": hashlib.sha256(excerpt.encode()).hexdigest(),
+            "candidate_status": {"verification_status":"needs_review","stage5_terminal_status":"pending","fail_closed":True,"production_releasable":False},
+        })
+    package = {
+        "treaty_pair_id": "CZ-TW",
+        "partner_country": "TW",
+        "partner_country_name": "Tchaj-wan",
+        "risk_category": CountryRisk.ELEVATED.value,
+        "risk_reasons": ["special_statutory_double_taxation_arrangement"],
+        "review_focus": ["special_statutory_double_taxation_arrangement", "effective_notice_309_2020"],
+        "base_treaty": {
+            "identity": "zákon č. 45/2020 Sb. (příloha – Ustanovení ve vztahu k Tchaj-wanu)",
+            "source_id": "CZ-TW-LAW-45-2020",
+            "official_urls": ["https://e-sbirka.gov.cz/sb/2020/45"],
+        },
+        "current_instrument_chain": {
+            "protocol": {
+                "inventory_protocol_listed": False,
+                "inventory_related_instruments": [{"authority":"Ministerstvo financí ČR / Sbírka zákonů","label":"Sdělení č. 309/2020 Sb.","source_id":"CZ-TW-NOTICE-309-2020","source_type":"effective_notice","url":"https://e-sbirka.gov.cz/sb/2020/309"}],
+                "candidate_effect": {"required":True,"candidate_status":"official_effective_notice_identified_needs_human_review","candidate_effective_from":"2021-01-01","effect_kind":"wht_rules_start_using","candidate_rates":[],"source_ids":["CZ-TW-NOTICE-309-2020"]},
+            },
+            "status_instrument": {"candidate_status":"in_force_use_start_confirmed_needs_human_review","effect_kind":"special_statutory_arrangement_in_use","effective_from":"2021-01-01","effective_to":None,"source_id":"CZ-TW-NOTICE-309-2020","suspended_articles":[]},
+        },
+        "income_scopes": scopes,
+        "wht_relevant_mli": {"cta_or_listing_status":"not_applicable_special_statutory_arrangement","modification":None,"article":None,"wht_effective_from_candidate":None,"source_page_id":None,"source_excerpt_sha256":None,"article_8_modification":None,"unrelated_mli_provisions_considered_in_wht_output":[]},
+        "language_and_prevailing_text": {"authentic_languages_candidate":["Czech statutory text"],"prevailing_text_candidate":"not_applicable_special_statutory_arrangement","evidence_class":"official_czech_statutory_text","signature_clause_excerpt":None,"official_source_url":"https://e-sbirka.gov.cz/sb/2020/45","current_official_sha256":None,"archived_manifest_sha256":None,"hash_relation":None,"verification_status":"needs_review"},
+        "effective_date_evidence": {"interpretation_status":"official_notice_candidate_needs_human_review","inventory_entry_into_force_candidate":"2020-03-12","mli_candidate_effective_from":None,"protocol_candidate_effective_from":"2021-01-01","status_candidate_effective_from":"2021-01-01","status_candidate_effective_to":None},
+        "czech_domestic_wht": domestic,
+        "eu_directive_interaction": {income:{"candidate":None,"candidate_status":"not_applicable_by_recipient_jurisdiction","potentially_relevant_by_recipient_jurisdiction":False} for income in INCOMES},
+        "ppt_treatment": {"relevant":True,"relevance_basis":{"wht_relevant_mli_article_7_effect":False,"bilateral_ppt_or_equivalent_candidate":{"relevant_candidate":True,"official_czech_mli_position_notifies_existing_article_7_2_provision":False,"official_base_treaty_text_match":True,"matched_article":26,"candidate_excerpt":"Article 26 permits denial of benefits where the competent authority considers granting them an abuse of the provisions.","parsed_path":None,"parsed_sha256":None,"verification_status":"needs_review"}},"user_representation_text":None,"tax_treat_determines_ppt_satisfaction":False,"unknown_or_not_confirmed_treatment":"retain research; do not assert unconditional relief; Article 26 anti-abuse requires separate assessment"},
+        "official_source_references": [
+            {"role":"special_statutory_arrangement","source_id":"CZ-TW-LAW-45-2020","title":"Zákon č. 45/2020 Sb., o zamezení dvojímu zdanění ve vztahu k Tchaj-wanu","official_urls":["https://e-sbirka.gov.cz/sb/2020/45"],"archived_sha256":None,"parsed_sha256":None},
+            {"role":"effective_notice","source_id":"CZ-TW-NOTICE-309-2020","title":"Sdělení MF č. 309/2020 Sb.","official_urls":["https://e-sbirka.gov.cz/sb/2020/309"],"archived_sha256":None},
+        ],
+        "audit_provenance": {"stage5_scope_ids":["CZ-TW-dividend","CZ-TW-interest","CZ-TW-royalty"],"candidate_chain_sha256":[],"existing_review_pack_sha256":[]},
+        "human_qa": {"status":"pending","reviewer_id":None,"reviewed_at":None,"outcome":None,"independent_review_required":"CZ-TW" in sampled_pairs,"independent_sample_selected":"CZ-TW" in sampled_pairs,"independent_reviewer_id":None,"independently_reviewed_at":None,"independent_outcome":None},
+        "release_state": {"scope_count":3,"needs_review_scope_count":3,"verified_scope_count":0,"fail_closed":True,"production_releasable":False},
+    }
+    package["package_sha256"] = canonical_hash(package)
+    return package
+
+
 def build_queue() -> dict[str, Any]:
     rows = stage5_scopes()
     rates = rate_candidates()
@@ -316,6 +408,7 @@ def build_queue() -> dict[str, Any]:
         f"CZ-{country}": classify_country_risk(risk_features(country_rows))
         for country, country_rows in grouped.items()
     }
+    risks["CZ-TW"] = CountryRisk.ELEVATED
     sampled_pairs = select_independent_sample(risks)
 
     packages = []
@@ -415,6 +508,9 @@ def build_queue() -> dict[str, Any]:
         package["package_sha256"] = canonical_hash(package)
         packages.append(package)
 
+    packages.append(build_taiwan_package(sampled_pairs))
+    packages.sort(key=lambda row: row["partner_country"])
+
     counts = Counter(row["risk_category"] for row in packages)
     for category in CountryRisk:
         counts.setdefault(category.value, 0)
@@ -425,7 +521,7 @@ def build_queue() -> dict[str, Any]:
     )
     return {
         "schema_version": 1,
-        "dataset_release": "cz-country-qa-queue-2026-08-10.1",
+        "dataset_release": "cz-country-qa-queue-2026-08-10.2",
         "methodology_version": METHODOLOGY_VERSION,
         "purpose": "Machine-prepared country-level legal QA queue; no package has been human reviewed or approved.",
         "summary": {
@@ -464,8 +560,8 @@ def build_governance(queue: dict[str, Any]) -> dict[str, Any]:
             "same_person_forbidden": True,
         },
         "estimated_workload": {
-            "primary_country_qa_minutes": [400, 700],
-            "independent_sample_minutes": [28, 50],
+            "primary_country_qa_minutes": [408, 715],
+            "independent_sample_minutes": [36, 65],
             "combined_hours_rounded": [7, 13],
             "exception_effort_excluded_until_an_exception_exists": True,
             "planning_estimate_not_completed_review": True,
@@ -573,9 +669,18 @@ def write_outputs() -> None:
     OUTPUT.write_text(render(queue), encoding="utf-8")
     GOVERNANCE_OUTPUT.write_text(render(governance), encoding="utf-8")
     REVIEW_DIR.mkdir(parents=True, exist_ok=True)
-    for index in range(10):
+    batch_size = 10
+    package_count = len(queue["packages"])
+    batch_count = (package_count + batch_size - 1) // batch_size
+    for index in range(batch_count):
         path = REVIEW_DIR / f"batch_{index + 1:02d}.md"
-        path.write_text(markdown_batch(queue["packages"][index * 10:(index + 1) * 10], index + 1), encoding="utf-8")
+        path.write_text(
+            markdown_batch(
+                queue["packages"][index * batch_size:(index + 1) * batch_size],
+                index + 1,
+            ),
+            encoding="utf-8",
+        )
 
 
 if __name__ == "__main__":

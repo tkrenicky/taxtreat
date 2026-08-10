@@ -41,20 +41,20 @@ def module():
     return value
 
 
-def test_country_queue_is_reproducible_and_reconciles_to_100_and_300():
+def test_country_queue_is_reproducible_and_reconciles_to_101_and_303():
     queue = load(QUEUE)
     assert queue == module().build_queue()
     assert queue["summary"] == {
-        "country_count": 100,
-        "pending_country_qa": 100,
+        "country_count": 101,
+        "pending_country_qa": 101,
         "production_releasable_scope_count": 0,
-        "risk_counts": {"ELEVATED": 20, "EXCEPTION": 0, "STANDARD": 80},
-        "scope_count": 300,
+        "risk_counts": {"ELEVATED": 21, "EXCEPTION": 0, "STANDARD": 80},
+        "scope_count": 303,
         "verified_scope_count": 0,
         "previously_elevated_solely_for_clean_ppt_mli_path": 51,
     }
-    assert len(queue["packages"]) == 100
-    assert len({row["treaty_pair_id"] for row in queue["packages"]}) == 100
+    assert len(queue["packages"]) == 101
+    assert len({row["treaty_pair_id"] for row in queue["packages"]}) == 101
     assert all(len(row["income_scopes"]) == 3 for row in queue["packages"])
 
 
@@ -68,7 +68,7 @@ def test_risk_classification_is_deterministic_and_reason_bound():
         assert classify_country_risk(set(package["risk_reasons"])).value == package["risk_category"]
         assert package["human_qa"]["independent_sample_selected"] is (package["treaty_pair_id"] in selected)
     assert sum(row["risk_category"] == "STANDARD" for row in queue["packages"] if row["treaty_pair_id"] in selected) == 4
-    assert sum(row["risk_category"] == "ELEVATED" for row in queue["packages"] if row["treaty_pair_id"] in selected) == 2
+    assert sum(row["risk_category"] == "ELEVATED" for row in queue["packages"] if row["treaty_pair_id"] in selected) == 3
     by_country = {row["partner_country"]: row for row in queue["packages"]}
     assert by_country["AE"]["risk_reasons"] == ["multiple_historical_instruments", "unusual_treaty_numbering"]
     assert by_country["NG"]["risk_reasons"] == ["unusual_treaty_numbering"]
@@ -82,6 +82,7 @@ def test_risk_classification_is_deterministic_and_reason_bound():
 def test_risk_classifier_rejects_unknown_features_and_prioritises_exceptions():
     assert classify_country_risk(set()) is CountryRisk.STANDARD
     assert classify_country_risk({"material_protocol_overlay"}) is CountryRisk.ELEVATED
+    assert classify_country_risk({"special_statutory_double_taxation_arrangement"}) is CountryRisk.ELEVATED
     assert classify_country_risk({"material_protocol_overlay", "effective_date_conflict"}) is CountryRisk.EXCEPTION
     with pytest.raises(ValueError, match="Unsupported"):
         classify_country_risk({"invented_feature"})
@@ -94,7 +95,7 @@ def test_clean_ppt_only_mli_path_is_not_an_elevated_feature():
     elevated = {row["partner_country"] for row in queue["packages"] if row["risk_category"] == "ELEVATED"}
     assert elevated == {
         "AE", "AT", "BE", "BY", "CH", "CL", "GB", "GH", "GR", "HR",
-        "IT", "KZ", "MD", "NG", "NL", "RS", "RU", "SG", "UA", "UZ",
+        "IT", "KZ", "MD", "NG", "NL", "RS", "RU", "SG", "TW", "UA", "UZ",
     }
 
 
@@ -103,6 +104,9 @@ def test_articles_are_treaty_specific_in_country_view():
     assert [row["article_number"] for row in packages["AE"]["income_scopes"]] == [11, 12, 13]
     assert [row["article_number"] for row in packages["NG"]["income_scopes"]] == [9, 10, 11]
     assert [row["article_number"] for row in packages["AD"]["income_scopes"]] == [10, 11, 12]
+    assert [row["article_number"] for row in packages["TW"]["income_scopes"]] == [10, 11, 12]
+    assert packages["TW"]["base_treaty"]["identity"].startswith("zákon č. 45/2020 Sb.")
+    assert packages["TW"]["effective_date_evidence"]["status_candidate_effective_from"] == "2021-01-01"
 
 
 def test_mli_product_scope_filters_unrelated_provisions_from_wht_output():
@@ -277,6 +281,8 @@ def test_governance_is_additive_and_does_not_weaken_live_gate():
     assert policy["independent_review"]["standard_sample_percent"] == 5
     assert policy["independent_review"]["elevated_sample_percent"] == 10
     assert policy["ppt_only_mli_risk_correction"]["former_elevated_country_count"] == 51
+    assert policy["estimated_workload"]["primary_country_qa_minutes"] == [408, 715]
+    assert policy["estimated_workload"]["independent_sample_minutes"] == [36, 65]
     assert policy["estimated_workload"]["combined_hours_rounded"] == [7, 13]
     assert policy["estimated_workload"]["planning_estimate_not_completed_review"] is True
 
@@ -301,6 +307,6 @@ def test_package_hashes_and_protected_candidate_hashes_are_unchanged():
 
 def test_review_views_are_complete_and_do_not_depend_on_ignored_raw_artifacts():
     files = sorted((BASE / "cz_country_qa_review_batches").glob("batch_*.md"))
-    assert len(files) == 10
-    assert sum(path.read_text(encoding="utf-8").count("Human QA: **PENDING**") for path in files) == 100
+    assert len(files) == 11
+    assert sum(path.read_text(encoding="utf-8").count("Human QA: **PENDING**") for path in files) == 101
     assert "data/raw" not in BUILDER.read_text(encoding="utf-8")
