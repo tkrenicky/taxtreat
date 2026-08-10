@@ -105,6 +105,40 @@ Audit package hash: `c8dcbc365131f10146d6855a9f26d396c9bde76fe8363ee96da39f91147
 
 Human QA: **PENDING**. Reviewer: ____  Date: ____  Outcome: ____  Independent review (if required): ____
 
+## TW — Tchaj-wan (ELEVATED)
+
+Base treaty: **zákon č. 45/2020 Sb. (příloha – Ustanovení ve vztahu k Tchaj-wanu)** (`CZ-TW-LAW-45-2020`).
+
+Risk focus: special_statutory_double_taxation_arrangement, effective_notice_309_2020.
+
+| Income | Article | Candidate rate(s) | Material candidate conditions |
+|---|---:|---:|---|
+| dividend | 10 | 10.0% | 10.0%: beneficial_owner == true |
+| interest | 11 | 0.0%, 10.0% | 0.0%: special_article_11_3_exemption == true, beneficial_owner == true; 10.0%: beneficial_owner == true |
+| royalty | 12 | 5.0%, 10.0% | 5.0%: royalty_category == industrial_commercial_scientific_equipment, beneficial_owner == true; 10.0%: royalty_category == other, beneficial_owner == true |
+
+Protocol/status: `official_effective_notice_identified_needs_human_review` / `in_force_use_start_confirmed_needs_human_review`.
+
+MLI (WHT only): `not_applicable_special_statutory_arrangement`; modification `None`; candidate WHT date `None`. Article 8 adds no overlay.
+
+Language: authentic `['Czech statutory text']`; prevailing `not_applicable_special_statutory_arrangement`; evidence `official_czech_statutory_text`; signature clause `None`.
+
+Domestic/EU: Czech candidate standard/protective rates `15.0` / `35.0`; EU interaction is shown per income in the JSON audit package.
+
+PPT: No current WHT-relevant MLI PPT effect record.
+
+Official sources: [CZ-TW-LAW-45-2020](https://e-sbirka.gov.cz/sb/2020/45); [CZ-TW-NOTICE-309-2020](https://e-sbirka.gov.cz/sb/2020/309).
+
+Candidate excerpts:
+
+- dividend Article 10: Article 10(2): source-territory tax does not exceed 10% of the gross dividend where the beneficial owner is resident in the other territory. …
+- interest Article 11: Article 11(2): 10% general ceiling for beneficial-owner interest; Article 11(3) provides source exemption for specified qualifying cases. …
+- royalty Article 12: Article 12(2): 5% for industrial, commercial or scientific equipment; 10% in all other cases, subject to beneficial ownership. …
+
+Audit package hash: `194bf7c4c90d24f52bd3b76d6b74c8fc0f7174e741bc2021eeba0c395cae3c68`.
+
+Human QA: **PENDING**. Reviewer: ____  Date: ____  Outcome: ____  Independent review (if required): ____
+
 ## UA — Ukrajina (ELEVATED)
 
 Base treaty: **103/1999 Sb.** (`SRC-1D74C3BA794BFE66`).
@@ -320,41 +354,5 @@ Candidate excerpts:
 - royalty Article 12: LICENČNÍ POPLATKY 1. Licenční poplatky mající zdroj v jednom smluvním státě a vyplácené rezidentu druhého smluvního státu mohou být zdaněny v tomto druhém státě. 2. Licenční poplatky uvedené v odstavci 3 písmenu a) však mohou být rovněž zdaněny ve smluvním státě, v němž mají zdroj, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník licenčních poplatků je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne 10 procent hrubé částky licenčních poplatků. Příslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace těchto omezení. 3. Výraz „licenční poplatky“ použitý v tomto článku označuje platby jakéhokoliv druhu obdržené jako náhrada za užití nebo za právo na užití: a) jakéhokoliv patentu, ochranné známky, návrhu nebo modelu, plánu, tajného vzorce nebo postupu, počítačového programu nebo jakéhokoliv průmyslového, obchodního nebo vědeckého za …
 
 Audit package hash: `d283770fea3173eb68ed60141575ef06dd2dea373c5ba5b9b3f323f59b35660f`.
-
-Human QA: **PENDING**. Reviewer: ____  Date: ____  Outcome: ____  Independent review (if required): ____
-
-## ZA — JAR (Jihoafrická republika) (STANDARD)
-
-Base treaty: **7/1998 Sb.** (`SRC-2F5F97D1F7BF9415`).
-
-Risk focus: high_level_three_income_sanity_check.
-
-| Income | Article | Candidate rate(s) | Material candidate conditions |
-|---|---:|---:|---|
-| dividend | 10 | 5.0%, 15.0% | 5.0%: minimum_ownership >= 25, beneficial_owner == true; 15.0%: beneficial_owner == true |
-| interest | 11 | 0.0% | 0.0%: beneficial_owner == true |
-| royalty | 12 | 10.0% | 10.0%: beneficial_owner == true |
-
-Protocol/status: `not_listed` / `not_listed`.
-
-MLI (WHT only): `wht_effect_candidate_available`; modification `CZ-ZA-MLI-WHT-PPT`; candidate WHT date `2023-01-01`. Article 8 adds no overlay.
-
-Language: authentic `None`; prevailing `None`; evidence `hash_bound_repository_signature_clause_candidate`; signature clause `Dáno ve dvojõm vyhotovenõ v Praze dne 11. listo-
-padu 1996 v ceském a anglickém jazyce, pricemz oba
-texty jsou autentické.`.
-
-Domestic/EU: Czech candidate standard/protective rates `15.0` / `35.0`; EU interaction is shown per income in the JSON audit package.
-
-PPT: I confirm, for the purpose of this treaty research, that obtaining the treaty benefit was not one of the principal purposes of the transaction or arrangement in circumstances where granting that benefit would be contrary to the object and purpose of the relevant treaty provisions.
-
-Official sources: [SRC-2F5F97D1F7BF9415](https://e-sbirka.gov.cz/sb/1998/7/0000-00-00).
-
-Candidate excerpts:
-
-- dividend Article 10: Dividendy 1. Dividendy vyplácené spolecnostõ, která je rezi- dentem v jednom smluvnõm státe, rezidentovi druhého smluvnõho státu, mohou být zdaneny v tomto druhém smluvnõm státe. 2. Tyto dividendy vsak mohou být rovnez zda- neny ve smluvnõm státe, v nemz je spolecnost, která je vyplácõ, rezidentem, a to podle právnõch predpisu tohoto státu, avsak jestlize prõjemce je skutecným vlastnõkem dividend, dan takto stanovená nepresáhne: a) 5 procent hrubé cástky dividend, jestlize skutec- ným vlastnõkem je spolecnost (jiná nez osobnõ spolecnost), která prõmo vlastnõ nejméne 25 pro- cent majetku spolecnosti vyplácejõcõ dividendy; b) 15 procent hrubé cástky dividend ve vsech ostat- nõch prõpadech. Přõslusné úrady smluvnõch státu upravõ vzájemnou do- hodou zpu sob aplikace techto omezenõ. Tento odstavec se nedotýká zdanenõ zisku spolecnosti, ze kterých jsou dividendy vypláceny. 3. Výraz 1dividendya …
-- interest Article 11: U roky 1. U roky majõcõ zdroj v jednom smluvnõm státe a vyplácené rezidentu druhého smluvnõho státu podlé- hajõ zdanenõ pouze v tomto druhém státe, jestlize ta- kový rezident je skutecným vlastnõkem úroku . 2. Výraz 1úrokya pouzitý v tomto clánku ozna- cuje prõjmy z pohledávak jakéhokoliv druhu zajiste- ných i nezajistených zástavnõm právem na nemovitosti nebo majõcõch nebo nemajõcõch právo úcasti na zisku dluznõka a zvláste prõjmy z vládnõch cenných papõru a prõjmy z obligacõ nebo dluhopisu vcetne prémiõ a od- men spojených s temito cennými papõry, obligacemi nebo dluhopisy. Penále za pozdnõ platbu se nepovazujõ za úroky pro úcely tohoto clánku. 3. Ustanovenõ odstavce 1 se nepouzije, jestlize skutecný vlastnõk úroku , který je rezidentem v jednom smluvnõm státe, vykonává v druhém smluvnõm státe, ve kterém majõ úroky zdroj, pru myslovou nebo obchodnõ cinnost prostrednictvõm stálé provozo …
-- royalty Article 12: Licencnõ poplatky 1. Licencnõ poplatky majõcõ zdroj v jednom smluvnõm státe, vyplácené rezidentu druhého smluv- nõho státu mohou být zdaneny v tomto druhém státe. 2. Takové licencnõ poplatky vsak mohou být zda- neny ve smluvnõm státe, ve kterém je jejich zdroj, a v souladu s právnõmi predpisy tohoto státu, avsak je-li prõjemce skutecným vlastnõkem licencnõch po- platku , cástka dane takto stanovená nepresáhne 10 pro- cent hrubé cástky licencnõch poplatku . Přõslusné úrady smluvnõch státu upravõ vzájemnou dohodou zpu sob aplikace tohoto omezenõ. 3. Výraz 1licencnõ poplatkya pouzitý v tomto clánku oznacuje platby jakéhokoliv druhu obdrzené jako náhrada za uzitõ nebo za právo na uzitõ autorského práva k dõlu literárnõmu, umeleckému nebo vedeckému vcetne kinematografických filmu a filmu nebo nahrá- vek pro televiznõ nebo rozhlasové vysõlánõ, jakéhokoliv patentu, ochranné známky, návrhu nebo  …
-
-Audit package hash: `2be35ab79e1249794eb76194c08aba6afb6f7606ca201aed75d8693505ced1f5`.
 
 Human QA: **PENDING**. Reviewer: ____  Date: ____  Outcome: ____  Independent review (if required): ____

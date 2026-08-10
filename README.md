@@ -1,6 +1,6 @@
 # TaxTreat
 
-TaxTreat is a deterministic withholding-tax analysis platform initially focused on payments from the Czech Republic to Czech treaty partners.
+TaxTreat is a deterministic withholding-tax analysis platform initially focused on Czech-source payments to 100 Czech treaty partners plus the special statutory double-taxation arrangement with Taiwan (101 recipient jurisdictions in the CZ coverage universe).
 
 Supported transaction types:
 
@@ -23,15 +23,15 @@ withholding-tax rate.
 | Raw treaty source artifacts in a clean clone | 100/100 available |
 | Recorded SHA-256 hashes for raw treaty artifacts | 100/100 recorded |
 | Source auditability | complete; no longer a production blocker |
-| Registered country-income scopes | 300/300 |
-| Mechanically ready legal scopes | 300/300 (candidate evidence only) |
-| Pending country-level human QA | 100/100 packages; 300/300 scopes |
+| Registered country-income scopes | 303/303 (300 treaty scopes + 3 Taiwan statutory-arrangement scopes) |
+| Mechanically ready legal scopes | 303/303 (candidate evidence only) |
+| Pending country-level human QA | 101/101 packages; 303/303 scopes |
 | Official MF instrument inventory | 100/100 treaty partners |
 | Remaining base-treaty review candidates | 294/294; 293 numeric-rate candidates + 1 explicit no-cap conclusion |
 | Official MLI WHT effect candidates | 64 partners; 62 outside AT/CH; 7 signed/no-current-effect determinations |
 | Remaining instrument-chain candidates | 294 assembled; 0 hard-blocked |
-| Scalable country legal-QA queue | 100/100 packages; 80 STANDARD, 20 ELEVATED, 0 EXCEPTION; all pending |
-| Fully approved legal scopes | 0/300 |
+| Scalable country legal-QA queue | 101/101 packages; 80 STANDARD, 21 ELEVATED, 0 EXCEPTION; all pending |
+| Fully approved legal scopes | 0/303 |
 | Executable golden cases | 8 (all intentionally `REVIEW_REQUIRED`) |
 | Production readiness | blocked by country QA, any required sampled/exception independent review, explicit rule promotion and release |
 
@@ -51,7 +51,7 @@ provenance or approval is incomplete.
 
 ## Current development phase
 
-Machine preparation for Stage 5 now covers all 100 partners and 300 income
+Machine preparation for Stage 5 now covers 100 classic treaty partners plus Taiwan as a special statutory arrangement, i.e. 101 recipient jurisdictions and 303 income
 scopes. Development has moved to country-level human QA and controlled release;
 machine preparation is not human legal review.
 
@@ -95,7 +95,7 @@ instruments are now represented as article-specific, date-sensitive review
 candidates. No protocol or status candidate is loaded into the active decision
 engine before full-chain and four-eyes review.
 
-The Czech domestic-law layer now covers all 300 scopes as review-only
+The Czech domestic-law layer now covers all 303 scopes as review-only
 candidates. It distinguishes the standard 15% withholding rate from the
 protective 35% rate and anchors the current rules to the official ZDP expression
 effective from 1 April 2026. Section 19 relief candidates cover 30 eligible
@@ -152,7 +152,7 @@ Until these layers are completed and validated, unresolved cases must not be pre
 - `reference_cases/` — independently reviewable golden cases
 - `app/` — initial API layer
 
-`GET /jurisdictions` exposes the complete 100-country registry and separates
+`GET /jurisdictions` should expose the complete 101-jurisdiction CZ coverage universe (100 treaty partners + Taiwan special statutory arrangement) and separates
 review-ready income types from scopes still awaiting legal consolidation.
 
 ## Documentation

@@ -1,0 +1,55 @@
+{
+  "anti_abuse": {
+    "article": 26,
+    "automation": "separate assessment required; no automated conclusion"
+  },
+  "dataset_release": "cz-tw-special-arrangement-2026-08-10.1",
+  "income_scopes": {
+    "dividend": {
+      "article": 10,
+      "rates": [
+        10.0
+      ]
+    },
+    "interest": {
+      "article": 11,
+      "rates": [
+        0.0,
+        10.0
+      ]
+    },
+    "royalty": {
+      "article": 12,
+      "rates": [
+        5.0,
+        10.0
+      ]
+    }
+  },
+  "instrument_type": "special_statutory_double_taxation_arrangement",
+  "jurisdiction_code": "TW",
+  "jurisdiction_name": "Tchaj-wan",
+  "legal_basis": {
+    "effective_notice": "sdělení MF č. 309/2020 Sb.",
+    "law_effective": "2020-03-12",
+    "official_urls": [
+      "https://e-sbirka.gov.cz/sb/2020/45",
+      "https://e-sbirka.gov.cz/sb/2020/309"
+    ],
+    "primary": "zákon č. 45/2020 Sb.",
+    "wht_rules_apply_from": "2021-01-01"
+  },
+  "mli": {
+    "applicable": false,
+    "reason": "special statutory arrangement, not a Covered Tax Agreement"
+  },
+  "production_releasable": false,
+  "risk": {
+    "category": "ELEVATED",
+    "reasons": [
+      "special_statutory_double_taxation_arrangement"
+    ]
+  },
+  "schema_version": 1,
+  "verification_status": "needs_review"
+}

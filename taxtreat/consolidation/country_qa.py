@@ -27,6 +27,7 @@ ELEVATED_FEATURES = {
     "multiple_historical_instruments",
     "unusual_language_or_prevailing_text",
     "preserved_historical_source_hash_difference",
+    "special_statutory_double_taxation_arrangement",
 }
 
 SAMPLE_PERCENT = {

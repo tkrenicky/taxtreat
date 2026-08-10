@@ -1,5 +1,5 @@
 {
-  "dataset_release": "cz-country-qa-queue-2026-08-10.1",
+  "dataset_release": "cz-country-qa-queue-2026-08-10.2",
   "methodology_version": "cz-country-qa-v2-ppt-standard",
   "packages": [
     {
@@ -30752,9 +30752,9 @@
       },
       "human_qa": {
         "independent_outcome": null,
-        "independent_review_required": false,
+        "independent_review_required": true,
         "independent_reviewer_id": null,
-        "independent_sample_selected": false,
+        "independent_sample_selected": true,
         "independently_reviewed_at": null,
         "outcome": null,
         "reviewed_at": null,
@@ -30889,7 +30889,7 @@
           "title": null
         }
       ],
-      "package_sha256": "07d549a17b8d12bbe548d2c5639f96f22fec98147c60f4d74779ba4a7538371e",
+      "package_sha256": "18d95aae102d9353d1628c7ed36e2da65b69f8e407540145a6790b90c27b1464",
       "partner_country": "SG",
       "partner_country_name": "Singapur",
       "ppt_treatment": {
@@ -34265,6 +34265,315 @@
     },
     {
       "audit_provenance": {
+        "candidate_chain_sha256": [],
+        "existing_review_pack_sha256": [],
+        "stage5_scope_ids": [
+          "CZ-TW-dividend",
+          "CZ-TW-interest",
+          "CZ-TW-royalty"
+        ]
+      },
+      "base_treaty": {
+        "identity": "zákon č. 45/2020 Sb. (příloha – Ustanovení ve vztahu k Tchaj-wanu)",
+        "official_urls": [
+          "https://e-sbirka.gov.cz/sb/2020/45"
+        ],
+        "source_id": "CZ-TW-LAW-45-2020"
+      },
+      "current_instrument_chain": {
+        "protocol": {
+          "candidate_effect": {
+            "candidate_effective_from": "2021-01-01",
+            "candidate_rates": [],
+            "candidate_status": "official_effective_notice_identified_needs_human_review",
+            "effect_kind": "wht_rules_start_using",
+            "required": true,
+            "source_ids": [
+              "CZ-TW-NOTICE-309-2020"
+            ]
+          },
+          "inventory_protocol_listed": false,
+          "inventory_related_instruments": [
+            {
+              "authority": "Ministerstvo financí ČR / Sbírka zákonů",
+              "label": "Sdělení č. 309/2020 Sb.",
+              "source_id": "CZ-TW-NOTICE-309-2020",
+              "source_type": "effective_notice",
+              "url": "https://e-sbirka.gov.cz/sb/2020/309"
+            }
+          ]
+        },
+        "status_instrument": {
+          "candidate_status": "in_force_use_start_confirmed_needs_human_review",
+          "effect_kind": "special_statutory_arrangement_in_use",
+          "effective_from": "2021-01-01",
+          "effective_to": null,
+          "source_id": "CZ-TW-NOTICE-309-2020",
+          "suspended_articles": []
+        }
+      },
+      "czech_domestic_wht": {
+        "effective_from": "2026-04-01",
+        "income_scope_reference": "section 22(1)(g)(3)",
+        "protective_rate": 35.0,
+        "protective_rate_condition": "recipient is outside the EU/EEA and no qualifying treaty or tax-information-exchange instrument is applied",
+        "protective_rate_reference": "section 36(1)(c)",
+        "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+        "standard_rate": 15.0,
+        "standard_reference": "section 36(1)(b)(1), referring to section 22(1)(g)(3)"
+      },
+      "effective_date_evidence": {
+        "interpretation_status": "official_notice_candidate_needs_human_review",
+        "inventory_entry_into_force_candidate": "2020-03-12",
+        "mli_candidate_effective_from": null,
+        "protocol_candidate_effective_from": "2021-01-01",
+        "status_candidate_effective_from": "2021-01-01",
+        "status_candidate_effective_to": null
+      },
+      "eu_directive_interaction": {
+        "dividend": {
+          "candidate": null,
+          "candidate_status": "not_applicable_by_recipient_jurisdiction",
+          "potentially_relevant_by_recipient_jurisdiction": false
+        },
+        "interest": {
+          "candidate": null,
+          "candidate_status": "not_applicable_by_recipient_jurisdiction",
+          "potentially_relevant_by_recipient_jurisdiction": false
+        },
+        "royalty": {
+          "candidate": null,
+          "candidate_status": "not_applicable_by_recipient_jurisdiction",
+          "potentially_relevant_by_recipient_jurisdiction": false
+        }
+      },
+      "human_qa": {
+        "independent_outcome": null,
+        "independent_review_required": false,
+        "independent_reviewer_id": null,
+        "independent_sample_selected": false,
+        "independently_reviewed_at": null,
+        "outcome": null,
+        "reviewed_at": null,
+        "reviewer_id": null,
+        "status": "pending"
+      },
+      "income_scopes": [
+        {
+          "article_heading": "Dividendy",
+          "article_number": 10,
+          "article_text_sha256": "7e76e749685614748a096ed913e5aa9754587f9f4b8496ca6f6e8ea330574e96",
+          "candidate_excerpt": "Article 10(2): source-territory tax does not exceed 10% of the gross dividend where the beneficial owner is resident in the other territory.",
+          "candidate_rates": [
+            10.0
+          ],
+          "candidate_status": {
+            "fail_closed": true,
+            "production_releasable": false,
+            "stage5_terminal_status": "pending",
+            "verification_status": "needs_review"
+          },
+          "income_type": "dividend",
+          "material_conditions": [
+            {
+              "conditions": [
+                {
+                  "condition_type": "beneficial_owner",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                }
+              ],
+              "rate": 10.0
+            }
+          ]
+        },
+        {
+          "article_heading": "Úroky",
+          "article_number": 11,
+          "article_text_sha256": "96a4a28538b12fa95aa9701562d80e967dc8346b9aefb0704a0ce36c4451ee72",
+          "candidate_excerpt": "Article 11(2): 10% general ceiling for beneficial-owner interest; Article 11(3) provides source exemption for specified qualifying cases.",
+          "candidate_rates": [
+            0.0,
+            10.0
+          ],
+          "candidate_status": {
+            "fail_closed": true,
+            "production_releasable": false,
+            "stage5_terminal_status": "pending",
+            "verification_status": "needs_review"
+          },
+          "income_type": "interest",
+          "material_conditions": [
+            {
+              "conditions": [
+                {
+                  "condition_type": "special_article_11_3_exemption",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
+                  "condition_type": "beneficial_owner",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                }
+              ],
+              "rate": 0.0
+            },
+            {
+              "conditions": [
+                {
+                  "condition_type": "beneficial_owner",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                }
+              ],
+              "rate": 10.0
+            }
+          ]
+        },
+        {
+          "article_heading": "Licenční poplatky",
+          "article_number": 12,
+          "article_text_sha256": "78fcfdf4f7e6d143ecd810e73f6a8b761c4128f94dba3b02682d2d3a29857bbd",
+          "candidate_excerpt": "Article 12(2): 5% for industrial, commercial or scientific equipment; 10% in all other cases, subject to beneficial ownership.",
+          "candidate_rates": [
+            5.0,
+            10.0
+          ],
+          "candidate_status": {
+            "fail_closed": true,
+            "production_releasable": false,
+            "stage5_terminal_status": "pending",
+            "verification_status": "needs_review"
+          },
+          "income_type": "royalty",
+          "material_conditions": [
+            {
+              "conditions": [
+                {
+                  "condition_type": "royalty_category",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "industrial_commercial_scientific_equipment"
+                },
+                {
+                  "condition_type": "beneficial_owner",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                }
+              ],
+              "rate": 5.0
+            },
+            {
+              "conditions": [
+                {
+                  "condition_type": "royalty_category",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "other"
+                },
+                {
+                  "condition_type": "beneficial_owner",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                }
+              ],
+              "rate": 10.0
+            }
+          ]
+        }
+      ],
+      "language_and_prevailing_text": {
+        "archived_manifest_sha256": null,
+        "authentic_languages_candidate": [
+          "Czech statutory text"
+        ],
+        "current_official_sha256": null,
+        "evidence_class": "official_czech_statutory_text",
+        "hash_relation": null,
+        "official_source_url": "https://e-sbirka.gov.cz/sb/2020/45",
+        "prevailing_text_candidate": "not_applicable_special_statutory_arrangement",
+        "signature_clause_excerpt": null,
+        "verification_status": "needs_review"
+      },
+      "official_source_references": [
+        {
+          "archived_sha256": null,
+          "official_urls": [
+            "https://e-sbirka.gov.cz/sb/2020/45"
+          ],
+          "parsed_sha256": null,
+          "role": "special_statutory_arrangement",
+          "source_id": "CZ-TW-LAW-45-2020",
+          "title": "Zákon č. 45/2020 Sb., o zamezení dvojímu zdanění ve vztahu k Tchaj-wanu"
+        },
+        {
+          "archived_sha256": null,
+          "official_urls": [
+            "https://e-sbirka.gov.cz/sb/2020/309"
+          ],
+          "role": "effective_notice",
+          "source_id": "CZ-TW-NOTICE-309-2020",
+          "title": "Sdělení MF č. 309/2020 Sb."
+        }
+      ],
+      "package_sha256": "194bf7c4c90d24f52bd3b76d6b74c8fc0f7174e741bc2021eeba0c395cae3c68",
+      "partner_country": "TW",
+      "partner_country_name": "Tchaj-wan",
+      "ppt_treatment": {
+        "relevance_basis": {
+          "bilateral_ppt_or_equivalent_candidate": {
+            "candidate_excerpt": "Article 26 permits denial of benefits where the competent authority considers granting them an abuse of the provisions.",
+            "matched_article": 26,
+            "official_base_treaty_text_match": true,
+            "official_czech_mli_position_notifies_existing_article_7_2_provision": false,
+            "parsed_path": null,
+            "parsed_sha256": null,
+            "relevant_candidate": true,
+            "verification_status": "needs_review"
+          },
+          "wht_relevant_mli_article_7_effect": false
+        },
+        "relevant": true,
+        "tax_treat_determines_ppt_satisfaction": false,
+        "unknown_or_not_confirmed_treatment": "retain research; do not assert unconditional relief; Article 26 anti-abuse requires separate assessment",
+        "user_representation_text": null
+      },
+      "release_state": {
+        "fail_closed": true,
+        "needs_review_scope_count": 3,
+        "production_releasable": false,
+        "scope_count": 3,
+        "verified_scope_count": 0
+      },
+      "review_focus": [
+        "special_statutory_double_taxation_arrangement",
+        "effective_notice_309_2020"
+      ],
+      "risk_category": "ELEVATED",
+      "risk_reasons": [
+        "special_statutory_double_taxation_arrangement"
+      ],
+      "treaty_pair_id": "CZ-TW",
+      "wht_relevant_mli": {
+        "article": null,
+        "article_8_modification": null,
+        "cta_or_listing_status": "not_applicable_special_statutory_arrangement",
+        "modification": null,
+        "source_excerpt_sha256": null,
+        "source_page_id": null,
+        "unrelated_mli_provisions_considered_in_wht_output": [],
+        "wht_effective_from_candidate": null
+      }
+    },
+    {
+      "audit_provenance": {
         "candidate_chain_sha256": [
           "ecba4040df22c30f06b237935ca224a148d0907b7094be74a4d7c211b20c87ab",
           "328a0e8fd49b56098f54251f39296ae794a111ecdc9c169aaf96f4d69475fee6",
@@ -36337,16 +36646,16 @@
   "purpose": "Machine-prepared country-level legal QA queue; no package has been human reviewed or approved.",
   "schema_version": 1,
   "summary": {
-    "country_count": 100,
-    "pending_country_qa": 100,
+    "country_count": 101,
+    "pending_country_qa": 101,
     "previously_elevated_solely_for_clean_ppt_mli_path": 51,
     "production_releasable_scope_count": 0,
     "risk_counts": {
-      "ELEVATED": 20,
+      "ELEVATED": 21,
       "EXCEPTION": 0,
       "STANDARD": 80
     },
-    "scope_count": 300,
+    "scope_count": 303,
     "verified_scope_count": 0
   }
 }
