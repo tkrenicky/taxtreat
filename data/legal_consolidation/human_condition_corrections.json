@@ -1,0 +1,559 @@
+{
+  "corrections": [
+    {
+      "country": "AD",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "copyright_literary_artistic_scientific_including_cinematographic_films"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "rate": 5.0
+        },
+        {
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "patent_trademark_design_model_plan_secret_formula_process_custom_software_equipment_or_knowhow"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "rate": 10.0
+        }
+      ]
+    },
+    {
+      "country": "AL",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "rate": 5.0
+        },
+        {
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "government_payer_or_government_or_wholly_state_owned_bank_or_financial_institution_recipient"
+            }
+          ],
+          "rate": 0.0
+        }
+      ]
+    },
+    {
+      "country": "AM",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "rate": 10.0
+        },
+        {
+          "conditions": [
+            {
+              "condition_type": "loan_or_credit_provider",
+              "operator": "==",
+              "unit": null,
+              "value": "bank"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "rate": 5.0
+        },
+        {
+          "conditions": [
+            {
+              "condition_type": "article_11_3a_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "government_central_bank_or_government_owned_controlled_financial_institution_or_qualifying_government_guaranteed_financing"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "rate": 0.0
+        }
+      ]
+    },
+    {
+      "country": "AM",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "copyright_literary_artistic_scientific_including_films_and_broadcast_media"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "rate": 5.0
+        },
+        {
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "patent_trademark_design_model_plan_secret_formula_process_software_equipment_or_knowhow"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "rate": 10.0
+        }
+      ]
+    },
+    {
+      "country": "AU",
+      "income_type": "dividend",
+      "rate_candidates": [
+        {
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_other_than_partnership"
+            },
+            {
+              "condition_type": "minimum_ownership",
+              "operator": ">=",
+              "unit": "%",
+              "value": "20"
+            }
+          ],
+          "rate": 5.0
+        },
+        {
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            }
+          ],
+          "rate": 15.0
+        }
+      ]
+    },
+    {
+      "country": "AU",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "conditions": [
+            {
+              "condition_type": "general_article_11_2_rate",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "rate": 10.0
+        },
+        {
+          "conditions": [
+            {
+              "condition_type": "official_foreign_exchange_reserve_investment",
+              "operator": "==",
+              "unit": null,
+              "value": "by_government_monetary_institution_or_central_bank"
+            }
+          ],
+          "rate": 0.0
+        }
+      ]
+    },
+    {
+      "country": "AZ",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "rate": 10.0
+        },
+        {
+          "conditions": [
+            {
+              "condition_type": "loan_or_credit_provider",
+              "operator": "==",
+              "unit": null,
+              "value": "bank"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "rate": 5.0
+        },
+        {
+          "conditions": [
+            {
+              "condition_type": "article_11_3a_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "government_central_bank_or_government_owned_controlled_financial_institution_or_qualifying_government_guaranteed_financing"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "rate": 0.0
+        }
+      ]
+    },
+    {
+      "country": "BD",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "rate": 10.0
+        },
+        {
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "government_central_bank_export_promotion_institution_or_qualifying_government_guaranteed_financing"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "rate": 0.0
+        }
+      ]
+    },
+    {
+      "country": "BB",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "rate": 5.0
+        },
+        {
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "credit_sale_or_bank_financing_or_government_central_bank_government_financial_institution_or_qualifying_government_guaranteed_financing"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "rate": 0.0
+        }
+      ]
+    },
+    {
+      "country": "BB",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "copyright_literary_artistic_scientific_including_films_and_broadcast_media"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "rate": 5.0
+        },
+        {
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "patent_trademark_design_model_plan_secret_formula_process_software_equipment_or_knowhow"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "rate": 10.0
+        }
+      ]
+    },
+    {
+      "country": "BW",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "rate": 7.5
+        },
+        {
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "credit_sale_or_bank_loan_or_government_or_subnational_or_local_authority_or_central_bank_or_other_specified_public_financing"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "rate": 0.0
+        }
+      ]
+    },
+    {
+      "country": "BR",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "conditions": [
+            {
+              "condition_type": "loan_or_credit_provider",
+              "operator": "==",
+              "unit": null,
+              "value": "bank"
+            },
+            {
+              "condition_type": "minimum_term_years",
+              "operator": ">=",
+              "unit": null,
+              "value": "10"
+            },
+            {
+              "condition_type": "purpose",
+              "operator": "==",
+              "unit": null,
+              "value": "industrial_equipment_sale_or_study_installation_furnishing_of_industrial_or_scientific_units_or_public_works"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "rate": 10.0
+        },
+        {
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "rate": 15.0
+        },
+        {
+          "conditions": [
+            {
+              "condition_type": "article_11_3a_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "interest_paid_to_other_state_government_political_subdivision_or_government_owned_agency_including_financial_institution_unless_11_3b_applies"
+            }
+          ],
+          "rate": 0.0
+        }
+      ]
+    },
+    {
+      "country": "BR",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "trademark"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "rate": 25.0
+        },
+        {
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_royalties"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "rate": 15.0
+        }
+      ]
+    },
+    {
+      "country": "BG",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "rate": 10.0
+        },
+        {
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "government_local_authority_central_bank_or_wholly_government_owned_financial_institution_or_other_article_11_3_qualifying_case"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "rate": 0.0
+        }
+      ]
+    }
+  ],
+  "dataset_release": "stage5-human-condition-corrections-2026-08-10.2",
+  "purpose": "Human-review correction overlay for structured rate conditions. Does not alter frozen remaining_294 candidate evidence.",
+  "schema_version": 1,
+  "verification_status": "needs_review"
+}

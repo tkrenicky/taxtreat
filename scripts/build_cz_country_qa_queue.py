@@ -21,6 +21,7 @@ MANIFEST = ROOT / "data/manifests/source_manifest.json"
 BASE_CANDIDATES = ROOT / "data/legal_consolidation/remaining_294_base_candidates.json"
 MLI_EFFECTS = ROOT / "data/legal_consolidation/mli_wht_effects.json"
 BLOCKER_RESOLUTIONS = ROOT / "data/legal_consolidation/blocker_resolutions.json"
+HUMAN_CONDITION_CORRECTIONS = ROOT / "data/legal_consolidation/human_condition_corrections.json"
 TAIWAN_SPECIAL = ROOT / "data/legal_special_jurisdictions/taiwan_45_2020.json"
 AT_CH_RULES = {
     "AT": ROOT / "data/legal_rules/rakousko.json",
@@ -101,6 +102,24 @@ def rate_candidates() -> dict[tuple[str, str], list[dict[str, Any]]]:
                         "candidate_rule_id": rule["rule_id"],
                     })
             result[(country, income)] = candidates
+
+    corrections = load(HUMAN_CONDITION_CORRECTIONS)["corrections"]
+    for correction in corrections:
+        key = (correction["country"], correction["income_type"])
+        originals = result.get(key)
+        if not originals:
+            raise RuntimeError(f"Human correction target missing: {key}")
+        template = originals[0]
+        rebuilt = []
+        for desired in correction["rate_candidates"]:
+            source = next((row for row in originals if row.get("rate") == desired["rate"]), template)
+            row = dict(source)
+            row["rate"] = desired["rate"]
+            row["conditions"] = desired["conditions"]
+            row["candidate_rule_id"] = f"HUMAN-CORR-{key[0]}-{key[1]}-{str(desired['rate']).replace('.', '_')}"
+            rebuilt.append(row)
+        result[key] = rebuilt
+
     if len(result) != 300:
         raise RuntimeError(f"Expected 300 rate-candidate scopes, found {len(result)}.")
     return result
