@@ -40,7 +40,7 @@ from taxtreat.consolidation.country_qa import (  # noqa: E402
     METHODOLOGY_VERSION,
     CountryRisk,
     classify_country_risk,
-    selected_for_independent_sample,
+    select_independent_sample,
 )
 from taxtreat.engine.ppt_representation import PPT_REPRESENTATION_TEXT  # noqa: E402
 
@@ -135,8 +135,6 @@ def risk_features(country_rows: list[dict[str, Any]]) -> set[str]:
     )
     if sequence != (10, 11, 12):
         features.add("unusual_treaty_numbering")
-    if any(row["mli_evidence"]["candidate_effect"].get("effect_id") for row in country_rows):
-        features.add("wht_relevant_mli_modification")
     if any(row["protocol_overlays"]["inventory_protocol_listed"] for row in country_rows):
         features.add("material_protocol_overlay")
     related = country_rows[0]["protocol_overlays"]["inventory_related_instruments"]
@@ -314,11 +312,17 @@ def build_queue() -> dict[str, Any]:
     for row in rows:
         grouped[row["recipient_country"]].append(row)
 
+    risks = {
+        f"CZ-{country}": classify_country_risk(risk_features(country_rows))
+        for country, country_rows in grouped.items()
+    }
+    sampled_pairs = select_independent_sample(risks)
+
     packages = []
     for country, country_rows in sorted(grouped.items()):
         country_rows.sort(key=lambda row: INCOMES.index(row["income_type"]))
         features = risk_features(country_rows)
-        risk = classify_country_risk(features)
+        risk = risks[f"CZ-{country}"]
         first = country_rows[0]
         mli = first["mli_evidence"]["candidate_effect"]
         bilateral_anti_abuse = bilateral_anti_abuse_candidate(country, first)
@@ -394,8 +398,8 @@ def build_queue() -> dict[str, Any]:
                 "reviewer_id": None,
                 "reviewed_at": None,
                 "outcome": None,
-                "independent_review_required": risk is CountryRisk.EXCEPTION or selected_for_independent_sample(f"CZ-{country}", risk),
-                "independent_sample_selected": risk is not CountryRisk.EXCEPTION and selected_for_independent_sample(f"CZ-{country}", risk),
+                "independent_review_required": risk is CountryRisk.EXCEPTION or f"CZ-{country}" in sampled_pairs,
+                "independent_sample_selected": risk is not CountryRisk.EXCEPTION and f"CZ-{country}" in sampled_pairs,
                 "independent_reviewer_id": None,
                 "independently_reviewed_at": None,
                 "independent_outcome": None,
@@ -414,6 +418,11 @@ def build_queue() -> dict[str, Any]:
     counts = Counter(row["risk_category"] for row in packages)
     for category in CountryRisk:
         counts.setdefault(category.value, 0)
+    formerly_ppt_only = sum(
+        row["risk_category"] == CountryRisk.STANDARD.value
+        and row["wht_relevant_mli"]["modification"] is not None
+        for row in packages
+    )
     return {
         "schema_version": 1,
         "dataset_release": "cz-country-qa-queue-2026-08-10.1",
@@ -426,6 +435,7 @@ def build_queue() -> dict[str, Any]:
             "pending_country_qa": sum(row["human_qa"]["status"] == "pending" for row in packages),
             "verified_scope_count": 0,
             "production_releasable_scope_count": 0,
+            "previously_elevated_solely_for_clean_ppt_mli_path": formerly_ppt_only,
         },
         "packages": packages,
     }
@@ -446,11 +456,19 @@ def build_governance(queue: dict[str, Any]) -> dict[str, Any]:
         },
         "independent_review": {
             "required_for_all_exception_packages": True,
-            "standard_sample_percent": 10,
-            "elevated_sample_percent": 20,
-            "selection_method": "deterministic SHA-256 bucket bound to methodology version and treaty pair",
+            "standard_sample_percent": 5,
+            "elevated_sample_percent": 10,
+            "selection_method": "exact stratified quota (ceiling of category rate), selected by deterministic SHA-256 rank bound to methodology version and treaty pair",
+            "sampling_rationale": "A small methodology-control sample checks machine-prepared package quality without re-performing treaty research. Article 7 PPT plus a mechanically clean WHT effective date is a standard cross-cutting condition and is not an elevated feature.",
             "selected_sample_pairs": sampled,
             "same_person_forbidden": True,
+        },
+        "estimated_workload": {
+            "primary_country_qa_minutes": [400, 700],
+            "independent_sample_minutes": [28, 50],
+            "combined_hours_rounded": [7, 13],
+            "exception_effort_excluded_until_an_exception_exists": True,
+            "planning_estimate_not_completed_review": True,
         },
         "release_prerequisites": [
             "country QA event bound to exact package hash",
@@ -472,6 +490,10 @@ def build_governance(queue: dict[str, Any]) -> dict[str, Any]:
             "safety_controls_removed": [],
         },
         "no_machine_human_approval": True,
+        "ppt_only_mli_risk_correction": {
+            "former_elevated_country_count": queue["summary"]["previously_elevated_solely_for_clean_ppt_mli_path"],
+            "classification": "STANDARD when Article 7 PPT and its pair-specific WHT effective-date evidence are mechanically clean and no other elevated or exception feature exists",
+        },
         "all_current_country_events_pending": True,
         "production_release_created": False,
     }

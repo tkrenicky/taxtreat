@@ -11,6 +11,7 @@ from taxtreat.consolidation.country_qa import (
     CountryRisk,
     apply_country_qa_event,
     classify_country_risk,
+    select_independent_sample,
     selected_for_independent_sample,
 )
 from taxtreat.engine.ppt_representation import (
@@ -47,9 +48,10 @@ def test_country_queue_is_reproducible_and_reconciles_to_100_and_300():
         "country_count": 100,
         "pending_country_qa": 100,
         "production_releasable_scope_count": 0,
-        "risk_counts": {"ELEVATED": 71, "EXCEPTION": 0, "STANDARD": 29},
+        "risk_counts": {"ELEVATED": 20, "EXCEPTION": 0, "STANDARD": 80},
         "scope_count": 300,
         "verified_scope_count": 0,
+        "previously_elevated_solely_for_clean_ppt_mli_path": 51,
     }
     assert len(queue["packages"]) == 100
     assert len({row["treaty_pair_id"] for row in queue["packages"]}) == 100
@@ -58,18 +60,23 @@ def test_country_queue_is_reproducible_and_reconciles_to_100_and_300():
 
 def test_risk_classification_is_deterministic_and_reason_bound():
     queue = load(QUEUE)
+    selected = select_independent_sample({
+        package["treaty_pair_id"]: package["risk_category"]
+        for package in queue["packages"]
+    })
     for package in queue["packages"]:
         assert classify_country_risk(set(package["risk_reasons"])).value == package["risk_category"]
-        expected_sample = (
-            package["risk_category"] != "EXCEPTION"
-            and selected_for_independent_sample(package["treaty_pair_id"], package["risk_category"])
-        )
-        assert package["human_qa"]["independent_sample_selected"] is expected_sample
+        assert package["human_qa"]["independent_sample_selected"] is (package["treaty_pair_id"] in selected)
+    assert sum(row["risk_category"] == "STANDARD" for row in queue["packages"] if row["treaty_pair_id"] in selected) == 4
+    assert sum(row["risk_category"] == "ELEVATED" for row in queue["packages"] if row["treaty_pair_id"] in selected) == 2
     by_country = {row["partner_country"]: row for row in queue["packages"]}
     assert by_country["AE"]["risk_reasons"] == ["multiple_historical_instruments", "unusual_treaty_numbering"]
     assert by_country["NG"]["risk_reasons"] == ["unusual_treaty_numbering"]
     assert "preserved_historical_source_hash_difference" in by_country["GR"]["risk_reasons"]
     assert "preserved_historical_source_hash_difference" in by_country["NL"]["risk_reasons"]
+    assert by_country["AL"]["wht_relevant_mli"]["modification"] is not None
+    assert by_country["AL"]["risk_category"] == "STANDARD"
+    assert by_country["AL"]["risk_reasons"] == []
 
 
 def test_risk_classifier_rejects_unknown_features_and_prioritises_exceptions():
@@ -78,6 +85,17 @@ def test_risk_classifier_rejects_unknown_features_and_prioritises_exceptions():
     assert classify_country_risk({"material_protocol_overlay", "effective_date_conflict"}) is CountryRisk.EXCEPTION
     with pytest.raises(ValueError, match="Unsupported"):
         classify_country_risk({"invented_feature"})
+
+
+def test_clean_ppt_only_mli_path_is_not_an_elevated_feature():
+    with pytest.raises(ValueError, match="Unsupported"):
+        classify_country_risk({"wht_relevant_mli_modification"})
+    queue = load(QUEUE)
+    elevated = {row["partner_country"] for row in queue["packages"] if row["risk_category"] == "ELEVATED"}
+    assert elevated == {
+        "AE", "AT", "BE", "BY", "CH", "CL", "GB", "GH", "GR", "HR",
+        "IT", "KZ", "MD", "NG", "NL", "RS", "RU", "SG", "UA", "UZ",
+    }
 
 
 def test_articles_are_treaty_specific_in_country_view():
@@ -256,6 +274,11 @@ def test_governance_is_additive_and_does_not_weaken_live_gate():
     assert policy["production_release_created"] is False
     assert policy["legacy_four_eyes_boundary"]["safety_controls_removed"] == []
     assert "remains fail-closed" in policy["legacy_four_eyes_boundary"]["change_in_this_release"]
+    assert policy["independent_review"]["standard_sample_percent"] == 5
+    assert policy["independent_review"]["elevated_sample_percent"] == 10
+    assert policy["ppt_only_mli_risk_correction"]["former_elevated_country_count"] == 51
+    assert policy["estimated_workload"]["combined_hours_rounded"] == [7, 13]
+    assert policy["estimated_workload"]["planning_estimate_not_completed_review"] is True
 
 
 def test_package_hashes_and_protected_candidate_hashes_are_unchanged():

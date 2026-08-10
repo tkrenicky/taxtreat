@@ -30,7 +30,7 @@ withholding-tax rate.
 | Remaining base-treaty review candidates | 294/294; 293 numeric-rate candidates + 1 explicit no-cap conclusion |
 | Official MLI WHT effect candidates | 64 partners; 62 outside AT/CH; 7 signed/no-current-effect determinations |
 | Remaining instrument-chain candidates | 294 assembled; 0 hard-blocked |
-| Scalable country legal-QA queue | 100/100 packages; 29 STANDARD, 71 ELEVATED, 0 EXCEPTION; all pending |
+| Scalable country legal-QA queue | 100/100 packages; 80 STANDARD, 20 ELEVATED, 0 EXCEPTION; all pending |
 | Fully approved legal scopes | 0/300 |
 | Executable golden cases | 8 (all intentionally `REVIEW_REQUIRED`) |
 | Production readiness | blocked by country QA, any required sampled/exception independent review, explicit rule promotion and release |

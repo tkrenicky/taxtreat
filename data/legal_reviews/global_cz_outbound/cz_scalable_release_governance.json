@@ -14,28 +14,37 @@
     "three_income_scopes_reviewed_together": true
   },
   "dataset_release": "cz-scalable-release-governance-2026-08-10.1",
+  "estimated_workload": {
+    "combined_hours_rounded": [
+      7,
+      13
+    ],
+    "exception_effort_excluded_until_an_exception_exists": true,
+    "independent_sample_minutes": [
+      28,
+      50
+    ],
+    "planning_estimate_not_completed_review": true,
+    "primary_country_qa_minutes": [
+      400,
+      700
+    ]
+  },
   "independent_review": {
-    "elevated_sample_percent": 20,
+    "elevated_sample_percent": 10,
     "required_for_all_exception_packages": true,
     "same_person_forbidden": true,
+    "sampling_rationale": "A small methodology-control sample checks machine-prepared package quality without re-performing treaty research. Article 7 PPT plus a mechanically clean WHT effective date is a standard cross-cutting condition and is not an elevated feature.",
     "selected_sample_pairs": [
-      "CZ-AL",
-      "CZ-CN",
-      "CZ-HR",
-      "CZ-JP",
-      "CZ-MA",
-      "CZ-MK",
-      "CZ-NL",
-      "CZ-NO",
-      "CZ-NZ",
-      "CZ-RS",
-      "CZ-RU",
-      "CZ-SI",
-      "CZ-VN",
-      "CZ-ZA"
+      "CZ-AT",
+      "CZ-BD",
+      "CZ-KP",
+      "CZ-KZ",
+      "CZ-MY",
+      "CZ-SA"
     ],
-    "selection_method": "deterministic SHA-256 bucket bound to methodology version and treaty pair",
-    "standard_sample_percent": 10
+    "selection_method": "exact stratified quota (ceiling of category rate), selected by deterministic SHA-256 rank bound to methodology version and treaty pair",
+    "standard_sample_percent": 5
   },
   "legacy_four_eyes_boundary": {
     "change_in_this_release": "Legacy per-scope promotion path remains fail-closed. The new country-level QA gate is additive and cannot promote rules. A later policy-approved migration may retire the legacy path only after real QA records and release integration exist.",
@@ -49,6 +58,10 @@
     "safety_controls_removed": []
   },
   "no_machine_human_approval": true,
+  "ppt_only_mli_risk_correction": {
+    "classification": "STANDARD when Article 7 PPT and its pair-specific WHT effective-date evidence are mechanically clean and no other elevated or exception feature exists",
+    "former_elevated_country_count": 51
+  },
   "production_release_created": false,
   "release_prerequisites": [
     "country QA event bound to exact package hash",

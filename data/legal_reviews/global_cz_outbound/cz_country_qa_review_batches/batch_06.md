@@ -42,7 +42,7 @@ Human QA: **PENDING**. Reviewer: ____  Date: ____  Outcome: ____  Independent re
 
 Base treaty: **3/2000 Sb.m.s.** (`SRC-A4EEB73B59D9CE70`).
 
-Risk focus: material_protocol_overlay, wht_relevant_mli_modification.
+Risk focus: material_protocol_overlay.
 
 | Income | Article | Candidate rate(s) | Material candidate conditions |
 |---|---:|---:|---|
@@ -70,7 +70,7 @@ Candidate excerpts:
 - interest Article 11: ÚROKY 1. Úroky mající zdroj v jednom smluvním státě a vyplácené rezidentu druhého smluvního státu mohou být zdaněny v tomto druhém státě. 2. Tyto úroky však mohou být rovněž zdaněny ve smluvním státě, v němž mají zdroj, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník úroků je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne 10 procent hrubé částky úroků. 3. Úroky mající zdroj v jednom smluvním státě a pobírané a skutečně vlastněné vládou druhého smluvního státu, včetně nižších správních útvarů a místních úřadů tohoto státu, centrální bankou nebo jakoukoli finanční institucí zcela vlastněnou touto vládou nebo úroky pobírané z půjček garantovaných touto vládou budou, bez ohledu na ustanovení odstavce 2, osvobozeny od zdanění v prvně zmíněném smluvním státě. Příslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace těchto omezení. 4 …
 - royalty Article 12: LICENČNÍ POPLATKY 1. Licenční poplatky mající zdroj v jednom smluvním státě a vyplácené rezidentu druhého smluvního státu mohou být zdaněny v tomto druhém státě. 2. Tyto licenční poplatky však mohou být rovněž zdaněny ve smluvním státě, v němž mají zdroj, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník licenčních poplatků je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne 10 procent hrubé částky licenčních poplatků. Příslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace tohoto omezení. 3. Výraz „licenční poplatky“, použitý v tomto článku, označuje platby jakéhokoliv druhu obdržené jako náhrada za užití nebo za právo na užití jakéhokoli autorského práva k dílu literárnímu, uměleckému nebo vědeckému, včetně softwaru, kinematografických filmů a filmů nebo nahrávek pro televizní nebo rozhlasové vysílání, jakéhokoli patentu, ochra …
 
-Audit package hash: `924fa568ba13ac7020a2dbd903c1304120860eeace3567785f81680cc16d3877`.
+Audit package hash: `cb04b12f1dde8dd3875df62a2742b90e0a3b8f9794cacea2ebd86f18b002b1a9`.
 
 Human QA: **PENDING**. Reviewer: ____  Date: ____  Outcome: ____  Independent review (if required): ____
 
@@ -109,11 +109,11 @@ Audit package hash: `ff24bb009f578fa253ff420e989f638450b83da6792df4d408442a81eb1
 
 Human QA: **PENDING**. Reviewer: ____  Date: ____  Outcome: ____  Independent review (if required): ____
 
-## LI — Lichtenštejnsko (ELEVATED)
+## LI — Lichtenštejnsko (STANDARD)
 
 Base treaty: **8/2016 Sb.m.s.** (`SRC-2FCAE2F83ACB4BD7`).
 
-Risk focus: wht_relevant_mli_modification.
+Risk focus: high_level_three_income_sanity_check.
 
 | Income | Article | Candidate rate(s) | Material candidate conditions |
 |---|---:|---:|---|
@@ -139,7 +139,7 @@ Candidate excerpts:
 - interest Article 11: ÚROKY 1. Úroky mající zdroj v jednom smluvním státě a skutečně vlastněné rezidentem druhého smluvního státu podléhají zdanění jen v tomto druhém státě. 2. Výraz „úroky“ použitý v tomto článku označuje příjmy z pohledávek jakéhokoliv druhu, ať zajištěných či nezajištěných zástavním právem na nemovitosti a majících či nemajících právo účasti na zisku dlužníka, a zvláště, příjmy z vládních cenných papírů a příjmy z obligací nebo dluhopisů, včetně prémií a výher, které se vážou k těmto cenným papírům, obligacím nebo dluhopisům. Penále ukládané za pozdní platbu se nepovažuje za úroky pro účely tohoto článku. Výraz „úroky“ nezahrnuje žádnou část příjmu, která je považována za dividendu podle ustanovení článku 10 odstavce 3. 3. Ustanovení odstavce 1 se nepoužijí, jestliže skutečný vlastník úroků, který je rezidentem jednoho smluvního státu, vykonává v druhém smluvním státě, ve kterém mají úroky …
 - royalty Article 12: LICENČNÍ POPLATKY 1. Licenční poplatky mající zdroj v jednom smluvním státě a skutečně vlastněné rezidentem druhého smluvního státu podléhají zdanění jen v tomto druhém státě. 2. Platby druhu, který je uveden v odstavci 3 písmenu b) však mohou být rovněž zdaněny ve smluvním státě, v němž mají zdroj, a to podle právních předpisů tohoto státu, avšak daň takto uložená nepřesáhne 10 procent hrubé částky takových licenčních poplatků. 3. Výraz „licenční poplatky“ použitý v tomto článku označuje platby jakéhokoliv druhu obdržené jako náhrada za užití nebo za právo na užití: a) jakéhokoliv autorského práva k dílu literárnímu, uměleckému nebo vědeckému (s výjimkou počítačového programu), včetně kinematografických filmů a filmů nebo pásek pro televizní nebo rozhlasové vysílání, b) jakéhokoliv patentu, ochranné známky, návrhu nebo modelu, plánu, tajného vzorce nebo postupu, zakázkového počítačového …
 
-Audit package hash: `c2910cecb1b4f1de36d1aa13db100da28d113b4a63d7f5b66de35a32d25cc25c`.
+Audit package hash: `55cdfd5ebecf2e910c05dfeca9665c16c4abc08bdb8aec5fe40b5f3e1af9a35a`.
 
 Human QA: **PENDING**. Reviewer: ____  Date: ____  Outcome: ____  Independent review (if required): ____
 
@@ -177,11 +177,11 @@ Audit package hash: `a894a2b2b67d1a766b5f03ac7bad8c2b40ff21ec21e9e9c4ee0b751e0e3
 
 Human QA: **PENDING**. Reviewer: ____  Date: ____  Outcome: ____  Independent review (if required): ____
 
-## LT — Litva (ELEVATED)
+## LT — Litva (STANDARD)
 
 Base treaty: **230/1995 Sb.** (`SRC-9315CFFD2F0A40D8`).
 
-Risk focus: wht_relevant_mli_modification.
+Risk focus: high_level_three_income_sanity_check.
 
 | Income | Article | Candidate rate(s) | Material candidate conditions |
 |---|---:|---:|---|
@@ -211,15 +211,15 @@ Candidate excerpts:
 - interest Article 11: U roky 1. U roky majõcõ zdroj v jednom smluvnõm státe, které pobõrá rezident druhého smluvnõho státu, mohou být zdaneny v tomto druhém státe. 2. Avsak úroky uvedené v odstavci 1 tohoto clánku mohou být zdaneny rovnez ve smluvnõm státe, v nemz majõ zdroj, a podle právnõch predpisu tohoto státu, ale pokud prõjemce je skutecným vlastnõ- kem úroku , dan takto ulozená nepresáhne 10 % hrubé cástky úroku . Přõslusné úrady smluvnõch státu mohou upravit vzájemnou dohodou zpu sob aplikace techto omezenõ. 3. Bez ohledu na ustanovenõ odstavce 2, úroky majõcõ zdroj v jednom smluvnõm státe a které plynou a jsou skutecne vlastneny vládou druhého státu, vcetne jeho nizsõch správnõch útvaru a mõstnõch úradu , ústrednõ bankou nebo jakoukoliv financnõ institucõ zcela vlastnenou touto vládou nebo úroky plynoucõ z pu jcek garantovaných touto vládou, budou vyjmuty ze zdanenõ v prvne zmõneném státe. 4. Výraz 1 …
 - royalty Article 12: Licencnõ poplatky 1. Licencnõ poplatky, které majõ zdroj v jednom smluvnõm státe, vyplácené rezidentu druhého smluv- nõho státu mohou být zdaneny v tomto druhém státe. 2. Avsak takové licencnõ poplatky mohou být také zdaneny ve smluvnõm státe, ve kterém je jejich zdroj, a v souladu s právnõmi predpisy tohoto státu, avsak je-li prõjemce skutecným vlastnõkem licencnõch poplatku , cástka dane takto stanovená nepresáhne 10 % hrubé cástky z licencnõch poplatku . Přõslusné úrady smluvnõch státu mohou upravit vzájemnou dohodou zpu sob aplikace techto omezenõ. 3. Výraz 1licencnõ poplatkya pouzitý v tomto clánku oznacuje platby jakéhokoliv druhu obdrzené jako náhrada za uzitõ nebo za právo na uzitõ autor- ského práva k dõlu literárnõmu, umeleckému nebo ve- deckému vcetne kinematografických filmu a filmu nebo nahrávek pro rozhlasové nebo televiznõ vysõlánõ, jakéhokoliv patentu, ochranné známky, ná …
 
-Audit package hash: `41c357077fd88ab05e4b5d3a9e5c950ba912380085f4258666e0f2bfebcaa70d`.
+Audit package hash: `ddce1a32bd878fe5ebb2479e34ba38e108bd7487add9c821f312278b7d9070b9`.
 
 Human QA: **PENDING**. Reviewer: ____  Date: ____  Outcome: ____  Independent review (if required): ____
 
-## LU — Lucembursko (ELEVATED)
+## LU — Lucembursko (STANDARD)
 
 Base treaty: **51/2014 Sb.m.s.** (`SRC-D1DA8B0150E7B80D`).
 
-Risk focus: wht_relevant_mli_modification.
+Risk focus: high_level_three_income_sanity_check.
 
 | Income | Article | Candidate rate(s) | Material candidate conditions |
 |---|---:|---:|---|
@@ -245,15 +245,15 @@ Candidate excerpts:
 - interest Article 11: ÚROKY 1. Úroky mající zdroj v jednom smluvním státě a skutečně vlastněné rezidentem druhého smluvního státu podléhají zdanění jen v tomto druhém státě. 2. Výraz „úroky“ použitý v tomto článku označuje příjmy z pohledávek jakéhokoliv druhu, ať zajištěných či nezajištěných zástavním právem na nemovitosti a majících či nemajících právo účasti na zisku dlužníka, a zvláště, příjmy z vládních cenných papírů a příjmy z obligací nebo dluhopisů, včetně prémií a výher, které se vážou k těmto cenným papírům, obligacím nebo dluhopisům. Penále ukládané za pozdní platbu se nepovažuje za úroky pro účely tohoto článku. Výraz „úroky“ nezahrnuje žádnou část příjmu, která je považována za dividendu podle ustanovení článku 10 odstavce 3. 3. Ustanovení odstavce 1 se nepoužijí, jestliže skutečný vlastník úroků, který je rezidentem jednoho smluvního státu, vykonává v druhém smluvním státě, ve kterém mají úroky …
 - royalty Article 12: LICENČNÍ POPLATKY 1. Licenční poplatky mající zdroj v jednom smluvním státě a vyplácené rezidentu druhého smluvního státu mohou být zdaněny v tomto druhém státě. 2. Tyto licenční poplatky však mohou být, vyjma případu druhu plateb, který je uveden v odstavci 3 písmenu a), rovněž zdaněny ve smluvním státě, v němž mají zdroj, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník licenčních poplatků je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne 10 procent hrubé částky licenčních poplatků. 3. Výraz „licenční poplatky“ použitý v tomto článku označuje platby jakéhokoliv druhu obdržené jako náhrada za užití nebo za právo na užití: a) jakéhokoliv autorského práva k dílu literárnímu, uměleckému nebo vědeckému (s výjimkou počítačového programu), včetně kinematografických filmů a filmů nebo pásek pro televizní nebo rozhlasové vysílání; b) jakéhokoliv pate …
 
-Audit package hash: `ba3cdff60a938f85769ad3abe2e2ef3eec64c6831d524a4a55e8e9597c26753f`.
+Audit package hash: `5aa932b5e7abc74355545bc8f688dd34b13636b120993479ab474b1e47803769`.
 
 Human QA: **PENDING**. Reviewer: ____  Date: ____  Outcome: ____  Independent review (if required): ____
 
-## LV — Lotyšsko (ELEVATED)
+## LV — Lotyšsko (STANDARD)
 
 Base treaty: **170/1995 Sb.** (`SRC-76B8D6E6D6D03B69`).
 
-Risk focus: wht_relevant_mli_modification.
+Risk focus: high_level_three_income_sanity_check.
 
 | Income | Article | Candidate rate(s) | Material candidate conditions |
 |---|---:|---:|---|
@@ -280,7 +280,7 @@ Candidate excerpts:
 - interest Article 11: U roky 1. U roky majõcõ zdroj v jednom smluvnõm státe, které pobõrá rezident druhého smluvnõho státu, mohou být zdaneny v tomto druhém státe. 2. Avsak úroky uvedené v odstavci 1 tohoto clánku mohou být zdaneny rovnez ve smluvnõm státe, v nemz majõ zdroj, a podle právnõch predpisu tohoto státu, ale pokud prõjemce je skutecným vlastnõ- kem úroku , dan takto ulozená nepresáhne 10 % hrubé cástky úroku . Přõslusné úrady smluvnõch státu mohou upravit vzájemnou dohodou zpu sob aplikace techto omezenõ. 3. Bez ohledu na ustanovenõ odstavce 2, úroky, které majõ zdroj v jednom smluvnõm státe a které ply- nou a jsou skutecne vlastneny vládou druhého státu, vcetne jeho nizsõch správnõch útvaru a mõstnõch úradu , ústrednõ bankou nebo jakoukoliv financnõ institucõ zcela vlastnenou touto vládou nebo úroky plynoucõ z pu jcek garantovaných touto vládou, budou vyjmuty ze zdanenõ v prvne zmõneném státe. 4.  …
 - royalty Article 12: Licencnõ poplatky 1. Licencnõ poplatky, majõcõ zdroj v jednom smluvnõm státe, vyplácené rezidentu druhého smluv- nõhõ státu, mohou být zdaneny v tomto druhém státe. 2. Avsak takové licencnõ poplatky mohou být také zdaneny ve smluvnõm státe, ve kterém je jejich zdroj, a v souladu s právnõmi predpisy tohoto státu, avsak je-li prõjemce skutecným vlastnõkem licencnõch poplatku , cástka dane takto stanovená nepresáhne 10 % hrubé cástky z licencnõch poplatku . Přõslusné úrady smluvnõch státu mohou upravit vzájemnou dohodou zpu sob aplikace techto omezenõ. 3. Výraz 1licencnõ poplatkya pouzitý v tomto clánku oznacuje platby jekéhokoliv druhu obdrzené jako náhrada za uzitõ nebo za právo na uzitõ autor- ského práva k dõlu literárnõmu, umeleckému nebo ve- deckému vcetne kinematografických filmu a filmu nebo nahrávek pro rozhlasové nebo televiznõ vysõlánõ, jakéhokoliv patentu, ochranné známky, návrh …
 
-Audit package hash: `e1bd4e3c444dce24b53230fac24e052b27e37dd447862b575bd6f25f567dbb9d`.
+Audit package hash: `bfed54247d7d22cd32b90b9a90e50961620085bc9f53ac423e65edb3eec10276`.
 
 Human QA: **PENDING**. Reviewer: ____  Date: ____  Outcome: ____  Independent review (if required): ____
 
@@ -315,7 +315,7 @@ Candidate excerpts:
 - interest Article 11: UROKY 1. Uroky majõcõ zdroj v jednom smluvnõm státe a vyplácené rezidentu druhého smluvnõho státu mohou být zdaneny v tomto druhém státe. 2. Tyto úroky vsak mohou být rovnez zdaneny ve smluvnõm státe, v nemz majõ zdroj, a to podle právnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk úroku je rezidentem druhého smluvnõho státu, dan takto ulozená nepresáhne 10 procent hrubé cástky úroku. 3. Bez ohledu na ustanovenõ odstavce 2 budou úroky osvobozeny od zdanenõ ve smluvnõm státe, v nemz majõ zdroj, pokud jsou pobõrané a skutecne vlastnené: a) vládou druhého smluvnõho státu, vcetne jakéhokoliv nizsõho správnõho útvaru nebo mõstnõho úradu tohoto státu, centrálnõ bankou nebo jakoukoli financnõ institucõ, která je zcela vlastnena touto vládou; nebo b) rezidentem druhého smluvnõho státu v souvislosti s pujckou nebo úverem zarucenými vládou tohoto dru- hého státu. 4. Výraz 1úrokya pouz …
 - royalty Article 12: LICENČNI POPLATKY 1. Licencnõ poplatky majõcõ zdroj v jednom smluvnõm státe a vyplácené rezidentu druhého smluvnõho státu mohou být zdaneny v tomto druhém státe. 2. Tyto licencnõ poplatky vsak mohou být rovnez zdaneny ve smluvnõm státe, v nemz majõ zdroj, a to podle právnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk licencnõch poplatku je rezidentem druhého smluvnõho státu, dan takto ulozená nepresáhne 10 procent hrubé cástky licencnõch poplatku. 3. Výraz 1licencnõ poplatkya pouzitý v tomto clánku oznacuje platby jakéhokoliv druhu obdrzené jako náhrada za uzitõ nebo za právo na uzitõ jakéhokoliv autorského práva k dõlu literárnõmu, umeleckému nebo vedeckému, vcetne kinematografických filmu a filmu nebo nahrávek pro rozhlasové nebo televiznõ vysõlánõ, jakéhokoliv patentu, ochranné známky, návrhu nebo modelu, plánu, tajného vzorce nebo výrobnõho postupu nebo za uzitõ nebo za  …
 
-Audit package hash: `691f74436fb4c0d772474d07577af4a81a038fb49e43801456085ca0ee4d0861`.
+Audit package hash: `149916b8fb3af9dd335ce7c1c23726628cd599093ac7adbbf053a78a90fb241f`.
 
 Human QA: **PENDING**. Reviewer: ____  Date: ____  Outcome: ____  Independent review (if required): ____
 

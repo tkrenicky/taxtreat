@@ -51,13 +51,16 @@ All three income scopes are reviewed together. The machine assigns exactly one
 risk category:
 
 - `STANDARD`: no enumerated exception or elevated feature;
-- `ELEVATED`: unusual numbering, material protocol overlay, WHT-relevant MLI
-  modification, multiple bilateral instruments, unusual language/prevailing
+- `ELEVATED`: unusual numbering, material protocol overlay, multiple bilateral
+  instruments, unusual language/prevailing
   text, or a preserved historical/current official-byte difference; or
 - `EXCEPTION`: conflicting primary evidence, unresolved legal effect, treaty
   status uncertainty, or effective-date conflict.
 
 The classifier is deterministic. Machine classification is not legal review.
+Article 7 PPT applicability plus its pair-specific WHT effective date is a
+standard cross-cutting product condition. It does not by itself elevate a
+mechanically clean package; elevation requires another country-specific feature.
 The concise reviewer view is split into ten Markdown batches of ten countries;
 the JSON queue retains full candidate excerpts, conditions, references, and
 hashes for audit.
@@ -65,9 +68,12 @@ hashes for audit.
 ## Approval and release
 
 Every country requires one hash-bound high-level QA event. All `EXCEPTION`
-packages require a separate independent reviewer. A deterministic 10% sample of
-`STANDARD` and 20% sample of `ELEVATED` packages also requires independent
+packages require a separate independent reviewer. A deterministic 5% sample of
+`STANDARD` and 10% sample of `ELEVATED` packages also requires independent
 review; the sample is bound to the methodology version and treaty-pair ID.
+The category quota is exact (rounded up) and selection uses deterministic
+SHA-256 ranking. This is a methodology-control sample, not a second full treaty
+review.
 
 Country QA alone never verifies a scope or promotes a rule. Release still
 requires correction closure, green automated invariants, a separate explicit
@@ -86,4 +92,7 @@ boundary are listed in `cz_scalable_release_governance.json`.
 The operating target is 3–5 minutes for a `STANDARD` country and 8–15 minutes
 for an `ELEVATED` country. `EXCEPTION` work is issue-driven and has no artificial
 minimum. Independent work is limited to all exceptions and the deterministic
-sample. These are planning estimates, not completed time or review records.
+sample. For the current 80/20/0 queue, primary QA is estimated at 400–700
+minutes and the six-package independent sample at another 28–50 minutes: about
+7–13 hours in total. These are planning estimates, not completed time or review
+records.

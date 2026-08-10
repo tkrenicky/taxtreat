@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import math
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
@@ -23,18 +24,17 @@ EXCEPTION_FEATURES = {
 ELEVATED_FEATURES = {
     "unusual_treaty_numbering",
     "material_protocol_overlay",
-    "wht_relevant_mli_modification",
     "multiple_historical_instruments",
     "unusual_language_or_prevailing_text",
     "preserved_historical_source_hash_difference",
 }
 
 SAMPLE_PERCENT = {
-    CountryRisk.STANDARD: 10,
-    CountryRisk.ELEVATED: 20,
+    CountryRisk.STANDARD: 5,
+    CountryRisk.ELEVATED: 10,
     CountryRisk.EXCEPTION: 100,
 }
-METHODOLOGY_VERSION = "cz-country-qa-v1"
+METHODOLOGY_VERSION = "cz-country-qa-v2-ppt-standard"
 
 
 def classify_country_risk(features: set[str]) -> CountryRisk:
@@ -56,6 +56,29 @@ def selected_for_independent_sample(
     token = f"{METHODOLOGY_VERSION}:{treaty_pair_id.upper()}".encode("ascii")
     bucket = int(hashlib.sha256(token).hexdigest()[:8], 16) % 100
     return bucket < SAMPLE_PERCENT[category]
+
+
+def select_independent_sample(
+    treaty_pair_risks: Mapping[str, CountryRisk | str],
+) -> set[str]:
+    """Select exact, deterministic stratified samples for a complete queue."""
+
+    selected: set[str] = set()
+    for category in (CountryRisk.STANDARD, CountryRisk.ELEVATED):
+        pairs = sorted(
+            pair_id.upper()
+            for pair_id, risk in treaty_pair_risks.items()
+            if CountryRisk(risk) is category
+        )
+        quota = math.ceil(len(pairs) * SAMPLE_PERCENT[category] / 100)
+        ranked = sorted(
+            pairs,
+            key=lambda pair_id: hashlib.sha256(
+                f"{METHODOLOGY_VERSION}:{pair_id}".encode("ascii")
+            ).hexdigest(),
+        )
+        selected.update(ranked[:quota])
+    return selected
 
 
 @dataclass(frozen=True)
@@ -89,10 +112,13 @@ def apply_country_qa_event(
 
     risk = CountryRisk(package["risk_category"])
     pair_id = str(package["treaty_pair_id"])
-    independent_required = (
-        risk is CountryRisk.EXCEPTION
-        or selected_for_independent_sample(pair_id, risk)
+    recorded_qa = package.get("human_qa")
+    recorded_sample = (
+        bool(recorded_qa.get("independent_sample_selected"))
+        if isinstance(recorded_qa, Mapping)
+        else selected_for_independent_sample(pair_id, risk)
     )
+    independent_required = risk is CountryRisk.EXCEPTION or recorded_sample
     if event is None:
         return CountryQAOutcome(
             country_qa_complete=False,
