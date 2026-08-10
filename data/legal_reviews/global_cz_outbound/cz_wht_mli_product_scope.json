@@ -1,0 +1,81 @@
+{
+  "dataset_release": "cz-wht-mli-product-scope-2026-08-10.1",
+  "expressly_non_applicable_under_czech_position": [
+    {
+      "adds_365_day_dividend_holding_period": false,
+      "article": "Article 8",
+      "reason": "Czechia reserves the right for the entirety of Article 8 not to apply to its Covered Tax Agreements"
+    }
+  ],
+  "interpretive_support_only": [
+    {
+      "article": "Article 6",
+      "role": "minimum-standard treaty purpose/preamble context supporting Article 7; no numeric WHT rate modification"
+    }
+  ],
+  "official_primary_sources": [
+    {
+      "article_7_excerpt": "Pursuant to Article 7(17)(b) of the Convention, the Czech Republic hereby chooses to apply Article 7(4).",
+      "article_8_excerpt": "Pursuant to Article 8(3)(a) of the Convention, the Czech Republic reserves the right for the entirety of Article 8 not to apply to its Covered Tax Agreements.",
+      "authority": "OECD Depositary",
+      "pdf_path": "data/legal_sources/czech_mli_position/czech_republic_mli_position.pdf",
+      "pdf_sha256": "556aa5d349bee3b06337a1b06970eb3dcff5696a4246aac38f5e43b0400dd98e",
+      "text_path": "data/legal_sources/czech_mli_position/czech_republic_mli_position.txt",
+      "text_sha256": "d9129e3ea69d7dbe0da6e8144446bcef0fed2016651d28631226a6278764b728",
+      "title": "Czech Republic — Status of List of Reservations and Notifications",
+      "url": "https://www.oecd.org/content/dam/oecd/en/topics/policy-sub-issues/beps-mli/beps-mli-position-czech-republic.pdf"
+    },
+    {
+      "authority": "Ministry of the Interior of the Czech Republic",
+      "source_id": "CZ-MLI-32-2020",
+      "title": "Multilateral Convention, Collection of International Treaties No. 32/2020",
+      "url": "https://aplikace.mvcr.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38919"
+    },
+    {
+      "artifact": "data/legal_consolidation/mli_wht_effects.json",
+      "artifact_sha256": "a341a227ff9cda01ef0f09572804df596f9e8f12084c4ed11a540f822c36bf7a",
+      "authority": "Ministry of Finance of the Czech Republic",
+      "supplemental_resolution_artifact": "data/legal_consolidation/blocker_resolutions.json",
+      "supplemental_resolution_sha256": "9249978716eb7d917c5fc0c5626d97e94aff9810040fb15a4d55d8c3f0acede7",
+      "title": "Pair-specific Financial Gazette MLI notices"
+    }
+  ],
+  "official_source_conclusion_status": "machine_consolidated_candidate_needs_human_qa",
+  "output_influencing_provisions": [
+    {
+      "article": "Article 7(1)",
+      "automation_boundary": "TaxTreat asks for a user representation and never determines PPT satisfaction",
+      "role": "PPT may deny an otherwise available treaty benefit for any of the three income types"
+    }
+  ],
+  "outside_tax_treat_product_output": [
+    "Article 9 capital gains",
+    "Articles 10 and 12-15 permanent-establishment provisions",
+    "Article 16 mutual agreement procedure",
+    "Article 17 corresponding adjustments",
+    "Parts V-VI arbitration and administrative provisions"
+  ],
+  "product_scope": [
+    "Czech-source dividends",
+    "Czech-source interest",
+    "Czech-source royalties"
+  ],
+  "safety_boundary": {
+    "all_country_packages_remain_fail_closed": true,
+    "article_7_ppt_is_not_automatically_decided": true,
+    "candidate_evidence_is_not_legal_verification": true
+  },
+  "schema_version": 1,
+  "wht_effective_date_mechanics": {
+    "article_35_role": "The Convention distinguishes taxes withheld at source and applies the matched modification from the applicable Article 35 entry-into-effect boundary.",
+    "method": "Use the pair-specific official Czech MF MLI notice/effect record after CTA matching; do not substitute a generic date.",
+    "pair_specific_candidate_effect_count": 64,
+    "verification_status": "needs_review"
+  },
+  "wht_output_architecture": [
+    "covered_tax_agreement_and_matching_status",
+    "wht_relevant_mli_modification",
+    "ppt_applicability",
+    "pair_specific_wht_effective_date"
+  ]
+}

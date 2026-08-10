@@ -1,0 +1,63 @@
+{
+  "all_current_country_events_pending": true,
+  "country_qa": {
+    "elevated_review_target_minutes": [
+      8,
+      15
+    ],
+    "exception_review_target": "issue-driven detailed legal research; no artificial time floor",
+    "required_for_every_country_package": true,
+    "standard_review_target_minutes": [
+      3,
+      5
+    ],
+    "three_income_scopes_reviewed_together": true
+  },
+  "dataset_release": "cz-scalable-release-governance-2026-08-10.1",
+  "independent_review": {
+    "elevated_sample_percent": 20,
+    "required_for_all_exception_packages": true,
+    "same_person_forbidden": true,
+    "selected_sample_pairs": [
+      "CZ-AL",
+      "CZ-CN",
+      "CZ-HR",
+      "CZ-JP",
+      "CZ-MA",
+      "CZ-MK",
+      "CZ-NL",
+      "CZ-NO",
+      "CZ-NZ",
+      "CZ-RS",
+      "CZ-RU",
+      "CZ-SI",
+      "CZ-VN",
+      "CZ-ZA"
+    ],
+    "selection_method": "deterministic SHA-256 bucket bound to methodology version and treaty pair",
+    "standard_sample_percent": 10
+  },
+  "legacy_four_eyes_boundary": {
+    "change_in_this_release": "Legacy per-scope promotion path remains fail-closed. The new country-level QA gate is additive and cannot promote rules. A later policy-approved migration may retire the legacy path only after real QA records and release integration exist.",
+    "hard_coded_locations": [
+      "taxtreat/consolidation/legal_review_queue.py::_apply_decision (294 per-scope packets)",
+      "taxtreat/consolidation/batch_primary_review.py (batch per-scope decisions)",
+      "taxtreat/tools/build_legal_review_batch.py and review dossier builders",
+      "taxtreat/pipeline/release.py legal-review summary fields",
+      "data/legal_reviews/remaining_294_review_queue.json policy metadata"
+    ],
+    "safety_controls_removed": []
+  },
+  "no_machine_human_approval": true,
+  "production_release_created": false,
+  "release_prerequisites": [
+    "country QA event bound to exact package hash",
+    "required exception/sample independent review event with separate identity",
+    "all flagged corrections resolved and package rebuilt",
+    "canonical automated invariants and clean-clone checks green",
+    "explicit hash-bound rule promotion action; country QA alone never marks a scope verified",
+    "production source-release gate explicitly opened by a separate release action"
+  ],
+  "schema_version": 1,
+  "status": "proposed_and_machine_enforced_candidate_workflow_not_production_release"
+}

@@ -24,16 +24,16 @@ withholding-tax rate.
 | Recorded SHA-256 hashes for raw treaty artifacts | 100/100 recorded |
 | Source auditability | complete; no longer a production blocker |
 | Registered country-income scopes | 300/300 |
-| Review-ready legal scopes | 6/300 (AT/CH; independent approval pending) |
-| Pending legal consolidation | 294/300 |
+| Mechanically ready legal scopes | 300/300 (candidate evidence only) |
+| Pending country-level human QA | 100/100 packages; 300/300 scopes |
 | Official MF instrument inventory | 100/100 treaty partners |
 | Remaining base-treaty review candidates | 294/294; 293 numeric-rate candidates + 1 explicit no-cap conclusion |
 | Official MLI WHT effect candidates | 64 partners; 62 outside AT/CH; 7 signed/no-current-effect determinations |
 | Remaining instrument-chain candidates | 294 assembled; 0 hard-blocked |
-| Candidate legal-review queue | 294/294 packets; 294 awaiting primary review; 0 approved/promotable |
+| Scalable country legal-QA queue | 100/100 packages; 29 STANDARD, 71 ELEVATED, 0 EXCEPTION; all pending |
 | Fully approved legal scopes | 0/300 |
 | Executable golden cases | 8 (all intentionally `REVIEW_REQUIRED`) |
-| Production readiness | blocked by pending primary review and independent four-eyes approval |
+| Production readiness | blocked by country QA, any required sampled/exception independent review, explicit rule promotion and release |
 
 Zákony pro lidi is used as a readable verification mirror for the relevant published Czech act. It is not treated as the sole authoritative source for the current legal position.
 
@@ -51,7 +51,16 @@ provenance or approval is incomplete.
 
 ## Current development phase
 
-Development now moves from reliable base-treaty extraction to legal consolidation and date-sensitive calculation.
+Machine preparation for Stage 5 now covers all 100 partners and 300 income
+scopes. Development has moved to country-level human QA and controlled release;
+machine preparation is not human legal review.
+
+The scalable workflow reviews dividends, interest and royalties together for
+each country, classifies packages as STANDARD, ELEVATED or EXCEPTION, and keeps
+exact evidence hashes in the audit view. MLI output is narrowed to CTA/matching,
+WHT-relevant modifications, PPT treatment and pair-specific WHT effective dates.
+Czechia's official MLI position reserves all of Article 8, so it adds no
+dividend holding-period overlay. See the [CZ scalable legal-QA workflow](docs/CZ_SCALABLE_LEGAL_QA.md).
 
 The AT/CH pilot now covers:
 
@@ -151,6 +160,7 @@ review-ready income types from scopes still awaiting legal consolidation.
 - [Project Bible](PROJECT_BIBLE.md)
 - [Roadmap](MILESTONES.md)
 - [Reference-case standard](reference_cases/README.md)
+- [CZ scalable legal-QA workflow](docs/CZ_SCALABLE_LEGAL_QA.md)
 
 ## Local verification
 
