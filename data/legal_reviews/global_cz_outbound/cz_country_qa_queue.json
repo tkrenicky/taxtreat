@@ -199,6 +199,12 @@
             {
               "conditions": [
                 {
+                  "condition_type": "royalty_category",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "copyright_literary_artistic_scientific_including_cinematographic_films"
+                },
+                {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
                   "unit": null,
@@ -209,6 +215,12 @@
             },
             {
               "conditions": [
+                {
+                  "condition_type": "royalty_category",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "patent_trademark_design_model_plan_secret_formula_process_custom_software_equipment_or_knowhow"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -255,7 +267,7 @@
           "title": "46/2023 Sb.m.s."
         }
       ],
-      "package_sha256": "ac95ff2d78a12d21b964878fdd9dd0173d39bcfc8c51986decd15c7948065b74",
+      "package_sha256": "8e5f5ec44384877de647407effe5391311110662fb3b82117fb23a643d9b16dd",
       "partner_country": "AD",
       "partner_country_name": "Andorra",
       "ppt_treatment": {
@@ -765,6 +777,7 @@
           "article_text_sha256": "251bc87ad10608737a7b89f1f41a95e852c2313197de6d13acf8dc5ee49302a5",
           "candidate_excerpt": "U roky\n1. U roky majõcõ zdroj v jednom smluvnõm státe\na vyplácené rezidentu druhého smluvnõho státu podlé-\nhajõ zdanenõ v tomto druhém státe.\n2. Tyto úroky vsak mohou být rovnez zdaneny ve\nsmluvnõm státe, v nemz majõ zdroj, a to podle právnõch\npredpisu tohoto státu, avsak jestlize prõjemce je sku-\ntecným vlastnõkem úroku , dan takto ulozená nepre-\nsáhne 5 procent hrubé cástky úroku .\nPřõslusné úrady smluvnõch státu upravõ vzájemnou do-\nhodou zpu sob aplikace tohoto omezenõ.\n3. Bez ohledu na ustanovenõ odstavce 2, budou\núroky majõcõ zdroj v jednom smluvnõm státe osvobo-\nzeny od zdanenõ v tomto státe, jestlize:\na) plátcem úroku je vláda tohoto smluvnõho státu;\nnebo\nb) úroky jsou vypláceny vláde druhého smluvnõho\nstátu nebo jakékoliv organizaci vcetne bank a fi-\nnancnõch institucõ, kterou zcela vlastnõ tento\ndruhý smluvnõ stát.\n4. Výraz 1úrokya pouzitý v tomto clánku ozna-\ncuje prõjmy z pohledávek jakéhokoliv druhu, at' zajis-\ntených ci nezajistených zástavnõm právem na nemovi-\ntosti nebo majõcõch ci nemajõcõch právo úcasti na zisku\ndluznõka, a zvláste, prõjmy z vládnõch cenných papõru\na prõjmy z obligacõ nebo dluhopisu vcetne prémiõ\na odmen spojených s temito cennými papõry, obliga-\ncemi nebo dluhopisy. Penále za pozdnõ platbu se ne-\npovazujõ za úroky pro úcely tohoto clánku.\n5. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nprõjemce úroku , který je rezidentem v jednom smluv-\nnõm státe, vykonává v druhém smluvnõm státe, ve kte-\nrém majõ úroky zdroj, pru myslovou nebo obchodn",
           "candidate_rates": [
+            0.0,
             5.0
           ],
           "candidate_status": {
@@ -785,6 +798,17 @@
                 }
               ],
               "rate": 5.0
+            },
+            {
+              "conditions": [
+                {
+                  "condition_type": "article_11_3_exemption",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "government_payer_or_government_or_wholly_state_owned_bank_or_financial_institution_recipient"
+                }
+              ],
+              "rate": 0.0
             }
           ]
         },
@@ -848,7 +872,7 @@
           "title": "270/1996 Sb."
         }
       ],
-      "package_sha256": "e1f195decc81005d4a661aa852e590aad5dbda9df1d788ee4d6a2a7320ab5885",
+      "package_sha256": "0cf3f81f175d833056c9d292bcadf35e191d5611986f75175b9e119703d12f9c",
       "partner_country": "AL",
       "partner_country_name": "Albánie",
       "ppt_treatment": {
@@ -1045,6 +1069,7 @@
           "article_text_sha256": "c3fa01d668af837cce0fb4d206b1f156e8a587b47987bdfccc8824b1c63a0c1f",
           "candidate_excerpt": "ÚROKY\n1. Úroky mající zdroj v jednom smluvním státě a vyplácené rezidentu druhého smluvního státu mohou být\nzdaněny v tomto druhém státě.\n2. Tyto úroky však mohou být rovněž zdaněny ve smluvním státě, v němž mají zdroj, a to podle právních\npředpisůtohoto státu, avšak jestliže skutečný vlastník úroků je rezidentem druhého smluvního státu, daň takto\nuložená nepřesáhne 10 procent hrubé částky úroků.\n3. Bez ohledu na ustanovení odstavce 2 úroky mající zdroj v jednom smluvním státě a skutečně vlastněné\nrezidentem druhého smluvního státu\na) budou osvobozeny od zdanění ve státě, ve kterém mají zdroj, pokud jsou vypláceny\n(i) vládědruhého smluvního státu, nižšímu správnímu útvaru nebo místnímu úřadu tohoto státu, centrální bance\ntohoto druhého státu nebo jakékoli finanční instituci, která je vlastněna nebo ovládána vládou druhého státu; nebo\n(ii) v souvislosti s půjčkou nebo úvěrem, která je zaručena nebo zajištěna nebo který je zaručen nebo zajištěn\nvládou druhého smluvního státu, centrální bankou tohoto druhého státu nebo jakoukoli finanční institucí, která je\nvlastněna nebo ovládána touto vládou;\nb) budou podléhat zdanění ve smluvním státě, v němž mají zdroj, sazbou nepřesahující 5 procent hrubé částky\núroků, jestliže jsou úroky vypláceny v souvislosti s půjčkou nebo úvěrem jakéhokoliv druhu, kterou nebo který\nposkytla banka.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace omezení uvedených v odstavcích 2\na 3.\n4. Výraz „úroky“ použitý v tomto článku označu",
           "candidate_rates": [
+            0.0,
             5.0,
             10.0
           ],
@@ -1070,6 +1095,12 @@
             {
               "conditions": [
                 {
+                  "condition_type": "loan_or_credit_provider",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "bank"
+                },
+                {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
                   "unit": null,
@@ -1077,6 +1108,23 @@
                 }
               ],
               "rate": 5.0
+            },
+            {
+              "conditions": [
+                {
+                  "condition_type": "article_11_3a_exemption",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "government_central_bank_or_government_owned_controlled_financial_institution_or_qualifying_government_guaranteed_financing"
+                },
+                {
+                  "condition_type": "beneficial_owner",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                }
+              ],
+              "rate": 0.0
             }
           ]
         },
@@ -1100,6 +1148,12 @@
             {
               "conditions": [
                 {
+                  "condition_type": "royalty_category",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "copyright_literary_artistic_scientific_including_films_and_broadcast_media"
+                },
+                {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
                   "unit": null,
@@ -1110,6 +1164,12 @@
             },
             {
               "conditions": [
+                {
+                  "condition_type": "royalty_category",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "patent_trademark_design_model_plan_secret_formula_process_software_equipment_or_knowhow"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -1152,7 +1212,7 @@
           "title": "86/2009 Sb.m.s."
         }
       ],
-      "package_sha256": "125b1436a07e8d7ed60076f8d28bf4815fb9a5228ceebfa98fecc19f76148ab9",
+      "package_sha256": "7c38b1424e95d10665a93018fcd5ddfd26fc691aec77ff29301ced72b3173219",
       "partner_country": "AM",
       "partner_country_name": "Arménie",
       "ppt_treatment": {
@@ -1967,7 +2027,8 @@
           "article_text_sha256": "ad4116832667abc16d6bd9c883245449326f8fb8c2f004c819a2c31e25373af9",
           "candidate_excerpt": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezi-\ndentem jednoho smluvnõho státu pro úcely jeho dane,\nna které má bezprostrednõ nárok rezident druhého\nsmluvnõho státu, mohou být zdaneny v tomto druhém\nstáte.\n2. Tyto dividendy vsak mohou být rovnez zda-\nneny ve smluvnõm státe, v nemz je spolecnost, která je\nvyplácõ, rezidentem pro úcely jeho dane, a to podle\nprávnõch predpisu tohoto státu, avsak dan takto stano-\nvená nepresáhne:\na) v Austrálii:\n(i) pet procent z té cásti hrubé cástky dividend,\nkterá byla ofrankována (zaplacenõm dane spo-\nlecnosti ze zisku ) v souladu se zákony Austrá-\nlie vztahujõcõmi se k danõm, jestlize podle\ntechto zákonu sazba dane z ofrankovaných\ndividend vyplácených nerezidentovi spolec-\nnostõ, která je pro dan ové úcely rezidentem\nAustrálie, nepresáhne pet procent hrubé\ncástky dividend;\n(ii) 15 procent z hrubé cástky dividend ve vsech\nostatnõch prõpadech; a\nb) v České republice:\n(i) pet procent z hrubé cástky dividend, jestlize\njsou dividendy vypláceny spolecnosti (vyjma\npartnerstvõ), která prõmo vlastnõ nejméne\n20 procent jmenõ spolecnosti vyplácejõcõ divi-\ndendy;\n(ii) 15 procent z hrubé cástky dividend ve vsech\nostatnõch prõpadech.\n3. Výraz 1dividendya, pouzitý v tomto clánku,\noznacuje prõjmy z podõlu a jiné prõjmy srovnatelné\ns prõjmy z podõlu podle dan ových predpisu toho\nsmluvnõho státu, v nemz je spolecnost, která rozdõlõ\nzisk, rezidentem pro úcely jeho dane.\n4. Ustanovenõ odstavce 2 se nepouzijõ, jestlize\nosoba bezprostredne oprávnená ",
           "candidate_rates": [
-            5.0
+            5.0,
+            15.0
           ],
           "candidate_status": {
             "fail_closed": true,
@@ -1978,11 +2039,13 @@
           "income_type": "dividend",
           "material_conditions": [
             {
-              "conditions": [],
-              "rate": 5.0
-            },
-            {
               "conditions": [
+                {
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company_other_than_partnership"
+                },
                 {
                   "condition_type": "minimum_ownership",
                   "operator": ">=",
@@ -1991,6 +2054,17 @@
                 }
               ],
               "rate": 5.0
+            },
+            {
+              "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                }
+              ],
+              "rate": 15.0
             }
           ]
         },
@@ -2000,6 +2074,7 @@
           "article_text_sha256": "f87db8887e9de6998e577fcab6337d8fb0fb7b0168d790a9de674f71c52fefb2",
           "candidate_excerpt": "U roky\n1. U roky majõcõ zdroj v jednom smluvnõm státe,\nna které má bezprostrednõ nárok rezident druhého\nsmluvnõho státu, mohou být zdaneny v tomto druhém\nstáte.\n2. Tyto úroky mohou být zdaneny ve smluvnõm\nstáte, ve kterém majõ zdroj, a podle právnõch predpisu\ntohoto státu, ale dan takto ulozená nepresáhne 10 pro-\ncent hrubé cástky úroku .\n3. Výraz 1úrokya v tomto clánku zahrnuje úroky\nz vládnõch cenných papõru nebo z obligacõ nebo dluho-\npisu , zajistených i nazajistených zástavnõm právem na\nnemovitosti nebo majõcõch nebo nemajõcõch právo úcasti\nna zisku, úroky z jakékoliv jiné formy zadluzenõ a ves-\nkerý jiný prõjem srovnatelný s prõjmem z pu jcených\npenez podle právnõch predpisu vztahujõcõch se k danõm\nsmluvnõho státu, v nemz má prõjem zdroj.\n4. Ustanovenõ odstavce 2 se nepouzije, jestlize\nosoba, která má bezprostrednõ nárok na úrok a která\nje rezidentem v jednom smluvnõm státe, vykonává\nv druhém smluvnõm státe, ve kterém majõ úroky\nzdroj, pru myslovou nebo obchodnõ cinnost prostred-\nnictvõm stálé provozovny, která je umõstena v tomto\ndruhém státe, nebo nezávislé povolánõ prostrednictvõm\nstálé základny umõstené v tomto druhém státe a jestlize\npohledávka, ze které jsou úroky placeny, se skutecne\nváze k této stálé provozovne nebo k této stálé základne.\nV takovém prõpade se pouzijõ ustanovenõ clánku 7 nebo\nclánku 14 podle toho, o jaký prõpad jde.\n5. Předpokládá se, ze úroky majõ zdroj v jednom\nsmluvnõm státe, jestlize plátcem je tento stát sám, jeho\nnizsõ správnõ útvar nebo mõ",
           "candidate_rates": [
+            0.0,
             10.0
           ],
           "candidate_status": {
@@ -2011,8 +2086,26 @@
           "income_type": "interest",
           "material_conditions": [
             {
-              "conditions": [],
+              "conditions": [
+                {
+                  "condition_type": "general_article_11_2_rate",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                }
+              ],
               "rate": 10.0
+            },
+            {
+              "conditions": [
+                {
+                  "condition_type": "official_foreign_exchange_reserve_investment",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "by_government_monetary_institution_or_central_bank"
+                }
+              ],
+              "rate": 0.0
             }
           ]
         },
@@ -2069,7 +2162,7 @@
           "title": "5/1996 Sb."
         }
       ],
-      "package_sha256": "83c22a892d1a6d1c9fe777886b8093729b5dbe81b7ebed999ed86a2e985c9ff8",
+      "package_sha256": "fcf9bb7f35d02a9520f6df759d6ef22f895909d87dad93b94f53234a09b61391",
       "partner_country": "AU",
       "partner_country_name": "Austrálie",
       "ppt_treatment": {
@@ -2273,6 +2366,7 @@
           "article_text_sha256": "dd2a58d59867f8f1d5e6a1c7e73f6f43235eeec86b90bee000ee3edb276802e4",
           "candidate_excerpt": "UROKY\n1. Uroky majõcõ zdroj v jednom smluvnõm státe a vyplácené rezidentu druhého smluvnõho státu mohou být\nzdaneny v tomto druhém státe.\n2. Tyto úroky vsak mohou být rovnez zdaneny ve smluvnõm státe, v nemz majõ zdroj, a to podle právnõch\npredpisu tohoto státu, avsak jestlize skutecný vlastnõk úroku je rezidentem druhého smluvnõho státu, dan takto\nulozená nepresáhne 10 procent hrubé cástky úroku.\n3. Uroky majõcõ zdroj v jednom smluvnõm státe a vyplácené rezidentu druhého smluvnõho státu, který je\njejich skutecným vlastnõkem, budou bez ohledu na ustanovenõ odstavce 2\na) osvobozeny od zdanenõ ve státe, ve kterém majõ zdroj, pokud jsou vypláceny\n(i) vláde druhého smluvnõho státu, územne-správnõmu útvaru nebo mõstnõmu úradu tohoto státu, centrálnõ\nbance tohoto druhého státu nebo jakékoli financnõ instituci, která je vlastnena nebo ovládána vládou\ndruhého státu; nebo\n(ii) v souvislosti s pujckou nebo úverem, která je zarucena nebo zajistena nebo který je zarucen nebo\nzajisten vládou druhého smluvnõho státu, centrálnõ bankou tohoto druhého státu nebo jakoukoli fi-\nnancnõ institucõ, která je vlastnena nebo ovládána touto vládou;\nb) podléhat zdanenõ ve smluvnõm státe, v nemz majõ zdroj, sazbou nepresahujõcõ 5 procent hrubé cástky úroku,\njestlize jsou úroky vypláceny v souvislosti s pujckou nebo úverem jakéhokoliv druhu, kterou nebo který\nposkytla banka.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou dohodou zpusob aplikace techto omezenõ.\n4. Výraz 1úrokya pouzitý v tomto clánku oz",
           "candidate_rates": [
+            0.0,
             5.0,
             10.0
           ],
@@ -2298,6 +2392,12 @@
             {
               "conditions": [
                 {
+                  "condition_type": "loan_or_credit_provider",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "bank"
+                },
+                {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
                   "unit": null,
@@ -2305,6 +2405,23 @@
                 }
               ],
               "rate": 5.0
+            },
+            {
+              "conditions": [
+                {
+                  "condition_type": "article_11_3a_exemption",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "government_central_bank_or_government_owned_controlled_financial_institution_or_qualifying_government_guaranteed_financing"
+                },
+                {
+                  "condition_type": "beneficial_owner",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                }
+              ],
+              "rate": 0.0
             }
           ]
         },
@@ -2368,7 +2485,7 @@
           "title": "74/2006 Sb.m.s."
         }
       ],
-      "package_sha256": "504b07d2032fae482f40521c97ed7a29679df3206430f8899ecc61b5354f4e0b",
+      "package_sha256": "e70f17023453da0c94528f87ddb8b218480ec89bbf0fa9a894fa63cdfb995a03",
       "partner_country": "AZ",
       "partner_country_name": "Ázerbájdžán",
       "ppt_treatment": {
@@ -2915,6 +3032,12 @@
             {
               "conditions": [
                 {
+                  "condition_type": "article_11_3_exemption",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "credit_sale_or_bank_financing_or_government_central_bank_government_financial_institution_or_qualifying_government_guaranteed_financing"
+                },
+                {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
                   "unit": null,
@@ -2945,6 +3068,12 @@
             {
               "conditions": [
                 {
+                  "condition_type": "royalty_category",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "copyright_literary_artistic_scientific_including_films_and_broadcast_media"
+                },
+                {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
                   "unit": null,
@@ -2955,6 +3084,12 @@
             },
             {
               "conditions": [
+                {
+                  "condition_type": "royalty_category",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "patent_trademark_design_model_plan_secret_formula_process_software_equipment_or_knowhow"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -3000,7 +3135,7 @@
           "title": "69/2012 Sb.m.s."
         }
       ],
-      "package_sha256": "e46b611b6893e5557fa4ef00d1c478ced0e6c2125ade6ba0a1da506d3217c9df",
+      "package_sha256": "388f4256cf2288cc020273edd547f53976584699de97390414eb7c5617785e92",
       "partner_country": "BB",
       "partner_country_name": "Barbados",
       "ppt_treatment": {
@@ -3225,6 +3360,12 @@
             {
               "conditions": [
                 {
+                  "condition_type": "article_11_3_exemption",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "government_central_bank_export_promotion_institution_or_qualifying_government_guaranteed_financing"
+                },
+                {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
                   "unit": null,
@@ -3297,7 +3438,7 @@
           "title": "8/2021 Sb.m.s."
         }
       ],
-      "package_sha256": "68ffac42fd66e1481d6bb9f8b8b02a908f4b9696a16346016b257b55490c20d6",
+      "package_sha256": "94ebe6924727e60eca34ee2ca176b3d4698ef378320ec73afcc23314359ea383",
       "partner_country": "BD",
       "partner_country_name": "Bangladéš",
       "ppt_treatment": {
@@ -4254,6 +4395,7 @@
           "article_text_sha256": "7a3608269b40d7ad5cae0ed081cc2d2f9cb463764a7baebdea8e8bde522dcb3d",
           "candidate_excerpt": "U roky\n1. U roky majõcõ zdroj v jednom smluvnõm státe\na vyplácené rezidentu druhého smluvnõho státu mohou\nbýt zdaneny v tomto druhém státe.\n2. Tyto úroky vsak mohou být rovnez zdaneny ve\nsmluvnõm státe, v nemz majõ zdroj, a to podle právnõch\npredpisu tohoto státu, avsak jestlize skutecný vlastnõk\núroku je rezidentem druhého smluvnõho státu, dan\ntakto ulozená nepresáhne 10 procent hrubé cástky\núroku .\nPřõslusné úrady smluvnõch státu upravõ vzájemnou do-\nhodou zpu sob aplikace tohoto omezenõ a omezenõ uve-\ndených v odstavci 3.\n3. Bez ohledu na ustanovenõ odstavce 2 jsou\núroky osvobozeny od zdanenõ ve smluvnõm státe, ve\nkterém majõ zdroj, jestlize jsou:\na) pobõrané a skutecne vlastnené:\n(i) vládou druhého smluvnõho státu, vcetne jaké-\nhokoliv mõstnõho úradu tohoto státu, cen-\ntrálnõ banky nebo jakékoliv financnõ instituce,\nkterou zcela vlastnõ tato vláda; nebo\n(ii) rezidentem druhého smluvnõho státu v souvis-\nlosti s pu jckou nebo úverem garantovanými\nvládou tohoto druhého státu;\nb) placené v souvislosti s prodejem jakéhokoliv za-\nrõzenõ ci zbozõ na obchodnõ úver.\n4. Výraz 1úrokya pouzitý v tomto clánku ozna-\ncuje prõjmy z pohledávek jakéhokoliv druhu, at' zajis-\ntených, ci nezajistených zástavnõm právem na nemovi-\ntosti nebo majõcõch ci nemajõcõch právo úcasti na zisku\ndluznõka, a zvláste prõjmy z vládnõch cenných papõru\na prõjmy z obligacõ nebo dluhopisu , vcetne prémiõ a vý-\nher, které se vázou k temto cenným papõru m, obliga-\ncõm nebo dluhopisu m. Penále ukládané za pozdnõ p",
           "candidate_rates": [
+            0.0,
             10.0
           ],
           "candidate_status": {
@@ -4274,6 +4416,23 @@
                 }
               ],
               "rate": 10.0
+            },
+            {
+              "conditions": [
+                {
+                  "condition_type": "article_11_3_exemption",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "government_local_authority_central_bank_or_wholly_government_owned_financial_institution_or_other_article_11_3_qualifying_case"
+                },
+                {
+                  "condition_type": "beneficial_owner",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                }
+              ],
+              "rate": 0.0
             }
           ]
         },
@@ -4337,7 +4496,7 @@
           "title": "203/1999 Sb."
         }
       ],
-      "package_sha256": "afb7d2f27de56f3b6ef97757725db92615ca9ee3f9a9fa6c2fd842ec8d7a9747",
+      "package_sha256": "4bc8a0b96d972d6ef9b0f4269daab55374bb888081dc4d3df98953270ef1757d",
       "partner_country": "BG",
       "partner_country_name": "Bulharsko",
       "ppt_treatment": {
@@ -4825,6 +4984,24 @@
             {
               "conditions": [
                 {
+                  "condition_type": "loan_or_credit_provider",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "bank"
+                },
+                {
+                  "condition_type": "minimum_term_years",
+                  "operator": ">=",
+                  "unit": null,
+                  "value": "10"
+                },
+                {
+                  "condition_type": "purpose",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "industrial_equipment_sale_or_study_installation_furnishing_of_industrial_or_scientific_units_or_public_works"
+                },
+                {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
                   "unit": null,
@@ -4835,6 +5012,12 @@
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -4847,10 +5030,10 @@
             {
               "conditions": [
                 {
-                  "condition_type": "beneficial_owner",
+                  "condition_type": "article_11_3a_exemption",
                   "operator": "==",
                   "unit": null,
-                  "value": "true"
+                  "value": "interest_paid_to_other_state_government_political_subdivision_or_government_owned_agency_including_financial_institution_unless_11_3b_applies"
                 }
               ],
               "rate": 0.0
@@ -4877,6 +5060,12 @@
             {
               "conditions": [
                 {
+                  "condition_type": "royalty_category",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "trademark"
+                },
+                {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
                   "unit": null,
@@ -4887,6 +5076,12 @@
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_royalties"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -4929,7 +5124,7 @@
           "title": "200/1991 Sb."
         }
       ],
-      "package_sha256": "b090f7deac79e7bf12df3e24805c35e07feef86853f0dbb87f7e598028dd85bb",
+      "package_sha256": "705ab2a9f52ec01fc5179bbe50c9733af71b8b8df86a509a4e27a6de2d42fb28",
       "partner_country": "BR",
       "partner_country_name": "Brazílie",
       "ppt_treatment": {
@@ -5136,6 +5331,12 @@
             {
               "conditions": [
                 {
+                  "condition_type": "article_11_3_exemption",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "credit_sale_or_bank_loan_or_government_or_subnational_or_local_authority_or_central_bank_or_other_specified_public_financing"
+                },
+                {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
                   "unit": null,
@@ -5209,7 +5410,7 @@
           "title": "49/2020 Sb.m.s."
         }
       ],
-      "package_sha256": "42b22327098e9e8188524dc6243a9962734d7a06d855417eb6a9faa0fa93c6d9",
+      "package_sha256": "42d8630e491ddc4a1490318b78d7322496c2a6e0a78e6a77b64ada7680a86398",
       "partner_country": "BW",
       "partner_country_name": "Botswana",
       "ppt_treatment": {
