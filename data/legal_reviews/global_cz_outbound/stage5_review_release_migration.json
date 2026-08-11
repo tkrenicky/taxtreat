@@ -1,45 +1,50 @@
 {
-  "schema_version": 1,
-  "dataset_release": "stage5-review-release-migration-2026-08-11.1",
-  "status": "architecture_only_no_production_release",
+  "current_migration_position": {
+    "country_count": 101,
+    "independent_qa_complete_packages": 0,
+    "independent_qa_pending_packages": 7,
+    "independent_qa_required_packages": 7,
+    "primary_human_review_complete_packages": 101,
+    "primary_human_review_complete_scopes": 303,
+    "production_approval_events_recorded_in_repository": 0,
+    "production_released_scopes": 0,
+    "scope_count": 303,
+    "verified_scopes": 0
+  },
+  "dataset_release": "stage5-review-release-migration-2026-08-11.2",
+  "migration_policy": {
+    "approval_does_not_equal_source_release": true,
+    "automatic_needs_review_to_verified_transition_forbidden": true,
+    "completed_country_review_may_replace_duplicate_legacy_primary_per_scope_review": true,
+    "final23_protected_candidate_bytes_remain_immutable": true,
+    "human_review_must_be_bound_to_exact_country_package_hash": true,
+    "legacy_existing_verified_records_must_not_be_rewritten": true,
+    "legacy_historical_review_records_must_not_be_fabricated": true,
+    "production_approval_must_be_bound_to_exact_country_package_hash": true,
+    "review_does_not_equal_release": true
+  },
   "review_state_model": {
     "candidate": {
       "legal_status": "needs_review",
       "production_releasable": false
     },
     "human_review_complete": {
-      "meaning": "The country package and all three WHT income scopes were substantively reviewed by a human reviewer against the review material and identified corrections were resolved.",
       "marks_scope_verified": false,
-      "promotes_rule": false,
-      "production_releasable": false
+      "meaning": "The country package and all three WHT income scopes were substantively reviewed by a human reviewer against the review material and identified corrections were resolved.",
+      "production_releasable": false,
+      "promotes_rule": false
     },
     "production_approved": {
-      "meaning": "A separate explicit approval action accepts the already reviewed package for production-release processing.",
       "marks_scope_verified": false,
+      "meaning": "A separate explicit approval action accepts the already reviewed package for production-release processing.",
       "opens_source_release_gate": false,
       "production_releasable": false
     },
     "production_released": {
-      "meaning": "Future explicit source-release integration step.",
-      "implemented_in_this_release": false
+      "implemented_in_this_release": false,
+      "meaning": "Future explicit source-release integration step."
     }
   },
-  "migration_policy": {
-    "completed_country_review_may_replace_duplicate_legacy_primary_per_scope_review": true,
-    "legacy_historical_review_records_must_not_be_fabricated": true,
-    "legacy_existing_verified_records_must_not_be_rewritten": true,
-    "human_review_must_be_bound_to_exact_country_package_hash": true,
-    "production_approval_must_be_bound_to_exact_country_package_hash": true,
-    "review_does_not_equal_release": true,
-    "approval_does_not_equal_source_release": true,
-    "automatic_needs_review_to_verified_transition_forbidden": true,
-    "final23_protected_candidate_bytes_remain_immutable": true
-  },
-  "current_migration_position": {
-    "country_count": 101,
-    "scope_count": 303,
-    "human_review_events_recorded_in_repository": 0,
-    "production_approval_events_recorded_in_repository": 0,
-    "production_released_scopes": 0
-  }
+  "schema_version": 1,
+  "status": "architecture_only_no_production_release"
 }
