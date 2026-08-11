@@ -29759,7 +29759,19 @@
             {
               "conditions": [
                 {
+                  "condition_type": "recipient_is_treaty_resident",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
                   "condition_type": "beneficial_owner",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
+                  "condition_type": "claim_not_effectively_connected_to_czech_pe",
                   "operator": "==",
                   "unit": null,
                   "value": "true"
@@ -29833,7 +29845,7 @@
           "title": "45/2022 Sb.m.s."
         }
       ],
-      "package_sha256": "89e973c2a6d877ed76c8a74db268da0f4865e8e4f955fa1d10cf76b6adaf75b8",
+      "package_sha256": "955712e070ef76d5a0d6c1c9ff9e3349d11e2892412ff7d6aa23d6a3186cb424",
       "partner_country": "QA",
       "partner_country_name": "Katar",
       "ppt_treatment": {
@@ -32080,6 +32092,12 @@
                   "operator": "==",
                   "unit": null,
                   "value": "true"
+                },
+                {
+                  "condition_type": "right_or_property_not_effectively_connected_to_czech_pe_or_fixed_base",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
                 }
               ],
               "rate": 0.0
@@ -32091,6 +32109,18 @@
                   "operator": "==",
                   "unit": null,
                   "value": "all_other_article_12_royalties"
+                },
+                {
+                  "condition_type": "recipient_is_treaty_resident",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
+                  "condition_type": "right_or_property_not_effectively_connected_to_czech_pe_or_fixed_base",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
                 }
               ],
               "rate": 5.0
@@ -32158,7 +32188,7 @@
           "title": null
         }
       ],
-      "package_sha256": "1a44b932db5127cc39d5cceaec123b987f19821838e0bc2e661a5f66b178afa4",
+      "package_sha256": "81c624796d8bb86d6974eb0c2436e936b5445b4a78d1d4072bdef2daeabe5896",
       "partner_country": "SE",
       "partner_country_name": "Švédsko",
       "ppt_treatment": {
