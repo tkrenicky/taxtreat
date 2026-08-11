@@ -15,9 +15,9 @@ from taxtreat.pipeline.release import (
     build_legal_registry,
     validate_release,
 )
-from taxtreat.engine.source_release_gate import (
-    SourceNotReleasedError,
-    get_source_release,
+from taxtreat.engine.source_release_gate_v2 import (
+    CanonicalSourceNotReleasedError,
+    get_canonical_source_release,
 )
 from taxtreat.registry.legal_scope import load_partner_registry
 from taxtreat.services.decision import (
@@ -217,8 +217,10 @@ def require_analysis_source_release(
     treaty_pair_id = f"{source}-{recipient}"
 
     try:
-        release = get_source_release(treaty_pair_id)
-    except SourceNotReleasedError as exc:
+        release = get_canonical_source_release(
+            treaty_pair_id
+        )
+    except CanonicalSourceNotReleasedError as exc:
         raise HTTPException(
             status_code=409,
             detail={

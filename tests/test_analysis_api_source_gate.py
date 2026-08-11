@@ -59,7 +59,7 @@ def test_released_pair_is_allowed(monkeypatch):
 
     monkeypatch.setattr(
         main,
-        "get_source_release",
+        "get_canonical_source_release",
         lambda treaty_pair_id: release,
     )
 
@@ -84,7 +84,7 @@ def test_partial_release_is_blocked(monkeypatch):
 
     monkeypatch.setattr(
         main,
-        "get_source_release",
+        "get_canonical_source_release",
         lambda treaty_pair_id: release,
     )
 
