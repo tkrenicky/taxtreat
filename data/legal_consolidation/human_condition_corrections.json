@@ -41,6 +41,47 @@
       ]
     },
     {
+      "country": "AE",
+      "income_type": "dividend",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "government_or_subnational_or_local_authority_or_central_bank_or_entity_directly_or_indirectly_wholly_owned_by_such_public_body"
+            }
+          ]
+        },
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_treaty_eligible_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "PARTIALLY ACCEPTED: 0% exemption is supported, but the current 2024 treaty excerpt requires full public ownership (not merely 25%). The separate 25% / special-foreign-investment-regime point is not supported by the current Article 10 excerpt; treaty-residence eligibility remains a separate gate."
+    },
+    {
       "country": "AL",
       "income_type": "interest",
       "rate_candidates": [
@@ -160,6 +201,47 @@
       ]
     },
     {
+      "country": "AT",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "copyright_literary_artistic_scientific_including_films_and_broadcast_media"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "patent_trademark_design_model_plan_secret_formula_process_software_equipment_or_knowhow"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "NOT ACCEPTED AS RATE REMOVAL; CONDITION CLARIFIED: Article 12 does not print '0%', but source-state taxation is allowed only for paragraph 3(a). Paragraph 3(b) copyright royalties therefore remain residence-state-only (0% source-state rate)."
+    },
+    {
       "country": "AU",
       "income_type": "dividend",
       "rate_candidates": [
@@ -222,6 +304,24 @@
       ]
     },
     {
+      "country": "AU",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_has_immediate_entitlement",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: The 10% ceiling is general; the missing treaty condition is immediate entitlement by the resident recipient."
+    },
+    {
       "country": "AZ",
       "income_type": "interest",
       "rate_candidates": [
@@ -273,27 +373,17 @@
       ]
     },
     {
-      "country": "BD",
-      "income_type": "interest",
+      "country": "BB",
+      "income_type": "dividend",
       "rate_candidates": [
         {
+          "rate": 5.0,
           "conditions": [
             {
-              "condition_type": "beneficial_owner",
-              "operator": "==",
+              "condition_type": "minimum_ownership",
+              "operator": ">=",
               "unit": null,
-              "value": "true"
-            }
-          ],
-          "rate": 10.0
-        },
-        {
-          "conditions": [
-            {
-              "condition_type": "article_11_3_exemption",
-              "operator": "==",
-              "unit": null,
-              "value": "government_central_bank_export_promotion_institution_or_qualifying_government_guaranteed_financing"
+              "value": "25%"
             },
             {
               "condition_type": "beneficial_owner",
@@ -301,10 +391,27 @@
               "unit": null,
               "value": "true"
             }
-          ],
-          "rate": 0.0
+          ]
+        },
+        {
+          "rate": 15.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
         }
-      ]
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Removed duplicate generic 5% candidate."
     },
     {
       "country": "BB",
@@ -381,7 +488,7 @@
       ]
     },
     {
-      "country": "BW",
+      "country": "BD",
       "income_type": "interest",
       "rate_candidates": [
         {
@@ -393,7 +500,7 @@
               "value": "true"
             }
           ],
-          "rate": 7.5
+          "rate": 10.0
         },
         {
           "conditions": [
@@ -401,7 +508,117 @@
               "condition_type": "article_11_3_exemption",
               "operator": "==",
               "unit": null,
-              "value": "credit_sale_or_bank_loan_or_government_or_subnational_or_local_authority_or_central_bank_or_other_specified_public_financing"
+              "value": "government_central_bank_export_promotion_institution_or_qualifying_government_guaranteed_financing"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "rate": 0.0
+        }
+      ]
+    },
+    {
+      "country": "BE",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "trade_receivable_or_public_export_credit_or_bank_loan_or_bank_deposit_or_government_subnational_or_local_authority"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Added missing Article 11(3) exemption."
+    },
+    {
+      "country": "BE",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "copyright_literary_artistic_scientific_including_cinematographic_films_and_broadcast_media"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "software_patent_trademark_design_model_plan_secret_formula_process_knowhow_or_industrial_commercial_scientific_equipment"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED WITH CONSOLIDATION: 127/2003 gives residence-only taxation for copyright royalties; D-312 reduces software/patent/trademark/etc. to 5%. Equipment is already 5% under the treaty. No separate 10% candidate remains for the covered Article 12 categories."
+    },
+    {
+      "country": "BG",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ],
+          "rate": 10.0
+        },
+        {
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "government_local_authority_central_bank_or_wholly_government_owned_financial_institution_or_other_article_11_3_qualifying_case"
             },
             {
               "condition_type": "beneficial_owner",
@@ -419,6 +636,18 @@
       "income_type": "interest",
       "rate_candidates": [
         {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "article_11_3a_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "interest_paid_to_other_state_government_political_subdivision_or_government_owned_agency_including_financial_institution_unless_11_3b_applies"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
           "conditions": [
             {
               "condition_type": "loan_or_credit_provider",
@@ -444,10 +673,10 @@
               "unit": null,
               "value": "true"
             }
-          ],
-          "rate": 10.0
+          ]
         },
         {
+          "rate": 15.0,
           "conditions": [
             {
               "condition_type": "fallback_case",
@@ -461,21 +690,10 @@
               "unit": null,
               "value": "true"
             }
-          ],
-          "rate": 15.0
-        },
-        {
-          "conditions": [
-            {
-              "condition_type": "article_11_3a_exemption",
-              "operator": "==",
-              "unit": null,
-              "value": "interest_paid_to_other_state_government_political_subdivision_or_government_owned_agency_including_financial_institution_unless_11_3b_applies"
-            }
-          ],
-          "rate": 0.0
+          ]
         }
-      ]
+      ],
+      "review_resolution_note": "NOT ACCEPTED: The stored Article 11(2)(a) expressly contains a 10% rate for qualifying ≥10-year bank financing. Existing correction is retained."
     },
     {
       "country": "BR",
@@ -518,7 +736,7 @@
       ]
     },
     {
-      "country": "BG",
+      "country": "BW",
       "income_type": "interest",
       "rate_candidates": [
         {
@@ -530,7 +748,7 @@
               "value": "true"
             }
           ],
-          "rate": 10.0
+          "rate": 7.5
         },
         {
           "conditions": [
@@ -538,7 +756,7 @@
               "condition_type": "article_11_3_exemption",
               "operator": "==",
               "unit": null,
-              "value": "government_local_authority_central_bank_or_wholly_government_owned_financial_institution_or_other_article_11_3_qualifying_case"
+              "value": "credit_sale_or_bank_loan_or_government_or_subnational_or_local_authority_or_central_bank_or_other_specified_public_financing"
             },
             {
               "condition_type": "beneficial_owner",
@@ -550,10 +768,4122 @@
           "rate": 0.0
         }
       ]
+    },
+    {
+      "country": "BY",
+      "income_type": "dividend",
+      "rate_candidates": [
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company"
+            },
+            {
+              "condition_type": "minimum_ownership",
+              "operator": ">=",
+              "unit": null,
+              "value": "25%"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED WITH CURRENT-SUSPENSION NOTE: Underlying treaty/protocol rule retained for post-suspension use. Articles 10 and 11 are suspended from 2024-06-01 through 2026-12-31 under Notice 115/2024, so these treaty rates are not currently usable during the suspension."
+    },
+    {
+      "country": "BY",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "government_or_central_bank"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Added missing government / central-bank exemption."
+    },
+    {
+      "country": "CA",
+      "income_type": "dividend",
+      "rate_candidates": [
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company"
+            },
+            {
+              "condition_type": "voting_power_control",
+              "operator": ">=",
+              "unit": null,
+              "value": "10%"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "canadian_non_resident_owned_investment_corporation_exception",
+              "operator": "==",
+              "unit": null,
+              "value": "false"
+            }
+          ]
+        },
+        {
+          "rate": 15.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Removed duplicate generic 5% candidate; tied 5% to ≥10% voting control."
+    },
+    {
+      "country": "CA",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "source_state_government_debt_or_qualifying_government_owned_export_financing_or_arm_length_credit_sale"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Replaced generic 0% with Article 11(3) exemption categories, including government/public financing."
+    },
+    {
+      "country": "CL",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 4.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "qualifying_article_11_2a_case",
+              "operator": "==",
+              "unit": null,
+              "value": "bank_or_insurer_or_active_regular_unrelated_financing_business_or_credit_sale_of_machinery_or_equipment_or_financial_market_funding_enterprise"
+            },
+            {
+              "condition_type": "detailed_eligibility_review_required",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED + REVIEW FLAG: The 4% route is correctly limited to the detailed Article 11(2)(a) cases. A dedicated detailed-eligibility-review flag is retained because the financing-business and financial-market tests are fact intensive."
+    },
+    {
+      "country": "CL",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "industrial_commercial_or_scientific_equipment"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_article_12_royalties"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Mapped 5% specifically to equipment royalties; 10% is the residual Article 12 rate."
+    },
+    {
+      "country": "CM",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "credit_sale_or_government_central_bank_export_promotion_institution_or_qualifying_government_guaranteed_financing"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Replaced generic 0% with credit-sale/government/public-financing conditions."
+    },
+    {
+      "country": "CN",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 7.5,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "government_subnational_local_authority_central_bank_or_government_agency_or_claim_financed_guaranteed_or_secured_by_such_public_body"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Added missing government/public-agency exemption."
+    },
+    {
+      "country": "CO",
+      "income_type": "dividend",
+      "rate_candidates": [
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_other_than_partnership"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": ">=",
+              "unit": null,
+              "value": "25%"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Removed 25% Colombia-only outbound clause: it applies to dividends paid by a Colombian company from untaxed Colombian profits, not CZ-source dividends."
+    },
+    {
+      "country": "CO",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "credit_sale_or_bank_loan_minimum_3_years_or_government_central_bank_government_owned_or_controlled_financial_institution_or_qualifying_government_guaranteed_financing"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Replaced generic 0% with Article 11(3) conditions."
+    },
+    {
+      "country": "DE",
+      "income_type": "dividend",
+      "rate_candidates": [
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": ">=",
+              "unit": null,
+              "value": "25%"
+            }
+          ]
+        },
+        {
+          "rate": 15.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            }
+          ]
+        },
+        {
+          "rate": 25.0,
+          "conditions": [
+            {
+              "condition_type": "distributed_vs_undistributed_corporate_tax_rate_difference",
+              "operator": ">=",
+              "unit": null,
+              "value": "20%"
+            },
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company"
+            },
+            {
+              "condition_type": "direct_or_indirect_voting_ownership",
+              "operator": ">=",
+              "unit": null,
+              "value": "25%"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED AND CORRECTED FURTHER: 20% was incorrectly treated as a dividend rate; it is a tax-rate-differential threshold in Article 10(3). The actual special rate is 25%, alongside 5% and 15%."
+    },
+    {
+      "country": "DE",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_is_treaty_resident",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "source_state_taxation",
+              "operator": "==",
+              "unit": null,
+              "value": "prohibited_under_article_11"
+            },
+            {
+              "condition_type": "permanent_establishment_connection",
+              "operator": "==",
+              "unit": null,
+              "value": "false"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Filled blank general 0% condition."
+    },
+    {
+      "country": "DE",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_is_treaty_resident",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Filled the missing general Article 12 condition."
+    },
+    {
+      "country": "DK",
+      "income_type": "dividend",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company"
+            },
+            {
+              "condition_type": "minimum_ownership",
+              "operator": ">=",
+              "unit": null,
+              "value": "10%"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "qualifying_pension_fund_or_similar_pension_institution"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Separated the two distinct 0% legal routes."
+    },
+    {
+      "country": "DK",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "copyright_literary_artistic_scientific_including_films_and_broadcast_media"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "patent_trademark_design_model_plan_secret_formula_process_software_equipment_or_knowhow"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Paragraph 3(b) copyright royalties are excluded from source-state taxation; paragraph 3(a) is capped at 10%."
+    },
+    {
+      "country": "EE",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_or_financing",
+              "operator": "==",
+              "unit": null,
+              "value": "government_subnational_local_authority_central_bank_wholly_government_owned_financial_institution_or_government_guaranteed_loan"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Added Article 11(3) government/public-financing exemption."
+    },
+    {
+      "country": "EG",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "government_subnational_local_authority_central_bank_or_other_financial_institution_or_public_company_with_government_ownership_over_50_percent"
+            }
+          ]
+        },
+        {
+          "rate": 15.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Added Article 11(3) exemption, including >50% government-owned financial institution/public company."
+    },
+    {
+      "country": "ES",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_is_treaty_resident",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "source_state_taxation",
+              "operator": "==",
+              "unit": null,
+              "value": "prohibited_under_article_11"
+            },
+            {
+              "condition_type": "permanent_establishment_connection",
+              "operator": "==",
+              "unit": null,
+              "value": "false"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Filled blank general 0% condition."
+    },
+    {
+      "country": "ES",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "copyright_literary_dramatic_musical_or_artistic_excluding_cinematographic_and_broadcast_recordings"
+            },
+            {
+              "condition_type": "recipient_taxed_on_royalty_in_residence_state",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_article_12_royalties"
+            },
+            {
+              "condition_type": "recipient_taxed_on_royalty_in_residence_state",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Filled category-specific 0% and 5% conditions."
+    },
+    {
+      "country": "ET",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "government_subnational_local_authority_central_bank_export_or_foreign_investment_promotion_institution_or_qualifying_guaranteed_or_secured_financing"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Added missing Article 11(3) exemption."
+    },
+    {
+      "country": "FI",
+      "income_type": "dividend",
+      "rate_candidates": [
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_other_than_partnership"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": ">=",
+              "unit": null,
+              "value": "25%"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Removed the 0% candidate because the residence-only rule in Article 10(2) is Finland-source-specific and does not apply to CZ-source dividends."
+    },
+    {
+      "country": "FI",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "copyright_literary_artistic_scientific_including_films_and_broadcast_media"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 1.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "financial_lease_of_equipment"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "operating_lease_of_equipment_or_computer_software"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "patent_trademark_design_model_plan_secret_formula_process_or_industrial_commercial_scientific_knowhow"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED WITH RATE CLARIFICATION: Article 12 gives 0/1/5/10. The two final paragraph 3 categories (d) and (e) are both 10%, not a separate additional 5%."
+    },
+    {
+      "country": "FR",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "copyright_literary_artistic_scientific_excluding_computer_program_including_films_and_broadcast_media"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "industrial_commercial_or_scientific_equipment"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "patent_trademark_design_model_plan_secret_formula_process_computer_program_or_knowhow"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Added residence-only copyright category and tied 5%/10% to the treaty categories."
+    },
+    {
+      "country": "GB",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "copyright_literary_artistic_or_scientific_including_films_and_broadcast_recordings"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "patent_trademark_design_model_plan_secret_formula_process_equipment_or_industrial_commercial_technical_technological_scientific_knowhow"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Article 12(3)(b) copyright royalties are residence-state-only; Article 12(3)(a) is capped at 10%."
+    },
+    {
+      "country": "GE",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 8.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "government_subnational_local_authority_central_bank_wholly_government_owned_financial_institution_or_government_guaranteed_financing_or_credit_sale_of_industrial_commercial_or_scientific_equipment"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Added missing Article 11(3) exemption."
+    },
+    {
+      "country": "GE",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "copyright_literary_artistic_scientific_excluding_computer_program_including_films_and_broadcast_media"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "industrial_commercial_or_scientific_equipment"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "patent_trademark_design_model_plan_secret_formula_process_computer_program_or_knowhow"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Added residence-only copyright category and tied 5%/10% to the treaty categories."
+    },
+    {
+      "country": "GH",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "credit_sale_or_bank_loan_or_government_central_bank_government_owned_or_controlled_financial_institution_or_qualifying_government_guaranteed_financing"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Replaced generic 0% with Article 11(3) conditions."
+    },
+    {
+      "country": "GR",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "loan_granted_by_government_or_bank_or_institution_on_behalf_or_for_account_of_government"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Replaced generic 0% with government-loan route."
+    },
+    {
+      "country": "GR",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "copyright_literary_artistic_or_scientific_including_cinematographic_and_television_films"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "patent_trademark_design_model_plan_secret_formula_process_equipment_or_industrial_commercial_scientific_knowhow"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Article 12(2) permits source-state taxation only for paragraph 3(a); paragraph 3(b) copyright royalties are residence-state-only."
+    },
+    {
+      "country": "ID",
+      "income_type": "dividend",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_other_than_partnership"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": ">=",
+              "unit": null,
+              "value": "20%"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Removed unsupported 12.5% dividend candidate."
+    },
+    {
+      "country": "ID",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "government_including_local_authority_central_bank_or_other_government_controlled_financial_institution"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 12.5,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Added government / central-bank / government-controlled financial institution exemption."
+    },
+    {
+      "country": "IL",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "source_state_government_bonds_debentures_or_qualifying_central_bank_provided_refinanced_guaranteed_or_secured_financing"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Replaced generic 0% with government-securities / central-bank financing routes."
+    },
+    {
+      "country": "IN",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_or_loan_provider_or_guarantor",
+              "operator": "==",
+              "unit": null,
+              "value": "government_subnational_local_authority_named_central_bank_or_public_financial_institution_or_other_agreed_institution"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Added Article 11(3) public / guaranteed financing exemption."
+    },
+    {
+      "country": "IR",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "credit_sale_or_bank_loan_or_government_central_bank_government_owned_or_controlled_financial_institution_or_qualifying_government_guaranteed_financing"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Replaced generic 0% with Article 11(3) conditions."
+    },
+    {
+      "country": "IT",
+      "income_type": "dividend",
+      "rate_candidates": [
+        {
+          "rate": 15.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Filled missing beneficial-owner condition."
+    },
+    {
+      "country": "IT",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_is_treaty_resident",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "source_state_taxation",
+              "operator": "==",
+              "unit": null,
+              "value": "prohibited_under_article_11"
+            },
+            {
+              "condition_type": "permanent_establishment_connection",
+              "operator": "==",
+              "unit": null,
+              "value": "false"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Filled blank general 0% condition."
+    },
+    {
+      "country": "IT",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "copyright_literary_artistic_or_scientific_including_cinematographic_and_television_films"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "patent_trademark_design_model_plan_secret_formula_process_equipment_or_industrial_commercial_scientific_knowhow"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Filled the Article 12 category conditions."
+    },
+    {
+      "country": "JO",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "government_subnational_local_authority_central_bank_or_wholly_government_owned_financial_institution"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Added missing government/public-institution exemption."
+    },
+    {
+      "country": "JP",
+      "income_type": "dividend",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company"
+            },
+            {
+              "condition_type": "voting_ownership",
+              "operator": ">=",
+              "unit": null,
+              "value": "25%"
+            },
+            {
+              "condition_type": "holding_period_months",
+              "operator": ">=",
+              "unit": null,
+              "value": "6"
+            }
+          ]
+        },
+        {
+          "rate": 15.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Added missing 15% fallback and six-month holding condition."
+    },
+    {
+      "country": "JP",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_is_treaty_resident",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "government_local_authority_central_bank_wholly_state_owned_financial_institution_or_claim_secured_or_indirectly_financed_by_such_public_body"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Added missing Article 11(3) exemption and filled blank 10% condition."
+    },
+    {
+      "country": "JP",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "cultural_copyright_literary_artistic_scientific_including_films_and_broadcast_media"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "industrial_patent_trademark_design_model_plan_secret_formula_process_equipment_or_knowhow"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Added cultural-royalty exemption and industrial-royalty category."
+    },
+    {
+      "country": "KG",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "credit_sale_or_government_central_bank_export_or_investment_promotion_institution_or_qualifying_government_guaranteed_financing"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Replaced generic 0% with Article 11(3) conditions."
+    },
+    {
+      "country": "KP",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "lender_category",
+              "operator": "==",
+              "unit": null,
+              "value": "other_state_government_subnational_local_authority_or_resident"
+            },
+            {
+              "condition_type": "borrower_category",
+              "operator": "==",
+              "unit": null,
+              "value": "source_state_government_subnational_local_authority_central_bank_or_government_controlled_financial_institution"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED WITH DIRECTIONAL CONDITION: Article 11(3) exemption depends on the public-sector borrower/lender relationship; it is not a generic 'government recipient' exemption."
+    },
+    {
+      "country": "KR",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "government_subnational_local_authority_central_bank_government_owned_or_controlled_financial_institution_or_qualifying_guaranteed_or_insured_financing_or_credit_sale"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Added missing Article 11(3) exemption."
+    },
+    {
+      "country": "KR",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "copyright_literary_artistic_scientific_including_films_and_broadcast_media"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "patent_trademark_design_model_plan_secret_formula_process_equipment_or_knowhow"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Replaced generic BO-only 0% with the paragraph 3(b) copyright category."
+    },
+    {
+      "country": "KW",
+      "income_type": "dividend",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "government_or_government_institution_or_article_4_2_public_organization_or_company_controlled_by_or_at_least_25_percent_directly_or_indirectly_owned_by_such_public_body"
+            }
+          ]
+        },
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Added Article 10(3) public-sector / ≥25%-public-ownership exemption."
+    },
+    {
+      "country": "KZ",
+      "income_type": "dividend",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Removed unsupported 5% candidate; base Article 10 and consolidated protocol inventory do not provide an Article 10 rate change."
+    },
+    {
+      "country": "KZ",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "government_subnational_local_authority_central_bank_or_wholly_government_owned_financial_institution_or_interest_on_government_guaranteed_loan"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Added missing government/public-financing exemption."
+    },
+    {
+      "country": "LB",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "industrial_commercial_or_scientific_equipment"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "copyright_literary_artistic_scientific_including_films_broadcast_software_patent_trademark_design_model_plan_secret_formula_process_or_knowhow"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Mapped 5% and 10% to the correct royalty categories."
+    },
+    {
+      "country": "LI",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "copyright_literary_artistic_scientific_excluding_computer_program_including_films_and_broadcast_media"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "patent_trademark_design_model_plan_secret_formula_process_custom_software_equipment_or_knowhow"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "NOT ACCEPTED AS RATE REMOVAL; CONDITION CLARIFIED: Article 12(1) is residence-only and Article 12(2) carves out only paragraph 3(b) for 10%; paragraph 3(a) therefore is a genuine 0% source-state category."
+    },
+    {
+      "country": "LK",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "government_or_central_bank_or_export_or_investment_promotion_institution_or_qualifying_government_guaranteed_financing"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Replaced generic 0% with Article 11(3) conditions."
+    },
+    {
+      "country": "LT",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_or_financing",
+              "operator": "==",
+              "unit": null,
+              "value": "government_subnational_local_authority_central_bank_wholly_government_owned_financial_institution_or_government_guaranteed_loan"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Added government/public-financing exemption."
+    },
+    {
+      "country": "LU",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "copyright_literary_artistic_scientific_excluding_computer_program_including_films_and_broadcast_media"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "patent_trademark_design_model_plan_secret_formula_process_computer_program_equipment_or_knowhow"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Added paragraph 3(a) residence-only copyright category."
+    },
+    {
+      "country": "LV",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_or_financing",
+              "operator": "==",
+              "unit": null,
+              "value": "government_subnational_local_authority_central_bank_wholly_government_owned_financial_institution_or_government_guaranteed_loan"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Added government/public-financing exemption."
+    },
+    {
+      "country": "MA",
+      "income_type": "dividend",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Removed unsupported 5% candidate; stored Article 10 excerpt contains a 10% ceiling only."
+    },
+    {
+      "country": "MA",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "government_subnational_local_authority_central_bank_wholly_government_owned_financial_institution_or_qualifying_government_guaranteed_financing"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Added missing Article 11(3) exemption."
+    },
+    {
+      "country": "ME",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "government_subnational_local_authority_central_bank_or_wholly_government_owned_financial_institution"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Added Article 11(3) exemption."
+    },
+    {
+      "country": "ME",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "copyright_literary_artistic_scientific_excluding_computer_software_including_films_and_broadcast_media"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "patent_trademark_design_model_plan_secret_formula_process_including_computer_software_equipment_or_knowhow"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Rates were correct; category conditions were added."
+    },
+    {
+      "country": "MN",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_or_financing",
+              "operator": "==",
+              "unit": null,
+              "value": "government_subnational_local_authority_central_bank_wholly_government_owned_financial_institution_or_government_guaranteed_loan"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Added government/public-financing exemption."
+    },
+    {
+      "country": "MX",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "government_subnational_local_authority_central_bank_or_named_public_export_finance_institution_or_qualifying_publicly_provided_guaranteed_or_insured_financing_minimum_3_years"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Added missing Article 11(3) exemption."
+    },
+    {
+      "country": "MY",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 12.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "government_of_malaysia_including_state_government_local_authority_bank_negara_or_agreed_wholly_government_owned_institution"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Added reciprocal government exemption relevant to CZ-source interest; excluded Malaysia-source-only approved-loan relief from CZ-source candidate logic."
+    },
+    {
+      "country": "NG",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 15.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "nigerian_government_local_authority_government_agency_or_central_bank_or_government_created_foreign_trade_finance_institution_with_required_approval"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Added missing government/public-finance exemption."
+    },
+    {
+      "country": "NG",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "rate": 15.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Correction notice 371/1999 changes the printed 10% ceiling to 15%."
+    },
+    {
+      "country": "NL",
+      "income_type": "dividend",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_with_share_capital"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": ">=",
+              "unit": null,
+              "value": "25%"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Added Article 10(3) source-state exemption."
+    },
+    {
+      "country": "NL",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_is_treaty_resident",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "source_state_taxation",
+              "operator": "==",
+              "unit": null,
+              "value": "prohibited_under_article_11"
+            },
+            {
+              "condition_type": "permanent_establishment_connection",
+              "operator": "==",
+              "unit": null,
+              "value": "false"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Filled blank general 0% condition."
+    },
+    {
+      "country": "NL",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_is_treaty_resident",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "permanent_establishment_connection",
+              "operator": "==",
+              "unit": null,
+              "value": "false"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Filled the general Article 12 treaty-residence / no-PE-connection condition."
+    },
+    {
+      "country": "NO",
+      "income_type": "dividend",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_other_than_partnership"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": ">=",
+              "unit": null,
+              "value": "10%"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "government_or_qualifying_public_body"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Separated corporate and government/public-body 0% routes."
+    },
+    {
+      "country": "NO",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "copyright_literary_artistic_scientific_excluding_computer_program_including_films_and_broadcast_media"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "industrial_commercial_or_scientific_equipment"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "patent_trademark_design_model_plan_secret_formula_process_computer_program_or_knowhow"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Added residence-only copyright category and mapped 5%/10%."
+    },
+    {
+      "country": "NZ",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "government_subnational_local_authority_central_bank_or_qualifying_export_credit_institution_provided_guaranteed_or_secured_financing"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Added missing Article 11(3) exemption."
+    },
+    {
+      "country": "PA",
+      "income_type": "dividend",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Removed unsupported 5% candidate; stored Article 10 excerpt contains a 10% ceiling only."
+    },
+    {
+      "country": "PA",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "bank"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "credit_sale_or_government_central_bank_government_owned_or_controlled_financial_institution_or_qualifying_government_guaranteed_financing_minimum_4_years"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Separated bank 5%, residual 10%, and 0% Article 11(3) routes."
+    },
+    {
+      "country": "PH",
+      "income_type": "dividend",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": ">=",
+              "unit": null,
+              "value": "10%"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Removed duplicate generic 10% candidate."
+    },
+    {
+      "country": "PH",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "government_subnational_local_authority_central_bank_wholly_government_owned_financial_institution_or_qualifying_government_guaranteed_financing"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Added missing Article 11(3) exemption."
+    },
+    {
+      "country": "PK",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "government_subnational_local_authority_central_bank_government_owned_or_controlled_financial_institution_or_qualifying_guaranteed_or_insured_financing"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Added missing Article 11(3) exemption."
+    },
+    {
+      "country": "PL",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "bank_loan_or_government_central_bank_government_owned_or_controlled_financial_institution_or_qualifying_government_guaranteed_financing"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Replaced generic 0% with Article 11(3) conditions."
+    },
+    {
+      "country": "PT",
+      "income_type": "dividend",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": ">=",
+              "unit": null,
+              "value": "25%"
+            },
+            {
+              "condition_type": "holding_period_years",
+              "operator": ">=",
+              "unit": null,
+              "value": "2"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Added 25% ownership + two-year holding condition for 10%."
+    },
+    {
+      "country": "PT",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "source_state_government_or_local_authority_debtor_or_other_state_government_local_authority_or_supported_financing_under_intergovernmental_agreement_or_named_public_financial_institution_loan_or_credit"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Added all Article 11(3) exemption routes."
+    },
+    {
+      "country": "QA",
+      "income_type": "dividend",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "other_state_government_subnational_local_authority_central_bank_other_public_law_body_or_entity_directly_or_indirectly_wholly_owned_by_such_public_body"
+            }
+          ]
+        },
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": ">=",
+              "unit": null,
+              "value": "10%"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Added Article 10(3) public-sector exemption."
+    },
+    {
+      "country": "RO",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_or_financing",
+              "operator": "==",
+              "unit": null,
+              "value": "government_local_authority_territorial_administrative_unit_government_agency_bank_or_body_or_claim_guaranteed_secured_or_directly_or_indirectly_financed_by_wholly_government_owned_financial_institution"
+            },
+            {
+              "condition_type": "loan_is_noncommercial",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 7.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Added Article 11(3) public / non-commercial financing exemption."
+    },
+    {
+      "country": "RS",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "government_subnational_local_authority_central_bank_or_wholly_government_owned_financial_institution"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Added missing government/public-institution exemption."
+    },
+    {
+      "country": "RS",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "copyright_literary_artistic_or_scientific_excluding_computer_program_including_films_and_broadcast_media"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "patent_trademark_design_model_plan_secret_formula_process_computer_program_equipment_or_knowhow"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Mapped 5% to paragraph 3(1) and 10% to paragraph 3(2)."
+    },
+    {
+      "country": "RW",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "government_central_bank_export_or_investment_promotion_institution_or_qualifying_government_guaranteed_financing"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Replaced generic 0% with Article 11(3) conditions."
+    },
+    {
+      "country": "SE",
+      "income_type": "dividend",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_with_share_capital"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": ">=",
+              "unit": null,
+              "value": "25%"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Added Article 10(3) source-state exemption."
+    },
+    {
+      "country": "SE",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_is_treaty_resident",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "source_state_taxation",
+              "operator": "==",
+              "unit": null,
+              "value": "prohibited_under_article_11"
+            },
+            {
+              "condition_type": "permanent_establishment_connection",
+              "operator": "==",
+              "unit": null,
+              "value": "false"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Filled blank general 0% condition."
+    },
+    {
+      "country": "SE",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "copyright_literary_artistic_or_scientific"
+            },
+            {
+              "condition_type": "recipient_is_treaty_resident",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_article_12_royalties"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "NOT ACCEPTED AS RATE REMOVAL; CONDITIONS ADDED: Article 12(3) expressly gives residence-only taxation to copyright royalties. 0% therefore remains; missing category conditions are added."
+    },
+    {
+      "country": "SG",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "copyright_literary_artistic_or_scientific_excluding_computer_program_including_films_and_broadcast_media"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "industrial_commercial_or_scientific_equipment"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "patent_trademark_design_model_plan_secret_formula_process_computer_program_or_knowhow"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED AND PROTOCOL-CONSOLIDATED: Protocol 64/2014 replaces Article 12(2)-(3): paragraph 3(a) remains residence-only, 3(b) is 5%, 3(c) is 10%."
+    },
+    {
+      "country": "SI",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "government_subnational_local_authority_or_central_bank"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Added missing government / central-bank exemption."
+    },
+    {
+      "country": "SK",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "copyright_literary_artistic_scientific_including_films_broadcast_recordings_and_other_audio_visual_reproduction_excluding_computer_software"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "patent_trademark_design_model_plan_secret_formula_process_computer_software_equipment_or_knowhow"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED WITH CATEGORY CONSOLIDATION: Paragraph 3(b) is residence-only (0%); paragraph 3(a) is 10%. The multiple copyright/media items are one legal 0% category in the structured model."
+    },
+    {
+      "country": "SM",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "government_central_bank_export_promotion_institution_or_qualifying_government_guaranteed_financing"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Replaced generic 0% with Article 11(3) conditions."
+    },
+    {
+      "country": "SN",
+      "income_type": "dividend",
+      "rate_candidates": [
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_other_than_partnership"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": ">=",
+              "unit": null,
+              "value": "25%"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Removed duplicate generic 5% candidate."
+    },
+    {
+      "country": "SN",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "government_or_central_bank_or_agreed_export_promotion_institution_or_qualifying_government_guaranteed_financing"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Replaced generic 0% with Article 11(3) conditions."
+    },
+    {
+      "country": "SY",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_or_financing",
+              "operator": "==",
+              "unit": null,
+              "value": "government_local_authority_central_bank_wholly_government_owned_financial_institution_or_government_guaranteed_loan_or_credit"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Added Article 11(3) government / guaranteed financing exemption."
+    },
+    {
+      "country": "TH",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_and_financial_institution_including_insurer"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "government_of_thailand_including_bank_of_thailand_export_import_bank_local_authority_or_agreed_wholly_government_owned_institution"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Corrected restricted 10% condition and added government exemption; treaty does not state a general 10% ceiling for other recipients."
+    },
+    {
+      "country": "TH",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "copyright_literary_artistic_or_scientific_excluding_cinematographic_films_and_broadcast_recordings"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "patent_trademark_design_model_plan_secret_formula_or_process"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_royalties"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Mapped each rate to the Article 12(2) category."
+    },
+    {
+      "country": "TJ",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 7.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "credit_sale_or_bank_loan_or_government_central_bank_government_controlled_financial_institution_or_qualifying_government_guaranteed_financing"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Replaced generic 0% with Article 11(3) conditions."
+    },
+    {
+      "country": "TM",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "government_central_bank_government_owned_or_controlled_institution_or_qualifying_government_guaranteed_financing"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Replaced generic 0% with Article 11(3) conditions."
+    },
+    {
+      "country": "TN",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "loan_provider",
+              "operator": "==",
+              "unit": null,
+              "value": "contracting_state"
+            }
+          ]
+        },
+        {
+          "rate": 12.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "other_interest_subject_to_source_state_taxation"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Article 11 excludes interest on loans granted by a Contracting State from the 12% source-state ceiling regime."
+    },
+    {
+      "country": "TN",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "copyright_literary_artistic_scientific_including_cinematographic_films_and_tv_or_radio_recordings"
+            }
+          ]
+        },
+        {
+          "rate": 15.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "patent_trademark_design_model_plan_secret_formula_process_equipment_knowhow_technical_or_economic_studies_or_technical_assistance"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Removed unsupported 0% royalty candidate and added the 5%/15% category conditions."
+    },
+    {
+      "country": "TR",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "government_subnational_local_authority_central_bank_eximbank_or_agreed_wholly_government_owned_institution"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Added missing government/public-institution exemption."
+    },
+    {
+      "country": "TW",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "special_article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "credit_sale_of_goods_or_equipment_or_government_subnational_local_authority_central_bank_or_government_controlled_or_wholly_owned_financial_institution_or_loan_or_credit_guaranteed_or_insured_by_such_public_body"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Expanded the generic 0% flag into the three specific Article 11(3) routes."
+    },
+    {
+      "country": "UA",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_or_financing",
+              "operator": "==",
+              "unit": null,
+              "value": "government_subnational_local_authority_central_bank_wholly_government_owned_financial_institution_or_government_guaranteed_loan"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Added Article 11(3) government/public-financing exemption."
+    },
+    {
+      "country": "US",
+      "income_type": "royalty",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "copyright_literary_artistic_scientific_including_films_tapes_or_other_audio_visual_reproduction"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "patent_trademark_design_model_plan_secret_formula_process_similar_right_or_property_equipment_or_knowhow_including_productivity_use_or_disposition_contingent_sales"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED: Added residence-only copyright category and corrected the 10% industrial/intangible category."
+    },
+    {
+      "country": "UZ",
+      "income_type": "dividend",
+      "rate_candidates": [
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_other_than_partnership"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": ">=",
+              "unit": null,
+              "value": "25%"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "ACCEPTED AND PROTOCOL-CONSOLIDATED: Protocol 92/2012 replaces Article 10(2) with 5% for direct ≥25% corporate ownership and 10% otherwise."
+    },
+    {
+      "country": "UZ",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "government_subnational_local_authority_central_bank_wholly_government_owned_financial_institution_or_government_guaranteed_financing_or_credit_sale_or_bank_loan"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Added missing Article 11(3) exemption."
+    },
+    {
+      "country": "VE",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "recipient_government_central_bank_subnational_or_local_authority_or_interest_paid_by_such_public_person_or_qualifying_government_owned_foreign_trade_financing"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Replaced generic 0% with Article 11(3) routes."
+    },
+    {
+      "country": "VN",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "article_11_3_exemption",
+              "operator": "==",
+              "unit": null,
+              "value": "government_subnational_local_authority_or_central_bank_or_government_approved_transaction_to_approved_extent"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Added missing Article 11(3) exemption."
     }
   ],
-  "dataset_release": "stage5-human-condition-corrections-2026-08-10.2",
-  "purpose": "Human-review correction overlay for structured rate conditions. Does not alter frozen remaining_294 candidate evidence.",
+  "dataset_release": "stage5-human-review-complete-2026-08-11.3",
+  "purpose": "Consolidated structured WHT treaty rate/condition corrections after completed human review of all 101 CZ outbound jurisdictions. Taiwan corrections are applied in its special statutory package. Domestic-law outcomes and treaty-status suspensions remain separate legal layers. Corrections remain needs_review and do not create verification or production release.",
   "schema_version": 1,
   "verification_status": "needs_review"
 }
