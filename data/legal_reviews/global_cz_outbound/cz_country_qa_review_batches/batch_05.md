@@ -295,7 +295,7 @@ Protocol/status: `not_listed` / `not_listed`.
 
 MLI (WHT only): `not_listed`; modification `None`; candidate WHT date `None`. Article 8 adds no overlay.
 
-Language: authentic `None`; prevailing `None`; evidence `hash_bound_repository_signature_clause_candidate`; signature clause `Dáno v Praze dne 2. brezna 2005 ve dvou puvodnõch vyhotovenõch, kazdé v jazyce ceském, korejském a anglic-
+Language: authentic `['Czech', 'Korean', 'English']`; prevailing `English`; evidence `hash_bound_repository_signature_clause_candidate`; signature clause `Dáno v Praze dne 2. brezna 2005 ve dvou puvodnõch vyhotovenõch, kazdé v jazyce ceském, korejském a anglic-
 kém, pricemz vsechny texty jsou autentické. V prõpade jakéhokoliv rozdõlu bude rozhodujõcõm anglický text.`.
 
 Domestic/EU: Czech candidate standard/protective rates `15.0` / `35.0`; EU interaction is shown per income in the JSON audit package.
@@ -310,7 +310,7 @@ Candidate excerpts:
 - interest Article 11: UROKY 1. Uroky majõcõ zdroj v jednom smluvnõm státe a vyplácené rezidentu druhého smluvnõho státu mohou být zdaneny v tomto druhém státe. 2. Tyto úroky vsak mohou být rovnez zdaneny ve smluvnõm státe, v nemz majõ zdroj, a to podle právnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk úroku je rezidentem druhého smluvnõho státu, dan takto ulozená nepresáhne 10 procent hrubé cástky úroku. 3. Uroky z pujcky, která byla poskytnuta jednõm smluvnõm státem, nizsõm správnõm útvarem, mõstnõm úradem nebo rezidentem tohoto státu vláde druhého smluvnõho státu vcetne nizsõho správnõho útvaru nebo mõstnõho úradu, centrálnõ bance nebo jakékoliv financnõ instituci, která je ovládána touto vládou, nepodléhajõ, bez ohledu na ustanovenõ odstavce 2, zdanenõ ve druhém smluvnõm státe. Přõslusné úrady smluvnõch státu upravõ vzájemnou dohodou zpusob aplikace omezenõ uvedených v odstav- cõch 2 a 3. 4. …
 - royalty Article 12: LICENČNI POPLATKY 1. Licencnõ poplatky majõcõ zdroj v jednom smluvnõm státe a vyplácené rezidentu druhého smluvnõho státu mohou být zdaneny v tomto druhém státe. 2. Tyto licencnõ poplatky vsak mohou být rovnez zdaneny ve smluvnõm státe, v nemz majõ zdroj, a to podle právnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk licencnõch poplatku je rezidentem druhého smluvnõho státu, dan takto ulozená nepresáhne 10 procent hrubé cástky licencnõch poplatku. Přõslusné úrady smluvnõch státu upravõ vzájemnou dohodou zpusob aplikace tohoto omezenõ. 3. Výraz 1licencnõ poplatkya pouzitý v tomto clánku oznacuje platby jakéhokoliv druhu obdrzené jako náhrada za uzitõ nebo za právo na uzitõ jakéhokoliv autorského práva k dõlu literárnõmu, umeleckému nebo vedeckému, vcetne kinematografických filmu a filmu nebo nahrávek pro televiznõ nebo rozhlasové vysõlánõ, jakéhokoliv patentu, ochranné známky …
 
-Audit package hash: `ca4aaf3640b7f2bfeb75e9f03180548d332126f364530bac0be60271af1f611b`.
+Audit package hash: `7b9de654ac05c013db552a99f9560508c00451480f725a9c38fe9106b2a96574`.
 
 Human QA: **PENDING**. Reviewer: ____  Date: ____  Outcome: ____  Independent review (if required): ____
 

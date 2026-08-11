@@ -77,10 +77,30 @@ def test_registry_has_exact_seven_country_sample():
 
     assert registry["summary"][
         "ai_crosscheck_complete_packages"
-    ] == 0
+    ] == 7
 
     assert registry["summary"][
         "ai_crosscheck_pending_packages"
+    ] == 0
+
+    assert registry["summary"][
+        "clean_packages"
+    ] == 2
+
+    assert registry["summary"][
+        "packages_with_discrepancies"
+    ] == 5
+
+    assert registry["summary"][
+        "human_resolution_pending_packages"
+    ] == 0
+
+    assert registry["summary"][
+        "human_resolution_complete_packages"
+    ] == 5
+
+    assert registry["summary"][
+        "production_approval_eligible_packages"
     ] == 7
 
 
@@ -94,23 +114,73 @@ def test_policy_does_not_claim_human_independence():
     )
 
 
-def test_registry_contains_no_fake_ai_event():
+def test_registry_contains_actual_ai_events_without_release():
     registry = _load(REGISTRY)
 
-    for row in registry["records"]:
+    by_pair = {
+        row["treaty_pair_id"]: row
+        for row in registry["records"]
+    }
+
+    for pair_id, row in by_pair.items():
         ai = row["ai_crosscheck"]
 
-        assert ai["provider"] is None
-        assert ai["model"] is None
-        assert ai["checked_at"] is None
-        assert ai["outcome"] is None
-        assert ai["findings"] == []
-        assert ai["status"] == "pending"
-
-        assert (
-            row["production_approval_allowed"]
-            is False
+        assert ai["provider"] == "Anthropic"
+        assert ai["model"] == "Sonnet 5"
+        assert ai["checked_at"] == (
+            "2026-08-11T20:24:04Z"
         )
+
+        assert ai["outcome"] in {
+            "no_discrepancy",
+            "discrepancy",
+        }
+
+        assert ai["status"].startswith(
+            "ai_crosscheck_"
+        )
+
+    assert by_pair["CZ-KZ"][
+        "production_approval_allowed"
+    ] is True
+
+    assert by_pair["CZ-SA"][
+        "production_approval_allowed"
+    ] is True
+
+    for pair_id in {
+        "CZ-AT",
+        "CZ-BD",
+        "CZ-KP",
+        "CZ-MY",
+        "CZ-SG",
+    }:
+        assert by_pair[pair_id][
+            "production_approval_allowed"
+        ] is True
+
+        assert by_pair[pair_id][
+            "human_resolution"
+        ]["reviewer_id"] == "tkrenicky"
+
+        assert by_pair[pair_id][
+            "human_resolution"
+        ]["status"] in {
+            "tax_treat_corrected",
+            "tax_treat_confirmed",
+        }
+
+    assert registry["summary"][
+        "production_approved_packages"
+    ] == 0
+
+    assert registry["summary"][
+        "released_packages"
+    ] == 0
+
+    assert registry["summary"][
+        "released_scopes"
+    ] == 0
 
 
 def test_selected_package_is_pending():
@@ -346,3 +416,140 @@ def test_nonselected_package_has_no_ai_crosscheck():
     assert result.required is False
     assert result.status == "not_required"
     assert result.production_approval_allowed is True
+
+
+def test_historical_review_hash_can_bind_real_ai_event():
+    registry = _load(REGISTRY)
+    package = _packages()["CZ-AT"]
+
+    record = next(
+        row
+        for row in registry["records"]
+        if row["treaty_pair_id"] == "CZ-AT"
+    )
+
+    event = {
+        "package_sha256":
+            record["reviewed_package_sha256"],
+        "treaty_pair_id":
+            "CZ-AT",
+        "provider":
+            record["ai_crosscheck"]["provider"],
+        "model":
+            record["ai_crosscheck"]["model"],
+        "run_reference":
+            record["ai_crosscheck"]["run_reference"],
+        "checked_at":
+            record["ai_crosscheck"]["checked_at"],
+        "outcome":
+            record["ai_crosscheck"]["outcome"],
+        "findings":
+            record["ai_crosscheck"]["findings"],
+    }
+
+    result = assess_ai_crosscheck(
+        package,
+        event,
+        reviewed_package_sha256=
+            record["reviewed_package_sha256"],
+    )
+
+    assert result.complete is True
+    assert result.human_resolution_required is True
+    assert result.production_approval_allowed is False
+
+
+def test_historical_ai_event_fails_without_hash_lineage():
+    registry = _load(REGISTRY)
+    package = _packages()["CZ-AT"]
+
+    record = next(
+        row
+        for row in registry["records"]
+        if row["treaty_pair_id"] == "CZ-AT"
+    )
+
+    event = {
+        "package_sha256":
+            record["reviewed_package_sha256"],
+        "treaty_pair_id":
+            "CZ-AT",
+        "provider":
+            record["ai_crosscheck"]["provider"],
+        "model":
+            record["ai_crosscheck"]["model"],
+        "run_reference":
+            record["ai_crosscheck"]["run_reference"],
+        "checked_at":
+            record["ai_crosscheck"]["checked_at"],
+        "outcome":
+            record["ai_crosscheck"]["outcome"],
+        "findings":
+            record["ai_crosscheck"]["findings"],
+    }
+
+    with pytest.raises(
+        ValueError,
+        match="stale package hash",
+    ):
+        assess_ai_crosscheck(
+            package,
+            event,
+        )
+
+
+def test_final_stage6b_resolution_outcomes_are_exact():
+    registry = _load(REGISTRY)
+
+    by_pair = {
+        row["treaty_pair_id"]: row
+        for row in registry["records"]
+    }
+
+    expected = {
+        "CZ-AT": "tax_treat_corrected",
+        "CZ-BD": "tax_treat_corrected",
+        "CZ-KP": "tax_treat_corrected",
+        "CZ-MY": "tax_treat_corrected",
+        "CZ-SG": "tax_treat_confirmed",
+    }
+
+    for pair_id, outcome in expected.items():
+        assert (
+            by_pair[pair_id][
+                "human_resolution"
+            ]["status"]
+            == outcome
+        )
+
+    assert (
+        by_pair["CZ-KZ"][
+            "human_resolution"
+        ]["status"]
+        == "not_required"
+    )
+
+    assert (
+        by_pair["CZ-SA"][
+            "human_resolution"
+        ]["status"]
+        == "not_required"
+    )
+
+
+def test_stage6b_completion_does_not_create_production_release():
+    registry = _load(REGISTRY)
+
+    summary = registry["summary"]
+
+    assert summary[
+        "production_approval_eligible_packages"
+    ] == 7
+
+    assert summary[
+        "production_approved_packages"
+    ] == 0
+
+    assert summary["promoted_packages"] == 0
+    assert summary["released_packages"] == 0
+    assert summary["released_scopes"] == 0

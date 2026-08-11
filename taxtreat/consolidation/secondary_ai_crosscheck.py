@@ -43,6 +43,8 @@ def _timestamp(value: Any, field: str) -> None:
 def assess_ai_crosscheck(
     package: Mapping[str, Any],
     event: Mapping[str, Any] | None = None,
+    *,
+    reviewed_package_sha256: str | None = None,
 ) -> AICrossCheckOutcome:
 
     package_hash = package.get("package_sha256")
@@ -93,7 +95,26 @@ def assess_ai_crosscheck(
             production_approval_allowed=False,
         )
 
-    if event.get("package_sha256") != package_hash:
+    expected_ai_hash = (
+        reviewed_package_sha256
+        if reviewed_package_sha256 is not None
+        else package_hash
+    )
+
+    if reviewed_package_sha256 is not None:
+        if (
+            not isinstance(
+                reviewed_package_sha256,
+                str,
+            )
+            or len(reviewed_package_sha256) != 64
+        ):
+            raise ValueError(
+                "AI cross-check has invalid reviewed "
+                "package hash."
+            )
+
+    if event.get("package_sha256") != expected_ai_hash:
         raise ValueError(
             "AI cross-check event is bound to a "
             "stale package hash."
@@ -188,11 +209,14 @@ def assess_human_resolution(
     resolution_event: Mapping[str, Any] | None,
     *,
     primary_reviewer_id: str,
+    reviewed_package_sha256: str | None = None,
 ) -> HumanResolutionOutcome:
 
     ai_result = assess_ai_crosscheck(
         package,
         ai_event,
+        reviewed_package_sha256=
+            reviewed_package_sha256,
     )
 
     if not ai_result.human_resolution_required:
