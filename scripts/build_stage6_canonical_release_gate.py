@@ -279,12 +279,12 @@ for package in sorted(
                     "primary_human_review_status"
                 ],
 
-            # Historical field retained for compatibility.
-            # It no longer means a second human.
+            # No second human review is required in the current
+            # Stage 6 governance model. Secondary AI cross-checking
+            # is represented separately below and must never be
+            # described as independent human QA.
             "independent_qa_status":
-                "complete"
-                if pair_id in ai_by_pair
-                else "not_required",
+                "not_required",
 
             "secondary_ai_qa_status":
                 qa_status,

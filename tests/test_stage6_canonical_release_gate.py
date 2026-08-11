@@ -103,8 +103,8 @@ def test_seven_secondary_ai_qa_packages_are_complete():
     complete = sorted(
         pair_id
         for pair_id, release in gate.items()
-        if release.independent_qa_status
-        == "complete"
+        if release.secondary_ai_qa_status
+        == "secondary_ai_crosscheck_complete"
     )
 
     assert complete == [
@@ -117,21 +117,32 @@ def test_seven_secondary_ai_qa_packages_are_complete():
         "CZ-SG",
     ]
 
+    assert all(
+        release.independent_qa_status
+        == "not_required"
+        for release in gate.values()
+    )
+
 
 def test_non_sample_packages_do_not_fake_secondary_qa():
     gate = load_canonical_source_release_gate(
         GATE_PATH
     )
 
-    statuses = {
-        release.independent_qa_status
+    non_sample = [
+        release
         for release in gate.values()
-    }
+        if release.secondary_ai_qa_status
+        == "not_selected"
+    ]
 
-    assert statuses == {
-        "complete",
-        "not_required",
-    }
+    assert len(non_sample) == 94
+
+    assert all(
+        release.independent_qa_status
+        == "not_required"
+        for release in gate.values()
+    )
 
 
 def test_production_approval_created_but_no_promotion():
@@ -354,3 +365,43 @@ def test_stage6c_still_blocks_rule_promotion_and_release():
             "rule_promotion_missing",
             "source_release_not_opened",
         ]
+
+
+def test_secondary_ai_crosscheck_is_never_recorded_as_independent_human_qa():
+    import json
+    from pathlib import Path
+
+    root = Path(__file__).parents[1]
+
+    gate = json.loads(
+        (
+            root
+            / "data"
+            / "legal_reviews"
+            / "global_cz_outbound"
+            / "production_source_release_gate_v2.json"
+        ).read_text(encoding="utf-8")
+    )
+
+    rows = gate["treaty_partners"]
+
+    assert len(rows) == 101
+
+    assert all(
+        row["independent_qa_status"]
+        == "not_required"
+        for row in rows
+    )
+
+    ai_rows = [
+        row
+        for row in rows
+        if row["secondary_ai_qa_status"]
+        == "secondary_ai_crosscheck_complete"
+    ]
+
+    assert len(ai_rows) == 7
+
+    assert gate["gate_semantics"][
+        "secondary_ai_is_not_human_review"
+    ] is True
