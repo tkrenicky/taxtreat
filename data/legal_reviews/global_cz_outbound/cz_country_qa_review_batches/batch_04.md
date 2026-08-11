@@ -12,7 +12,7 @@ Risk focus: high_level_three_income_sanity_check.
 |---|---:|---:|---|
 | dividend | 10 | 0.0%, 10.0% | 0.0%: minimum_ownership >= 25, beneficial_owner == true; 10.0%: beneficial_owner == true |
 | interest | 11 | 0.0% | 0.0%: beneficial_owner == true |
-| royalty | 12 | 5.0%, 10.0% | 5.0%: beneficial_owner == true; 10.0%: beneficial_owner == true |
+| royalty | 12 | 0.0%, 5.0%, 10.0% | 0.0%: royalty_category == copyright_literary_artistic_scientific_excluding_computer_program_including_films_and_broadcast_media, beneficial_owner == true; 5.0%: royalty_category == industrial_commercial_or_scientific_equipment, beneficial_owner == true; 10.0%: royalty_category == patent_trademark_design_model_plan_secret_formula_process_computer_program_or_knowhow, beneficial_owner == true |
 
 Protocol/status: `not_listed` / `not_listed`.
 
@@ -33,7 +33,7 @@ Candidate excerpts:
 - interest Article 11: UROKY 1. Uroky majõcõ zdroj v jednom smluvnõm státe a skutecne vlastnené rezidentem druhého smluvnõho státu podléhajõ zdanenõ jen v tomto druhém státe. 2. Výraz 1úrokya oznacuje prõjmy z pohledávek jakéhokoliv druhu, at' zajistených ci nezajistených zá- stavnõm právem na nemovitosti nebo majõcõch ci nemajõcõch právo úcasti na zisku dluznõka, a zvláste, prõjmy z vládnõch cenných papõru a prõjmy z obligacõ nebo dluhopisu, vcetne prémiõ a výher, které se vázou k temto cenným papõrum, obligacõm nebo dluhopisum. Penále ukládané za pozdnõ platbu se nepovazuje za úroky pro úcely tohoto clánku. Výraz 1úrokya nezahrnuje zádnou cást prõjmu, která je povazována za dividendu podle ustanovenõ clánku 10. 3. Ustanovenõ odstavce 1 se nepouzijõ, jestlize skutecný vlastnõk úroku, který je rezidentem jednoho smluv- nõho státu, vykonává v druhém smluvnõm státe, ve kterém majõ úroky zdroj, prumyslovou nebo o …
 - royalty Article 12: LICENČNI POPLATKY 1. Licencnõ poplatky majõcõ zdroj v jednom smluvnõm státe a vyplácené rezidentu druhého smluvnõho státu mohou být zdaneny v tomto druhém státe. 2. Tyto licencnõ poplatky vsak mohou být, vyjma prõpadu druhu plateb, který je uveden v põsmenu a) odstavce 3, rovnez zdaneny ve smluvnõm státe, v nemz majõ zdroj, a to podle právnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk licencnõch poplatku je rezidentem druhého smluvnõho státu, dan takto ulozená nepresáhne: a) 5 procent hrubé cástky licencnõch poplatku, a to v prõpade druhu plateb, který je uveden v põsmenu b) odstavce 3; b) 10 procent hrubé cástky licencnõch poplatku, a to v prõpade druhu plateb, který je uveden v põsmenu c) odstavce 3. 3. Výraz 1licencnõ poplatkya oznacuje platby jakéhokoliv druhu obdrzené jako náhrada za uzitõ nebo za právo na uzitõ: a) jakéhokoliv autorského práva k dõlu literárnõmu, umel …
 
-Audit package hash: `702c875611055e662819c490569206a143c0c7ac7d18b124b66fa82f49affca8`.
+Audit package hash: `40967f1d059a1ccc8280508cd41386b0813d6b59f32e014297ad6c3e5c7431b0`.
 
 Human QA: **PENDING**. Reviewer: ____  Date: ____  Outcome: ____  Independent review (if required): ____
 
@@ -47,7 +47,7 @@ Risk focus: multiple_historical_instruments.
 |---|---:|---:|---|
 | dividend | 10 | 5.0%, 15.0% | 5.0%: minimum_ownership >= 25, beneficial_owner == true; 15.0%: beneficial_owner == true |
 | interest | 11 | 0.0% | 0.0%: beneficial_owner == true |
-| royalty | 12 | 0.0%, 10.0% | 0.0%: beneficial_owner == true; 10.0%: beneficial_owner == true |
+| royalty | 12 | 0.0%, 10.0% | 0.0%: royalty_category == copyright_literary_artistic_or_scientific_including_films_and_broadcast_recordings, beneficial_owner == true; 10.0%: royalty_category == patent_trademark_design_model_plan_secret_formula_process_equipment_or_industrial_commercial_technical_technological_scientific_knowhow, beneficial_owner == true |
 
 Protocol/status: `not_listed` / `not_listed`.
 
@@ -67,7 +67,7 @@ Candidate excerpts:
 - interest Article 11: Úroky 1. Úroky mající zdroj v jednom smluvním státě, které pobírá rezident druhého smluvního státu, a který je jejich skutečným vlastníkem, budou zdaněny pouze v tomto druhém státě. 2. Výraz „úroky“, použitý v tomto článku, označuje příjmy z vládních cenných papírů, obligací nebo dluhopisů zajištěných i nezajištěných zástavním právem na nemovitosti nebo doložkou o účasti na zisku a z pohledávek jakéhokoliv druhu, stejně jako všechny ostatní příjmy, mající charakter příjmů z půjček, podle daňového práva státu, ve kterém je zdroj příjmu. 3. Ustanovení odstavce 1 tohoto článku se nepoužije, jestliže skutečný vlastník úroků, který je rezidentem v jednom smluvním státě, vykonává v druhém smluvním státě, ve kterém mají úroky zdroj, průmyslovou nebo obchodní činnost prostřednictvím stálé provozovny, která je tam umístěna, nebo nezávislé povolání prostřednictvím stálé základny tam umístěné a jes …
 - royalty Article 12: Licenční poplatky 1. Licenční poplatky, mající zdroj v jednom smluvním státě, který pobírá rezident druhého smluvního státu, a který je jejich skutečným vlastníkem, budou zdaněny pouze v tomto druhém státě. 2. Licenční poplatky uvedené v pododstavci 3 (a), mohou být bez ohledu na ustanovení odstavce 1 tohoto článku, zdaněny také ve smluvním státě, ve kterém je jejich zdroj, a v souladu s právními předpisy tohoto státu, avšak je-li příjemce skutečným vlastníkem licenčních poplatků, částka daně takto stanovená nepřesáhne 10 % hrubé částky z licenčních poplatků. 3. Výraz „licenční poplatky“ použitý v tomto článku označuje platby jakéhokoliv druhu obdržené jako náhrada za: (a) užití nebo za právo na užití patentu, ochranné známky, návrhu nebo modelu, plánu, tajného vzorce nebo výrobního postupu nebo za užití nebo za právo na užití průmyslového, obchodního nebo vědeckého zařízení, nebo za inf …
 
-Audit package hash: `80f205ad62b9e45a3c16a88d8959960b4c2659d825d1e6eef482eea4de323aff`.
+Audit package hash: `74b3f36a0dee0d938aafcb7b2e7dcdfc8cab5674577cd9480c6a881e824bbce9`.
 
 Human QA: **PENDING**. Reviewer: ____  Date: ____  Outcome: ____  Independent review (if required): ____
 
@@ -80,8 +80,8 @@ Risk focus: high_level_three_income_sanity_check.
 | Income | Article | Candidate rate(s) | Material candidate conditions |
 |---|---:|---:|---|
 | dividend | 10 | 5.0%, 10.0% | 5.0%: minimum_ownership >= 25, beneficial_owner == true; 10.0%: beneficial_owner == true |
-| interest | 11 | 8.0% | 8.0%: beneficial_owner == true |
-| royalty | 12 | 5.0%, 10.0% | 5.0%: beneficial_owner == true; 10.0%: beneficial_owner == true |
+| interest | 11 | 0.0%, 8.0% | 8.0%: beneficial_owner == true; 0.0%: article_11_3_exemption == government_subnational_local_authority_central_bank_wholly_government_owned_financial_institution_or_government_guaranteed_financing_or_credit_sale_of_industrial_commercial_or_scientific_equipment, beneficial_owner == true |
+| royalty | 12 | 0.0%, 5.0%, 10.0% | 0.0%: royalty_category == copyright_literary_artistic_scientific_excluding_computer_program_including_films_and_broadcast_media, beneficial_owner == true; 5.0%: royalty_category == industrial_commercial_or_scientific_equipment, beneficial_owner == true; 10.0%: royalty_category == patent_trademark_design_model_plan_secret_formula_process_computer_program_or_knowhow, beneficial_owner == true |
 
 Protocol/status: `not_listed` / `not_listed`.
 
@@ -103,7 +103,7 @@ Candidate excerpts:
 - interest Article 11: UROKY 1. Uroky majõcõ zdroj v jednom smluvnõm státe a vyplácené rezidentu druhého smluvnõho státu mohou být zdaneny v tomto druhém státe. 2. Tyto úroky vsak mohou být rovnez zdaneny ve smluvnõm státe, v nemz majõ zdroj, a to podle právnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk úroku je rezidentem druhého smluvnõho státu, dan takto ulozená nepresáhne 8 procent hrubé cástky úroku. Přõslusné úrady smluvnõch státu upravõ vzájemnou dohodou zpusob aplikace tohoto omezenõ. 3. Bez ohledu na ustanovenõ odstavce 2 budou úroky osvobozeny od zdanenõ ve smluvnõm státe, ve kterém majõ zdroj, pokud jsou: a) pobõrané a skutecne vlastnené: (i) vládou druhého smluvnõho státu, vcetne jakéhokoliv nizsõho správnõho útvaru nebo mõstnõho úradu tohoto státu, centrálnõ bankou nebo jakoukoli financnõ institucõ, která je zcela vlastnena touto vládou; nebo (ii) rezidentem druhého smluvnõho státu v …
 - royalty Article 12: LICENČNI POPLATKY 1. Licencnõ poplatky majõcõ zdroj v jednom smluvnõm státe a vyplácené rezidentu druhého smluvnõho státu mohou být zdaneny v tomto druhém státe. 2. Tyto licencnõ poplatky vsak mohou být, vyjma prõpadu druhu plateb, který je uveden v põsmenu a) odstavce 3, rovnez zdaneny ve smluvnõm státe, v nemz majõ zdroj, a to podle právnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk licencnõch poplatku je rezidentem druhého smluvnõho státu, dan takto ulozená nepresáhne: a) 5 procent hrubé cástky licencnõch poplatku, a to v prõpade druhu plateb, který je uveden v põsmenu b) odstavce 3; b) 10 procent hrubé cástky licencnõch poplatku, a to v prõpade druhu plateb, který je uveden v põsmenu c) odstavce 3. Přõslusné úrady smluvnõch státu upravõ vzájemnou dohodou zpusob aplikace techto omezenõ. 3. Výraz 1licencnõ poplatkya oznacuje platby jakéhokoliv druhu obdrzené jako náhrada  …
 
-Audit package hash: `03c6d114c9c10ee44e095d8a3b659ecb8e8af99c1bf9c8bbbd8d108b669e7af4`.
+Audit package hash: `55714a2a87b25ff586e2f050a54f296e78d67ad6b0bc9160f1f969c439a82afe`.
 
 Human QA: **PENDING**. Reviewer: ____  Date: ____  Outcome: ____  Independent review (if required): ____
 
@@ -116,7 +116,7 @@ Risk focus: unusual_language_or_prevailing_text.
 | Income | Article | Candidate rate(s) | Material candidate conditions |
 |---|---:|---:|---|
 | dividend | 10 | 6.0% | 6.0%: beneficial_owner == true |
-| interest | 11 | 0.0%, 10.0% | 10.0%: beneficial_owner == true; 0.0%: beneficial_owner == true |
+| interest | 11 | 0.0%, 10.0% | 10.0%: beneficial_owner == true; 0.0%: article_11_3_exemption == credit_sale_or_bank_loan_or_government_central_bank_government_owned_or_controlled_financial_institution_or_qualifying_government_guaranteed_financing, beneficial_owner == true |
 | royalty | 12 | 8.0% | 8.0%: beneficial_owner == true |
 
 Protocol/status: `not_listed` / `not_listed`.
@@ -137,7 +137,7 @@ Candidate excerpts:
 - interest Article 11: 1. Úroky mající zdroj v jednom smluvním státě a vyplácené rezidentu druhého smluvního státu mohou být zdaněny v tomto druhém státě. 2. Tyto úroky však mohou být rovněž zdaněny ve smluvním státě, v němž mají zdroj, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník úroků je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne 10 procent hrubé částky úroků. Příslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace tohoto omezení. 3. Úroky mající zdroj v jednom smluvním státě a vyplácené rezidentu druhého smluvního státu, který je jejich skutečným vlastníkem, podléhají bez ohledu na ustanovení odstavce 2 zdanění jen v tomto druhém státě, jestliže jsou tyto úroky vypláceny: a) v souvislosti s prodejem jakéhokoliv zboží nebo zařízení na úvěr; b) z jakékoliv půjčky nebo úvěru jakéhokoliv druhu, kterou nebo který poskytla banka; c) vládě druhé …
 - royalty Article 12: 1. Licenční poplatky a poplatky za služby mající zdroj v jednom smluvním státě a vyplácené rezidentu druhého smluvního státu mohou být zdaněny v tomto druhém státě. 2. Tyto licenční poplatky a poplatky za služby však mohou být rovněž zdaněny ve smluvním státě, v němž mají zdroj, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník licenčních poplatků nebo poplatků za služby je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne 8 procent hrubé částky licenčních poplatků nebo poplatků za služby. Příslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace tohoto omezení. 3. a) Výraz „licenční poplatky“ použitý vtomto článku označuje platby jakéhokoliv druhu obdržené jako náhrada za užití nebo za právo na užití jakéhokoliv autorského práva k dílu literárnímu, uměleckému nebo vědeckému, včetně kinematografických filmů, a filmů nebo pásek pro t …
 
-Audit package hash: `25d3203bd7601ec4a738402142d5bd39e3f3c7f257cf32e829f0eb8d5cf0c68f`.
+Audit package hash: `a92130ea00be08ff6e9346298f277e085df4fe7bf230fac7c81b45f0979894b8`.
 
 Human QA: **PENDING**. Reviewer: ____  Date: ____  Outcome: ____  Independent review (if required): ____
 
@@ -150,8 +150,8 @@ Risk focus: preserved_historical_source_hash_difference.
 | Income | Article | Candidate rate(s) | Material candidate conditions |
 |---|---:|---:|---|
 | dividend | 10 | none | No extracted rate condition |
-| interest | 11 | 0.0%, 10.0% | 10.0%: beneficial_owner == true; 0.0%: beneficial_owner == true |
-| royalty | 12 | 10.0% | 10.0%:  |
+| interest | 11 | 0.0%, 10.0% | 10.0%: beneficial_owner == true; 0.0%: article_11_3_exemption == loan_granted_by_government_or_bank_or_institution_on_behalf_or_for_account_of_government, beneficial_owner == true |
+| royalty | 12 | 0.0%, 10.0% | 0.0%: royalty_category == copyright_literary_artistic_or_scientific_including_cinematographic_and_television_films; 10.0%: royalty_category == patent_trademark_design_model_plan_secret_formula_process_equipment_or_industrial_commercial_scientific_knowhow |
 
 Protocol/status: `not_listed` / `not_listed`.
 
@@ -171,7 +171,7 @@ Candidate excerpts:
 - interest Article 11: Úroky 1. Úroky mající zdroj v jednom smluvním stá- tě a vyplácené osobě, která je rezidentem v dru- hém smluvním státě, mohou být zdaněny v tomto druhém státě, 2. Takové úroky však mohou být zdaněny také ve smluvním státě, ve kterém je jejich zdroj, a to podle právních předpisů tohoto státu, avšak jestli- že příjemce je skutečným vlastníkem úroků, daň takto ukládaná nepřesáhne 10 % hrubé částky úroků. Příslušné úřady smluvních států stanoví ve vzájemné dohodě způsob uplatnění tohoto omeze- ní. 3. Bez ohledu na ustanovení odstavce 2, úroky plynoucí z půjčky poskytnuté vládou jednoho smluvního státu, nebo bankou, nebo jakoukoli ji- nou institucí ve jménu nebo na účet této vlády, budou podléhat zdanění pouze ve smluvním státě, v němž je příjemce rezidentem. 4. Výraz „úroky“ použitý v tomto článku označuje příjmy z pohledávek jakéhokoli druhu, zajištěných i nezajištěných zástavním právem na  …
 - royalty Article 12: Licenční poplatky 1. Licenční poplatky mající zdroj v jednom smluvním státě a placené osobě, která je rezidentem v druhém smluvním státě, mohou být zdaněny v tomto druhém státě. 2. Licenční poplatky uvedené v odstavci 3a) mohou být však zdaněny také ve smluvním státě, ve kterém je jejich zdroj, a to podle právních předpisů tohoto státu. Daň takto stanovená však nemůže přesáhnout 10 % z hrubé částky licenčních poplatků. Příslušné úřady smluvních států stanoví ve vzájemné dohodě způsob uplatnění tohoto omezení. 3. Výraz "licenční poplatky" použitý v tomto článku označuje náhrady jakéhokoli druhu placené za užití nebo za přivolení k užití: a) patentu, ochranné známky, vzoru nebo modelu, plánu, tajného vzorce nebo výrobního postupu nebo průmyslového, obchodního nebo vědeckého zařízení, nebo za informace, které se vztahují na zkušenosti nabyté v oblasti průmyslové, obchodní nebo vědecké; b) p …
 
-Audit package hash: `b184686f150ad28e663d49236dcd30a61b7cd11f1813f133b16dcc12125f4d10`.
+Audit package hash: `d4b9d9c753af30d34866903e0dae2d199872d540b02089e460410cf24ec50835`.
 
 Human QA: **PENDING**. Reviewer: ____  Date: ____  Outcome: ____  Independent review (if required): ____
 
@@ -287,8 +287,8 @@ Risk focus: high_level_three_income_sanity_check.
 
 | Income | Article | Candidate rate(s) | Material candidate conditions |
 |---|---:|---:|---|
-| dividend | 10 | 10.0%, 12.5%, 15.0% | 10.0%: minimum_ownership >= 20, beneficial_owner == true; 15.0%: beneficial_owner == true; 12.5%: beneficial_owner == true |
-| interest | 11 | 12.5% | 12.5%: beneficial_owner == true |
+| dividend | 10 | 10.0%, 15.0% | 10.0%: recipient_entity_type == company_other_than_partnership, direct_ownership >= 20%, beneficial_owner == true; 15.0%: fallback_case == all_other_cases, beneficial_owner == true |
+| interest | 11 | 0.0%, 12.5% | 0.0%: recipient_entity_type == government_including_local_authority_central_bank_or_other_government_controlled_financial_institution, beneficial_owner == true; 12.5%: fallback_case == all_other_cases, beneficial_owner == true |
 | royalty | 12 | 12.5% | 12.5%: beneficial_owner == true |
 
 Protocol/status: `not_listed` / `not_listed`.
@@ -310,7 +310,7 @@ Candidate excerpts:
 - interest Article 11: U roky 1. U roky majõcõ zdroj v jednom smluvnõm státe, které pobõrá rezident druhého smluvnõho státu, mohou být zdaneny v tomto druhém státe. 2. Avsak takovéto úroky mohou být zdaneny rovnez ve smluvnõm státe, v nemz majõ zdroj, podle právnõch predpisu tohoto státu, ale pokud prõjemce je skutecným vlastnõkem úroku , dan takto ulozená nepre- sáhne 12,5 % hrubé cástky úroku . Přõslusné úrady smluvnõch státu stanovõ vzájemnou do- hodou zpu sob aplikace tohoto omezenõ. 3. Bez ohledu na ustanovenõ odstavce 2 úroky, které majõ zdroj v jednom smluvnõm státe a které po- bõrá vláda druhého smluvnõho státu vcetne mõstnõch orgánu tohoto státu, centrálnõ banky nebo jakéhokoliv jiného financnõho ústavu kontrolovaného touto vládou, budou vyn aty ze zdanenõ v prvne zmõneném státe. 4. Pro úcely odstavce 3 výrazy 1centrálnõ bankaa a 1financnõ ústav kontrolovaný vládoua znamenajõ: a) V prõpade Indonésie:  …
 - royalty Article 12: Licencnõ poplatky 1. Licencnõ poplatky majõcõ zdroj v jednom smluvnõm státe, vyplácené rezidentu druhého smluv- nõho státu, mohou být zdaneny v tomto druhém státe. 2. Avsak takové licencnõ poplatky mohou být také zdaneny ve smluvnõm státe, ve kterém je jejich zdroj, a v souladu s právnõmi predpisy tohoto státu, avsak je-li prõjemce skutecným vlastnõkem licencnõch poplatku , cástka dane takto stanovená nepresáhne 12,5 % hrubé cástky z licencnõch poplatku . Přõslusné úrady smluv- nõch státu upravõ vzájemnou dohodou zpu sob aplikace tohoto omezenõ. 3. Výraz 1licencnõ poplatkya, pouzitý v tomto clánku, oznacuje platby jakéhokoliv druhu obdrzené jako náhrada za uzitõ nebo za právo na uzitõ jakéhoko- liv autorského práva k literárnõmu, umeleckému nebo vedeckému dõlu vcetne kinematografických filmu nebo filmu a pásek pro rozhlasové a televiznõ vysõlánõ, jaké- hokoliv patentu, ochranné známky, n …
 
-Audit package hash: `e8635bf41fbfae88ae72aea623d4443831af29a244845830bc162f7446b07c7e`.
+Audit package hash: `189c8e2574f58a59ebe1e82c13ac4879db09801d1fb0f58deabdf4e746ec8797`.
 
 Human QA: **PENDING**. Reviewer: ____  Date: ____  Outcome: ____  Independent review (if required): ____
 

@@ -106,6 +106,9 @@ def rate_candidates() -> dict[tuple[str, str], list[dict[str, Any]]]:
     corrections = load(HUMAN_CONDITION_CORRECTIONS)["corrections"]
     for correction in corrections:
         key = (correction["country"], correction["income_type"])
+        if key[0] == "TW":
+            # Taiwan is built through build_taiwan_package(), outside the ordinary 100-country map.
+            continue
         originals = result.get(key)
         if not originals:
             raise RuntimeError(f"Human correction target missing: {key}")
@@ -342,6 +345,11 @@ def build_taiwan_package(sampled_pairs: set[str]) -> dict[str, Any]:
         "interest": "Article 11(2): 10% general ceiling for beneficial-owner interest; Article 11(3) provides source exemption for specified qualifying cases.",
         "royalty": "Article 12(2): 5% for industrial, commercial or scientific equipment; 10% in all other cases, subject to beneficial ownership.",
     }
+    tw_corrections = {
+        row["income_type"]: row
+        for row in load(HUMAN_CONDITION_CORRECTIONS)["corrections"]
+        if row["country"] == "TW"
+    }
     scopes = []
     for income in INCOMES:
         node = source["income_scopes"][income]
@@ -365,12 +373,20 @@ def build_taiwan_package(sampled_pairs: set[str]) -> dict[str, Any]:
             else:
                 cs = [{"condition_type": "beneficial_owner", "operator": "==", "value": "true", "unit": None}]
             conditions.append({"rate": rate, "conditions": cs})
+        correction = tw_corrections.get(income)
+        candidate_rates = node["rates"]
+        if correction is not None:
+            candidate_rates = [row["rate"] for row in correction["rate_candidates"]]
+            conditions = [
+                {"rate": row["rate"], "conditions": row["conditions"]}
+                for row in correction["rate_candidates"]
+            ]
         excerpt = excerpts[income]
         scopes.append({
             "income_type": income,
             "article_number": node["article"],
             "article_heading": {"dividend":"Dividendy","interest":"Úroky","royalty":"Licenční poplatky"}[income],
-            "candidate_rates": node["rates"],
+            "candidate_rates": candidate_rates,
             "material_conditions": conditions,
             "candidate_excerpt": excerpt,
             "article_text_sha256": hashlib.sha256(excerpt.encode()).hexdigest(),
