@@ -36,6 +36,7 @@ class CanonicalSourceRelease:
 
     human_review_status: str
     independent_qa_status: str
+    secondary_ai_qa_status: str
     production_approval_status: str
     rule_promotion_status: str
 
@@ -140,6 +141,12 @@ def load_canonical_source_release_gate(
 
             independent_qa_status=
                 row["independent_qa_status"],
+
+            secondary_ai_qa_status=
+                row.get(
+                    "secondary_ai_qa_status",
+                    "not_selected",
+                ),
 
             production_approval_status=
                 row["production_approval_status"],
