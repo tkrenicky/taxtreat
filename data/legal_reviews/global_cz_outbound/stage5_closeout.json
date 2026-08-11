@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "dataset_release": "stage5-closeout-2026-08-11.1",
+  "stage": "Stage 5 - Full legal consolidation",
+  "legal_consolidation_status": "complete",
+  "country_package_count": 101,
+  "wht_scope_count": 303,
+  "primary_human_review": {
+    "status": "complete",
+    "country_packages": 101,
+    "scopes": 303
+  },
+  "remaining_release_blockers": {
+    "independent_country_qa": {
+      "required_packages": 7,
+      "completed_packages": 0,
+      "status": "pending"
+    },
+    "production_approval": "not_started",
+    "source_release": "not_opened"
+  },
+  "production_state": {
+    "verified_scopes": 0,
+    "production_approved_scopes": 0,
+    "production_released_scopes": 0,
+    "fail_closed": true
+  },
+  "closure_basis": "Legal consolidation and primary substantive human review are complete. Remaining independent QA and production-release controls are explicit downstream release blockers and are not represented as completed.",
+  "historical_review_or_approval_metadata_fabricated": false
+}
