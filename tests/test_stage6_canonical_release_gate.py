@@ -95,19 +95,19 @@ def test_all_packages_remain_fail_closed():
     )
 
 
-def test_seven_independent_qa_packages_remain_pending():
+def test_seven_secondary_ai_qa_packages_are_complete():
     gate = load_canonical_source_release_gate(
         GATE_PATH
     )
 
-    pending = sorted(
+    complete = sorted(
         pair_id
         for pair_id, release in gate.items()
         if release.independent_qa_status
-        == "pending"
+        == "complete"
     )
 
-    assert pending == [
+    assert complete == [
         "CZ-AT",
         "CZ-BD",
         "CZ-KP",
@@ -118,7 +118,7 @@ def test_seven_independent_qa_packages_remain_pending():
     ]
 
 
-def test_non_sample_packages_do_not_fake_independent_review():
+def test_non_sample_packages_do_not_fake_secondary_qa():
     gate = load_canonical_source_release_gate(
         GATE_PATH
     )
@@ -129,19 +129,19 @@ def test_non_sample_packages_do_not_fake_independent_review():
     }
 
     assert statuses == {
-        "pending",
+        "complete",
         "not_required",
     }
 
 
-def test_no_production_approval_or_promotion_created():
+def test_production_approval_created_but_no_promotion():
     gate = load_canonical_source_release_gate(
         GATE_PATH
     )
 
     assert all(
         release.production_approval_status
-        == "not_approved"
+        == "production_approved"
         for release in gate.values()
     )
 
@@ -170,3 +170,187 @@ def test_unknown_pair_fails_closed():
             "CZ-ZZ",
             gate_path=GATE_PATH,
         )
+
+
+def test_all_101_packages_are_production_approval_eligible_and_approved():
+    raw = json.loads(
+        GATE_PATH.read_text(encoding="utf-8")
+    )
+
+    assert raw["counts"][
+        "production_approval_eligible_packages"
+    ] == 101
+
+    assert raw["counts"][
+        "production_approved_packages"
+    ] == 101
+
+    assert all(
+        row["production_approval_eligible"] is True
+        for row in raw["treaty_partners"]
+    )
+
+    assert all(
+        row["production_approval_status"]
+        == "production_approved"
+        for row in raw["treaty_partners"]
+    )
+
+
+def test_stage6b_qa_is_reflected_without_claiming_second_human_review():
+    raw = json.loads(
+        GATE_PATH.read_text(encoding="utf-8")
+    )
+
+    assert raw["gate_semantics"][
+        "secondary_ai_crosscheck_sample_complete"
+    ] is True
+
+    assert raw["gate_semantics"][
+        "secondary_ai_is_not_human_review"
+    ] is True
+
+    assert raw["counts"][
+        "secondary_ai_crosscheck_complete_packages"
+    ] == 7
+
+    assert raw["counts"][
+        "secondary_ai_crosscheck_pending_packages"
+    ] == 0
+
+    assert raw["counts"][
+        "human_resolution_complete_packages"
+    ] == 5
+
+    assert raw["counts"][
+        "human_resolution_pending_packages"
+    ] == 0
+
+
+def test_current_package_hashes_are_used_after_stage6b_corrections():
+    raw = json.loads(
+        GATE_PATH.read_text(encoding="utf-8")
+    )
+
+    queue = json.loads(
+        (
+            BASE / "cz_country_qa_queue.json"
+        ).read_text(encoding="utf-8")
+    )
+
+    gate_hashes = {
+        row["treaty_pair_id"]:
+            row["package_sha256"]
+        for row in raw["treaty_partners"]
+    }
+
+    queue_hashes = {
+        row["treaty_pair_id"]:
+            row["package_sha256"]
+        for row in queue["packages"]
+    }
+
+    assert gate_hashes == queue_hashes
+
+
+def test_readiness_does_not_promote_or_release_anything():
+    raw = json.loads(
+        GATE_PATH.read_text(encoding="utf-8")
+    )
+
+    assert raw["counts"][
+        "rule_promoted_packages"
+    ] == 0
+
+    assert raw["counts"][
+        "released_packages"
+    ] == 0
+
+    assert raw["counts"][
+        "released_scopes"
+    ] == 0
+
+    for row in raw["treaty_partners"]:
+        assert (
+            row["release_blockers"]
+            == [
+                "rule_promotion_missing",
+                "source_release_not_opened",
+            ]
+        )
+
+
+def test_stage6c_all_101_packages_are_production_approved():
+    raw = json.loads(
+        GATE_PATH.read_text(encoding="utf-8")
+    )
+
+    assert raw["counts"][
+        "production_approval_eligible_packages"
+    ] == 101
+
+    assert raw["counts"][
+        "production_approved_packages"
+    ] == 101
+
+    assert all(
+        row["production_approval_status"]
+        == "production_approved"
+        for row in raw["treaty_partners"]
+    )
+
+
+def test_stage6c_approval_is_not_additional_human_review():
+    raw = json.loads(
+        GATE_PATH.read_text(encoding="utf-8")
+    )
+
+    assert raw["gate_semantics"][
+        "production_approval_is_deterministic_governance_result"
+    ] is True
+
+    assert raw["gate_semantics"][
+        "production_approval_is_additional_human_review"
+    ] is False
+
+    for row in raw["treaty_partners"]:
+        event = row["release_evidence"][
+            "production_approval_event"
+        ]
+
+        assert event is not None
+        assert event["additional_human_review_claimed"] is False
+        assert (
+            event["package_sha256"]
+            == row["package_sha256"]
+        )
+
+
+def test_stage6c_still_blocks_rule_promotion_and_release():
+    raw = json.loads(
+        GATE_PATH.read_text(encoding="utf-8")
+    )
+
+    assert raw["counts"][
+        "rule_promoted_packages"
+    ] == 0
+
+    assert raw["counts"][
+        "released_packages"
+    ] == 0
+
+    assert raw["counts"][
+        "released_scopes"
+    ] == 0
+
+    for row in raw["treaty_partners"]:
+        assert row["rule_promotion_status"] == "not_promoted"
+        assert row["release_status"] == "blocked"
+        assert row["active_rule_allowed"] is False
+        assert row["production_ready"] is False
+        assert row["fail_closed"] is True
+
+        assert row["release_blockers"] == [
+            "rule_promotion_missing",
+            "source_release_not_opened",
+        ]
