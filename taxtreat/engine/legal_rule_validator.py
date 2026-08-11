@@ -64,21 +64,79 @@ def validate_legal_rules(rules: list[LegalRule]) -> list[str]:
         if rule.verification_status not in _ALLOWED_STATUSES:
             issues.append(f"{prefix} unsupported verification_status.")
         if rule.verification_status == "verified":
-            missing_verification = [
-                field_name
-                for field_name in _VERIFICATION_FIELDS
-                if getattr(rule, field_name) in (None, "")
-            ]
-            if missing_verification:
-                issues.append(
-                    f"{prefix} verified rule lacks provenance/approval: "
-                    + ", ".join(missing_verification)
-                    + "."
+            stage6_governance = (
+                rule.verification_authority
+                == "stage6_governance_policy"
+            )
+
+            if stage6_governance:
+                stage6_required = (
+                    "effective_from",
+                    "source_id",
+                    "source_url",
+                    "source_excerpt_hash",
+                    "review_package_sha256",
+                    "approval_dataset_release",
+                    "approval_created_at",
+                    "dataset_release",
                 )
-            if rule.reviewer_id == rule.approved_by:
-                issues.append(
-                    f"{prefix} reviewer and approver must be independent."
-                )
+
+                missing_stage6 = [
+                    field_name
+                    for field_name in stage6_required
+                    if getattr(rule, field_name) in (None, "")
+                ]
+
+                if missing_stage6:
+                    issues.append(
+                        f"{prefix} Stage 6 verified rule lacks "
+                        "governance provenance: "
+                        + ", ".join(missing_stage6)
+                        + "."
+                    )
+
+                if (
+                    rule.review_package_sha256
+                    and not re.fullmatch(
+                        r"[0-9a-fA-F]{64}",
+                        rule.review_package_sha256,
+                    )
+                ):
+                    issues.append(
+                        f"{prefix} review_package_sha256 must be "
+                        "full SHA-256."
+                    )
+
+                # Stage 6 production approval is deterministic
+                # governance over an already completed primary
+                # human review. It is explicitly not a second
+                # human review and therefore must not fabricate
+                # per-rule reviewer / approver identities.
+            else:
+                missing_verification = [
+                    field_name
+                    for field_name in _VERIFICATION_FIELDS
+                    if getattr(rule, field_name) in (None, "")
+                ]
+
+                if missing_verification:
+                    issues.append(
+                        f"{prefix} verified rule lacks "
+                        "provenance/approval: "
+                        + ", ".join(missing_verification)
+                        + "."
+                    )
+
+                if (
+                    rule.reviewer_id is not None
+                    and rule.approved_by is not None
+                    and rule.reviewer_id == rule.approved_by
+                ):
+                    issues.append(
+                        f"{prefix} reviewer and approver must "
+                        "be independent."
+                    )
+
             if rule.source_excerpt_hash and not re.fullmatch(
                 r"[0-9a-fA-F]{64}",
                 rule.source_excerpt_hash,

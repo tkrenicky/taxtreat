@@ -47,6 +47,10 @@ class LegalRule:
     reviewed_at: date | None = None
     approved_by: str | None = None
     approved_at: date | None = None
+    verification_authority: str | None = None
+    review_package_sha256: str | None = None
+    approval_dataset_release: str | None = None
+    approval_created_at: date | None = None
     dataset_release: str | None = None
     evidence_source_ids: list[str] = field(default_factory=list)
     applies_to_layers: list[str] = field(default_factory=list)
