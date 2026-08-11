@@ -3801,6 +3801,36 @@
       "review_resolution_note": "ACCEPTED: Added Article 10(3) public-sector exemption."
     },
     {
+      "country": "QA",
+      "income_type": "interest",
+      "rate_candidates": [
+        {
+          "rate": 0.0,
+          "conditions": [
+            {
+              "condition_type": "recipient_is_treaty_resident",
+              "operator": "==",
+              "value": "true",
+              "unit": null
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "value": "true",
+              "unit": null
+            },
+            {
+              "condition_type": "claim_not_effectively_connected_to_czech_pe",
+              "operator": "==",
+              "value": "true",
+              "unit": null
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "POST-REVIEW CONFIRMED: Article 11(1) residence-only treatment requires the interest to be beneficially owned by a treaty resident of Qatar; Article 11(3) removes that treatment where the claim is effectively connected with a Czech permanent establishment."
+    },
+    {
       "country": "RO",
       "income_type": "interest",
       "rate_candidates": [
@@ -4033,14 +4063,20 @@
             {
               "condition_type": "royalty_category",
               "operator": "==",
-              "unit": null,
-              "value": "copyright_literary_artistic_or_scientific"
+              "value": "copyright_literary_artistic_or_scientific",
+              "unit": null
             },
             {
               "condition_type": "recipient_is_treaty_resident",
               "operator": "==",
-              "unit": null,
-              "value": "true"
+              "value": "true",
+              "unit": null
+            },
+            {
+              "condition_type": "right_or_property_not_effectively_connected_to_czech_pe_or_fixed_base",
+              "operator": "==",
+              "value": "true",
+              "unit": null
             }
           ]
         },
@@ -4050,13 +4086,25 @@
             {
               "condition_type": "royalty_category",
               "operator": "==",
-              "unit": null,
-              "value": "all_other_article_12_royalties"
+              "value": "all_other_article_12_royalties",
+              "unit": null
+            },
+            {
+              "condition_type": "recipient_is_treaty_resident",
+              "operator": "==",
+              "value": "true",
+              "unit": null
+            },
+            {
+              "condition_type": "right_or_property_not_effectively_connected_to_czech_pe_or_fixed_base",
+              "operator": "==",
+              "value": "true",
+              "unit": null
             }
           ]
         }
       ],
-      "review_resolution_note": "NOT ACCEPTED AS RATE REMOVAL; CONDITIONS ADDED: Article 12(3) expressly gives residence-only taxation to copyright royalties. 0% therefore remains; missing category conditions are added."
+      "review_resolution_note": "POST-REVIEW CONFIRMED: Article 12(3) preserves residence-only taxation for copyright royalties to literary, artistic or scientific works. The 5% source-state ceiling applies to the remaining Article 12 royalties. Article 12(5) PE/fixed-base effective-connection carve-out is made explicit."
     },
     {
       "country": "SG",
@@ -4882,7 +4930,7 @@
       "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Added missing Article 11(3) exemption."
     }
   ],
-  "dataset_release": "stage5-human-review-complete-2026-08-11.3",
+  "dataset_release": "stage5-human-review-complete-2026-08-11.4",
   "purpose": "Consolidated structured WHT treaty rate/condition corrections after completed human review of all 101 CZ outbound jurisdictions. Taiwan corrections are applied in its special statutory package. Domestic-law outcomes and treaty-status suspensions remain separate legal layers. Corrections remain needs_review and do not create verification or production release.",
   "schema_version": 1,
   "verification_status": "needs_review"

@@ -46,7 +46,7 @@ Risk focus: high_level_three_income_sanity_check.
 |---|---:|---:|---|
 | dividend | 10 | 0.0%, 10.0% | 0.0%: recipient_entity_type == company_with_share_capital, direct_ownership >= 25%; 10.0%: fallback_case == all_other_cases |
 | interest | 11 | 0.0% | 0.0%: recipient_is_treaty_resident == true, source_state_taxation == prohibited_under_article_11, permanent_establishment_connection == false |
-| royalty | 12 | 0.0%, 5.0% | 0.0%: royalty_category == copyright_literary_artistic_or_scientific, recipient_is_treaty_resident == true; 5.0%: royalty_category == all_other_article_12_royalties |
+| royalty | 12 | 0.0%, 5.0% | 0.0%: royalty_category == copyright_literary_artistic_or_scientific, recipient_is_treaty_resident == true, right_or_property_not_effectively_connected_to_czech_pe_or_fixed_base == true; 5.0%: royalty_category == all_other_article_12_royalties, recipient_is_treaty_resident == true, right_or_property_not_effectively_connected_to_czech_pe_or_fixed_base == true |
 
 Protocol/status: `not_listed` / `not_listed`.
 
@@ -66,7 +66,7 @@ Candidate excerpts:
 - interest Article 11: Úroky 1. Úroky mající zdroj v jednom smluvním státě a placené osobě mající bydliště či sídlo v druhém smluvním státě podléhají zdanění pou- ze v tomto druhém státě. 2. Výraz „úroky“ použitý v tomto článku označuje příjmy z pohledávek jakéhokoli druhu, zajištěných i nezajištěných zástavním právem na nemovitosti, poskytujících i neposkytuj vo na účast na zisku dlužníka a obzvláště příjmy z veřejných dluhopisů a obligací, včetně prémií a výher spojených s těmito cennými papíry. 3. Ustanovení odstavce 1 se nepoužije, jest- liže příjemce úroků, který má bydliště či sídlo v jednom smluvním státě, vykonává v druhém smluvním státě, ve kterém mají úroky zdroj, průmyslovou nebo obchodní činnost prostřednic- tvím stálé provozovny, která je tam umístěna, nebo vykonává v tomto druhém státě svobodné povolání pomocí stálé základny tam umístěné a jestliže pohledávka, ze které jsou úroky placeny, je skut …
 - royalty Article 12: Licenční poplatky 1 Licenční poplatky mající zdroj v jednom smluvním státě a placené osobě, která má byd- liště či sídlo v druhém smluvním státě, mohou být zdaněny v tomto druhém státě, 2. Takové licenční poplatky však mohou být zdaněny ve smluvním státě, ve kterém je jejich zdroj, a to podle právních předpisů tohoto státu. Daň takto uložená však nepřesáhne 5% hrubé částky licenčních poplatků, 3. Licenční poplatky plynoucí z autorských práv k dílům literárním, uměleckým nebo vě- deckým podléhají bez ohledu na ustanovení od- stavců 1 a 2 zdanění jen v tom smluvním státě, ve kterém má příjemce takových licenčních po- platků bydliště či sídlo. 4. Výraz „licenční poplatky“ použitý v tom- to článku označuje platy jakéhokoli druhu. při- Jaté náhradou za užití nebo právo na užití jaké- hokoli patentu, ochranné známky, návrhu nebo modelu, plánu, tajného vzorce nebo postupu nebo průmyslového, obc …
 
-Audit package hash: `1a44b932db5127cc39d5cceaec123b987f19821838e0bc2e661a5f66b178afa4`.
+Audit package hash: `81c624796d8bb86d6974eb0c2436e936b5445b4a78d1d4072bdef2daeabe5896`.
 
 Human QA: **PENDING**. Reviewer: ____  Date: ____  Outcome: ____  Independent review (if required): ____
 

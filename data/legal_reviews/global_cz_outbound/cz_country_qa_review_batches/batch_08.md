@@ -185,7 +185,7 @@ Risk focus: high_level_three_income_sanity_check.
 | Income | Article | Candidate rate(s) | Material candidate conditions |
 |---|---:|---:|---|
 | dividend | 10 | 0.0%, 5.0%, 10.0% | 0.0%: beneficial_owner == other_state_government_subnational_local_authority_central_bank_other_public_law_body_or_entity_directly_or_indirectly_wholly_owned_by_such_public_body; 5.0%: recipient_entity_type == company, direct_ownership >= 10%, beneficial_owner == true; 10.0%: fallback_case == all_other_cases, beneficial_owner == true |
-| interest | 11 | 0.0% | 0.0%: beneficial_owner == true |
+| interest | 11 | 0.0% | 0.0%: recipient_is_treaty_resident == true, beneficial_owner == true, claim_not_effectively_connected_to_czech_pe == true |
 | royalty | 12 | 10.0% | 10.0%: beneficial_owner == true |
 
 Protocol/status: `not_listed` / `not_listed`.
@@ -206,7 +206,7 @@ Candidate excerpts:
 - interest Article 11: 1. Úroky mající zdroj v jednom smluvním státě a skutečně vlastněné rezidentem druhého smluvního státu podléhají zdanění jen v tomto druhém státě. 2. Výraz „úroky“ použitý v tomto článku označuje příjmy z pohledávek jakéhokoliv druhu, ať zajištěných či nezajištěných zástavním právem na nemovitosti a majících či nemajících právo účasti na zisku dlužníka, a zvláště, příjmy z vládních cenných papírů a příjmy z obligací nebo dluhopisů, včetně prémií a výher, které se vážou k těmto cenným papírům, obligacím nebo dluhopisům. Penále ukládané za pozdní platbu se nepovažuje za úroky pro účely tohoto článku. Výraz „úroky“ nezahrnuje žádnou část příjmu, která je považována za dividendu podle ustanovení článku 10 odstavce 4. 3. Ustanovení odstavce I se nepoužijí, jestliže skutečný vlastník úroků, který je rezidentem jednoho smluvního státu, vykonává v druhém smluvním státě, ve kterém mají úroky zdroj …
 - royalty Article 12: 1. Licenční poplatky mající zdroj v jednom smluvním státě a vyplácené rezidentu druhého smluvního státu mohou být zdaněny v tomto druhém státě. 2. Tyto licenční poplatky však mohou být rovněž zdaněny ve smluvním státě, v němž mají zdroj, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník licenčních poplatků je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne 10 procent hrubé částky licenčních poplatků. Příslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace tohoto omezení. 3. Výraz „licenční poplatky“ použitý v tomto článku označuje platby jakéhokoliv druhu obdržené jako náhrada za užití nebo za právo na užití jakéhokoliv autorského práva k dílu literárnímu, uměleckému nebo vědeckému, jakéhokoliv patentu, ochranné známky, návrhu nebo modelu, plánu, tajného vzorce nebo postupu, nebo za užití nebo za právo na užití jakéhokoliv průmy …
 
-Audit package hash: `89e973c2a6d877ed76c8a74db268da0f4865e8e4f955fa1d10cf76b6adaf75b8`.
+Audit package hash: `955712e070ef76d5a0d6c1c9ff9e3349d11e2892412ff7d6aa23d6a3186cb424`.
 
 Human QA: **PENDING**. Reviewer: ____  Date: ____  Outcome: ____  Independent review (if required): ____
 
