@@ -1394,7 +1394,7 @@
         "interpretation_status": "not_assessed_needs_human_review",
         "inventory_entry_into_force_candidate": "2007-03-22",
         "mli_candidate_effective_from": "2021-01-01",
-        "protocol_candidate_effective_from": null,
+        "protocol_candidate_effective_from": "2013-01-01",
         "status_candidate_effective_from": null,
         "status_candidate_effective_to": null
       },
@@ -1853,7 +1853,7 @@
           "title": null
         }
       ],
-      "package_sha256": "27df6afe79bbcf08fea08e9aa2f974e38db73249d3d229b1a15e82b510b3fc55",
+      "package_sha256": "d2ccc29d059524ce25db0c54f53531870477c625d0d80404863d57456555fb9e",
       "partner_country": "AT",
       "partner_country_name": "Rakousko",
       "ppt_treatment": {
@@ -3312,6 +3312,24 @@
                   "operator": "==",
                   "unit": null,
                   "value": "true"
+                },
+                {
+                  "condition_type": "continuous_holding_period_days",
+                  "operator": ">=",
+                  "unit": "days",
+                  "value": 365
+                },
+                {
+                  "condition_type": "holding_period_includes_payment_date",
+                  "operator": "==",
+                  "unit": null,
+                  "value": true
+                },
+                {
+                  "condition_type": "holding_period_reorganisation_continuity",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "ownership_changes_directly_resulting_from_corporate_reorganisation_ignored"
                 }
               ],
               "rate": 10.0
@@ -3438,7 +3456,7 @@
           "title": "8/2021 Sb.m.s."
         }
       ],
-      "package_sha256": "94ebe6924727e60eca34ee2ca176b3d4698ef378320ec73afcc23314359ea383",
+      "package_sha256": "0c873e0915a646dd8d546a8f3994b95c68c306c1f7056b38b1c09773f7c4f4d7",
       "partner_country": "BD",
       "partner_country_name": "Bangladéš",
       "ppt_treatment": {
@@ -19396,12 +19414,16 @@
       ],
       "language_and_prevailing_text": {
         "archived_manifest_sha256": null,
-        "authentic_languages_candidate": null,
+        "authentic_languages_candidate": [
+          "Czech",
+          "Korean",
+          "English"
+        ],
         "current_official_sha256": null,
         "evidence_class": "hash_bound_repository_signature_clause_candidate",
         "hash_relation": null,
         "official_source_url": null,
-        "prevailing_text_candidate": null,
+        "prevailing_text_candidate": "English",
         "signature_clause_excerpt": "Dáno v Praze dne 2. brezna 2005 ve dvou puvodnõch vyhotovenõch, kazdé v jazyce ceském, korejském a anglic-\nkém, pricemz vsechny texty jsou autentické. V prõpade jakéhokoliv rozdõlu bude rozhodujõcõm anglický text.",
         "verification_status": "needs_review"
       },
@@ -19424,7 +19446,7 @@
           "title": "3/2006 Sb.m.s."
         }
       ],
-      "package_sha256": "ca4aaf3640b7f2bfeb75e9f03180548d332126f364530bac0be60271af1f611b",
+      "package_sha256": "7b9de654ac05c013db552a99f9560508c00451480f725a9c38fe9106b2a96574",
       "partner_country": "KP",
       "partner_country_name": "KLDR (Korejská lidově demokratická republika)",
       "ppt_treatment": {
@@ -25696,12 +25718,16 @@
       ],
       "language_and_prevailing_text": {
         "archived_manifest_sha256": null,
-        "authentic_languages_candidate": null,
+        "authentic_languages_candidate": [
+          "Czech",
+          "Malay",
+          "English"
+        ],
         "current_official_sha256": null,
         "evidence_class": "hash_bound_repository_signature_clause_candidate",
         "hash_relation": null,
         "official_source_url": null,
-        "prevailing_text_candidate": null,
+        "prevailing_text_candidate": "English",
         "signature_clause_excerpt": "Dáno ve dvojõm vyhotovenõ v Kuala Lumpur\ndne 8. brezna 1996 v ceském, malajsijském a anglickém\njazyce, pricemz vsechny tri texty majõ stejnou platnost.\nV prõpade jakýchkoliv rozdõlnostõ výkladu bude roz-\nhodujõcõ anglický text.",
         "verification_status": "needs_review"
       },
@@ -25724,7 +25750,7 @@
           "title": "71/1998 Sb."
         }
       ],
-      "package_sha256": "91cd868803d6a0787cd04739189b2268c1883de1bbdb689d98d1a3ffab32814a",
+      "package_sha256": "6d91e999b381f821e9d543ff6b935545226cf7be1c27fd526ab8b8beefa1af40",
       "partner_country": "MY",
       "partner_country_name": "Malajsie",
       "ppt_treatment": {

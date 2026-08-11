@@ -4928,9 +4928,62 @@
         }
       ],
       "review_resolution_note": "D/I structured audit correction accepted through completed 101-country human review: Added missing Article 11(3) exemption."
+    },
+    {
+      "country": "BD",
+      "income_type": "dividend",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "minimum_ownership",
+              "operator": ">=",
+              "unit": "%",
+              "value": "25"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "continuous_holding_period_days",
+              "operator": ">=",
+              "unit": "days",
+              "value": 365
+            },
+            {
+              "condition_type": "holding_period_includes_payment_date",
+              "operator": "==",
+              "unit": null,
+              "value": true
+            },
+            {
+              "condition_type": "holding_period_reorganisation_continuity",
+              "operator": "==",
+              "unit": null,
+              "value": "ownership_changes_directly_resulting_from_corporate_reorganisation_ignored"
+            }
+          ]
+        },
+        {
+          "rate": 15.0,
+          "conditions": [
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ],
+      "review_resolution_note": "STAGE6_AI_CROSSCHECK: Article 10(2)(a) requires the qualifying 25% holding to be maintained continuously for 365 days including the payment date; qualifying ownership changes resulting directly from corporate reorganisation are disregarded for this period."
     }
   ],
-  "dataset_release": "stage5-human-review-complete-2026-08-11.4",
+  "dataset_release": "stage5-human-review-complete-2026-08-11.5",
   "purpose": "Consolidated structured WHT treaty rate/condition corrections after completed human review of all 101 CZ outbound jurisdictions. Taiwan corrections are applied in its special statutory package. Domestic-law outcomes and treaty-status suspensions remain separate legal layers. Corrections remain needs_review and do not create verification or production release.",
   "schema_version": 1,
   "verification_status": "needs_review"

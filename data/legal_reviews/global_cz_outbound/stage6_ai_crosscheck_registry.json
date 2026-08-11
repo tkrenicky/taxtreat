@@ -1,202 +1,264 @@
 {
-  "dataset_release": "stage6-ai-crosscheck-registry-2026-08-11.1",
+  "dataset_release": "stage6-ai-crosscheck-registry-2026-08-11.3",
   "policy": {
     "ai_crosscheck_is_not_production_approval": true,
-    "ai_crosscheck_is_not_rule_promotion": true,
-    "ai_crosscheck_is_not_source_release": true,
     "ai_findings_do_not_self_modify_legal_content": true,
     "ai_is_human_reviewer": false,
     "clean_ai_result_requires_no_extra_human_rereview": true,
     "crosscheck_type": "secondary_ai_cross_check",
-    "different_model_or_session_preferred": true,
-    "exact_package_hash_required": true,
+    "exact_reviewed_package_hash_required": true,
     "fabricated_ai_event_forbidden": true,
+    "fabricated_human_resolution_forbidden": true,
+    "human_resolution_is_not_production_approval": true,
     "human_resolution_required_for_discrepancies": true,
     "human_resolution_required_for_uncertainty": true,
     "independent_human_review_claimed": false,
+    "post_review_correction_hash_lineage_supported": true,
     "primary_human_reviewer_id": "tkrenicky",
+    "production_approval_is_not_rule_promotion": true,
     "provider_and_model_must_be_recorded": true,
-    "selected_package_count": 7
+    "rule_promotion_is_not_source_release": true,
+    "selected_package_count": 7,
+    "supplementary_work_adjudication_recorded": true
   },
-  "purpose": "Secondary AI cross-check of the deterministic Stage 6 QA sample before production approval.",
+  "purpose": "Completed Stage 6 secondary AI cross-check and required primary-human discrepancy resolutions before production approval.",
   "records": [
     {
       "ai_crosscheck": {
-        "checked_at": null,
-        "findings": [],
-        "model": null,
-        "outcome": null,
-        "provider": null,
-        "run_reference": null,
-        "status": "pending"
+        "checked_at": "2026-08-11T20:24:04Z",
+        "findings": [
+          {
+            "description": "Structured protocol effective-date field was null despite protocol timing evidence being present.",
+            "topic": "protocol_effective_date"
+          }
+        ],
+        "model": "Sonnet 5",
+        "outcome": "discrepancy",
+        "provider": "Anthropic",
+        "run_reference": "manual-claude-phase2-effort-medium",
+        "status": "ai_crosscheck_discrepancy",
+        "timestamp_basis": "Phase 2 result received in the TaxTreat working conversation; provider-native completion timestamp was not available."
       },
+      "current_package_sha256": "d2ccc29d059524ce25db0c54f53531870477c625d0d80404863d57456555fb9e",
       "human_resolution": {
-        "resolution": null,
-        "resolution_note": null,
-        "resolved_at": null,
-        "reviewer_id": null,
-        "status": "not_required_yet"
+        "resolution": "tax_treat_corrected",
+        "resolution_note": "Confirmed after secondary AI cross-check and supplementary Work adjudication. The corrected package distinguishes protocol entry into force from the operational application date and uses 2013-01-01.",
+        "resolved_at": "2026-08-11T20:59:29Z",
+        "reviewer_id": "tkrenicky",
+        "status": "tax_treat_corrected"
       },
-      "package_sha256": "27df6afe79bbcf08fea08e9aa2f974e38db73249d3d229b1a15e82b510b3fc55",
+      "package_sha256": "d2ccc29d059524ce25db0c54f53531870477c625d0d80404863d57456555fb9e",
       "partner_country": "AT",
       "primary_human_reviewer_id": "tkrenicky",
-      "production_approval_allowed": false,
+      "production_approval_allowed": true,
+      "reviewed_package_sha256": "27df6afe79bbcf08fea08e9aa2f974e38db73249d3d229b1a15e82b510b3fc55",
       "scope_count": 3,
       "treaty_pair_id": "CZ-AT"
     },
     {
       "ai_crosscheck": {
-        "checked_at": null,
-        "findings": [],
-        "model": null,
-        "outcome": null,
-        "provider": null,
-        "run_reference": null,
-        "status": "pending"
+        "checked_at": "2026-08-11T20:24:04Z",
+        "findings": [
+          {
+            "description": "Article 10 reduced dividend rate did not encode the 365-day continuous holding requirement including the payment date and related reorganisation continuity.",
+            "topic": "dividend_qualifying_condition"
+          }
+        ],
+        "model": "Sonnet 5",
+        "outcome": "discrepancy",
+        "provider": "Anthropic",
+        "run_reference": "manual-claude-phase2-effort-medium",
+        "status": "ai_crosscheck_discrepancy",
+        "timestamp_basis": "Phase 2 result received in the TaxTreat working conversation; provider-native completion timestamp was not available."
       },
+      "current_package_sha256": "0c873e0915a646dd8d546a8f3994b95c68c306c1f7056b38b1c09773f7c4f4d7",
       "human_resolution": {
-        "resolution": null,
-        "resolution_note": null,
-        "resolved_at": null,
-        "reviewer_id": null,
-        "status": "not_required_yet"
+        "resolution": "tax_treat_corrected",
+        "resolution_note": "Confirmed after secondary AI cross-check and supplementary Work adjudication. The corrected package includes the 365-day continuous holding period, payment-date inclusion and qualifying corporate-reorganisation continuity.",
+        "resolved_at": "2026-08-11T20:59:29Z",
+        "reviewer_id": "tkrenicky",
+        "status": "tax_treat_corrected"
       },
-      "package_sha256": "94ebe6924727e60eca34ee2ca176b3d4698ef378320ec73afcc23314359ea383",
+      "package_sha256": "0c873e0915a646dd8d546a8f3994b95c68c306c1f7056b38b1c09773f7c4f4d7",
       "partner_country": "BD",
       "primary_human_reviewer_id": "tkrenicky",
-      "production_approval_allowed": false,
+      "production_approval_allowed": true,
+      "reviewed_package_sha256": "94ebe6924727e60eca34ee2ca176b3d4698ef378320ec73afcc23314359ea383",
       "scope_count": 3,
       "treaty_pair_id": "CZ-BD"
     },
     {
       "ai_crosscheck": {
-        "checked_at": null,
-        "findings": [],
-        "model": null,
-        "outcome": null,
-        "provider": null,
-        "run_reference": null,
-        "status": "pending"
+        "checked_at": "2026-08-11T20:24:04Z",
+        "findings": [
+          {
+            "description": "Structured language fields were null despite the stored signature clause identifying Czech, Korean and English texts and English as prevailing.",
+            "topic": "authentic_languages_prevailing_text"
+          }
+        ],
+        "model": "Sonnet 5",
+        "outcome": "discrepancy",
+        "provider": "Anthropic",
+        "run_reference": "manual-claude-phase2-effort-medium",
+        "status": "ai_crosscheck_discrepancy",
+        "timestamp_basis": "Phase 2 result received in the TaxTreat working conversation; provider-native completion timestamp was not available."
       },
+      "current_package_sha256": "7b9de654ac05c013db552a99f9560508c00451480f725a9c38fe9106b2a96574",
       "human_resolution": {
-        "resolution": null,
-        "resolution_note": null,
-        "resolved_at": null,
-        "reviewer_id": null,
-        "status": "not_required_yet"
+        "resolution": "tax_treat_corrected",
+        "resolution_note": "Confirmed after secondary AI cross-check and supplementary Work adjudication. The corrected package records Czech, Korean and English as authentic texts with English prevailing.",
+        "resolved_at": "2026-08-11T20:59:29Z",
+        "reviewer_id": "tkrenicky",
+        "status": "tax_treat_corrected"
       },
-      "package_sha256": "ca4aaf3640b7f2bfeb75e9f03180548d332126f364530bac0be60271af1f611b",
+      "package_sha256": "7b9de654ac05c013db552a99f9560508c00451480f725a9c38fe9106b2a96574",
       "partner_country": "KP",
       "primary_human_reviewer_id": "tkrenicky",
-      "production_approval_allowed": false,
+      "production_approval_allowed": true,
+      "reviewed_package_sha256": "ca4aaf3640b7f2bfeb75e9f03180548d332126f364530bac0be60271af1f611b",
       "scope_count": 3,
       "treaty_pair_id": "CZ-KP"
     },
     {
       "ai_crosscheck": {
-        "checked_at": null,
+        "checked_at": "2026-08-11T20:24:04Z",
         "findings": [],
-        "model": null,
-        "outcome": null,
-        "provider": null,
-        "run_reference": null,
-        "status": "pending"
+        "model": "Sonnet 5",
+        "outcome": "no_discrepancy",
+        "provider": "Anthropic",
+        "run_reference": "manual-claude-phase2-effort-medium",
+        "status": "ai_crosscheck_no_discrepancy",
+        "timestamp_basis": "Phase 2 result received in the TaxTreat working conversation; provider-native completion timestamp was not available."
       },
+      "current_package_sha256": "2ec06e38b1d2d7d5c5e1dad723a92d32c87f5e32776aaa3ec1deac9c4f74c1eb",
       "human_resolution": {
         "resolution": null,
         "resolution_note": null,
         "resolved_at": null,
         "reviewer_id": null,
-        "status": "not_required_yet"
+        "status": "not_required"
       },
       "package_sha256": "2ec06e38b1d2d7d5c5e1dad723a92d32c87f5e32776aaa3ec1deac9c4f74c1eb",
       "partner_country": "KZ",
       "primary_human_reviewer_id": "tkrenicky",
-      "production_approval_allowed": false,
+      "production_approval_allowed": true,
+      "reviewed_package_sha256": "2ec06e38b1d2d7d5c5e1dad723a92d32c87f5e32776aaa3ec1deac9c4f74c1eb",
       "scope_count": 3,
       "treaty_pair_id": "CZ-KZ"
     },
     {
       "ai_crosscheck": {
-        "checked_at": null,
-        "findings": [],
-        "model": null,
-        "outcome": null,
-        "provider": null,
-        "run_reference": null,
-        "status": "pending"
+        "checked_at": "2026-08-11T20:24:04Z",
+        "findings": [
+          {
+            "description": "AI identified Malaysian dividend relief in Article 10(3) as absent from structured conditions.",
+            "topic": "dividend_article_10_3"
+          },
+          {
+            "description": "AI identified the Malaysian approved-loan exemption in Article 11(3) as absent from structured conditions.",
+            "topic": "interest_article_11_3"
+          },
+          {
+            "description": "Structured language fields were null despite the stored Czech/Malay/English signature clause with English prevailing for interpretive differences.",
+            "topic": "authentic_languages_prevailing_text"
+          }
+        ],
+        "model": "Sonnet 5",
+        "outcome": "discrepancy",
+        "provider": "Anthropic",
+        "run_reference": "manual-claude-phase2-effort-medium",
+        "status": "ai_crosscheck_discrepancy",
+        "timestamp_basis": "Phase 2 result received in the TaxTreat working conversation; provider-native completion timestamp was not available."
       },
+      "current_package_sha256": "6d91e999b381f821e9d543ff6b935545226cf7be1c27fd526ab8b8beefa1af40",
       "human_resolution": {
-        "resolution": null,
-        "resolution_note": null,
-        "resolved_at": null,
-        "reviewer_id": null,
-        "status": "not_required_yet"
+        "resolution": "tax_treat_corrected",
+        "resolution_note": "Confirmed after secondary AI cross-check and supplementary Work adjudication. Language metadata was corrected. The Article 10(3) and Article 11(3) AI findings were directionality false positives and remain outside the CZ-to-MY WHT decision path.",
+        "resolved_at": "2026-08-11T20:59:29Z",
+        "reviewer_id": "tkrenicky",
+        "status": "tax_treat_corrected"
       },
-      "package_sha256": "91cd868803d6a0787cd04739189b2268c1883de1bbdb689d98d1a3ffab32814a",
+      "package_sha256": "6d91e999b381f821e9d543ff6b935545226cf7be1c27fd526ab8b8beefa1af40",
       "partner_country": "MY",
       "primary_human_reviewer_id": "tkrenicky",
-      "production_approval_allowed": false,
+      "production_approval_allowed": true,
+      "reviewed_package_sha256": "91cd868803d6a0787cd04739189b2268c1883de1bbdb689d98d1a3ffab32814a",
       "scope_count": 3,
       "treaty_pair_id": "CZ-MY"
     },
     {
       "ai_crosscheck": {
-        "checked_at": null,
+        "checked_at": "2026-08-11T20:24:04Z",
         "findings": [],
-        "model": null,
-        "outcome": null,
-        "provider": null,
-        "run_reference": null,
-        "status": "pending"
+        "model": "Sonnet 5",
+        "outcome": "no_discrepancy",
+        "provider": "Anthropic",
+        "run_reference": "manual-claude-phase2-effort-medium",
+        "status": "ai_crosscheck_no_discrepancy",
+        "timestamp_basis": "Phase 2 result received in the TaxTreat working conversation; provider-native completion timestamp was not available."
       },
+      "current_package_sha256": "af3fc702047d48182c8c043f8a38aa1cd7a8fcd5f6c090a625174acc667038da",
       "human_resolution": {
         "resolution": null,
         "resolution_note": null,
         "resolved_at": null,
         "reviewer_id": null,
-        "status": "not_required_yet"
+        "status": "not_required"
       },
       "package_sha256": "af3fc702047d48182c8c043f8a38aa1cd7a8fcd5f6c090a625174acc667038da",
       "partner_country": "SA",
       "primary_human_reviewer_id": "tkrenicky",
-      "production_approval_allowed": false,
+      "production_approval_allowed": true,
+      "reviewed_package_sha256": "af3fc702047d48182c8c043f8a38aa1cd7a8fcd5f6c090a625174acc667038da",
       "scope_count": 3,
       "treaty_pair_id": "CZ-SA"
     },
     {
       "ai_crosscheck": {
-        "checked_at": null,
-        "findings": [],
-        "model": null,
-        "outcome": null,
-        "provider": null,
-        "run_reference": null,
-        "status": "pending"
+        "checked_at": "2026-08-11T20:24:04Z",
+        "findings": [
+          {
+            "description": "AI challenged TaxTreat's protocol-based 0/5/10 royalty structure and requested primary protocol support for the rate/category replacement.",
+            "topic": "royalty_protocol_rate_structure"
+          },
+          {
+            "description": "AI identified the Singapore one-tier dividend provision as absent from structured conditions.",
+            "topic": "dividend_article_10_4a"
+          }
+        ],
+        "model": "Sonnet 5",
+        "outcome": "discrepancy",
+        "provider": "Anthropic",
+        "run_reference": "manual-claude-phase2-effort-medium",
+        "status": "ai_crosscheck_discrepancy",
+        "timestamp_basis": "Phase 2 result received in the TaxTreat working conversation; provider-native completion timestamp was not available."
       },
+      "current_package_sha256": "56000cb59625a70f65ca01cd74c543b8a8654b2f97b57531b15f74ebeec55eae",
       "human_resolution": {
-        "resolution": null,
-        "resolution_note": null,
-        "resolved_at": null,
-        "reviewer_id": null,
-        "status": "not_required_yet"
+        "resolution": "tax_treat_confirmed",
+        "resolution_note": "Confirmed after secondary AI cross-check and supplementary Work adjudication. Protocol Article 6 supports the existing 0/5/10 royalty structure from 2015-01-01. Article 10(4)(a) is Singapore-source direction only.",
+        "resolved_at": "2026-08-11T20:59:29Z",
+        "reviewer_id": "tkrenicky",
+        "status": "tax_treat_confirmed"
       },
       "package_sha256": "56000cb59625a70f65ca01cd74c543b8a8654b2f97b57531b15f74ebeec55eae",
       "partner_country": "SG",
       "primary_human_reviewer_id": "tkrenicky",
-      "production_approval_allowed": false,
+      "production_approval_allowed": true,
+      "reviewed_package_sha256": "56000cb59625a70f65ca01cd74c543b8a8654b2f97b57531b15f74ebeec55eae",
       "scope_count": 3,
       "treaty_pair_id": "CZ-SG"
     }
   ],
   "schema_version": 1,
   "summary": {
-    "ai_crosscheck_complete_packages": 0,
-    "ai_crosscheck_pending_packages": 7,
-    "clean_packages": 0,
-    "human_resolution_complete_packages": 0,
+    "ai_crosscheck_complete_packages": 7,
+    "ai_crosscheck_pending_packages": 0,
+    "clean_packages": 2,
+    "human_resolution_complete_packages": 5,
     "human_resolution_pending_packages": 0,
-    "packages_with_discrepancies": 0,
+    "packages_with_discrepancies": 5,
+    "production_approval_eligible_packages": 7,
     "production_approved_packages": 0,
     "promoted_packages": 0,
     "released_packages": 0,

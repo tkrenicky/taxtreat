@@ -1,16 +1,24 @@
 {
-  "clean_packages": 0,
-  "complete_packages": 0,
+  "clean_packages": 2,
+  "complete_packages": 7,
   "crosscheck_type": "secondary_ai_cross_check",
-  "dataset_release": "stage6-ai-crosscheck-registry-summary-2026-08-11.1",
-  "discrepancy_packages": 0,
+  "dataset_release": "stage6-ai-crosscheck-registry-summary-2026-08-11.3",
+  "discrepancy_packages": 5,
+  "human_resolution_complete_packages": 5,
+  "human_resolution_pending_packages": 0,
   "independent_human_review_claimed": false,
-  "pending_packages": 7,
+  "pending_packages": 0,
+  "production_approval_eligible_packages": 7,
   "production_approved_packages": 0,
   "released_packages": 0,
   "released_scopes": 0,
   "required_packages": 7,
   "schema_version": 1,
+  "secondary_ai": {
+    "effort": "Medium",
+    "model": "Sonnet 5",
+    "provider": "Anthropic"
+  },
   "selected_pairs": [
     "CZ-AT",
     "CZ-BD",
@@ -20,5 +28,10 @@
     "CZ-SA",
     "CZ-SG"
   ],
+  "supplementary_ai": {
+    "effort": "Medium",
+    "model": "GPT-5.6 Sol",
+    "provider": "OpenAI"
+  },
   "uncertain_packages": 0
 }

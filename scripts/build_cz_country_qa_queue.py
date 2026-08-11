@@ -22,6 +22,7 @@ BASE_CANDIDATES = ROOT / "data/legal_consolidation/remaining_294_base_candidates
 MLI_EFFECTS = ROOT / "data/legal_consolidation/mli_wht_effects.json"
 BLOCKER_RESOLUTIONS = ROOT / "data/legal_consolidation/blocker_resolutions.json"
 HUMAN_CONDITION_CORRECTIONS = ROOT / "data/legal_consolidation/human_condition_corrections.json"
+STAGE6_AI_PACKAGE_CORRECTIONS = ROOT / "data/legal_consolidation/stage6_ai_package_corrections.json"
 TAIWAN_SPECIAL = ROOT / "data/legal_special_jurisdictions/taiwan_45_2020.json"
 AT_CH_RULES = {
     "AT": ROOT / "data/legal_rules/rakousko.json",
@@ -244,6 +245,62 @@ def bilateral_anti_abuse_candidate(
         "parsed_sha256": digest(parsed_path),
         "verification_status": "needs_review",
     }
+
+
+
+def apply_stage6_package_corrections(
+    package: dict[str, Any],
+) -> dict[str, Any]:
+    """Apply explicit post-Stage-5 package corrections.
+
+    Stage 5 historical review artifacts are immutable.
+    Corrections are applied only to the derived country QA
+    package before its canonical package hash is calculated.
+    """
+    if not STAGE6_AI_PACKAGE_CORRECTIONS.exists():
+        return package
+
+    payload = load(
+        STAGE6_AI_PACKAGE_CORRECTIONS
+    )
+
+    pair_id = package["treaty_pair_id"]
+
+    for correction in payload.get(
+        "corrections",
+        [],
+    ):
+        if correction.get(
+            "treaty_pair_id"
+        ) != pair_id:
+            continue
+
+        for dotted_path, value in correction.get(
+            "changes",
+            {},
+        ).items():
+            parts = dotted_path.split(".")
+            node = package
+
+            for part in parts[:-1]:
+                if (
+                    part not in node
+                    or not isinstance(
+                        node[part],
+                        dict,
+                    )
+                ):
+                    raise RuntimeError(
+                        "Invalid Stage 6 package "
+                        f"correction path: "
+                        f"{pair_id} {dotted_path}"
+                    )
+
+                node = node[part]
+
+            node[parts[-1]] = value
+
+    return package
 
 
 def build_mli_product_scope() -> dict[str, Any]:
@@ -540,6 +597,7 @@ def build_queue() -> dict[str, Any]:
                 "production_releasable": False,
             },
         }
+        package = apply_stage6_package_corrections(package)
         package["package_sha256"] = canonical_hash(package)
         packages.append(package)
 

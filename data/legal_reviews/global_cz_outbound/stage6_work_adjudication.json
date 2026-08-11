@@ -1,0 +1,69 @@
+{
+  "adjudication_type": "supplementary_ai_adjudication",
+  "dataset_release": "stage6-work-adjudication-2026-08-11.1",
+  "effort": "Medium",
+  "independent_human_review_claimed": false,
+  "model": "GPT-5.6 Sol",
+  "observed_at": "2026-08-11T20:57:53Z",
+  "production_approval_created": false,
+  "provider": "OpenAI",
+  "purpose": "Supplementary independent AI adjudication of the five discrepancy packages identified by the Stage 6 secondary AI cross-check.",
+  "results": [
+    {
+      "conclusion": "Protocol entered into force on 2012-11-26; operational application date is 2013-01-01.",
+      "issue": "Protocol entry into force versus operational application date",
+      "outcome": "CONFIRMED",
+      "primary_sources": [
+        "https://e-sbirka.gov.cz/sm/2012/100?zalozka=text"
+      ],
+      "tax_treat_change_required": false,
+      "treaty_pair_id": "CZ-AT"
+    },
+    {
+      "conclusion": "The 10% route requires direct >=25% ownership for 365 continuous days including the payment date, with qualifying reorganisation continuity.",
+      "issue": "Article 10 reduced dividend rate holding-period conditions",
+      "outcome": "CONFIRMED",
+      "primary_sources": [
+        "https://e-sbirka.gov.cz/sm/2021/8?zalozka=text"
+      ],
+      "tax_treat_change_required": false,
+      "treaty_pair_id": "CZ-BD"
+    },
+    {
+      "conclusion": "Czech, Korean and English are authentic; English prevails in case of divergence.",
+      "issue": "Authentic treaty languages and prevailing text",
+      "outcome": "CONFIRMED",
+      "primary_sources": [
+        "https://e-sbirka.gov.cz/sm/2006/3?zalozka=text"
+      ],
+      "tax_treat_change_required": false,
+      "treaty_pair_id": "CZ-KP"
+    },
+    {
+      "conclusion": "Czech, Malay and English have equal validity with English prevailing. Article 10(3) and Article 11(3) concern Malaysia-source payments to Czech residents and do not belong in the CZ-to-MY WHT decision path.",
+      "issue": "Language metadata and directionality of Articles 10(3) and 11(3)",
+      "outcome": "CONFIRMED",
+      "primary_sources": [
+        "https://e-sbirka.gov.cz/sb/1998/71/0000-00-00?zalozka=text"
+      ],
+      "tax_treat_change_required": false,
+      "treaty_pair_id": "CZ-MY"
+    },
+    {
+      "conclusion": "Protocol Article 6 produces the 0% / 5% / 10% royalty structure for Czech-source royalties from 2015-01-01. Article 10(4)(a) concerns Singapore-source dividends and does not belong in the CZ-to-SG WHT decision path.",
+      "issue": "Post-protocol royalty rates and direction of Singapore one-tier dividend provision",
+      "outcome": "CONFIRMED",
+      "primary_sources": [
+        "https://e-sbirka.gov.cz/sm/2014/64?zalozka=text",
+        "https://e-sbirka.gov.cz/sb/1998/224/0000-00-00?zalozka=text",
+        "https://www.iras.gov.sg/media/docs/default-source/dtas/singapore-czech-republic-dta-%28ratified%29%28mli%29%281-sep-2020%29.pdf?sfvrsn=8b48a465_0"
+      ],
+      "tax_treat_change_required": false,
+      "treaty_pair_id": "CZ-SG"
+    }
+  ],
+  "rule_promotion_created": false,
+  "schema_version": 1,
+  "source_release_created": false,
+  "timestamp_basis": "Result received in the TaxTreat working conversation; provider-native completion timestamp was not available."
+}

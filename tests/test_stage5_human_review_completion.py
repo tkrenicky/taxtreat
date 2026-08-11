@@ -96,3 +96,111 @@ def test_fake_production_release_is_rejected():
 
     with pytest.raises(ValueError, match="fail closed"):
         validate_human_review_completion(QUEUE, changed)
+
+def test_post_review_corrections_preserve_historical_review_hashes():
+    expected_reviewed = {
+        "CZ-AT":
+            "27df6afe79bbcf08fea08e9aa2f974e38db73249d3d229b1a15e82b510b3fc55",
+        "CZ-BD":
+            "94ebe6924727e60eca34ee2ca176b3d4698ef378320ec73afcc23314359ea383",
+        "CZ-KP":
+            "ca4aaf3640b7f2bfeb75e9f03180548d332126f364530bac0be60271af1f611b",
+        "CZ-MY":
+            "91cd868803d6a0787cd04739189b2268c1883de1bbdb689d98d1a3ffab32814a",
+    }
+
+    by_pair = {
+        row["treaty_pair_id"]: row
+        for row in RECORD["packages"]
+    }
+
+    queue_by_pair = {
+        row["treaty_pair_id"]: row
+        for row in QUEUE["packages"]
+    }
+
+    for pair_id, reviewed_hash in expected_reviewed.items():
+        node = by_pair[pair_id]
+
+        assert (
+            node["reviewed_package_sha256"]
+            == reviewed_hash
+        )
+
+        assert (
+            node["package_sha256"]
+            == queue_by_pair[pair_id]["package_sha256"]
+        )
+
+        assert (
+            node["package_sha256"]
+            != node["reviewed_package_sha256"]
+        )
+
+        correction = node["post_review_correction"]
+
+        assert (
+            correction["status"]
+            == "pending_stage6_human_resolution"
+        )
+
+        assert (
+            correction[
+                "correction_requires_primary_human_resolution"
+            ]
+            is True
+        )
+
+        assert (
+            correction["production_approval_allowed"]
+            is False
+        )
+
+
+def test_post_review_correction_lineage_remains_fail_closed():
+    lineage = RECORD[
+        "post_review_correction_lineage"
+    ]
+
+    assert lineage["changed_package_count"] == 4
+
+    assert lineage["changed_pairs"] == [
+        "CZ-AT",
+        "CZ-BD",
+        "CZ-KP",
+        "CZ-MY",
+    ]
+
+    assert (
+        lineage["historical_review_hashes_preserved"]
+        is True
+    )
+
+    assert lineage["production_approval_created"] is False
+    assert lineage["rule_promotion_created"] is False
+    assert lineage["source_release_created"] is False
+
+
+def test_fake_post_review_correction_release_is_rejected():
+    changed = copy.deepcopy(RECORD)
+
+    node = next(
+        row
+        for row in changed["packages"]
+        if row["treaty_pair_id"] == "CZ-AT"
+    )
+
+    node[
+        "post_review_correction"
+    ][
+        "production_approval_allowed"
+    ] = True
+
+    with pytest.raises(
+        ValueError,
+        match="fail closed",
+    ):
+        validate_human_review_completion(
+            QUEUE,
+            changed,
+        )

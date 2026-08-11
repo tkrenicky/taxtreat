@@ -51,6 +51,89 @@ def validate_human_review_completion(
                 f"Completion record has stale package hash: {pair_id}."
             )
 
+        reviewed_hash = node.get(
+            "reviewed_package_sha256"
+        )
+        correction = node.get(
+            "post_review_correction"
+        )
+
+        if reviewed_hash is not None:
+            if (
+                not isinstance(reviewed_hash, str)
+                or len(reviewed_hash) != 64
+            ):
+                raise ValueError(
+                    "Completion record has invalid "
+                    f"historical reviewed hash: {pair_id}."
+                )
+
+            if reviewed_hash == package.get(
+                "package_sha256"
+            ):
+                raise ValueError(
+                    "Post-review correction must preserve "
+                    "a distinct historical reviewed hash: "
+                    f"{pair_id}."
+                )
+
+            if not isinstance(correction, dict):
+                raise ValueError(
+                    "Changed package requires explicit "
+                    f"post-review correction lineage: {pair_id}."
+                )
+
+            if (
+                correction.get(
+                    "reviewed_package_sha256"
+                )
+                != reviewed_hash
+            ):
+                raise ValueError(
+                    "Post-review lineage has stale "
+                    f"reviewed hash: {pair_id}."
+                )
+
+            if (
+                correction.get(
+                    "corrected_package_sha256"
+                )
+                != package.get("package_sha256")
+            ):
+                raise ValueError(
+                    "Post-review lineage has stale "
+                    f"corrected hash: {pair_id}."
+                )
+
+            if correction.get("status") not in {
+                "pending_stage6_human_resolution",
+                "resolved_by_primary_human_reviewer",
+            }:
+                raise ValueError(
+                    "Post-review correction has invalid "
+                    f"status: {pair_id}."
+                )
+
+            if (
+                correction.get(
+                    "production_approval_allowed"
+                )
+                is not False
+                and correction.get("status")
+                == "pending_stage6_human_resolution"
+            ):
+                raise ValueError(
+                    "Pending post-review correction "
+                    f"must remain fail closed: {pair_id}."
+                )
+
+        elif correction is not None:
+            raise ValueError(
+                "Post-review correction lineage requires "
+                f"historical reviewed hash: {pair_id}."
+            )
+
+
         if node.get("scope_count") != 3:
             raise ValueError(
                 f"Completion record has invalid scope count: {pair_id}."
