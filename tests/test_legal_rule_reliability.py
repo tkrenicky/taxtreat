@@ -278,3 +278,67 @@ def test_loader_rejects_non_list_duplicates_scope_and_invalid_rules(tmp_path):
                 },
             )
         )
+
+
+def test_stage6_governance_verified_rule_is_valid_without_second_human():
+    rule = legal_rule(
+        "STAGE6-VALID",
+        reviewer_id=None,
+        reviewed_at=None,
+        approved_by=None,
+        approved_at=None,
+        verification_authority="stage6_governance_policy",
+        review_package_sha256="a" * 64,
+        approval_dataset_release="stage6-production-approval-test",
+        approval_created_at=date(2026, 8, 11),
+    )
+
+    issues = validate_legal_rules([rule])
+
+    assert issues == []
+
+
+def test_stage6_governance_requires_complete_governance_provenance():
+    rule = legal_rule(
+        "STAGE6-MISSING",
+        reviewer_id=None,
+        reviewed_at=None,
+        approved_by=None,
+        approved_at=None,
+        verification_authority="stage6_governance_policy",
+        review_package_sha256=None,
+        approval_dataset_release=None,
+        approval_created_at=None,
+    )
+
+    issues = "\n".join(
+        validate_legal_rules([rule])
+    )
+
+    assert "Stage 6 verified rule lacks governance provenance" in issues
+    assert "review_package_sha256" in issues
+    assert "approval_dataset_release" in issues
+    assert "approval_created_at" in issues
+
+
+def test_stage6_governance_rejects_malformed_package_hash():
+    rule = legal_rule(
+        "STAGE6-BAD-HASH",
+        reviewer_id=None,
+        reviewed_at=None,
+        approved_by=None,
+        approved_at=None,
+        verification_authority="stage6_governance_policy",
+        review_package_sha256="bad",
+        approval_dataset_release="stage6-production-approval-test",
+        approval_created_at=date(2026, 8, 11),
+    )
+
+    issues = "\n".join(
+        validate_legal_rules([rule])
+    )
+
+    assert (
+        "review_package_sha256 must be full SHA-256"
+        in issues
+    )

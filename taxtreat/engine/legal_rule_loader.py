@@ -72,6 +72,18 @@ def load_legal_rules(path: str | Path) -> list[LegalRule]:
                 reviewed_at=_parse_date(raw_rule.get("reviewed_at")),
                 approved_by=raw_rule.get("approved_by"),
                 approved_at=_parse_date(raw_rule.get("approved_at")),
+                verification_authority=raw_rule.get(
+                    "verification_authority"
+                ),
+                review_package_sha256=raw_rule.get(
+                    "review_package_sha256"
+                ),
+                approval_dataset_release=raw_rule.get(
+                    "approval_dataset_release"
+                ),
+                approval_created_at=_parse_date(
+                    raw_rule.get("approval_created_at")
+                ),
                 dataset_release=raw_rule.get("dataset_release"),
                 evidence_source_ids=list(
                     raw_rule.get("evidence_source_ids", [])
