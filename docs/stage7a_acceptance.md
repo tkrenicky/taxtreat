@@ -39,7 +39,7 @@ acceptance evidence.
 
 ## Optional transaction amount
 
-The analysis request may include:
+A CZK request may include:
 
 ```json
 {
@@ -50,17 +50,41 @@ The analysis request may include:
 }
 ```
 
-TaxTreat uses decimal arithmetic. For CZK, the calculated withholding tax is
-always rounded upward to the next whole crown; the net amount is the supplied
-gross amount less that rounded tax. Other currencies currently use a documented
-two-decimal half-up fallback until a currency-specific policy is configured.
+For a foreign-currency payment, the request must additionally carry frozen CNB
+rate evidence:
 
-TaxTreat calculates indicative withholding tax and net payment only when the
-released legal engine returns a `FINAL` rate. A candidate rate or
-`REVIEW_REQUIRED` result never produces a tax amount.
+```json
+{
+  "transaction_amount": {
+    "amount": "1000.00",
+    "currency": "EUR",
+    "payment_date": "2026-08-12",
+    "accounting_date": "2026-08-10",
+    "exchange_rate": {
+      "source": "CNB",
+      "currency": "EUR",
+      "czk_per_unit": "24.85",
+      "effective_date": "2026-08-10",
+      "source_url": "https://www.cnb.cz/..."
+    }
+  }
+}
+```
 
-This separation is deliberate: transaction arithmetic must not turn an
-unresolved legal conclusion into a precise-looking payable amount.
+The applicable rate date is the earlier of payment and accounting, following
+the confirmed Section 38 ZDP workflow. The currency amount is converted without
+intermediate rounding. The resulting withholding tax is denominated in CZK and
+rounded down to whole crowns under Section 36(3) ZDP.
+
+The report preserves the original amount, both event dates, the selected rate
+date, normalized CZK-per-unit rate and source URL. Missing dates, non-CNB
+evidence, a currency mismatch or a rate for the wrong date produces
+`NOT_CALCULATED`.
+
+TaxTreat calculates tax only when the released legal engine returns a `FINAL`
+rate. A candidate rate or `REVIEW_REQUIRED` result never produces a tax amount.
+This separation prevents an unresolved legal conclusion from appearing as a
+precise payable amount.
 
 ## Extensible client facts
 
