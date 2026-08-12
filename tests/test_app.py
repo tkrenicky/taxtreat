@@ -20,14 +20,39 @@ def test_liveness_and_readiness_are_distinct():
     assert client.get("/").json() == {"name": "TaxTreat", "version": "0.2.0"}
     assert client.get("/health/live").json() == {"status": "ok"}
     assert client.get("/health").json() == {"status": "ok"}
+
     readiness = client.get("/health/ready")
-    assert readiness.status_code == 503
-    assert "Production gate failed" in readiness.json()["detail"]
+
+    assert readiness.status_code == 200
+    assert readiness.json() == {
+        "status": "ready",
+        "release": {
+            "dataset_release":
+                "stage6-source-release-2026-08-12.1",
+            "released_packages": 101,
+            "released_scopes": 303,
+        },
+    }
 
 
-def test_readiness_success(monkeypatch):
-    monkeypatch.setattr(api, "validate_release", lambda **kwargs: {})
-    assert client.get("/health/ready").json() == {"status": "ready"}
+def test_readiness_fails_when_stage6_release_is_invalid(
+    monkeypatch,
+):
+    def invalid_release():
+        raise RuntimeError("Stage 6 release invalid.")
+
+    monkeypatch.setattr(
+        api,
+        "validate_stage6_runtime_release",
+        invalid_release,
+    )
+
+    response = client.get("/health/ready")
+
+    assert response.status_code == 503
+    assert response.json()["detail"] == (
+        "Stage 6 release invalid."
+    )
 
 
 def test_analysis_uses_released_canonical_path():
@@ -141,7 +166,7 @@ def test_released_registered_scope_reaches_decision_engine():
     assert payload["requires_review"] is True
 
 
-def test_analysis_without_release_manifest_uses_unreleased(
+def test_analysis_uses_stage6_release_not_legacy_manifest(
     monkeypatch,
 ):
     monkeypatch.setattr(
@@ -161,7 +186,9 @@ def test_analysis_without_release_manifest_uses_unreleased(
     )
 
     assert response.status_code == 200
-    assert response.json()["dataset_version"] == "unreleased"
+    assert response.json()["dataset_version"] == (
+        "stage6-source-release-2026-08-12.1"
+    )
 
 
 class FakeConnection:
@@ -212,3 +239,4 @@ def test_get_db_connection_checks_file(monkeypatch, tmp_path):
     connection = api.get_db_connection()
     assert connection.row_factory is sqlite3.Row
     connection.close()
+
