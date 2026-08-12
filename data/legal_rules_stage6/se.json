@@ -1,0 +1,1626 @@
+{
+  "country_pair": {
+    "recipient_country": "SE",
+    "source_country": "CZ"
+  },
+  "rules": [
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": 36,
+      "conditions": [],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA"
+      ],
+      "income_type": "dividend",
+      "legal_instrument": "domestic_law",
+      "legal_layer": "domestic",
+      "paragraph": "1(b)(1)",
+      "priority": 900,
+      "rate": 15.0,
+      "recipient_country": "SE",
+      "review_package_sha256": "81c624796d8bb86d6974eb0c2436e936b5445b4a78d1d4072bdef2daeabe5896",
+      "rule_id": "CZ-SE-DIVIDEND-DOMESTIC",
+      "source_country": "CZ",
+      "source_excerpt_hash": "aa1100129d4ba33a4efeeb3258bfc621281f11b160890ba7a898e71318bd643d",
+      "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+      "source_representation": "approved_structured_projection",
+      "source_text": "Current Czech domestic withholding tax standard rate represented in the approved Stage 6 package: 15.0%.",
+      "source_url": "https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/1992/586/2026-04-01",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "136e2020fb77ac2210ae2ad6894fae9cf3101b1bc502ae0d5c81ce5313924615",
+      "article": 10,
+      "conditions": [
+        {
+          "fact": "recipient_entity_type",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "company_with_share_capital"
+        },
+        {
+          "fact": "direct_ownership",
+          "fact_source": "transaction",
+          "operator": ">=",
+          "value": "25%"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "1980-10-08",
+      "evidence_source_ids": [
+        "SRC-2346C8B8EC6A8A34"
+      ],
+      "income_type": "dividend",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 681,
+      "rate": 0.0,
+      "recipient_country": "SE",
+      "review_package_sha256": "81c624796d8bb86d6974eb0c2436e936b5445b4a78d1d4072bdef2daeabe5896",
+      "rule_id": "CZ-SE-DIVIDEND-CURRENT-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "8130261fd4e0c21cdec2d132652bb00e67a5d536a8b557f215090967cb2977aa",
+      "source_id": "SRC-2346C8B8EC6A8A34",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "Dividendy\n1. Dividendy © vyplácené společností, která\nmá sídlo v jednom smluvním státě, osobě mající\nbydliště či sídlo v druhém smluvním státě, mo-\nhou být zdaněny v tomto druhém státě.\n2. Takové dividendy však mohou být zda-\nněny ve smluvním státě, v němž má sídlo spo-\nlečnost, která je vyplácí, a to podle práva tohoto\nstátu. Daň takto uložená však nepřesáhne 10%\nhrubé částky dividend.\n3. Smluvní stát, ve kterém má sídlo společ-\nnost, nezdaní bez ohledu na ustanovení odstavce\n2 dividendy vyplácené touto společností společ-\nnosti, jejíž jmění je zcela nebo zčásti rozděleno\nna akcie a která má sídlo v druhém smluvním\nstátě a vlastní přímo nejméně 25% jmění spo-\nlečnosti vyplácející dividendy,\n4. Příslušné úřady smluvních států upraví\nvzájemnou dohodou způsob aplikace odstavců 2\na3.\n5. Ustanovení odstavců 2 a 3 se nedotknou\nzdanění zisků společnosti, z nichž jsou dividendy\nvypláceny.\n6. Výraz „dividendy“, použitý v tomto člán-\nku, označuje příjmy plynoucí z akcií nebo z ji-\nných práv, pokud nejsou pohledávkami, spoje-\nných s účastí na zisku, právě tak jako příjmy\nz jiných společenských práv, které jsou podro-\nbeny stejnému zdanění jako příjmy z akcií podle\ndaňových předpisů státu, v němž má sídlo spo-\nlečnost vyplácející dividendy.\n7. Dividendy vyplácené společností, | která\nmá sídlo v jednom smluvním státě, společnosti,\nkterá má sídlo v druhém smluvním státě, se bez\nohledu na ustanovení odstavce 1 osvobodí od\nzdanění v tomto druhém státě v takovém rozsa-\nhu, v jakém by byly os",
+      "source_url": "https://e-sbirka.gov.cz/sb/1981/9/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "136e2020fb77ac2210ae2ad6894fae9cf3101b1bc502ae0d5c81ce5313924615",
+      "article": 10,
+      "conditions": [
+        {
+          "fact": "fallback_case",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "all_other_cases"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "1980-10-08",
+      "evidence_source_ids": [
+        "SRC-2346C8B8EC6A8A34"
+      ],
+      "income_type": "dividend",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 692,
+      "rate": 10.0,
+      "recipient_country": "SE",
+      "review_package_sha256": "81c624796d8bb86d6974eb0c2436e936b5445b4a78d1d4072bdef2daeabe5896",
+      "rule_id": "CZ-SE-DIVIDEND-CURRENT-2",
+      "source_country": "CZ",
+      "source_excerpt_hash": "8130261fd4e0c21cdec2d132652bb00e67a5d536a8b557f215090967cb2977aa",
+      "source_id": "SRC-2346C8B8EC6A8A34",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "Dividendy\n1. Dividendy © vyplácené společností, která\nmá sídlo v jednom smluvním státě, osobě mající\nbydliště či sídlo v druhém smluvním státě, mo-\nhou být zdaněny v tomto druhém státě.\n2. Takové dividendy však mohou být zda-\nněny ve smluvním státě, v němž má sídlo spo-\nlečnost, která je vyplácí, a to podle práva tohoto\nstátu. Daň takto uložená však nepřesáhne 10%\nhrubé částky dividend.\n3. Smluvní stát, ve kterém má sídlo společ-\nnost, nezdaní bez ohledu na ustanovení odstavce\n2 dividendy vyplácené touto společností společ-\nnosti, jejíž jmění je zcela nebo zčásti rozděleno\nna akcie a která má sídlo v druhém smluvním\nstátě a vlastní přímo nejméně 25% jmění spo-\nlečnosti vyplácející dividendy,\n4. Příslušné úřady smluvních států upraví\nvzájemnou dohodou způsob aplikace odstavců 2\na3.\n5. Ustanovení odstavců 2 a 3 se nedotknou\nzdanění zisků společnosti, z nichž jsou dividendy\nvypláceny.\n6. Výraz „dividendy“, použitý v tomto člán-\nku, označuje příjmy plynoucí z akcií nebo z ji-\nných práv, pokud nejsou pohledávkami, spoje-\nných s účastí na zisku, právě tak jako příjmy\nz jiných společenských práv, které jsou podro-\nbeny stejnému zdanění jako příjmy z akcií podle\ndaňových předpisů státu, v němž má sídlo spo-\nlečnost vyplácející dividendy.\n7. Dividendy vyplácené společností, | která\nmá sídlo v jednom smluvním státě, společnosti,\nkterá má sídlo v druhém smluvním státě, se bez\nohledu na ustanovení odstavce 1 osvobodí od\nzdanění v tomto druhém státě v takovém rozsa-\nhu, v jakém by byly os",
+      "source_url": "https://e-sbirka.gov.cz/sb/1981/9/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "anti_abuse_review_required": true,
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": "section 19(1)(ze), (3), (4), (6), (8) and (11)",
+      "conditions": [
+        {
+          "fact": "recipient_is_qualifying_company_form",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_is_tax_resident_in_eligible_jurisdiction",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_subject_to_qualifying_corporate_tax",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_has_no_tax_exemption_or_zero_rate_option",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "ownership_percent",
+          "fact_source": "transaction",
+          "operator": ">=",
+          "value": 10
+        },
+        {
+          "fact": "recipient_is_parent_company",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "holding_period_months",
+          "fact_source": "transaction",
+          "operator": ">=",
+          "value": 12
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "EU-PSD-2011-96-CONSOLIDATED"
+      ],
+      "income_type": "dividend",
+      "legal_instrument": "eu_directive",
+      "legal_layer": "eu_relief",
+      "paragraph": null,
+      "priority": 131,
+      "rate": 0.0,
+      "recipient_country": "SE",
+      "review_package_sha256": "81c624796d8bb86d6974eb0c2436e936b5445b4a78d1d4072bdef2daeabe5896",
+      "rule_id": "CZ-SE-DIVIDEND-EU-RELIEF-1",
+      "source_basis": "explicit_candidate_source",
+      "source_country": "CZ",
+      "source_excerpt_hash": "dffeab3d0d296c6bed0f8f2c65514d7f8df997b11a31dd9b8ead0dcf8b1d76e7",
+      "source_id": "EU-PSD-2011-96-CONSOLIDATED",
+      "source_representation": "approved_structured_candidate_not_verbatim_quote",
+      "source_text": "{\"all_of\":[{\"fact\":\"recipient_is_qualifying_company_form\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_is_tax_resident_in_eligible_jurisdiction\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_subject_to_qualifying_corporate_tax\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_has_no_tax_exemption_or_zero_rate_option\",\"operator\":\"==\",\"value\":true},{\"fact\":\"ownership_percent\",\"operator\":\">=\",\"value\":10},{\"fact\":\"recipient_is_parent_company\",\"operator\":\"==\",\"value\":true}],\"anti_abuse_review_required\":true,\"directive_source_id\":\"EU-PSD-2011-96-CONSOLIDATED\",\"holding_period_one_of\":[{\"fact\":\"holding_period_months\",\"operator\":\">=\",\"value\":12},{\"all_of\":[{\"fact\":\"holding_period_will_reach_months\",\"operator\":\">=\",\"value\":12},{\"fact\":\"statutory_clawback_acknowledged\",\"operator\":\"==\",\"value\":true}]}],\"legal_reference\":\"section 19(1)(ze), (3), (4), (6), (8) and (11)\",\"rate\":0.0,\"regime\":\"eu_directive_domestic_implementation\"}",
+      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02011L0096-20150217",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "anti_abuse_review_required": true,
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": "section 19(1)(ze), (3), (4), (6), (8) and (11)",
+      "conditions": [
+        {
+          "fact": "recipient_is_qualifying_company_form",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_is_tax_resident_in_eligible_jurisdiction",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_subject_to_qualifying_corporate_tax",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_has_no_tax_exemption_or_zero_rate_option",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "ownership_percent",
+          "fact_source": "transaction",
+          "operator": ">=",
+          "value": 10
+        },
+        {
+          "fact": "recipient_is_parent_company",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "holding_period_will_reach_months",
+          "fact_source": "transaction",
+          "operator": ">=",
+          "value": 12
+        },
+        {
+          "fact": "statutory_clawback_acknowledged",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "EU-PSD-2011-96-CONSOLIDATED"
+      ],
+      "income_type": "dividend",
+      "legal_instrument": "eu_directive",
+      "legal_layer": "eu_relief",
+      "paragraph": null,
+      "priority": 122,
+      "rate": 0.0,
+      "recipient_country": "SE",
+      "review_package_sha256": "81c624796d8bb86d6974eb0c2436e936b5445b4a78d1d4072bdef2daeabe5896",
+      "rule_id": "CZ-SE-DIVIDEND-EU-RELIEF-2",
+      "source_basis": "explicit_candidate_source",
+      "source_country": "CZ",
+      "source_excerpt_hash": "dffeab3d0d296c6bed0f8f2c65514d7f8df997b11a31dd9b8ead0dcf8b1d76e7",
+      "source_id": "EU-PSD-2011-96-CONSOLIDATED",
+      "source_representation": "approved_structured_candidate_not_verbatim_quote",
+      "source_text": "{\"all_of\":[{\"fact\":\"recipient_is_qualifying_company_form\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_is_tax_resident_in_eligible_jurisdiction\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_subject_to_qualifying_corporate_tax\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_has_no_tax_exemption_or_zero_rate_option\",\"operator\":\"==\",\"value\":true},{\"fact\":\"ownership_percent\",\"operator\":\">=\",\"value\":10},{\"fact\":\"recipient_is_parent_company\",\"operator\":\"==\",\"value\":true}],\"anti_abuse_review_required\":true,\"directive_source_id\":\"EU-PSD-2011-96-CONSOLIDATED\",\"holding_period_one_of\":[{\"fact\":\"holding_period_months\",\"operator\":\">=\",\"value\":12},{\"all_of\":[{\"fact\":\"holding_period_will_reach_months\",\"operator\":\">=\",\"value\":12},{\"fact\":\"statutory_clawback_acknowledged\",\"operator\":\"==\",\"value\":true}]}],\"legal_reference\":\"section 19(1)(ze), (3), (4), (6), (8) and (11)\",\"rate\":0.0,\"regime\":\"eu_directive_domestic_implementation\"}",
+      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02011L0096-20150217",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": 36,
+      "conditions": [],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "domestic_law",
+      "legal_layer": "domestic",
+      "paragraph": "1(a)(1)",
+      "priority": 900,
+      "rate": 15.0,
+      "recipient_country": "SE",
+      "review_package_sha256": "81c624796d8bb86d6974eb0c2436e936b5445b4a78d1d4072bdef2daeabe5896",
+      "rule_id": "CZ-SE-INTEREST-DOMESTIC",
+      "source_country": "CZ",
+      "source_excerpt_hash": "aa1100129d4ba33a4efeeb3258bfc621281f11b160890ba7a898e71318bd643d",
+      "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+      "source_representation": "approved_structured_projection",
+      "source_text": "Current Czech domestic withholding tax standard rate represented in the approved Stage 6 package: 15.0%.",
+      "source_url": "https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/1992/586/2026-04-01",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "fc3f3033bf2274bb348d92fe83af54e9ec7a2cc620e38d6c29cefa20d3be1ea9",
+      "article": 11,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        },
+        {
+          "fact": "source_state_taxation",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "prohibited_under_article_11"
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "false"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "1980-10-08",
+      "evidence_source_ids": [
+        "SRC-2346C8B8EC6A8A34"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 671,
+      "rate": 0.0,
+      "recipient_country": "SE",
+      "review_package_sha256": "81c624796d8bb86d6974eb0c2436e936b5445b4a78d1d4072bdef2daeabe5896",
+      "rule_id": "CZ-SE-INTEREST-CURRENT-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "c76d85fe046cf230af935177426b4b0025e247ef488379d2ae6f5c84030c6c22",
+      "source_id": "SRC-2346C8B8EC6A8A34",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "Úroky\n1. Úroky mající zdroj v jednom smluvním\nstátě a placené osobě mající bydliště či sídlo\nv druhém smluvním státě podléhají zdanění pou-\nze v tomto druhém státě.\n2. Výraz „úroky“ použitý v tomto článku\noznačuje příjmy z pohledávek jakéhokoli druhu,\nzajištěných i nezajištěných zástavním právem na\nnemovitosti, poskytujících i neposkytuj\nvo na účast na zisku dlužníka a obzvláště příjmy\nz veřejných dluhopisů a obligací, včetně prémií\na výher spojených s těmito cennými papíry.\n3. Ustanovení odstavce 1 se nepoužije, jest-\nliže příjemce úroků, který má bydliště či sídlo\nv jednom smluvním státě, vykonává v druhém\nsmluvním státě, ve kterém mají úroky zdroj,\nprůmyslovou nebo obchodní činnost prostřednic-\ntvím stálé provozovny, která je tam umístěna,\nnebo vykonává v tomto druhém státě svobodné\npovolání pomocí stálé základny tam umístěné a\njestliže pohledávka, ze které jsou úroky placeny,\nje skutečně spojena s takovou stálou provozov-\nnou nebo stálou základnou. V takovém případě\nse použijí ustanovení článku 7 nebo článku 14\npodle toho. o jaký případ jde.\n4. Jestliže tka placených úroků, posuzo-\nváno se zřetelem k pohledávce, ze které jsou\nplaceny, přesahuje v důsledku zvláštních vztahů\nexistujících mezi plátcem a příjemcem nebo\nmezl oběma a třetí osobou částku, kterou by byl\nsmluvil plátce s příjemcem, kdyby nebylo tako-\nvých vztahů, použijí se ustanovení tohoto člán-\nku jen na tuto poslední částku. Část úroků, kte-\nrá ji přesabuje, bude v tomto případě podrobena\nzdanění podle právníc",
+      "source_url": "https://e-sbirka.gov.cz/sb/1981/9/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "anti_abuse_review_required": true,
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": "section 19(1)(zk), (3), (5), (6), (8) and section 38nb",
+      "conditions": [
+        {
+          "fact": "recipient_is_qualifying_company_form",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_is_tax_resident_in_eligible_jurisdiction",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_subject_to_qualifying_corporate_tax",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_has_no_tax_exemption_or_zero_rate_option",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "payment_is_arm_length_amount",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "section_38nb_decision_effective",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "payment_not_attributable_to_disqualifying_pe",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "ird_association_payer_directly_holds_25_percent_recipient",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "holding_period_months",
+          "fact_source": "transaction",
+          "operator": ">=",
+          "value": 24
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "EU-IRD-2003-49-CONSOLIDATED"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "eu_directive",
+      "legal_layer": "eu_relief",
+      "paragraph": null,
+      "priority": 101,
+      "rate": 0.0,
+      "recipient_country": "SE",
+      "review_package_sha256": "81c624796d8bb86d6974eb0c2436e936b5445b4a78d1d4072bdef2daeabe5896",
+      "rule_id": "CZ-SE-INTEREST-EU-RELIEF-1",
+      "source_basis": "explicit_candidate_source",
+      "source_country": "CZ",
+      "source_excerpt_hash": "9b4e98fccfe142ca1b3294803fc2094cadaf388c9dee962a74364511ead4e560",
+      "source_id": "EU-IRD-2003-49-CONSOLIDATED",
+      "source_representation": "approved_structured_candidate_not_verbatim_quote",
+      "source_text": "{\"all_of\":[{\"fact\":\"recipient_is_qualifying_company_form\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_is_tax_resident_in_eligible_jurisdiction\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_subject_to_qualifying_corporate_tax\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_has_no_tax_exemption_or_zero_rate_option\",\"operator\":\"==\",\"value\":true},{\"fact\":\"beneficial_owner\",\"operator\":\"==\",\"value\":true},{\"fact\":\"payment_is_arm_length_amount\",\"operator\":\"==\",\"value\":true},{\"fact\":\"section_38nb_decision_effective\",\"operator\":\"==\",\"value\":true},{\"fact\":\"payment_not_attributable_to_disqualifying_pe\",\"operator\":\"==\",\"value\":true}],\"anti_abuse_review_required\":true,\"association_one_of\":[\"payer directly holds at least 25% of recipient capital or voting rights\",\"recipient directly holds at least 25% of payer capital or voting rights\",\"one person directly holds at least 25% of both payer and recipient capital or voting rights\"],\"association_period_one_of\":[{\"fact\":\"holding_period_months\",\"operator\":\">=\",\"value\":24},{\"all_of\":[{\"fact\":\"holding_period_will_reach_months\",\"operator\":\">=\",\"value\":24},{\"fact\":\"statutory_clawback_acknowledged\",\"operator\":\"==\",\"value\":true}]}],\"directive_source_id\":\"EU-IRD-2003-49-CONSOLIDATED\",\"legal_reference\":\"section 19(1)(zk), (3), (5), (6), (8) and section 38nb\",\"rate\":0.0,\"regime\":\"eu_directive_domestic_implementation\"}",
+      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02003L0049-20130701",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "anti_abuse_review_required": true,
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": "section 19(1)(zk), (3), (5), (6), (8) and section 38nb",
+      "conditions": [
+        {
+          "fact": "recipient_is_qualifying_company_form",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_is_tax_resident_in_eligible_jurisdiction",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_subject_to_qualifying_corporate_tax",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_has_no_tax_exemption_or_zero_rate_option",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "payment_is_arm_length_amount",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "section_38nb_decision_effective",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "payment_not_attributable_to_disqualifying_pe",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "ird_association_payer_directly_holds_25_percent_recipient",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "holding_period_will_reach_months",
+          "fact_source": "transaction",
+          "operator": ">=",
+          "value": 24
+        },
+        {
+          "fact": "statutory_clawback_acknowledged",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "EU-IRD-2003-49-CONSOLIDATED"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "eu_directive",
+      "legal_layer": "eu_relief",
+      "paragraph": null,
+      "priority": 92,
+      "rate": 0.0,
+      "recipient_country": "SE",
+      "review_package_sha256": "81c624796d8bb86d6974eb0c2436e936b5445b4a78d1d4072bdef2daeabe5896",
+      "rule_id": "CZ-SE-INTEREST-EU-RELIEF-2",
+      "source_basis": "explicit_candidate_source",
+      "source_country": "CZ",
+      "source_excerpt_hash": "9b4e98fccfe142ca1b3294803fc2094cadaf388c9dee962a74364511ead4e560",
+      "source_id": "EU-IRD-2003-49-CONSOLIDATED",
+      "source_representation": "approved_structured_candidate_not_verbatim_quote",
+      "source_text": "{\"all_of\":[{\"fact\":\"recipient_is_qualifying_company_form\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_is_tax_resident_in_eligible_jurisdiction\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_subject_to_qualifying_corporate_tax\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_has_no_tax_exemption_or_zero_rate_option\",\"operator\":\"==\",\"value\":true},{\"fact\":\"beneficial_owner\",\"operator\":\"==\",\"value\":true},{\"fact\":\"payment_is_arm_length_amount\",\"operator\":\"==\",\"value\":true},{\"fact\":\"section_38nb_decision_effective\",\"operator\":\"==\",\"value\":true},{\"fact\":\"payment_not_attributable_to_disqualifying_pe\",\"operator\":\"==\",\"value\":true}],\"anti_abuse_review_required\":true,\"association_one_of\":[\"payer directly holds at least 25% of recipient capital or voting rights\",\"recipient directly holds at least 25% of payer capital or voting rights\",\"one person directly holds at least 25% of both payer and recipient capital or voting rights\"],\"association_period_one_of\":[{\"fact\":\"holding_period_months\",\"operator\":\">=\",\"value\":24},{\"all_of\":[{\"fact\":\"holding_period_will_reach_months\",\"operator\":\">=\",\"value\":24},{\"fact\":\"statutory_clawback_acknowledged\",\"operator\":\"==\",\"value\":true}]}],\"directive_source_id\":\"EU-IRD-2003-49-CONSOLIDATED\",\"legal_reference\":\"section 19(1)(zk), (3), (5), (6), (8) and section 38nb\",\"rate\":0.0,\"regime\":\"eu_directive_domestic_implementation\"}",
+      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02003L0049-20130701",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "anti_abuse_review_required": true,
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": "section 19(1)(zk), (3), (5), (6), (8) and section 38nb",
+      "conditions": [
+        {
+          "fact": "recipient_is_qualifying_company_form",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_is_tax_resident_in_eligible_jurisdiction",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_subject_to_qualifying_corporate_tax",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_has_no_tax_exemption_or_zero_rate_option",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "payment_is_arm_length_amount",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "section_38nb_decision_effective",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "payment_not_attributable_to_disqualifying_pe",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "ird_association_recipient_directly_holds_25_percent_payer",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "holding_period_months",
+          "fact_source": "transaction",
+          "operator": ">=",
+          "value": 24
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "EU-IRD-2003-49-CONSOLIDATED"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "eu_directive",
+      "legal_layer": "eu_relief",
+      "paragraph": null,
+      "priority": 103,
+      "rate": 0.0,
+      "recipient_country": "SE",
+      "review_package_sha256": "81c624796d8bb86d6974eb0c2436e936b5445b4a78d1d4072bdef2daeabe5896",
+      "rule_id": "CZ-SE-INTEREST-EU-RELIEF-3",
+      "source_basis": "explicit_candidate_source",
+      "source_country": "CZ",
+      "source_excerpt_hash": "9b4e98fccfe142ca1b3294803fc2094cadaf388c9dee962a74364511ead4e560",
+      "source_id": "EU-IRD-2003-49-CONSOLIDATED",
+      "source_representation": "approved_structured_candidate_not_verbatim_quote",
+      "source_text": "{\"all_of\":[{\"fact\":\"recipient_is_qualifying_company_form\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_is_tax_resident_in_eligible_jurisdiction\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_subject_to_qualifying_corporate_tax\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_has_no_tax_exemption_or_zero_rate_option\",\"operator\":\"==\",\"value\":true},{\"fact\":\"beneficial_owner\",\"operator\":\"==\",\"value\":true},{\"fact\":\"payment_is_arm_length_amount\",\"operator\":\"==\",\"value\":true},{\"fact\":\"section_38nb_decision_effective\",\"operator\":\"==\",\"value\":true},{\"fact\":\"payment_not_attributable_to_disqualifying_pe\",\"operator\":\"==\",\"value\":true}],\"anti_abuse_review_required\":true,\"association_one_of\":[\"payer directly holds at least 25% of recipient capital or voting rights\",\"recipient directly holds at least 25% of payer capital or voting rights\",\"one person directly holds at least 25% of both payer and recipient capital or voting rights\"],\"association_period_one_of\":[{\"fact\":\"holding_period_months\",\"operator\":\">=\",\"value\":24},{\"all_of\":[{\"fact\":\"holding_period_will_reach_months\",\"operator\":\">=\",\"value\":24},{\"fact\":\"statutory_clawback_acknowledged\",\"operator\":\"==\",\"value\":true}]}],\"directive_source_id\":\"EU-IRD-2003-49-CONSOLIDATED\",\"legal_reference\":\"section 19(1)(zk), (3), (5), (6), (8) and section 38nb\",\"rate\":0.0,\"regime\":\"eu_directive_domestic_implementation\"}",
+      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02003L0049-20130701",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "anti_abuse_review_required": true,
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": "section 19(1)(zk), (3), (5), (6), (8) and section 38nb",
+      "conditions": [
+        {
+          "fact": "recipient_is_qualifying_company_form",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_is_tax_resident_in_eligible_jurisdiction",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_subject_to_qualifying_corporate_tax",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_has_no_tax_exemption_or_zero_rate_option",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "payment_is_arm_length_amount",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "section_38nb_decision_effective",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "payment_not_attributable_to_disqualifying_pe",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "ird_association_recipient_directly_holds_25_percent_payer",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "holding_period_will_reach_months",
+          "fact_source": "transaction",
+          "operator": ">=",
+          "value": 24
+        },
+        {
+          "fact": "statutory_clawback_acknowledged",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "EU-IRD-2003-49-CONSOLIDATED"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "eu_directive",
+      "legal_layer": "eu_relief",
+      "paragraph": null,
+      "priority": 94,
+      "rate": 0.0,
+      "recipient_country": "SE",
+      "review_package_sha256": "81c624796d8bb86d6974eb0c2436e936b5445b4a78d1d4072bdef2daeabe5896",
+      "rule_id": "CZ-SE-INTEREST-EU-RELIEF-4",
+      "source_basis": "explicit_candidate_source",
+      "source_country": "CZ",
+      "source_excerpt_hash": "9b4e98fccfe142ca1b3294803fc2094cadaf388c9dee962a74364511ead4e560",
+      "source_id": "EU-IRD-2003-49-CONSOLIDATED",
+      "source_representation": "approved_structured_candidate_not_verbatim_quote",
+      "source_text": "{\"all_of\":[{\"fact\":\"recipient_is_qualifying_company_form\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_is_tax_resident_in_eligible_jurisdiction\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_subject_to_qualifying_corporate_tax\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_has_no_tax_exemption_or_zero_rate_option\",\"operator\":\"==\",\"value\":true},{\"fact\":\"beneficial_owner\",\"operator\":\"==\",\"value\":true},{\"fact\":\"payment_is_arm_length_amount\",\"operator\":\"==\",\"value\":true},{\"fact\":\"section_38nb_decision_effective\",\"operator\":\"==\",\"value\":true},{\"fact\":\"payment_not_attributable_to_disqualifying_pe\",\"operator\":\"==\",\"value\":true}],\"anti_abuse_review_required\":true,\"association_one_of\":[\"payer directly holds at least 25% of recipient capital or voting rights\",\"recipient directly holds at least 25% of payer capital or voting rights\",\"one person directly holds at least 25% of both payer and recipient capital or voting rights\"],\"association_period_one_of\":[{\"fact\":\"holding_period_months\",\"operator\":\">=\",\"value\":24},{\"all_of\":[{\"fact\":\"holding_period_will_reach_months\",\"operator\":\">=\",\"value\":24},{\"fact\":\"statutory_clawback_acknowledged\",\"operator\":\"==\",\"value\":true}]}],\"directive_source_id\":\"EU-IRD-2003-49-CONSOLIDATED\",\"legal_reference\":\"section 19(1)(zk), (3), (5), (6), (8) and section 38nb\",\"rate\":0.0,\"regime\":\"eu_directive_domestic_implementation\"}",
+      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02003L0049-20130701",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "anti_abuse_review_required": true,
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": "section 19(1)(zk), (3), (5), (6), (8) and section 38nb",
+      "conditions": [
+        {
+          "fact": "recipient_is_qualifying_company_form",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_is_tax_resident_in_eligible_jurisdiction",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_subject_to_qualifying_corporate_tax",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_has_no_tax_exemption_or_zero_rate_option",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "payment_is_arm_length_amount",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "section_38nb_decision_effective",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "payment_not_attributable_to_disqualifying_pe",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "ird_association_common_person_directly_holds_25_percent_both",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "holding_period_months",
+          "fact_source": "transaction",
+          "operator": ">=",
+          "value": 24
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "EU-IRD-2003-49-CONSOLIDATED"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "eu_directive",
+      "legal_layer": "eu_relief",
+      "paragraph": null,
+      "priority": 105,
+      "rate": 0.0,
+      "recipient_country": "SE",
+      "review_package_sha256": "81c624796d8bb86d6974eb0c2436e936b5445b4a78d1d4072bdef2daeabe5896",
+      "rule_id": "CZ-SE-INTEREST-EU-RELIEF-5",
+      "source_basis": "explicit_candidate_source",
+      "source_country": "CZ",
+      "source_excerpt_hash": "9b4e98fccfe142ca1b3294803fc2094cadaf388c9dee962a74364511ead4e560",
+      "source_id": "EU-IRD-2003-49-CONSOLIDATED",
+      "source_representation": "approved_structured_candidate_not_verbatim_quote",
+      "source_text": "{\"all_of\":[{\"fact\":\"recipient_is_qualifying_company_form\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_is_tax_resident_in_eligible_jurisdiction\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_subject_to_qualifying_corporate_tax\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_has_no_tax_exemption_or_zero_rate_option\",\"operator\":\"==\",\"value\":true},{\"fact\":\"beneficial_owner\",\"operator\":\"==\",\"value\":true},{\"fact\":\"payment_is_arm_length_amount\",\"operator\":\"==\",\"value\":true},{\"fact\":\"section_38nb_decision_effective\",\"operator\":\"==\",\"value\":true},{\"fact\":\"payment_not_attributable_to_disqualifying_pe\",\"operator\":\"==\",\"value\":true}],\"anti_abuse_review_required\":true,\"association_one_of\":[\"payer directly holds at least 25% of recipient capital or voting rights\",\"recipient directly holds at least 25% of payer capital or voting rights\",\"one person directly holds at least 25% of both payer and recipient capital or voting rights\"],\"association_period_one_of\":[{\"fact\":\"holding_period_months\",\"operator\":\">=\",\"value\":24},{\"all_of\":[{\"fact\":\"holding_period_will_reach_months\",\"operator\":\">=\",\"value\":24},{\"fact\":\"statutory_clawback_acknowledged\",\"operator\":\"==\",\"value\":true}]}],\"directive_source_id\":\"EU-IRD-2003-49-CONSOLIDATED\",\"legal_reference\":\"section 19(1)(zk), (3), (5), (6), (8) and section 38nb\",\"rate\":0.0,\"regime\":\"eu_directive_domestic_implementation\"}",
+      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02003L0049-20130701",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "anti_abuse_review_required": true,
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": "section 19(1)(zk), (3), (5), (6), (8) and section 38nb",
+      "conditions": [
+        {
+          "fact": "recipient_is_qualifying_company_form",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_is_tax_resident_in_eligible_jurisdiction",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_subject_to_qualifying_corporate_tax",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_has_no_tax_exemption_or_zero_rate_option",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "payment_is_arm_length_amount",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "section_38nb_decision_effective",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "payment_not_attributable_to_disqualifying_pe",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "ird_association_common_person_directly_holds_25_percent_both",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "holding_period_will_reach_months",
+          "fact_source": "transaction",
+          "operator": ">=",
+          "value": 24
+        },
+        {
+          "fact": "statutory_clawback_acknowledged",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "EU-IRD-2003-49-CONSOLIDATED"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "eu_directive",
+      "legal_layer": "eu_relief",
+      "paragraph": null,
+      "priority": 96,
+      "rate": 0.0,
+      "recipient_country": "SE",
+      "review_package_sha256": "81c624796d8bb86d6974eb0c2436e936b5445b4a78d1d4072bdef2daeabe5896",
+      "rule_id": "CZ-SE-INTEREST-EU-RELIEF-6",
+      "source_basis": "explicit_candidate_source",
+      "source_country": "CZ",
+      "source_excerpt_hash": "9b4e98fccfe142ca1b3294803fc2094cadaf388c9dee962a74364511ead4e560",
+      "source_id": "EU-IRD-2003-49-CONSOLIDATED",
+      "source_representation": "approved_structured_candidate_not_verbatim_quote",
+      "source_text": "{\"all_of\":[{\"fact\":\"recipient_is_qualifying_company_form\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_is_tax_resident_in_eligible_jurisdiction\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_subject_to_qualifying_corporate_tax\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_has_no_tax_exemption_or_zero_rate_option\",\"operator\":\"==\",\"value\":true},{\"fact\":\"beneficial_owner\",\"operator\":\"==\",\"value\":true},{\"fact\":\"payment_is_arm_length_amount\",\"operator\":\"==\",\"value\":true},{\"fact\":\"section_38nb_decision_effective\",\"operator\":\"==\",\"value\":true},{\"fact\":\"payment_not_attributable_to_disqualifying_pe\",\"operator\":\"==\",\"value\":true}],\"anti_abuse_review_required\":true,\"association_one_of\":[\"payer directly holds at least 25% of recipient capital or voting rights\",\"recipient directly holds at least 25% of payer capital or voting rights\",\"one person directly holds at least 25% of both payer and recipient capital or voting rights\"],\"association_period_one_of\":[{\"fact\":\"holding_period_months\",\"operator\":\">=\",\"value\":24},{\"all_of\":[{\"fact\":\"holding_period_will_reach_months\",\"operator\":\">=\",\"value\":24},{\"fact\":\"statutory_clawback_acknowledged\",\"operator\":\"==\",\"value\":true}]}],\"directive_source_id\":\"EU-IRD-2003-49-CONSOLIDATED\",\"legal_reference\":\"section 19(1)(zk), (3), (5), (6), (8) and section 38nb\",\"rate\":0.0,\"regime\":\"eu_directive_domestic_implementation\"}",
+      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02003L0049-20130701",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": 36,
+      "conditions": [],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "domestic_law",
+      "legal_layer": "domestic",
+      "paragraph": "1(a)(1)",
+      "priority": 900,
+      "rate": 15.0,
+      "recipient_country": "SE",
+      "review_package_sha256": "81c624796d8bb86d6974eb0c2436e936b5445b4a78d1d4072bdef2daeabe5896",
+      "rule_id": "CZ-SE-ROYALTY-DOMESTIC",
+      "source_country": "CZ",
+      "source_excerpt_hash": "aa1100129d4ba33a4efeeb3258bfc621281f11b160890ba7a898e71318bd643d",
+      "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+      "source_representation": "approved_structured_projection",
+      "source_text": "Current Czech domestic withholding tax standard rate represented in the approved Stage 6 package: 15.0%.",
+      "source_url": "https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/1992/586/2026-04-01",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "a91202a4fc086ef59152e678252759c0757b7671fdc64a7292d6b2595804289a",
+      "article": 12,
+      "conditions": [
+        {
+          "fact": "royalty_category",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "copyright_literary_artistic_or_scientific"
+        },
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        },
+        {
+          "fact": "right_or_property_not_effectively_connected_to_czech_pe_or_fixed_base",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "1980-10-08",
+      "evidence_source_ids": [
+        "SRC-2346C8B8EC6A8A34"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 671,
+      "rate": 0.0,
+      "recipient_country": "SE",
+      "review_package_sha256": "81c624796d8bb86d6974eb0c2436e936b5445b4a78d1d4072bdef2daeabe5896",
+      "rule_id": "CZ-SE-ROYALTY-CURRENT-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "620ab735385753b3f0c65329b32cfe0a4c0116230e927c982b67cb2320ba4739",
+      "source_id": "SRC-2346C8B8EC6A8A34",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "Licenční poplatky\n1 Licenční poplatky mající zdroj v jednom\nsmluvním státě a placené osobě, která má byd-\nliště či sídlo v druhém smluvním státě, mohou\nbýt zdaněny v tomto druhém státě,\n2. Takové licenční poplatky však mohou být\nzdaněny ve smluvním státě, ve kterém je jejich\nzdroj, a to podle právních předpisů tohoto státu.\nDaň takto uložená však nepřesáhne 5% hrubé\nčástky licenčních poplatků,\n3. Licenční poplatky plynoucí z autorských\npráv k dílům literárním, uměleckým nebo vě-\ndeckým podléhají bez ohledu na ustanovení od-\nstavců 1 a 2 zdanění jen v tom smluvním státě,\nve kterém má příjemce takových licenčních po-\nplatků bydliště či sídlo.\n4. Výraz „licenční poplatky“ použitý v tom-\nto článku označuje platy jakéhokoli druhu. při-\nJaté náhradou za užití nebo právo na užití jaké-\nhokoli patentu, ochranné známky, návrhu nebo\nmodelu, plánu, tajného vzorce nebo postupu\nnebo průmyslového, obchodního nebo vědecké-\nho zařízení nebo za informace, které se vztahují\nna zkušenosti z oblasti průmyslové, obchodní\nnebo vědecké, a jakéhokoli autorského práva\nk dílu literárnímu, uměleckému nebo vědeckému\nvčetně kinematografických filmů a filmů nebo\npásek pro televizní nebo rozhlasová vysílání.\n5. Ustanovení odstavců 1, 2 a 3 se nepoužijí,\njestliže příjemce licenčních poplatků mající byd-\nliště či sídlo v jednom smluvním státě vykonává\nv druhém smluvním státě, ve kterém mají li-\ncenční poplatky zdroj, průmyslovou nebo ob-\nchodní činnost prostřednictvím stálé provozovny,\nkterá je tam umístěna,",
+      "source_url": "https://e-sbirka.gov.cz/sb/1981/9/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "a91202a4fc086ef59152e678252759c0757b7671fdc64a7292d6b2595804289a",
+      "article": 12,
+      "conditions": [
+        {
+          "fact": "royalty_category",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "all_other_article_12_royalties"
+        },
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        },
+        {
+          "fact": "right_or_property_not_effectively_connected_to_czech_pe_or_fixed_base",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "1980-10-08",
+      "evidence_source_ids": [
+        "SRC-2346C8B8EC6A8A34"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 672,
+      "rate": 5.0,
+      "recipient_country": "SE",
+      "review_package_sha256": "81c624796d8bb86d6974eb0c2436e936b5445b4a78d1d4072bdef2daeabe5896",
+      "rule_id": "CZ-SE-ROYALTY-CURRENT-2",
+      "source_country": "CZ",
+      "source_excerpt_hash": "620ab735385753b3f0c65329b32cfe0a4c0116230e927c982b67cb2320ba4739",
+      "source_id": "SRC-2346C8B8EC6A8A34",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "Licenční poplatky\n1 Licenční poplatky mající zdroj v jednom\nsmluvním státě a placené osobě, která má byd-\nliště či sídlo v druhém smluvním státě, mohou\nbýt zdaněny v tomto druhém státě,\n2. Takové licenční poplatky však mohou být\nzdaněny ve smluvním státě, ve kterém je jejich\nzdroj, a to podle právních předpisů tohoto státu.\nDaň takto uložená však nepřesáhne 5% hrubé\nčástky licenčních poplatků,\n3. Licenční poplatky plynoucí z autorských\npráv k dílům literárním, uměleckým nebo vě-\ndeckým podléhají bez ohledu na ustanovení od-\nstavců 1 a 2 zdanění jen v tom smluvním státě,\nve kterém má příjemce takových licenčních po-\nplatků bydliště či sídlo.\n4. Výraz „licenční poplatky“ použitý v tom-\nto článku označuje platy jakéhokoli druhu. při-\nJaté náhradou za užití nebo právo na užití jaké-\nhokoli patentu, ochranné známky, návrhu nebo\nmodelu, plánu, tajného vzorce nebo postupu\nnebo průmyslového, obchodního nebo vědecké-\nho zařízení nebo za informace, které se vztahují\nna zkušenosti z oblasti průmyslové, obchodní\nnebo vědecké, a jakéhokoli autorského práva\nk dílu literárnímu, uměleckému nebo vědeckému\nvčetně kinematografických filmů a filmů nebo\npásek pro televizní nebo rozhlasová vysílání.\n5. Ustanovení odstavců 1, 2 a 3 se nepoužijí,\njestliže příjemce licenčních poplatků mající byd-\nliště či sídlo v jednom smluvním státě vykonává\nv druhém smluvním státě, ve kterém mají li-\ncenční poplatky zdroj, průmyslovou nebo ob-\nchodní činnost prostřednictvím stálé provozovny,\nkterá je tam umístěna,",
+      "source_url": "https://e-sbirka.gov.cz/sb/1981/9/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "anti_abuse_review_required": true,
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": "section 19(1)(zj), (3), (5)-(8) and section 38nb",
+      "conditions": [
+        {
+          "fact": "recipient_is_qualifying_company_form",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_is_tax_resident_in_eligible_jurisdiction",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_subject_to_qualifying_corporate_tax",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_has_no_tax_exemption_or_zero_rate_option",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "payment_is_arm_length_amount",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "section_38nb_decision_effective",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "payment_not_attributable_to_disqualifying_pe",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "ird_association_payer_directly_holds_25_percent_recipient",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "holding_period_months",
+          "fact_source": "transaction",
+          "operator": ">=",
+          "value": 24
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "EU-IRD-2003-49-CONSOLIDATED"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "eu_directive",
+      "legal_layer": "eu_relief",
+      "paragraph": null,
+      "priority": 101,
+      "rate": 0.0,
+      "recipient_country": "SE",
+      "review_package_sha256": "81c624796d8bb86d6974eb0c2436e936b5445b4a78d1d4072bdef2daeabe5896",
+      "rule_id": "CZ-SE-ROYALTY-EU-RELIEF-1",
+      "source_basis": "explicit_candidate_source",
+      "source_country": "CZ",
+      "source_excerpt_hash": "ce791ace2a2871143f5a6ad00d030ac36e41191dbbe9810d7070ce75e1204728",
+      "source_id": "EU-IRD-2003-49-CONSOLIDATED",
+      "source_representation": "approved_structured_candidate_not_verbatim_quote",
+      "source_text": "{\"all_of\":[{\"fact\":\"recipient_is_qualifying_company_form\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_is_tax_resident_in_eligible_jurisdiction\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_subject_to_qualifying_corporate_tax\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_has_no_tax_exemption_or_zero_rate_option\",\"operator\":\"==\",\"value\":true},{\"fact\":\"beneficial_owner\",\"operator\":\"==\",\"value\":true},{\"fact\":\"payment_is_arm_length_amount\",\"operator\":\"==\",\"value\":true},{\"fact\":\"section_38nb_decision_effective\",\"operator\":\"==\",\"value\":true},{\"fact\":\"payment_not_attributable_to_disqualifying_pe\",\"operator\":\"==\",\"value\":true}],\"anti_abuse_review_required\":true,\"association_one_of\":[\"payer directly holds at least 25% of recipient capital or voting rights\",\"recipient directly holds at least 25% of payer capital or voting rights\",\"one person directly holds at least 25% of both payer and recipient capital or voting rights\"],\"association_period_one_of\":[{\"fact\":\"holding_period_months\",\"operator\":\">=\",\"value\":24},{\"all_of\":[{\"fact\":\"holding_period_will_reach_months\",\"operator\":\">=\",\"value\":24},{\"fact\":\"statutory_clawback_acknowledged\",\"operator\":\"==\",\"value\":true}]}],\"directive_source_id\":\"EU-IRD-2003-49-CONSOLIDATED\",\"legal_reference\":\"section 19(1)(zj), (3), (5)-(8) and section 38nb\",\"rate\":0.0,\"regime\":\"eu_directive_domestic_implementation\"}",
+      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02003L0049-20130701",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "anti_abuse_review_required": true,
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": "section 19(1)(zj), (3), (5)-(8) and section 38nb",
+      "conditions": [
+        {
+          "fact": "recipient_is_qualifying_company_form",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_is_tax_resident_in_eligible_jurisdiction",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_subject_to_qualifying_corporate_tax",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_has_no_tax_exemption_or_zero_rate_option",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "payment_is_arm_length_amount",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "section_38nb_decision_effective",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "payment_not_attributable_to_disqualifying_pe",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "ird_association_payer_directly_holds_25_percent_recipient",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "holding_period_will_reach_months",
+          "fact_source": "transaction",
+          "operator": ">=",
+          "value": 24
+        },
+        {
+          "fact": "statutory_clawback_acknowledged",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "EU-IRD-2003-49-CONSOLIDATED"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "eu_directive",
+      "legal_layer": "eu_relief",
+      "paragraph": null,
+      "priority": 92,
+      "rate": 0.0,
+      "recipient_country": "SE",
+      "review_package_sha256": "81c624796d8bb86d6974eb0c2436e936b5445b4a78d1d4072bdef2daeabe5896",
+      "rule_id": "CZ-SE-ROYALTY-EU-RELIEF-2",
+      "source_basis": "explicit_candidate_source",
+      "source_country": "CZ",
+      "source_excerpt_hash": "ce791ace2a2871143f5a6ad00d030ac36e41191dbbe9810d7070ce75e1204728",
+      "source_id": "EU-IRD-2003-49-CONSOLIDATED",
+      "source_representation": "approved_structured_candidate_not_verbatim_quote",
+      "source_text": "{\"all_of\":[{\"fact\":\"recipient_is_qualifying_company_form\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_is_tax_resident_in_eligible_jurisdiction\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_subject_to_qualifying_corporate_tax\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_has_no_tax_exemption_or_zero_rate_option\",\"operator\":\"==\",\"value\":true},{\"fact\":\"beneficial_owner\",\"operator\":\"==\",\"value\":true},{\"fact\":\"payment_is_arm_length_amount\",\"operator\":\"==\",\"value\":true},{\"fact\":\"section_38nb_decision_effective\",\"operator\":\"==\",\"value\":true},{\"fact\":\"payment_not_attributable_to_disqualifying_pe\",\"operator\":\"==\",\"value\":true}],\"anti_abuse_review_required\":true,\"association_one_of\":[\"payer directly holds at least 25% of recipient capital or voting rights\",\"recipient directly holds at least 25% of payer capital or voting rights\",\"one person directly holds at least 25% of both payer and recipient capital or voting rights\"],\"association_period_one_of\":[{\"fact\":\"holding_period_months\",\"operator\":\">=\",\"value\":24},{\"all_of\":[{\"fact\":\"holding_period_will_reach_months\",\"operator\":\">=\",\"value\":24},{\"fact\":\"statutory_clawback_acknowledged\",\"operator\":\"==\",\"value\":true}]}],\"directive_source_id\":\"EU-IRD-2003-49-CONSOLIDATED\",\"legal_reference\":\"section 19(1)(zj), (3), (5)-(8) and section 38nb\",\"rate\":0.0,\"regime\":\"eu_directive_domestic_implementation\"}",
+      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02003L0049-20130701",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "anti_abuse_review_required": true,
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": "section 19(1)(zj), (3), (5)-(8) and section 38nb",
+      "conditions": [
+        {
+          "fact": "recipient_is_qualifying_company_form",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_is_tax_resident_in_eligible_jurisdiction",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_subject_to_qualifying_corporate_tax",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_has_no_tax_exemption_or_zero_rate_option",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "payment_is_arm_length_amount",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "section_38nb_decision_effective",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "payment_not_attributable_to_disqualifying_pe",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "ird_association_recipient_directly_holds_25_percent_payer",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "holding_period_months",
+          "fact_source": "transaction",
+          "operator": ">=",
+          "value": 24
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "EU-IRD-2003-49-CONSOLIDATED"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "eu_directive",
+      "legal_layer": "eu_relief",
+      "paragraph": null,
+      "priority": 103,
+      "rate": 0.0,
+      "recipient_country": "SE",
+      "review_package_sha256": "81c624796d8bb86d6974eb0c2436e936b5445b4a78d1d4072bdef2daeabe5896",
+      "rule_id": "CZ-SE-ROYALTY-EU-RELIEF-3",
+      "source_basis": "explicit_candidate_source",
+      "source_country": "CZ",
+      "source_excerpt_hash": "ce791ace2a2871143f5a6ad00d030ac36e41191dbbe9810d7070ce75e1204728",
+      "source_id": "EU-IRD-2003-49-CONSOLIDATED",
+      "source_representation": "approved_structured_candidate_not_verbatim_quote",
+      "source_text": "{\"all_of\":[{\"fact\":\"recipient_is_qualifying_company_form\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_is_tax_resident_in_eligible_jurisdiction\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_subject_to_qualifying_corporate_tax\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_has_no_tax_exemption_or_zero_rate_option\",\"operator\":\"==\",\"value\":true},{\"fact\":\"beneficial_owner\",\"operator\":\"==\",\"value\":true},{\"fact\":\"payment_is_arm_length_amount\",\"operator\":\"==\",\"value\":true},{\"fact\":\"section_38nb_decision_effective\",\"operator\":\"==\",\"value\":true},{\"fact\":\"payment_not_attributable_to_disqualifying_pe\",\"operator\":\"==\",\"value\":true}],\"anti_abuse_review_required\":true,\"association_one_of\":[\"payer directly holds at least 25% of recipient capital or voting rights\",\"recipient directly holds at least 25% of payer capital or voting rights\",\"one person directly holds at least 25% of both payer and recipient capital or voting rights\"],\"association_period_one_of\":[{\"fact\":\"holding_period_months\",\"operator\":\">=\",\"value\":24},{\"all_of\":[{\"fact\":\"holding_period_will_reach_months\",\"operator\":\">=\",\"value\":24},{\"fact\":\"statutory_clawback_acknowledged\",\"operator\":\"==\",\"value\":true}]}],\"directive_source_id\":\"EU-IRD-2003-49-CONSOLIDATED\",\"legal_reference\":\"section 19(1)(zj), (3), (5)-(8) and section 38nb\",\"rate\":0.0,\"regime\":\"eu_directive_domestic_implementation\"}",
+      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02003L0049-20130701",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "anti_abuse_review_required": true,
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": "section 19(1)(zj), (3), (5)-(8) and section 38nb",
+      "conditions": [
+        {
+          "fact": "recipient_is_qualifying_company_form",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_is_tax_resident_in_eligible_jurisdiction",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_subject_to_qualifying_corporate_tax",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_has_no_tax_exemption_or_zero_rate_option",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "payment_is_arm_length_amount",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "section_38nb_decision_effective",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "payment_not_attributable_to_disqualifying_pe",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "ird_association_recipient_directly_holds_25_percent_payer",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "holding_period_will_reach_months",
+          "fact_source": "transaction",
+          "operator": ">=",
+          "value": 24
+        },
+        {
+          "fact": "statutory_clawback_acknowledged",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "EU-IRD-2003-49-CONSOLIDATED"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "eu_directive",
+      "legal_layer": "eu_relief",
+      "paragraph": null,
+      "priority": 94,
+      "rate": 0.0,
+      "recipient_country": "SE",
+      "review_package_sha256": "81c624796d8bb86d6974eb0c2436e936b5445b4a78d1d4072bdef2daeabe5896",
+      "rule_id": "CZ-SE-ROYALTY-EU-RELIEF-4",
+      "source_basis": "explicit_candidate_source",
+      "source_country": "CZ",
+      "source_excerpt_hash": "ce791ace2a2871143f5a6ad00d030ac36e41191dbbe9810d7070ce75e1204728",
+      "source_id": "EU-IRD-2003-49-CONSOLIDATED",
+      "source_representation": "approved_structured_candidate_not_verbatim_quote",
+      "source_text": "{\"all_of\":[{\"fact\":\"recipient_is_qualifying_company_form\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_is_tax_resident_in_eligible_jurisdiction\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_subject_to_qualifying_corporate_tax\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_has_no_tax_exemption_or_zero_rate_option\",\"operator\":\"==\",\"value\":true},{\"fact\":\"beneficial_owner\",\"operator\":\"==\",\"value\":true},{\"fact\":\"payment_is_arm_length_amount\",\"operator\":\"==\",\"value\":true},{\"fact\":\"section_38nb_decision_effective\",\"operator\":\"==\",\"value\":true},{\"fact\":\"payment_not_attributable_to_disqualifying_pe\",\"operator\":\"==\",\"value\":true}],\"anti_abuse_review_required\":true,\"association_one_of\":[\"payer directly holds at least 25% of recipient capital or voting rights\",\"recipient directly holds at least 25% of payer capital or voting rights\",\"one person directly holds at least 25% of both payer and recipient capital or voting rights\"],\"association_period_one_of\":[{\"fact\":\"holding_period_months\",\"operator\":\">=\",\"value\":24},{\"all_of\":[{\"fact\":\"holding_period_will_reach_months\",\"operator\":\">=\",\"value\":24},{\"fact\":\"statutory_clawback_acknowledged\",\"operator\":\"==\",\"value\":true}]}],\"directive_source_id\":\"EU-IRD-2003-49-CONSOLIDATED\",\"legal_reference\":\"section 19(1)(zj), (3), (5)-(8) and section 38nb\",\"rate\":0.0,\"regime\":\"eu_directive_domestic_implementation\"}",
+      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02003L0049-20130701",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "anti_abuse_review_required": true,
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": "section 19(1)(zj), (3), (5)-(8) and section 38nb",
+      "conditions": [
+        {
+          "fact": "recipient_is_qualifying_company_form",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_is_tax_resident_in_eligible_jurisdiction",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_subject_to_qualifying_corporate_tax",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_has_no_tax_exemption_or_zero_rate_option",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "payment_is_arm_length_amount",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "section_38nb_decision_effective",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "payment_not_attributable_to_disqualifying_pe",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "ird_association_common_person_directly_holds_25_percent_both",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "holding_period_months",
+          "fact_source": "transaction",
+          "operator": ">=",
+          "value": 24
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "EU-IRD-2003-49-CONSOLIDATED"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "eu_directive",
+      "legal_layer": "eu_relief",
+      "paragraph": null,
+      "priority": 105,
+      "rate": 0.0,
+      "recipient_country": "SE",
+      "review_package_sha256": "81c624796d8bb86d6974eb0c2436e936b5445b4a78d1d4072bdef2daeabe5896",
+      "rule_id": "CZ-SE-ROYALTY-EU-RELIEF-5",
+      "source_basis": "explicit_candidate_source",
+      "source_country": "CZ",
+      "source_excerpt_hash": "ce791ace2a2871143f5a6ad00d030ac36e41191dbbe9810d7070ce75e1204728",
+      "source_id": "EU-IRD-2003-49-CONSOLIDATED",
+      "source_representation": "approved_structured_candidate_not_verbatim_quote",
+      "source_text": "{\"all_of\":[{\"fact\":\"recipient_is_qualifying_company_form\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_is_tax_resident_in_eligible_jurisdiction\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_subject_to_qualifying_corporate_tax\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_has_no_tax_exemption_or_zero_rate_option\",\"operator\":\"==\",\"value\":true},{\"fact\":\"beneficial_owner\",\"operator\":\"==\",\"value\":true},{\"fact\":\"payment_is_arm_length_amount\",\"operator\":\"==\",\"value\":true},{\"fact\":\"section_38nb_decision_effective\",\"operator\":\"==\",\"value\":true},{\"fact\":\"payment_not_attributable_to_disqualifying_pe\",\"operator\":\"==\",\"value\":true}],\"anti_abuse_review_required\":true,\"association_one_of\":[\"payer directly holds at least 25% of recipient capital or voting rights\",\"recipient directly holds at least 25% of payer capital or voting rights\",\"one person directly holds at least 25% of both payer and recipient capital or voting rights\"],\"association_period_one_of\":[{\"fact\":\"holding_period_months\",\"operator\":\">=\",\"value\":24},{\"all_of\":[{\"fact\":\"holding_period_will_reach_months\",\"operator\":\">=\",\"value\":24},{\"fact\":\"statutory_clawback_acknowledged\",\"operator\":\"==\",\"value\":true}]}],\"directive_source_id\":\"EU-IRD-2003-49-CONSOLIDATED\",\"legal_reference\":\"section 19(1)(zj), (3), (5)-(8) and section 38nb\",\"rate\":0.0,\"regime\":\"eu_directive_domestic_implementation\"}",
+      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02003L0049-20130701",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "anti_abuse_review_required": true,
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": "section 19(1)(zj), (3), (5)-(8) and section 38nb",
+      "conditions": [
+        {
+          "fact": "recipient_is_qualifying_company_form",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_is_tax_resident_in_eligible_jurisdiction",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_subject_to_qualifying_corporate_tax",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_has_no_tax_exemption_or_zero_rate_option",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "payment_is_arm_length_amount",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "section_38nb_decision_effective",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "payment_not_attributable_to_disqualifying_pe",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "ird_association_common_person_directly_holds_25_percent_both",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "holding_period_will_reach_months",
+          "fact_source": "transaction",
+          "operator": ">=",
+          "value": 24
+        },
+        {
+          "fact": "statutory_clawback_acknowledged",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "EU-IRD-2003-49-CONSOLIDATED"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "eu_directive",
+      "legal_layer": "eu_relief",
+      "paragraph": null,
+      "priority": 96,
+      "rate": 0.0,
+      "recipient_country": "SE",
+      "review_package_sha256": "81c624796d8bb86d6974eb0c2436e936b5445b4a78d1d4072bdef2daeabe5896",
+      "rule_id": "CZ-SE-ROYALTY-EU-RELIEF-6",
+      "source_basis": "explicit_candidate_source",
+      "source_country": "CZ",
+      "source_excerpt_hash": "ce791ace2a2871143f5a6ad00d030ac36e41191dbbe9810d7070ce75e1204728",
+      "source_id": "EU-IRD-2003-49-CONSOLIDATED",
+      "source_representation": "approved_structured_candidate_not_verbatim_quote",
+      "source_text": "{\"all_of\":[{\"fact\":\"recipient_is_qualifying_company_form\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_is_tax_resident_in_eligible_jurisdiction\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_subject_to_qualifying_corporate_tax\",\"operator\":\"==\",\"value\":true},{\"fact\":\"recipient_has_no_tax_exemption_or_zero_rate_option\",\"operator\":\"==\",\"value\":true},{\"fact\":\"beneficial_owner\",\"operator\":\"==\",\"value\":true},{\"fact\":\"payment_is_arm_length_amount\",\"operator\":\"==\",\"value\":true},{\"fact\":\"section_38nb_decision_effective\",\"operator\":\"==\",\"value\":true},{\"fact\":\"payment_not_attributable_to_disqualifying_pe\",\"operator\":\"==\",\"value\":true}],\"anti_abuse_review_required\":true,\"association_one_of\":[\"payer directly holds at least 25% of recipient capital or voting rights\",\"recipient directly holds at least 25% of payer capital or voting rights\",\"one person directly holds at least 25% of both payer and recipient capital or voting rights\"],\"association_period_one_of\":[{\"fact\":\"holding_period_months\",\"operator\":\">=\",\"value\":24},{\"all_of\":[{\"fact\":\"holding_period_will_reach_months\",\"operator\":\">=\",\"value\":24},{\"fact\":\"statutory_clawback_acknowledged\",\"operator\":\"==\",\"value\":true}]}],\"directive_source_id\":\"EU-IRD-2003-49-CONSOLIDATED\",\"legal_reference\":\"section 19(1)(zj), (3), (5)-(8) and section 38nb\",\"rate\":0.0,\"regime\":\"eu_directive_domestic_implementation\"}",
+      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02003L0049-20130701",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    }
+  ],
+  "schema_version": 3,
+  "stage6_production": {
+    "additional_human_review_claimed": false,
+    "package_sha256": "81c624796d8bb86d6974eb0c2436e936b5445b4a78d1d4072bdef2daeabe5896",
+    "production_approval": "production_approved",
+    "rule_promotion": "promoted",
+    "source_release": "not_released",
+    "treaty_pair_id": "CZ-SE",
+    "verification_authority": "stage6_governance_policy"
+  }
+}

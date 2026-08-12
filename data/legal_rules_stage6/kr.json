@@ -1,0 +1,308 @@
+{
+  "country_pair": {
+    "recipient_country": "KR",
+    "source_country": "CZ"
+  },
+  "rules": [
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": 36,
+      "conditions": [],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA"
+      ],
+      "income_type": "dividend",
+      "legal_instrument": "domestic_law",
+      "legal_layer": "domestic",
+      "paragraph": "1(b)(1)",
+      "priority": 900,
+      "rate": 15.0,
+      "recipient_country": "KR",
+      "review_package_sha256": "6660522ae8df0a2f4ddc4ee81614b820b29e882a12060a99c31ec0573514fc35",
+      "rule_id": "CZ-KR-DIVIDEND-DOMESTIC",
+      "source_country": "CZ",
+      "source_excerpt_hash": "aa1100129d4ba33a4efeeb3258bfc621281f11b160890ba7a898e71318bd643d",
+      "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+      "source_representation": "approved_structured_projection",
+      "source_text": "Current Czech domestic withholding tax standard rate represented in the approved Stage 6 package: 15.0%.",
+      "source_url": "https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/1992/586/2026-04-01",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "46f8b2d89b5e772daca743314180775db45acf7d9aadb7c804ce35679a55042e",
+      "article": 10,
+      "conditions": [
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2019-12-20",
+      "evidence_source_ids": [
+        "SRC-23CD4C7925E15101"
+      ],
+      "income_type": "dividend",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 691,
+      "rate": 5.0,
+      "recipient_country": "KR",
+      "review_package_sha256": "6660522ae8df0a2f4ddc4ee81614b820b29e882a12060a99c31ec0573514fc35",
+      "rule_id": "CZ-KR-DIVIDEND-CURRENT-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "e6386c5ac30978f2abc9f054de1ee0e5adc8cff958e37f0e7c9b1f53e542c67b",
+      "source_id": "SRC-23CD4C7925E15101",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "1. Dividendy vyplácené společností, která je rezidentem jednoho smluvního státu, rezidentu\ndruhého smluvního státu, mohou být zdaněny v tomto druhém státě.\n2. Dividendy vyplácené společností, která je rezidentem jednoho smluvního státu, však mohou\nbýt rovněž zdaněny v tomto státě, a to podle právních předpisů tohoto státu, avšak jestliže\nskutečný vlasmík dividend je rezidentem druhého smluvního státu, daň takto uložená\nnepřesáhne 5 procent hrubé částky dividend.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace tohoto omezení.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.\n3. Výraz „dividendy“ použitý v tomto článku označuje příjmy z akcií nebo jiných práv, s\nvýjimkou pohledávek, s podílem na zisku, jakož i jiné příjmy, které jsou podrobeny stejnému\ndaňovému režimu jako příjmy z akcií podle právních předpisů státu, jehož je společnost, která\nprovádí platbu, rezidentem.\n4. Ustanovení odstavců 1 a 2 se nepoužijí, jestliže skutečný vlastník dividend, který je\nrezidentem jednoho smluvního státu, vykonává v druhém smluvním státě, jehož je rezidentem\nspolečnost vyplácející dividendy, svoji činnost prostřednictvím stálé provozovny, která je tam\numístěna, a jestliže účast, pro kterou se dividendy vyplácejí, se skutečně váže k této stálé\nprovozovně. V takovém případě se použijí ustanovení článku 7.\n5. Jestliže společnost, která je rezidentem jednoho smluvního Státu, dosahuje zisky nebo\npříjmy z druhého smluvního státu, ne",
+      "source_url": "https://e-sbirka.gov.cz/sm/2020/1/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": 36,
+      "conditions": [],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "domestic_law",
+      "legal_layer": "domestic",
+      "paragraph": "1(a)(1)",
+      "priority": 900,
+      "rate": 15.0,
+      "recipient_country": "KR",
+      "review_package_sha256": "6660522ae8df0a2f4ddc4ee81614b820b29e882a12060a99c31ec0573514fc35",
+      "rule_id": "CZ-KR-INTEREST-DOMESTIC",
+      "source_country": "CZ",
+      "source_excerpt_hash": "aa1100129d4ba33a4efeeb3258bfc621281f11b160890ba7a898e71318bd643d",
+      "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+      "source_representation": "approved_structured_projection",
+      "source_text": "Current Czech domestic withholding tax standard rate represented in the approved Stage 6 package: 15.0%.",
+      "source_url": "https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/1992/586/2026-04-01",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "65f9649798b16d4f4f6b90d3b3355cdfbc633e82402fadcfdadb156549465f8f",
+      "article": 11,
+      "conditions": [
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2019-12-20",
+      "evidence_source_ids": [
+        "SRC-23CD4C7925E15101"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 691,
+      "rate": 5.0,
+      "recipient_country": "KR",
+      "review_package_sha256": "6660522ae8df0a2f4ddc4ee81614b820b29e882a12060a99c31ec0573514fc35",
+      "rule_id": "CZ-KR-INTEREST-CURRENT-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "a373fc189e469268d2de504b98c2ca99aa5939e17f559188e41dc421f1d8be67",
+      "source_id": "SRC-23CD4C7925E15101",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "1. Úroky mající zdroj v jednom smluvním státě a vyplácené rezidentu druhého smluvního\nstátu mohou být zdaněny v tomto druhém státě.\n2. Úroky mající zdroj v jednom smluvním státě však mohou být rovněž zdaněny v tomto státě,\na to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník úroků je rezidentem\ndruhého smluvního státu, daň takto uložená nepřesáhne 5 procent hrubé částky úroků.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace tohoto omezení.\n3. Úroky mající zdroj v jednom smluvním státě jsou bez ohledu na ustanovení odstavce 2\nosvobozeny od zdanění v tomto státě za předpokladu, že jsou skutečně vlastněny:\na) vládou, nižším správním útvarem nebo místním úřadem druhého smluvního státu; nebo\nb) centrální bankou tohoto druhého státu; nebo\n©) jakoukoli finanční institucí, která je vlastněna nebo ovládána vládou tohoto druhého státu;\nnebo\nd) rezidentem druhého smluvního státu v souvislosti s půjčkou nebo úvěrem, která je zaručena\nnebo pojištěna nebo který je zaručen nebo pojištěn:\n(3) vládou, nižším správním útvarem nebo místním úřadem druhého smluvního státu; nebo\n(ii) centrální bankou tohoto druhého státu; nebo\n(iii) jakoukoli finanční institucí, která je vlastněna nebo ovládána vládou tohoto druhého státu;\nnebo\ne) rezidentem druhého státu a jsou vypláceny v souvislosti s prodejem jakéhokoliv zboží nebo\nzařízení na úvěr.\n4. Výrazy „centrální banka“ a „jakákoli finanční instituce, která je vlastněna nebo ovládána\nvládou“ označují pro ú",
+      "source_url": "https://e-sbirka.gov.cz/sm/2020/1/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "65f9649798b16d4f4f6b90d3b3355cdfbc633e82402fadcfdadb156549465f8f",
+      "article": 11,
+      "conditions": [
+        {
+          "fact": "article_11_3_exemption",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "government_subnational_local_authority_central_bank_government_owned_or_controlled_financial_institution_or_qualifying_guaranteed_or_insured_financing_or_credit_sale"
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2019-12-20",
+      "evidence_source_ids": [
+        "SRC-23CD4C7925E15101"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 682,
+      "rate": 0.0,
+      "recipient_country": "KR",
+      "review_package_sha256": "6660522ae8df0a2f4ddc4ee81614b820b29e882a12060a99c31ec0573514fc35",
+      "rule_id": "CZ-KR-INTEREST-CURRENT-2",
+      "source_country": "CZ",
+      "source_excerpt_hash": "a373fc189e469268d2de504b98c2ca99aa5939e17f559188e41dc421f1d8be67",
+      "source_id": "SRC-23CD4C7925E15101",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "1. Úroky mající zdroj v jednom smluvním státě a vyplácené rezidentu druhého smluvního\nstátu mohou být zdaněny v tomto druhém státě.\n2. Úroky mající zdroj v jednom smluvním státě však mohou být rovněž zdaněny v tomto státě,\na to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník úroků je rezidentem\ndruhého smluvního státu, daň takto uložená nepřesáhne 5 procent hrubé částky úroků.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace tohoto omezení.\n3. Úroky mající zdroj v jednom smluvním státě jsou bez ohledu na ustanovení odstavce 2\nosvobozeny od zdanění v tomto státě za předpokladu, že jsou skutečně vlastněny:\na) vládou, nižším správním útvarem nebo místním úřadem druhého smluvního státu; nebo\nb) centrální bankou tohoto druhého státu; nebo\n©) jakoukoli finanční institucí, která je vlastněna nebo ovládána vládou tohoto druhého státu;\nnebo\nd) rezidentem druhého smluvního státu v souvislosti s půjčkou nebo úvěrem, která je zaručena\nnebo pojištěna nebo který je zaručen nebo pojištěn:\n(3) vládou, nižším správním útvarem nebo místním úřadem druhého smluvního státu; nebo\n(ii) centrální bankou tohoto druhého státu; nebo\n(iii) jakoukoli finanční institucí, která je vlastněna nebo ovládána vládou tohoto druhého státu;\nnebo\ne) rezidentem druhého státu a jsou vypláceny v souvislosti s prodejem jakéhokoliv zboží nebo\nzařízení na úvěr.\n4. Výrazy „centrální banka“ a „jakákoli finanční instituce, která je vlastněna nebo ovládána\nvládou“ označují pro ú",
+      "source_url": "https://e-sbirka.gov.cz/sm/2020/1/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": 36,
+      "conditions": [],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "domestic_law",
+      "legal_layer": "domestic",
+      "paragraph": "1(a)(1)",
+      "priority": 900,
+      "rate": 15.0,
+      "recipient_country": "KR",
+      "review_package_sha256": "6660522ae8df0a2f4ddc4ee81614b820b29e882a12060a99c31ec0573514fc35",
+      "rule_id": "CZ-KR-ROYALTY-DOMESTIC",
+      "source_country": "CZ",
+      "source_excerpt_hash": "aa1100129d4ba33a4efeeb3258bfc621281f11b160890ba7a898e71318bd643d",
+      "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+      "source_representation": "approved_structured_projection",
+      "source_text": "Current Czech domestic withholding tax standard rate represented in the approved Stage 6 package: 15.0%.",
+      "source_url": "https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/1992/586/2026-04-01",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "493b6afe3a398a109087433d6e949b67f73543576d4eaf8685c0268b02974823",
+      "article": 12,
+      "conditions": [
+        {
+          "fact": "royalty_category",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "copyright_literary_artistic_scientific_including_films_and_broadcast_media"
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2019-12-20",
+      "evidence_source_ids": [
+        "SRC-23CD4C7925E15101"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 681,
+      "rate": 0.0,
+      "recipient_country": "KR",
+      "review_package_sha256": "6660522ae8df0a2f4ddc4ee81614b820b29e882a12060a99c31ec0573514fc35",
+      "rule_id": "CZ-KR-ROYALTY-CURRENT-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "32d2818182532e131f2860f82a8b4a6983f55913650313efbf2ddf2fc9f989a9",
+      "source_id": "SRC-23CD4C7925E15101",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "1. Licenční poplatky mající zdroj v jednom smluvním státě a vyplácené rezidentu druhého\nsmluvního státu mohou být zdaněny v tomto druhém státě.\n2. Licenční poplatky mající zdroj v jednom smluvním státě však mohou být rovněž zdaněny v\ntomto státě, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník\nlicenčních poplatků je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne:\na) 10 procent hrubé částky licenčních poplatků uvedených v odstavci 3 písmenu a);\nb) 0 procent hrubé částky licenčních poplatků uvedených v odstavci 3 písmenu b).\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace těchto omezení.\n3. Výraz „licenční poplatky“ použitý v tomto článku označuje platby jakéhokoliv druhu\nobdržené jako náhrada za užití nebo za právo na užití:\na) jakéhokoliv patentu, ochranné známky, návrhu nebo modelu, plánu, tajného vzorce nebo\npostupu, nebo jakéhokoliv průmyslového, obchodního nebo vědeckého zařízení, nebo za\ninformace, které se vztahují na zkušenosti nabyté v oblasti průmyslové, obchodní nebo\nvědecké;\nb) jakéhokoliv autorského práva k dílu literárnímu, uměleckému nebo vědeckému, včetně\nkinematografických filmů, a filmů nebo pásek pro televizní nebo rozhlasové vysílání.\n4. Ustanovení odstavců 1 a 2 se nepoužijí, jestliže skutečný vlastník licenčních poplatků, který\nje rezidentem jednoho smluvního státu, vykonává v druhém smluvním státě, ve kterém mají\nlicenční poplatky zdroj, svoji činnost prostřednictvím stálé provozovny,",
+      "source_url": "https://e-sbirka.gov.cz/sm/2020/1/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "493b6afe3a398a109087433d6e949b67f73543576d4eaf8685c0268b02974823",
+      "article": 12,
+      "conditions": [
+        {
+          "fact": "royalty_category",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "patent_trademark_design_model_plan_secret_formula_process_equipment_or_knowhow"
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2019-12-20",
+      "evidence_source_ids": [
+        "SRC-23CD4C7925E15101"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 682,
+      "rate": 10.0,
+      "recipient_country": "KR",
+      "review_package_sha256": "6660522ae8df0a2f4ddc4ee81614b820b29e882a12060a99c31ec0573514fc35",
+      "rule_id": "CZ-KR-ROYALTY-CURRENT-2",
+      "source_country": "CZ",
+      "source_excerpt_hash": "32d2818182532e131f2860f82a8b4a6983f55913650313efbf2ddf2fc9f989a9",
+      "source_id": "SRC-23CD4C7925E15101",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "1. Licenční poplatky mající zdroj v jednom smluvním státě a vyplácené rezidentu druhého\nsmluvního státu mohou být zdaněny v tomto druhém státě.\n2. Licenční poplatky mající zdroj v jednom smluvním státě však mohou být rovněž zdaněny v\ntomto státě, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník\nlicenčních poplatků je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne:\na) 10 procent hrubé částky licenčních poplatků uvedených v odstavci 3 písmenu a);\nb) 0 procent hrubé částky licenčních poplatků uvedených v odstavci 3 písmenu b).\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace těchto omezení.\n3. Výraz „licenční poplatky“ použitý v tomto článku označuje platby jakéhokoliv druhu\nobdržené jako náhrada za užití nebo za právo na užití:\na) jakéhokoliv patentu, ochranné známky, návrhu nebo modelu, plánu, tajného vzorce nebo\npostupu, nebo jakéhokoliv průmyslového, obchodního nebo vědeckého zařízení, nebo za\ninformace, které se vztahují na zkušenosti nabyté v oblasti průmyslové, obchodní nebo\nvědecké;\nb) jakéhokoliv autorského práva k dílu literárnímu, uměleckému nebo vědeckému, včetně\nkinematografických filmů, a filmů nebo pásek pro televizní nebo rozhlasové vysílání.\n4. Ustanovení odstavců 1 a 2 se nepoužijí, jestliže skutečný vlastník licenčních poplatků, který\nje rezidentem jednoho smluvního státu, vykonává v druhém smluvním státě, ve kterém mají\nlicenční poplatky zdroj, svoji činnost prostřednictvím stálé provozovny,",
+      "source_url": "https://e-sbirka.gov.cz/sm/2020/1/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    }
+  ],
+  "schema_version": 3,
+  "stage6_production": {
+    "additional_human_review_claimed": false,
+    "package_sha256": "6660522ae8df0a2f4ddc4ee81614b820b29e882a12060a99c31ec0573514fc35",
+    "production_approval": "production_approved",
+    "rule_promotion": "promoted",
+    "source_release": "not_released",
+    "treaty_pair_id": "CZ-KR",
+    "verification_authority": "stage6_governance_policy"
+  }
+}

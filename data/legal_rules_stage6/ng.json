@@ -1,0 +1,302 @@
+{
+  "country_pair": {
+    "recipient_country": "NG",
+    "source_country": "CZ"
+  },
+  "rules": [
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": 36,
+      "conditions": [],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA"
+      ],
+      "income_type": "dividend",
+      "legal_instrument": "domestic_law",
+      "legal_layer": "domestic",
+      "paragraph": "1(b)(1)",
+      "priority": 900,
+      "rate": 15.0,
+      "recipient_country": "NG",
+      "review_package_sha256": "e436c926221b605720e9dbc1359a8b67b21f75caf76513349f05dcd64a48dad2",
+      "rule_id": "CZ-NG-DIVIDEND-DOMESTIC",
+      "source_country": "CZ",
+      "source_excerpt_hash": "aa1100129d4ba33a4efeeb3258bfc621281f11b160890ba7a898e71318bd643d",
+      "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+      "source_representation": "approved_structured_projection",
+      "source_text": "Current Czech domestic withholding tax standard rate represented in the approved Stage 6 package: 15.0%.",
+      "source_url": "https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/1992/586/2026-04-01",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "2e30e5119a7437571d0ac64e2cae97e2d3a65e0207ed45d939772ee76ece85a9",
+      "article": 9,
+      "conditions": [
+        {
+          "fact": "minimum_ownership",
+          "fact_source": "transaction",
+          "operator": ">=",
+          "value": "10"
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "1990-12-02",
+      "evidence_source_ids": [
+        "SRC-3606886A4EB55B88"
+      ],
+      "income_type": "dividend",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 681,
+      "rate": 12.5,
+      "recipient_country": "NG",
+      "review_package_sha256": "e436c926221b605720e9dbc1359a8b67b21f75caf76513349f05dcd64a48dad2",
+      "rule_id": "CZ-NG-DIVIDEND-CURRENT-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "5d38965e05c5d92bcae93601633219b1e44e1b26181277b4bd3340cdacf47144",
+      "source_id": "SRC-3606886A4EB55B88",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "Dividendy\n1. Dividendy plynoucõ od spolecnosti, která je re-\nzidentem v jednom smluvnõm státe, osobe, která je re-\nzidentem ve druhém smluvnõm státe, mohou být zda-\nneny v tomto druhém státe.\n2. Tyto dividendy vsak mohou být zdaneny také\nve smluvnõm státe, v nemz je spolecnost, která je vyplá-\ncõ, rezidentem, a to podle právnõch predpisu tohoto\nstátu, avsak jestlize prõjemce je skutecným vlastnõkem\ndividend, dan takto stanovená nepresáhne:\na) 12,5 % hrubé cástky dividend, jestlize prõjemce\nje spolecnost, která vlastnõ prõmo ci ne-\nprõmo nejméne 10 % podõlu s hlasovacõm\nprávem na spolecnosti vyplácejõcõ divi-\ndendy;\nb) 15 % hrubé cástky dividend ve vsech jiných\nprõpadech.\nTento odstavec se nedotkne zdanenõ zisku spolec-\nnosti, ze kterých jsou dividendy vypláceny.\n3. Ustanovenõ odstavcu 1 a 2 tohoto clánku se ne-\npouzijõ, jestlize skutecný vlastnõk dividend, který je re-\nzidentem v jednom smluvnõm státe, má ve druhém\nsmluvnõm státe, kde je spolecnost vyplácejõcõ dividendy\nrezidentem, stálou provozovnu nebo stálou základnu\ntam umõstenou, a jestlize vlastnictvõ akciõ, na jehoz zá-\nklade se dividendy vyplácejõ, je skutecne spojeno s ob-\nchody uskutecn ovanými touto stálou provozovnou ne-\nbo stálou základnou. V takovém prõpade se pouzijõ\nustanovenõ clánku 7 nebo clánku 13 podle toho, o jaký\nprõpad jde.\n4. Jestlize spolecnost, která je rezidentem v jed-\nnom smluvnõm státe, dosahuje zisky nebo prõjmy\nz druhého smluvnõho státu, nemu ze tento druhý stát\nzdanit dividendy vyplácené spole",
+      "source_url": "https://e-sbirka.gov.cz/sb/1991/339/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "2e30e5119a7437571d0ac64e2cae97e2d3a65e0207ed45d939772ee76ece85a9",
+      "article": 9,
+      "conditions": [
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "1990-12-02",
+      "evidence_source_ids": [
+        "SRC-3606886A4EB55B88"
+      ],
+      "income_type": "dividend",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 692,
+      "rate": 15.0,
+      "recipient_country": "NG",
+      "review_package_sha256": "e436c926221b605720e9dbc1359a8b67b21f75caf76513349f05dcd64a48dad2",
+      "rule_id": "CZ-NG-DIVIDEND-CURRENT-2",
+      "source_country": "CZ",
+      "source_excerpt_hash": "5d38965e05c5d92bcae93601633219b1e44e1b26181277b4bd3340cdacf47144",
+      "source_id": "SRC-3606886A4EB55B88",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "Dividendy\n1. Dividendy plynoucõ od spolecnosti, která je re-\nzidentem v jednom smluvnõm státe, osobe, která je re-\nzidentem ve druhém smluvnõm státe, mohou být zda-\nneny v tomto druhém státe.\n2. Tyto dividendy vsak mohou být zdaneny také\nve smluvnõm státe, v nemz je spolecnost, která je vyplá-\ncõ, rezidentem, a to podle právnõch predpisu tohoto\nstátu, avsak jestlize prõjemce je skutecným vlastnõkem\ndividend, dan takto stanovená nepresáhne:\na) 12,5 % hrubé cástky dividend, jestlize prõjemce\nje spolecnost, která vlastnõ prõmo ci ne-\nprõmo nejméne 10 % podõlu s hlasovacõm\nprávem na spolecnosti vyplácejõcõ divi-\ndendy;\nb) 15 % hrubé cástky dividend ve vsech jiných\nprõpadech.\nTento odstavec se nedotkne zdanenõ zisku spolec-\nnosti, ze kterých jsou dividendy vypláceny.\n3. Ustanovenõ odstavcu 1 a 2 tohoto clánku se ne-\npouzijõ, jestlize skutecný vlastnõk dividend, který je re-\nzidentem v jednom smluvnõm státe, má ve druhém\nsmluvnõm státe, kde je spolecnost vyplácejõcõ dividendy\nrezidentem, stálou provozovnu nebo stálou základnu\ntam umõstenou, a jestlize vlastnictvõ akciõ, na jehoz zá-\nklade se dividendy vyplácejõ, je skutecne spojeno s ob-\nchody uskutecn ovanými touto stálou provozovnou ne-\nbo stálou základnou. V takovém prõpade se pouzijõ\nustanovenõ clánku 7 nebo clánku 13 podle toho, o jaký\nprõpad jde.\n4. Jestlize spolecnost, která je rezidentem v jed-\nnom smluvnõm státe, dosahuje zisky nebo prõjmy\nz druhého smluvnõho státu, nemu ze tento druhý stát\nzdanit dividendy vyplácené spole",
+      "source_url": "https://e-sbirka.gov.cz/sb/1991/339/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": 36,
+      "conditions": [],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "domestic_law",
+      "legal_layer": "domestic",
+      "paragraph": "1(a)(1)",
+      "priority": 900,
+      "rate": 15.0,
+      "recipient_country": "NG",
+      "review_package_sha256": "e436c926221b605720e9dbc1359a8b67b21f75caf76513349f05dcd64a48dad2",
+      "rule_id": "CZ-NG-INTEREST-DOMESTIC",
+      "source_country": "CZ",
+      "source_excerpt_hash": "aa1100129d4ba33a4efeeb3258bfc621281f11b160890ba7a898e71318bd643d",
+      "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+      "source_representation": "approved_structured_projection",
+      "source_text": "Current Czech domestic withholding tax standard rate represented in the approved Stage 6 package: 15.0%.",
+      "source_url": "https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/1992/586/2026-04-01",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "ab1c8d83c7e07db1ed25b265e3545ac4a114ef0342b482ac8cc71829d2eb7f9c",
+      "article": 10,
+      "conditions": [
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "1990-12-02",
+      "evidence_source_ids": [
+        "SRC-3606886A4EB55B88"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 691,
+      "rate": 15.0,
+      "recipient_country": "NG",
+      "review_package_sha256": "e436c926221b605720e9dbc1359a8b67b21f75caf76513349f05dcd64a48dad2",
+      "rule_id": "CZ-NG-INTEREST-CURRENT-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "f82bc53981d198810ce168c02de7ff00a1882c8fcd534e6a08df2cc75e8ee152",
+      "source_id": "SRC-3606886A4EB55B88",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "U roky\n1. U roky plynoucõ z jednoho smluvnõho státu\nosobe, která je rezidentem ve druhém smluvnõm státe,\nmohou být zdaneny v tomto druhém státe.\n2. Takové úroky vsak mohou být zdaneny také\nve smluvnõm státe ve kterém je jejich zdroj, a to podle\nprávnõch predpisu tohoto státu, avsak jestlize prõjemce\nje skutecným vlastnõkem úroku , dan takto ukládaná\nnepresáhne 15 % hrubé cástky úroku .\n3. Bez ohledu na ustanovenõ odstavce 2 tohoto\nclánku, úroky budou osvobozeny od zdanenõ\nve smluvnõm státe, ve kterém je jejich zdroj, jestlize je-\njich prõjemcem a skutecným vlastnõkem je:\na) vláda druhého smluvnõho státu nebo jeho mõstnõ\norgán nebo jakýkoliv úrad ci instituce této vlády\nnebo mõstnõho správnõho útvaru.\nPro úcely tohoto pododstavce se úradem nebo or-\ngánem vlády rozumõ:\ni) v prõpade Č eskoslovenska, Č eskoslovenská\nobchodnõ banka; a\nii) v prõpade Nigérie, U strednõ banka Nigérie;\nb) jakákoliv instituce smluvnõho státu zrõzená vládou\ntohoto státu k financovánõ zahranicnõho obchodu\nza predpokladu, ze pu jcka nebo úver, z nichz úro-\nky plynou, byly schváleny vládami obou smluv-\nnõch státu .\n4. Ustanovenõ odstavcu 1 a 2 tohoto clánku se ne-\npouzijõ, jestlize skutecný vlastnõk úroku , který je rezi-\ndentem v jednom smluvnõm státe, má ve druhém\nsmluvnõm státe, v nemz je osoba platõcõ úroky reziden-\ntem, stálou provozovnu nebo stálou základnu tam\numõstenou a jestlize pohledávka, ze které jsou úroky\nplaceny, je skutecne spojená s obchody provozovaný-\nmi touto stálou provozovnou nebo stá",
+      "source_url": "https://e-sbirka.gov.cz/sb/1991/339/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "ab1c8d83c7e07db1ed25b265e3545ac4a114ef0342b482ac8cc71829d2eb7f9c",
+      "article": 10,
+      "conditions": [
+        {
+          "fact": "recipient_entity_type",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "nigerian_government_local_authority_government_agency_or_central_bank_or_government_created_foreign_trade_finance_institution_with_required_approval"
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "1990-12-02",
+      "evidence_source_ids": [
+        "SRC-3606886A4EB55B88"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 682,
+      "rate": 0.0,
+      "recipient_country": "NG",
+      "review_package_sha256": "e436c926221b605720e9dbc1359a8b67b21f75caf76513349f05dcd64a48dad2",
+      "rule_id": "CZ-NG-INTEREST-CURRENT-2",
+      "source_country": "CZ",
+      "source_excerpt_hash": "f82bc53981d198810ce168c02de7ff00a1882c8fcd534e6a08df2cc75e8ee152",
+      "source_id": "SRC-3606886A4EB55B88",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "U roky\n1. U roky plynoucõ z jednoho smluvnõho státu\nosobe, která je rezidentem ve druhém smluvnõm státe,\nmohou být zdaneny v tomto druhém státe.\n2. Takové úroky vsak mohou být zdaneny také\nve smluvnõm státe ve kterém je jejich zdroj, a to podle\nprávnõch predpisu tohoto státu, avsak jestlize prõjemce\nje skutecným vlastnõkem úroku , dan takto ukládaná\nnepresáhne 15 % hrubé cástky úroku .\n3. Bez ohledu na ustanovenõ odstavce 2 tohoto\nclánku, úroky budou osvobozeny od zdanenõ\nve smluvnõm státe, ve kterém je jejich zdroj, jestlize je-\njich prõjemcem a skutecným vlastnõkem je:\na) vláda druhého smluvnõho státu nebo jeho mõstnõ\norgán nebo jakýkoliv úrad ci instituce této vlády\nnebo mõstnõho správnõho útvaru.\nPro úcely tohoto pododstavce se úradem nebo or-\ngánem vlády rozumõ:\ni) v prõpade Č eskoslovenska, Č eskoslovenská\nobchodnõ banka; a\nii) v prõpade Nigérie, U strednõ banka Nigérie;\nb) jakákoliv instituce smluvnõho státu zrõzená vládou\ntohoto státu k financovánõ zahranicnõho obchodu\nza predpokladu, ze pu jcka nebo úver, z nichz úro-\nky plynou, byly schváleny vládami obou smluv-\nnõch státu .\n4. Ustanovenõ odstavcu 1 a 2 tohoto clánku se ne-\npouzijõ, jestlize skutecný vlastnõk úroku , který je rezi-\ndentem v jednom smluvnõm státe, má ve druhém\nsmluvnõm státe, v nemz je osoba platõcõ úroky reziden-\ntem, stálou provozovnu nebo stálou základnu tam\numõstenou a jestlize pohledávka, ze které jsou úroky\nplaceny, je skutecne spojená s obchody provozovaný-\nmi touto stálou provozovnou nebo stá",
+      "source_url": "https://e-sbirka.gov.cz/sb/1991/339/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": 36,
+      "conditions": [],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "domestic_law",
+      "legal_layer": "domestic",
+      "paragraph": "1(a)(1)",
+      "priority": 900,
+      "rate": 15.0,
+      "recipient_country": "NG",
+      "review_package_sha256": "e436c926221b605720e9dbc1359a8b67b21f75caf76513349f05dcd64a48dad2",
+      "rule_id": "CZ-NG-ROYALTY-DOMESTIC",
+      "source_country": "CZ",
+      "source_excerpt_hash": "aa1100129d4ba33a4efeeb3258bfc621281f11b160890ba7a898e71318bd643d",
+      "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+      "source_representation": "approved_structured_projection",
+      "source_text": "Current Czech domestic withholding tax standard rate represented in the approved Stage 6 package: 15.0%.",
+      "source_url": "https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/1992/586/2026-04-01",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "eda2eeb26fecb40667050f6a31f0c70469997929fcd14c7c1697fa81f8962113",
+      "article": 11,
+      "conditions": [
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "1990-12-02",
+      "evidence_source_ids": [
+        "SRC-3606886A4EB55B88"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 691,
+      "rate": 15.0,
+      "recipient_country": "NG",
+      "review_package_sha256": "e436c926221b605720e9dbc1359a8b67b21f75caf76513349f05dcd64a48dad2",
+      "rule_id": "CZ-NG-ROYALTY-CURRENT-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "f0c01da63d00e17265b411277dcb1eb9c1325138b839713e7bb547c37ffab3b4",
+      "source_id": "SRC-3606886A4EB55B88",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "Licencnõ poplatky\n1. Licencnõ poplatky plynoucõ od osoby, která\nje rezidentem v jednom smluvnõm státe, osobe, která\nje rezidentem ve druhém smluvnõm státe, mohou být\nzdaneny v tomto druhém státe.\n2. Takové licencnõ poplatky mohou být vsak také\nzdaneny ve smluvnõm státe, odkud plynou, a to podle\nprávnõch predpisu tohoto státu, avsak jestlize prõjemce\nje skutecným vlastnõkem licencnõch poplatku , dan tak-\nto ukládaná nepresáhne 10 % z hrubé cástky licencnõch\npoplatku .\n3. Ustanovenõ odstavcu 1 a 2 tohoto clánku se ne-\npouzijõ, jestlize skutecný vlastnõk licencnõch poplatku ,\nkterý je rezidentem v jednom smluvnõm státe,\nmá ve druhém smluvnõm státe, v nemz je osoba platõcõ\nlicencnõ poplatky rezidentem, stálou provozovnu nebo\nstálou základnu tam umõstenou a jestlize právo nebo\nmajetek, které dávajõ vznik licencnõm poplatku m, jsou\nskutecne spojeny s obchody provozovanými touto stá-\nlou provozovnou nebo stálou základnou. V tomto prõ-\npade se pouzijõ ustanovenõ clánku 7 nebo clánku\n13 podle toho, o jaký prõpad jde.\n4. Předpokládá se, ze licencnõ poplatky majõ zdroj\nv jednom smluvnõm státe, jestlize plátcem je tento\nsmluvnõ stát sám, jeho správnõ útvar, mõstnõ orgán to-\nhoto státu nebo osoba, která je rezidentem v tomto stá-\nte. Jestlize vsak osoba, která platõ licencnõ poplatky,\nat' je nebo nenõ rezidentem v nekterém smluvnõm státe,\nmá v jednom smluvnõm státe stálou provozovnu nebo\nstálou základnu, ve spojenõ s nõz vznikla povinnost,\nna jejõmz základe se licencnõ poplatky platõ, a k",
+      "source_url": "https://e-sbirka.gov.cz/sb/1991/339/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    }
+  ],
+  "schema_version": 3,
+  "stage6_production": {
+    "additional_human_review_claimed": false,
+    "package_sha256": "e436c926221b605720e9dbc1359a8b67b21f75caf76513349f05dcd64a48dad2",
+    "production_approval": "production_approved",
+    "rule_promotion": "promoted",
+    "source_release": "not_released",
+    "treaty_pair_id": "CZ-NG",
+    "verification_authority": "stage6_governance_policy"
+  }
+}
