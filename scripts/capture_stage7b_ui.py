@@ -99,10 +99,17 @@ def capture(output_dir: Path) -> dict[str, object]:
             questions = int(
                 page.locator("#question-count").inner_text()
             )
-            if visible_questions != min(questions, 5):
+            if visible_questions != min(questions, 3):
                 raise AssertionError(
-                    "Guided intake progressive disclosure regressed: "
+                    "Guided intake pagination regressed: "
                     f"{visible_questions=} {questions=}."
+                )
+            progress_copy = page.locator(
+                "#questions .wizard-progress"
+            ).inner_text()
+            if "Otázky 1–3" not in progress_copy:
+                raise AssertionError(
+                    f"Unexpected wizard progress: {progress_copy!r}."
                 )
             first_prompt = page.locator(
                 "#questions .question p"
@@ -124,23 +131,29 @@ def capture(output_dir: Path) -> dict[str, object]:
             page.set_viewport_size({"width": 390, "height": 844})
             page.screenshot(path=mobile_path, full_page=True)
 
-            if visible_questions < questions:
-                page.locator("#questions .reveal-button").click()
-                if (
-                    page.locator("#questions .question").count()
-                    != questions
-                ):
-                    raise AssertionError(
-                        "Remaining intake questions were not revealed."
-                    )
-
             beneficial_owner = page.locator(
                 '[data-input-path="facts.beneficial_owner"]'
             )
             beneficial_owner.select_option("true")
-            page.locator(
-                "#questions .question-actions button"
-            ).click()
+
+            if questions > visible_questions:
+                page.locator("#questions .wizard-next").click()
+                if "Krok 2" not in page.locator(
+                    "#questions .wizard-progress"
+                ).inner_text():
+                    raise AssertionError(
+                        "Wizard did not advance to the second page."
+                    )
+                page.locator("#questions .wizard-back").click()
+                beneficial_owner = page.locator(
+                    '[data-input-path="facts.beneficial_owner"]'
+                )
+                if beneficial_owner.input_value() != "true":
+                    raise AssertionError(
+                        "Wizard did not preserve the draft answer."
+                    )
+
+            page.locator("#questions .wizard-save").click()
             page.wait_for_function(
                 """() => !document.querySelector(
                     '[data-input-path="facts.beneficial_owner"]'
