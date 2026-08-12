@@ -8,6 +8,8 @@ from pathlib import Path
 from typing import Any
 
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field, field_validator
 
 from taxtreat.pipeline.release import (
@@ -37,6 +39,7 @@ from taxtreat.services.reporting import (
 
 
 ROOT = Path(__file__).resolve().parent.parent
+WEB_ROOT = ROOT / "app" / "web"
 STAGE6_SOURCE_RELEASE = (
     ROOT
     / "data"
@@ -45,6 +48,11 @@ STAGE6_SOURCE_RELEASE = (
     / "stage6_source_release.json"
 )
 app = FastAPI(title="TaxTreat", version="0.2.0")
+app.mount(
+    "/ui-assets",
+    StaticFiles(directory=WEB_ROOT),
+    name="ui-assets",
+)
 
 
 class CnbExchangeRate(BaseModel):
@@ -108,6 +116,11 @@ def get_db_connection() -> sqlite3.Connection:
 @app.get("/")
 def read_root():
     return {"name": "TaxTreat", "version": app.version}
+
+
+@app.get("/ui", include_in_schema=False)
+def guided_intake_ui():
+    return FileResponse(WEB_ROOT / "index.html")
 
 
 @app.get("/health/live")
