@@ -292,7 +292,7 @@
         const button = document.createElement("button");
         button.type = "button";
         button.className = "secondary wizard-save";
-        button.textContent = "Uložit odpovědi a vyhodnotit";
+        button.textContent = "Aktualizovat posouzení";
         button.addEventListener(
           "click",
           () => submitGuidedAnswers(button, drafts)
