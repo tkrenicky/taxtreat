@@ -18,15 +18,27 @@ from taxtreat.pipeline.release import (
 from taxtreat.engine.source_release_gate_v2 import (
     CanonicalSourceNotReleasedError,
     get_canonical_source_release,
+    load_canonical_source_release_gate,
 )
 from taxtreat.registry.legal_scope import load_partner_registry
 from taxtreat.services.decision import (
     CanonicalAnalysisRequest,
     analyze_transaction,
 )
+from taxtreat.services.reporting import (
+    build_professional_report,
+    render_report_html,
+)
 
 
 ROOT = Path(__file__).resolve().parent.parent
+STAGE6_SOURCE_RELEASE = (
+    ROOT
+    / "data"
+    / "legal_reviews"
+    / "global_cz_outbound"
+    / "stage6_source_release.json"
+)
 app = FastAPI(title="TaxTreat", version="0.2.0")
 
 
@@ -59,13 +71,58 @@ def liveness():
     return {"status": "ok"}
 
 
+def load_stage6_source_release() -> dict[str, Any]:
+    if not STAGE6_SOURCE_RELEASE.is_file():
+        raise RuntimeError(
+            "Stage 6 source-release manifest is missing."
+        )
+
+    payload = json.loads(
+        STAGE6_SOURCE_RELEASE.read_text(encoding="utf-8")
+    )
+    counts = payload.get("counts", {})
+
+    if counts.get("released_packages") != 101:
+        raise RuntimeError(
+            "Stage 6 source release must contain 101 packages."
+        )
+    if counts.get("released_scopes") != 303:
+        raise RuntimeError(
+            "Stage 6 source release must contain 303 scopes."
+        )
+    if not payload.get("dataset_release"):
+        raise RuntimeError(
+            "Stage 6 source release has no dataset identifier."
+        )
+
+    return payload
+
+
+def validate_stage6_runtime_release() -> dict[str, Any]:
+    source_release = load_stage6_source_release()
+    gate = load_canonical_source_release_gate()
+
+    if len(gate) != 101 or not all(
+        release.is_released for release in gate.values()
+    ):
+        raise RuntimeError(
+            "Canonical Stage 6 runtime release is incomplete."
+        )
+
+    return {
+        "dataset_release": source_release["dataset_release"],
+        "released_packages": 101,
+        "released_scopes": 303,
+    }
+
+
 @app.get("/health/ready")
 def readiness():
     try:
-        validate_release(production=True)
+        release = validate_stage6_runtime_release()
     except (OSError, RuntimeError, ValueError) as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
-    return {"status": "ready"}
+    return {"status": "ready", "release": release}
 
 
 @app.get("/health")
@@ -269,11 +326,9 @@ def analyze(payload: AnalysisPayload):
             determinations=payload.determinations,
         )
     )
-    dataset_version = "unreleased"
-    if RELEASE_MANIFEST.exists():
-        dataset_version = json.loads(
-            RELEASE_MANIFEST.read_text(encoding="utf-8")
-        ).get("dataset_version", dataset_version)
+    dataset_version = load_stage6_source_release()[
+        "dataset_release"
+    ]
     return {
         "status": result.status.value,
         "rate": result.rate,
@@ -292,6 +347,20 @@ def analyze(payload: AnalysisPayload):
         "layer_results": result.layer_results,
         "legal_dataset_release": result.dataset_release,
         "dataset_version": dataset_version,
+    }
+
+
+@app.post("/analysis/report")
+def analysis_report(payload: AnalysisPayload):
+    analysis = analyze(payload)
+    request = payload.model_dump(mode="json")
+    report = build_professional_report(
+        request,
+        analysis,
+    )
+    return {
+        "report": report,
+        "html": render_report_html(report),
     }
 
 
@@ -314,3 +383,4 @@ def list_treaties():
         ) from exc
     finally:
         conn.close()
+
