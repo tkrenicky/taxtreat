@@ -102,6 +102,10 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 34px 0; }
 .question { border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
 .question p { margin: 0; font-size: .9rem; line-height: 1.5; }
 .question small { display: block; color: var(--muted); margin-top: 7px; }
+.question-answer { display: block; margin-top: 14px; }
+.question-answer > span { color: var(--forest); }
+.question-answer input, .question-answer select { margin-top: 2px; }
+.question-actions .secondary { margin-top: 4px; }
 .question .tag { display: inline-block; margin-bottom: 8px; padding: 3px 7px; border-radius: 5px; background: var(--mint); color: var(--forest); font-size: .65rem; font-weight: 900; text-transform: uppercase; }
 .question .tag.review { background: var(--amber-bg); color: var(--amber); }
 .document-list { padding: 0; margin: 12px 0 0; list-style: none; display: grid; gap: 8px; }
