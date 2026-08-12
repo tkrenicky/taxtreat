@@ -43,6 +43,16 @@ jobs:
             --cov-branch \
             --cov-fail-under=96 \
             --cov-report=term-missing
+          coverage json -o coverage.json
+          python - <<'PY'
+          import json
+
+          coverage = json.loads(
+              open("coverage.json", encoding="utf-8").read()
+          )["totals"]["percent_covered"]
+          assert coverage >= 96, coverage
+          print(f"Verified total coverage: {coverage:.2f}%")
+          PY
 
       - name: Run Stage 7B browser acceptance
         run: python scripts/capture_stage7b_ui.py artifacts/stage7b
