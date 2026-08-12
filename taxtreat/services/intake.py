@@ -5,127 +5,127 @@ from typing import Any, Mapping
 
 FACT_GUIDANCE: dict[str, dict[str, Any]] = {
     "beneficial_owner": {
-        "prompt": "Is the recipient the beneficial owner of the income?",
-        "why": "Treaty relief commonly depends on beneficial-owner status.",
+        "prompt": "Je příjemce skutečným vlastníkem příjmu?",
+        "why": "Uplatnění smlouvy obvykle závisí na postavení skutečného vlastníka příjmu.",
         "documents": [
-            "Beneficial-owner declaration",
-            "Relevant agreements and payment-flow evidence",
+            "Prohlášení skutečného vlastníka příjmu",
+            "Relevantní smlouvy a doklady o toku platby",
         ],
     },
     "recipient_is_treaty_resident": {
-        "prompt": "Is the recipient resident for treaty purposes?",
-        "why": "Treaty access requires qualifying residence.",
-        "documents": ["Current tax-residence certificate"],
+        "prompt": "Je příjemce daňovým rezidentem pro účely smlouvy?",
+        "why": "Použití smlouvy vyžaduje doložené daňové rezidentství.",
+        "documents": ["Aktuální potvrzení o daňovém rezidentství"],
     },
     "permanent_establishment_connection": {
         "prompt": (
-            "Is the right or asset connected with a permanent establishment "
-            "in the Czech Republic?"
+            "Souvisí právo nebo majetek se stálou provozovnou "
+            "v České republice?"
         ),
-        "why": "A permanent-establishment connection can change the tax path.",
+        "why": "Vazba na stálou provozovnu může změnit daňový režim.",
         "documents": [
-            "Organizational structure",
-            "Permanent-establishment analysis",
+            "Organizační struktura",
+            "Analýza stálé provozovny",
         ],
     },
     "arm_length_amount": {
-        "prompt": "Is the full payment amount arm's length?",
-        "why": "Treaty limits may apply only to an arm's-length amount.",
+        "prompt": "Odpovídá celá výše platby principu tržního odstupu?",
+        "why": "Smluvní limit se může vztahovat pouze na částku odpovídající principu tržního odstupu.",
         "documents": [
-            "Intercompany agreement",
-            "Transfer-pricing support",
+            "Vnitroskupinová smlouva",
+            "Dokumentace k převodním cenám",
         ],
     },
     "payment_is_arm_length_amount": {
-        "prompt": "Is the payment limited to an arm's-length amount?",
-        "why": "Related-party excess may follow a different tax treatment.",
+        "prompt": "Je platba omezena na částku odpovídající principu tržního odstupu?",
+        "why": "Nadlimitní část mezi spojenými osobami může mít odlišný daňový režim.",
         "documents": [
-            "Intercompany agreement",
-            "Transfer-pricing support",
+            "Vnitroskupinová smlouva",
+            "Dokumentace k převodním cenám",
         ],
     },
     "ownership_percent": {
-        "prompt": "What ownership percentage does the recipient hold?",
-        "why": "Ownership thresholds can select a reduced dividend rate.",
+        "prompt": "Jaký procentní podíl příjemce drží?",
+        "why": "Výše podílu může rozhodnout o použití snížené sazby z dividend.",
         "response_type": "decimal_percent",
         "documents": [
-            "Share register",
-            "Ownership chart",
+            "Výpis z evidence podílů nebo akcií",
+            "Schéma vlastnické struktury",
         ],
     },
     "direct_ownership": {
-        "prompt": "Is the qualifying ownership held directly?",
-        "why": "Some relief paths require direct ownership.",
-        "documents": ["Share register", "Ownership chart"],
+        "prompt": "Je kvalifikovaný podíl držen přímo?",
+        "why": "Některá osvobození nebo snížené sazby vyžadují přímé vlastnictví.",
+        "documents": ["Výpis z evidence podílů nebo akcií", "Schéma vlastnické struktury"],
     },
     "direct_or_indirect_voting_ownership": {
-        "prompt": "What direct or indirect voting ownership is held?",
-        "why": "Treaty rate thresholds may use voting ownership.",
+        "prompt": "Jaký přímý nebo nepřímý podíl na hlasovacích právech příjemce drží?",
+        "why": "Smluvní hranice sazby mohou vycházet z podílu na hlasovacích právech.",
         "response_type": "decimal_percent",
-        "documents": ["Share register", "Ownership chart"],
+        "documents": ["Výpis z evidence podílů nebo akcií", "Schéma vlastnické struktury"],
     },
     "holding_period_months": {
-        "prompt": "For how many completed months has the interest been held?",
-        "why": "A minimum holding period may be required.",
+        "prompt": "Kolik celých měsíců je podíl držen?",
+        "why": "Může být vyžadována minimální doba držby.",
         "response_type": "integer",
         "documents": [
-            "Acquisition documents",
-            "Dated share-register extract",
+            "Doklady o nabytí podílu",
+            "Datovaný výpis z evidence podílů nebo akcií",
         ],
     },
     "holding_period_will_reach_months": {
-        "prompt": "Will the required holding period be completed?",
-        "why": "Some relief can depend on subsequent completion.",
-        "documents": ["Acquisition date and expected holding evidence"],
+        "prompt": "Bude požadovaná doba držby splněna?",
+        "why": "Některé zvýhodnění může záviset na následném splnění doby držby.",
+        "documents": ["Doklad o datu nabytí a předpokládané době držby"],
     },
     "recipient_entity_type": {
-        "prompt": "What is the legal form and tax classification of the recipient?",
-        "why": "Entity type can determine eligibility for a relief path.",
+        "prompt": "Jaká je právní forma a daňová klasifikace příjemce?",
+        "why": "Právní forma může rozhodnout o nároku na osvobození nebo sníženou sazbu.",
         "response_type": "text",
         "documents": [
-            "Commercial-register extract",
-            "Constitutional documents",
+            "Výpis z obchodního rejstříku",
+            "Zakladatelské dokumenty",
         ],
     },
     "recipient_is_qualifying_company_form": {
-        "prompt": "Does the recipient have a qualifying company form?",
-        "why": "EU relief requires an eligible legal form.",
+        "prompt": "Má příjemce kvalifikovanou právní formu společnosti?",
+        "why": "Režim EU vyžaduje způsobilou právní formu.",
         "documents": [
-            "Commercial-register extract",
-            "Constitutional documents",
+            "Výpis z obchodního rejstříku",
+            "Zakladatelské dokumenty",
         ],
     },
     "recipient_subject_to_qualifying_corporate_tax": {
         "prompt": (
-            "Is the recipient subject to qualifying corporate tax without "
-            "an elective exemption?"
+            "Podléhá příjemce kvalifikované dani z příjmů právnických osob bez "
+            "možnosti volitelného osvobození?"
         ),
-        "why": "EU relief requires qualifying tax-subject status.",
+        "why": "Režim EU vyžaduje kvalifikované postavení daňového subjektu.",
         "documents": [
-            "Tax-status confirmation",
-            "Residence certificate",
+            "Potvrzení o daňovém postavení",
+            "Potvrzení o daňovém rezidentství",
         ],
     },
     "royalty_category": {
-        "prompt": "What legal category best describes the royalty payment?",
-        "why": "Different royalty categories may follow different provisions.",
+        "prompt": "Která právní kategorie nejlépe vystihuje licenční poplatek?",
+        "why": "Různé kategorie licenčních poplatků mohou podléhat odlišným ustanovením.",
         "response_type": "text",
-        "documents": ["Licence agreement", "Description of licensed rights"],
+        "documents": ["Licenční smlouva", "Popis licencovaných práv"],
     },
     "special_article_11_3_exemption": {
-        "prompt": "Does a specific Article 11(3) interest exemption apply?",
-        "why": "A special treaty exemption may override the general rate.",
-        "documents": ["Loan agreement", "Evidence for the claimed exemption"],
+        "prompt": "Uplatní se zvláštní osvobození úroků podle čl. 11 odst. 3?",
+        "why": "Zvláštní smluvní osvobození může nahradit obecnou sazbu.",
+        "documents": ["Úvěrová nebo zápůjční smlouva", "Doklady k uplatňovanému osvobození"],
     },
 }
 
 DETERMINATION_GUIDANCE = {
     "treaty_ppt_passed": {
-        "prompt": "Has the treaty principal-purpose test been reviewed and passed?",
-        "why": "PPT is a legal determination and is not inferred from client facts.",
+        "prompt": "Byl odborně posouzen a splněn test hlavního účelu podle smlouvy?",
+        "why": "Test hlavního účelu je právní závěr; nelze jej dovodit pouze z tvrzení klienta.",
         "documents": [
-            "Transaction purpose memorandum",
-            "Substance and commercial-rationale evidence",
+            "Memorandum k účelu transakce",
+            "Doklady o ekonomické podstatě a obchodním důvodu",
         ],
     },
 }
@@ -148,10 +148,10 @@ def _question_for_missing_fact(missing: str) -> dict[str, Any]:
             "category": "legal_evidence",
             "client_answerable": False,
             "response_type": "professional_review",
-            "prompt": f"Resolve the legal fact: {_humanize(name)}.",
+            "prompt": f"Ověřte právní skutečnost: {_humanize(name)}.",
             "why": (
-                "This item must come from released legal evidence or "
-                "professional review, not a client assertion."
+                "Tato položka musí vycházet z ověřeného právního podkladu nebo "
+                "odborného posouzení, nikoli pouze z tvrzení klienta."
             ),
             "required_documents": [],
         }
@@ -166,11 +166,11 @@ def _question_for_missing_fact(missing: str) -> dict[str, Any]:
             "response_type": "reviewed_boolean",
             "prompt": guidance.get(
                 "prompt",
-                f"Has {_humanize(name).lower()} been professionally determined?",
+                f"Bylo odborně posouzeno: {_humanize(name).lower()}?",
             ),
             "why": guidance.get(
                 "why",
-                "This is an explicit legal determination, not an inferred fact.",
+                "Jde o výslovný právní závěr, nikoli o automaticky dovozenou skutečnost.",
             ),
             "required_documents": guidance.get("documents", []),
         }
@@ -184,11 +184,11 @@ def _question_for_missing_fact(missing: str) -> dict[str, Any]:
         "response_type": guidance.get("response_type", "boolean"),
         "prompt": guidance.get(
             "prompt",
-            f"Please confirm: {_humanize(name)}.",
+            f"Doplňte prosím: {_humanize(name)}.",
         ),
         "why": guidance.get(
             "why",
-            "The released rule path requires this transaction fact.",
+            "Uvolněné pravidlo vyžaduje tuto skutkovou informaci o transakci.",
         ),
         "required_documents": guidance.get("documents", []),
     }
@@ -218,16 +218,16 @@ def build_intake_plan(
                 "client_answerable": True,
                 "response_type": "structured_cnb_rate",
                 "prompt": (
-                    "Provide payment date, accounting date and CNB rate "
-                    "evidence for the earlier date."
+                    "Doplňte datum úhrady, datum zaúčtování a doložený kurz ČNB "
+                    "pro dřívější z těchto dat."
                 ),
                 "why": (
-                    "Foreign-currency withholding tax must be converted to CZK "
-                    "using the applicable evidenced rate."
+                    "Daň z částky v cizí měně musí být přepočtena na CZK "
+                    "pomocí příslušného doloženého kurzu."
                 ),
                 "required_documents": [
-                    "CNB rate source URL",
-                    "Payment or accounting record",
+                    "Odkaz na zdroj kurzu ČNB",
+                    "Doklad o úhradě nebo zaúčtování",
                 ],
             }
         )
@@ -239,8 +239,8 @@ def build_intake_plan(
             {
                 "input_path": "transaction_amount",
                 "prompt": (
-                    "Add the gross amount and currency to calculate CZK tax "
-                    "after a final rate is available."
+                    "Doplňte hrubou částku a měnu pro výpočet daně v CZK "
+                    "po určení finální sazby."
                 ),
             }
         )
