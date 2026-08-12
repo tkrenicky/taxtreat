@@ -30,13 +30,51 @@ artifacts with:
 
 ```bash
 python scripts/run_stage7a_acceptance.py \
-  --json-output stage7a_acceptance.json \
-  --html-output stage7a_acceptance.html
+  --output-dir artifacts/stage7a
 ```
 
 The command exits non-zero when any case fails. Its SHA-256 is derived from the
 canonicalized case results, so unchanged runtime behavior produces unchanged
 acceptance evidence.
+
+## Optional transaction amount
+
+The analysis request may include:
+
+```json
+{
+  "transaction_amount": {
+    "amount": "100000.55",
+    "currency": "CZK"
+  }
+}
+```
+
+TaxTreat uses decimal arithmetic and a documented two-decimal half-up rounding
+policy. It calculates indicative withholding tax and net payment only when the
+released legal engine returns a `FINAL` rate. A candidate rate or
+`REVIEW_REQUIRED` result never produces a tax amount.
+
+This separation is deliberate: transaction arithmetic must not turn an
+unresolved legal conclusion into a precise-looking payable amount.
+
+## Extensible client facts
+
+The request already accepts structured transaction facts and user
+determinations. Useful future guided inputs include:
+
+- recipient tax residence and entity type;
+- beneficial-owner status and supporting evidence;
+- direct or indirect ownership percentage and holding period;
+- relationship between payer and recipient;
+- permanent-establishment connection;
+- arm's-length limitations;
+- eligibility for an EU directive exemption;
+- payment, record and entitlement dates;
+- available residence, ownership and exemption documents.
+
+These inputs must remain factual or explicitly user-supplied determinations.
+TaxTreat must identify missing evidence and must not invent legal approval.
 
 ## Discovery is not approval
 
