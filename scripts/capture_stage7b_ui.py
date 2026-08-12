@@ -193,7 +193,7 @@ def capture(output_dir: Path) -> dict[str, object]:
                         `[data-input-path="${path}"]`
                     );
                 }""",
-                [first_input_path, questions],
+                arg=[first_input_path, questions],
             )
             questions_after_answer = int(
                 page.locator("#question-count").inner_text()
