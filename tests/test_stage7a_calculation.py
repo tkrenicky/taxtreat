@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import date
 from decimal import Decimal
 
 import pytest
@@ -12,6 +13,7 @@ from taxtreat.engine.legal_rule_engine import (
     LegalDecisionResult,
 )
 from taxtreat.services.calculation import (
+    _parse_date,
     build_withholding_tax_calculation,
 )
 
@@ -289,3 +291,9 @@ def test_api_rejects_invalid_transaction_amount(transaction_amount):
     )
 
     assert response.status_code == 422
+
+
+def test_calculation_accepts_an_already_parsed_event_date():
+    event_date = date(2026, 8, 12)
+
+    assert _parse_date(event_date) is event_date
