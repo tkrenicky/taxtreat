@@ -191,4 +191,6 @@ def test_released_source_handoff_preserves_needs_review(
     assert response["status"] == "needs_review"
     assert response["rate"] is None
     assert response["requires_review"] is True
-    assert response["dataset_version"] == "test-manifest"
+    assert response["dataset_version"] == (
+        "stage6-source-release-2026-08-12.1"
+    )
