@@ -27,9 +27,22 @@ BASE_REQUEST = {
         "currency": "czk",
     },
 }
+EUR_AMOUNT = {
+    "amount": "1000",
+    "currency": "EUR",
+    "payment_date": "2026-08-12",
+    "accounting_date": "2026-08-10",
+    "exchange_rate": {
+        "source": "CNB",
+        "currency": "EUR",
+        "czk_per_unit": "24.85",
+        "effective_date": "2026-08-10",
+        "source_url": "https://www.cnb.cz/example",
+    },
+}
 
 
-def test_czk_tax_is_always_rounded_up_to_whole_crowns():
+def test_czk_tax_is_rounded_down_to_whole_crowns():
     calculation = build_withholding_tax_calculation(
         {"amount": "100000.55", "currency": "czk"},
         decision_status="FINAL",
@@ -37,45 +50,121 @@ def test_czk_tax_is_always_rounded_up_to_whole_crowns():
     )
 
     assert calculation == {
-        "schema_version": 1,
+        "schema_version": 2,
         "status": "CALCULATED",
         "reason": None,
         "gross_amount": "100000.55",
-        "currency": "CZK",
+        "transaction_currency": "CZK",
+        "gross_amount_czk": "100000.55",
+        "tax_currency": "CZK",
         "rate_percent": "15",
-        "estimated_tax_amount": "15001",
-        "estimated_net_amount": "84999.55",
-        "rounding_policy": "czk_whole_crown_up",
+        "withholding_tax_czk": "15000",
+        "net_amount_czk": "85000.55",
+        "rounding_policy": "section_36_3_whole_crown_down",
+        "exchange_rate": None,
     }
 
 
-def test_non_czk_tax_retains_two_decimal_half_up_rounding():
+def test_foreign_amount_uses_cnb_rate_from_earlier_event_date():
     calculation = build_withholding_tax_calculation(
-        {"amount": "100.05", "currency": "EUR"},
+        EUR_AMOUNT,
         decision_status="FINAL",
         rate_percent=Decimal("15"),
     )
 
-    assert calculation["estimated_tax_amount"] == "15.01"
-    assert calculation["estimated_net_amount"] == "85.04"
-    assert calculation["rounding_policy"] == "2_decimal_half_up"
+    assert calculation["gross_amount"] == "1000"
+    assert calculation["transaction_currency"] == "EUR"
+    assert calculation["gross_amount_czk"] == "24850.00"
+    assert calculation["withholding_tax_czk"] == "3727"
+    assert calculation["net_amount_czk"] == "21123.00"
+    assert calculation["tax_currency"] == "CZK"
+    assert calculation["exchange_rate"] == {
+        "source": "CNB",
+        "currency": "EUR",
+        "czk_per_unit": "24.85",
+        "effective_date": "2026-08-10",
+        "payment_date": "2026-08-12",
+        "accounting_date": "2026-08-10",
+        "date_selection": "earlier_of_payment_or_accounting",
+        "source_url": "https://www.cnb.cz/example",
+    }
 
 
 def test_non_final_result_never_calculates_candidate_tax():
     calculation = build_withholding_tax_calculation(
-        {"amount": "50000", "currency": "EUR"},
+        EUR_AMOUNT,
         decision_status="REVIEW_REQUIRED",
         rate_percent=None,
     )
 
     assert calculation["status"] == "NOT_CALCULATED"
     assert calculation["reason"] == "final_rate_unavailable"
-    assert calculation["estimated_tax_amount"] is None
+    assert calculation["withholding_tax_czk"] is None
     assert build_withholding_tax_calculation(
         None,
         decision_status="FINAL",
         rate_percent=15,
     ) is None
+
+
+@pytest.mark.parametrize(
+    ("amount", "reason"),
+    [
+        (
+            {"amount": "1000", "currency": "EUR"},
+            "exchange_rate_reference_dates_incomplete",
+        ),
+        (
+            {
+                "amount": "1000",
+                "currency": "EUR",
+                "payment_date": "2026-08-12",
+                "accounting_date": "2026-08-10",
+            },
+            "exchange_rate_evidence_missing",
+        ),
+        (
+            {
+                **EUR_AMOUNT,
+                "exchange_rate": {
+                    **EUR_AMOUNT["exchange_rate"],
+                    "effective_date": "2026-08-12",
+                },
+            },
+            "exchange_rate_date_mismatch",
+        ),
+        (
+            {
+                **EUR_AMOUNT,
+                "exchange_rate": {
+                    **EUR_AMOUNT["exchange_rate"],
+                    "source": "ECB",
+                },
+            },
+            "exchange_rate_source_not_cnb",
+        ),
+        (
+            {
+                **EUR_AMOUNT,
+                "exchange_rate": {
+                    **EUR_AMOUNT["exchange_rate"],
+                    "currency": "USD",
+                },
+            },
+            "exchange_rate_currency_mismatch",
+        ),
+    ],
+)
+def test_foreign_currency_conversion_fails_closed(amount, reason):
+    calculation = build_withholding_tax_calculation(
+        amount,
+        decision_status="FINAL",
+        rate_percent=15,
+    )
+
+    assert calculation["status"] == "NOT_CALCULATED"
+    assert calculation["reason"] == reason
+    assert calculation["withholding_tax_czk"] is None
 
 
 @pytest.mark.parametrize("amount", ["invalid", "0", "-1"])
@@ -98,17 +187,37 @@ def test_invalid_final_rate_fails_closed(rate):
         )
 
 
+@pytest.mark.parametrize("rate", ["invalid", "0", "-1"])
+def test_invalid_direct_exchange_rate_fails_closed(rate):
+    amount = {
+        **EUR_AMOUNT,
+        "exchange_rate": {
+            **EUR_AMOUNT["exchange_rate"],
+            "czk_per_unit": rate,
+        },
+    }
+
+    with pytest.raises(ValueError):
+        build_withholding_tax_calculation(
+            amount,
+            decision_status="FINAL",
+            rate_percent=15,
+        )
+
+
 def test_api_normalizes_currency_but_does_not_calculate_review_rate():
     response = client.post("/analysis", json=BASE_REQUEST)
 
     assert response.status_code == 200
     calculation = response.json()["withholding_tax_calculation"]
     assert calculation["status"] == "NOT_CALCULATED"
-    assert calculation["currency"] == "CZK"
-    assert calculation["estimated_tax_amount"] is None
+    assert calculation["transaction_currency"] == "CZK"
+    assert calculation["withholding_tax_czk"] is None
 
 
-def test_api_calculates_only_mocked_final_released_result(monkeypatch):
+def test_api_calculates_foreign_amount_only_from_mocked_final_result(
+    monkeypatch,
+):
     monkeypatch.setattr(
         main,
         "analyze_transaction",
@@ -121,8 +230,12 @@ def test_api_calculates_only_mocked_final_released_result(monkeypatch):
             dataset_release="stage6-production-rules-2026-08-12.1",
         ),
     )
+    request = {
+        **BASE_REQUEST,
+        "transaction_amount": EUR_AMOUNT,
+    }
 
-    response = client.post("/analysis/report", json=BASE_REQUEST)
+    response = client.post("/analysis/report", json=request)
 
     assert response.status_code == 200
     payload = response.json()
@@ -130,17 +243,20 @@ def test_api_calculates_only_mocked_final_released_result(monkeypatch):
         "withholding_tax_calculation"
     ]
     assert calculation["status"] == "CALCULATED"
-    assert calculation["estimated_tax_amount"] == "10001"
-    assert calculation["estimated_net_amount"] == "89999.55"
-    assert "Estimated withholding tax:" in payload["html"]
-    assert "10001" in payload["html"]
+    assert calculation["gross_amount_czk"] == "24850.00"
+    assert calculation["withholding_tax_czk"] == "2485"
+    assert calculation["net_amount_czk"] == "22365.00"
+    assert calculation["exchange_rate"]["effective_date"] == "2026-08-10"
+    assert "Withholding tax:" in payload["html"]
+    assert "2485" in payload["html"]
+    assert "1 EUR = 24.85 CZK" in payload["html"]
 
 
-def test_report_explains_why_review_amount_is_not_calculated():
+def test_report_exposes_non_calculation_reason():
     response = client.post("/analysis/report", json=BASE_REQUEST)
 
     assert response.status_code == 200
-    assert "final released rate is unavailable" in response.json()["html"]
+    assert "final_rate_unavailable" in response.json()["html"]
 
 
 @pytest.mark.parametrize(
@@ -150,6 +266,20 @@ def test_report_explains_why_review_amount_is_not_calculated():
         {"amount": "-1", "currency": "CZK"},
         {"amount": "100", "currency": "CZ"},
         {"amount": "100", "currency": "12A"},
+        {
+            **EUR_AMOUNT,
+            "exchange_rate": {
+                **EUR_AMOUNT["exchange_rate"],
+                "source": "ECB",
+            },
+        },
+        {
+            **EUR_AMOUNT,
+            "exchange_rate": {
+                **EUR_AMOUNT["exchange_rate"],
+                "source_url": "http://invalid.example",
+            },
+        },
     ],
 )
 def test_api_rejects_invalid_transaction_amount(transaction_amount):
