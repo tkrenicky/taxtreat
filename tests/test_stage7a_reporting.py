@@ -210,3 +210,43 @@ def test_runtime_readiness_rejects_incomplete_gate(monkeypatch):
         assert "incomplete" in str(exc)
     else:
         raise AssertionError("Incomplete gate must fail closed.")
+
+
+def test_calculated_czk_report_omits_exchange_rate_details():
+    report = {
+        "report_id": "report-czk",
+        "generated_at": "2026-08-12T00:00:00Z",
+        "legal_data_cutoff": "2026-08-12",
+        "scope": {
+            "source_country": "CZ",
+            "recipient_country": "AT",
+            "income_type": "dividend",
+            "transaction_date": "2026-08-12",
+        },
+        "result": {
+            "status": "FINAL",
+            "rate": 15,
+            "candidate_rate": 15,
+            "withholding_tax_calculation": {
+                "status": "CALCULATED",
+                "gross_amount": "1000",
+                "transaction_currency": "CZK",
+                "gross_amount_czk": "1000.00",
+                "withholding_tax_czk": "150",
+                "net_amount_czk": "850.00",
+                "rounding_policy": "down_to_whole_czk",
+                "exchange_rate": None,
+            },
+        },
+        "risk_assessment": "Final released rule.",
+        "missing_facts": [],
+        "official_sources": [],
+        "legal_dataset_release": "rules",
+        "source_release": "sources",
+        "disclaimer": DISCLAIMER,
+    }
+
+    html = render_report_html(report)
+
+    assert "Withholding tax:</strong> 150 CZK" in html
+    assert "CNB rate:" not in html
