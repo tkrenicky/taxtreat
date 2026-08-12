@@ -24,6 +24,11 @@ def test_guided_intake_ui_is_served_without_changing_api_root():
     assert 'id="documents"' in html
     assert 'id="calculation-card"' in html
     assert 'id="answer-error"' in html
+    assert 'class="sidebar"' in html
+    assert "Klientský portál" in html
+    assert "Moje případy" in html
+    assert "Důležité upozornění" in html
+    assert "Stage 6 production rules" not in html
     assert "nikoli daňové poradenství" in html
 
 
@@ -39,6 +44,8 @@ def test_guided_intake_assets_are_local_and_accessible():
     assert "https://cdn" not in html
     assert "@media (max-width: 580px)" in css.text
     assert "--forest:" in css.text
+    assert "grid-template-columns: 232px" in css.text
+    assert "linear-gradient(180deg, #112744" in css.text
 
 
 def test_ui_calls_canonical_endpoints_and_uses_safe_dom_rendering():
