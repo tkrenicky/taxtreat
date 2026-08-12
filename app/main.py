@@ -3,11 +3,12 @@ from __future__ import annotations
 import json
 import sqlite3
 from datetime import date
+from decimal import Decimal
 from pathlib import Path
 from typing import Any
 
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 from taxtreat.pipeline.release import (
     LEGAL_REGISTRY,
@@ -18,16 +19,69 @@ from taxtreat.pipeline.release import (
 from taxtreat.engine.source_release_gate_v2 import (
     CanonicalSourceNotReleasedError,
     get_canonical_source_release,
+    load_canonical_source_release_gate,
 )
 from taxtreat.registry.legal_scope import load_partner_registry
+from taxtreat.services.calculation import (
+    build_withholding_tax_calculation,
+)
 from taxtreat.services.decision import (
     CanonicalAnalysisRequest,
     analyze_transaction,
 )
+from taxtreat.services.reporting import (
+    build_professional_report,
+    render_report_html,
+)
 
 
 ROOT = Path(__file__).resolve().parent.parent
+STAGE6_SOURCE_RELEASE = (
+    ROOT
+    / "data"
+    / "legal_reviews"
+    / "global_cz_outbound"
+    / "stage6_source_release.json"
+)
 app = FastAPI(title="TaxTreat", version="0.2.0")
+
+
+class CnbExchangeRate(BaseModel):
+    source: str = Field(pattern=r"^(?i:CNB)$")
+    currency: str = Field(pattern=r"^[A-Za-z]{3}$")
+    czk_per_unit: Decimal = Field(
+        gt=0,
+        max_digits=30,
+        decimal_places=12,
+    )
+    effective_date: date
+    source_url: str = Field(pattern=r"^https://")
+
+    @field_validator("source", "currency")
+    @classmethod
+    def normalize_codes(cls, value: str) -> str:
+        return value.upper()
+
+
+class TransactionAmount(BaseModel):
+    amount: Decimal = Field(
+        gt=0,
+        max_digits=30,
+        decimal_places=8,
+    )
+    currency: str = Field(
+        min_length=3,
+        max_length=3,
+        pattern=r"^[A-Za-z]{3}$",
+    )
+    payment_date: date | None = None
+    accounting_date: date | None = None
+    exchange_rate: CnbExchangeRate | None = None
+
+    @field_validator("currency")
+    @classmethod
+    def normalize_currency(cls, value: str) -> str:
+        return value.upper()
 
 
 class AnalysisPayload(BaseModel):
@@ -37,6 +91,7 @@ class AnalysisPayload(BaseModel):
     transaction_date: date
     facts: dict[str, Any] = Field(default_factory=dict)
     determinations: dict[str, Any] = Field(default_factory=dict)
+    transaction_amount: TransactionAmount | None = None
 
 
 def get_db_connection() -> sqlite3.Connection:
@@ -59,13 +114,58 @@ def liveness():
     return {"status": "ok"}
 
 
+def load_stage6_source_release() -> dict[str, Any]:
+    if not STAGE6_SOURCE_RELEASE.is_file():
+        raise RuntimeError(
+            "Stage 6 source-release manifest is missing."
+        )
+
+    payload = json.loads(
+        STAGE6_SOURCE_RELEASE.read_text(encoding="utf-8")
+    )
+    counts = payload.get("counts", {})
+
+    if counts.get("released_packages") != 101:
+        raise RuntimeError(
+            "Stage 6 source release must contain 101 packages."
+        )
+    if counts.get("released_scopes") != 303:
+        raise RuntimeError(
+            "Stage 6 source release must contain 303 scopes."
+        )
+    if not payload.get("dataset_release"):
+        raise RuntimeError(
+            "Stage 6 source release has no dataset identifier."
+        )
+
+    return payload
+
+
+def validate_stage6_runtime_release() -> dict[str, Any]:
+    source_release = load_stage6_source_release()
+    gate = load_canonical_source_release_gate()
+
+    if len(gate) != 101 or not all(
+        release.is_released for release in gate.values()
+    ):
+        raise RuntimeError(
+            "Canonical Stage 6 runtime release is incomplete."
+        )
+
+    return {
+        "dataset_release": source_release["dataset_release"],
+        "released_packages": 101,
+        "released_scopes": 303,
+    }
+
+
 @app.get("/health/ready")
 def readiness():
     try:
-        validate_release(production=True)
+        release = validate_stage6_runtime_release()
     except (OSError, RuntimeError, ValueError) as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
-    return {"status": "ready"}
+    return {"status": "ready", "release": release}
 
 
 @app.get("/health")
@@ -269,12 +369,10 @@ def analyze(payload: AnalysisPayload):
             determinations=payload.determinations,
         )
     )
-    dataset_version = "unreleased"
-    if RELEASE_MANIFEST.exists():
-        dataset_version = json.loads(
-            RELEASE_MANIFEST.read_text(encoding="utf-8")
-        ).get("dataset_version", dataset_version)
-    return {
+    dataset_version = load_stage6_source_release()[
+        "dataset_release"
+    ]
+    analysis = {
         "status": result.status.value,
         "rate": result.rate,
         "candidate_rate": result.candidate_rate,
@@ -292,6 +390,33 @@ def analyze(payload: AnalysisPayload):
         "layer_results": result.layer_results,
         "legal_dataset_release": result.dataset_release,
         "dataset_version": dataset_version,
+    }
+    amount = (
+        payload.transaction_amount.model_dump(mode="json")
+        if payload.transaction_amount is not None
+        else None
+    )
+    analysis["withholding_tax_calculation"] = (
+        build_withholding_tax_calculation(
+            amount,
+            decision_status=result.status.value,
+            rate_percent=result.rate,
+        )
+    )
+    return analysis
+
+
+@app.post("/analysis/report")
+def analysis_report(payload: AnalysisPayload):
+    analysis = analyze(payload)
+    request = payload.model_dump(mode="json")
+    report = build_professional_report(
+        request,
+        analysis,
+    )
+    return {
+        "report": report,
+        "html": render_report_html(report),
     }
 
 
@@ -314,3 +439,4 @@ def list_treaties():
         ) from exc
     finally:
         conn.close()
+
