@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
+from decimal import Decimal, InvalidOperation, ROUND_CEILING, ROUND_HALF_UP
 from typing import Any, Mapping
 
 
@@ -23,8 +23,20 @@ def build_withholding_tax_calculation(
     if transaction_amount is None:
         return None
 
-    amount = Decimal(str(transaction_amount["amount"]))
+    try:
+        amount = Decimal(str(transaction_amount["amount"]))
+    except InvalidOperation as exc:
+        raise ValueError("Transaction amount must be a decimal number.") from exc
+    if amount <= 0:
+        raise ValueError("Transaction amount must be greater than zero.")
+
     currency = str(transaction_amount["currency"]).upper()
+    czk_rounding = currency == "CZK"
+    rounding_policy = (
+        "czk_whole_crown_up"
+        if czk_rounding
+        else "2_decimal_half_up"
+    )
     base = {
         "schema_version": CALCULATION_VERSION,
         "gross_amount": _decimal_string(amount),
@@ -32,7 +44,7 @@ def build_withholding_tax_calculation(
         "rate_percent": None,
         "estimated_tax_amount": None,
         "estimated_net_amount": None,
-        "rounding_policy": "2_decimal_half_up",
+        "rounding_policy": rounding_policy,
     }
 
     if decision_status != "FINAL" or rate_percent is None:
@@ -51,8 +63,8 @@ def build_withholding_tax_calculation(
         raise ValueError("Final withholding-tax rate must be between 0 and 100.")
 
     tax = (amount * rate / Decimal("100")).quantize(
-        MONEY_QUANTUM,
-        rounding=ROUND_HALF_UP,
+        Decimal("1") if czk_rounding else MONEY_QUANTUM,
+        rounding=ROUND_CEILING if czk_rounding else ROUND_HALF_UP,
     )
     net = (amount - tax).quantize(
         MONEY_QUANTUM,
