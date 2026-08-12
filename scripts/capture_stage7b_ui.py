@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-import socket
 import subprocess
 import sys
 import time
@@ -94,10 +93,23 @@ def capture(output_dir: Path) -> dict[str, object]:
                 raise AssertionError(
                     f"Expected REVIEW_REQUIRED, received {status!r}."
                 )
-            questions = page.locator("#questions .question").count()
-            if questions < 1:
+            visible_questions = page.locator(
+                "#questions .question"
+            ).count()
+            questions = int(
+                page.locator("#question-count").inner_text()
+            )
+            if visible_questions != min(questions, 5):
                 raise AssertionError(
-                    "Guided intake did not render any missing-fact question."
+                    "Guided intake progressive disclosure regressed: "
+                    f"{visible_questions=} {questions=}."
+                )
+            first_prompt = page.locator(
+                "#questions .question p"
+            ).first.inner_text()
+            if "skutečným vlastníkem" not in first_prompt:
+                raise AssertionError(
+                    f"Expected Czech intake copy, received {first_prompt!r}."
                 )
             if page.locator("#form-error").is_visible():
                 raise AssertionError(
@@ -111,6 +123,16 @@ def capture(output_dir: Path) -> dict[str, object]:
             page.screenshot(path=desktop_path, full_page=True)
             page.set_viewport_size({"width": 390, "height": 844})
             page.screenshot(path=mobile_path, full_page=True)
+
+            if visible_questions < questions:
+                page.locator("#questions .reveal-button").click()
+                if (
+                    page.locator("#questions .question").count()
+                    != questions
+                ):
+                    raise AssertionError(
+                        "Remaining intake questions were not revealed."
+                    )
             browser.close()
     finally:
         process.terminate()
@@ -126,6 +148,7 @@ def capture(output_dir: Path) -> dict[str, object]:
         "scenario": "CZ-AT dividend guided intake",
         "analysis_status": "REVIEW_REQUIRED",
         "question_count": questions,
+        "initially_visible_questions": visible_questions,
         "screenshots": [
             {
                 "name": desktop_path.name,
