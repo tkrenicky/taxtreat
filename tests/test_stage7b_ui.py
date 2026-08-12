@@ -27,8 +27,13 @@ def test_guided_intake_ui_is_served_without_changing_api_root():
     assert 'id="answer-error"' in html
     assert 'class="sidebar"' in html
     assert "Klientský portál" in html
-    assert "Moje případy" in html
-    assert "Důležité upozornění" in html
+    assert "Moje případy" not in html
+    assert "Doklady <small>Připravujeme" not in html
+    assert 'href="/docs"' not in html
+    assert 'id="napoveda"' in html
+    assert "Metodika a nápověda" in html
+    assert "Rozsah výstupu" in html
+    assert "Posouzení české srážkové daně" in html
     assert "Stage 6 production rules" not in html
     assert "nikoli daňové poradenství" in html
 
@@ -49,6 +54,8 @@ def test_guided_intake_assets_are_local_and_accessible():
     assert "linear-gradient(180deg, #112744" in css.text
     assert ".wizard-progress" in css.text
     assert ".wizard-navigation" in css.text
+    assert ".help-section" in css.text
+    assert ".help-grid" in css.text
 
 
 def test_ui_calls_canonical_endpoints_and_uses_safe_dom_rendering():
@@ -62,13 +69,16 @@ def test_ui_calls_canonical_endpoints_and_uses_safe_dom_rendering():
     assert "exchange_rate" in javascript
     assert "payment_date" in javascript
     assert "accounting_date" in javascript
-    assert "Zobrazit dalších" in javascript
+    assert "Zobrazit zbývající podklady" in javascript
     assert "pageSize = 3" in javascript
     assert "wizard-progress" in javascript
-    assert "Další otázky" in javascript
+    assert "Další položky" in javascript
     assert 'startsWith("facts.")' in javascript
     assert "payload.facts[factName] = answer" in javascript
-    assert "Uložit odpovědi a vyhodnotit" in javascript
+    assert "Aktualizovat posouzení" in javascript
+    assert "VYŽADUJE DOPLNĚNÍ" in javascript
+    assert "badge.textContent = statusBadgeCopy" in javascript
+    assert "REVIEW_REQUIRED" in javascript
     assert 'postJson("/analysis/intake", nextPayload)' in javascript
 
 
