@@ -107,6 +107,13 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 34px 0; }
 .document-list { padding: 0; margin: 12px 0 0; list-style: none; display: grid; gap: 8px; }
 .document-list li { padding-left: 26px; position: relative; color: #43504b; font-size: .88rem; }
 .document-list li::before { content: "□"; position: absolute; left: 2px; color: var(--forest-2); font-size: 1.1rem; }
+.reveal-button {
+  width: 100%; border: 1px solid #c9ddd3; border-radius: 10px; padding: 11px 14px;
+  color: var(--forest); background: #f5faf7; font-weight: 800;
+}
+.reveal-button:hover { background: var(--mint); }
+.reveal-item { padding-left: 0 !important; }
+.reveal-item::before { content: none !important; }
 
 footer { border-top: 1px solid var(--line); padding: 24px clamp(20px,5vw,72px); display: flex; justify-content: space-between; gap: 20px; color: var(--muted); font-size: .78rem; background: white; }
 footer a { color: var(--forest-2); }
