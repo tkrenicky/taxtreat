@@ -19,8 +19,8 @@ def test_transaction_fact_question_is_actionable_and_documented():
     assert question["category"] == "transaction_fact"
     assert question["client_answerable"] is True
     assert question["response_type"] == "boolean"
-    assert "beneficial owner" in question["prompt"]
-    assert "Beneficial-owner declaration" in question[
+    assert "skutečným vlastníkem" in question["prompt"]
+    assert "Prohlášení skutečného vlastníka příjmu" in question[
         "required_documents"
     ]
 
@@ -32,7 +32,7 @@ def test_numeric_and_fallback_transaction_questions():
     assert ownership["response_type"] == "decimal_percent"
     assert ownership["input_path"] == "facts.ownership_percent"
     assert unknown["response_type"] == "boolean"
-    assert unknown["prompt"] == "Please confirm: New future fact."
+    assert unknown["prompt"] == "Doplňte prosím: New future fact."
     assert unknown["required_documents"] == []
 
 
@@ -54,7 +54,7 @@ def test_determination_and_legal_fact_are_not_client_assertions():
     assert determination["response_type"] == "reviewed_boolean"
     assert determination["required_documents"]
     assert unknown_determination["client_answerable"] is False
-    assert "professionally determined" in unknown_determination["prompt"]
+    assert "odborně posouzeno" in unknown_determination["prompt"]
     assert legal_fact["input_path"] is None
     assert legal_fact["category"] == "legal_evidence"
     assert legal_fact["response_type"] == "professional_review"
@@ -78,7 +78,7 @@ def test_plan_combines_missing_facts_documents_and_optional_amount():
     assert plan["optional_inputs"][0]["input_path"] == (
         "transaction_amount"
     )
-    assert "Beneficial-owner declaration" in plan[
+    assert "Prohlášení skutečného vlastníka příjmu" in plan[
         "required_documents"
     ]
     assert plan["semantics"] == {
@@ -106,7 +106,7 @@ def test_plan_requests_complete_cnb_evidence_for_fx_failure():
     fx = plan["questions"][0]
     assert fx["category"] == "exchange_rate_evidence"
     assert fx["response_type"] == "structured_cnb_rate"
-    assert "CNB rate source URL" in fx["required_documents"]
+    assert "Odkaz na zdroj kurzu ČNB" in fx["required_documents"]
 
 
 def test_final_rate_unavailable_does_not_duplicate_legal_questions():
