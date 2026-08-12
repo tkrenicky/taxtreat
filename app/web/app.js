@@ -69,34 +69,70 @@
     return copies[status] || ["Posouzení vyžaduje kontrolu", "Zkontrolujte zobrazené otázky a doklady."];
   }
 
+  function revealButton(label, onClick) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "reveal-button";
+    button.textContent = label;
+    button.addEventListener("click", onClick, { once: true });
+    return button;
+  }
+
   function renderQuestions(questions) {
     const root = document.querySelector("#questions");
-    root.replaceChildren();
-    questions.forEach((question) => {
-      const card = document.createElement("article");
-      card.className = "question";
-      const tag = document.createElement("span");
-      tag.className = "tag" + (question.client_answerable ? "" : " review");
-      tag.textContent = question.client_answerable ? "Údaj klienta" : "Odborné posouzení";
-      const prompt = document.createElement("p");
-      prompt.textContent = question.prompt;
-      const why = document.createElement("small");
-      why.textContent = question.why;
-      card.append(tag, prompt, why);
-      root.append(card);
-    });
+    const initialLimit = 5;
+
+    function render(limit) {
+      root.replaceChildren();
+      questions.slice(0, limit).forEach((question) => {
+        const card = document.createElement("article");
+        card.className = "question";
+        const tag = document.createElement("span");
+        tag.className = "tag" + (question.client_answerable ? "" : " review");
+        tag.textContent = question.client_answerable ? "Údaj klienta" : "Odborné posouzení";
+        const prompt = document.createElement("p");
+        prompt.textContent = question.prompt;
+        const why = document.createElement("small");
+        why.textContent = question.why;
+        card.append(tag, prompt, why);
+        root.append(card);
+      });
+      if (limit < questions.length) {
+        root.append(revealButton(
+          `Zobrazit dalších ${questions.length - limit} otázek`,
+          () => render(questions.length)
+        ));
+      }
+    }
+
+    render(initialLimit);
     document.querySelector("#question-count").textContent = questions.length;
   }
 
   function renderDocuments(documents) {
     const root = document.querySelector("#documents");
-    root.replaceChildren();
+    const initialLimit = 6;
     const values = documents.length ? documents : ["V této fázi nejsou vyžádány další doklady."];
-    values.forEach((documentName) => {
-      const item = document.createElement("li");
-      item.textContent = documentName;
-      root.append(item);
-    });
+
+    function render(limit) {
+      root.replaceChildren();
+      values.slice(0, limit).forEach((documentName) => {
+        const item = document.createElement("li");
+        item.textContent = documentName;
+        root.append(item);
+      });
+      if (limit < values.length) {
+        const item = document.createElement("li");
+        item.className = "reveal-item";
+        item.append(revealButton(
+          `Zobrazit dalších ${values.length - limit} dokladů`,
+          () => render(values.length)
+        ));
+        root.append(item);
+      }
+    }
+
+    render(initialLimit);
     document.querySelector("#document-count").textContent = documents.length;
   }
 
