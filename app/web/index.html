@@ -18,13 +18,11 @@
       </a>
       <nav>
         <a class="active" href="/ui"><span aria-hidden="true">⌂</span> Nové posouzení</a>
-        <span class="disabled"><span aria-hidden="true">▤</span> Moje případy <small>Připravujeme</small></span>
-        <span class="disabled"><span aria-hidden="true">□</span> Doklady <small>Připravujeme</small></span>
-        <a href="/docs"><span aria-hidden="true">?</span> Nápověda</a>
+        <a href="#napoveda"><span aria-hidden="true">?</span> Metodika a nápověda</a>
       </nav>
       <div class="sidebar-assurance">
-        <strong>Bezpečný postup</strong>
-        <p>TaxTreat zobrazí jen údaje potřebné pro váš případ. Právní závěry potvrzuje odborník.</p>
+        <strong>Kontrolovaný postup</strong>
+        <p>Výstup vychází z uvolněných pravidel a doložených skutkových okolností. Neuzavřené právní otázky podléhají odbornému posouzení.</p>
       </div>
     </aside>
 
@@ -36,7 +34,7 @@
         </div>
         <div class="top-actions">
           <span>CS</span>
-          <a href="/docs">Nápověda</a>
+          <a href="#napoveda">Nápověda</a>
         </div>
       </header>
 
@@ -44,17 +42,17 @@
         <section class="notice" aria-label="Důležité upozornění">
           <span class="notice-icon" aria-hidden="true">◇</span>
           <div>
-            <strong>Důležité upozornění</strong>
-            <p>Výsledek má informační charakter a nenahrazuje daňové poradenství.
-               Nevyřešené právní otázky zůstanou označené k odbornému posouzení.</p>
+            <strong>Rozsah výstupu</strong>
+            <p>Výstup představuje předběžné posouzení na základě zadaných údajů a dostupných právních pravidel.
+               Neuzavřené právní otázky jsou výslovně označeny k odbornému posouzení.</p>
           </div>
         </section>
 
         <section class="hero">
       <p class="eyebrow">NOVÉ POSOUZENÍ</p>
-      <h1>Od transakce k doloženému výsledku.</h1>
-      <p>Vyplňte základní údaje. TaxTreat zobrazí pouze otázky a doklady,
-         které skutečně chybí pro danou právní cestu.</p>
+      <h1>Posouzení české srážkové daně</h1>
+      <p>Zadejte parametry transakce. TaxTreat identifikuje použitelnou sazbu,
+         chybějící skutkové okolnosti a podklady nezbytné k uzavření posouzení.</p>
     </section>
 
     <div class="workspace">
@@ -107,7 +105,7 @@
             <p class="step-label">Krok 2</p>
             <h2>Částka a měna</h2>
           </div>
-          <span class="optional">volitelné do finálního výpočtu</span>
+          <span class="optional">volitelné pro výpočet daně</span>
         </div>
 
         <div class="amount-row">
@@ -144,25 +142,25 @@
 
         <div id="form-error" class="message error" role="alert" hidden></div>
         <button class="primary" type="submit">
-          Zjistit potřebné informace
+          Vyhodnotit transakci
           <span aria-hidden="true">→</span>
         </button>
-        <p class="fine-print">Odpovědi klienta nejsou právním schválením.
-          Nevyřešené položky zůstávají označené k odbornému posouzení.</p>
+        <p class="fine-print">Zadané skutkové údaje nepředstavují právní závěr.
+          Neuzavřené právní otázky zůstávají označeny k odbornému posouzení.</p>
       </form>
 
       <aside class="panel result-panel" aria-live="polite">
         <div id="empty-state" class="empty-state">
           <div class="empty-icon">✓</div>
-          <h2>Výsledek se objeví zde</h2>
-          <p>Po odeslání zobrazíme stav, doplňující otázky, potřebné doklady
-             a případný výpočet daně v CZK.</p>
+          <h2>Výsledek posouzení</h2>
+          <p>Po vyhodnocení se zobrazí stav posouzení, rozhodné skutkové okolnosti,
+             požadované podklady a případný výpočet daně v CZK.</p>
         </div>
 
         <div id="result" hidden>
           <div class="result-header">
             <div>
-              <p class="step-label">AKTUÁLNÍ STAV</p>
+              <p class="step-label">STAV POSOUZENÍ</p>
               <h2 id="status-title">—</h2>
             </div>
             <span id="status-badge" class="status-badge">—</span>
@@ -170,7 +168,7 @@
           <p id="status-description" class="status-description"></p>
 
           <section id="calculation-card" class="calculation" hidden>
-            <p class="step-label">ORIENTAČNÍ VÝPOČET</p>
+            <p class="step-label">VÝPOČET V CZK</p>
             <dl>
               <div><dt>Základ v CZK</dt><dd id="gross-czk">—</dd></div>
               <div class="tax-row"><dt>Srážková daň</dt><dd id="tax-czk">—</dd></div>
@@ -180,7 +178,7 @@
 
           <section>
             <div class="list-heading">
-              <h3>Doplňující otázky</h3>
+              <h3>Doplňující skutkové okolnosti</h3>
               <span id="question-count">0</span>
             </div>
             <div id="questions" class="questions"></div>
@@ -189,25 +187,53 @@
 
           <details class="documents-panel">
             <summary>
-              <span>Potřebné doklady</span>
+              <span>Požadované podklady</span>
               <span id="document-count">0</span>
             </summary>
-            <p>Doklady jsou oddělené od otázek, abyste se mohli soustředit vždy jen na jeden krok.</p>
+            <p>Přehled podkladů, které mohou být vyžadovány k doložení skutkových okolností a právních podmínek.</p>
             <ul id="documents" class="document-list"></ul>
           </details>
 
           <button id="report-button" class="secondary" type="button">
-            Vytvořit HTML report
+            Stáhnout výstup posouzení
           </button>
           <div id="report-error" class="message error" role="alert" hidden></div>
         </div>
       </aside>
     </div>
+
+    <section id="napoveda" class="help-section" aria-labelledby="help-title">
+      <p class="eyebrow">METODIKA A NÁPOVĚDA</p>
+      <h2 id="help-title">Jak probíhá posouzení</h2>
+      <div class="help-grid">
+        <article>
+          <span>01</span>
+          <h3>Parametry transakce</h3>
+          <p>Zadejte stát příjemce, druh příjmu, rozhodné datum a případně částku pro výpočet daně v CZK.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Skutkové okolnosti</h3>
+          <p>Doplňte pouze skutečnosti, které můžete doložit. Právní závěry systém nepřebírá z tvrzení klienta.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Výsledek a podklady</h3>
+          <p>Výstup odděluje uzavřené závěry, nevyřešené podmínky, požadované podklady a výpočet srážkové daně.</p>
+        </article>
+      </div>
+      <div class="status-guide">
+        <strong>Význam stavů</strong>
+        <p><b>Uzavřeno</b> – sazbu lze určit z uvolněného pravidla a doložených údajů.
+           <b>Vyžaduje doplnění</b> – chybí skutková okolnost nebo odborný právní závěr.
+           <b>Mimo podporovaný rozsah</b> – případ nelze v aktuálním rozsahu TaxTreat posoudit.</p>
+      </div>
+    </section>
       </main>
 
       <footer>
-        <p>TaxTreat poskytuje právní informace a podporu workflow, nikoli daňové poradenství.</p>
-        <a href="/docs">Nápověda a metodika</a>
+        <p>TaxTreat poskytuje strukturované právní informace a podporu rozhodovacího procesu; nenahrazuje individuální daňové poradenství.</p>
+        <a href="#napoveda">Metodika posouzení</a>
       </footer>
     </div>
   </div>
