@@ -29,7 +29,7 @@ BASE_REQUEST = {
 }
 
 
-def test_final_rate_calculates_tax_with_decimal_rounding():
+def test_czk_tax_is_always_rounded_up_to_whole_crowns():
     calculation = build_withholding_tax_calculation(
         {"amount": "100000.55", "currency": "czk"},
         decision_status="FINAL",
@@ -43,10 +43,22 @@ def test_final_rate_calculates_tax_with_decimal_rounding():
         "gross_amount": "100000.55",
         "currency": "CZK",
         "rate_percent": "15",
-        "estimated_tax_amount": "15000.08",
-        "estimated_net_amount": "85000.47",
-        "rounding_policy": "2_decimal_half_up",
+        "estimated_tax_amount": "15001",
+        "estimated_net_amount": "84999.55",
+        "rounding_policy": "czk_whole_crown_up",
     }
+
+
+def test_non_czk_tax_retains_two_decimal_half_up_rounding():
+    calculation = build_withholding_tax_calculation(
+        {"amount": "100.05", "currency": "EUR"},
+        decision_status="FINAL",
+        rate_percent=Decimal("15"),
+    )
+
+    assert calculation["estimated_tax_amount"] == "15.01"
+    assert calculation["estimated_net_amount"] == "85.04"
+    assert calculation["rounding_policy"] == "2_decimal_half_up"
 
 
 def test_non_final_result_never_calculates_candidate_tax():
@@ -64,6 +76,16 @@ def test_non_final_result_never_calculates_candidate_tax():
         decision_status="FINAL",
         rate_percent=15,
     ) is None
+
+
+@pytest.mark.parametrize("amount", ["invalid", "0", "-1"])
+def test_invalid_direct_transaction_amount_fails_closed(amount):
+    with pytest.raises(ValueError):
+        build_withholding_tax_calculation(
+            {"amount": amount, "currency": "CZK"},
+            decision_status="FINAL",
+            rate_percent=15,
+        )
 
 
 @pytest.mark.parametrize("rate", ["invalid", -1, 101])
@@ -108,10 +130,10 @@ def test_api_calculates_only_mocked_final_released_result(monkeypatch):
         "withholding_tax_calculation"
     ]
     assert calculation["status"] == "CALCULATED"
-    assert calculation["estimated_tax_amount"] == "10000.06"
-    assert calculation["estimated_net_amount"] == "90000.49"
+    assert calculation["estimated_tax_amount"] == "10001"
+    assert calculation["estimated_net_amount"] == "89999.55"
     assert "Estimated withholding tax:" in payload["html"]
-    assert "10000.06" in payload["html"]
+    assert "10001" in payload["html"]
 
 
 def test_report_explains_why_review_amount_is_not_calculated():
