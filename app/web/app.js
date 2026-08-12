@@ -62,11 +62,19 @@
 
   function statusCopy(status) {
     const copies = {
-      FINAL: ["Výpočet dokončen", "Uvolněná právní cesta poskytla finální sazbu."],
-      REVIEW_REQUIRED: ["Je potřeba doplnit informace", "Bez níže uvedených údajů nelze bezpečně určit finální sazbu."],
-      OUT_OF_SCOPE: ["Mimo podporovaný rozsah", "Tato transakce není součástí současného českého outbound rozsahu."]
+      FINAL: ["Posouzení uzavřeno", "Na základě uvolněného právního pravidla a zadaných údajů byla určena výsledná sazba."],
+      REVIEW_REQUIRED: ["Posouzení nelze uzavřít", "K určení výsledné sazby je nutné doplnit níže uvedené skutkové okolnosti nebo odborné právní závěry."],
+      OUT_OF_SCOPE: ["Mimo podporovaný rozsah", "Transakce nespadá do aktuálně podporovaného rozsahu českých odchozích plateb."]
     };
-    return copies[status] || ["Posouzení vyžaduje kontrolu", "Zkontrolujte zobrazené otázky a doklady."];
+    return copies[status] || ["Vyžaduje odbornou kontrolu", "Výsledek nelze bez dalšího posouzení uzavřít."];
+  }
+
+  function statusBadgeCopy(status) {
+    return {
+      FINAL: "UZAVŘENO",
+      REVIEW_REQUIRED: "VYŽADUJE DOPLNĚNÍ",
+      OUT_OF_SCOPE: "MIMO ROZSAH"
+    }[status] || "K ODBORNÉ KONTROLE";
   }
 
   function revealButton(label, onClick) {
@@ -93,7 +101,7 @@
     const label = document.createElement("label");
     label.className = "question-answer";
     const caption = document.createElement("span");
-    caption.textContent = "Odpověď klienta";
+    caption.textContent = "Doplnění údaje";
     const inputId = "answer-" + question.question_id.replace(/[^a-z0-9_-]/gi, "-");
     const draft = drafts[question.input_path];
     const existing = draft
@@ -153,13 +161,13 @@
     let supplied = 0;
     Object.entries(drafts).forEach(([inputPath, draft]) => {
       if (!draft.valid) {
-        throw new Error("Zkontrolujte formát zadaných odpovědí.");
+        throw new Error("Zkontrolujte formát doplněných údajů.");
       }
       const raw = draft.value.trim();
       if (!raw) return;
       const factName = clientFactName(inputPath);
       if (!factName) {
-        throw new Error("Klientská odpověď smí měnit pouze skutkové údaje.");
+        throw new Error("V této části lze doplňovat pouze skutkové údaje.");
       }
 
       let answer = raw;
@@ -185,10 +193,10 @@
     try {
       const supplied = applyClientAnswers(nextPayload, drafts);
       if (!supplied) {
-        throw new Error("Vyplňte alespoň jednu odpověď klienta.");
+        throw new Error("Doplňte alespoň jeden skutkový údaj.");
       }
       button.disabled = true;
-      button.textContent = "Přepočítávám…";
+      button.textContent = "Aktualizuji posouzení…";
       const response = await postJson("/analysis/intake", nextPayload);
       currentPayload = nextPayload;
       renderResponse(response);
@@ -197,7 +205,7 @@
       answerError.hidden = false;
     } finally {
       button.disabled = false;
-      button.textContent = "Uložit odpovědi a vyhodnotit";
+      button.textContent = "Aktualizovat posouzení";
     }
   }
 
@@ -219,7 +227,7 @@
       progress.className = "wizard-progress";
       const progressCopy = document.createElement("div");
       const progressLabel = document.createElement("strong");
-      progressLabel.textContent = `Otázky ${start + 1}–${end} z ${questions.length}`;
+      progressLabel.textContent = `Položky ${start + 1}–${end} z ${questions.length}`;
       const progressStep = document.createElement("span");
       progressStep.textContent = `Krok ${pageIndex + 1} z ${pageCount}`;
       progressCopy.append(progressLabel, progressStep);
@@ -236,7 +244,7 @@
         card.className = "question";
         const tag = document.createElement("span");
         tag.className = "tag" + (question.client_answerable ? "" : " review");
-        tag.textContent = question.client_answerable ? "Údaj klienta" : "Odborné posouzení";
+        tag.textContent = question.client_answerable ? "Skutkový údaj" : "Odborné posouzení";
         const prompt = document.createElement("p");
         prompt.textContent = question.prompt;
         const why = document.createElement("small");
@@ -265,7 +273,7 @@
         const next = document.createElement("button");
         next.type = "button";
         next.className = "wizard-next";
-        next.textContent = "Další otázky →";
+        next.textContent = "Další položky →";
         next.addEventListener("click", () => {
           captureDraftAnswers(root, drafts);
           pageIndex += 1;
@@ -301,7 +309,7 @@
   function renderDocuments(documents) {
     const root = document.querySelector("#documents");
     const initialLimit = 6;
-    const values = documents.length ? documents : ["V této fázi nejsou vyžádány další doklady."];
+    const values = documents.length ? documents : ["V této fázi nejsou vyžadovány další podklady."];
 
     function render(limit) {
       root.replaceChildren();
@@ -314,7 +322,7 @@
         const item = document.createElement("li");
         item.className = "reveal-item";
         item.append(revealButton(
-          `Zobrazit dalších ${values.length - limit} dokladů`,
+          `Zobrazit zbývající podklady (${values.length - limit})`,
           () => render(values.length)
         ));
         root.append(item);
@@ -346,7 +354,7 @@
     document.querySelector("#status-title").textContent = title;
     document.querySelector("#status-description").textContent = description;
     const badge = document.querySelector("#status-badge");
-    badge.textContent = analysis.status;
+    badge.textContent = statusBadgeCopy(analysis.status);
     badge.className = "status-badge" +
       (analysis.status === "FINAL" ? " final" : analysis.status === "OUT_OF_SCOPE" ? " out" : "");
     renderQuestions(intake.questions || []);
@@ -379,11 +387,11 @@
       renderResponse(response);
       result.scrollIntoView({ behavior: "smooth", block: "start" });
     } catch (error) {
-      formError.textContent = "Posouzení se nepodařilo: " + error.message;
+      formError.textContent = "Posouzení nebylo možné dokončit: " + error.message;
       formError.hidden = false;
     } finally {
       submitButton.disabled = false;
-      submitButton.firstChild.textContent = "Zjistit potřebné informace ";
+      submitButton.firstChild.textContent = "Vyhodnotit transakci ";
     }
   });
 
@@ -401,7 +409,7 @@
       link.click();
       URL.revokeObjectURL(url);
     } catch (error) {
-      reportError.textContent = "Report se nepodařilo vytvořit: " + error.message;
+      reportError.textContent = "Výstup nebylo možné vytvořit: " + error.message;
       reportError.hidden = false;
     } finally {
       reportButton.disabled = false;
