@@ -10,19 +10,47 @@
 </head>
 <body>
   <a class="skip-link" href="#case-form">Přejít na formulář</a>
-  <header class="topbar">
-    <a class="brand" href="/ui" aria-label="TaxTreat domů">
-      <span class="brand-mark">TT</span>
-      <span><strong>TaxTreat</strong><small>Czech outbound WHT</small></span>
-    </a>
-    <div class="release">
-      <span class="release-dot"></span>
-      Stage 6 production rules
-    </div>
-  </header>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Hlavní navigace">
+      <a class="sidebar-brand" href="/ui" aria-label="TaxTreat domů">
+        <span class="brand-mark">TT</span>
+        <span><strong>TaxTreat</strong><small>Klientský portál</small></span>
+      </a>
+      <nav>
+        <a class="active" href="/ui"><span aria-hidden="true">⌂</span> Nové posouzení</a>
+        <span class="disabled"><span aria-hidden="true">▤</span> Moje případy <small>Připravujeme</small></span>
+        <span class="disabled"><span aria-hidden="true">□</span> Doklady <small>Připravujeme</small></span>
+        <a href="/docs"><span aria-hidden="true">?</span> Nápověda</a>
+      </nav>
+      <div class="sidebar-assurance">
+        <strong>Bezpečný postup</strong>
+        <p>TaxTreat zobrazí jen údaje potřebné pro váš případ. Právní závěry potvrzuje odborník.</p>
+      </div>
+    </aside>
 
-  <main>
-    <section class="hero">
+    <div class="page">
+      <header class="topbar">
+        <div>
+          <strong>Nové posouzení</strong>
+          <small>Česká srážková daň</small>
+        </div>
+        <div class="top-actions">
+          <span>CS</span>
+          <a href="/docs">Nápověda</a>
+        </div>
+      </header>
+
+      <main>
+        <section class="notice" aria-label="Důležité upozornění">
+          <span class="notice-icon" aria-hidden="true">◇</span>
+          <div>
+            <strong>Důležité upozornění</strong>
+            <p>Výsledek má informační charakter a nenahrazuje daňové poradenství.
+               Nevyřešené právní otázky zůstanou označené k odbornému posouzení.</p>
+          </div>
+        </section>
+
+        <section class="hero">
       <p class="eyebrow">NOVÉ POSOUZENÍ</p>
       <h1>Od transakce k doloženému výsledku.</h1>
       <p>Vyplňte základní údaje. TaxTreat zobrazí pouze otázky a doklady,
@@ -174,11 +202,13 @@
         </div>
       </aside>
     </div>
-  </main>
+      </main>
 
-  <footer>
-    <p>TaxTreat poskytuje právní informace a podporu workflow, nikoli daňové poradenství.</p>
-    <a href="/docs">API dokumentace</a>
-  </footer>
+      <footer>
+        <p>TaxTreat poskytuje právní informace a podporu workflow, nikoli daňové poradenství.</p>
+        <a href="/docs">Nápověda a metodika</a>
+      </footer>
+    </div>
+  </div>
 </body>
 </html>
