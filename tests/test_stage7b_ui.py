@@ -51,6 +51,8 @@ def test_ui_calls_canonical_endpoints_and_uses_safe_dom_rendering():
     assert "exchange_rate" in javascript
     assert "payment_date" in javascript
     assert "accounting_date" in javascript
+    assert "Zobrazit dalších" in javascript
+    assert "initialLimit = 5" in javascript
 
 
 def test_ui_exposes_accessible_status_and_error_regions():
