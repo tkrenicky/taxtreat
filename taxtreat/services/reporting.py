@@ -7,7 +7,7 @@ from html import escape
 from typing import Any, Mapping
 
 
-REPORT_SCHEMA_VERSION = 1
+REPORT_SCHEMA_VERSION = 2
 LEGAL_DATA_CUTOFF = "2026-08-12"
 DISCLAIMER = (
     "TaxTreat is a deterministic legal-information and workflow tool. "
@@ -43,6 +43,9 @@ def stable_report_id(
                 "legal_dataset_release"
             ),
             "source_release": analysis.get("dataset_version"),
+            "withholding_tax_calculation": analysis.get(
+                "withholding_tax_calculation"
+            ),
             "citation_hashes": sorted(
                 citation.get("excerpt_sha256")
                 for citation in analysis.get("citations", [])
@@ -100,6 +103,7 @@ def build_professional_report(
             "recipient_country": request.get("recipient_country"),
             "income_type": request.get("income_type"),
             "transaction_date": request.get("transaction_date"),
+            "transaction_amount": request.get("transaction_amount"),
         },
         "result": {
             "status": analysis.get("status"),
@@ -110,6 +114,9 @@ def build_professional_report(
             "selected_rule_id": analysis.get("selected_rule_id"),
             "candidate_rule_id": analysis.get("candidate_rule_id"),
             "applied_rule_ids": analysis.get("applied_rule_ids", []),
+            "withholding_tax_calculation": analysis.get(
+                "withholding_tax_calculation"
+            ),
         },
         "assumptions": {
             "transaction_facts": request.get("facts", {}),
@@ -137,6 +144,28 @@ def render_report_html(report: Mapping[str, Any]) -> str:
     scope = report["scope"]
     result = report["result"]
     sources = report.get("official_sources", [])
+    calculation = result.get("withholding_tax_calculation")
+    if calculation is None:
+        calculation_html = "<p>No transaction amount was supplied.</p>"
+    elif calculation["status"] == "CALCULATED":
+        calculation_html = (
+            "<p><strong>Gross amount:</strong> "
+            f"{escape(str(calculation['gross_amount']))} "
+            f"{escape(str(calculation['currency']))}<br>"
+            "<strong>Estimated withholding tax:</strong> "
+            f"{escape(str(calculation['estimated_tax_amount']))} "
+            f"{escape(str(calculation['currency']))}<br>"
+            "<strong>Estimated net amount:</strong> "
+            f"{escape(str(calculation['estimated_net_amount']))} "
+            f"{escape(str(calculation['currency']))}<br>"
+            "<strong>Rounding:</strong> "
+            f"{escape(str(calculation['rounding_policy']))}</p>"
+        )
+    else:
+        calculation_html = (
+            "<p>Amount supplied, but tax was not calculated because "
+            "a final released rate is unavailable.</p>"
+        )
 
     source_items = []
     for source in sources:
@@ -193,6 +222,8 @@ def render_report_html(report: Mapping[str, Any]) -> str:
        {escape(str(result['candidate_rate']))}</p>
     <p>{escape(str(report['risk_assessment']))}</p>
   </section>
+  <h2>Indicative amount calculation</h2>
+  {calculation_html}
   <h2>Missing facts</h2><ul>{missing_items}</ul>
   <h2>Official sources</h2><ul>{''.join(source_items)}</ul>
   <h2>Release metadata</h2>
