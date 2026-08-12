@@ -22,6 +22,7 @@ def test_guided_intake_ui_is_served_without_changing_api_root():
     assert 'id="fx-fields"' in html
     assert 'id="questions"' in html
     assert 'id="documents"' in html
+    assert 'class="documents-panel"' in html
     assert 'id="calculation-card"' in html
     assert 'id="answer-error"' in html
     assert 'class="sidebar"' in html
@@ -46,6 +47,8 @@ def test_guided_intake_assets_are_local_and_accessible():
     assert "--forest:" in css.text
     assert "grid-template-columns: 232px" in css.text
     assert "linear-gradient(180deg, #112744" in css.text
+    assert ".wizard-progress" in css.text
+    assert ".wizard-navigation" in css.text
 
 
 def test_ui_calls_canonical_endpoints_and_uses_safe_dom_rendering():
@@ -60,10 +63,12 @@ def test_ui_calls_canonical_endpoints_and_uses_safe_dom_rendering():
     assert "payment_date" in javascript
     assert "accounting_date" in javascript
     assert "Zobrazit dalších" in javascript
-    assert "initialLimit = 5" in javascript
+    assert "pageSize = 3" in javascript
+    assert "wizard-progress" in javascript
+    assert "Další otázky" in javascript
     assert 'startsWith("facts.")' in javascript
     assert "payload.facts[factName] = answer" in javascript
-    assert "Uložit odpovědi a znovu vyhodnotit" in javascript
+    assert "Uložit odpovědi a vyhodnotit" in javascript
     assert 'postJson("/analysis/intake", nextPayload)' in javascript
 
 
