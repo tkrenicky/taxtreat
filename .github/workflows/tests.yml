@@ -41,6 +41,40 @@ jobs:
             --cov-fail-under=96 \
             --cov-report=term-missing
 
+      - name: Build Stage 7A acceptance evidence
+        run: |
+          python scripts/run_stage7a_acceptance.py \
+            --output-dir artifacts/stage7a
+          python - <<'PY'
+          import hashlib
+          from pathlib import Path
+
+          expected = (
+              "3140c31835596f00686f9ad99fc2cddaf43c185ab"
+              "94a73c94bccf993fe159486"
+          )
+          root = Path(".")
+          digest = hashlib.sha256()
+          for path in sorted(
+              (root / "data/legal_rule_candidates/final23").glob("*.json")
+          ):
+              digest.update(str(path.relative_to(root)).encode())
+              digest.update(b"\0")
+              digest.update(path.read_bytes())
+          actual = digest.hexdigest()
+          assert actual == expected, (expected, actual)
+          print(f"Final23 protected hash: {actual}")
+          PY
+
+      - name: Upload Stage 7A acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage7a-acceptance-python-${{ matrix.python-version }}
+          path: artifacts/stage7a
+          if-no-files-found: error
+          retention-days: 30
+
       - name: Canonical decision core 100% branch coverage
         run: |
           python -m pytest \
