@@ -23,6 +23,7 @@ def test_guided_intake_ui_is_served_without_changing_api_root():
     assert 'id="questions"' in html
     assert 'id="documents"' in html
     assert 'id="calculation-card"' in html
+    assert 'id="answer-error"' in html
     assert "nikoli daňové poradenství" in html
 
 
@@ -53,6 +54,10 @@ def test_ui_calls_canonical_endpoints_and_uses_safe_dom_rendering():
     assert "accounting_date" in javascript
     assert "Zobrazit dalších" in javascript
     assert "initialLimit = 5" in javascript
+    assert 'startsWith("facts.")' in javascript
+    assert "payload.facts[factName] = answer" in javascript
+    assert "Uložit odpovědi a znovu vyhodnotit" in javascript
+    assert 'postJson("/analysis/intake", nextPayload)' in javascript
 
 
 def test_ui_exposes_accessible_status_and_error_regions():
