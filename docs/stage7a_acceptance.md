@@ -14,6 +14,30 @@ professional JSON/HTML report.
 - Source release: `stage6-source-release-2026-08-12.1`.
 - Legal-data cut-off: 2026-08-12.
 
+## Acceptance matrix
+
+The versioned fixture at `data/acceptance/stage7a_pilot.json` contains exactly
+17 cases:
+
+- 15 released empty-fact discovery cases covering five pilot partners and three
+  income types;
+- one unknown Czech pair that must return HTTP 409 and the canonical
+  `SOURCE_NOT_RELEASED` blocker;
+- one reverse-direction request that must remain `OUT_OF_SCOPE`.
+
+Run the deterministic matrix and write both machine-readable and reviewable
+artifacts with:
+
+```bash
+python scripts/run_stage7a_acceptance.py \
+  --json-output stage7a_acceptance.json \
+  --html-output stage7a_acceptance.html
+```
+
+The command exits non-zero when any case fails. Its SHA-256 is derived from the
+canonicalized case results, so unchanged runtime behavior produces unchanged
+acceptance evidence.
+
 ## Discovery is not approval
 
 The first 15 empty-fact cases are discovery fixtures. Their expected result is
