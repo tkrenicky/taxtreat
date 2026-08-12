@@ -12,27 +12,30 @@ from taxtreat.services.intake import (
 client = TestClient(app)
 
 
-def test_transaction_fact_question_is_actionable_and_documented():
+def test_beneficial_owner_is_an_explicit_adviser_assumption():
     question = _question_for_missing_fact("beneficial_owner")
 
-    assert question["input_path"] == "facts.beneficial_owner"
-    assert question["category"] == "transaction_fact"
-    assert question["client_answerable"] is True
-    assert question["response_type"] == "boolean"
+    assert question["input_path"] is None
+    assert question["category"] == "professional_review"
+    assert question["client_answerable"] is False
+    assert question["response_type"] == "professional_review"
     assert "skutečným vlastníkem" in question["prompt"]
     assert "Prohlášení skutečného vlastníka příjmu" in question[
         "required_documents"
     ]
 
 
-def test_numeric_and_fallback_transaction_questions():
+def test_numeric_question_is_precise_and_fallback_is_not_exposed():
     ownership = _question_for_missing_fact("ownership_percent")
     unknown = _question_for_missing_fact("new_future_fact")
 
     assert ownership["response_type"] == "decimal_percent"
     assert ownership["input_path"] == "facts.ownership_percent"
-    assert unknown["response_type"] == "boolean"
-    assert unknown["prompt"] == "Doplňte prosím: New future fact."
+    assert "základním kapitálu českého plátce" in ownership["prompt"]
+    assert unknown["response_type"] == "professional_review"
+    assert unknown["client_answerable"] is False
+    assert unknown["input_path"] is None
+    assert "new future fact" not in unknown["prompt"].lower()
     assert unknown["required_documents"] == []
 
 
@@ -54,10 +57,53 @@ def test_determination_and_legal_fact_are_not_client_assertions():
     assert determination["response_type"] == "reviewed_boolean"
     assert determination["required_documents"]
     assert unknown_determination["client_answerable"] is False
-    assert "odborně posouzeno" in unknown_determination["prompt"]
+    assert "daňovým poradcem" in unknown_determination["prompt"]
     assert legal_fact["input_path"] is None
     assert legal_fact["category"] == "legal_evidence"
     assert legal_fact["response_type"] == "professional_review"
+    assert "foreign statutory rule" not in legal_fact["prompt"].lower()
+
+
+def test_client_wording_does_not_delegate_legal_conclusions():
+    holding = _question_for_missing_fact("holding_period_months")
+    future_holding = _question_for_missing_fact(
+        "holding_period_will_reach_months"
+    )
+    company_form = _question_for_missing_fact(
+        "recipient_is_qualifying_company_form"
+    )
+    corporate_tax = _question_for_missing_fact(
+        "recipient_subject_to_qualifying_corporate_tax"
+    )
+
+    assert "Od jakého data" in holding["prompt"]
+    assert holding["client_answerable"] is True
+    assert holding["response_type"] == "date"
+    assert holding["input_path"] == "derived.acquisition_date"
+    assert future_holding["client_answerable"] is False
+    assert company_form["client_answerable"] is False
+    assert corporate_tax["client_answerable"] is False
+
+
+def test_related_professional_conditions_are_collapsed_for_clients():
+    plan = build_intake_plan(
+        {"facts": {}, "determinations": {}},
+        {
+            "status": "REVIEW_REQUIRED",
+            "missing_facts": [
+                "recipient_is_qualifying_company_form",
+                "recipient_subject_to_qualifying_corporate_tax",
+                "recipient_is_parent_company",
+                "recipient_is_tax_resident_in_eligible_jurisdiction",
+            ],
+            "withholding_tax_calculation": None,
+        },
+    )
+
+    assert len(plan["questions"]) == 1
+    assert plan["questions"][0]["advisor_topic"] == (
+        "recipient_eligibility"
+    )
 
 
 def test_plan_combines_missing_facts_documents_and_optional_amount():

@@ -92,14 +92,14 @@ def capture(output_dir: Path) -> dict[str, object]:
             )
             page.select_option('select[name="income_type"]', "dividend")
             page.fill('input[name="transaction_date"]', "2026-08-12")
-            page.fill('input[name="amount"]', "100000.55")
+            page.fill('input[name="amount"]', "100000")
             page.select_option('select[name="currency"]', "CZK")
             page.click('#case-form button[type="submit"]')
 
             result = page.locator("#result")
             result.wait_for(state="visible")
             status = page.locator("#status-badge").inner_text()
-            if status != "VYŽADUJE DOPLNĚNÍ":
+            if status != "DOPLNIT ÚDAJE":
                 raise AssertionError(
                     "Expected localized review status, "
                     f"received {status!r}."
@@ -118,14 +118,21 @@ def capture(output_dir: Path) -> dict[str, object]:
             progress_copy = page.locator(
                 "#questions .wizard-progress"
             ).inner_text()
-            if "Položky 1–3" not in progress_copy:
+            expected_range = f"Položky 1–{min(questions, 3)}"
+            if expected_range not in progress_copy:
                 raise AssertionError(
                     f"Unexpected wizard progress: {progress_copy!r}."
                 )
             first_prompt = page.locator(
                 "#questions .question p"
             ).first.inner_text()
-            if "skutečným vlastníkem" not in first_prompt:
+            if not any(
+                phrase in first_prompt
+                for phrase in (
+                    "Od jakého data",
+                    "základním kapitálu českého plátce",
+                )
+            ):
                 raise AssertionError(
                     f"Expected Czech intake copy, received {first_prompt!r}."
                 )
@@ -142,10 +149,17 @@ def capture(output_dir: Path) -> dict[str, object]:
             page.set_viewport_size({"width": 390, "height": 844})
             page.screenshot(path=mobile_path, full_page=True)
 
-            beneficial_owner = page.locator(
-                '[data-input-path="facts.beneficial_owner"]'
-            )
-            beneficial_owner.select_option("true")
+            first_input = page.locator(
+                "#questions .question-input"
+            ).first
+            first_input_path = first_input.get_attribute("data-input-path")
+            response_type = first_input.get_attribute("data-response-type")
+            if response_type == "date":
+                first_input.fill("2025-01-01")
+            elif response_type == "boolean":
+                first_input.select_option("true")
+            else:
+                first_input.fill("25")
 
             if questions > visible_questions:
                 page.locator("#questions .wizard-next").click()
@@ -156,19 +170,30 @@ def capture(output_dir: Path) -> dict[str, object]:
                         "Wizard did not advance to the second page."
                     )
                 page.locator("#questions .wizard-back").click()
-                beneficial_owner = page.locator(
-                    '[data-input-path="facts.beneficial_owner"]'
+                first_input = page.locator(
+                    f'[data-input-path="{first_input_path}"]'
                 )
-                if beneficial_owner.input_value() != "true":
+                expected_value = (
+                    "2025-01-01" if response_type == "date"
+                    else "true" if response_type == "boolean"
+                    else "25"
+                )
+                if first_input.input_value() != expected_value:
                     raise AssertionError(
                         "Wizard did not preserve the draft answer."
                     )
 
             page.locator("#questions .wizard-save").click()
             page.wait_for_function(
-                """() => !document.querySelector(
-                    '[data-input-path="facts.beneficial_owner"]'
-                )"""
+                """([path, count]) => {
+                    const current = Number(document.querySelector(
+                        '#question-count'
+                    ).textContent);
+                    return current < count || !document.querySelector(
+                        `[data-input-path="${path}"]`
+                    );
+                }""",
+                [first_input_path, questions],
             )
             questions_after_answer = int(
                 page.locator("#question-count").inner_text()

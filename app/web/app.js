@@ -3,7 +3,10 @@
 
   const form = document.querySelector("#case-form");
   const currency = document.querySelector("#currency");
+  const amount = document.querySelector("#amount");
+  const incomeType = document.querySelector("#income-type");
   const fxFields = document.querySelector("#fx-fields");
+  const dividendFields = document.querySelector("#dividend-fields");
   const emptyState = document.querySelector("#empty-state");
   const result = document.querySelector("#result");
   const submitButton = form.querySelector("button[type=submit]");
@@ -15,7 +18,28 @@
   const value = (data, name) => String(data.get(name) || "").trim();
 
   function toggleFx() {
-    fxFields.hidden = currency.value === "CZK";
+    const isCzk = currency.value === "CZK";
+    fxFields.hidden = isCzk;
+    amount.step = isCzk ? "1" : "0.01";
+    amount.inputMode = isCzk ? "numeric" : "decimal";
+    amount.placeholder = isCzk ? "100000" : "100000.00";
+  }
+
+  function toggleIncomeDetails() {
+    dividendFields.hidden = incomeType.value !== "dividend";
+  }
+
+  function completeMonths(fromValue, toValue) {
+    if (!fromValue || !toValue) return null;
+    const from = new Date(`${fromValue}T00:00:00Z`);
+    const to = new Date(`${toValue}T00:00:00Z`);
+    if (Number.isNaN(from.valueOf()) || Number.isNaN(to.valueOf()) || from > to) {
+      return null;
+    }
+    let months = (to.getUTCFullYear() - from.getUTCFullYear()) * 12
+      + to.getUTCMonth() - from.getUTCMonth();
+    if (to.getUTCDate() < from.getUTCDate()) months -= 1;
+    return Math.max(0, months);
   }
 
   function amountPayload(data) {
@@ -52,29 +76,46 @@
       recipient_country: value(data, "recipient_country"),
       income_type: value(data, "income_type"),
       transaction_date: value(data, "transaction_date"),
-      facts: {},
+      facts: {
+        beneficial_owner: true,
+        recipient_is_treaty_resident: true,
+        permanent_establishment_connection: !data.get("no_pe_connection"),
+        recipient_entity_type: value(data, "recipient_entity_type")
+      },
       determinations: {}
     };
     const transactionAmount = amountPayload(data);
     if (transactionAmount) payload.transaction_amount = transactionAmount;
+    if (payload.income_type === "dividend") {
+      const ownership = value(data, "ownership_percent");
+      const votingOwnership = value(data, "voting_ownership_percent");
+      const acquisitionDate = value(data, "acquisition_date");
+      if (ownership) payload.facts.ownership_percent = Number(ownership);
+      if (votingOwnership) {
+        payload.facts.direct_or_indirect_voting_ownership = Number(votingOwnership);
+      }
+      payload.facts.direct_ownership = Boolean(data.get("direct_ownership"));
+      const months = completeMonths(acquisitionDate, payload.transaction_date);
+      if (months !== null) payload.facts.holding_period_months = months;
+    }
     return payload;
   }
 
   function statusCopy(status) {
     const copies = {
-      FINAL: ["Posouzení uzavřeno", "Na základě uvolněného právního pravidla a zadaných údajů byla určena výsledná sazba."],
-      REVIEW_REQUIRED: ["Posouzení nelze uzavřít", "K určení výsledné sazby je nutné doplnit níže uvedené skutkové okolnosti nebo odborné právní závěry."],
+      FINAL: ["Výpočet dokončen", "Sazba a daň byly vypočteny podle zadaných údajů a uvedených předpokladů."],
+      REVIEW_REQUIRED: ["Je třeba doplnit údaje", "Níže doplňte konkrétní informace nebo ověřte označené podmínky s daňovým poradcem."],
       OUT_OF_SCOPE: ["Mimo podporovaný rozsah", "Transakce nespadá do aktuálně podporovaného rozsahu českých odchozích plateb."]
     };
-    return copies[status] || ["Vyžaduje odbornou kontrolu", "Výsledek nelze bez dalšího posouzení uzavřít."];
+    return copies[status] || ["Ověřte s daňovým poradcem", "Použití sazby závisí na podmínce, kterou aplikace nemůže potvrdit ze zadaných údajů."];
   }
 
   function statusBadgeCopy(status) {
     return {
-      FINAL: "UZAVŘENO",
-      REVIEW_REQUIRED: "VYŽADUJE DOPLNĚNÍ",
+      FINAL: "DOKONČENO",
+      REVIEW_REQUIRED: "DOPLNIT ÚDAJE",
       OUT_OF_SCOPE: "MIMO ROZSAH"
-    }[status] || "K ODBORNÉ KONTROLE";
+    }[status] || "OVĚŘIT S PORADCEM";
   }
 
   function revealButton(label, onClick) {
@@ -92,11 +133,16 @@
     return /^[a-z0-9_]+$/.test(name) ? name : null;
   }
 
+  function isClientInputPath(inputPath) {
+    return Boolean(clientFactName(inputPath))
+      || inputPath === "derived.acquisition_date";
+  }
+
   function createQuestionInput(question, drafts) {
-    const factName = question.client_answerable
-      ? clientFactName(question.input_path)
-      : null;
-    if (!factName) return null;
+    const factName = clientFactName(question.input_path);
+    if (!question.client_answerable || !isClientInputPath(question.input_path)) {
+      return null;
+    }
 
     const label = document.createElement("label");
     label.className = "question-answer";
@@ -106,7 +152,7 @@
     const draft = drafts[question.input_path];
     const existing = draft
       ? draft.value
-      : currentPayload?.facts?.[factName];
+      : factName ? currentPayload?.facts?.[factName] : undefined;
 
     let input;
     if (question.response_type === "boolean") {
@@ -121,9 +167,20 @@
         option.textContent = optionLabel;
         input.append(option);
       });
+    } else if (question.response_type === "choice") {
+      input = document.createElement("select");
+      [["", "Vyberte možnost"], ...(question.options || [])].forEach(
+        ([optionValue, optionLabel]) => {
+          const option = document.createElement("option");
+          option.value = optionValue;
+          option.textContent = optionLabel;
+          input.append(option);
+        }
+      );
     } else {
       input = document.createElement("input");
-      input.type = question.response_type === "text" ? "text" : "number";
+      input.type = question.response_type === "date" ? "date"
+        : question.response_type === "text" ? "text" : "number";
       if (question.response_type === "decimal_percent") {
         input.min = "0";
         input.max = "100";
@@ -166,8 +223,17 @@
       const raw = draft.value.trim();
       if (!raw) return;
       const factName = clientFactName(inputPath);
+      if (inputPath === "derived.acquisition_date") {
+        const months = completeMonths(raw, payload.transaction_date);
+        if (months === null) {
+          throw new Error("Datum nabytí podílu musí předcházet datu transakce.");
+        }
+        payload.facts.holding_period_months = months;
+        supplied += 1;
+        return;
+      }
       if (!factName) {
-        throw new Error("V této části lze doplňovat pouze skutkové údaje.");
+        throw new Error("Tento údaj upravte v základním zadání transakce.");
       }
 
       let answer = raw;
@@ -196,7 +262,7 @@
         throw new Error("Doplňte alespoň jeden skutkový údaj.");
       }
       button.disabled = true;
-      button.textContent = "Aktualizuji posouzení…";
+      button.textContent = "Aktualizuji výpočet…";
       const response = await postJson("/analysis/intake", nextPayload);
       currentPayload = nextPayload;
       renderResponse(response);
@@ -205,17 +271,48 @@
       answerError.hidden = false;
     } finally {
       button.disabled = false;
-      button.textContent = "Aktualizovat posouzení";
+      button.textContent = "Aktualizovat výpočet";
     }
   }
 
-  function renderQuestions(questions) {
+  function renderAdvisorItems(items) {
+    const section = document.querySelector("#advisor-review-section");
+    const root = document.querySelector("#advisor-items");
+    root.replaceChildren();
+    section.hidden = items.length === 0;
+    document.querySelector("#advisor-count").textContent = items.length;
+    items.forEach((item) => {
+      const card = document.createElement("article");
+      card.className = "question advisor-item";
+      const tag = document.createElement("span");
+      tag.className = "tag review";
+      tag.textContent = "Ověřit s poradcem";
+      const prompt = document.createElement("p");
+      prompt.textContent = item.prompt;
+      const why = document.createElement("small");
+      why.textContent = item.why;
+      card.append(tag, prompt, why);
+      root.append(card);
+    });
+  }
+
+  function renderQuestions(allQuestions) {
+    const questions = allQuestions.filter((question) => question.client_answerable);
+    const advisorItems = allQuestions.filter((question) => !question.client_answerable);
     const root = document.querySelector("#questions");
+    const section = document.querySelector("#client-questions-section");
     const pageSize = 3;
     const pageCount = Math.max(1, Math.ceil(questions.length / pageSize));
     const drafts = {};
     let pageIndex = 0;
     root.replaceChildren();
+    section.hidden = questions.length === 0;
+    renderAdvisorItems(advisorItems);
+
+    if (!questions.length) {
+      document.querySelector("#question-count").textContent = "0";
+      return;
+    }
 
     function render() {
       captureDraftAnswers(root, drafts);
@@ -243,8 +340,8 @@
         const card = document.createElement("article");
         card.className = "question";
         const tag = document.createElement("span");
-        tag.className = "tag" + (question.client_answerable ? "" : " review");
-        tag.textContent = question.client_answerable ? "Skutkový údaj" : "Odborné posouzení";
+        tag.className = "tag";
+        tag.textContent = "Údaj k doplnění";
         const prompt = document.createElement("p");
         prompt.textContent = question.prompt;
         const why = document.createElement("small");
@@ -292,7 +389,7 @@
         const button = document.createElement("button");
         button.type = "button";
         button.className = "secondary wizard-save";
-        button.textContent = "Aktualizovat posouzení";
+        button.textContent = "Aktualizovat výpočet";
         button.addEventListener(
           "click",
           () => submitGuidedAnswers(button, drafts)
@@ -387,11 +484,11 @@
       renderResponse(response);
       result.scrollIntoView({ behavior: "smooth", block: "start" });
     } catch (error) {
-      formError.textContent = "Posouzení nebylo možné dokončit: " + error.message;
+      formError.textContent = "Výpočet nebylo možné dokončit: " + error.message;
       formError.hidden = false;
     } finally {
       submitButton.disabled = false;
-      submitButton.firstChild.textContent = "Vyhodnotit transakci ";
+      submitButton.firstChild.textContent = "Vypočítat srážkovou daň ";
     }
   });
 
@@ -417,6 +514,8 @@
   });
 
   currency.addEventListener("change", toggleFx);
+  incomeType.addEventListener("change", toggleIncomeDetails);
   form.elements.transaction_date.value = new Date().toISOString().slice(0, 10);
   toggleFx();
+  toggleIncomeDetails();
 })();

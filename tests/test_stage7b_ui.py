@@ -32,10 +32,24 @@ def test_guided_intake_ui_is_served_without_changing_api_root():
     assert 'href="/docs"' not in html
     assert 'id="napoveda"' in html
     assert "Metodika a nápověda" in html
-    assert "Rozsah výstupu" in html
-    assert "Posouzení české srážkové daně" in html
+    assert "Důležité upozornění" in html
+    assert "Výpočet české srážkové daně" in html
+    assert "výpočet podle zadaných údajů" in html.lower()
+    assert "101" in html
+    assert "303" in html
+    assert "Zadané údaje se po zpracování neukládají" in html
+    assert "Stát plátce" in html
+    assert "Stát daňové rezidence příjemce" in html
+    assert "Typ příjemce" in html
+    assert 'name="no_pe_connection"' in html
+    assert 'id="dividend-fields"' in html
+    assert 'id="advisor-review-section"' in html
     assert "Stage 6 production rules" not in html
-    assert "nenahrazuje individuální daňové poradenství" in html
+    assert "není právním ani daňovým poradenstvím" in html
+    assert "TaxTreat poskytuje strukturované právní informace" not in html
+    assert "orientační" not in html.lower()
+    assert "Neuzavřené právní otázky" not in html
+    assert "šifrov" not in html.lower()
 
 
 def test_guided_intake_assets_are_local_and_accessible():
@@ -56,6 +70,9 @@ def test_guided_intake_assets_are_local_and_accessible():
     assert ".wizard-navigation" in css.text
     assert ".help-section" in css.text
     assert ".help-grid" in css.text
+    assert ".project-metrics" in css.text
+    assert ".trust-strip" in css.text
+    assert ".assumption-toggle" in css.text
 
 
 def test_ui_calls_canonical_endpoints_and_uses_safe_dom_rendering():
@@ -75,11 +92,16 @@ def test_ui_calls_canonical_endpoints_and_uses_safe_dom_rendering():
     assert "Další položky" in javascript
     assert 'startsWith("facts.")' in javascript
     assert "payload.facts[factName] = answer" in javascript
-    assert "Aktualizovat posouzení" in javascript
-    assert "VYŽADUJE DOPLNĚNÍ" in javascript
+    assert "Aktualizovat výpočet" in javascript
+    assert "DOPLNIT ÚDAJE" in javascript
     assert "badge.textContent = statusBadgeCopy" in javascript
     assert "REVIEW_REQUIRED" in javascript
     assert 'postJson("/analysis/intake", nextPayload)' in javascript
+    assert "beneficial_owner: true" in javascript
+    assert "recipient_is_treaty_resident: true" in javascript
+    assert "permanent_establishment_connection" in javascript
+    assert "completeMonths" in javascript
+    assert "renderAdvisorItems" in javascript
 
 
 def test_ui_exposes_accessible_status_and_error_regions():
