@@ -35,7 +35,7 @@ def test_guided_intake_ui_is_served_without_changing_api_root():
     assert "Rozsah výstupu" in html
     assert "Posouzení české srážkové daně" in html
     assert "Stage 6 production rules" not in html
-    assert "nikoli daňové poradenství" in html
+    assert "nenahrazuje individuální daňové poradenství" in html
 
 
 def test_guided_intake_assets_are_local_and_accessible():
