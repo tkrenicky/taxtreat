@@ -90,8 +90,10 @@ def test_workspace_demo_exposes_recipient_payment_result_workflow():
     assert "Komu platíš?" in html
     assert "Údaje o platbě" in html
     assert "Výsledek kontroly" in html
-    assert "Proč tato sazba" in html
+    assert "Jak výsledek číst" in html
     assert "Další kroky" in html
+    assert "Jak výsledek číst" in html
+    assert 'id="new-recipient-form"' in html
     assert "Přihlášení ani ukládání klientských případů zatím není aktivní" in html
     assert "TaxTreat je výpočetní nástroj" in html
     assert "orientační" not in html.lower()
@@ -112,6 +114,11 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert "document.cookie" not in javascript.text
     assert "textContent" in javascript.text
     assert ".innerHTML" not in javascript.text
+    assert "resultExplanation" in javascript.text
+    assert "citationCard" in javascript.text
+    assert "Pravidla identifikovala sazbu" in javascript.text
+    assert "Otevřít zdroj" in javascript.text
+    assert "recipientForm.addEventListener" in javascript.text
     assert "grid-template-columns:repeat(4,1fr)" in css.text
 
 

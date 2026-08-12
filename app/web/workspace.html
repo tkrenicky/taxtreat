@@ -114,13 +114,24 @@
       <section class="flow-step active" data-step="1">
         <div class="page-title"><div><p>KROK 1 ZE 3</p><h1>Komu platíš?</h1><span>Vyber existujícího příjemce nebo založ nový profil.</span></div></div>
         <article class="card select-card selected">
-          <label><input type="radio" name="flow-recipient" checked><span class="avatar">D</span><span><b>Demo GmbH</b><small>Rakousko · společnost · profil 4/5</small></span><em>Vybráno</em></label>
+          <label><input type="radio" name="flow-recipient" checked><span class="avatar" id="flow-recipient-avatar">D</span><span><b id="flow-recipient-name">Demo GmbH</b><small id="flow-recipient-meta">Rakousko · společnost · profil 4/5</small></span><em>Vybráno</em></label>
         </article>
+        <button class="new-recipient-toggle" type="button" data-show-recipient-form>+ Založit nového příjemce</button>
+        <form id="new-recipient-form" class="card mini-form" hidden>
+          <h2>Základní profil příjemce</h2>
+          <div class="field-grid three-fields">
+            <label><span>Název nebo jméno *</span><input name="recipient_name" required placeholder="např. Example GmbH"></label>
+            <label><span>Stát daňové rezidence *</span><select name="recipient_country" required><option value="">Vyber stát</option><option value="AT">Rakousko</option><option value="CH">Švýcarsko</option><option value="DE">Německo</option><option value="SG">Singapur</option><option value="TW">Tchaj-wan</option></select></label>
+            <label><span>Typ příjemce *</span><select name="recipient_type"><option>Společnost</option><option>Fyzická osoba</option><option>Fond</option><option>Jiný subjekt</option></select></label>
+          </div>
+          <p>Další údaje a podklady doplníš v profilu příjemce. V tomto demu se nový profil po obnovení stránky odstraní.</p>
+          <button class="primary" type="submit">Použít příjemce v této kontrole →</button>
+        </form>
         <div class="flow-actions"><button class="secondary" data-nav="recipients">Spravovat příjemce</button><button class="primary" data-next-step="2">Pokračovat k platbě →</button></div>
       </section>
 
       <section class="flow-step" data-step="2">
-        <div class="page-title"><div><p>KROK 2 ZE 3</p><h1>Údaje o platbě</h1><span>Kontrola pro příjemce <b>Demo GmbH</b>.</span></div></div>
+        <div class="page-title"><div><p>KROK 2 ZE 3</p><h1>Údaje o platbě</h1><span>Kontrola pro příjemce <b data-recipient-name>Demo GmbH</b>.</span></div></div>
         <form id="workspace-payment" class="card payment-form">
           <div class="field-grid">
             <label><span>Druh příjmu *</span><select name="income_type" required><option value="">Vyber druh</option><option value="dividend">Dividendy</option><option value="interest">Úroky</option><option value="royalty">Licenční poplatky</option></select></label>
@@ -136,12 +147,12 @@
       </section>
 
       <section class="flow-step" data-step="3">
-        <div class="page-title"><div><p>KROK 3 ZE 3</p><h1>Výsledek kontroly</h1><span>Demo CZ s.r.o. → Demo GmbH</span></div></div>
+        <div class="page-title"><div><p>KROK 3 ZE 3</p><h1>Výsledek kontroly</h1><span>Demo CZ s.r.o. → <b data-recipient-name>Demo GmbH</b></span></div></div>
         <article class="card result-hero">
           <span id="workspace-result-status" class="badge warning">ČEKÁ NA VÝPOČET</span>
           <p>Srážková daň v CZK</p><strong id="workspace-tax">—</strong><small id="workspace-rate">—</small>
         </article>
-        <article class="reason"><h2>Proč tato sazba</h2><p id="workspace-reason">Výsledek se zobrazí po vyhodnocení platby kanonickým pravidlovým enginem.</p></article>
+        <article class="reason"><h2>Jak výsledek číst</h2><p id="workspace-reason">Výsledek se zobrazí po vyhodnocení platby kanonickým pravidlovým enginem.</p></article>
         <div class="dashboard-grid">
           <article class="card summary"><h2>Souhrn platby</h2><dl><div><dt>Hrubá částka</dt><dd id="workspace-gross">—</dd></div><div><dt>Srážková daň</dt><dd id="workspace-tax-row">—</dd></div><div><dt>Čistá částka</dt><dd id="workspace-net">—</dd></div></dl></article>
           <article class="card"><div class="card-head"><h2>Další kroky</h2><span id="workspace-action-count">0</span></div><div id="workspace-actions" class="action-list"></div></article>
