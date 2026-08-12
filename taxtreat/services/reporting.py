@@ -148,23 +148,39 @@ def render_report_html(report: Mapping[str, Any]) -> str:
     if calculation is None:
         calculation_html = "<p>No transaction amount was supplied.</p>"
     elif calculation["status"] == "CALCULATED":
+        exchange = calculation.get("exchange_rate")
+        exchange_html = ""
+        if exchange is not None:
+            source_url = escape(
+                str(exchange.get("source_url") or ""),
+                quote=True,
+            )
+            exchange_html = (
+                "<br><strong>CNB rate:</strong> "
+                f"1 {escape(str(exchange['currency']))} = "
+                f"{escape(str(exchange['czk_per_unit']))} CZK "
+                f"on {escape(str(exchange['effective_date']))} "
+                f'(<a href="{source_url}">source</a>)'
+            )
         calculation_html = (
             "<p><strong>Gross amount:</strong> "
             f"{escape(str(calculation['gross_amount']))} "
-            f"{escape(str(calculation['currency']))}<br>"
-            "<strong>Estimated withholding tax:</strong> "
-            f"{escape(str(calculation['estimated_tax_amount']))} "
-            f"{escape(str(calculation['currency']))}<br>"
-            "<strong>Estimated net amount:</strong> "
-            f"{escape(str(calculation['estimated_net_amount']))} "
-            f"{escape(str(calculation['currency']))}<br>"
+            f"{escape(str(calculation['transaction_currency']))}<br>"
+            "<strong>Gross CZK equivalent:</strong> "
+            f"{escape(str(calculation['gross_amount_czk']))} CZK<br>"
+            "<strong>Withholding tax:</strong> "
+            f"{escape(str(calculation['withholding_tax_czk']))} CZK<br>"
+            "<strong>Net CZK equivalent:</strong> "
+            f"{escape(str(calculation['net_amount_czk']))} CZK<br>"
             "<strong>Rounding:</strong> "
-            f"{escape(str(calculation['rounding_policy']))}</p>"
+            f"{escape(str(calculation['rounding_policy']))}"
+            f"{exchange_html}</p>"
         )
     else:
+        reason = escape(str(calculation.get("reason") or "unavailable"))
         calculation_html = (
-            "<p>Amount supplied, but tax was not calculated because "
-            "a final released rate is unavailable.</p>"
+            "<p>Amount supplied, but tax was not calculated. "
+            f"Reason: <code>{reason}</code>.</p>"
         )
 
     source_items = []
