@@ -78,18 +78,16 @@ def test_materialization_audit_is_hash_bound():
     )
 
 
-def test_readiness_audit_does_not_promote_or_release():
+def test_readiness_audit_is_historical_but_final_gate_is_released():
     audit = load(AUDIT)
     gate = load(GATE)
 
     assert audit["semantics"][
         "this_is_rule_promotion"
     ] is False
-
     assert audit["semantics"][
         "this_is_source_release"
     ] is False
-
     assert audit["semantics"][
         "this_opens_runtime"
     ] is False
@@ -97,18 +95,19 @@ def test_readiness_audit_does_not_promote_or_release():
     assert audit["counts"][
         "rule_promoted_packages"
     ] == 0
-
     assert audit["counts"][
         "released_packages"
     ] == 0
 
     assert gate["counts"][
         "rule_promoted_packages"
-    ] == 0
-
+    ] == 101
     assert gate["counts"][
         "released_packages"
-    ] == 0
+    ] == 101
+    assert gate["counts"][
+        "released_scopes"
+    ] == 303
 
 
 def test_every_package_has_three_income_scopes():

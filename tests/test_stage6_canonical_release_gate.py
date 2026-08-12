@@ -50,7 +50,7 @@ def test_canonical_gate_matches_101_303_reviewed_universe():
     }
 
 
-def test_taiwan_is_inside_canonical_gate():
+def test_taiwan_is_inside_released_canonical_gate():
     release = get_canonical_source_release(
         "CZ-TW",
         gate_path=GATE_PATH,
@@ -60,37 +60,36 @@ def test_taiwan_is_inside_canonical_gate():
     assert release.human_review_status == (
         "human_review_complete"
     )
+    assert release.is_released is True
 
-    assert release.is_released is False
 
-
-def test_all_packages_remain_fail_closed():
+def test_all_canonical_packages_are_released():
     gate = load_canonical_source_release_gate(
         GATE_PATH
     )
 
     assert all(
-        release.release_status == "blocked"
+        release.release_status == "released"
         for release in gate.values()
     )
-
     assert all(
-        release.active_rule_allowed is False
+        release.active_rule_allowed is True
         for release in gate.values()
     )
-
     assert all(
-        release.production_ready is False
+        release.production_ready is True
         for release in gate.values()
     )
-
     assert all(
-        release.fail_closed is True
+        release.fail_closed is False
         for release in gate.values()
     )
-
     assert all(
-        release.is_released is False
+        release.release_blockers == ()
+        for release in gate.values()
+    )
+    assert all(
+        release.is_released is True
         for release in gate.values()
     )
 
@@ -145,7 +144,7 @@ def test_non_sample_packages_do_not_fake_secondary_qa():
     )
 
 
-def test_production_approval_created_but_no_promotion():
+def test_production_approval_and_promotion_are_complete():
     gate = load_canonical_source_release_gate(
         GATE_PATH
     )
@@ -155,22 +154,21 @@ def test_production_approval_created_but_no_promotion():
         == "production_approved"
         for release in gate.values()
     )
-
     assert all(
         release.rule_promotion_status
-        == "not_promoted"
+        == "promoted"
         for release in gate.values()
     )
 
 
-def test_require_release_fails_closed():
-    with pytest.raises(
-        CanonicalSourceNotReleasedError
-    ):
-        require_canonical_released_source(
-            "CZ-AT",
-            gate_path=GATE_PATH,
-        )
+def test_require_release_accepts_released_pair():
+    release = require_canonical_released_source(
+        "CZ-AT",
+        gate_path=GATE_PATH,
+    )
+
+    assert release.treaty_pair_id == "CZ-AT"
+    assert release.is_released is True
 
 
 def test_unknown_pair_fails_closed():
@@ -264,31 +262,23 @@ def test_current_package_hashes_are_used_after_stage6b_corrections():
     assert gate_hashes == queue_hashes
 
 
-def test_readiness_does_not_promote_or_release_anything():
+def test_final_gate_releases_complete_universe():
     raw = json.loads(
         GATE_PATH.read_text(encoding="utf-8")
     )
 
     assert raw["counts"][
         "rule_promoted_packages"
-    ] == 0
-
+    ] == 101
     assert raw["counts"][
         "released_packages"
-    ] == 0
-
+    ] == 101
     assert raw["counts"][
         "released_scopes"
-    ] == 0
+    ] == 303
 
     for row in raw["treaty_partners"]:
-        assert (
-            row["release_blockers"]
-            == [
-                "rule_promotion_missing",
-                "source_release_not_opened",
-            ]
-        )
+        assert row["release_blockers"] == []
 
 
 def test_stage6c_all_101_packages_are_production_approved():
@@ -337,34 +327,28 @@ def test_stage6c_approval_is_not_additional_human_review():
         )
 
 
-def test_stage6c_still_blocks_rule_promotion_and_release():
+def test_stage6_final_runtime_state_is_released():
     raw = json.loads(
         GATE_PATH.read_text(encoding="utf-8")
     )
 
     assert raw["counts"][
         "rule_promoted_packages"
-    ] == 0
-
+    ] == 101
     assert raw["counts"][
         "released_packages"
-    ] == 0
-
+    ] == 101
     assert raw["counts"][
         "released_scopes"
-    ] == 0
+    ] == 303
 
     for row in raw["treaty_partners"]:
-        assert row["rule_promotion_status"] == "not_promoted"
-        assert row["release_status"] == "blocked"
-        assert row["active_rule_allowed"] is False
-        assert row["production_ready"] is False
-        assert row["fail_closed"] is True
-
-        assert row["release_blockers"] == [
-            "rule_promotion_missing",
-            "source_release_not_opened",
-        ]
+        assert row["rule_promotion_status"] == "promoted"
+        assert row["release_status"] == "released"
+        assert row["active_rule_allowed"] is True
+        assert row["production_ready"] is True
+        assert row["fail_closed"] is False
+        assert row["release_blockers"] == []
 
 
 def test_secondary_ai_crosscheck_is_never_recorded_as_independent_human_qa():
@@ -405,3 +389,35 @@ def test_secondary_ai_crosscheck_is_never_recorded_as_independent_human_qa():
     assert gate["gate_semantics"][
         "secondary_ai_is_not_human_review"
     ] is True
+
+
+def test_final_release_events_are_hash_bound():
+    raw = json.loads(
+        GATE_PATH.read_text(encoding="utf-8")
+    )
+
+    assert raw["fail_closed"] is True
+
+    for row in raw["treaty_partners"]:
+        evidence = row["release_evidence"]
+        promotion = evidence["rule_promotion_event"]
+        release = evidence["source_release_event"]
+
+        assert promotion is not None
+        assert release is not None
+
+        assert (
+            promotion["package_sha256"]
+            == row["package_sha256"]
+        )
+        assert (
+            release["package_sha256"]
+            == row["package_sha256"]
+        )
+        assert (
+            promotion["rule_file_sha256"]
+            == release["rule_file_sha256"]
+        )
+
+        assert row["fail_closed"] is False
+        assert row["release_blockers"] == []

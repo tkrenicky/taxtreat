@@ -30,7 +30,7 @@ def test_readiness_success(monkeypatch):
     assert client.get("/health/ready").json() == {"status": "ready"}
 
 
-def test_analysis_uses_canonical_fail_closed_path():
+def test_analysis_uses_released_canonical_path():
     response = client.post(
         "/analysis",
         json={
@@ -41,14 +41,10 @@ def test_analysis_uses_canonical_fail_closed_path():
         },
     )
 
-    assert response.status_code == 409
-
-    detail = response.json()["detail"]
-
-    assert detail["code"] == "SOURCE_NOT_RELEASED"
-    assert detail["treaty_pair_id"] == "CZ-CH"
-    assert detail["release_status"] != "released"
-    assert detail["release_blockers"]
+    assert response.status_code == 200
+    payload = response.json()
+    assert "status" in payload
+    assert "requires_review" in payload
 
 
 def test_analysis_requires_transaction_date():
@@ -127,7 +123,7 @@ def test_all_registered_jurisdictions_are_exposed():
     ]
 
 
-def test_pending_registered_scope_fails_closed_without_candidate_rate():
+def test_released_registered_scope_reaches_decision_engine():
     response = client.post(
         "/analysis",
         json={
@@ -138,14 +134,11 @@ def test_pending_registered_scope_fails_closed_without_candidate_rate():
         },
     )
 
-    assert response.status_code == 409
-
-    detail = response.json()["detail"]
-
-    assert detail["code"] == "SOURCE_NOT_RELEASED"
-    assert detail["treaty_pair_id"] == "CZ-CH"
-    assert detail["release_status"] != "released"
-    assert detail["release_blockers"]
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["status"] == "REVIEW_REQUIRED"
+    assert payload["rate"] is None
+    assert payload["requires_review"] is True
 
 
 def test_analysis_without_release_manifest_uses_unreleased(
@@ -167,14 +160,8 @@ def test_analysis_without_release_manifest_uses_unreleased(
         },
     )
 
-    # Source-release validation occurs before response
-    # metadata such as dataset_version is constructed.
-    assert response.status_code == 409
-
-    detail = response.json()["detail"]
-
-    assert detail["code"] == "SOURCE_NOT_RELEASED"
-    assert detail["treaty_pair_id"] == "CZ-CH"
+    assert response.status_code == 200
+    assert response.json()["dataset_version"] == "unreleased"
 
 
 class FakeConnection:

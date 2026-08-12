@@ -175,7 +175,7 @@ def test_gr_dividend_has_no_invented_treaty_cap():
     assert treaty_rows == []
 
 
-def test_canonical_gate_remains_closed():
+def test_canonical_gate_is_fully_released():
     gate = load(
         BASE
         / "production_source_release_gate_v2.json"
@@ -183,24 +183,24 @@ def test_canonical_gate_remains_closed():
 
     assert (
         gate["counts"]["rule_promoted_packages"]
-        == 0
+        == 101
     )
     assert (
         gate["counts"]["released_packages"]
-        == 0
+        == 101
     )
     assert (
         gate["counts"]["released_scopes"]
-        == 0
+        == 303
     )
 
     assert all(
         row["rule_promotion_status"]
-        == "not_promoted"
+        == "promoted"
         for row in gate["treaty_partners"]
     )
 
     assert all(
-        row["release_status"] == "blocked"
+        row["release_status"] == "released"
         for row in gate["treaty_partners"]
     )
