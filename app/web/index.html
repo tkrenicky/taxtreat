@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="TaxTreat – řízené posouzení české srážkové daně">
+  <title>TaxTreat · Nové posouzení</title>
+  <link rel="stylesheet" href="/ui-assets/styles.css">
+  <script defer src="/ui-assets/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#case-form">Přejít na formulář</a>
+  <header class="topbar">
+    <a class="brand" href="/ui" aria-label="TaxTreat domů">
+      <span class="brand-mark">TT</span>
+      <span><strong>TaxTreat</strong><small>Czech outbound WHT</small></span>
+    </a>
+    <div class="release">
+      <span class="release-dot"></span>
+      Stage 6 production rules
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">NOVÉ POSOUZENÍ</p>
+      <h1>Od transakce k doloženému výsledku.</h1>
+      <p>Vyplňte základní údaje. TaxTreat zobrazí pouze otázky a doklady,
+         které skutečně chybí pro danou právní cestu.</p>
+    </section>
+
+    <div class="workspace">
+      <form id="case-form" class="panel form-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="step-label">Krok 1</p>
+            <h2>Transakce</h2>
+          </div>
+          <span class="required-note">* povinné</span>
+        </div>
+
+        <div class="field-grid">
+          <label>
+            <span>Země zdroje *</span>
+            <select name="source_country" required>
+              <option value="CZ">Česká republika (CZ)</option>
+            </select>
+          </label>
+          <label>
+            <span>Země příjemce *</span>
+            <select name="recipient_country" required>
+              <option value="">Vyberte zemi</option>
+              <option value="AT">Rakousko (AT)</option>
+              <option value="CH">Švýcarsko (CH)</option>
+              <option value="DE">Německo (DE)</option>
+              <option value="SG">Singapur (SG)</option>
+              <option value="TW">Tchaj-wan (TW)</option>
+            </select>
+          </label>
+          <label>
+            <span>Druh příjmu *</span>
+            <select name="income_type" required>
+              <option value="">Vyberte druh</option>
+              <option value="dividend">Dividendy</option>
+              <option value="interest">Úroky</option>
+              <option value="royalty">Licenční poplatky</option>
+            </select>
+          </label>
+          <label>
+            <span>Datum transakce *</span>
+            <input name="transaction_date" type="date" required>
+          </label>
+        </div>
+
+        <hr>
+
+        <div class="section-heading">
+          <div>
+            <p class="step-label">Krok 2</p>
+            <h2>Částka a měna</h2>
+          </div>
+          <span class="optional">volitelné do finálního výpočtu</span>
+        </div>
+
+        <div class="amount-row">
+          <label class="amount-field">
+            <span>Hrubá částka</span>
+            <input name="amount" inputmode="decimal" placeholder="100000.00">
+          </label>
+          <label>
+            <span>Měna</span>
+            <select name="currency" id="currency">
+              <option value="CZK">CZK</option>
+              <option value="EUR">EUR</option>
+              <option value="USD">USD</option>
+              <option value="CHF">CHF</option>
+              <option value="GBP">GBP</option>
+            </select>
+          </label>
+        </div>
+
+        <fieldset id="fx-fields" class="fx-box" hidden>
+          <legend>Kurzový podklad ČNB</legend>
+          <p>Rozhodný je dřívější den úhrady nebo zaúčtování.</p>
+          <div class="field-grid">
+            <label><span>Datum úhrady</span><input name="payment_date" type="date"></label>
+            <label><span>Datum zaúčtování</span><input name="accounting_date" type="date"></label>
+            <label><span>Kurz CZK za 1 jednotku</span><input name="czk_per_unit" inputmode="decimal" placeholder="24.850"></label>
+            <label><span>Datum kurzu</span><input name="rate_date" type="date"></label>
+          </div>
+          <label>
+            <span>Oficiální URL ČNB</span>
+            <input name="rate_url" type="url" placeholder="https://www.cnb.cz/...">
+          </label>
+        </fieldset>
+
+        <div id="form-error" class="message error" role="alert" hidden></div>
+        <button class="primary" type="submit">
+          Zjistit potřebné informace
+          <span aria-hidden="true">→</span>
+        </button>
+        <p class="fine-print">Odpovědi klienta nejsou právním schválením.
+          Nevyřešené položky zůstávají označené k odbornému posouzení.</p>
+      </form>
+
+      <aside class="panel result-panel" aria-live="polite">
+        <div id="empty-state" class="empty-state">
+          <div class="empty-icon">✓</div>
+          <h2>Výsledek se objeví zde</h2>
+          <p>Po odeslání zobrazíme stav, doplňující otázky, potřebné doklady
+             a případný výpočet daně v CZK.</p>
+        </div>
+
+        <div id="result" hidden>
+          <div class="result-header">
+            <div>
+              <p class="step-label">AKTUÁLNÍ STAV</p>
+              <h2 id="status-title">—</h2>
+            </div>
+            <span id="status-badge" class="status-badge">—</span>
+          </div>
+          <p id="status-description" class="status-description"></p>
+
+          <section id="calculation-card" class="calculation" hidden>
+            <p class="step-label">ORIENTAČNÍ VÝPOČET</p>
+            <dl>
+              <div><dt>Základ v CZK</dt><dd id="gross-czk">—</dd></div>
+              <div class="tax-row"><dt>Srážková daň</dt><dd id="tax-czk">—</dd></div>
+              <div><dt>Čistá částka v CZK</dt><dd id="net-czk">—</dd></div>
+            </dl>
+          </section>
+
+          <section>
+            <div class="list-heading">
+              <h3>Doplňující otázky</h3>
+              <span id="question-count">0</span>
+            </div>
+            <div id="questions" class="questions"></div>
+          </section>
+
+          <section>
+            <div class="list-heading">
+              <h3>Potřebné doklady</h3>
+              <span id="document-count">0</span>
+            </div>
+            <ul id="documents" class="document-list"></ul>
+          </section>
+
+          <button id="report-button" class="secondary" type="button">
+            Vytvořit HTML report
+          </button>
+          <div id="report-error" class="message error" role="alert" hidden></div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+    <p>TaxTreat poskytuje právní informace a podporu workflow, nikoli daňové poradenství.</p>
+    <a href="/docs">API dokumentace</a>
+  </footer>
+</body>
+</html>
