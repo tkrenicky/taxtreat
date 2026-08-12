@@ -41,6 +41,8 @@ def capture(output_dir: Path) -> dict[str, object]:
     output_dir.mkdir(parents=True, exist_ok=True)
     desktop_path = output_dir / "stage7b-guided-intake-desktop.png"
     mobile_path = output_dir / "stage7b-guided-intake-mobile.png"
+    workspace_path = output_dir / "stage7c-workspace-dashboard.png"
+    workspace_result_path = output_dir / "stage7c-workspace-result.png"
 
     process = subprocess.Popen(
         [
@@ -222,6 +224,61 @@ def capture(output_dir: Path) -> dict[str, object]:
                 raise AssertionError(
                     "Professional report download did not produce HTML."
                 )
+
+            page.set_viewport_size({"width": 1440, "height": 1100})
+            page.goto(
+                f"{BASE_URL}/workspace-demo",
+                wait_until="networkidle",
+            )
+            if not page.get_by_text(
+                "Návrh pracovního prostoru",
+                exact=True,
+            ).is_visible():
+                raise AssertionError(
+                    "Workspace data-boundary notice is missing."
+                )
+            page.screenshot(path=workspace_path, full_page=True)
+            page.get_by_role(
+                "button",
+                name="Nová kontrola platby →",
+            ).first.click()
+            page.get_by_role(
+                "button",
+                name="Pokračovat k platbě →",
+            ).click()
+            workspace_form = page.locator("#workspace-payment")
+            workspace_form.locator(
+                'select[name="income_type"]'
+            ).select_option("dividend")
+            workspace_form.locator(
+                'input[name="transaction_date"]'
+            ).fill("2026-08-12")
+            workspace_form.locator(
+                'input[name="amount"]'
+            ).fill("100000")
+            workspace_form.get_by_role(
+                "button",
+                name="Vypočítat a zobrazit výsledek →",
+            ).click()
+            page.locator("#workspace-result-status").wait_for(
+                state="visible"
+            )
+            workspace_status = page.locator(
+                "#workspace-result-status"
+            ).inner_text()
+            if workspace_status != "VYŽADUJE DOPLNĚNÍ":
+                raise AssertionError(
+                    "Workspace did not render the canonical review status: "
+                    f"{workspace_status!r}."
+                )
+            if page.locator("#workspace-actions .action-item").count() < 1:
+                raise AssertionError(
+                    "Workspace result did not expose actionable next steps."
+                )
+            page.screenshot(
+                path=workspace_result_path,
+                full_page=True,
+            )
             browser.close()
     finally:
         process.terminate()
@@ -249,6 +306,16 @@ def capture(output_dir: Path) -> dict[str, object]:
                 "name": mobile_path.name,
                 "width": 390,
                 "sha256": _sha256(mobile_path),
+            },
+            {
+                "name": workspace_path.name,
+                "width": 1440,
+                "sha256": _sha256(workspace_path),
+            },
+            {
+                "name": workspace_result_path.name,
+                "width": 1440,
+                "sha256": _sha256(workspace_result_path),
             },
         ],
     }

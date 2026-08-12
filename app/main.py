@@ -123,6 +123,11 @@ def guided_intake_ui():
     return FileResponse(WEB_ROOT / "index.html")
 
 
+@app.get("/workspace-demo", include_in_schema=False)
+def workspace_demo_ui():
+    return FileResponse(WEB_ROOT / "workspace.html")
+
+
 @app.get("/health/live")
 def liveness():
     return {"status": "ok"}
@@ -463,4 +468,3 @@ def list_treaties():
         ) from exc
     finally:
         conn.close()
-

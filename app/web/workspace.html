@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="TaxTreat – pracovní prostor pro kontrolu české srážkové daně">
+  <title>TaxTreat · Pracovní prostor</title>
+  <link rel="stylesheet" href="/ui-assets/workspace.css">
+  <script defer src="/ui-assets/workspace.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <a class="logo" href="#prehled" data-nav="dashboard"><span>TT</span><b>TaxTreat</b></a>
+    <nav aria-label="Hlavní navigace">
+      <button class="active" data-nav="dashboard">Přehled</button>
+      <button data-nav="payers">Plátci</button>
+      <button data-nav="recipients">Příjemci</button>
+      <button data-nav="reviews">Kontroly plateb</button>
+      <button data-nav="outputs">Výstupy</button>
+      <button data-nav="sources">Zdroje</button>
+    </nav>
+    <div class="account"><span>Demo režim</span><b aria-hidden="true">TK</b></div>
+  </header>
+
+  <div class="demo-notice" role="status">
+    <strong>Návrh pracovního prostoru</strong>
+    <span>Data zůstávají pouze v paměti této stránky a po obnovení se odstraní. Přihlášení ani ukládání klientských případů zatím není aktivní.</span>
+  </div>
+
+  <main>
+    <section class="view active" data-view="dashboard">
+      <div class="page-title">
+        <div><p>PRACOVNÍ PROSTOR</p><h1>Přehled</h1><span>Platby, příjemci a úkoly vyžadující pozornost.</span></div>
+        <button class="primary compact" data-start-flow>Nová kontrola platby →</button>
+      </div>
+      <div class="metrics">
+        <article><span>Aktivní plátci</span><strong>1</strong><small>v tomto pracovním prostoru</small></article>
+        <article><span>Příjemci</span><strong>1</strong><small>jeden profil k doplnění</small></article>
+        <article><span>Otevřené kontroly</span><strong>0</strong><small>žádná rozpracovaná platba</small></article>
+        <article><span>Vyžaduje pozornost</span><strong>1</strong><small>chybějící podklad příjemce</small></article>
+      </div>
+      <article class="card onboarding">
+        <div><span class="icon">✓</span><div><h2>Dokonči nastavení pracovního prostoru</h2><p>Profil plátce je připraven. Doplň příjemce a proveď první kontrolu platby.</p></div></div>
+        <ol><li class="done">Plátce založen</li><li>Příjemce zkontrolován</li><li>První platba vyhodnocena</li></ol>
+      </article>
+      <div class="dashboard-grid">
+        <article class="card attention">
+          <div class="card-head"><h2>Úkoly</h2><span>1</span></div>
+          <button class="task-row" data-open-recipient><span>Demo GmbH</span><b>Doplnit potvrzení o daňovém rezidentství</b><small>Otevřít profil →</small></button>
+        </article>
+        <article class="card">
+          <div class="card-head"><h2>Poslední výstupy</h2><span>0</span></div>
+          <div class="empty"><strong>Zatím bez výstupů</strong><p>Po dokončení kontroly platby se zde objeví její výsledek.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="view" data-view="payers">
+      <div class="page-title"><div><p>ORGANIZACE</p><h1>Plátci</h1><span>České subjekty, jejichž platby jsou v TaxTreat kontrolovány.</span></div></div>
+      <article class="card entity-card">
+        <div class="avatar">D</div><div><h2>Demo CZ s.r.o.</h2><p>Česká republika · aktivní plátce</p></div>
+        <dl><div><dt>Příjemci</dt><dd>1</dd></div><div><dt>Platby</dt><dd>0</dd></div><div><dt>Otevřené úkoly</dt><dd>1</dd></div></dl>
+      </article>
+    </section>
+
+    <section class="view" data-view="recipients">
+      <div class="page-title"><div><p>PROFILY PRO OPAKOVANÉ POUŽITÍ</p><h1>Příjemci</h1><span>Skutkové údaje a podklady použitelné pro další platby stejnému příjemci.</span></div><button class="secondary compact" data-create-recipient>Přidat příjemce</button></div>
+      <article class="card recipient-row" data-open-recipient tabindex="0">
+        <div class="avatar">D</div><div><h2>Demo GmbH</h2><p>Rakousko · společnost</p></div><span class="badge warning">Podklady k doplnění</span><strong>Profil 4/5</strong><span>Otevřít →</span>
+      </article>
+    </section>
+
+    <section class="view" data-view="recipient-detail">
+      <button class="back" data-nav="recipients">← Zpět na příjemce</button>
+      <article class="card profile-head">
+        <div class="avatar large">D</div><div><h1>Demo GmbH</h1><p>Rakousko · společnost · příjemce Demo CZ s.r.o.</p></div>
+        <button class="primary compact" data-start-flow>Kontrola nové platby →</button>
+      </article>
+      <article class="card completeness">
+        <div><h2>Úplnost profilu</h2><strong>4/5</strong></div><progress max="5" value="4">4 z 5</progress>
+        <button>+ Doplnit potvrzení o daňovém rezidentství a dobu jeho platnosti</button>
+      </article>
+      <div class="dashboard-grid">
+        <article class="card profile-facts"><h2>Základní údaje</h2><dl><div><dt>Daňová rezidence</dt><dd>Rakousko</dd></div><div><dt>Typ subjektu</dt><dd>Společnost</dd></div><div><dt>Skutečný vlastník příjmu</dt><dd>Předpokládáno</dd></div><div><dt>Vztah ke stálé provozovně v ČR</dt><dd>Bez souvislosti</dd></div></dl></article>
+        <article class="card"><h2>Dokumenty</h2><div class="empty compact-empty"><strong>Potvrzení o daňovém rezidentství</strong><p>Zatím nebylo bezpečně uloženo.</p></div><button class="secondary" disabled>Nahrávání zpřístupníme po zavedení zabezpečeného úložiště</button></article>
+      </div>
+      <article class="card history"><h2>Historie plateb</h2><div class="empty"><strong>Zatím bez plateb</strong><p>Spusť první kontrolu platby pro tohoto příjemce.</p></div></article>
+    </section>
+
+    <section class="view" data-view="reviews">
+      <div class="page-title"><div><p>TRANSAKCE</p><h1>Kontroly plateb</h1><span>Samostatný záznam pro každou platbu a každou verzi výsledku.</span></div><button class="primary compact" data-start-flow>Nová kontrola platby →</button></div>
+      <article class="card"><div class="empty"><strong>Zatím bez kontrol plateb</strong><p>Vyber příjemce a zadej údaje o první transakci.</p></div></article>
+    </section>
+
+    <section class="view" data-view="outputs">
+      <div class="page-title"><div><p>DOKUMENTACE</p><h1>Výstupy</h1><span>Verzované výpočty a reporty navázané na konkrétní platby.</span></div></div>
+      <article class="card"><div class="empty"><strong>Zatím bez výstupů</strong><p>Výstup vznikne po dokončení kontroly platby.</p></div></article>
+    </section>
+
+    <section class="view" data-view="sources">
+      <div class="page-title"><div><p>DŮKAZNÍ ZÁKLAD</p><h1>Zdroje</h1><span>Smluvní texty a evidované zdroje použité v konkrétních výsledcích.</span></div></div>
+      <div class="metrics source-metrics"><article><span>Smluvní partneři</span><strong>101</strong></article><article><span>Pokryté kombinace</span><strong>303</strong></article><article><span>Příjmové kategorie</span><strong>3</strong></article></div>
+      <article class="card source-note"><h2>Zdroje patří k výsledku</h2><p>U každé dokončené kontroly zobrazíme konkrétní článek smlouvy, použitou právní vrstvu a verzi datasetu. Obecná knihovna nenahrazuje posouzení konkrétní transakce.</p></article>
+    </section>
+
+    <section class="view flow" data-view="flow">
+      <div class="flow-progress" aria-label="Průběh kontroly">
+        <button class="active" data-flow-step="1"><b>1</b><span>Příjemce</span></button><i></i>
+        <button data-flow-step="2"><b>2</b><span>Platba</span></button><i></i>
+        <button data-flow-step="3"><b>3</b><span>Výsledek</span></button>
+      </div>
+      <button class="back" data-nav="dashboard">← Ukončit průvodce</button>
+
+      <section class="flow-step active" data-step="1">
+        <div class="page-title"><div><p>KROK 1 ZE 3</p><h1>Komu platíš?</h1><span>Vyber existujícího příjemce nebo založ nový profil.</span></div></div>
+        <article class="card select-card selected">
+          <label><input type="radio" name="flow-recipient" checked><span class="avatar">D</span><span><b>Demo GmbH</b><small>Rakousko · společnost · profil 4/5</small></span><em>Vybráno</em></label>
+        </article>
+        <div class="flow-actions"><button class="secondary" data-nav="recipients">Spravovat příjemce</button><button class="primary" data-next-step="2">Pokračovat k platbě →</button></div>
+      </section>
+
+      <section class="flow-step" data-step="2">
+        <div class="page-title"><div><p>KROK 2 ZE 3</p><h1>Údaje o platbě</h1><span>Kontrola pro příjemce <b>Demo GmbH</b>.</span></div></div>
+        <form id="workspace-payment" class="card payment-form">
+          <div class="field-grid">
+            <label><span>Druh příjmu *</span><select name="income_type" required><option value="">Vyber druh</option><option value="dividend">Dividendy</option><option value="interest">Úroky</option><option value="royalty">Licenční poplatky</option></select></label>
+            <label><span>Datum transakce *</span><input name="transaction_date" type="date" required></label>
+            <label><span>Hrubá částka *</span><input name="amount" type="number" min="1" step="1" required placeholder="100000"></label>
+            <label><span>Měna *</span><select name="currency"><option>CZK</option><option>EUR</option><option>USD</option><option>CHF</option><option>GBP</option></select></label>
+          </div>
+          <label class="check"><input name="no_pe_connection" type="checkbox" checked><span>Platba nesouvisí se stálou provozovnou příjemce v České republice.</span><abbr title="Stálá provozovna je trvalé místo podnikání zahraniční osoby v České republice.">i</abbr></label>
+          <div class="assumption"><b>Použité předpoklady</b><p>Příjemce je skutečným vlastníkem příjmu a daňovým rezidentem Rakouska. Případnou nejistotu označ ve výsledku k ověření poradcem.</p></div>
+          <div id="workspace-error" class="error" role="alert" hidden></div>
+          <div class="flow-actions"><button type="button" class="secondary" data-next-step="1">← Zpět</button><button type="submit" class="primary">Vypočítat a zobrazit výsledek →</button></div>
+        </form>
+      </section>
+
+      <section class="flow-step" data-step="3">
+        <div class="page-title"><div><p>KROK 3 ZE 3</p><h1>Výsledek kontroly</h1><span>Demo CZ s.r.o. → Demo GmbH</span></div></div>
+        <article class="card result-hero">
+          <span id="workspace-result-status" class="badge warning">ČEKÁ NA VÝPOČET</span>
+          <p>Srážková daň v CZK</p><strong id="workspace-tax">—</strong><small id="workspace-rate">—</small>
+        </article>
+        <article class="reason"><h2>Proč tato sazba</h2><p id="workspace-reason">Výsledek se zobrazí po vyhodnocení platby kanonickým pravidlovým enginem.</p></article>
+        <div class="dashboard-grid">
+          <article class="card summary"><h2>Souhrn platby</h2><dl><div><dt>Hrubá částka</dt><dd id="workspace-gross">—</dd></div><div><dt>Srážková daň</dt><dd id="workspace-tax-row">—</dd></div><div><dt>Čistá částka</dt><dd id="workspace-net">—</dd></div></dl></article>
+          <article class="card"><div class="card-head"><h2>Další kroky</h2><span id="workspace-action-count">0</span></div><div id="workspace-actions" class="action-list"></div></article>
+        </div>
+        <article class="card result-sources"><h2>Podklady výsledku</h2><div id="workspace-citations" class="citation-list"><p>Po výpočtu se zobrazí smluvní článek a evidované zdroje.</p></div></article>
+        <div class="flow-actions"><button class="secondary" data-next-step="2">← Upravit platbu</button><button class="primary" data-nav="reviews">Uložit až po zavedení zabezpečeného účtu</button></div>
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    <p>TaxTreat je výpočetní nástroj. Výstup není právním ani daňovým poradenstvím ani závazným stanoviskem.</p>
+    <p><a href="/ui">Jednorázový výpočet</a> · Zásady ochrany dat · Podmínky použití</p>
+  </footer>
+</body>
+</html>

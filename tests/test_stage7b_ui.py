@@ -75,6 +75,46 @@ def test_guided_intake_assets_are_local_and_accessible():
     assert ".assumption-toggle" in css.text
 
 
+def test_workspace_demo_exposes_recipient_payment_result_workflow():
+    response = client.get("/workspace-demo")
+
+    assert response.status_code == 200
+    html = response.text
+    assert "Návrh pracovního prostoru" in html
+    assert "po obnovení se odstraní" in html
+    assert "Přehled" in html
+    assert "Plátci" in html
+    assert "Příjemci" in html
+    assert "Kontroly plateb" in html
+    assert "Výstupy" in html
+    assert "Komu platíš?" in html
+    assert "Údaje o platbě" in html
+    assert "Výsledek kontroly" in html
+    assert "Proč tato sazba" in html
+    assert "Další kroky" in html
+    assert "Přihlášení ani ukládání klientských případů zatím není aktivní" in html
+    assert "TaxTreat je výpočetní nástroj" in html
+    assert "orientační" not in html.lower()
+
+
+def test_workspace_demo_assets_are_local_and_use_canonical_intake():
+    html = client.get("/workspace-demo").text
+    css = client.get("/ui-assets/workspace.css")
+    javascript = client.get("/ui-assets/workspace.js")
+
+    assert css.status_code == 200
+    assert javascript.status_code == 200
+    assert "/ui-assets/workspace.css" in html
+    assert "/ui-assets/workspace.js" in html
+    assert 'fetch("/analysis/intake"' in javascript.text
+    assert "localStorage" not in javascript.text
+    assert "sessionStorage" not in javascript.text
+    assert "document.cookie" not in javascript.text
+    assert "textContent" in javascript.text
+    assert ".innerHTML" not in javascript.text
+    assert "grid-template-columns:repeat(4,1fr)" in css.text
+
+
 def test_ui_calls_canonical_endpoints_and_uses_safe_dom_rendering():
     javascript = client.get("/ui-assets/app.js").text
 
