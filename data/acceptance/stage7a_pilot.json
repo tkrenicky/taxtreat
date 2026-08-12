@@ -1,0 +1,354 @@
+{
+  "schema_version": 1,
+  "dataset_release": "stage7a-e2e-acceptance-2026-08-12.1",
+  "legal_dataset_release": "stage6-production-rules-2026-08-12.1",
+  "source_release": "stage6-source-release-2026-08-12.1",
+  "legal_data_cutoff": "2026-08-12",
+  "semantics": {
+    "discovery_is_not_legal_approval": true,
+    "empty_facts_must_not_produce_final_result": true,
+    "unknown_cz_pairs_fail_closed": true,
+    "reverse_direction_is_out_of_scope": true
+  },
+  "cases": [
+    {
+      "case_id": "CZ-AT-DIVIDEND-EMPTY",
+      "kind": "released_empty_fact_discovery",
+      "request": {
+        "source_country": "CZ",
+        "recipient_country": "AT",
+        "income_type": "dividend",
+        "transaction_date": "2026-08-12",
+        "facts": {},
+        "determinations": {}
+      },
+      "expected": {
+        "http_status": 200,
+        "status": "REVIEW_REQUIRED",
+        "rate": null,
+        "requires_review": true,
+        "missing_facts_nonempty": true,
+        "minimum_official_citations": 1
+      }
+    },
+    {
+      "case_id": "CZ-AT-INTEREST-EMPTY",
+      "kind": "released_empty_fact_discovery",
+      "request": {
+        "source_country": "CZ",
+        "recipient_country": "AT",
+        "income_type": "interest",
+        "transaction_date": "2026-08-12",
+        "facts": {},
+        "determinations": {}
+      },
+      "expected": {
+        "http_status": 200,
+        "status": "REVIEW_REQUIRED",
+        "rate": null,
+        "requires_review": true,
+        "missing_facts_nonempty": true,
+        "minimum_official_citations": 1
+      }
+    },
+    {
+      "case_id": "CZ-AT-ROYALTY-EMPTY",
+      "kind": "released_empty_fact_discovery",
+      "request": {
+        "source_country": "CZ",
+        "recipient_country": "AT",
+        "income_type": "royalty",
+        "transaction_date": "2026-08-12",
+        "facts": {},
+        "determinations": {}
+      },
+      "expected": {
+        "http_status": 200,
+        "status": "REVIEW_REQUIRED",
+        "rate": null,
+        "requires_review": true,
+        "missing_facts_nonempty": true,
+        "minimum_official_citations": 1
+      }
+    },
+    {
+      "case_id": "CZ-CH-DIVIDEND-EMPTY",
+      "kind": "released_empty_fact_discovery",
+      "request": {
+        "source_country": "CZ",
+        "recipient_country": "CH",
+        "income_type": "dividend",
+        "transaction_date": "2026-08-12",
+        "facts": {},
+        "determinations": {}
+      },
+      "expected": {
+        "http_status": 200,
+        "status": "REVIEW_REQUIRED",
+        "rate": null,
+        "requires_review": true,
+        "missing_facts_nonempty": true,
+        "minimum_official_citations": 1
+      }
+    },
+    {
+      "case_id": "CZ-CH-INTEREST-EMPTY",
+      "kind": "released_empty_fact_discovery",
+      "request": {
+        "source_country": "CZ",
+        "recipient_country": "CH",
+        "income_type": "interest",
+        "transaction_date": "2026-08-12",
+        "facts": {},
+        "determinations": {}
+      },
+      "expected": {
+        "http_status": 200,
+        "status": "REVIEW_REQUIRED",
+        "rate": null,
+        "requires_review": true,
+        "missing_facts_nonempty": true,
+        "minimum_official_citations": 1
+      }
+    },
+    {
+      "case_id": "CZ-CH-ROYALTY-EMPTY",
+      "kind": "released_empty_fact_discovery",
+      "request": {
+        "source_country": "CZ",
+        "recipient_country": "CH",
+        "income_type": "royalty",
+        "transaction_date": "2026-08-12",
+        "facts": {},
+        "determinations": {}
+      },
+      "expected": {
+        "http_status": 200,
+        "status": "REVIEW_REQUIRED",
+        "rate": null,
+        "requires_review": true,
+        "missing_facts_nonempty": true,
+        "minimum_official_citations": 1
+      }
+    },
+    {
+      "case_id": "CZ-DE-DIVIDEND-EMPTY",
+      "kind": "released_empty_fact_discovery",
+      "request": {
+        "source_country": "CZ",
+        "recipient_country": "DE",
+        "income_type": "dividend",
+        "transaction_date": "2026-08-12",
+        "facts": {},
+        "determinations": {}
+      },
+      "expected": {
+        "http_status": 200,
+        "status": "REVIEW_REQUIRED",
+        "rate": null,
+        "requires_review": true,
+        "missing_facts_nonempty": true,
+        "minimum_official_citations": 1
+      }
+    },
+    {
+      "case_id": "CZ-DE-INTEREST-EMPTY",
+      "kind": "released_empty_fact_discovery",
+      "request": {
+        "source_country": "CZ",
+        "recipient_country": "DE",
+        "income_type": "interest",
+        "transaction_date": "2026-08-12",
+        "facts": {},
+        "determinations": {}
+      },
+      "expected": {
+        "http_status": 200,
+        "status": "REVIEW_REQUIRED",
+        "rate": null,
+        "requires_review": true,
+        "missing_facts_nonempty": true,
+        "minimum_official_citations": 1
+      }
+    },
+    {
+      "case_id": "CZ-DE-ROYALTY-EMPTY",
+      "kind": "released_empty_fact_discovery",
+      "request": {
+        "source_country": "CZ",
+        "recipient_country": "DE",
+        "income_type": "royalty",
+        "transaction_date": "2026-08-12",
+        "facts": {},
+        "determinations": {}
+      },
+      "expected": {
+        "http_status": 200,
+        "status": "REVIEW_REQUIRED",
+        "rate": null,
+        "requires_review": true,
+        "missing_facts_nonempty": true,
+        "minimum_official_citations": 1
+      }
+    },
+    {
+      "case_id": "CZ-SG-DIVIDEND-EMPTY",
+      "kind": "released_empty_fact_discovery",
+      "request": {
+        "source_country": "CZ",
+        "recipient_country": "SG",
+        "income_type": "dividend",
+        "transaction_date": "2026-08-12",
+        "facts": {},
+        "determinations": {}
+      },
+      "expected": {
+        "http_status": 200,
+        "status": "REVIEW_REQUIRED",
+        "rate": null,
+        "requires_review": true,
+        "missing_facts_nonempty": true,
+        "minimum_official_citations": 1
+      }
+    },
+    {
+      "case_id": "CZ-SG-INTEREST-EMPTY",
+      "kind": "released_empty_fact_discovery",
+      "request": {
+        "source_country": "CZ",
+        "recipient_country": "SG",
+        "income_type": "interest",
+        "transaction_date": "2026-08-12",
+        "facts": {},
+        "determinations": {}
+      },
+      "expected": {
+        "http_status": 200,
+        "status": "REVIEW_REQUIRED",
+        "rate": null,
+        "requires_review": true,
+        "missing_facts_nonempty": true,
+        "minimum_official_citations": 1
+      }
+    },
+    {
+      "case_id": "CZ-SG-ROYALTY-EMPTY",
+      "kind": "released_empty_fact_discovery",
+      "request": {
+        "source_country": "CZ",
+        "recipient_country": "SG",
+        "income_type": "royalty",
+        "transaction_date": "2026-08-12",
+        "facts": {},
+        "determinations": {}
+      },
+      "expected": {
+        "http_status": 200,
+        "status": "REVIEW_REQUIRED",
+        "rate": null,
+        "requires_review": true,
+        "missing_facts_nonempty": true,
+        "minimum_official_citations": 1
+      }
+    },
+    {
+      "case_id": "CZ-TW-DIVIDEND-EMPTY",
+      "kind": "released_empty_fact_discovery",
+      "request": {
+        "source_country": "CZ",
+        "recipient_country": "TW",
+        "income_type": "dividend",
+        "transaction_date": "2026-08-12",
+        "facts": {},
+        "determinations": {}
+      },
+      "expected": {
+        "http_status": 200,
+        "status": "REVIEW_REQUIRED",
+        "rate": null,
+        "requires_review": true,
+        "missing_facts_nonempty": true,
+        "minimum_official_citations": 1
+      }
+    },
+    {
+      "case_id": "CZ-TW-INTEREST-EMPTY",
+      "kind": "released_empty_fact_discovery",
+      "request": {
+        "source_country": "CZ",
+        "recipient_country": "TW",
+        "income_type": "interest",
+        "transaction_date": "2026-08-12",
+        "facts": {},
+        "determinations": {}
+      },
+      "expected": {
+        "http_status": 200,
+        "status": "REVIEW_REQUIRED",
+        "rate": null,
+        "requires_review": true,
+        "missing_facts_nonempty": true,
+        "minimum_official_citations": 1
+      }
+    },
+    {
+      "case_id": "CZ-TW-ROYALTY-EMPTY",
+      "kind": "released_empty_fact_discovery",
+      "request": {
+        "source_country": "CZ",
+        "recipient_country": "TW",
+        "income_type": "royalty",
+        "transaction_date": "2026-08-12",
+        "facts": {},
+        "determinations": {}
+      },
+      "expected": {
+        "http_status": 200,
+        "status": "REVIEW_REQUIRED",
+        "rate": null,
+        "requires_review": true,
+        "missing_facts_nonempty": true,
+        "minimum_official_citations": 1
+      }
+    },
+    {
+      "case_id": "CZ-ZZ-DIVIDEND-UNKNOWN",
+      "kind": "unknown_pair_fail_closed",
+      "request": {
+        "source_country": "CZ",
+        "recipient_country": "ZZ",
+        "income_type": "dividend",
+        "transaction_date": "2026-08-12",
+        "facts": {},
+        "determinations": {}
+      },
+      "expected": {
+        "http_status": 409,
+        "error_code": "SOURCE_NOT_RELEASED",
+        "release_status": "not_registered",
+        "release_blockers": [
+          "production_source_release_missing"
+        ]
+      }
+    },
+    {
+      "case_id": "AT-CZ-DIVIDEND-REVERSE",
+      "kind": "reverse_direction_out_of_scope",
+      "request": {
+        "source_country": "AT",
+        "recipient_country": "CZ",
+        "income_type": "dividend",
+        "transaction_date": "2026-08-12",
+        "facts": {},
+        "determinations": {}
+      },
+      "expected": {
+        "http_status": 200,
+        "status": "OUT_OF_SCOPE",
+        "rate": null,
+        "requires_review": false,
+        "minimum_official_citations": 0
+      }
+    }
+  ]
+}
