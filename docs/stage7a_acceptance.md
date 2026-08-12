@@ -50,8 +50,12 @@ The analysis request may include:
 }
 ```
 
-TaxTreat uses decimal arithmetic and a documented two-decimal half-up rounding
-policy. It calculates indicative withholding tax and net payment only when the
+TaxTreat uses decimal arithmetic. For CZK, the calculated withholding tax is
+always rounded upward to the next whole crown; the net amount is the supplied
+gross amount less that rounded tax. Other currencies currently use a documented
+two-decimal half-up fallback until a currency-specific policy is configured.
+
+TaxTreat calculates indicative withholding tax and net payment only when the
 released legal engine returns a `FINAL` rate. A candidate rate or
 `REVIEW_REQUIRED` result never produces a tax amount.
 
