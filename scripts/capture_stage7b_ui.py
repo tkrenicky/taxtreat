@@ -133,6 +133,31 @@ def capture(output_dir: Path) -> dict[str, object]:
                     raise AssertionError(
                         "Remaining intake questions were not revealed."
                     )
+
+            beneficial_owner = page.locator(
+                '[data-input-path="facts.beneficial_owner"]'
+            )
+            beneficial_owner.select_option("true")
+            page.locator(
+                "#questions .question-actions button"
+            ).click()
+            page.wait_for_function(
+                """() => !document.querySelector(
+                    '[data-input-path="facts.beneficial_owner"]'
+                )"""
+            )
+            questions_after_answer = int(
+                page.locator("#question-count").inner_text()
+            )
+            if questions_after_answer >= questions:
+                raise AssertionError(
+                    "Supplying a client fact did not reduce "
+                    "the unresolved intake plan."
+                )
+            if page.locator("#answer-error").is_visible():
+                raise AssertionError(
+                    page.locator("#answer-error").inner_text()
+                )
             browser.close()
     finally:
         process.terminate()
@@ -149,6 +174,7 @@ def capture(output_dir: Path) -> dict[str, object]:
         "analysis_status": "REVIEW_REQUIRED",
         "question_count": questions,
         "initially_visible_questions": visible_questions,
+        "question_count_after_answer": questions_after_answer,
         "screenshots": [
             {
                 "name": desktop_path.name,
@@ -178,7 +204,8 @@ def main() -> int:
     summary = capture(output_dir)
     print(
         "Stage 7B browser E2E: PASS "
-        f"({summary['question_count']} questions)"
+        f"({summary['question_count']} questions, "
+        f"{summary['question_count_after_answer']} after answer)"
     )
     for screenshot in summary["screenshots"]:
         print(
