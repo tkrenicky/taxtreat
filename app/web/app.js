@@ -78,9 +78,127 @@
     return button;
   }
 
+  function clientFactName(inputPath) {
+    if (!inputPath || !inputPath.startsWith("facts.")) return null;
+    const name = inputPath.slice("facts.".length);
+    return /^[a-z0-9_]+$/.test(name) ? name : null;
+  }
+
+  function createQuestionInput(question, drafts) {
+    const factName = question.client_answerable
+      ? clientFactName(question.input_path)
+      : null;
+    if (!factName) return null;
+
+    const label = document.createElement("label");
+    label.className = "question-answer";
+    const caption = document.createElement("span");
+    caption.textContent = "Odpověď klienta";
+    const inputId = "answer-" + question.question_id.replace(/[^a-z0-9_-]/gi, "-");
+    const existing = Object.hasOwn(drafts, question.input_path)
+      ? drafts[question.input_path]
+      : currentPayload?.facts?.[factName];
+
+    let input;
+    if (question.response_type === "boolean") {
+      input = document.createElement("select");
+      [
+        ["", "Vyberte odpověď"],
+        ["true", "Ano"],
+        ["false", "Ne"]
+      ].forEach(([optionValue, optionLabel]) => {
+        const option = document.createElement("option");
+        option.value = optionValue;
+        option.textContent = optionLabel;
+        input.append(option);
+      });
+    } else {
+      input = document.createElement("input");
+      input.type = question.response_type === "text" ? "text" : "number";
+      if (question.response_type === "decimal_percent") {
+        input.min = "0";
+        input.max = "100";
+        input.step = "0.01";
+        input.placeholder = "např. 25";
+      } else if (question.response_type === "integer") {
+        input.min = "0";
+        input.step = "1";
+        input.placeholder = "počet celých měsíců";
+      }
+    }
+    input.id = inputId;
+    input.className = "question-input";
+    input.dataset.inputPath = question.input_path;
+    input.dataset.responseType = question.response_type;
+    if (existing !== undefined && existing !== null) {
+      input.value = String(existing);
+    }
+    label.htmlFor = inputId;
+    label.append(caption, input);
+    return label;
+  }
+
+  function captureDraftAnswers(root, drafts) {
+    root.querySelectorAll(".question-input").forEach((input) => {
+      drafts[input.dataset.inputPath] = input.value;
+    });
+  }
+
+  function applyClientAnswers(payload, root) {
+    let supplied = 0;
+    root.querySelectorAll(".question-input").forEach((input) => {
+      if (!input.checkValidity()) {
+        throw new Error("Zkontrolujte formát zadaných odpovědí.");
+      }
+      const raw = input.value.trim();
+      if (!raw) return;
+      const factName = clientFactName(input.dataset.inputPath);
+      if (!factName) {
+        throw new Error("Klientská odpověď smí měnit pouze skutkové údaje.");
+      }
+
+      let answer = raw;
+      if (input.dataset.responseType === "boolean") {
+        answer = raw === "true";
+      } else if (input.dataset.responseType === "integer") {
+        answer = Number.parseInt(raw, 10);
+      } else if (input.dataset.responseType === "decimal_percent") {
+        answer = Number(raw);
+      }
+      payload.facts[factName] = answer;
+      supplied += 1;
+    });
+    return supplied;
+  }
+
+  async function submitGuidedAnswers(button) {
+    const root = document.querySelector("#questions");
+    const answerError = document.querySelector("#answer-error");
+    answerError.hidden = true;
+    const nextPayload = structuredClone(currentPayload);
+    try {
+      const supplied = applyClientAnswers(nextPayload, root);
+      if (!supplied) {
+        throw new Error("Vyplňte alespoň jednu odpověď klienta.");
+      }
+      button.disabled = true;
+      button.textContent = "Přepočítávám…";
+      const response = await postJson("/analysis/intake", nextPayload);
+      currentPayload = nextPayload;
+      renderResponse(response);
+    } catch (error) {
+      answerError.textContent = error.message;
+      answerError.hidden = false;
+    } finally {
+      button.disabled = false;
+      button.textContent = "Uložit odpovědi a znovu vyhodnotit";
+    }
+  }
+
   function renderQuestions(questions) {
     const root = document.querySelector("#questions");
     const initialLimit = 5;
+    const drafts = {};
 
     function render(limit) {
       root.replaceChildren();
@@ -95,13 +213,29 @@
         const why = document.createElement("small");
         why.textContent = question.why;
         card.append(tag, prompt, why);
+        const input = createQuestionInput(question, drafts);
+        if (input) card.append(input);
         root.append(card);
       });
       if (limit < questions.length) {
         root.append(revealButton(
           `Zobrazit dalších ${questions.length - limit} otázek`,
-          () => render(questions.length)
+          () => {
+            captureDraftAnswers(root, drafts);
+            render(questions.length);
+          }
         ));
+      }
+      if (root.querySelector(".question-input")) {
+        const actions = document.createElement("div");
+        actions.className = "question-actions";
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "secondary";
+        button.textContent = "Uložit odpovědi a znovu vyhodnotit";
+        button.addEventListener("click", () => submitGuidedAnswers(button));
+        actions.append(button);
+        root.append(actions);
       }
     }
 
