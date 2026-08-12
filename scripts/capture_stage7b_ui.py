@@ -185,7 +185,7 @@ def capture(output_dir: Path) -> dict[str, object]:
 
             documents = page.locator(".documents-panel")
             documents.locator("summary").click()
-            if not documents.get_attribute("open"):
+            if not documents.evaluate("(element) => element.open"):
                 raise AssertionError(
                     "Required-document panel did not open."
                 )
