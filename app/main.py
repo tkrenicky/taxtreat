@@ -29,6 +29,7 @@ from taxtreat.services.decision import (
     CanonicalAnalysisRequest,
     analyze_transaction,
 )
+from taxtreat.services.intake import build_intake_plan
 from taxtreat.services.reporting import (
     build_professional_report,
     render_report_html,
@@ -404,6 +405,16 @@ def analyze(payload: AnalysisPayload):
         )
     )
     return analysis
+
+
+@app.post("/analysis/intake")
+def analysis_intake(payload: AnalysisPayload):
+    analysis = analyze(payload)
+    request = payload.model_dump(mode="json")
+    return {
+        "analysis": analysis,
+        "intake": build_intake_plan(request, analysis),
+    }
 
 
 @app.post("/analysis/report")
