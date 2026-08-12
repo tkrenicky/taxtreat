@@ -134,3 +134,161 @@ footer a { color: var(--forest-2); }
   .hero h1 { font-size: 2.55rem; }
   footer { display: block; }
 }
+
+
+/* Shared TaxTreat Explorer design system: client surface */
+:root {
+  --ink: #10213b;
+  --muted: #607089;
+  --line: #dce4ef;
+  --canvas: #f5f8fc;
+  --forest: #1766dc;
+  --forest-2: #0d55c7;
+  --mint: #eaf2ff;
+  --shadow: 0 10px 30px rgba(17, 45, 84, .07);
+}
+
+body { background: var(--canvas); }
+.app-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+}
+.page { min-width: 0; }
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 16px 18px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 15% 0%, rgba(54, 113, 202, .28), transparent 18rem),
+    linear-gradient(180deg, #112744 0%, #091b34 100%);
+}
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 6px 24px;
+  color: #fff;
+  text-decoration: none;
+}
+.sidebar-brand strong, .sidebar-brand small { display: block; }
+.sidebar-brand strong { font-size: 1.08rem; }
+.sidebar-brand small { margin-top: 2px; color: #aec1dd; }
+.sidebar .brand-mark { background: #fff; color: #123f78; }
+.sidebar nav { display: grid; gap: 6px; }
+.sidebar nav a, .sidebar nav .disabled {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-height: 42px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: #dce8f8;
+  font-size: .88rem;
+  text-decoration: none;
+}
+.sidebar nav a.active {
+  color: #fff;
+  background: linear-gradient(90deg, rgba(42, 105, 203, .72), rgba(42, 105, 203, .38));
+}
+.sidebar nav .disabled { opacity: .6; }
+.sidebar nav small {
+  margin-left: auto;
+  font-size: .61rem;
+  text-transform: uppercase;
+}
+.sidebar-assurance {
+  margin-top: auto;
+  padding: 15px;
+  border: 1px solid rgba(205, 223, 247, .38);
+  border-radius: 10px;
+  background: rgba(255,255,255,.04);
+}
+.sidebar-assurance strong { font-size: .82rem; }
+.sidebar-assurance p {
+  margin: 8px 0 0;
+  color: #c4d3e7;
+  font-size: .72rem;
+  line-height: 1.55;
+}
+
+.topbar {
+  height: 68px;
+  padding: 0 clamp(20px, 4vw, 48px);
+  border-bottom-color: var(--line);
+  background: rgba(255,255,255,.94);
+}
+.topbar > div:first-child strong, .topbar > div:first-child small { display: block; }
+.topbar > div:first-child small { margin-top: 3px; color: var(--muted); }
+.top-actions { display: flex; align-items: center; gap: 22px; font-size: .84rem; }
+.top-actions a { color: var(--ink); text-decoration: none; }
+
+main {
+  width: min(1240px, calc(100% - 48px));
+  padding: 26px 0 64px;
+}
+.notice {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 28px;
+  padding: 16px 18px;
+  border: 1px solid #f0dfb0;
+  border-radius: 10px;
+  color: #624413;
+  background: linear-gradient(90deg, #fff9e9, #fffdf7);
+}
+.notice-icon {
+  flex: 0 0 30px;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  color: #865b00;
+  background: #ffe29b;
+}
+.notice strong { font-size: .86rem; }
+.notice p { margin: 4px 0 0; font-size: .78rem; line-height: 1.5; }
+
+.hero { max-width: 720px; margin-bottom: 26px; }
+.hero h1 {
+  font-family: inherit;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-weight: 750;
+  letter-spacing: -.045em;
+}
+.eyebrow, .step-label { color: #1766dc; }
+.panel { border-radius: 12px; box-shadow: var(--shadow); }
+.primary { background: linear-gradient(90deg, #1766dc, #0954c7); }
+.secondary { color: #0d55c7; background: #eaf2ff; }
+.status-badge.final, .question .tag { color: #126d3a; background: #e4f6ea; }
+.release-dot { background: #20a464; }
+.calculation { background: linear-gradient(145deg, #102c52, #164b86); }
+
+@media (max-width: 960px) {
+  .app-shell { grid-template-columns: 1fr; }
+  .sidebar {
+    position: static;
+    height: auto;
+    padding: 14px 18px;
+  }
+  .sidebar-brand { padding-bottom: 12px; }
+  .sidebar nav {
+    display: flex;
+    overflow-x: auto;
+  }
+  .sidebar nav a, .sidebar nav .disabled { flex: 0 0 auto; }
+  .sidebar-assurance { display: none; }
+}
+@media (max-width: 580px) {
+  .sidebar nav .disabled { display: none; }
+  .topbar { height: 60px; }
+  .topbar > div:first-child small { display: none; }
+  .top-actions { gap: 12px; }
+  main { width: min(100% - 24px, 1240px); padding-top: 16px; }
+  .notice { padding: 14px; }
+}
