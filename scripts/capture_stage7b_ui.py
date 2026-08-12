@@ -76,6 +76,16 @@ def capture(output_dir: Path) -> dict[str, object]:
             )
 
             page.goto(f"{BASE_URL}/ui", wait_until="networkidle")
+            help_link = page.locator('a[href="#napoveda"]').first
+            if help_link.count() != 1:
+                raise AssertionError("Client methodology link is missing.")
+            help_link.click()
+            page.wait_for_function(
+                "() => window.location.hash === '#napoveda'"
+            )
+            if not page.locator("#help-title").is_visible():
+                raise AssertionError("Client methodology section is not visible.")
+            page.goto(f"{BASE_URL}/ui", wait_until="networkidle")
             page.select_option(
                 'select[name="recipient_country"]',
                 "AT",
@@ -89,9 +99,10 @@ def capture(output_dir: Path) -> dict[str, object]:
             result = page.locator("#result")
             result.wait_for(state="visible")
             status = page.locator("#status-badge").inner_text()
-            if status != "REVIEW_REQUIRED":
+            if status != "VYŽADUJE DOPLNĚNÍ":
                 raise AssertionError(
-                    f"Expected REVIEW_REQUIRED, received {status!r}."
+                    "Expected localized review status, "
+                    f"received {status!r}."
                 )
             visible_questions = page.locator(
                 "#questions .question"
@@ -107,7 +118,7 @@ def capture(output_dir: Path) -> dict[str, object]:
             progress_copy = page.locator(
                 "#questions .wizard-progress"
             ).inner_text()
-            if "Otázky 1–3" not in progress_copy:
+            if "Položky 1–3" not in progress_copy:
                 raise AssertionError(
                     f"Unexpected wizard progress: {progress_copy!r}."
                 )
@@ -170,6 +181,21 @@ def capture(output_dir: Path) -> dict[str, object]:
             if page.locator("#answer-error").is_visible():
                 raise AssertionError(
                     page.locator("#answer-error").inner_text()
+                )
+
+            documents = page.locator(".documents-panel")
+            documents.locator("summary").click()
+            if not documents.get_attribute("open"):
+                raise AssertionError(
+                    "Required-document panel did not open."
+                )
+
+            with page.expect_download() as download_info:
+                page.locator("#report-button").click()
+            download = download_info.value
+            if not download.suggested_filename.endswith(".html"):
+                raise AssertionError(
+                    "Professional report download did not produce HTML."
                 )
             browser.close()
     finally:
