@@ -101,12 +101,13 @@ def test_acceptance_html_contains_summary_and_escapes():
     hostile["results"][0]["case_id"] = "<script>alert(1)</script>"
 
     html = render_acceptance_html(hostile)
+    normalized_html = " ".join(html.split())
 
     assert "<script>" not in html
     assert "&lt;script&gt;" in html
     assert summary["acceptance_sha256"] in html
     assert "17/17 passed" in html
-    assert "do not constitute new legal review" in html
+    assert "do not constitute new legal review" in normalized_html
 
 
 def test_invalid_fixture_semantics_fail_closed(tmp_path):
@@ -138,7 +139,8 @@ def test_invalid_fixture_semantics_fail_closed(tmp_path):
 
 def test_validator_reports_mismatches_and_bad_citations():
     fixture = load_acceptance_fixture(FIXTURE)
-    case = fixture["cases"][0]
+    case = copy.deepcopy(fixture["cases"][0])
+    case["expected"]["minimum_official_citations"] = 2
 
     errors = validate_case_result(
         case,
@@ -164,6 +166,7 @@ def test_validator_reports_mismatches_and_bad_citations():
 
     assert "status expected" in errors[0]
     assert any("missing facts" in error for error in errors)
+    assert any("expected at least 2 citations" in error for error in errors)
     assert any("HTTPS" in error for error in errors)
     assert any("SHA-256" in error for error in errors)
     assert "legal dataset release mismatch" in errors
