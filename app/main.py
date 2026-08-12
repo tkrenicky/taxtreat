@@ -46,6 +46,23 @@ STAGE6_SOURCE_RELEASE = (
 app = FastAPI(title="TaxTreat", version="0.2.0")
 
 
+class CnbExchangeRate(BaseModel):
+    source: str = Field(pattern=r"^(?i:CNB)$")
+    currency: str = Field(pattern=r"^[A-Za-z]{3}$")
+    czk_per_unit: Decimal = Field(
+        gt=0,
+        max_digits=30,
+        decimal_places=12,
+    )
+    effective_date: date
+    source_url: str = Field(pattern=r"^https://")
+
+    @field_validator("source", "currency")
+    @classmethod
+    def normalize_codes(cls, value: str) -> str:
+        return value.upper()
+
+
 class TransactionAmount(BaseModel):
     amount: Decimal = Field(
         gt=0,
@@ -57,6 +74,9 @@ class TransactionAmount(BaseModel):
         max_length=3,
         pattern=r"^[A-Za-z]{3}$",
     )
+    payment_date: date | None = None
+    accounting_date: date | None = None
+    exchange_rate: CnbExchangeRate | None = None
 
     @field_validator("currency")
     @classmethod
