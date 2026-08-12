@@ -62,7 +62,7 @@ def test_professional_report_preserves_review_required_semantics():
     payload = response.json()
     report = payload["report"]
 
-    assert report["schema_version"] == 1
+    assert report["schema_version"] == 2
     assert report["result"]["status"] == "REVIEW_REQUIRED"
     assert report["result"]["rate"] is None
     assert report["result"]["requires_review"] is True
