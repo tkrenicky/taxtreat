@@ -1,0 +1,394 @@
+{
+  "country_pair": {
+    "recipient_country": "GE",
+    "source_country": "CZ"
+  },
+  "rules": [
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": 36,
+      "conditions": [],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA"
+      ],
+      "income_type": "dividend",
+      "legal_instrument": "domestic_law",
+      "legal_layer": "domestic",
+      "paragraph": "1(b)(1)",
+      "priority": 900,
+      "rate": 15.0,
+      "recipient_country": "GE",
+      "review_package_sha256": "55714a2a87b25ff586e2f050a54f296e78d67ad6b0bc9160f1f969c439a82afe",
+      "rule_id": "CZ-GE-DIVIDEND-DOMESTIC",
+      "source_country": "CZ",
+      "source_excerpt_hash": "aa1100129d4ba33a4efeeb3258bfc621281f11b160890ba7a898e71318bd643d",
+      "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+      "source_representation": "approved_structured_projection",
+      "source_text": "Current Czech domestic withholding tax standard rate represented in the approved Stage 6 package: 15.0%.",
+      "source_url": "https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/1992/586/2026-04-01",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "277875b90d6ebdad7a8a63ac78066680443933938df7ce2d467775bf9809cd10",
+      "article": 10,
+      "conditions": [
+        {
+          "fact": "minimum_ownership",
+          "fact_source": "transaction",
+          "operator": ">=",
+          "value": "25"
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2007-05-04",
+      "evidence_source_ids": [
+        "SRC-424DC2CFCDF8B32E"
+      ],
+      "income_type": "dividend",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 681,
+      "rate": 5.0,
+      "recipient_country": "GE",
+      "review_package_sha256": "55714a2a87b25ff586e2f050a54f296e78d67ad6b0bc9160f1f969c439a82afe",
+      "rule_id": "CZ-GE-DIVIDEND-CURRENT-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "83dcf8444442691704e740845f27c7c0c18fd0bdb33e43e7d8c0d50801cd2668",
+      "source_id": "SRC-424DC2CFCDF8B32E",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "DIVIDENDY\n1. Dividendy vyplácené spolecnostõ, která je rezidentem jednoho smluvnõho státu, rezidentu druhého\nsmluvnõho státu, mohou být zdaneny v tomto druhém státe.\n2. Tyto dividendy vsak mohou být rovnez zdaneny ve smluvnõm státe, jehoz je spolecnost, která je vyplácõ,\nrezidentem, a to podle právnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk dividend je rezidentem\ndruhého smluvnõho státu, dan takto ulozená nepresáhne:\na) 5 procent hrubé cástky dividend, jestlize skutecným vlastnõkem je spolecnost (jiná nez osobnõ spolecnost),\nkterá prõmo vlastnõ nejméne 25 procent kapitálu spolecnosti vyplácejõcõ dividendy;\nb) 10 procent hrubé cástky dividend ve vsech ostatnõch prõpadech.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou dohodou zpusob aplikace techto omezenõ.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti, z nichz jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku oznacuje prõjmy z akciõ nebo jiných práv, s výjimkou pohle-\ndávek, s podõlem na zisku, jakoz i jiné prõjmy, které jsou podrobeny stejnému danovému rezimu jako prõjmy\nz akciõ podle právnõch predpisu státu, jehoz je spolecnost, která provádõ platbu, rezidentem.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize skutecný vlastnõk dividend, který je rezidentem jednoho\nsmluvnõho státu, vykonává v druhém smluvnõm státe, jehoz je rezidentem spolecnost vyplácejõcõ dividendy, svoji\ncinnost prostrednictvõm stálé provozovny, která je tam umõstena, a jestlize úcast, pro kterou se divide",
+      "source_url": "https://e-sbirka.gov.cz/sm/2007/40/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "277875b90d6ebdad7a8a63ac78066680443933938df7ce2d467775bf9809cd10",
+      "article": 10,
+      "conditions": [
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2007-05-04",
+      "evidence_source_ids": [
+        "SRC-424DC2CFCDF8B32E"
+      ],
+      "income_type": "dividend",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 692,
+      "rate": 10.0,
+      "recipient_country": "GE",
+      "review_package_sha256": "55714a2a87b25ff586e2f050a54f296e78d67ad6b0bc9160f1f969c439a82afe",
+      "rule_id": "CZ-GE-DIVIDEND-CURRENT-2",
+      "source_country": "CZ",
+      "source_excerpt_hash": "83dcf8444442691704e740845f27c7c0c18fd0bdb33e43e7d8c0d50801cd2668",
+      "source_id": "SRC-424DC2CFCDF8B32E",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "DIVIDENDY\n1. Dividendy vyplácené spolecnostõ, která je rezidentem jednoho smluvnõho státu, rezidentu druhého\nsmluvnõho státu, mohou být zdaneny v tomto druhém státe.\n2. Tyto dividendy vsak mohou být rovnez zdaneny ve smluvnõm státe, jehoz je spolecnost, která je vyplácõ,\nrezidentem, a to podle právnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk dividend je rezidentem\ndruhého smluvnõho státu, dan takto ulozená nepresáhne:\na) 5 procent hrubé cástky dividend, jestlize skutecným vlastnõkem je spolecnost (jiná nez osobnõ spolecnost),\nkterá prõmo vlastnõ nejméne 25 procent kapitálu spolecnosti vyplácejõcõ dividendy;\nb) 10 procent hrubé cástky dividend ve vsech ostatnõch prõpadech.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou dohodou zpusob aplikace techto omezenõ.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti, z nichz jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku oznacuje prõjmy z akciõ nebo jiných práv, s výjimkou pohle-\ndávek, s podõlem na zisku, jakoz i jiné prõjmy, které jsou podrobeny stejnému danovému rezimu jako prõjmy\nz akciõ podle právnõch predpisu státu, jehoz je spolecnost, která provádõ platbu, rezidentem.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize skutecný vlastnõk dividend, který je rezidentem jednoho\nsmluvnõho státu, vykonává v druhém smluvnõm státe, jehoz je rezidentem spolecnost vyplácejõcõ dividendy, svoji\ncinnost prostrednictvõm stálé provozovny, která je tam umõstena, a jestlize úcast, pro kterou se divide",
+      "source_url": "https://e-sbirka.gov.cz/sm/2007/40/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": 36,
+      "conditions": [],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "domestic_law",
+      "legal_layer": "domestic",
+      "paragraph": "1(a)(1)",
+      "priority": 900,
+      "rate": 15.0,
+      "recipient_country": "GE",
+      "review_package_sha256": "55714a2a87b25ff586e2f050a54f296e78d67ad6b0bc9160f1f969c439a82afe",
+      "rule_id": "CZ-GE-INTEREST-DOMESTIC",
+      "source_country": "CZ",
+      "source_excerpt_hash": "aa1100129d4ba33a4efeeb3258bfc621281f11b160890ba7a898e71318bd643d",
+      "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+      "source_representation": "approved_structured_projection",
+      "source_text": "Current Czech domestic withholding tax standard rate represented in the approved Stage 6 package: 15.0%.",
+      "source_url": "https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/1992/586/2026-04-01",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "f4e05e9bb8213967723de1fa8ed2189825f705777685418a940db2f065c0075f",
+      "article": 11,
+      "conditions": [
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2007-05-04",
+      "evidence_source_ids": [
+        "SRC-424DC2CFCDF8B32E"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 691,
+      "rate": 8.0,
+      "recipient_country": "GE",
+      "review_package_sha256": "55714a2a87b25ff586e2f050a54f296e78d67ad6b0bc9160f1f969c439a82afe",
+      "rule_id": "CZ-GE-INTEREST-CURRENT-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "0ea453c2702f2d6b4f27a608965b129c799f50dfccacede136184d52950193be",
+      "source_id": "SRC-424DC2CFCDF8B32E",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "UROKY\n1. Uroky majõcõ zdroj v jednom smluvnõm státe a vyplácené rezidentu druhého smluvnõho státu mohou být\nzdaneny v tomto druhém státe.\n2. Tyto úroky vsak mohou být rovnez zdaneny ve smluvnõm státe, v nemz majõ zdroj, a to podle právnõch\npredpisu tohoto státu, avsak jestlize skutecný vlastnõk úroku je rezidentem druhého smluvnõho státu, dan takto\nulozená nepresáhne 8 procent hrubé cástky úroku. Přõslusné úrady smluvnõch státu upravõ vzájemnou dohodou\nzpusob aplikace tohoto omezenõ.\n3. Bez ohledu na ustanovenõ odstavce 2 budou úroky osvobozeny od zdanenõ ve smluvnõm státe, ve kterém\nmajõ zdroj, pokud jsou:\na) pobõrané a skutecne vlastnené:\n(i) vládou druhého smluvnõho státu, vcetne jakéhokoliv nizsõho správnõho útvaru nebo mõstnõho úradu\ntohoto státu, centrálnõ bankou nebo jakoukoli financnõ institucõ, která je zcela vlastnena touto vládou;\nnebo\n(ii) rezidentem druhého smluvnõho státu v souvislosti s pujckou zarucenou nebo úverem zaruceným vládou\ntohoto druhého státu;\nb) vyplácené v souvislosti s prodejem jakéhokoliv prumyslového, obchodnõho nebo vedeckého zarõzenõ na úver.\n4. Výraz 1úrokya pouzitý v tomto clánku oznacuje prõjmy z pohledávek jakéhokoliv druhu, at' zajistených\nci nezajistených zástavnõm právem na nemovitosti a majõcõch ci nemajõcõch právo úcasti na zisku dluznõka,\na zvláste prõjmy z vládnõch cenných papõru a prõjmy z obligacõ nebo dluhopisu, vcetne prémiõ a výher, které\nse vázou k temto cenným papõrum, obligacõm nebo dluhopisum. Penále ukládané za pozdnõ plat",
+      "source_url": "https://e-sbirka.gov.cz/sm/2007/40/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "f4e05e9bb8213967723de1fa8ed2189825f705777685418a940db2f065c0075f",
+      "article": 11,
+      "conditions": [
+        {
+          "fact": "article_11_3_exemption",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "government_subnational_local_authority_central_bank_wholly_government_owned_financial_institution_or_government_guaranteed_financing_or_credit_sale_of_industrial_commercial_or_scientific_equipment"
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2007-05-04",
+      "evidence_source_ids": [
+        "SRC-424DC2CFCDF8B32E"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 682,
+      "rate": 0.0,
+      "recipient_country": "GE",
+      "review_package_sha256": "55714a2a87b25ff586e2f050a54f296e78d67ad6b0bc9160f1f969c439a82afe",
+      "rule_id": "CZ-GE-INTEREST-CURRENT-2",
+      "source_country": "CZ",
+      "source_excerpt_hash": "0ea453c2702f2d6b4f27a608965b129c799f50dfccacede136184d52950193be",
+      "source_id": "SRC-424DC2CFCDF8B32E",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "UROKY\n1. Uroky majõcõ zdroj v jednom smluvnõm státe a vyplácené rezidentu druhého smluvnõho státu mohou být\nzdaneny v tomto druhém státe.\n2. Tyto úroky vsak mohou být rovnez zdaneny ve smluvnõm státe, v nemz majõ zdroj, a to podle právnõch\npredpisu tohoto státu, avsak jestlize skutecný vlastnõk úroku je rezidentem druhého smluvnõho státu, dan takto\nulozená nepresáhne 8 procent hrubé cástky úroku. Přõslusné úrady smluvnõch státu upravõ vzájemnou dohodou\nzpusob aplikace tohoto omezenõ.\n3. Bez ohledu na ustanovenõ odstavce 2 budou úroky osvobozeny od zdanenõ ve smluvnõm státe, ve kterém\nmajõ zdroj, pokud jsou:\na) pobõrané a skutecne vlastnené:\n(i) vládou druhého smluvnõho státu, vcetne jakéhokoliv nizsõho správnõho útvaru nebo mõstnõho úradu\ntohoto státu, centrálnõ bankou nebo jakoukoli financnõ institucõ, která je zcela vlastnena touto vládou;\nnebo\n(ii) rezidentem druhého smluvnõho státu v souvislosti s pujckou zarucenou nebo úverem zaruceným vládou\ntohoto druhého státu;\nb) vyplácené v souvislosti s prodejem jakéhokoliv prumyslového, obchodnõho nebo vedeckého zarõzenõ na úver.\n4. Výraz 1úrokya pouzitý v tomto clánku oznacuje prõjmy z pohledávek jakéhokoliv druhu, at' zajistených\nci nezajistených zástavnõm právem na nemovitosti a majõcõch ci nemajõcõch právo úcasti na zisku dluznõka,\na zvláste prõjmy z vládnõch cenných papõru a prõjmy z obligacõ nebo dluhopisu, vcetne prémiõ a výher, které\nse vázou k temto cenným papõrum, obligacõm nebo dluhopisum. Penále ukládané za pozdnõ plat",
+      "source_url": "https://e-sbirka.gov.cz/sm/2007/40/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": 36,
+      "conditions": [],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "domestic_law",
+      "legal_layer": "domestic",
+      "paragraph": "1(a)(1)",
+      "priority": 900,
+      "rate": 15.0,
+      "recipient_country": "GE",
+      "review_package_sha256": "55714a2a87b25ff586e2f050a54f296e78d67ad6b0bc9160f1f969c439a82afe",
+      "rule_id": "CZ-GE-ROYALTY-DOMESTIC",
+      "source_country": "CZ",
+      "source_excerpt_hash": "aa1100129d4ba33a4efeeb3258bfc621281f11b160890ba7a898e71318bd643d",
+      "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+      "source_representation": "approved_structured_projection",
+      "source_text": "Current Czech domestic withholding tax standard rate represented in the approved Stage 6 package: 15.0%.",
+      "source_url": "https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/1992/586/2026-04-01",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "c96192527e91b13826228076cb7d30e6c560037bb303da846dab33d9303f9ec7",
+      "article": 12,
+      "conditions": [
+        {
+          "fact": "royalty_category",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "copyright_literary_artistic_scientific_excluding_computer_program_including_films_and_broadcast_media"
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2007-05-04",
+      "evidence_source_ids": [
+        "SRC-424DC2CFCDF8B32E"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 681,
+      "rate": 0.0,
+      "recipient_country": "GE",
+      "review_package_sha256": "55714a2a87b25ff586e2f050a54f296e78d67ad6b0bc9160f1f969c439a82afe",
+      "rule_id": "CZ-GE-ROYALTY-CURRENT-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "b97ead2e79ae7672b418ba71185122235a0cff82f4d4228789e3b2741f14934b",
+      "source_id": "SRC-424DC2CFCDF8B32E",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "LICENČNI POPLATKY\n1. Licencnõ poplatky majõcõ zdroj v jednom smluvnõm státe a vyplácené rezidentu druhého smluvnõho státu\nmohou být zdaneny v tomto druhém státe.\n2. Tyto licencnõ poplatky vsak mohou být, vyjma prõpadu druhu plateb, který je uveden v põsmenu a)\nodstavce 3, rovnez zdaneny ve smluvnõm státe, v nemz majõ zdroj, a to podle právnõch predpisu tohoto státu,\navsak jestlize skutecný vlastnõk licencnõch poplatku je rezidentem druhého smluvnõho státu, dan takto ulozená\nnepresáhne:\na) 5 procent hrubé cástky licencnõch poplatku, a to v prõpade druhu plateb, který je uveden v põsmenu b)\nodstavce 3;\nb) 10 procent hrubé cástky licencnõch poplatku, a to v prõpade druhu plateb, který je uveden v põsmenu c)\nodstavce 3.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou dohodou zpusob aplikace techto omezenõ.\n3. Výraz 1licencnõ poplatkya oznacuje platby jakéhokoliv druhu obdrzené jako náhrada za uzitõ nebo za\nprávo na uzitõ:\na) jakéhokoliv autorského práva k dõlu literárnõmu, umeleckému nebo vedeckému, s výjimkou pocõtacového\nprogramu a vcetne kinematografických filmu a filmu nebo pásek pro televiznõ nebo rozhlasové vysõlánõ;\nb) jakéhokoliv prumyslového, obchodnõho nebo vedeckého zarõzenõ;\nc) jakéhokoliv patentu, ochranné známky, návrhu nebo modelu, plánu, tajného vzorce nebo výrobnõho po-\nstupu a pocõtacového programu nebo za informace, které se vztahujõ na zkusenosti nabyté v oblasti pru-\nmyslové, obchodnõ nebo vedecké.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize skutecný",
+      "source_url": "https://e-sbirka.gov.cz/sm/2007/40/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "c96192527e91b13826228076cb7d30e6c560037bb303da846dab33d9303f9ec7",
+      "article": 12,
+      "conditions": [
+        {
+          "fact": "royalty_category",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "industrial_commercial_or_scientific_equipment"
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2007-05-04",
+      "evidence_source_ids": [
+        "SRC-424DC2CFCDF8B32E"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 682,
+      "rate": 5.0,
+      "recipient_country": "GE",
+      "review_package_sha256": "55714a2a87b25ff586e2f050a54f296e78d67ad6b0bc9160f1f969c439a82afe",
+      "rule_id": "CZ-GE-ROYALTY-CURRENT-2",
+      "source_country": "CZ",
+      "source_excerpt_hash": "b97ead2e79ae7672b418ba71185122235a0cff82f4d4228789e3b2741f14934b",
+      "source_id": "SRC-424DC2CFCDF8B32E",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "LICENČNI POPLATKY\n1. Licencnõ poplatky majõcõ zdroj v jednom smluvnõm státe a vyplácené rezidentu druhého smluvnõho státu\nmohou být zdaneny v tomto druhém státe.\n2. Tyto licencnõ poplatky vsak mohou být, vyjma prõpadu druhu plateb, který je uveden v põsmenu a)\nodstavce 3, rovnez zdaneny ve smluvnõm státe, v nemz majõ zdroj, a to podle právnõch predpisu tohoto státu,\navsak jestlize skutecný vlastnõk licencnõch poplatku je rezidentem druhého smluvnõho státu, dan takto ulozená\nnepresáhne:\na) 5 procent hrubé cástky licencnõch poplatku, a to v prõpade druhu plateb, který je uveden v põsmenu b)\nodstavce 3;\nb) 10 procent hrubé cástky licencnõch poplatku, a to v prõpade druhu plateb, který je uveden v põsmenu c)\nodstavce 3.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou dohodou zpusob aplikace techto omezenõ.\n3. Výraz 1licencnõ poplatkya oznacuje platby jakéhokoliv druhu obdrzené jako náhrada za uzitõ nebo za\nprávo na uzitõ:\na) jakéhokoliv autorského práva k dõlu literárnõmu, umeleckému nebo vedeckému, s výjimkou pocõtacového\nprogramu a vcetne kinematografických filmu a filmu nebo pásek pro televiznõ nebo rozhlasové vysõlánõ;\nb) jakéhokoliv prumyslového, obchodnõho nebo vedeckého zarõzenõ;\nc) jakéhokoliv patentu, ochranné známky, návrhu nebo modelu, plánu, tajného vzorce nebo výrobnõho po-\nstupu a pocõtacového programu nebo za informace, které se vztahujõ na zkusenosti nabyté v oblasti pru-\nmyslové, obchodnõ nebo vedecké.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize skutecný",
+      "source_url": "https://e-sbirka.gov.cz/sm/2007/40/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "c96192527e91b13826228076cb7d30e6c560037bb303da846dab33d9303f9ec7",
+      "article": 12,
+      "conditions": [
+        {
+          "fact": "royalty_category",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "patent_trademark_design_model_plan_secret_formula_process_computer_program_or_knowhow"
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2007-05-04",
+      "evidence_source_ids": [
+        "SRC-424DC2CFCDF8B32E"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 683,
+      "rate": 10.0,
+      "recipient_country": "GE",
+      "review_package_sha256": "55714a2a87b25ff586e2f050a54f296e78d67ad6b0bc9160f1f969c439a82afe",
+      "rule_id": "CZ-GE-ROYALTY-CURRENT-3",
+      "source_country": "CZ",
+      "source_excerpt_hash": "b97ead2e79ae7672b418ba71185122235a0cff82f4d4228789e3b2741f14934b",
+      "source_id": "SRC-424DC2CFCDF8B32E",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "LICENČNI POPLATKY\n1. Licencnõ poplatky majõcõ zdroj v jednom smluvnõm státe a vyplácené rezidentu druhého smluvnõho státu\nmohou být zdaneny v tomto druhém státe.\n2. Tyto licencnõ poplatky vsak mohou být, vyjma prõpadu druhu plateb, který je uveden v põsmenu a)\nodstavce 3, rovnez zdaneny ve smluvnõm státe, v nemz majõ zdroj, a to podle právnõch predpisu tohoto státu,\navsak jestlize skutecný vlastnõk licencnõch poplatku je rezidentem druhého smluvnõho státu, dan takto ulozená\nnepresáhne:\na) 5 procent hrubé cástky licencnõch poplatku, a to v prõpade druhu plateb, který je uveden v põsmenu b)\nodstavce 3;\nb) 10 procent hrubé cástky licencnõch poplatku, a to v prõpade druhu plateb, který je uveden v põsmenu c)\nodstavce 3.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou dohodou zpusob aplikace techto omezenõ.\n3. Výraz 1licencnõ poplatkya oznacuje platby jakéhokoliv druhu obdrzené jako náhrada za uzitõ nebo za\nprávo na uzitõ:\na) jakéhokoliv autorského práva k dõlu literárnõmu, umeleckému nebo vedeckému, s výjimkou pocõtacového\nprogramu a vcetne kinematografických filmu a filmu nebo pásek pro televiznõ nebo rozhlasové vysõlánõ;\nb) jakéhokoliv prumyslového, obchodnõho nebo vedeckého zarõzenõ;\nc) jakéhokoliv patentu, ochranné známky, návrhu nebo modelu, plánu, tajného vzorce nebo výrobnõho po-\nstupu a pocõtacového programu nebo za informace, které se vztahujõ na zkusenosti nabyté v oblasti pru-\nmyslové, obchodnõ nebo vedecké.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize skutecný",
+      "source_url": "https://e-sbirka.gov.cz/sm/2007/40/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    }
+  ],
+  "schema_version": 3,
+  "stage6_production": {
+    "additional_human_review_claimed": false,
+    "package_sha256": "55714a2a87b25ff586e2f050a54f296e78d67ad6b0bc9160f1f969c439a82afe",
+    "production_approval": "production_approved",
+    "rule_promotion": "promoted",
+    "source_release": "not_released",
+    "treaty_pair_id": "CZ-GE",
+    "verification_authority": "stage6_governance_policy"
+  }
+}

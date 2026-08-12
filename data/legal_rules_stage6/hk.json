@@ -1,0 +1,216 @@
+{
+  "country_pair": {
+    "recipient_country": "HK",
+    "source_country": "CZ"
+  },
+  "rules": [
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": 36,
+      "conditions": [],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA"
+      ],
+      "income_type": "dividend",
+      "legal_instrument": "domestic_law",
+      "legal_layer": "domestic",
+      "paragraph": "1(b)(1)",
+      "priority": 900,
+      "rate": 15.0,
+      "recipient_country": "HK",
+      "review_package_sha256": "b969e3015c947fa320292130036e5e8d10c96963473a0ad116a4662fa92450d8",
+      "rule_id": "CZ-HK-DIVIDEND-DOMESTIC",
+      "source_country": "CZ",
+      "source_excerpt_hash": "aa1100129d4ba33a4efeeb3258bfc621281f11b160890ba7a898e71318bd643d",
+      "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+      "source_representation": "approved_structured_projection",
+      "source_text": "Current Czech domestic withholding tax standard rate represented in the approved Stage 6 package: 15.0%.",
+      "source_url": "https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/1992/586/2026-04-01",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "747f78e7ccbcc1f51952cfbb6bb76dce59b937c711d7a384dd260693b61ff266",
+      "article": 10,
+      "conditions": [
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2012-01-24",
+      "evidence_source_ids": [
+        "SRC-D025022024F9F174"
+      ],
+      "income_type": "dividend",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 691,
+      "rate": 5.0,
+      "recipient_country": "HK",
+      "review_package_sha256": "b969e3015c947fa320292130036e5e8d10c96963473a0ad116a4662fa92450d8",
+      "rule_id": "CZ-HK-DIVIDEND-CURRENT-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "5f5507201d5c48683003422409bba364e33da83d95c4e3fb2dcba5a2fbe131c8",
+      "source_id": "SRC-D025022024F9F174",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "DIVIDENDY\n1.\nDividendy vyplácené společností, která je rezidentem jedné smluvní strany, rezidentu druhé smluvní strany, mohou být zdaněny v této druhé straně.\n2.\nTyto dividendy však mohou být rovněž zdaněny ve smluvní straně, jejíž je společnost, která je vyplácí, rezidentem, a to podle právních předpisů této strany, avšak jestliže skutečný vlastník dividend je rezidentem druhé smluvní strany, daň takto uložená nepřesáhne 5 procent hrubé částky dividend.\nPříslušné úřady smluvních stran upraví vzájemnou dohodou způsob aplikace tohoto omezení.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.\n3.\nVýraz „dividendy“ použitý v tomto článku označuje příjmy z akcií, požitkových akcií nebo požitkových práv, kuksů, zakladatelských podílů nebo jiných práv, s výjimkou pohledávek, s podílem na zisku, jakož i jiné příjmy, které jsou podrobeny stejnému daňovému režimu jako příjmy z akcií podle právních předpisů strany, jejíž je společnost, která rozdílí zisk nebo provádí platbu, rezidentem.\n4.\nUstanovení odstavců 1 a 2 se nepoužijí, jestliže skutečný vlastník dividend, který je rezidentem jedné smluvní strany, vykonává v druhé smluvní straně, jejíž je rezidentem společnost vyplácející dividendy, svoji činnost prostřednictvím stálé provozovny, která je tam umístěna, a jestliže účast, pro kterou se dividendy vyplácejí, se skutečně váže k této stálé provozovně. V takovém případě se použijí ustanovení článku 7.\n5.\nJestliže společnost, která je rezidentem je",
+      "source_url": "https://e-sbirka.gov.cz/sm/2012/49/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": 36,
+      "conditions": [],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "domestic_law",
+      "legal_layer": "domestic",
+      "paragraph": "1(a)(1)",
+      "priority": 900,
+      "rate": 15.0,
+      "recipient_country": "HK",
+      "review_package_sha256": "b969e3015c947fa320292130036e5e8d10c96963473a0ad116a4662fa92450d8",
+      "rule_id": "CZ-HK-INTEREST-DOMESTIC",
+      "source_country": "CZ",
+      "source_excerpt_hash": "aa1100129d4ba33a4efeeb3258bfc621281f11b160890ba7a898e71318bd643d",
+      "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+      "source_representation": "approved_structured_projection",
+      "source_text": "Current Czech domestic withholding tax standard rate represented in the approved Stage 6 package: 15.0%.",
+      "source_url": "https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/1992/586/2026-04-01",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "eb0e2a492d0318435ffd5872d720a77ee5f5e64e20e45729310ab2e504f12ea6",
+      "article": 11,
+      "conditions": [
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2012-01-24",
+      "evidence_source_ids": [
+        "SRC-D025022024F9F174"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 691,
+      "rate": 0.0,
+      "recipient_country": "HK",
+      "review_package_sha256": "b969e3015c947fa320292130036e5e8d10c96963473a0ad116a4662fa92450d8",
+      "rule_id": "CZ-HK-INTEREST-CURRENT-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "93274635b2a764d6cb28d326d8500ffa7593b88facebb8a70fd17cb9170150dd",
+      "source_id": "SRC-D025022024F9F174",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "ÚROKY\n1.\nÚroky mající zdroj v jedné smluvní straně a skutečně vlastněné rezidentem druhé smluvní strany podléhají zdanění jen v této druhé straně.\n2.\nVýraz „úroky“ použitý v tomto článku označuje příjmy z pohledávek jakéhokoliv druhu, ať zajištěných či nezajištěných zástavním právem na nemovitosti a majících či nemajících právo účasti na zisku dlužníka, a zvláště, příjmy z vládních cenných papírů a příjmy z obligací nebo dluhopisů, včetně prémií a výher, které se vážou k těmto cenným papírům, obligacím nebo dluhopisům. Penále ukládané za pozdní platbu se nepovažuje za úroky pro účely tohoto článku. Výraz „úroky“ nezahrnuje žádnou část příjmu, která je považována za dividendu podle ustanovení článku 10 odstavce 3.\n3.\nUstanovení odstavce 1 se nepoužijí, jestliže skutečný vlastník úroků, který je rezidentem jedné smluvní strany, vykonává v druhé smluvní straně, ve které mají úroky zdroj, svoji činnost prostřednictvím stálé provozovny, která je tam umístěna, a jestliže pohledávka, ze které jsou úroky placeny, se skutečně váže k této stálé provozovně. V takovém případě se použijí ustanovení článku 7.\n4.\nPředpokládá se, že úroky mají zdroj ve smluvní straně, jestliže plátcem je rezident této strany. Jestliže však plátce úroků, ať je nebo není rezidentem některé smluvní strany, má ve smluvní straně stálou provozovnu, ve spojení s níž došlo k zadlužení, z něhož jsou úroky placeny, a tyto úroky jdou k tíži takové stálé provozovny, předpokládá se, že tyto úroky mají zdroj v té straně, ",
+      "source_url": "https://e-sbirka.gov.cz/sm/2012/49/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": 36,
+      "conditions": [],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "domestic_law",
+      "legal_layer": "domestic",
+      "paragraph": "1(a)(1)",
+      "priority": 900,
+      "rate": 15.0,
+      "recipient_country": "HK",
+      "review_package_sha256": "b969e3015c947fa320292130036e5e8d10c96963473a0ad116a4662fa92450d8",
+      "rule_id": "CZ-HK-ROYALTY-DOMESTIC",
+      "source_country": "CZ",
+      "source_excerpt_hash": "aa1100129d4ba33a4efeeb3258bfc621281f11b160890ba7a898e71318bd643d",
+      "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+      "source_representation": "approved_structured_projection",
+      "source_text": "Current Czech domestic withholding tax standard rate represented in the approved Stage 6 package: 15.0%.",
+      "source_url": "https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/1992/586/2026-04-01",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "83bd1cf7ddc67f2ea432fcc5b68bcdca724d066b80420c062f91d0f80f3d63b5",
+      "article": 12,
+      "conditions": [
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2012-01-24",
+      "evidence_source_ids": [
+        "SRC-D025022024F9F174"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 691,
+      "rate": 10.0,
+      "recipient_country": "HK",
+      "review_package_sha256": "b969e3015c947fa320292130036e5e8d10c96963473a0ad116a4662fa92450d8",
+      "rule_id": "CZ-HK-ROYALTY-CURRENT-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "2185b067709e509947776ff0bea8c3dfc6e0f0cc4ae72a39dee2c1714952c48f",
+      "source_id": "SRC-D025022024F9F174",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "LICENČNÍ POPLATKY\n1.\nLicenční poplatky mající zdroj v jedné smluvní straně a vyplácené rezidentu druhé smluvní strany mohou být zdaněny v této druhé straně.\n2.\nTyto licenční poplatky však mohou být rovněž zdaněny ve smluvní straně, ve které mají zdroj, a to podle právních předpisů této strany, avšak jestliže skutečný vlastník licenčních poplatků je rezidentem druhé smluvní strany, daň takto uložená nepřesáhne 10 procent hrubé částky licenčních poplatků.\nPříslušné úřady smluvních stran upraví vzájemnou dohodou způsob aplikace tohoto omezení.\n3.\nVýraz „licenční poplatky“ použitý v tomto článku označuje platby jakéhokoliv druhu obdržené jako náhrada za užití nebo za právo na užití jakéhokoliv autorského práva k dílu literárnímu, uměleckému nebo vědeckému, včetně kinematografických filmů nebo filmů nebo pásek používaných pro rozhlasové nebo televizní vysílání, jakéhokoliv patentu, ochranné známky, návrhu nebo modelu, plánu, tajného vzorce nebo postupu nebo za užití nebo za právo na užití průmyslového, obchodního nebo vědeckého zařízení nebo za informace, které se vztahují na zkušenosti nabyté v oblasti průmyslové, obchodní nebo vědecké.\n4.\nUstanovení odstavců 1 a 2 se nepoužijí, jestliže skutečný vlastník licenčních poplatků, který je rezidentem jedné smluvní strany, vykonává v druhé smluvní straně, ve které mají licenční poplatky zdroj, svoji činnost prostřednictvím stálé provozovny, která je tam umístěna, a jestliže právo nebo majetek, které dávají vznik licenčním poplatkům, se",
+      "source_url": "https://e-sbirka.gov.cz/sm/2012/49/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    }
+  ],
+  "schema_version": 3,
+  "stage6_production": {
+    "additional_human_review_claimed": false,
+    "package_sha256": "b969e3015c947fa320292130036e5e8d10c96963473a0ad116a4662fa92450d8",
+    "production_approval": "production_approved",
+    "rule_promotion": "promoted",
+    "source_release": "not_released",
+    "treaty_pair_id": "CZ-HK",
+    "verification_authority": "stage6_governance_policy"
+  }
+}

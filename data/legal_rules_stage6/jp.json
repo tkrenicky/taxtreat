@@ -1,0 +1,339 @@
+{
+  "country_pair": {
+    "recipient_country": "JP",
+    "source_country": "CZ"
+  },
+  "rules": [
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": 36,
+      "conditions": [],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA"
+      ],
+      "income_type": "dividend",
+      "legal_instrument": "domestic_law",
+      "legal_layer": "domestic",
+      "paragraph": "1(b)(1)",
+      "priority": 900,
+      "rate": 15.0,
+      "recipient_country": "JP",
+      "review_package_sha256": "33c34965ae57dab109152a5a5ca2dc044c63b52640e7000c72dfc57fef37ef30",
+      "rule_id": "CZ-JP-DIVIDEND-DOMESTIC",
+      "source_country": "CZ",
+      "source_excerpt_hash": "aa1100129d4ba33a4efeeb3258bfc621281f11b160890ba7a898e71318bd643d",
+      "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+      "source_representation": "approved_structured_projection",
+      "source_text": "Current Czech domestic withholding tax standard rate represented in the approved Stage 6 package: 15.0%.",
+      "source_url": "https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/1992/586/2026-04-01",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "ed33c1dce5612689a1ec1c1408cf1f2bb376b1ce2c2e6272eeeba91614d53f72",
+      "article": 10,
+      "conditions": [
+        {
+          "fact": "recipient_entity_type",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "company"
+        },
+        {
+          "fact": "voting_ownership",
+          "fact_source": "transaction",
+          "operator": ">=",
+          "value": "25%"
+        },
+        {
+          "fact": "holding_period_months",
+          "fact_source": "transaction",
+          "operator": ">=",
+          "value": "6"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "1978-11-25",
+      "evidence_source_ids": [
+        "SRC-DAF33E409B334A94"
+      ],
+      "income_type": "dividend",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 671,
+      "rate": 10.0,
+      "recipient_country": "JP",
+      "review_package_sha256": "33c34965ae57dab109152a5a5ca2dc044c63b52640e7000c72dfc57fef37ef30",
+      "rule_id": "CZ-JP-DIVIDEND-CURRENT-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "eaa633cf5c2680da017b417afe5a0cce1217576348ce81da1921f14159b4e990",
+      "source_id": "SRC-DAF33E409B334A94",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "1. Dividendy vyplácené společností, která má\nsídlo v jednom smluvním státě, osobě mající byd-\nliště či sídlo v druhém smluvním státě. mohou být\nzdaněny v tomto druhém smluvním státě,\n2. Tyto dividendy však mohou být zdaněny\nve smluvnim státě, v němž má sídlo společnost,\nkterá je vyplácí, a to podle právních předpisů to-\nhoto smluvního státu. Daň takto stanovená však\nnepřesáhne:\na) 10% hrubé částky dividend, jestliže příjemce\nje společností, která vlastní nejméně 25 % po-\ndílů spojených s hlasovacím právem na spo-\nlečnosti vyplácející dividendy po dobu šesti\nměsíců bezprostředně předcházejících datum\nvýplaty takových dividend,\n15% hrubé částky dividend ve všech ostat-\nních případech.\nTento odstavec se nedotkne zdanění získu spo-\nlečnosli, ze kterého jsou dividendy vypláceny.\n3. Výraz „dividendy“, použitý v tomto článku,\noznačuje příjem plynoucí z akcii nebo jiných\npráv, s výjímkou pohledávek s účastí na zisku,\nprávě tak jako příjem z jiných společenských\npráv který je postaven na roveň příjmu z akcií\ndaňovými předpisy smluvního státu, v němž má\nsídlo společnost vyplácející dividendy.\n4. Ustanovení odstavců 1 a 2 se nepoužijí,\njestliže příjemce dividend, mající bydliště či síd-\nlo v jednom smluvním státě, má v druhém smluv-\nním státě, v němž má sídlo společnost vypláce-\nJící dividendy, stálou provozovnu, s níž je skutečně\nspojeno vlastnictví akcií, na jehož základě se di-\nvidendy vyplácejí. V takovém případě se použijí\nustanovení článku 7.\nb\n5. Jestliže společnost, mající sídlo",
+      "source_url": "https://e-sbirka.gov.cz/sb/1979/46/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "ed33c1dce5612689a1ec1c1408cf1f2bb376b1ce2c2e6272eeeba91614d53f72",
+      "article": 10,
+      "conditions": [
+        {
+          "fact": "fallback_case",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "all_other_cases"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "1978-11-25",
+      "evidence_source_ids": [
+        "SRC-DAF33E409B334A94"
+      ],
+      "income_type": "dividend",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 692,
+      "rate": 15.0,
+      "recipient_country": "JP",
+      "review_package_sha256": "33c34965ae57dab109152a5a5ca2dc044c63b52640e7000c72dfc57fef37ef30",
+      "rule_id": "CZ-JP-DIVIDEND-CURRENT-2",
+      "source_country": "CZ",
+      "source_excerpt_hash": "eaa633cf5c2680da017b417afe5a0cce1217576348ce81da1921f14159b4e990",
+      "source_id": "SRC-DAF33E409B334A94",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "1. Dividendy vyplácené společností, která má\nsídlo v jednom smluvním státě, osobě mající byd-\nliště či sídlo v druhém smluvním státě. mohou být\nzdaněny v tomto druhém smluvním státě,\n2. Tyto dividendy však mohou být zdaněny\nve smluvnim státě, v němž má sídlo společnost,\nkterá je vyplácí, a to podle právních předpisů to-\nhoto smluvního státu. Daň takto stanovená však\nnepřesáhne:\na) 10% hrubé částky dividend, jestliže příjemce\nje společností, která vlastní nejméně 25 % po-\ndílů spojených s hlasovacím právem na spo-\nlečnosti vyplácející dividendy po dobu šesti\nměsíců bezprostředně předcházejících datum\nvýplaty takových dividend,\n15% hrubé částky dividend ve všech ostat-\nních případech.\nTento odstavec se nedotkne zdanění získu spo-\nlečnosli, ze kterého jsou dividendy vypláceny.\n3. Výraz „dividendy“, použitý v tomto článku,\noznačuje příjem plynoucí z akcii nebo jiných\npráv, s výjímkou pohledávek s účastí na zisku,\nprávě tak jako příjem z jiných společenských\npráv který je postaven na roveň příjmu z akcií\ndaňovými předpisy smluvního státu, v němž má\nsídlo společnost vyplácející dividendy.\n4. Ustanovení odstavců 1 a 2 se nepoužijí,\njestliže příjemce dividend, mající bydliště či síd-\nlo v jednom smluvním státě, má v druhém smluv-\nním státě, v němž má sídlo společnost vypláce-\nJící dividendy, stálou provozovnu, s níž je skutečně\nspojeno vlastnictví akcií, na jehož základě se di-\nvidendy vyplácejí. V takovém případě se použijí\nustanovení článku 7.\nb\n5. Jestliže společnost, mající sídlo",
+      "source_url": "https://e-sbirka.gov.cz/sb/1979/46/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": 36,
+      "conditions": [],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "domestic_law",
+      "legal_layer": "domestic",
+      "paragraph": "1(a)(1)",
+      "priority": 900,
+      "rate": 15.0,
+      "recipient_country": "JP",
+      "review_package_sha256": "33c34965ae57dab109152a5a5ca2dc044c63b52640e7000c72dfc57fef37ef30",
+      "rule_id": "CZ-JP-INTEREST-DOMESTIC",
+      "source_country": "CZ",
+      "source_excerpt_hash": "aa1100129d4ba33a4efeeb3258bfc621281f11b160890ba7a898e71318bd643d",
+      "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+      "source_representation": "approved_structured_projection",
+      "source_text": "Current Czech domestic withholding tax standard rate represented in the approved Stage 6 package: 15.0%.",
+      "source_url": "https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/1992/586/2026-04-01",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "ac42f4c20749e11f09a1cb8085e45f9eb66e25b7748320315389dcb37e745a55",
+      "article": 11,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "1978-11-25",
+      "evidence_source_ids": [
+        "SRC-DAF33E409B334A94"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 691,
+      "rate": 10.0,
+      "recipient_country": "JP",
+      "review_package_sha256": "33c34965ae57dab109152a5a5ca2dc044c63b52640e7000c72dfc57fef37ef30",
+      "rule_id": "CZ-JP-INTEREST-CURRENT-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "3b38d9528e40b06293abdee2e7c9073ad750a4f9da281d47a7ade99c6eed6948",
+      "source_id": "SRC-DAF33E409B334A94",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "1.\nÚroky, mající zdroj v jednom smluvním státě a vyplácené osobě mající bydliště či sídlo v druhém smluvním státě, mohou být zdaněny v tomto druhém smluvním státě.\n2.\nTyto úroky však mohou být zdaněny ve smluvním státě, ve kterém je jejich zdroj, a to podle právních předpisů tohoto smluvního státu. Daň takto stanovená však nepřesáhne 10 % hrubé částky úroků.\n3.\nÚroky, mající zdroj v jednom smluvním státě a placené vládě druhého smluvního státu, jeho místním úřadům, ústřední bance tohoto druhého smluvního státu nebo finanční instituci, která je plně ve vlastnictví tohoto státu, nebo osobě mající v tomto druhém smluvním státě bydliště či sídlo, z pohledávek zajištěných nebo nepřímo financovaných vládou tohoto druhého smluvního státu, jeho místními úřady, ústřední bankou tohoto druhého smluvního státu nebo finanční institucí, která je plně ve vlastnictví tohoto státu, jsou bez ohledu na ustanovení odstavce 2 osvobozeny od daně v prvně zmíněném smluvním státě.\n4.\nVýraz \"úroky\" použitý v tomto článku označuje příjem z veřejných dluhopisů, obligací, zajištěných i nezajištěných zástavním právem na nemovitosti, poskytujících i neposkytujících právo na účast na zisku, a jiné pohledávky jakéhokoliv druhu, jakékoliv rozdíly, o které částka zaplacená na vyrovnání takových pohledávek převyšuje částku půjčky, i jakýkoliv jiný příjem, který je postaven daňovými předpisy smluvního státu, ve kterém je zdroj příjmu, na roveň příjmu z půjček.\n5.\nUstanovení odstavců 1 a 2 se nepoužije, jestliže ",
+      "source_url": "https://e-sbirka.gov.cz/sb/1979/46/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "ac42f4c20749e11f09a1cb8085e45f9eb66e25b7748320315389dcb37e745a55",
+      "article": 11,
+      "conditions": [
+        {
+          "fact": "recipient_entity_type",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "government_local_authority_central_bank_wholly_state_owned_financial_institution_or_claim_secured_or_indirectly_financed_by_such_public_body"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "1978-11-25",
+      "evidence_source_ids": [
+        "SRC-DAF33E409B334A94"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 692,
+      "rate": 0.0,
+      "recipient_country": "JP",
+      "review_package_sha256": "33c34965ae57dab109152a5a5ca2dc044c63b52640e7000c72dfc57fef37ef30",
+      "rule_id": "CZ-JP-INTEREST-CURRENT-2",
+      "source_country": "CZ",
+      "source_excerpt_hash": "3b38d9528e40b06293abdee2e7c9073ad750a4f9da281d47a7ade99c6eed6948",
+      "source_id": "SRC-DAF33E409B334A94",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "1.\nÚroky, mající zdroj v jednom smluvním státě a vyplácené osobě mající bydliště či sídlo v druhém smluvním státě, mohou být zdaněny v tomto druhém smluvním státě.\n2.\nTyto úroky však mohou být zdaněny ve smluvním státě, ve kterém je jejich zdroj, a to podle právních předpisů tohoto smluvního státu. Daň takto stanovená však nepřesáhne 10 % hrubé částky úroků.\n3.\nÚroky, mající zdroj v jednom smluvním státě a placené vládě druhého smluvního státu, jeho místním úřadům, ústřední bance tohoto druhého smluvního státu nebo finanční instituci, která je plně ve vlastnictví tohoto státu, nebo osobě mající v tomto druhém smluvním státě bydliště či sídlo, z pohledávek zajištěných nebo nepřímo financovaných vládou tohoto druhého smluvního státu, jeho místními úřady, ústřední bankou tohoto druhého smluvního státu nebo finanční institucí, která je plně ve vlastnictví tohoto státu, jsou bez ohledu na ustanovení odstavce 2 osvobozeny od daně v prvně zmíněném smluvním státě.\n4.\nVýraz \"úroky\" použitý v tomto článku označuje příjem z veřejných dluhopisů, obligací, zajištěných i nezajištěných zástavním právem na nemovitosti, poskytujících i neposkytujících právo na účast na zisku, a jiné pohledávky jakéhokoliv druhu, jakékoliv rozdíly, o které částka zaplacená na vyrovnání takových pohledávek převyšuje částku půjčky, i jakýkoliv jiný příjem, který je postaven daňovými předpisy smluvního státu, ve kterém je zdroj příjmu, na roveň příjmu z půjček.\n5.\nUstanovení odstavců 1 a 2 se nepoužije, jestliže ",
+      "source_url": "https://e-sbirka.gov.cz/sb/1979/46/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": 36,
+      "conditions": [],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "domestic_law",
+      "legal_layer": "domestic",
+      "paragraph": "1(a)(1)",
+      "priority": 900,
+      "rate": 15.0,
+      "recipient_country": "JP",
+      "review_package_sha256": "33c34965ae57dab109152a5a5ca2dc044c63b52640e7000c72dfc57fef37ef30",
+      "rule_id": "CZ-JP-ROYALTY-DOMESTIC",
+      "source_country": "CZ",
+      "source_excerpt_hash": "aa1100129d4ba33a4efeeb3258bfc621281f11b160890ba7a898e71318bd643d",
+      "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+      "source_representation": "approved_structured_projection",
+      "source_text": "Current Czech domestic withholding tax standard rate represented in the approved Stage 6 package: 15.0%.",
+      "source_url": "https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/1992/586/2026-04-01",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "91757852e289183c97ee1e9e5761e777704fd2490946d0f371be731af68d8cf3",
+      "article": 12,
+      "conditions": [
+        {
+          "fact": "royalty_category",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "cultural_copyright_literary_artistic_scientific_including_films_and_broadcast_media"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "1978-11-25",
+      "evidence_source_ids": [
+        "SRC-DAF33E409B334A94"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 691,
+      "rate": 0.0,
+      "recipient_country": "JP",
+      "review_package_sha256": "33c34965ae57dab109152a5a5ca2dc044c63b52640e7000c72dfc57fef37ef30",
+      "rule_id": "CZ-JP-ROYALTY-CURRENT-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "fffa30aff90537bb5a371d657be3ff365b87736024329ab36d3d660bb0e260c9",
+      "source_id": "SRC-DAF33E409B334A94",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "1. Licenční poplatky mající zdroj v jednom\nsmluvním státě a placené osohé, která má byd-\ně či sídlo v druhém smluvním státě, mohou být\nzdaněny v tomto druhém smluvním státě.\n2. a) Průmyslové ličenční poplatky mohou být.\nzdaněny ve smluvním státě, ve kterém je jejich\nzdroj, a to podle právních předpisů tohoto smluv-\nního státu. Daň takto stanovená však nepřesáhne\n10 % hrubé částky licenčních poplatků.\nb) Kulturní licenční poplatky budou osvo-\nbozeny od daní ve smluvním státě, ve kterém je\njejich zdroj. -\n3. a) Výraz „průmyslové licenční poplatky“\npoužitý v odstavci 2 označuje platy jakéhokoliv dru-\nhu přijaté náhradou za užití nebo za právo na uží-\ntí jakéhokoliv patentu, ochranné známky, navrhu\nnebo modelu, plánu, tajného návodu nebo výrob-\nního postupu, nebo za užití nebo za právo na\nužití průmyslového, obchodního nebo vědeckého\nzařízení, nebo za informace, které se vztahují na\nzkušenosti nabyté v oblasti průmyslové, obchodní\nnebo vědecké,\nb) Výraz „kulturní licenční poplatky“ po-\nužitý v odstavci 2 označuje platy jakéhokoliv druhu\npřijaté náhradou za užití nebo za právo na užití\njakéhokoliv autorského práva k dílu literárnímu\numěleckému nebo vědeckému včetně kinematogra-\nfických fihnů a filmů nebo pásek pro rozhlaso-\nvá nebo televizní vysílání.\n4. Ustanovení odstavců 1 a-2 se nepoužijí,\njestliže příjemce licenčních poplatků mající byd-\nliště. či sídlo v jednom smluvním státě má v dru-\nhém smluvním státě, ve kterém mají licenční po-\nplatky zdroj, stálou provozovnu, s níž je ",
+      "source_url": "https://e-sbirka.gov.cz/sb/1979/46/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "91757852e289183c97ee1e9e5761e777704fd2490946d0f371be731af68d8cf3",
+      "article": 12,
+      "conditions": [
+        {
+          "fact": "royalty_category",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "industrial_patent_trademark_design_model_plan_secret_formula_process_equipment_or_knowhow"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "1978-11-25",
+      "evidence_source_ids": [
+        "SRC-DAF33E409B334A94"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 692,
+      "rate": 10.0,
+      "recipient_country": "JP",
+      "review_package_sha256": "33c34965ae57dab109152a5a5ca2dc044c63b52640e7000c72dfc57fef37ef30",
+      "rule_id": "CZ-JP-ROYALTY-CURRENT-2",
+      "source_country": "CZ",
+      "source_excerpt_hash": "fffa30aff90537bb5a371d657be3ff365b87736024329ab36d3d660bb0e260c9",
+      "source_id": "SRC-DAF33E409B334A94",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "1. Licenční poplatky mající zdroj v jednom\nsmluvním státě a placené osohé, která má byd-\ně či sídlo v druhém smluvním státě, mohou být\nzdaněny v tomto druhém smluvním státě.\n2. a) Průmyslové ličenční poplatky mohou být.\nzdaněny ve smluvním státě, ve kterém je jejich\nzdroj, a to podle právních předpisů tohoto smluv-\nního státu. Daň takto stanovená však nepřesáhne\n10 % hrubé částky licenčních poplatků.\nb) Kulturní licenční poplatky budou osvo-\nbozeny od daní ve smluvním státě, ve kterém je\njejich zdroj. -\n3. a) Výraz „průmyslové licenční poplatky“\npoužitý v odstavci 2 označuje platy jakéhokoliv dru-\nhu přijaté náhradou za užití nebo za právo na uží-\ntí jakéhokoliv patentu, ochranné známky, navrhu\nnebo modelu, plánu, tajného návodu nebo výrob-\nního postupu, nebo za užití nebo za právo na\nužití průmyslového, obchodního nebo vědeckého\nzařízení, nebo za informace, které se vztahují na\nzkušenosti nabyté v oblasti průmyslové, obchodní\nnebo vědecké,\nb) Výraz „kulturní licenční poplatky“ po-\nužitý v odstavci 2 označuje platy jakéhokoliv druhu\npřijaté náhradou za užití nebo za právo na užití\njakéhokoliv autorského práva k dílu literárnímu\numěleckému nebo vědeckému včetně kinematogra-\nfických fihnů a filmů nebo pásek pro rozhlaso-\nvá nebo televizní vysílání.\n4. Ustanovení odstavců 1 a-2 se nepoužijí,\njestliže příjemce licenčních poplatků mající byd-\nliště. či sídlo v jednom smluvním státě má v dru-\nhém smluvním státě, ve kterém mají licenční po-\nplatky zdroj, stálou provozovnu, s níž je ",
+      "source_url": "https://e-sbirka.gov.cz/sb/1979/46/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    }
+  ],
+  "schema_version": 3,
+  "stage6_production": {
+    "additional_human_review_claimed": false,
+    "package_sha256": "33c34965ae57dab109152a5a5ca2dc044c63b52640e7000c72dfc57fef37ef30",
+    "production_approval": "production_approved",
+    "rule_promotion": "promoted",
+    "source_release": "not_released",
+    "treaty_pair_id": "CZ-JP",
+    "verification_authority": "stage6_governance_policy"
+  }
+}
