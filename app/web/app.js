@@ -95,8 +95,9 @@
     const caption = document.createElement("span");
     caption.textContent = "Odpověď klienta";
     const inputId = "answer-" + question.question_id.replace(/[^a-z0-9_-]/gi, "-");
-    const existing = Object.hasOwn(drafts, question.input_path)
-      ? drafts[question.input_path]
+    const draft = drafts[question.input_path];
+    const existing = draft
+      ? draft.value
       : currentPayload?.facts?.[factName];
 
     let input;
@@ -140,29 +141,33 @@
 
   function captureDraftAnswers(root, drafts) {
     root.querySelectorAll(".question-input").forEach((input) => {
-      drafts[input.dataset.inputPath] = input.value;
+      drafts[input.dataset.inputPath] = {
+        value: input.value,
+        responseType: input.dataset.responseType,
+        valid: input.checkValidity()
+      };
     });
   }
 
-  function applyClientAnswers(payload, root) {
+  function applyClientAnswers(payload, drafts) {
     let supplied = 0;
-    root.querySelectorAll(".question-input").forEach((input) => {
-      if (!input.checkValidity()) {
+    Object.entries(drafts).forEach(([inputPath, draft]) => {
+      if (!draft.valid) {
         throw new Error("Zkontrolujte formát zadaných odpovědí.");
       }
-      const raw = input.value.trim();
+      const raw = draft.value.trim();
       if (!raw) return;
-      const factName = clientFactName(input.dataset.inputPath);
+      const factName = clientFactName(inputPath);
       if (!factName) {
         throw new Error("Klientská odpověď smí měnit pouze skutkové údaje.");
       }
 
       let answer = raw;
-      if (input.dataset.responseType === "boolean") {
+      if (draft.responseType === "boolean") {
         answer = raw === "true";
-      } else if (input.dataset.responseType === "integer") {
+      } else if (draft.responseType === "integer") {
         answer = Number.parseInt(raw, 10);
-      } else if (input.dataset.responseType === "decimal_percent") {
+      } else if (draft.responseType === "decimal_percent") {
         answer = Number(raw);
       }
       payload.facts[factName] = answer;
@@ -171,13 +176,14 @@
     return supplied;
   }
 
-  async function submitGuidedAnswers(button) {
+  async function submitGuidedAnswers(button, drafts) {
     const root = document.querySelector("#questions");
     const answerError = document.querySelector("#answer-error");
     answerError.hidden = true;
+    captureDraftAnswers(root, drafts);
     const nextPayload = structuredClone(currentPayload);
     try {
-      const supplied = applyClientAnswers(nextPayload, root);
+      const supplied = applyClientAnswers(nextPayload, drafts);
       if (!supplied) {
         throw new Error("Vyplňte alespoň jednu odpověď klienta.");
       }
@@ -191,18 +197,41 @@
       answerError.hidden = false;
     } finally {
       button.disabled = false;
-      button.textContent = "Uložit odpovědi a znovu vyhodnotit";
+      button.textContent = "Uložit odpovědi a vyhodnotit";
     }
   }
 
   function renderQuestions(questions) {
     const root = document.querySelector("#questions");
-    const initialLimit = 5;
+    const pageSize = 3;
+    const pageCount = Math.max(1, Math.ceil(questions.length / pageSize));
     const drafts = {};
+    let pageIndex = 0;
+    root.replaceChildren();
 
-    function render(limit) {
+    function render() {
+      captureDraftAnswers(root, drafts);
       root.replaceChildren();
-      questions.slice(0, limit).forEach((question) => {
+
+      const start = pageIndex * pageSize;
+      const end = Math.min(start + pageSize, questions.length);
+      const progress = document.createElement("div");
+      progress.className = "wizard-progress";
+      const progressCopy = document.createElement("div");
+      const progressLabel = document.createElement("strong");
+      progressLabel.textContent = `Otázky ${start + 1}–${end} z ${questions.length}`;
+      const progressStep = document.createElement("span");
+      progressStep.textContent = `Krok ${pageIndex + 1} z ${pageCount}`;
+      progressCopy.append(progressLabel, progressStep);
+      const progressTrack = document.createElement("div");
+      progressTrack.className = "wizard-progress-track";
+      const progressFill = document.createElement("span");
+      progressFill.style.width = `${((pageIndex + 1) / pageCount) * 100}%`;
+      progressTrack.append(progressFill);
+      progress.append(progressCopy, progressTrack);
+      root.append(progress);
+
+      questions.slice(start, end).forEach((question) => {
         const card = document.createElement("article");
         card.className = "question";
         const tag = document.createElement("span");
@@ -217,29 +246,55 @@
         if (input) card.append(input);
         root.append(card);
       });
-      if (limit < questions.length) {
-        root.append(revealButton(
-          `Zobrazit dalších ${questions.length - limit} otázek`,
-          () => {
-            captureDraftAnswers(root, drafts);
-            render(questions.length);
-          }
-        ));
+
+      const navigation = document.createElement("div");
+      navigation.className = "wizard-navigation";
+      if (pageIndex > 0) {
+        const previous = document.createElement("button");
+        previous.type = "button";
+        previous.className = "wizard-back";
+        previous.textContent = "← Zpět";
+        previous.addEventListener("click", () => {
+          captureDraftAnswers(root, drafts);
+          pageIndex -= 1;
+          render();
+        });
+        navigation.append(previous);
       }
-      if (root.querySelector(".question-input")) {
+      if (pageIndex < pageCount - 1) {
+        const next = document.createElement("button");
+        next.type = "button";
+        next.className = "wizard-next";
+        next.textContent = "Další otázky →";
+        next.addEventListener("click", () => {
+          captureDraftAnswers(root, drafts);
+          pageIndex += 1;
+          render();
+        });
+        navigation.append(next);
+      }
+      root.append(navigation);
+
+      if (
+        Object.keys(drafts).length
+        || root.querySelector(".question-input")
+      ) {
         const actions = document.createElement("div");
         actions.className = "question-actions";
         const button = document.createElement("button");
         button.type = "button";
-        button.className = "secondary";
-        button.textContent = "Uložit odpovědi a znovu vyhodnotit";
-        button.addEventListener("click", () => submitGuidedAnswers(button));
+        button.className = "secondary wizard-save";
+        button.textContent = "Uložit odpovědi a vyhodnotit";
+        button.addEventListener(
+          "click",
+          () => submitGuidedAnswers(button, drafts)
+        );
         actions.append(button);
         root.append(actions);
       }
     }
 
-    render(initialLimit);
+    render();
     document.querySelector("#question-count").textContent = questions.length;
   }
 
