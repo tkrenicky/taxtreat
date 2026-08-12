@@ -1,7 +1,21 @@
 from datetime import date
+from pathlib import Path
 
 from taxtreat.engine.legal_rule_engine import DecisionStatus
-from taxtreat.services.decision import CanonicalAnalysisRequest, analyze_transaction
+from taxtreat.services.decision import CanonicalAnalysisRequest, analyze_transaction as canonical_analyze_transaction
+
+LEGACY_RULE_DIR = (
+    Path(__file__).parents[1]
+    / "data"
+    / "legal_rules"
+)
+
+
+def analyze_transaction(request):
+    return canonical_analyze_transaction(
+        request,
+        rule_dir=LEGACY_RULE_DIR,
+    )
 
 def decide(country: str, facts: dict, determinations: dict | None = None):
     recipient = {"rakousko": "AT", "svycarsko": "CH"}[country]

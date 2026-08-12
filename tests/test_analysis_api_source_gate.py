@@ -6,20 +6,16 @@ from fastapi import HTTPException
 import app.main as main
 
 
-def test_current_blocked_pair_cannot_reach_analysis():
-    with pytest.raises(HTTPException) as exc_info:
-        main.require_analysis_source_release(
-            "CZ",
-            "AT",
-        )
+def test_current_released_pair_can_reach_analysis():
+    release = main.require_analysis_source_release(
+        "CZ",
+        "AT",
+    )
 
-    error = exc_info.value
-
-    assert error.status_code == 409
-    assert error.detail["code"] == "SOURCE_NOT_RELEASED"
-    assert error.detail["treaty_pair_id"] == "CZ-AT"
-    assert error.detail["release_status"] == "blocked"
-    assert error.detail["release_blockers"]
+    assert release.treaty_pair_id == "CZ-AT"
+    assert release.release_status == "released"
+    assert release.release_blockers == ()
+    assert release.is_released is True
 
 
 def test_unknown_cz_pair_fails_closed():
@@ -101,36 +97,35 @@ def test_partial_release_is_blocked(monkeypatch):
     ]
 
 
-def test_analysis_stops_before_decision_engine(
+def test_analysis_reaches_decision_engine(
     monkeypatch,
 ):
     called = False
+    original = main.analyze_transaction
 
-    def forbidden_analysis(*args, **kwargs):
+    def observed_analysis(*args, **kwargs):
         nonlocal called
         called = True
-        raise AssertionError(
-            "Decision engine must not run"
-        )
+        return original(*args, **kwargs)
 
     monkeypatch.setattr(
         main,
         "analyze_transaction",
-        forbidden_analysis,
+        observed_analysis,
     )
 
-    payload = main.AnalysisPayload(
-        source_country="CZ",
-        recipient_country="CH",
-        income_type="royalty",
-        transaction_date="2026-08-06",
+    response = main.analyze(
+        main.AnalysisPayload(
+            source_country="CZ",
+            recipient_country="CH",
+            income_type="royalty",
+            transaction_date="2026-08-06",
+        )
     )
 
-    with pytest.raises(HTTPException) as exc_info:
-        main.analyze(payload)
-
-    assert exc_info.value.status_code == 409
-    assert called is False
+    assert called is True
+    assert "status" in response
+    assert "requires_review" in response
 
 
 def test_released_source_handoff_preserves_needs_review(

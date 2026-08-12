@@ -73,113 +73,52 @@ def test_canonical_gate_is_full_101_country_universe():
     assert "CZ-TW" in pair_ids
 
 
-def test_canonical_gate_has_stage6c_approval_but_no_release():
+def test_canonical_gate_has_final_stage6_release():
     raw = json.loads(
         CANONICAL_GATE.read_text(encoding="utf-8")
     )
 
-    assert raw["counts"][
-        "production_approved_packages"
-    ] == 101
-
-    assert raw["counts"][
-        "rule_promoted_packages"
-    ] == 0
-
-    assert raw["counts"][
-        "released_packages"
-    ] == 0
-
-    assert raw["counts"][
-        "released_scopes"
-    ] == 0
+    assert raw["counts"]["production_approved_packages"] == 101
+    assert raw["counts"]["rule_promoted_packages"] == 101
+    assert raw["counts"]["released_packages"] == 101
+    assert raw["counts"]["released_scopes"] == 303
 
 
-def test_all_canonical_packages_remain_runtime_blocked():
+def test_all_canonical_packages_are_runtime_released():
     raw = json.loads(
         CANONICAL_GATE.read_text(encoding="utf-8")
     )
 
     for row in raw["treaty_partners"]:
-        assert (
-            row["production_approval_status"]
-            == "production_approved"
-        )
-        assert (
-            row["rule_promotion_status"]
-            == "not_promoted"
-        )
-        assert row["release_status"] == "blocked"
-        assert row["active_rule_allowed"] is False
-        assert row["production_ready"] is False
-        assert row["fail_closed"] is True
+        assert row["production_approval_status"] == "production_approved"
+        assert row["rule_promotion_status"] == "promoted"
+        assert row["release_status"] == "released"
+        assert row["active_rule_allowed"] is True
+        assert row["production_ready"] is True
+        assert row["fail_closed"] is False
+        assert row["release_blockers"] == []
 
 
 @pytest.mark.parametrize(
     "pair_id",
-    [
-        "CZ-AT",
-        "CZ-CH",
-        "CZ-SG",
-        "CZ-TW",
-    ],
+    ["CZ-AT", "CZ-CH", "CZ-SG", "CZ-TW"],
 )
-def test_runtime_gate_blocks_known_pairs_before_promotion(
-    pair_id: str,
-):
+def test_runtime_gate_releases_known_pairs(pair_id: str):
     release = get_canonical_source_release(pair_id)
 
-    assert release.is_released is False
-
-    with pytest.raises(
-        CanonicalSourceNotReleasedError
-    ):
-        require_canonical_released_source(pair_id)
+    assert release.is_released is True
+    assert require_canonical_released_source(pair_id) == release
 
 
-def test_api_release_guard_uses_canonical_blockers():
-    release = get_canonical_source_release("CZ-AT")
-
-    assert release.production_approval_status == (
-        "production_approved"
+def test_api_release_guard_allows_released_pair():
+    release = app_main.require_analysis_source_release(
+        "CZ",
+        "AT",
     )
 
-    assert release.rule_promotion_status == (
-        "not_promoted"
-    )
-
-    with pytest.raises(HTTPException) as exc_info:
-        app_main.require_analysis_source_release(
-            "CZ",
-            "AT",
-        )
-
-    exc = exc_info.value
-
-    assert exc.status_code == 409
-
-    assert exc.detail["code"] == (
-        "SOURCE_NOT_RELEASED"
-    )
-
-    assert exc.detail["treaty_pair_id"] == "CZ-AT"
-
-    assert exc.detail["release_status"] == "blocked"
-
-    assert (
-        "rule_promotion_missing"
-        in exc.detail["release_blockers"]
-    )
-
-    assert (
-        "source_release_not_opened"
-        in exc.detail["release_blockers"]
-    )
-
-    assert (
-        "production_approval_missing"
-        not in exc.detail["release_blockers"]
-    )
+    assert release.treaty_pair_id == "CZ-AT"
+    assert release.release_status == "released"
+    assert release.is_released is True
 
 
 def test_unknown_cz_pair_still_fails_closed():

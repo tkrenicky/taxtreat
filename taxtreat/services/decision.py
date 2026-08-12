@@ -21,7 +21,7 @@ from taxtreat.services.runtime_gate import evaluate_runtime_gate
 
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_RULE_DIR = ROOT / "data" / "legal_rules"
+DEFAULT_RULE_DIR = ROOT / "data" / "legal_rules_stage6"
 DEFAULT_LEGAL_FACT_DIR = ROOT / "data" / "legal_facts"
 INCOME_ALIASES = {
     "dividend": "dividend",
