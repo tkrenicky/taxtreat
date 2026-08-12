@@ -24,5 +24,8 @@ dependencies = [
 where = [".", "src"]
 include = ["app*", "taxtreat*", "taxtreat_cz*"]
 
+[tool.setuptools.package-data]
+app = ["web/*.html", "web/*.css", "web/*.js"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
