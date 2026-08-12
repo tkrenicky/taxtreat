@@ -27,6 +27,9 @@ jobs:
           pip install -r requirements-dev.txt
           pip install --no-deps -e .
 
+      - name: Install Playwright Chromium
+        run: python -m playwright install --with-deps chromium
+
       - name: Clean-install smoke test
         run: |
           python -c "import app.main; import taxtreat"
@@ -40,6 +43,18 @@ jobs:
             --cov-branch \
             --cov-fail-under=96 \
             --cov-report=term-missing
+
+      - name: Run Stage 7B browser acceptance
+        run: python scripts/capture_stage7b_ui.py artifacts/stage7b
+
+      - name: Upload Stage 7B browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage7b-browser-evidence-python-${{ matrix.python-version }}
+          path: artifacts/stage7b
+          if-no-files-found: warn
+          retention-days: 30
 
       - name: Build Stage 7A acceptance evidence
         run: |
