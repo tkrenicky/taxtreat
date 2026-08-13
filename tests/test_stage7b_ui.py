@@ -100,7 +100,7 @@ def test_workspace_demo_exposes_recipient_payment_result_workflow():
     assert 'name="accounting_date"' in html
     assert 'name="pe_connection"' in html
     assert 'id="workspace-follow-up"' in html
-    assert "Profil 4/5" not in html
+    assert "4/5" not in html
     assert "Obecná knihovna" not in html
     assert "Případnou nejistotu označ" not in html
     assert "Přihlášení ani ukládání klientských případů zatím není aktivní" in html
@@ -130,6 +130,7 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert "recipientForm.addEventListener" in javascript.text
     assert "renderClientQuestions" in javascript.text
     assert "applyAnswers" in javascript.text
+    assert "clientAnswers" in javascript.text
     assert "showModal" in javascript.text
     assert "data-tooltip" in javascript.text
     assert "grid-template-columns:repeat(4,1fr)" in css.text
