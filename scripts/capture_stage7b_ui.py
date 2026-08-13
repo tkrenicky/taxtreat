@@ -266,18 +266,18 @@ def capture(output_dir: Path) -> dict[str, object]:
                     '.flow-step[data-step="3"].active'
                 ).is_visible():
                     break
-                questions = workspace_form.locator(
+                workspace_questions = workspace_form.locator(
                     "#workspace-questions"
                 )
-                for item in questions.locator("select").all():
+                for item in workspace_questions.locator("select").all():
                     options = item.locator("option").all()
                     if len(options) > 1:
                         item.select_option(index=1)
-                for item in questions.locator(
+                for item in workspace_questions.locator(
                     'input[type="number"]'
                 ).all():
                     item.fill("25")
-                for item in questions.locator(
+                for item in workspace_questions.locator(
                     'input[type="date"]'
                 ).all():
                     item.fill("2024-01-01")
