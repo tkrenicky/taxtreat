@@ -251,22 +251,50 @@ def capture(output_dir: Path) -> dict[str, object]:
                 'select[name="income_type"]'
             ).select_option("dividend")
             workspace_form.locator(
-                'input[name="transaction_date"]'
+                'input[name="payment_date"]'
             ).fill("2026-08-12")
+            workspace_form.locator(
+                'input[name="accounting_date"]'
+            ).fill("2026-08-11")
             workspace_form.locator(
                 'input[name="amount"]'
             ).fill("100000")
-            workspace_form.get_by_role(
-                "button",
-                name="Vypočítat a zobrazit výsledek →",
-            ).click()
+            for _ in range(5):
+                workspace_form.locator("#workspace-submit").click()
+                page.wait_for_timeout(250)
+                if page.locator(
+                    '.flow-step[data-step="3"].active'
+                ).is_visible():
+                    break
+                questions = workspace_form.locator(
+                    "#workspace-questions"
+                )
+                for item in questions.locator("select").all():
+                    options = item.locator("option").all()
+                    if len(options) > 1:
+                        item.select_option(index=1)
+                for item in questions.locator(
+                    'input[type="number"]'
+                ).all():
+                    item.fill("25")
+                for item in questions.locator(
+                    'input[type="date"]'
+                ).all():
+                    item.fill("2024-01-01")
+            else:
+                raise AssertionError(
+                    "Workspace client questions did not converge."
+                )
             page.locator("#workspace-result-status").wait_for(
                 state="visible"
             )
             workspace_status = page.locator(
                 "#workspace-result-status"
             ).inner_text()
-            if workspace_status != "VYŽADUJE DOPLNĚNÍ":
+            if workspace_status not in {
+                "VÝPOČET DOKONČEN",
+                "ODBORNÉ OVĚŘENÍ",
+            }:
                 raise AssertionError(
                     "Workspace did not render the canonical review status: "
                     f"{workspace_status!r}."
