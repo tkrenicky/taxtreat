@@ -46,7 +46,7 @@
       <div class="dashboard-grid">
         <article class="card attention">
           <div class="card-head"><h2>Úkoly</h2><span>1</span></div>
-          <button class="task-row" data-open-recipient><span>Demo GmbH</span><b>Doplnit potvrzení o daňovém rezidentství</b><small>Otevřít profil →</small></button>
+          <button class="task-row" data-open-recipient><span>Demo GmbH</span><b>Doklad k případnému smluvnímu nároku není evidován</b><small>Otevřít profil →</small></button>
         </article>
         <article class="card">
           <div class="card-head"><h2>Poslední výstupy</h2><span>0</span></div>
@@ -58,15 +58,16 @@
     <section class="view" data-view="payers">
       <div class="page-title"><div><p>ORGANIZACE</p><h1>Plátci</h1><span>České subjekty, jejichž platby jsou v TaxTreat kontrolovány.</span></div></div>
       <article class="card entity-card">
-        <div class="avatar">D</div><div><h2>Demo CZ s.r.o.</h2><p>Česká republika · aktivní plátce</p></div>
+        <div class="avatar" data-payer-avatar>D</div><div><h2 data-payer-name>Demo CZ s.r.o.</h2><p>Česká republika · aktivní plátce</p></div>
         <dl><div><dt>Příjemci</dt><dd>1</dd></div><div><dt>Platby</dt><dd>0</dd></div><div><dt>Otevřené úkoly</dt><dd>1</dd></div></dl>
+        <button class="secondary compact entity-edit" type="button" data-edit-payer>Upravit plátce</button>
       </article>
     </section>
 
     <section class="view" data-view="recipients">
       <div class="page-title"><div><p>PROFILY PRO OPAKOVANÉ POUŽITÍ</p><h1>Příjemci</h1><span>Skutkové údaje a podklady použitelné pro další platby stejnému příjemci.</span></div><button class="secondary compact" data-create-recipient>Přidat příjemce</button></div>
       <article class="card recipient-row" data-open-recipient tabindex="0">
-        <div class="avatar">D</div><div><h2>Demo GmbH</h2><p>Rakousko · společnost</p></div><span class="badge warning">Podklady k doplnění</span><strong>Profil 4/5</strong><span>Otevřít →</span>
+        <div class="avatar">D</div><div><h2>Demo GmbH</h2><p>Rakousko · společnost</p></div><span class="badge">Základní údaje vyplněny</span><strong>Doklad rezidentství neevidován</strong><span>Otevřít →</span>
       </article>
     </section>
 
@@ -77,8 +78,14 @@
         <button class="primary compact" data-start-flow>Kontrola nové platby →</button>
       </article>
       <article class="card completeness">
-        <div><h2>Úplnost profilu</h2><strong>4/5</strong></div><progress max="5" value="4">4 z 5</progress>
-        <button>+ Doplnit potvrzení o daňovém rezidentství a dobu jeho platnosti</button>
+        <div><h2>Základní profil</h2><span class="badge">Údaje vyplněny</span></div>
+        <p>Potvrzení o daňovém rezidentství je důkazním podkladem pro uplatnění smluvní výhody. Samotný výpočet lze provést i bez něj; ve výsledku bude uvedeno, že rezidentství nebylo doloženo.</p>
+        <button type="button" data-residency-document>+ Evidovat potvrzení o daňovém rezidentství</button>
+        <form id="residency-document-form" class="inline-document-form" hidden>
+          <label><span>Datum vystavení *</span><input name="issued_at" type="date" required></label>
+          <label><span>Platnost do *</span><input name="valid_until" type="date" required></label>
+          <div><button class="secondary compact" type="button" data-close-residency>Teď ne</button><button class="primary compact" type="submit">Uložit evidenci</button></div>
+        </form>
       </article>
       <div class="dashboard-grid">
         <article class="card profile-facts"><h2>Základní údaje</h2><dl><div><dt>Daňová rezidence</dt><dd>Rakousko</dd></div><div><dt>Typ subjektu</dt><dd>Společnost</dd></div><div><dt>Skutečný vlastník příjmu</dt><dd>Předpokládáno</dd></div><div><dt>Vztah ke stálé provozovně v ČR</dt><dd>Bez souvislosti</dd></div></dl></article>
@@ -100,7 +107,7 @@
     <section class="view" data-view="sources">
       <div class="page-title"><div><p>DŮKAZNÍ ZÁKLAD</p><h1>Zdroje</h1><span>Smluvní texty a evidované zdroje použité v konkrétních výsledcích.</span></div></div>
       <div class="metrics source-metrics"><article><span>Smluvní partneři</span><strong>101</strong></article><article><span>Pokryté kombinace</span><strong>303</strong></article><article><span>Příjmové kategorie</span><strong>3</strong></article></div>
-      <article class="card source-note"><h2>Zdroje patří k výsledku</h2><p>U každé dokončené kontroly zobrazíme konkrétní článek smlouvy, použitou právní vrstvu a verzi datasetu. Obecná knihovna nenahrazuje posouzení konkrétní transakce.</p></article>
+      <article class="card source-note"><h2>Podklady použité ve výsledku</h2><p>U každé dokončené kontroly jsou uvedeny konkrétní články příslušné smlouvy, použité vrstvy právních pravidel, odkazy na evidované zdroje a verze datasetu platná pro daný výsledek.</p></article>
     </section>
 
     <section class="view flow" data-view="flow">
@@ -119,10 +126,11 @@
         <button class="new-recipient-toggle" type="button" data-show-recipient-form>+ Založit nového příjemce</button>
         <form id="new-recipient-form" class="card mini-form" hidden>
           <h2>Základní profil příjemce</h2>
-          <div class="field-grid three-fields">
-            <label><span>Název nebo jméno *</span><input name="recipient_name" required placeholder="např. Example GmbH"></label>
-            <label><span>Stát daňové rezidence *</span><select name="recipient_country" required><option value="">Vyber stát</option><option value="AT">Rakousko</option><option value="CH">Švýcarsko</option><option value="DE">Německo</option><option value="SG">Singapur</option><option value="TW">Tchaj-wan</option></select></label>
-            <label><span>Typ příjemce *</span><select name="recipient_type"><option>Společnost</option><option>Fyzická osoba</option><option>Fond</option><option>Jiný subjekt</option></select></label>
+          <p class="form-intro">Údaje se uloží do pracovního profilu a při dalších platbách je nebude nutné zadávat znovu.</p>
+          <div class="profile-form-grid">
+            <label class="form-field form-field-wide"><span><b>01</b> Název nebo jméno *</span><input name="recipient_name" required placeholder="např. Example GmbH" autocomplete="organization"></label>
+            <label class="form-field"><span><b>02</b> Stát daňové rezidence *</span><select name="recipient_country" required><option value="">Vyber stát</option><option value="AT">Rakousko</option><option value="CH">Švýcarsko</option><option value="DE">Německo</option><option value="SG">Singapur</option><option value="TW">Tchaj-wan</option></select></label>
+            <label class="form-field"><span><b>03</b> Typ příjemce *</span><select name="recipient_type"><option>Společnost</option><option>Fyzická osoba</option><option>Fond</option><option>Jiný subjekt</option></select></label>
           </div>
           <p>Další údaje a podklady doplníš v profilu příjemce. V tomto demu se nový profil po obnovení stránky odstraní.</p>
           <button class="primary" type="submit">Použít příjemce v této kontrole →</button>
@@ -135,14 +143,21 @@
         <form id="workspace-payment" class="card payment-form">
           <div class="field-grid">
             <label><span>Druh příjmu *</span><select name="income_type" required><option value="">Vyber druh</option><option value="dividend">Dividendy</option><option value="interest">Úroky</option><option value="royalty">Licenční poplatky</option></select></label>
-            <label><span>Datum transakce *</span><input name="transaction_date" type="date" required></label>
+            <label><span>Datum úhrady * <button class="info-button" type="button" data-tooltip="date-help" aria-label="Vysvětlení rozhodného data">i</button></span><input name="payment_date" type="date" required></label>
+            <label><span>Datum zaúčtování závazku * <button class="info-button" type="button" data-tooltip="date-help" aria-label="Vysvětlení rozhodného data">i</button></span><input name="accounting_date" type="date" required></label>
             <label><span>Hrubá částka *</span><input name="amount" type="number" min="1" step="1" required placeholder="100000"></label>
             <label><span>Měna *</span><select name="currency"><option>CZK</option><option>EUR</option><option>USD</option><option>CHF</option><option>GBP</option></select></label>
           </div>
-          <label class="check"><input name="no_pe_connection" type="checkbox" checked><span>Platba nesouvisí se stálou provozovnou příjemce v České republice.</span><abbr title="Stálá provozovna je trvalé místo podnikání zahraniční osoby v České republice.">i</abbr></label>
-          <div class="assumption"><b>Použité předpoklady</b><p>Příjemce je skutečným vlastníkem příjmu a daňovým rezidentem Rakouska. Případnou nejistotu označ ve výsledku k ověření poradcem.</p></div>
+          <div id="date-help" class="tooltip-panel" hidden>Pro výběr právních pravidel a kurzu ČNB se použije dřívější z data úhrady a data zaúčtování závazku.</div>
+          <fieldset class="pe-question">
+            <legend><span id="pe-question-text">Váže se příjem skutečně ke stálé provozovně příjemce v České republice?</span> <button class="info-button" type="button" data-tooltip="pe-help" aria-label="Vysvětlení vztahu ke stálé provozovně">i</button></legend>
+            <div class="segmented"><label><input name="pe_connection" type="radio" value="false" checked><span>Ne</span></label><label><input name="pe_connection" type="radio" value="true"><span>Ano</span></label><label><input name="pe_connection" type="radio" value="unknown"><span>Nevím</span></label></div>
+            <div id="pe-help" class="tooltip-panel" hidden>Ve smlouvách se posuzuje, zda se účast, pohledávka nebo právo, z něhož příjem plyne, skutečně váže ke stálé provozovně příjemce v ČR. Pokud ano, může se použít jiný daňový režim.</div>
+          </fieldset>
+          <div class="assumption"><b>Použité předpoklady</b><p>Příjemce je pro účely výpočtu považován za skutečného vlastníka příjmu a daňového rezidenta <span data-recipient-country>Rakouska</span>. Nedoložené předpoklady jsou ve výsledku výslovně uvedeny.</p></div>
+          <section id="workspace-follow-up" class="follow-up" hidden aria-live="polite"><div class="section-heading"><div><p>DOPLŇUJÍCÍ SKUTKOVÉ ÚDAJE</p><h2>Údaje potřebné pro dokončení výpočtu</h2></div><span id="workspace-question-count"></span></div><p>Otázky jsou odvozeny od zvoleného druhu příjmu a smlouvy s konkrétním státem.</p><div id="workspace-questions" class="question-list"></div></section>
           <div id="workspace-error" class="error" role="alert" hidden></div>
-          <div class="flow-actions"><button type="button" class="secondary" data-next-step="1">← Zpět</button><button type="submit" class="primary">Vypočítat a zobrazit výsledek →</button></div>
+          <div class="flow-actions"><button type="button" class="secondary" data-next-step="1">← Zpět</button><button type="submit" class="primary" id="workspace-submit">Vyhodnotit vstupní údaje →</button></div>
         </form>
       </section>
 
@@ -155,13 +170,22 @@
         <article class="reason"><h2>Jak výsledek číst</h2><p id="workspace-reason">Výsledek se zobrazí po vyhodnocení platby kanonickým pravidlovým enginem.</p></article>
         <div class="dashboard-grid">
           <article class="card summary"><h2>Souhrn platby</h2><dl><div><dt>Hrubá částka</dt><dd id="workspace-gross">—</dd></div><div><dt>Srážková daň</dt><dd id="workspace-tax-row">—</dd></div><div><dt>Čistá částka</dt><dd id="workspace-net">—</dd></div></dl></article>
-          <article class="card"><div class="card-head"><h2>Další kroky</h2><span id="workspace-action-count">0</span></div><div id="workspace-actions" class="action-list"></div></article>
+          <article class="card"><div class="card-head"><h2>Odborné ověření</h2><span id="workspace-action-count">0</span></div><div id="workspace-actions" class="action-list"></div></article>
         </div>
         <article class="card result-sources"><h2>Podklady výsledku</h2><div id="workspace-citations" class="citation-list"><p>Po výpočtu se zobrazí smluvní článek a evidované zdroje.</p></div></article>
         <div class="flow-actions"><button class="secondary" data-next-step="2">← Upravit platbu</button><button class="primary" data-nav="reviews">Uložit až po zavedení zabezpečeného účtu</button></div>
       </section>
     </section>
   </main>
+
+  <dialog id="payer-dialog" class="modal">
+    <form method="dialog" id="payer-form"><div class="modal-head"><div><p>PLÁTCE</p><h2>Upravit plátce</h2></div><button type="button" data-close-payer aria-label="Zavřít">×</button></div>
+      <label><span>Název *</span><input name="payer_name" value="Demo CZ s.r.o." required></label>
+      <label><span>IČO</span><input name="payer_id" inputmode="numeric" placeholder="např. 12345678"></label>
+      <label><span>Stát</span><input value="Česká republika" disabled></label>
+      <div class="flow-actions"><button class="secondary" type="button" data-close-payer>Zrušit</button><button class="primary" type="submit">Uložit změny</button></div>
+    </form>
+  </dialog>
 
   <footer>
     <p>TaxTreat je výpočetní nástroj. Výstup není právním ani daňovým poradenstvím ani závazným stanoviskem.</p>
