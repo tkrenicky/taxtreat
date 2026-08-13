@@ -91,9 +91,18 @@ def test_workspace_demo_exposes_recipient_payment_result_workflow():
     assert "Údaje o platbě" in html
     assert "Výsledek kontroly" in html
     assert "Jak výsledek číst" in html
-    assert "Další kroky" in html
+    assert "Odborné ověření" in html
     assert "Jak výsledek číst" in html
     assert 'id="new-recipient-form"' in html
+    assert 'data-edit-payer' in html
+    assert 'id="residency-document-form"' in html
+    assert 'name="payment_date"' in html
+    assert 'name="accounting_date"' in html
+    assert 'name="pe_connection"' in html
+    assert 'id="workspace-follow-up"' in html
+    assert "Profil 4/5" not in html
+    assert "Obecná knihovna" not in html
+    assert "Případnou nejistotu označ" not in html
     assert "Přihlášení ani ukládání klientských případů zatím není aktivní" in html
     assert "TaxTreat je výpočetní nástroj" in html
     assert "orientační" not in html.lower()
@@ -116,10 +125,17 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert ".innerHTML" not in javascript.text
     assert "resultExplanation" in javascript.text
     assert "citationCard" in javascript.text
-    assert "Pravidla identifikovala sazbu" in javascript.text
+    assert "Byla identifikována sazba" in javascript.text
     assert "Otevřít zdroj" in javascript.text
     assert "recipientForm.addEventListener" in javascript.text
+    assert "renderClientQuestions" in javascript.text
+    assert "applyAnswers" in javascript.text
+    assert "showModal" in javascript.text
+    assert "data-tooltip" in javascript.text
     assert "grid-template-columns:repeat(4,1fr)" in css.text
+    assert ".profile-form-grid" in css.text
+    assert ".question-card" in css.text
+    assert ".modal::backdrop" in css.text
 
 
 def test_ui_calls_canonical_endpoints_and_uses_safe_dom_rendering():
