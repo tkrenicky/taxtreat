@@ -18,6 +18,7 @@
   let payer = { name: "Demo CZ s.r.o.", id: "" };
   let lastPayload = null;
   let pendingQuestions = [];
+  const clientAnswers = { facts: {}, acquisitionDate: null, exchangeRate: null };
 
   function showView(name) {
     views.forEach((view) => view.classList.toggle("active", view.dataset.view === name));
@@ -186,14 +187,17 @@
       const path = input.dataset.inputPath;
       if (input.classList.contains("structured-answer")) {
         const rateDate = [payload.transaction_amount.payment_date, payload.transaction_amount.accounting_date].sort()[0];
-        payload.transaction_amount.exchange_rate = { source: "CNB", currency: payload.transaction_amount.currency, czk_per_unit: input.querySelector('[name="czk_per_unit"]').value, effective_date: rateDate, source_url: input.querySelector('[name="source_url"]').value };
+        clientAnswers.exchangeRate = { source: "CNB", currency: payload.transaction_amount.currency, czk_per_unit: input.querySelector('[name="czk_per_unit"]').value, effective_date: rateDate, source_url: input.querySelector('[name="source_url"]').value };
       } else if (path === "derived.acquisition_date") {
-        payload.facts.holding_period_months = completeMonths(input.value, payload.transaction_date);
+        clientAnswers.acquisitionDate = input.value;
       } else if (path && path.startsWith("facts.")) {
         const name = path.slice(6);
-        payload.facts[name] = input.dataset.responseType === "boolean" ? input.value === "true" : input.dataset.responseType === "decimal_percent" ? Number(input.value) : input.value;
+        clientAnswers.facts[name] = input.dataset.responseType === "boolean" ? input.value === "true" : input.dataset.responseType === "decimal_percent" ? Number(input.value) : input.value;
       }
     });
+    Object.assign(payload.facts, clientAnswers.facts);
+    if (clientAnswers.acquisitionDate) payload.facts.holding_period_months = completeMonths(clientAnswers.acquisitionDate, payload.transaction_date);
+    if (clientAnswers.exchangeRate) payload.transaction_amount.exchange_rate = { ...clientAnswers.exchangeRate, currency: payload.transaction_amount.currency };
   }
 
   function professionalTitle(question) {
