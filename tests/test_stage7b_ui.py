@@ -106,6 +106,11 @@ def test_workspace_demo_exposes_recipient_payment_result_workflow():
     assert 'name="ownership_percent"' in html
     assert 'name="direct_ownership"' in html
     assert 'name="acquisition_date"' in html
+    assert 'name="holding_period_mode"' in html
+    assert 'value="at_least_12_months"' in html
+    assert 'data-dividend-step="4"' in html
+    assert 'id="interest-facts"' in html
+    assert 'name="arm_length_amount"' in html
     assert 'data-edit-recipient' in html
     assert 'id="recipient-edit-form"' in html
     assert 'id="workspace-follow-up"' in html
@@ -145,6 +150,12 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert "showModal" in javascript.text
     assert "data-tooltip" in javascript.text
     assert "renderTransactionFacts" in javascript.text
+    assert "updateDividendProgress" in javascript.text
+    assert "decisiveCitations" in javascript.text
+    assert "citation.source_id" not in javascript.text
+    assert "evidovaný zdroj" not in javascript.text
+    assert 'incomeType === "royalty"' in javascript.text
+    assert 'incomeType === "interest"' in javascript.text
     assert 'data.get("transaction_date")' in javascript.text
     assert "facts.ownership_percent" in javascript.text
     assert "recipientEditForm.addEventListener" in javascript.text
@@ -152,6 +163,8 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert "grid-template-columns:repeat(4,1fr)" in css.text
     assert ".profile-form-grid" in css.text
     assert ".question-card" in css.text
+    assert ".progressive-facts" in css.text
+    assert ".fact-question" in css.text
     assert ".modal::backdrop" in css.text
 
 
