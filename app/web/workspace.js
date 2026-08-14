@@ -11,10 +11,26 @@
   const questionsRoot = document.querySelector("#workspace-questions");
   const payerDialog = document.querySelector("#payer-dialog");
   const payerForm = document.querySelector("#payer-form");
+  const recipientDialog = document.querySelector("#recipient-dialog");
+  const recipientEditForm = document.querySelector("#recipient-edit-form");
   const residenceForm = document.querySelector("#residency-document-form");
+  const transactionFacts = document.querySelector("#transaction-facts");
+  const dividendFacts = document.querySelector("#dividend-facts");
+  const royaltyFacts = document.querySelector("#royalty-facts");
   const countryNames = { AT: "Rakousko", CH: "Švýcarsko", DE: "Německo", SG: "Singapur", TW: "Tchaj-wan" };
   const countryGenitives = { AT: "Rakouska", CH: "Švýcarska", DE: "Německa", SG: "Singapuru", TW: "Tchaj-wanu" };
-  let recipient = { name: "Demo GmbH", country: "AT", type: "Společnost" };
+  let recipient = {
+    name: "Demo GmbH",
+    country: "AT",
+    type: "Společnost",
+    beneficialOwner: true,
+    treatyResident: true,
+    peConnection: false,
+    ownershipPercent: "",
+    directOwnership: "",
+    acquisitionDate: "",
+    votingOwnershipPercent: ""
+  };
   let payer = { name: "Demo CZ s.r.o.", id: "" };
   let lastPayload = null;
   let pendingQuestions = [];
@@ -73,6 +89,39 @@
     payerDialog.close();
   });
 
+  document.querySelectorAll("[data-edit-recipient]").forEach((button) => button.addEventListener("click", (event) => {
+    event.stopPropagation();
+    recipientEditForm.elements.recipient_name.value = recipient.name;
+    recipientEditForm.elements.recipient_country.value = recipient.country;
+    recipientEditForm.elements.recipient_type.value = recipient.type;
+    recipientEditForm.elements.ownership_percent.value = recipient.ownershipPercent;
+    recipientEditForm.elements.acquisition_date.value = recipient.acquisitionDate;
+    recipientEditForm.elements.direct_ownership.value = recipient.directOwnership;
+    recipientEditForm.elements.beneficial_owner.value = String(recipient.beneficialOwner);
+    recipientEditForm.elements.treaty_resident.value = String(recipient.treatyResident);
+    recipientEditForm.elements.pe_connection.value = String(recipient.peConnection);
+    recipientDialog.showModal();
+  }));
+  document.querySelectorAll("[data-close-recipient]").forEach((button) => button.addEventListener("click", () => recipientDialog.close()));
+  recipientEditForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const data = new FormData(recipientEditForm);
+    recipient = {
+      ...recipient,
+      name: String(data.get("recipient_name")).trim(),
+      country: String(data.get("recipient_country")),
+      type: String(data.get("recipient_type")),
+      ownershipPercent: String(data.get("ownership_percent")),
+      acquisitionDate: String(data.get("acquisition_date")),
+      directOwnership: String(data.get("direct_ownership")),
+      beneficialOwner: String(data.get("beneficial_owner")) === "true",
+      treatyResident: String(data.get("treaty_resident")) === "true",
+      peConnection: String(data.get("pe_connection")) === "true"
+    };
+    renderRecipient();
+    recipientDialog.close();
+  });
+
   document.querySelector("[data-residency-document]").addEventListener("click", () => {
     residenceForm.hidden = false;
     residenceForm.querySelector("input").focus();
@@ -85,17 +134,38 @@
   });
 
   function renderRecipient() {
+    const country = countryNames[recipient.country];
+    const initial = recipient.name.slice(0, 1).toUpperCase();
     document.querySelector("#flow-recipient-name").textContent = recipient.name;
-    document.querySelector("#flow-recipient-avatar").textContent = recipient.name.slice(0, 1).toUpperCase();
-    document.querySelector("#flow-recipient-meta").textContent = `${countryNames[recipient.country]} · ${recipient.type.toLowerCase()} · nový profil`;
+    document.querySelector("#flow-recipient-avatar").textContent = initial;
+    document.querySelector("#flow-recipient-meta").textContent = `${country} · ${recipient.type.toLowerCase()} · základní údaje vyplněny`;
     document.querySelectorAll("[data-recipient-name]").forEach((node) => { node.textContent = recipient.name; });
+    document.querySelectorAll("[data-recipient-avatar]").forEach((node) => { node.textContent = initial; });
     document.querySelectorAll("[data-recipient-country]").forEach((node) => { node.textContent = countryGenitives[recipient.country]; });
+    document.querySelectorAll("[data-recipient-country-name]").forEach((node) => { node.textContent = country; });
+    document.querySelectorAll("[data-recipient-type]").forEach((node) => { node.textContent = recipient.type.toLowerCase(); });
+    document.querySelectorAll("[data-profile-beneficial]").forEach((node) => { node.textContent = recipient.beneficialOwner ? "Ano" : "Ne"; });
+    document.querySelectorAll("[data-profile-pe]").forEach((node) => { node.textContent = recipient.peConnection ? "Ano" : "Ne"; });
+    document.querySelectorAll("[data-profile-ownership]").forEach((node) => { node.textContent = recipient.ownershipPercent ? `${recipient.ownershipPercent} %` : "Nevyplněno"; });
+    document.querySelectorAll("[data-profile-acquisition]").forEach((node) => { node.textContent = recipient.acquisitionDate || "Nevyplněno"; });
+    form.elements.beneficial_owner.value = String(recipient.beneficialOwner);
+    form.elements.treaty_resident.value = String(recipient.treatyResident);
+    form.elements.pe_connection.value = String(recipient.peConnection);
+    form.elements.ownership_percent.value = recipient.ownershipPercent;
+    form.elements.direct_ownership.value = recipient.directOwnership;
+    form.elements.acquisition_date.value = recipient.acquisitionDate;
+    form.elements.voting_ownership_percent.value = recipient.votingOwnershipPercent;
   }
 
   recipientForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const data = new FormData(recipientForm);
-    recipient = { name: String(data.get("recipient_name")).trim(), country: String(data.get("recipient_country")), type: String(data.get("recipient_type")) };
+    recipient = {
+      ...recipient,
+      name: String(data.get("recipient_name")).trim(),
+      country: String(data.get("recipient_country")),
+      type: String(data.get("recipient_type"))
+    };
     renderRecipient();
     recipientForm.hidden = true;
   });
@@ -120,15 +190,13 @@
     return Math.max(0, months);
   }
 
-  function updatePeQuestion() {
-    const wording = {
-      dividend: "Váže se účast, pro kterou jsou dividendy vypláceny, skutečně ke stálé provozovně příjemce v České republice?",
-      interest: "Váže se pohledávka, ze které jsou úroky placeny, skutečně ke stálé provozovně příjemce v České republice?",
-      royalty: "Váže se právo nebo majetek, za které jsou licenční poplatky placeny, skutečně ke stálé provozovně příjemce v České republice?"
-    };
-    setText("#pe-question-text", wording[form.elements.income_type.value] || "Váže se příjem skutečně ke stálé provozovně příjemce v České republice?");
+  function renderTransactionFacts() {
+    const incomeType = form.elements.income_type.value;
+    transactionFacts.hidden = !incomeType;
+    dividendFacts.hidden = incomeType !== "dividend";
+    royaltyFacts.hidden = incomeType !== "royalty";
   }
-  form.elements.income_type.addEventListener("change", updatePeQuestion);
+  form.elements.income_type.addEventListener("change", renderTransactionFacts);
 
   function createQuestion(question) {
     const field = document.createElement("article");
@@ -186,7 +254,7 @@
     questionsRoot.querySelectorAll("[data-input-path]").forEach((input) => {
       const path = input.dataset.inputPath;
       if (input.classList.contains("structured-answer")) {
-        const rateDate = [payload.transaction_amount.payment_date, payload.transaction_amount.accounting_date].sort()[0];
+        const rateDate = payload.transaction_date;
         clientAnswers.exchangeRate = { source: "CNB", currency: payload.transaction_amount.currency, czk_per_unit: input.querySelector('[name="czk_per_unit"]').value, effective_date: rateDate, source_url: input.querySelector('[name="source_url"]').value };
       } else if (path === "derived.acquisition_date") {
         clientAnswers.acquisitionDate = input.value;
@@ -256,7 +324,7 @@
     }
     const citations = document.querySelector("#workspace-citations"); citations.replaceChildren();
     (analysis.citations || []).forEach((citation) => citations.append(citationCard(citation)));
-    if (!citations.children.length) { const p = document.createElement("p"); p.textContent = `Právní dataset: ${analysis.dataset_version || "neuveden"}`; citations.append(p); }
+    if (!citations.children.length) { const p = document.createElement("p"); p.textContent = "Pro tento výsledek nebyl vrácen konkrétní odkaz na právní zdroj."; citations.append(p); }
     showStep(3);
   }
 
@@ -264,15 +332,26 @@
     event.preventDefault();
     const data = new FormData(form);
     const error = document.querySelector("#workspace-error"); error.hidden = true;
-    const paymentDate = String(data.get("payment_date"));
-    const accountingDate = String(data.get("accounting_date"));
-    const transactionDate = [paymentDate, accountingDate].sort()[0];
-    const peConnection = String(data.get("pe_connection"));
-    const facts = { beneficial_owner: true, recipient_is_treaty_resident: true, recipient_entity_type: recipient.type === "Fyzická osoba" ? "individual" : recipient.type === "Fond" ? "fund" : recipient.type === "Společnost" ? "company" : "other" };
-    if (peConnection !== "unknown") facts.permanent_establishment_connection = peConnection === "true";
+    const transactionDate = String(data.get("transaction_date"));
+    const facts = {
+      beneficial_owner: String(data.get("beneficial_owner")) === "true",
+      recipient_is_treaty_resident: String(data.get("treaty_resident")) === "true",
+      permanent_establishment_connection: String(data.get("pe_connection")) === "true",
+      recipient_entity_type: recipient.type === "Fyzická osoba" ? "individual" : recipient.type === "Fond" ? "fund" : recipient.type === "Společnost" ? "company" : "other"
+    };
+    const ownershipPercent = String(data.get("ownership_percent"));
+    const directOwnership = String(data.get("direct_ownership"));
+    const votingOwnership = String(data.get("voting_ownership_percent"));
+    const acquisitionDate = String(data.get("acquisition_date"));
+    const royaltyCategory = String(data.get("royalty_category"));
+    if (ownershipPercent) facts.ownership_percent = Number(ownershipPercent);
+    if (directOwnership) facts.direct_ownership = directOwnership === "true";
+    if (votingOwnership) facts.direct_or_indirect_voting_ownership = Number(votingOwnership);
+    if (acquisitionDate) facts.holding_period_months = completeMonths(acquisitionDate, transactionDate);
+    if (royaltyCategory) facts.royalty_category = royaltyCategory;
     const payload = {
       source_country: "CZ", recipient_country: recipient.country, income_type: String(data.get("income_type")), transaction_date: transactionDate,
-      facts, determinations: {}, transaction_amount: { amount: String(data.get("amount")), currency: String(data.get("currency")), payment_date: paymentDate, accounting_date: accountingDate }
+      facts, determinations: {}, transaction_amount: { amount: String(data.get("amount")), currency: String(data.get("currency")), payment_date: transactionDate, accounting_date: transactionDate }
     };
     if (pendingQuestions.length) applyAnswers(payload);
     try {
@@ -285,4 +364,7 @@
       else { renderClientQuestions([]); renderResult(payload, body); }
     } catch (problem) { error.textContent = problem.message; error.hidden = false; }
   });
+
+  renderRecipient();
+  renderTransactionFacts();
 })();
