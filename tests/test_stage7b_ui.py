@@ -96,15 +96,26 @@ def test_workspace_demo_exposes_recipient_payment_result_workflow():
     assert 'id="new-recipient-form"' in html
     assert 'data-edit-payer' in html
     assert 'id="residency-document-form"' in html
-    assert 'name="payment_date"' in html
-    assert 'name="accounting_date"' in html
+    assert 'name="transaction_date"' in html
+    assert 'name="payment_date"' not in html
+    assert 'name="accounting_date"' not in html
+    assert "dřívější z těchto dvou dat" in html
+    assert 'name="beneficial_owner"' in html
+    assert 'name="treaty_resident"' in html
     assert 'name="pe_connection"' in html
+    assert 'name="ownership_percent"' in html
+    assert 'name="direct_ownership"' in html
+    assert 'name="acquisition_date"' in html
+    assert 'data-edit-recipient' in html
+    assert 'id="recipient-edit-form"' in html
     assert 'id="workspace-follow-up"' in html
     assert "4/5" not in html
     assert "Obecná knihovna" not in html
     assert "Případnou nejistotu označ" not in html
     assert "Přihlášení ani ukládání klientských případů zatím není aktivní" in html
     assert "TaxTreat je výpočetní nástroj" in html
+    assert "nepředstavuje právní ani daňové poradenství" in html
+    assert "Právní dataset:" not in html
     assert "orientační" not in html.lower()
 
 
@@ -133,6 +144,11 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert "clientAnswers" in javascript.text
     assert "showModal" in javascript.text
     assert "data-tooltip" in javascript.text
+    assert "renderTransactionFacts" in javascript.text
+    assert 'data.get("transaction_date")' in javascript.text
+    assert "facts.ownership_percent" in javascript.text
+    assert "recipientEditForm.addEventListener" in javascript.text
+    assert "Právní dataset:" not in javascript.text
     assert "grid-template-columns:repeat(4,1fr)" in css.text
     assert ".profile-form-grid" in css.text
     assert ".question-card" in css.text
