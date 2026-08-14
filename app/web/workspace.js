@@ -16,7 +16,11 @@
   const residenceForm = document.querySelector("#residency-document-form");
   const transactionFacts = document.querySelector("#transaction-facts");
   const dividendFacts = document.querySelector("#dividend-facts");
+  const interestFacts = document.querySelector("#interest-facts");
   const royaltyFacts = document.querySelector("#royalty-facts");
+  const dividendSteps = [...document.querySelectorAll("[data-dividend-step]")];
+  const acquisitionDateField = document.querySelector("[data-acquisition-date]");
+  let votingWasEdited = false;
   const countryNames = { AT: "Rakousko", CH: "Švýcarsko", DE: "Německo", SG: "Singapur", TW: "Tchaj-wan" };
   const countryGenitives = { AT: "Rakouska", CH: "Švýcarska", DE: "Německa", SG: "Singapuru", TW: "Tchaj-wanu" };
   let recipient = {
@@ -154,7 +158,10 @@
     form.elements.ownership_percent.value = recipient.ownershipPercent;
     form.elements.direct_ownership.value = recipient.directOwnership;
     form.elements.acquisition_date.value = recipient.acquisitionDate;
-    form.elements.voting_ownership_percent.value = recipient.votingOwnershipPercent;
+    form.elements.holding_period_mode.value = recipient.acquisitionDate ? "known_date" : "";
+    form.elements.voting_ownership_percent.value = recipient.votingOwnershipPercent || recipient.ownershipPercent;
+    votingWasEdited = Boolean(recipient.votingOwnershipPercent);
+    updateDividendProgress();
   }
 
   recipientForm.addEventListener("submit", (event) => {
@@ -190,11 +197,42 @@
     return Math.max(0, months);
   }
 
+  function holdingAnswerIsComplete() {
+    const mode = form.elements.holding_period_mode.value;
+    return mode === "at_least_12_months" || mode === "less_than_12_months" ||
+      (mode === "known_date" && Boolean(form.elements.acquisition_date.value));
+  }
+
+  function updateDividendProgress() {
+    const ownershipAnswered = form.elements.ownership_percent.value !== "";
+    const directAnswered = form.elements.direct_ownership.value !== "";
+    const holdingMode = form.elements.holding_period_mode.value;
+    dividendSteps[1].hidden = !ownershipAnswered;
+    dividendSteps[2].hidden = !ownershipAnswered || !directAnswered;
+    acquisitionDateField.hidden = holdingMode !== "known_date";
+    dividendSteps[3].hidden = !ownershipAnswered || !directAnswered || !holdingAnswerIsComplete();
+  }
+
+  form.elements.ownership_percent.addEventListener("input", () => {
+    if (!votingWasEdited) form.elements.voting_ownership_percent.value = form.elements.ownership_percent.value;
+    updateDividendProgress();
+  });
+  form.elements.direct_ownership.addEventListener("change", updateDividendProgress);
+  form.elements.holding_period_mode.addEventListener("change", updateDividendProgress);
+  form.elements.acquisition_date.addEventListener("input", updateDividendProgress);
+  form.elements.voting_ownership_percent.addEventListener("input", () => { votingWasEdited = true; });
+
   function renderTransactionFacts() {
     const incomeType = form.elements.income_type.value;
     transactionFacts.hidden = !incomeType;
     dividendFacts.hidden = incomeType !== "dividend";
+    interestFacts.hidden = incomeType !== "interest";
     royaltyFacts.hidden = incomeType !== "royalty";
+    pendingQuestions = [];
+    questionsRoot.replaceChildren();
+    followUp.hidden = true;
+    setText("#workspace-submit", "Vyhodnotit vstupní údaje →");
+    if (incomeType === "dividend") updateDividendProgress();
   }
   form.elements.income_type.addEventListener("change", renderTransactionFacts);
 
@@ -280,21 +318,55 @@
     return node;
   }
 
-  function resultExplanation(analysis) {
-    if (analysis.status === "FINAL") return `Použitá sazba ${analysis.rate} % byla určena na základě zadaných údajů a evidovaných pravidel. Níže jsou uvedeny podklady výsledku.`;
+  function selectedRuleId(analysis) {
+    return String(analysis.selected_rule_id || analysis.candidate_rule_id || "");
+  }
+
+  function resultExplanation(analysis, payload) {
+    const selected = selectedRuleId(analysis);
+    if (analysis.status === "FINAL" && analysis.rate === 0 && payload.income_type === "dividend" && selected.endsWith("CURRENT-2")) {
+      return "Česká srážková daň je 0 %. Podle článku 10 odst. 2 písm. b) příslušné smlouvy se dividendy při alespoň 10% podílu společnosti zdaňují pouze ve státě rezidence příjemce. Nejde o použití obecné 10% smluvní sazby.";
+    }
+    if (analysis.status === "FINAL" && analysis.rate === 0 && payload.income_type === "dividend" && selected.includes("EU-RELIEF")) {
+      return "Česká srážková daň je 0 % na základě osvobození podílu na zisku mezi kvalifikovanou mateřskou a dceřinou společností. Výsledek vychází z české úpravy v § 19 zákona o daních z příjmů, která provádí pravidla EU.";
+    }
+    if (analysis.status === "FINAL") return `Použitá sazba ${analysis.rate} % byla určena na základě zadaných údajů a rozhodného právního pravidla uvedeného níže.`;
     if (analysis.candidate_rate !== null && analysis.candidate_rate !== undefined) return `Byla identifikována sazba ${analysis.candidate_rate} %. Její použití závisí na odborném ověření právních podmínek uvedených níže.`;
-    return "Sazbu zatím nelze určit. Ve výsledku jsou uvedeny podmínky, které vyžadují odborné posouzení.";
+    return "Sazbu zatím nelze určit. Níže jsou uvedeny konkrétní podmínky, které je třeba odborně ověřit.";
+  }
+
+  function citationDetail(citation) {
+    const ruleId = String(citation.rule_id || "");
+    if (ruleId.endsWith("CURRENT-2")) return "Při alespoň 10% podílu společnosti přiznává smlouva právo zdanit dividendy pouze státu rezidence příjemce.";
+    if (ruleId.endsWith("CURRENT-1")) return "Obecný smluvní limit české daně činí 10 % hrubé částky dividend.";
+    if (ruleId.includes("EU-RELIEF")) return "Osvobození kvalifikované výplaty podílu na zisku podle § 19 zákona o daních z příjmů a pravidel EU.";
+    if (ruleId.includes("DOMESTIC")) return "Výchozí sazba podle českého zákona o daních z příjmů.";
+    return "Právní ustanovení použité při výpočtu.";
   }
 
   function citationCard(citation) {
     const card = document.createElement("article"); card.className = "citation-card";
     const title = document.createElement("strong");
-    const isTreaty = String(citation.rule_id || "").includes("CURRENT");
-    title.textContent = isTreaty ? `Smlouva o zamezení dvojího zdanění · článek ${citation.article || "—"}` : `Český zákon o daních z příjmů · § ${citation.article || "—"}`;
+    const ruleId = String(citation.rule_id || "");
+    const isTreaty = ruleId.includes("CURRENT");
+    const treatyParagraph = ruleId.endsWith("CURRENT-2") ? " odst. 2 písm. b)" : ruleId.endsWith("CURRENT-1") ? " odst. 2 písm. a)" : "";
+    title.textContent = isTreaty ? `Smlouva o zamezení dvojího zdanění · článek ${citation.article || "—"}${treatyParagraph}` : ruleId.includes("EU-RELIEF") ? "Zákon o daních z příjmů · § 19" : `Zákon o daních z příjmů · § ${citation.article || "—"}`;
     const link = document.createElement("a"); link.href = citation.source_url; link.target = "_blank"; link.rel = "noreferrer noopener"; link.textContent = "Otevřít zdroj ↗";
-    const detail = document.createElement("p"); detail.textContent = `Pravidlo ${citation.rule_id} · evidovaný zdroj ${citation.source_id}`;
+    const detail = document.createElement("p"); detail.textContent = citationDetail(citation);
     card.append(title, link, detail);
     return card;
+  }
+
+  function decisiveCitations(analysis) {
+    const selected = selectedRuleId(analysis);
+    const citations = [...(analysis.citations || [])];
+    citations.sort((left, right) => Number(String(right.rule_id || "") === selected) - Number(String(left.rule_id || "") === selected));
+    const unique = new Map();
+    citations.forEach((citation) => {
+      const key = `${citation.source_url || ""}|${citation.article || ""}`;
+      if (!unique.has(key)) unique.set(key, citation);
+    });
+    return [...unique.values()];
   }
 
   function renderResult(payload, response) {
@@ -312,7 +384,7 @@
     setText("#workspace-gross", grossCzk !== null ? money(grossCzk) : payload.transaction_amount.currency === "CZK" ? money(payload.transaction_amount.amount) : `${payload.transaction_amount.amount} ${payload.transaction_amount.currency}`);
     setText("#workspace-tax-row", calculation ? money(taxCzk) : "—");
     setText("#workspace-net", calculation ? money(netCzk) : "—");
-    setText("#workspace-reason", resultExplanation(analysis));
+    setText("#workspace-reason", resultExplanation(analysis, payload));
     const actions = document.querySelector("#workspace-actions"); actions.replaceChildren();
     professional.forEach((question) => actions.append(actionItem(question)));
     setText("#workspace-action-count", String(professional.length));
@@ -323,7 +395,7 @@
       item.append(strong, small); actions.append(item);
     }
     const citations = document.querySelector("#workspace-citations"); citations.replaceChildren();
-    (analysis.citations || []).forEach((citation) => citations.append(citationCard(citation)));
+    decisiveCitations(analysis).forEach((citation) => citations.append(citationCard(citation)));
     if (!citations.children.length) { const p = document.createElement("p"); p.textContent = "Pro tento výsledek nebyl vrácen konkrétní odkaz na právní zdroj."; citations.append(p); }
     showStep(3);
   }
@@ -339,18 +411,26 @@
       permanent_establishment_connection: String(data.get("pe_connection")) === "true",
       recipient_entity_type: recipient.type === "Fyzická osoba" ? "individual" : recipient.type === "Fond" ? "fund" : recipient.type === "Společnost" ? "company" : "other"
     };
+    const incomeType = String(data.get("income_type"));
     const ownershipPercent = String(data.get("ownership_percent"));
     const directOwnership = String(data.get("direct_ownership"));
     const votingOwnership = String(data.get("voting_ownership_percent"));
+    const holdingPeriodMode = String(data.get("holding_period_mode"));
     const acquisitionDate = String(data.get("acquisition_date"));
+    const armLengthAmount = String(data.get("arm_length_amount"));
     const royaltyCategory = String(data.get("royalty_category"));
-    if (ownershipPercent) facts.ownership_percent = Number(ownershipPercent);
-    if (directOwnership) facts.direct_ownership = directOwnership === "true";
-    if (votingOwnership) facts.direct_or_indirect_voting_ownership = Number(votingOwnership);
-    if (acquisitionDate) facts.holding_period_months = completeMonths(acquisitionDate, transactionDate);
-    if (royaltyCategory) facts.royalty_category = royaltyCategory;
+    if (incomeType === "dividend") {
+      if (ownershipPercent) facts.ownership_percent = Number(ownershipPercent);
+      if (directOwnership) facts.direct_ownership = directOwnership === "true";
+      if (votingOwnership) facts.direct_or_indirect_voting_ownership = Number(votingOwnership);
+      if (holdingPeriodMode === "known_date" && acquisitionDate) facts.holding_period_months = completeMonths(acquisitionDate, transactionDate);
+      if (holdingPeriodMode === "at_least_12_months") facts.holding_period_months = 12;
+      if (holdingPeriodMode === "less_than_12_months") facts.holding_period_months = 0;
+    }
+    if (incomeType === "interest" && armLengthAmount) facts.arm_length_amount = armLengthAmount === "true";
+    if (incomeType === "royalty" && royaltyCategory) facts.royalty_category = royaltyCategory;
     const payload = {
-      source_country: "CZ", recipient_country: recipient.country, income_type: String(data.get("income_type")), transaction_date: transactionDate,
+      source_country: "CZ", recipient_country: recipient.country, income_type: incomeType, transaction_date: transactionDate,
       facts, determinations: {}, transaction_amount: { amount: String(data.get("amount")), currency: String(data.get("currency")), payment_date: transactionDate, accounting_date: transactionDate }
     };
     if (pendingQuestions.length) applyAnswers(payload);
