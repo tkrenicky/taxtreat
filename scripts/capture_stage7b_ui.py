@@ -347,6 +347,27 @@ def capture(output_dir: Path) -> dict[str, object]:
                 raise AssertionError(
                     "Workspace result did not expose actionable next steps."
                 )
+            if page.locator(
+                "#workspace-citations blockquote"
+            ).count() < 1:
+                raise AssertionError(
+                    "Workspace result did not expose treaty wording."
+                )
+            reference_date = page.locator(
+                "#workspace-reference-date"
+            ).inner_text()
+            if "2026" not in reference_date:
+                raise AssertionError(
+                    "Workspace did not bind the transaction date "
+                    "to the statutory calendar."
+                )
+            notification_deadline = page.locator(
+                "#workspace-notification-deadline"
+            ).inner_text()
+            if notification_deadline == "—":
+                raise AssertionError(
+                    "Workspace did not render a notification deadline."
+                )
             page.screenshot(
                 path=workspace_result_path,
                 full_page=True,

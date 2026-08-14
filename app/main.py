@@ -25,6 +25,7 @@ from taxtreat.engine.source_release_gate_v2 import (
 )
 from taxtreat.registry.legal_scope import load_partner_registry
 from taxtreat.services.calculation import (
+    build_withholding_compliance_schedule,
     build_withholding_tax_calculation,
 )
 from taxtreat.services.decision import (
@@ -418,6 +419,14 @@ def analyze(payload: AnalysisPayload):
     analysis["withholding_tax_calculation"] = (
         build_withholding_tax_calculation(
             amount,
+            decision_status=result.status.value,
+            rate_percent=result.rate,
+        )
+    )
+    analysis["withholding_compliance_schedule"] = (
+        build_withholding_compliance_schedule(
+            payload.transaction_date,
+            income_type=payload.income_type,
             decision_status=result.status.value,
             rate_percent=result.rate,
         )

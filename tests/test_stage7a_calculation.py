@@ -14,6 +14,7 @@ from taxtreat.engine.legal_rule_engine import (
 )
 from taxtreat.services.calculation import (
     _parse_date,
+    build_withholding_compliance_schedule,
     build_withholding_tax_calculation,
 )
 
@@ -297,3 +298,60 @@ def test_calculation_accepts_an_already_parsed_event_date():
     event_date = date(2026, 8, 12)
 
     assert _parse_date(event_date) is event_date
+
+
+def test_tax_and_notification_are_due_at_end_of_following_month():
+    schedule = build_withholding_compliance_schedule(
+        "2026-08-12",
+        income_type="dividend",
+        decision_status="FINAL",
+        rate_percent=10,
+    )
+
+    assert schedule == {
+        "schema_version": 1,
+        "status": "READY",
+        "reference_date": "2026-08-12",
+        "reference_date_basis": "earlier_of_payment_or_payable_recognition",
+        "tax_remittance_deadline": "2026-09-30",
+        "notification_deadline": "2026-09-30",
+        "notification_regime": "withheld_income_same_as_remittance",
+        "dividend_timing_review_required": True,
+    }
+
+
+def test_zero_rate_dividend_has_annual_notification_deadline():
+    schedule = build_withholding_compliance_schedule(
+        date(2026, 8, 12),
+        income_type="dividend",
+        decision_status="FINAL",
+        rate_percent=0,
+    )
+
+    assert schedule["tax_remittance_deadline"] is None
+    assert schedule["notification_deadline"] == "2027-02-01"
+    assert schedule["notification_regime"] == (
+        "exempt_or_treaty_non_taxable_annual"
+    )
+
+
+def test_non_final_result_keeps_compliance_dates_pending():
+    schedule = build_withholding_compliance_schedule(
+        "2026-08-12",
+        income_type="dividend",
+        decision_status="REVIEW_REQUIRED",
+        rate_percent=None,
+    )
+
+    assert schedule["status"] == "PENDING_FINAL_TREATMENT"
+    assert schedule["tax_remittance_deadline"] is None
+    assert schedule["notification_deadline"] is None
+
+
+def test_analysis_api_exposes_compliance_schedule():
+    response = client.post("/analysis", json=BASE_REQUEST)
+
+    assert response.status_code == 200
+    schedule = response.json()["withholding_compliance_schedule"]
+    assert schedule["reference_date"] == "2026-08-12"
+    assert schedule["status"] == "PENDING_FINAL_TREATMENT"

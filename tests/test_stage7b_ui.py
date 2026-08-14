@@ -92,6 +92,10 @@ def test_workspace_demo_exposes_recipient_payment_result_workflow():
     assert "Výsledek kontroly" in html
     assert "Jak výsledek číst" in html
     assert "Odborné ověření" in html
+    assert "Rozhodné datum a navazující lhůty" in html
+    assert 'id="workspace-remittance-deadline"' in html
+    assert 'id="workspace-notification-deadline"' in html
+    assert "§ 38d / § 38da" in html
     assert "Jak výsledek číst" in html
     assert 'id="new-recipient-form"' in html
     assert 'data-edit-payer' in html
@@ -152,6 +156,14 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert "renderTransactionFacts" in javascript.text
     assert "updateDividendProgress" in javascript.text
     assert "decisiveCitations" in javascript.text
+    assert "concreteReviewItems" in javascript.text
+    assert "Vazba podílu ke stálé provozovně" in javascript.text
+    assert "citationExcerpt" in javascript.text
+    assert "Dvanáctiměsíční doba držby" not in javascript.text
+    assert "dvanáctiměsíční doba držby" in javascript.text
+    assert "build_withholding_compliance_schedule" not in javascript.text
+    assert "renderComplianceSchedule" in javascript.text
+    assert "withholding_compliance_schedule" in javascript.text
     assert "citation.source_id" not in javascript.text
     assert "evidovaný zdroj" not in javascript.text
     assert 'incomeType === "royalty"' in javascript.text
@@ -166,6 +178,8 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert ".progressive-facts" in css.text
     assert ".fact-question" in css.text
     assert ".modal::backdrop" in css.text
+    assert ".compliance-schedule" in css.text
+    assert ".citation-card blockquote" in css.text
 
 
 def test_ui_calls_canonical_endpoints_and_uses_safe_dom_rendering():

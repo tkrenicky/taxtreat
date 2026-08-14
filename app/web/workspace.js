@@ -318,6 +318,31 @@
     return node;
   }
 
+  function reviewItem(title, detail) {
+    const node = document.createElement("div"); node.className = "action-item adviser";
+    const strong = document.createElement("strong"); strong.textContent = title;
+    const copy = document.createElement("small"); copy.textContent = detail;
+    node.append(strong, copy);
+    return node;
+  }
+
+  function concreteReviewItems(analysis, payload, professional) {
+    const items = professional.map((question) => actionItem(question));
+    if (payload.income_type === "dividend" && payload.facts.permanent_establishment_connection === true) {
+      items.unshift(reviewItem(
+        "Vazba podílu ke stálé provozovně v České republice",
+        "Bylo uvedeno, že podíl, ze kterého dividendy plynou, je součástí činnosti stálé provozovny příjemce v České republice. Limity podle čl. 10 odst. 1 a 2 se proto nepoužijí; režim musí být posouzen podle čl. 7 smlouvy a českých pravidel pro stálou provozovnu."
+      ));
+    }
+    if (analysis.status !== "FINAL" && !items.length) {
+      items.push(reviewItem(
+        "Podmínky použitelné sazby",
+        "Z dostupných údajů zatím nelze uzavřít všechny podmínky právního pravidla. Je třeba ověřit chybějící skutkové okolnosti uvedené u vstupních údajů a kontrolu přepočítat."
+      ));
+    }
+    return items;
+  }
+
   function selectedRuleId(analysis) {
     return String(analysis.selected_rule_id || analysis.candidate_rule_id || "");
   }
@@ -325,11 +350,15 @@
   function resultExplanation(analysis, payload) {
     const selected = selectedRuleId(analysis);
     if (analysis.status === "FINAL" && analysis.rate === 0 && payload.income_type === "dividend" && selected.endsWith("CURRENT-2")) {
-      return "Česká srážková daň je 0 %. Podle článku 10 odst. 2 písm. b) příslušné smlouvy se dividendy při alespoň 10% podílu společnosti zdaňují pouze ve státě rezidence příjemce. Nejde o použití obecné 10% smluvní sazby.";
+      const holding = Number(payload.facts.holding_period_months || 0);
+      const treatyConclusion = "Česká srážková daň je 0 %. Článek 10 odst. 2 písm. b) smlouvy přiznává při alespoň 10% podílu společnosti právo zdanit dividendy pouze státu rezidence příjemce. Pro tuto smluvní cestu se dvanáctiměsíční doba držby nevyžaduje.";
+      if (holding >= 12) return `${treatyConclusion} Osvobození podle § 19 zákona o daních z příjmů může představovat další samostatný právní titul, jeho použití však vyžaduje prokázání všech podmínek kvalifikované mateřské a dceřiné společnosti.`;
+      return treatyConclusion;
     }
     if (analysis.status === "FINAL" && analysis.rate === 0 && payload.income_type === "dividend" && selected.includes("EU-RELIEF")) {
-      return "Česká srážková daň je 0 % na základě osvobození podílu na zisku mezi kvalifikovanou mateřskou a dceřinou společností. Výsledek vychází z české úpravy v § 19 zákona o daních z příjmů, která provádí pravidla EU.";
+      return "Česká srážková daň je 0 % na základě osvobození podílu na zisku mezi kvalifikovanou mateřskou a dceřinou společností podle § 19 zákona o daních z příjmů. Příslušná smlouva může nezávisle vést ke stejnému výsledku; použitým právním titulem je v tomto výpočtu vnitrostátní osvobození.";
     }
+    if (analysis.status === "FINAL" && analysis.rate === 10 && payload.income_type === "dividend" && selected.endsWith("CURRENT-1")) return "Česká srážková daň je 10 %. Článek 10 odst. 2 písm. a) smlouvy omezuje českou daň na 10 % hrubé částky dividend, pokud je příjemce skutečným vlastníkem dividend a podmínky zvláštního 0% režimu nejsou splněny.";
     if (analysis.status === "FINAL") return `Použitá sazba ${analysis.rate} % byla určena na základě zadaných údajů a rozhodného právního pravidla uvedeného níže.`;
     if (analysis.candidate_rate !== null && analysis.candidate_rate !== undefined) return `Byla identifikována sazba ${analysis.candidate_rate} %. Její použití závisí na odborném ověření právních podmínek uvedených níže.`;
     return "Sazbu zatím nelze určit. Níže jsou uvedeny konkrétní podmínky, které je třeba odborně ověřit.";
@@ -344,6 +373,15 @@
     return "Právní ustanovení použité při výpočtu.";
   }
 
+  function citationExcerpt(citation) {
+    const ruleId = String(citation.rule_id || "");
+    const sourceUrl = String(citation.source_url || "");
+    if (!sourceUrl.includes("/sm/2007/31/")) return null;
+    if (ruleId.endsWith("CURRENT-2")) return "„Tyto dividendy podléhají zdanění jen ve smluvním státě, jehož je skutečný vlastník dividend rezidentem.“";
+    if (ruleId.endsWith("CURRENT-1")) return "„Daň takto uložená nepřesáhne 10 % hrubé částky dividend.“";
+    return null;
+  }
+
   function citationCard(citation) {
     const card = document.createElement("article"); card.className = "citation-card";
     const title = document.createElement("strong");
@@ -354,7 +392,28 @@
     const link = document.createElement("a"); link.href = citation.source_url; link.target = "_blank"; link.rel = "noreferrer noopener"; link.textContent = "Otevřít zdroj ↗";
     const detail = document.createElement("p"); detail.textContent = citationDetail(citation);
     card.append(title, link, detail);
+    const excerptText = citationExcerpt(citation);
+    if (excerptText) { const excerpt = document.createElement("blockquote"); excerpt.textContent = excerptText; card.append(excerpt); }
     return card;
+  }
+
+  function formatCzechDate(value) {
+    if (!value) return "—";
+    return new Intl.DateTimeFormat("cs-CZ", { day: "numeric", month: "long", year: "numeric" }).format(new Date(`${value}T12:00:00`));
+  }
+
+  function renderComplianceSchedule(analysis) {
+    const schedule = analysis.withholding_compliance_schedule;
+    if (!schedule) return;
+    setText("#workspace-reference-date", formatCzechDate(schedule.reference_date));
+    setText("#workspace-remittance-deadline", schedule.tax_remittance_deadline ? formatCzechDate(schedule.tax_remittance_deadline) : analysis.status === "FINAL" && Number(analysis.rate) === 0 ? "Daň se neodvádí" : "Po dokončení posouzení");
+    setText("#workspace-notification-deadline", schedule.notification_deadline ? formatCzechDate(schedule.notification_deadline) : "Po dokončení posouzení");
+    const note = document.querySelector("#workspace-deadline-note");
+    if (schedule.status !== "READY") note.textContent = "Lhůty nelze uzavřít, dokud není určeno konečné daňové zacházení.";
+    else if (schedule.notification_regime === "exempt_or_treaty_non_taxable_annual") note.textContent = "Při 0% výsledku se daň neodvádí. Oznámení o příjmu plynoucím do zahraničí se u dividend podává do 31. ledna následujícího roku.";
+    else note.textContent = "Odvod sražené daně a oznámení o příjmu plynoucím do zahraničí mají shodnou lhůtu: konec následujícího kalendářního měsíce.";
+    const caution = document.querySelector("#workspace-dividend-deadline-caution");
+    caution.hidden = !schedule.dividend_timing_review_required;
   }
 
   function decisiveCitations(analysis) {
@@ -373,6 +432,7 @@
     const analysis = response.analysis;
     const calculation = analysis.withholding_tax_calculation;
     const professional = (response.intake?.questions || []).filter((question) => !question.client_answerable);
+    const reviewItems = concreteReviewItems(analysis, payload, professional);
     const status = document.querySelector("#workspace-result-status");
     status.textContent = analysis.status === "FINAL" ? "VÝPOČET DOKONČEN" : "ODBORNÉ OVĚŘENÍ";
     status.className = analysis.status === "FINAL" ? "badge" : "badge warning";
@@ -386,9 +446,9 @@
     setText("#workspace-net", calculation ? money(netCzk) : "—");
     setText("#workspace-reason", resultExplanation(analysis, payload));
     const actions = document.querySelector("#workspace-actions"); actions.replaceChildren();
-    professional.forEach((question) => actions.append(actionItem(question)));
-    setText("#workspace-action-count", String(professional.length));
-    if (!professional.length) {
+    reviewItems.forEach((item) => actions.append(item));
+    setText("#workspace-action-count", String(reviewItems.length));
+    if (!reviewItems.length) {
       const item = document.createElement("div"); item.className = "action-item complete";
       const strong = document.createElement("strong"); strong.textContent = "Bez otevřených odborných položek";
       const small = document.createElement("small"); small.textContent = "Zadané údaje postačují pro dokončení výpočtu.";
@@ -397,6 +457,7 @@
     const citations = document.querySelector("#workspace-citations"); citations.replaceChildren();
     decisiveCitations(analysis).forEach((citation) => citations.append(citationCard(citation)));
     if (!citations.children.length) { const p = document.createElement("p"); p.textContent = "Pro tento výsledek nebyl vrácen konkrétní odkaz na právní zdroj."; citations.append(p); }
+    renderComplianceSchedule(analysis);
     showStep(3);
   }
 
