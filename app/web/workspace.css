@@ -76,9 +76,10 @@
   line-height: 1.4;
 }
 
+.transaction-facts [hidden],
 .fact-question[hidden],
 .nested-date[hidden] {
-  display: none;
+  display: none !important;
 }
 
 .input-suffix {
