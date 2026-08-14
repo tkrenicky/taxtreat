@@ -130,6 +130,40 @@ def test_layered_engine_handles_scope_release_and_final_paths():
     assert final.selected_rule_id == "DOMESTIC"
 
 
+def test_citation_carries_rule_metadata_for_data_driven_clients():
+    rule = _verified_rule(
+        "ANY-COUNTRY-TREATY-RULE",
+        legal_instrument="treaty",
+        legal_layer="treaty",
+        article=11,
+        paragraph="2(b)",
+        rate=5.0,
+        conditions=[LegalCondition("minimum_ownership", ">=", 10)],
+    )
+
+    result = evaluate_layered_rules(
+        [rule],
+        {**_interest_facts("AT"), "minimum_ownership": 25},
+        as_of=date(2026, 1, 1),
+    )
+
+    citation = result.citations[0]
+    assert citation["legal_instrument"] == "treaty"
+    assert citation["legal_layer"] == "treaty"
+    assert citation["rate"] == 5.0
+    assert citation["article"] == "11"
+    assert citation["paragraph"] == "2(b)"
+    assert citation["excerpt"] == "source"
+    assert citation["conditions"] == [
+        {
+            "fact": "minimum_ownership",
+            "operator": ">=",
+            "value": 10,
+            "fact_source": "transaction",
+        }
+    ]
+
+
 def test_verified_gate_and_missing_better_rule_are_fail_closed():
     facts = _interest_facts("AT")
     gate = _verified_rule(

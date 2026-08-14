@@ -158,9 +158,14 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert "decisiveCitations" in javascript.text
     assert "concreteReviewItems" in javascript.text
     assert "Vazba podílu ke stálé provozovně" in javascript.text
-    assert "citationExcerpt" in javascript.text
-    assert "Dvanáctiměsíční doba držby" not in javascript.text
-    assert "dvanáctiměsíční doba držby" in javascript.text
+    assert "selectedCitation" in javascript.text
+    assert "citation.excerpt" in javascript.text
+    assert "citation.conditions" in javascript.text
+    assert "citation.legal_layer" in javascript.text
+    assert "CURRENT-1" not in javascript.text
+    assert "CURRENT-2" not in javascript.text
+    assert "/sm/2007/31/" not in javascript.text
+    assert "Článek 10 odst." not in javascript.text
     assert "build_withholding_compliance_schedule" not in javascript.text
     assert "renderComplianceSchedule" in javascript.text
     assert "withholding_compliance_schedule" in javascript.text
@@ -180,6 +185,7 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert ".modal::backdrop" in css.text
     assert ".compliance-schedule" in css.text
     assert ".citation-card blockquote" in css.text
+    assert ".citation-excerpt" in css.text
 
 
 def test_ui_calls_canonical_endpoints_and_uses_safe_dom_rendering():

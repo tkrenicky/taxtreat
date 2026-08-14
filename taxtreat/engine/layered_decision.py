@@ -34,15 +34,27 @@ def _normalize_missing(rule: LegalRule, missing: list[str]) -> list[str]:
     ]
 
 
-def _citation(rule: LegalRule) -> dict[str, str | None]:
+def _citation(rule: LegalRule) -> dict[str, Any]:
     return {
         "rule_id": rule.rule_id,
+        "legal_instrument": rule.legal_instrument,
+        "legal_layer": rule.legal_layer,
+        "rate": rule.rate,
         "source_id": rule.source_id,
         "source_url": rule.source_url,
         "article": str(rule.article) if rule.article is not None else None,
         "paragraph": rule.paragraph,
         "excerpt": rule.source_text,
         "excerpt_sha256": rule.source_excerpt_hash,
+        "conditions": [
+            {
+                "fact": condition.fact,
+                "operator": condition.operator,
+                "value": condition.value,
+                "fact_source": condition.fact_source,
+            }
+            for condition in rule.conditions
+        ],
     }
 
 

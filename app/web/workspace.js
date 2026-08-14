@@ -331,7 +331,7 @@
     if (payload.income_type === "dividend" && payload.facts.permanent_establishment_connection === true) {
       items.unshift(reviewItem(
         "Vazba podílu ke stálé provozovně v České republice",
-        "Bylo uvedeno, že podíl, ze kterého dividendy plynou, je součástí činnosti stálé provozovny příjemce v České republice. Limity podle čl. 10 odst. 1 a 2 se proto nepoužijí; režim musí být posouzen podle čl. 7 smlouvy a českých pravidel pro stálou provozovnu."
+        "Bylo uvedeno, že podíl, ze kterého dividendy plynou, je součástí činnosti stálé provozovny příjemce v České republice. Zvláštní sazba smlouvy pro dividendy se proto nemusí použít; režim musí být posouzen podle konkrétního ustanovení příslušné smlouvy o dividendách, pravidel pro zisky podniků a českých pravidel pro stálou provozovnu."
       ));
     }
     if (analysis.status !== "FINAL" && !items.length) {
@@ -347,53 +347,52 @@
     return String(analysis.selected_rule_id || analysis.candidate_rule_id || "");
   }
 
-  function resultExplanation(analysis, payload) {
+  function selectedCitation(analysis) {
     const selected = selectedRuleId(analysis);
-    if (analysis.status === "FINAL" && analysis.rate === 0 && payload.income_type === "dividend" && selected.endsWith("CURRENT-2")) {
-      const holding = Number(payload.facts.holding_period_months || 0);
-      const treatyConclusion = "Česká srážková daň je 0 %. Článek 10 odst. 2 písm. b) smlouvy přiznává při alespoň 10% podílu společnosti právo zdanit dividendy pouze státu rezidence příjemce. Pro tuto smluvní cestu se dvanáctiměsíční doba držby nevyžaduje.";
-      if (holding >= 12) return `${treatyConclusion} Osvobození podle § 19 zákona o daních z příjmů může představovat další samostatný právní titul, jeho použití však vyžaduje prokázání všech podmínek kvalifikované mateřské a dceřiné společnosti.`;
-      return treatyConclusion;
-    }
-    if (analysis.status === "FINAL" && analysis.rate === 0 && payload.income_type === "dividend" && selected.includes("EU-RELIEF")) {
-      return "Česká srážková daň je 0 % na základě osvobození podílu na zisku mezi kvalifikovanou mateřskou a dceřinou společností podle § 19 zákona o daních z příjmů. Příslušná smlouva může nezávisle vést ke stejnému výsledku; použitým právním titulem je v tomto výpočtu vnitrostátní osvobození.";
-    }
-    if (analysis.status === "FINAL" && analysis.rate === 10 && payload.income_type === "dividend" && selected.endsWith("CURRENT-1")) return "Česká srážková daň je 10 %. Článek 10 odst. 2 písm. a) smlouvy omezuje českou daň na 10 % hrubé částky dividend, pokud je příjemce skutečným vlastníkem dividend a podmínky zvláštního 0% režimu nejsou splněny.";
-    if (analysis.status === "FINAL") return `Použitá sazba ${analysis.rate} % byla určena na základě zadaných údajů a rozhodného právního pravidla uvedeného níže.`;
+    return (analysis.citations || []).find((citation) => String(citation.rule_id || "") === selected) || null;
+  }
+
+  function provisionLabel(citation) {
+    if (!citation) return "příslušného ustanovení";
+    const article = citation.article ? `článku ${citation.article}` : "příslušného ustanovení";
+    return citation.paragraph ? `${article}, ${citation.paragraph}` : article;
+  }
+
+  function resultExplanation(analysis, payload) {
+    const citation = selectedCitation(analysis);
+    const layer = String(citation?.legal_layer || "");
+    if (analysis.status === "FINAL" && layer === "eu_relief") return `Česká srážková daň je ${analysis.rate} %. Výsledek vychází z osvobození podle ${provisionLabel(citation)} zákona o daních z příjmů; všechny podmínky vybraného pravidla byly splněny zadanými a ověřenými údaji.`;
+    if (analysis.status === "FINAL" && ["treaty", "protocol", "mli"].includes(layer)) return `Česká srážková daň je ${analysis.rate} %. Výsledek vychází z ${provisionLabel(citation)} příslušné smlouvy ve znění použitelných změn. Rozhodující byly podmínky konkrétního pravidla uvedené v právních podkladech.`;
+    if (analysis.status === "FINAL" && layer === "domestic") return `Česká srážková daň je ${analysis.rate} %. Výsledek vychází z ${provisionLabel(citation)} zákona o daních z příjmů, protože nebylo použito pravidlo s nižší sazbou.`;
+    if (analysis.status === "FINAL") return `Použitá sazba ${analysis.rate} % byla určena na základě zadaných údajů a vybraného právního pravidla uvedeného níže.`;
     if (analysis.candidate_rate !== null && analysis.candidate_rate !== undefined) return `Byla identifikována sazba ${analysis.candidate_rate} %. Její použití závisí na odborném ověření právních podmínek uvedených níže.`;
     return "Sazbu zatím nelze určit. Níže jsou uvedeny konkrétní podmínky, které je třeba odborně ověřit.";
   }
 
   function citationDetail(citation) {
-    const ruleId = String(citation.rule_id || "");
-    if (ruleId.endsWith("CURRENT-2")) return "Při alespoň 10% podílu společnosti přiznává smlouva právo zdanit dividendy pouze státu rezidence příjemce.";
-    if (ruleId.endsWith("CURRENT-1")) return "Obecný smluvní limit české daně činí 10 % hrubé částky dividend.";
-    if (ruleId.includes("EU-RELIEF")) return "Osvobození kvalifikované výplaty podílu na zisku podle § 19 zákona o daních z příjmů a pravidel EU.";
-    if (ruleId.includes("DOMESTIC")) return "Výchozí sazba podle českého zákona o daních z příjmů.";
+    const rate = citation.rate === null || citation.rate === undefined ? null : `${citation.rate} %`;
+    const ownership = (citation.conditions || []).find((condition) => ["minimum_ownership", "ownership_percent", "direct_or_indirect_voting_ownership"].includes(condition.fact) && condition.operator === ">=");
+    if (["treaty", "protocol", "mli"].includes(citation.legal_layer)) return ownership ? `Pravidlo stanoví sazbu ${rate} při podílu alespoň ${ownership.value} % a při splnění ostatních uvedených podmínek.` : `Pravidlo příslušné smlouvy stanoví sazbu ${rate} při splnění jeho podmínek.`;
+    if (citation.legal_layer === "eu_relief") return `Pravidlo vnitrostátního osvobození stanoví sazbu ${rate} při splnění všech kvalifikačních podmínek.`;
+    if (citation.legal_layer === "domestic") return `Vnitrostátní pravidlo stanoví sazbu ${rate}.`;
     return "Právní ustanovení použité při výpočtu.";
-  }
-
-  function citationExcerpt(citation) {
-    const ruleId = String(citation.rule_id || "");
-    const sourceUrl = String(citation.source_url || "");
-    if (!sourceUrl.includes("/sm/2007/31/")) return null;
-    if (ruleId.endsWith("CURRENT-2")) return "„Tyto dividendy podléhají zdanění jen ve smluvním státě, jehož je skutečný vlastník dividend rezidentem.“";
-    if (ruleId.endsWith("CURRENT-1")) return "„Daň takto uložená nepřesáhne 10 % hrubé částky dividend.“";
-    return null;
   }
 
   function citationCard(citation) {
     const card = document.createElement("article"); card.className = "citation-card";
     const title = document.createElement("strong");
-    const ruleId = String(citation.rule_id || "");
-    const isTreaty = ruleId.includes("CURRENT");
-    const treatyParagraph = ruleId.endsWith("CURRENT-2") ? " odst. 2 písm. b)" : ruleId.endsWith("CURRENT-1") ? " odst. 2 písm. a)" : "";
-    title.textContent = isTreaty ? `Smlouva o zamezení dvojího zdanění · článek ${citation.article || "—"}${treatyParagraph}` : ruleId.includes("EU-RELIEF") ? "Zákon o daních z příjmů · § 19" : `Zákon o daních z příjmů · § ${citation.article || "—"}`;
+    const layer = String(citation.legal_layer || "");
+    const paragraph = citation.paragraph ? ` · ${citation.paragraph}` : "";
+    title.textContent = ["treaty", "protocol", "mli"].includes(layer) ? `Smlouva o zamezení dvojího zdanění · článek ${citation.article || "—"}${paragraph}` : `Zákon o daních z příjmů · § ${citation.article || "—"}${paragraph}`;
     const link = document.createElement("a"); link.href = citation.source_url; link.target = "_blank"; link.rel = "noreferrer noopener"; link.textContent = "Otevřít zdroj ↗";
     const detail = document.createElement("p"); detail.textContent = citationDetail(citation);
     card.append(title, link, detail);
-    const excerptText = citationExcerpt(citation);
-    if (excerptText) { const excerpt = document.createElement("blockquote"); excerpt.textContent = excerptText; card.append(excerpt); }
+    if (citation.excerpt && layer !== "domestic") {
+      const disclosure = document.createElement("details"); disclosure.className = "citation-excerpt";
+      const summary = document.createElement("summary"); summary.textContent = "Zobrazit schválený text ustanovení";
+      const excerpt = document.createElement("blockquote"); excerpt.textContent = citation.excerpt;
+      disclosure.append(summary, excerpt); card.append(disclosure);
+    }
     return card;
   }
 

@@ -144,6 +144,23 @@
   line-height: 1.55;
 }
 
+.citation-excerpt {
+  grid-column: 1 / -1;
+  margin-top: 4px;
+}
+
+.citation-excerpt summary {
+  cursor: pointer;
+  color: var(--blue);
+  font-weight: 750;
+}
+
+.citation-excerpt blockquote {
+  max-height: 320px;
+  overflow: auto;
+  white-space: pre-line;
+}
+
 .compliance-schedule {
   margin-top: 18px;
   border-left: 4px solid var(--blue);
@@ -185,7 +202,8 @@
 .deadline-caution { padding: 12px 14px; border-radius: 8px; color: #70531a !important; background: #fff8e3; }
 
 @media (max-width: 700px) {
-  .citation-card blockquote { grid-column: 1; }
+  .citation-card blockquote,
+  .citation-excerpt { grid-column: 1; }
   .compliance-schedule dl { grid-template-columns: 1fr; }
   .compliance-schedule dl > div { border-right: 1px solid var(--line); border-bottom: 0; }
   .compliance-schedule dl > div:first-child { border-radius: 9px 9px 0 0; }

@@ -71,7 +71,7 @@ class LegalDecisionResult:
     missing_legal_layers: list[str] = field(default_factory=list)
     failed_conditions: list[str] = field(default_factory=list)
     explanation: list[str] = field(default_factory=list)
-    citations: list[dict[str, str | None]] = field(default_factory=list)
+    citations: list[dict[str, Any]] = field(default_factory=list)
     layer_results: list[dict[str, Any]] = field(default_factory=list)
     dataset_release: str | None = None
 
