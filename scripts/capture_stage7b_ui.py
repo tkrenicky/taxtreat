@@ -251,14 +251,20 @@ def capture(output_dir: Path) -> dict[str, object]:
                 'select[name="income_type"]'
             ).select_option("dividend")
             workspace_form.locator(
-                'input[name="payment_date"]'
-            ).fill("2026-08-12")
-            workspace_form.locator(
-                'input[name="accounting_date"]'
+                'input[name="transaction_date"]'
             ).fill("2026-08-11")
             workspace_form.locator(
                 'input[name="amount"]'
             ).fill("100000")
+            workspace_form.locator(
+                'input[name="ownership_percent"]'
+            ).fill("25")
+            workspace_form.locator(
+                'select[name="direct_ownership"]'
+            ).select_option("true")
+            workspace_form.locator(
+                'input[name="acquisition_date"]'
+            ).fill("2024-01-01")
             for _ in range(5):
                 workspace_form.locator("#workspace-submit").click()
                 page.wait_for_timeout(250)
