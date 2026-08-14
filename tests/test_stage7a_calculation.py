@@ -355,3 +355,39 @@ def test_analysis_api_exposes_compliance_schedule():
     schedule = response.json()["withholding_compliance_schedule"]
     assert schedule["reference_date"] == "2026-08-12"
     assert schedule["status"] == "PENDING_FINAL_TREATMENT"
+
+
+@pytest.mark.parametrize("rate", ["invalid", -1, 101])
+def test_compliance_schedule_rejects_invalid_final_rate(rate):
+    with pytest.raises(ValueError):
+        build_withholding_compliance_schedule(
+            "2026-08-12",
+            income_type="dividend",
+            decision_status="FINAL",
+            rate_percent=rate,
+        )
+
+
+def test_compliance_schedule_requires_a_reference_date():
+    with pytest.raises(ValueError):
+        build_withholding_compliance_schedule(
+            None,
+            income_type="dividend",
+            decision_status="FINAL",
+            rate_percent=10,
+        )
+
+
+def test_zero_rate_interest_keeps_notification_scope_open():
+    schedule = build_withholding_compliance_schedule(
+        "2026-08-12",
+        income_type="interest",
+        decision_status="FINAL",
+        rate_percent=0,
+    )
+
+    assert schedule["status"] == "REVIEW_NOTIFICATION_SCOPE"
+    assert schedule["notification_deadline"] is None
+    assert schedule["notification_regime"] == (
+        "income_classification_review_required"
+    )
