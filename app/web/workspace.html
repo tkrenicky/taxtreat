@@ -201,6 +201,9 @@
       <label><span>Podíl na základním kapitálu českého plátce (%)</span><input name="ownership_percent" type="number" min="0" max="100" step="0.01"></label>
       <label><span>Datum nabytí podílu</span><input name="acquisition_date" type="date"></label>
       <label><span>Přímé držení podílu</span><select name="direct_ownership"><option value="">Nevyplněno</option><option value="true">Ano</option><option value="false">Ne</option></select></label>
+      <label><span>Skutečný vlastník příjmu</span><select name="beneficial_owner"><option value="true">Ano</option><option value="false">Ne</option></select></label>
+      <label><span>Daňový rezident vybraného státu pro účely smlouvy</span><select name="treaty_resident"><option value="true">Ano</option><option value="false">Ne</option></select></label>
+      <label><span>Vazba účasti, pohledávky nebo práva ke stálé provozovně v ČR</span><select name="pe_connection"><option value="false">Ne</option><option value="true">Ano</option></select></label>
       <div class="flow-actions"><button class="secondary" type="button" data-close-recipient>Zrušit</button><button class="primary" type="submit">Uložit změny</button></div>
     </form>
   </dialog>
