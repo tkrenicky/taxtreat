@@ -250,6 +250,16 @@ def capture(output_dir: Path) -> dict[str, object]:
             workspace_form.locator(
                 'select[name="income_type"]'
             ).select_option("dividend")
+            if workspace_form.locator("#royalty-facts").is_visible():
+                raise AssertionError(
+                    "Royalty facts leaked into the dividend flow."
+                )
+            if workspace_form.locator(
+                '[data-dividend-step="2"]'
+            ).is_visible():
+                raise AssertionError(
+                    "Dividend questions did not start progressively."
+                )
             workspace_form.locator(
                 'input[name="transaction_date"]'
             ).fill("2026-08-11")
@@ -259,12 +269,40 @@ def capture(output_dir: Path) -> dict[str, object]:
             workspace_form.locator(
                 'input[name="ownership_percent"]'
             ).fill("25")
+            if not workspace_form.locator(
+                '[data-dividend-step="2"]'
+            ).is_visible():
+                raise AssertionError(
+                    "Second dividend question did not open."
+                )
             workspace_form.locator(
                 'select[name="direct_ownership"]'
             ).select_option("true")
+            if not workspace_form.locator(
+                '[data-dividend-step="3"]'
+            ).is_visible():
+                raise AssertionError(
+                    "Holding-period question did not open."
+                )
+            workspace_form.locator(
+                'select[name="holding_period_mode"]'
+            ).select_option("known_date")
             workspace_form.locator(
                 'input[name="acquisition_date"]'
             ).fill("2024-01-01")
+            voting = workspace_form.locator(
+                'input[name="voting_ownership_percent"]'
+            )
+            if not workspace_form.locator(
+                '[data-dividend-step="4"]'
+            ).is_visible():
+                raise AssertionError(
+                    "Voting-rights question did not open."
+                )
+            if voting.input_value() != "25":
+                raise AssertionError(
+                    "Voting rights were not prefilled from capital share."
+                )
             for _ in range(5):
                 workspace_form.locator("#workspace-submit").click()
                 page.wait_for_timeout(250)
