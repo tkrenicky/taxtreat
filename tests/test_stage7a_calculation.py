@@ -90,7 +90,33 @@ def test_foreign_amount_uses_cnb_rate_from_earlier_event_date():
         "accounting_date": "2026-08-10",
         "date_selection": "earlier_of_payment_or_accounting",
         "source_url": "https://www.cnb.cz/example",
+        "entry_method": "automatic",
+        "cnb_reference_czk_per_unit": None,
     }
+
+
+def test_foreign_amount_records_manual_override_against_cnb_reference():
+    calculation = build_withholding_tax_calculation(
+        {
+            **EUR_AMOUNT,
+            "exchange_rate": {
+                **EUR_AMOUNT["exchange_rate"],
+                "czk_per_unit": "25.10",
+                "entry_method": "manual_override",
+                "cnb_reference_czk_per_unit": "24.85",
+            },
+        },
+        decision_status="FINAL",
+        rate_percent=Decimal("10"),
+    )
+
+    assert calculation["gross_amount_czk"] == "25100.00"
+    assert calculation["exchange_rate"]["entry_method"] == (
+        "manual_override"
+    )
+    assert calculation["exchange_rate"][
+        "cnb_reference_czk_per_unit"
+    ] == "24.85"
 
 
 def test_non_final_result_never_calculates_candidate_tax():

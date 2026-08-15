@@ -118,6 +118,8 @@ def test_workspace_demo_exposes_recipient_payment_result_workflow():
     assert "Výpočet vychází z níže uvedených předpokladů" in html
     assert "Pracujeme s níže uvedenými předpoklady" not in html
     assert 'id="workspace-fx-status"' in html
+    assert 'name="exchange_rate_czk_per_unit"' in html
+    assert "Automaticky se předvyplní kurzem ČNB" in html
     assert 'name="beneficial_owner"' in html
     assert 'name="treaty_resident"' in html
     assert 'name="pe_connection"' in html
@@ -183,9 +185,9 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert css.status_code == 200
     assert javascript.status_code == 200
     assert designs.status_code == 200
-    assert "/ui-assets/workspace.css?v=20260815-6" in html
-    assert "/ui-assets/workspace.js?v=20260815-6" in html
-    assert "/ui-assets/workspace-designs.css?v=20260815-6" in html
+    assert "/ui-assets/workspace.css?v=20260815-7" in html
+    assert "/ui-assets/workspace.js?v=20260815-7" in html
+    assert "/ui-assets/workspace-designs.css?v=20260815-7" in html
     assert 'data-design-link="editorial"' in html
     assert 'data-design-link="atlas"' in html
     assert 'data-design-link="civic"' in html
@@ -248,6 +250,8 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert "recipient.relationships" in javascript.text
     assert "Právní dataset:" not in javascript.text
     assert 'fetch(`/exchange-rates/cnb?' in javascript.text
+    assert "syncExchangeRateFromField" in javascript.text
+    assert "ručně upraven" in javascript.text
     assert "Zobrazit znění ustanovení" in javascript.text
     assert "Zobrazit shrnutí použitého ustanovení" in javascript.text
     assert "Zobrazit úplné znění použitého ustanovení" in javascript.text
@@ -269,7 +273,7 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert "non_taxing_interest_above_monthly_threshold_annual" in javascript.text
     assert "non_taxing_interest_monthly_threshold_not_exceeded" in javascript.text
     assert "§ 38da zákona č. 586/1992 Sb." in javascript.text
-    assert 'const BUILD_VERSION = "20260815-6"' in javascript.text
+    assert 'const BUILD_VERSION = "20260815-7"' in javascript.text
     assert "Načíst novou verzi" in javascript.text
     assert ".new-build-notice" in css.text
     assert ".dashboard-summary" in css.text

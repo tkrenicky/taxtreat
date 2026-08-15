@@ -5,7 +5,7 @@ import sqlite3
 from datetime import date
 from decimal import Decimal
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
@@ -71,6 +71,13 @@ class CnbExchangeRate(BaseModel):
     )
     effective_date: date
     source_url: str = Field(pattern=r"^https://")
+    entry_method: Literal["automatic", "manual_override"] = "automatic"
+    cnb_reference_czk_per_unit: Decimal | None = Field(
+        default=None,
+        gt=0,
+        max_digits=30,
+        decimal_places=12,
+    )
 
     @field_validator("source", "currency")
     @classmethod

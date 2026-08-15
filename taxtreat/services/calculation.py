@@ -299,6 +299,10 @@ def build_withholding_tax_calculation(
             "accounting_date": accounting_date.isoformat(),
             "date_selection": "earlier_of_payment_or_accounting",
             "source_url": evidence.get("source_url"),
+            "entry_method": evidence.get("entry_method", "automatic"),
+            "cnb_reference_czk_per_unit": evidence.get(
+                "cnb_reference_czk_per_unit"
+            ),
         }
 
     tax = (gross_czk * rate / Decimal("100")).quantize(

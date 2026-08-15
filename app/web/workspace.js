@@ -11,7 +11,7 @@
   }
   "use strict";
 
-  const BUILD_VERSION = "20260815-6";
+  const BUILD_VERSION = "20260815-7";
 
   async function checkForNewBuild() {
     try {
@@ -51,6 +51,9 @@
   const dividendSteps = [...document.querySelectorAll("[data-dividend-step]")];
   const acquisitionDateField = document.querySelector("[data-acquisition-date]");
   const fxStatus = document.querySelector("#workspace-fx-status");
+  const exchangeRateField = document.querySelector("#workspace-exchange-rate-field");
+  const exchangeRateInput = form.elements.exchange_rate_czk_per_unit;
+  const exchangeRateLabel = document.querySelector("#workspace-exchange-rate-label");
   const activePayerSelect = document.querySelector("#active-payer-select");
   const payerList = document.querySelector("#payer-list");
   const flowPayerList = document.querySelector("#flow-payer-list");
@@ -300,16 +303,52 @@
     fxStatus.textContent = copy;
   }
 
+  function syncExchangeRateFromField() {
+    const currency = form.elements.currency.value;
+    const rateDate = form.elements.transaction_date.value;
+    const entered = exchangeRateInput.value;
+    if (currency === "CZK" || !rateDate || !entered || Number(entered) <= 0) {
+      clientAnswers.exchangeRate = null;
+      return null;
+    }
+    const existing = clientAnswers.exchangeRate;
+    const reference = existing?.cnb_reference_czk_per_unit || null;
+    const isAutomatic = reference !== null && Math.abs(Number(entered) - Number(reference)) < 1e-12;
+    clientAnswers.exchangeRate = {
+      source: "CNB",
+      currency,
+      czk_per_unit: entered,
+      effective_date: rateDate,
+      source_url: existing?.source_url || cnbSourceUrl(rateDate),
+      entry_method: isAutomatic ? "automatic" : "manual_override",
+      cnb_reference_czk_per_unit: reference
+    };
+    if (isAutomatic) {
+      showFxStatus(`Kurz ČNB: 1 ${currency} = ${entered} CZK k rozhodnému datu ${formatCzechDate(rateDate)}.`, "success");
+    } else {
+      const comparison = reference ? ` Automaticky načtený kurz ČNB byl ${reference} CZK.` : "";
+      showFxStatus(`Kurz byl pro tuto kontrolu ručně upraven na 1 ${currency} = ${entered} CZK.${comparison} Rozhodné datum je ${formatCzechDate(rateDate)}; zdrojem zůstává kurzovní lístek ČNB.`, "warning");
+    }
+    return clientAnswers.exchangeRate;
+  }
+
   async function loadCnbRate() {
     const currency = form.elements.currency.value;
     const rateDate = form.elements.transaction_date.value;
     if (currency === "CZK") {
       clientAnswers.exchangeRate = null;
+      exchangeRateInput.value = "";
+      exchangeRateInput.required = false;
+      exchangeRateField.hidden = true;
       fxStatus.hidden = true;
       return null;
     }
+    exchangeRateField.hidden = false;
+    exchangeRateInput.required = true;
+    exchangeRateLabel.textContent = `Kurz v CZK za 1 ${currency}`;
     if (!rateDate) {
       clientAnswers.exchangeRate = null;
+      exchangeRateInput.value = "";
       showFxStatus("Kurz ČNB bude načten automaticky po zadání rozhodného data.");
       return null;
     }
@@ -324,15 +363,19 @@
         currency,
         czk_per_unit: body.czk_per_unit,
         effective_date: rateDate,
-        source_url: body.source_url
+        source_url: body.source_url,
+        entry_method: "automatic",
+        cnb_reference_czk_per_unit: body.czk_per_unit
       };
+      exchangeRateInput.value = body.czk_per_unit;
       const published = body.published_for && body.published_for !== rateDate
         ? ` Použit byl poslední kurz vyhlášený ${formatCzechDate(body.published_for)}.`
         : "";
-      showFxStatus(`Kurz načten automaticky: 1 ${currency} = ${body.czk_per_unit} CZK.${published}`, "success");
+      showFxStatus(`Kurz načten automaticky z kurzovního lístku ČNB pro rozhodné datum ${formatCzechDate(rateDate)}: 1 ${currency} = ${body.czk_per_unit} CZK.${published}`, "success");
       return clientAnswers.exchangeRate;
     } catch (_problem) {
       clientAnswers.exchangeRate = null;
+      exchangeRateInput.value = "";
       showFxStatus("Kurz ČNB se nepodařilo načíst. Po vyhodnocení bude možné zadat kurz ručně; rozhodné datum ani odkaz se znovu zadávat nebudou.", "warning");
       return null;
     }
@@ -340,6 +383,7 @@
 
   form.elements.currency.addEventListener("change", loadCnbRate);
   form.elements.transaction_date.addEventListener("change", loadCnbRate);
+  exchangeRateInput.addEventListener("input", syncExchangeRateFromField);
 
   function calculationValue(calculation, canonicalName, legacyName) {
     if (!calculation) return null;
@@ -709,7 +753,11 @@
     }
     if (incomeType === "interest" && armLengthAmount) facts.arm_length_amount = armLengthAmount === "true";
     if (incomeType === "royalty" && royaltyCategory) facts.royalty_category = royaltyCategory;
-    if (String(data.get("currency")) !== "CZK") await loadCnbRate();
+    if (String(data.get("currency")) !== "CZK") {
+      const currentRate = clientAnswers.exchangeRate;
+      if (!currentRate || currentRate.currency !== String(data.get("currency")) || currentRate.effective_date !== transactionDate) await loadCnbRate();
+      syncExchangeRateFromField();
+    }
     const payload = {
       source_country: "CZ", recipient_country: recipient.country, income_type: incomeType, transaction_date: transactionDate,
       facts, determinations: {}, transaction_amount: { amount: String(data.get("amount")), currency: String(data.get("currency")), payment_date: transactionDate, accounting_date: transactionDate }

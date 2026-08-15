@@ -195,6 +195,26 @@
   background: #fff8e3;
 }
 
+#workspace-exchange-rate-field small {
+  display: block;
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: .7rem;
+  line-height: 1.35;
+}
+
+.payment-form > .field-grid {
+  grid-template-columns: 1fr 1.35fr .9fr .72fr 1fr;
+}
+
+@media (max-width: 1050px) {
+  .payment-form > .field-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 700px) {
+  .payment-form > .field-grid { grid-template-columns: 1fr; }
+}
+
 .fact-question > small.tooltip-panel {
   grid-column: 1 / -1;
   margin-top: 0;

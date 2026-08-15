@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="TaxTreat – pracovní prostor pro kontrolu české srážkové daně">
   <title>TaxTreat · Pracovní prostor</title>
-  <link rel="stylesheet" href="/ui-assets/workspace.css?v=20260815-6">
-  <link rel="stylesheet" href="/ui-assets/workspace-designs.css?v=20260815-6">
-  <script defer src="/ui-assets/workspace.js?v=20260815-6"></script>
+  <link rel="stylesheet" href="/ui-assets/workspace.css?v=20260815-7">
+  <link rel="stylesheet" href="/ui-assets/workspace-designs.css?v=20260815-7">
+  <script defer src="/ui-assets/workspace.js?v=20260815-7"></script>
 </head>
 <body>
   <aside id="design-switcher" class="design-switcher" aria-label="Volba návrhu vzhledu" hidden>
@@ -161,6 +161,7 @@
             <label class="transaction-date-field"><span>Datum transakce * <button class="info-button" type="button" data-tooltip="date-help" aria-label="Vysvětlení data transakce">i</button></span><input name="transaction_date" type="date" required><small>Uveď dřívější z těchto dvou dat: datum úhrady nebo datum zaúčtování závazku.</small></label>
             <label><span>Hrubá částka *</span><input name="amount" type="number" min="1" step="1" required placeholder="100000"></label>
             <label><span>Měna *</span><select name="currency"><option>CZK</option><option>EUR</option><option>USD</option><option>CHF</option><option>GBP</option></select></label>
+            <label id="workspace-exchange-rate-field" hidden><span id="workspace-exchange-rate-label">Kurz v CZK za 1 jednotku měny</span><input name="exchange_rate_czk_per_unit" type="number" min="0.000001" step="0.000001" inputmode="decimal"><small>Automaticky se předvyplní kurzem ČNB. Hodnotu lze pro konkrétní kontrolu upravit.</small></label>
           </div>
           <div id="date-help" class="tooltip-panel" hidden>Pro určení rozhodného právního režimu a případného kurzu ČNB se používá dřívější z data úhrady a data zaúčtování závazku. Do pole proto uveď právě toto dřívější datum.</div>
           <div id="workspace-fx-status" class="fx-status" hidden aria-live="polite"></div>
