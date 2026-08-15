@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="TaxTreat – pracovní prostor pro kontrolu české srážkové daně">
   <title>TaxTreat · Pracovní prostor</title>
-  <link rel="stylesheet" href="/ui-assets/workspace.css?v=20260815-8">
-  <link rel="stylesheet" href="/ui-assets/workspace-designs.css?v=20260815-8">
-  <script defer src="/ui-assets/workspace.js?v=20260815-8"></script>
+  <link rel="stylesheet" href="/ui-assets/workspace.css?v=20260815-9">
+  <link rel="stylesheet" href="/ui-assets/workspace-designs.css?v=20260815-9">
+  <script defer src="/ui-assets/workspace.js?v=20260815-9"></script>
 </head>
 <body>
   <aside id="design-switcher" class="design-switcher" aria-label="Volba návrhu vzhledu" hidden>
@@ -157,10 +157,10 @@
         <div class="page-title"><div><p>KROK 3 ZE 4</p><h1>Údaje o platbě</h1><span><b data-payer-name>Demo CZ s.r.o.</b> → <b data-recipient-name>Demo GmbH</b></span></div></div>
         <form id="workspace-payment" class="card payment-form">
           <div class="field-grid">
-            <label><span>Druh příjmu *</span><select name="income_type" required><option value="">Vyber druh</option><option value="dividend">Dividendy</option><option value="interest">Úroky</option><option value="royalty">Licenční poplatky</option></select></label>
+            <label class="payment-income-field"><span>Druh příjmu *</span><select name="income_type" required><option value="">Vyber druh</option><option value="dividend">Dividendy</option><option value="interest">Úroky</option><option value="royalty">Licenční poplatky</option></select></label>
             <label class="transaction-date-field"><span>Datum transakce * <button class="info-button" type="button" data-tooltip="date-help" aria-label="Vysvětlení data transakce">i</button></span><input name="transaction_date" type="date" required><small>Uveď dřívější z těchto dvou dat: datum úhrady nebo datum zaúčtování závazku.</small></label>
-            <label><span>Hrubá částka *</span><input name="amount" type="number" min="1" step="1" required placeholder="100000"></label>
-            <label><span>Měna *</span><select name="currency"><option>CZK</option><option>EUR</option><option>USD</option><option>CHF</option><option>GBP</option></select></label>
+            <label class="payment-amount-field"><span>Hrubá částka *</span><input name="amount" type="number" min="1" step="1" required placeholder="100000"></label>
+            <label class="payment-currency-field"><span>Měna *</span><select name="currency"><option>CZK</option><option>EUR</option><option>USD</option><option>CHF</option><option>GBP</option></select></label>
             <label id="workspace-exchange-rate-field" hidden><span id="workspace-exchange-rate-label">Kurz v CZK za 1 jednotku měny</span><input name="exchange_rate_czk_per_unit" type="number" min="0.000001" step="0.000001" inputmode="decimal"><small>Automaticky se předvyplní kurzem ČNB. Hodnotu lze pro konkrétní kontrolu upravit.</small></label>
           </div>
           <div id="date-help" class="tooltip-panel" hidden>Pro určení rozhodného právního režimu a případného kurzu ČNB se používá dřívější z data úhrady a data zaúčtování závazku. Do pole proto uveď právě toto dřívější datum.</div>
@@ -187,7 +187,7 @@
               <label><span>Ostatní úroky stejného druhu připadající tomuto příjemci ve stejném kalendářním měsíci (Kč)</span><input name="prior_same_type_monthly_amount_czk" type="number" min="0" step="1" value="0"><small>Uveď souhrn bez právě zadávané platby. Aktuální platba se po přepočtu kurzem ČNB přičte automaticky pro posouzení limitu podle § 38da zákona č. 586/1992 Sb., o daních z příjmů.</small></label>
             </div>
             <div id="royalty-facts" class="fact-grid" hidden>
-              <label><span>Předmět licenční platby</span><select name="royalty_category"><option value="">Vyber možnost</option><option value="copyright_literary_artistic_or_scientific">Autorské dílo</option><option value="software_patent_trademark_design_model_plan_secret_formula_process_knowhow_or_industrial_commercial_scientific_equipment">Software, patent, ochranná známka nebo know-how</option><option value="industrial_commercial_or_scientific_equipment">Průmyslové, obchodní nebo vědecké zařízení</option><option value="other">Jiný předmět licence</option></select></label>
+              <label><span>Předmět licenční platby</span><select name="royalty_category"><option value="">Vyber možnost</option><option value="copyright_literary_artistic_or_scientific">Autorské dílo</option><option value="software_patent_trademark_design_model_plan_secret_formula_process_or_knowhow">Software, patent, ochranná známka nebo know-how</option><option value="industrial_commercial_or_scientific_equipment">Průmyslové, obchodní nebo vědecké zařízení</option><option value="other">Jiný předmět licence</option></select></label>
             </div>
           </section>
           <section id="workspace-follow-up" class="follow-up" hidden aria-live="polite"><div class="section-heading"><div><p>DOPLŇUJÍCÍ SKUTKOVÉ ÚDAJE</p><h2>Údaje potřebné pro dokončení výpočtu</h2></div><span id="workspace-question-count"></span></div><p>Otázky jsou odvozeny od zvoleného druhu příjmu a smlouvy s konkrétním státem.</p><div id="workspace-questions" class="question-list"></div></section>

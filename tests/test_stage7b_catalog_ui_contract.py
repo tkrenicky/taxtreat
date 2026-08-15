@@ -3,6 +3,9 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from taxtreat.engine.legal_rule_engine import _evaluate_rule
+from taxtreat.engine.legal_rule_loader import load_legal_rules
+
 
 RULE_DIR = Path("data/legal_rules_stage6")
 
@@ -46,3 +49,37 @@ def test_rule_sequence_suffixes_are_not_semantic_contracts():
                 )
 
     assert any(len(values) > 1 for values in examples.values())
+
+
+def test_austrian_royalty_ui_facts_reach_each_treaty_rule():
+    rules = {
+        rule.rule_id: rule
+        for rule in load_legal_rules(RULE_DIR / "at.json")
+    }
+    cases = [
+        (
+            "CZ-AT-ROYALTY-CURRENT-1",
+            "copyright_literary_artistic_or_scientific"
+        ),
+        (
+            "CZ-AT-ROYALTY-CURRENT-2",
+            "software_patent_trademark_design_model_plan_secret_formula_process_or_knowhow"
+        ),
+        (
+            "CZ-AT-ROYALTY-CURRENT-2",
+            "industrial_commercial_or_scientific_equipment",
+        ),
+    ]
+
+    for rule_id, category in cases:
+        matches, missing, failed = _evaluate_rule(
+            rules[rule_id],
+            {
+                "beneficial_owner": True,
+                "royalty_category": category,
+            },
+            {},
+        )
+        assert matches is True
+        assert missing == []
+        assert failed == []

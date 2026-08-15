@@ -97,6 +97,93 @@ _SUPPORTED_OPERATORS = {
 }
 
 
+_ROYALTY_CATEGORY_ALIASES = {
+    "copyright_literary_artistic_or_scientific": "copyright",
+    # Kept for requests created by the earlier Stage 7B UI.
+    "software_patent_trademark_design_model_plan_secret_formula_process_knowhow_or_industrial_commercial_scientific_equipment": "industrial_property",
+    "software_patent_trademark_design_model_plan_secret_formula_process_or_knowhow": "industrial_property",
+    "industrial_commercial_or_scientific_equipment": "equipment",
+    "other": "other",
+}
+
+
+def _royalty_category_scopes(
+    value: Any,
+    *,
+    catalog_value: bool = False,
+) -> set[str]:
+    """Map UI categories and treaty-specific labels to semantic scopes."""
+
+    normalized = str(value).strip().lower()
+    if catalog_value and (
+        normalized == "other" or normalized.startswith("all_other_")
+    ):
+        return {"copyright", "industrial_property", "other"}
+    alias = _ROYALTY_CATEGORY_ALIASES.get(normalized)
+    if alias is not None:
+        return {alias}
+
+    scopes: set[str] = set()
+    if "copyright" in normalized:
+        scopes.add("copyright")
+    industrial_scope = normalized.replace(
+        "excluding_computer_program",
+        "",
+    ).replace(
+        "excluding_computer_software",
+        "",
+    )
+    if any(
+        token in industrial_scope
+        for token in (
+            "patent",
+            "trademark",
+            "design",
+            "secret_formula",
+            "process",
+            "software",
+            "computer_program",
+            "knowhow",
+            "know-how",
+        )
+    ):
+        scopes.add("industrial_property")
+    if "equipment" in normalized:
+        scopes.add("equipment")
+    return scopes
+
+
+def _condition_operands(
+    condition: LegalCondition,
+    supplied: Any,
+) -> tuple[Any, Any]:
+    """Normalize catalog serialization without weakening legal comparisons."""
+
+    expected = condition.value
+    if isinstance(supplied, bool) and isinstance(expected, str):
+        lowered = expected.strip().lower()
+        if lowered in {"true", "false"}:
+            expected = lowered == "true"
+    elif isinstance(expected, bool) and isinstance(supplied, str):
+        lowered = supplied.strip().lower()
+        if lowered in {"true", "false"}:
+            supplied = lowered == "true"
+    if (
+        condition.fact == "royalty_category"
+        and condition.operator in {"==", "!="}
+    ):
+        if str(supplied).strip().lower() == str(expected).strip().lower():
+            return True, True
+        expected_scopes = _royalty_category_scopes(
+            expected,
+            catalog_value=True,
+        )
+        supplied_scopes = _royalty_category_scopes(supplied)
+        category_matches = bool(expected_scopes.intersection(supplied_scopes))
+        return category_matches, True
+    return supplied, expected
+
+
 def resolve_tax_treatment(rule: LegalRule) -> TaxTreatment | None:
     """Return the legal outcome without presenting non-taxation as a 0% rate."""
 
@@ -150,8 +237,12 @@ def _evaluate_condition(
             f"Unsupported legal-rule operator: {condition.operator!r}"
         )
 
+    supplied, expected = _condition_operands(
+        condition,
+        fact_store[condition.fact],
+    )
     try:
-        return bool(operator(fact_store[condition.fact], condition.value)), None
+        return bool(operator(supplied, expected)), None
     except TypeError:
         return False, None
 

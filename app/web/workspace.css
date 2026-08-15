@@ -204,15 +204,27 @@
 }
 
 .payment-form > .field-grid {
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(6, 1fr);
 }
 
+.payment-income-field,
+.transaction-date-field,
+.payment-amount-field { grid-column: span 2; }
+
+.payment-currency-field,
+#workspace-exchange-rate-field { grid-column: span 3; }
+
 @media (max-width: 1050px) {
-  .payment-form > .field-grid { grid-template-columns: 1fr 1fr; }
+  .payment-form > .field-grid { grid-template-columns: repeat(6, 1fr); }
 }
 
 @media (max-width: 700px) {
   .payment-form > .field-grid { grid-template-columns: 1fr; }
+  .payment-income-field,
+  .transaction-date-field,
+  .payment-amount-field,
+  .payment-currency-field,
+  #workspace-exchange-rate-field { grid-column: 1; }
 }
 
 .fact-question > small.tooltip-panel {

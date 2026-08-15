@@ -5,8 +5,10 @@ import pytest
 
 from taxtreat.engine.legal_rule_engine import (
     DecisionStatus,
+    LegalCondition,
     LegalRule,
     TaxTreatment,
+    _evaluate_rule,
     resolve_tax_treatment,
 )
 from taxtreat.engine.legal_rule_loader import load_legal_rules
@@ -177,3 +179,77 @@ def test_non_taxing_treatment_drives_notification_schedule():
     assert schedule["tax_treatment"] == "exclusive_foreign_taxation"
     assert schedule["tax_remittance_deadline"] is None
     assert schedule["notification_deadline"] == "2027-02-01"
+
+
+def test_catalog_string_boolean_matches_ui_boolean_fact():
+    rule = LegalRule(
+        rule_id="BOOLEAN-SERIALIZATION",
+        income_type="royalty",
+        source_country="CZ",
+        recipient_country="AT",
+        legal_instrument="treaty",
+        conditions=[
+            LegalCondition("beneficial_owner", "==", "true"),
+        ],
+    )
+
+    matches, missing, failed = _evaluate_rule(
+        rule,
+        {"beneficial_owner": True},
+        {},
+    )
+
+    assert matches is True
+    assert missing == []
+    assert failed == []
+
+
+@pytest.mark.parametrize(
+    ("ui_category", "catalog_category"),
+    [
+        (
+            "copyright_literary_artistic_or_scientific",
+            "copyright_literary_artistic_scientific_including_films_and_broadcast_media",
+        ),
+        (
+            "software_patent_trademark_design_model_plan_secret_formula_process_or_knowhow",
+            "patent_trademark_design_model_plan_secret_formula_process_software_equipment_or_knowhow",
+        ),
+        (
+            "industrial_commercial_or_scientific_equipment",
+            "patent_trademark_design_model_plan_secret_formula_process_software_equipment_or_knowhow",
+        ),
+        (
+            "industrial_commercial_or_scientific_equipment",
+            "industrial_commercial_scientific_equipment",
+        ),
+        (
+            "software_patent_trademark_design_model_plan_secret_formula_process_or_knowhow",
+            "other",
+        ),
+    ],
+)
+def test_ui_royalty_category_matches_treaty_taxonomy(
+    ui_category,
+    catalog_category,
+):
+    rule = LegalRule(
+        rule_id="ROYALTY-TAXONOMY",
+        income_type="royalty",
+        source_country="CZ",
+        recipient_country="AT",
+        legal_instrument="treaty",
+        conditions=[
+            LegalCondition("royalty_category", "==", catalog_category),
+        ],
+    )
+
+    matches, missing, failed = _evaluate_rule(
+        rule,
+        {"royalty_category": ui_category},
+        {},
+    )
+
+    assert matches is True
+    assert missing == []
+    assert failed == []
