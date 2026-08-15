@@ -159,6 +159,10 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert "renderTransactionFacts" in javascript.text
     assert "updateDividendProgress" in javascript.text
     assert "decisiveCitations" in javascript.text
+    assert "citationRole" in javascript.text
+    assert 'domestic: 0, treaty: 1' in javascript.text
+    assert "index + 1" in javascript.text
+    assert "1. Výchozí vnitrostátní pravidlo" not in javascript.text
     assert "concreteReviewItems" in javascript.text
     assert "Vazba podílu ke stálé provozovně" in javascript.text
     assert "selectedCitation" in javascript.text
@@ -183,6 +187,8 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert 'fetch(`/exchange-rates/cnb?' in javascript.text
     assert "Zobrazit znění ustanovení" in javascript.text
     assert "Zobrazit schválený text ustanovení" not in javascript.text
+    assert "displayLegalExcerpt" in javascript.text
+    assert "excerptIsReadable" not in javascript.text
     assert "Odkaz na kurzovní lístek ČNB" not in javascript.text
     assert ".dashboard-summary" in css.text
     assert ".dashboard-metrics" in css.text
@@ -196,6 +202,7 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert ".compliance-schedule" in css.text
     assert ".citation-card blockquote" in css.text
     assert ".citation-excerpt" in css.text
+    assert "font-size: .88rem" in css.text
 
 
 def test_ui_calls_canonical_endpoints_and_uses_safe_dom_rendering():

@@ -430,30 +430,44 @@
     return "Právní ustanovení použité při výpočtu.";
   }
 
-  function excerptIsReadable(excerpt) {
-    return Boolean(excerpt) && !/[õÕ]/.test(excerpt);
+  function displayLegalExcerpt(excerpt) {
+    return String(excerpt || "")
+      .replaceAll("õ", "í")
+      .replaceAll("Õ", "Í");
   }
 
-  function citationCard(citation, analysis) {
+  function citationRole(citation, selected, position) {
+    const layer = String(citation.legal_layer || "");
+    if (layer === "domestic") return `${position}. Výchozí vnitrostátní pravidlo`;
+    if (["treaty", "protocol", "mli"].includes(layer)) {
+      return `${position}. ${selected ? "Použité smluvní pravidlo" : "Smluvní pravidlo"}`;
+    }
+    if (layer === "eu_relief") {
+      return `${position}. ${selected ? "Použité osvobození" : "Pravidlo osvobození"}`;
+    }
+    return `${position}. ${selected ? "Použité pravidlo" : "Související právní pravidlo"}`;
+  }
+
+  function citationCard(citation, analysis, position) {
     const card = document.createElement("article"); card.className = "citation-card";
     const selected = String(citation.rule_id || "") === selectedRuleId(analysis);
     const title = document.createElement("strong");
     const layer = String(citation.legal_layer || "");
     if (!selected) card.classList.add("context");
     const role = document.createElement("span"); role.className = "citation-role";
-    role.textContent = selected ? "Použité pravidlo" : layer === "domestic" ? "Výchozí vnitrostátní pravidlo" : "Související právní pravidlo";
+    role.textContent = citationRole(citation, selected, position);
     const paragraph = citation.paragraph ? ` · ${citation.paragraph}` : "";
     title.textContent = ["treaty", "protocol", "mli"].includes(layer) ? `Smlouva o zamezení dvojího zdanění · článek ${citation.article || "—"}${paragraph}` : `Zákon o daních z příjmů · § ${citation.article || "—"}${paragraph}`;
     const link = document.createElement("a"); link.href = citation.source_url; link.target = "_blank"; link.rel = "noreferrer noopener"; link.textContent = "Otevřít zdroj ↗";
     const detail = document.createElement("p");
     detail.textContent = !selected && layer === "domestic"
-      ? `Výchozí vnitrostátní sazba činí ${citation.rate} %. V tomto výsledku byla upravena použitím výhodnějšího pravidla uvedeného výše.`
+      ? `Výchozí vnitrostátní sazba činí ${citation.rate} %. V následujícím kroku je zohledněno pravidlo, které tuto sazbu omezuje nebo nahrazuje.`
       : citationDetail(citation);
     card.append(role, title, link, detail);
-    if (excerptIsReadable(citation.excerpt) && layer !== "domestic") {
+    if (citation.excerpt && layer !== "domestic") {
       const disclosure = document.createElement("details"); disclosure.className = "citation-excerpt";
       const summary = document.createElement("summary"); summary.textContent = "Zobrazit znění ustanovení";
-      const excerpt = document.createElement("blockquote"); excerpt.textContent = citation.excerpt;
+      const excerpt = document.createElement("blockquote"); excerpt.textContent = displayLegalExcerpt(citation.excerpt);
       disclosure.append(summary, excerpt); card.append(disclosure);
     }
     return card;
@@ -481,7 +495,12 @@
   function decisiveCitations(analysis) {
     const selected = selectedRuleId(analysis);
     const citations = [...(analysis.citations || [])];
-    citations.sort((left, right) => Number(String(right.rule_id || "") === selected) - Number(String(left.rule_id || "") === selected));
+    const layerOrder = { domestic: 0, treaty: 1, protocol: 2, mli: 3, eu_relief: 4 };
+    citations.sort((left, right) => {
+      const layerDifference = (layerOrder[left.legal_layer] ?? 9) - (layerOrder[right.legal_layer] ?? 9);
+      if (layerDifference) return layerDifference;
+      return Number(String(right.rule_id || "") === selected) - Number(String(left.rule_id || "") === selected);
+    });
     const unique = new Map();
     citations.forEach((citation) => {
       const key = `${citation.source_url || ""}|${citation.article || ""}`;
@@ -517,7 +536,7 @@
       item.append(strong, small); actions.append(item);
     }
     const citations = document.querySelector("#workspace-citations"); citations.replaceChildren();
-    decisiveCitations(analysis).forEach((citation) => citations.append(citationCard(citation, analysis)));
+    decisiveCitations(analysis).forEach((citation, index) => citations.append(citationCard(citation, analysis, index + 1)));
     if (!citations.children.length) { const p = document.createElement("p"); p.textContent = "Pro tento výsledek nebyl vrácen konkrétní odkaz na právní zdroj."; citations.append(p); }
     renderComplianceSchedule(analysis);
     showStep(3);
