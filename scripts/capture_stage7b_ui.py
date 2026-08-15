@@ -347,11 +347,28 @@ def capture(output_dir: Path) -> dict[str, object]:
                 raise AssertionError(
                     "Workspace result did not expose actionable next steps."
                 )
-            if page.locator(
-                "#workspace-citations blockquote"
-            ).count() < 1:
+            citation_cards = page.locator(
+                "#workspace-citations .citation-card"
+            )
+            if citation_cards.count() < 1:
                 raise AssertionError(
-                    "Workspace result did not expose treaty wording."
+                    "Workspace result did not expose legal support."
+                )
+            primary_citation = citation_cards.first
+            if not primary_citation.locator("p").inner_text().strip():
+                raise AssertionError(
+                    "Workspace legal support is missing a readable summary."
+                )
+            source_url = primary_citation.locator("a").get_attribute("href")
+            if not source_url or not source_url.startswith("https://"):
+                raise AssertionError(
+                    "Workspace legal support is missing an official link."
+                )
+            if "schválený text" in page.locator(
+                "#workspace-citations"
+            ).inner_text().lower():
+                raise AssertionError(
+                    "Workspace incorrectly describes source wording as approved."
                 )
             reference_date = page.locator(
                 "#workspace-reference-date"
