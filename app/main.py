@@ -91,6 +91,12 @@ class TransactionAmount(BaseModel):
     payment_date: date | None = None
     accounting_date: date | None = None
     exchange_rate: CnbExchangeRate | None = None
+    prior_same_type_monthly_amount_czk: Decimal | None = Field(
+        default=None,
+        ge=0,
+        max_digits=30,
+        decimal_places=2,
+    )
 
     @field_validator("currency")
     @classmethod
@@ -465,18 +471,17 @@ def analyze(payload: AnalysisPayload):
         if payload.transaction_amount is not None
         else None
     )
-    analysis["withholding_tax_calculation"] = (
-        build_withholding_tax_calculation(
-            amount,
-            decision_status=result.status.value,
-            rate_percent=result.rate,
-            tax_treatment=(
-                result.tax_treatment.value
-                if getattr(result, "tax_treatment", None) is not None
-                else None
-            ),
-        )
+    calculation = build_withholding_tax_calculation(
+        amount,
+        decision_status=result.status.value,
+        rate_percent=result.rate,
+        tax_treatment=(
+            result.tax_treatment.value
+            if getattr(result, "tax_treatment", None) is not None
+            else None
+        ),
     )
+    analysis["withholding_tax_calculation"] = calculation
     analysis["withholding_compliance_schedule"] = (
         build_withholding_compliance_schedule(
             payload.transaction_date,
@@ -486,6 +491,17 @@ def analyze(payload: AnalysisPayload):
             tax_treatment=(
                 result.tax_treatment.value
                 if getattr(result, "tax_treatment", None) is not None
+                else None
+            ),
+            gross_amount_czk=(
+                calculation.get("gross_amount_czk")
+                if calculation is not None
+                and calculation.get("status") == "CALCULATED"
+                else None
+            ),
+            prior_same_type_monthly_amount_czk=(
+                amount.get("prior_same_type_monthly_amount_czk")
+                if amount is not None
                 else None
             ),
         )

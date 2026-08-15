@@ -100,7 +100,7 @@ def test_workspace_demo_exposes_recipient_payment_result_workflow():
     assert 'id="workspace-notification-deadline"' in html
     assert 'id="workspace-tax-label"' in html
     assert 'id="workspace-tax-row-label"' in html
-    assert "§ 38d / § 38da" in html
+    assert "§ 38d a § 38da zákona č. 586/1992 Sb." in html
     assert "Jak výsledek číst" in html
     assert 'id="new-recipient-form"' in html
     assert 'id="active-payer-select"' in html
@@ -128,6 +128,7 @@ def test_workspace_demo_exposes_recipient_payment_result_workflow():
     assert 'value="at_least_12_months"' in html
     assert 'data-dividend-step="4"' in html
     assert 'id="interest-facts"' in html
+    assert 'name="prior_same_type_monthly_amount_czk"' in html
     assert 'name="arm_length_amount"' in html
     assert 'data-edit-recipient' in html
     assert 'id="recipient-edit-form"' in html
@@ -147,14 +148,15 @@ def test_design_lab_exposes_three_distinct_functional_directions():
 
     assert response.status_code == 200
     html = response.text
-    assert "EDITORIAL LEDGER" in html
-    assert "ATLAS CONTROL" in html
-    assert "CIVIC STANDARD" in html
+    assert "01 · HALO" in html
+    assert "02 · MOSS" in html
+    assert "03 · SIGNAL" in html
     assert "/design-lab/editorial" in html
     assert "/design-lab/atlas" in html
     assert "/design-lab/civic" in html
     assert "Stejný produkt" in html
     assert client.get("/ui-assets/design-lab.css").status_code == 200
+    assert client.get("/ui-assets/design-lab-v2.css").status_code == 200
     for design in ("editorial", "atlas", "civic"):
         variant = client.get(f"/design-lab/{design}")
         assert variant.status_code == 200
@@ -181,9 +183,9 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert css.status_code == 200
     assert javascript.status_code == 200
     assert designs.status_code == 200
-    assert "/ui-assets/workspace.css?v=20260815-2" in html
-    assert "/ui-assets/workspace.js?v=20260815-2" in html
-    assert "/ui-assets/workspace-designs.css?v=20260815-2" in html
+    assert "/ui-assets/workspace.css?v=20260815-3" in html
+    assert "/ui-assets/workspace.js?v=20260815-3" in html
+    assert "/ui-assets/workspace-designs.css?v=20260815-3" in html
     assert 'data-design-link="editorial"' in html
     assert 'data-design-link="atlas"' in html
     assert 'data-design-link="civic"' in html
@@ -202,6 +204,8 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert "applyAnswers" in javascript.text
     assert "clientAnswers" in javascript.text
     assert "showModal" in javascript.text
+    assert "Upravit plátce" in javascript.text
+    assert "payer-choice-edit" in javascript.text
     assert "data-tooltip" in javascript.text
     assert "renderTransactionFacts" in javascript.text
     assert "updateDividendProgress" in javascript.text
@@ -243,6 +247,8 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert "Právní dataset:" not in javascript.text
     assert 'fetch(`/exchange-rates/cnb?' in javascript.text
     assert "Zobrazit znění ustanovení" in javascript.text
+    assert "Zobrazit shrnutí použitého ustanovení" in javascript.text
+    assert "excerptHasBrokenEncoding" in javascript.text
     assert "Zobrazit schválený text ustanovení" not in javascript.text
     assert "displayLegalExcerpt" in javascript.text
     assert "excerptIsReadable" not in javascript.text
@@ -252,6 +258,13 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert 'body[data-design="editorial"]' in designs.text
     assert 'body[data-design="atlas"]' in designs.text
     assert 'body[data-design="civic"]' in designs.text
+    assert "01 — Halo" in designs.text
+    assert "02 — Moss" in designs.text
+    assert "03 — Signal" in designs.text
+    assert "border-radius:26px" in designs.text
+    assert "non_taxing_interest_above_monthly_threshold_annual" in javascript.text
+    assert "non_taxing_interest_monthly_threshold_not_exceeded" in javascript.text
+    assert "§ 38da zákona č. 586/1992 Sb." in javascript.text
     assert ".dashboard-summary" in css.text
     assert ".dashboard-metrics" in css.text
     assert ".fx-status.success" in css.text

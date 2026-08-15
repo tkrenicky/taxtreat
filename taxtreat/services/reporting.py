@@ -206,7 +206,10 @@ def _source_title(source: Mapping[str, Any]) -> str:
     suffix = f", {escape(str(paragraph))}" if paragraph else ""
     if source.get("legal_layer") in {"treaty", "protocol", "mli"}:
         return f"Smlouva o zamezení dvojího zdanění · článek {article}{suffix}"
-    return f"Zákon o daních z příjmů · § {article}{suffix}"
+    return (
+        f"Zákon č. 586/1992 Sb., o daních z příjmů · "
+        f"§ {article}{suffix}"
+    )
 
 
 def render_report_html(report: Mapping[str, Any]) -> str:

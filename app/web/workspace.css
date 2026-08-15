@@ -312,3 +312,10 @@
   .compliance-schedule dl > div:first-child { border-radius: 9px 9px 0 0; }
   .compliance-schedule dl > div:last-child { border-bottom: 1px solid var(--line); border-radius: 0 0 9px 9px; }
 }
+
+.payer-choice { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 14px; }
+.payer-choice-edit { white-space: nowrap; }
+@media (max-width: 700px) {
+  .payer-choice { grid-template-columns: 1fr; }
+  .payer-choice-edit { width: 100%; }
+}

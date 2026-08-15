@@ -27,3 +27,59 @@ body[data-design="civic"] .demo-notice{border:0;border-bottom:1px solid #cfdbd7;
 body[data-design="civic"] .card,body[data-design="civic"] .metrics article{border-radius:0;border-color:#ccd6d3;background:#fff;box-shadow:none}body[data-design="civic"] .onboarding{border-left:8px solid #176d61}body[data-design="civic"] .attention{border-top:4px solid #b47b1e}body[data-design="civic"] .primary{border-radius:0;background:#176d61}body[data-design="civic"] .secondary{border-radius:0}body[data-design="civic"] input,body[data-design="civic"] select{border-radius:0!important}body[data-design="civic"] .flow-progress button b{border-radius:50%;border:2px solid #94aaa5}body[data-design="civic"] .flow-progress button.active b{background:#176d61}body[data-design="civic"] .badge{border-radius:0!important}
 
 @media(max-width:920px){.design-switcher{right:8px;bottom:8px;max-width:calc(100% - 16px);overflow:auto}body[data-design] .app-header{height:auto}}
+
+/* 2026-08-15 redesign — three rounded identities, not palette swaps. */
+.design-switcher{gap:6px;padding:7px;border-color:#dfe2ea;border-radius:22px;box-shadow:0 18px 48px #24305222}
+.design-switcher a{padding:10px 14px;border-radius:15px}
+body[data-design] .app-header nav button,body[data-design] .payer-context{border-radius:16px}
+body[data-design] .logo span,body[data-design] .account b{border-radius:13px}
+body[data-design] .demo-notice{margin:12px 18px 0;border:1px solid var(--line);border-radius:18px}
+body[data-design] .card,body[data-design] .metrics article{border-radius:26px}
+body[data-design] .primary,body[data-design] .secondary,body[data-design] .new-recipient-toggle{border-radius:16px}
+body[data-design] input,body[data-design] select,body[data-design] .form-field,body[data-design] .question-card,body[data-design] .fact-question,body[data-design] .tooltip-panel,body[data-design] .citation-card.context{border-radius:16px!important}
+body[data-design] .badge,body[data-design] .action-item{border-radius:999px!important}
+body[data-design] .flow-progress button b{border-radius:13px}
+
+/* 01 — Halo: airy, translucent, contemporary. */
+body[data-design="editorial"]{--blue:#5b5ce2;--blue-soft:#ececff;--ink:#22233b;--muted:#73758e;--line:#e2e3f0;--surface:#ffffffdc;--surface-soft:#f2f2fb;background:radial-gradient(circle at 15% 5%,#dfe5ff 0,transparent 32%),radial-gradient(circle at 90% 20%,#f4dcff 0,transparent 28%),#f6f7fb;font-family:Arial,"Helvetica Neue",sans-serif}
+body[data-design="editorial"] .app-header{height:76px;margin:14px 18px 0;padding-inline:24px;border:1px solid #ffffffbb;border-radius:24px;color:#262844;background:#ffffffc9;box-shadow:0 18px 54px #4d4d8d16;backdrop-filter:blur(18px)}
+body[data-design="editorial"] .logo{color:#262844;font-family:Arial,sans-serif}body[data-design="editorial"] .logo span{background:linear-gradient(135deg,#5b5ce2,#8b6ee8)}
+body[data-design="editorial"] .app-header nav button{color:#70728b;font-family:Arial,sans-serif}body[data-design="editorial"] .app-header nav button.active{color:#fff;background:#5b5ce2}
+body[data-design="editorial"] .payer-context{background:#f0f0fb}body[data-design="editorial"] .payer-context select{color:#25263f;background:#f0f0fb}body[data-design="editorial"] .account{color:#6f7188}body[data-design="editorial"] .account b{background:#8b6ee8}
+body[data-design="editorial"] .demo-notice{color:#5f6081;background:#eeeeffb8;border-color:#dddffd}
+body[data-design="editorial"] main{max-width:1400px;padding-top:44px}body[data-design="editorial"] .page-title h1{font:750 43px/1.05 Arial,sans-serif;letter-spacing:-.045em}body[data-design="editorial"] .page-title p{color:#6b58d7;font-family:Arial,sans-serif;letter-spacing:.16em}
+body[data-design="editorial"] .card,body[data-design="editorial"] .metrics article{border-color:#ffffffc7;background:#ffffffc9;box-shadow:0 20px 54px #494a8410;backdrop-filter:blur(14px)}
+body[data-design="editorial"] .onboarding{border-left:0;background:linear-gradient(125deg,#ffffffdd,#ededffcc);box-shadow:inset 0 0 0 1px #fff,0 20px 54px #494a8410}
+body[data-design="editorial"] .primary,body[data-design="editorial"] .flow-progress button.active b{color:#fff;background:linear-gradient(135deg,#5556da,#7967e8)}
+body[data-design="editorial"] .secondary{border-color:#dedff0;background:#ffffffb8}
+body[data-design="editorial"] .design-switcher a.active{background:#5b5ce2}
+
+/* 02 — Moss: warm paper, forest ink, calm accounting workspace. */
+body[data-design="atlas"]{--blue:#356859;--blue-soft:#e3eee7;--ink:#26352f;--muted:#758078;--line:#dadfd5;--surface:#fffef9;--surface-soft:#f0f2e9;color:var(--ink);background:#f1efe5;font-family:Georgia,"Times New Roman",serif;background-image:radial-gradient(#72836f18 1px,transparent 1px);background-size:22px 22px}
+body[data-design="atlas"] .app-header{height:82px;padding-inline:30px;border:0;border-radius:0 0 30px 30px;background:#294c42;box-shadow:0 16px 42px #1d382c1a}
+body[data-design="atlas"] .logo{color:#fff8e8;font-family:Georgia,serif}body[data-design="atlas"] .logo span{color:#294c42;background:#f1c66f}
+body[data-design="atlas"] .app-header nav button{color:#c9d8d0;font:700 12px Arial,sans-serif;text-transform:none;letter-spacing:0}body[data-design="atlas"] .app-header nav button.active{color:#294c42;background:#f1c66f}
+body[data-design="atlas"] .payer-context{border-color:#507166;background:#355a4f}body[data-design="atlas"] .payer-context select{color:#fff8e8;background:#355a4f}body[data-design="atlas"] .account{color:#d0ddd6}body[data-design="atlas"] .account b{color:#294c42;background:#f1c66f}
+body[data-design="atlas"] .demo-notice{color:#5d6659;background:#ebe9d8;border-color:#dcd9c5;font-family:Arial,sans-serif}
+body[data-design="atlas"] main{max-width:1460px;padding-top:52px}body[data-design="atlas"] .page-title h1{font:500 46px/1 Georgia,serif;text-transform:none;letter-spacing:-.035em}body[data-design="atlas"] .page-title p{color:#a36d28;font-family:Arial,sans-serif}
+body[data-design="atlas"] .card,body[data-design="atlas"] .metrics article{border-color:#dfe1d5;background:#fffef9;box-shadow:0 16px 42px #4c5d4010}
+body[data-design="atlas"] .onboarding{border-left:0;background:linear-gradient(115deg,#fffef9,#edf1e4);box-shadow:inset 0 6px 0 #8aac83,0 16px 42px #4c5d4010}
+body[data-design="atlas"] .primary,body[data-design="atlas"] .flow-progress button.active b{color:#fff;background:#356859}
+body[data-design="atlas"] .secondary{border-color:#d5dbcf;color:#40584e;background:#f8f7ef}
+body[data-design="atlas"] input,body[data-design="atlas"] select{border-color:#d8ddd3!important;color:#26352f!important;background:#fffef9!important}
+body[data-design="atlas"] .design-switcher a.active{background:#356859}
+
+/* 03 — Signal: graphic monochrome with one decisive coral accent. */
+body[data-design="civic"]{--blue:#dc5e4b;--blue-soft:#fde8e3;--ink:#232323;--muted:#74716d;--line:#d8d5d0;--surface:#fff;--surface-soft:#f3f1ed;background:#eeece7;font-family:Arial,"Helvetica Neue",sans-serif}
+body[data-design="civic"] .app-header{height:78px;margin:0;border:0;border-bottom:0;border-radius:0 0 26px 26px;background:#242424;box-shadow:0 16px 40px #1d1d1d18}
+body[data-design="civic"] .logo{color:#fff}body[data-design="civic"] .logo span{border-radius:13px;background:#dc5e4b}
+body[data-design="civic"] .app-header nav button{color:#bbb9b4}body[data-design="civic"] .app-header nav button.active{border:0;color:#242424;background:#f4efe6}
+body[data-design="civic"] .payer-context{border-color:#484848;background:#303030}body[data-design="civic"] .payer-context select{color:#fff;background:#303030}body[data-design="civic"] .account{color:#bbb9b4}body[data-design="civic"] .account b{background:#dc5e4b}
+body[data-design="civic"] .demo-notice{color:#63443f;background:#fae8e4;border-color:#f0d0c9}
+body[data-design="civic"] main{max-width:1480px;padding-top:46px}body[data-design="civic"] .page-title{padding:24px 28px;border:0;border-radius:24px;background:#f7f5f1}body[data-design="civic"] .page-title h1{font-size:42px;letter-spacing:-.045em}body[data-design="civic"] .page-title p{color:#dc5e4b}
+body[data-design="civic"] .card,body[data-design="civic"] .metrics article{border:2px solid #d5d2cc;background:#fff;box-shadow:0 12px 0 #d9d6d0}
+body[data-design="civic"] .onboarding{border-left:0;box-shadow:inset 7px 0 0 #dc5e4b,0 12px 0 #d9d6d0}
+body[data-design="civic"] .attention{border-top:0}
+body[data-design="civic"] .primary,body[data-design="civic"] .flow-progress button.active b{color:#fff;background:#dc5e4b}
+body[data-design="civic"] .secondary{border:2px solid #d5d2cc;color:#292929;background:#f7f5f1}
+body[data-design="civic"] .design-switcher a.active{background:#dc5e4b}

@@ -154,7 +154,9 @@
       const radio = document.createElement("input"); radio.type = "radio"; radio.name = "flow-payer"; radio.value = item.key; radio.checked = item.key === activePayerKey;
       radio.addEventListener("change", () => { activePayerKey = item.key; renderPayers(); renderRecipient(); });
       const state = document.createElement("em"); state.textContent = radio.checked ? "Vybráno" : "Vybrat";
-      label.append(radio, avatar, copy, state); article.append(label);
+      const edit = document.createElement("button"); edit.className = "secondary compact payer-choice-edit"; edit.type = "button"; edit.textContent = "Upravit plátce";
+      edit.addEventListener("click", (event) => { event.preventDefault(); event.stopPropagation(); activePayerKey = item.key; renderPayers(); renderRecipient(); openPayerDialog(item.key); });
+      label.append(radio, avatar, copy, state); article.append(label, edit);
       return article;
     }
     const details = document.createElement("dl");
@@ -493,15 +495,24 @@
     return citation.paragraph ? `${article}, ${citation.paragraph}` : article;
   }
 
+  function legalProvisionLabel(citation) {
+    if (!citation) return "příslušného ustanovení";
+    const layer = String(citation.legal_layer || "");
+    const provision = ["domestic", "eu_relief"].includes(layer)
+      ? `§ ${citation.article || "—"}`
+      : `článku ${citation.article || "—"}`;
+    return citation.paragraph ? `${provision}, ${citation.paragraph}` : provision;
+  }
+
   function resultExplanation(analysis, payload) {
     const citation = selectedCitation(analysis);
     const layer = String(citation?.legal_layer || "");
     const treatment = analysis.tax_treatment || analysis.candidate_tax_treatment;
-    if (analysis.status === "FINAL" && treatment === "exclusive_foreign_taxation") return `Podle ${provisionLabel(citation)} příslušné smlouvy může být příjem zdaněn pouze ve státě daňové rezidence příjemce. V České republice proto nevzniká srážková daň; česká daň k odvodu činí 0 Kč.`;
-    if (analysis.status === "FINAL" && treatment === "domestic_exemption") return `Příjem je v České republice osvobozen podle ${provisionLabel(citation)} zákona o daních z příjmů. Česká daň k odvodu proto činí 0 Kč.`;
-    if (analysis.status === "FINAL" && layer === "eu_relief") return `Příjem je v České republice osvobozen podle ${provisionLabel(citation)} zákona o daních z příjmů; všechny podmínky vybraného pravidla byly splněny zadanými a ověřenými údaji.`;
+    if (analysis.status === "FINAL" && treatment === "exclusive_foreign_taxation") return `Podle ${legalProvisionLabel(citation)} příslušné smlouvy může být příjem zdaněn pouze ve státě daňové rezidence příjemce. V České republice proto nevzniká srážková daň; česká daň k odvodu činí 0 Kč.`;
+    if (analysis.status === "FINAL" && treatment === "domestic_exemption") return `Příjem je v České republice osvobozen podle ${legalProvisionLabel(citation)} zákona č. 586/1992 Sb., o daních z příjmů. Česká daň k odvodu proto činí 0 Kč.`;
+    if (analysis.status === "FINAL" && layer === "eu_relief") return `Příjem je v České republice osvobozen podle ${legalProvisionLabel(citation)} zákona č. 586/1992 Sb., o daních z příjmů; všechny podmínky vybraného pravidla byly splněny zadanými a ověřenými údaji.`;
     if (analysis.status === "FINAL" && ["treaty", "protocol", "mli"].includes(layer)) return `Česká srážková daň je ${analysis.rate} %. Výsledek vychází z ${provisionLabel(citation)} příslušné smlouvy ve znění použitelných změn. Rozhodující byly podmínky konkrétního pravidla uvedené v právních podkladech.`;
-    if (analysis.status === "FINAL" && layer === "domestic") return `Česká srážková daň je ${analysis.rate} %. Výsledek vychází z ${provisionLabel(citation)} zákona o daních z příjmů, protože nebylo použito pravidlo s nižší sazbou.`;
+    if (analysis.status === "FINAL" && layer === "domestic") return `Česká srážková daň je ${analysis.rate} %. Výsledek vychází z ${legalProvisionLabel(citation)} zákona č. 586/1992 Sb., o daních z příjmů, protože nebylo použito pravidlo s nižší sazbou.`;
     if (analysis.status === "FINAL") return `Použitá sazba ${analysis.rate} % byla určena na základě zadaných údajů a vybraného právního pravidla uvedeného níže.`;
     if (treatment === "exclusive_foreign_taxation") return "Zadané údaje směřují k použití smluvního pravidla, podle něhož se příjem zdaňuje pouze ve státě rezidence příjemce. Před uzavřením výsledku je třeba ověřit konkrétní podmínky uvedené níže.";
     if (treatment === "domestic_exemption") return "Zadané údaje směřují k osvobození příjmu v České republice. Před uzavřením výsledku je třeba ověřit konkrétní podmínky uvedené níže.";
@@ -520,10 +531,14 @@
     return "Právní ustanovení použité při výpočtu.";
   }
 
-  function displayLegalExcerpt(excerpt) {
-    return String(excerpt || "")
-      .replaceAll("õ", "í")
-      .replaceAll("Õ", "Í");
+  function excerptHasBrokenEncoding(excerpt) {
+    return /[õÕ]|\b(spolecnost|smluvnõ|prõjem|skutecný|zdaneny|clánku|predpisu|vlastnõk)\b/i.test(String(excerpt || ""));
+  }
+
+  function displayLegalExcerpt(citation) {
+    const excerpt = String(citation.excerpt || "");
+    if (!excerptHasBrokenEncoding(excerpt)) return excerpt;
+    return `${citationDetail(citation)} Úplné oficiální znění ustanovení je dostupné prostřednictvím odkazu výše.`;
   }
 
   function citationRole(citation, selected, position) {
@@ -547,7 +562,7 @@
     const role = document.createElement("span"); role.className = "citation-role";
     role.textContent = citationRole(citation, selected, position);
     const paragraph = citation.paragraph ? ` · ${citation.paragraph}` : "";
-    title.textContent = ["treaty", "protocol", "mli"].includes(layer) ? `Smlouva o zamezení dvojího zdanění · článek ${citation.article || "—"}${paragraph}` : `Zákon o daních z příjmů · § ${citation.article || "—"}${paragraph}`;
+    title.textContent = ["treaty", "protocol", "mli"].includes(layer) ? `Smlouva o zamezení dvojího zdanění · článek ${citation.article || "—"}${paragraph}` : `Zákon č. 586/1992 Sb., o daních z příjmů · § ${citation.article || "—"}${paragraph}`;
     const link = document.createElement("a"); link.href = citation.source_url; link.target = "_blank"; link.rel = "noreferrer noopener"; link.textContent = "Otevřít zdroj ↗";
     const detail = document.createElement("p");
     detail.textContent = !selected && layer === "domestic"
@@ -556,8 +571,8 @@
     card.append(role, title, link, detail);
     if (citation.excerpt && layer !== "domestic") {
       const disclosure = document.createElement("details"); disclosure.className = "citation-excerpt";
-      const summary = document.createElement("summary"); summary.textContent = "Zobrazit znění ustanovení";
-      const excerpt = document.createElement("blockquote"); excerpt.textContent = displayLegalExcerpt(citation.excerpt);
+      const summary = document.createElement("summary"); summary.textContent = excerptHasBrokenEncoding(citation.excerpt) ? "Zobrazit shrnutí použitého ustanovení" : "Zobrazit znění ustanovení";
+      const excerpt = document.createElement("blockquote"); excerpt.textContent = displayLegalExcerpt(citation);
       disclosure.append(summary, excerpt); card.append(disclosure);
     }
     return card;
@@ -574,10 +589,12 @@
     setText("#workspace-reference-date", formatCzechDate(schedule.reference_date));
     const nonTaxing = ["exclusive_foreign_taxation", "domestic_exemption"].includes(analysis.tax_treatment);
     setText("#workspace-remittance-deadline", schedule.tax_remittance_deadline ? formatCzechDate(schedule.tax_remittance_deadline) : analysis.status === "FINAL" && nonTaxing ? "Daň se neodvádí" : "Po dokončení posouzení");
-    setText("#workspace-notification-deadline", schedule.notification_deadline ? formatCzechDate(schedule.notification_deadline) : "Po dokončení posouzení");
+    setText("#workspace-notification-deadline", schedule.notification_deadline ? formatCzechDate(schedule.notification_deadline) : schedule.notification_required === false ? "Oznámení se nepodává" : "Po dokončení posouzení");
     const note = document.querySelector("#workspace-deadline-note");
-    if (schedule.status !== "READY") note.textContent = "Lhůty nelze uzavřít, dokud není určeno konečné daňové zacházení.";
-    else if (schedule.notification_regime === "exempt_or_treaty_non_taxable_annual") note.textContent = "Česká daň se při tomto daňovém zacházení neodvádí. Oznámení o příjmu plynoucím do zahraničí se u dividend podává do 31. ledna následujícího roku.";
+    if (schedule.status !== "READY") note.textContent = "Lhůty nelze uzavřít, dokud není určeno konečné daňové zacházení nebo měsíční úhrn rozhodný pro oznamovací povinnost.";
+    else if (schedule.notification_regime === "exempt_or_treaty_non_taxable_annual") note.textContent = "Česká daň se při tomto daňovém zacházení neodvádí. Oznámení podle § 38da zákona č. 586/1992 Sb., o daních z příjmů se u dividend a licenčních poplatků podává do 31. ledna následujícího roku.";
+    else if (schedule.notification_regime === "non_taxing_interest_above_monthly_threshold_annual") note.textContent = `Česká daň se neodvádí. Měsíční úhrn úroků stejného druhu činí ${money(schedule.monthly_same_type_income_czk)} a přesáhl 300 000 Kč; oznámení podle § 38da zákona č. 586/1992 Sb., o daních z příjmů se podává do uvedeného data.`;
+    else if (schedule.notification_regime === "non_taxing_interest_monthly_threshold_not_exceeded") note.textContent = `Česká daň se neodvádí. Měsíční úhrn úroků stejného druhu činí ${money(schedule.monthly_same_type_income_czk)} a nepřesáhl 300 000 Kč; oznamovací povinnost podle § 38da zákona č. 586/1992 Sb., o daních z příjmů proto nevzniká.`;
     else note.textContent = "Odvod sražené daně a oznámení o příjmu plynoucím do zahraničí mají shodnou lhůtu: konec následujícího kalendářního měsíce.";
     const caution = document.querySelector("#workspace-dividend-deadline-caution");
     caution.hidden = !schedule.dividend_timing_review_required;
@@ -678,6 +695,7 @@
       source_country: "CZ", recipient_country: recipient.country, income_type: incomeType, transaction_date: transactionDate,
       facts, determinations: {}, transaction_amount: { amount: String(data.get("amount")), currency: String(data.get("currency")), payment_date: transactionDate, accounting_date: transactionDate }
     };
+    if (incomeType === "interest") payload.transaction_amount.prior_same_type_monthly_amount_czk = String(data.get("prior_same_type_monthly_amount_czk") || "0");
     if (clientAnswers.exchangeRate) payload.transaction_amount.exchange_rate = { ...clientAnswers.exchangeRate };
     if (pendingQuestions.length) applyAnswers(payload);
     try {

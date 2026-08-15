@@ -66,6 +66,59 @@ def test_final_non_taxing_result_is_not_presented_as_zero_rate(
     assert result.citations[0]["tax_treatment"] == treatment.value
 
 
+def test_treaty_result_keeps_domestic_starting_rate_in_audit_path():
+    domestic = LegalRule(
+        rule_id="DOMESTIC-15",
+        income_type="dividend",
+        source_country="CZ",
+        recipient_country="AT",
+        legal_instrument="domestic_law",
+        legal_layer="domestic",
+        rate=15.0,
+        effective_from=date(2020, 1, 1),
+        verification_status="verified",
+        source_text="Domestic standard rate.",
+        source_id="DOMESTIC-SOURCE",
+        source_url="https://example.test/domestic",
+        source_excerpt_hash="b" * 64,
+        dataset_release="release-1",
+    )
+    treaty = LegalRule(
+        rule_id="TREATY-10",
+        income_type="dividend",
+        source_country="CZ",
+        recipient_country="AT",
+        legal_instrument="treaty",
+        legal_layer="treaty",
+        rate=10.0,
+        effective_from=date(2020, 1, 1),
+        verification_status="verified",
+        source_text="Treaty maximum rate.",
+        source_id="TREATY-SOURCE",
+        source_url="https://example.test/treaty",
+        source_excerpt_hash="c" * 64,
+        dataset_release="release-1",
+    )
+
+    result = evaluate_layered_rules(
+        [domestic, treaty],
+        {
+            "income_type": "dividend",
+            "source_country": "CZ",
+            "recipient_country": "AT",
+        },
+        as_of=date(2026, 8, 15),
+    )
+
+    assert result.status == DecisionStatus.FINAL
+    assert result.rate == 10.0
+    assert result.selected_rule_id == "TREATY-10"
+    assert {
+        (citation["legal_layer"], citation["rate"])
+        for citation in result.citations
+    } == {("domestic", 15.0), ("treaty", 10.0)}
+
+
 def test_every_stage6_zero_rule_has_unambiguous_non_taxing_semantics():
     zero_rules = []
     for path in sorted(Path("data/legal_rules_stage6").glob("*.json")):
@@ -124,4 +177,3 @@ def test_non_taxing_treatment_drives_notification_schedule():
     assert schedule["tax_treatment"] == "exclusive_foreign_taxation"
     assert schedule["tax_remittance_deadline"] is None
     assert schedule["notification_deadline"] == "2027-02-01"
-

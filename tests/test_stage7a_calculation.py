@@ -309,13 +309,20 @@ def test_tax_and_notification_are_due_at_end_of_following_month():
     )
 
     assert schedule == {
-        "schema_version": 1,
+        "schema_version": 2,
         "status": "READY",
         "reference_date": "2026-08-12",
         "reference_date_basis": "earlier_of_payment_or_payable_recognition",
         "tax_remittance_deadline": "2026-09-30",
         "notification_deadline": "2026-09-30",
         "notification_regime": "withheld_income_same_as_remittance",
+        "notification_required": True,
+        "notification_legal_basis": (
+            "§ 38da zákona č. 586/1992 Sb., o daních z příjmů"
+        ),
+        "tax_remittance_legal_basis": (
+            "§ 38d zákona č. 586/1992 Sb., o daních z příjmů"
+        ),
         "dividend_timing_review_required": True,
     }
 
@@ -389,5 +396,60 @@ def test_zero_rate_interest_keeps_notification_scope_open():
     assert schedule["status"] == "REVIEW_NOTIFICATION_SCOPE"
     assert schedule["notification_deadline"] is None
     assert schedule["notification_regime"] == (
-        "income_classification_review_required"
+        "interest_monthly_aggregate_required"
     )
+
+
+@pytest.mark.parametrize(
+    ("gross", "prior", "required", "regime"),
+    [
+        (
+            "300000",
+            "0",
+            False,
+            "non_taxing_interest_monthly_threshold_not_exceeded",
+        ),
+        (
+            "250000",
+            "50000.01",
+            True,
+            "non_taxing_interest_above_monthly_threshold_annual",
+        ),
+    ],
+)
+def test_non_taxing_interest_uses_monthly_aggregate_threshold(
+    gross,
+    prior,
+    required,
+    regime,
+):
+    schedule = build_withholding_compliance_schedule(
+        "2026-08-12",
+        income_type="interest",
+        decision_status="FINAL",
+        rate_percent=None,
+        tax_treatment="exclusive_foreign_taxation",
+        gross_amount_czk=gross,
+        prior_same_type_monthly_amount_czk=prior,
+    )
+
+    assert schedule["status"] == "READY"
+    assert schedule["notification_required"] is required
+    assert schedule["notification_regime"] == regime
+    assert schedule["notification_threshold_czk"] == "300000"
+    assert schedule["notification_deadline"] == (
+        "2027-02-01" if required else None
+    )
+
+
+@pytest.mark.parametrize(("gross", "prior"), [("0", "0"), ("1", "-1")])
+def test_interest_notification_rejects_invalid_monthly_amounts(gross, prior):
+    with pytest.raises(ValueError):
+        build_withholding_compliance_schedule(
+            "2026-08-12",
+            income_type="interest",
+            decision_status="FINAL",
+            rate_percent=0,
+            gross_amount_czk=gross,
+            prior_same_type_monthly_amount_czk=prior,
+        )

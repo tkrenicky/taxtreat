@@ -9,7 +9,8 @@ from typing import Any, Mapping
 MONEY_QUANTUM = Decimal("0.01")
 WHOLE_CROWN = Decimal("1")
 CALCULATION_VERSION = 2
-COMPLIANCE_SCHEDULE_VERSION = 1
+COMPLIANCE_SCHEDULE_VERSION = 2
+NON_TAXING_INTEREST_NOTIFICATION_THRESHOLD_CZK = Decimal("300000")
 
 
 def _decimal_string(value: Decimal) -> str:
@@ -58,6 +59,8 @@ def build_withholding_compliance_schedule(
     decision_status: str,
     rate_percent: float | Decimal | None,
     tax_treatment: str | None = None,
+    gross_amount_czk: float | Decimal | None = None,
+    prior_same_type_monthly_amount_czk: float | Decimal | None = None,
 ) -> dict[str, Any]:
     """Derive Czech WHT and non-resident notification milestones.
 
@@ -78,6 +81,13 @@ def build_withholding_compliance_schedule(
         "tax_remittance_deadline": None,
         "notification_deadline": None,
         "notification_regime": None,
+        "notification_required": None,
+        "notification_legal_basis": (
+            "§ 38da zákona č. 586/1992 Sb., o daních z příjmů"
+        ),
+        "tax_remittance_legal_basis": (
+            "§ 38d zákona č. 586/1992 Sb., o daních z příjmů"
+        ),
         "dividend_timing_review_required": income_type == "dividend",
     }
     if tax_treatment is not None:
@@ -110,6 +120,7 @@ def build_withholding_compliance_schedule(
             "tax_remittance_deadline": deadline,
             "notification_deadline": deadline,
             "notification_regime": "withheld_income_same_as_remittance",
+            "notification_required": True,
         }
 
     if income_type in {"dividend", "royalty"}:
@@ -121,6 +132,61 @@ def build_withholding_compliance_schedule(
             "status": "READY",
             "notification_deadline": notification_deadline,
             "notification_regime": "exempt_or_treaty_non_taxable_annual",
+            "notification_required": True,
+        }
+
+    if income_type == "interest":
+        threshold = NON_TAXING_INTEREST_NOTIFICATION_THRESHOLD_CZK
+        interest_base = {
+            **base,
+            "notification_threshold_czk": _decimal_string(threshold),
+        }
+        if (
+            gross_amount_czk is None
+            or prior_same_type_monthly_amount_czk is None
+        ):
+            return {
+                **interest_base,
+                "status": "REVIEW_NOTIFICATION_SCOPE",
+                "notification_regime": (
+                    "interest_monthly_aggregate_required"
+                ),
+            }
+        try:
+            gross = Decimal(str(gross_amount_czk))
+            prior = Decimal(str(prior_same_type_monthly_amount_czk))
+        except InvalidOperation as exc:
+            raise ValueError(
+                "Monthly interest amounts must be decimal numbers."
+            ) from exc
+        if gross <= 0 or prior < 0:
+            raise ValueError(
+                "Current interest must be positive and prior monthly "
+                "interest cannot be negative."
+            )
+        monthly_total = gross + prior
+        interest_base["monthly_same_type_income_czk"] = _decimal_string(
+            monthly_total
+        )
+        if monthly_total > threshold:
+            return {
+                **interest_base,
+                "status": "READY",
+                "notification_deadline": _next_business_day(
+                    date(reference_date.year + 1, 1, 31)
+                ).isoformat(),
+                "notification_regime": (
+                    "non_taxing_interest_above_monthly_threshold_annual"
+                ),
+                "notification_required": True,
+            }
+        return {
+            **interest_base,
+            "status": "READY",
+            "notification_regime": (
+                "non_taxing_interest_monthly_threshold_not_exceeded"
+            ),
+            "notification_required": False,
         }
 
     return {
