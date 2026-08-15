@@ -6,6 +6,7 @@ from taxtreat.engine.legal_rule_engine import (
     DecisionStatus,
     LegalCondition,
     LegalRule,
+    TaxTreatment,
 )
 from taxtreat.engine.legal_rule_loader import load_legal_rules
 from taxtreat.engine.layered_decision import evaluate_layered_rules
@@ -192,7 +193,8 @@ def test_verified_gate_and_missing_better_rule_are_fail_closed():
         determinations={"treaty_ppt_passed": True},
     )
     assert final.status == DecisionStatus.FINAL
-    assert final.rate == 0.0
+    assert final.rate is None
+    assert final.tax_treatment == TaxTreatment.EXCLUSIVE_FOREIGN_TAXATION
 
     unresolved_relief = _verified_rule(
         "RELIEF",

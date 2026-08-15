@@ -414,6 +414,16 @@ def analyze(payload: AnalysisPayload):
         "status": result.status.value,
         "rate": result.rate,
         "candidate_rate": result.candidate_rate,
+        "tax_treatment": (
+            result.tax_treatment.value
+            if getattr(result, "tax_treatment", None) is not None
+            else None
+        ),
+        "candidate_tax_treatment": (
+            result.candidate_tax_treatment.value
+            if getattr(result, "candidate_tax_treatment", None) is not None
+            else None
+        ),
         "eligible": result.eligible,
         "requires_review": result.requires_review,
         "selected_rule_id": result.selected_rule_id,
@@ -439,6 +449,11 @@ def analyze(payload: AnalysisPayload):
             amount,
             decision_status=result.status.value,
             rate_percent=result.rate,
+            tax_treatment=(
+                result.tax_treatment.value
+                if getattr(result, "tax_treatment", None) is not None
+                else None
+            ),
         )
     )
     analysis["withholding_compliance_schedule"] = (
@@ -447,6 +462,11 @@ def analyze(payload: AnalysisPayload):
             income_type=payload.income_type,
             decision_status=result.status.value,
             rate_percent=result.rate,
+            tax_treatment=(
+                result.tax_treatment.value
+                if getattr(result, "tax_treatment", None) is not None
+                else None
+            ),
         )
     )
     return analysis

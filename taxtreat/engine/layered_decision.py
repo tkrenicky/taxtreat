@@ -7,9 +7,11 @@ from taxtreat.engine.legal_rule_engine import (
     DecisionStatus,
     LegalDecisionResult,
     LegalRule,
+    TaxTreatment,
     _evaluate_rule,
     _is_effective,
     _matches_scope,
+    resolve_tax_treatment,
 )
 
 
@@ -40,6 +42,11 @@ def _citation(rule: LegalRule) -> dict[str, Any]:
         "legal_instrument": rule.legal_instrument,
         "legal_layer": rule.legal_layer,
         "rate": rule.rate,
+        "tax_treatment": (
+            resolve_tax_treatment(rule).value
+            if resolve_tax_treatment(rule) is not None
+            else None
+        ),
         "source_id": rule.source_id,
         "source_url": rule.source_url,
         "article": str(rule.article) if rule.article is not None else None,
@@ -70,6 +77,11 @@ def _layer_result(
         "rule_id": rule.rule_id,
         "effect": rule.effect,
         "rate": rule.rate,
+        "tax_treatment": (
+            resolve_tax_treatment(rule).value
+            if resolve_tax_treatment(rule) is not None
+            else None
+        ),
         "outcome": outcome,
         "verification_status": rule.verification_status,
         "missing_facts": missing or [],
@@ -208,6 +220,7 @@ def evaluate_layered_rules(
 
     selected = candidates[0]
     result.candidate_rate = selected.rate
+    result.candidate_tax_treatment = resolve_tax_treatment(selected)
     result.candidate_rule_id = selected.rule_id
     result.applied_rule_ids = [
         rule.rule_id
@@ -263,12 +276,15 @@ def evaluate_layered_rules(
             )
         return result
 
-    result.rate = selected.rate
+    result.tax_treatment = resolve_tax_treatment(selected)
+    if result.tax_treatment == TaxTreatment.TAXABLE_AT_RATE:
+        result.rate = selected.rate
     result.selected_rule_id = selected.rule_id
     result.eligible = True
     result.requires_review = False
     result.status = DecisionStatus.FINAL
     result.explanation.append(
-        f"Selected verified rule {selected.rule_id} with rate {selected.rate}."
+        f"Selected verified rule {selected.rule_id} with treatment "
+        f"{result.tax_treatment.value}."
     )
     return result

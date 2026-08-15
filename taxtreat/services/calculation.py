@@ -57,6 +57,7 @@ def build_withholding_compliance_schedule(
     income_type: str,
     decision_status: str,
     rate_percent: float | Decimal | None,
+    tax_treatment: str | None = None,
 ) -> dict[str, Any]:
     """Derive Czech WHT and non-resident notification milestones.
 
@@ -79,13 +80,25 @@ def build_withholding_compliance_schedule(
         "notification_regime": None,
         "dividend_timing_review_required": income_type == "dividend",
     }
-    if decision_status != "FINAL" or rate_percent is None:
+    if tax_treatment is not None:
+        base["tax_treatment"] = tax_treatment
+    if decision_status != "FINAL" or (
+        rate_percent is None and tax_treatment is None
+    ):
         return base
 
-    try:
-        rate = Decimal(str(rate_percent))
-    except InvalidOperation as exc:
-        raise ValueError("Rate must be a decimal number.") from exc
+    non_taxing = tax_treatment in {
+        "exclusive_foreign_taxation",
+        "domestic_exemption",
+    }
+    if non_taxing:
+        rate = Decimal("0")
+    else:
+        try:
+            rate = Decimal(str(rate_percent))
+        except InvalidOperation as exc:
+            raise ValueError("Rate must be a decimal number.") from exc
+
     if rate < 0 or rate > 100:
         raise ValueError("Final withholding-tax rate must be between 0 and 100.")
 
@@ -122,6 +135,7 @@ def build_withholding_tax_calculation(
     *,
     decision_status: str,
     rate_percent: float | Decimal | None,
+    tax_treatment: str | None = None,
 ) -> dict[str, Any] | None:
     """Calculate CZK WHT only from a final rate and complete FX evidence."""
 
@@ -148,14 +162,25 @@ def build_withholding_tax_calculation(
         "rounding_policy": "section_36_3_whole_crown_down",
         "exchange_rate": None,
     }
+    if tax_treatment is not None:
+        base["tax_treatment"] = tax_treatment
 
-    if decision_status != "FINAL" or rate_percent is None:
+    if decision_status != "FINAL" or (
+        rate_percent is None and tax_treatment is None
+    ):
         return _not_calculated(base, "final_rate_unavailable")
 
-    try:
-        rate = Decimal(str(rate_percent))
-    except InvalidOperation as exc:
-        raise ValueError("Rate must be a decimal number.") from exc
+    non_taxing = tax_treatment in {
+        "exclusive_foreign_taxation",
+        "domestic_exemption",
+    }
+    if non_taxing:
+        rate = Decimal("0")
+    else:
+        try:
+            rate = Decimal(str(rate_percent))
+        except InvalidOperation as exc:
+            raise ValueError("Rate must be a decimal number.") from exc
     if rate < 0 or rate > 100:
         raise ValueError("Final withholding-tax rate must be between 0 and 100.")
 
@@ -223,7 +248,7 @@ def build_withholding_tax_calculation(
         "status": "CALCULATED",
         "reason": None,
         "gross_amount_czk": _decimal_string(gross_czk),
-        "rate_percent": _decimal_string(rate),
+        "rate_percent": None if non_taxing else _decimal_string(rate),
         "withholding_tax_czk": _decimal_string(tax),
         "net_amount_czk": _decimal_string(net_czk),
         "exchange_rate": exchange_output,

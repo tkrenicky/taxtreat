@@ -1,0 +1,127 @@
+from datetime import date
+from pathlib import Path
+
+import pytest
+
+from taxtreat.engine.legal_rule_engine import (
+    DecisionStatus,
+    LegalRule,
+    TaxTreatment,
+    resolve_tax_treatment,
+)
+from taxtreat.engine.legal_rule_loader import load_legal_rules
+from taxtreat.engine.layered_decision import evaluate_layered_rules
+from taxtreat.services.calculation import (
+    build_withholding_compliance_schedule,
+    build_withholding_tax_calculation,
+)
+
+
+def _verified_zero_rule(layer: str) -> LegalRule:
+    instrument = "eu_directive" if layer == "eu_relief" else "treaty"
+    return LegalRule(
+        rule_id=f"ZERO-{layer}",
+        income_type="dividend",
+        source_country="CZ",
+        recipient_country="AT",
+        legal_instrument=instrument,
+        legal_layer=layer,
+        rate=0.0,
+        effective_from=date(2020, 1, 1),
+        verification_status="verified",
+        source_text="source",
+        source_id="SOURCE",
+        source_url="https://example.test/source",
+        source_excerpt_hash="a" * 64,
+        dataset_release="release-1",
+    )
+
+
+@pytest.mark.parametrize(
+    ("layer", "treatment"),
+    [
+        ("treaty", TaxTreatment.EXCLUSIVE_FOREIGN_TAXATION),
+        ("eu_relief", TaxTreatment.DOMESTIC_EXEMPTION),
+    ],
+)
+def test_final_non_taxing_result_is_not_presented_as_zero_rate(
+    layer,
+    treatment,
+):
+    result = evaluate_layered_rules(
+        [_verified_zero_rule(layer)],
+        {
+            "income_type": "dividend",
+            "source_country": "CZ",
+            "recipient_country": "AT",
+        },
+        as_of=date(2026, 8, 15),
+    )
+
+    assert result.status == DecisionStatus.FINAL
+    assert result.tax_treatment == treatment
+    assert result.rate is None
+    assert result.candidate_rate == 0.0
+    assert result.candidate_tax_treatment == treatment
+    assert result.citations[0]["tax_treatment"] == treatment.value
+
+
+def test_every_stage6_zero_rule_has_unambiguous_non_taxing_semantics():
+    zero_rules = []
+    for path in sorted(Path("data/legal_rules_stage6").glob("*.json")):
+        zero_rules.extend(
+            rule
+            for rule in load_legal_rules(path)
+            if rule.effect == "rate" and rule.rate == 0
+        )
+
+    assert len(zero_rules) == 555
+    assert {rule.legal_layer for rule in zero_rules} == {
+        "treaty",
+        "eu_relief",
+    }
+    assert all(
+        resolve_tax_treatment(rule)
+        == (
+            TaxTreatment.DOMESTIC_EXEMPTION
+            if rule.legal_layer == "eu_relief"
+            else TaxTreatment.EXCLUSIVE_FOREIGN_TAXATION
+        )
+        for rule in zero_rules
+    )
+
+
+@pytest.mark.parametrize(
+    "treatment",
+    ["exclusive_foreign_taxation", "domestic_exemption"],
+)
+def test_non_taxing_calculation_keeps_tax_amount_without_fake_rate(
+    treatment,
+):
+    calculation = build_withholding_tax_calculation(
+        {"amount": "100000", "currency": "CZK"},
+        decision_status="FINAL",
+        rate_percent=None,
+        tax_treatment=treatment,
+    )
+
+    assert calculation["status"] == "CALCULATED"
+    assert calculation["tax_treatment"] == treatment
+    assert calculation["rate_percent"] is None
+    assert calculation["withholding_tax_czk"] == "0"
+    assert calculation["net_amount_czk"] == "100000.00"
+
+
+def test_non_taxing_treatment_drives_notification_schedule():
+    schedule = build_withholding_compliance_schedule(
+        "2026-08-12",
+        income_type="dividend",
+        decision_status="FINAL",
+        rate_percent=None,
+        tax_treatment="exclusive_foreign_taxation",
+    )
+
+    assert schedule["tax_treatment"] == "exclusive_foreign_taxation"
+    assert schedule["tax_remittance_deadline"] is None
+    assert schedule["notification_deadline"] == "2027-02-01"
+

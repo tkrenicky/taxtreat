@@ -4,6 +4,7 @@ from taxtreat.engine.legal_rule_engine import (
     DecisionStatus,
     LegalCondition,
     LegalRule,
+    TaxTreatment,
     evaluate_legal_rules,
 )
 
@@ -72,7 +73,8 @@ def test_interest_rate_is_selected_from_applicable_rule():
 
     assert result.eligible is True
     assert result.requires_review is False
-    assert result.rate == 0.0
+    assert result.rate is None
+    assert result.tax_treatment == TaxTreatment.EXCLUSIVE_FOREIGN_TAXATION
     assert result.selected_rule_id == "CZ-CH-INT-BASE"
 
 
@@ -194,7 +196,11 @@ def test_royalty_category_selects_different_rates():
 
     assert industrial.rate == 5.0
     assert industrial.selected_rule_id == "CZ-AT-ROY-INDUSTRIAL"
-    assert copyright_result.rate == 0.0
+    assert copyright_result.rate is None
+    assert (
+        copyright_result.tax_treatment
+        == TaxTreatment.EXCLUSIVE_FOREIGN_TAXATION
+    )
     assert copyright_result.selected_rule_id == "CZ-AT-ROY-COPYRIGHT"
 
 

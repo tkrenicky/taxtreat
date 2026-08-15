@@ -13,6 +13,12 @@ class DecisionStatus(str, Enum):
     OUT_OF_SCOPE = "OUT_OF_SCOPE"
 
 
+class TaxTreatment(str, Enum):
+    TAXABLE_AT_RATE = "taxable_at_rate"
+    EXCLUSIVE_FOREIGN_TAXATION = "exclusive_foreign_taxation"
+    DOMESTIC_EXEMPTION = "domestic_exemption"
+
+
 @dataclass(frozen=True)
 class LegalCondition:
     fact: str
@@ -35,6 +41,7 @@ class LegalRule:
     priority: int = 100
     conditions: list[LegalCondition] = field(default_factory=list)
     effect: str = "rate"
+    tax_treatment: TaxTreatment | None = None
     effective_from: date | None = None
     effective_to: date | None = None
     overrides_rule_id: str | None = None
@@ -63,6 +70,8 @@ class LegalDecisionResult:
     selected_rule_id: str | None = None
     candidate_rate: float | None = None
     candidate_rule_id: str | None = None
+    tax_treatment: TaxTreatment | None = None
+    candidate_tax_treatment: TaxTreatment | None = None
     applied_rule_ids: list[str] = field(default_factory=list)
     overridden_rule_id: str | None = None
     eligible: bool = False
@@ -86,6 +95,20 @@ _SUPPORTED_OPERATORS = {
     "in": lambda left, right: left in right,
     "not in": lambda left, right: left not in right,
 }
+
+
+def resolve_tax_treatment(rule: LegalRule) -> TaxTreatment | None:
+    """Return the legal outcome without presenting non-taxation as a 0% rate."""
+
+    if rule.effect != "rate":
+        return None
+    if rule.tax_treatment is not None:
+        return TaxTreatment(rule.tax_treatment)
+    if rule.rate == 0 and rule.legal_layer == "eu_relief":
+        return TaxTreatment.DOMESTIC_EXEMPTION
+    if rule.rate == 0 and rule.legal_layer in {"treaty", "protocol", "mli"}:
+        return TaxTreatment.EXCLUSIVE_FOREIGN_TAXATION
+    return TaxTreatment.TAXABLE_AT_RATE
 
 
 def _is_effective(rule: LegalRule, as_of: date) -> bool:
@@ -297,7 +320,12 @@ def evaluate_legal_rules(
             if rule.priority == selected.priority
         ]
         distinct_outcomes = {
-            (rule.effect, rule.rate, rule.overrides_rule_id)
+            (
+                rule.effect,
+                rule.rate,
+                resolve_tax_treatment(rule),
+                rule.overrides_rule_id,
+            )
             for rule in same_priority
         }
 
@@ -335,13 +363,16 @@ def evaluate_legal_rules(
             )
             return result
 
-        result.rate = selected.rate
+        result.tax_treatment = resolve_tax_treatment(selected)
+        result.candidate_tax_treatment = result.tax_treatment
+        if result.tax_treatment == TaxTreatment.TAXABLE_AT_RATE:
+            result.rate = selected.rate
         result.eligible = True
         result.requires_review = False
         result.status = DecisionStatus.FINAL
         result.explanation.append(
-            f"Selected legal rule {selected.rule_id} with rate "
-            f"{selected.rate}."
+            f"Selected legal rule {selected.rule_id} with treatment "
+            f"{result.tax_treatment.value}."
         )
         return result
 
