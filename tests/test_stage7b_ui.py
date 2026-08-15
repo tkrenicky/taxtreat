@@ -87,7 +87,8 @@ def test_workspace_demo_exposes_recipient_payment_result_workflow():
     assert "Příjemci" in html
     assert "Kontroly plateb" in html
     assert "Výstupy" in html
-    assert "Komu platíš?" in html
+    assert "Která společnost platbu provádí?" in html
+    assert "Komu je placeno?" in html
     assert "Údaje o platbě" in html
     assert "Výsledek kontroly" in html
     assert "Jak výsledek číst" in html
@@ -98,7 +99,13 @@ def test_workspace_demo_exposes_recipient_payment_result_workflow():
     assert "§ 38d / § 38da" in html
     assert "Jak výsledek číst" in html
     assert 'id="new-recipient-form"' in html
-    assert 'data-edit-payer' in html
+    assert 'id="active-payer-select"' in html
+    assert 'id="payer-list"' in html
+    assert 'id="flow-payer-list"' in html
+    assert 'data-create-payer' in html
+    assert 'name="payer_vat_id"' in html
+    assert "KROK 1 ZE 4" in html
+    assert "KROK 4 ZE 4" in html
     assert 'id="residency-document-form"' in html
     assert 'name="transaction_date"' in html
     assert 'name="payment_date"' not in html
@@ -183,6 +190,11 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert 'data.get("transaction_date")' in javascript.text
     assert "facts.ownership_percent" in javascript.text
     assert "recipientEditForm.addEventListener" in javascript.text
+    assert "let payers = [" in javascript.text
+    assert "activePayerKey" in javascript.text
+    assert "currentRelationship" in javascript.text
+    assert "renderPayers" in javascript.text
+    assert "recipient.relationships" in javascript.text
     assert "Právní dataset:" not in javascript.text
     assert 'fetch(`/exchange-rates/cnb?' in javascript.text
     assert "Zobrazit znění ustanovení" in javascript.text

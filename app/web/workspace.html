@@ -19,6 +19,7 @@
       <button data-nav="outputs">Výstupy</button>
       <button data-nav="sources">Zdroje</button>
     </nav>
+    <label class="payer-context"><span>Aktivní plátce</span><select id="active-payer-select" aria-label="Aktivní plátce"></select></label>
     <div class="account"><span>Demo režim</span><b aria-hidden="true">TK</b></div>
   </header>
 
@@ -58,12 +59,8 @@
     </section>
 
     <section class="view" data-view="payers">
-      <div class="page-title"><div><p>ORGANIZACE</p><h1>Plátci</h1><span>České subjekty, jejichž platby jsou v TaxTreat kontrolovány.</span></div></div>
-      <article class="card entity-card">
-        <div class="avatar" data-payer-avatar>D</div><div><h2 data-payer-name>Demo CZ s.r.o.</h2><p>Česká republika · aktivní plátce</p></div>
-        <dl><div><dt>Příjemci</dt><dd>1</dd></div><div><dt>Platby</dt><dd>0</dd></div><div><dt>Otevřené úkoly</dt><dd>1</dd></div></dl>
-        <button class="secondary compact entity-edit" type="button" data-edit-payer>Upravit plátce</button>
-      </article>
+      <div class="page-title"><div><p>ORGANIZACE</p><h1>Plátci</h1><span>České subjekty, jejichž platby jsou v TaxTreat kontrolovány.</span></div><button class="primary compact" type="button" data-create-payer>Přidat plátce</button></div>
+      <div id="payer-list" class="payer-list" aria-live="polite"></div>
     </section>
 
     <section class="view" data-view="recipients">
@@ -115,14 +112,21 @@
 
     <section class="view flow" data-view="flow">
       <div class="flow-progress" aria-label="Průběh kontroly">
-        <button class="active" data-flow-step="1"><b>1</b><span>Příjemce</span></button><i></i>
-        <button data-flow-step="2"><b>2</b><span>Platba</span></button><i></i>
-        <button data-flow-step="3"><b>3</b><span>Výsledek</span></button>
+        <button class="active" data-flow-step="1"><b>1</b><span>Plátce</span></button><i></i>
+        <button data-flow-step="2"><b>2</b><span>Příjemce</span></button><i></i>
+        <button data-flow-step="3"><b>3</b><span>Platba</span></button><i></i>
+        <button data-flow-step="4"><b>4</b><span>Výsledek</span></button>
       </div>
       <button class="back" data-nav="dashboard">← Ukončit průvodce</button>
 
       <section class="flow-step active" data-step="1">
-        <div class="page-title"><div><p>KROK 1 ZE 3</p><h1>Komu platíš?</h1><span>Vyber existujícího příjemce nebo založ nový profil.</span></div></div>
+        <div class="page-title"><div><p>KROK 1 ZE 4</p><h1>Která společnost platbu provádí?</h1><span>Vyber českého plátce, ke kterému bude kontrola uložena.</span></div></div>
+        <div id="flow-payer-list" class="flow-payer-list"></div>
+        <div class="flow-actions"><button class="secondary" type="button" data-create-payer>+ Přidat plátce</button><button class="primary" data-next-step="2">Pokračovat k příjemci →</button></div>
+      </section>
+
+      <section class="flow-step" data-step="2">
+        <div class="page-title"><div><p>KROK 2 ZE 4</p><h1>Komu je placeno?</h1><span>Vyber existujícího příjemce nebo založ nový profil.</span></div></div>
         <article class="card select-card selected">
           <label><input type="radio" name="flow-recipient" checked><span class="avatar" id="flow-recipient-avatar">D</span><span><b id="flow-recipient-name">Demo GmbH</b><small id="flow-recipient-meta">Rakousko · společnost · základní údaje vyplněny</small></span><em>Vybráno</em></label>
         </article>
@@ -138,11 +142,11 @@
           <p>Další údaje a podklady doplníš v profilu příjemce. V tomto demu se nový profil po obnovení stránky odstraní.</p>
           <button class="primary" type="submit">Použít příjemce v této kontrole →</button>
         </form>
-        <div class="flow-actions"><button class="secondary" data-nav="recipients">Spravovat příjemce</button><button class="primary" data-next-step="2">Pokračovat k platbě →</button></div>
+        <div class="flow-actions"><button class="secondary" data-next-step="1">← Zpět k plátci</button><button class="primary" data-next-step="3">Pokračovat k platbě →</button></div>
       </section>
 
-      <section class="flow-step" data-step="2">
-        <div class="page-title"><div><p>KROK 2 ZE 3</p><h1>Údaje o platbě</h1><span>Kontrola pro příjemce <b data-recipient-name>Demo GmbH</b>.</span></div></div>
+      <section class="flow-step" data-step="3">
+        <div class="page-title"><div><p>KROK 3 ZE 4</p><h1>Údaje o platbě</h1><span><b data-payer-name>Demo CZ s.r.o.</b> → <b data-recipient-name>Demo GmbH</b></span></div></div>
         <form id="workspace-payment" class="card payment-form">
           <div class="field-grid">
             <label><span>Druh příjmu *</span><select name="income_type" required><option value="">Vyber druh</option><option value="dividend">Dividendy</option><option value="interest">Úroky</option><option value="royalty">Licenční poplatky</option></select></label>
@@ -178,12 +182,12 @@
           </section>
           <section id="workspace-follow-up" class="follow-up" hidden aria-live="polite"><div class="section-heading"><div><p>DOPLŇUJÍCÍ SKUTKOVÉ ÚDAJE</p><h2>Údaje potřebné pro dokončení výpočtu</h2></div><span id="workspace-question-count"></span></div><p>Otázky jsou odvozeny od zvoleného druhu příjmu a smlouvy s konkrétním státem.</p><div id="workspace-questions" class="question-list"></div></section>
           <div id="workspace-error" class="error" role="alert" hidden></div>
-          <div class="flow-actions"><button type="button" class="secondary" data-next-step="1">← Zpět</button><button type="submit" class="primary" id="workspace-submit">Vyhodnotit vstupní údaje →</button></div>
+          <div class="flow-actions"><button type="button" class="secondary" data-next-step="2">← Zpět k příjemci</button><button type="submit" class="primary" id="workspace-submit">Vyhodnotit vstupní údaje →</button></div>
         </form>
       </section>
 
-      <section class="flow-step" data-step="3">
-        <div class="page-title"><div><p>KROK 3 ZE 3</p><h1>Výsledek kontroly</h1><span><b data-payer-name>Demo CZ s.r.o.</b> → <b data-recipient-name>Demo GmbH</b></span></div></div>
+      <section class="flow-step" data-step="4">
+        <div class="page-title"><div><p>KROK 4 ZE 4</p><h1>Výsledek kontroly</h1><span><b data-payer-name>Demo CZ s.r.o.</b> → <b data-recipient-name>Demo GmbH</b></span></div></div>
         <article class="card result-hero">
           <span id="workspace-result-status" class="badge warning">ČEKÁ NA VÝPOČET</span>
           <p>Srážková daň v CZK</p><strong id="workspace-tax">—</strong><small id="workspace-rate">—</small>
@@ -200,7 +204,7 @@
           <p id="workspace-dividend-deadline-caution" class="deadline-caution" hidden>U dividend může povinnost srazit daň podle § 38d odst. 2 vzniknout i před zadaným datem. Pro úplné určení je nutné zohlednit také schválení účetní závěrky a rozhodnutí o rozdělení zisku.</p>
         </article>
         <article class="card result-sources"><h2>Právní podklady</h2><div id="workspace-citations" class="citation-list"><p>Po výpočtu se zobrazí smluvní článek a evidované zdroje.</p></div></article>
-        <div class="flow-actions"><button class="secondary" data-next-step="2">← Upravit platbu</button><button class="primary" data-nav="reviews">Uložit až po zavedení zabezpečeného účtu</button></div>
+        <div class="flow-actions"><button class="secondary" data-next-step="3">← Upravit platbu</button><button class="primary" data-nav="reviews">Uložit až po zavedení zabezpečeného účtu</button></div>
       </section>
     </section>
   </main>
@@ -221,9 +225,10 @@
   </dialog>
 
   <dialog id="payer-dialog" class="modal">
-    <form method="dialog" id="payer-form"><div class="modal-head"><div><p>PLÁTCE</p><h2>Upravit plátce</h2></div><button type="button" data-close-payer aria-label="Zavřít">×</button></div>
+    <form method="dialog" id="payer-form"><div class="modal-head"><div><p>PLÁTCE</p><h2 id="payer-dialog-title">Upravit plátce</h2></div><button type="button" data-close-payer aria-label="Zavřít">×</button></div>
       <label><span>Název *</span><input name="payer_name" value="Demo CZ s.r.o." required></label>
       <label><span>IČO</span><input name="payer_id" inputmode="numeric" placeholder="např. 12345678"></label>
+      <label><span>DIČ</span><input name="payer_vat_id" placeholder="např. CZ12345678"></label>
       <label><span>Stát</span><input value="Česká republika" disabled></label>
       <div class="flow-actions"><button class="secondary" type="button" data-close-payer>Zrušit</button><button class="primary" type="submit">Uložit změny</button></div>
     </form>

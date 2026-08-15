@@ -21,6 +21,9 @@
   const dividendSteps = [...document.querySelectorAll("[data-dividend-step]")];
   const acquisitionDateField = document.querySelector("[data-acquisition-date]");
   const fxStatus = document.querySelector("#workspace-fx-status");
+  const activePayerSelect = document.querySelector("#active-payer-select");
+  const payerList = document.querySelector("#payer-list");
+  const flowPayerList = document.querySelector("#flow-payer-list");
   let votingWasEdited = false;
   const countryNames = { AT: "Rakousko", CH: "Švýcarsko", DE: "Německo", SG: "Singapur", TW: "Tchaj-wan" };
   const countryGenitives = { AT: "Rakouska", CH: "Švýcarska", DE: "Německa", SG: "Singapuru", TW: "Tchaj-wanu" };
@@ -30,13 +33,17 @@
     type: "Společnost",
     beneficialOwner: true,
     treatyResident: true,
-    peConnection: false,
-    ownershipPercent: "",
-    directOwnership: "",
-    acquisitionDate: "",
-    votingOwnershipPercent: ""
+    relationships: {
+      "demo-cz": { peConnection: false, ownershipPercent: "", directOwnership: "", acquisitionDate: "", votingOwnershipPercent: "" },
+      "alfa-cz": { peConnection: false, ownershipPercent: "25", directOwnership: "true", acquisitionDate: "2024-06-01", votingOwnershipPercent: "25" }
+    }
   };
-  let payer = { name: "Demo CZ s.r.o.", id: "" };
+  let payers = [
+    { key: "demo-cz", name: "Demo CZ s.r.o.", id: "12345678", vatId: "CZ12345678" },
+    { key: "alfa-cz", name: "Alfa Services CZ a.s.", id: "87654321", vatId: "CZ87654321" }
+  ];
+  let activePayerKey = "demo-cz";
+  let editingPayerKey = null;
   let lastPayload = null;
   let pendingQuestions = [];
   const clientAnswers = { facts: {}, acquisitionDate: null, exchangeRate: null };
@@ -53,16 +60,27 @@
     progressButtons.forEach((button) => button.classList.toggle("active", Number(button.dataset.flowStep) <= number));
   }
 
+  function activePayer() {
+    return payers.find((item) => item.key === activePayerKey) || payers[0];
+  }
+
+  function currentRelationship() {
+    if (!recipient.relationships[activePayerKey]) {
+      recipient.relationships[activePayerKey] = { peConnection: false, ownershipPercent: "", directOwnership: "", acquisitionDate: "", votingOwnershipPercent: "" };
+    }
+    return recipient.relationships[activePayerKey];
+  }
+
   navButtons.forEach((button) => button.addEventListener("click", () => showView(button.dataset.nav)));
   document.querySelectorAll("[data-start-flow]").forEach((button) => button.addEventListener("click", () => showStep(1)));
   document.querySelectorAll("[data-open-recipient]").forEach((button) => button.addEventListener("click", () => showView("recipient-detail")));
   document.querySelectorAll("[data-next-step]").forEach((button) => button.addEventListener("click", () => showStep(Number(button.dataset.nextStep))));
   progressButtons.forEach((button) => button.addEventListener("click", () => {
     const step = Number(button.dataset.flowStep);
-    if (step < 3 || lastPayload) showStep(step);
+    if (step < 4 || lastPayload) showStep(step);
   }));
   document.querySelectorAll("[data-create-recipient]").forEach((button) => button.addEventListener("click", () => {
-    showStep(1);
+    showStep(2);
     recipientForm.hidden = false;
     recipientForm.querySelector("input").focus();
   }));
@@ -79,50 +97,104 @@
     button.setAttribute("aria-expanded", String(willOpen));
   }));
 
-  document.querySelectorAll("[data-edit-payer]").forEach((button) => button.addEventListener("click", () => {
-    payerForm.elements.payer_name.value = payer.name;
-    payerForm.elements.payer_id.value = payer.id;
+  function openPayerDialog(key = null) {
+    editingPayerKey = key;
+    const selected = key ? payers.find((item) => item.key === key) : null;
+    document.querySelector("#payer-dialog-title").textContent = selected ? "Upravit plátce" : "Přidat plátce";
+    payerForm.elements.payer_name.value = selected?.name || "";
+    payerForm.elements.payer_id.value = selected?.id || "";
+    payerForm.elements.payer_vat_id.value = selected?.vatId || "";
     payerDialog.showModal();
-  }));
+  }
+  document.querySelectorAll("[data-create-payer]").forEach((button) => button.addEventListener("click", () => openPayerDialog()));
   document.querySelectorAll("[data-close-payer]").forEach((button) => button.addEventListener("click", () => payerDialog.close()));
   payerForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const data = new FormData(payerForm);
-    payer = { name: String(data.get("payer_name")).trim(), id: String(data.get("payer_id")).trim() };
-    document.querySelectorAll("[data-payer-name]").forEach((node) => { node.textContent = payer.name; });
-    document.querySelectorAll("[data-payer-avatar]").forEach((node) => { node.textContent = payer.name.slice(0, 1).toUpperCase(); });
+    const values = { name: String(data.get("payer_name")).trim(), id: String(data.get("payer_id")).trim(), vatId: String(data.get("payer_vat_id")).trim() };
+    if (editingPayerKey) {
+      Object.assign(payers.find((item) => item.key === editingPayerKey), values);
+    } else {
+      const key = `payer-${Date.now()}`;
+      payers.push({ key, ...values });
+      activePayerKey = key;
+    }
+    renderPayers();
+    renderRecipient();
     payerDialog.close();
   });
 
+  activePayerSelect.addEventListener("change", () => {
+    activePayerKey = activePayerSelect.value;
+    renderPayers();
+    renderRecipient();
+  });
+
+  function payerCard(item, compact = false) {
+    const article = document.createElement("article");
+    article.className = compact ? "card payer-choice" : "card entity-card payer-record";
+    if (item.key === activePayerKey) article.classList.add("selected");
+    const avatar = document.createElement("div"); avatar.className = "avatar"; avatar.textContent = item.name.slice(0, 1).toUpperCase();
+    const copy = document.createElement("div");
+    const title = document.createElement("h2"); title.textContent = item.name;
+    const meta = document.createElement("p"); meta.textContent = `Česká republika · IČO ${item.id || "neuvedeno"}${item.vatId ? ` · DIČ ${item.vatId}` : ""}`;
+    copy.append(title, meta);
+    if (compact) {
+      const label = document.createElement("label");
+      const radio = document.createElement("input"); radio.type = "radio"; radio.name = "flow-payer"; radio.value = item.key; radio.checked = item.key === activePayerKey;
+      radio.addEventListener("change", () => { activePayerKey = item.key; renderPayers(); renderRecipient(); });
+      const state = document.createElement("em"); state.textContent = radio.checked ? "Vybráno" : "Vybrat";
+      label.append(radio, avatar, copy, state); article.append(label);
+      return article;
+    }
+    const details = document.createElement("dl");
+    [["Příjemci", "1"], ["Platby", "0"], ["Stav", item.key === activePayerKey ? "Aktivní" : "Připraven"]].forEach(([term, value]) => {
+      const group = document.createElement("div"); const dt = document.createElement("dt"); const dd = document.createElement("dd");
+      dt.textContent = term; dd.textContent = value; group.append(dt, dd); details.append(group);
+    });
+    const actions = document.createElement("div"); actions.className = "payer-actions";
+    const activate = document.createElement("button"); activate.className = "secondary compact"; activate.type = "button";
+    activate.textContent = item.key === activePayerKey ? "Aktivní plátce" : "Nastavit jako aktivního"; activate.disabled = item.key === activePayerKey;
+    activate.addEventListener("click", () => { activePayerKey = item.key; renderPayers(); renderRecipient(); });
+    const edit = document.createElement("button"); edit.className = "secondary compact"; edit.type = "button"; edit.textContent = "Upravit";
+    edit.addEventListener("click", () => openPayerDialog(item.key)); actions.append(activate, edit);
+    article.append(avatar, copy, details, actions);
+    return article;
+  }
+
+  function renderPayers() {
+    const selected = activePayer();
+    activePayerSelect.replaceChildren();
+    payers.forEach((item) => {
+      const option = document.createElement("option"); option.value = item.key; option.textContent = item.name; option.selected = item.key === activePayerKey; activePayerSelect.append(option);
+    });
+    payerList.replaceChildren(...payers.map((item) => payerCard(item)));
+    flowPayerList.replaceChildren(...payers.map((item) => payerCard(item, true)));
+    document.querySelectorAll("[data-payer-name]").forEach((node) => { node.textContent = selected.name; });
+    document.querySelectorAll("[data-payer-avatar]").forEach((node) => { node.textContent = selected.name.slice(0, 1).toUpperCase(); });
+    document.querySelectorAll(".dashboard-metrics article:first-child strong").forEach((node) => { node.textContent = String(payers.length); });
+  }
+
   document.querySelectorAll("[data-edit-recipient]").forEach((button) => button.addEventListener("click", (event) => {
     event.stopPropagation();
+    const relationship = currentRelationship();
     recipientEditForm.elements.recipient_name.value = recipient.name;
     recipientEditForm.elements.recipient_country.value = recipient.country;
     recipientEditForm.elements.recipient_type.value = recipient.type;
-    recipientEditForm.elements.ownership_percent.value = recipient.ownershipPercent;
-    recipientEditForm.elements.acquisition_date.value = recipient.acquisitionDate;
-    recipientEditForm.elements.direct_ownership.value = recipient.directOwnership;
+    recipientEditForm.elements.ownership_percent.value = relationship.ownershipPercent;
+    recipientEditForm.elements.acquisition_date.value = relationship.acquisitionDate;
+    recipientEditForm.elements.direct_ownership.value = relationship.directOwnership;
     recipientEditForm.elements.beneficial_owner.value = String(recipient.beneficialOwner);
     recipientEditForm.elements.treaty_resident.value = String(recipient.treatyResident);
-    recipientEditForm.elements.pe_connection.value = String(recipient.peConnection);
+    recipientEditForm.elements.pe_connection.value = String(relationship.peConnection);
     recipientDialog.showModal();
   }));
   document.querySelectorAll("[data-close-recipient]").forEach((button) => button.addEventListener("click", () => recipientDialog.close()));
   recipientEditForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const data = new FormData(recipientEditForm);
-    recipient = {
-      ...recipient,
-      name: String(data.get("recipient_name")).trim(),
-      country: String(data.get("recipient_country")),
-      type: String(data.get("recipient_type")),
-      ownershipPercent: String(data.get("ownership_percent")),
-      acquisitionDate: String(data.get("acquisition_date")),
-      directOwnership: String(data.get("direct_ownership")),
-      beneficialOwner: String(data.get("beneficial_owner")) === "true",
-      treatyResident: String(data.get("treaty_resident")) === "true",
-      peConnection: String(data.get("pe_connection")) === "true"
-    };
+    recipient = { ...recipient, name: String(data.get("recipient_name")).trim(), country: String(data.get("recipient_country")), type: String(data.get("recipient_type")), beneficialOwner: String(data.get("beneficial_owner")) === "true", treatyResident: String(data.get("treaty_resident")) === "true" };
+    Object.assign(currentRelationship(), { ownershipPercent: String(data.get("ownership_percent")), acquisitionDate: String(data.get("acquisition_date")), directOwnership: String(data.get("direct_ownership")), peConnection: String(data.get("pe_connection")) === "true" });
     renderRecipient();
     recipientDialog.close();
   });
@@ -139,6 +211,7 @@
   });
 
   function renderRecipient() {
+    const relationship = currentRelationship();
     const country = countryNames[recipient.country];
     const initial = recipient.name.slice(0, 1).toUpperCase();
     document.querySelector("#flow-recipient-name").textContent = recipient.name;
@@ -150,18 +223,18 @@
     document.querySelectorAll("[data-recipient-country-name]").forEach((node) => { node.textContent = country; });
     document.querySelectorAll("[data-recipient-type]").forEach((node) => { node.textContent = recipient.type.toLowerCase(); });
     document.querySelectorAll("[data-profile-beneficial]").forEach((node) => { node.textContent = recipient.beneficialOwner ? "Ano" : "Ne"; });
-    document.querySelectorAll("[data-profile-pe]").forEach((node) => { node.textContent = recipient.peConnection ? "Ano" : "Ne"; });
-    document.querySelectorAll("[data-profile-ownership]").forEach((node) => { node.textContent = recipient.ownershipPercent ? `${recipient.ownershipPercent} %` : "Nevyplněno"; });
-    document.querySelectorAll("[data-profile-acquisition]").forEach((node) => { node.textContent = recipient.acquisitionDate || "Nevyplněno"; });
+    document.querySelectorAll("[data-profile-pe]").forEach((node) => { node.textContent = relationship.peConnection ? "Ano" : "Ne"; });
+    document.querySelectorAll("[data-profile-ownership]").forEach((node) => { node.textContent = relationship.ownershipPercent ? `${relationship.ownershipPercent} %` : "Nevyplněno"; });
+    document.querySelectorAll("[data-profile-acquisition]").forEach((node) => { node.textContent = relationship.acquisitionDate || "Nevyplněno"; });
     form.elements.beneficial_owner.value = String(recipient.beneficialOwner);
     form.elements.treaty_resident.value = String(recipient.treatyResident);
-    form.elements.pe_connection.value = String(recipient.peConnection);
-    form.elements.ownership_percent.value = recipient.ownershipPercent;
-    form.elements.direct_ownership.value = recipient.directOwnership;
-    form.elements.acquisition_date.value = recipient.acquisitionDate;
-    form.elements.holding_period_mode.value = recipient.acquisitionDate ? "known_date" : "";
-    form.elements.voting_ownership_percent.value = recipient.votingOwnershipPercent || recipient.ownershipPercent;
-    votingWasEdited = Boolean(recipient.votingOwnershipPercent);
+    form.elements.pe_connection.value = String(relationship.peConnection);
+    form.elements.ownership_percent.value = relationship.ownershipPercent;
+    form.elements.direct_ownership.value = relationship.directOwnership;
+    form.elements.acquisition_date.value = relationship.acquisitionDate;
+    form.elements.holding_period_mode.value = relationship.acquisitionDate ? "known_date" : "";
+    form.elements.voting_ownership_percent.value = relationship.votingOwnershipPercent || relationship.ownershipPercent;
+    votingWasEdited = Boolean(relationship.votingOwnershipPercent);
     updateDividendProgress();
   }
 
@@ -539,7 +612,7 @@
     decisiveCitations(analysis).forEach((citation, index) => citations.append(citationCard(citation, analysis, index + 1)));
     if (!citations.children.length) { const p = document.createElement("p"); p.textContent = "Pro tento výsledek nebyl vrácen konkrétní odkaz na právní zdroj."; citations.append(p); }
     renderComplianceSchedule(analysis);
-    showStep(3);
+    showStep(4);
   }
 
   form.addEventListener("submit", async (event) => {
@@ -561,6 +634,13 @@
     const acquisitionDate = String(data.get("acquisition_date"));
     const armLengthAmount = String(data.get("arm_length_amount"));
     const royaltyCategory = String(data.get("royalty_category"));
+    Object.assign(currentRelationship(), {
+      peConnection: String(data.get("pe_connection")) === "true",
+      ownershipPercent,
+      directOwnership,
+      acquisitionDate,
+      votingOwnershipPercent: votingOwnership
+    });
     if (incomeType === "dividend") {
       if (ownershipPercent) facts.ownership_percent = Number(ownershipPercent);
       if (directOwnership) facts.direct_ownership = directOwnership === "true";
@@ -589,6 +669,7 @@
     } catch (problem) { error.textContent = problem.message; error.hidden = false; }
   });
 
+  renderPayers();
   renderRecipient();
   renderTransactionFacts();
 })();

@@ -244,6 +244,10 @@ def capture(output_dir: Path) -> dict[str, object]:
             ).first.click()
             page.get_by_role(
                 "button",
+                name="Pokračovat k příjemci →",
+            ).click()
+            page.get_by_role(
+                "button",
                 name="Pokračovat k platbě →",
             ).click()
             workspace_form = page.locator("#workspace-payment")
@@ -307,7 +311,7 @@ def capture(output_dir: Path) -> dict[str, object]:
                 workspace_form.locator("#workspace-submit").click()
                 page.wait_for_timeout(250)
                 if page.locator(
-                    '.flow-step[data-step="3"].active'
+                    '.flow-step[data-step="4"].active'
                 ).is_visible():
                     break
                 workspace_questions = workspace_form.locator(
