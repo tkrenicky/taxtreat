@@ -250,7 +250,7 @@ def test_api_calculates_foreign_amount_only_from_mocked_final_result(
     assert calculation["withholding_tax_czk"] == "2485"
     assert calculation["net_amount_czk"] == "22365.00"
     assert calculation["exchange_rate"]["effective_date"] == "2026-08-10"
-    assert "Withholding tax:" in payload["html"]
+    assert "Srážková daň" in payload["html"]
     assert "2485" in payload["html"]
     assert "1 EUR = 24.85 CZK" in payload["html"]
 
