@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from fastapi.testclient import TestClient
 
 from app.main import app
@@ -153,6 +155,16 @@ def test_design_lab_exposes_three_distinct_functional_directions():
     assert "/workspace-demo?design=civic" in html
     assert "Stejný produkt" in html
     assert client.get("/ui-assets/design-lab.css").status_code == 200
+
+
+def test_browser_acceptance_uses_current_result_status_wording():
+    source = (
+        Path("scripts/capture_stage7b_ui.py")
+        .read_text(encoding="utf-8")
+    )
+
+    assert "VÝSLEDEK DOKONČEN" in source
+    assert "VÝPOČET DOKONČEN" not in source
 
 
 def test_workspace_demo_assets_are_local_and_use_canonical_intake():

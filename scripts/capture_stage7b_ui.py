@@ -340,7 +340,7 @@ def capture(output_dir: Path) -> dict[str, object]:
                 "#workspace-result-status"
             ).inner_text()
             if workspace_status not in {
-                "VÝPOČET DOKONČEN",
+                "VÝSLEDEK DOKONČEN",
                 "ODBORNÉ OVĚŘENÍ",
             }:
                 raise AssertionError(
