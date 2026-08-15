@@ -71,6 +71,64 @@ def test_cnb_rate_reports_missing_currency():
         raise AssertionError("Missing CNB rate must fail closed.")
 
 
+def test_czk_rate_does_not_call_remote_service():
+    def opener(*_args, **_kwargs):
+        raise AssertionError("CZK must not require a CNB API call.")
+
+    rate = fetch_cnb_exchange_rate(
+        "czk",
+        date(2026, 8, 12),
+        opener=opener,
+    )
+
+    assert rate["currency"] == "CZK"
+    assert rate["czk_per_unit"] == "1"
+
+
+def test_cnb_network_failure_is_reported_as_unavailable():
+    def opener(*_args, **_kwargs):
+        raise OSError("offline")
+
+    try:
+        fetch_cnb_exchange_rate(
+            "EUR",
+            date(2026, 8, 12),
+            opener=opener,
+        )
+    except CnbRateUnavailableError as exc:
+        assert "unavailable" in str(exc)
+    else:
+        raise AssertionError("Network failure must fail closed.")
+
+
+def test_invalid_cnb_quote_is_reported_as_unavailable():
+    def opener(_request, timeout):
+        assert timeout == 10
+        return _Response(
+            {
+                "rates": [
+                    {
+                        "validFor": "2026-08-12",
+                        "amount": 0,
+                        "currencyCode": "EUR",
+                        "rate": 24.255,
+                    }
+                ]
+            }
+        )
+
+    try:
+        fetch_cnb_exchange_rate(
+            "EUR",
+            date(2026, 8, 12),
+            opener=opener,
+        )
+    except CnbRateUnavailableError as exc:
+        assert "invalid" in str(exc)
+    else:
+        raise AssertionError("Invalid CNB quote must fail closed.")
+
+
 def test_cnb_endpoint_returns_structured_rate(monkeypatch):
     monkeypatch.setattr(
         main,
