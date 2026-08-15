@@ -11,6 +11,26 @@
   }
   "use strict";
 
+  const BUILD_VERSION = "20260815-5";
+
+  async function checkForNewBuild() {
+    try {
+      const response = await fetch(window.location.pathname, {
+        cache: "no-store",
+      });
+      const html = await response.text();
+      const deployed = html.match(/workspace\.js\?v=([0-9-]+)/)?.[1];
+      if (!deployed || deployed === BUILD_VERSION || document.querySelector("#new-build-notice")) return;
+      const notice = document.createElement("aside"); notice.id = "new-build-notice"; notice.className = "new-build-notice";
+      const copy = document.createElement("span"); copy.textContent = "Je dostupná novější verze TaxTreat. Rozpracovaný výsledek může používat starší pravidla zobrazení.";
+      const reload = document.createElement("button"); reload.type = "button"; reload.textContent = "Načíst novou verzi"; reload.addEventListener("click", () => window.location.reload());
+      notice.append(copy, reload); document.body.append(notice);
+    } catch (_problem) {
+      // Kontrola verze nesmí přerušit práci v aplikaci.
+    }
+  }
+  window.setInterval(checkForNewBuild, 60000);
+
   const views = [...document.querySelectorAll("[data-view]")];
   const navButtons = [...document.querySelectorAll("[data-nav]")];
   const flowSteps = [...document.querySelectorAll(".flow-step")];
@@ -714,4 +734,5 @@
   renderPayers();
   renderRecipient();
   renderTransactionFacts();
+  checkForNewBuild();
 })();

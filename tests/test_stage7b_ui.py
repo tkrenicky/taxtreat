@@ -149,7 +149,7 @@ def test_design_lab_exposes_three_distinct_functional_directions():
     assert response.status_code == 200
     html = response.text
     assert "01 · HALO" in html
-    assert "02 · GRIDLINE" in html
+    assert "02 · APERTURE" in html
     assert "03 · SIGNAL" in html
     assert "/design-lab/editorial" in html
     assert "/design-lab/atlas" in html
@@ -183,9 +183,9 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert css.status_code == 200
     assert javascript.status_code == 200
     assert designs.status_code == 200
-    assert "/ui-assets/workspace.css?v=20260815-4" in html
-    assert "/ui-assets/workspace.js?v=20260815-4" in html
-    assert "/ui-assets/workspace-designs.css?v=20260815-4" in html
+    assert "/ui-assets/workspace.css?v=20260815-5" in html
+    assert "/ui-assets/workspace.js?v=20260815-5" in html
+    assert "/ui-assets/workspace-designs.css?v=20260815-5" in html
     assert 'data-design-link="editorial"' in html
     assert 'data-design-link="atlas"' in html
     assert 'data-design-link="civic"' in html
@@ -262,12 +262,15 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert 'body[data-design="atlas"]' in designs.text
     assert 'body[data-design="civic"]' in designs.text
     assert "01 — Halo" in designs.text
-    assert "02 — Gridline" in designs.text
+    assert "02 — Aperture" in designs.text
     assert "03 — Signal" in designs.text
     assert "border-radius:26px" in designs.text
     assert "non_taxing_interest_above_monthly_threshold_annual" in javascript.text
     assert "non_taxing_interest_monthly_threshold_not_exceeded" in javascript.text
     assert "§ 38da zákona č. 586/1992 Sb." in javascript.text
+    assert 'const BUILD_VERSION = "20260815-5"' in javascript.text
+    assert "Načíst novou verzi" in javascript.text
+    assert ".new-build-notice" in css.text
     assert ".dashboard-summary" in css.text
     assert ".dashboard-metrics" in css.text
     assert ".fx-status.success" in css.text
