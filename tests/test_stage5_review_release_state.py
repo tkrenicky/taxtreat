@@ -138,3 +138,15 @@ def test_invalid_human_review_event_fails_closed(event, message):
             PACKAGE,
             human_review_event=event,
         )
+
+
+def test_missing_review_timestamp_fails_closed():
+    event = human_review()
+    event["reviewed_at"] = ""
+    with pytest.raises(ValueError, match="requires reviewed_at"):
+        assess_review_release_state(PACKAGE, human_review_event=event)
+
+
+def test_invalid_package_hash_fails_closed():
+    with pytest.raises(ValueError, match="requires package_sha256"):
+        assess_review_release_state({"package_sha256": "too-short"})
