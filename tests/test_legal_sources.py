@@ -13,6 +13,10 @@ from taxtreat.engine.legal_sources import (
     load_legal_sources,
     validate_evidence_references,
 )
+from taxtreat.services.legal_sources import (
+    build_legal_path,
+    load_verified_provisions,
+)
 
 
 def test_pilot_rules_reference_only_registered_official_sources():
@@ -81,3 +85,45 @@ def test_legal_source_loader_rejects_invalid_registries(tmp_path):
     assert validate_evidence_references(
         [None, "SOURCE", "MISSING"], registered
     ) == ["MISSING"]
+
+
+def test_verified_austrian_article_has_complete_czech_diacritics():
+    provision = load_verified_provisions()["CZ-AT|treaty|10"]
+
+    assert "Článek 10 – DIVIDENDY" in provision["text"]
+    assert "skutečný vlastník" in provision["text"]
+    assert "stálé provozovně" in provision["text"]
+    assert "spolecnostõ" not in provision["text"]
+    assert provision["source_url"].startswith("https://e-sbirka.gov.cz/")
+
+
+def test_legal_path_keeps_domestic_start_before_selected_treaty():
+    citations = [
+        {
+            "rule_id": "TREATY-10",
+            "legal_layer": "treaty",
+            "article": "10",
+            "source_url": "https://example.test/treaty",
+            "rate": 10.0,
+        },
+        {
+            "rule_id": "DOMESTIC-15",
+            "legal_layer": "domestic",
+            "article": "36",
+            "source_url": "https://example.test/domestic",
+            "rate": 15.0,
+        },
+    ]
+
+    path = build_legal_path(
+        citations,
+        source_country="CZ",
+        recipient_country="AT",
+        selected_rule_id="TREATY-10",
+    )
+
+    assert [item["rule_id"] for item in path] == [
+        "DOMESTIC-15",
+        "TREATY-10",
+    ]
+    assert "official_text" in path[1]

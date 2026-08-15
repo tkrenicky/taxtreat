@@ -149,7 +149,7 @@ def test_design_lab_exposes_three_distinct_functional_directions():
     assert response.status_code == 200
     html = response.text
     assert "01 · HALO" in html
-    assert "02 · MOSS" in html
+    assert "02 · GRIDLINE" in html
     assert "03 · SIGNAL" in html
     assert "/design-lab/editorial" in html
     assert "/design-lab/atlas" in html
@@ -183,9 +183,9 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert css.status_code == 200
     assert javascript.status_code == 200
     assert designs.status_code == 200
-    assert "/ui-assets/workspace.css?v=20260815-3" in html
-    assert "/ui-assets/workspace.js?v=20260815-3" in html
-    assert "/ui-assets/workspace-designs.css?v=20260815-3" in html
+    assert "/ui-assets/workspace.css?v=20260815-4" in html
+    assert "/ui-assets/workspace.js?v=20260815-4" in html
+    assert "/ui-assets/workspace-designs.css?v=20260815-4" in html
     assert 'data-design-link="editorial"' in html
     assert 'data-design-link="atlas"' in html
     assert 'data-design-link="civic"' in html
@@ -205,6 +205,7 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert "clientAnswers" in javascript.text
     assert "showModal" in javascript.text
     assert "Upravit plátce" in javascript.text
+    assert "Upravit příjemce" in html
     assert "payer-choice-edit" in javascript.text
     assert "data-tooltip" in javascript.text
     assert "renderTransactionFacts" in javascript.text
@@ -248,6 +249,8 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert 'fetch(`/exchange-rates/cnb?' in javascript.text
     assert "Zobrazit znění ustanovení" in javascript.text
     assert "Zobrazit shrnutí použitého ustanovení" in javascript.text
+    assert "Zobrazit úplné znění použitého ustanovení" in javascript.text
+    assert "analysis.legal_path" in javascript.text
     assert "excerptHasBrokenEncoding" in javascript.text
     assert "Zobrazit schválený text ustanovení" not in javascript.text
     assert "displayLegalExcerpt" in javascript.text
@@ -259,7 +262,7 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert 'body[data-design="atlas"]' in designs.text
     assert 'body[data-design="civic"]' in designs.text
     assert "01 — Halo" in designs.text
-    assert "02 — Moss" in designs.text
+    assert "02 — Gridline" in designs.text
     assert "03 — Signal" in designs.text
     assert "border-radius:26px" in designs.text
     assert "non_taxing_interest_above_monthly_threshold_annual" in javascript.text
@@ -278,6 +281,47 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert ".citation-card blockquote" in css.text
     assert ".citation-excerpt" in css.text
     assert "font-size: .88rem" in css.text
+
+
+def test_real_cz_at_result_returns_domestic_then_treaty_legal_path():
+    response = client.post(
+        "/analysis/intake",
+        json={
+            "source_country": "CZ",
+            "recipient_country": "AT",
+            "income_type": "dividend",
+            "transaction_date": "2026-08-12",
+            "facts": {
+                "beneficial_owner": True,
+                "recipient_is_treaty_resident": True,
+                "permanent_establishment_connection": False,
+                "recipient_entity_type": "company",
+                "ownership_percent": 11,
+                "direct_ownership": True,
+                "direct_or_indirect_voting_ownership": 11,
+                "holding_period_months": 0,
+            },
+            "determinations": {},
+            "transaction_amount": {
+                "amount": "100000",
+                "currency": "CZK",
+                "payment_date": "2026-08-12",
+                "accounting_date": "2026-08-12",
+            },
+        },
+    )
+
+    assert response.status_code == 200
+    legal_path = response.json()["analysis"]["legal_path"]
+    assert [(item["legal_layer"], item["rate"]) for item in legal_path] == [
+        ("domestic", 15.0),
+        ("treaty", 0.0),
+    ]
+    assert "Dividendy vyplácené společností" in legal_path[1][
+        "official_text"
+    ]
+    assert "spolecnostõ" not in legal_path[1]["official_text"]
+    assert legal_path[1]["source_url"].startswith("https://e-sbirka.gov.cz/")
 
 
 def test_ui_calls_canonical_endpoints_and_uses_safe_dom_rendering():

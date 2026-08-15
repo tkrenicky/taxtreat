@@ -536,6 +536,8 @@
   }
 
   function displayLegalExcerpt(citation) {
+    const officialText = String(citation.official_text || "");
+    if (officialText) return officialText;
     const excerpt = String(citation.excerpt || "");
     if (!excerptHasBrokenEncoding(excerpt)) return excerpt;
     return `${citationDetail(citation)} Úplné oficiální znění ustanovení je dostupné prostřednictvím odkazu výše.`;
@@ -569,9 +571,9 @@
       ? `Výchozí vnitrostátní sazba činí ${citation.rate} %. V následujícím kroku je zohledněno pravidlo, které tuto sazbu omezuje nebo nahrazuje.`
       : citationDetail(citation);
     card.append(role, title, link, detail);
-    if (citation.excerpt && layer !== "domestic") {
+    if ((citation.official_text || citation.excerpt) && layer !== "domestic") {
       const disclosure = document.createElement("details"); disclosure.className = "citation-excerpt";
-      const summary = document.createElement("summary"); summary.textContent = excerptHasBrokenEncoding(citation.excerpt) ? "Zobrazit shrnutí použitého ustanovení" : "Zobrazit znění ustanovení";
+      const summary = document.createElement("summary"); summary.textContent = citation.official_text ? "Zobrazit úplné znění použitého ustanovení" : excerptHasBrokenEncoding(citation.excerpt) ? "Zobrazit shrnutí použitého ustanovení" : "Zobrazit znění ustanovení";
       const excerpt = document.createElement("blockquote"); excerpt.textContent = displayLegalExcerpt(citation);
       disclosure.append(summary, excerpt); card.append(disclosure);
     }
@@ -602,7 +604,7 @@
 
   function decisiveCitations(analysis) {
     const selected = selectedRuleId(analysis);
-    const citations = [...(analysis.citations || [])];
+    const citations = [...(analysis.legal_path || analysis.citations || [])];
     const layerOrder = { domestic: 0, treaty: 1, protocol: 2, mli: 3, eu_relief: 4 };
     citations.sort((left, right) => {
       const layerDifference = (layerOrder[left.legal_layer] ?? 9) - (layerOrder[right.legal_layer] ?? 9);

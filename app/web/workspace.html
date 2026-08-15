@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="TaxTreat – pracovní prostor pro kontrolu české srážkové daně">
   <title>TaxTreat · Pracovní prostor</title>
-  <link rel="stylesheet" href="/ui-assets/workspace.css?v=20260815-3">
-  <link rel="stylesheet" href="/ui-assets/workspace-designs.css?v=20260815-3">
-  <script defer src="/ui-assets/workspace.js?v=20260815-3"></script>
+  <link rel="stylesheet" href="/ui-assets/workspace.css?v=20260815-4">
+  <link rel="stylesheet" href="/ui-assets/workspace-designs.css?v=20260815-4">
+  <script defer src="/ui-assets/workspace.js?v=20260815-4"></script>
 </head>
 <body>
   <aside id="design-switcher" class="design-switcher" aria-label="Volba návrhu vzhledu" hidden>
@@ -134,8 +134,9 @@
 
       <section class="flow-step" data-step="2">
         <div class="page-title"><div><p>KROK 2 ZE 4</p><h1>Komu je placeno?</h1><span>Vyber existujícího příjemce nebo založ nový profil.</span></div></div>
-        <article class="card select-card selected">
+        <article class="card select-card selected flow-recipient-choice">
           <label><input type="radio" name="flow-recipient" checked><span class="avatar" id="flow-recipient-avatar">D</span><span><b id="flow-recipient-name">Demo GmbH</b><small id="flow-recipient-meta">Rakousko · společnost · základní údaje vyplněny</small></span><em>Vybráno</em></label>
+          <button class="secondary compact" type="button" data-edit-recipient>Upravit příjemce</button>
         </article>
         <button class="new-recipient-toggle" type="button" data-show-recipient-form>+ Založit nového příjemce</button>
         <form id="new-recipient-form" class="card mini-form" hidden>

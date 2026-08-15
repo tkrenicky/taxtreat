@@ -33,6 +33,7 @@ from taxtreat.services.decision import (
     analyze_transaction,
 )
 from taxtreat.services.intake import build_intake_plan
+from taxtreat.services.legal_sources import build_legal_path
 from taxtreat.services.exchange_rates import (
     CnbRateUnavailableError,
     fetch_cnb_exchange_rate,
@@ -466,6 +467,14 @@ def analyze(payload: AnalysisPayload):
         "legal_dataset_release": result.dataset_release,
         "dataset_version": dataset_version,
     }
+    analysis["legal_path"] = build_legal_path(
+        result.citations,
+        source_country=source_country,
+        recipient_country=recipient_country,
+        selected_rule_id=(
+            result.selected_rule_id or result.candidate_rule_id
+        ),
+    )
     amount = (
         payload.transaction_amount.model_dump(mode="json")
         if payload.transaction_amount is not None
