@@ -147,6 +147,11 @@ def workspace_demo_ui():
     return FileResponse(WEB_ROOT / "workspace.html")
 
 
+@app.get("/design-lab", include_in_schema=False)
+def design_lab_ui():
+    return FileResponse(WEB_ROOT / "design-lab.html")
+
+
 @app.get("/health/live")
 def liveness():
     return {"status": "ok"}

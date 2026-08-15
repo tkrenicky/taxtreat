@@ -1,4 +1,11 @@
 (() => {
+  const design = new URLSearchParams(window.location.search).get("design");
+  if (["editorial", "atlas", "civic"].includes(design)) {
+    document.body.dataset.design = design;
+    const switcher = document.querySelector("#design-switcher");
+    switcher.hidden = false;
+    switcher.querySelector(`[data-design-link="${design}"]`).classList.add("active");
+  }
   "use strict";
 
   const views = [...document.querySelectorAll("[data-view]")];

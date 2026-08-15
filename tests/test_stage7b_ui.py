@@ -140,15 +140,36 @@ def test_workspace_demo_exposes_recipient_payment_result_workflow():
     assert "orientační" not in html.lower()
 
 
+def test_design_lab_exposes_three_distinct_functional_directions():
+    response = client.get("/design-lab")
+
+    assert response.status_code == 200
+    html = response.text
+    assert "EDITORIAL LEDGER" in html
+    assert "ATLAS CONTROL" in html
+    assert "CIVIC STANDARD" in html
+    assert "/workspace-demo?design=editorial" in html
+    assert "/workspace-demo?design=atlas" in html
+    assert "/workspace-demo?design=civic" in html
+    assert "Stejný produkt" in html
+    assert client.get("/ui-assets/design-lab.css").status_code == 200
+
+
 def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     html = client.get("/workspace-demo").text
     css = client.get("/ui-assets/workspace.css")
     javascript = client.get("/ui-assets/workspace.js")
+    designs = client.get("/ui-assets/workspace-designs.css")
 
     assert css.status_code == 200
     assert javascript.status_code == 200
+    assert designs.status_code == 200
     assert "/ui-assets/workspace.css" in html
     assert "/ui-assets/workspace.js" in html
+    assert "/ui-assets/workspace-designs.css" in html
+    assert 'data-design-link="editorial"' in html
+    assert 'data-design-link="atlas"' in html
+    assert 'data-design-link="civic"' in html
     assert 'fetch("/analysis/intake"' in javascript.text
     assert "localStorage" not in javascript.text
     assert "sessionStorage" not in javascript.text
@@ -209,6 +230,10 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert "displayLegalExcerpt" in javascript.text
     assert "excerptIsReadable" not in javascript.text
     assert "Odkaz na kurzovní lístek ČNB" not in javascript.text
+    assert 'document.body.dataset.design = design' in javascript.text
+    assert 'body[data-design="editorial"]' in designs.text
+    assert 'body[data-design="atlas"]' in designs.text
+    assert 'body[data-design="civic"]' in designs.text
     assert ".dashboard-summary" in css.text
     assert ".dashboard-metrics" in css.text
     assert ".fx-status.success" in css.text
