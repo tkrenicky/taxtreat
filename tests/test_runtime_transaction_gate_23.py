@@ -55,7 +55,7 @@ def test_recipient_country_satisfies_residence_identity():
     assert result.applies is True
     assert result.allowed is False
     assert result.missing_facts == [
-        "royalty_classification"
+        "royalty_category"
     ]
 
 
@@ -141,5 +141,26 @@ def test_scope_outside_final_23_is_unchanged():
     )
 
     assert result.applies is False
+    assert result.allowed is True
+    assert result.missing_facts == []
+
+
+def test_royalty_category_is_accepted_as_runtime_classification():
+    result = evaluate_runtime_gate(
+        source_country="CZ",
+        recipient_country="BY",
+        income_type="royalty",
+        transaction_date=date(
+            2026,
+            1,
+            15,
+        ),
+        facts={
+            **COMMON_FACTS,
+            "royalty_category": "copyright_literary_artistic_or_scientific",
+        },
+    )
+
+    assert result.applies is True
     assert result.allowed is True
     assert result.missing_facts == []

@@ -182,6 +182,7 @@ def analyze_transaction(
         result.status = DecisionStatus.REVIEW_REQUIRED
         result.requires_review = True
         result.rate = None
+        result.tax_treatment = None
         result.eligible = False
         result.selected_rule_id = None
         result.missing_facts = sorted(

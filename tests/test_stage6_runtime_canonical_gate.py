@@ -159,3 +159,46 @@ def test_legacy_gate_file_is_not_runtime_authority():
 
     assert "production_source_release_gate.json" not in source
     assert "get_source_release(" not in source
+
+
+@pytest.mark.parametrize(
+    ("blockers", "expected"),
+    [
+        (["manual_hold"], "manual_hold"),
+        ([], "unknown blockers"),
+    ],
+)
+def test_runtime_gate_rejects_blocked_rows(
+    tmp_path: Path,
+    blockers: list[str],
+    expected: str,
+):
+    raw = json.loads(CANONICAL_GATE.read_text(encoding="utf-8"))
+    row = next(
+        item
+        for item in raw["treaty_partners"]
+        if item["treaty_pair_id"] == "CZ-AT"
+    )
+    row["release_status"] = "blocked"
+    row["active_rule_allowed"] = False
+    row["production_ready"] = False
+    row["fail_closed"] = True
+    row["release_blockers"] = blockers
+    gate_path = tmp_path / (
+        "blocked-with-reason.json"
+        if blockers
+        else "blocked-without-reason.json"
+    )
+    gate_path.write_text(
+        json.dumps(raw),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(
+        CanonicalSourceNotReleasedError,
+        match=expected,
+    ):
+        require_canonical_released_source(
+            "CZ-AT",
+            gate_path=gate_path,
+        )

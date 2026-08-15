@@ -4,6 +4,7 @@ from taxtreat.engine.legal_rule_engine import (
     DecisionStatus,
     LegalCondition,
     LegalRule,
+    TaxTreatment,
     evaluate_legal_rules,
 )
 
@@ -72,7 +73,8 @@ def test_interest_rate_is_selected_from_applicable_rule():
 
     assert result.eligible is True
     assert result.requires_review is False
-    assert result.rate == 0.0
+    assert result.rate is None
+    assert result.tax_treatment == TaxTreatment.EXCLUSIVE_FOREIGN_TAXATION
     assert result.selected_rule_id == "CZ-CH-INT-BASE"
 
 
@@ -194,7 +196,11 @@ def test_royalty_category_selects_different_rates():
 
     assert industrial.rate == 5.0
     assert industrial.selected_rule_id == "CZ-AT-ROY-INDUSTRIAL"
-    assert copyright_result.rate == 0.0
+    assert copyright_result.rate is None
+    assert (
+        copyright_result.tax_treatment
+        == TaxTreatment.EXCLUSIVE_FOREIGN_TAXATION
+    )
     assert copyright_result.selected_rule_id == "CZ-AT-ROY-COPYRIGHT"
 
 
@@ -397,3 +403,113 @@ def test_protocol_override_must_reference_existing_base_rule():
     assert result.eligible is False
     assert result.requires_review is True
     assert result.rate is None
+
+
+def test_boolean_string_condition_matches_boolean_transaction_fact():
+    rules = [
+        rule(
+            "CZ-CH-ROY-BOOLEAN-NORMALIZATION",
+            income_type="royalty",
+            rate=5.0,
+            priority=10,
+            conditions=[
+                LegalCondition("beneficial_owner", "==", "true"),
+            ],
+        ),
+    ]
+
+    result = evaluate_legal_rules(
+        rules,
+        {
+            "income_type": "royalty",
+            "source_country": "CZ",
+            "recipient_country": "CH",
+            "beneficial_owner": True,
+        },
+        as_of=date(2026, 8, 15),
+    )
+
+    assert result.status == DecisionStatus.FINAL
+    assert result.requires_review is False
+    assert result.eligible is True
+    assert result.rate == 5.0
+
+
+def test_ui_royalty_category_matches_treaty_specific_taxonomy():
+    rules = [
+        rule(
+            "CZ-CH-ROY-COPYRIGHT-LONG",
+            income_type="royalty",
+            rate=0.0,
+            priority=10,
+            conditions=[
+                LegalCondition(
+                    "royalty_category",
+                    "==",
+                    "copyright_literary_artistic_scientific_including_films_and_broadcast_media",
+                ),
+                LegalCondition("beneficial_owner", "==", "true"),
+            ],
+        ),
+        rule(
+            "CZ-CH-ROY-INDUSTRIAL-LONG",
+            income_type="royalty",
+            rate=5.0,
+            priority=10,
+            conditions=[
+                LegalCondition(
+                    "royalty_category",
+                    "==",
+                    "patent_trademark_design_model_plan_secret_formula_process_software_equipment_or_knowhow",
+                ),
+                LegalCondition("beneficial_owner", "==", "true"),
+            ],
+        ),
+    ]
+
+    copyright_result = evaluate_legal_rules(
+        rules,
+        {
+            "income_type": "royalty",
+            "source_country": "CZ",
+            "recipient_country": "CH",
+            "royalty_category": "copyright_literary_artistic_or_scientific",
+            "beneficial_owner": True,
+        },
+        as_of=date(2026, 8, 15),
+    )
+
+    industrial_result = evaluate_legal_rules(
+        rules,
+        {
+            "income_type": "royalty",
+            "source_country": "CZ",
+            "recipient_country": "CH",
+            "royalty_category": "software_patent_trademark_design_model_plan_secret_formula_process_knowhow",
+            "beneficial_owner": True,
+        },
+        as_of=date(2026, 8, 15),
+    )
+
+    equipment_result = evaluate_legal_rules(
+        rules,
+        {
+            "income_type": "royalty",
+            "source_country": "CZ",
+            "recipient_country": "CH",
+            "royalty_category": "industrial_commercial_or_scientific_equipment",
+            "beneficial_owner": True,
+        },
+        as_of=date(2026, 8, 15),
+    )
+
+    assert copyright_result.status == DecisionStatus.FINAL
+    assert copyright_result.selected_rule_id == "CZ-CH-ROY-COPYRIGHT-LONG"
+
+    assert industrial_result.status == DecisionStatus.FINAL
+    assert industrial_result.rate == 5.0
+    assert industrial_result.selected_rule_id == "CZ-CH-ROY-INDUSTRIAL-LONG"
+
+    assert equipment_result.status == DecisionStatus.FINAL
+    assert equipment_result.rate == 5.0
+    assert equipment_result.selected_rule_id == "CZ-CH-ROY-INDUSTRIAL-LONG"

@@ -310,21 +310,17 @@ def evaluate_runtime_gate(
             )
 
     elif income_key in {"royalty", "royalties"}:
-        royalty_fields = [
-            "royalty_classification",
-        ]
+        royalty_category = facts.get("royalty_category")
 
-        royalty_missing = sorted(
-            field
-            for field in royalty_fields
-            if facts.get(field) is None
-        )
+        # Backward-compatible alias for older integrations.
+        if royalty_category is None:
+            royalty_category = facts.get("royalty_classification")
 
-        if royalty_missing:
+        if royalty_category is None:
             return RuntimeGateResult(
                 applies=True,
                 allowed=False,
-                missing_facts=royalty_missing,
+                missing_facts=["royalty_category"],
                 explanation=(
                     "Royalty treatment requires a transaction-specific "
                     "royalty classification."

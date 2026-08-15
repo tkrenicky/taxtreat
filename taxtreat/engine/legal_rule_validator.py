@@ -3,7 +3,12 @@ from __future__ import annotations
 import hashlib
 import re
 
-from taxtreat.engine.legal_rule_engine import LegalRule, _SUPPORTED_OPERATORS
+from taxtreat.engine.legal_rule_engine import (
+    LegalRule,
+    TaxTreatment,
+    _SUPPORTED_OPERATORS,
+    resolve_tax_treatment,
+)
 
 
 _ALLOWED_EFFECTS = {"rate", "exclude", "eligibility_gate"}
@@ -160,6 +165,18 @@ def validate_legal_rules(rules: list[LegalRule]) -> list[str]:
                 issues.append(f"{prefix} rate must be numeric.")
             elif not 0 <= float(rule.rate) <= 100:
                 issues.append(f"{prefix} rate must be between 0 and 100.")
+            treatment = resolve_tax_treatment(rule)
+            if (
+                treatment in {
+                    TaxTreatment.EXCLUSIVE_FOREIGN_TAXATION,
+                    TaxTreatment.DOMESTIC_EXEMPTION,
+                }
+                and rule.rate != 0
+            ):
+                issues.append(
+                    f"{prefix} non-taxing treatment must use structural "
+                    "rate 0 in the rule catalog."
+                )
 
         if rule.effect == "exclude" and rule.rate is not None:
             issues.append(f"{prefix} exclusion rule must not contain a rate.")

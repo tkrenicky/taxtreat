@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from datetime import date
+from calendar import monthrange
+from datetime import date, timedelta
 from decimal import Decimal, InvalidOperation, ROUND_DOWN, ROUND_HALF_UP
 from typing import Any, Mapping
 
@@ -8,6 +9,8 @@ from typing import Any, Mapping
 MONEY_QUANTUM = Decimal("0.01")
 WHOLE_CROWN = Decimal("1")
 CALCULATION_VERSION = 2
+COMPLIANCE_SCHEDULE_VERSION = 2
+NON_TAXING_INTEREST_NOTIFICATION_THRESHOLD_CZK = Decimal("300000")
 
 
 def _decimal_string(value: Decimal) -> str:
@@ -33,11 +36,172 @@ def _parse_date(value: Any) -> date | None:
     return date.fromisoformat(str(value))
 
 
+def _next_business_day(value: date) -> date:
+    """Move a Saturday or Sunday statutory deadline to Monday."""
+
+    while value.weekday() >= 5:
+        value += timedelta(days=1)
+    return value
+
+
+def _end_of_following_month(value: date) -> date:
+    year = value.year + (1 if value.month == 12 else 0)
+    month = 1 if value.month == 12 else value.month + 1
+    return _next_business_day(
+        date(year, month, monthrange(year, month)[1])
+    )
+
+
+def build_withholding_compliance_schedule(
+    transaction_date: date | str,
+    *,
+    income_type: str,
+    decision_status: str,
+    rate_percent: float | Decimal | None,
+    tax_treatment: str | None = None,
+    gross_amount_czk: float | Decimal | None = None,
+    prior_same_type_monthly_amount_czk: float | Decimal | None = None,
+) -> dict[str, Any]:
+    """Derive Czech WHT and non-resident notification milestones.
+
+    The supplied date represents the earlier of payment and recognition of
+    the payable. Dividend-specific timing under section 38d(2) can arise
+    earlier and therefore remains an explicit review note.
+    """
+
+    reference_date = _parse_date(transaction_date)
+    if reference_date is None:
+        raise ValueError("Transaction date is required for compliance dates.")
+
+    base = {
+        "schema_version": COMPLIANCE_SCHEDULE_VERSION,
+        "status": "PENDING_FINAL_TREATMENT",
+        "reference_date": reference_date.isoformat(),
+        "reference_date_basis": "earlier_of_payment_or_payable_recognition",
+        "tax_remittance_deadline": None,
+        "notification_deadline": None,
+        "notification_regime": None,
+        "notification_required": None,
+        "notification_legal_basis": (
+            "§ 38da zákona č. 586/1992 Sb., o daních z příjmů"
+        ),
+        "tax_remittance_legal_basis": (
+            "§ 38d zákona č. 586/1992 Sb., o daních z příjmů"
+        ),
+        "dividend_timing_review_required": income_type == "dividend",
+    }
+    if tax_treatment is not None:
+        base["tax_treatment"] = tax_treatment
+    if decision_status != "FINAL" or (
+        rate_percent is None and tax_treatment is None
+    ):
+        return base
+
+    non_taxing = tax_treatment in {
+        "exclusive_foreign_taxation",
+        "domestic_exemption",
+    }
+    if non_taxing:
+        rate = Decimal("0")
+    else:
+        try:
+            rate = Decimal(str(rate_percent))
+        except InvalidOperation as exc:
+            raise ValueError("Rate must be a decimal number.") from exc
+
+    if rate < 0 or rate > 100:
+        raise ValueError("Final withholding-tax rate must be between 0 and 100.")
+
+    if rate > 0:
+        deadline = _end_of_following_month(reference_date).isoformat()
+        return {
+            **base,
+            "status": "READY",
+            "tax_remittance_deadline": deadline,
+            "notification_deadline": deadline,
+            "notification_regime": "withheld_income_same_as_remittance",
+            "notification_required": True,
+        }
+
+    if income_type in {"dividend", "royalty"}:
+        notification_deadline = _next_business_day(
+            date(reference_date.year + 1, 1, 31)
+        ).isoformat()
+        return {
+            **base,
+            "status": "READY",
+            "notification_deadline": notification_deadline,
+            "notification_regime": "exempt_or_treaty_non_taxable_annual",
+            "notification_required": True,
+        }
+
+    if income_type == "interest":
+        threshold = NON_TAXING_INTEREST_NOTIFICATION_THRESHOLD_CZK
+        interest_base = {
+            **base,
+            "notification_threshold_czk": _decimal_string(threshold),
+        }
+        if (
+            gross_amount_czk is None
+            or prior_same_type_monthly_amount_czk is None
+        ):
+            return {
+                **interest_base,
+                "status": "REVIEW_NOTIFICATION_SCOPE",
+                "notification_regime": (
+                    "interest_monthly_aggregate_required"
+                ),
+            }
+        try:
+            gross = Decimal(str(gross_amount_czk))
+            prior = Decimal(str(prior_same_type_monthly_amount_czk))
+        except InvalidOperation as exc:
+            raise ValueError(
+                "Monthly interest amounts must be decimal numbers."
+            ) from exc
+        if gross <= 0 or prior < 0:
+            raise ValueError(
+                "Current interest must be positive and prior monthly "
+                "interest cannot be negative."
+            )
+        monthly_total = gross + prior
+        interest_base["monthly_same_type_income_czk"] = _decimal_string(
+            monthly_total
+        )
+        if monthly_total > threshold:
+            return {
+                **interest_base,
+                "status": "READY",
+                "notification_deadline": _next_business_day(
+                    date(reference_date.year + 1, 1, 31)
+                ).isoformat(),
+                "notification_regime": (
+                    "non_taxing_interest_above_monthly_threshold_annual"
+                ),
+                "notification_required": True,
+            }
+        return {
+            **interest_base,
+            "status": "READY",
+            "notification_regime": (
+                "non_taxing_interest_monthly_threshold_not_exceeded"
+            ),
+            "notification_required": False,
+        }
+
+    return {
+        **base,
+        "status": "REVIEW_NOTIFICATION_SCOPE",
+        "notification_regime": "income_classification_review_required",
+    }
+
+
 def build_withholding_tax_calculation(
     transaction_amount: Mapping[str, Any] | None,
     *,
     decision_status: str,
     rate_percent: float | Decimal | None,
+    tax_treatment: str | None = None,
 ) -> dict[str, Any] | None:
     """Calculate CZK WHT only from a final rate and complete FX evidence."""
 
@@ -64,14 +228,25 @@ def build_withholding_tax_calculation(
         "rounding_policy": "section_36_3_whole_crown_down",
         "exchange_rate": None,
     }
+    if tax_treatment is not None:
+        base["tax_treatment"] = tax_treatment
 
-    if decision_status != "FINAL" or rate_percent is None:
+    if decision_status != "FINAL" or (
+        rate_percent is None and tax_treatment is None
+    ):
         return _not_calculated(base, "final_rate_unavailable")
 
-    try:
-        rate = Decimal(str(rate_percent))
-    except InvalidOperation as exc:
-        raise ValueError("Rate must be a decimal number.") from exc
+    non_taxing = tax_treatment in {
+        "exclusive_foreign_taxation",
+        "domestic_exemption",
+    }
+    if non_taxing:
+        rate = Decimal("0")
+    else:
+        try:
+            rate = Decimal(str(rate_percent))
+        except InvalidOperation as exc:
+            raise ValueError("Rate must be a decimal number.") from exc
     if rate < 0 or rate > 100:
         raise ValueError("Final withholding-tax rate must be between 0 and 100.")
 
@@ -124,6 +299,10 @@ def build_withholding_tax_calculation(
             "accounting_date": accounting_date.isoformat(),
             "date_selection": "earlier_of_payment_or_accounting",
             "source_url": evidence.get("source_url"),
+            "entry_method": evidence.get("entry_method", "automatic"),
+            "cnb_reference_czk_per_unit": evidence.get(
+                "cnb_reference_czk_per_unit"
+            ),
         }
 
     tax = (gross_czk * rate / Decimal("100")).quantize(
@@ -139,7 +318,7 @@ def build_withholding_tax_calculation(
         "status": "CALCULATED",
         "reason": None,
         "gross_amount_czk": _decimal_string(gross_czk),
-        "rate_percent": _decimal_string(rate),
+        "rate_percent": None if non_taxing else _decimal_string(rate),
         "withholding_tax_czk": _decimal_string(tax),
         "net_amount_czk": _decimal_string(net_czk),
         "exchange_rate": exchange_output,

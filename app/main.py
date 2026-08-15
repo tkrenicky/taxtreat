@@ -5,9 +5,11 @@ import sqlite3
 from datetime import date
 from decimal import Decimal
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field, field_validator
 
 from taxtreat.pipeline.release import (
@@ -23,11 +25,18 @@ from taxtreat.engine.source_release_gate_v2 import (
 )
 from taxtreat.registry.legal_scope import load_partner_registry
 from taxtreat.services.calculation import (
+    build_withholding_compliance_schedule,
     build_withholding_tax_calculation,
 )
 from taxtreat.services.decision import (
     CanonicalAnalysisRequest,
     analyze_transaction,
+)
+from taxtreat.services.intake import build_intake_plan
+from taxtreat.services.legal_sources import build_legal_path
+from taxtreat.services.exchange_rates import (
+    CnbRateUnavailableError,
+    fetch_cnb_exchange_rate,
 )
 from taxtreat.services.reporting import (
     build_professional_report,
@@ -36,6 +45,7 @@ from taxtreat.services.reporting import (
 
 
 ROOT = Path(__file__).resolve().parent.parent
+WEB_ROOT = ROOT / "app" / "web"
 STAGE6_SOURCE_RELEASE = (
     ROOT
     / "data"
@@ -44,6 +54,11 @@ STAGE6_SOURCE_RELEASE = (
     / "stage6_source_release.json"
 )
 app = FastAPI(title="TaxTreat", version="0.2.0")
+app.mount(
+    "/ui-assets",
+    StaticFiles(directory=WEB_ROOT),
+    name="ui-assets",
+)
 
 
 class CnbExchangeRate(BaseModel):
@@ -56,6 +71,13 @@ class CnbExchangeRate(BaseModel):
     )
     effective_date: date
     source_url: str = Field(pattern=r"^https://")
+    entry_method: Literal["automatic", "manual_override"] = "automatic"
+    cnb_reference_czk_per_unit: Decimal | None = Field(
+        default=None,
+        gt=0,
+        max_digits=30,
+        decimal_places=12,
+    )
 
     @field_validator("source", "currency")
     @classmethod
@@ -77,6 +99,12 @@ class TransactionAmount(BaseModel):
     payment_date: date | None = None
     accounting_date: date | None = None
     exchange_rate: CnbExchangeRate | None = None
+    prior_same_type_monthly_amount_czk: Decimal | None = Field(
+        default=None,
+        ge=0,
+        max_digits=30,
+        decimal_places=2,
+    )
 
     @field_validator("currency")
     @classmethod
@@ -94,6 +122,20 @@ class AnalysisPayload(BaseModel):
     transaction_amount: TransactionAmount | None = None
 
 
+@app.get("/exchange-rates/cnb")
+def cnb_exchange_rate(currency: str, date: date):
+    try:
+        return fetch_cnb_exchange_rate(currency, date)
+    except CnbRateUnavailableError as exc:
+        raise HTTPException(
+            status_code=502,
+            detail={
+                "code": "CNB_RATE_UNAVAILABLE",
+                "message": str(exc),
+            },
+        ) from exc
+
+
 def get_db_connection() -> sqlite3.Connection:
     db_path = ROOT / "taxtreat.db"
     if not db_path.is_file():
@@ -107,6 +149,37 @@ def get_db_connection() -> sqlite3.Connection:
 @app.get("/")
 def read_root():
     return {"name": "TaxTreat", "version": app.version}
+
+
+@app.get("/ui", include_in_schema=False)
+def guided_intake_ui():
+    return FileResponse(WEB_ROOT / "index.html")
+
+
+@app.get("/workspace-demo", include_in_schema=False)
+def workspace_demo_ui():
+    return FileResponse(
+        WEB_ROOT / "workspace.html",
+        headers={"Cache-Control": "no-store"},
+    )
+
+
+@app.get("/design-lab/{design}", include_in_schema=False)
+def workspace_design_ui(design: str):
+    if design not in {"editorial", "atlas", "civic"}:
+        raise HTTPException(status_code=404, detail="Unknown design")
+    return FileResponse(
+        WEB_ROOT / "workspace.html",
+        headers={"Cache-Control": "no-store"},
+    )
+
+
+@app.get("/design-lab", include_in_schema=False)
+def design_lab_ui():
+    return FileResponse(
+        WEB_ROOT / "design-lab.html",
+        headers={"Cache-Control": "no-store"},
+    )
 
 
 @app.get("/health/live")
@@ -376,6 +449,16 @@ def analyze(payload: AnalysisPayload):
         "status": result.status.value,
         "rate": result.rate,
         "candidate_rate": result.candidate_rate,
+        "tax_treatment": (
+            result.tax_treatment.value
+            if getattr(result, "tax_treatment", None) is not None
+            else None
+        ),
+        "candidate_tax_treatment": (
+            result.candidate_tax_treatment.value
+            if getattr(result, "candidate_tax_treatment", None) is not None
+            else None
+        ),
         "eligible": result.eligible,
         "requires_review": result.requires_review,
         "selected_rule_id": result.selected_rule_id,
@@ -391,19 +474,66 @@ def analyze(payload: AnalysisPayload):
         "legal_dataset_release": result.dataset_release,
         "dataset_version": dataset_version,
     }
+    analysis["legal_path"] = build_legal_path(
+        result.citations,
+        source_country=source_country,
+        recipient_country=recipient_country,
+        selected_rule_id=(
+            result.selected_rule_id or result.candidate_rule_id
+        ),
+        income_type=payload.income_type,
+    )
     amount = (
         payload.transaction_amount.model_dump(mode="json")
         if payload.transaction_amount is not None
         else None
     )
-    analysis["withholding_tax_calculation"] = (
-        build_withholding_tax_calculation(
-            amount,
+    calculation = build_withholding_tax_calculation(
+        amount,
+        decision_status=result.status.value,
+        rate_percent=result.rate,
+        tax_treatment=(
+            result.tax_treatment.value
+            if getattr(result, "tax_treatment", None) is not None
+            else None
+        ),
+    )
+    analysis["withholding_tax_calculation"] = calculation
+    analysis["withholding_compliance_schedule"] = (
+        build_withholding_compliance_schedule(
+            payload.transaction_date,
+            income_type=payload.income_type,
             decision_status=result.status.value,
             rate_percent=result.rate,
+            tax_treatment=(
+                result.tax_treatment.value
+                if getattr(result, "tax_treatment", None) is not None
+                else None
+            ),
+            gross_amount_czk=(
+                calculation.get("gross_amount_czk")
+                if calculation is not None
+                and calculation.get("status") == "CALCULATED"
+                else None
+            ),
+            prior_same_type_monthly_amount_czk=(
+                amount.get("prior_same_type_monthly_amount_czk")
+                if amount is not None
+                else None
+            ),
         )
     )
     return analysis
+
+
+@app.post("/analysis/intake")
+def analysis_intake(payload: AnalysisPayload):
+    analysis = analyze(payload)
+    request = payload.model_dump(mode="json")
+    return {
+        "analysis": analysis,
+        "intake": build_intake_plan(request, analysis),
+    }
 
 
 @app.post("/analysis/report")
@@ -439,4 +569,3 @@ def list_treaties():
         ) from exc
     finally:
         conn.close()
-

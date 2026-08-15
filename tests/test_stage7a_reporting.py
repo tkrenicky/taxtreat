@@ -62,7 +62,7 @@ def test_professional_report_preserves_review_required_semantics():
     payload = response.json()
     report = payload["report"]
 
-    assert report["schema_version"] == 2
+    assert report["schema_version"] == 3
     assert report["result"]["status"] == "REVIEW_REQUIRED"
     assert report["result"]["rate"] is None
     assert report["result"]["requires_review"] is True
@@ -74,7 +74,7 @@ def test_professional_report_preserves_review_required_semantics():
         "stage6-source-release-2026-08-12.1"
     )
     assert report["disclaimer"] == DISCLAIMER
-    assert "not tax advice" in report["disclaimer"]
+    assert "Není právním nebo daňovým poradenstvím" in report["disclaimer"]
     assert "<!doctype html>" in payload["html"]
     assert report["report_id"] in payload["html"]
 
@@ -130,8 +130,8 @@ def test_report_risk_labels_cover_final_and_out_of_scope():
         },
     )
 
-    assert "Automated result available" in final["risk_assessment"]
-    assert "outside the supported scope" in (
+    assert "uvolněného katalogu" in final["risk_assessment"]
+    assert "mimo aktuálně podporovaný rozsah" in (
         out_of_scope["risk_assessment"]
     )
 
@@ -210,3 +210,87 @@ def test_runtime_readiness_rejects_incomplete_gate(monkeypatch):
         assert "incomplete" in str(exc)
     else:
         raise AssertionError("Incomplete gate must fail closed.")
+
+
+def test_calculated_czk_report_omits_exchange_rate_details():
+    report = {
+        "report_id": "report-czk",
+        "generated_at": "2026-08-12T00:00:00Z",
+        "legal_data_cutoff": "2026-08-12",
+        "scope": {
+            "source_country": "CZ",
+            "recipient_country": "AT",
+            "income_type": "dividend",
+            "transaction_date": "2026-08-12",
+        },
+        "result": {
+            "status": "FINAL",
+            "rate": 15,
+            "candidate_rate": 15,
+            "withholding_tax_calculation": {
+                "status": "CALCULATED",
+                "gross_amount": "1000",
+                "transaction_currency": "CZK",
+                "gross_amount_czk": "1000.00",
+                "withholding_tax_czk": "150",
+                "net_amount_czk": "850.00",
+                "rounding_policy": "down_to_whole_czk",
+                "exchange_rate": None,
+            },
+        },
+        "risk_assessment": "Final released rule.",
+        "missing_facts": [],
+        "official_sources": [],
+        "legal_dataset_release": "rules",
+        "source_release": "sources",
+        "disclaimer": DISCLAIMER,
+    }
+
+    html = render_report_html(report)
+
+    assert "Srážková daň</span><strong>150 Kč" in html
+    assert "Přepočet ČNB" not in html
+
+
+def test_report_distinguishes_foreign_taxation_from_zero_rate():
+    report = build_professional_report(
+        REQUEST,
+        {
+            "status": "FINAL",
+            "rate": None,
+            "candidate_rate": 0.0,
+            "tax_treatment": "exclusive_foreign_taxation",
+            "candidate_tax_treatment": "exclusive_foreign_taxation",
+            "citations": [
+                {
+                    "legal_layer": "treaty",
+                    "article": "10",
+                    "source_url": "https://example.test/treaty",
+                    "excerpt": "Příjem může být zdaněn pouze ve státě rezidence.",
+                }
+            ],
+            "withholding_tax_calculation": {
+                "status": "CALCULATED",
+                "gross_amount": "1000",
+                "transaction_currency": "CZK",
+                "gross_amount_czk": "1000",
+                "withholding_tax_czk": "0",
+                "net_amount_czk": "1000.00",
+                "tax_treatment": "exclusive_foreign_taxation",
+                "exchange_rate": None,
+            },
+            "dataset_version": "release",
+        },
+    )
+
+    html = render_report_html(report)
+
+    assert report["result"]["rate"] is None
+    assert report["result"]["tax_treatment"] == (
+        "exclusive_foreign_taxation"
+    )
+    assert "Příjem se v České republice nezdaňuje" in html
+    assert "Česká daň k odvodu</span><strong>0 Kč" in html
+    assert "Použitá sazba</span><strong>Neuplatňuje se" in html
+    assert "Sazba české srážkové daně: 0" not in html
+    assert "ZERO-treaty" not in html

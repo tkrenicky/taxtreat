@@ -1,0 +1,37 @@
+/* Rounded identities: Halo, Moss and Signal. */
+body { background: #f5f5f4; }
+header { margin: 14px 18px 0; border: 1px solid #e4e4ea; border-radius: 24px; box-shadow: 0 16px 44px #2d354f0d; }
+.wordmark span { border-radius: 13px; background: #5b5ce2; }
+.concepts { gap: 24px; }
+.concept { border-radius: 28px; box-shadow: 0 18px 50px #2730470d; }
+.preview { border-radius: 20px; }
+.rail i, .paper em { border-radius: 99px; }
+.concept > a { margin-top: auto; padding: 15px 18px; border: 0; border-radius: 15px; color: #fff; background: #5b5ce2; }
+
+.editorial { background: #fff; }
+.editorial .preview { color: #333457; background: linear-gradient(145deg, #e8ebff, #f6e7ff); }
+.editorial .rail { background: #303253; }
+.editorial .paper strong { color: #6d5de3; font-family: Arial, sans-serif; }
+.editorial > p { color: #5b5ce2; }
+
+.atlas { color: #18243b; background: #fbfcff; border-color: #d8e0ec; border-radius: 12px; }
+.atlas .preview { color: #243453; background: linear-gradient(#dfe6f0 1px,transparent 1px),linear-gradient(90deg,#dfe6f0 1px,transparent 1px),#f4f7fb; background-size: 22px 22px; border-radius: 8px; }
+.atlas .rail { color: #fff; background: #2f65d9; border-radius: 4px; }
+.atlas .paper { border-top: 3px solid #2f65d9; background:#fff; }
+.atlas > p { color: #2f65d9; }
+.atlas > span { color: #6d7b91; }
+.atlas a { color: #fff; border: 0; border-radius: 7px; background: #2f65d9; }
+.atlas .paper strong { color: #2f65d9; font: 800 26px Arial,sans-serif; }
+
+.civic { background: #fff; border: 2px solid #d7d4cf; box-shadow: 0 12px 0 #d9d6d0; }
+.civic .preview { color: #2d2d2d; background: #f0eeea; }
+.civic .rail { background: #242424; }
+.civic .paper { border-top: 0; }
+.civic .paper strong { color: #dc5e4b; }
+.civic > p { color: #dc5e4b; }
+.civic a { background: #dc5e4b; }
+
+@media (max-width: 960px) {
+  header { margin-inline: 10px; }
+  .concept { min-height: 530px; }
+}

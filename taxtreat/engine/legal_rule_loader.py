@@ -4,7 +4,11 @@ import json
 from datetime import date
 from pathlib import Path
 
-from taxtreat.engine.legal_rule_engine import LegalCondition, LegalRule
+from taxtreat.engine.legal_rule_engine import (
+    LegalCondition,
+    LegalRule,
+    TaxTreatment,
+)
 from taxtreat.engine.legal_rule_validator import validate_legal_rules
 
 
@@ -57,6 +61,11 @@ def load_legal_rules(path: str | Path) -> list[LegalRule]:
                 priority=raw_rule.get("priority", 100),
                 conditions=conditions,
                 effect=raw_rule.get("effect", "rate"),
+                tax_treatment=(
+                    TaxTreatment(raw_rule["tax_treatment"])
+                    if raw_rule.get("tax_treatment")
+                    else None
+                ),
                 effective_from=_parse_date(raw_rule.get("effective_from")),
                 effective_to=_parse_date(raw_rule.get("effective_to")),
                 overrides_rule_id=raw_rule.get("overrides_rule_id"),

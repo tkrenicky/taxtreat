@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import date
 from decimal import Decimal
 
 import pytest
@@ -12,6 +13,8 @@ from taxtreat.engine.legal_rule_engine import (
     LegalDecisionResult,
 )
 from taxtreat.services.calculation import (
+    _parse_date,
+    build_withholding_compliance_schedule,
     build_withholding_tax_calculation,
 )
 
@@ -87,7 +90,33 @@ def test_foreign_amount_uses_cnb_rate_from_earlier_event_date():
         "accounting_date": "2026-08-10",
         "date_selection": "earlier_of_payment_or_accounting",
         "source_url": "https://www.cnb.cz/example",
+        "entry_method": "automatic",
+        "cnb_reference_czk_per_unit": None,
     }
+
+
+def test_foreign_amount_records_manual_override_against_cnb_reference():
+    calculation = build_withholding_tax_calculation(
+        {
+            **EUR_AMOUNT,
+            "exchange_rate": {
+                **EUR_AMOUNT["exchange_rate"],
+                "czk_per_unit": "25.10",
+                "entry_method": "manual_override",
+                "cnb_reference_czk_per_unit": "24.85",
+            },
+        },
+        decision_status="FINAL",
+        rate_percent=Decimal("10"),
+    )
+
+    assert calculation["gross_amount_czk"] == "25100.00"
+    assert calculation["exchange_rate"]["entry_method"] == (
+        "manual_override"
+    )
+    assert calculation["exchange_rate"][
+        "cnb_reference_czk_per_unit"
+    ] == "24.85"
 
 
 def test_non_final_result_never_calculates_candidate_tax():
@@ -247,7 +276,7 @@ def test_api_calculates_foreign_amount_only_from_mocked_final_result(
     assert calculation["withholding_tax_czk"] == "2485"
     assert calculation["net_amount_czk"] == "22365.00"
     assert calculation["exchange_rate"]["effective_date"] == "2026-08-10"
-    assert "Withholding tax:" in payload["html"]
+    assert "Srážková daň" in payload["html"]
     assert "2485" in payload["html"]
     assert "1 EUR = 24.85 CZK" in payload["html"]
 
@@ -289,3 +318,164 @@ def test_api_rejects_invalid_transaction_amount(transaction_amount):
     )
 
     assert response.status_code == 422
+
+
+def test_calculation_accepts_an_already_parsed_event_date():
+    event_date = date(2026, 8, 12)
+
+    assert _parse_date(event_date) is event_date
+
+
+def test_tax_and_notification_are_due_at_end_of_following_month():
+    schedule = build_withholding_compliance_schedule(
+        "2026-08-12",
+        income_type="dividend",
+        decision_status="FINAL",
+        rate_percent=10,
+    )
+
+    assert schedule == {
+        "schema_version": 2,
+        "status": "READY",
+        "reference_date": "2026-08-12",
+        "reference_date_basis": "earlier_of_payment_or_payable_recognition",
+        "tax_remittance_deadline": "2026-09-30",
+        "notification_deadline": "2026-09-30",
+        "notification_regime": "withheld_income_same_as_remittance",
+        "notification_required": True,
+        "notification_legal_basis": (
+            "§ 38da zákona č. 586/1992 Sb., o daních z příjmů"
+        ),
+        "tax_remittance_legal_basis": (
+            "§ 38d zákona č. 586/1992 Sb., o daních z příjmů"
+        ),
+        "dividend_timing_review_required": True,
+    }
+
+
+def test_zero_rate_dividend_has_annual_notification_deadline():
+    schedule = build_withholding_compliance_schedule(
+        date(2026, 8, 12),
+        income_type="dividend",
+        decision_status="FINAL",
+        rate_percent=0,
+    )
+
+    assert schedule["tax_remittance_deadline"] is None
+    assert schedule["notification_deadline"] == "2027-02-01"
+    assert schedule["notification_regime"] == (
+        "exempt_or_treaty_non_taxable_annual"
+    )
+
+
+def test_non_final_result_keeps_compliance_dates_pending():
+    schedule = build_withholding_compliance_schedule(
+        "2026-08-12",
+        income_type="dividend",
+        decision_status="REVIEW_REQUIRED",
+        rate_percent=None,
+    )
+
+    assert schedule["status"] == "PENDING_FINAL_TREATMENT"
+    assert schedule["tax_remittance_deadline"] is None
+    assert schedule["notification_deadline"] is None
+
+
+def test_analysis_api_exposes_compliance_schedule():
+    response = client.post("/analysis", json=BASE_REQUEST)
+
+    assert response.status_code == 200
+    schedule = response.json()["withholding_compliance_schedule"]
+    assert schedule["reference_date"] == "2026-08-12"
+    assert schedule["status"] == "PENDING_FINAL_TREATMENT"
+
+
+@pytest.mark.parametrize("rate", ["invalid", -1, 101])
+def test_compliance_schedule_rejects_invalid_final_rate(rate):
+    with pytest.raises(ValueError):
+        build_withholding_compliance_schedule(
+            "2026-08-12",
+            income_type="dividend",
+            decision_status="FINAL",
+            rate_percent=rate,
+        )
+
+
+def test_compliance_schedule_requires_a_reference_date():
+    with pytest.raises(ValueError):
+        build_withholding_compliance_schedule(
+            None,
+            income_type="dividend",
+            decision_status="FINAL",
+            rate_percent=10,
+        )
+
+
+def test_zero_rate_interest_keeps_notification_scope_open():
+    schedule = build_withholding_compliance_schedule(
+        "2026-08-12",
+        income_type="interest",
+        decision_status="FINAL",
+        rate_percent=0,
+    )
+
+    assert schedule["status"] == "REVIEW_NOTIFICATION_SCOPE"
+    assert schedule["notification_deadline"] is None
+    assert schedule["notification_regime"] == (
+        "interest_monthly_aggregate_required"
+    )
+
+
+@pytest.mark.parametrize(
+    ("gross", "prior", "required", "regime"),
+    [
+        (
+            "300000",
+            "0",
+            False,
+            "non_taxing_interest_monthly_threshold_not_exceeded",
+        ),
+        (
+            "250000",
+            "50000.01",
+            True,
+            "non_taxing_interest_above_monthly_threshold_annual",
+        ),
+    ],
+)
+def test_non_taxing_interest_uses_monthly_aggregate_threshold(
+    gross,
+    prior,
+    required,
+    regime,
+):
+    schedule = build_withholding_compliance_schedule(
+        "2026-08-12",
+        income_type="interest",
+        decision_status="FINAL",
+        rate_percent=None,
+        tax_treatment="exclusive_foreign_taxation",
+        gross_amount_czk=gross,
+        prior_same_type_monthly_amount_czk=prior,
+    )
+
+    assert schedule["status"] == "READY"
+    assert schedule["notification_required"] is required
+    assert schedule["notification_regime"] == regime
+    assert schedule["notification_threshold_czk"] == "300000"
+    assert schedule["notification_deadline"] == (
+        "2027-02-01" if required else None
+    )
+
+
+@pytest.mark.parametrize(("gross", "prior"), [("0", "0"), ("1", "-1")])
+def test_interest_notification_rejects_invalid_monthly_amounts(gross, prior):
+    with pytest.raises(ValueError):
+        build_withholding_compliance_schedule(
+            "2026-08-12",
+            income_type="interest",
+            decision_status="FINAL",
+            rate_percent=0,
+            gross_amount_czk=gross,
+            prior_same_type_monthly_amount_czk=prior,
+        )

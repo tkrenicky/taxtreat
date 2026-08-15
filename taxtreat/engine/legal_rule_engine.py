@@ -13,6 +13,12 @@ class DecisionStatus(str, Enum):
     OUT_OF_SCOPE = "OUT_OF_SCOPE"
 
 
+class TaxTreatment(str, Enum):
+    TAXABLE_AT_RATE = "taxable_at_rate"
+    EXCLUSIVE_FOREIGN_TAXATION = "exclusive_foreign_taxation"
+    DOMESTIC_EXEMPTION = "domestic_exemption"
+
+
 @dataclass(frozen=True)
 class LegalCondition:
     fact: str
@@ -35,6 +41,7 @@ class LegalRule:
     priority: int = 100
     conditions: list[LegalCondition] = field(default_factory=list)
     effect: str = "rate"
+    tax_treatment: TaxTreatment | None = None
     effective_from: date | None = None
     effective_to: date | None = None
     overrides_rule_id: str | None = None
@@ -63,6 +70,8 @@ class LegalDecisionResult:
     selected_rule_id: str | None = None
     candidate_rate: float | None = None
     candidate_rule_id: str | None = None
+    tax_treatment: TaxTreatment | None = None
+    candidate_tax_treatment: TaxTreatment | None = None
     applied_rule_ids: list[str] = field(default_factory=list)
     overridden_rule_id: str | None = None
     eligible: bool = False
@@ -71,9 +80,16 @@ class LegalDecisionResult:
     missing_legal_layers: list[str] = field(default_factory=list)
     failed_conditions: list[str] = field(default_factory=list)
     explanation: list[str] = field(default_factory=list)
-    citations: list[dict[str, str | None]] = field(default_factory=list)
+    citations: list[dict[str, Any]] = field(default_factory=list)
     layer_results: list[dict[str, Any]] = field(default_factory=list)
     dataset_release: str | None = None
+
+
+_RULE_CONTROL_FACTS = {
+    "fallback_case",
+    "source_state_taxation",
+    "general_article_11_2_rate",
+}
 
 
 _SUPPORTED_OPERATORS = {
@@ -86,6 +102,170 @@ _SUPPORTED_OPERATORS = {
     "in": lambda left, right: left in right,
     "not in": lambda left, right: left not in right,
 }
+
+
+def _boolean_like(value: Any) -> bool | None:
+    """Normalize boolean values preserved in legacy legal-rule projections."""
+
+    if isinstance(value, bool):
+        return value
+
+    if isinstance(value, str):
+        normalized = value.strip().lower()
+        if normalized in {"true", "yes", "1"}:
+            return True
+        if normalized in {"false", "no", "0"}:
+            return False
+
+    return None
+
+
+_UI_ROYALTY_CATEGORY_GROUPS = {
+    "copyright_literary_artistic_or_scientific": {"copyright"},
+    "software_patent_trademark_design_model_plan_secret_formula_process_knowhow": {
+        "industrial_ip"
+    },
+    # Backward compatibility with the original Stage 7B frontend value.
+    "software_patent_trademark_design_model_plan_secret_formula_process_knowhow_or_industrial_commercial_scientific_equipment": {
+        "industrial_ip"
+    },
+    "industrial_commercial_or_scientific_equipment": {"equipment"},
+    "other": {"other"},
+}
+
+
+def _royalty_category_groups(value: Any) -> set[str]:
+    """Map UI royalty classes and treaty-specific taxonomy to common groups."""
+
+    if value is None:
+        return set()
+
+    normalized = str(value).strip().lower()
+
+    if normalized in _UI_ROYALTY_CATEGORY_GROUPS:
+        return set(_UI_ROYALTY_CATEGORY_GROUPS[normalized])
+
+    groups: set[str] = set()
+
+    if normalized == "all_other_article_12_royalties":
+        groups.add("other")
+
+    copyright_tokens = (
+        "copyright",
+        "literary",
+        "artistic",
+        "dramatic",
+        "musical",
+        "cultural",
+    )
+    if any(token in normalized for token in copyright_tokens):
+        groups.add("copyright")
+
+    industrial_ip_tokens = (
+        "patent",
+        "trademark",
+        "design",
+        "model",
+        "secret_formula",
+        "process",
+        "knowhow",
+        "know-how",
+        "software",
+        "computer_program",
+        "computer_software",
+        "similar_right",
+        "technical_assistance",
+        "technical_or_economic_studies",
+    )
+    if any(token in normalized for token in industrial_ip_tokens):
+        groups.add("industrial_ip")
+
+    equipment_tokens = (
+        "equipment",
+        "financial_lease",
+        "operating_lease",
+    )
+    if any(token in normalized for token in equipment_tokens):
+        groups.add("equipment")
+
+    return groups
+
+
+def _numeric_like(value: Any) -> float | None:
+    """Normalize numeric legal thresholds including legacy string percentages."""
+
+    if isinstance(value, bool):
+        return None
+
+    if isinstance(value, (int, float)):
+        return float(value)
+
+    if isinstance(value, str):
+        normalized = value.strip()
+
+        if normalized.endswith("%"):
+            normalized = normalized[:-1].strip()
+
+        try:
+            return float(normalized)
+        except ValueError:
+            return None
+
+    return None
+
+
+def _royalty_categories_match(left: Any, right: Any) -> bool:
+    """Match UI royalty category to the taxonomy used by the treaty rule.
+
+    ``right`` is the catalog / Stage 6 condition value.  Some treaty
+    packages use ``other`` (or an equivalent all-other label) as the
+    residual Article 12 bucket covering copyright, industrial-property
+    rights and other royalties, while equipment remains a separate
+    category.
+    """
+
+    if left == right:
+        return True
+
+    left_groups = _royalty_category_groups(left)
+
+    catalog_value = str(right or "").strip().lower()
+
+    if (
+        catalog_value == "other"
+        or catalog_value.startswith("all_other_")
+    ):
+        return bool(
+            left_groups.intersection(
+                {
+                    "copyright",
+                    "industrial_ip",
+                    "other",
+                }
+            )
+        )
+
+    right_groups = _royalty_category_groups(right)
+
+    return bool(
+        left_groups
+        and right_groups
+        and left_groups.intersection(right_groups)
+    )
+
+
+def resolve_tax_treatment(rule: LegalRule) -> TaxTreatment | None:
+    """Return the legal outcome without presenting non-taxation as a 0% rate."""
+
+    if rule.effect != "rate":
+        return None
+    if rule.tax_treatment is not None:
+        return TaxTreatment(rule.tax_treatment)
+    if rule.rate == 0 and rule.legal_layer == "eu_relief":
+        return TaxTreatment.DOMESTIC_EXEMPTION
+    if rule.rate == 0 and rule.legal_layer in {"treaty", "protocol", "mli"}:
+        return TaxTreatment.EXCLUSIVE_FOREIGN_TAXATION
+    return TaxTreatment.TAXABLE_AT_RATE
 
 
 def _is_effective(rule: LegalRule, as_of: date) -> bool:
@@ -116,6 +296,12 @@ def _evaluate_condition(
     facts: dict[str, Any],
     legal_facts: dict[str, Any],
 ) -> tuple[bool | None, str | None]:
+    if condition.fact in _RULE_CONTROL_FACTS:
+        # These values describe the legal-rule branch itself, not a
+        # transaction fact. Rule priority still prevents a fallback/general
+        # rule from displacing a matching higher-priority special rule.
+        return True, None
+
     fact_store = legal_facts if condition.fact_source == "legal" else facts
     if condition.fact not in fact_store or fact_store[condition.fact] is None:
         prefix = "legal_fact:" if condition.fact_source == "legal" else ""
@@ -127,8 +313,51 @@ def _evaluate_condition(
             f"Unsupported legal-rule operator: {condition.operator!r}"
         )
 
+    fact_value = fact_store[condition.fact]
+    condition_value = condition.value
+
+    if (
+        condition.fact == "royalty_category"
+        and condition.operator in {"==", "!="}
+    ):
+        matched = _royalty_categories_match(
+            fact_value,
+            condition_value,
+        )
+        if condition.operator == "!=":
+            matched = not matched
+        return matched, None
+
+    fact_boolean = _boolean_like(fact_value)
+    condition_boolean = _boolean_like(condition_value)
+
+    if (
+        fact_boolean is not None
+        and condition_boolean is not None
+        and condition.operator in {"==", "!="}
+    ):
+        matched = fact_boolean == condition_boolean
+        if condition.operator == "!=":
+            matched = not matched
+        return matched, None
+
+    if condition.operator in {">", ">=", "<", "<="}:
+        fact_numeric = _numeric_like(fact_value)
+        condition_numeric = _numeric_like(condition_value)
+
+        if (
+            fact_numeric is not None
+            and condition_numeric is not None
+        ):
+            return bool(
+                operator(
+                    fact_numeric,
+                    condition_numeric,
+                )
+            ), None
+
     try:
-        return bool(operator(fact_store[condition.fact], condition.value)), None
+        return bool(operator(fact_value, condition_value)), None
     except TypeError:
         return False, None
 
@@ -297,7 +526,12 @@ def evaluate_legal_rules(
             if rule.priority == selected.priority
         ]
         distinct_outcomes = {
-            (rule.effect, rule.rate, rule.overrides_rule_id)
+            (
+                rule.effect,
+                rule.rate,
+                resolve_tax_treatment(rule),
+                rule.overrides_rule_id,
+            )
             for rule in same_priority
         }
 
@@ -335,13 +569,16 @@ def evaluate_legal_rules(
             )
             return result
 
-        result.rate = selected.rate
+        result.tax_treatment = resolve_tax_treatment(selected)
+        result.candidate_tax_treatment = result.tax_treatment
+        if result.tax_treatment == TaxTreatment.TAXABLE_AT_RATE:
+            result.rate = selected.rate
         result.eligible = True
         result.requires_review = False
         result.status = DecisionStatus.FINAL
         result.explanation.append(
-            f"Selected legal rule {selected.rule_id} with rate "
-            f"{selected.rate}."
+            f"Selected legal rule {selected.rule_id} with treatment "
+            f"{result.tax_treatment.value}."
         )
         return result
 
