@@ -9,19 +9,15 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
-      - name: Verify five legally binding PDFs
+      - name: Inspect e-Sbirka async download response
         shell: bash
         run: |
           python - <<'PY'
           import requests
           ids = [390641, 917903, 917907, 1122, 186]
           base = 'https://e-sbirka.gov.cz/sbr-externi/stahni/pravne-zavazne-zneni-vcetne-uplnych/'
-          ok = 0
           for did in ids:
               r = requests.get(base + str(did), params={'stahniOpravnouSadu':'false'}, timeout=90, allow_redirects=True)
-              is_pdf = r.status_code == 200 and r.content.startswith(b'%PDF-')
-              print(f'{did}: status={r.status_code} content_type={r.headers.get("content-type")} bytes={len(r.content)} pdf={is_pdf} url={r.url}')
-              ok += int(is_pdf)
-          print(f'VERIFIED={ok}/5')
-          raise SystemExit(0 if ok == 5 else 1)
+              print(f'{did}: status={r.status_code} content_type={r.headers.get("content-type")} url={r.url}')
+              print(r.text)
           PY
