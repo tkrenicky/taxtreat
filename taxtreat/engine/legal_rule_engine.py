@@ -188,9 +188,6 @@ def _royalty_category_groups(value: Any) -> set[str]:
     if any(token in normalized for token in equipment_tokens):
         groups.add("equipment")
 
-    if normalized == "other":
-        groups.add("other")
-
     return groups
 
 
