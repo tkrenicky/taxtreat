@@ -165,6 +165,11 @@ def test_validator_enforces_complete_schema_and_approval():
         legal_rule("NEG", priority=-1),
         legal_rule("NONNUMERIC", rate="five"),
         legal_rule("RANGE", rate=101),
+        legal_rule(
+            "NON-TAXING-WITH-RATE",
+            rate=5,
+            tax_treatment="domestic_exemption",
+        ),
         legal_rule("EXCLUDE", effect="exclude", rate=1),
         legal_rule(
             "GATE-RATE",
@@ -189,6 +194,7 @@ def test_validator_enforces_complete_schema_and_approval():
     assert "priority cannot be negative" in extra_issues
     assert "rate must be numeric" in extra_issues
     assert "rate must be between" in extra_issues
+    assert "non-taxing treatment must use structural rate 0" in extra_issues
     assert "exclusion rule must not contain a rate" in extra_issues
     assert "eligibility gate must not contain a rate" in extra_issues
     assert "eligibility gate must identify affected layers" in extra_issues
