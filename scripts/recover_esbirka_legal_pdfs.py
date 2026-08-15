@@ -5,12 +5,14 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import time
 from pathlib import Path
 from typing import Any
 
 import requests
 
 BASE = "https://e-sbirka.gov.cz/sbr-externi"
+FILE_BASE = "https://e-sbirka.gov.cz/souborove-sluzby"
 
 
 def legacy_verified_url(document_id: int) -> str:
@@ -21,11 +23,64 @@ def legally_binding_complete_url(document_id: int) -> str:
     return f"{BASE}/stahni/pravne-zavazne-zneni-vcetne-uplnych/{document_id}"
 
 
+def async_status_url(request_id: str) -> str:
+    return f"{FILE_BASE}/verejne-pozadavky-dokumenty/pozadavky/{request_id}"
+
+
+def async_file_url(file_id: str) -> str:
+    return f"{FILE_BASE}/soubory/{file_id}"
+
+
 def is_pdf_response(response: requests.Response) -> bool:
     return response.status_code == 200 and response.content.startswith(b"%PDF-")
 
 
-def download_pdf(session: requests.Session, document_id: int, timeout: int = 90) -> tuple[requests.Response, str]:
+def _resolve_async_download(
+    session: requests.Session,
+    response: requests.Response,
+    timeout: int,
+    poll_interval: float = 0.5,
+) -> requests.Response:
+    """Resolve the asynchronous e-Sbírka download response to the final PDF response."""
+    try:
+        payload = response.json()
+    except (ValueError, json.JSONDecodeError):
+        return response
+
+    status = str(payload.get("stavPozadavku") or "").upper()
+    request_id = payload.get("pozadavekId")
+    file_id = payload.get("id")
+
+    if status == "OK" and file_id:
+        return session.get(async_file_url(str(file_id)), timeout=timeout, allow_redirects=True)
+
+    if status != "PROBIHA" or not request_id:
+        return response
+
+    deadline = time.monotonic() + timeout
+    current = payload
+    while time.monotonic() < deadline:
+        time.sleep(poll_interval)
+        status_response = session.get(
+            async_status_url(str(request_id)), timeout=timeout, allow_redirects=True
+        )
+        try:
+            current = status_response.json()
+        except (ValueError, json.JSONDecodeError):
+            return status_response
+        status = str(current.get("stav") or current.get("stavPozadavku") or "").upper()
+        if status == "CHYBA":
+            return status_response
+        file_id = current.get("id")
+        if status == "OK" and file_id:
+            return session.get(async_file_url(str(file_id)), timeout=timeout, allow_redirects=True)
+
+    return response
+
+
+def download_pdf(
+    session: requests.Session, document_id: int, timeout: int = 90
+) -> tuple[requests.Response, str]:
     attempts = [
         (legally_binding_complete_url(document_id), "pravne_zavazne_zneni_vcetne_uplnych"),
         (legacy_verified_url(document_id), "overena_zneni"),
@@ -38,6 +93,8 @@ def download_pdf(session: requests.Session, document_id: int, timeout: int = 90)
             timeout=timeout,
             allow_redirects=True,
         )
+        if mode == "pravne_zavazne_zneni_vcetne_uplnych" and not is_pdf_response(response):
+            response = _resolve_async_download(session, response, timeout)
         last = response
         if is_pdf_response(response):
             return response, mode
