@@ -8,6 +8,7 @@ from taxtreat.db.repository import (
     TreatyRepository,
     connect_db,
     get_article_paragraph_texts,
+    get_repo_root,
 )
 
 
@@ -193,3 +194,51 @@ def test_repository_never_mixes_same_numbered_articles_between_treaties(tmp_path
     ) == "First dividend paragraph\nSecond dividend paragraph"
     assert repository.get_full_article_text(article_id=3) == "OTHER TREATY"
     repository.close()
+
+
+def test_repository_lookup_boundaries_and_id_access(tmp_path):
+    db_path = tmp_path / "lookup-boundaries.db"
+    create_test_database(db_path)
+    repository = TreatyRepository(db_path)
+
+    assert get_repo_root().name == "taxtreat"
+    assert repository.get_article_by_id(1) == {
+        "id": 1,
+        "treaty_version_id": 100,
+        "article_number": 10,
+        "title": "Dividends",
+    }
+    assert repository.get_article_by_id(999) is None
+    assert repository.get_article_paragraphs(article_id=999) == []
+    assert repository.get_article_paragraphs(999) == []
+    with pytest.raises(ValueError, match="article_id or article_number is required"):
+        repository.get_article_paragraphs()
+
+    repository.close()
+
+
+def test_paragraph_text_lookup_can_scope_ambiguous_article_numbers(tmp_path):
+    db_path = tmp_path / "paragraph-scope.db"
+    create_test_database(db_path)
+    conn = sqlite3.connect(db_path)
+    conn.execute(
+        "INSERT INTO articles (id, treaty_version_id, article_number, title) "
+        "VALUES (3, 200, 10, 'Dividends other treaty')"
+    )
+    conn.execute(
+        "INSERT INTO paragraphs (id, article_id, paragraph_number, text) "
+        "VALUES (4, 3, '1', 'OTHER TREATY')"
+    )
+    conn.commit()
+
+    with pytest.raises(AmbiguousArticleError):
+        get_article_paragraph_texts(conn, 10)
+    assert get_article_paragraph_texts(conn, 10, treaty_version_id=100) == [
+        "First dividend paragraph",
+        "Second dividend paragraph",
+    ]
+    assert get_article_paragraph_texts(conn, 10, treaty_version_id=200) == [
+        "OTHER TREATY"
+    ]
+
+    conn.close()
