@@ -3,6 +3,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from scripts.recover_esbirka_legal_pdfs import (
+    async_file_url,
+    async_status_url,
     is_pdf_response,
     legally_binding_complete_url,
     legacy_verified_url,
@@ -24,6 +26,11 @@ def test_legally_binding_complete_url_uses_document_id_path_only() -> None:
 
 def test_legacy_verified_url_uses_document_id_path_only() -> None:
     assert legacy_verified_url(224063).endswith("/stahni/overena-zneni/224063")
+
+
+def test_async_urls_match_esbirka_file_service() -> None:
+    assert async_status_url("abc").endswith("/verejne-pozadavky-dokumenty/pozadavky/abc")
+    assert async_file_url("xyz").endswith("/souborove-sluzby/soubory/xyz")
 
 
 def test_pdf_detection_is_fail_closed() -> None:
