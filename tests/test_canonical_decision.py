@@ -7,6 +7,7 @@ from taxtreat.services.decision import (
     analyze_transaction as canonical_analyze_transaction,
 )
 from taxtreat.services.runtime_gate import RuntimeGateResult
+import taxtreat.engine.legal_rule_engine as legal_engine
 import taxtreat.services.decision as decision_service
 
 LEGACY_RULE_DIR = (
@@ -147,3 +148,90 @@ def test_runtime_gate_block_remains_review_required(monkeypatch):
     assert result.explanation == [
         "Status-instrument effect requires legal review."
     ]
+
+
+def test_legal_normalizers_cover_legacy_boundary_values():
+    assert legal_engine._boolean_like(False) is False
+    assert legal_engine._boolean_like(" NO ") is False
+    assert legal_engine._boolean_like("unknown") is None
+    assert legal_engine._boolean_like(None) is None
+
+    assert legal_engine._royalty_category_groups(None) == set()
+    assert legal_engine._royalty_category_groups(
+        "all_other_article_12_royalties"
+    ) == {"other"}
+    assert legal_engine._royalty_category_groups("financial_lease") == {
+        "equipment"
+    }
+    assert legal_engine._royalty_category_groups("other") == {"other"}
+    assert legal_engine._royalty_category_groups("technical_assistance") == {
+        "industrial_ip"
+    }
+
+    assert legal_engine._numeric_like(True) is None
+    assert legal_engine._numeric_like(5) == 5.0
+    assert legal_engine._numeric_like(" 12.5% ") == 12.5
+    assert legal_engine._numeric_like("not-a-number") is None
+    assert legal_engine._numeric_like(None) is None
+
+
+def test_royalty_category_matching_covers_residual_and_empty_groups():
+    assert legal_engine._royalty_categories_match("other", "other") is True
+    assert legal_engine._royalty_categories_match(
+        "copyright_literary_artistic_or_scientific",
+        "all_other_article_12_royalties",
+    ) is True
+    assert legal_engine._royalty_categories_match(
+        "industrial_commercial_or_scientific_equipment",
+        "other",
+    ) is False
+    assert legal_engine._royalty_categories_match("unknown", "unknown-2") is False
+
+
+def test_condition_evaluation_covers_control_boolean_numeric_and_type_error():
+    assert legal_engine._evaluate_condition(
+        legal_engine.LegalCondition("fallback_case", "==", True),
+        {},
+        {},
+    ) == (True, None)
+
+    assert legal_engine._evaluate_condition(
+        legal_engine.LegalCondition(
+            "missing_legal_fact",
+            "==",
+            True,
+            fact_source="legal",
+        ),
+        {},
+        {},
+    ) == (None, "legal_fact:missing_legal_fact")
+
+    assert legal_engine._evaluate_condition(
+        legal_engine.LegalCondition("royalty_category", "!=", "other"),
+        {"royalty_category": "other"},
+        {},
+    ) == (False, None)
+
+    assert legal_engine._evaluate_condition(
+        legal_engine.LegalCondition("beneficial_owner", "!=", "false"),
+        {"beneficial_owner": True},
+        {},
+    ) == (True, None)
+
+    assert legal_engine._evaluate_condition(
+        legal_engine.LegalCondition("ownership", ">=", "10%"),
+        {"ownership": 12},
+        {},
+    ) == (True, None)
+
+    assert legal_engine._evaluate_condition(
+        legal_engine.LegalCondition("ownership", ">", 10),
+        {"ownership": "not-numeric"},
+        {},
+    ) == (False, None)
+
+    assert legal_engine._evaluate_condition(
+        legal_engine.LegalCondition("value", "in", 3),
+        {"value": 1},
+        {},
+    ) == (False, None)
