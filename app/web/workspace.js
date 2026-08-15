@@ -20,6 +20,7 @@
   const royaltyFacts = document.querySelector("#royalty-facts");
   const dividendSteps = [...document.querySelectorAll("[data-dividend-step]")];
   const acquisitionDateField = document.querySelector("[data-acquisition-date]");
+  const fxStatus = document.querySelector("#workspace-fx-status");
   let votingWasEdited = false;
   const countryNames = { AT: "Rakousko", CH: "Švýcarsko", DE: "Německo", SG: "Singapur", TW: "Tchaj-wan" };
   const countryGenitives = { AT: "Rakouska", CH: "Švýcarska", DE: "Německa", SG: "Singapuru", TW: "Tchaj-wanu" };
@@ -182,6 +183,59 @@
     return new Intl.NumberFormat("cs-CZ", { maximumFractionDigits: 0 }).format(Number(value)) + " Kč";
   }
 
+  function cnbSourceUrl(rateDate) {
+    const [year, month, day] = rateDate.split("-");
+    const query = new URLSearchParams({ date: `${day}.${month}.${year}` });
+    return `https://www.cnb.cz/cs/financni-trhy/devizovy-trh/kurzy-devizoveho-trhu/kurzy-devizoveho-trhu/index.html?${query}`;
+  }
+
+  function showFxStatus(copy, kind = "") {
+    fxStatus.hidden = false;
+    fxStatus.className = `fx-status ${kind}`.trim();
+    fxStatus.textContent = copy;
+  }
+
+  async function loadCnbRate() {
+    const currency = form.elements.currency.value;
+    const rateDate = form.elements.transaction_date.value;
+    if (currency === "CZK") {
+      clientAnswers.exchangeRate = null;
+      fxStatus.hidden = true;
+      return null;
+    }
+    if (!rateDate) {
+      clientAnswers.exchangeRate = null;
+      showFxStatus("Kurz ČNB bude načten automaticky po zadání rozhodného data.");
+      return null;
+    }
+    showFxStatus(`Načítá se kurz ČNB pro ${currency} k rozhodnému datu…`);
+    try {
+      const query = new URLSearchParams({ currency, date: rateDate });
+      const response = await fetch(`/exchange-rates/cnb?${query}`);
+      const body = await response.json();
+      if (!response.ok) throw new Error("Kurz ČNB není dostupný.");
+      clientAnswers.exchangeRate = {
+        source: "CNB",
+        currency,
+        czk_per_unit: body.czk_per_unit,
+        effective_date: rateDate,
+        source_url: body.source_url
+      };
+      const published = body.published_for && body.published_for !== rateDate
+        ? ` Použit byl poslední kurz vyhlášený ${formatCzechDate(body.published_for)}.`
+        : "";
+      showFxStatus(`Kurz načten automaticky: 1 ${currency} = ${body.czk_per_unit} CZK.${published}`, "success");
+      return clientAnswers.exchangeRate;
+    } catch (_problem) {
+      clientAnswers.exchangeRate = null;
+      showFxStatus("Kurz ČNB se nepodařilo načíst. Po vyhodnocení bude možné zadat kurz ručně; rozhodné datum ani odkaz se znovu zadávat nebudou.", "warning");
+      return null;
+    }
+  }
+
+  form.elements.currency.addEventListener("change", loadCnbRate);
+  form.elements.transaction_date.addEventListener("change", loadCnbRate);
+
   function calculationValue(calculation, canonicalName, legacyName) {
     if (!calculation) return null;
     return calculation[canonicalName] ?? calculation[legacyName] ?? null;
@@ -258,11 +312,9 @@
     } else if (question.response_type === "structured_cnb_rate") {
       const wrapper = document.createElement("div");
       wrapper.className = "structured-answer";
-      [["czk_per_unit", "Kurz ČNB (CZK za jednotku měny)", "number"], ["source_url", "Odkaz na kurzovní lístek ČNB", "url"]].forEach(([name, placeholder, type]) => {
-        const child = document.createElement("input"); child.name = name; child.type = type; child.required = true; child.placeholder = placeholder;
-        if (type === "number") { child.min = "0.000001"; child.step = "0.000001"; }
-        wrapper.append(child);
-      });
+      const child = document.createElement("input"); child.name = "czk_per_unit"; child.type = "number"; child.required = true; child.placeholder = "CZK za 1 jednotku měny"; child.min = "0.000001"; child.step = "0.000001";
+      const note = document.createElement("small"); note.textContent = "Rozhodné datum bylo převzato ze zadání. Odkaz na odpovídající kurzovní lístek ČNB doplní TaxTreat automaticky.";
+      wrapper.append(child, note);
       wrapper.dataset.inputPath = inputPath;
       field.append(copy, wrapper);
       return field;
@@ -293,7 +345,7 @@
       const path = input.dataset.inputPath;
       if (input.classList.contains("structured-answer")) {
         const rateDate = payload.transaction_date;
-        clientAnswers.exchangeRate = { source: "CNB", currency: payload.transaction_amount.currency, czk_per_unit: input.querySelector('[name="czk_per_unit"]').value, effective_date: rateDate, source_url: input.querySelector('[name="source_url"]').value };
+        clientAnswers.exchangeRate = { source: "CNB", currency: payload.transaction_amount.currency, czk_per_unit: input.querySelector('[name="czk_per_unit"]').value, effective_date: rateDate, source_url: cnbSourceUrl(rateDate) };
       } else if (path === "derived.acquisition_date") {
         clientAnswers.acquisitionDate = input.value;
       } else if (path && path.startsWith("facts.")) {
@@ -378,18 +430,29 @@
     return "Právní ustanovení použité při výpočtu.";
   }
 
-  function citationCard(citation) {
+  function excerptIsReadable(excerpt) {
+    return Boolean(excerpt) && !/[õÕ]/.test(excerpt);
+  }
+
+  function citationCard(citation, analysis) {
     const card = document.createElement("article"); card.className = "citation-card";
+    const selected = String(citation.rule_id || "") === selectedRuleId(analysis);
     const title = document.createElement("strong");
     const layer = String(citation.legal_layer || "");
+    if (!selected) card.classList.add("context");
+    const role = document.createElement("span"); role.className = "citation-role";
+    role.textContent = selected ? "Použité pravidlo" : layer === "domestic" ? "Výchozí vnitrostátní pravidlo" : "Související právní pravidlo";
     const paragraph = citation.paragraph ? ` · ${citation.paragraph}` : "";
     title.textContent = ["treaty", "protocol", "mli"].includes(layer) ? `Smlouva o zamezení dvojího zdanění · článek ${citation.article || "—"}${paragraph}` : `Zákon o daních z příjmů · § ${citation.article || "—"}${paragraph}`;
     const link = document.createElement("a"); link.href = citation.source_url; link.target = "_blank"; link.rel = "noreferrer noopener"; link.textContent = "Otevřít zdroj ↗";
-    const detail = document.createElement("p"); detail.textContent = citationDetail(citation);
-    card.append(title, link, detail);
-    if (citation.excerpt && layer !== "domestic") {
+    const detail = document.createElement("p");
+    detail.textContent = !selected && layer === "domestic"
+      ? `Výchozí vnitrostátní sazba činí ${citation.rate} %. V tomto výsledku byla upravena použitím výhodnějšího pravidla uvedeného výše.`
+      : citationDetail(citation);
+    card.append(role, title, link, detail);
+    if (excerptIsReadable(citation.excerpt) && layer !== "domestic") {
       const disclosure = document.createElement("details"); disclosure.className = "citation-excerpt";
-      const summary = document.createElement("summary"); summary.textContent = "Zobrazit schválený text ustanovení";
+      const summary = document.createElement("summary"); summary.textContent = "Zobrazit znění ustanovení";
       const excerpt = document.createElement("blockquote"); excerpt.textContent = citation.excerpt;
       disclosure.append(summary, excerpt); card.append(disclosure);
     }
@@ -454,7 +517,7 @@
       item.append(strong, small); actions.append(item);
     }
     const citations = document.querySelector("#workspace-citations"); citations.replaceChildren();
-    decisiveCitations(analysis).forEach((citation) => citations.append(citationCard(citation)));
+    decisiveCitations(analysis).forEach((citation) => citations.append(citationCard(citation, analysis)));
     if (!citations.children.length) { const p = document.createElement("p"); p.textContent = "Pro tento výsledek nebyl vrácen konkrétní odkaz na právní zdroj."; citations.append(p); }
     renderComplianceSchedule(analysis);
     showStep(3);
@@ -489,10 +552,12 @@
     }
     if (incomeType === "interest" && armLengthAmount) facts.arm_length_amount = armLengthAmount === "true";
     if (incomeType === "royalty" && royaltyCategory) facts.royalty_category = royaltyCategory;
+    if (String(data.get("currency")) !== "CZK") await loadCnbRate();
     const payload = {
       source_country: "CZ", recipient_country: recipient.country, income_type: incomeType, transaction_date: transactionDate,
       facts, determinations: {}, transaction_amount: { amount: String(data.get("amount")), currency: String(data.get("currency")), payment_date: transactionDate, accounting_date: transactionDate }
     };
+    if (clientAnswers.exchangeRate) payload.transaction_amount.exchange_rate = { ...clientAnswers.exchangeRate };
     if (pendingQuestions.length) applyAnswers(payload);
     try {
       const response = await fetch("/analysis/intake", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });

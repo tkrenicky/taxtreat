@@ -33,16 +33,18 @@
         <div><p>PRACOVNÍ PROSTOR</p><h1>Přehled</h1><span>Platby, příjemci a úkoly vyžadující pozornost.</span></div>
         <button class="primary compact" data-start-flow>Nová kontrola platby →</button>
       </div>
-      <div class="metrics">
-        <article><span>Aktivní plátci</span><strong>1</strong><small>v tomto pracovním prostoru</small></article>
-        <article><span>Příjemci</span><strong>1</strong><small>jeden profil k doplnění</small></article>
-        <article><span>Otevřené kontroly</span><strong>0</strong><small>žádná rozpracovaná platba</small></article>
-        <article><span>Vyžaduje pozornost</span><strong>1</strong><small>chybějící podklad příjemce</small></article>
+      <div class="dashboard-summary">
+        <article class="card onboarding">
+          <div><span class="icon">✓</span><div><h2>Dokonči nastavení pracovního prostoru</h2><p>Profil plátce je připraven. Doplň příjemce a proveď první kontrolu platby.</p></div></div>
+          <ol><li class="done">Plátce založen</li><li>Příjemce zkontrolován</li><li>První platba vyhodnocena</li></ol>
+        </article>
+        <div class="metrics dashboard-metrics">
+          <article><span>Aktivní plátci</span><strong>1</strong><small>v pracovním prostoru</small></article>
+          <article><span>Příjemci</span><strong>1</strong><small>profil k doplnění</small></article>
+          <article><span>Otevřené kontroly</span><strong>0</strong><small>bez rozpracované platby</small></article>
+          <article><span>Vyžaduje pozornost</span><strong>1</strong><small>chybějící podklad</small></article>
+        </div>
       </div>
-      <article class="card onboarding">
-        <div><span class="icon">✓</span><div><h2>Dokonči nastavení pracovního prostoru</h2><p>Profil plátce je připraven. Doplň příjemce a proveď první kontrolu platby.</p></div></div>
-        <ol><li class="done">Plátce založen</li><li>Příjemce zkontrolován</li><li>První platba vyhodnocena</li></ol>
-      </article>
       <div class="dashboard-grid">
         <article class="card attention">
           <div class="card-head"><h2>Úkoly</h2><span>1</span></div>
@@ -149,8 +151,9 @@
             <label><span>Měna *</span><select name="currency"><option>CZK</option><option>EUR</option><option>USD</option><option>CHF</option><option>GBP</option></select></label>
           </div>
           <div id="date-help" class="tooltip-panel" hidden>Pro určení rozhodného právního režimu a případného kurzu ČNB se používá dřívější z data úhrady a data zaúčtování závazku. Do pole proto uveď právě toto dřívější datum.</div>
+          <div id="workspace-fx-status" class="fx-status" hidden aria-live="polite"></div>
           <fieldset class="assumptions">
-            <legend>Pracujeme s níže uvedenými předpoklady</legend>
+            <legend>Výpočet vychází z níže uvedených předpokladů</legend>
             <p>Předvyplněné odpovědi zkontroluj a změň, pokud pro danou platbu neplatí.</p>
             <div class="assumption-row"><span>Příjemce je skutečným vlastníkem příjmu.</span><div class="segmented"><label><input name="beneficial_owner" type="radio" value="true" checked><span>Ano</span></label><label><input name="beneficial_owner" type="radio" value="false"><span>Ne</span></label></div></div>
             <div class="assumption-row"><span>Příjemce je daňovým rezidentem státu <b data-recipient-country-name>Rakousko</b> pro účely příslušné smlouvy.</span><div class="segmented"><label><input name="treaty_resident" type="radio" value="true" checked><span>Ano</span></label><label><input name="treaty_resident" type="radio" value="false"><span>Ne</span></label></div></div>
@@ -162,7 +165,7 @@
             <p>Vyplň dostupné skutkové údaje před výpočtem. Údaje uložené v profilu příjemce jsou předvyplněny a lze je pro tuto platbu změnit.</p>
             <div id="dividend-facts" class="progressive-facts" hidden>
               <label class="fact-question" data-dividend-step="1"><span><b>1</b> Jaký podíl na základním kapitálu českého plátce příjemce drží?</span><div class="input-suffix"><input name="ownership_percent" type="number" min="0" max="100" step="0.01" placeholder="např. 25"><em>%</em></div></label>
-              <label class="fact-question" data-dividend-step="2" hidden><span><b>2</b> Drží příjemce tento podíl přímo?</span><select name="direct_ownership"><option value="">Vyber odpověď</option><option value="true">Ano</option><option value="false">Ne</option></select></label>
+              <label class="fact-question" data-dividend-step="2" hidden><span><b>2</b> Drží příjemce tento podíl přímo? <button class="info-button" type="button" data-tooltip="direct-help" aria-label="Vysvětlení přímého a nepřímého držení">i</button></span><select name="direct_ownership"><option value="">Vyber odpověď</option><option value="true">Ano, přímo</option><option value="false">Ne, nepřímo</option></select><small id="direct-help" class="tooltip-panel" hidden>Při nepřímém držení je podíl vlastněn prostřednictvím jiné společnosti. TaxTreat dále posoudí pravidla, která nepřímou účast připouštějí; pravidlo vyžadující přímé držení nebude bez dalšího použito.</small></label>
               <div class="fact-question" data-dividend-step="3" hidden><span><b>3</b> Jak dlouho příjemce podíl drží?</span><select name="holding_period_mode"><option value="">Vyber odpověď</option><option value="known_date">Znám datum nabytí podílu</option><option value="at_least_12_months">K datu transakce alespoň 12 měsíců</option><option value="less_than_12_months">K datu transakce méně než 12 měsíců</option></select><label class="nested-date" data-acquisition-date hidden><span>Datum nabytí podílu</span><input name="acquisition_date" type="date"><small>Doba držby se vypočte automaticky k datu transakce.</small></label></div>
               <label class="fact-question" data-dividend-step="4" hidden><span><b>4</b> Jaký podíl na hlasovacích právech českého plátce příjemce drží?</span><div class="input-suffix"><input name="voting_ownership_percent" type="number" min="0" max="100" step="0.01"><em>%</em></div><small>Předvyplněno podle podílu na základním kapitálu. Uprav, pokud se podíl na hlasovacích právech liší.</small></label>
             </div>

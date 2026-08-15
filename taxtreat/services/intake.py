@@ -306,15 +306,14 @@ def build_intake_plan(
                 "client_answerable": True,
                 "response_type": "structured_cnb_rate",
                 "prompt": (
-                    "Doplňte datum úhrady, datum zaúčtování a doložený kurz ČNB "
-                    "pro dřívější z těchto dat."
+                    "Automatický kurz ČNB se nepodařilo načíst. Doplňte kurz "
+                    "v CZK za jednu jednotku zvolené měny."
                 ),
                 "why": (
-                    "Daň z částky v cizí měně musí být přepočtena na CZK "
-                    "pomocí příslušného doloženého kurzu."
+                    "Použijte kurz ČNB pro rozhodné datum uvedené výše. Datum "
+                    "ani odkaz na kurzovní lístek není třeba zadávat znovu."
                 ),
                 "required_documents": [
-                    "Odkaz na zdroj kurzu ČNB",
                     "Doklad o úhradě nebo zaúčtování",
                 ],
             }

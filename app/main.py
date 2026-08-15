@@ -33,6 +33,10 @@ from taxtreat.services.decision import (
     analyze_transaction,
 )
 from taxtreat.services.intake import build_intake_plan
+from taxtreat.services.exchange_rates import (
+    CnbRateUnavailableError,
+    fetch_cnb_exchange_rate,
+)
 from taxtreat.services.reporting import (
     build_professional_report,
     render_report_html,
@@ -102,6 +106,20 @@ class AnalysisPayload(BaseModel):
     facts: dict[str, Any] = Field(default_factory=dict)
     determinations: dict[str, Any] = Field(default_factory=dict)
     transaction_amount: TransactionAmount | None = None
+
+
+@app.get("/exchange-rates/cnb")
+def cnb_exchange_rate(currency: str, date: date):
+    try:
+        return fetch_cnb_exchange_rate(currency, date)
+    except CnbRateUnavailableError as exc:
+        raise HTTPException(
+            status_code=502,
+            detail={
+                "code": "CNB_RATE_UNAVAILABLE",
+                "message": str(exc),
+            },
+        ) from exc
 
 
 def get_db_connection() -> sqlite3.Connection:

@@ -152,7 +152,8 @@ def test_plan_requests_complete_cnb_evidence_for_fx_failure():
     fx = plan["questions"][0]
     assert fx["category"] == "exchange_rate_evidence"
     assert fx["response_type"] == "structured_cnb_rate"
-    assert "Odkaz na zdroj kurzu ČNB" in fx["required_documents"]
+    assert "Odkaz na zdroj kurzu ČNB" not in fx["required_documents"]
+    assert "není třeba zadávat znovu" in fx["why"]
 
 
 def test_final_rate_unavailable_does_not_duplicate_legal_questions():

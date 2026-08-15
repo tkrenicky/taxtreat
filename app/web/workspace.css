@@ -131,6 +131,98 @@
   }
 }
 
+/* Compact dashboard summary and automatic CNB rate */
+.dashboard-summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  gap: 18px;
+  align-items: stretch;
+  margin-bottom: 18px;
+}
+
+.dashboard-summary .onboarding {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0;
+  min-height: 100%;
+}
+
+.dashboard-metrics {
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 0;
+}
+
+.dashboard-metrics article {
+  padding: 14px 15px;
+  box-shadow: none;
+}
+
+.dashboard-metrics strong {
+  margin: 4px 0 2px;
+  font-size: 1.35rem;
+}
+
+.dashboard-metrics small {
+  font-size: .7rem;
+  line-height: 1.3;
+}
+
+.fx-status {
+  margin-top: 14px;
+  padding: 13px 15px;
+  border: 1px solid #cfdcff;
+  border-radius: 9px;
+  color: #40506f;
+  background: #f2f6ff;
+  font-size: .8rem;
+  line-height: 1.5;
+}
+
+.fx-status.success {
+  border-color: #bde5ce;
+  color: #17633b;
+  background: #eefaf3;
+}
+
+.fx-status.warning {
+  border-color: #f0d89d;
+  color: #70531a;
+  background: #fff8e3;
+}
+
+.fact-question > small.tooltip-panel {
+  grid-column: 1 / -1;
+  margin-top: 0;
+}
+
+.citation-card.context {
+  margin-top: 6px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #f8f9fc;
+}
+
+.citation-role {
+  grid-column: 1 / -1;
+  color: var(--muted);
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .dashboard-summary { grid-template-columns: 1fr; }
+  .dashboard-metrics { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (max-width: 700px) {
+  .dashboard-metrics { grid-template-columns: 1fr 1fr; }
+}
+
 /* Result evidence and statutory calendar */
 .citation-card blockquote {
   grid-column: 1 / -1;
