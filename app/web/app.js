@@ -101,7 +101,13 @@
     return payload;
   }
 
-  function statusCopy(status) {
+  function statusCopy(status, treatment = null) {
+    if (status === "FINAL" && treatment === "exclusive_foreign_taxation") {
+      return ["Příjem se v České republice nezdaňuje", "Podle použitého smluvního pravidla se příjem zdaňuje pouze ve státě daňové rezidence příjemce. Česká daň k odvodu činí 0 Kč."];
+    }
+    if (status === "FINAL" && treatment === "domestic_exemption") {
+      return ["Příjem je v České republice osvobozen", "Podmínky použitého vnitrostátního osvobození byly podle zadaných údajů splněny. Česká daň k odvodu činí 0 Kč."];
+    }
     const copies = {
       FINAL: ["Výpočet dokončen", "Sazba a daň byly vypočteny podle zadaných údajů a uvedených předpokladů."],
       REVIEW_REQUIRED: ["Je třeba doplnit údaje", "Níže doplňte konkrétní informace nebo ověřte označené podmínky s daňovým poradcem."],
@@ -437,6 +443,7 @@
       return;
     }
     document.querySelector("#gross-czk").textContent = calculation.gross_amount_czk + " Kč";
+    document.querySelector("#tax-czk-label").textContent = ["exclusive_foreign_taxation", "domestic_exemption"].includes(calculation.tax_treatment) ? "Česká daň k odvodu" : "Srážková daň";
     document.querySelector("#tax-czk").textContent = calculation.withholding_tax_czk + " Kč";
     document.querySelector("#net-czk").textContent = calculation.net_amount_czk + " Kč";
     card.hidden = false;
@@ -445,7 +452,7 @@
   function renderResponse(payload) {
     const analysis = payload.analysis;
     const intake = payload.intake;
-    const [title, description] = statusCopy(analysis.status);
+    const [title, description] = statusCopy(analysis.status, analysis.tax_treatment);
     emptyState.hidden = true;
     result.hidden = false;
     document.querySelector("#status-title").textContent = title;

@@ -486,10 +486,15 @@
   function resultExplanation(analysis, payload) {
     const citation = selectedCitation(analysis);
     const layer = String(citation?.legal_layer || "");
-    if (analysis.status === "FINAL" && layer === "eu_relief") return `Česká srážková daň je ${analysis.rate} %. Výsledek vychází z osvobození podle ${provisionLabel(citation)} zákona o daních z příjmů; všechny podmínky vybraného pravidla byly splněny zadanými a ověřenými údaji.`;
+    const treatment = analysis.tax_treatment || analysis.candidate_tax_treatment;
+    if (analysis.status === "FINAL" && treatment === "exclusive_foreign_taxation") return `Podle ${provisionLabel(citation)} příslušné smlouvy může být příjem zdaněn pouze ve státě daňové rezidence příjemce. V České republice proto nevzniká srážková daň; česká daň k odvodu činí 0 Kč.`;
+    if (analysis.status === "FINAL" && treatment === "domestic_exemption") return `Příjem je v České republice osvobozen podle ${provisionLabel(citation)} zákona o daních z příjmů. Česká daň k odvodu proto činí 0 Kč.`;
+    if (analysis.status === "FINAL" && layer === "eu_relief") return `Příjem je v České republice osvobozen podle ${provisionLabel(citation)} zákona o daních z příjmů; všechny podmínky vybraného pravidla byly splněny zadanými a ověřenými údaji.`;
     if (analysis.status === "FINAL" && ["treaty", "protocol", "mli"].includes(layer)) return `Česká srážková daň je ${analysis.rate} %. Výsledek vychází z ${provisionLabel(citation)} příslušné smlouvy ve znění použitelných změn. Rozhodující byly podmínky konkrétního pravidla uvedené v právních podkladech.`;
     if (analysis.status === "FINAL" && layer === "domestic") return `Česká srážková daň je ${analysis.rate} %. Výsledek vychází z ${provisionLabel(citation)} zákona o daních z příjmů, protože nebylo použito pravidlo s nižší sazbou.`;
     if (analysis.status === "FINAL") return `Použitá sazba ${analysis.rate} % byla určena na základě zadaných údajů a vybraného právního pravidla uvedeného níže.`;
+    if (treatment === "exclusive_foreign_taxation") return "Zadané údaje směřují k použití smluvního pravidla, podle něhož se příjem zdaňuje pouze ve státě rezidence příjemce. Před uzavřením výsledku je třeba ověřit konkrétní podmínky uvedené níže.";
+    if (treatment === "domestic_exemption") return "Zadané údaje směřují k osvobození příjmu v České republice. Před uzavřením výsledku je třeba ověřit konkrétní podmínky uvedené níže.";
     if (analysis.candidate_rate !== null && analysis.candidate_rate !== undefined) return `Byla identifikována sazba ${analysis.candidate_rate} %. Její použití závisí na odborném ověření právních podmínek uvedených níže.`;
     return "Sazbu zatím nelze určit. Níže jsou uvedeny konkrétní podmínky, které je třeba odborně ověřit.";
   }
@@ -497,8 +502,10 @@
   function citationDetail(citation) {
     const rate = citation.rate === null || citation.rate === undefined ? null : `${citation.rate} %`;
     const ownership = (citation.conditions || []).find((condition) => ["minimum_ownership", "ownership_percent", "direct_or_indirect_voting_ownership"].includes(condition.fact) && condition.operator === ">=");
+    if (citation.tax_treatment === "exclusive_foreign_taxation") return "Smluvní pravidlo přiznává právo zdanit příjem pouze státu daňové rezidence příjemce.";
+    if (citation.tax_treatment === "domestic_exemption") return "Vnitrostátní pravidlo stanoví osvobození příjmu při splnění všech kvalifikačních podmínek.";
     if (["treaty", "protocol", "mli"].includes(citation.legal_layer)) return ownership ? `Pravidlo stanoví sazbu ${rate} při podílu alespoň ${ownership.value} % a při splnění ostatních uvedených podmínek.` : `Pravidlo příslušné smlouvy stanoví sazbu ${rate} při splnění jeho podmínek.`;
-    if (citation.legal_layer === "eu_relief") return `Pravidlo vnitrostátního osvobození stanoví sazbu ${rate} při splnění všech kvalifikačních podmínek.`;
+    if (citation.legal_layer === "eu_relief") return "Pravidlo vnitrostátního osvobození se použije při splnění všech kvalifikačních podmínek.";
     if (citation.legal_layer === "domestic") return `Vnitrostátní pravidlo stanoví sazbu ${rate}.`;
     return "Právní ustanovení použité při výpočtu.";
   }
@@ -555,11 +562,12 @@
     const schedule = analysis.withholding_compliance_schedule;
     if (!schedule) return;
     setText("#workspace-reference-date", formatCzechDate(schedule.reference_date));
-    setText("#workspace-remittance-deadline", schedule.tax_remittance_deadline ? formatCzechDate(schedule.tax_remittance_deadline) : analysis.status === "FINAL" && Number(analysis.rate) === 0 ? "Daň se neodvádí" : "Po dokončení posouzení");
+    const nonTaxing = ["exclusive_foreign_taxation", "domestic_exemption"].includes(analysis.tax_treatment);
+    setText("#workspace-remittance-deadline", schedule.tax_remittance_deadline ? formatCzechDate(schedule.tax_remittance_deadline) : analysis.status === "FINAL" && nonTaxing ? "Daň se neodvádí" : "Po dokončení posouzení");
     setText("#workspace-notification-deadline", schedule.notification_deadline ? formatCzechDate(schedule.notification_deadline) : "Po dokončení posouzení");
     const note = document.querySelector("#workspace-deadline-note");
     if (schedule.status !== "READY") note.textContent = "Lhůty nelze uzavřít, dokud není určeno konečné daňové zacházení.";
-    else if (schedule.notification_regime === "exempt_or_treaty_non_taxable_annual") note.textContent = "Při 0% výsledku se daň neodvádí. Oznámení o příjmu plynoucím do zahraničí se u dividend podává do 31. ledna následujícího roku.";
+    else if (schedule.notification_regime === "exempt_or_treaty_non_taxable_annual") note.textContent = "Česká daň se při tomto daňovém zacházení neodvádí. Oznámení o příjmu plynoucím do zahraničí se u dividend podává do 31. ledna následujícího roku.";
     else note.textContent = "Odvod sražené daně a oznámení o příjmu plynoucím do zahraničí mají shodnou lhůtu: konec následujícího kalendářního měsíce.";
     const caution = document.querySelector("#workspace-dividend-deadline-caution");
     caution.hidden = !schedule.dividend_timing_review_required;
@@ -588,13 +596,17 @@
     const professional = (response.intake?.questions || []).filter((question) => !question.client_answerable);
     const reviewItems = concreteReviewItems(analysis, payload, professional);
     const status = document.querySelector("#workspace-result-status");
-    status.textContent = analysis.status === "FINAL" ? "VÝPOČET DOKONČEN" : "ODBORNÉ OVĚŘENÍ";
+    status.textContent = analysis.status === "FINAL" ? "VÝSLEDEK DOKONČEN" : "ODBORNÉ OVĚŘENÍ";
     status.className = analysis.status === "FINAL" ? "badge" : "badge warning";
     const grossCzk = calculationValue(calculation, "gross_amount_czk", "tax_base_czk");
     const taxCzk = calculationValue(calculation, "withholding_tax_czk", "withholding_tax_czk");
     const netCzk = calculationValue(calculation, "net_amount_czk", "net_amount_czk");
+    const treatment = analysis.tax_treatment || analysis.candidate_tax_treatment;
+    const nonTaxing = ["exclusive_foreign_taxation", "domestic_exemption"].includes(treatment);
+    setText("#workspace-tax-label", nonTaxing ? "Česká daň k odvodu" : "Srážková daň v CZK");
+    setText("#workspace-tax-row-label", nonTaxing ? "Česká daň k odvodu" : "Srážková daň");
     setText("#workspace-tax", calculation ? money(taxCzk) : "—");
-    setText("#workspace-rate", analysis.rate === null ? analysis.candidate_rate === null ? "Sazbu nelze určit bez odborného posouzení" : `Identifikovaná sazba: ${analysis.candidate_rate} %` : `${analysis.rate} % z daňového základu`);
+    setText("#workspace-rate", treatment === "exclusive_foreign_taxation" ? `Zdanění pouze ve státě rezidence příjemce (${countryNames[recipient.country]})` : treatment === "domestic_exemption" ? "Příjem je v České republice osvobozen" : analysis.rate === null ? analysis.candidate_rate === null ? "Sazbu nelze určit bez odborného posouzení" : `Identifikovaná sazba: ${analysis.candidate_rate} %` : `${analysis.rate} % z daňového základu`);
     setText("#workspace-gross", grossCzk !== null ? money(grossCzk) : payload.transaction_amount.currency === "CZK" ? money(payload.transaction_amount.amount) : `${payload.transaction_amount.amount} ${payload.transaction_amount.currency}`);
     setText("#workspace-tax-row", calculation ? money(taxCzk) : "—");
     setText("#workspace-net", calculation ? money(netCzk) : "—");

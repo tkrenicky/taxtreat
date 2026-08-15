@@ -96,6 +96,8 @@ def test_workspace_demo_exposes_recipient_payment_result_workflow():
     assert "Rozhodné datum a navazující lhůty" in html
     assert 'id="workspace-remittance-deadline"' in html
     assert 'id="workspace-notification-deadline"' in html
+    assert 'id="workspace-tax-label"' in html
+    assert 'id="workspace-tax-row-label"' in html
     assert "§ 38d / § 38da" in html
     assert "Jak výsledek číst" in html
     assert 'id="new-recipient-form"' in html
@@ -182,6 +184,11 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert "Článek 10 odst." not in javascript.text
     assert "build_withholding_compliance_schedule" not in javascript.text
     assert "renderComplianceSchedule" in javascript.text
+    assert "exclusive_foreign_taxation" in javascript.text
+    assert "domestic_exemption" in javascript.text
+    assert "Česká daň k odvodu" in javascript.text
+    assert "Při 0% výsledku" not in javascript.text
+    assert "Smluvní pravidlo přiznává právo zdanit příjem pouze" in javascript.text
     assert "withholding_compliance_schedule" in javascript.text
     assert "citation.source_id" not in javascript.text
     assert "evidovaný zdroj" not in javascript.text
@@ -229,6 +236,10 @@ def test_ui_calls_canonical_endpoints_and_uses_safe_dom_rendering():
     assert "payment_date" in javascript
     assert "accounting_date" in javascript
     assert "Zobrazit zbývající podklady" in javascript
+    assert "exclusive_foreign_taxation" in javascript
+    assert "Příjem se v České republice nezdaňuje" in javascript
+    assert "Příjem je v České republice osvobozen" in javascript
+    assert 'id="tax-czk-label"' in client.get("/ui").text
     assert "pageSize = 3" in javascript
     assert "wizard-progress" in javascript
     assert "Další položky" in javascript
