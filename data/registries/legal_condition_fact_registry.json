@@ -1,0 +1,1819 @@
+{
+  "schema_version": 1,
+  "scope": "CZ outbound WHT – 101 treaty packages",
+  "policy": {
+    "unknown_fact": "fail_closed",
+    "boolean_representation": "normalized",
+    "numeric_representation": "normalized",
+    "professional_legal_conditions": "must not be assumed true without legal/factual basis",
+    "treaty_specific_conditions": "must be collected, derived or explicitly resolved when relevant to the selected treaty"
+  },
+  "facts": {
+    "arm_length_amount": {
+      "classification": "standard_user_input",
+      "income_types": [
+        "interest",
+        "royalty"
+      ],
+      "country_count": 2,
+      "countries": [
+        "AT",
+        "CH"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 4,
+      "values": [
+        "True"
+      ]
+    },
+    "article_11_3_exemption": {
+      "classification": "treaty_specific_structured",
+      "income_types": [
+        "interest"
+      ],
+      "country_count": 32,
+      "countries": [
+        "AL",
+        "BB",
+        "BD",
+        "BE",
+        "BG",
+        "BW",
+        "CA",
+        "CM",
+        "CO",
+        "ET",
+        "GE",
+        "GH",
+        "GR",
+        "IL",
+        "IR",
+        "KG",
+        "KR",
+        "LK",
+        "MX",
+        "NZ",
+        "PA",
+        "PK",
+        "PL",
+        "PT",
+        "RW",
+        "SM",
+        "SN",
+        "TJ",
+        "TM",
+        "UZ",
+        "VE",
+        "VN"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 32,
+      "values": [
+        "'bank_loan_or_government_central_bank_government_owned_or_controlled_financial_institution_or_qualifying_government_guaranteed_financing'",
+        "'credit_sale_or_bank_financing_or_government_central_bank_government_financial_institution_or_qualifying_government_guaranteed_financing'",
+        "'credit_sale_or_bank_loan_minimum_3_years_or_government_central_bank_government_owned_or_controlled_financial_institution_or_qualifying_government_guaranteed_financing'",
+        "'credit_sale_or_bank_loan_or_government_central_bank_government_controlled_financial_institution_or_qualifying_government_guaranteed_financing'",
+        "'credit_sale_or_bank_loan_or_government_central_bank_government_owned_or_controlled_financial_institution_or_qualifying_government_guaranteed_financing'",
+        "'credit_sale_or_bank_loan_or_government_or_subnational_or_local_authority_or_central_bank_or_other_specified_public_financing'",
+        "'credit_sale_or_government_central_bank_export_or_investment_promotion_institution_or_qualifying_government_guaranteed_financing'",
+        "'credit_sale_or_government_central_bank_export_promotion_institution_or_qualifying_government_guaranteed_financing'",
+        "'credit_sale_or_government_central_bank_government_owned_or_controlled_financial_institution_or_qualifying_government_guaranteed_financing_minimum_4_years'",
+        "'government_central_bank_export_or_investment_promotion_institution_or_qualifying_government_guaranteed_financing'",
+        "'government_central_bank_export_promotion_institution_or_qualifying_government_guaranteed_financing'",
+        "'government_central_bank_government_owned_or_controlled_institution_or_qualifying_government_guaranteed_financing'",
+        "'government_local_authority_central_bank_or_wholly_government_owned_financial_institution_or_other_article_11_3_qualifying_case'",
+        "'government_or_central_bank_or_agreed_export_promotion_institution_or_qualifying_government_guaranteed_financing'",
+        "'government_or_central_bank_or_export_or_investment_promotion_institution_or_qualifying_government_guaranteed_financing'",
+        "'government_payer_or_government_or_wholly_state_owned_bank_or_financial_institution_recipient'",
+        "'government_subnational_local_authority_central_bank_export_or_foreign_investment_promotion_institution_or_qualifying_guaranteed_or_secured_financing'",
+        "'government_subnational_local_authority_central_bank_government_owned_or_controlled_financial_institution_or_qualifying_guaranteed_or_insured_financing'",
+        "'government_subnational_local_authority_central_bank_government_owned_or_controlled_financial_institution_or_qualifying_guaranteed_or_insured_financing_or_credit_sale'",
+        "'government_subnational_local_authority_central_bank_or_named_public_export_finance_institution_or_qualifying_publicly_provided_guaranteed_or_insured_financing_minimum_3_years'",
+        "'government_subnational_local_authority_central_bank_or_qualifying_export_credit_institution_provided_guaranteed_or_secured_financing'",
+        "'government_subnational_local_authority_central_bank_wholly_government_owned_financial_institution_or_government_guaranteed_financing_or_credit_sale_of_industrial_commercial_or_scientific_equipment'",
+        "'government_subnational_local_authority_central_bank_wholly_government_owned_financial_institution_or_government_guaranteed_financing_or_credit_sale_or_bank_loan'",
+        "'government_subnational_local_authority_or_central_bank_or_government_approved_transaction_to_approved_extent'",
+        "'loan_granted_by_government_or_bank_or_institution_on_behalf_or_for_account_of_government'",
+        "'recipient_government_central_bank_subnational_or_local_authority_or_interest_paid_by_such_public_person_or_qualifying_government_owned_foreign_trade_financing'",
+        "'source_state_government_bonds_debentures_or_qualifying_central_bank_provided_refinanced_guaranteed_or_secured_financing'",
+        "'source_state_government_debt_or_qualifying_government_owned_export_financing_or_arm_length_credit_sale'",
+        "'source_state_government_or_local_authority_debtor_or_other_state_government_local_authority_or_supported_financing_under_intergovernmental_agreement_or_named_public_financial_institution_loan_or_credit'",
+        "'trade_receivable_or_public_export_credit_or_bank_loan_or_bank_deposit_or_government_subnational_or_local_authority'"
+      ]
+    },
+    "article_11_3a_exemption": {
+      "classification": "treaty_specific_structured",
+      "income_types": [
+        "interest"
+      ],
+      "country_count": 3,
+      "countries": [
+        "AM",
+        "AZ",
+        "BR"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 3,
+      "values": [
+        "'government_central_bank_or_government_owned_controlled_financial_institution_or_qualifying_government_guaranteed_financing'",
+        "'interest_paid_to_other_state_government_political_subdivision_or_government_owned_agency_including_financial_institution_unless_11_3b_applies'"
+      ]
+    },
+    "beneficial_owner": {
+      "classification": "standard_user_input",
+      "income_types": [
+        "dividend",
+        "interest",
+        "royalty"
+      ],
+      "country_count": 99,
+      "countries": [
+        "AD",
+        "AE",
+        "AL",
+        "AM",
+        "AT",
+        "AZ",
+        "BA",
+        "BB",
+        "BD",
+        "BE",
+        "BG",
+        "BH",
+        "BR",
+        "BW",
+        "BY",
+        "CA",
+        "CH",
+        "CL",
+        "CM",
+        "CN",
+        "CO",
+        "CY",
+        "DE",
+        "DK",
+        "EE",
+        "EG",
+        "ES",
+        "ET",
+        "FI",
+        "FR",
+        "GB",
+        "GE",
+        "GH",
+        "GR",
+        "HK",
+        "HR",
+        "HU",
+        "ID",
+        "IE",
+        "IL",
+        "IN",
+        "IR",
+        "IS",
+        "IT",
+        "JO",
+        "KG",
+        "KP",
+        "KR",
+        "KW",
+        "KZ",
+        "LB",
+        "LI",
+        "LK",
+        "LT",
+        "LU",
+        "LV",
+        "MA",
+        "MD",
+        "ME",
+        "MK",
+        "MN",
+        "MT",
+        "MX",
+        "MY",
+        "NG",
+        "NL",
+        "NO",
+        "NZ",
+        "PA",
+        "PH",
+        "PK",
+        "PL",
+        "PT",
+        "QA",
+        "RO",
+        "RS",
+        "RU",
+        "RW",
+        "SA",
+        "SE",
+        "SG",
+        "SI",
+        "SK",
+        "SM",
+        "SN",
+        "SY",
+        "TH",
+        "TJ",
+        "TM",
+        "TN",
+        "TR",
+        "TW",
+        "UA",
+        "US",
+        "UZ",
+        "VE",
+        "VN",
+        "XK",
+        "ZA"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 789,
+      "values": [
+        "'government_or_government_institution_or_article_4_2_public_organization_or_company_controlled_by_or_at_least_25_percent_directly_or_indirectly_owned_by_such_public_body'",
+        "'other_state_government_subnational_local_authority_central_bank_other_public_law_body_or_entity_directly_or_indirectly_wholly_owned_by_such_public_body'",
+        "'true'",
+        "True"
+      ]
+    },
+    "borrower_category": {
+      "classification": "treaty_specific_structured",
+      "income_types": [
+        "interest"
+      ],
+      "country_count": 1,
+      "countries": [
+        "KP"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 1,
+      "values": [
+        "'source_state_government_subnational_local_authority_central_bank_or_government_controlled_financial_institution'"
+      ]
+    },
+    "canadian_non_resident_owned_investment_corporation_exception": {
+      "classification": "treaty_specific_structured",
+      "income_types": [
+        "dividend"
+      ],
+      "country_count": 1,
+      "countries": [
+        "CA"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 1,
+      "values": [
+        "'false'"
+      ]
+    },
+    "claim_not_effectively_connected_to_czech_pe": {
+      "classification": "derived",
+      "income_types": [
+        "interest"
+      ],
+      "country_count": 1,
+      "countries": [
+        "QA"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 1,
+      "values": [
+        "'true'"
+      ]
+    },
+    "continuous_holding_period_days": {
+      "classification": "treaty_specific_structured",
+      "income_types": [
+        "dividend"
+      ],
+      "country_count": 1,
+      "countries": [
+        "BD"
+      ],
+      "operators": [
+        ">="
+      ],
+      "condition_count": 1,
+      "values": [
+        "365"
+      ]
+    },
+    "detailed_eligibility_review_required": {
+      "classification": "professional_legal",
+      "income_types": [
+        "interest"
+      ],
+      "country_count": 1,
+      "countries": [
+        "CL"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 1,
+      "values": [
+        "'true'"
+      ]
+    },
+    "direct_or_indirect_voting_ownership": {
+      "classification": "standard_user_input",
+      "income_types": [
+        "dividend"
+      ],
+      "country_count": 1,
+      "countries": [
+        "DE"
+      ],
+      "operators": [
+        ">="
+      ],
+      "condition_count": 1,
+      "values": [
+        "'25%'"
+      ]
+    },
+    "direct_ownership": {
+      "classification": "standard_user_input",
+      "income_types": [
+        "dividend"
+      ],
+      "country_count": 12,
+      "countries": [
+        "CO",
+        "DE",
+        "FI",
+        "ID",
+        "NL",
+        "NO",
+        "PH",
+        "PT",
+        "QA",
+        "SE",
+        "SN",
+        "UZ"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 12,
+      "values": [
+        "True"
+      ]
+    },
+    "distributed_vs_undistributed_corporate_tax_rate_difference": {
+      "classification": "professional_legal",
+      "income_types": [
+        "dividend"
+      ],
+      "country_count": 1,
+      "countries": [
+        "DE"
+      ],
+      "operators": [
+        ">="
+      ],
+      "condition_count": 1,
+      "values": [
+        "'20%'"
+      ]
+    },
+    "fallback_case": {
+      "classification": "rule_control",
+      "income_types": [
+        "dividend",
+        "interest",
+        "royalty"
+      ],
+      "country_count": 37,
+      "countries": [
+        "AE",
+        "AU",
+        "BB",
+        "BR",
+        "BY",
+        "CA",
+        "CL",
+        "CO",
+        "DE",
+        "DK",
+        "EE",
+        "EG",
+        "FI",
+        "ID",
+        "IN",
+        "JP",
+        "KP",
+        "KW",
+        "LT",
+        "LV",
+        "ME",
+        "MN",
+        "NL",
+        "NO",
+        "PA",
+        "PH",
+        "PT",
+        "QA",
+        "RO",
+        "SE",
+        "SN",
+        "SY",
+        "TH",
+        "TN",
+        "TW",
+        "UA",
+        "UZ"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 41,
+      "values": [
+        "'all_other_article_12_royalties'",
+        "'all_other_cases'",
+        "'all_other_royalties'",
+        "'all_other_treaty_eligible_cases'",
+        "'other_interest_subject_to_source_state_taxation'"
+      ]
+    },
+    "general_article_11_2_rate": {
+      "classification": "rule_control",
+      "income_types": [
+        "interest"
+      ],
+      "country_count": 1,
+      "countries": [
+        "AU"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 1,
+      "values": [
+        "'true'"
+      ]
+    },
+    "holding_period_includes_payment_date": {
+      "classification": "professional_legal",
+      "income_types": [
+        "dividend"
+      ],
+      "country_count": 1,
+      "countries": [
+        "BD"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 1,
+      "values": [
+        "True"
+      ]
+    },
+    "holding_period_months": {
+      "classification": "standard_user_input",
+      "income_types": [
+        "dividend",
+        "interest",
+        "royalty"
+      ],
+      "country_count": 31,
+      "countries": [
+        "AT",
+        "BE",
+        "BG",
+        "CH",
+        "CY",
+        "DE",
+        "DK",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GR",
+        "HR",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "JP",
+        "LI",
+        "LT",
+        "LU",
+        "LV",
+        "MT",
+        "NL",
+        "NO",
+        "PL",
+        "PT",
+        "RO",
+        "SE",
+        "SI",
+        "SK"
+      ],
+      "operators": [
+        ">="
+      ],
+      "condition_count": 212,
+      "values": [
+        "'6'",
+        "12",
+        "24"
+      ]
+    },
+    "holding_period_reorganisation_continuity": {
+      "classification": "professional_legal",
+      "income_types": [
+        "dividend"
+      ],
+      "country_count": 1,
+      "countries": [
+        "BD"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 1,
+      "values": [
+        "'ownership_changes_directly_resulting_from_corporate_reorganisation_ignored'"
+      ]
+    },
+    "holding_period_will_reach_months": {
+      "classification": "professional_legal",
+      "income_types": [
+        "dividend",
+        "interest",
+        "royalty"
+      ],
+      "country_count": 30,
+      "countries": [
+        "AT",
+        "BE",
+        "BG",
+        "CH",
+        "CY",
+        "DE",
+        "DK",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GR",
+        "HR",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LI",
+        "LT",
+        "LU",
+        "LV",
+        "MT",
+        "NL",
+        "NO",
+        "PL",
+        "PT",
+        "RO",
+        "SE",
+        "SI",
+        "SK"
+      ],
+      "operators": [
+        ">="
+      ],
+      "condition_count": 210,
+      "values": [
+        "12",
+        "24"
+      ]
+    },
+    "holding_period_years": {
+      "classification": "treaty_specific_structured",
+      "income_types": [
+        "dividend"
+      ],
+      "country_count": 1,
+      "countries": [
+        "PT"
+      ],
+      "operators": [
+        ">="
+      ],
+      "condition_count": 1,
+      "values": [
+        "'2'"
+      ]
+    },
+    "ird_association_common_person_directly_holds_25_percent_both": {
+      "classification": "professional_legal",
+      "income_types": [
+        "interest",
+        "royalty"
+      ],
+      "country_count": 30,
+      "countries": [
+        "AT",
+        "BE",
+        "BG",
+        "CH",
+        "CY",
+        "DE",
+        "DK",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GR",
+        "HR",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LI",
+        "LT",
+        "LU",
+        "LV",
+        "MT",
+        "NL",
+        "NO",
+        "PL",
+        "PT",
+        "RO",
+        "SE",
+        "SI",
+        "SK"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 120,
+      "values": [
+        "True"
+      ]
+    },
+    "ird_association_payer_directly_holds_25_percent_recipient": {
+      "classification": "professional_legal",
+      "income_types": [
+        "interest",
+        "royalty"
+      ],
+      "country_count": 30,
+      "countries": [
+        "AT",
+        "BE",
+        "BG",
+        "CH",
+        "CY",
+        "DE",
+        "DK",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GR",
+        "HR",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LI",
+        "LT",
+        "LU",
+        "LV",
+        "MT",
+        "NL",
+        "NO",
+        "PL",
+        "PT",
+        "RO",
+        "SE",
+        "SI",
+        "SK"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 120,
+      "values": [
+        "True"
+      ]
+    },
+    "ird_association_recipient_directly_holds_25_percent_payer": {
+      "classification": "professional_legal",
+      "income_types": [
+        "interest",
+        "royalty"
+      ],
+      "country_count": 30,
+      "countries": [
+        "AT",
+        "BE",
+        "BG",
+        "CH",
+        "CY",
+        "DE",
+        "DK",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GR",
+        "HR",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LI",
+        "LT",
+        "LU",
+        "LV",
+        "MT",
+        "NL",
+        "NO",
+        "PL",
+        "PT",
+        "RO",
+        "SE",
+        "SI",
+        "SK"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 120,
+      "values": [
+        "True"
+      ]
+    },
+    "lender_category": {
+      "classification": "treaty_specific_structured",
+      "income_types": [
+        "interest"
+      ],
+      "country_count": 1,
+      "countries": [
+        "KP"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 1,
+      "values": [
+        "'other_state_government_subnational_local_authority_or_resident'"
+      ]
+    },
+    "loan_is_noncommercial": {
+      "classification": "treaty_specific_structured",
+      "income_types": [
+        "interest"
+      ],
+      "country_count": 1,
+      "countries": [
+        "RO"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 1,
+      "values": [
+        "'true'"
+      ]
+    },
+    "loan_or_credit_provider": {
+      "classification": "treaty_specific_structured",
+      "income_types": [
+        "interest"
+      ],
+      "country_count": 3,
+      "countries": [
+        "AM",
+        "AZ",
+        "BR"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 3,
+      "values": [
+        "'bank'"
+      ]
+    },
+    "loan_provider": {
+      "classification": "treaty_specific_structured",
+      "income_types": [
+        "interest"
+      ],
+      "country_count": 1,
+      "countries": [
+        "TN"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 1,
+      "values": [
+        "'contracting_state'"
+      ]
+    },
+    "minimum_term_years": {
+      "classification": "treaty_specific_structured",
+      "income_types": [
+        "interest"
+      ],
+      "country_count": 1,
+      "countries": [
+        "BR"
+      ],
+      "operators": [
+        ">="
+      ],
+      "condition_count": 1,
+      "values": [
+        "'10'"
+      ]
+    },
+    "official_foreign_exchange_reserve_investment": {
+      "classification": "treaty_specific_structured",
+      "income_types": [
+        "interest"
+      ],
+      "country_count": 1,
+      "countries": [
+        "AU"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 1,
+      "values": [
+        "'by_government_monetary_institution_or_central_bank'"
+      ]
+    },
+    "ownership_percent": {
+      "classification": "standard_user_input",
+      "income_types": [
+        "dividend"
+      ],
+      "country_count": 59,
+      "countries": [
+        "AD",
+        "AL",
+        "AT",
+        "AU",
+        "BB",
+        "BD",
+        "BE",
+        "BG",
+        "BY",
+        "CH",
+        "CN",
+        "CO",
+        "CY",
+        "DE",
+        "DK",
+        "EE",
+        "EG",
+        "ES",
+        "FI",
+        "FR",
+        "GB",
+        "GE",
+        "GR",
+        "HR",
+        "HU",
+        "ID",
+        "IE",
+        "IL",
+        "IS",
+        "IT",
+        "KG",
+        "LI",
+        "LK",
+        "LT",
+        "LU",
+        "LV",
+        "MD",
+        "MK",
+        "MT",
+        "NG",
+        "NL",
+        "NO",
+        "PH",
+        "PK",
+        "PL",
+        "PT",
+        "QA",
+        "RO",
+        "SE",
+        "SI",
+        "SK",
+        "SN",
+        "TN",
+        "UA",
+        "US",
+        "UZ",
+        "VE",
+        "XK",
+        "ZA"
+      ],
+      "operators": [
+        ">="
+      ],
+      "condition_count": 112,
+      "values": [
+        "'10%'",
+        "'10'",
+        "'15'",
+        "'20%'",
+        "'20'",
+        "'25%'",
+        "'25'",
+        "10"
+      ]
+    },
+    "payment_is_arm_length_amount": {
+      "classification": "professional_legal",
+      "income_types": [
+        "interest",
+        "royalty"
+      ],
+      "country_count": 30,
+      "countries": [
+        "AT",
+        "BE",
+        "BG",
+        "CH",
+        "CY",
+        "DE",
+        "DK",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GR",
+        "HR",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LI",
+        "LT",
+        "LU",
+        "LV",
+        "MT",
+        "NL",
+        "NO",
+        "PL",
+        "PT",
+        "RO",
+        "SE",
+        "SI",
+        "SK"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 360,
+      "values": [
+        "True"
+      ]
+    },
+    "payment_not_attributable_to_disqualifying_pe": {
+      "classification": "professional_legal",
+      "income_types": [
+        "interest",
+        "royalty"
+      ],
+      "country_count": 30,
+      "countries": [
+        "AT",
+        "BE",
+        "BG",
+        "CH",
+        "CY",
+        "DE",
+        "DK",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GR",
+        "HR",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LI",
+        "LT",
+        "LU",
+        "LV",
+        "MT",
+        "NL",
+        "NO",
+        "PL",
+        "PT",
+        "RO",
+        "SE",
+        "SI",
+        "SK"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 360,
+      "values": [
+        "True"
+      ]
+    },
+    "permanent_establishment_connection": {
+      "classification": "standard_user_input",
+      "income_types": [
+        "dividend",
+        "interest",
+        "royalty"
+      ],
+      "country_count": 7,
+      "countries": [
+        "AT",
+        "CH",
+        "DE",
+        "ES",
+        "IT",
+        "NL",
+        "SE"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 16,
+      "values": [
+        "'false'",
+        "False"
+      ]
+    },
+    "purpose": {
+      "classification": "treaty_specific_structured",
+      "income_types": [
+        "interest"
+      ],
+      "country_count": 1,
+      "countries": [
+        "BR"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 1,
+      "values": [
+        "'industrial_equipment_sale_or_study_installation_furnishing_of_industrial_or_scientific_units_or_public_works'"
+      ]
+    },
+    "qualifying_article_11_2a_case": {
+      "classification": "treaty_specific_structured",
+      "income_types": [
+        "interest"
+      ],
+      "country_count": 1,
+      "countries": [
+        "CL"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 1,
+      "values": [
+        "'bank_or_insurer_or_active_regular_unrelated_financing_business_or_credit_sale_of_machinery_or_equipment_or_financial_market_funding_enterprise'"
+      ]
+    },
+    "recipient_country_imposes_royalty_wht_on_nonresidents": {
+      "classification": "professional_legal",
+      "income_types": [
+        "royalty"
+      ],
+      "country_count": 1,
+      "countries": [
+        "CH"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 1,
+      "values": [
+        "False"
+      ]
+    },
+    "recipient_entity_type": {
+      "classification": "standard_user_input",
+      "income_types": [
+        "dividend",
+        "interest"
+      ],
+      "country_count": 33,
+      "countries": [
+        "AE",
+        "AT",
+        "AU",
+        "BY",
+        "CA",
+        "CH",
+        "CN",
+        "CO",
+        "DE",
+        "DK",
+        "EG",
+        "FI",
+        "ID",
+        "JO",
+        "JP",
+        "KZ",
+        "MA",
+        "ME",
+        "MY",
+        "NG",
+        "NL",
+        "NO",
+        "PA",
+        "PH",
+        "PT",
+        "QA",
+        "RS",
+        "SE",
+        "SI",
+        "SN",
+        "TH",
+        "TR",
+        "UZ"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 43,
+      "values": [
+        "'bank'",
+        "'central_bank'",
+        "'company'",
+        "'company_and_financial_institution_including_insurer'",
+        "'company_other_than_partnership'",
+        "'company_with_share_capital'",
+        "'government_including_local_authority_central_bank_or_other_government_controlled_financial_institution'",
+        "'government_local_authority_central_bank_wholly_state_owned_financial_institution_or_claim_secured_or_indirectly_financed_by_such_public_body'",
+        "'government_of_malaysia_including_state_government_local_authority_bank_negara_or_agreed_wholly_government_owned_institution'",
+        "'government_of_thailand_including_bank_of_thailand_export_import_bank_local_authority_or_agreed_wholly_government_owned_institution'",
+        "'government_or_central_bank'",
+        "'government_or_qualifying_public_body'",
+        "'government_or_subnational_or_local_authority_or_central_bank_or_entity_directly_or_indirectly_wholly_owned_by_such_public_body'",
+        "'government_subnational_local_authority_central_bank_eximbank_or_agreed_wholly_government_owned_institution'",
+        "'government_subnational_local_authority_central_bank_or_government_agency_or_claim_financed_guaranteed_or_secured_by_such_public_body'",
+        "'government_subnational_local_authority_central_bank_or_other_financial_institution_or_public_company_with_government_ownership_over_50_percent'",
+        "'government_subnational_local_authority_central_bank_or_wholly_government_owned_financial_institution'",
+        "'government_subnational_local_authority_central_bank_or_wholly_government_owned_financial_institution_or_interest_on_government_guaranteed_loan'",
+        "'government_subnational_local_authority_central_bank_wholly_government_owned_financial_institution_or_qualifying_government_guaranteed_financing'",
+        "'government_subnational_local_authority_or_central_bank'",
+        "'nigerian_government_local_authority_government_agency_or_central_bank_or_government_created_foreign_trade_finance_institution_with_required_approval'",
+        "'qualifying_pension_fund'",
+        "'qualifying_pension_fund_or_similar_pension_institution'"
+      ]
+    },
+    "recipient_has_immediate_entitlement": {
+      "classification": "treaty_specific_structured",
+      "income_types": [
+        "royalty"
+      ],
+      "country_count": 1,
+      "countries": [
+        "AU"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 1,
+      "values": [
+        "'true'"
+      ]
+    },
+    "recipient_has_no_tax_exemption_or_zero_rate_option": {
+      "classification": "professional_legal",
+      "income_types": [
+        "dividend",
+        "interest",
+        "royalty"
+      ],
+      "country_count": 30,
+      "countries": [
+        "AT",
+        "BE",
+        "BG",
+        "CH",
+        "CY",
+        "DE",
+        "DK",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GR",
+        "HR",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LI",
+        "LT",
+        "LU",
+        "LV",
+        "MT",
+        "NL",
+        "NO",
+        "PL",
+        "PT",
+        "RO",
+        "SE",
+        "SI",
+        "SK"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 420,
+      "values": [
+        "True"
+      ]
+    },
+    "recipient_is_parent_company": {
+      "classification": "professional_legal",
+      "income_types": [
+        "dividend"
+      ],
+      "country_count": 30,
+      "countries": [
+        "AT",
+        "BE",
+        "BG",
+        "CH",
+        "CY",
+        "DE",
+        "DK",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GR",
+        "HR",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LI",
+        "LT",
+        "LU",
+        "LV",
+        "MT",
+        "NL",
+        "NO",
+        "PL",
+        "PT",
+        "RO",
+        "SE",
+        "SI",
+        "SK"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 60,
+      "values": [
+        "True"
+      ]
+    },
+    "recipient_is_partnership": {
+      "classification": "treaty_specific_structured",
+      "income_types": [
+        "dividend"
+      ],
+      "country_count": 1,
+      "countries": [
+        "CH"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 1,
+      "values": [
+        "False"
+      ]
+    },
+    "recipient_is_qualifying_company_form": {
+      "classification": "professional_legal",
+      "income_types": [
+        "dividend",
+        "interest",
+        "royalty"
+      ],
+      "country_count": 30,
+      "countries": [
+        "AT",
+        "BE",
+        "BG",
+        "CH",
+        "CY",
+        "DE",
+        "DK",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GR",
+        "HR",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LI",
+        "LT",
+        "LU",
+        "LV",
+        "MT",
+        "NL",
+        "NO",
+        "PL",
+        "PT",
+        "RO",
+        "SE",
+        "SI",
+        "SK"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 420,
+      "values": [
+        "True"
+      ]
+    },
+    "recipient_is_tax_resident_in_eligible_jurisdiction": {
+      "classification": "professional_legal",
+      "income_types": [
+        "dividend",
+        "interest",
+        "royalty"
+      ],
+      "country_count": 30,
+      "countries": [
+        "AT",
+        "BE",
+        "BG",
+        "CH",
+        "CY",
+        "DE",
+        "DK",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GR",
+        "HR",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LI",
+        "LT",
+        "LU",
+        "LV",
+        "MT",
+        "NL",
+        "NO",
+        "PL",
+        "PT",
+        "RO",
+        "SE",
+        "SI",
+        "SK"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 420,
+      "values": [
+        "True"
+      ]
+    },
+    "recipient_is_treaty_resident": {
+      "classification": "standard_user_input",
+      "income_types": [
+        "dividend",
+        "interest",
+        "royalty"
+      ],
+      "country_count": 9,
+      "countries": [
+        "AT",
+        "CH",
+        "DE",
+        "ES",
+        "IT",
+        "JP",
+        "NL",
+        "QA",
+        "SE"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 21,
+      "values": [
+        "'true'",
+        "True"
+      ]
+    },
+    "recipient_or_financing": {
+      "classification": "treaty_specific_structured",
+      "income_types": [
+        "interest"
+      ],
+      "country_count": 7,
+      "countries": [
+        "EE",
+        "LT",
+        "LV",
+        "MN",
+        "RO",
+        "SY",
+        "UA"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 7,
+      "values": [
+        "'government_local_authority_central_bank_wholly_government_owned_financial_institution_or_government_guaranteed_loan_or_credit'",
+        "'government_local_authority_territorial_administrative_unit_government_agency_bank_or_body_or_claim_guaranteed_secured_or_directly_or_indirectly_financed_by_wholly_government_owned_financial_institution'",
+        "'government_subnational_local_authority_central_bank_wholly_government_owned_financial_institution_or_government_guaranteed_loan'"
+      ]
+    },
+    "recipient_or_loan_provider_or_guarantor": {
+      "classification": "treaty_specific_structured",
+      "income_types": [
+        "interest"
+      ],
+      "country_count": 1,
+      "countries": [
+        "IN"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 1,
+      "values": [
+        "'government_subnational_local_authority_named_central_bank_or_public_financial_institution_or_other_agreed_institution'"
+      ]
+    },
+    "recipient_subject_to_qualifying_corporate_tax": {
+      "classification": "professional_legal",
+      "income_types": [
+        "dividend",
+        "interest",
+        "royalty"
+      ],
+      "country_count": 30,
+      "countries": [
+        "AT",
+        "BE",
+        "BG",
+        "CH",
+        "CY",
+        "DE",
+        "DK",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GR",
+        "HR",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LI",
+        "LT",
+        "LU",
+        "LV",
+        "MT",
+        "NL",
+        "NO",
+        "PL",
+        "PT",
+        "RO",
+        "SE",
+        "SI",
+        "SK"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 420,
+      "values": [
+        "True"
+      ]
+    },
+    "recipient_taxed_on_royalty_in_residence_state": {
+      "classification": "professional_legal",
+      "income_types": [
+        "royalty"
+      ],
+      "country_count": 1,
+      "countries": [
+        "ES"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 2,
+      "values": [
+        "'true'"
+      ]
+    },
+    "right_or_property_not_effectively_connected_to_czech_pe_or_fixed_base": {
+      "classification": "derived",
+      "income_types": [
+        "royalty"
+      ],
+      "country_count": 1,
+      "countries": [
+        "SE"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 2,
+      "values": [
+        "'true'"
+      ]
+    },
+    "royalty_category": {
+      "classification": "standard_user_input",
+      "income_types": [
+        "royalty"
+      ],
+      "country_count": 30,
+      "countries": [
+        "AD",
+        "AM",
+        "AT",
+        "BB",
+        "BE",
+        "BR",
+        "CL",
+        "DK",
+        "ES",
+        "FI",
+        "FR",
+        "GB",
+        "GE",
+        "GR",
+        "IT",
+        "JP",
+        "KR",
+        "LB",
+        "LI",
+        "LU",
+        "ME",
+        "NO",
+        "RS",
+        "SE",
+        "SG",
+        "SK",
+        "TH",
+        "TN",
+        "TW",
+        "US"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 64,
+      "values": [
+        "'all_other_article_12_royalties'",
+        "'copyright_literary_artistic_or_scientific'",
+        "'copyright_literary_artistic_or_scientific_excluding_cinematographic_films_and_broadcast_recordings'",
+        "'copyright_literary_artistic_or_scientific_excluding_computer_program_including_films_and_broadcast_media'",
+        "'copyright_literary_artistic_or_scientific_including_cinematographic_and_television_films'",
+        "'copyright_literary_artistic_or_scientific_including_films_and_broadcast_recordings'",
+        "'copyright_literary_artistic_scientific_excluding_computer_program_including_films_and_broadcast_media'",
+        "'copyright_literary_artistic_scientific_excluding_computer_software_including_films_and_broadcast_media'",
+        "'copyright_literary_artistic_scientific_including_cinematographic_films'",
+        "'copyright_literary_artistic_scientific_including_cinematographic_films_and_broadcast_media'",
+        "'copyright_literary_artistic_scientific_including_cinematographic_films_and_tv_or_radio_recordings'",
+        "'copyright_literary_artistic_scientific_including_films_and_broadcast_media'",
+        "'copyright_literary_artistic_scientific_including_films_broadcast_recordings_and_other_audio_visual_reproduction_excluding_computer_software'",
+        "'copyright_literary_artistic_scientific_including_films_broadcast_software_patent_trademark_design_model_plan_secret_formula_process_or_knowhow'",
+        "'copyright_literary_artistic_scientific_including_films_tapes_or_other_audio_visual_reproduction'",
+        "'copyright_literary_dramatic_musical_or_artistic_excluding_cinematographic_and_broadcast_recordings'",
+        "'cultural_copyright_literary_artistic_scientific_including_films_and_broadcast_media'",
+        "'financial_lease_of_equipment'",
+        "'industrial_commercial_or_scientific_equipment'",
+        "'industrial_commercial_scientific_equipment'",
+        "'industrial_patent_trademark_design_model_plan_secret_formula_process_equipment_or_knowhow'",
+        "'operating_lease_of_equipment_or_computer_software'",
+        "'other'",
+        "'patent_trademark_design_model_plan_secret_formula_or_process'",
+        "'patent_trademark_design_model_plan_secret_formula_process_computer_program_equipment_or_knowhow'",
+        "'patent_trademark_design_model_plan_secret_formula_process_computer_program_or_knowhow'",
+        "'patent_trademark_design_model_plan_secret_formula_process_computer_software_equipment_or_knowhow'",
+        "'patent_trademark_design_model_plan_secret_formula_process_custom_software_equipment_or_knowhow'",
+        "'patent_trademark_design_model_plan_secret_formula_process_equipment_knowhow_technical_or_economic_studies_or_technical_assistance'",
+        "'patent_trademark_design_model_plan_secret_formula_process_equipment_or_industrial_commercial_scientific_knowhow'",
+        "'patent_trademark_design_model_plan_secret_formula_process_equipment_or_industrial_commercial_technical_technological_scientific_knowhow'",
+        "'patent_trademark_design_model_plan_secret_formula_process_equipment_or_knowhow'",
+        "'patent_trademark_design_model_plan_secret_formula_process_including_computer_software_equipment_or_knowhow'",
+        "'patent_trademark_design_model_plan_secret_formula_process_or_industrial_commercial_scientific_knowhow'",
+        "'patent_trademark_design_model_plan_secret_formula_process_similar_right_or_property_equipment_or_knowhow_including_productivity_use_or_disposition_contingent_sales'",
+        "'patent_trademark_design_model_plan_secret_formula_process_software_equipment_or_knowhow'",
+        "'software_patent_trademark_design_model_plan_secret_formula_process_knowhow_or_industrial_commercial_scientific_equipment'",
+        "'trademark'"
+      ]
+    },
+    "section_38nb_decision_effective": {
+      "classification": "professional_legal",
+      "income_types": [
+        "interest",
+        "royalty"
+      ],
+      "country_count": 30,
+      "countries": [
+        "AT",
+        "BE",
+        "BG",
+        "CH",
+        "CY",
+        "DE",
+        "DK",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GR",
+        "HR",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LI",
+        "LT",
+        "LU",
+        "LV",
+        "MT",
+        "NL",
+        "NO",
+        "PL",
+        "PT",
+        "RO",
+        "SE",
+        "SI",
+        "SK"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 360,
+      "values": [
+        "True"
+      ]
+    },
+    "source_state_taxation": {
+      "classification": "rule_control",
+      "income_types": [
+        "interest"
+      ],
+      "country_count": 5,
+      "countries": [
+        "DE",
+        "ES",
+        "IT",
+        "NL",
+        "SE"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 5,
+      "values": [
+        "'prohibited_under_article_11'"
+      ]
+    },
+    "special_article_11_3_exemption": {
+      "classification": "treaty_specific_structured",
+      "income_types": [
+        "interest"
+      ],
+      "country_count": 1,
+      "countries": [
+        "TW"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 1,
+      "values": [
+        "'credit_sale_of_goods_or_equipment_or_government_subnational_local_authority_central_bank_or_government_controlled_or_wholly_owned_financial_institution_or_loan_or_credit_guaranteed_or_insured_by_such_public_body'"
+      ]
+    },
+    "statutory_clawback_acknowledged": {
+      "classification": "professional_legal",
+      "income_types": [
+        "dividend",
+        "interest",
+        "royalty"
+      ],
+      "country_count": 30,
+      "countries": [
+        "AT",
+        "BE",
+        "BG",
+        "CH",
+        "CY",
+        "DE",
+        "DK",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GR",
+        "HR",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LI",
+        "LT",
+        "LU",
+        "LV",
+        "MT",
+        "NL",
+        "NO",
+        "PL",
+        "PT",
+        "RO",
+        "SE",
+        "SI",
+        "SK"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 210,
+      "values": [
+        "True"
+      ]
+    },
+    "voting_ownership": {
+      "classification": "treaty_specific_structured",
+      "income_types": [
+        "dividend"
+      ],
+      "country_count": 1,
+      "countries": [
+        "JP"
+      ],
+      "operators": [
+        ">="
+      ],
+      "condition_count": 1,
+      "values": [
+        "'25%'"
+      ]
+    },
+    "voting_power_control": {
+      "classification": "treaty_specific_structured",
+      "income_types": [
+        "dividend"
+      ],
+      "country_count": 1,
+      "countries": [
+        "CA"
+      ],
+      "operators": [
+        ">="
+      ],
+      "condition_count": 1,
+      "values": [
+        "'10%'"
+      ]
+    }
+  }
+}

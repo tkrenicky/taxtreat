@@ -47,6 +47,11 @@
         },
         {
           "fact": "direct_ownership",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "ownership_percent",
           "fact_source": "transaction",
           "operator": ">=",
           "value": "20%"

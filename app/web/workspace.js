@@ -11,7 +11,7 @@
   }
   "use strict";
 
-  const BUILD_VERSION = "20260815-9";
+  const BUILD_VERSION = "20260815-10";
 
   async function checkForNewBuild() {
     try {
@@ -400,6 +400,41 @@
     return Math.max(0, months);
   }
 
+  function completeDays(acquisitionDate, transactionDate) {
+    const start = new Date(`${acquisitionDate}T00:00:00Z`);
+    const end = new Date(`${transactionDate}T00:00:00Z`);
+    return Math.max(0, Math.floor((end - start) / 86400000));
+  }
+
+  function completeYears(acquisitionDate, transactionDate) {
+    const start = new Date(`${acquisitionDate}T00:00:00Z`);
+    const end = new Date(`${transactionDate}T00:00:00Z`);
+    let years = end.getUTCFullYear() - start.getUTCFullYear();
+
+    if (
+      end.getUTCMonth() < start.getUTCMonth() ||
+      (
+        end.getUTCMonth() === start.getUTCMonth() &&
+        end.getUTCDate() < start.getUTCDate()
+      )
+    ) years -= 1;
+
+    return Math.max(0, years);
+  }
+
+  function applyHoldingPeriodFacts(facts, acquisitionDate, transactionDate) {
+    if (!acquisitionDate || !transactionDate) return;
+
+    facts.holding_period_months =
+      completeMonths(acquisitionDate, transactionDate);
+
+    facts.continuous_holding_period_days =
+      completeDays(acquisitionDate, transactionDate);
+
+    facts.holding_period_years =
+      completeYears(acquisitionDate, transactionDate);
+  }
+
   function holdingAnswerIsComplete() {
     const mode = form.elements.holding_period_mode.value;
     return mode === "at_least_12_months" || mode === "less_than_12_months" ||
@@ -448,11 +483,24 @@
     copy.append(title, why);
     const inputPath = question.input_path;
     let input;
-    if (question.response_type === "boolean") {
+    if (question.response_type === "boolean" || question.response_type === "boolean_rule_value") {
       input = document.createElement("select");
-      [["", "Vyber odpověď"], ["true", "Ano"], ["false", "Ne"]].forEach(([value, label]) => {
-        const option = document.createElement("option"); option.value = value; option.textContent = label; input.append(option);
+
+      const values = question.response_type === "boolean_rule_value"
+        ? [["", "Vyber odpověď"], ["__yes__", "Ano"], ["__no__", "Ne"]]
+        : [["", "Vyber odpověď"], ["true", "Ano"], ["false", "Ne"]];
+
+      values.forEach(([value, label]) => {
+        const option = document.createElement("option");
+        option.value = value;
+        option.textContent = label;
+        input.append(option);
       });
+
+      if (question.response_type === "boolean_rule_value") {
+        input.dataset.trueValue = JSON.stringify(question.true_value);
+        input.dataset.falseValue = JSON.stringify(question.false_value);
+      }
     } else if (question.response_type === "choice") {
       input = document.createElement("select");
       [["", "Vyber možnost"], ...(question.options || [])].forEach(([value, label]) => {
@@ -499,16 +547,53 @@
         clientAnswers.acquisitionDate = input.value;
       } else if (path && path.startsWith("facts.")) {
         const name = path.slice(6);
-        clientAnswers.facts[name] = input.dataset.responseType === "boolean" ? input.value === "true" : input.dataset.responseType === "decimal_percent" ? Number(input.value) : input.value;
+
+        if (input.dataset.responseType === "boolean_rule_value") {
+          const encoded = input.value === "__yes__"
+            ? input.dataset.trueValue
+            : input.dataset.falseValue;
+
+          clientAnswers.facts[name] = JSON.parse(encoded);
+
+        } else if (input.dataset.responseType === "boolean") {
+          clientAnswers.facts[name] = input.value === "true";
+
+        } else if (
+          ["decimal_percent", "number"].includes(
+            input.dataset.responseType
+          )
+        ) {
+          clientAnswers.facts[name] = Number(input.value);
+
+        } else {
+          clientAnswers.facts[name] = input.value;
+        }
       }
     });
-    Object.assign(payload.facts, clientAnswers.facts);
-    if (clientAnswers.acquisitionDate) payload.facts.holding_period_months = completeMonths(clientAnswers.acquisitionDate, payload.transaction_date);
+
+    Object.assign(
+      payload.facts,
+      clientAnswers.facts,
+    );
+
+    if (clientAnswers.acquisitionDate) {
+      applyHoldingPeriodFacts(
+        payload.facts,
+        clientAnswers.acquisitionDate,
+        payload.transaction_date,
+      );
+    }
     if (clientAnswers.exchangeRate) payload.transaction_amount.exchange_rate = { ...clientAnswers.exchangeRate, currency: payload.transaction_amount.currency };
   }
 
   function professionalTitle(question) {
-    return { recipient_eligibility: "Podmínky případného osvobození", future_holding_period: "Dodatečné splnění doby držby", domestic_exemption: "Podmínky vnitrostátního osvobození" }[question.advisor_topic] || "Podmínka vyžadující odborné posouzení";
+    return {
+      recipient_eligibility: "Podmínky případného osvobození",
+      future_holding_period: "Dodatečné splnění doby držby",
+      domestic_exemption: "Podmínky vnitrostátního osvobození",
+      interest_treaty_special_condition: "Zvláštní smluvní podmínka úroku",
+      royalty_treaty_legal_condition: "Zvláštní smluvní podmínka licenční platby"
+    }[question.advisor_topic] || "Podmínka vyžadující odborné posouzení";
   }
 
   function actionItem(question) {
@@ -726,6 +811,8 @@
       beneficial_owner: String(data.get("beneficial_owner")) === "true",
       recipient_is_treaty_resident: String(data.get("treaty_resident")) === "true",
       permanent_establishment_connection: String(data.get("pe_connection")) === "true",
+      right_or_property_not_effectively_connected_to_czech_pe_or_fixed_base: String(data.get("pe_connection")) !== "true",
+      claim_not_effectively_connected_to_czech_pe: String(data.get("pe_connection")) !== "true",
       recipient_entity_type: recipient.type === "Fyzická osoba" ? "individual" : recipient.type === "Fond" ? "fund" : recipient.type === "Společnost" ? "company" : "other"
     };
     const incomeType = String(data.get("income_type"));
@@ -746,8 +833,29 @@
     if (incomeType === "dividend") {
       if (ownershipPercent) facts.ownership_percent = Number(ownershipPercent);
       if (directOwnership) facts.direct_ownership = directOwnership === "true";
-      if (votingOwnership) facts.direct_or_indirect_voting_ownership = Number(votingOwnership);
-      if (holdingPeriodMode === "known_date" && acquisitionDate) facts.holding_period_months = completeMonths(acquisitionDate, transactionDate);
+      if (votingOwnership) {
+        const votingPercent = Number(votingOwnership);
+
+        facts.direct_or_indirect_voting_ownership =
+          votingPercent;
+
+        facts.voting_ownership =
+          votingPercent;
+
+        facts.voting_power_control =
+          votingPercent;
+      }
+
+      if (
+        holdingPeriodMode === "known_date" &&
+        acquisitionDate
+      ) {
+        applyHoldingPeriodFacts(
+          facts,
+          acquisitionDate,
+          transactionDate,
+        );
+      }
       if (holdingPeriodMode === "at_least_12_months") facts.holding_period_months = 12;
       if (holdingPeriodMode === "less_than_12_months") facts.holding_period_months = 0;
     }

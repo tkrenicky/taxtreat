@@ -85,6 +85,13 @@ class LegalDecisionResult:
     dataset_release: str | None = None
 
 
+_RULE_CONTROL_FACTS = {
+    "fallback_case",
+    "source_state_taxation",
+    "general_article_11_2_rate",
+}
+
+
 _SUPPORTED_OPERATORS = {
     "==": lambda left, right: left == right,
     "!=": lambda left, right: left != right,
@@ -97,91 +104,157 @@ _SUPPORTED_OPERATORS = {
 }
 
 
-_ROYALTY_CATEGORY_ALIASES = {
-    "copyright_literary_artistic_or_scientific": "copyright",
-    # Kept for requests created by the earlier Stage 7B UI.
-    "software_patent_trademark_design_model_plan_secret_formula_process_knowhow_or_industrial_commercial_scientific_equipment": "industrial_property",
-    "software_patent_trademark_design_model_plan_secret_formula_process_or_knowhow": "industrial_property",
-    "industrial_commercial_or_scientific_equipment": "equipment",
-    "other": "other",
+def _boolean_like(value: Any) -> bool | None:
+    """Normalize boolean values preserved in legacy legal-rule projections."""
+
+    if isinstance(value, bool):
+        return value
+
+    if isinstance(value, str):
+        normalized = value.strip().lower()
+        if normalized in {"true", "yes", "1"}:
+            return True
+        if normalized in {"false", "no", "0"}:
+            return False
+
+    return None
+
+
+_UI_ROYALTY_CATEGORY_GROUPS = {
+    "copyright_literary_artistic_or_scientific": {"copyright"},
+    "software_patent_trademark_design_model_plan_secret_formula_process_knowhow": {
+        "industrial_ip"
+    },
+    # Backward compatibility with the original Stage 7B frontend value.
+    "software_patent_trademark_design_model_plan_secret_formula_process_knowhow_or_industrial_commercial_scientific_equipment": {
+        "industrial_ip"
+    },
+    "industrial_commercial_or_scientific_equipment": {"equipment"},
+    "other": {"other"},
 }
 
 
-def _royalty_category_scopes(
-    value: Any,
-    *,
-    catalog_value: bool = False,
-) -> set[str]:
-    """Map UI categories and treaty-specific labels to semantic scopes."""
+def _royalty_category_groups(value: Any) -> set[str]:
+    """Map UI royalty classes and treaty-specific taxonomy to common groups."""
+
+    if value is None:
+        return set()
 
     normalized = str(value).strip().lower()
-    if catalog_value and (
-        normalized == "other" or normalized.startswith("all_other_")
-    ):
-        return {"copyright", "industrial_property", "other"}
-    alias = _ROYALTY_CATEGORY_ALIASES.get(normalized)
-    if alias is not None:
-        return {alias}
 
-    scopes: set[str] = set()
-    if "copyright" in normalized:
-        scopes.add("copyright")
-    industrial_scope = normalized.replace(
-        "excluding_computer_program",
-        "",
-    ).replace(
-        "excluding_computer_software",
-        "",
+    if normalized in _UI_ROYALTY_CATEGORY_GROUPS:
+        return set(_UI_ROYALTY_CATEGORY_GROUPS[normalized])
+
+    groups: set[str] = set()
+
+    if normalized == "all_other_article_12_royalties":
+        groups.add("other")
+
+    copyright_tokens = (
+        "copyright",
+        "literary",
+        "artistic",
+        "dramatic",
+        "musical",
+        "cultural",
     )
-    if any(
-        token in industrial_scope
-        for token in (
-            "patent",
-            "trademark",
-            "design",
-            "secret_formula",
-            "process",
-            "software",
-            "computer_program",
-            "knowhow",
-            "know-how",
-        )
-    ):
-        scopes.add("industrial_property")
-    if "equipment" in normalized:
-        scopes.add("equipment")
-    return scopes
+    if any(token in normalized for token in copyright_tokens):
+        groups.add("copyright")
+
+    industrial_ip_tokens = (
+        "patent",
+        "trademark",
+        "design",
+        "model",
+        "secret_formula",
+        "process",
+        "knowhow",
+        "know-how",
+        "software",
+        "computer_program",
+        "computer_software",
+        "similar_right",
+        "technical_assistance",
+        "technical_or_economic_studies",
+    )
+    if any(token in normalized for token in industrial_ip_tokens):
+        groups.add("industrial_ip")
+
+    equipment_tokens = (
+        "equipment",
+        "financial_lease",
+        "operating_lease",
+    )
+    if any(token in normalized for token in equipment_tokens):
+        groups.add("equipment")
+
+    if normalized == "other":
+        groups.add("other")
+
+    return groups
 
 
-def _condition_operands(
-    condition: LegalCondition,
-    supplied: Any,
-) -> tuple[Any, Any]:
-    """Normalize catalog serialization without weakening legal comparisons."""
+def _numeric_like(value: Any) -> float | None:
+    """Normalize numeric legal thresholds including legacy string percentages."""
 
-    expected = condition.value
-    if isinstance(supplied, bool) and isinstance(expected, str):
-        lowered = expected.strip().lower()
-        if lowered in {"true", "false"}:
-            expected = lowered == "true"
-    elif isinstance(expected, bool) and isinstance(supplied, str):
-        lowered = supplied.strip().lower()
-        if lowered in {"true", "false"}:
-            supplied = lowered == "true"
+    if isinstance(value, bool):
+        return None
+
+    if isinstance(value, (int, float)):
+        return float(value)
+
+    if isinstance(value, str):
+        normalized = value.strip()
+
+        if normalized.endswith("%"):
+            normalized = normalized[:-1].strip()
+
+        try:
+            return float(normalized)
+        except ValueError:
+            return None
+
+    return None
+
+
+def _royalty_categories_match(left: Any, right: Any) -> bool:
+    """Match UI royalty category to the taxonomy used by the treaty rule.
+
+    ``right`` is the catalog / Stage 6 condition value.  Some treaty
+    packages use ``other`` (or an equivalent all-other label) as the
+    residual Article 12 bucket covering copyright, industrial-property
+    rights and other royalties, while equipment remains a separate
+    category.
+    """
+
+    if left == right:
+        return True
+
+    left_groups = _royalty_category_groups(left)
+
+    catalog_value = str(right or "").strip().lower()
+
     if (
-        condition.fact == "royalty_category"
-        and condition.operator in {"==", "!="}
+        catalog_value == "other"
+        or catalog_value.startswith("all_other_")
     ):
-        if str(supplied).strip().lower() == str(expected).strip().lower():
-            return True, True
-        expected_scopes = _royalty_category_scopes(
-            expected,
-            catalog_value=True,
+        return bool(
+            left_groups.intersection(
+                {
+                    "copyright",
+                    "industrial_ip",
+                    "other",
+                }
+            )
         )
-        supplied_scopes = _royalty_category_scopes(supplied)
-        category_matches = bool(expected_scopes.intersection(supplied_scopes))
-        return category_matches, True
-    return supplied, expected
+
+    right_groups = _royalty_category_groups(right)
+
+    return bool(
+        left_groups
+        and right_groups
+        and left_groups.intersection(right_groups)
+    )
 
 
 def resolve_tax_treatment(rule: LegalRule) -> TaxTreatment | None:
@@ -226,6 +299,12 @@ def _evaluate_condition(
     facts: dict[str, Any],
     legal_facts: dict[str, Any],
 ) -> tuple[bool | None, str | None]:
+    if condition.fact in _RULE_CONTROL_FACTS:
+        # These values describe the legal-rule branch itself, not a
+        # transaction fact. Rule priority still prevents a fallback/general
+        # rule from displacing a matching higher-priority special rule.
+        return True, None
+
     fact_store = legal_facts if condition.fact_source == "legal" else facts
     if condition.fact not in fact_store or fact_store[condition.fact] is None:
         prefix = "legal_fact:" if condition.fact_source == "legal" else ""
@@ -237,12 +316,51 @@ def _evaluate_condition(
             f"Unsupported legal-rule operator: {condition.operator!r}"
         )
 
-    supplied, expected = _condition_operands(
-        condition,
-        fact_store[condition.fact],
-    )
+    fact_value = fact_store[condition.fact]
+    condition_value = condition.value
+
+    if (
+        condition.fact == "royalty_category"
+        and condition.operator in {"==", "!="}
+    ):
+        matched = _royalty_categories_match(
+            fact_value,
+            condition_value,
+        )
+        if condition.operator == "!=":
+            matched = not matched
+        return matched, None
+
+    fact_boolean = _boolean_like(fact_value)
+    condition_boolean = _boolean_like(condition_value)
+
+    if (
+        fact_boolean is not None
+        and condition_boolean is not None
+        and condition.operator in {"==", "!="}
+    ):
+        matched = fact_boolean == condition_boolean
+        if condition.operator == "!=":
+            matched = not matched
+        return matched, None
+
+    if condition.operator in {">", ">=", "<", "<="}:
+        fact_numeric = _numeric_like(fact_value)
+        condition_numeric = _numeric_like(condition_value)
+
+        if (
+            fact_numeric is not None
+            and condition_numeric is not None
+        ):
+            return bool(
+                operator(
+                    fact_numeric,
+                    condition_numeric,
+                )
+            ), None
+
     try:
-        return bool(operator(supplied, expected)), None
+        return bool(operator(fact_value, condition_value)), None
     except TypeError:
         return False, None
 

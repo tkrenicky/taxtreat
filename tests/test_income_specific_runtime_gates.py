@@ -91,7 +91,7 @@ def test_royalty_requires_classification():
     assert result.applies is True
     assert result.allowed is False
     assert result.missing_facts == [
-        "royalty_classification"
+        "royalty_category"
     ]
 
 

@@ -1,6 +1,12 @@
 from __future__ import annotations
 
+import json
+from pathlib import Path
 from typing import Any, Mapping
+
+
+ROOT = Path(__file__).resolve().parents[2]
+STAGE6_RULE_DIR = ROOT / "data" / "legal_rules_stage6"
 
 
 FACT_GUIDANCE: dict[str, dict[str, Any]] = {
@@ -127,7 +133,7 @@ FACT_GUIDANCE: dict[str, dict[str, Any]] = {
         "response_type": "choice",
         "options": [
             ["copyright_literary_artistic_or_scientific", "Autorské dílo"],
-            ["software_patent_trademark_design_model_plan_secret_formula_process_knowhow_or_industrial_commercial_scientific_equipment", "Software, patent, ochranná známka nebo know-how"],
+            ["software_patent_trademark_design_model_plan_secret_formula_process_knowhow", "Software, patent, ochranná známka nebo know-how"],
             ["industrial_commercial_or_scientific_equipment", "Průmyslové, obchodní nebo vědecké zařízení"],
             ["other", "Jiný předmět licence"],
         ],
@@ -140,6 +146,258 @@ FACT_GUIDANCE: dict[str, dict[str, Any]] = {
         "documents": ["Úvěrová nebo zápůjční smlouva", "Doklady k uplatňovanému osvobození"],
     },
 }
+
+# Treaty-specific facts that can be answered by the user. They are
+# presented only when the selected treaty actually needs them.
+FACT_GUIDANCE.update({
+    "continuous_holding_period_days": {
+        "prompt": "Od jakého data příjemce nepřetržitě drží podíl na českém plátci?",
+        "why": (
+            "TaxTreat z data nabytí automaticky vypočte přesnou dobu "
+            "držby ve dnech."
+        ),
+        "response_type": "date",
+        "input_path": "derived.acquisition_date",
+        "documents": ["Doklady o nabytí podílu"],
+    },
+    "holding_period_years": {
+        "prompt": "Od jakého data příjemce drží podíl na českém plátci?",
+        "why": (
+            "TaxTreat z data nabytí automaticky vypočte dobu držby "
+            "v celých letech."
+        ),
+        "response_type": "date",
+        "input_path": "derived.acquisition_date",
+        "documents": ["Doklady o nabytí podílu"],
+    },
+    "voting_ownership": {
+        "prompt": (
+            "Jaký podíl na hlasovacích právech českého plátce "
+            "příjemce drží?"
+        ),
+        "why": (
+            "Smluvní hranice může být navázána na hlasovací práva "
+            "namísto podílu na základním kapitálu."
+        ),
+        "response_type": "decimal_percent",
+        "documents": ["Schéma vlastnické struktury"],
+    },
+    "voting_power_control": {
+        "prompt": (
+            "Jaký podíl hlasovací síly českého plátce příjemce ovládá?"
+        ),
+        "why": (
+            "Příslušná smlouva používá pro sníženou sazbu hranici "
+            "hlasovací síly."
+        ),
+        "response_type": "decimal_percent",
+        "documents": ["Schéma vlastnické struktury"],
+    },
+    "recipient_is_partnership": {
+        "prompt": (
+            "Je příjemce právně kvalifikován jako partnership "
+            "(osobní společnost)?"
+        ),
+        "why": (
+            "U této smlouvy může právní forma partnership ovlivnit "
+            "použití dividendového pravidla."
+        ),
+        "response_type": "boolean",
+        "documents": ["Zakladatelské dokumenty příjemce"],
+    },
+    "canadian_non_resident_owned_investment_corporation_exception": {
+        "prompt": (
+            "Spadá kanadský příjemce do zvláštní kategorie "
+            "non-resident-owned investment corporation?"
+        ),
+        "why": (
+            "Kanadská smlouva obsahuje pro tuto kategorii zvláštní "
+            "výjimku z dividendového pravidla."
+        ),
+        "response_type": "boolean",
+        "documents": [
+            "Doklady k právnímu a daňovému postavení příjemce"
+        ],
+    },
+    "recipient_has_immediate_entitlement": {
+        "prompt": "Má příjemce bezprostřední nárok na licenční příjem?",
+        "why": (
+            "Příslušná smlouva vyžaduje bezprostřední nárok příjemce "
+            "na licenční platbu."
+        ),
+        "response_type": "boolean",
+        "documents": ["Licenční smlouva"],
+    },
+    "loan_is_noncommercial": {
+        "prompt": (
+            "Jde o nekomerční úvěr nebo zápůjčku ve smyslu "
+            "příslušné smlouvy?"
+        ),
+        "why": (
+            "U této smlouvy může nekomerční charakter financování "
+            "vést ke zvláštnímu režimu úroku."
+        ),
+        "response_type": "boolean",
+        "documents": ["Úvěrová nebo zápůjční smlouva"],
+    },
+    "minimum_term_years": {
+        "prompt": (
+            "Jaká je sjednaná minimální doba tohoto financování "
+            "v letech?"
+        ),
+        "why": (
+            "Příslušná smlouva váže zvláštní sazbu na minimální "
+            "dobu financování."
+        ),
+        "response_type": "number",
+        "documents": ["Úvěrová nebo zápůjční smlouva"],
+    },
+})
+
+
+# These facts contain a treaty-specific enumerated value rather than
+# an ordinary True/False value. The UI asks a human Yes/No question,
+# while intake translates Yes to the exact value required by the
+# selected country's Stage 6 rule.
+RULE_VALUE_BOOLEAN_GUIDANCE: dict[str, dict[str, str]] = {
+    "article_11_3_exemption": {
+        "prompt": (
+            "Splňuje tento úrok zvláštní výjimku podle čl. 11 odst. 3 "
+            "příslušné smlouvy?"
+        ),
+        "why": (
+            "Zvolte Ano pouze tehdy, pokud jste ověřili, že konkrétní "
+            "financování spadá do zvláštní smluvní kategorie. "
+            "TaxTreat tuto výjimku bez výslovné odpovědi nepředpokládá."
+        ),
+    },
+    "article_11_3a_exemption": {
+        "prompt": (
+            "Splňuje tento úrok zvláštní výjimku podle čl. 11 odst. 3 "
+            "písm. a) příslušné smlouvy?"
+        ),
+        "why": (
+            "Zvolte Ano jen při potvrzeném splnění konkrétní smluvní "
+            "výjimky; jinak zvolte Ne."
+        ),
+    },
+    "special_article_11_3_exemption": {
+        "prompt": (
+            "Splňuje tento úrok zvláštní výjimku podle čl. 11 odst. 3 "
+            "příslušné smlouvy?"
+        ),
+        "why": (
+            "Zvolte Ano jen tehdy, pokud konkrétní financování odpovídá "
+            "přesnému znění smluvní výjimky."
+        ),
+    },
+    "recipient_or_financing": {
+        "prompt": (
+            "Spadá příjemce nebo způsob financování do zvláštní "
+            "kategorie osvobozené podle smlouvy?"
+        ),
+        "why": (
+            "Může jít o veřejné orgány, centrální banku, vybrané "
+            "veřejné finanční instituce nebo kvalifikované státem "
+            "podporované financování podle konkrétní smlouvy."
+        ),
+    },
+    "recipient_or_loan_provider_or_guarantor": {
+        "prompt": (
+            "Spadá příjemce, poskytovatel úvěru nebo ručitel do "
+            "zvláštní veřejné kategorie podle smlouvy?"
+        ),
+        "why": (
+            "Zvolte Ano pouze při potvrzeném splnění konkrétní "
+            "smluvní kategorie."
+        ),
+    },
+    "loan_or_credit_provider": {
+        "prompt": "Je poskytovatelem tohoto úvěru nebo zápůjčky banka?",
+        "why": (
+            "Některé smlouvy stanoví zvláštní sazbu pro úrok "
+            "z bankovního financování."
+        ),
+    },
+    "loan_provider": {
+        "prompt": (
+            "Je poskytovatelem financování smluvní stát nebo jiný "
+            "subjekt výslovně uvedený ve smlouvě?"
+        ),
+        "why": (
+            "Zvláštní sazba se použije pouze při splnění konkrétní "
+            "kategorie poskytovatele uvedené ve smlouvě."
+        ),
+    },
+    "lender_category": {
+        "prompt": (
+            "Splňuje věřitel zvláštní kategorii požadovanou smlouvou?"
+        ),
+        "why": (
+            "Zvolte Ano pouze tehdy, pokud jste ověřili postavení "
+            "věřitele podle příslušného ustanovení smlouvy."
+        ),
+    },
+    "borrower_category": {
+        "prompt": (
+            "Splňuje dlužník zvláštní kategorii požadovanou smlouvou?"
+        ),
+        "why": (
+            "Zvolte Ano pouze tehdy, pokud jste ověřili postavení "
+            "dlužníka podle příslušného ustanovení smlouvy."
+        ),
+    },
+    "official_foreign_exchange_reserve_investment": {
+        "prompt": (
+            "Jde o investici oficiálních devizových rezerv provedenou "
+            "oprávněnou veřejnou nebo měnovou institucí?"
+        ),
+        "why": (
+            "Tato zvláštní kategorie může podle příslušné smlouvy "
+            "vést k osvobození úroku."
+        ),
+    },
+    "purpose": {
+        "prompt": (
+            "Splňuje financování zvláštní účel výslovně uvedený "
+            "v příslušné smlouvě?"
+        ),
+        "why": (
+            "Zvláštní sazba se použije pouze pro účel financování "
+            "přesně vymezený danou smlouvou."
+        ),
+    },
+    "qualifying_article_11_2a_case": {
+        "prompt": (
+            "Spadá tento úrok do zvláštní kategorie podle čl. 11 "
+            "odst. 2 písm. a) příslušné smlouvy?"
+        ),
+        "why": (
+            "Může jít například o kvalifikované bankovní, pojistné, "
+            "finanční nebo úvěrové financování podle konkrétní smlouvy."
+        ),
+    },
+}
+
+
+# These are labels of the legal-rule branch itself. They are not
+# transaction facts and must never become questions for the user.
+DERIVED_TRANSACTION_FACTS = {
+    "claim_not_effectively_connected_to_czech_pe": (
+        "permanent_establishment_connection"
+    ),
+    "right_or_property_not_effectively_connected_to_czech_pe_or_fixed_base": (
+        "permanent_establishment_connection"
+    ),
+}
+
+
+RULE_CONTROL_FACTS = {
+    "fallback_case",
+    "source_state_taxation",
+    "general_article_11_2_rate",
+}
+
 
 DETERMINATION_GUIDANCE = {
     "treaty_ppt_passed": {
@@ -184,6 +442,32 @@ PROFESSIONAL_FACT_GROUPS = {
         "why": "Použití osvobození může vyžadovat další dokumentaci nebo rozhodnutí správce daně.",
     },
 }
+
+PROFESSIONAL_FACT_GROUPS.update({
+    "recipient_country_imposes_royalty_wht_on_nonresidents": {
+        "topic": "royalty_treaty_legal_condition",
+        "prompt": (
+            "Ověřte podmínku zdanění licenčních poplatků "
+            "ve státě příjemce."
+        ),
+        "why": (
+            "Jde o právní podmínku smlouvy závislou na daňovém "
+            "režimu státu příjemce, nikoli o prostý skutkový údaj klienta."
+        ),
+    },
+    "recipient_taxed_on_royalty_in_residence_state": {
+        "topic": "royalty_treaty_legal_condition",
+        "prompt": (
+            "Ověřte zdanění licenčního příjmu ve státě "
+            "rezidence příjemce."
+        ),
+        "why": (
+            "Tato smluvní podmínka vyžaduje právní posouzení "
+            "daňového režimu příjemce ve státě rezidence."
+        ),
+    },
+})
+
 
 REVIEW_REASON_GUIDANCE = {
     "beneficial_owner": (
@@ -326,7 +610,179 @@ def build_review_reasons(
     return reasons
 
 
-def _question_for_missing_fact(missing: str) -> dict[str, Any]:
+def _normalized_income_type(value: Any) -> str:
+    income = str(value or "").lower()
+    return {
+        "dividends": "dividend",
+        "royalties": "royalty",
+    }.get(income, income)
+
+
+def _stage6_condition_values(
+    request: Mapping[str, Any],
+    fact: str,
+) -> list[Any]:
+    """Return exact condition values used by the selected treaty package."""
+
+    country = str(
+        request.get("recipient_country")
+        or ""
+    ).lower()
+
+    income_type = _normalized_income_type(
+        request.get("income_type")
+    )
+
+    if not country or not income_type:
+        return []
+
+    path = STAGE6_RULE_DIR / f"{country}.json"
+
+    if not path.is_file():
+        return []
+
+    payload = json.loads(
+        path.read_text(
+            encoding="utf-8"
+        )
+    )
+
+    rules = payload.get(
+        "rules",
+        payload if isinstance(payload, list) else [],
+    )
+
+    values: list[Any] = []
+
+    for rule in rules:
+        if (
+            _normalized_income_type(
+                rule.get("income_type")
+            )
+            != income_type
+        ):
+            continue
+
+        for condition in rule.get(
+            "conditions",
+            [],
+        ):
+            if condition.get("fact") != fact:
+                continue
+
+            value = condition.get("value")
+
+            if value not in values:
+                values.append(value)
+
+    return values
+
+
+def _rule_value_boolean_question(
+    missing: str,
+    name: str,
+    request: Mapping[str, Any],
+) -> dict[str, Any] | None:
+    """
+    Translate a human Yes/No answer to the exact enum value stored in
+    the selected treaty's Stage 6 condition.
+
+    If one country ever contains more than one value for the same fact,
+    fail closed and require professional review rather than guessing.
+    """
+
+    guidance = RULE_VALUE_BOOLEAN_GUIDANCE.get(
+        name
+    )
+
+    if guidance is None:
+        return None
+
+    values = _stage6_condition_values(
+        request,
+        name,
+    )
+
+    if len(values) != 1:
+        return {
+            "question_id": missing,
+            "input_path": None,
+            "category": "professional_review",
+            "client_answerable": False,
+            "response_type": "professional_review",
+            "prompt": guidance["prompt"],
+            "why": (
+                "Pro zvolenou smlouvu existuje více možných právních "
+                "variant této podmínky; je nutné odborné posouzení."
+            ),
+            "required_documents": [
+                "Úvěrová nebo zápůjční smlouva"
+            ],
+            "advisor_topic": (
+                "interest_treaty_special_condition"
+            ),
+        }
+
+    return {
+        "question_id": missing,
+        "input_path": f"facts.{name}",
+        "category": "transaction_fact",
+        "client_answerable": True,
+        "response_type": "boolean_rule_value",
+        "prompt": guidance["prompt"],
+        "why": guidance["why"],
+        "required_documents": [
+            "Úvěrová nebo zápůjční smlouva"
+        ],
+        "true_value": values[0],
+        "false_value": "__not_applicable__",
+    }
+
+
+def _collapse_duplicate_input_questions(
+    questions: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    """
+    Do not ask for acquisition date twice when one treaty uses months
+    and another condition in the same path uses days or years.
+    """
+
+    collapsed: list[dict[str, Any]] = []
+    seen: set[tuple[Any, ...]] = set()
+
+    for question in questions:
+        input_path = question.get(
+            "input_path"
+        )
+
+        if (
+            question.get("client_answerable")
+            and input_path
+        ):
+            key = (
+                "client",
+                input_path,
+            )
+        else:
+            key = (
+                "question",
+                question.get("question_id"),
+            )
+
+        if key in seen:
+            continue
+
+        seen.add(key)
+        collapsed.append(question)
+
+    return collapsed
+
+
+def _question_for_missing_fact(
+    missing: str,
+    request: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    request = request or {}
     prefix = None
     name = missing
     if ":" in missing:
@@ -365,6 +821,49 @@ def _question_for_missing_fact(missing: str) -> dict[str, Any]:
             ),
             "required_documents": guidance.get("documents", []),
         }
+
+    if name in DERIVED_TRANSACTION_FACTS:
+        return {
+            "question_id": missing,
+            "input_path": None,
+            "category": "derived_fact",
+            "client_answerable": False,
+            "response_type": "derived_fact",
+            "prompt": (
+                "Tento údaj se automaticky odvozuje z vazby příjmu "
+                "ke stálé provozovně v České republice."
+            ),
+            "why": (
+                "Uživatel jej nemá zadávat samostatně; TaxTreat jej "
+                "odvozuje z již zadaného údaje o stálé provozovně."
+            ),
+            "required_documents": [],
+            "derived_from": DERIVED_TRANSACTION_FACTS[name],
+        }
+
+    if name in RULE_CONTROL_FACTS:
+        return {
+            "question_id": missing,
+            "input_path": None,
+            "category": "rule_control",
+            "client_answerable": False,
+            "response_type": "internal_rule_control",
+            "prompt": "Interní řídicí podmínka právního pravidla.",
+            "why": (
+                "Tato položka se uživateli nezadává; "
+                "vyhodnocuje ji pravidlový engine."
+            ),
+            "required_documents": [],
+        }
+
+    dynamic = _rule_value_boolean_question(
+        missing,
+        name,
+        request,
+    )
+
+    if dynamic is not None:
+        return dynamic
 
     guidance = FACT_GUIDANCE.get(name)
     if guidance is None:
@@ -426,10 +925,18 @@ def build_intake_plan(
     request: Mapping[str, Any],
     analysis: Mapping[str, Any],
 ) -> dict[str, Any]:
-    questions = _collapse_adviser_items([
-        _question_for_missing_fact(missing)
-        for missing in analysis.get("missing_facts", [])
-    ])
+    questions = _collapse_duplicate_input_questions(
+        _collapse_adviser_items([
+            _question_for_missing_fact(
+                missing,
+                request,
+            )
+            for missing in analysis.get(
+                "missing_facts",
+                [],
+            )
+        ])
+    )
 
     calculation = analysis.get("withholding_tax_calculation")
     if (
