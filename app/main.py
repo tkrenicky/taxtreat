@@ -144,12 +144,28 @@ def guided_intake_ui():
 
 @app.get("/workspace-demo", include_in_schema=False)
 def workspace_demo_ui():
-    return FileResponse(WEB_ROOT / "workspace.html")
+    return FileResponse(
+        WEB_ROOT / "workspace.html",
+        headers={"Cache-Control": "no-store"},
+    )
+
+
+@app.get("/design-lab/{design}", include_in_schema=False)
+def workspace_design_ui(design: str):
+    if design not in {"editorial", "atlas", "civic"}:
+        raise HTTPException(status_code=404, detail="Unknown design")
+    return FileResponse(
+        WEB_ROOT / "workspace.html",
+        headers={"Cache-Control": "no-store"},
+    )
 
 
 @app.get("/design-lab", include_in_schema=False)
 def design_lab_ui():
-    return FileResponse(WEB_ROOT / "design-lab.html")
+    return FileResponse(
+        WEB_ROOT / "design-lab.html",
+        headers={"Cache-Control": "no-store"},
+    )
 
 
 @app.get("/health/live")

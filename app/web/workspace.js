@@ -1,5 +1,8 @@
 (() => {
-  const design = new URLSearchParams(window.location.search).get("design");
+  const routeDesign = window.location.pathname.split("/").filter(Boolean).at(-1);
+  const design = ["editorial", "atlas", "civic"].includes(routeDesign)
+    ? routeDesign
+    : new URLSearchParams(window.location.search).get("design");
   if (["editorial", "atlas", "civic"].includes(design)) {
     document.body.dataset.design = design;
     const switcher = document.querySelector("#design-switcher");

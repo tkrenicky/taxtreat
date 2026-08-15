@@ -150,11 +150,16 @@ def test_design_lab_exposes_three_distinct_functional_directions():
     assert "EDITORIAL LEDGER" in html
     assert "ATLAS CONTROL" in html
     assert "CIVIC STANDARD" in html
-    assert "/workspace-demo?design=editorial" in html
-    assert "/workspace-demo?design=atlas" in html
-    assert "/workspace-demo?design=civic" in html
+    assert "/design-lab/editorial" in html
+    assert "/design-lab/atlas" in html
+    assert "/design-lab/civic" in html
     assert "Stejný produkt" in html
     assert client.get("/ui-assets/design-lab.css").status_code == 200
+    for design in ("editorial", "atlas", "civic"):
+        variant = client.get(f"/design-lab/{design}")
+        assert variant.status_code == 200
+        assert variant.headers["cache-control"] == "no-store"
+    assert client.get("/design-lab/unknown").status_code == 404
 
 
 def test_browser_acceptance_uses_current_result_status_wording():
@@ -176,9 +181,9 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert css.status_code == 200
     assert javascript.status_code == 200
     assert designs.status_code == 200
-    assert "/ui-assets/workspace.css" in html
-    assert "/ui-assets/workspace.js" in html
-    assert "/ui-assets/workspace-designs.css" in html
+    assert "/ui-assets/workspace.css?v=20260815-2" in html
+    assert "/ui-assets/workspace.js?v=20260815-2" in html
+    assert "/ui-assets/workspace-designs.css?v=20260815-2" in html
     assert 'data-design-link="editorial"' in html
     assert 'data-design-link="atlas"' in html
     assert 'data-design-link="civic"' in html
@@ -243,6 +248,7 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert "excerptIsReadable" not in javascript.text
     assert "Odkaz na kurzovní lístek ČNB" not in javascript.text
     assert 'document.body.dataset.design = design' in javascript.text
+    assert "routeDesign" in javascript.text
     assert 'body[data-design="editorial"]' in designs.text
     assert 'body[data-design="atlas"]' in designs.text
     assert 'body[data-design="civic"]' in designs.text
