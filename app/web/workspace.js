@@ -11,7 +11,7 @@
   }
   "use strict";
 
-  const BUILD_VERSION = "20260815-10";
+  const BUILD_VERSION = "20260815-11";
 
   async function checkForNewBuild() {
     try {
@@ -681,11 +681,11 @@
   }
 
   function displayLegalExcerpt(citation) {
-    const officialText = String(citation.official_text || "");
+    const officialText = String(citation.official_text || "").trim();
     if (officialText) return officialText;
-    const excerpt = String(citation.excerpt || "");
-    if (!excerptHasBrokenEncoding(excerpt)) return excerpt;
-    return `${citationDetail(citation)} Úplné oficiální znění ustanovení je dostupné prostřednictvím odkazu výše.`;
+    const excerpt = String(citation.excerpt || "").trim();
+    if (excerpt) return excerpt;
+    return "Pro toto pravidlo není v právním datasetu uložen text ustanovení.";
   }
 
   function citationRole(citation, selected, position) {
@@ -717,8 +717,8 @@
       : citationDetail(citation);
     card.append(role, title, link, detail);
     if ((citation.official_text || citation.excerpt) && layer !== "domestic") {
-      const disclosure = document.createElement("details"); disclosure.className = "citation-excerpt";
-      const summary = document.createElement("summary"); summary.textContent = citation.official_text ? "Zobrazit úplné znění použitého ustanovení" : excerptHasBrokenEncoding(citation.excerpt) ? "Zobrazit shrnutí použitého ustanovení" : "Zobrazit znění ustanovení";
+      const disclosure = document.createElement("details"); disclosure.className = "citation-excerpt"; disclosure.open = true;
+      const summary = document.createElement("summary"); summary.textContent = citation.official_text ? "Znění použitého ustanovení" : "Evidované znění použitého ustanovení";
       const excerpt = document.createElement("blockquote"); excerpt.textContent = displayLegalExcerpt(citation);
       disclosure.append(summary, excerpt); card.append(disclosure);
     }
