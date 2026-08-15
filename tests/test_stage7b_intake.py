@@ -6,6 +6,7 @@ from app.main import app
 from taxtreat.services.intake import (
     _question_for_missing_fact,
     build_intake_plan,
+    build_review_reasons,
 )
 
 
@@ -173,6 +174,73 @@ def test_final_rate_unavailable_does_not_duplicate_legal_questions():
     assert plan["status"] == "PROFESSIONAL_REVIEW_REQUIRED"
 
 
+def test_review_reason_names_permanent_establishment_blocker():
+    reasons = build_review_reasons(
+        {"income_type": "dividend"},
+        {
+            "status": "REVIEW_REQUIRED",
+            "missing_facts": [],
+            "failed_conditions": [],
+            "missing_legal_layers": [],
+            "layer_results": [
+                {
+                    "outcome": "not_applicable",
+                    "missing_facts": [],
+                    "failed_conditions": [
+                        "permanent_establishment_connection"
+                    ],
+                },
+                {
+                    "outcome": "not_applicable",
+                    "missing_facts": [],
+                    "failed_conditions": [
+                        "ownership_percent",
+                        "permanent_establishment_connection",
+                    ],
+                },
+            ],
+        },
+    )
+
+    assert len(reasons) == 1
+    assert reasons[0]["code"] == "permanent_establishment_connection"
+    assert "stálé provozovně" in reasons[0]["title"]
+    assert "účast, ze které jsou dividendy vypláceny" in reasons[0][
+        "detail"
+    ]
+
+
+def test_review_reason_uses_only_closest_rule_blockers():
+    reasons = build_review_reasons(
+        {"income_type": "dividend"},
+        {
+            "status": "REVIEW_REQUIRED",
+            "missing_facts": [],
+            "failed_conditions": [],
+            "missing_legal_layers": [],
+            "layer_results": [
+                {
+                    "outcome": "not_applicable",
+                    "missing_facts": [],
+                    "failed_conditions": ["recipient_is_treaty_resident"],
+                },
+                {
+                    "outcome": "not_applicable",
+                    "missing_facts": [],
+                    "failed_conditions": [
+                        "ownership_percent",
+                        "holding_period_months",
+                    ],
+                },
+            ],
+        },
+    )
+
+    assert [reason["code"] for reason in reasons] == [
+        "recipient_is_treaty_resident"
+    ]
+
+
 def test_complete_and_out_of_scope_plan_states():
     complete = build_intake_plan(
         {"transaction_amount": {"amount": "100", "currency": "CZK"}},
@@ -218,3 +286,52 @@ def test_guided_intake_endpoint_uses_actual_engine_missing_facts():
     assert payload["intake"]["semantics"][
         "client_facts_are_not_legal_approval"
     ] is True
+
+
+def test_guided_intake_explains_why_pe_case_has_no_selected_rate():
+    response = client.post(
+        "/analysis/intake",
+        json={
+            "source_country": "CZ",
+            "recipient_country": "AT",
+            "income_type": "dividend",
+            "transaction_date": "2025-01-01",
+            "facts": {
+                "beneficial_owner": True,
+                "recipient_is_treaty_resident": True,
+                "permanent_establishment_connection": True,
+                "recipient_entity_type": "company",
+                "ownership_percent": 9,
+                "direct_ownership": True,
+                "direct_or_indirect_voting_ownership": 9,
+                "holding_period_months": 0,
+            },
+            "determinations": {},
+            "transaction_amount": {
+                "amount": "100000",
+                "currency": "CZK",
+                "payment_date": "2025-01-01",
+                "accounting_date": "2025-01-01",
+            },
+        },
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["analysis"]["status"] == "REVIEW_REQUIRED"
+    assert payload["analysis"]["rate"] is None
+    assert payload["intake"]["review_reasons"] == [
+        {
+            "code": "permanent_establishment_connection",
+            "title": (
+                "Vazba příjmu ke stálé provozovně v České republice"
+            ),
+            "detail": (
+                "Bylo uvedeno, že účast, ze které jsou dividendy "
+                "vypláceny, se skutečně váže ke stálé provozovně "
+                "příjemce v České republice. Smluvní pravidlo pro tento "
+                "druh příjmu se proto nepoužije a daňový režim musí být "
+                "určen podle pravidel vztahujících se ke stálé provozovně."
+            ),
+        }
+    ]

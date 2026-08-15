@@ -11,7 +11,7 @@
   }
   "use strict";
 
-  const BUILD_VERSION = "20260815-5";
+  const BUILD_VERSION = "20260815-6";
 
   async function checkForNewBuild() {
     try {
@@ -469,8 +469,8 @@
 
   function actionItem(question) {
     const node = document.createElement("div"); node.className = "action-item adviser";
-    const strong = document.createElement("strong"); strong.textContent = professionalTitle(question);
-    const detail = document.createElement("small"); detail.textContent = "V dostupných údajích nebyly uzavřeny všechny právní podmínky. Výsledek je proto označen k odbornému posouzení.";
+    const strong = document.createElement("strong"); strong.textContent = question.prompt || professionalTitle(question);
+    const detail = document.createElement("small"); detail.textContent = question.why || "Podmínku nelze uzavřít pouze ze zadaných údajů.";
     node.append(strong, detail);
     return node;
   }
@@ -483,14 +483,10 @@
     return node;
   }
 
-  function concreteReviewItems(analysis, payload, professional) {
-    const items = professional.map((question) => actionItem(question));
-    if (payload.income_type === "dividend" && payload.facts.permanent_establishment_connection === true) {
-      items.unshift(reviewItem(
-        "Vazba podílu ke stálé provozovně v České republice",
-        "Bylo uvedeno, že podíl, ze kterého dividendy plynou, je součástí činnosti stálé provozovny příjemce v České republice. Zvláštní sazba smlouvy pro dividendy se proto nemusí použít; režim musí být posouzen podle konkrétního ustanovení příslušné smlouvy o dividendách, pravidel pro zisky podniků a českých pravidel pro stálou provozovnu."
-      ));
-    }
+  function concreteReviewItems(analysis, payload, professional, reviewReasons = []) {
+    const items = reviewReasons.length
+      ? reviewReasons.map((reason) => reviewItem(reason.title, reason.detail))
+      : professional.map((question) => actionItem(question));
     if (analysis.status !== "FINAL" && !items.length) {
       items.push(reviewItem(
         "Podmínky použitelné sazby",
@@ -537,7 +533,7 @@
     if (treatment === "exclusive_foreign_taxation") return "Zadané údaje směřují k použití smluvního pravidla, podle něhož se příjem zdaňuje pouze ve státě rezidence příjemce. Před uzavřením výsledku je třeba ověřit konkrétní podmínky uvedené níže.";
     if (treatment === "domestic_exemption") return "Zadané údaje směřují k osvobození příjmu v České republice. Před uzavřením výsledku je třeba ověřit konkrétní podmínky uvedené níže.";
     if (analysis.candidate_rate !== null && analysis.candidate_rate !== undefined) return `Byla identifikována sazba ${analysis.candidate_rate} %. Její použití závisí na odborném ověření právních podmínek uvedených níže.`;
-    return "Sazbu zatím nelze určit. Níže jsou uvedeny konkrétní podmínky, které je třeba odborně ověřit.";
+    return "Sazbu zatím nelze určit. Konkrétní důvod je uveden v části Odborné ověření níže.";
   }
 
   function citationDetail(citation) {
@@ -643,7 +639,8 @@
     const analysis = response.analysis;
     const calculation = analysis.withholding_tax_calculation;
     const professional = (response.intake?.questions || []).filter((question) => !question.client_answerable);
-    const reviewItems = concreteReviewItems(analysis, payload, professional);
+    const reviewReasons = response.intake?.review_reasons || [];
+    const reviewItems = concreteReviewItems(analysis, payload, professional, reviewReasons);
     const status = document.querySelector("#workspace-result-status");
     status.textContent = analysis.status === "FINAL" ? "VÝSLEDEK DOKONČEN" : "ODBORNÉ OVĚŘENÍ";
     status.className = analysis.status === "FINAL" ? "badge" : "badge warning";

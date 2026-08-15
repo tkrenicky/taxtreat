@@ -183,9 +183,9 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert css.status_code == 200
     assert javascript.status_code == 200
     assert designs.status_code == 200
-    assert "/ui-assets/workspace.css?v=20260815-5" in html
-    assert "/ui-assets/workspace.js?v=20260815-5" in html
-    assert "/ui-assets/workspace-designs.css?v=20260815-5" in html
+    assert "/ui-assets/workspace.css?v=20260815-6" in html
+    assert "/ui-assets/workspace.js?v=20260815-6" in html
+    assert "/ui-assets/workspace-designs.css?v=20260815-6" in html
     assert 'data-design-link="editorial"' in html
     assert 'data-design-link="atlas"' in html
     assert 'data-design-link="civic"' in html
@@ -216,7 +216,8 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert "index + 1" in javascript.text
     assert "1. Výchozí vnitrostátní pravidlo" not in javascript.text
     assert "concreteReviewItems" in javascript.text
-    assert "Vazba podílu ke stálé provozovně" in javascript.text
+    assert "review_reasons" in javascript.text
+    assert "Konkrétní důvod je uveden" in javascript.text
     assert "selectedCitation" in javascript.text
     assert "citation.excerpt" in javascript.text
     assert "citation.conditions" in javascript.text
@@ -268,7 +269,7 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert "non_taxing_interest_above_monthly_threshold_annual" in javascript.text
     assert "non_taxing_interest_monthly_threshold_not_exceeded" in javascript.text
     assert "§ 38da zákona č. 586/1992 Sb." in javascript.text
-    assert 'const BUILD_VERSION = "20260815-5"' in javascript.text
+    assert 'const BUILD_VERSION = "20260815-6"' in javascript.text
     assert "Načíst novou verzi" in javascript.text
     assert ".new-build-notice" in css.text
     assert ".dashboard-summary" in css.text

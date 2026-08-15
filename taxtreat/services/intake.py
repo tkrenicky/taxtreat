@@ -185,6 +185,146 @@ PROFESSIONAL_FACT_GROUPS = {
     },
 }
 
+REVIEW_REASON_GUIDANCE = {
+    "beneficial_owner": (
+        "Postavení skutečného vlastníka příjmu",
+        "Zadané údaje nepotvrzují podmínku skutečného vlastníka příjmu, "
+        "kterou vyžaduje posuzované smluvní pravidlo.",
+    ),
+    "recipient_is_treaty_resident": (
+        "Daňové rezidentství příjemce",
+        "Zadané údaje nepotvrzují daňové rezidentství příjemce ve státě, "
+        "jehož smlouva má být použita.",
+    ),
+    "ownership_percent": (
+        "Výše podílu na českém plátci",
+        "Uvedený podíl nesplňuje hranici nejbližšího posuzovaného pravidla.",
+    ),
+    "direct_ownership": (
+        "Přímé držení podílu",
+        "Nejbližší posuzované pravidlo vyžaduje přímé držení podílu.",
+    ),
+    "direct_or_indirect_voting_ownership": (
+        "Podíl na hlasovacích právech",
+        "Uvedený podíl na hlasovacích právech nesplňuje hranici "
+        "nejbližšího posuzovaného pravidla.",
+    ),
+    "holding_period_months": (
+        "Doba držby podílu",
+        "Uvedená doba držby nesplňuje časovou podmínku nejbližšího "
+        "posuzovaného pravidla.",
+    ),
+    "arm_length_amount": (
+        "Výše úroku mezi spojenými osobami",
+        "Zadané údaje nepotvrzují, že výše úroku odpovídá obvyklým "
+        "podmínkám.",
+    ),
+    "payment_is_arm_length_amount": (
+        "Výše platby mezi spojenými osobami",
+        "Zadané údaje nepotvrzují, že výše platby odpovídá obvyklým "
+        "podmínkám.",
+    ),
+    "royalty_category": (
+        "Předmět licenční platby",
+        "Zvolený předmět licence neodpovídá podmínkám nejbližšího "
+        "posuzovaného pravidla.",
+    ),
+}
+
+
+def _review_reason_for_fact(
+    fact: str,
+    request: Mapping[str, Any],
+) -> dict[str, str]:
+    income_type = str(request.get("income_type") or "")
+    if fact == "permanent_establishment_connection":
+        subject = {
+            "dividend": "účast, ze které jsou dividendy vypláceny,",
+            "interest": "pohledávka, ze které úrok plyne,",
+            "royalty": "právo nebo majetek, za který licenční poplatek plyne,",
+        }.get(income_type, "posuzovaný příjem")
+        return {
+            "code": fact,
+            "title": "Vazba příjmu ke stálé provozovně v České republice",
+            "detail": (
+                f"Bylo uvedeno, že {subject} se skutečně váže ke stálé "
+                "provozovně příjemce v České republice. Smluvní pravidlo "
+                "pro tento druh příjmu se proto nepoužije a daňový režim "
+                "musí být určen podle pravidel vztahujících se ke stálé "
+                "provozovně."
+            ),
+        }
+    title, detail = REVIEW_REASON_GUIDANCE.get(
+        fact,
+        (
+            "Nesplněná podmínka právního pravidla",
+            "Nejbližší posuzované pravidlo obsahuje podmínku, kterou "
+            "zadané údaje nesplňují.",
+        ),
+    )
+    return {"code": fact, "title": title, "detail": detail}
+
+
+def build_review_reasons(
+    request: Mapping[str, Any],
+    analysis: Mapping[str, Any],
+) -> list[dict[str, str]]:
+    """Explain why a non-final analysis cannot select a rate."""
+
+    if str(analysis.get("status")) == "FINAL":
+        return []
+
+    layer_results = [
+        result
+        for result in analysis.get("layer_results", [])
+        if result.get("outcome") != "applicable"
+    ]
+    blockers: set[str] = set()
+    if layer_results:
+        blocker_counts = [
+            len(set(result.get("missing_facts", [])))
+            + len(set(result.get("failed_conditions", [])))
+            for result in layer_results
+        ]
+        positive_counts = [count for count in blocker_counts if count]
+        if positive_counts:
+            closest_count = min(positive_counts)
+            for result, count in zip(layer_results, blocker_counts):
+                if count == closest_count:
+                    blockers.update(result.get("missing_facts", []))
+                    blockers.update(result.get("failed_conditions", []))
+
+    blockers.update(analysis.get("missing_facts", []))
+    blockers.update(analysis.get("failed_conditions", []))
+    reasons = [
+        _review_reason_for_fact(str(fact).split(":", 1)[-1], request)
+        for fact in sorted(blockers)
+    ]
+    for layer in analysis.get("missing_legal_layers", []):
+        reasons.append(
+            {
+                "code": f"missing_legal_layer:{layer}",
+                "title": "Chybějící právní vrstva",
+                "detail": (
+                    "Pro uzavření výsledku chybí ověřené pravidlo právní "
+                    "vrstvy nezbytné pro tuto transakci."
+                ),
+            }
+        )
+    if not reasons:
+        reasons.append(
+            {
+                "code": "no_applicable_rule",
+                "title": "Pro zadané údaje nebylo určeno použitelné pravidlo",
+                "detail": (
+                    "Žádné z ověřených pravidel pro zvolený stát, druh "
+                    "příjmu a datum transakce nebylo možné na základě "
+                    "zadaných údajů použít."
+                ),
+            }
+        )
+    return reasons
+
 
 def _question_for_missing_fact(missing: str) -> dict[str, Any]:
     prefix = None
@@ -356,6 +496,7 @@ def build_intake_plan(
         "questions": questions,
         "required_documents": documents,
         "optional_inputs": optional_inputs,
+        "review_reasons": build_review_reasons(request, analysis),
         "semantics": {
             "client_facts_are_not_legal_approval": True,
             "unanswered_items_remain_unresolved": True,
