@@ -327,6 +327,43 @@ def test_real_cz_at_result_returns_domestic_then_treaty_legal_path():
     assert legal_path[1]["source_url"].startswith("https://e-sbirka.gov.cz/")
 
 
+def test_cz_at_result_before_catalog_source_version_keeps_domestic_start():
+    response = client.post(
+        "/analysis/intake",
+        json={
+            "source_country": "CZ",
+            "recipient_country": "AT",
+            "income_type": "dividend",
+            "transaction_date": "2026-03-01",
+            "facts": {
+                "beneficial_owner": True,
+                "recipient_is_treaty_resident": True,
+                "permanent_establishment_connection": False,
+                "recipient_entity_type": "company",
+                "ownership_percent": 9,
+                "direct_ownership": True,
+                "direct_or_indirect_voting_ownership": 9,
+                "holding_period_months": 0,
+            },
+            "determinations": {},
+            "transaction_amount": {
+                "amount": "100000",
+                "currency": "CZK",
+                "payment_date": "2026-03-01",
+                "accounting_date": "2026-03-01",
+            },
+        },
+    )
+
+    assert response.status_code == 200
+    legal_path = response.json()["analysis"]["legal_path"]
+    assert [(item["legal_layer"], item["rate"]) for item in legal_path] == [
+        ("domestic", 15.0),
+        ("treaty", 10.0),
+    ]
+    assert legal_path[0]["path_role"] == "domestic_starting_point"
+
+
 def test_ui_calls_canonical_endpoints_and_uses_safe_dom_rendering():
     javascript = client.get("/ui-assets/app.js").text
 

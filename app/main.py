@@ -474,6 +474,7 @@ def analyze(payload: AnalysisPayload):
         selected_rule_id=(
             result.selected_rule_id or result.candidate_rule_id
         ),
+        income_type=payload.income_type,
     )
     amount = (
         payload.transaction_amount.model_dump(mode="json")

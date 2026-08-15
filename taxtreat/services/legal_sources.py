@@ -17,6 +17,36 @@ _LAYER_ORDER = {
     "mli": 3,
     "eu_relief": 4,
 }
+_CZ_OUTBOUND_INCOME_TYPES = {"dividend", "interest", "royalty"}
+_CZ_DOMESTIC_SOURCE_URL = "https://e-sbirka.gov.cz/sb/1992/586"
+
+
+def _domestic_starting_point(income_type: str) -> dict[str, Any]:
+    """Return the mandatory Czech domestic starting point for the legal path.
+
+    The date of a consolidated source package must not decide whether the
+    domestic starting step is displayed.  Rule selection remains owned by the
+    legal engine; this item makes the audit path complete when an applicable
+    treaty rule is returned without its preceding domestic citation.
+    """
+
+    return {
+        "rule_id": f"CZ-{income_type.upper()}-DOMESTIC-STARTING-15",
+        "legal_instrument": "domestic_law",
+        "legal_layer": "domestic",
+        "article": "36",
+        "paragraph": "1",
+        "rate": 15.0,
+        "tax_treatment": "taxable_at_rate",
+        "source_id": "CZ-ZDP-CANONICAL",
+        "source_url": _CZ_DOMESTIC_SOURCE_URL,
+        "path_role": "domestic_starting_point",
+        "excerpt": (
+            "Výchozím vnitrostátním krokem je sazba 15 % podle § 36 "
+            "zákona č. 586/1992 Sb., o daních z příjmů. Následně je "
+            "zohledněna příslušná smlouva nebo vnitrostátní osvobození."
+        ),
+    }
 
 
 @lru_cache(maxsize=1)
@@ -30,12 +60,26 @@ def build_legal_path(
     source_country: str,
     recipient_country: str,
     selected_rule_id: str | None,
+    income_type: str | None = None,
 ) -> list[dict[str, Any]]:
     """Return the legal path in application order with verified display text."""
 
     selected = selected_rule_id or ""
+    supplied = [dict(citation) for citation in citations]
+    normalized_income_type = str(income_type or "").lower()
+    has_domestic_start = any(
+        str(citation.get("legal_layer") or "") == "domestic"
+        for citation in supplied
+    )
+    if (
+        source_country.upper() == "CZ"
+        and normalized_income_type in _CZ_OUTBOUND_INCOME_TYPES
+        and not has_domestic_start
+    ):
+        supplied.append(_domestic_starting_point(normalized_income_type))
+
     ordered = sorted(
-        citations,
+        supplied,
         key=lambda citation: (
             _LAYER_ORDER.get(str(citation.get("legal_layer")), 99),
             str(citation.get("rule_id")) != selected,

@@ -127,3 +127,31 @@ def test_legal_path_keeps_domestic_start_before_selected_treaty():
         "TREATY-10",
     ]
     assert "official_text" in path[1]
+
+
+@pytest.mark.parametrize("income_type", ["dividend", "interest", "royalty"])
+def test_legal_path_restores_missing_czech_domestic_starting_point(
+    income_type: str,
+):
+    path = build_legal_path(
+        [
+            {
+                "rule_id": "TREATY-10",
+                "legal_layer": "treaty",
+                "article": "10",
+                "source_url": "https://example.test/treaty",
+                "rate": 10.0,
+            }
+        ],
+        source_country="CZ",
+        recipient_country="AT",
+        selected_rule_id="TREATY-10",
+        income_type=income_type,
+    )
+
+    assert [(item["legal_layer"], item["rate"]) for item in path] == [
+        ("domestic", 15.0),
+        ("treaty", 10.0),
+    ]
+    assert path[0]["path_role"] == "domestic_starting_point"
+    assert "zákona č. 586/1992 Sb." in path[0]["excerpt"]
