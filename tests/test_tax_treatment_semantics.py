@@ -181,7 +181,22 @@ def test_non_taxing_treatment_drives_notification_schedule():
     assert schedule["notification_deadline"] == "2027-02-01"
 
 
-def test_catalog_string_boolean_matches_ui_boolean_fact():
+@pytest.mark.parametrize(
+    ("supplied", "catalog_value", "expected_match"),
+    [
+        (True, "true", True),
+        (False, "false", True),
+        (True, "not-a-boolean", False),
+        ("true", True, True),
+        ("false", False, True),
+        ("not-a-boolean", True, False),
+    ],
+)
+def test_catalog_boolean_serialization_matches_ui_fact(
+    supplied,
+    catalog_value,
+    expected_match,
+):
     rule = LegalRule(
         rule_id="BOOLEAN-SERIALIZATION",
         income_type="royalty",
@@ -189,19 +204,23 @@ def test_catalog_string_boolean_matches_ui_boolean_fact():
         recipient_country="AT",
         legal_instrument="treaty",
         conditions=[
-            LegalCondition("beneficial_owner", "==", "true"),
+            LegalCondition(
+                "beneficial_owner",
+                "==",
+                catalog_value,
+            ),
         ],
     )
 
     matches, missing, failed = _evaluate_rule(
         rule,
-        {"beneficial_owner": True},
+        {"beneficial_owner": supplied},
         {},
     )
 
-    assert matches is True
+    assert matches is expected_match
     assert missing == []
-    assert failed == []
+    assert failed == ([] if expected_match else ["beneficial_owner"])
 
 
 @pytest.mark.parametrize(
