@@ -9,15 +9,23 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
-      - name: Inspect e-Sbirka async download response
+      - uses: actions/checkout@v4
+      - name: Verify five legally binding PDFs end-to-end
         shell: bash
         run: |
           python - <<'PY'
           import requests
+          from scripts.recover_esbirka_legal_pdfs import download_pdf, is_pdf_response
+
           ids = [390641, 917903, 917907, 1122, 186]
-          base = 'https://e-sbirka.gov.cz/sbr-externi/stahni/pravne-zavazne-zneni-vcetne-uplnych/'
+          session = requests.Session()
+          session.headers.update({'User-Agent': 'TaxTreat legal-source verifier/1.0'})
+          ok = 0
           for did in ids:
-              r = requests.get(base + str(did), params={'stahniOpravnouSadu':'false'}, timeout=90, allow_redirects=True)
-              print(f'{did}: status={r.status_code} content_type={r.headers.get("content-type")} url={r.url}')
-              print(r.text)
+              r, mode = download_pdf(session, did, timeout=90)
+              good = is_pdf_response(r)
+              print(f'{did}: mode={mode} status={r.status_code} content_type={r.headers.get("content-type")} bytes={len(r.content)} pdf={good} final_url={r.url}')
+              ok += int(good)
+          print(f'VERIFIED={ok}/5')
+          raise SystemExit(0 if ok == 5 else 1)
           PY
