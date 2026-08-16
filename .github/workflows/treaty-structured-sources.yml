@@ -11,22 +11,33 @@ on:
       - "scripts/build_treaty_pdf_manifest.py"
       - "scripts/build_treaty_verbatim_registry.py"
       - "data/legal_rules_stage6/**"
+      - "data/legal_texts/canonical_provisions.json"
       - ".github/workflows/treaty-structured-sources.yml"
+
+permissions:
+  contents: write
 
 jobs:
   structured-sources:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+
       - name: Install dependencies
         run: python -m pip install requests==2.32.3 pypdf==5.9.0
+
       - name: Build treaty provision registry
         run: python scripts/build_treaty_verbatim_registry.py
+
       - name: Resolve official instruments
         run: python scripts/build_treaty_pdf_manifest.py --timeout 90
+
       - name: Recover 101 authoritative PDFs
         run: |
           python scripts/recover_esbirka_legal_pdfs.py \
@@ -34,6 +45,7 @@ jobs:
             --pdf-dir artifacts/legal_pdfs \
             --timeout 90 \
             --workers 12
+
       - name: Fetch official structured JSON
         run: |
           python scripts/fetch_esbirka_structured_sources.py \
@@ -42,6 +54,7 @@ jobs:
             --report reports/treaty_structured_source_manifest.json \
             --timeout 60 \
             --workers 12
+
       - name: Build 302 canonical treaty text candidates
         run: |
           python scripts/build_canonical_treaty_texts.py \
@@ -50,6 +63,7 @@ jobs:
             --structured-dir artifacts/structured_sources \
             --output reports/canonical_treaty_texts_candidate.json \
             --report reports/canonical_treaty_texts_candidate_report.json
+
       - name: Compare canonical texts with authoritative PDF text layers
         run: |
           python scripts/compare_canonical_text_to_pdf_layer.py \
@@ -57,6 +71,21 @@ jobs:
             --pdf-manifest reports/treaty_verified_pdf_manifest.json \
             --output reports/treaty_pdf_layer_comparison.json \
             --upgrade-output reports/canonical_treaty_texts_pdf_checked.json
+
+      - name: Materialize canonical corpus on the PR branch
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        run: |
+          cp reports/canonical_treaty_texts_pdf_checked.json data/legal_texts/canonical_provisions.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/legal_texts/canonical_provisions.json
+          if git diff --cached --quiet; then
+            echo "Canonical corpus already current."
+          else
+            git commit -m "Materialize 302 canonical treaty provisions [skip ci]"
+            git push origin HEAD:${{ github.event.pull_request.head.ref }}
+          fi
+
       - name: Upload canonical treaty text evidence
         if: always()
         uses: actions/upload-artifact@v4
