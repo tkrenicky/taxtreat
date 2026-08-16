@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
@@ -50,6 +51,21 @@ def _domestic_starting_point(income_type: str) -> dict[str, Any]:
     }
 
 
+def _format_domestic_paragraph(value: Any) -> Any:
+    """Render internal domestic locators in conventional Czech legal style."""
+
+    if value in (None, ""):
+        return value
+    text = str(value).strip()
+    match = re.fullmatch(r"(\d+)\(([a-z])\)\((\d+)\)", text)
+    if match:
+        paragraph, letter, point = match.groups()
+        return f"odst. {paragraph} písm. {letter}) bod {point}"
+    if re.fullmatch(r"\d+", text):
+        return f"odst. {text}"
+    return value
+
+
 @lru_cache(maxsize=1)
 def load_verified_provisions() -> dict[str, dict[str, Any]]:
     """Load canonical display text while retaining the historic public helper.
@@ -79,8 +95,6 @@ def _attach_canonical_text(
         return
 
     text_source_status = str(provision.get("text_source_status") or "")
-    # Legacy records pre-date the explicit structured-source status. They are
-    # accepted only when the canonical 302-provision registry is unavailable.
     legacy = not CANONICAL_PROVISIONS.is_file()
     if not legacy and text_source_status not in _DISPLAYABLE_TREATY_TEXT_STATUSES:
         return
@@ -95,8 +109,6 @@ def _attach_canonical_text(
     item["text_source_status"] = provision.get("text_source_status")
     item["text_verification_status"] = provision.get("verification_status")
     item["text_verification_method"] = provision.get("verification_method")
-    # ``excerpt`` is the historic public/report field. Once canonical treaty
-    # text exists it must never continue carrying the older Stage 6 extract.
     item["excerpt"] = text
     item["excerpt_sha256"] = text_hash
     if provision.get("official_pdf_pages"):
@@ -183,6 +195,7 @@ def build_legal_path(
         if provision:
             _attach_canonical_text(item, provision)
         if layer == "domestic":
+            item["paragraph"] = _format_domestic_paragraph(item.get("paragraph"))
             # Stage 6 domestic excerpts are internal summaries, not verbatim
             # statutory text. Keep the official source link and rule metadata,
             # but never present the internal summary as legal wording.
