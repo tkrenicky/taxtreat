@@ -90,6 +90,7 @@ def build_professional_report(
             "odborné ověření označených podmínek."
         )
 
+    source_path = analysis.get("legal_path") or analysis.get("citations", [])
     citations = [
         {
             "rule_id": citation.get("rule_id"),
@@ -101,10 +102,18 @@ def build_professional_report(
             "legal_instrument": citation.get("legal_instrument"),
             "rate": citation.get("rate"),
             "tax_treatment": citation.get("tax_treatment"),
-            "excerpt": citation.get("excerpt"),
-            "excerpt_sha256": citation.get("excerpt_sha256"),
+            "excerpt": (
+                citation.get("excerpt")
+                if citation.get("legal_layer") in {"treaty", "protocol", "mli"}
+                else None
+            ),
+            "excerpt_sha256": (
+                citation.get("excerpt_sha256")
+                if citation.get("legal_layer") in {"treaty", "protocol", "mli"}
+                else None
+            ),
         }
-        for citation in analysis.get("citations", [])
+        for citation in source_path
     ]
 
     report = {
