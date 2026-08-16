@@ -147,13 +147,14 @@ def render(output_dir: Path) -> dict:
         page.extract_text() or ""
         for page in PdfReader(str(pdf_path)).pages
     )
+    pdf_normalized = " ".join(pdf_text.split())
     if canonical_heading not in pdf_text:
         raise AssertionError("Printed PDF does not contain the canonical article heading.")
     if pdf_text.count("Smlouva o zamezení dvojího zdanění · článek 10") != 1:
         raise AssertionError("Printed PDF contains duplicate treaty Article 10 cards.")
     if _INTERNAL_DOMESTIC_PLACEHOLDER in pdf_text:
         raise AssertionError("Internal Stage 6 domestic placeholder leaked into PDF.")
-    if _DOMESTIC_LOCATOR not in pdf_text or _INTERNAL_DOMESTIC_LOCATOR in pdf_text:
+    if _DOMESTIC_LOCATOR not in pdf_normalized or _INTERNAL_DOMESTIC_LOCATOR in pdf_text:
         raise AssertionError("Printed PDF uses an invalid domestic legal locator format.")
     for damaged in ("rozdili zisk", "vyplacejici"):
         if damaged in pdf_text:
