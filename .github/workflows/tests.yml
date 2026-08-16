@@ -54,6 +54,18 @@ jobs:
           print(f"Verified total coverage: {coverage:.2f}%")
           PY
 
+      - name: Build treaty verbatim verification inventory
+        run: python scripts/build_treaty_verbatim_registry.py
+
+      - name: Upload treaty verbatim verification inventory
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: treaty-verbatim-registry-python-${{ matrix.python-version }}
+          path: reports/treaty_verbatim_registry.json
+          if-no-files-found: error
+          retention-days: 30
+
       - name: Run Stage 7B browser acceptance
         run: python scripts/capture_stage7b_ui.py artifacts/stage7b
 
