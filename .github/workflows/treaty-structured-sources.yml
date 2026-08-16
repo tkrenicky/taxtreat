@@ -6,6 +6,7 @@ on:
     paths:
       - "scripts/fetch_esbirka_structured_sources.py"
       - "scripts/build_canonical_treaty_texts.py"
+      - "scripts/compare_canonical_text_to_pdf_layer.py"
       - "scripts/recover_esbirka_legal_pdfs.py"
       - "scripts/build_treaty_pdf_manifest.py"
       - "scripts/build_treaty_verbatim_registry.py"
@@ -21,7 +22,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Install dependencies
-        run: python -m pip install requests==2.32.3
+        run: python -m pip install requests==2.32.3 pypdf==5.9.0
       - name: Build treaty provision registry
         run: python scripts/build_treaty_verbatim_registry.py
       - name: Resolve official instruments
@@ -49,6 +50,13 @@ jobs:
             --structured-dir artifacts/structured_sources \
             --output reports/canonical_treaty_texts_candidate.json \
             --report reports/canonical_treaty_texts_candidate_report.json
+      - name: Compare canonical texts with authoritative PDF text layers
+        run: |
+          python scripts/compare_canonical_text_to_pdf_layer.py \
+            --corpus reports/canonical_treaty_texts_candidate.json \
+            --pdf-manifest reports/treaty_verified_pdf_manifest.json \
+            --output reports/treaty_pdf_layer_comparison.json \
+            --upgrade-output reports/canonical_treaty_texts_pdf_checked.json
       - name: Upload canonical treaty text evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -60,5 +68,7 @@ jobs:
             reports/treaty_structured_source_manifest.json
             reports/canonical_treaty_texts_candidate.json
             reports/canonical_treaty_texts_candidate_report.json
+            reports/treaty_pdf_layer_comparison.json
+            reports/canonical_treaty_texts_pdf_checked.json
           if-no-files-found: warn
           retention-days: 30
