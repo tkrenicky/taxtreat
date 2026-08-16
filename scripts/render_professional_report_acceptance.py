@@ -6,6 +6,7 @@ from pathlib import Path
 
 from fastapi.testclient import TestClient
 from playwright.sync_api import sync_playwright
+from pypdf import PdfReader
 
 from app.main import app
 from taxtreat.services.legal_sources import load_verified_provisions
@@ -56,6 +57,7 @@ def render(output_dir: Path) -> dict:
 
     canonical = load_verified_provisions()["CZ-AD|treaty|10"]
     canonical_text = canonical["text"]
+    canonical_heading = canonical_text.splitlines()[0].strip()
     if canonical_text not in html:
         raise AssertionError("Canonical AD Article 10 text is absent from report HTML.")
     for damaged in ("rozdili zisk", "vyplacejici"):
@@ -72,16 +74,23 @@ def render(output_dir: Path) -> dict:
         browser = playwright.chromium.launch()
         page = browser.new_page(viewport={"width": 1280, "height": 1600})
         page.set_content(html, wait_until="load")
-        page.emulate_media(media="print")
+
+        # Legal provisions are collapsible in the interactive HTML report. A
+        # PDF is an archival output, so every cited provision must be expanded
+        # before Chromium prints the document.
+        page.locator("details").evaluate_all(
+            "nodes => nodes.forEach(node => { node.open = true; })"
+        )
 
         body_text = page.locator("body").inner_text()
         if "Česká srážková daň" not in body_text:
             raise AssertionError("Rendered report is missing its main heading.")
         if "Použité právní podklady" not in body_text:
             raise AssertionError("Rendered report is missing legal-source section.")
-        if canonical_text.splitlines()[0] not in body_text:
-            raise AssertionError("Rendered report does not contain the canonical article heading.")
+        if canonical_heading not in body_text:
+            raise AssertionError("Expanded report does not contain the canonical article heading.")
 
+        page.emulate_media(media="print")
         page.pdf(
             path=str(pdf_path),
             format="A4",
@@ -98,6 +107,16 @@ def render(output_dir: Path) -> dict:
     if len(pdf_bytes) < 20_000:
         raise AssertionError("Rendered PDF is unexpectedly small.")
 
+    pdf_text = "\n".join(
+        page.extract_text() or ""
+        for page in PdfReader(str(pdf_path)).pages
+    )
+    if canonical_heading not in pdf_text:
+        raise AssertionError("Printed PDF does not contain the canonical article heading.")
+    for damaged in ("rozdili zisk", "vyplacejici"):
+        if damaged in pdf_text:
+            raise AssertionError(f"Damaged Stage 6 wording leaked into PDF: {damaged}")
+
     result = {
         "schema_version": 1,
         "report_id": report["report_id"],
@@ -110,6 +129,7 @@ def render(output_dir: Path) -> dict:
         "damaged_stage6_wording_absent": True,
         "html_rendered": True,
         "pdf_rendered": True,
+        "pdf_contains_canonical_heading": True,
         "pass": True,
     }
     metadata_path.write_text(
