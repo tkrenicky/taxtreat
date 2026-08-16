@@ -1,0 +1,40 @@
+name: Production deployment verification
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-deployment-verification
+  cancel-in-progress: true
+
+jobs:
+  verify-production:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Wait for current workspace release on production
+        shell: bash
+        run: |
+          for attempt in $(seq 1 60); do
+            html="$(curl -fsSL --max-time 20 'https://taxtreat.vercel.app/workspace-demo' || true)"
+            asset="$(curl -fsSL --max-time 20 "https://taxtreat.vercel.app/ui-assets/workspace-report-export.js?verify=${GITHUB_SHA}" || true)"
+
+            if printf '%s' "$html" | grep -q 'workspace-report-export.js' \
+              && printf '%s' "$asset" | grep -q 'Dokončené kontroly' \
+              && printf '%s' "$asset" | grep -q 'renderReviewHistory' \
+              && printf '%s' "$asset" | grep -q 'renderDashboardMetrics'; then
+              echo "Production workspace contains the current review/output workflow."
+              exit 0
+            fi
+
+            echo "Production has not reached the expected release yet (attempt ${attempt}/60)."
+            sleep 10
+          done
+
+          echo "Production verification failed: taxtreat.vercel.app did not expose the expected release markers."
+          exit 1
