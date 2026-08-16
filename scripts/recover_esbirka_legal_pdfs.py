@@ -6,6 +6,7 @@ import argparse
 import hashlib
 import json
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any
 
@@ -13,6 +14,7 @@ import requests
 
 BASE = "https://e-sbirka.gov.cz/sbr-externi"
 FILE_BASE = "https://e-sbirka.gov.cz/souborove-sluzby"
+USER_AGENT = "TaxTreat legal-source verifier/1.0"
 
 
 def legacy_verified_url(document_id: int) -> str:
@@ -33,6 +35,12 @@ def async_file_url(file_id: str) -> str:
 
 def is_pdf_response(response: requests.Response) -> bool:
     return response.status_code == 200 and response.content.startswith(b"%PDF-")
+
+
+def _new_session() -> requests.Session:
+    session = requests.Session()
+    session.headers.update({"User-Agent": USER_AGENT})
+    return session
 
 
 def _resolve_async_download(
@@ -102,37 +110,88 @@ def download_pdf(
     return last, "unresolved"
 
 
-def recover_manifest(manifest_path: Path, pdf_dir: Path, timeout: int = 90) -> dict[str, int]:
+def _recover_one(
+    item: dict[str, Any],
+    pdf_dir: Path,
+    timeout: int,
+) -> tuple[int, dict[str, Any]]:
+    document_id = int(item["document_id"])
+    session = _new_session()
+    try:
+        response, mode = download_pdf(session, document_id, timeout=timeout)
+    finally:
+        session.close()
+
+    update: dict[str, Any]
+    if not is_pdf_response(response):
+        update = {
+            "download_status": "unresolved_legal_pdf",
+            "resolved": False,
+            "last_http_status": response.status_code,
+            "last_content_type": response.headers.get("content-type"),
+        }
+        return document_id, update
+
+    path = pdf_dir / f"{document_id}.pdf"
+    path.write_bytes(response.content)
+    update = {
+        "pdf_path": str(path),
+        "pdf_sha256": hashlib.sha256(response.content).hexdigest(),
+        "pdf_bytes": len(response.content),
+        "download_status": "downloaded",
+        "download_mode": mode,
+        "resolved": True,
+        "official_download_url": str(response.url),
+    }
+    return document_id, update
+
+
+def recover_manifest(
+    manifest_path: Path,
+    pdf_dir: Path,
+    timeout: int = 90,
+    workers: int = 1,
+) -> dict[str, int]:
     manifest: list[dict[str, Any]] = json.loads(manifest_path.read_text(encoding="utf-8"))
     pdf_dir.mkdir(parents=True, exist_ok=True)
-    session = requests.Session()
-    session.headers.update({"User-Agent": "TaxTreat legal-source verifier/1.0"})
+    pending = [item for item in manifest if not item.get("pdf_sha256")]
+    updates: dict[int, dict[str, Any]] = {}
+
+    if workers <= 1:
+        for item in pending:
+            document_id, update = _recover_one(item, pdf_dir, timeout)
+            updates[document_id] = update
+    else:
+        with ThreadPoolExecutor(max_workers=workers) as executor:
+            futures = {
+                executor.submit(_recover_one, item, pdf_dir, timeout): int(item["document_id"])
+                for item in pending
+            }
+            for future in as_completed(futures):
+                document_id = futures[future]
+                try:
+                    resolved_document_id, update = future.result()
+                except requests.RequestException as exc:
+                    updates[document_id] = {
+                        "download_status": "request_error",
+                        "resolved": False,
+                        "last_error": type(exc).__name__,
+                    }
+                    continue
+                updates[resolved_document_id] = update
+
     recovered = 0
     failed = 0
     for item in manifest:
-        if item.get("pdf_sha256"):
+        update = updates.get(int(item["document_id"]))
+        if update is None:
             continue
-        document_id = int(item["document_id"])
-        response, mode = download_pdf(session, document_id, timeout=timeout)
-        if not is_pdf_response(response):
-            item["download_status"] = "unresolved_legal_pdf"
-            item["resolved"] = False
-            item["last_http_status"] = response.status_code
-            item["last_content_type"] = response.headers.get("content-type")
+        item.update(update)
+        if update.get("pdf_sha256"):
+            recovered += 1
+        else:
             failed += 1
-            continue
-        path = pdf_dir / f"{document_id}.pdf"
-        path.write_bytes(response.content)
-        item.update({
-            "pdf_path": str(path),
-            "pdf_sha256": hashlib.sha256(response.content).hexdigest(),
-            "pdf_bytes": len(response.content),
-            "download_status": "downloaded",
-            "download_mode": mode,
-            "resolved": True,
-            "official_download_url": str(response.url),
-        })
-        recovered += 1
+
     manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     valid = sum(bool(item.get("pdf_sha256")) for item in manifest)
     return {"total": len(manifest), "valid": valid, "recovered": recovered, "failed": failed}
@@ -143,8 +202,14 @@ def main() -> int:
     parser.add_argument("--manifest", default="reports/treaty_verified_pdf_manifest.json")
     parser.add_argument("--pdf-dir", default="data/legal_texts/verified_source_pdfs")
     parser.add_argument("--timeout", type=int, default=90)
+    parser.add_argument("--workers", type=int, default=1)
     args = parser.parse_args()
-    result = recover_manifest(Path(args.manifest), Path(args.pdf_dir), timeout=args.timeout)
+    result = recover_manifest(
+        Path(args.manifest),
+        Path(args.pdf_dir),
+        timeout=args.timeout,
+        workers=max(1, args.workers),
+    )
     print(f"Official instruments: {result['total']}")
     print(f"Valid official PDFs: {result['valid']}")
     print(f"Recovered this run: {result['recovered']}")
