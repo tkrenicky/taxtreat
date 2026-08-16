@@ -5,6 +5,8 @@ on:
     branches: [ main ]
     paths:
       - "scripts/fetch_esbirka_structured_sources.py"
+      - "scripts/build_canonical_treaty_texts.py"
+      - "scripts/recover_esbirka_legal_pdfs.py"
       - "scripts/build_treaty_pdf_manifest.py"
       - "scripts/build_treaty_verbatim_registry.py"
       - "data/legal_rules_stage6/**"
@@ -24,6 +26,13 @@ jobs:
         run: python scripts/build_treaty_verbatim_registry.py
       - name: Resolve official instruments
         run: python scripts/build_treaty_pdf_manifest.py --timeout 90
+      - name: Recover 101 authoritative PDFs
+        run: |
+          python scripts/recover_esbirka_legal_pdfs.py \
+            --manifest reports/treaty_verified_pdf_manifest.json \
+            --pdf-dir artifacts/legal_pdfs \
+            --timeout 90 \
+            --workers 12
       - name: Fetch official structured JSON
         run: |
           python scripts/fetch_esbirka_structured_sources.py \
@@ -32,13 +41,24 @@ jobs:
             --report reports/treaty_structured_source_manifest.json \
             --timeout 60 \
             --workers 12
-      - name: Upload structured-source evidence
+      - name: Build 302 canonical treaty text candidates
+        run: |
+          python scripts/build_canonical_treaty_texts.py \
+            --registry reports/treaty_verbatim_registry.json \
+            --pdf-manifest reports/treaty_verified_pdf_manifest.json \
+            --structured-dir artifacts/structured_sources \
+            --output reports/canonical_treaty_texts_candidate.json \
+            --report reports/canonical_treaty_texts_candidate_report.json
+      - name: Upload canonical treaty text evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: treaty-structured-source-evidence
+          name: treaty-canonical-text-evidence
           path: |
+            reports/treaty_verbatim_registry.json
+            reports/treaty_verified_pdf_manifest.json
             reports/treaty_structured_source_manifest.json
-            artifacts/structured_sources
+            reports/canonical_treaty_texts_candidate.json
+            reports/canonical_treaty_texts_candidate_report.json
           if-no-files-found: warn
           retention-days: 30
