@@ -3,7 +3,7 @@
 
   const historyStyles = document.createElement("link");
   historyStyles.rel = "stylesheet";
-  historyStyles.href = "/ui-assets/workspace-output-history.css?v=20260816-1";
+  historyStyles.href = "/ui-assets/workspace-output-history.css?v=20260816-2";
   document.head.append(historyStyles);
 
   const nativeFetch = window.fetch.bind(window);
@@ -87,6 +87,29 @@
     }).format(parsed);
   }
 
+  function statusNeedsReview(status) {
+    const normalized = String(status || "").toUpperCase();
+    return (
+      normalized.includes("REVIEW") ||
+      normalized.includes("UNCERTAIN") ||
+      normalized.includes("MANUAL")
+    );
+  }
+
+  function statusLabel(status) {
+    return statusNeedsReview(status) ? "ODBORNÉ OVĚŘENÍ" : "DOKONČENO";
+  }
+
+  function formatRate(rate) {
+    if (rate === null || rate === undefined || rate === "") return "sazba —";
+    const numeric = Number(rate);
+    if (Number.isNaN(numeric)) return `sazba ${rate}`;
+    return `sazba ${new Intl.NumberFormat("cs-CZ", {
+      style: "percent",
+      maximumFractionDigits: 2,
+    }).format(numeric)}`;
+  }
+
   function prepareReportWindow(reportWindow, html, printAfterLoad) {
     reportWindow.document.open();
     reportWindow.document.write(html);
@@ -156,6 +179,35 @@
     return row;
   }
 
+  function reviewRow(record) {
+    const row = document.createElement("article");
+    row.className = "review-history-row";
+    row.dataset.reviewReportId = record.id;
+
+    const copy = document.createElement("div");
+    const eyebrow = document.createElement("small");
+    eyebrow.textContent = compactGeneratedAt(record.generatedAt);
+    const title = document.createElement("strong");
+    title.textContent = `${incomeLabels[record.incomeType] || record.incomeType || "Platba"} · ${record.recipientCountry}`;
+    const meta = document.createElement("span");
+    meta.textContent = `${formatRate(record.rate)} · ${record.id}`;
+    copy.append(eyebrow, title, meta);
+
+    const status = document.createElement("b");
+    status.className = statusNeedsReview(record.status)
+      ? "review-history-status attention"
+      : "review-history-status";
+    status.textContent = statusLabel(record.status);
+
+    const action = actionButton(
+      "Otevřít výstup",
+      () => openStoredReport(record)
+    );
+
+    row.append(copy, status, action);
+    return row;
+  }
+
   function renderOutputHistory() {
     const dashboardCards = document.querySelectorAll(
       '[data-view="dashboard"] .dashboard-grid > article.card'
@@ -217,13 +269,74 @@
     }
   }
 
+  function renderReviewHistory() {
+    const reviewsCard = document.querySelector('[data-view="reviews"] > article.card');
+    if (!reviewsCard) return;
+
+    reviewsCard.replaceChildren();
+    if (!outputHistory.length) {
+      const empty = document.createElement("div");
+      empty.className = "empty";
+      const title = document.createElement("strong");
+      title.textContent = "Zatím bez kontrol plateb";
+      const copy = document.createElement("p");
+      copy.textContent = "Vyber příjemce a zadej údaje o první transakci.";
+      empty.append(title, copy);
+      reviewsCard.append(empty);
+      return;
+    }
+
+    const head = document.createElement("div");
+    head.className = "card-head";
+    const heading = document.createElement("h2");
+    heading.textContent = "Dokončené kontroly";
+    const count = document.createElement("span");
+    count.textContent = String(outputHistory.length);
+    head.append(heading, count);
+    reviewsCard.append(head);
+    outputHistory.forEach((record) => reviewsCard.append(reviewRow(record)));
+  }
+
+  function renderDashboardMetrics() {
+    const metrics = document.querySelectorAll(
+      '[data-view="dashboard"] .dashboard-metrics > article'
+    );
+    const completed = metrics.item(2);
+    const attention = metrics.item(3);
+    const attentionCount = outputHistory.filter(
+      (record) => statusNeedsReview(record.status)
+    ).length;
+
+    if (completed) {
+      const label = completed.querySelector("span");
+      const value = completed.querySelector("strong");
+      const note = completed.querySelector("small");
+      if (label) label.textContent = "Dokončené kontroly";
+      if (value) value.textContent = String(outputHistory.length);
+      if (note) note.textContent = "v této relaci stránky";
+    }
+
+    if (attention) {
+      const value = attention.querySelector("strong");
+      const note = attention.querySelector("small");
+      if (value) value.textContent = String(attentionCount);
+      if (note) note.textContent = "výsledků k odbornému ověření";
+    }
+  }
+
+  function renderWorkspaceHistory() {
+    renderOutputHistory();
+    renderReviewHistory();
+    renderDashboardMetrics();
+  }
+
   function rememberReport(body) {
     const record = reportRecord(body);
     const existing = outputHistory.findIndex((item) => item.id === record.id);
     if (existing >= 0) outputHistory.splice(existing, 1);
     outputHistory.unshift(record);
     if (outputHistory.length > 10) outputHistory.length = 10;
-    renderOutputHistory();
+    renderWorkspaceHistory();
     return record;
   }
 
@@ -258,7 +371,7 @@
   );
   const openButton = resultActions?.querySelector(".primary");
 
-  renderOutputHistory();
+  renderWorkspaceHistory();
   if (!resultActions || !openButton) return;
 
   openButton.removeAttribute("data-nav");
