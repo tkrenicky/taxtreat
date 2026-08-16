@@ -1,0 +1,29 @@
+from fastapi.testclient import TestClient
+
+from app.main import app
+
+
+client = TestClient(app)
+
+
+def test_workspace_loads_professional_report_export_asset():
+    html = client.get("/workspace-demo").text
+    asset = client.get("/ui-assets/workspace-report-export.js")
+
+    assert asset.status_code == 200
+    assert "/ui-assets/workspace-report-export.js?v=20260816-1" in html
+    assert "Otevřít profesionální report" in asset.text
+    assert "Tisk / uložit PDF" in asset.text
+    assert 'nativeFetch("/analysis/report"' in asset.text
+    assert 'url.endsWith("/analysis/intake")' in asset.text
+    assert "reportWindow.print()" in asset.text
+    assert "details.open = true" in asset.text
+
+
+def test_report_export_does_not_store_transaction_payload_in_browser_storage():
+    asset = client.get("/ui-assets/workspace-report-export.js").text
+
+    assert "localStorage" not in asset
+    assert "sessionStorage" not in asset
+    assert "document.cookie" not in asset
+    assert "lastAnalysisPayload" in asset
