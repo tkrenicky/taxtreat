@@ -90,7 +90,7 @@ def test_legal_source_loader_rejects_invalid_registries(tmp_path):
 def test_verified_austrian_article_has_complete_czech_diacritics():
     provision = load_verified_provisions()["CZ-AT|treaty|10"]
 
-    assert "Článek 10 – DIVIDENDY" in provision["text"]
+    assert provision["text"].startswith("Článek 10\nDIVIDENDY\n")
     assert "skutečný vlastník" in provision["text"]
     assert "stálé provozovně" in provision["text"]
     assert "spolecnostõ" not in provision["text"]
