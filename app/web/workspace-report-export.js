@@ -1,6 +1,11 @@
 (() => {
   "use strict";
 
+  const historyStyles = document.createElement("link");
+  historyStyles.rel = "stylesheet";
+  historyStyles.href = "/ui-assets/workspace-output-history.css?v=20260816-1";
+  document.head.append(historyStyles);
+
   const nativeFetch = window.fetch.bind(window);
   const outputHistory = [];
   const incomeLabels = {
