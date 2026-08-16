@@ -1,0 +1,39 @@
+name: Professional report acceptance
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - "app/**"
+      - "taxtreat/services/reporting.py"
+      - "taxtreat/services/legal_sources.py"
+      - "data/legal_texts/canonical_provisions.json"
+      - "scripts/render_professional_report_acceptance.py"
+      - ".github/workflows/professional-report-acceptance.yml"
+  workflow_dispatch:
+
+jobs:
+  report-acceptance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+          pip install --no-deps -e .
+      - name: Install Chromium
+        run: playwright install --with-deps chromium
+      - name: Render HTML and PDF report
+        run: python scripts/render_professional_report_acceptance.py
+      - name: Upload report acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: professional-report-acceptance
+          path: reports/professional_report_acceptance
+          if-no-files-found: error
+          retention-days: 30
