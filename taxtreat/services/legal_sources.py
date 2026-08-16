@@ -90,17 +90,43 @@ def _attach_canonical_text(
     if not legacy and text_source_status not in _DISPLAYABLE_TREATY_TEXT_STATUSES:
         return
 
+    text_hash = provision.get("verified_text_sha256")
     item["official_text"] = text
     item["official_title"] = provision.get("title")
     item["source_url"] = provision.get("source_url") or item.get("source_url")
-    item["official_text_sha256"] = provision.get("verified_text_sha256")
+    item["official_text_sha256"] = text_hash
     item["official_pdf_sha256"] = provision.get("official_pdf_sha256")
     item["official_pdf_document_id"] = provision.get("official_pdf_document_id")
     item["text_source_status"] = provision.get("text_source_status")
     item["text_verification_status"] = provision.get("verification_status")
     item["text_verification_method"] = provision.get("verification_method")
+    # ``excerpt`` is the historic public/report field. Once canonical treaty
+    # text exists it must never continue carrying the older Stage 6 extract.
+    # Keeping both fields identical makes every downstream consumer use the
+    # same official structured e-Sbírka wording.
+    item["excerpt"] = text
+    item["excerpt_sha256"] = text_hash
     if provision.get("official_pdf_pages"):
         item["official_pdf_pages"] = provision["official_pdf_pages"]
+
+
+def _enrich_citations_in_place(
+    citations: list[dict[str, Any]],
+    *,
+    source_country: str,
+    recipient_country: str,
+    provisions: dict[str, dict[str, Any]],
+) -> None:
+    """Make canonical treaty text available to reports sharing the citations."""
+
+    for citation in citations:
+        layer = str(citation.get("legal_layer") or "")
+        article = str(citation.get("article") or "")
+        provision = provisions.get(
+            f"{source_country}-{recipient_country}|{layer}|{article}"
+        )
+        if provision:
+            _attach_canonical_text(citation, provision)
 
 
 def build_legal_path(
@@ -111,9 +137,23 @@ def build_legal_path(
     selected_rule_id: str | None,
     income_type: str | None = None,
 ) -> list[dict[str, Any]]:
-    """Return the legal path in application order with canonical display text."""
+    """Return the legal path in application order with canonical display text.
+
+    The supplied citation objects are also enriched in place. ``/analysis``
+    stores those same objects as ``analysis.citations`` and the professional
+    report consumes them later; mutating them here prevents the report from
+    falling back to obsolete Stage 6 treaty extracts after the legal path has
+    already resolved the canonical provision.
+    """
 
     selected = selected_rule_id or ""
+    provisions = load_verified_provisions()
+    _enrich_citations_in_place(
+        citations,
+        source_country=source_country,
+        recipient_country=recipient_country,
+        provisions=provisions,
+    )
     supplied = [dict(citation) for citation in citations]
     normalized_income_type = str(income_type or "").lower()
     has_domestic_start = any(
@@ -135,7 +175,6 @@ def build_legal_path(
             str(citation.get("rule_id")),
         ),
     )
-    provisions = load_verified_provisions()
     result: list[dict[str, Any]] = []
     seen: set[tuple[str, str, str]] = set()
     for citation in ordered:
