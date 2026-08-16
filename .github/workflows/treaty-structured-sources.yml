@@ -1,0 +1,44 @@
+name: Treaty structured sources
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - "scripts/fetch_esbirka_structured_sources.py"
+      - "scripts/build_treaty_pdf_manifest.py"
+      - "scripts/build_treaty_verbatim_registry.py"
+      - "data/legal_rules_stage6/**"
+      - ".github/workflows/treaty-structured-sources.yml"
+
+jobs:
+  structured-sources:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: python -m pip install requests==2.32.3
+      - name: Build treaty provision registry
+        run: python scripts/build_treaty_verbatim_registry.py
+      - name: Resolve official instruments
+        run: python scripts/build_treaty_pdf_manifest.py --timeout 90
+      - name: Fetch official structured JSON
+        run: |
+          python scripts/fetch_esbirka_structured_sources.py \
+            --manifest reports/treaty_verified_pdf_manifest.json \
+            --output-dir artifacts/structured_sources \
+            --report reports/treaty_structured_source_manifest.json \
+            --timeout 60 \
+            --workers 12
+      - name: Upload structured-source evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: treaty-structured-source-evidence
+          path: |
+            reports/treaty_structured_source_manifest.json
+            artifacts/structured_sources
+          if-no-files-found: warn
+          retention-days: 30
