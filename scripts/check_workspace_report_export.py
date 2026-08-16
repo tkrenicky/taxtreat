@@ -97,6 +97,7 @@ def main() -> int:
             )
             page = context.new_page()
             console_errors: list[str] = []
+            report_requests: list[str] = []
             page.on(
                 "console",
                 lambda message: (
@@ -105,15 +106,6 @@ def main() -> int:
                     else None
                 ),
             )
-
-            finish_workspace_calculation(page)
-
-            open_button = page.locator('[data-report-action="open"]')
-            print_button = page.locator('[data-report-action="print"]')
-            if open_button.count() != 1 or print_button.count() != 1:
-                raise AssertionError("Workspace report actions are missing.")
-
-            report_requests: list[str] = []
             page.on(
                 "request",
                 lambda request: (
@@ -123,6 +115,29 @@ def main() -> int:
                 ),
             )
 
+            finish_workspace_calculation(page)
+
+            output_rows = page.locator("[data-output-report-id]")
+            output_rows.first.wait_for(state="attached", timeout=5000)
+            if output_rows.count() < 2:
+                raise AssertionError(
+                    "Completed result was not exposed on dashboard and outputs."
+                )
+            if not any("Dividendy · AT" in text for text in output_rows.all_inner_texts()):
+                raise AssertionError(
+                    "Output history is missing the transaction summary."
+                )
+            if len(report_requests) < 1:
+                raise AssertionError(
+                    "Completed result did not preload /analysis/report."
+                )
+
+            open_button = page.locator('[data-report-action="open"]')
+            print_button = page.locator('[data-report-action="print"]')
+            if open_button.count() != 1 or print_button.count() != 1:
+                raise AssertionError("Workspace report actions are missing.")
+
+            requests_before_direct_exports = len(report_requests)
             with page.expect_popup() as popup_info:
                 open_button.click()
             report_page = popup_info.value
@@ -149,10 +164,35 @@ def main() -> int:
                 )
             print_page.close()
 
-            if len(report_requests) < 2:
+            if len(report_requests) < requests_before_direct_exports + 2:
                 raise AssertionError(
-                    "Both export actions must request /analysis/report."
+                    "Both result export actions must request /analysis/report."
                 )
+
+            page.get_by_role("button", name="Výstupy", exact=True).click()
+            outputs_view = page.locator('[data-view="outputs"].active')
+            outputs_view.wait_for(state="visible")
+            stored_rows = outputs_view.locator("[data-output-report-id]")
+            if stored_rows.count() != 1:
+                raise AssertionError(
+                    "Outputs view did not retain exactly one in-memory report."
+                )
+            if "Vytvořené výstupy" not in outputs_view.inner_text():
+                raise AssertionError("Outputs view did not leave its empty state.")
+
+            requests_before_reopen = len(report_requests)
+            with page.expect_popup() as stored_popup_info:
+                stored_rows.first.get_by_role(
+                    "button", name="Otevřít report"
+                ).click()
+            stored_page = stored_popup_info.value
+            stored_page.get_by_text("Česká srážková daň", exact=True).wait_for()
+            stored_page.close()
+            if len(report_requests) != requests_before_reopen:
+                raise AssertionError(
+                    "Reopening an in-memory output unexpectedly recalculated report."
+                )
+
             if console_errors:
                 raise AssertionError(
                     f"Browser console errors: {console_errors!r}"
@@ -167,7 +207,7 @@ def main() -> int:
             process.kill()
             process.wait(timeout=5)
 
-    print("Workspace professional report export: PASS")
+    print("Workspace professional report export and history: PASS")
     return 0
 
 
