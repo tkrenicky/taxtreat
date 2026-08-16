@@ -7,7 +7,10 @@ from typing import Any
 
 
 ROOT = Path(__file__).resolve().parents[2]
-VERIFIED_PROVISIONS = (
+CANONICAL_PROVISIONS = (
+    ROOT / "data" / "legal_texts" / "canonical_provisions.json"
+)
+LEGACY_VERIFIED_PROVISIONS = (
     ROOT / "data" / "legal_texts" / "verified_provisions.json"
 )
 _LAYER_ORDER = {
@@ -19,13 +22,16 @@ _LAYER_ORDER = {
 }
 _CZ_OUTBOUND_INCOME_TYPES = {"dividend", "interest", "royalty"}
 _CZ_DOMESTIC_SOURCE_URL = "https://e-sbirka.gov.cz/sb/1992/586"
+_DISPLAYABLE_TREATY_TEXT_STATUSES = {
+    "official_esbirka_structured_text_pdf_anchored",
+}
 
 
 def _domestic_starting_point(income_type: str) -> dict[str, Any]:
     """Return the mandatory Czech domestic starting point for the legal path.
 
     The date of a consolidated source package must not decide whether the
-    domestic starting step is displayed.  Rule selection remains owned by the
+    domestic starting step is displayed. Rule selection remains owned by the
     legal engine; this item makes the audit path complete when an applicable
     treaty rule is returned without its preceding domestic citation.
     """
@@ -50,8 +56,51 @@ def _domestic_starting_point(income_type: str) -> dict[str, Any]:
 
 
 @lru_cache(maxsize=1)
-def load_verified_provisions() -> dict[str, dict[str, str]]:
-    return json.loads(VERIFIED_PROVISIONS.read_text(encoding="utf-8"))
+def load_verified_provisions() -> dict[str, dict[str, Any]]:
+    """Load canonical display text while retaining the historic public helper.
+
+    Treaty display text is sourced from the official structured e-Sbírka text
+    and is bound to the SHA-256 of the corresponding authoritative PDF. The
+    legacy single-provision file remains a fallback for older checkouts only.
+    """
+
+    path = (
+        CANONICAL_PROVISIONS
+        if CANONICAL_PROVISIONS.is_file()
+        else LEGACY_VERIFIED_PROVISIONS
+    )
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise ValueError("Canonical legal-text registry must contain an object.")
+    return payload
+
+
+def _attach_canonical_text(
+    item: dict[str, Any],
+    provision: dict[str, Any],
+) -> None:
+    text = str(provision.get("text") or "").strip()
+    if not text:
+        return
+
+    text_source_status = str(provision.get("text_source_status") or "")
+    # Legacy records pre-date the explicit structured-source status. They are
+    # accepted only when the canonical 302-provision registry is unavailable.
+    legacy = not CANONICAL_PROVISIONS.is_file()
+    if not legacy and text_source_status not in _DISPLAYABLE_TREATY_TEXT_STATUSES:
+        return
+
+    item["official_text"] = text
+    item["official_title"] = provision.get("title")
+    item["source_url"] = provision.get("source_url") or item.get("source_url")
+    item["official_text_sha256"] = provision.get("verified_text_sha256")
+    item["official_pdf_sha256"] = provision.get("official_pdf_sha256")
+    item["official_pdf_document_id"] = provision.get("official_pdf_document_id")
+    item["text_source_status"] = provision.get("text_source_status")
+    item["text_verification_status"] = provision.get("verification_status")
+    item["text_verification_method"] = provision.get("verification_method")
+    if provision.get("official_pdf_pages"):
+        item["official_pdf_pages"] = provision["official_pdf_pages"]
 
 
 def build_legal_path(
@@ -62,7 +111,7 @@ def build_legal_path(
     selected_rule_id: str | None,
     income_type: str | None = None,
 ) -> list[dict[str, Any]]:
-    """Return the legal path in application order with verified display text."""
+    """Return the legal path in application order with canonical display text."""
 
     selected = selected_rule_id or ""
     supplied = [dict(citation) for citation in citations]
@@ -97,12 +146,10 @@ def build_legal_path(
             continue
         seen.add(identity)
         item = dict(citation)
-        verified = provisions.get(
+        provision = provisions.get(
             f"{source_country}-{recipient_country}|{layer}|{article}"
         )
-        if verified:
-            item["official_text"] = verified["text"]
-            item["official_title"] = verified["title"]
-            item["source_url"] = verified["source_url"]
+        if provision:
+            _attach_canonical_text(item, provision)
         result.append(item)
     return result
