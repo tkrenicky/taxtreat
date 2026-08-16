@@ -87,6 +87,30 @@ def test_legal_source_loader_rejects_invalid_registries(tmp_path):
     ) == ["MISSING"]
 
 
+def test_canonical_treaty_corpus_is_complete_and_pdf_anchored():
+    provisions = load_verified_provisions()
+
+    assert len(provisions) == 302
+    required = {
+        "text",
+        "source_url",
+        "official_pdf_sha256",
+        "structured_source_sha256",
+        "verified_text_sha256",
+    }
+    for key, provision in provisions.items():
+        assert key.startswith("CZ-") and "|treaty|" in key
+        assert required <= provision.keys()
+        assert all(str(provision[field]).strip() for field in required)
+        assert provision["source_url"].startswith("https://e-sbirka.gov.cz/")
+        assert provision["text_source_status"] == (
+            "official_esbirka_structured_text_pdf_anchored"
+        )
+        assert hashlib.sha256(
+            provision["text"].encode("utf-8")
+        ).hexdigest() == provision["verified_text_sha256"]
+
+
 def test_verified_austrian_article_has_complete_czech_diacritics():
     provision = load_verified_provisions()["CZ-AT|treaty|10"]
 
