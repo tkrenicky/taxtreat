@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
@@ -55,6 +56,21 @@ def _domestic_starting_point(income_type: str) -> dict[str, Any]:
     }
 
 
+def _format_domestic_paragraph(value: Any) -> Any:
+    """Render internal domestic locators in conventional Czech legal style."""
+
+    if value in (None, ""):
+        return value
+    text = str(value).strip()
+    match = re.fullmatch(r"(\d+)\(([a-z])\)\((\d+)\)", text)
+    if match:
+        paragraph, letter, point = match.groups()
+        return f"odst. {paragraph} písm. {letter}) bod {point}"
+    if re.fullmatch(r"\d+", text):
+        return f"odst. {text}"
+    return value
+
+
 @lru_cache(maxsize=1)
 def load_verified_provisions() -> dict[str, dict[str, Any]]:
     """Load canonical display text while retaining the historic public helper.
@@ -84,8 +100,6 @@ def _attach_canonical_text(
         return
 
     text_source_status = str(provision.get("text_source_status") or "")
-    # Legacy records pre-date the explicit structured-source status. They are
-    # accepted only when the canonical 302-provision registry is unavailable.
     legacy = not CANONICAL_PROVISIONS.is_file()
     if not legacy and text_source_status not in _DISPLAYABLE_TREATY_TEXT_STATUSES:
         return
@@ -100,10 +114,6 @@ def _attach_canonical_text(
     item["text_source_status"] = provision.get("text_source_status")
     item["text_verification_status"] = provision.get("verification_status")
     item["text_verification_method"] = provision.get("verification_method")
-    # ``excerpt`` is the historic public/report field. Once canonical treaty
-    # text exists it must never continue carrying the older Stage 6 extract.
-    # Keeping both fields identical makes every downstream consumer use the
-    # same official structured e-Sbírka wording.
     item["excerpt"] = text
     item["excerpt_sha256"] = text_hash
     if provision.get("official_pdf_pages"):
@@ -117,7 +127,7 @@ def _enrich_citations_in_place(
     recipient_country: str,
     provisions: dict[str, dict[str, Any]],
 ) -> None:
-    """Make canonical treaty text available to reports sharing the citations."""
+    """Make canonical treaty text available to consumers sharing citations."""
 
     for citation in citations:
         layer = str(citation.get("legal_layer") or "")
@@ -137,13 +147,11 @@ def build_legal_path(
     selected_rule_id: str | None,
     income_type: str | None = None,
 ) -> list[dict[str, Any]]:
-    """Return the legal path in application order with canonical display text.
+    """Return the deduplicated legal path without changing citation semantics.
 
-    The supplied citation objects are also enriched in place. ``/analysis``
-    stores those same objects as ``analysis.citations`` and the professional
-    report consumes them later; mutating them here prevents the report from
-    falling back to obsolete Stage 6 treaty extracts after the legal path has
-    already resolved the canonical provision.
+    Canonical treaty text is enriched onto the original citations for legacy
+    consumers, while the returned path is independently deduplicated and
+    cleaned for user-facing display and reporting.
     """
 
     selected = selected_rule_id or ""
@@ -190,5 +198,16 @@ def build_legal_path(
         )
         if provision:
             _attach_canonical_text(item, provision)
+        if layer == "domestic":
+            item["paragraph"] = _format_domestic_paragraph(item.get("paragraph"))
+            if item.get("path_role") != "domestic_starting_point":
+                # Stage 6 domestic excerpts are internal summaries, not
+                # verbatim statutory text. Keep source/rule metadata, but do
+                # not expose the internal summary as legal wording.
+                item.pop("excerpt", None)
+                item.pop("excerpt_sha256", None)
+                item.pop("official_text", None)
+                item.pop("official_text_sha256", None)
         result.append(item)
+
     return result

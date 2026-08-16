@@ -14,6 +14,12 @@ from taxtreat.services.legal_sources import load_verified_provisions
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT_DIR = ROOT / "reports" / "professional_report_acceptance"
+_INTERNAL_DOMESTIC_PLACEHOLDER = (
+    "Current Czech domestic withholding tax standard rate represented "
+    "in the approved Stage 6 package"
+)
+_DOMESTIC_LOCATOR = "odst. 1 písm. b) bod 1"
+_INTERNAL_DOMESTIC_LOCATOR = "1(b)(1)"
 
 
 def _payload() -> dict:
@@ -63,6 +69,36 @@ def render(output_dir: Path) -> dict:
     for damaged in ("rozdili zisk", "vyplacejici"):
         if damaged in html:
             raise AssertionError(f"Damaged Stage 6 wording leaked into report HTML: {damaged}")
+    if _INTERNAL_DOMESTIC_PLACEHOLDER in html:
+        raise AssertionError("Internal Stage 6 domestic placeholder leaked into report HTML.")
+    if _INTERNAL_DOMESTIC_LOCATOR in html:
+        raise AssertionError("Internal domestic locator notation leaked into report HTML.")
+    if _DOMESTIC_LOCATOR not in html:
+        raise AssertionError("Czech-formatted domestic locator is absent from report HTML.")
+
+    sources = report.get("official_sources", [])
+    treaty_article_10 = [
+        source
+        for source in sources
+        if source.get("legal_layer") == "treaty"
+        and str(source.get("article")) == "10"
+    ]
+    if len(treaty_article_10) != 1:
+        raise AssertionError(
+            f"Expected one AD treaty Article 10 source, got {len(treaty_article_10)}."
+        )
+    domestic_sources = [
+        source for source in sources
+        if source.get("legal_layer") == "domestic"
+    ]
+    if len(domestic_sources) != 1:
+        raise AssertionError(
+            f"Expected one domestic starting source, got {len(domestic_sources)}."
+        )
+    if domestic_sources[0].get("excerpt"):
+        raise AssertionError("Domestic internal summary must not be rendered as legal text.")
+    if domestic_sources[0].get("paragraph") != _DOMESTIC_LOCATOR:
+        raise AssertionError("Domestic source locator is not formatted for Czech legal display.")
 
     html_path = output_dir / "taxtreat-professional-report.html"
     pdf_path = output_dir / "taxtreat-professional-report.pdf"
@@ -74,10 +110,6 @@ def render(output_dir: Path) -> dict:
         browser = playwright.chromium.launch()
         page = browser.new_page(viewport={"width": 1280, "height": 1600})
         page.set_content(html, wait_until="load")
-
-        # Legal provisions are collapsible in the interactive HTML report. A
-        # PDF is an archival output, so every cited provision must be expanded
-        # before Chromium prints the document.
         page.locator("details").evaluate_all(
             "nodes => nodes.forEach(node => { node.open = true; })"
         )
@@ -89,6 +121,10 @@ def render(output_dir: Path) -> dict:
             raise AssertionError("Rendered report is missing legal-source section.")
         if canonical_heading not in body_text:
             raise AssertionError("Expanded report does not contain the canonical article heading.")
+        if body_text.count("Smlouva o zamezení dvojího zdanění · článek 10") != 1:
+            raise AssertionError("Rendered report contains duplicate treaty Article 10 cards.")
+        if _DOMESTIC_LOCATOR not in body_text or _INTERNAL_DOMESTIC_LOCATOR in body_text:
+            raise AssertionError("Rendered report uses an invalid domestic legal locator format.")
 
         page.emulate_media(media="print")
         page.pdf(
@@ -111,14 +147,21 @@ def render(output_dir: Path) -> dict:
         page.extract_text() or ""
         for page in PdfReader(str(pdf_path)).pages
     )
+    pdf_normalized = " ".join(pdf_text.split())
     if canonical_heading not in pdf_text:
         raise AssertionError("Printed PDF does not contain the canonical article heading.")
+    if pdf_text.count("Smlouva o zamezení dvojího zdanění · článek 10") != 1:
+        raise AssertionError("Printed PDF contains duplicate treaty Article 10 cards.")
+    if _INTERNAL_DOMESTIC_PLACEHOLDER in pdf_text:
+        raise AssertionError("Internal Stage 6 domestic placeholder leaked into PDF.")
+    if _DOMESTIC_LOCATOR not in pdf_normalized or _INTERNAL_DOMESTIC_LOCATOR in pdf_text:
+        raise AssertionError("Printed PDF uses an invalid domestic legal locator format.")
     for damaged in ("rozdili zisk", "vyplacejici"):
         if damaged in pdf_text:
             raise AssertionError(f"Damaged Stage 6 wording leaked into PDF: {damaged}")
 
     result = {
-        "schema_version": 1,
+        "schema_version": 3,
         "report_id": report["report_id"],
         "html_bytes": html_path.stat().st_size,
         "pdf_bytes": len(pdf_bytes),
@@ -126,6 +169,12 @@ def render(output_dir: Path) -> dict:
         "canonical_source_key": "CZ-AD|treaty|10",
         "canonical_text_sha256": canonical["verified_text_sha256"],
         "official_pdf_sha256": canonical["official_pdf_sha256"],
+        "official_source_count": len(sources),
+        "treaty_article_10_count": len(treaty_article_10),
+        "domestic_source_count": len(domestic_sources),
+        "domestic_locator": _DOMESTIC_LOCATOR,
+        "domestic_locator_czech_format": True,
+        "domestic_placeholder_absent": True,
         "damaged_stage6_wording_absent": True,
         "html_rendered": True,
         "pdf_rendered": True,
