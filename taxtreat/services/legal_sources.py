@@ -48,6 +48,11 @@ def _domestic_starting_point(income_type: str) -> dict[str, Any]:
         "source_id": "CZ-ZDP-CANONICAL",
         "source_url": _CZ_DOMESTIC_SOURCE_URL,
         "path_role": "domestic_starting_point",
+        "excerpt": (
+            "Výchozím vnitrostátním krokem je sazba 15 % podle § 36 "
+            "zákona č. 586/1992 Sb., o daních z příjmů. Následně je "
+            "zohledněna příslušná smlouva nebo vnitrostátní osvobození."
+        ),
     }
 
 
@@ -142,12 +147,11 @@ def build_legal_path(
     selected_rule_id: str | None,
     income_type: str | None = None,
 ) -> list[dict[str, Any]]:
-    """Return one canonical legal path shared by UI and professional report.
+    """Return the deduplicated legal path without changing citation semantics.
 
-    The caller's citation list is replaced with the same deduplicated path.
-    This prevents exported reports from reintroducing duplicate treaty article
-    cards or internal Stage 6 excerpts after the UI has already resolved the
-    canonical legal path.
+    Canonical treaty text is enriched onto the original citations for legacy
+    consumers, while the returned path is independently deduplicated and
+    cleaned for user-facing display and reporting.
     """
 
     selected = selected_rule_id or ""
@@ -196,14 +200,14 @@ def build_legal_path(
             _attach_canonical_text(item, provision)
         if layer == "domestic":
             item["paragraph"] = _format_domestic_paragraph(item.get("paragraph"))
-            # Stage 6 domestic excerpts are internal summaries, not verbatim
-            # statutory text. Keep the official source link and rule metadata,
-            # but never present the internal summary as legal wording.
-            item.pop("excerpt", None)
-            item.pop("excerpt_sha256", None)
-            item.pop("official_text", None)
-            item.pop("official_text_sha256", None)
+            if item.get("path_role") != "domestic_starting_point":
+                # Stage 6 domestic excerpts are internal summaries, not
+                # verbatim statutory text. Keep source/rule metadata, but do
+                # not expose the internal summary as legal wording.
+                item.pop("excerpt", None)
+                item.pop("excerpt_sha256", None)
+                item.pop("official_text", None)
+                item.pop("official_text_sha256", None)
         result.append(item)
 
-    citations[:] = [dict(item) for item in result]
     return result
