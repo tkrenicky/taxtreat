@@ -193,6 +193,61 @@ def main() -> int:
                     "Reopening an in-memory output unexpectedly recalculated report."
                 )
 
+            page.get_by_role(
+                "button", name="Kontroly plateb", exact=True
+            ).click()
+            reviews_view = page.locator('[data-view="reviews"].active')
+            reviews_view.wait_for(state="visible")
+            review_rows = reviews_view.locator("[data-review-report-id]")
+            if review_rows.count() != 1:
+                raise AssertionError(
+                    "Reviews view did not retain exactly one completed payment review."
+                )
+            review_text = review_rows.first.inner_text()
+            if "Dividendy · AT" not in review_text:
+                raise AssertionError(
+                    "Completed payment review is missing its transaction summary."
+                )
+            if "Dokončené kontroly" not in reviews_view.inner_text():
+                raise AssertionError("Reviews view did not leave its empty state.")
+
+            review_status = review_rows.first.locator(
+                ".review-history-status"
+            ).inner_text()
+            if review_status not in {"DOKONČENO", "ODBORNÉ OVĚŘENÍ"}:
+                raise AssertionError(
+                    f"Unexpected completed-review status: {review_status!r}."
+                )
+
+            requests_before_review_open = len(report_requests)
+            with page.expect_popup() as review_popup_info:
+                review_rows.first.get_by_role(
+                    "button", name="Otevřít výstup"
+                ).click()
+            review_page = review_popup_info.value
+            review_page.get_by_text("Česká srážková daň", exact=True).wait_for()
+            review_page.close()
+            if len(report_requests) != requests_before_review_open:
+                raise AssertionError(
+                    "Opening a stored review unexpectedly recalculated report."
+                )
+
+            page.get_by_role("button", name="Přehled", exact=True).click()
+            dashboard = page.locator('[data-view="dashboard"].active')
+            dashboard.wait_for(state="visible")
+            metrics = dashboard.locator(".dashboard-metrics > article")
+            completed_metric = metrics.nth(2)
+            attention_metric = metrics.nth(3)
+            if completed_metric.locator("span").inner_text() != "Dokončené kontroly":
+                raise AssertionError("Dashboard completed-review metric is not data-bound.")
+            if completed_metric.locator("strong").inner_text() != "1":
+                raise AssertionError("Dashboard completed-review count is incorrect.")
+            expected_attention = "1" if review_status == "ODBORNÉ OVĚŘENÍ" else "0"
+            if attention_metric.locator("strong").inner_text() != expected_attention:
+                raise AssertionError(
+                    "Dashboard attention count does not match stored review status."
+                )
+
             if console_errors:
                 raise AssertionError(
                     f"Browser console errors: {console_errors!r}"
@@ -207,7 +262,7 @@ def main() -> int:
             process.kill()
             process.wait(timeout=5)
 
-    print("Workspace professional report export and history: PASS")
+    print("Workspace professional report, output and review history: PASS")
     return 0
 
 
