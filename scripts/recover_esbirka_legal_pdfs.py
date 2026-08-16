@@ -150,7 +150,7 @@ def recover_manifest(
     manifest_path: Path,
     pdf_dir: Path,
     timeout: int = 90,
-    workers: int = 1,
+    workers: int = 12,
 ) -> dict[str, int]:
     manifest: list[dict[str, Any]] = json.loads(manifest_path.read_text(encoding="utf-8"))
     pdf_dir.mkdir(parents=True, exist_ok=True)
@@ -202,7 +202,7 @@ def main() -> int:
     parser.add_argument("--manifest", default="reports/treaty_verified_pdf_manifest.json")
     parser.add_argument("--pdf-dir", default="data/legal_texts/verified_source_pdfs")
     parser.add_argument("--timeout", type=int, default=90)
-    parser.add_argument("--workers", type=int, default=1)
+    parser.add_argument("--workers", type=int, default=12)
     args = parser.parse_args()
     result = recover_manifest(
         Path(args.manifest),
