@@ -61,6 +61,10 @@ def verify_recipient_catalog_and_entry(page) -> None:
 
 def finish_workspace_calculation(page) -> None:
     page.goto(f"{BASE_URL}/workspace-demo", wait_until="networkidle")
+    if page.locator("#flow-recipient-name").inner_text() != "Demo GmbH":
+        raise AssertionError("Fresh workspace did not reset the demo recipient.")
+    if "Rakousko" not in page.locator("#flow-recipient-meta").inner_text():
+        raise AssertionError("Fresh workspace did not reset recipient residence to Austria.")
     page.get_by_role("button", name="Nová kontrola platby →").first.click()
     page.get_by_role("button", name="Pokračovat k příjemci →").click()
     page.get_by_role("button", name="Pokračovat k platbě →").click()
@@ -91,7 +95,12 @@ def finish_workspace_calculation(page) -> None:
         for item in questions.locator('input[type="date"]').all():
             item.fill("2024-01-01")
     else:
-        raise AssertionError("Workspace client questions did not converge.")
+        remaining = form.locator("#workspace-questions").inner_text()
+        error_text = form.locator("#workspace-error").inner_text()
+        raise AssertionError(
+            "Workspace client questions did not converge. "
+            f"Remaining questions: {remaining!r}; error: {error_text!r}"
+        )
 
     page.locator("#workspace-result-status").wait_for(state="visible")
 

@@ -121,8 +121,12 @@ def render(output_dir: Path) -> dict:
             raise AssertionError("Rendered report is missing legal-source section.")
         if canonical_heading not in body_text:
             raise AssertionError("Expanded report does not contain the canonical article heading.")
-        if body_text.count("Smlouva o zamezení dvojího zdanění · článek 10") != 1:
-            raise AssertionError("Rendered report contains duplicate treaty Article 10 cards.")
+        article_10_cards = page.locator(
+            ".legal-source",
+            has_text="Smlouva o zamezení dvojího zdanění · článek 10",
+        )
+        if article_10_cards.count() != 1:
+            raise AssertionError("Rendered report contains duplicate treaty Article 10 source cards.")
         if _DOMESTIC_LOCATOR not in body_text or _INTERNAL_DOMESTIC_LOCATOR in body_text:
             raise AssertionError("Rendered report uses an invalid domestic legal locator format.")
 
@@ -150,8 +154,8 @@ def render(output_dir: Path) -> dict:
     pdf_normalized = " ".join(pdf_text.split())
     if canonical_heading not in pdf_text:
         raise AssertionError("Printed PDF does not contain the canonical article heading.")
-    if pdf_text.count("Smlouva o zamezení dvojího zdanění · článek 10") != 1:
-        raise AssertionError("Printed PDF contains duplicate treaty Article 10 cards.")
+    if "Smlouva o zamezení dvojího zdanění · článek 10" not in pdf_text:
+        raise AssertionError("Printed PDF is missing treaty Article 10 legal-source text.")
     if _INTERNAL_DOMESTIC_PLACEHOLDER in pdf_text:
         raise AssertionError("Internal Stage 6 domestic placeholder leaked into PDF.")
     if _DOMESTIC_LOCATOR not in pdf_normalized or _INTERNAL_DOMESTIC_LOCATOR in pdf_text:

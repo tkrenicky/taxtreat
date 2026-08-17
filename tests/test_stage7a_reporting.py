@@ -74,9 +74,9 @@ def test_professional_report_preserves_review_required_semantics():
         "stage6-source-release-2026-08-12.1"
     )
     assert report["disclaimer"] == DISCLAIMER
-    assert "Není právním nebo daňovým poradenstvím" in report["disclaimer"]
+    assert "nepředstavuje právní ani daňové poradenství" in report["disclaimer"]
     assert "<!doctype html>" in payload["html"]
-    assert report["report_id"] in payload["html"]
+    assert report["report_id"] not in payload["html"]
 
 
 def test_unknown_pair_report_remains_fail_closed():
@@ -130,7 +130,7 @@ def test_report_risk_labels_cover_final_and_out_of_scope():
         },
     )
 
-    assert "uvolněného katalogu" in final["risk_assessment"]
+    assert "právních pravidel uvedených v tomto výstupu" in final["risk_assessment"]
     assert "mimo aktuálně podporovaný rozsah" in (
         out_of_scope["risk_assessment"]
     )
