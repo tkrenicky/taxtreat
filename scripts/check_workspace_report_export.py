@@ -195,12 +195,14 @@ def main() -> int:
             report_page.get_by_text("Česká srážková daň", exact=True).wait_for()
             report_page.get_by_text("Analyzovaná transakce", exact=True).wait_for()
             report_page.get_by_text("Právní základ", exact=True).wait_for()
+            report_page.get_by_text("Proč tato sazba", exact=True).wait_for()
             if report_page.locator(".section-no,.source-number").count() != 0:
                 raise AssertionError("Report still exposes internal section/source numbering.")
             if "TAXTREAT-" in report_page.locator("body").inner_text():
                 raise AssertionError("Report still exposes an internal report identifier.")
-            if "Odborné ověření" in report_page.locator("body").inner_text():
-                raise AssertionError("Report still exposes obsolete human-review wording.")
+            report_body = report_page.locator("body").inner_text()
+            if "Odborné ověření" in report_body or "uvolněného katalogu" in report_body or "Withholding tax analysis" in report_body:
+                raise AssertionError("Report still exposes obsolete or internal-facing wording.")
             if report_page.locator(".legal-source").count() < 1:
                 raise AssertionError(
                     "Opened professional report contains no legal sources."

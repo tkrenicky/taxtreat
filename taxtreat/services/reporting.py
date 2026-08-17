@@ -80,7 +80,7 @@ def build_professional_report(
     elif status == "FINAL" and treatment == "domestic_exemption":
         risk = "Příjem je podle použitého vnitrostátního pravidla osvobozen."
     elif status == "FINAL":
-        risk = "Výsledek byl určen z uvolněného katalogu právních pravidel."
+        risk = "Výsledek vychází ze zadaných údajů a z právních pravidel uvedených v tomto výstupu."
     elif status == "OUT_OF_SCOPE":
         risk = "Transakce je mimo aktuálně podporovaný rozsah."
     else:
@@ -270,6 +270,24 @@ def render_report_html(report: Mapping[str, Any]) -> str:
     else:
         calculation_html = '<p class="note">Částkový výpočet nebyl uzavřen.</p>'
 
+    selected_rule_id = result.get("selected_rule_id") or result.get("candidate_rule_id")
+    selected_source = next(
+        (source for source in report.get("official_sources", []) if source.get("rule_id") == selected_rule_id),
+        None,
+    )
+    if selected_source and selected_source.get("legal_layer") in {"treaty", "protocol", "mli"}:
+        why_result = (
+            "Použitá sazba vychází z příslušné smlouvy o zamezení dvojího zdanění. "
+            f"Rozhodující právní základ je {_source_title(selected_source)}; níže je uveden oficiální zdroj i přesné znění ustanovení."
+        )
+    elif selected_source:
+        why_result = (
+            f"Výsledek vychází z {_source_title(selected_source)}. "
+            "Níže je uveden oficiální zdroj a právní podklad použitý při výpočtu."
+        )
+    else:
+        why_result = "Výsledek vychází ze zadaných údajů a z právních podkladů uvedených níže."
+
     source_items: list[str] = []
     for source in report.get("official_sources", []):
         url = escape(str(source.get("source_url") or ""), quote=True)
@@ -341,11 +359,11 @@ def render_report_html(report: Mapping[str, Any]) -> str:
     .note {{ color:var(--muted); }} .risk {{ margin-top:12px; color:#4c596e; }}
     footer {{ padding:20px 38px 26px; border-top:1px solid var(--line); color:var(--muted); background:#fafbfc; font-size:10px; }}
     @media(max-width:760px) {{ .report{{width:100%;margin:0}} header{{display:block}} header .cutoff{{margin-top:16px;text-align:left}} main{{padding:24px 20px}} .transaction-grid{{grid-template-columns:1fr 1fr}} .transaction-grid div{{border-bottom:1px solid var(--line)}} .metric-grid,.two-col,.deadline-grid{{grid-template-columns:1fr}} }}
-    @media print {{ @page{{size:A4;margin:13mm}} body{{background:#fff}} .report{{width:auto;margin:0;box-shadow:none}} header{{print-color-adjust:exact;-webkit-print-color-adjust:exact}} section,.verdict,.transaction,.legal-source{{break-inside:avoid}} a{{color:inherit;text-decoration:none}} details{{display:block}} }}
+    @media print {{ @page{{size:A4;margin:13mm}} body{{background:#fff}} .report{{width:auto;margin:0;box-shadow:none}} header{{print-color-adjust:exact;-webkit-print-color-adjust:exact}} section,.verdict,.transaction{{break-inside:avoid}} a{{color:inherit;text-decoration:none}} details{{display:block}} blockquote{{max-height:none;overflow:visible;break-inside:auto}} .legal-source{{break-inside:auto}} }}
   </style>
 </head>
 <body><article class="report">
-  <header><div><div class="brand"><span>TT</span>TaxTreat</div><p>Withholding tax analysis</p></div><div class="cutoff">Právní stav k {_report_date(report.get('legal_data_cutoff'))}</div></header>
+  <header><div><div class="brand"><span>TT</span>TaxTreat</div><p>Analýza české srážkové daně</p></div><div class="cutoff">Právní stav k {_report_date(report.get('legal_data_cutoff'))}</div></header>
   <main>
     <section class="transaction"><div class="eyebrow">Analyzovaná transakce</div><h1>Česká srážková daň</h1><div class="transaction-grid">
       <div><span>Zdroj příjmu</span><strong>{escape(str(scope.get('source_country') or '—'))}</strong></div>
@@ -358,6 +376,7 @@ def render_report_html(report: Mapping[str, Any]) -> str:
     <section><h2>Výpočet</h2>{calculation_html}<p class="risk">{escape(str(report['risk_assessment']))}</p></section>
     <section><h2>Podmínky a podklady</h2><div class="two-col"><div><h3>Otevřené skutkové údaje</h3><ul>{missing_items}</ul></div><div><h3>Podklady k dokumentaci</h3><ul>{documents}</ul></div></div></section>
     <section><h2>Daňový kalendář</h2><div class="deadline-grid">{compliance_html}</div></section>
+    <section><h2>Proč tato sazba</h2><p class="risk">{why_result}</p></section>
     <section><h2>Právní základ</h2>{''.join(source_items)}</section>
   </main>
   <footer>{escape(str(report['disclaimer']))}</footer>
