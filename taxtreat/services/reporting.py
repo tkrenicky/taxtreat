@@ -197,7 +197,7 @@ def _result_copy(result: Mapping[str, Any]) -> tuple[str, str]:
         )
     if result.get("status") == "FINAL" and result.get("rate") is not None:
         return (
-            f"Sazba české srážkové daně: {result['rate']} %",
+            f"Sazba české srážkové daně: {_format_rate(result['rate'])}",
             "Sazba byla určena z uvedených údajů a použitých právních "
             "pravidel.",
         )
