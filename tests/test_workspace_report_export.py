@@ -6,21 +6,20 @@ from app.main import app
 client = TestClient(app)
 
 
-def test_workspace_loads_professional_report_export_asset():
+def test_workspace_loads_pdf_report_export_asset():
     html = client.get("/workspace-demo").text
     asset = client.get("/ui-assets/workspace-report-export.js")
 
     assert asset.status_code == 200
     assert "/ui-assets/workspace-report-export.js?v=20260817-2" in html
     assert "Tisk / PDF reportu" in asset.text
-    assert "Tisk / uložit PDF" in asset.text
     assert 'nativeFetch("/analysis/report"' in asset.text
     assert 'url.endsWith("/analysis/intake")' in asset.text
     assert "reportWindow.print()" in asset.text
     assert "details.open = true" in asset.text
 
 
-def test_workspace_output_history_is_in_memory_and_reopenable():
+def test_workspace_output_history_is_in_memory_and_printable():
     asset = client.get("/ui-assets/workspace-report-export.js").text
     styles = client.get("/ui-assets/workspace-output-history.css")
 

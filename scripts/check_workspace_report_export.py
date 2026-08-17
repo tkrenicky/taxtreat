@@ -191,52 +191,34 @@ def main() -> int:
                     "Completed result did not preload /analysis/report."
                 )
 
-            open_button = page.locator('[data-report-action="open"]')
             print_button = page.locator('[data-report-action="print"]')
-            if open_button.count() != 1 or print_button.count() != 1:
-                raise AssertionError("Workspace report actions are missing.")
+            if print_button.count() != 1:
+                raise AssertionError("Workspace PDF report action is missing.")
+            if page.locator('[data-report-action="open"]').count() != 0:
+                raise AssertionError("Obsolete open-report action is still exposed.")
 
-            requests_before_direct_exports = len(report_requests)
-            with page.expect_popup() as popup_info:
-                open_button.click()
-            report_page = popup_info.value
-            report_page.wait_for_load_state("domcontentloaded")
-            report_page.get_by_text("Česká srážková daň", exact=True).wait_for()
-            report_page.get_by_text("Analyzovaná transakce", exact=True).wait_for()
-            report_page.get_by_text("Právní základ", exact=True).wait_for()
-            report_page.get_by_text("Proč tato sazba", exact=True).wait_for()
-            if report_page.locator(".section-no,.source-number").count() != 0:
-                raise AssertionError("Report still exposes internal section/source numbering.")
-            if "TAXTREAT-" in report_page.locator("body").inner_text():
-                raise AssertionError("Report still exposes an internal report identifier.")
-            report_body = report_page.locator("body").inner_text()
-            if "Odborné ověření" in report_body or "uvolněného katalogu" in report_body or "Withholding tax analysis" in report_body:
-                raise AssertionError("Report still exposes obsolete or internal-facing wording.")
-            if report_page.locator(".legal-source").count() < 1:
-                raise AssertionError(
-                    "Opened professional report contains no legal sources."
-                )
-            if "TaxTreat" not in report_page.title():
-                raise AssertionError("Opened report has an unexpected title.")
-            report_page.close()
-
+            requests_before_direct_export = len(report_requests)
             with page.expect_popup() as print_popup_info:
                 print_button.click()
             print_page = print_popup_info.value
+            print_page.wait_for_load_state("domcontentloaded")
+            print_page.get_by_text("Posouzení srážkové daně", exact=True).wait_for()
+            print_page.get_by_text("Odůvodnění výsledku", exact=True).wait_for()
+            print_page.get_by_text("Právní základ", exact=True).wait_for()
+            report_body = print_page.locator("body").inner_text()
+            if "TAXTREAT-" in report_body:
+                raise AssertionError("PDF report still exposes an internal report identifier.")
+            if "Otevřít profesionální report" in report_body or "Withholding tax analysis" in report_body:
+                raise AssertionError("PDF report still exposes obsolete/internal-facing wording.")
+            if print_page.locator(".legal-source").count() < 1:
+                raise AssertionError("PDF report contains no legal sources.")
             print_page.wait_for_function(
-                "() => window.__taxtreatPrintCalled === true",
-                timeout=5000,
+                "() => window.__taxtreatPrintCalled === true", timeout=5000
             )
-            if print_page.locator("details[open]").count() < 1:
-                raise AssertionError(
-                    "Print export did not expand legal provision details."
-                )
             print_page.close()
 
-            if len(report_requests) < requests_before_direct_exports + 2:
-                raise AssertionError(
-                    "Both result export actions must request /analysis/report."
-                )
+            if len(report_requests) < requests_before_direct_export + 1:
+                raise AssertionError("PDF export did not request /analysis/report.")
 
             page.get_by_role("button", name="Výstupy", exact=True).click()
             outputs_view = page.locator('[data-view="outputs"].active')
@@ -255,7 +237,7 @@ def main() -> int:
                     "button", name="Tisk / PDF"
                 ).click()
             stored_page = stored_popup_info.value
-            stored_page.get_by_text("Česká srážková daň", exact=True).wait_for()
+            stored_page.get_by_text("Posouzení srážkové daně", exact=True).wait_for()
             stored_page.close()
             if len(report_requests) != requests_before_reopen:
                 raise AssertionError(
