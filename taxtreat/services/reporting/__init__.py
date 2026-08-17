@@ -72,7 +72,8 @@ def render_report_html(report):
     )
 
     # Make foreign-only taxation visibly distinct from a numeric 0% rate.
-    if result.get("tax_treatment") == "exclusive_foreign_taxation":
+    foreign_only = result.get("tax_treatment") == "exclusive_foreign_taxation"
+    if foreign_only:
         html = html.replace(
             "česká srážková daň neuplatní.</div>",
             "česká srážková daň neuplatní. Jde o pravidlo bez českého zdanění.</div>",
@@ -85,16 +86,18 @@ def render_report_html(report):
         base = _display_number(calculation.get("gross_amount_czk"))
         tax = _display_number(calculation.get("withholding_tax_czk"))
         rate = result.get("rate")
-        if result.get("tax_treatment") == "exclusive_foreign_taxation":
+        if foreign_only:
             rate_text = "Neuplatňuje se"
+            tax_label = "Česká daň k odvodu"
         else:
             rate_text = "—" if rate is None else f"{_display_number(rate)} %"
+            tax_label = "Srážková daň"
         detail = (
             '<div class="calculation-detail-wrap">'
             '<span class="kicker">Detail výpočtu</span>'
             '<table class="calculation-detail"><tbody>'
             f'<tr><th>Daňový základ</th><td>{base} Kč</td></tr>'
-            f'<tr><th>Srážková daň</th><td>{tax} Kč</td></tr>'
+            f'<tr><th>{tax_label}</th><td>{tax} Kč</td></tr>'
             f'<tr><th>Použitá sazba</th><td>{rate_text}</td></tr>'
             '</tbody></table></div>'
         )
