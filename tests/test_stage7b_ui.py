@@ -264,6 +264,8 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert "Odkaz na kurzovní lístek ČNB" not in javascript.text
     assert 'document.body.dataset.design = design' in javascript.text
     assert "routeDesign" in javascript.text
+    assert "countryNames" not in javascript.text
+    assert "countryName(recipient.country)" in javascript.text
     assert 'body[data-design="editorial"]' in designs.text
     assert 'body[data-design="atlas"]' in designs.text
     assert 'body[data-design="civic"]' in designs.text
