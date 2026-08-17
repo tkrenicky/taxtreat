@@ -129,6 +129,10 @@ def render_report_html(report):
         ".calculation-detail th{color:var(--muted);font-weight:700}"
         ".calculation-detail td{text-align:right;color:var(--ink);font-weight:800}"
         ".calculation-detail tr:last-child th,.calculation-detail tr:last-child td{border-bottom:0}"
+        ".path-step{display:block!important;width:100%!important;padding:0 0 5mm!important}"
+        ".path-step>div{display:block!important;width:100%!important;max-width:none!important}"
+        ".path-step b{display:block!important;width:auto!important}"
+        ".path-step p{display:block!important;width:auto!important;max-width:145mm!important}"
     )
     html = html.replace("</style>", visual_overrides + "</style>", 1)
 
