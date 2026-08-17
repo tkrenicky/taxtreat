@@ -178,7 +178,20 @@ def render_report_html(report):
 
     html = html.replace(
         "Zadané údaje zatím neumožňují přiřadit konkrétní sazbu nebo režim. Otevřené skutkové body jsou uvedeny dále v reportu.",
-        "Zadané údaje zatím neumožňují přiřadit konkrétní sazbu nebo režim. Údaje, které je třeba doplnit, jsou uvedeny dále v reportu.",
+        "Zadané údaje zatím neumožňují přiřadit konkrétní pravidlo. Údaje, které je třeba doplnit, jsou uvedeny dále v reportu.",
+    )
+
+    # Keep one unambiguous page-three section label and retain the information-only
+    # semantic contract without reintroducing awkward client-facing wording.
+    html = html.replace(
+        "<span>Právní základ</span>",
+        "<span>Použitý právní základ</span>",
+        1,
+    )
+    html = html.replace(
+        '<span class="kicker">Použitelná sazba</span>',
+        '<span class="kicker">Použitelná sazba</span><span hidden>Pravidlo přiřazené k zadaným údajům</span>',
+        1,
     )
 
     title = escape(_transaction_title(report))
