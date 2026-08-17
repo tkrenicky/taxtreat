@@ -508,17 +508,31 @@
   reportButton.addEventListener("click", async () => {
     if (!currentPayload) return;
     reportError.hidden = true;
+    const reportWindow = window.open("", "_blank");
+    if (!reportWindow) {
+      reportError.textContent = "Prohlížeč zablokoval nové okno. Povol vyskakovací okna pro TaxTreat a zkus Tisk / PDF znovu.";
+      reportError.hidden = false;
+      return;
+    }
     reportButton.disabled = true;
+    reportWindow.document.write("<!doctype html><title>TaxTreat</title><p style='font-family:system-ui;padding:32px'>Připravuji PDF výstup…</p>");
     try {
       const response = await postJson("/analysis/report", currentPayload);
-      const blob = new Blob([response.html], { type: "text/html;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = response.report.report_id + ".html";
-      link.click();
-      URL.revokeObjectURL(url);
+      reportWindow.document.open();
+      reportWindow.document.write(response.html);
+      reportWindow.document.close();
+      reportWindow.opener = null;
+      let printed = false;
+      const printOutput = () => {
+        if (printed) return;
+        printed = true;
+        reportWindow.focus();
+        reportWindow.print();
+      };
+      reportWindow.addEventListener("load", printOutput, { once: true });
+      window.setTimeout(printOutput, 250);
     } catch (error) {
+      reportWindow.close();
       reportError.textContent = "Výstup nebylo možné vytvořit: " + error.message;
       reportError.hidden = false;
     } finally {

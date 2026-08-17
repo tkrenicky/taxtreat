@@ -47,7 +47,7 @@ def test_guided_intake_ui_is_served_without_changing_api_root():
     assert 'id="dividend-fields"' in html
     assert 'id="advisor-review-section"' in html
     assert "Stage 6 production rules" not in html
-    assert "není právním ani daňovým poradenstvím" in html
+    assert "neposkytuje individuální daňové nebo právní poradenství" in html.lower()
     assert "TaxTreat poskytuje strukturované právní informace" not in html
     assert "orientační" not in html.lower()
     assert "Neuzavřené právní otázky" not in html
@@ -87,14 +87,14 @@ def test_workspace_demo_exposes_recipient_payment_result_workflow():
     assert "Přehled" in html
     assert "Plátci" in html
     assert "Příjemci" in html
-    assert "Kontroly plateb" in html
+    assert "Výpočty" in html
     assert "Výstupy" in html
     assert "Která společnost platbu provádí?" in html
     assert "Komu je placeno?" in html
     assert "Údaje o platbě" in html
-    assert "Výsledek kontroly" in html
-    assert "Jak výsledek číst" in html
-    assert "Podmínky a další kroky" in html
+    assert "Informace podle zadaných údajů" in html
+    assert "Použité právní pravidlo" in html
+    assert "Podmínky použitého pravidla" in html
     assert "Odborné ověření" not in html
     assert "Rozhodné datum a navazující lhůty" in html
     assert 'id="workspace-remittance-deadline"' in html
@@ -102,7 +102,7 @@ def test_workspace_demo_exposes_recipient_payment_result_workflow():
     assert 'id="workspace-tax-label"' in html
     assert 'id="workspace-tax-row-label"' in html
     assert "§ 38d a § 38da zákona č. 586/1992 Sb." in html
-    assert "Jak výsledek číst" in html
+    assert "Použité právní pravidlo" in html
     assert 'id="new-recipient-form"' in html
     assert 'id="active-payer-select"' in html
     assert 'id="payer-list"' in html
@@ -140,8 +140,8 @@ def test_workspace_demo_exposes_recipient_payment_result_workflow():
     assert "Obecná knihovna" not in html
     assert "Případnou nejistotu označ" not in html
     assert "Přihlášení ani ukládání klientských případů zatím není aktivní" in html
-    assert "TaxTreat je výpočetní nástroj" in html
-    assert "nepředstavuje právní ani daňové poradenství" in html
+    assert "TaxTreat je informační nástroj" in html
+    assert "neposkytuje individuální právní ani daňové poradenství" in html.lower()
     assert "Právní dataset:" not in html
     assert "orientační" not in html.lower()
 
@@ -173,8 +173,8 @@ def test_browser_acceptance_uses_current_result_status_wording():
         .read_text(encoding="utf-8")
     )
 
-    assert "VÝSLEDEK DOKONČEN" in source
-    assert "VÝPOČET DOKONČEN" not in source
+    assert "VÝPOČET DOKONČEN" in source
+    assert "VÝSLEDEK DOKONČEN" not in source
 
 
 def test_workspace_demo_assets_are_local_and_use_canonical_intake():
@@ -186,9 +186,9 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert css.status_code == 200
     assert javascript.status_code == 200
     assert designs.status_code == 200
-    assert "/ui-assets/workspace.css?v=20260817-1" in html
-    assert "/ui-assets/workspace.js?v=20260817-1" in html
-    assert "/ui-assets/workspace-designs.css?v=20260817-1" in html
+    assert "/ui-assets/workspace.css?v=20260817-2" in html
+    assert "/ui-assets/workspace.js?v=20260817-2" in html
+    assert "/ui-assets/workspace-designs.css?v=20260817-2" in html
     assert 'data-design-link="editorial"' in html
     assert 'data-design-link="atlas"' in html
     assert 'data-design-link="civic"' in html
@@ -392,7 +392,7 @@ def test_ui_calls_canonical_endpoints_and_uses_safe_dom_rendering():
     assert "accounting_date" in javascript
     assert "Zobrazit zbývající podklady" in javascript
     assert "exclusive_foreign_taxation" in javascript
-    assert "Příjem se v České republice nezdaňuje" in javascript
+    assert "pravidlo bez českého zdanění" in javascript
     assert "Příjem je v České republice osvobozen" in javascript
     assert 'id="tax-czk-label"' in client.get("/ui").text
     assert "pageSize = 3" in javascript

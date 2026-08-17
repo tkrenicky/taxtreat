@@ -36,9 +36,9 @@ def test_public_ui_uses_information_only_positioning():
         _assert_information_only(text)
 
     assert "informační" in legacy_html.lower()
-    assert "neposkytuje individuální daňové nebo právní poradenství" in legacy_html
+    assert "neposkytuje individuální daňové nebo právní poradenství" in legacy_html.lower()
     assert "Informační nástroj" in workspace_html
-    assert "neposkytuje individuální daňové nebo právní poradenství" in workspace_html
+    assert "neposkytuje individuální daňové nebo právní poradenství" in workspace_html.lower()
 
 
 def test_report_is_presented_as_information_not_individual_tax_advice():

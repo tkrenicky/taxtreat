@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="TaxTreat – pracovní prostor pro kontrolu české srážkové daně">
+  <meta name="description" content="TaxTreat – informační pracovní prostor pro českou srážkovou daň">
   <title>TaxTreat · Pracovní prostor</title>
   <link rel="stylesheet" href="/ui-assets/workspace.css?v=20260817-2">
   <link rel="stylesheet" href="/ui-assets/workspace-designs.css?v=20260817-2">
@@ -40,7 +40,7 @@
   <main>
     <section class="view active" data-view="dashboard">
       <div class="page-title">
-        <div><p>PRACOVNÍ PROSTOR</p><h1>Přehled</h1><span>Platby, příjemci a úkoly vyžadující pozornost.</span></div>
+        <div><p>PRACOVNÍ PROSTOR</p><h1>Přehled</h1><span>Platby, příjemci a informace navázané na zadané údaje.</span></div>
         <button class="primary compact" data-start-flow>Nový výpočet →</button>
       </div>
       <div class="dashboard-summary">
@@ -68,7 +68,7 @@
     </section>
 
     <section class="view" data-view="payers">
-      <div class="page-title"><div><p>ORGANIZACE</p><h1>Plátci</h1><span>České subjekty, jejichž platby jsou v TaxTreat kontrolovány.</span></div><button class="primary compact" type="button" data-create-payer>Přidat plátce</button></div>
+      <div class="page-title"><div><p>ORGANIZACE</p><h1>Plátci</h1><span>České subjekty, jejichž platby jsou v TaxTreat zpracovávány.</span></div><button class="primary compact" type="button" data-create-payer>Přidat plátce</button></div>
       <div id="payer-list" class="payer-list" aria-live="polite"></div>
     </section>
 
@@ -84,7 +84,7 @@
       <article class="card profile-head">
         <div class="avatar large" data-recipient-avatar>D</div><div><h1 data-recipient-name>Demo GmbH</h1><p><span data-recipient-country-name>Rakousko</span> · <span data-recipient-type>společnost</span> · příjemce <span data-payer-name>Demo CZ s.r.o.</span></p></div>
         <button class="secondary compact" type="button" data-edit-recipient>Upravit příjemce</button>
-        <button class="primary compact" data-start-flow>Kontrola nové platby →</button>
+        <button class="primary compact" data-start-flow>Nový výpočet →</button>
       </article>
       <article class="card completeness">
         <div><h2>Základní profil</h2><span class="badge">Údaje vyplněny</span></div>
@@ -100,23 +100,23 @@
         <article class="card profile-facts"><h2>Základní údaje</h2><dl><div><dt>Daňová rezidence</dt><dd data-recipient-country-name>Rakousko</dd></div><div><dt>Typ subjektu</dt><dd data-recipient-type>společnost</dd></div><div><dt>Skutečný vlastník příjmu</dt><dd data-profile-beneficial>Ano</dd></div><div><dt>Vazba ke stálé provozovně v ČR</dt><dd data-profile-pe>Ne</dd></div><div><dt>Podíl na plátci</dt><dd data-profile-ownership>Nevyplněno</dd></div><div><dt>Datum nabytí podílu</dt><dd data-profile-acquisition>Nevyplněno</dd></div></dl></article>
         <article class="card"><h2>Dokumenty</h2><div class="empty compact-empty"><strong>Potvrzení o daňovém rezidentství</strong><p>Zatím nebylo bezpečně uloženo.</p></div><button class="secondary" disabled>Nahrávání zpřístupníme po zavedení zabezpečeného úložiště</button></article>
       </div>
-      <article class="card history"><h2>Historie plateb</h2><div class="empty"><strong>Zatím bez plateb</strong><p>Spusť první kontrolu platby pro tohoto příjemce.</p></div></article>
+      <article class="card history"><h2>Historie plateb</h2><div class="empty"><strong>Zatím bez plateb</strong><p>Spusť první výpočet pro tohoto příjemce.</p></div></article>
     </section>
 
     <section class="view" data-view="reviews">
       <div class="page-title"><div><p>TRANSAKCE</p><h1>Výpočty</h1><span>Samostatný záznam pro každou platbu a každou verzi výsledku.</span></div><button class="primary compact" data-start-flow>Nový výpočet →</button></div>
-      <article class="card"><div class="empty"><strong>Zatím bez kontrol plateb</strong><p>Vyber příjemce a zadej údaje o první transakci.</p></div></article>
+      <article class="card"><div class="empty"><strong>Zatím bez výpočtů</strong><p>Vyber příjemce a zadej údaje o první transakci.</p></div></article>
     </section>
 
     <section class="view" data-view="outputs">
       <div class="page-title"><div><p>DOKUMENTACE</p><h1>Výstupy</h1><span>Verzované výpočty a reporty navázané na konkrétní platby.</span></div></div>
-      <article class="card"><div class="empty"><strong>Zatím bez výstupů</strong><p>Výstup vznikne po dokončení kontroly platby.</p></div></article>
+      <article class="card"><div class="empty"><strong>Zatím bez výstupů</strong><p>Výstup vznikne po dokončení výpočtu podle zadaných údajů.</p></div></article>
     </section>
 
     <section class="view" data-view="sources">
       <div class="page-title"><div><p>DŮKAZNÍ ZÁKLAD</p><h1>Zdroje</h1><span>Smluvní texty a evidované zdroje použité v konkrétních výsledcích.</span></div></div>
-      <div class="metrics source-metrics"><article><span>Smluvní partneři</span><strong>101</strong></article><article><span>Pokryté kombinace</span><strong>303</strong></article><article><span>Příjmové kategorie</span><strong>3</strong></article></div>
-      <article class="card source-note"><h2>Podklady použité ve výsledku</h2><p>U každé dokončené kontroly jsou uvedeny konkrétní články příslušné smlouvy, použité vrstvy právních pravidel, odkazy na evidované zdroje a verze datasetu platná pro daný výsledek.</p></article>
+      <div class="metrics source-metrics"><article><span>Podporované jurisdikce</span><strong>101</strong></article><article><span>Pokryté kombinace</span><strong>303</strong></article><article><span>Příjmové kategorie</span><strong>3</strong></article></div>
+      <article class="card source-note"><h2>Podklady použité ve výsledku</h2><p>U každého dokončeného výpočtu jsou uvedeny konkrétní články příslušné smlouvy, použité vrstvy právních pravidel, odkazy na evidované zdroje a verze datasetu platná pro daný výsledek.</p></article>
     </section>
 
     <section class="view flow" data-view="flow">
@@ -194,17 +194,17 @@
           </section>
           <section id="workspace-follow-up" class="follow-up" hidden aria-live="polite"><div class="section-heading"><div><p>DOPLŇUJÍCÍ SKUTKOVÉ ÚDAJE</p><h2>Údaje potřebné pro dokončení výpočtu</h2></div><span id="workspace-question-count"></span></div><p>Otázky jsou odvozeny od zvoleného druhu příjmu a smlouvy s konkrétním státem.</p><div id="workspace-questions" class="question-list"></div></section>
           <div id="workspace-error" class="error" role="alert" hidden></div>
-          <div class="flow-actions"><button type="button" class="secondary" data-next-step="2">← Zpět k příjemci</button><button type="submit" class="primary" id="workspace-submit">Vyhodnotit vstupní údaje →</button></div>
+          <div class="flow-actions"><button type="button" class="secondary" data-next-step="2">← Zpět k příjemci</button><button type="submit" class="primary" id="workspace-submit">Zobrazit pravidla a výpočet →</button></div>
         </form>
       </section>
 
       <section class="flow-step" data-step="4">
-        <div class="page-title"><div><p>KROK 4 ZE 4</p><h1>Informace podle zadaných údajů kontroly</h1><span><b data-payer-name>Demo CZ s.r.o.</b> → <b data-recipient-name>Demo GmbH</b></span></div></div>
+        <div class="page-title"><div><p>KROK 4 ZE 4</p><h1>Informace podle zadaných údajů</h1><span><b data-payer-name>Demo CZ s.r.o.</b> → <b data-recipient-name>Demo GmbH</b></span></div></div>
         <article class="card result-hero">
           <span id="workspace-result-status" class="badge warning">ČEKÁ NA VÝPOČET</span>
           <p id="workspace-tax-label">Srážková daň v CZK</p><strong id="workspace-tax">—</strong><small id="workspace-rate">—</small>
         </article>
-        <article class="reason"><h2>Jak výsledek číst</h2><p id="workspace-reason">Informace podle zadaných údajů se zobrazí po vyhodnocení platby kanonickým pravidlovým enginem.</p></article>
+        <article class="reason"><h2>Použité právní pravidlo</h2><p id="workspace-reason">Po zpracování zadaných údajů se zde zobrazí přiřazené právní pravidlo a související informace.</p></article>
         <div class="dashboard-grid">
           <article class="card summary"><h2>Souhrn platby</h2><dl><div><dt>Hrubá částka</dt><dd id="workspace-gross">—</dd></div><div><dt id="workspace-tax-row-label">Srážková daň</dt><dd id="workspace-tax-row">—</dd></div><div><dt>Čistá částka</dt><dd id="workspace-net">—</dd></div></dl></article>
           <article class="card"><div class="card-head"><h2>Podmínky použitého pravidla</h2><span id="workspace-action-count">0</span></div><div id="workspace-actions" class="action-list"></div></article>
@@ -251,7 +251,7 @@
   </dialog>
 
   <footer>
-    <p>TaxTreat je výpočetní nástroj. Výstup nepředstavuje právní ani daňové poradenství a není závazným stanoviskem.</p>
+    <p>TaxTreat je informační nástroj. Automatizovaně zobrazuje informace z právních zdrojů a údajů zadaných uživatelem; neposkytuje individuální právní ani daňové poradenství, doporučení ani závazné stanovisko.</p>
     <p><a href="/ui">Jednorázový výpočet</a> · Zásady ochrany dat · Podmínky použití</p>
   </footer>
 </body>

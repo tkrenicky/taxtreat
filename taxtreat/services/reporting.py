@@ -308,7 +308,7 @@ def render_report_html(report: Mapping[str, Any]) -> str:
         excerpt_html = f"<blockquote>{excerpt}</blockquote>" if excerpt else ""
         source_items.append(f'''<article class="legal-source"><div class="source-head"><h3>{_source_title(source)}</h3><a href="{url}">Oficiální zdroj ↗</a></div>{excerpt_html}</article>''')
     if not source_items:
-        source_items.append('<p class="empty-note">Pro tento výsledek nebyl vybrán konkrétní právní zdroj.</p>')
+        source_items.append('<p class="empty-note">Pro tento informační výstup nebyl přiřazen konkrétní právní zdroj.</p>')
 
     missing = report.get("missing_facts", [])
     missing_items = "".join(f"<li>{escape(_FACT_LABELS.get(str(item), str(item).replace('_', ' ')))}</li>" for item in missing) or "<li>Žádné otevřené skutkové údaje.</li>"
@@ -348,7 +348,7 @@ blockquote{{margin:12px 0 0;padding:14px 16px;border-left:3px solid #9ebcb1;back
 </style></head><body><article class="report">
 <header class="masthead"><div><div class="brand"><span class="brand-mark">TT</span>TaxTreat</div><small>Informace k české srážkové dani</small></div><div class="cutoff">Právní stav<br><strong>{_report_date(report.get('legal_data_cutoff'))}</strong></div></header>
 <main>
-<div class="hero"><div><div class="eyebrow">Informační výstup</div><h1>Informace k české srážkové dani</h1><p>Automatizovaný přehled právních pravidel a výpočtu podle zadaných údajů vztahujícího se k údajům zadaným uživatelem.</p></div><aside class="result-card"><span>Pravidlo přiřazené k zadaným údajům</span><strong>{escape(conclusion)}</strong><p>{escape(conclusion_detail)}</p></aside></div>
+<div class="hero"><div><div class="eyebrow">Informační výstup</div><h1>Informace k české srážkové dani</h1><p>Automatizovaný přehled právních pravidel a výpočtu vycházejícího z údajů zadaných uživatelem.</p></div><aside class="result-card"><span>Pravidlo přiřazené k zadaným údajům</span><strong>{escape(conclusion)}</strong><p>{escape(conclusion_detail)}</p></aside></div>
 <div class="transaction-strip"><div><span>Zdroj</span><strong>{escape(str(scope.get('source_country') or '—'))}</strong></div><div><span>Příjemce</span><strong>{escape(str(scope.get('recipient_country') or '—'))}</strong></div><div><span>Příjem</span><strong>{escape(_income_type_label(scope.get('income_type')))}</strong></div><div><span>Datum</span><strong>{_report_date(scope.get('transaction_date'))}</strong></div><div><span>Částka</span><strong>{amount_copy}</strong></div></div>
 <section><h2>Výpočet daně</h2>{calculation_html}</section>
 <section><h2>Použité právní pravidlo</h2><div class="summary-box"><p>{why_result}</p></div></section>
