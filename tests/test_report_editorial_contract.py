@@ -102,7 +102,7 @@ def test_report_shows_only_operational_excerpt_and_net_amount():
     visible_quote = soup.select_one(".legal-source .quote")
     assert visible_quote is not None
     quote_text = visible_quote.get_text(" ", strip=True)
-    assert "2. Test treaty excerpt with 5 procent." in quote_text
+    assert quote_text.startswith("2. Test treaty excerpt with 5 procent")
     assert "1. Test." not in quote_text
     assert "3. Other text." not in quote_text
     assert "<strong>5 procent</strong>" in str(visible_quote)
