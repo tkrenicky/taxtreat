@@ -22,12 +22,28 @@
     return "";
   }
 
+  function reportPartyContext() {
+    const payer = document.querySelector("#active-payer-select option:checked")?.textContent?.trim() || "";
+    const recipient = document.querySelector("#flow-recipient-name")?.textContent?.trim() || "";
+    return { payer, recipient };
+  }
+
+  function enrichPayloadForReport(payload) {
+    if (!payload || typeof payload !== "object") return payload;
+    const { payer, recipient } = reportPartyContext();
+    payload.facts = payload.facts && typeof payload.facts === "object" ? payload.facts : {};
+    if (payer) payload.facts.report_payer_name = payer;
+    if (recipient) payload.facts.report_recipient_name = recipient;
+    return payload;
+  }
+
   function parseAnalysisPayload(resource, options = {}) {
     const url = requestUrl(resource);
     if (!url.endsWith("/analysis/intake") || !options.body) return null;
     try {
-      const payload = JSON.parse(String(options.body));
+      const payload = enrichPayloadForReport(JSON.parse(String(options.body)));
       if (payload && payload.source_country && payload.recipient_country) {
+        options.body = JSON.stringify(payload);
         lastAnalysisPayload = payload;
         return payload;
       }
@@ -38,9 +54,7 @@
   }
 
   function clientQuestionsRemain(body) {
-    return (body?.intake?.questions || []).some(
-      (question) => question.client_answerable
-    );
+    return (body?.intake?.questions || []).some((question) => question.client_answerable);
   }
 
   function payloadFingerprint(payload) {
@@ -51,18 +65,17 @@
     const response = await nativeFetch("/analysis/report", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(enrichPayloadForReport(structuredClone(payload))),
     });
     const body = await response.json();
     if (!response.ok || !body.html || !body.report) {
-      throw new Error(
-        body.detail?.code || "Report se nepodařilo vytvořit."
-      );
+      throw new Error(body.detail?.code || "Report se nepodařilo vytvořit.");
     }
     return body;
   }
 
   function reportRecord(body) {
+    const facts = body.report.assumptions?.transaction_facts || {};
     return {
       id: String(body.report.report_id),
       html: body.html,
@@ -71,6 +84,8 @@
       incomeType: String(body.report.scope?.income_type || ""),
       status: String(body.report.result?.status || ""),
       rate: body.report.result?.rate,
+      payerName: String(facts.report_payer_name || ""),
+      recipientName: String(facts.report_recipient_name || ""),
     };
   }
 
@@ -79,21 +94,13 @@
     const parsed = new Date(value);
     if (Number.isNaN(parsed.getTime())) return value;
     return new Intl.DateTimeFormat("cs-CZ", {
-      day: "numeric",
-      month: "numeric",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
+      day: "numeric", month: "numeric", year: "numeric", hour: "2-digit", minute: "2-digit",
     }).format(parsed);
   }
 
   function statusNeedsReview(status) {
     const normalized = String(status || "").toUpperCase();
-    return (
-      normalized.includes("REVIEW") ||
-      normalized.includes("UNCERTAIN") ||
-      normalized.includes("MANUAL")
-    );
+    return normalized.includes("REVIEW") || normalized.includes("UNCERTAIN") || normalized.includes("MANUAL");
   }
 
   function statusLabel(status) {
@@ -104,10 +111,13 @@
     if (rate === null || rate === undefined || rate === "") return "sazba —";
     const numeric = Number(rate);
     if (Number.isNaN(numeric)) return `sazba ${rate}`;
-    return `sazba ${new Intl.NumberFormat("cs-CZ", {
-      style: "percent",
-      maximumFractionDigits: 2,
-    }).format(numeric)}`;
+    return `sazba ${new Intl.NumberFormat("cs-CZ", { maximumFractionDigits: 2 }).format(numeric)} %`;
+  }
+
+  function historyTitle(record, fallback = "Výstup") {
+    const base = `${incomeLabels[record.incomeType] || record.incomeType || fallback} · ${record.recipientCountry}`;
+    if (record.payerName && record.recipientName) return `${base} · ${record.payerName} → ${record.recipientName}`;
+    return base;
   }
 
   function prepareReportWindow(reportWindow, html, printAfterLoad) {
@@ -115,23 +125,18 @@
     reportWindow.document.write(html);
     reportWindow.document.close();
     reportWindow.opener = null;
-
     if (!printAfterLoad) {
       reportWindow.focus();
       return;
     }
-
     let printed = false;
     const printReport = () => {
       if (printed) return;
       printed = true;
-      reportWindow.document
-        .querySelectorAll("details")
-        .forEach((details) => { details.open = true; });
+      reportWindow.document.querySelectorAll("details").forEach((details) => { details.open = true; });
       reportWindow.focus();
       reportWindow.print();
     };
-
     reportWindow.addEventListener("load", printReport, { once: true });
     window.setTimeout(printReport, 250);
   }
@@ -139,9 +144,7 @@
   function openStoredReport(record, printAfterLoad = false) {
     const reportWindow = window.open("", "_blank");
     if (!reportWindow) {
-      window.alert(
-        "Prohlížeč zablokoval nové okno. Povol vyskakovací okna pro TaxTreat a zkus export znovu."
-      );
+      window.alert("Prohlížeč zablokoval nové okno. Povol vyskakovací okna pro TaxTreat a zkus export znovu.");
       return;
     }
     prepareReportWindow(reportWindow, record.html, printAfterLoad);
@@ -160,20 +163,12 @@
     const row = document.createElement("article");
     row.className = compact ? "output-history-row compact" : "output-history-row";
     row.dataset.outputReportId = record.id;
-
     const copy = document.createElement("div");
-    const title = document.createElement("strong");
-    title.textContent = `${incomeLabels[record.incomeType] || record.incomeType || "Výstup"} · ${record.recipientCountry}`;
-    const meta = document.createElement("small");
-    meta.textContent = `${record.id} · ${compactGeneratedAt(record.generatedAt)}`;
+    const title = document.createElement("strong"); title.textContent = historyTitle(record);
+    const meta = document.createElement("small"); meta.textContent = compactGeneratedAt(record.generatedAt);
     copy.append(title, meta);
-
-    const actions = document.createElement("div");
-    actions.className = "output-history-actions";
-    actions.append(
-      actionButton("Tisk / PDF", () => openStoredReport(record, true)),
-    );
-
+    const actions = document.createElement("div"); actions.className = "output-history-actions";
+    actions.append(actionButton("Tisk / PDF", () => openStoredReport(record, true)));
     row.append(copy, actions);
     return row;
   }
@@ -182,88 +177,50 @@
     const row = document.createElement("article");
     row.className = "review-history-row";
     row.dataset.reviewReportId = record.id;
-
     const copy = document.createElement("div");
-    const eyebrow = document.createElement("small");
-    eyebrow.textContent = compactGeneratedAt(record.generatedAt);
-    const title = document.createElement("strong");
-    title.textContent = `${incomeLabels[record.incomeType] || record.incomeType || "Platba"} · ${record.recipientCountry}`;
-    const meta = document.createElement("span");
-    meta.textContent = `${formatRate(record.rate)} · ${record.id}`;
+    const eyebrow = document.createElement("small"); eyebrow.textContent = compactGeneratedAt(record.generatedAt);
+    const title = document.createElement("strong"); title.textContent = historyTitle(record, "Platba");
+    const meta = document.createElement("span"); meta.textContent = formatRate(record.rate);
     copy.append(eyebrow, title, meta);
-
     const status = document.createElement("b");
-    status.className = statusNeedsReview(record.status)
-      ? "review-history-status attention"
-      : "review-history-status";
+    status.className = statusNeedsReview(record.status) ? "review-history-status attention" : "review-history-status";
     status.textContent = statusLabel(record.status);
-
-    const action = actionButton(
-      "Tisk / PDF",
-      () => openStoredReport(record, true)
-    );
-
-    row.append(copy, status, action);
+    row.append(copy, status, actionButton("Tisk / PDF", () => openStoredReport(record, true)));
     return row;
   }
 
   function renderOutputHistory() {
-    const dashboardCards = document.querySelectorAll(
-      '[data-view="dashboard"] .dashboard-grid > article.card'
-    );
+    const dashboardCards = document.querySelectorAll('[data-view="dashboard"] .dashboard-grid > article.card');
     const dashboardCard = dashboardCards.item(1);
     const outputsCard = document.querySelector('[data-view="outputs"] > article.card');
-
     if (dashboardCard) {
       dashboardCard.replaceChildren();
-      const head = document.createElement("div");
-      head.className = "card-head";
-      const heading = document.createElement("h2");
-      heading.textContent = "Poslední výstupy";
-      const count = document.createElement("span");
-      count.textContent = String(outputHistory.length);
-      head.append(heading, count);
-      dashboardCard.append(head);
-
+      const head = document.createElement("div"); head.className = "card-head";
+      const heading = document.createElement("h2"); heading.textContent = "Poslední výstupy";
+      const count = document.createElement("span"); count.textContent = String(outputHistory.length);
+      head.append(heading, count); dashboardCard.append(head);
       if (!outputHistory.length) {
-        const empty = document.createElement("div");
-        empty.className = "empty";
-        const title = document.createElement("strong");
-        title.textContent = "Zatím bez výstupů";
-        const copy = document.createElement("p");
-        copy.textContent = "Po dokončení výpočtu se zde zobrazí informační výstup podle zadaných údajů.";
-        empty.append(title, copy);
-        dashboardCard.append(empty);
+        const empty = document.createElement("div"); empty.className = "empty";
+        const title = document.createElement("strong"); title.textContent = "Zatím bez výstupů";
+        const copy = document.createElement("p"); copy.textContent = "Po dokončení výpočtu se zde zobrazí informační výstup podle zadaných údajů.";
+        empty.append(title, copy); dashboardCard.append(empty);
       } else {
-        outputHistory.slice(0, 3).forEach(
-          (record) => dashboardCard.append(outputRow(record, true))
-        );
+        outputHistory.slice(0, 3).forEach((record) => dashboardCard.append(outputRow(record, true)));
       }
     }
-
     if (outputsCard) {
       outputsCard.replaceChildren();
       if (!outputHistory.length) {
-        const empty = document.createElement("div");
-        empty.className = "empty";
-        const title = document.createElement("strong");
-        title.textContent = "Zatím bez výstupů";
-        const copy = document.createElement("p");
-        copy.textContent = "Výstup vznikne po dokončení informačního výpočtu.";
-        empty.append(title, copy);
-        outputsCard.append(empty);
+        const empty = document.createElement("div"); empty.className = "empty";
+        const title = document.createElement("strong"); title.textContent = "Zatím bez výstupů";
+        const copy = document.createElement("p"); copy.textContent = "Výstup vznikne po dokončení informačního výpočtu.";
+        empty.append(title, copy); outputsCard.append(empty);
       } else {
-        const head = document.createElement("div");
-        head.className = "card-head";
-        const heading = document.createElement("h2");
-        heading.textContent = "Vytvořené výstupy";
-        const count = document.createElement("span");
-        count.textContent = String(outputHistory.length);
-        head.append(heading, count);
-        outputsCard.append(head);
-        outputHistory.forEach(
-          (record) => outputsCard.append(outputRow(record))
-        );
+        const head = document.createElement("div"); head.className = "card-head";
+        const heading = document.createElement("h2"); heading.textContent = "Vytvořené výstupy";
+        const count = document.createElement("span"); count.textContent = String(outputHistory.length);
+        head.append(heading, count); outputsCard.append(head);
+        outputHistory.forEach((record) => outputsCard.append(outputRow(record)));
       }
     }
   }
@@ -271,55 +228,33 @@
   function renderReviewHistory() {
     const reviewsCard = document.querySelector('[data-view="reviews"] > article.card');
     if (!reviewsCard) return;
-
     reviewsCard.replaceChildren();
     if (!outputHistory.length) {
-      const empty = document.createElement("div");
-      empty.className = "empty";
-      const title = document.createElement("strong");
-      title.textContent = "Zatím bez výpočtů";
-      const copy = document.createElement("p");
-      copy.textContent = "Vyber příjemce a zadej údaje o první transakci.";
-      empty.append(title, copy);
-      reviewsCard.append(empty);
-      return;
+      const empty = document.createElement("div"); empty.className = "empty";
+      const title = document.createElement("strong"); title.textContent = "Zatím bez výpočtů";
+      const copy = document.createElement("p"); copy.textContent = "Vyber příjemce a zadej údaje o první transakci.";
+      empty.append(title, copy); reviewsCard.append(empty); return;
     }
-
-    const head = document.createElement("div");
-    head.className = "card-head";
-    const heading = document.createElement("h2");
-    heading.textContent = "Dokončené výpočty";
-    const count = document.createElement("span");
-    count.textContent = String(outputHistory.length);
-    head.append(heading, count);
-    reviewsCard.append(head);
+    const head = document.createElement("div"); head.className = "card-head";
+    const heading = document.createElement("h2"); heading.textContent = "Dokončené výpočty";
+    const count = document.createElement("span"); count.textContent = String(outputHistory.length);
+    head.append(heading, count); reviewsCard.append(head);
     outputHistory.forEach((record) => reviewsCard.append(reviewRow(record)));
   }
 
   function renderDashboardMetrics() {
-    const metrics = document.querySelectorAll(
-      '[data-view="dashboard"] .dashboard-metrics > article'
-    );
+    const metrics = document.querySelectorAll('[data-view="dashboard"] .dashboard-metrics > article');
     const completed = metrics.item(2);
     const attention = metrics.item(3);
-    const attentionCount = outputHistory.filter(
-      (record) => statusNeedsReview(record.status)
-    ).length;
-
+    const attentionCount = outputHistory.filter((record) => statusNeedsReview(record.status)).length;
     if (completed) {
-      const label = completed.querySelector("span");
-      const value = completed.querySelector("strong");
-      const note = completed.querySelector("small");
-      if (label) label.textContent = "Dokončené výpočty";
-      if (value) value.textContent = String(outputHistory.length);
-      if (note) note.textContent = "v této relaci stránky";
+      completed.querySelector("span").textContent = "Dokončené výpočty";
+      completed.querySelector("strong").textContent = String(outputHistory.length);
+      completed.querySelector("small").textContent = "v této relaci stránky";
     }
-
     if (attention) {
-      const value = attention.querySelector("strong");
-      const note = attention.querySelector("small");
-      if (value) value.textContent = String(attentionCount);
-      if (note) note.textContent = "výpočtů s chybějícími údaji";
+      attention.querySelector("strong").textContent = String(attentionCount);
+      attention.querySelector("small").textContent = "výpočtů s chybějícími údaji";
     }
   }
 
@@ -348,15 +283,14 @@
     } catch (_problem) {
       // A failed convenience preload must not change the calculation result.
     } finally {
-      if (pendingReportFingerprint === fingerprint) {
-        pendingReportFingerprint = null;
-      }
+      if (pendingReportFingerprint === fingerprint) pendingReportFingerprint = null;
     }
   }
 
-  window.fetch = async function taxtreatReportAwareFetch(resource, options) {
-    const payload = parseAnalysisPayload(resource, options);
-    const response = await nativeFetch(resource, options);
+  window.fetch = async function taxtreatReportAwareFetch(resource, options = {}) {
+    const mutableOptions = { ...options };
+    const payload = parseAnalysisPayload(resource, mutableOptions);
+    const response = await nativeFetch(resource, mutableOptions);
     if (payload && response.ok) {
       response.clone().json().then((body) => {
         if (!clientQuestionsRemain(body)) cacheCompletedReport(payload);
@@ -365,11 +299,8 @@
     return response;
   };
 
-  const resultActions = document.querySelector(
-    '.flow-step[data-step="4"] .flow-actions'
-  );
+  const resultActions = document.querySelector('.flow-step[data-step="4"] .flow-actions');
   const openButton = resultActions?.querySelector(".primary");
-
   renderWorkspaceHistory();
   if (!resultActions || !openButton) return;
 
@@ -378,55 +309,38 @@
   openButton.textContent = "Tisk / PDF reportu";
   openButton.dataset.reportAction = "print";
 
-  function showExportProblem(message) {
-    window.alert(message);
-  }
+  function showExportProblem(message) { window.alert(message); }
 
   async function exportReport(printAfterLoad, button) {
     if (!lastAnalysisPayload) {
-      showExportProblem(
-        "Nejprve dokonči výpočet podle zadaných údajů. PDF lze vytvořit až po přiřazení právních pravidel."
-      );
+      showExportProblem("Nejprve dokonči výpočet podle zadaných údajů. PDF lze vytvořit až po přiřazení právních pravidel.");
       return;
     }
-
     const reportWindow = window.open("", "_blank");
     if (!reportWindow) {
-      showExportProblem(
-        "Prohlížeč zablokoval nové okno. Povol vyskakovací okna pro TaxTreat a zkus export znovu."
-      );
+      showExportProblem("Prohlížeč zablokoval nové okno. Povol vyskakovací okna pro TaxTreat a zkus export znovu.");
       return;
     }
-
     const originalLabel = button.textContent;
     button.disabled = true;
     button.textContent = "Připravuji report…";
-    reportWindow.document.write(
-      "<!doctype html><title>TaxTreat</title><p style='font-family:system-ui;padding:32px'>Připravuji PDF report…</p>"
-    );
-
+    reportWindow.document.write("<!doctype html><title>TaxTreat</title><p style='font-family:system-ui;padding:32px'>Připravuji PDF report…</p>");
     try {
       const body = await buildReport(lastAnalysisPayload);
       const record = rememberReport(body);
       prepareReportWindow(reportWindow, record.html, printAfterLoad);
     } catch (problem) {
       reportWindow.close();
-      showExportProblem(
-        problem?.message || "Report se nepodařilo vytvořit."
-      );
+      showExportProblem(problem?.message || "Report se nepodařilo vytvořit.");
     } finally {
       button.disabled = false;
       button.textContent = originalLabel;
     }
   }
 
-  openButton.addEventListener(
-    "click",
-    (event) => {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      exportReport(true, openButton);
-    },
-    true
-  );
+  openButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    exportReport(true, openButton);
+  }, true);
 })();
