@@ -9,8 +9,43 @@ def _plain_number(value):
     return text
 
 
+def _dedupe_sources(sources, selected_rule_id=None):
+    """Collapse duplicate displays of the same legal provision.
+
+    Distinct legal layers and distinct provisions remain separate. If the same
+    provision is present more than once, prefer the entry selected by the
+    decision engine so the displayed source keeps its applied-rule marker.
+    """
+    ordered_keys = []
+    selected_by_key = {}
+    for source in sources or []:
+        source_key = source.get("source_id") or source.get("source_url") or source.get("legal_instrument")
+        key = (
+            source.get("legal_layer"),
+            source_key,
+            str(source.get("article") or ""),
+            str(source.get("paragraph") or ""),
+        )
+        if key not in selected_by_key:
+            ordered_keys.append(key)
+            selected_by_key[key] = source
+        elif source.get("rule_id") == selected_rule_id:
+            selected_by_key[key] = source
+    return [selected_by_key[key] for key in ordered_keys]
+
+
 def render_report_html(report):
-    html = _render_report_html(report)
+    result = report.get("result") or {}
+    selected_rule_id = result.get("selected_rule_id") or result.get("candidate_rule_id")
+
+    # Render one card per actual legal provision, not one per internal rule-path
+    # occurrence. This keeps legal references rich without duplicating the same
+    # treaty article in the client document.
+    render_report = dict(report)
+    render_report["official_sources"] = _dedupe_sources(
+        report.get("official_sources", []), selected_rule_id
+    )
+    html = _render_report_html(render_report)
 
     # Keep the established accessible document name while allowing the visible
     # cover title to describe the actual transaction.
@@ -50,6 +85,14 @@ def render_report_html(report):
     )
     html = html.replace('class="source-card', 'class="legal-source source-card')
     html = html.replace(
+        "Smlouva o zamezení dvojího zdanění · čl. ",
+        "Smlouva o zamezení dvojího zdanění · článek ",
+    )
+    html = html.replace(
+        "Protokol ke smlouvě o zamezení dvojího zdanění · čl. ",
+        "Protokol ke smlouvě o zamezení dvojího zdanění · článek ",
+    )
+    html = html.replace(
         '<span>Česká srážková daň</span>',
         '<span>Srážková daň</span>',
     )
@@ -58,7 +101,6 @@ def render_report_html(report):
         "Zadané údaje zatím neumožňují přiřadit konkrétní pravidlo. Otevřené body jsou uvedeny dále v reportu.",
     )
 
-    result = report.get("result") or {}
     calculation = result.get("withholding_tax_calculation") or {}
 
     # A compact detailed calculation table complements the headline figures and
