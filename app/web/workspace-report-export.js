@@ -3,7 +3,7 @@
 
   const historyStyles = document.createElement("link");
   historyStyles.rel = "stylesheet";
-  historyStyles.href = "/ui-assets/workspace-output-history.css?v=20260816-2";
+  historyStyles.href = "/ui-assets/workspace-output-history.css?v=20260817-1";
   document.head.append(historyStyles);
 
   const nativeFetch = window.fetch.bind(window);
@@ -97,7 +97,7 @@
   }
 
   function statusLabel(status) {
-    return statusNeedsReview(status) ? "ODBORNÉ OVĚŘENÍ" : "DOKONČENO";
+    return statusNeedsReview(status) ? "VYŽADUJE DOPLNĚNÍ" : "DOKONČENO";
   }
 
   function formatRate(rate) {
@@ -320,7 +320,7 @@
       const value = attention.querySelector("strong");
       const note = attention.querySelector("small");
       if (value) value.textContent = String(attentionCount);
-      if (note) note.textContent = "výsledků k odbornému ověření";
+      if (note) note.textContent = "výsledků s otevřenými podmínkami";
     }
   }
 

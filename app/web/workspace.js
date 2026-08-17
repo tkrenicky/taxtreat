@@ -11,7 +11,7 @@
   }
   "use strict";
 
-  const BUILD_VERSION = "20260815-11";
+  const BUILD_VERSION = "20260817-1";
 
   async function checkForNewBuild() {
     try {
@@ -58,8 +58,48 @@
   const payerList = document.querySelector("#payer-list");
   const flowPayerList = document.querySelector("#flow-payer-list");
   let votingWasEdited = false;
-  const countryNames = { AT: "Rakousko", CH: "Švýcarsko", DE: "Německo", SG: "Singapur", TW: "Tchaj-wan" };
-  const countryGenitives = { AT: "Rakouska", CH: "Švýcarska", DE: "Německa", SG: "Singapuru", TW: "Tchaj-wanu" };
+  const regionNames = new Intl.DisplayNames(["cs-CZ"], { type: "region" });
+  const knownCountryGenitives = { AT: "Rakouska", CH: "Švýcarska", DE: "Německa", SG: "Singapuru", TW: "Tchaj-wanu" };
+  function countryName(code) {
+    try { return regionNames.of(String(code || "").toUpperCase()) || String(code || ""); }
+    catch (_problem) { return String(code || ""); }
+  }
+  function countryGenitive(code) {
+    return knownCountryGenitives[String(code || "").toUpperCase()] || countryName(code);
+  }
+  async function loadJurisdictionCatalog() {
+    const selects = [recipientForm?.elements.recipient_country, recipientEditForm?.elements.recipient_country].filter(Boolean);
+    selects.forEach((select) => { select.disabled = true; });
+    try {
+      const response = await fetch("/jurisdictions", { cache: "no-store" });
+      const body = await response.json();
+      if (!response.ok || !Array.isArray(body.jurisdictions) || body.jurisdictions.length !== 101) {
+        throw new Error("Incomplete jurisdiction catalog");
+      }
+      const jurisdictions = [...body.jurisdictions].sort((a, b) =>
+        countryName(a.iso2).localeCompare(countryName(b.iso2), "cs")
+      );
+      selects.forEach((select) => {
+        const current = select.value;
+        const placeholder = select.closest("#new-recipient-form") ? "Vyber stát" : null;
+        select.replaceChildren();
+        if (placeholder) {
+          const option = document.createElement("option"); option.value = ""; option.textContent = placeholder; select.append(option);
+        }
+        jurisdictions.forEach((item) => {
+          const option = document.createElement("option");
+          option.value = item.iso2;
+          option.textContent = countryName(item.iso2);
+          select.append(option);
+        });
+        if ([...select.options].some((option) => option.value === current)) select.value = current;
+      });
+    } catch (_problem) {
+      // Keep the server-rendered fallback rather than blocking the workspace.
+    } finally {
+      selects.forEach((select) => { select.disabled = false; });
+    }
+  }
   let recipient = {
     name: "Demo GmbH",
     country: "AT",
@@ -115,11 +155,15 @@
   document.querySelectorAll("[data-create-recipient]").forEach((button) => button.addEventListener("click", () => {
     showStep(2);
     recipientForm.hidden = false;
+    recipientForm.querySelectorAll("input,select").forEach((field) => { field.disabled = false; field.readOnly = false; });
     recipientForm.querySelector("input").focus();
   }));
   document.querySelector("[data-show-recipient-form]").addEventListener("click", () => {
     recipientForm.hidden = !recipientForm.hidden;
-    if (!recipientForm.hidden) recipientForm.querySelector("input").focus();
+    if (!recipientForm.hidden) {
+      recipientForm.querySelectorAll("input,select").forEach((field) => { field.disabled = false; field.readOnly = false; });
+      recipientForm.querySelector("input").focus();
+    }
   });
 
   document.querySelectorAll("[data-tooltip]").forEach((button) => button.addEventListener("click", () => {
@@ -247,14 +291,14 @@
 
   function renderRecipient() {
     const relationship = currentRelationship();
-    const country = countryNames[recipient.country];
+    const country = countryName(recipient.country);
     const initial = recipient.name.slice(0, 1).toUpperCase();
     document.querySelector("#flow-recipient-name").textContent = recipient.name;
     document.querySelector("#flow-recipient-avatar").textContent = initial;
     document.querySelector("#flow-recipient-meta").textContent = `${country} · ${recipient.type.toLowerCase()} · základní údaje vyplněny`;
     document.querySelectorAll("[data-recipient-name]").forEach((node) => { node.textContent = recipient.name; });
     document.querySelectorAll("[data-recipient-avatar]").forEach((node) => { node.textContent = initial; });
-    document.querySelectorAll("[data-recipient-country]").forEach((node) => { node.textContent = countryGenitives[recipient.country]; });
+    document.querySelectorAll("[data-recipient-country]").forEach((node) => { node.textContent = countryGenitive(recipient.country); });
     document.querySelectorAll("[data-recipient-country-name]").forEach((node) => { node.textContent = country; });
     document.querySelectorAll("[data-recipient-type]").forEach((node) => { node.textContent = recipient.type.toLowerCase(); });
     document.querySelectorAll("[data-profile-beneficial]").forEach((node) => { node.textContent = recipient.beneficialOwner ? "Ano" : "Ne"; });
@@ -886,6 +930,7 @@
 
   renderPayers();
   renderRecipient();
+  loadJurisdictionCatalog();
   renderTransactionFacts();
   checkForNewBuild();
 })();

@@ -31,6 +31,31 @@ def wait_for_server(process: subprocess.Popen[bytes]) -> None:
     raise TimeoutError("UI server did not become ready within 30 seconds.")
 
 
+def verify_recipient_catalog_and_entry(page) -> None:
+    page.goto(f"{BASE_URL}/workspace-demo", wait_until="networkidle")
+    page.get_by_role("button", name="Příjemci", exact=True).click()
+    page.get_by_role("button", name="Přidat příjemce", exact=True).click()
+    form = page.locator("#new-recipient-form")
+    form.wait_for(state="visible")
+    country = form.locator('select[name="recipient_country"]')
+    page.wait_for_function(
+        "() => document.querySelector('#new-recipient-form select[name=recipient_country]').options.length === 102",
+        timeout=5000,
+    )
+    if country.locator("option").count() != 102:
+        raise AssertionError("Recipient form does not expose all 101 jurisdictions.")
+    name = form.locator('input[name="recipient_name"]')
+    name.fill("Test Korea Co.")
+    if name.input_value() != "Test Korea Co.":
+        raise AssertionError("Recipient name field is not writable.")
+    country.select_option("KR")
+    form.get_by_role("button", name="Použít příjemce v této kontrole →").click()
+    if page.locator("#flow-recipient-name").inner_text() != "Test Korea Co.":
+        raise AssertionError("New recipient was not applied to the workspace.")
+    if "undefined" in page.locator("#flow-recipient-meta").inner_text().lower():
+        raise AssertionError("Dynamic jurisdiction name was not rendered.")
+
+
 def finish_workspace_calculation(page) -> None:
     page.goto(f"{BASE_URL}/workspace-demo", wait_until="networkidle")
     page.get_by_role("button", name="Nová kontrola platby →").first.click()
@@ -115,6 +140,7 @@ def main() -> int:
                 ),
             )
 
+            verify_recipient_catalog_and_entry(page)
             finish_workspace_calculation(page)
 
             output_rows = page.locator("[data-output-report-id]")
@@ -143,6 +169,14 @@ def main() -> int:
             report_page = popup_info.value
             report_page.wait_for_load_state("domcontentloaded")
             report_page.get_by_text("Česká srážková daň", exact=True).wait_for()
+            report_page.get_by_text("Analyzovaná transakce", exact=True).wait_for()
+            report_page.get_by_text("Právní základ", exact=True).wait_for()
+            if report_page.locator(".section-no,.source-number").count() != 0:
+                raise AssertionError("Report still exposes internal section/source numbering.")
+            if "TAXTREAT-" in report_page.locator("body").inner_text():
+                raise AssertionError("Report still exposes an internal report identifier.")
+            if "Odborné ověření" in report_page.locator("body").inner_text():
+                raise AssertionError("Report still exposes obsolete human-review wording.")
             if report_page.locator(".source").count() < 1:
                 raise AssertionError(
                     "Opened professional report contains no legal sources."
@@ -214,7 +248,7 @@ def main() -> int:
             review_status = review_rows.first.locator(
                 ".review-history-status"
             ).inner_text()
-            if review_status not in {"DOKONČENO", "ODBORNÉ OVĚŘENÍ"}:
+            if review_status not in {"DOKONČENO", "VYŽADUJE DOPLNĚNÍ"}:
                 raise AssertionError(
                     f"Unexpected completed-review status: {review_status!r}."
                 )
@@ -242,7 +276,7 @@ def main() -> int:
                 raise AssertionError("Dashboard completed-review metric is not data-bound.")
             if completed_metric.locator("strong").inner_text() != "1":
                 raise AssertionError("Dashboard completed-review count is incorrect.")
-            expected_attention = "1" if review_status == "ODBORNÉ OVĚŘENÍ" else "0"
+            expected_attention = "1" if review_status == "VYŽADUJE DOPLNĚNÍ" else "0"
             if attention_metric.locator("strong").inner_text() != expected_attention:
                 raise AssertionError(
                     "Dashboard attention count does not match stored review status."

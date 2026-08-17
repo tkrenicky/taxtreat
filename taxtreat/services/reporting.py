@@ -10,10 +10,9 @@ from typing import Any, Mapping
 REPORT_SCHEMA_VERSION = 3
 LEGAL_DATA_CUTOFF = "2026-08-12"
 DISCLAIMER = (
-    "Výstup byl vytvořen automatizovaným výpočtem z uvedených údajů. "
-    "Není právním nebo daňovým poradenstvím a nemá povahu závazného "
-    "stanoviska. Před použitím pro splnění daňových povinností má být "
-    "posouzen kvalifikovaným daňovým poradcem."
+    "Výstup vychází ze zadaných údajů a z právních pravidel evidovaných "
+    "v TaxTreat. Slouží jako pracovní podklad a nepředstavuje právní ani "
+    "daňové poradenství nebo závazné stanovisko správce daně."
 )
 
 
@@ -86,8 +85,8 @@ def build_professional_report(
         risk = "Transakce je mimo aktuálně podporovaný rozsah."
     else:
         risk = (
-            "Před použitím výsledku je vyžadováno doplnění údajů nebo "
-            "odborné ověření označených podmínek."
+            "Před použitím výsledku je potřeba doplnit otevřené skutkové "
+            "údaje nebo uzavřít označené podmínky."
         )
 
     source_path = analysis.get("legal_path") or analysis.get("citations", [])
@@ -203,7 +202,7 @@ def _result_copy(result: Mapping[str, Any]) -> tuple[str, str]:
             "pravidel.",
         )
     return (
-        "Výsledek vyžaduje doplnění nebo odborné ověření",
+        "Výsledek vyžaduje doplnění údajů",
         "Bez uzavření položek uvedených v části Otevřené body nemá být "
         "výsledek použit pro splnění daňové povinnosti.",
     )
@@ -221,128 +220,145 @@ def _source_title(source: Mapping[str, Any]) -> str:
     )
 
 
+def _report_date(value: Any) -> str:
+    text = str(value or "")
+    try:
+        parsed = datetime.fromisoformat(text.replace("Z", "+00:00"))
+        return f"{parsed.day}. {parsed.month}. {parsed.year}"
+    except ValueError:
+        return text or "—"
+
+
+def _income_type_label(value: Any) -> str:
+    return {
+        "dividend": "Dividendy",
+        "interest": "Úroky",
+        "royalty": "Licenční poplatky",
+    }.get(str(value), str(value or "—"))
+
+
 def render_report_html(report: Mapping[str, Any]) -> str:
     scope = report["scope"]
     result = report["result"]
     calculation = result.get("withholding_tax_calculation")
+    schedule = result.get("withholding_compliance_schedule") or {}
     conclusion, conclusion_detail = _result_copy(result)
     treatment = result.get("tax_treatment")
-    non_taxing = treatment in {
-        "exclusive_foreign_taxation",
-        "domestic_exemption",
-    }
+    non_taxing = treatment in {"exclusive_foreign_taxation", "domestic_exemption"}
 
     if calculation and calculation.get("status") == "CALCULATED":
         tax_label = "Česká daň k odvodu" if non_taxing else "Srážková daň"
-        rate_value = (
-            "Neuplatňuje se"
-            if non_taxing
-            else f"{escape(str(result.get('rate')))} %"
-        )
+        rate_value = "Neuplatňuje se" if non_taxing else f"{escape(str(result.get('rate')))} %"
         exchange = calculation.get("exchange_rate")
         exchange_row = ""
         if exchange:
             source_url = escape(str(exchange.get("source_url") or ""), quote=True)
             exchange_row = (
-                '<div><span>Přepočet ČNB</span><strong>'
-                f"1 {escape(str(exchange['currency']))} = "
-                f"{escape(str(exchange['czk_per_unit']))} CZK"
-                f'</strong><small>{escape(str(exchange["effective_date"]))} · '
-                f'<a href="{source_url}">kurzovní lístek</a></small></div>'
+                '<div class="metric"><span>Přepočet ČNB</span><strong>'
+                f"1 {escape(str(exchange['currency']))} = {escape(str(exchange['czk_per_unit']))} CZK"
+                f'</strong><small>{_report_date(exchange.get("effective_date"))} · '
+                f'<a href="{source_url}">kurzovní lístek ČNB</a></small></div>'
             )
         calculation_html = f"""
-          <div class="number-grid">
-            <div><span>Hrubá částka</span><strong>{escape(str(calculation['gross_amount']))} {escape(str(calculation['transaction_currency']))}</strong></div>
-            <div><span>Daňový základ v CZK</span><strong>{escape(str(calculation['gross_amount_czk']))} Kč</strong></div>
-            <div class="accent"><span>{tax_label}</span><strong>{escape(str(calculation['withholding_tax_czk']))} Kč</strong></div>
-            <div><span>Použitá sazba</span><strong>{rate_value}</strong></div>
-            {exchange_row}
-          </div>"""
+        <div class="metric-grid">
+          <div class="metric"><span>Hrubá částka</span><strong>{escape(str(calculation['gross_amount']))} {escape(str(calculation['transaction_currency']))}</strong></div>
+          <div class="metric"><span>Daňový základ</span><strong>{escape(str(calculation['gross_amount_czk']))} Kč</strong></div>
+          <div class="metric primary-metric"><span>{tax_label}</span><strong>{escape(str(calculation['withholding_tax_czk']))} Kč</strong></div>
+          <div class="metric"><span>Použitá sazba</span><strong>{rate_value}</strong></div>
+          {exchange_row}
+        </div>"""
     else:
-        calculation_html = (
-            '<p class="muted">Částkový výpočet nebyl uzavřen. Důvod: '
-            f"{escape(str((calculation or {}).get('reason') or 'částka nebyla zadána'))}.</p>"
-        )
+        calculation_html = '<p class="note">Částkový výpočet nebyl uzavřen.</p>'
 
-    source_items = []
-    for index, source in enumerate(report.get("official_sources", []), 1):
+    source_items: list[str] = []
+    for source in report.get("official_sources", []):
         url = escape(str(source.get("source_url") or ""), quote=True)
         excerpt = escape(str(source.get("excerpt") or ""))
         excerpt_html = (
-            f"<details><summary>Zobrazit znění ustanovení</summary><blockquote>{excerpt}</blockquote></details>"
-            if excerpt
-            else ""
+            f"<details><summary>Zobrazit přesné znění ustanovení</summary><blockquote>{excerpt}</blockquote></details>"
+            if excerpt else ""
         )
         source_items.append(
-            '<article class="source">'
-            f'<span class="source-number">{index:02d}</span><div><h3>{_source_title(source)}</h3>'
-            f'<a href="{url}">Otevřít oficiální zdroj ↗</a>{excerpt_html}</div></article>'
+            '<article class="legal-source"><div><h3>'
+            f'{_source_title(source)}</h3><a href="{url}">Otevřít zdroj ↗</a></div>{excerpt_html}</article>'
         )
     if not source_items:
-        source_items.append('<p class="muted">Nebyl vybrán konkrétní právní zdroj.</p>')
+        source_items.append('<p class="note">Pro tento výsledek nebyl vybrán konkrétní právní zdroj.</p>')
 
     missing = report.get("missing_facts", [])
     missing_items = "".join(
-        f"<li>{escape(_FACT_LABELS.get(str(item), str(item).replace('_', ' ')))}</li>"
-        for item in missing
+        f"<li>{escape(_FACT_LABELS.get(str(item), str(item).replace('_', ' ')))}</li>" for item in missing
     ) or "<li>Žádné otevřené skutkové údaje.</li>"
-    documents = "".join(
-        f"<li>{escape(str(item))}</li>"
-        for item in report.get("required_documentation", [])
-    )
+    documents = "".join(f"<li>{escape(str(item))}</li>" for item in report.get("required_documentation", []))
     amount = scope.get("transaction_amount") or {}
-    amount_copy = (
-        f"{escape(str(amount.get('amount')))} {escape(str(amount.get('currency')))}"
-        if amount
-        else "Neuvedena"
-    )
+    amount_copy = f"{escape(str(amount.get('amount')))} {escape(str(amount.get('currency')))}" if amount else "Neuvedena"
+
+    deadline_rows = []
+    labels = {
+        "reference_date": "Rozhodné datum",
+        "remittance_deadline": "Odvod srážkové daně",
+        "notification_deadline": "Oznámení příjmu do zahraničí",
+    }
+    for key, label in labels.items():
+        value = schedule.get(key)
+        if value:
+            deadline_rows.append(f"<div><span>{label}</span><strong>{_report_date(value)}</strong></div>")
+    compliance_html = "".join(deadline_rows) or '<p class="note">Navazující lhůty nejsou pro tento výsledek k dispozici.</p>'
 
     return f"""<!doctype html>
 <html lang="cs">
 <head>
   <meta charset="utf-8">
-  <title>TaxTreat · {escape(str(report['report_id']))}</title>
+  <title>TaxTreat · Analýza srážkové daně</title>
   <style>
-    :root {{ --ink:#10233e; --paper:#fffdf8; --canvas:#f0ece2; --line:#d9d1c2; --copper:#a85f32; --sage:#315c55; --muted:#687386; }}
+    :root {{ --navy:#172b4d; --blue:#3157d5; --ink:#172033; --muted:#657085; --line:#dfe4ec; --soft:#f5f7fb; --paper:#ffffff; --green:#176c4f; }}
     * {{ box-sizing:border-box; }}
-    body {{ margin:0; color:var(--ink); background:var(--canvas); font:15px/1.55 Inter, ui-sans-serif, system-ui, sans-serif; }}
-    .sheet {{ width:min(1080px,calc(100% - 40px)); margin:34px auto; padding:58px 64px; background:var(--paper); box-shadow:0 18px 55px #2b35401a; }}
-    header {{ display:grid; grid-template-columns:1fr auto; gap:40px; padding-bottom:34px; border-bottom:1px solid var(--line); }}
-    .brand {{ font-size:13px; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:var(--copper); }}
-    h1 {{ max-width:650px; margin:12px 0 8px; font:700 42px/1.08 Georgia, serif; letter-spacing:-.025em; }}
-    h2 {{ margin:0 0 18px; font:700 24px/1.2 Georgia, serif; }} h3 {{ margin:0 0 5px; font-size:15px; }}
-    p {{ margin:0; }} .muted,.meta {{ color:var(--muted); }} .meta {{ font-size:12px; text-align:right; }}
-    .meta strong {{ display:block; margin-bottom:8px; color:var(--ink); font-size:13px; }}
-    .scope {{ display:grid; grid-template-columns:repeat(4,1fr); gap:0; margin:30px 0 0; border:1px solid var(--line); }}
-    .scope div {{ padding:14px 16px; border-right:1px solid var(--line); }} .scope div:last-child {{ border:0; }}
-    .scope span,.number-grid span {{ display:block; color:var(--muted); font-size:11px; letter-spacing:.06em; text-transform:uppercase; }}
-    .scope strong {{ display:block; margin-top:5px; }}
-    .verdict {{ margin:34px 0 0; padding:34px 38px; color:white; background:var(--ink); border-left:9px solid var(--copper); }}
-    .verdict .eyebrow {{ color:#e4b28f; font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; }}
-    .verdict h2 {{ margin:9px 0; color:white; font-size:30px; }} .verdict p {{ max-width:760px; color:#dce4ee; }}
-    section.numbered {{ display:grid; grid-template-columns:52px 1fr; gap:22px; padding:40px 0; border-bottom:1px solid var(--line); }}
-    .section-no {{ color:var(--copper); font:700 18px Georgia,serif; }}
-    .number-grid {{ display:grid; grid-template-columns:repeat(2,1fr); border-top:1px solid var(--line); border-left:1px solid var(--line); }}
-    .number-grid>div {{ min-height:90px; padding:17px 18px; border-right:1px solid var(--line); border-bottom:1px solid var(--line); }}
-    .number-grid strong {{ display:block; margin-top:8px; font-size:20px; }} .number-grid small {{ display:block; margin-top:5px; color:var(--muted); }}
-    .number-grid .accent strong {{ color:var(--copper); font-size:25px; }} a {{ color:var(--sage); }}
-    .two-col {{ display:grid; grid-template-columns:1fr 1fr; gap:42px; }} ul {{ margin:0; padding-left:20px; }} li {{ margin:7px 0; }}
-    .source {{ display:grid; grid-template-columns:42px 1fr; gap:14px; padding:18px 0; border-top:1px solid var(--line); }}
-    .source-number {{ color:var(--copper); font:700 16px Georgia,serif; }} details {{ margin-top:9px; }} summary {{ cursor:pointer; color:var(--sage); font-weight:700; }}
-    blockquote {{ max-height:230px; overflow:auto; margin:12px 0 0; padding:15px 18px; white-space:pre-line; color:#38465a; background:#f4f0e8; border-left:3px solid var(--line); font-size:13px; }}
-    footer {{ display:grid; grid-template-columns:1fr auto; gap:35px; padding-top:30px; color:var(--muted); font-size:11px; }}
-    footer .notice {{ max-width:720px; padding-left:14px; border-left:3px solid var(--copper); }}
-    @media(max-width:760px) {{ .sheet{{width:100%;margin:0;padding:34px 22px}} header,.two-col{{grid-template-columns:1fr}} .meta{{text-align:left}} .scope{{grid-template-columns:1fr 1fr}} .scope div:nth-child(2){{border-right:0}} section.numbered{{grid-template-columns:1fr}} }}
-    @media print {{ @page{{size:A4;margin:14mm}} body{{background:white}} .sheet{{width:auto;margin:0;padding:0;box-shadow:none}} section.numbered,.verdict,.source{{break-inside:avoid}} a{{color:inherit;text-decoration:none}} }}
+    body {{ margin:0; color:var(--ink); background:#edf1f6; font:14px/1.55 Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }}
+    .report {{ width:min(1040px,calc(100% - 36px)); margin:28px auto; background:var(--paper); box-shadow:0 16px 50px #172b4d14; }}
+    header {{ display:flex; justify-content:space-between; gap:28px; padding:28px 38px; color:#fff; background:var(--navy); }}
+    .brand {{ font-size:20px; font-weight:800; letter-spacing:-.02em; }}
+    .brand span {{ display:inline-grid; place-items:center; width:34px; height:34px; margin-right:10px; border-radius:8px; color:#fff; background:var(--blue); font-size:12px; vertical-align:middle; }}
+    header p {{ margin:5px 0 0; color:#cbd6e7; }} header .cutoff {{ align-self:center; text-align:right; font-size:12px; }}
+    main {{ padding:34px 38px 42px; }}
+    h1 {{ margin:0; font-size:30px; letter-spacing:-.035em; }} h2 {{ margin:0 0 16px; color:var(--navy); font-size:20px; }} h3 {{ margin:0 0 5px; font-size:14px; }}
+    .transaction {{ margin-bottom:26px; padding:24px; border:1px solid #cad5e7; border-top:5px solid var(--blue); background:#fbfcff; }}
+    .transaction .eyebrow,.verdict .eyebrow {{ color:var(--blue); font-size:11px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }}
+    .transaction h1 {{ margin:6px 0 20px; }}
+    .transaction-grid {{ display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); border:1px solid var(--line); background:#fff; }}
+    .transaction-grid div {{ min-height:72px; padding:13px 14px; border-right:1px solid var(--line); }} .transaction-grid div:last-child {{ border-right:0; }}
+    .transaction-grid span,.metric span,.deadline-grid span {{ display:block; color:var(--muted); font-size:10px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; }}
+    .transaction-grid strong {{ display:block; margin-top:6px; font-size:14px; }}
+    .verdict {{ margin-bottom:30px; padding:25px 28px; border-left:5px solid var(--blue); background:#eef3ff; }}
+    .verdict h2 {{ margin:7px 0 7px; font-size:25px; }} .verdict p {{ max-width:780px; color:#46536a; }}
+    section {{ padding:26px 0; border-top:1px solid var(--line); }}
+    .metric-grid {{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); border-top:1px solid var(--line); border-left:1px solid var(--line); }}
+    .metric {{ min-height:88px; padding:16px; border-right:1px solid var(--line); border-bottom:1px solid var(--line); }} .metric strong {{ display:block; margin-top:7px; font-size:19px; }} .metric small {{ display:block; margin-top:4px; color:var(--muted); }}
+    .primary-metric {{ background:#f0f4ff; }} .primary-metric strong {{ color:var(--blue); font-size:24px; }}
+    .two-col {{ display:grid; grid-template-columns:1fr 1fr; gap:34px; }} ul {{ margin:0; padding-left:18px; }} li {{ margin:7px 0; }}
+    .deadline-grid {{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }} .deadline-grid div {{ padding:14px; border:1px solid var(--line); background:var(--soft); }} .deadline-grid strong {{ display:block; margin-top:5px; }}
+    .legal-source {{ padding:16px 0; border-top:1px solid var(--line); }} .legal-source:first-of-type {{ border-top:0; }} .legal-source a {{ color:var(--blue); font-weight:700; text-decoration:none; }}
+    details {{ margin-top:10px; }} summary {{ cursor:pointer; color:var(--blue); font-weight:700; }} blockquote {{ max-height:260px; overflow:auto; margin:12px 0 0; padding:15px 17px; white-space:pre-line; color:#334158; background:var(--soft); border-left:3px solid #b9c7e7; font-size:12px; }}
+    .note {{ color:var(--muted); }} .risk {{ margin-top:12px; color:#4c596e; }}
+    footer {{ padding:20px 38px 26px; border-top:1px solid var(--line); color:var(--muted); background:#fafbfc; font-size:10px; }}
+    @media(max-width:760px) {{ .report{{width:100%;margin:0}} header{{display:block}} header .cutoff{{margin-top:16px;text-align:left}} main{{padding:24px 20px}} .transaction-grid{{grid-template-columns:1fr 1fr}} .transaction-grid div{{border-bottom:1px solid var(--line)}} .metric-grid,.two-col,.deadline-grid{{grid-template-columns:1fr}} }}
+    @media print {{ @page{{size:A4;margin:13mm}} body{{background:#fff}} .report{{width:auto;margin:0;box-shadow:none}} header{{print-color-adjust:exact;-webkit-print-color-adjust:exact}} section,.verdict,.transaction,.legal-source{{break-inside:avoid}} a{{color:inherit;text-decoration:none}} details{{display:block}} }}
   </style>
 </head>
-<body><main class="sheet">
-  <header><div><div class="brand">TaxTreat · výstup kontroly platby</div><h1>Česká srážková daň</h1><p class="muted">Jednotný záznam vstupních údajů, výsledku, výpočtu a použitých podkladů.</p></div>
-    <div class="meta"><strong>{escape(str(report['report_id']))}</strong>Vytvořeno {escape(str(report['generated_at']))}<br>Právní stav k {escape(str(report['legal_data_cutoff']))}</div></header>
-  <div class="scope"><div><span>Plátce / zdroj</span><strong>{escape(str(scope['source_country']))}</strong></div><div><span>Rezidence příjemce</span><strong>{escape(str(scope['recipient_country']))}</strong></div><div><span>Druh příjmu</span><strong>{escape(str(scope['income_type']))}</strong></div><div><span>Částka</span><strong>{amount_copy}</strong></div></div>
-  <section class="verdict"><div class="eyebrow">Závěr kontroly</div><h2>{escape(conclusion)}</h2><p>{escape(conclusion_detail)}</p></section>
-  <section class="numbered"><span class="section-no">01</span><div><h2>Výpočet a daňové zacházení</h2>{calculation_html}<p class="muted" style="margin-top:14px">{escape(str(report['risk_assessment']))}</p></div></section>
-  <section class="numbered"><span class="section-no">02</span><div><h2>Údaje a podklady</h2><div class="two-col"><div><h3>Otevřené body</h3><ul>{missing_items}</ul></div><div><h3>Dokumentace k založení</h3><ul>{documents}</ul></div></div></div></section>
-  <section class="numbered"><span class="section-no">03</span><div><h2>Použité právní podklady</h2>{''.join(source_items)}</div></section>
-  <footer><p class="notice">{escape(str(report['disclaimer']))}</p><p>TaxTreat<br>{escape(str(report['report_id']))}</p></footer>
-</main></body></html>"""
+<body><article class="report">
+  <header><div><div class="brand"><span>TT</span>TaxTreat</div><p>Withholding tax analysis</p></div><div class="cutoff">Právní stav k {_report_date(report.get('legal_data_cutoff'))}</div></header>
+  <main>
+    <section class="transaction"><div class="eyebrow">Analyzovaná transakce</div><h1>Česká srážková daň</h1><div class="transaction-grid">
+      <div><span>Zdroj příjmu</span><strong>{escape(str(scope.get('source_country') or '—'))}</strong></div>
+      <div><span>Rezidence příjemce</span><strong>{escape(str(scope.get('recipient_country') or '—'))}</strong></div>
+      <div><span>Druh příjmu</span><strong>{escape(_income_type_label(scope.get('income_type')))}</strong></div>
+      <div><span>Datum transakce</span><strong>{_report_date(scope.get('transaction_date'))}</strong></div>
+      <div><span>Částka</span><strong>{amount_copy}</strong></div>
+    </div></section>
+    <section class="verdict"><div class="eyebrow">Výsledek</div><h2>{escape(conclusion)}</h2><p>{escape(conclusion_detail)}</p></section>
+    <section><h2>Výpočet</h2>{calculation_html}<p class="risk">{escape(str(report['risk_assessment']))}</p></section>
+    <section><h2>Podmínky a podklady</h2><div class="two-col"><div><h3>Otevřené skutkové údaje</h3><ul>{missing_items}</ul></div><div><h3>Podklady k dokumentaci</h3><ul>{documents}</ul></div></div></section>
+    <section><h2>Daňový kalendář</h2><div class="deadline-grid">{compliance_html}</div></section>
+    <section><h2>Právní základ</h2>{''.join(source_items)}</section>
+  </main>
+  <footer>{escape(str(report['disclaimer']))}</footer>
+</article></body></html>"""
