@@ -1,3 +1,5 @@
+from bs4 import BeautifulSoup
+
 from taxtreat.services.reporting import render_report_html
 
 
@@ -96,9 +98,14 @@ def test_report_identifies_parties_and_marks_assumptions_as_user_supplied():
 
 def test_report_shows_only_operational_excerpt_and_net_amount():
     html = render_report_html(_sample_report())
-    assert "2. Test treaty excerpt with <strong>5 procent</strong>." in html
-    assert "1. Test." not in html
-    assert "3. Other text." not in html
+    soup = BeautifulSoup(html, "html.parser")
+    visible_quote = soup.select_one(".legal-source .quote")
+    assert visible_quote is not None
+    quote_text = visible_quote.get_text(" ", strip=True)
+    assert "2. Test treaty excerpt with 5 procent." in quote_text
+    assert "1. Test." not in quote_text
+    assert "3. Other text." not in quote_text
+    assert "<strong>5 procent</strong>" in str(visible_quote)
     assert "Čistá částka po srážce" in html
     assert "1 000 000 Kč" in html
 
