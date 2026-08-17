@@ -44,6 +44,9 @@ def verify_recipient_catalog_and_entry(page) -> None:
     )
     if country.locator("option").count() != 102:
         raise AssertionError("Recipient form does not expose all 101 jurisdictions.")
+    option_values = country.locator("option").evaluate_all("options => options.map(option => option.value)")
+    if "KR" not in option_values or "TW" not in option_values:
+        raise AssertionError("Recipient catalog must include both Korea and Taiwan.")
     name = form.locator('input[name="recipient_name"]')
     name.fill("Test Korea Co.")
     if name.input_value() != "Test Korea Co.":

@@ -456,6 +456,26 @@ def list_jurisdictions():
                 ],
             }
         )
+    # Taiwan is supported by the production runtime through Czech domestic
+    # withholding-tax rules even though it is not a Czech treaty partner.
+    # `/jurisdictions` is a product-support catalog, not merely a treaty list.
+    jurisdictions.append(
+        {
+            "country": "Tchaj-wan",
+            "iso2": "TW",
+            "income_types": ["dividend", "interest", "royalty"],
+            "review_ready_income_types": [],
+            "base_candidate_income_types": [],
+            "protocol_candidate_income_types": [],
+            "domestic_candidate_income_types": ["dividend", "interest", "royalty"],
+            "eu_relief_candidate_income_types": [],
+            "manual_rate_extraction_income_types": [],
+            "candidate_chain_assembled_income_types": [],
+            "candidate_chain_blocked_income_types": [],
+            "candidate_review_queued_income_types": [],
+            "candidate_review_approved_income_types": [],
+        }
+    )
     return {"total": len(jurisdictions), "jurisdictions": jurisdictions}
 
 

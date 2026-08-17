@@ -19,3 +19,17 @@ def test_normalize_ares_subject_exposes_form_fields():
     assert result["legal_form"] == "112"
     assert result["data_box"] == "amqg4i4"
     assert result["established_at"] == "2003-10-08"
+
+
+def test_jurisdiction_catalog_contains_all_supported_destinations():
+    from fastapi.testclient import TestClient
+    from app.main import app
+
+    response = TestClient(app).get("/jurisdictions")
+    assert response.status_code == 200
+    body = response.json()
+    assert body["total"] == 101
+    codes = {item["iso2"] for item in body["jurisdictions"]}
+    assert len(codes) == 101
+    assert "KR" in codes
+    assert "TW" in codes
