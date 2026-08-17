@@ -1,6 +1,23 @@
 from bs4 import BeautifulSoup
 
 from taxtreat.services.reporting import render_report_html
+from taxtreat.services.reporting.client_report import (
+    _deadline_cards,
+    _display_fact,
+    _display_number,
+    _extract_numbered_paragraph,
+    _key_facts_html,
+    _legal_reference,
+    _operative_excerpt,
+    _result_conclusion,
+    _selected_source,
+    _source_link,
+    _transaction_gloss,
+    _transaction_title,
+    _treaty_name,
+    _treaty_name_in_sentence,
+    _truncate_at_boundary,
+)
 
 
 def _sample_report():
@@ -133,8 +150,87 @@ def test_client_report_uses_restrained_visual_contract():
     assert "linear-gradient" not in html
     assert "Následující údaje byly zadány uživatelem" in html
     assert "Údaje k doplnění" not in html
+    assert "Jak se určuje česká srážková daň" in html
+    assert "ZDP" in html and "SZDZ" in html and "MLI / PPT" in html
 
 
 def test_automation_wording_is_not_repeated_in_report_body():
     html = render_report_html(_sample_report())
     assert html.lower().count("automatizovaně") == 1
+
+
+def test_client_report_helper_fallbacks_and_formats():
+    assert _display_number(None) == "—"
+    assert _display_number("abc") == "abc"
+    assert _display_number(1234.5) == "1 234.5"
+    assert _display_fact(False, "boolean") == "Ne"
+    assert _display_fact(12.5, "percent") == "12.5 %"
+    assert _display_fact(18, "months") == "18 měsíců"
+    assert _display_fact("software", "text") == "software"
+
+    report = {"scope": {"recipient_country": "ZZ", "income_type": "interest"}, "assumptions": {"transaction_facts": {}}}
+    assert _transaction_title(report).startswith("Úroková platba: Plátce – název neuveden")
+    assert _treaty_name(report) == "Smlouva o zamezení dvojího zdanění ČR–ZZ"
+    assert _treaty_name_in_sentence(report) == "smlouvy o zamezení dvojího zdanění ČR–ZZ"
+    assert _treaty_name({"scope": {}}) == "Smlouva o zamezení dvojího zdanění"
+
+
+def test_client_report_source_selection_and_legal_reference_fallbacks():
+    report = {"result": {"selected_rule_id": "missing"}, "scope": {"recipient_country": "AT"}}
+    treaty = {"rule_id": "t", "legal_layer": "treaty", "article": "10", "paragraph": "2"}
+    domestic = {"rule_id": "d", "legal_layer": "domestic", "article": "36", "paragraph": "1"}
+    protocol = {"legal_layer": "protocol", "article": "1", "paragraph": "2"}
+    mli = {"legal_layer": "mli", "article": "7", "paragraph": "1"}
+
+    selected, rule_id = _selected_source(report, [domestic, treaty])
+    assert selected is treaty and rule_id == "missing"
+    selected, _ = _selected_source(report, [domestic])
+    assert selected is domestic
+    assert _legal_reference(report, None) == "—"
+    assert "protokolu" in _legal_reference(report, protocol)
+    assert "MLI" in _legal_reference(report, mli)
+    assert "zákona č. 586/1992 Sb." in _legal_reference(report, domestic)
+    assert _source_link(None) == ""
+
+
+def test_client_report_excerpt_and_truncation_edge_cases():
+    assert _extract_numbered_paragraph("", "2") == ""
+    assert _extract_numbered_paragraph("Celý text bez číslování", "") == "Celý text bez číslování"
+    assert _extract_numbered_paragraph("1. Jeden\n2. Dva", "3") == "1. Jeden\n2. Dva"
+    assert _operative_excerpt(None) == "Právní výňatek není k dispozici."
+    assert "není v reportu" in _operative_excerpt({"excerpt": "", "paragraph": "2"})
+
+    long_with_boundary = ("První věta. " * 200).strip()
+    cut = _truncate_at_boundary(long_with_boundary, 120)
+    assert cut.endswith("… (dále zkráceno)")
+    long_without_boundary = "x" * 80 + " " + "y" * 80
+    cut2 = _truncate_at_boundary(long_without_boundary, 100)
+    assert cut2.endswith("… (dále zkráceno)")
+
+
+def test_client_report_result_deadline_gloss_and_key_fact_variants():
+    report = _sample_report()
+    treaty = report["official_sources"][0]
+
+    nonfinal = _sample_report()
+    nonfinal["result"] = {"status": "NEEDS_INFO"}
+    assert "doplnit" in _result_conclusion(nonfinal, treaty, "—")
+
+    exempt = _sample_report()
+    exempt["result"]["tax_treatment"] = "domestic_exemption"
+    assert "osvobození" in _result_conclusion(exempt, treaty, "0 %")
+
+    numeric = _sample_report()
+    numeric["result"]["tax_treatment"] = "treaty_rate"
+    numeric["result"]["rate"] = 5
+    assert "5 %" in _result_conclusion(numeric, treaty, "5 %")
+
+    deadlines = _deadline_cards({"remittance_deadline": "2026-08-31", "notification_deadline": "2026-09-30"})
+    assert "Odvod srážkové daně" in deadlines
+    assert "Oznámení o příjmech" in deadlines
+
+    plain = {"scope": {"income_type": "interest"}, "assumptions": {"transaction_facts": {}}}
+    assert _transaction_gloss(plain).startswith("Použité ustanovení")
+    key_facts = _key_facts_html("5 %", "interest", treaty, {})
+    assert "Použitá sazba" in key_facts
+    assert "Nejbližší uvedená lhůta" not in key_facts
