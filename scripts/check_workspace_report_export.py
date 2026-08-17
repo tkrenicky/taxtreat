@@ -65,7 +65,7 @@ def finish_workspace_calculation(page) -> None:
         raise AssertionError("Fresh workspace did not reset the demo recipient.")
     if "Rakousko" not in page.locator("#flow-recipient-meta").inner_text():
         raise AssertionError("Fresh workspace did not reset recipient residence to Austria.")
-    page.get_by_role("button", name="Nová kontrola platby →").first.click()
+    page.get_by_role("button", name="Nový výpočet →").first.click()
     page.get_by_role("button", name="Pokračovat k příjemci →").click()
     page.get_by_role("button", name="Pokračovat k platbě →").click()
 
@@ -245,7 +245,7 @@ def main() -> int:
                 )
 
             page.get_by_role(
-                "button", name="Kontroly plateb", exact=True
+                "button", name="Výpočty", exact=True
             ).click()
             reviews_view = page.locator('[data-view="reviews"].active')
             reviews_view.wait_for(state="visible")
@@ -276,7 +276,7 @@ def main() -> int:
                     "button", name="Tisk / PDF"
                 ).click()
             review_page = review_popup_info.value
-            review_page.get_by_text("Česká srážková daň", exact=True).wait_for()
+            review_page.get_by_text("Informace k české srážkové dani", exact=True).wait_for()
             review_page.close()
             if len(report_requests) != requests_before_review_open:
                 raise AssertionError(
