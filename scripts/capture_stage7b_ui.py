@@ -217,13 +217,14 @@ def capture(output_dir: Path) -> dict[str, object]:
                     "Required-document panel did not open."
                 )
 
-            with page.expect_download() as download_info:
+            page.add_init_script("window.print = () => { window.__taxtreatPrintCalled = true; };")
+            with page.expect_popup() as report_popup_info:
                 page.locator("#report-button").click()
-            download = download_info.value
-            if not download.suggested_filename.endswith(".html"):
-                raise AssertionError(
-                    "Professional report download did not produce HTML."
-                )
+            report_page = report_popup_info.value
+            report_page.wait_for_load_state("domcontentloaded")
+            report_page.get_by_role("heading", name="Informace k české srážkové dani", exact=True).wait_for()
+            report_page.wait_for_function("() => window.__taxtreatPrintCalled === true", timeout=5000)
+            report_page.close()
 
             page.set_viewport_size({"width": 1440, "height": 1100})
             page.goto(
@@ -240,7 +241,7 @@ def capture(output_dir: Path) -> dict[str, object]:
             page.screenshot(path=workspace_path, full_page=True)
             page.get_by_role(
                 "button",
-                name="Nová kontrola platby →",
+                name="Nový výpočet →",
             ).first.click()
             page.get_by_role(
                 "button",
@@ -340,7 +341,7 @@ def capture(output_dir: Path) -> dict[str, object]:
                 "#workspace-result-status"
             ).inner_text()
             if workspace_status not in {
-                "VÝSLEDEK DOKONČEN",
+                "VÝPOČET DOKONČEN",
                 "ODBORNÉ OVĚŘENÍ",
             }:
                 raise AssertionError(

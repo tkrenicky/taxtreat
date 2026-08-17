@@ -22,7 +22,7 @@
       </nav>
       <div class="sidebar-assurance">
         <strong>Transparentní výstup</strong>
-        <p>Výsledek uvádí použitou sazbu, výpočet a podmínky, které je vhodné ověřit s daňovým poradcem.</p>
+        <p>Výstup zobrazuje právní pravidla přiřazená k zadaným údajům a výpočet podle zadaných údajů; neposkytuje doporučení ani individuální daňové posouzení.</p>
       </div>
     </aside>
 
@@ -43,8 +43,7 @@
           <span class="notice-icon" aria-hidden="true">◇</span>
           <div>
             <strong>Důležité upozornění</strong>
-            <p>TaxTreat je výpočetní nástroj. Výstup není právním ani daňovým poradenstvím ani závazným stanoviskem.
-               Splnění podmínek pro použití sazby a konečný postup ověřte s daňovým poradcem.</p>
+            <p>TaxTreat je informační nástroj. Automatizovaně zobrazuje informace z uvedených právních zdrojů a zadaných údajů. Neposkytuje individuální daňové nebo právní poradenství, doporučení ani závazné stanovisko a neurčuje postup uživatele.</p>
           </div>
         </section>
 
@@ -52,11 +51,11 @@
       <p class="eyebrow">VÝPOČET PODLE ZADANÝCH ÚDAJŮ</p>
       <h1>Výpočet české srážkové daně</h1>
       <p>Zadejte údaje o plátci, příjemci a platbě. TaxTreat je porovná s evidovanými
-         pravidly, zobrazí odpovídající sazbu a vypočte srážkovou daň v CZK.</p>
+         pravidly, zobrazí pravidlo přiřazené k zadaným údajům a provede výpočet podle zadaných údajů v CZK.</p>
     </section>
 
     <section class="project-metrics" aria-label="Rozsah TaxTreat">
-      <article><strong>101</strong><span>smluvních partnerů</span></article>
+      <article><strong>101</strong><span>podporovaných jurisdikcí</span></article>
       <article><strong>303</strong><span>pokrytých kombinací země a příjmu</span></article>
       <article><strong>3</strong><span>příjmové kategorie</span></article>
       <article><strong>12. 8. 2026</strong><span>stav použitého datasetu</span></article>
@@ -65,7 +64,7 @@
     <section class="trust-strip" aria-label="Informace o výstupu a datech">
       <span><b>✓</b> Sazby navázané na smluvní text a evidované zdroje</span>
       <span><b>◇</b> Zadané údaje se po zpracování neukládají</span>
-      <span><b>i</b> Výsledek ověřte s daňovým poradcem</span>
+      <span><b>i</b> Informační výstup bez individuálního daňového doporučení</span>
     </section>
 
     <div class="workspace">
@@ -119,7 +118,7 @@
         <div class="assumptions">
           <strong>Předpoklady výpočtu</strong>
           <p>Příjemce je skutečným vlastníkem příjmu a daňovým rezidentem vybraného státu.
-             Pokud některý z těchto předpokladů neplatí nebo si nejste jistí, výsledek ověřte s daňovým poradcem.</p>
+             Pokud některý z těchto předpokladů neplatí, upravte vstupní údaje; TaxTreat podle nich znovu přiřadí relevantní pravidla.</p>
         </div>
 
         <hr>
@@ -193,15 +192,14 @@
           <span aria-hidden="true">→</span>
         </button>
         <p class="fine-print">Výpočet vychází výhradně ze zadaných údajů a uvedených předpokladů.
-          Podmínky označené ve výsledku doporučujeme projednat s daňovým poradcem.</p>
+          TaxTreat nezobrazuje doporučení ani individuální daňové posouzení; výstup pouze propojuje zadané údaje s evidovanými pravidly.</p>
       </form>
 
       <aside class="panel result-panel" aria-live="polite">
         <div id="empty-state" class="empty-state">
           <div class="empty-icon">✓</div>
-          <h2>Výsledek výpočtu</h2>
-          <p>Po odeslání údajů se zobrazí sazba, výpočet daně v CZK a podmínky,
-             které je třeba doložit nebo ověřit s daňovým poradcem.</p>
+          <h2>Informace podle zadaných údajů</h2>
+          <p>Po odeslání údajů se zobrazí přiřazené právní pravidlo, výpočet podle zadaných údajů v CZK a údaje, které vstupují do přiřazení pravidla.</p>
         </div>
 
         <div id="result" hidden>
@@ -234,7 +232,7 @@
 
           <section id="advisor-review-section" hidden>
             <div class="list-heading">
-              <h3>Podmínky k ověření s daňovým poradcem</h3>
+              <h3>Podmínky, které nelze určit z dostupných údajů</h3>
               <span id="advisor-count">0</span>
             </div>
             <div id="advisor-items" class="questions advisor-items"></div>
@@ -242,15 +240,15 @@
 
           <details class="documents-panel">
             <summary>
-              <span>Požadované podklady</span>
+              <span>Související podklady</span>
               <span id="document-count">0</span>
             </summary>
-            <p>Přehled podkladů, které mohou být vyžadovány k doložení skutkových okolností a právních podmínek.</p>
+            <p>Přehled podkladů souvisejících se skutkovými údaji a právními podmínkami zobrazenými ve výstupu.</p>
             <ul id="documents" class="document-list"></ul>
           </details>
 
           <button id="report-button" class="secondary" type="button">
-            Stáhnout výsledek
+            Tisk / PDF
           </button>
           <div id="report-error" class="message error" role="alert" hidden></div>
         </div>
@@ -273,21 +271,21 @@
         </article>
         <article>
           <span>03</span>
-          <h3>Výsledek a ověření</h3>
-          <p>Výstup uvádí sazbu, výpočet v CZK, použité předpoklady a samostatně podmínky k ověření s daňovým poradcem.</p>
+          <h3>Pravidla a výpočet</h3>
+          <p>Výstup uvádí přiřazené právní pravidlo, výpočet podle zadaných údajů v CZK, použité vstupní údaje a samostatně podmínky, které nelze určit z dostupných údajů.</p>
         </article>
       </div>
       <div class="status-guide">
         <strong>Význam stavů</strong>
         <p><b>Výpočet dokončen</b> – sazba a daň byly vypočteny podle zadaných údajů.
            <b>Je třeba doplnit údaje</b> – pro výpočet chybí konkrétní informace.
-           <b>Ověřte s poradcem</b> – použití sazby závisí na podmínce, kterou aplikace nemůže potvrdit z klientského vstupu.</p>
+           <b>Chybí údaj pro přiřazení pravidla</b> – z dostupných vstupních údajů nelze konkrétní pravidlo automatizovaně přiřadit.</p>
       </div>
     </section>
       </main>
 
       <footer>
-        <p>Výstup není právním ani daňovým poradenstvím ani závazným stanoviskem.</p>
+        <p>TaxTreat je informační nástroj; neposkytuje individuální právní ani daňové poradenství, doporučení ani závazné stanovisko.</p>
         <a href="#napoveda">Postup výpočtu</a>
       </footer>
     </div>

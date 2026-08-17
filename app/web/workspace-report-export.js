@@ -3,7 +3,7 @@
 
   const historyStyles = document.createElement("link");
   historyStyles.rel = "stylesheet";
-  historyStyles.href = "/ui-assets/workspace-output-history.css?v=20260817-1";
+  historyStyles.href = "/ui-assets/workspace-output-history.css?v=20260817-2";
   document.head.append(historyStyles);
 
   const nativeFetch = window.fetch.bind(window);
@@ -171,7 +171,6 @@
     const actions = document.createElement("div");
     actions.className = "output-history-actions";
     actions.append(
-      actionButton("Otevřít report", () => openStoredReport(record)),
       actionButton("Tisk / PDF", () => openStoredReport(record, true)),
     );
 
@@ -200,8 +199,8 @@
     status.textContent = statusLabel(record.status);
 
     const action = actionButton(
-      "Otevřít výstup",
-      () => openStoredReport(record)
+      "Tisk / PDF",
+      () => openStoredReport(record, true)
     );
 
     row.append(copy, status, action);
@@ -232,7 +231,7 @@
         const title = document.createElement("strong");
         title.textContent = "Zatím bez výstupů";
         const copy = document.createElement("p");
-        copy.textContent = "Po dokončení kontroly platby se zde objeví její výsledek.";
+        copy.textContent = "Po dokončení výpočtu se zde zobrazí informační výstup podle zadaných údajů.";
         empty.append(title, copy);
         dashboardCard.append(empty);
       } else {
@@ -250,7 +249,7 @@
         const title = document.createElement("strong");
         title.textContent = "Zatím bez výstupů";
         const copy = document.createElement("p");
-        copy.textContent = "Výstup vznikne po dokončení kontroly platby.";
+        copy.textContent = "Výstup vznikne po dokončení informačního výpočtu.";
         empty.append(title, copy);
         outputsCard.append(empty);
       } else {
@@ -278,7 +277,7 @@
       const empty = document.createElement("div");
       empty.className = "empty";
       const title = document.createElement("strong");
-      title.textContent = "Zatím bez kontrol plateb";
+      title.textContent = "Zatím bez výpočtů";
       const copy = document.createElement("p");
       copy.textContent = "Vyber příjemce a zadej údaje o první transakci.";
       empty.append(title, copy);
@@ -289,7 +288,7 @@
     const head = document.createElement("div");
     head.className = "card-head";
     const heading = document.createElement("h2");
-    heading.textContent = "Dokončené kontroly";
+    heading.textContent = "Dokončené výpočty";
     const count = document.createElement("span");
     count.textContent = String(outputHistory.length);
     head.append(heading, count);
@@ -311,7 +310,7 @@
       const label = completed.querySelector("span");
       const value = completed.querySelector("strong");
       const note = completed.querySelector("small");
-      if (label) label.textContent = "Dokončené kontroly";
+      if (label) label.textContent = "Dokončené výpočty";
       if (value) value.textContent = String(outputHistory.length);
       if (note) note.textContent = "v této relaci stránky";
     }
@@ -320,7 +319,7 @@
       const value = attention.querySelector("strong");
       const note = attention.querySelector("small");
       if (value) value.textContent = String(attentionCount);
-      if (note) note.textContent = "výsledků s otevřenými podmínkami";
+      if (note) note.textContent = "výpočtů s chybějícími údaji";
     }
   }
 
@@ -376,15 +375,8 @@
 
   openButton.removeAttribute("data-nav");
   openButton.type = "button";
-  openButton.textContent = "Otevřít profesionální report";
-  openButton.dataset.reportAction = "open";
-
-  const printButton = document.createElement("button");
-  printButton.type = "button";
-  printButton.className = "secondary";
-  printButton.textContent = "Tisk / uložit PDF";
-  printButton.dataset.reportAction = "print";
-  resultActions.insertBefore(printButton, openButton);
+  openButton.textContent = "Tisk / PDF reportu";
+  openButton.dataset.reportAction = "print";
 
   function showExportProblem(message) {
     window.alert(message);
@@ -393,7 +385,7 @@
   async function exportReport(printAfterLoad, button) {
     if (!lastAnalysisPayload) {
       showExportProblem(
-        "Nejprve dokonči výpočet. Report lze vytvořit až z vyhodnocené platby."
+        "Nejprve dokonči výpočet podle zadaných údajů. PDF lze vytvořit až po přiřazení právních pravidel."
       );
       return;
     }
@@ -410,7 +402,7 @@
     button.disabled = true;
     button.textContent = "Připravuji report…";
     reportWindow.document.write(
-      "<!doctype html><title>TaxTreat</title><p style='font-family:system-ui;padding:32px'>Připravuji profesionální report…</p>"
+      "<!doctype html><title>TaxTreat</title><p style='font-family:system-ui;padding:32px'>Připravuji PDF report…</p>"
     );
 
     try {
@@ -433,12 +425,8 @@
     (event) => {
       event.preventDefault();
       event.stopImmediatePropagation();
-      exportReport(false, openButton);
+      exportReport(true, openButton);
     },
     true
   );
-
-  printButton.addEventListener("click", () => {
-    exportReport(true, printButton);
-  });
 })();

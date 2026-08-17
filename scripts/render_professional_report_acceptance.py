@@ -115,7 +115,7 @@ def render(output_dir: Path) -> dict:
         )
 
         body_text = page.locator("body").inner_text()
-        if "Česká srážková daň" not in body_text:
+        if "Informace k české srážkové dani" not in body_text:
             raise AssertionError("Rendered report is missing its main heading.")
         if "Právní základ" not in body_text:
             raise AssertionError("Rendered report is missing legal-source section.")

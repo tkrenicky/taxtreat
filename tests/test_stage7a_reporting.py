@@ -74,7 +74,7 @@ def test_professional_report_preserves_review_required_semantics():
         "stage6-source-release-2026-08-12.1"
     )
     assert report["disclaimer"] == DISCLAIMER
-    assert "nepředstavuje právní ani daňové poradenství" in report["disclaimer"]
+    assert "neposkytuje doporučení ani právní či daňové poradenství" in report["disclaimer"]
     assert "<!doctype html>" in payload["html"]
     assert report["report_id"] not in payload["html"]
 
@@ -130,7 +130,7 @@ def test_report_risk_labels_cover_final_and_out_of_scope():
         },
     )
 
-    assert "právních pravidel uvedených v tomto výstupu" in final["risk_assessment"]
+    assert "přiřadil právní pravidlo k údajům zadaným uživatelem" in final["risk_assessment"]
     assert "mimo aktuálně podporovaný rozsah" in (
         out_of_scope["risk_assessment"]
     )
@@ -248,8 +248,8 @@ def test_calculated_czk_report_omits_exchange_rate_details():
 
     html = render_report_html(report)
 
-    assert "Srážková daň</span><strong>150 Kč" in html
-    assert "Přepočet ČNB" not in html
+    assert "<th>Srážková daň</th><td>150 Kč</td>" in html
+    assert "Kurz ČNB" not in html
 
 
 def test_report_distinguishes_foreign_taxation_from_zero_rate():
@@ -289,8 +289,8 @@ def test_report_distinguishes_foreign_taxation_from_zero_rate():
     assert report["result"]["tax_treatment"] == (
         "exclusive_foreign_taxation"
     )
-    assert "Příjem se v České republice nezdaňuje" in html
-    assert "Česká daň k odvodu</span><strong>0 Kč" in html
-    assert "Použitá sazba</span><strong>Neuplatňuje se" in html
+    assert "pravidlo bez českého zdanění" in html
+    assert "<th>Česká daň k odvodu</th><td>0 Kč</td>" in html
+    assert "Sazba Neuplatňuje se" in html
     assert "Sazba české srážkové daně: 0" not in html
     assert "ZERO-treaty" not in html

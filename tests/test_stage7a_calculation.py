@@ -277,8 +277,8 @@ def test_api_calculates_foreign_amount_only_from_mocked_final_result(
     assert calculation["net_amount_czk"] == "22365.00"
     assert calculation["exchange_rate"]["effective_date"] == "2026-08-10"
     assert "Srážková daň" in payload["html"]
-    assert "2485" in payload["html"]
-    assert "1 EUR = 24.85 CZK" in payload["html"]
+    assert "2 485" in payload["html"]
+    assert "1 EUR = 24.85 Kč" in payload["html"]
 
 
 def test_report_exposes_non_calculation_reason():
@@ -289,7 +289,7 @@ def test_report_exposes_non_calculation_reason():
     calculation = payload["report"]["result"]["withholding_tax_calculation"]
     assert calculation["reason"] == "final_rate_unavailable"
     assert "final_rate_unavailable" not in payload["html"]
-    assert "Výsledek vyžaduje doplnění údajů" in payload["html"]
+    assert "Zadané údaje zatím neumožňují přiřadit konkrétní pravidlo" in payload["html"]
 
 
 @pytest.mark.parametrize(
