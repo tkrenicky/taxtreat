@@ -6,6 +6,8 @@ from datetime import date
 from decimal import Decimal
 from pathlib import Path
 from typing import Any, Literal
+from urllib.error import HTTPError, URLError
+from urllib.request import Request, urlopen
 
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
@@ -245,6 +247,86 @@ def readiness():
 def health_check():
     """Backward-compatible liveness alias."""
     return liveness()
+
+
+def _normalize_ares_subject(payload: dict[str, Any]) -> dict[str, Any]:
+    sidlo = payload.get("sidlo") or {}
+    data_boxes = payload.get("datoveSchranky") or []
+    data_box = ""
+    if isinstance(data_boxes, list) and data_boxes:
+        first = data_boxes[0]
+        if isinstance(first, dict):
+            data_box = str(first.get("datovaSchranka") or first.get("idDatoveSchranky") or "")
+        elif first:
+            data_box = str(first)
+
+    address = str(sidlo.get("textovaAdresa") or "").strip()
+    if not address:
+        street = str(sidlo.get("nazevUlice") or sidlo.get("nazevCastiObce") or "").strip()
+        house = str(sidlo.get("cisloDomovni") or "").strip()
+        orientation = str(sidlo.get("cisloOrientacni") or "").strip()
+        number = house + (f"/{orientation}" if orientation else "")
+        municipality = str(sidlo.get("nazevObce") or "").strip()
+        psc = str(sidlo.get("psc") or "").strip()
+        address = " ".join(part for part in (street, number) if part).strip()
+        locality = " ".join(part for part in (psc, municipality) if part).strip()
+        address = ", ".join(part for part in (address, locality) if part)
+
+    return {
+        "source": "ARES",
+        "source_url": f"https://ares.gov.cz/ekonomicke-subjekty?ico={payload.get('ico', '')}",
+        "ico": str(payload.get("ico") or ""),
+        "name": str(payload.get("obchodniJmeno") or ""),
+        "vat_id": str(payload.get("dic") or ""),
+        "address": address,
+        "legal_form": str(payload.get("pravniForma") or ""),
+        "data_box": data_box,
+        "established_at": str(payload.get("datumVzniku") or ""),
+    }
+
+
+@app.get("/company-registry/ares/{ico}")
+def company_registry_ares(ico: str):
+    normalized_ico = "".join(character for character in ico if character.isdigit())
+    if len(normalized_ico) != 8:
+        raise HTTPException(
+            status_code=422,
+            detail={"code": "INVALID_ICO", "message": "IČO musí obsahovat 8 číslic."},
+        )
+
+    url = (
+        "https://ares.gov.cz/ekonomicke-subjekty-v-be/rest/"
+        f"ekonomicke-subjekty/{normalized_ico}"
+    )
+    request = Request(
+        url,
+        headers={"Accept": "application/json", "User-Agent": "TaxTreat/0.2 (+https://taxtreat.vercel.app)"},
+    )
+    try:
+        with urlopen(request, timeout=8) as response:
+            payload = json.loads(response.read().decode("utf-8"))
+    except HTTPError as exc:
+        if exc.code == 404:
+            raise HTTPException(
+                status_code=404,
+                detail={"code": "ARES_NOT_FOUND", "message": "Subjekt s tímto IČO nebyl v ARES nalezen."},
+            ) from exc
+        raise HTTPException(
+            status_code=502,
+            detail={"code": "ARES_UNAVAILABLE", "message": "ARES nyní není dostupný."},
+        ) from exc
+    except (URLError, TimeoutError, json.JSONDecodeError) as exc:
+        raise HTTPException(
+            status_code=502,
+            detail={"code": "ARES_UNAVAILABLE", "message": "ARES nyní není dostupný."},
+        ) from exc
+
+    if not isinstance(payload, dict) or not payload.get("ico"):
+        raise HTTPException(
+            status_code=502,
+            detail={"code": "ARES_INVALID_RESPONSE", "message": "ARES vrátil neočekávanou odpověď."},
+        )
+    return _normalize_ares_subject(payload)
 
 
 @app.get("/jurisdictions")

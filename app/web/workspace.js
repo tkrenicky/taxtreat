@@ -112,8 +112,8 @@
     }
   };
   let payers = [
-    { key: "demo-cz", name: "Demo CZ s.r.o.", id: "12345678", vatId: "CZ12345678" },
-    { key: "alfa-cz", name: "Alfa Services CZ a.s.", id: "87654321", vatId: "CZ87654321" }
+    { key: "demo-cz", name: "Demo CZ s.r.o.", id: "12345678", vatId: "CZ12345678", address: "", legalForm: "", dataBox: "", establishedAt: "" },
+    { key: "alfa-cz", name: "Alfa Services CZ a.s.", id: "87654321", vatId: "CZ87654321", address: "", legalForm: "", dataBox: "", establishedAt: "" }
   ];
   let activePayerKey = "demo-cz";
   let editingPayerKey = null;
@@ -181,14 +181,65 @@
     payerForm.elements.payer_name.value = selected?.name || "";
     payerForm.elements.payer_id.value = selected?.id || "";
     payerForm.elements.payer_vat_id.value = selected?.vatId || "";
+    payerForm.elements.payer_address.value = selected?.address || "";
+    payerForm.elements.payer_legal_form.value = selected?.legalForm || "";
+    payerForm.elements.payer_data_box.value = selected?.dataBox || "";
+    payerForm.elements.payer_established_at.value = selected?.establishedAt || "";
+    document.querySelector("#ares-lookup-status").className = "lookup-status";
+    document.querySelector("#ares-lookup-status").textContent = "Po zadání 8 číslic TaxTreat načte identifikační údaje z ARES.";
     payerDialog.showModal();
   }
   document.querySelectorAll("[data-create-payer]").forEach((button) => button.addEventListener("click", () => openPayerDialog()));
   document.querySelectorAll("[data-close-payer]").forEach((button) => button.addEventListener("click", () => payerDialog.close()));
+
+  let aresLookupTimer = null;
+  async function lookupPayerFromAres() {
+    const ico = String(payerForm.elements.payer_id.value || "").replace(/\D/g, "");
+    const status = document.querySelector("#ares-lookup-status");
+    if (ico.length !== 8) {
+      status.className = "lookup-status error";
+      status.textContent = "IČO musí obsahovat přesně 8 číslic.";
+      return;
+    }
+    status.className = "lookup-status";
+    status.textContent = "Načítám údaje z ARES…";
+    try {
+      const response = await fetch(`/company-registry/ares/${ico}`, { cache: "no-store" });
+      const body = await response.json();
+      if (!response.ok) throw new Error(body.detail?.message || "ARES lookup failed");
+      payerForm.elements.payer_id.value = body.ico || ico;
+      payerForm.elements.payer_name.value = body.name || payerForm.elements.payer_name.value;
+      payerForm.elements.payer_vat_id.value = body.vat_id || payerForm.elements.payer_vat_id.value;
+      payerForm.elements.payer_address.value = body.address || "";
+      payerForm.elements.payer_legal_form.value = body.legal_form || "";
+      payerForm.elements.payer_data_box.value = body.data_box || "";
+      payerForm.elements.payer_established_at.value = body.established_at || "";
+      status.className = "lookup-status success";
+      status.textContent = "Údaje byly načteny z ARES. Před uložením je můžeš upravit.";
+    } catch (_problem) {
+      status.className = "lookup-status error";
+      status.textContent = "Údaje se z ARES nepodařilo načíst. Pole můžeš vyplnit ručně.";
+    }
+  }
+  document.querySelector("[data-ares-lookup]").addEventListener("click", lookupPayerFromAres);
+  payerForm.elements.payer_id.addEventListener("input", () => {
+    window.clearTimeout(aresLookupTimer);
+    const ico = String(payerForm.elements.payer_id.value || "").replace(/\D/g, "");
+    if (ico.length === 8) aresLookupTimer = window.setTimeout(lookupPayerFromAres, 450);
+  });
+
   payerForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const data = new FormData(payerForm);
-    const values = { name: String(data.get("payer_name")).trim(), id: String(data.get("payer_id")).trim(), vatId: String(data.get("payer_vat_id")).trim() };
+    const values = {
+      name: String(data.get("payer_name")).trim(),
+      id: String(data.get("payer_id")).trim(),
+      vatId: String(data.get("payer_vat_id")).trim(),
+      address: String(data.get("payer_address")).trim(),
+      legalForm: String(data.get("payer_legal_form")).trim(),
+      dataBox: String(data.get("payer_data_box")).trim(),
+      establishedAt: String(data.get("payer_established_at")).trim()
+    };
     if (editingPayerKey) {
       Object.assign(payers.find((item) => item.key === editingPayerKey), values);
     } else {
@@ -214,7 +265,7 @@
     const avatar = document.createElement("div"); avatar.className = "avatar"; avatar.textContent = item.name.slice(0, 1).toUpperCase();
     const copy = document.createElement("div");
     const title = document.createElement("h2"); title.textContent = item.name;
-    const meta = document.createElement("p"); meta.textContent = `Česká republika · IČO ${item.id || "neuvedeno"}${item.vatId ? ` · DIČ ${item.vatId}` : ""}`;
+    const meta = document.createElement("p"); meta.textContent = `Česká republika · IČO ${item.id || "neuvedeno"}${item.vatId ? ` · DIČ ${item.vatId}` : ""}${item.address ? ` · ${item.address}` : ""}`;
     copy.append(title, meta);
     if (compact) {
       const label = document.createElement("label");

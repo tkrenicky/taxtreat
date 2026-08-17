@@ -237,9 +237,13 @@
 
   <dialog id="payer-dialog" class="modal">
     <form method="dialog" id="payer-form"><div class="modal-head"><div><p>PLÁTCE</p><h2 id="payer-dialog-title">Upravit plátce</h2></div><button type="button" data-close-payer aria-label="Zavřít">×</button></div>
+      <label><span>IČO *</span><div class="ico-lookup"><input name="payer_id" inputmode="numeric" maxlength="8" pattern="[0-9]{8}" placeholder="např. 27082440" required><button class="secondary compact" type="button" data-ares-lookup>Načíst z ARES</button></div><small id="ares-lookup-status" class="lookup-status" aria-live="polite">Po zadání 8 číslic TaxTreat načte identifikační údaje z ARES.</small></label>
       <label><span>Název *</span><input name="payer_name" value="Demo CZ s.r.o." required></label>
-      <label><span>IČO</span><input name="payer_id" inputmode="numeric" placeholder="např. 12345678"></label>
       <label><span>DIČ</span><input name="payer_vat_id" placeholder="např. CZ12345678"></label>
+      <label><span>Sídlo</span><input name="payer_address" placeholder="Načte se z ARES"></label>
+      <label><span>Právní forma</span><input name="payer_legal_form" placeholder="Načte se z ARES"></label>
+      <label><span>Datová schránka</span><input name="payer_data_box" placeholder="Načte se z ARES"></label>
+      <label><span>Datum vzniku</span><input name="payer_established_at" type="date"></label>
       <label><span>Stát</span><input value="Česká republika" disabled></label>
       <div class="flow-actions"><button class="secondary" type="button" data-close-payer>Zrušit</button><button class="primary" type="submit">Uložit změny</button></div>
     </form>

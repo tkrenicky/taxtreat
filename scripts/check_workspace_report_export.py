@@ -140,6 +140,27 @@ def main() -> int:
                 ),
             )
 
+            page.route(
+                "**/company-registry/ares/27082440",
+                lambda route: route.fulfill(
+                    status=200,
+                    content_type="application/json",
+                    body='{"source":"ARES","ico":"27082440","name":"Google Czech Republic, s.r.o.","vat_id":"CZ27082440","address":"Stroupežnického 3191/17, 150 00 Praha 5","legal_form":"112","data_box":"amqg4i4","established_at":"2003-10-08"}',
+                ),
+            )
+            page.goto(f"{BASE_URL}/workspace-demo", wait_until="networkidle")
+            page.get_by_role("button", name="Plátci", exact=True).click()
+            page.get_by_role("button", name="Přidat plátce", exact=True).click()
+            payer_form = page.locator("#payer-form")
+            payer_form.locator('input[name="payer_id"]').fill("27082440")
+            payer_form.locator('input[name="payer_name"]').wait_for()
+            page.wait_for_function("() => document.querySelector('#payer-form input[name=payer_name]').value.includes('Google Czech')", timeout=5000)
+            if payer_form.locator('input[name="payer_address"]').input_value() != "Stroupežnického 3191/17, 150 00 Praha 5":
+                raise AssertionError("ARES lookup did not populate payer address.")
+            if payer_form.locator('input[name="payer_data_box"]').input_value() != "amqg4i4":
+                raise AssertionError("ARES lookup did not populate payer data box.")
+            page.get_by_role("button", name="Zrušit", exact=True).last.click()
+
             verify_recipient_catalog_and_entry(page)
             finish_workspace_calculation(page)
 
