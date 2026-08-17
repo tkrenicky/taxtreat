@@ -198,7 +198,7 @@ def main() -> int:
                 raise AssertionError("Report still exposes an internal report identifier.")
             if "Odborné ověření" in report_page.locator("body").inner_text():
                 raise AssertionError("Report still exposes obsolete human-review wording.")
-            if report_page.locator(".source").count() < 1:
+            if report_page.locator(".legal-source").count() < 1:
                 raise AssertionError(
                     "Opened professional report contains no legal sources."
                 )
