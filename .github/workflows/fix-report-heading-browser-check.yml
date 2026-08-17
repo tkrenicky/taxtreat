@@ -1,0 +1,33 @@
+name: Fix report heading browser check
+on:
+  push:
+    branches: [redesign/unified-product-report-20260817]
+    paths:
+      - scripts/fix_report_heading_browser_check.py
+      - .github/workflows/fix-report-heading-browser-check.yml
+permissions:
+  contents: write
+jobs:
+  fix:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: redesign/unified-product-report-20260817
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python scripts/fix_report_heading_browser_check.py
+      - shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scripts/check_workspace_report_export.py
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "Disambiguate report heading browser checks"
+            git push origin HEAD:redesign/unified-product-report-20260817
+          fi
