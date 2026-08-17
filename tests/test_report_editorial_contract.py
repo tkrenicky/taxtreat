@@ -51,7 +51,7 @@ def _sample_report():
                 "legal_layer": "treaty",
                 "legal_instrument": "CZ-AT DTT",
                 "rate": 0,
-                "excerpt": "Test treaty excerpt.",
+                "excerpt": "Článek 10\n1. Test.\n2. Test treaty excerpt with 5 procent.\n3. Other text.",
             }
         ],
         "missing_facts": [],
@@ -61,10 +61,12 @@ def _sample_report():
     }
 
 
-def test_report_uses_professional_czech_legal_reference():
+def test_report_uses_named_professional_czech_legal_reference():
     html = render_report_html(_sample_report())
     assert "Podle Smlouva" not in html
-    assert "Podle čl. 10 odst. 2 příslušné smlouvy o zamezení dvojího zdanění" in html
+    assert "Smlouva mezi Českou republikou a Rakouskem o zamezení dvojího zdanění" in html
+    assert "čl. 10 odst. 2 smlouvy mezi Českou republikou a Rakouskem" in html
+    assert "příslušné smlouvy o zamezení dvojího zdanění" not in html
     assert "Skutkový bod" not in html
     assert "skutkový bod" not in html
     assert "přiřazenému výsledku" not in html
@@ -76,18 +78,29 @@ def test_report_is_two_page_client_document():
     assert "02 / 02" in html
     assert "03 / 04" not in html
     assert "04 / 04" not in html
-    assert "Právní zdroje, lhůty a související podklady" in html
+    assert "Použité ustanovení a praktické kroky" in html
     assert "Použité předpoklady" in html
     assert "Klíčové právní reference" not in html
+    assert "Jak jsme k sazbě dospěli" not in html
 
 
-def test_report_identifies_parties_and_assumptions():
+def test_report_identifies_parties_and_marks_assumptions_as_user_supplied():
     html = render_report_html(_sample_report())
     assert "Výplata dividend: Demo CZ s.r.o. → Demo GmbH" in html
     assert "Skutečný vlastník příjmu" in html
     assert "Daňová rezidence pro účely smlouvy" in html
     assert "Vazba příjmu ke stálé provozovně v ČR" in html
     assert "Podíl na základním kapitálu plátce" in html
+    assert "zadány uživatelem a nebyly nezávisle ověřeny" in html
+
+
+def test_report_shows_only_operational_excerpt_and_net_amount():
+    html = render_report_html(_sample_report())
+    assert "2. Test treaty excerpt with <strong>5 procent</strong>." in html
+    assert "1. Test." not in html
+    assert "3. Other text." not in html
+    assert "Čistá částka po srážce" in html
+    assert "1 000 000 Kč" in html
 
 
 def test_client_report_hides_release_metadata_and_uses_one_language():
@@ -104,6 +117,15 @@ def test_client_report_hides_release_metadata_and_uses_one_language():
     assert "Report details" not in html
     assert "Výsledek k dispozici" not in html
     assert "Výsledek srážkové daně" not in html
+
+
+def test_client_report_uses_restrained_visual_contract():
+    html = render_report_html(_sample_report())
+    assert "<svg" not in html
+    assert "hero-art" not in html
+    assert "linear-gradient" not in html
+    assert "Následující údaje byly zadány uživatelem" in html
+    assert "Údaje k doplnění" not in html
 
 
 def test_automation_wording_is_not_repeated_in_report_body():
