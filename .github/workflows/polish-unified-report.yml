@@ -1,0 +1,37 @@
+name: Polish unified report
+
+on:
+  push:
+    branches:
+      - redesign/unified-product-report-20260817
+    paths:
+      - scripts/polish_unified_report.py
+      - .github/workflows/polish-unified-report.yml
+
+permissions:
+  contents: write
+
+jobs:
+  polish:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: redesign/unified-product-report-20260817
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python scripts/polish_unified_report.py
+      - shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add taxtreat/services/reporting.py
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "Polish unified report rate formatting"
+            git push origin HEAD:redesign/unified-product-report-20260817
+          fi
