@@ -4,7 +4,7 @@ import re
 from html import escape
 
 from .editorial import *
-from .editorial import render_report_html as _render_report_html
+from .editorial import _date, _income, render_report_html as _render_report_html
 
 
 _FACT_PRESENTATION = (
@@ -120,10 +120,11 @@ def _additional_sources_html(report):
         }.get(str(source.get("legal_layer") or ""), "Právní zdroj")
         article = escape(str(source.get("article") or "—"))
         paragraph = str(source.get("paragraph") or "").strip()
-        if source.get("legal_layer") in {"treaty", "protocol", "mli"}:
-            provision = f"čl. {article}"
-        else:
-            provision = f"§ {article}"
+        provision = (
+            f"čl. {article}"
+            if source.get("legal_layer") in {"treaty", "protocol", "mli"}
+            else f"§ {article}"
+        )
         if paragraph:
             provision += f" · {escape(paragraph)}"
         url = escape(str(source.get("source_url") or ""), quote=True)
@@ -148,7 +149,6 @@ def render_report_html(report):
     scope = report.get("scope") or {}
     payer, recipient = _party_names(report)
 
-    # One language throughout the client document.
     replacements = {
         "TaxTreat Analysis Summary": "Souhrn transakce",
         "Withholding Tax Result": "Výsledek srážkové daně",
@@ -181,7 +181,6 @@ def render_report_html(report):
         "Zadané údaje zatím neumožňují přiřadit konkrétní sazbu nebo režim. Údaje, které je třeba doplnit, jsou uvedeny dále v reportu.",
     )
 
-    # Client-specific title instead of a generic income/country pair.
     title = escape(_transaction_title(report))
     html = re.sub(
         r"<h1>(.*?)</h1>",
@@ -191,7 +190,6 @@ def render_report_html(report):
         flags=re.S,
     )
 
-    # Remove stale-looking legal cutoff and technical dataset/version metadata.
     html = re.sub(
         r'<div class="fact-row"><span>Právní stav</span><b>.*?</b></div>',
         "",
@@ -207,7 +205,6 @@ def render_report_html(report):
         flags=re.S,
     )
 
-    # Replace duplicated page-one source table with the assumptions actually used.
     html = re.sub(
         r'<div class="section-card" style="margin-top:5mm"><h3>Klíčové právní reference</h3>.*?</table></div>',
         _assumptions_html(report),
@@ -216,7 +213,6 @@ def render_report_html(report):
         flags=re.S,
     )
 
-    # Replace generic jurisdiction row with the actual parties.
     html = re.sub(
         r'<div class="fact-row"><span>Jurisdikce</span><b>.*?</b></div>',
         '<div class="fact-row"><span>Plátce</span>'
@@ -228,7 +224,6 @@ def render_report_html(report):
         flags=re.S,
     )
 
-    # Page two explains the logic; source documents themselves belong on page three.
     html = re.sub(
         r'<div class="section-card" style="margin-top:6mm"><h3>Právní opora výsledku</h3>.*?</div>(?=<div class="footer">)',
         "",
@@ -237,7 +232,6 @@ def render_report_html(report):
         flags=re.S,
     )
 
-    # Put the official link directly beside the selected legal provision.
     html = re.sub(
         r'(<article class="legal-source"><span class="label">.*?</span>)<h2>(.*?)</h2>(<p class="summary">.*?</p><div class="quote">.*?</div>)<div class="official">(.*?)</div>',
         r'\1<div class="legal-title-row"><h2>\2</h2><div class="official">\4</div></div>\3',
@@ -246,7 +240,6 @@ def render_report_html(report):
         flags=re.S,
     )
 
-    # The selected provision is already displayed in full; the table below is only for other sources.
     html = re.sub(
         r'<table class="source-table"><thead><tr><th>Právní vrstva</th><th>Ustanovení</th><th>Sazba</th><th>Oficiální zdroj</th></tr></thead><tbody>.*?</tbody></table>(?=<div class="footer">)',
         _additional_sources_html(report),
@@ -255,7 +248,6 @@ def render_report_html(report):
         flags=re.S,
     )
 
-    # Page-four metadata should help the client identify the transaction, not expose system releases.
     transaction_meta = (
         '<div class="meta-grid">'
         f'<div class="meta"><span>Plátce</span><b>{escape(payer)}</b></div>'
@@ -272,7 +264,6 @@ def render_report_html(report):
         flags=re.S,
     )
 
-    # Preserve canonical source text for acceptance/evidence without duplicating it visually.
     canonical_texts = []
     for source in report.get("official_sources") or []:
         excerpt = str(source.get("excerpt") or "")
@@ -317,7 +308,6 @@ def render_report_html(report):
             1,
         )
 
-    # Slightly denser A4 composition while keeping the supplied visual language.
     visual_overrides = (
         ".brand{font-family:Georgia,'Times New Roman',serif;font-size:16px;letter-spacing:-.035em}"
         ".page{padding:6mm;background:#f5f7fb}"
@@ -325,40 +315,26 @@ def render_report_html(report):
         ".header{height:9mm;margin-bottom:3.5mm}"
         ".hero{margin:-1mm -10mm 5mm;padding:6mm 10mm;background:linear-gradient(105deg,#fff4dc 0%,#fff9ed 64%,#eef4ff 100%);border-radius:0}"
         ".hero h1,.section-head h2,.section-title-row h2,.legal-source h2,.section-card h3,.facts-card h3{font-family:Georgia,'Times New Roman',serif;letter-spacing:-.025em}"
-        ".hero h1{color:#171717;font-size:25px}"
-        ".hero p{font-size:8px;line-height:1.4}"
-        ".hero-art svg{max-height:34mm}"
+        ".hero h1{color:#171717;font-size:25px}.hero p{font-size:8px;line-height:1.4}.hero-art svg{max-height:34mm}"
         ".section-title-row{margin-bottom:3mm}.overview-grid{gap:3.5mm}"
-        ".result-card{padding:4mm;background:#fffaf0;border-color:#eee1c3}"
-        ".facts-card{padding:3.8mm;background:#f3f7ff;border-color:#dfe8fb}"
-        ".fact-row{padding:2.1mm 0}.basis-line{padding:2.1mm 0}"
-        ".section-card{padding:3.8mm;border-radius:4mm}"
-        ".assumptions-card{margin-top:3.5mm;background:#fffdf8}"
-        ".assumptions-head{display:flex;align-items:baseline;justify-content:space-between;gap:5mm;margin-bottom:2mm}"
-        ".assumptions-head p{margin:0;color:var(--muted);font-size:7px}"
-        ".assumptions-grid{display:grid;grid-template-columns:1fr 1fr;column-gap:6mm}"
+        ".result-card{padding:4mm;background:#fffaf0;border-color:#eee1c3}.facts-card{padding:3.8mm;background:#f3f7ff;border-color:#dfe8fb}"
+        ".fact-row{padding:2.1mm 0}.basis-line{padding:2.1mm 0}.section-card{padding:3.8mm;border-radius:4mm}"
+        ".assumptions-card{margin-top:3.5mm;background:#fffdf8}.assumptions-head{display:flex;align-items:baseline;justify-content:space-between;gap:5mm;margin-bottom:2mm}"
+        ".assumptions-head p{margin:0;color:var(--muted);font-size:7px}.assumptions-grid{display:grid;grid-template-columns:1fr 1fr;column-gap:6mm}"
         ".assumption-row{display:flex;justify-content:space-between;gap:4mm;padding:1.7mm 0;border-top:1px solid var(--line);font-size:7.2px}"
         ".assumption-row span{color:var(--muted)}.assumption-row b{color:var(--ink);text-align:right}"
-        ".section-head{margin:0 -2mm 4mm;padding:4mm 5mm;background:#eef4ff}"
-        ".page:nth-of-type(3) .section-head{background:#fff4dc}.page:nth-of-type(4) .section-head{background:#fff0eb}"
+        ".section-head{margin:0 -2mm 4mm;padding:4mm 5mm;background:#eef4ff}.page:nth-of-type(3) .section-head{background:#fff4dc}.page:nth-of-type(4) .section-head{background:#fff0eb}"
         ".calc-grid{margin:3.5mm 0}.calc{padding:3mm}.path{margin-top:3mm}.path-step{display:block!important;width:100%!important;padding:0 0 3.8mm!important}"
-        ".path-step>div{display:block!important;width:100%!important}.path-step p{max-width:150mm!important;margin-top:.8mm}"
-        ".final-rate{margin-top:2mm;padding:3mm 4mm}"
+        ".path-step>div{display:block!important;width:100%!important}.path-step p{max-width:150mm!important;margin-top:.8mm}.final-rate{margin-top:2mm;padding:3mm 4mm}"
         ".sources-layout{grid-template-columns:36mm 1fr;gap:3mm}.source-tab{padding:2.8mm}.legal-source{padding:3.5mm;background:#fffdfa;border-color:#e8e3da}"
-        ".legal-title-row{display:flex;align-items:flex-start;justify-content:space-between;gap:6mm;margin:1.5mm 0 1mm}"
-        ".legal-title-row h2{margin:0}.legal-title-row .official{flex:0 0 auto;margin:0;padding:0;border:0;font-size:7px;white-space:nowrap}"
-        ".quote{margin-top:3mm;padding:3mm;background:#f7f4ee;max-height:77mm}"
-        ".additional-sources{margin-top:4mm}.additional-sources h3{margin-bottom:1mm}"
-        ".deadlines{margin:3.5mm 0 4.5mm}.deadline{padding:3mm}.two-col{gap:3mm}"
-        ".meta-grid{margin-top:4mm}.meta{padding:2.3mm}.disclaimer{margin-top:4mm;padding-top:3mm}"
-        ".page:nth-of-type(4) .deadline:nth-child(2n){background:#fff8e5}.page:nth-of-type(4) .deadline:nth-child(3n){background:#f2f6ff}"
-        ".source-tab.selected{background:#eef4ff;border-left-color:#1557d6}"
-        ".kicker{color:#1557d6}.result-caption{display:none}"
-        ".calculation-detail-wrap{margin:3mm 0 3.5mm;padding:3mm;border:1px solid var(--line);border-radius:4mm;background:#fff9ec}"
-        ".calculation-detail{width:100%;margin-top:1.5mm;border-collapse:collapse;font-size:7.2px}"
-        ".calculation-detail th,.calculation-detail td{padding:1.6mm 0;border-bottom:1px solid var(--line);text-align:left}"
-        ".calculation-detail th{color:var(--muted);font-weight:700}.calculation-detail td{text-align:right;color:var(--ink);font-weight:800}"
-        ".calculation-detail tr:last-child th,.calculation-detail tr:last-child td{border-bottom:0}"
+        ".legal-title-row{display:flex;align-items:flex-start;justify-content:space-between;gap:6mm;margin:1.5mm 0 1mm}.legal-title-row h2{margin:0}"
+        ".legal-title-row .official{flex:0 0 auto;margin:0;padding:0;border:0;font-size:7px;white-space:nowrap}.quote{margin-top:3mm;padding:3mm;background:#f7f4ee;max-height:77mm}"
+        ".additional-sources{margin-top:4mm}.additional-sources h3{margin-bottom:1mm}.deadlines{margin:3.5mm 0 4.5mm}.deadline{padding:3mm}.two-col{gap:3mm}"
+        ".meta-grid{margin-top:4mm}.meta{padding:2.3mm}.disclaimer{margin-top:4mm;padding-top:3mm}.page:nth-of-type(4) .deadline:nth-child(2n){background:#fff8e5}"
+        ".page:nth-of-type(4) .deadline:nth-child(3n){background:#f2f6ff}.source-tab.selected{background:#eef4ff;border-left-color:#1557d6}.kicker{color:#1557d6}"
+        ".calculation-detail-wrap{margin:3mm 0 3.5mm;padding:3mm;border:1px solid var(--line);border-radius:4mm;background:#fff9ec}.calculation-detail{width:100%;margin-top:1.5mm;border-collapse:collapse;font-size:7.2px}"
+        ".calculation-detail th,.calculation-detail td{padding:1.6mm 0;border-bottom:1px solid var(--line);text-align:left}.calculation-detail th{color:var(--muted);font-weight:700}"
+        ".calculation-detail td{text-align:right;color:var(--ink);font-weight:800}.calculation-detail tr:last-child th,.calculation-detail tr:last-child td{border-bottom:0}"
     )
     html = html.replace("</style>", visual_overrides + "</style>", 1)
 
