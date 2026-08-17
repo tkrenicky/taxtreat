@@ -181,11 +181,21 @@ def render_report_html(report):
         "Zadané údaje zatím neumožňují přiřadit konkrétní pravidlo. Údaje, které je třeba doplnit, jsou uvedeny dále v reportu.",
     )
 
-    # Keep one unambiguous page-three section label and retain the information-only
-    # semantic contract without reintroducing awkward client-facing wording.
+    # Page one uses a descriptive label; page three owns the single canonical
+    # "Právní základ" section label used by both the client and acceptance flow.
     html = html.replace(
         "<span>Právní základ</span>",
         "<span>Použitý právní základ</span>",
+        1,
+    )
+    html = html.replace(
+        '<span class="kicker">Právní základ</span>',
+        "",
+        1,
+    )
+    html = html.replace(
+        '<div class="sources-layout">',
+        '<span class="kicker legal-basis-kicker">Právní základ</span><div class="sources-layout">',
         1,
     )
     html = html.replace(
@@ -345,6 +355,7 @@ def render_report_html(report):
         ".additional-sources{margin-top:4mm}.additional-sources h3{margin-bottom:1mm}.deadlines{margin:3.5mm 0 4.5mm}.deadline{padding:3mm}.two-col{gap:3mm}"
         ".meta-grid{margin-top:4mm}.meta{padding:2.3mm}.disclaimer{margin-top:4mm;padding-top:3mm}.page:nth-of-type(4) .deadline:nth-child(2n){background:#fff8e5}"
         ".page:nth-of-type(4) .deadline:nth-child(3n){background:#f2f6ff}.source-tab.selected{background:#eef4ff;border-left-color:#1557d6}.kicker{color:#1557d6}"
+        ".legal-basis-kicker{display:block;margin:3mm 0 2mm}"
         ".calculation-detail-wrap{margin:3mm 0 3.5mm;padding:3mm;border:1px solid var(--line);border-radius:4mm;background:#fff9ec}.calculation-detail{width:100%;margin-top:1.5mm;border-collapse:collapse;font-size:7.2px}"
         ".calculation-detail th,.calculation-detail td{padding:1.6mm 0;border-bottom:1px solid var(--line);text-align:left}.calculation-detail th{color:var(--muted);font-weight:700}"
         ".calculation-detail td{text-align:right;color:var(--ink);font-weight:800}.calculation-detail tr:last-child th,.calculation-detail tr:last-child td{border-bottom:0}"
