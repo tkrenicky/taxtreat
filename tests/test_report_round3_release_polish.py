@@ -95,6 +95,6 @@ def test_round3_flow_is_timeline_without_duplicate_principle():
     assert soup.select_one(".flow") is not None
     assert len(soup.select(".flow-node")) == 5
     assert soup.select_one(".flow-principle") is None
-    assert "display: flex" in html
     assert ".flow::before" in html
     assert "border-radius: 50%" in html
+    assert "Výsledek" in soup.select(".flow-node")[-1].get_text(" ", strip=True)
