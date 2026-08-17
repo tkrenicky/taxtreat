@@ -471,7 +471,7 @@
     } catch (_problem) {
       clientAnswers.exchangeRate = null;
       exchangeRateInput.value = "";
-      showFxStatus("Kurz ČNB se nepodařilo načíst. Po vyhodnocení bude možné zadat kurz ručně; rozhodné datum ani odkaz se znovu zadávat nebudou.", "warning");
+      showFxStatus("Kurz ČNB se nepodařilo načíst. Po doplnění údajů bude možné zadat kurz ručně; rozhodné datum ani odkaz se znovu zadávat nebudou.", "warning");
       return null;
     }
   }
@@ -564,7 +564,7 @@
     pendingQuestions = [];
     questionsRoot.replaceChildren();
     followUp.hidden = true;
-    setText("#workspace-submit", "Vyhodnotit vstupní údaje →");
+    setText("#workspace-submit", "Zobrazit pravidla a výpočet →");
     if (incomeType === "dividend") updateDividendProgress();
   }
   form.elements.income_type.addEventListener("change", renderTransactionFacts);
@@ -628,7 +628,7 @@
     pendingQuestions.forEach((question) => questionsRoot.append(createQuestion(question)));
     followUp.hidden = pendingQuestions.length === 0;
     setText("#workspace-question-count", `${pendingQuestions.length} ${pendingQuestions.length === 1 ? "údaj" : "údaje"}`);
-    setText("#workspace-submit", pendingQuestions.length ? "Doplnit údaje a dokončit kontrolu →" : "Vyhodnotit vstupní údaje →");
+    setText("#workspace-submit", pendingQuestions.length ? "Doplnit údaje a aktualizovat výpočet →" : "Zobrazit pravidla a výpočet →");
     if (pendingQuestions.length) followUp.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
@@ -830,10 +830,10 @@
     if (!schedule) return;
     setText("#workspace-reference-date", formatCzechDate(schedule.reference_date));
     const nonTaxing = ["exclusive_foreign_taxation", "domestic_exemption"].includes(analysis.tax_treatment);
-    setText("#workspace-remittance-deadline", schedule.tax_remittance_deadline ? formatCzechDate(schedule.tax_remittance_deadline) : analysis.status === "FINAL" && nonTaxing ? "Daň se neodvádí" : "Po dokončení posouzení");
-    setText("#workspace-notification-deadline", schedule.notification_deadline ? formatCzechDate(schedule.notification_deadline) : schedule.notification_required === false ? "Oznámení se nepodává" : "Po dokončení posouzení");
+    setText("#workspace-remittance-deadline", schedule.tax_remittance_deadline ? formatCzechDate(schedule.tax_remittance_deadline) : analysis.status === "FINAL" && nonTaxing ? "Daň se neodvádí" : "Po doplnění údajů");
+    setText("#workspace-notification-deadline", schedule.notification_deadline ? formatCzechDate(schedule.notification_deadline) : schedule.notification_required === false ? "Oznámení se nepodává" : "Po doplnění údajů");
     const note = document.querySelector("#workspace-deadline-note");
-    if (schedule.status !== "READY") note.textContent = "Lhůty nelze uzavřít, dokud není určeno konečné daňové zacházení nebo měsíční úhrn rozhodný pro oznamovací povinnost.";
+    if (schedule.status !== "READY") note.textContent = "Lhůty nelze uzavřít, dokud zadané údaje neumožní přiřadit příslušné pravidlo nebo měsíční úhrn rozhodný pro oznamovací povinnost.";
     else if (schedule.notification_regime === "exempt_or_treaty_non_taxable_annual") note.textContent = "Česká daň se při tomto daňovém zacházení neodvádí. Oznámení podle § 38da zákona č. 586/1992 Sb., o daních z příjmů se u dividend a licenčních poplatků podává do 31. ledna následujícího roku.";
     else if (schedule.notification_regime === "non_taxing_interest_above_monthly_threshold_annual") note.textContent = `Česká daň se neodvádí. Měsíční úhrn úroků stejného druhu činí ${money(schedule.monthly_same_type_income_czk)} a přesáhl 300 000 Kč; oznámení podle § 38da zákona č. 586/1992 Sb., o daních z příjmů se podává do uvedeného data.`;
     else if (schedule.notification_regime === "non_taxing_interest_monthly_threshold_not_exceeded") note.textContent = `Česká daň se neodvádí. Měsíční úhrn úroků stejného druhu činí ${money(schedule.monthly_same_type_income_czk)} a nepřesáhl 300 000 Kč; oznamovací povinnost podle § 38da zákona č. 586/1992 Sb., o daních z příjmů proto nevzniká.`;
@@ -859,6 +859,31 @@
     return [...unique.values()];
   }
 
+  function informationalRuleStatement(analysis) {
+    const selected = selectedRuleId(analysis);
+    const citation = [...(analysis.legal_path || analysis.citations || [])]
+      .find((item) => String(item.rule_id || "") === selected);
+    let reference = "použitého právního pravidla";
+    if (citation) {
+      const paragraph = citation.paragraph ? `, ${citation.paragraph}` : "";
+      reference = ["treaty", "protocol", "mli"].includes(String(citation.legal_layer || ""))
+        ? `článku ${citation.article || "—"}${paragraph} smlouvy o zamezení dvojího zdanění`
+        : `§ ${citation.article || "—"}${paragraph} zákona č. 586/1992 Sb., o daních z příjmů`;
+    }
+    const treatment = analysis.tax_treatment || analysis.candidate_tax_treatment;
+    if (treatment === "exclusive_foreign_taxation") {
+      return `Podle ${reference} je v TaxTreat při zadaných údajích přiřazeno pravidlo, podle něhož se příjem v České republice nezdaňuje.`;
+    }
+    if (treatment === "domestic_exemption") {
+      return `Podle ${reference} je v TaxTreat při zadaných údajích přiřazeno pravidlo osvobození.`;
+    }
+    const rate = analysis.rate ?? analysis.candidate_rate;
+    if (rate !== null && rate !== undefined) {
+      return `Podle ${reference} je v TaxTreat při zadaných údajích přiřazena sazba ${new Intl.NumberFormat("cs-CZ", { maximumFractionDigits: 2 }).format(Number(rate))} %.`;
+    }
+    return `Zadané údaje zatím neumožňují v TaxTreat přiřadit konkrétní právní pravidlo a sazbu.`;
+  }
+
   function renderResult(payload, response) {
     const analysis = response.analysis;
     const calculation = analysis.withholding_tax_calculation;
@@ -866,7 +891,7 @@
     const reviewReasons = response.intake?.review_reasons || [];
     const reviewItems = concreteReviewItems(analysis, payload, professional, reviewReasons);
     const status = document.querySelector("#workspace-result-status");
-    status.textContent = analysis.status === "FINAL" ? "VÝSLEDEK DOKONČEN" : "ODBORNÉ OVĚŘENÍ";
+    status.textContent = analysis.status === "FINAL" ? "VÝPOČET DOKONČEN" : "CHYBÍ ÚDAJE PRO PŘIŘAZENÍ PRAVIDLA";
     status.className = analysis.status === "FINAL" ? "badge" : "badge warning";
     const grossCzk = calculationValue(calculation, "gross_amount_czk", "tax_base_czk");
     const taxCzk = calculationValue(calculation, "withholding_tax_czk", "withholding_tax_czk");
@@ -876,23 +901,23 @@
     setText("#workspace-tax-label", nonTaxing ? "Česká daň k odvodu" : "Srážková daň v CZK");
     setText("#workspace-tax-row-label", nonTaxing ? "Česká daň k odvodu" : "Srážková daň");
     setText("#workspace-tax", calculation ? money(taxCzk) : "—");
-    setText("#workspace-rate", treatment === "exclusive_foreign_taxation" ? `Zdanění pouze ve státě rezidence příjemce (${countryName(recipient.country)})` : treatment === "domestic_exemption" ? "Příjem je v České republice osvobozen" : analysis.rate === null ? analysis.candidate_rate === null ? "Sazbu nelze určit bez doplnění potřebných podmínek" : `Identifikovaná sazba: ${analysis.candidate_rate} %` : `${analysis.rate} % z daňového základu`);
+    setText("#workspace-rate", treatment === "exclusive_foreign_taxation" ? `Zdanění pouze ve státě rezidence příjemce (${countryName(recipient.country)})` : treatment === "domestic_exemption" ? "Příjem je v České republice osvobozen" : analysis.rate === null ? analysis.candidate_rate === null ? "Sazbu nelze určit bez doplnění potřebných podmínek" : `Sazba přiřazená podle dostupných údajů: ${analysis.candidate_rate} %` : `${analysis.rate} % z daňového základu`);
     setText("#workspace-gross", grossCzk !== null ? money(grossCzk) : payload.transaction_amount.currency === "CZK" ? money(payload.transaction_amount.amount) : `${payload.transaction_amount.amount} ${payload.transaction_amount.currency}`);
     setText("#workspace-tax-row", calculation ? money(taxCzk) : "—");
     setText("#workspace-net", calculation ? money(netCzk) : "—");
-    setText("#workspace-reason", resultExplanation(analysis, payload));
+    setText("#workspace-reason", informationalRuleStatement(analysis));
     const actions = document.querySelector("#workspace-actions"); actions.replaceChildren();
     reviewItems.forEach((item) => actions.append(item));
     setText("#workspace-action-count", String(reviewItems.length));
     if (!reviewItems.length) {
       const item = document.createElement("div"); item.className = "action-item complete";
-      const strong = document.createElement("strong"); strong.textContent = "Bez otevřených odborných položek";
-      const small = document.createElement("small"); small.textContent = "Zadané údaje postačují pro dokončení výpočtu.";
+      const strong = document.createElement("strong"); strong.textContent = "Všechny údaje potřebné pro přiřazení pravidla jsou zadány";
+      const small = document.createElement("small"); small.textContent = "TaxTreat může z uvedených údajů zobrazit odpovídající pravidlo a mechanický výpočet.";
       item.append(strong, small); actions.append(item);
     }
     const citations = document.querySelector("#workspace-citations"); citations.replaceChildren();
     decisiveCitations(analysis).forEach((citation, index) => citations.append(citationCard(citation, analysis, index + 1)));
-    if (!citations.children.length) { const p = document.createElement("p"); p.textContent = "Pro tento výsledek nebyl vrácen konkrétní odkaz na právní zdroj."; citations.append(p); }
+    if (!citations.children.length) { const p = document.createElement("p"); p.textContent = "Pro tento informační výstup nebyl vrácen konkrétní odkaz na právní zdroj."; citations.append(p); }
     renderComplianceSchedule(analysis);
     showStep(4);
   }
@@ -971,7 +996,7 @@
     try {
       const response = await fetch("/analysis/intake", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       const body = await response.json();
-      if (!response.ok) throw new Error(body.detail?.code || "Výpočet se nepodařilo dokončit.");
+      if (!response.ok) throw new Error(body.detail?.code || "Informační výpočet se nepodařilo dokončit.");
       const clientQuestions = (body.intake?.questions || []).filter((question) => question.client_answerable);
       lastPayload = payload;
       if (clientQuestions.length) renderClientQuestions(clientQuestions);

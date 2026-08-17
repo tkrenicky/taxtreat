@@ -10,9 +10,12 @@ from typing import Any, Mapping
 REPORT_SCHEMA_VERSION = 3
 LEGAL_DATA_CUTOFF = "2026-08-12"
 DISCLAIMER = (
-    "Výstup vychází ze zadaných údajů a z právních pravidel evidovaných "
-    "v TaxTreat. Slouží jako pracovní podklad a nepředstavuje právní ani "
-    "daňové poradenství nebo závazné stanovisko správce daně."
+    "TaxTreat je informační nástroj. Automatizovaně zobrazuje informace "
+    "odvozené z uvedených právních zdrojů a z údajů zadaných uživatelem. "
+    "Neprovádí individuální právní ani daňové posouzení, neposkytuje "
+    "doporučení ani právní či daňové poradenství a neurčuje postup uživatele. "
+    "Uživatel odpovídá za správnost vstupních údajů a za vlastní posouzení "
+    "použitelnosti zobrazených informací."
 )
 
 
@@ -80,7 +83,7 @@ def build_professional_report(
     elif status == "FINAL" and treatment == "domestic_exemption":
         risk = "Příjem je podle použitého vnitrostátního pravidla osvobozen."
     elif status == "FINAL":
-        risk = "Výsledek vychází ze zadaných údajů a z právních pravidel uvedených v tomto výstupu."
+        risk = "TaxTreat přiřadil právní pravidlo k údajům zadaným uživatelem."
     elif status == "OUT_OF_SCOPE":
         risk = "Transakce je mimo aktuálně podporovaný rozsah."
     else:
@@ -181,32 +184,28 @@ _FACT_LABELS = {
 }
 
 
-def _result_copy(result: Mapping[str, Any]) -> tuple[str, str]:
+def _result_copy(result: Mapping[str, Any], source_title: str | None = None) -> tuple[str, str]:
+    reference = source_title or "použité právní pravidlo"
     treatment = result.get("tax_treatment")
     if treatment == "exclusive_foreign_taxation":
         return (
-            "Příjem se v České republice nezdaňuje",
-            "Podle použitého smluvního pravidla se příjem zdaňuje pouze "
-            "ve státě daňové rezidence příjemce.",
+            f"Podle {reference} je při zadaných údajích přiřazeno pravidlo bez českého zdanění",
+            "TaxTreat automatizovaně přiřadil právní pravidlo k údajům zadaným uživatelem; nejde o individuální daňové posouzení.",
         )
     if treatment == "domestic_exemption":
         return (
-            "Příjem je v České republice osvobozen",
-            "Podmínky použitého vnitrostátního osvobození byly podle "
-            "zadaných údajů splněny.",
+            f"Podle {reference} je při zadaných údajích přiřazeno pravidlo osvobození",
+            "TaxTreat automatizovaně přiřadil právní pravidlo k údajům zadaným uživatelem; nejde o individuální daňové posouzení.",
         )
     if result.get("status") == "FINAL" and result.get("rate") is not None:
         return (
-            f"Sazba české srážkové daně: {_format_rate(result['rate'])}",
-            "Sazba byla určena z uvedených údajů a použitých právních "
-            "pravidel.",
+            f"Podle {reference} je při zadaných údajích přiřazena sazba {_format_rate(result['rate'])}",
+            "Sazba je zobrazena jako automatizované přiřazení pravidla k zadaným údajům, nikoli jako daňové doporučení nebo stanovisko.",
         )
     return (
-        "Výsledek vyžaduje doplnění údajů",
-        "Bez uzavření položek uvedených v části Otevřené body nemá být "
-        "výsledek použit pro splnění daňové povinnosti.",
+        "Zadané údaje zatím neumožňují přiřadit konkrétní pravidlo",
+        "Po doplnění otevřených údajů TaxTreat znovu zobrazí pravidla odpovídající zadaným skutečnostem.",
     )
-
 
 def _source_title(source: Mapping[str, Any]) -> str:
     article = escape(str(source.get("article") or "—"))
@@ -262,7 +261,6 @@ def render_report_html(report: Mapping[str, Any]) -> str:
     result = report["result"]
     calculation = result.get("withholding_tax_calculation")
     schedule = result.get("withholding_compliance_schedule") or {}
-    conclusion, conclusion_detail = _result_copy(result)
     treatment = result.get("tax_treatment")
     non_taxing = treatment in {"exclusive_foreign_taxation", "domestic_exemption"}
 
@@ -348,11 +346,11 @@ blockquote{{margin:12px 0 0;padding:14px 16px;border-left:3px solid #9ebcb1;back
 </style></head><body><article class="report">
 <header class="masthead"><div><div class="brand"><span class="brand-mark">TT</span>TaxTreat</div><small>Analýza české srážkové daně</small></div><div class="cutoff">Právní stav<br><strong>{_report_date(report.get('legal_data_cutoff'))}</strong></div></header>
 <main>
-<div class="hero"><div><div class="eyebrow">Daňový report</div><h1>Posouzení srážkové daně</h1><p>Vyhodnocení konkrétní přeshraniční platby z České republiky na základě zadaných skutkových údajů a relevantních právních pravidel.</p></div><aside class="result-card"><span>Závěr</span><strong>{escape(conclusion)}</strong><p>{escape(conclusion_detail)}</p></aside></div>
+<div class="hero"><div><div class="eyebrow">Informační výstup</div><h1>Informace k české srážkové dani</h1><p>Automatizovaný přehled právních pravidel a mechanického výpočtu vztahujícího se k údajům zadaným uživatelem.</p></div><aside class="result-card"><span>Pravidlo přiřazené k zadaným údajům</span><strong>{escape(conclusion)}</strong><p>{escape(conclusion_detail)}</p></aside></div>
 <div class="transaction-strip"><div><span>Zdroj</span><strong>{escape(str(scope.get('source_country') or '—'))}</strong></div><div><span>Příjemce</span><strong>{escape(str(scope.get('recipient_country') or '—'))}</strong></div><div><span>Příjem</span><strong>{escape(_income_type_label(scope.get('income_type')))}</strong></div><div><span>Datum</span><strong>{_report_date(scope.get('transaction_date'))}</strong></div><div><span>Částka</span><strong>{amount_copy}</strong></div></div>
 <section><h2>Výpočet daně</h2>{calculation_html}</section>
-<section><h2>Odůvodnění výsledku</h2><div class="summary-box"><p>{why_result}</p></div></section>
-<section><h2>Podmínky a doporučené podklady</h2><div class="two-col"><div><h3>Otevřené skutkové údaje</h3><ul>{missing_items}</ul></div><div><h3>Dokumentace k transakci</h3><ul>{documents}</ul></div></div></section>
+<section><h2>Použité právní pravidlo</h2><div class="summary-box"><p>{why_result}</p></div></section>
+<section><h2>Zadané podmínky a související podklady</h2><div class="two-col"><div><h3>Otevřené skutkové údaje</h3><ul>{missing_items}</ul></div><div><h3>Související podklady</h3><ul>{documents}</ul></div></div></section>
 <section><h2>Daňový kalendář</h2><div class="deadlines">{compliance_html}</div></section>
 <section><h2>Právní základ</h2>{''.join(source_items)}</section>
 </main><footer>{escape(str(report['disclaimer']))}</footer></article></body></html>'''

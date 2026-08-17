@@ -42,8 +42,8 @@ def test_workspace_completed_reviews_and_dashboard_metrics_are_data_bound():
 
     assert "renderReviewHistory" in asset
     assert "renderDashboardMetrics" in asset
-    assert "Dokončené kontroly" in asset
-    assert "výsledků s otevřenými podmínkami" in asset
+    assert "Dokončené výpočty" in asset
+    assert "výpočtů s chybějícími údaji" in asset
     assert "dataset.reviewReportId" in asset
     assert "Tisk / PDF" in asset
     assert "statusNeedsReview" in asset

@@ -231,7 +231,7 @@
         const title = document.createElement("strong");
         title.textContent = "Zatím bez výstupů";
         const copy = document.createElement("p");
-        copy.textContent = "Po dokončení kontroly platby se zde objeví její výsledek.";
+        copy.textContent = "Po dokončení výpočtu se zde zobrazí informační výstup podle zadaných údajů.";
         empty.append(title, copy);
         dashboardCard.append(empty);
       } else {
@@ -249,7 +249,7 @@
         const title = document.createElement("strong");
         title.textContent = "Zatím bez výstupů";
         const copy = document.createElement("p");
-        copy.textContent = "Výstup vznikne po dokončení kontroly platby.";
+        copy.textContent = "Výstup vznikne po dokončení informačního výpočtu.";
         empty.append(title, copy);
         outputsCard.append(empty);
       } else {
@@ -277,7 +277,7 @@
       const empty = document.createElement("div");
       empty.className = "empty";
       const title = document.createElement("strong");
-      title.textContent = "Zatím bez kontrol plateb";
+      title.textContent = "Zatím bez výpočtů";
       const copy = document.createElement("p");
       copy.textContent = "Vyber příjemce a zadej údaje o první transakci.";
       empty.append(title, copy);
@@ -288,7 +288,7 @@
     const head = document.createElement("div");
     head.className = "card-head";
     const heading = document.createElement("h2");
-    heading.textContent = "Dokončené kontroly";
+    heading.textContent = "Dokončené výpočty";
     const count = document.createElement("span");
     count.textContent = String(outputHistory.length);
     head.append(heading, count);
@@ -310,7 +310,7 @@
       const label = completed.querySelector("span");
       const value = completed.querySelector("strong");
       const note = completed.querySelector("small");
-      if (label) label.textContent = "Dokončené kontroly";
+      if (label) label.textContent = "Dokončené výpočty";
       if (value) value.textContent = String(outputHistory.length);
       if (note) note.textContent = "v této relaci stránky";
     }
@@ -319,7 +319,7 @@
       const value = attention.querySelector("strong");
       const note = attention.querySelector("small");
       if (value) value.textContent = String(attentionCount);
-      if (note) note.textContent = "výsledků s otevřenými podmínkami";
+      if (note) note.textContent = "výpočtů s chybějícími údaji";
     }
   }
 
@@ -385,7 +385,7 @@
   async function exportReport(printAfterLoad, button) {
     if (!lastAnalysisPayload) {
       showExportProblem(
-        "Nejprve dokonči výpočet. Report lze vytvořit až z vyhodnocené platby."
+        "Nejprve dokonči výpočet podle zadaných údajů. PDF lze vytvořit až po přiřazení právních pravidel."
       );
       return;
     }

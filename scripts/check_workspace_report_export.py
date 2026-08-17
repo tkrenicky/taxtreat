@@ -202,8 +202,8 @@ def main() -> int:
                 print_button.click()
             print_page = print_popup_info.value
             print_page.wait_for_load_state("domcontentloaded")
-            print_page.get_by_text("Posouzení srážkové daně", exact=True).wait_for()
-            print_page.get_by_text("Odůvodnění výsledku", exact=True).wait_for()
+            print_page.get_by_text("Informace k české srážkové dani", exact=True).wait_for()
+            print_page.get_by_text("Použité právní pravidlo", exact=True).wait_for()
             print_page.get_by_text("Právní základ", exact=True).wait_for()
             report_body = print_page.locator("body").inner_text()
             if "TAXTREAT-" in report_body:
@@ -237,7 +237,7 @@ def main() -> int:
                     "button", name="Tisk / PDF"
                 ).click()
             stored_page = stored_popup_info.value
-            stored_page.get_by_text("Posouzení srážkové daně", exact=True).wait_for()
+            stored_page.get_by_text("Informace k české srážkové dani", exact=True).wait_for()
             stored_page.close()
             if len(report_requests) != requests_before_reopen:
                 raise AssertionError(
@@ -259,7 +259,7 @@ def main() -> int:
                 raise AssertionError(
                     "Completed payment review is missing its transaction summary."
                 )
-            if "Dokončené kontroly" not in reviews_view.inner_text():
+            if "Dokončené výpočty" not in reviews_view.inner_text():
                 raise AssertionError("Reviews view did not leave its empty state.")
 
             review_status = review_rows.first.locator(
@@ -289,7 +289,7 @@ def main() -> int:
             metrics = dashboard.locator(".dashboard-metrics > article")
             completed_metric = metrics.nth(2)
             attention_metric = metrics.nth(3)
-            if completed_metric.locator("span").inner_text() != "Dokončené kontroly":
+            if completed_metric.locator("span").inner_text() != "Dokončené výpočty":
                 raise AssertionError("Dashboard completed-review metric is not data-bound.")
             if completed_metric.locator("strong").inner_text() != "1":
                 raise AssertionError("Dashboard completed-review count is incorrect.")
