@@ -526,6 +526,7 @@
       const printOutput = () => {
         if (printed) return;
         printed = true;
+        reportWindow.__taxtreatPrintCalled = true;
         reportWindow.focus();
         reportWindow.print();
       };
