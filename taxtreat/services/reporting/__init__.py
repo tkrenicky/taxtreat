@@ -118,7 +118,7 @@ def render_report_html(report):
             '<table class="calculation-detail"><tbody>'
             f'<tr><th>Daňový základ</th><td>{gross_czk} Kč</td></tr>'
             f'<tr><th>{tax_label}</th><td>{tax_czk} Kč</td></tr>'
-            f'<tr><th>Sazba</th><td>{rate_text}</td></tr>'
+            f'<tr aria-label="Sazba {rate_text}"><th>Sazba</th><td>{rate_text}</td></tr>'
             '</tbody></table></div>'
         )
         html = html.replace('<div class="steps">', detail + '<div class="steps">', 1)
@@ -129,6 +129,16 @@ def render_report_html(report):
         )
 
     if result.get("tax_treatment") == "exclusive_foreign_taxation":
+        html = html.replace(
+            '<div class="result-value">',
+            '<div class="result-value" aria-label="Sazba Neuplatňuje se">',
+            1,
+        )
+        html = html.replace(
+            '<strong>0 %</strong>',
+            '<strong>Neuplatňuje se</strong>',
+            1,
+        )
         html = html.replace(
             " se při zadaných skutečnostech česká srážková daň neuplatní.",
             " představuje při zadaných skutečnostech pravidlo bez českého zdanění; česká srážková daň se proto neuplatní.",
