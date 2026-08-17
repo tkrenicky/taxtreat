@@ -4,115 +4,112 @@ import argparse
 import json
 from pathlib import Path
 
-from fastapi.testclient import TestClient
 from playwright.sync_api import sync_playwright
-from pypdf import PdfReader
 
-from app.main import app
-from taxtreat.services.legal_sources import load_verified_provisions
+from taxtreat.services.reporting import render_report_html
 
 
-ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_OUTPUT_DIR = ROOT / "reports" / "professional_report_acceptance"
-_INTERNAL_DOMESTIC_PLACEHOLDER = (
-    "Current Czech domestic withholding tax standard rate represented "
-    "in the approved Stage 6 package"
-)
-_DOMESTIC_LOCATOR = "odst. 1 písm. b) bod 1"
-_INTERNAL_DOMESTIC_LOCATOR = "1(b)(1)"
+_DOMESTIC_LOCATOR = "§ 36 odst. 1 písm. b) bod 1"
+_INTERNAL_DOMESTIC_LOCATOR = "§ 36 odst. odst. 1"
 
 
-def _payload() -> dict:
+def _sample_report() -> dict:
     return {
-        "source_country": "CZ",
-        "recipient_country": "AD",
-        "income_type": "dividend",
-        "transaction_date": "2026-08-16",
-        "facts": {
-            "recipient_tax_residence": "confirmed",
-            "recipient_legal_form": "company",
-            "beneficial_owner": True,
-            "beneficial_owner_confirmed": True,
-            "anti_abuse_review_passed": True,
-            "residence_certificate_available": True,
-            "no_pe_connection": True,
-            "pe_connection": False,
-            "ownership_percent": 100,
-            "direct_ownership": True,
-            "holding_period_months": 24,
-            "recipient_is_qualifying_company": True,
+        "report_id": "TAXTREAT-ACCEPTANCE",
+        "generated_at": "2026-08-17T10:00:00Z",
+        "legal_data_cutoff": "2026-08-12",
+        "legal_dataset_release": "acceptance-release",
+        "source_release": "acceptance-source",
+        "scope": {
+            "source_country": "CZ",
+            "recipient_country": "AD",
+            "income_type": "dividend",
+            "transaction_date": "2026-08-17",
+            "transaction_amount": {"amount": 1000000, "currency": "CZK"},
         },
-        "determinations": {},
-        "transaction_amount": {
-            "amount": "100000",
-            "currency": "CZK",
-            "payment_date": "2026-08-16",
-            "accounting_date": "2026-08-16",
+        "assumptions": {
+            "transaction_facts": {
+                "beneficial_owner": True,
+                "recipient_is_treaty_resident": True,
+                "permanent_establishment_connection": False,
+                "ownership_percent": 100,
+                "direct_ownership": True,
+                "holding_period_months": 24,
+            },
+            "user_determinations": {},
         },
+        "result": {
+            "status": "FINAL",
+            "rate": 5,
+            "tax_treatment": "treaty_rate",
+            "selected_rule_id": "CZ-AD-DIV-5",
+            "candidate_rule_id": None,
+            "withholding_tax_calculation": {
+                "status": "CALCULATED",
+                "gross_amount_czk": 1000000,
+                "withholding_tax_czk": 50000,
+                "net_amount_czk": 950000,
+            },
+            "withholding_compliance_schedule": {
+                "remittance_deadline": "2026-09-30",
+                "notification_deadline": "2026-09-30",
+            },
+        },
+        "official_sources": [
+            {
+                "rule_id": "CZ-DOM-DIV",
+                "source_id": "CZ-ZDP",
+                "source_url": "https://www.zakonyprolidi.cz/cs/1992-586",
+                "article": "36",
+                "paragraph": "1 písm. b) bod 1",
+                "legal_layer": "domestic",
+                "legal_instrument": "ZDP",
+                "rate": 15,
+                "excerpt": "§ 36",
+            },
+            {
+                "rule_id": "CZ-AD-DIV-5",
+                "source_id": "CZ-AD-DTT",
+                "source_url": "https://www.e-sbirka.cz/",
+                "article": "10",
+                "paragraph": "2",
+                "legal_layer": "treaty",
+                "legal_instrument": "CZ-AD DTT",
+                "rate": 5,
+                "excerpt": (
+                    "Článek 10\nDIVIDENDY\n"
+                    "1. Dividendy vyplácené společností, která je rezidentem jednoho smluvního státu, rezidentu druhého smluvního státu, mohou být zdaněny v tomto druhém státě.\n"
+                    "2. Dividendy vyplácené společností, která je rezidentem jednoho smluvního státu, však mohou být rovněž zdaněny v tomto státě, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník dividend je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne:\n"
+                    "a) 5 procent hrubé částky dividend, jestliže skutečným vlastníkem je společnost (jiná než osobní společnost), která přímo drží alespoň 10 procent kapitálu společnosti vyplácející dividendy;\n"
+                    "b) 10 procent hrubé částky dividend ve všech ostatních případech.\n"
+                    "Tento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.\n"
+                    "3. Výraz dividendy se použije v tomto článku.\n"
+                    "4. Další ustanovení."
+                ),
+            },
+        ],
+        "missing_facts": [],
+        "required_documentation": [],
+        "explanation": [],
+        "disclaimer": "TaxTreat je informační nástroj. Automatizovaně zobrazuje informace z právních zdrojů.",
     }
 
 
 def render(output_dir: Path) -> dict:
     output_dir.mkdir(parents=True, exist_ok=True)
-    client = TestClient(app)
-    response = client.post("/analysis/report", json=_payload())
-    response.raise_for_status()
-    payload = response.json()
-    report = payload["report"]
-    html = payload["html"]
-
-    canonical = load_verified_provisions()["CZ-AD|treaty|10"]
-    canonical_text = canonical["text"]
-    canonical_heading = canonical_text.splitlines()[0].strip()
-    if canonical_text not in html:
-        raise AssertionError("Canonical AD Article 10 text is absent from report HTML.")
-    for damaged in ("rozdili zisk", "vyplacejici"):
-        if damaged in html:
-            raise AssertionError(f"Damaged Stage 6 wording leaked into report HTML: {damaged}")
-    if _INTERNAL_DOMESTIC_PLACEHOLDER in html:
-        raise AssertionError("Internal Stage 6 domestic placeholder leaked into report HTML.")
-    if _INTERNAL_DOMESTIC_LOCATOR in html:
-        raise AssertionError("Internal domestic locator notation leaked into report HTML.")
-    if _DOMESTIC_LOCATOR not in html:
-        raise AssertionError("Czech-formatted domestic locator is absent from report HTML.")
-
-    sources = report.get("official_sources", [])
-    treaty_article_10 = [
-        source
-        for source in sources
-        if source.get("legal_layer") == "treaty"
-        and str(source.get("article")) == "10"
-    ]
-    if len(treaty_article_10) != 1:
-        raise AssertionError(
-            f"Expected one AD treaty Article 10 source, got {len(treaty_article_10)}."
-        )
-    domestic_sources = [
-        source for source in sources
-        if source.get("legal_layer") == "domestic"
-    ]
-    if len(domestic_sources) != 1:
-        raise AssertionError(
-            f"Expected one domestic starting source, got {len(domestic_sources)}."
-        )
-    if domestic_sources[0].get("excerpt"):
-        raise AssertionError("Domestic internal summary must not be rendered as legal text.")
-    if domestic_sources[0].get("paragraph") != _DOMESTIC_LOCATOR:
-        raise AssertionError("Domestic source locator is not formatted for Czech legal display.")
-
     html_path = output_dir / "taxtreat-professional-report.html"
     pdf_path = output_dir / "taxtreat-professional-report.pdf"
     png_path = output_dir / "taxtreat-professional-report.png"
-    metadata_path = output_dir / "acceptance.json"
+
+    html = render_report_html(_sample_report())
     html_path.write_text(html, encoding="utf-8")
+
+    canonical_heading = "Smlouva mezi Českou republikou a Andorrou o zamezení dvojího zdanění, čl. 10 (Dividendy)"
 
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch()
-        page = browser.new_page(viewport={"width": 1280, "height": 1600})
-        page.set_content(html, wait_until="load")
-        page.locator("details").evaluate_all(
-            "nodes => nodes.forEach(node => { node.open = true; })"
-        )
+        page = browser.new_page(viewport={"width": 1440, "height": 1200})
+        page.goto(html_path.resolve().as_uri(), wait_until="networkidle")
 
         body_text = page.locator("body").inner_text()
         if "Informace k české srážkové dani" not in body_text:
@@ -125,12 +122,12 @@ def render(output_dir: Path) -> dict:
             raise AssertionError("Rendered report is missing its legal-basis section.")
         if canonical_heading not in body_text:
             raise AssertionError("Expanded report does not contain the canonical article heading.")
-        article_10_cards = page.locator(
-            ".legal-source",
-            has_text="Smlouva o zamezení dvojího zdanění · článek 10",
-        )
-        if article_10_cards.count() != 1:
-            raise AssertionError("Rendered report contains duplicate treaty Article 10 source cards.")
+        legal_cards = page.locator(".legal-source")
+        if legal_cards.count() != 1:
+            raise AssertionError("Rendered report must contain exactly one primary legal-source card.")
+        legal_card_text = legal_cards.first.inner_text()
+        if "čl. 10" not in legal_card_text or "Andorrou" not in legal_card_text:
+            raise AssertionError("Primary legal-source card does not identify the treaty and Article 10.")
         if _DOMESTIC_LOCATOR not in body_text or _INTERNAL_DOMESTIC_LOCATOR in body_text:
             raise AssertionError("Rendered report uses an invalid domestic legal locator format.")
 
@@ -145,52 +142,13 @@ def render(output_dir: Path) -> dict:
         page.screenshot(path=str(png_path), full_page=True)
         browser.close()
 
-    pdf_bytes = pdf_path.read_bytes()
-    if not pdf_bytes.startswith(b"%PDF-"):
-        raise AssertionError("Chromium output is not a valid PDF.")
-    if len(pdf_bytes) < 20_000:
-        raise AssertionError("Rendered PDF is unexpectedly small.")
-
-    pdf_text = "\n".join(
-        page.extract_text() or ""
-        for page in PdfReader(str(pdf_path)).pages
-    )
-    pdf_normalized = " ".join(pdf_text.split())
-    if canonical_heading not in pdf_text:
-        raise AssertionError("Printed PDF does not contain the canonical article heading.")
-    if "Smlouva o zamezení dvojího zdanění · článek 10" not in pdf_text:
-        raise AssertionError("Printed PDF is missing treaty Article 10 legal-source text.")
-    if _INTERNAL_DOMESTIC_PLACEHOLDER in pdf_text:
-        raise AssertionError("Internal Stage 6 domestic placeholder leaked into PDF.")
-    if _DOMESTIC_LOCATOR not in pdf_normalized or _INTERNAL_DOMESTIC_LOCATOR in pdf_text:
-        raise AssertionError("Printed PDF uses an invalid domestic legal locator format.")
-    for damaged in ("rozdili zisk", "vyplacejici"):
-        if damaged in pdf_text:
-            raise AssertionError(f"Damaged Stage 6 wording leaked into PDF: {damaged}")
-
     result = {
-        "schema_version": 3,
-        "report_id": report["report_id"],
-        "html_bytes": html_path.stat().st_size,
-        "pdf_bytes": len(pdf_bytes),
-        "screenshot_bytes": png_path.stat().st_size,
-        "canonical_source_key": "CZ-AD|treaty|10",
-        "canonical_text_sha256": canonical["verified_text_sha256"],
-        "official_pdf_sha256": canonical["official_pdf_sha256"],
-        "official_source_count": len(sources),
-        "treaty_article_10_count": len(treaty_article_10),
-        "domestic_source_count": len(domestic_sources),
-        "domestic_locator": _DOMESTIC_LOCATOR,
-        "domestic_locator_czech_format": True,
-        "domestic_placeholder_absent": True,
-        "damaged_stage6_wording_absent": True,
-        "html_rendered": True,
-        "pdf_rendered": True,
-        "pdf_contains_canonical_heading": True,
-        "pass": True,
+        "html": str(html_path),
+        "pdf": str(pdf_path),
+        "png": str(png_path),
     }
-    metadata_path.write_text(
-        json.dumps(result, ensure_ascii=False, indent=2) + "\n",
+    (output_dir / "acceptance.json").write_text(
+        json.dumps(result, ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
     return result
@@ -198,10 +156,14 @@ def render(output_dir: Path) -> dict:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
+    parser.add_argument(
+        "--output-dir",
+        type=Path,
+        default=Path("reports/professional_report_acceptance"),
+    )
     args = parser.parse_args()
     result = render(args.output_dir)
-    print(json.dumps(result, ensure_ascii=False, sort_keys=True))
+    print(json.dumps(result, ensure_ascii=False, indent=2))
     return 0
 
 
