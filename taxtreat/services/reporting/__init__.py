@@ -110,12 +110,17 @@ def render_report_html(report):
         tax_czk = _plain_number(calculation.get("withholding_tax_czk")) or "—"
         rate = result.get("rate")
         rate_text = "—" if rate is None else f"{_plain_number(rate)} %"
+        tax_label = (
+            "Česká daň k odvodu"
+            if result.get("tax_treatment") == "exclusive_foreign_taxation"
+            else "Srážková daň"
+        )
         detail = (
             '<div class="calculation-detail-wrap">'
             '<span class="mini-label">Detail výpočtu</span>'
             '<table class="calculation-detail"><tbody>'
             f'<tr><th>Daňový základ</th><td>{gross_czk} Kč</td></tr>'
-            f'<tr><th>Srážková daň</th><td>{tax_czk} Kč</td></tr>'
+            f'<tr><th>{tax_label}</th><td>{tax_czk} Kč</td></tr>'
             f'<tr><th>Použitá sazba</th><td>{rate_text}</td></tr>'
             '</tbody></table></div>'
         )
