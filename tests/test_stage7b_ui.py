@@ -276,7 +276,7 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert "non_taxing_interest_above_monthly_threshold_annual" in javascript.text
     assert "non_taxing_interest_monthly_threshold_not_exceeded" in javascript.text
     assert "§ 38da zákona č. 586/1992 Sb." in javascript.text
-    assert 'const BUILD_VERSION = "20260817-1"' in javascript.text
+    assert 'const BUILD_VERSION = "20260817-2"' in javascript.text
     assert "Načíst novou verzi" in javascript.text
     assert ".new-build-notice" in css.text
     assert ".dashboard-summary" in css.text
@@ -393,7 +393,7 @@ def test_ui_calls_canonical_endpoints_and_uses_safe_dom_rendering():
     assert "Zobrazit zbývající podklady" in javascript
     assert "exclusive_foreign_taxation" in javascript
     assert "pravidlo bez českého zdanění" in javascript
-    assert "Příjem je v České republice osvobozen" in javascript
+    assert "pravidlo osvobození" in javascript
     assert 'id="tax-czk-label"' in client.get("/ui").text
     assert "pageSize = 3" in javascript
     assert "wizard-progress" in javascript

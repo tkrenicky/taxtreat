@@ -278,7 +278,7 @@ def test_api_calculates_foreign_amount_only_from_mocked_final_result(
     assert calculation["exchange_rate"]["effective_date"] == "2026-08-10"
     assert "Srážková daň" in payload["html"]
     assert "2 485" in payload["html"]
-    assert "1 EUR = 24.85 CZK" in payload["html"]
+    assert "1 EUR = 24.85 Kč" in payload["html"]
 
 
 def test_report_exposes_non_calculation_reason():
