@@ -104,8 +104,6 @@ def render(output_dir: Path) -> dict:
     html = render_report_html(_sample_report())
     html_path.write_text(html, encoding="utf-8")
 
-    canonical_heading = "Smlouva mezi Českou republikou a Andorrou o zamezení dvojího zdanění, čl. 10 (Dividendy)"
-
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch()
         page = browser.new_page(viewport={"width": 1440, "height": 1200})
@@ -120,14 +118,22 @@ def render(output_dir: Path) -> dict:
         )
         if legal_basis.count() != 1:
             raise AssertionError("Rendered report is missing its legal-basis section.")
-        if canonical_heading not in body_text:
-            raise AssertionError("Expanded report does not contain the canonical article heading.")
+        legal_heading = page.locator(".legal-source .legal-title-row h2")
+        if legal_heading.count() != 1:
+            raise AssertionError("Rendered report must contain exactly one primary legal heading.")
+        heading_text = legal_heading.first.inner_text()
+        if (
+            "Smlouva mezi Českou republikou a Andorrou" not in heading_text
+            or "čl. 10 odst. 2" not in heading_text
+            or "Dividendy" not in heading_text
+        ):
+            raise AssertionError("Primary legal heading does not identify the treaty, Article 10 paragraph 2 and income type.")
         legal_cards = page.locator(".legal-source")
         if legal_cards.count() != 1:
             raise AssertionError("Rendered report must contain exactly one primary legal-source card.")
         legal_card_text = legal_cards.first.inner_text()
-        if "čl. 10" not in legal_card_text or "Andorrou" not in legal_card_text:
-            raise AssertionError("Primary legal-source card does not identify the treaty and Article 10.")
+        if "čl. 10 odst. 2" not in legal_card_text or "Andorrou" not in legal_card_text:
+            raise AssertionError("Primary legal-source card does not identify the treaty and Article 10 paragraph 2.")
         if _DOMESTIC_LOCATOR not in body_text or _INTERNAL_DOMESTIC_LOCATOR in body_text:
             raise AssertionError("Rendered report uses an invalid domestic legal locator format.")
 
