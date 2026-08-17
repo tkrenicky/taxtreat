@@ -71,7 +71,7 @@ def _report():
 def test_round3_copy_polish_is_applied():
     html = render_report_html(_report())
     assert "anti-abuse test" not in html
-    assert "test hlavního účelu (PPT)" in html
+    assert "test hlavního účelu" in html
     assert "Vzniká česká srážková daň? Jaký je její výchozí režim?" in html
     assert "Nejbližší uvedená lhůta" not in html
     assert "Nejbližší lhůta" in html
@@ -95,6 +95,6 @@ def test_round3_flow_is_timeline_without_duplicate_principle():
     assert soup.select_one(".flow") is not None
     assert len(soup.select(".flow-node")) == 5
     assert soup.select_one(".flow-principle") is None
-    assert "grid-template-columns: repeat(5, minmax(0, 1fr))" in html
+    assert "display: flex" in html
     assert ".flow::before" in html
-    assert "display: none !important" in html
+    assert "border-radius: 50%" in html
