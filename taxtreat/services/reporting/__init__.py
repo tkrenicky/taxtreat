@@ -99,16 +99,46 @@ def render_report_html(report):
             '</tbody></table></div>'
         )
         html = html.replace('<div class="path">', detail + '<div class="path">', 1)
-        html = html.replace(
-            "</style>",
-            ".result-caption{display:block;margin-top:1mm;color:#7a86a1;font-size:6.5px;font-weight:700}"
-            ".calculation-detail-wrap{margin:4mm 0 5mm;padding:4mm;border:1px solid var(--line);border-radius:3mm;background:#fff}"
-            ".calculation-detail{width:100%;margin-top:2mm;border-collapse:collapse;font-size:7.4px}"
-            ".calculation-detail th,.calculation-detail td{padding:2mm 0;border-bottom:1px solid var(--line);text-align:left}"
-            ".calculation-detail th{color:var(--muted);font-weight:700}"
-            ".calculation-detail td{text-align:right;color:var(--ink);font-weight:800}"
-            ".calculation-detail tr:last-child th,.calculation-detail tr:last-child td{border-bottom:0}</style>",
-            1,
-        )
+
+    # Final visual layer: follow the supplied editorial tax-advisory template,
+    # not a generic SaaS dashboard. Use serif editorial headings, royal blue,
+    # warm cream/yellow fields, powder blue panels and coral illustration accents.
+    visual_overrides = (
+        ".brand{font-family:Georgia,'Times New Roman',serif;font-size:16px;letter-spacing:-.035em}"
+        ".sheet{border-radius:6mm;border-color:#e9e4d9;background:#fffdf9}"
+        ".page{background:#f5f7fb}"
+        ".hero{background:linear-gradient(105deg,#fff4dc 0%,#fff9ed 64%,#eef4ff 100%);border-radius:5mm;margin-left:-8mm;margin-right:-8mm;padding-left:8mm;padding-right:8mm}"
+        ".hero h1,.section-head h2,.section-title-row h2,.legal-source h2,.section-card h3,.facts-card h3{font-family:Georgia,'Times New Roman',serif;letter-spacing:-.025em}"
+        ".hero h1{color:#171717;font-size:27px}"
+        ".kicker{color:#1557d6}"
+        ".result-card{background:#fffaf0;border-color:#eee1c3}"
+        ".facts-card{background:#f3f7ff;border-color:#dfe8fb}"
+        ".section-card{border-radius:4mm}"
+        ".page:nth-of-type(2) .section-head{background:#eef4ff}"
+        ".page:nth-of-type(3) .section-head{background:#fff4dc}"
+        ".page:nth-of-type(4) .section-head{background:#fff0eb}"
+        ".page:nth-of-type(4) .deadline:nth-child(2n){background:#fff8e5}"
+        ".page:nth-of-type(4) .deadline:nth-child(3n){background:#f2f6ff}"
+        ".source-tab.selected{background:#eef4ff;border-left-color:#1557d6}"
+        ".legal-source{background:#fffdfa;border-color:#e8e3da}"
+        ".quote{background:#f7f4ee}"
+        ".result-caption{display:block;margin-top:1mm;color:#77716a;font-size:6.5px;font-weight:700}"
+        ".calculation-detail-wrap{margin:4mm 0 5mm;padding:4mm;border:1px solid var(--line);border-radius:4mm;background:#fff9ec}"
+        ".calculation-detail{width:100%;margin-top:2mm;border-collapse:collapse;font-size:7.4px}"
+        ".calculation-detail th,.calculation-detail td{padding:2mm 0;border-bottom:1px solid var(--line);text-align:left}"
+        ".calculation-detail th{color:var(--muted);font-weight:700}"
+        ".calculation-detail td{text-align:right;color:var(--ink);font-weight:800}"
+        ".calculation-detail tr:last-child th,.calculation-detail tr:last-child td{border-bottom:0}"
+    )
+    html = html.replace("</style>", visual_overrides + "</style>", 1)
+
+    # Recolour the decorative SVGs to the same blue/yellow/coral palette while
+    # leaving the green tax-result status untouched.
+    html = html.replace("#14295f", "#1557d6")
+    html = html.replace("#2f68ce", "#1557d6")
+    html = html.replace("#e8f8ed", "#fff0bd")
+    html = html.replace("#169447", "#f37f69")
+    html = html.replace("#ffd9a8", "#f37f69")
+    html = html.replace("#cfe2ff", "#ffd05a")
 
     return html
