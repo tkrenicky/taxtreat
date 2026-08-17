@@ -285,7 +285,11 @@ def test_report_exposes_non_calculation_reason():
     response = client.post("/analysis/report", json=BASE_REQUEST)
 
     assert response.status_code == 200
-    assert "final_rate_unavailable" in response.json()["html"]
+    payload = response.json()
+    calculation = payload["report"]["result"]["withholding_tax_calculation"]
+    assert calculation["reason"] == "final_rate_unavailable"
+    assert "final_rate_unavailable" not in payload["html"]
+    assert "Výsledek vyžaduje doplnění údajů" in payload["html"]
 
 
 @pytest.mark.parametrize(

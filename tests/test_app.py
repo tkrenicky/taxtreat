@@ -88,9 +88,11 @@ def test_all_registered_jurisdictions_are_exposed():
     response = client.get("/jurisdictions")
     assert response.status_code == 200
     payload = response.json()
-    assert payload["total"] == 100
+    assert payload["total"] == 101
     by_code = {row["iso2"]: row for row in payload["jurisdictions"]}
-    assert len(by_code) == 100
+    assert len(by_code) == 101
+    assert "KR" in by_code
+    assert "TW" in by_code
     assert by_code["AT"]["review_ready_income_types"] == [
         "dividend",
         "interest",

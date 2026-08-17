@@ -94,7 +94,8 @@ def test_workspace_demo_exposes_recipient_payment_result_workflow():
     assert "Údaje o platbě" in html
     assert "Výsledek kontroly" in html
     assert "Jak výsledek číst" in html
-    assert "Odborné ověření" in html
+    assert "Podmínky a další kroky" in html
+    assert "Odborné ověření" not in html
     assert "Rozhodné datum a navazující lhůty" in html
     assert 'id="workspace-remittance-deadline"' in html
     assert 'id="workspace-notification-deadline"' in html
@@ -185,9 +186,9 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert css.status_code == 200
     assert javascript.status_code == 200
     assert designs.status_code == 200
-    assert "/ui-assets/workspace.css?v=20260815-11" in html
-    assert "/ui-assets/workspace.js?v=20260815-11" in html
-    assert "/ui-assets/workspace-designs.css?v=20260815-11" in html
+    assert "/ui-assets/workspace.css?v=20260817-1" in html
+    assert "/ui-assets/workspace.js?v=20260817-1" in html
+    assert "/ui-assets/workspace-designs.css?v=20260817-1" in html
     assert 'data-design-link="editorial"' in html
     assert 'data-design-link="atlas"' in html
     assert 'data-design-link="civic"' in html
@@ -263,6 +264,8 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert "Odkaz na kurzovní lístek ČNB" not in javascript.text
     assert 'document.body.dataset.design = design' in javascript.text
     assert "routeDesign" in javascript.text
+    assert "countryNames" not in javascript.text
+    assert "countryName(recipient.country)" in javascript.text
     assert 'body[data-design="editorial"]' in designs.text
     assert 'body[data-design="atlas"]' in designs.text
     assert 'body[data-design="civic"]' in designs.text
@@ -273,7 +276,7 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert "non_taxing_interest_above_monthly_threshold_annual" in javascript.text
     assert "non_taxing_interest_monthly_threshold_not_exceeded" in javascript.text
     assert "§ 38da zákona č. 586/1992 Sb." in javascript.text
-    assert 'const BUILD_VERSION = "20260815-11"' in javascript.text
+    assert 'const BUILD_VERSION = "20260817-1"' in javascript.text
     assert "Načíst novou verzi" in javascript.text
     assert ".new-build-notice" in css.text
     assert ".dashboard-summary" in css.text

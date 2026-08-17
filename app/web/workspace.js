@@ -11,7 +11,7 @@
   }
   "use strict";
 
-  const BUILD_VERSION = "20260815-11";
+  const BUILD_VERSION = "20260817-1";
 
   async function checkForNewBuild() {
     try {
@@ -58,8 +58,48 @@
   const payerList = document.querySelector("#payer-list");
   const flowPayerList = document.querySelector("#flow-payer-list");
   let votingWasEdited = false;
-  const countryNames = { AT: "Rakousko", CH: "Švýcarsko", DE: "Německo", SG: "Singapur", TW: "Tchaj-wan" };
-  const countryGenitives = { AT: "Rakouska", CH: "Švýcarska", DE: "Německa", SG: "Singapuru", TW: "Tchaj-wanu" };
+  const regionNames = new Intl.DisplayNames(["cs-CZ"], { type: "region" });
+  const knownCountryGenitives = { AT: "Rakouska", CH: "Švýcarska", DE: "Německa", SG: "Singapuru", TW: "Tchaj-wanu" };
+  function countryName(code) {
+    try { return regionNames.of(String(code || "").toUpperCase()) || String(code || ""); }
+    catch (_problem) { return String(code || ""); }
+  }
+  function countryGenitive(code) {
+    return knownCountryGenitives[String(code || "").toUpperCase()] || countryName(code);
+  }
+  async function loadJurisdictionCatalog() {
+    const selects = [recipientForm?.elements.recipient_country, recipientEditForm?.elements.recipient_country].filter(Boolean);
+    selects.forEach((select) => { select.disabled = true; });
+    try {
+      const response = await fetch("/jurisdictions", { cache: "no-store" });
+      const body = await response.json();
+      if (!response.ok || !Array.isArray(body.jurisdictions) || body.jurisdictions.length !== 101) {
+        throw new Error("Incomplete jurisdiction catalog");
+      }
+      const jurisdictions = [...body.jurisdictions].sort((a, b) =>
+        countryName(a.iso2).localeCompare(countryName(b.iso2), "cs")
+      );
+      selects.forEach((select) => {
+        const current = select.value;
+        const placeholder = select.closest("#new-recipient-form") ? "Vyber stát" : null;
+        select.replaceChildren();
+        if (placeholder) {
+          const option = document.createElement("option"); option.value = ""; option.textContent = placeholder; select.append(option);
+        }
+        jurisdictions.forEach((item) => {
+          const option = document.createElement("option");
+          option.value = item.iso2;
+          option.textContent = countryName(item.iso2);
+          select.append(option);
+        });
+        if ([...select.options].some((option) => option.value === current)) select.value = current;
+      });
+    } catch (_problem) {
+      // Keep the server-rendered fallback rather than blocking the workspace.
+    } finally {
+      selects.forEach((select) => { select.disabled = false; });
+    }
+  }
   let recipient = {
     name: "Demo GmbH",
     country: "AT",
@@ -72,8 +112,8 @@
     }
   };
   let payers = [
-    { key: "demo-cz", name: "Demo CZ s.r.o.", id: "12345678", vatId: "CZ12345678" },
-    { key: "alfa-cz", name: "Alfa Services CZ a.s.", id: "87654321", vatId: "CZ87654321" }
+    { key: "demo-cz", name: "Demo CZ s.r.o.", id: "12345678", vatId: "CZ12345678", address: "", legalForm: "", dataBox: "", establishedAt: "" },
+    { key: "alfa-cz", name: "Alfa Services CZ a.s.", id: "87654321", vatId: "CZ87654321", address: "", legalForm: "", dataBox: "", establishedAt: "" }
   ];
   let activePayerKey = "demo-cz";
   let editingPayerKey = null;
@@ -115,11 +155,15 @@
   document.querySelectorAll("[data-create-recipient]").forEach((button) => button.addEventListener("click", () => {
     showStep(2);
     recipientForm.hidden = false;
+    recipientForm.querySelectorAll("input,select").forEach((field) => { field.disabled = false; field.readOnly = false; });
     recipientForm.querySelector("input").focus();
   }));
   document.querySelector("[data-show-recipient-form]").addEventListener("click", () => {
     recipientForm.hidden = !recipientForm.hidden;
-    if (!recipientForm.hidden) recipientForm.querySelector("input").focus();
+    if (!recipientForm.hidden) {
+      recipientForm.querySelectorAll("input,select").forEach((field) => { field.disabled = false; field.readOnly = false; });
+      recipientForm.querySelector("input").focus();
+    }
   });
 
   document.querySelectorAll("[data-tooltip]").forEach((button) => button.addEventListener("click", () => {
@@ -137,14 +181,65 @@
     payerForm.elements.payer_name.value = selected?.name || "";
     payerForm.elements.payer_id.value = selected?.id || "";
     payerForm.elements.payer_vat_id.value = selected?.vatId || "";
+    payerForm.elements.payer_address.value = selected?.address || "";
+    payerForm.elements.payer_legal_form.value = selected?.legalForm || "";
+    payerForm.elements.payer_data_box.value = selected?.dataBox || "";
+    payerForm.elements.payer_established_at.value = selected?.establishedAt || "";
+    document.querySelector("#ares-lookup-status").className = "lookup-status";
+    document.querySelector("#ares-lookup-status").textContent = "Po zadání 8 číslic TaxTreat načte identifikační údaje z ARES.";
     payerDialog.showModal();
   }
   document.querySelectorAll("[data-create-payer]").forEach((button) => button.addEventListener("click", () => openPayerDialog()));
   document.querySelectorAll("[data-close-payer]").forEach((button) => button.addEventListener("click", () => payerDialog.close()));
+
+  let aresLookupTimer = null;
+  async function lookupPayerFromAres() {
+    const ico = String(payerForm.elements.payer_id.value || "").replace(/\D/g, "");
+    const status = document.querySelector("#ares-lookup-status");
+    if (ico.length !== 8) {
+      status.className = "lookup-status error";
+      status.textContent = "IČO musí obsahovat přesně 8 číslic.";
+      return;
+    }
+    status.className = "lookup-status";
+    status.textContent = "Načítám údaje z ARES…";
+    try {
+      const response = await fetch(`/company-registry/ares/${ico}`, { cache: "no-store" });
+      const body = await response.json();
+      if (!response.ok) throw new Error(body.detail?.message || "ARES lookup failed");
+      payerForm.elements.payer_id.value = body.ico || ico;
+      payerForm.elements.payer_name.value = body.name || payerForm.elements.payer_name.value;
+      payerForm.elements.payer_vat_id.value = body.vat_id || payerForm.elements.payer_vat_id.value;
+      payerForm.elements.payer_address.value = body.address || "";
+      payerForm.elements.payer_legal_form.value = body.legal_form || "";
+      payerForm.elements.payer_data_box.value = body.data_box || "";
+      payerForm.elements.payer_established_at.value = body.established_at || "";
+      status.className = "lookup-status success";
+      status.textContent = "Údaje byly načteny z ARES. Před uložením je můžeš upravit.";
+    } catch (_problem) {
+      status.className = "lookup-status error";
+      status.textContent = "Údaje se z ARES nepodařilo načíst. Pole můžeš vyplnit ručně.";
+    }
+  }
+  document.querySelector("[data-ares-lookup]").addEventListener("click", lookupPayerFromAres);
+  payerForm.elements.payer_id.addEventListener("input", () => {
+    window.clearTimeout(aresLookupTimer);
+    const ico = String(payerForm.elements.payer_id.value || "").replace(/\D/g, "");
+    if (ico.length === 8) aresLookupTimer = window.setTimeout(lookupPayerFromAres, 450);
+  });
+
   payerForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const data = new FormData(payerForm);
-    const values = { name: String(data.get("payer_name")).trim(), id: String(data.get("payer_id")).trim(), vatId: String(data.get("payer_vat_id")).trim() };
+    const values = {
+      name: String(data.get("payer_name")).trim(),
+      id: String(data.get("payer_id")).trim(),
+      vatId: String(data.get("payer_vat_id")).trim(),
+      address: String(data.get("payer_address")).trim(),
+      legalForm: String(data.get("payer_legal_form")).trim(),
+      dataBox: String(data.get("payer_data_box")).trim(),
+      establishedAt: String(data.get("payer_established_at")).trim()
+    };
     if (editingPayerKey) {
       Object.assign(payers.find((item) => item.key === editingPayerKey), values);
     } else {
@@ -170,7 +265,7 @@
     const avatar = document.createElement("div"); avatar.className = "avatar"; avatar.textContent = item.name.slice(0, 1).toUpperCase();
     const copy = document.createElement("div");
     const title = document.createElement("h2"); title.textContent = item.name;
-    const meta = document.createElement("p"); meta.textContent = `Česká republika · IČO ${item.id || "neuvedeno"}${item.vatId ? ` · DIČ ${item.vatId}` : ""}`;
+    const meta = document.createElement("p"); meta.textContent = `Česká republika · IČO ${item.id || "neuvedeno"}${item.vatId ? ` · DIČ ${item.vatId}` : ""}${item.address ? ` · ${item.address}` : ""}`;
     copy.append(title, meta);
     if (compact) {
       const label = document.createElement("label");
@@ -247,14 +342,14 @@
 
   function renderRecipient() {
     const relationship = currentRelationship();
-    const country = countryNames[recipient.country];
+    const country = countryName(recipient.country);
     const initial = recipient.name.slice(0, 1).toUpperCase();
     document.querySelector("#flow-recipient-name").textContent = recipient.name;
     document.querySelector("#flow-recipient-avatar").textContent = initial;
     document.querySelector("#flow-recipient-meta").textContent = `${country} · ${recipient.type.toLowerCase()} · základní údaje vyplněny`;
     document.querySelectorAll("[data-recipient-name]").forEach((node) => { node.textContent = recipient.name; });
     document.querySelectorAll("[data-recipient-avatar]").forEach((node) => { node.textContent = initial; });
-    document.querySelectorAll("[data-recipient-country]").forEach((node) => { node.textContent = countryGenitives[recipient.country]; });
+    document.querySelectorAll("[data-recipient-country]").forEach((node) => { node.textContent = countryGenitive(recipient.country); });
     document.querySelectorAll("[data-recipient-country-name]").forEach((node) => { node.textContent = country; });
     document.querySelectorAll("[data-recipient-type]").forEach((node) => { node.textContent = recipient.type.toLowerCase(); });
     document.querySelectorAll("[data-profile-beneficial]").forEach((node) => { node.textContent = recipient.beneficialOwner ? "Ano" : "Ne"; });
@@ -661,8 +756,8 @@
     if (analysis.status === "FINAL") return `Použitá sazba ${analysis.rate} % byla určena na základě zadaných údajů a vybraného právního pravidla uvedeného níže.`;
     if (treatment === "exclusive_foreign_taxation") return "Zadané údaje směřují k použití smluvního pravidla, podle něhož se příjem zdaňuje pouze ve státě rezidence příjemce. Před uzavřením výsledku je třeba ověřit konkrétní podmínky uvedené níže.";
     if (treatment === "domestic_exemption") return "Zadané údaje směřují k osvobození příjmu v České republice. Před uzavřením výsledku je třeba ověřit konkrétní podmínky uvedené níže.";
-    if (analysis.candidate_rate !== null && analysis.candidate_rate !== undefined) return `Byla identifikována sazba ${analysis.candidate_rate} %. Její použití závisí na odborném ověření právních podmínek uvedených níže.`;
-    return "Sazbu zatím nelze určit. Konkrétní důvod je uveden v části Odborné ověření níže.";
+    if (analysis.candidate_rate !== null && analysis.candidate_rate !== undefined) return `Byla identifikována sazba ${analysis.candidate_rate} %. Její použití závisí na splnění právních a skutkových podmínek uvedených níže.`;
+    return "Sazbu zatím nelze určit. Konkrétní důvod je uveden v části Podmínky a další kroky níže.";
   }
 
   function citationDetail(citation) {
@@ -781,7 +876,7 @@
     setText("#workspace-tax-label", nonTaxing ? "Česká daň k odvodu" : "Srážková daň v CZK");
     setText("#workspace-tax-row-label", nonTaxing ? "Česká daň k odvodu" : "Srážková daň");
     setText("#workspace-tax", calculation ? money(taxCzk) : "—");
-    setText("#workspace-rate", treatment === "exclusive_foreign_taxation" ? `Zdanění pouze ve státě rezidence příjemce (${countryNames[recipient.country]})` : treatment === "domestic_exemption" ? "Příjem je v České republice osvobozen" : analysis.rate === null ? analysis.candidate_rate === null ? "Sazbu nelze určit bez odborného posouzení" : `Identifikovaná sazba: ${analysis.candidate_rate} %` : `${analysis.rate} % z daňového základu`);
+    setText("#workspace-rate", treatment === "exclusive_foreign_taxation" ? `Zdanění pouze ve státě rezidence příjemce (${countryName(recipient.country)})` : treatment === "domestic_exemption" ? "Příjem je v České republice osvobozen" : analysis.rate === null ? analysis.candidate_rate === null ? "Sazbu nelze určit bez doplnění potřebných podmínek" : `Identifikovaná sazba: ${analysis.candidate_rate} %` : `${analysis.rate} % z daňového základu`);
     setText("#workspace-gross", grossCzk !== null ? money(grossCzk) : payload.transaction_amount.currency === "CZK" ? money(payload.transaction_amount.amount) : `${payload.transaction_amount.amount} ${payload.transaction_amount.currency}`);
     setText("#workspace-tax-row", calculation ? money(taxCzk) : "—");
     setText("#workspace-net", calculation ? money(netCzk) : "—");
@@ -886,6 +981,7 @@
 
   renderPayers();
   renderRecipient();
+  loadJurisdictionCatalog();
   renderTransactionFacts();
   checkForNewBuild();
 })();

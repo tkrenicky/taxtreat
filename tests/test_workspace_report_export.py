@@ -11,7 +11,7 @@ def test_workspace_loads_professional_report_export_asset():
     asset = client.get("/ui-assets/workspace-report-export.js")
 
     assert asset.status_code == 200
-    assert "/ui-assets/workspace-report-export.js?v=20260816-1" in html
+    assert "/ui-assets/workspace-report-export.js?v=20260817-1" in html
     assert "Otevřít profesionální report" in asset.text
     assert "Tisk / uložit PDF" in asset.text
     assert 'nativeFetch("/analysis/report"' in asset.text
@@ -25,7 +25,7 @@ def test_workspace_output_history_is_in_memory_and_reopenable():
     styles = client.get("/ui-assets/workspace-output-history.css")
 
     assert styles.status_code == 200
-    assert "/ui-assets/workspace-output-history.css?v=20260816-2" in asset
+    assert "/ui-assets/workspace-output-history.css?v=20260817-1" in asset
     assert "const outputHistory = []" in asset
     assert "cacheCompletedReport" in asset
     assert "clientQuestionsRemain" in asset
@@ -44,7 +44,7 @@ def test_workspace_completed_reviews_and_dashboard_metrics_are_data_bound():
     assert "renderReviewHistory" in asset
     assert "renderDashboardMetrics" in asset
     assert "Dokončené kontroly" in asset
-    assert "výsledků k odbornému ověření" in asset
+    assert "výsledků s otevřenými podmínkami" in asset
     assert "dataset.reviewReportId" in asset
     assert "Otevřít výstup" in asset
     assert "statusNeedsReview" in asset

@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="TaxTreat – pracovní prostor pro kontrolu české srážkové daně">
   <title>TaxTreat · Pracovní prostor</title>
-  <link rel="stylesheet" href="/ui-assets/workspace.css?v=20260815-11">
-  <link rel="stylesheet" href="/ui-assets/workspace-designs.css?v=20260815-11">
-  <script defer src="/ui-assets/workspace.js?v=20260815-11"></script>
-  <script defer src="/ui-assets/workspace-report-export.js?v=20260816-1"></script>
+  <link rel="stylesheet" href="/ui-assets/workspace.css?v=20260817-1">
+  <link rel="stylesheet" href="/ui-assets/workspace-designs.css?v=20260817-1">
+  <script defer src="/ui-assets/workspace.js?v=20260817-1"></script>
+  <script defer src="/ui-assets/workspace-report-export.js?v=20260817-1"></script>
 </head>
 <body>
   <aside id="design-switcher" class="design-switcher" aria-label="Volba návrhu vzhledu" hidden>
@@ -144,9 +144,9 @@
           <h2>Základní profil příjemce</h2>
           <p class="form-intro">Údaje se uloží do pracovního profilu a při dalších platbách je nebude nutné zadávat znovu.</p>
           <div class="profile-form-grid">
-            <label class="form-field form-field-wide"><span><b>01</b> Název nebo jméno *</span><input name="recipient_name" required placeholder="např. Example GmbH" autocomplete="organization"></label>
-            <label class="form-field"><span><b>02</b> Stát daňové rezidence *</span><select name="recipient_country" required><option value="">Vyber stát</option><option value="AT">Rakousko</option><option value="CH">Švýcarsko</option><option value="DE">Německo</option><option value="SG">Singapur</option><option value="TW">Tchaj-wan</option></select></label>
-            <label class="form-field"><span><b>03</b> Typ příjemce *</span><select name="recipient_type"><option>Společnost</option><option>Fyzická osoba</option><option>Fond</option><option>Jiný subjekt</option></select></label>
+            <label class="form-field form-field-wide"><span>Název nebo jméno *</span><input name="recipient_name" required placeholder="např. Example GmbH" autocomplete="organization"></label>
+            <label class="form-field"><span>Stát daňové rezidence *</span><select name="recipient_country" required><option value="">Vyber stát</option><option value="AT">Rakousko</option><option value="CH">Švýcarsko</option><option value="DE">Německo</option><option value="SG">Singapur</option><option value="TW">Tchaj-wan</option></select></label>
+            <label class="form-field"><span>Typ příjemce *</span><select name="recipient_type"><option>Společnost</option><option>Fyzická osoba</option><option>Fond</option><option>Jiný subjekt</option></select></label>
           </div>
           <p>Další údaje a podklady doplníš v profilu příjemce. V tomto demu se nový profil po obnovení stránky odstraní.</p>
           <button class="primary" type="submit">Použít příjemce v této kontrole →</button>
@@ -206,7 +206,7 @@
         <article class="reason"><h2>Jak výsledek číst</h2><p id="workspace-reason">Výsledek se zobrazí po vyhodnocení platby kanonickým pravidlovým enginem.</p></article>
         <div class="dashboard-grid">
           <article class="card summary"><h2>Souhrn platby</h2><dl><div><dt>Hrubá částka</dt><dd id="workspace-gross">—</dd></div><div><dt id="workspace-tax-row-label">Srážková daň</dt><dd id="workspace-tax-row">—</dd></div><div><dt>Čistá částka</dt><dd id="workspace-net">—</dd></div></dl></article>
-          <article class="card"><div class="card-head"><h2>Odborné ověření</h2><span id="workspace-action-count">0</span></div><div id="workspace-actions" class="action-list"></div></article>
+          <article class="card"><div class="card-head"><h2>Podmínky a další kroky</h2><span id="workspace-action-count">0</span></div><div id="workspace-actions" class="action-list"></div></article>
         </div>
         <article class="card compliance-schedule">
           <div class="card-head"><div><p>DAŇOVÝ KALENDÁŘ</p><h2>Rozhodné datum a navazující lhůty</h2></div><span>§ 38d a § 38da zákona č. 586/1992 Sb., o daních z příjmů</span></div>
@@ -237,9 +237,13 @@
 
   <dialog id="payer-dialog" class="modal">
     <form method="dialog" id="payer-form"><div class="modal-head"><div><p>PLÁTCE</p><h2 id="payer-dialog-title">Upravit plátce</h2></div><button type="button" data-close-payer aria-label="Zavřít">×</button></div>
+      <label><span>IČO *</span><div class="ico-lookup"><input name="payer_id" inputmode="numeric" maxlength="8" pattern="[0-9]{8}" placeholder="např. 27082440" required><button class="secondary compact" type="button" data-ares-lookup>Načíst z ARES</button></div><small id="ares-lookup-status" class="lookup-status" aria-live="polite">Po zadání 8 číslic TaxTreat načte identifikační údaje z ARES.</small></label>
       <label><span>Název *</span><input name="payer_name" value="Demo CZ s.r.o." required></label>
-      <label><span>IČO</span><input name="payer_id" inputmode="numeric" placeholder="např. 12345678"></label>
       <label><span>DIČ</span><input name="payer_vat_id" placeholder="např. CZ12345678"></label>
+      <label><span>Sídlo</span><input name="payer_address" placeholder="Načte se z ARES"></label>
+      <label><span>Právní forma</span><input name="payer_legal_form" placeholder="Načte se z ARES"></label>
+      <label><span>Datová schránka</span><input name="payer_data_box" placeholder="Načte se z ARES"></label>
+      <label><span>Datum vzniku</span><input name="payer_established_at" type="date"></label>
       <label><span>Stát</span><input value="Česká republika" disabled></label>
       <div class="flow-actions"><button class="secondary" type="button" data-close-payer>Zrušit</button><button class="primary" type="submit">Uložit změny</button></div>
     </form>

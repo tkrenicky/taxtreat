@@ -31,8 +31,40 @@ def wait_for_server(process: subprocess.Popen[bytes]) -> None:
     raise TimeoutError("UI server did not become ready within 30 seconds.")
 
 
+def verify_recipient_catalog_and_entry(page) -> None:
+    page.goto(f"{BASE_URL}/workspace-demo", wait_until="networkidle")
+    page.get_by_role("button", name="Příjemci", exact=True).click()
+    page.get_by_role("button", name="Přidat příjemce", exact=True).click()
+    form = page.locator("#new-recipient-form")
+    form.wait_for(state="visible")
+    country = form.locator('select[name="recipient_country"]')
+    page.wait_for_function(
+        "() => document.querySelector('#new-recipient-form select[name=recipient_country]').options.length === 102",
+        timeout=5000,
+    )
+    if country.locator("option").count() != 102:
+        raise AssertionError("Recipient form does not expose all 101 jurisdictions.")
+    option_values = country.locator("option").evaluate_all("options => options.map(option => option.value)")
+    if "KR" not in option_values or "TW" not in option_values:
+        raise AssertionError("Recipient catalog must include both Korea and Taiwan.")
+    name = form.locator('input[name="recipient_name"]')
+    name.fill("Test Korea Co.")
+    if name.input_value() != "Test Korea Co.":
+        raise AssertionError("Recipient name field is not writable.")
+    country.select_option("KR")
+    form.get_by_role("button", name="Použít příjemce v této kontrole →").click()
+    if page.locator("#flow-recipient-name").inner_text() != "Test Korea Co.":
+        raise AssertionError("New recipient was not applied to the workspace.")
+    if "undefined" in page.locator("#flow-recipient-meta").inner_text().lower():
+        raise AssertionError("Dynamic jurisdiction name was not rendered.")
+
+
 def finish_workspace_calculation(page) -> None:
     page.goto(f"{BASE_URL}/workspace-demo", wait_until="networkidle")
+    if page.locator("#flow-recipient-name").inner_text() != "Demo GmbH":
+        raise AssertionError("Fresh workspace did not reset the demo recipient.")
+    if "Rakousko" not in page.locator("#flow-recipient-meta").inner_text():
+        raise AssertionError("Fresh workspace did not reset recipient residence to Austria.")
     page.get_by_role("button", name="Nová kontrola platby →").first.click()
     page.get_by_role("button", name="Pokračovat k příjemci →").click()
     page.get_by_role("button", name="Pokračovat k platbě →").click()
@@ -63,7 +95,12 @@ def finish_workspace_calculation(page) -> None:
         for item in questions.locator('input[type="date"]').all():
             item.fill("2024-01-01")
     else:
-        raise AssertionError("Workspace client questions did not converge.")
+        remaining = form.locator("#workspace-questions").inner_text()
+        error_text = form.locator("#workspace-error").inner_text()
+        raise AssertionError(
+            "Workspace client questions did not converge. "
+            f"Remaining questions: {remaining!r}; error: {error_text!r}"
+        )
 
     page.locator("#workspace-result-status").wait_for(state="visible")
 
@@ -115,6 +152,28 @@ def main() -> int:
                 ),
             )
 
+            page.route(
+                "**/company-registry/ares/27082440",
+                lambda route: route.fulfill(
+                    status=200,
+                    content_type="application/json",
+                    body='{"source":"ARES","ico":"27082440","name":"Google Czech Republic, s.r.o.","vat_id":"CZ27082440","address":"Stroupežnického 3191/17, 150 00 Praha 5","legal_form":"112","data_box":"amqg4i4","established_at":"2003-10-08"}',
+                ),
+            )
+            page.goto(f"{BASE_URL}/workspace-demo", wait_until="networkidle")
+            page.get_by_role("button", name="Plátci", exact=True).click()
+            page.get_by_role("button", name="Přidat plátce", exact=True).click()
+            payer_form = page.locator("#payer-form")
+            payer_form.locator('input[name="payer_id"]').fill("27082440")
+            payer_form.locator('input[name="payer_name"]').wait_for()
+            page.wait_for_function("() => document.querySelector('#payer-form input[name=payer_name]').value.includes('Google Czech')", timeout=5000)
+            if payer_form.locator('input[name="payer_address"]').input_value() != "Stroupežnického 3191/17, 150 00 Praha 5":
+                raise AssertionError("ARES lookup did not populate payer address.")
+            if payer_form.locator('input[name="payer_data_box"]').input_value() != "amqg4i4":
+                raise AssertionError("ARES lookup did not populate payer data box.")
+            page.get_by_role("button", name="Zrušit", exact=True).last.click()
+
+            verify_recipient_catalog_and_entry(page)
             finish_workspace_calculation(page)
 
             output_rows = page.locator("[data-output-report-id]")
@@ -143,7 +202,17 @@ def main() -> int:
             report_page = popup_info.value
             report_page.wait_for_load_state("domcontentloaded")
             report_page.get_by_text("Česká srážková daň", exact=True).wait_for()
-            if report_page.locator(".source").count() < 1:
+            report_page.get_by_text("Analyzovaná transakce", exact=True).wait_for()
+            report_page.get_by_text("Právní základ", exact=True).wait_for()
+            report_page.get_by_text("Proč tato sazba", exact=True).wait_for()
+            if report_page.locator(".section-no,.source-number").count() != 0:
+                raise AssertionError("Report still exposes internal section/source numbering.")
+            if "TAXTREAT-" in report_page.locator("body").inner_text():
+                raise AssertionError("Report still exposes an internal report identifier.")
+            report_body = report_page.locator("body").inner_text()
+            if "Odborné ověření" in report_body or "uvolněného katalogu" in report_body or "Withholding tax analysis" in report_body:
+                raise AssertionError("Report still exposes obsolete or internal-facing wording.")
+            if report_page.locator(".legal-source").count() < 1:
                 raise AssertionError(
                     "Opened professional report contains no legal sources."
                 )
@@ -214,7 +283,7 @@ def main() -> int:
             review_status = review_rows.first.locator(
                 ".review-history-status"
             ).inner_text()
-            if review_status not in {"DOKONČENO", "ODBORNÉ OVĚŘENÍ"}:
+            if review_status not in {"DOKONČENO", "VYŽADUJE DOPLNĚNÍ"}:
                 raise AssertionError(
                     f"Unexpected completed-review status: {review_status!r}."
                 )
@@ -242,7 +311,7 @@ def main() -> int:
                 raise AssertionError("Dashboard completed-review metric is not data-bound.")
             if completed_metric.locator("strong").inner_text() != "1":
                 raise AssertionError("Dashboard completed-review count is incorrect.")
-            expected_attention = "1" if review_status == "ODBORNÉ OVĚŘENÍ" else "0"
+            expected_attention = "1" if review_status == "VYŽADUJE DOPLNĚNÍ" else "0"
             if attention_metric.locator("strong").inner_text() != expected_attention:
                 raise AssertionError(
                     "Dashboard attention count does not match stored review status."
