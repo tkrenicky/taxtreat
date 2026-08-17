@@ -103,17 +103,17 @@
 
   function statusCopy(status, treatment = null) {
     if (status === "FINAL" && treatment === "exclusive_foreign_taxation") {
-      return ["Příjem se v České republice nezdaňuje", "Podle použitého smluvního pravidla se příjem zdaňuje pouze ve státě daňové rezidence příjemce. Česká daň k odvodu činí 0 Kč."];
+      return ["Pravidlo přiřazené k zadaným údajům", "Podle použitého smluvního pravidla je v TaxTreat při zadaných údajích přiřazeno pravidlo bez českého zdanění; jde o automatizované informační přiřazení, nikoli individuální daňové posouzení."];
     }
     if (status === "FINAL" && treatment === "domestic_exemption") {
-      return ["Příjem je v České republice osvobozen", "Podmínky použitého vnitrostátního osvobození byly podle zadaných údajů splněny. Česká daň k odvodu činí 0 Kč."];
+      return ["Pravidlo přiřazené k zadaným údajům", "Podle použitého vnitrostátního pravidla je v TaxTreat při zadaných údajích přiřazeno pravidlo osvobození; jde o automatizované informační přiřazení, nikoli individuální daňové posouzení."];
     }
     const copies = {
-      FINAL: ["Výpočet dokončen", "Sazba a daň byly vypočteny podle zadaných údajů a uvedených předpokladů."],
-      REVIEW_REQUIRED: ["Je třeba doplnit údaje", "Níže doplňte konkrétní informace nebo ověřte označené podmínky s daňovým poradcem."],
+      FINAL: ["Výpočet dokončen", "TaxTreat podle zadaných údajů přiřadil evidované právní pravidlo a provedl mechanický výpočet."],
+      REVIEW_REQUIRED: ["Je třeba doplnit údaje", "Doplňte konkrétní vstupní informace, aby TaxTreat mohl automatizovaně přiřadit relevantní pravidlo."],
       OUT_OF_SCOPE: ["Mimo podporovaný rozsah", "Transakce nespadá do aktuálně podporovaného rozsahu českých odchozích plateb."]
     };
-    return copies[status] || ["Ověřte s daňovým poradcem", "Použití sazby závisí na podmínce, kterou aplikace nemůže potvrdit ze zadaných údajů."];
+    return copies[status] || ["Chybí údaj pro přiřazení pravidla", "Z dostupných vstupních údajů nelze konkrétní právní pravidlo automatizovaně přiřadit."];
   }
 
   function statusBadgeCopy(status) {
@@ -121,7 +121,7 @@
       FINAL: "DOKONČENO",
       REVIEW_REQUIRED: "DOPLNIT ÚDAJE",
       OUT_OF_SCOPE: "MIMO ROZSAH"
-    }[status] || "OVĚŘIT S PORADCEM";
+    }[status] || "CHYBÍ ÚDAJ";
   }
 
   function revealButton(label, onClick) {
@@ -292,7 +292,7 @@
       card.className = "question advisor-item";
       const tag = document.createElement("span");
       tag.className = "tag review";
-      tag.textContent = "Ověřit s poradcem";
+      tag.textContent = "Nelze určit z dostupných údajů";
       const prompt = document.createElement("p");
       prompt.textContent = item.prompt;
       const why = document.createElement("small");
@@ -412,7 +412,7 @@
   function renderDocuments(documents) {
     const root = document.querySelector("#documents");
     const initialLimit = 6;
-    const values = documents.length ? documents : ["V této fázi nejsou vyžadovány další podklady."];
+    const values = documents.length ? documents : ["K tomuto informačnímu výstupu nejsou evidovány další související podklady."];
 
     function render(limit) {
       root.replaceChildren();
@@ -436,16 +436,22 @@
     document.querySelector("#document-count").textContent = documents.length;
   }
 
+  function formatCzk(value) {
+    const numeric = Number(value);
+    if (!Number.isFinite(numeric)) return "—";
+    return new Intl.NumberFormat("cs-CZ", { maximumFractionDigits: 2 }).format(numeric) + " Kč";
+  }
+
   function renderCalculation(calculation) {
     const card = document.querySelector("#calculation-card");
     if (!calculation || calculation.status !== "CALCULATED") {
       card.hidden = true;
       return;
     }
-    document.querySelector("#gross-czk").textContent = calculation.gross_amount_czk + " Kč";
+    document.querySelector("#gross-czk").textContent = formatCzk(calculation.gross_amount_czk);
     document.querySelector("#tax-czk-label").textContent = ["exclusive_foreign_taxation", "domestic_exemption"].includes(calculation.tax_treatment) ? "Česká daň k odvodu" : "Srážková daň";
-    document.querySelector("#tax-czk").textContent = calculation.withholding_tax_czk + " Kč";
-    document.querySelector("#net-czk").textContent = calculation.net_amount_czk + " Kč";
+    document.querySelector("#tax-czk").textContent = formatCzk(calculation.withholding_tax_czk);
+    document.querySelector("#net-czk").textContent = formatCzk(calculation.net_amount_czk);
     card.hidden = false;
   }
 
@@ -484,7 +490,7 @@
     event.preventDefault();
     formError.hidden = true;
     submitButton.disabled = true;
-    submitButton.firstChild.textContent = "Vyhodnocuji… ";
+    submitButton.firstChild.textContent = "Přiřazuji pravidla… ";
     try {
       currentPayload = buildPayload();
       const response = await postJson("/analysis/intake", currentPayload);
