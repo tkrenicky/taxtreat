@@ -32,6 +32,11 @@ def render_report_html(report):
         '<div class="section-title"><h2>Právní základ</h2>',
         1,
     )
+    html = html.replace(
+        '<div class="docmeta"><b>Právní základ</b>',
+        '<div class="docmeta"><b>Oficiální právní zdroje</b>',
+        1,
+    )
     html = html.replace('class="source-card', 'class="legal-source source-card')
 
     return html
