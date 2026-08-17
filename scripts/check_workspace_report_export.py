@@ -202,7 +202,7 @@ def main() -> int:
                 print_button.click()
             print_page = print_popup_info.value
             print_page.wait_for_load_state("domcontentloaded")
-            print_page.get_by_text("Informace k české srážkové dani", exact=True).wait_for()
+            print_page.get_by_role("heading", name="Informace k české srážkové dani", exact=True).wait_for()
             print_page.get_by_text("Použité právní pravidlo", exact=True).wait_for()
             print_page.get_by_text("Právní základ", exact=True).wait_for()
             report_body = print_page.locator("body").inner_text()
@@ -237,7 +237,7 @@ def main() -> int:
                     "button", name="Tisk / PDF"
                 ).click()
             stored_page = stored_popup_info.value
-            stored_page.get_by_text("Informace k české srážkové dani", exact=True).wait_for()
+            stored_page.get_by_role("heading", name="Informace k české srážkové dani", exact=True).wait_for()
             stored_page.close()
             if len(report_requests) != requests_before_reopen:
                 raise AssertionError(
@@ -276,7 +276,7 @@ def main() -> int:
                     "button", name="Tisk / PDF"
                 ).click()
             review_page = review_popup_info.value
-            review_page.get_by_text("Informace k české srážkové dani", exact=True).wait_for()
+            review_page.get_by_role("heading", name="Informace k české srážkové dani", exact=True).wait_for()
             review_page.close()
             if len(report_requests) != requests_before_review_open:
                 raise AssertionError(
