@@ -281,7 +281,7 @@ def render_report_html(report: Mapping[str, Any]) -> str:
         calculation_html = f'''
           <table class="calculation-table">
             <tbody>
-              <tr><th>Hrubá částka</th><td>{_format_number(calculation.get('gross_amount'))} {escape(str(calculation.get('transaction_currency') or ''))}</td><td>Částka zadaná pro analyzovanou transakci</td></tr>
+              <tr><th>Hrubá částka</th><td>{_format_number(calculation.get('gross_amount'))} {escape(str(calculation.get('transaction_currency') or ''))}</td><td>Částka zadaná pro tuto transakci</td></tr>
               <tr><th>Daňový základ</th><td>{_format_number(calculation.get('gross_amount_czk'))} Kč</td><td>Hodnota po přepočtu do CZK</td></tr>
               <tr class="emphasis"><th>{tax_label}</th><td>{_format_number(calculation.get('withholding_tax_czk'))} Kč</td><td>Sazba {rate_value}</td></tr>
               {exchange_row}
@@ -292,12 +292,14 @@ def render_report_html(report: Mapping[str, Any]) -> str:
 
     selected_rule_id = result.get("selected_rule_id") or result.get("candidate_rule_id")
     selected_source = next((s for s in report.get("official_sources", []) if s.get("rule_id") == selected_rule_id), None)
+    selected_source_title = _source_title(selected_source) if selected_source else None
+    conclusion, conclusion_detail = _result_copy(result, selected_source_title)
     if selected_source and selected_source.get("legal_layer") in {"treaty", "protocol", "mli"}:
-        why_result = f"Sazba vychází z {_source_title(selected_source)} a ze skutkových údajů potvrzených pro tuto transakci."
+        why_result = f"Podle {_source_title(selected_source)} je v TaxTreat při zadaných údajích přiřazeno pravidlo použité ve výpočtu."
     elif selected_source:
-        why_result = f"Výsledek vychází z {_source_title(selected_source)} a ze skutkových údajů potvrzených pro tuto transakci."
+        why_result = f"Podle {_source_title(selected_source)} je v TaxTreat při zadaných údajích přiřazeno pravidlo použité ve výpočtu."
     else:
-        why_result = "Výsledek vychází ze zadaných údajů a z právních podkladů uvedených v tomto reportu."
+        why_result = "TaxTreat zobrazuje pravidla přiřazená k zadaným údajům a právní zdroje uvedené v tomto výstupu."
 
     source_items = []
     for source in report.get("official_sources", []):
@@ -344,9 +346,9 @@ blockquote{{margin:12px 0 0;padding:14px 16px;border-left:3px solid #9ebcb1;back
 @media(max-width:720px){{.report{{width:100%;margin:0}} main{{padding:22px}} .hero,.two-col{{grid-template-columns:1fr}} .transaction-strip{{grid-template-columns:1fr 1fr}} .deadlines{{grid-template-columns:1fr}}}}
 @media print{{@page{{size:A4;margin:11mm}} body{{background:#fff}} .report{{width:auto;margin:0;box-shadow:none}} .masthead{{print-color-adjust:exact;-webkit-print-color-adjust:exact}} section,.hero,.result-card,.calculation-table{{break-inside:avoid}} .legal-source{{break-inside:auto}} blockquote{{break-inside:auto}} a{{color:inherit;text-decoration:none}}}}
 </style></head><body><article class="report">
-<header class="masthead"><div><div class="brand"><span class="brand-mark">TT</span>TaxTreat</div><small>Analýza české srážkové daně</small></div><div class="cutoff">Právní stav<br><strong>{_report_date(report.get('legal_data_cutoff'))}</strong></div></header>
+<header class="masthead"><div><div class="brand"><span class="brand-mark">TT</span>TaxTreat</div><small>Informace k české srážkové dani</small></div><div class="cutoff">Právní stav<br><strong>{_report_date(report.get('legal_data_cutoff'))}</strong></div></header>
 <main>
-<div class="hero"><div><div class="eyebrow">Informační výstup</div><h1>Informace k české srážkové dani</h1><p>Automatizovaný přehled právních pravidel a mechanického výpočtu vztahujícího se k údajům zadaným uživatelem.</p></div><aside class="result-card"><span>Pravidlo přiřazené k zadaným údajům</span><strong>{escape(conclusion)}</strong><p>{escape(conclusion_detail)}</p></aside></div>
+<div class="hero"><div><div class="eyebrow">Informační výstup</div><h1>Informace k české srážkové dani</h1><p>Automatizovaný přehled právních pravidel a výpočtu podle zadaných údajů vztahujícího se k údajům zadaným uživatelem.</p></div><aside class="result-card"><span>Pravidlo přiřazené k zadaným údajům</span><strong>{escape(conclusion)}</strong><p>{escape(conclusion_detail)}</p></aside></div>
 <div class="transaction-strip"><div><span>Zdroj</span><strong>{escape(str(scope.get('source_country') or '—'))}</strong></div><div><span>Příjemce</span><strong>{escape(str(scope.get('recipient_country') or '—'))}</strong></div><div><span>Příjem</span><strong>{escape(_income_type_label(scope.get('income_type')))}</strong></div><div><span>Datum</span><strong>{_report_date(scope.get('transaction_date'))}</strong></div><div><span>Částka</span><strong>{amount_copy}</strong></div></div>
 <section><h2>Výpočet daně</h2>{calculation_html}</section>
 <section><h2>Použité právní pravidlo</h2><div class="summary-box"><p>{why_result}</p></div></section>

@@ -15,6 +15,8 @@ FORBIDDEN_PUBLIC_PHRASES = (
     "Odborné ověření",
     "ODBORNÉ OVĚŘENÍ",
     "Otevřít profesionální report",
+    "mechanický výpočet",
+    "mechanického výpočtu",
 )
 
 

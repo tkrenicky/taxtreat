@@ -109,7 +109,7 @@
       return ["Pravidlo přiřazené k zadaným údajům", "Podle použitého vnitrostátního pravidla je v TaxTreat při zadaných údajích přiřazeno pravidlo osvobození; jde o automatizované informační přiřazení, nikoli individuální daňové posouzení."];
     }
     const copies = {
-      FINAL: ["Výpočet dokončen", "TaxTreat podle zadaných údajů přiřadil evidované právní pravidlo a provedl mechanický výpočet."],
+      FINAL: ["Výpočet dokončen", "TaxTreat podle zadaných údajů přiřadil evidované právní pravidlo a provedl výpočet podle zadaných údajů."],
       REVIEW_REQUIRED: ["Je třeba doplnit údaje", "Doplňte konkrétní vstupní informace, aby TaxTreat mohl automatizovaně přiřadit relevantní pravidlo."],
       OUT_OF_SCOPE: ["Mimo podporovaný rozsah", "Transakce nespadá do aktuálně podporovaného rozsahu českých odchozích plateb."]
     };

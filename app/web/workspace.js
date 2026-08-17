@@ -912,7 +912,7 @@
     if (!reviewItems.length) {
       const item = document.createElement("div"); item.className = "action-item complete";
       const strong = document.createElement("strong"); strong.textContent = "Všechny údaje potřebné pro přiřazení pravidla jsou zadány";
-      const small = document.createElement("small"); small.textContent = "TaxTreat může z uvedených údajů zobrazit odpovídající pravidlo a mechanický výpočet.";
+      const small = document.createElement("small"); small.textContent = "TaxTreat může z uvedených údajů zobrazit odpovídající pravidlo a výpočet podle zadaných údajů.";
       item.append(strong, small); actions.append(item);
     }
     const citations = document.querySelector("#workspace-citations"); citations.replaceChildren();
