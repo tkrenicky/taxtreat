@@ -19,16 +19,11 @@ def render_report_html(report):
     result = report.get("result") or {}
     calculation = result.get("withholding_tax_calculation") or {}
 
-    # Keep the established accessible document name while the visible title
-    # describes the actual transaction.
     html = html.replace(
         "<h1>",
         '<h1 aria-label="Informace k české srážkové dani">',
         1,
     )
-
-    # Keep one unambiguous exact "Právní základ" heading for browser/PDF
-    # navigation and use a more descriptive label in the overview card.
     html = html.replace(
         "<span>Právní základ</span>",
         "<span>Použitý právní základ</span>",
@@ -39,18 +34,12 @@ def render_report_html(report):
         "<b>Právní základ a oficiální zdroje</b>",
         1,
     )
-
-    # Information-only positioning: describe what the product mapped from the
-    # entered facts without framing the output as advice or a recommendation.
     html = html.replace(
         '<span class="kicker">Applicable WHT rate</span>',
         '<span class="kicker">Pravidlo přiřazené k zadaným údajům</span><span class="result-caption">Applicable WHT rate</span>',
         1,
     )
 
-    # Preserve the complete canonical legal text in the report HTML. The visual
-    # source panel remains concise, while the full source text remains attached
-    # to the exported document for traceability and regression verification.
     canonical_texts = []
     for source in report.get("official_sources") or []:
         excerpt = str(source.get("excerpt") or "")
@@ -64,14 +53,11 @@ def render_report_html(report):
             1,
         )
 
-    # Use one clear sentence for a non-final output and never leak an internal
-    # reason code into the client-facing document.
     html = html.replace(
         "Zadané údaje zatím neumožňují přiřadit konkrétní sazbu nebo režim. Otevřené skutkové body jsou uvedeny dále v reportu.",
         "Zadané údaje zatím neumožňují přiřadit konkrétní pravidlo. Otevřené skutkové body jsou uvedeny dále v reportu.",
     )
 
-    # Make foreign-only taxation visibly distinct from a numeric 0% rate.
     foreign_only = result.get("tax_treatment") == "exclusive_foreign_taxation"
     if foreign_only:
         html = html.replace(
@@ -80,8 +66,6 @@ def render_report_html(report):
             1,
         )
 
-    # Add a compact calculation table below the headline cards. It is both more
-    # precise for the reader and keeps the established calculation contract.
     if calculation.get("status") == "CALCULATED":
         base = _display_number(calculation.get("gross_amount_czk"))
         tax = _display_number(calculation.get("withholding_tax_czk"))
@@ -89,23 +73,22 @@ def render_report_html(report):
         if foreign_only:
             rate_text = "Neuplatňuje se"
             tax_label = "Česká daň k odvodu"
+            rate_aria = ' aria-label="Sazba Neuplatňuje se"'
         else:
             rate_text = "—" if rate is None else f"{_display_number(rate)} %"
             tax_label = "Srážková daň"
+            rate_aria = ""
         detail = (
             '<div class="calculation-detail-wrap">'
             '<span class="kicker">Detail výpočtu</span>'
             '<table class="calculation-detail"><tbody>'
             f'<tr><th>Daňový základ</th><td>{base} Kč</td></tr>'
             f'<tr><th>{tax_label}</th><td>{tax} Kč</td></tr>'
-            f'<tr><th>Použitá sazba</th><td>{rate_text}</td></tr>'
+            f'<tr{rate_aria}><th>Použitá sazba</th><td>{rate_text}</td></tr>'
             '</tbody></table></div>'
         )
         html = html.replace('<div class="path">', detail + '<div class="path">', 1)
 
-    # Final visual layer: follow the supplied editorial tax-advisory template,
-    # not a generic SaaS dashboard. Use serif editorial headings, royal blue,
-    # warm cream/yellow fields, powder blue panels and coral illustration accents.
     visual_overrides = (
         ".brand{font-family:Georgia,'Times New Roman',serif;font-size:16px;letter-spacing:-.035em}"
         ".sheet{border-radius:6mm;border-color:#e9e4d9;background:#fffdf9}"
@@ -139,8 +122,6 @@ def render_report_html(report):
     )
     html = html.replace("</style>", visual_overrides + "</style>", 1)
 
-    # Recolour the decorative SVGs to the same blue/yellow/coral palette while
-    # leaving the green tax-result status untouched.
     html = html.replace("#14295f", "#1557d6")
     html = html.replace("#2f68ce", "#1557d6")
     html = html.replace("#e8f8ed", "#fff0bd")
