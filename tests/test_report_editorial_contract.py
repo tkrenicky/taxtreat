@@ -67,15 +67,16 @@ def test_report_uses_professional_czech_legal_reference():
     assert "Podle čl. 10 odst. 2 příslušné smlouvy o zamezení dvojího zdanění" in html
     assert "Skutkový bod" not in html
     assert "skutkový bod" not in html
+    assert "přiřazenému výsledku" not in html
 
 
-def test_report_is_four_page_client_document():
+def test_report_is_two_page_client_document():
     html = render_report_html(_sample_report())
-    assert "01 / 04" in html
-    assert "02 / 04" in html
-    assert "03 / 04" in html
-    assert "04 / 04" in html
-    assert "Právní zdroje" in html
+    assert "01 / 02" in html
+    assert "02 / 02" in html
+    assert "03 / 04" not in html
+    assert "04 / 04" not in html
+    assert "Právní zdroje, lhůty a související podklady" in html
     assert "Použité předpoklady" in html
     assert "Klíčové právní reference" not in html
 
@@ -101,6 +102,8 @@ def test_client_report_hides_release_metadata_and_uses_one_language():
     assert "Transaction details" not in html
     assert "Decision path" not in html
     assert "Report details" not in html
+    assert "Výsledek k dispozici" not in html
+    assert "Výsledek srážkové daně" not in html
 
 
 def test_automation_wording_is_not_repeated_in_report_body():
