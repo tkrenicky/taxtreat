@@ -88,20 +88,36 @@ _POLISH_CSS = r"""
 .flow-principle {
     display: none !important;
 }
-.lower-grid {
-    margin-top: 5.5mm;
+/* Spread the existing page-2 content deliberately instead of leaving one trailing void. */
+.page:nth-of-type(2) .sheet {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 16mm;
 }
-.related-sources {
-    margin-top: 5mm;
+.page:nth-of-type(2) .header,
+.page:nth-of-type(2) .section-head,
+.page:nth-of-type(2) .legal-source,
+.page:nth-of-type(2) .lower-grid,
+.page:nth-of-type(2) .related-sources,
+.page:nth-of-type(2) .hierarchy-note,
+.page:nth-of-type(2) .disclaimer {
+    flex: 0 0 auto;
+}
+.page:nth-of-type(2) .lower-grid,
+.page:nth-of-type(2) .related-sources,
+.page:nth-of-type(2) .hierarchy-note,
+.page:nth-of-type(2) .disclaimer {
+    margin-top: 0;
+}
+.page:nth-of-type(2) .related-sources {
     padding-top: 3.6mm;
     padding-bottom: 3.6mm;
 }
-.hierarchy-note {
-    margin-top: 5mm;
+.page:nth-of-type(2) .hierarchy-note {
     padding: 3.8mm 4mm;
 }
-.disclaimer {
-    margin-top: 5mm;
+.page:nth-of-type(2) .disclaimer {
     padding-top: 3.2mm;
 }
 """
