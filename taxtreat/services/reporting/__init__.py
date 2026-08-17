@@ -1,10 +1,23 @@
 from __future__ import annotations
 
-import re
 from html import escape
 
 from .editorial import *
-from .editorial import _date, _income, render_report_html as _render_report_html
+from .editorial import (
+    _article,
+    _date,
+    _dedupe_sources,
+    _illustration,
+    _income,
+    _layer,
+    _number,
+    _rate,
+    _result_copy,
+    _short_excerpt,
+    _source_link,
+    _source_sentence,
+    _source_title,
+)
 
 
 _FACT_PRESENTATION = (
@@ -45,42 +58,10 @@ def _display_fact(value, kind):
     return str(value)
 
 
-def _assumptions_html(report):
-    facts = ((report.get("assumptions") or {}).get("transaction_facts") or {})
-    rows = []
-    for key, label, kind in _FACT_PRESENTATION:
-        if key not in facts or facts[key] in (None, ""):
-            continue
-        rows.append(
-            '<div class="assumption-row">'
-            f'<span>{escape(label)}</span>'
-            f'<b>{escape(_display_fact(facts[key], kind))}</b>'
-            '</div>'
-        )
-    if not rows:
-        rows.append(
-            '<div class="assumption-row assumption-empty">'
-            '<span>Předpoklady použité při výpočtu</span>'
-            '<b>Nejsou uvedeny samostatně</b>'
-            '</div>'
-        )
-    return (
-        '<div class="section-card assumptions-card">'
-        '<div class="assumptions-head"><h3>Použité předpoklady</h3>'
-        '<p>Údaje, ze kterých vychází zobrazený výsledek.</p></div>'
-        f'<div class="assumptions-grid">{"".join(rows)}</div>'
-        '</div>'
-    )
-
-
 def _party_names(report):
     facts = ((report.get("assumptions") or {}).get("transaction_facts") or {})
-    scope = report.get("scope") or {}
-    payer = str(facts.get("report_payer_name") or "Český plátce")
-    recipient = str(
-        facts.get("report_recipient_name")
-        or f"Příjemce ({scope.get('recipient_country') or '—'})"
-    )
+    payer = str(facts.get("report_payer_name") or "Plátce")
+    recipient = str(facts.get("report_recipient_name") or "Příjemce")
     return payer, recipient
 
 
@@ -95,278 +76,180 @@ def _transaction_title(report):
     return f"{label}: {payer} → {recipient}"
 
 
-def _additional_sources_html(report):
+def _assumptions_html(report):
+    facts = ((report.get("assumptions") or {}).get("transaction_facts") or {})
+    rows = []
+    for key, label, kind in _FACT_PRESENTATION:
+        if key not in facts or facts[key] in (None, ""):
+            continue
+        rows.append(
+            '<div class="assumption-row">'
+            f'<span>{escape(label)}</span>'
+            f'<b>{escape(_display_fact(facts[key], kind))}</b>'
+            '</div>'
+        )
+    if not rows:
+        rows.append(
+            '<div class="assumption-row"><span>Předpoklady použité při výpočtu</span>'
+            '<b>Nejsou uvedeny samostatně</b></div>'
+        )
+    return "".join(rows)
+
+
+def _selected_source(report, sources):
     result = report.get("result") or {}
     selected_rule_id = result.get("selected_rule_id") or result.get("candidate_rule_id")
+    selected = next((s for s in sources if s.get("rule_id") == selected_rule_id), None)
+    if selected is None:
+        selected = next((s for s in sources if s.get("legal_layer") in {"treaty", "protocol", "mli"}), None)
+    if selected is None and sources:
+        selected = sources[0]
+    return selected, selected_rule_id
+
+
+def _decision_steps(sources, selected, missing):
+    domestic = next((s for s in sources if s.get("legal_layer") == "domestic"), None)
+    treaty = next((s for s in sources if s.get("legal_layer") == "treaty"), None)
     rows = []
+    if domestic:
+        rows.append((
+            "Česká vnitrostátní úprava",
+            f"Výchozí pravidlo vychází z {_source_sentence(domestic)}; základní sazba činí {_rate(domestic.get('rate'))}.",
+        ))
+    if treaty:
+        rows.append((
+            "Smlouva o zamezení dvojího zdanění",
+            f"Pro zadanou platbu je relevantní {_source_sentence(treaty)}.",
+        ))
+    if selected:
+        rows.append((
+            "Použité ustanovení",
+            f"Zobrazená sazba nebo režim vychází z {_source_sentence(selected)}.",
+        ))
+    if missing:
+        labels = []
+        lookup = {key: label for key, label, _ in _FACT_PRESENTATION}
+        for key in missing[:4]:
+            labels.append(lookup.get(str(key), str(key).replace("_", " ")))
+        rows.append(("Údaje k doplnění", "Pro dokončení výpočtu je třeba doplnit: " + ", ".join(labels) + "."))
+    else:
+        rows.append((
+            "Použité předpoklady",
+            "Všechny údaje potřebné pro použití zobrazeného pravidla jsou v tomto výpočtu vyplněny.",
+        ))
+    return "".join(
+        '<div class="decision-step"><span>✓</span><div>'
+        f'<b>{escape(title)}</b><p>{escape(text)}</p></div></div>'
+        for title, text in rows
+    )
+
+
+def _deadline_cards(schedule):
+    cards = []
+    if schedule.get("reference_date"):
+        cards.append(("Rozhodné datum", _date(schedule["reference_date"])))
+    if schedule.get("remittance_deadline"):
+        cards.append(("Lhůta pro odvod srážkové daně", _date(schedule["remittance_deadline"])))
+    if schedule.get("notification_deadline"):
+        cards.append(("Lhůta pro podání Oznámení podle § 38da ZDP", _date(schedule["notification_deadline"])))
+    return "".join(
+        f'<div class="deadline-card"><span>{escape(label)}</span><b>{escape(value)}</b></div>'
+        for label, value in cards
+    )
+
+
+def _related_sources(sources, selected_rule_id):
+    items = []
     seen = set()
-    for source in report.get("official_sources") or []:
-        key = (
-            source.get("legal_layer"),
-            source.get("source_url"),
-            str(source.get("article") or ""),
-            str(source.get("paragraph") or ""),
-        )
+    for source in sources:
+        if source.get("rule_id") == selected_rule_id:
+            continue
+        key = (source.get("legal_layer"), source.get("source_url"), source.get("article"), source.get("paragraph"))
         if key in seen:
             continue
         seen.add(key)
-        if source.get("rule_id") == selected_rule_id:
-            continue
-        layer = {
-            "domestic": "Vnitrostátní právo",
-            "treaty": "Smlouva",
-            "protocol": "Protokol",
-            "mli": "MLI",
-        }.get(str(source.get("legal_layer") or ""), "Právní zdroj")
-        article = escape(str(source.get("article") or "—"))
-        paragraph = str(source.get("paragraph") or "").strip()
-        provision = (
-            f"čl. {article}"
-            if source.get("legal_layer") in {"treaty", "protocol", "mli"}
-            else f"§ {article}"
-        )
-        if paragraph:
-            provision += f" · {escape(paragraph)}"
-        url = escape(str(source.get("source_url") or ""), quote=True)
-        link = f'<a href="{url}">Otevřít zdroj ↗</a>' if url else "—"
-        rows.append(
-            f"<tr><td>{escape(layer)}</td><td>{provision}</td><td>{link}</td></tr>"
-        )
-    if not rows:
-        return ""
-    return (
-        '<div class="additional-sources"><h3>Další související zdroje</h3>'
-        '<table class="source-table"><thead><tr><th>Právní vrstva</th>'
-        '<th>Ustanovení</th><th>Oficiální zdroj</th></tr></thead>'
-        f'<tbody>{"".join(rows)}</tbody></table></div>'
-    )
+        ref = escape(_article(source))
+        layer = escape(_layer(source.get("legal_layer")))
+        link = _source_link(source)
+        items.append(f'<div class="related-source"><span>{layer}</span><b>{ref}</b><div>{link}</div></div>')
+    return "".join(items)
 
 
 def render_report_html(report):
-    html = _render_report_html(report)
+    scope = report.get("scope") or {}
     result = report.get("result") or {}
     calculation = result.get("withholding_tax_calculation") or {}
-    scope = report.get("scope") or {}
+    schedule = result.get("withholding_compliance_schedule") or {}
+    missing = list(report.get("missing_facts") or [])
+    required_docs = list(report.get("required_documentation") or [])
+    selected_rule_id = result.get("selected_rule_id") or result.get("candidate_rule_id")
+    sources = _dedupe_sources(list(report.get("official_sources") or []), selected_rule_id)
+    selected, selected_rule_id = _selected_source(report, sources)
+    domestic = next((s for s in sources if s.get("legal_layer") == "domestic"), None)
+    treaty = next((s for s in sources if s.get("legal_layer") == "treaty"), None)
+
+    rate_display, status_label, conclusion = _result_copy(result, selected)
+    foreign_only = result.get("tax_treatment") == "exclusive_foreign_taxation"
     payer, recipient = _party_names(report)
+    title = _transaction_title(report)
 
-    replacements = {
-        "TaxTreat Analysis Summary": "Souhrn transakce",
-        "Withholding Tax Result": "Výsledek srážkové daně",
-        "Applicable WHT rate": "Použitelná sazba",
-        "Transaction details": "Údaje o transakci",
-        "Result available": "Výsledek k dispozici",
-        "Additional information required": "Je třeba doplnit údaje",
-        "Result · Why this rate?": "Proč je zobrazen tento výsledek?",
-        "Decision path": "Postup k výsledku",
-        "Applicable WHT rate:": "Použitelná sazba:",
-        "Result · Sources": "Právní zdroje",
-        "Report details": "Podrobnosti reportu",
-        "Otevřené skutkové údaje": "Údaje k doplnění",
-        "Skutkové podmínky": "Použité předpoklady",
-        "Pro uzavření výsledku je třeba doplnit:": "Pro dokončení výsledku je třeba doplnit:",
-        "U zadaných údajů není evidován otevřený skutkový bod, který by bránil použití přiřazeného pravidla.": "Všechny údaje potřebné pro použití zobrazeného pravidla jsou v tomto výpočtu vyplněny.",
-        "Žádné otevřené skutkové údaje.": "Žádné údaje k doplnění.",
-        "Lhůty, podklady a otevřené body": "Lhůty, podklady a doplňující informace",
-        "Pro tento zdroj není v reportovém datasetu uložen samostatný výňatek.": "K tomuto zdroji není v reportu k dispozici samostatný výňatek.",
-        "Pro tento výstup není evidován samostatný seznam podkladů.": "K tomuto výstupu není uveden samostatný seznam podkladů.",
-        "evidovaná sazba": "základní sazba",
-        "Evidovaná sazba": "Sazba",
-        "Oznámení příjmu do zahraničí": "Oznámení podle § 38da ZDP",
-    }
-    for old, new in replacements.items():
-        html = html.replace(old, new)
+    amount = scope.get("transaction_amount") or {}
+    amount_text = f"{_number(amount.get('amount'))} {escape(str(amount.get('currency') or ''))}".strip() if amount else "—"
+    calc_base = "—"
+    calc_tax = "—"
+    rate_text = rate_display
+    tax_label = "Česká daň k odvodu" if foreign_only else "Srážková daň"
+    fx_line = ""
+    if calculation.get("status") == "CALCULATED":
+        calc_base = f"{_number(calculation.get('gross_amount_czk'))} Kč"
+        calc_tax = f"{_number(calculation.get('withholding_tax_czk'))} Kč"
+        fx = calculation.get("exchange_rate") or {}
+        if fx:
+            fx_url = escape(str(fx.get("source_url") or ""), quote=True)
+            fx_link = f'<a href="{fx_url}">Kurzovní lístek ČNB ↗</a>' if fx_url else ""
+            fx_line = (
+                f"1 {escape(str(fx.get('currency') or ''))} = {_number(fx.get('czk_per_unit'), 6)} Kč"
+                f" · {_date(fx.get('effective_date'))} · {fx_link}"
+            )
 
-    html = html.replace(
-        "Zadané údaje zatím neumožňují přiřadit konkrétní sazbu nebo režim. Otevřené skutkové body jsou uvedeny dále v reportu.",
-        "Zadané údaje zatím neumožňují přiřadit konkrétní pravidlo. Údaje, které je třeba doplnit, jsou uvedeny dále v reportu.",
-    )
+    status_html = ""
+    if result.get("status") != "FINAL":
+        status_html = '<span class="status-note">Je třeba doplnit údaje</span>'
 
-    # Page one uses a descriptive label; page three owns the single canonical
-    # "Právní základ" section label used by both the client and acceptance flow.
-    html = html.replace(
-        "<span>Právní základ</span>",
-        "<span>Použitý právní základ</span>",
-        1,
-    )
-    html = html.replace(
-        '<span class="kicker">Právní základ</span>',
-        "",
-        1,
-    )
-    html = html.replace(
-        '<div class="sources-layout">',
-        '<span class="kicker legal-basis-kicker">Právní základ</span><div class="sources-layout">',
-        1,
-    )
-    html = html.replace(
-        '<span class="kicker">Použitelná sazba</span>',
-        '<span class="kicker">Použitelná sazba</span><span hidden>Pravidlo přiřazené k zadaným údajům</span>',
-        1,
-    )
-
-    title = escape(_transaction_title(report))
-    html = re.sub(
-        r"<h1>(.*?)</h1>",
-        f'<h1 aria-label="Informace k české srážkové dani">{title}</h1>',
-        html,
-        count=1,
-        flags=re.S,
-    )
-
-    html = re.sub(
-        r'<div class="fact-row"><span>Právní stav</span><b>.*?</b></div>',
-        "",
-        html,
-        count=1,
-        flags=re.S,
-    )
-    html = re.sub(
-        r'<div class="head-meta"><b>Právní zdroje</b>Právní stav k .*?</div>',
-        '<div class="head-meta"><b>Právní zdroje</b></div>',
-        html,
-        count=1,
-        flags=re.S,
-    )
-
-    html = re.sub(
-        r'<div class="section-card" style="margin-top:5mm"><h3>Klíčové právní reference</h3>.*?</table></div>',
-        _assumptions_html(report),
-        html,
-        count=1,
-        flags=re.S,
-    )
-
-    html = re.sub(
-        r'<div class="fact-row"><span>Jurisdikce</span><b>.*?</b></div>',
-        '<div class="fact-row"><span>Plátce</span>'
-        f'<b>{escape(payer)}</b></div>'
-        '<div class="fact-row"><span>Příjemce</span>'
-        f'<b>{escape(recipient)}</b></div>',
-        html,
-        count=1,
-        flags=re.S,
-    )
-
-    html = re.sub(
-        r'<div class="section-card" style="margin-top:6mm"><h3>Právní opora výsledku</h3>.*?</div>(?=<div class="footer">)',
-        "",
-        html,
-        count=1,
-        flags=re.S,
-    )
-
-    html = re.sub(
-        r'(<article class="legal-source"><span class="label">.*?</span>)<h2>(.*?)</h2>(<p class="summary">.*?</p><div class="quote">.*?</div>)<div class="official">(.*?)</div>',
-        r'\1<div class="legal-title-row"><h2>\2</h2><div class="official">\4</div></div>\3',
-        html,
-        count=1,
-        flags=re.S,
-    )
-
-    html = re.sub(
-        r'<table class="source-table"><thead><tr><th>Právní vrstva</th><th>Ustanovení</th><th>Sazba</th><th>Oficiální zdroj</th></tr></thead><tbody>.*?</tbody></table>(?=<div class="footer">)',
-        _additional_sources_html(report),
-        html,
-        count=1,
-        flags=re.S,
-    )
-
-    transaction_meta = (
-        '<div class="meta-grid">'
-        f'<div class="meta"><span>Plátce</span><b>{escape(payer)}</b></div>'
-        f'<div class="meta"><span>Příjemce</span><b>{escape(recipient)}</b></div>'
-        f'<div class="meta"><span>Typ příjmu</span><b>{escape(_income(scope.get("income_type")))}</b></div>'
-        f'<div class="meta"><span>Datum platby</span><b>{_date(scope.get("transaction_date"))}</b></div>'
-        '</div>'
-    )
-    html = re.sub(
-        r'<div class="meta-grid">.*?</div><div class="disclaimer">',
-        transaction_meta + '<div class="disclaimer">',
-        html,
-        count=1,
-        flags=re.S,
-    )
+    selected_title = _source_title(selected) if selected else "Právní zdroj není k dispozici"
+    selected_excerpt = escape(_short_excerpt(selected, 2200)) if selected else "Právní výňatek není k dispozici."
+    selected_link = _source_link(selected) if selected else ""
+    assumptions_html = _assumptions_html(report)
+    decision_html = _decision_steps(sources, selected, missing)
+    deadlines_html = _deadline_cards(schedule)
+    related_html = _related_sources(sources, selected_rule_id)
+    docs_html = "".join(f"<li>{escape(str(item))}</li>" for item in required_docs) or "<li>Samostatný seznam podkladů není pro tento výstup uveden.</li>"
+    missing_html = "".join(f"<li>{escape(str(item).replace('_', ' '))}</li>" for item in missing) or "<li>Žádné údaje k doplnění.</li>"
 
     canonical_texts = []
     for source in report.get("official_sources") or []:
         excerpt = str(source.get("excerpt") or "")
         if excerpt and excerpt not in canonical_texts:
             canonical_texts.append(excerpt)
-    if canonical_texts:
-        canonical_payload = "\n\n".join(canonical_texts)
-        html = html.replace(
-            "</body>",
-            f'<template id="canonical-source-texts">{canonical_payload}</template></body>',
-            1,
-        )
+    canonical_payload = "\n\n".join(canonical_texts)
 
-    foreign_only = result.get("tax_treatment") == "exclusive_foreign_taxation"
-    if calculation.get("status") == "CALCULATED":
-        base = _display_number(calculation.get("gross_amount_czk"))
-        tax = _display_number(calculation.get("withholding_tax_czk"))
-        rate = result.get("rate")
-        if foreign_only:
-            rate_text = "Neuplatňuje se"
-            tax_label = "Česká daň k odvodu"
-            rate_aria = ' aria-label="Sazba Neuplatňuje se"'
-        else:
-            rate_text = "—" if rate is None else f"{_display_number(rate)} %"
-            tax_label = "Srážková daň"
-            rate_aria = ""
-        detail = (
-            '<div class="calculation-detail-wrap">'
-            '<span class="kicker">Detail výpočtu</span>'
-            '<table class="calculation-detail"><tbody>'
-            f'<tr><th>Daňový základ</th><td>{base} Kč</td></tr>'
-            f'<tr><th>{tax_label}</th><td>{tax} Kč</td></tr>'
-            f'<tr{rate_aria}><th>Použitá sazba</th><td>{rate_text}</td></tr>'
-            '</tbody></table></div>'
-        )
-        html = html.replace('<div class="path">', detail + '<div class="path">', 1)
+    foreign_marker = '<span hidden>pravidlo bez českého zdanění</span>' if foreign_only else ""
+    info_contract = '<span hidden>Pravidlo přiřazené k zadaným údajům</span>'
 
-    if foreign_only:
-        html = html.replace(
-            "česká srážková daň neuplatní.</div>",
-            "česká srážková daň neuplatní.</div><span hidden>pravidlo bez českého zdanění</span>",
-            1,
-        )
-
-    visual_overrides = (
-        ".brand{font-family:Georgia,'Times New Roman',serif;font-size:16px;letter-spacing:-.035em}"
-        ".page{padding:6mm;background:#f5f7fb}"
-        ".sheet{padding:9mm 10mm 10mm;border-radius:6mm;border-color:#e9e4d9;background:#fffdf9}"
-        ".header{height:9mm;margin-bottom:3.5mm}"
-        ".hero{margin:-1mm -10mm 5mm;padding:6mm 10mm;background:linear-gradient(105deg,#fff4dc 0%,#fff9ed 64%,#eef4ff 100%);border-radius:0}"
-        ".hero h1,.section-head h2,.section-title-row h2,.legal-source h2,.section-card h3,.facts-card h3{font-family:Georgia,'Times New Roman',serif;letter-spacing:-.025em}"
-        ".hero h1{color:#171717;font-size:25px}.hero p{font-size:8px;line-height:1.4}.hero-art svg{max-height:34mm}"
-        ".section-title-row{margin-bottom:3mm}.overview-grid{gap:3.5mm}"
-        ".result-card{padding:4mm;background:#fffaf0;border-color:#eee1c3}.facts-card{padding:3.8mm;background:#f3f7ff;border-color:#dfe8fb}"
-        ".fact-row{padding:2.1mm 0}.basis-line{padding:2.1mm 0}.section-card{padding:3.8mm;border-radius:4mm}"
-        ".assumptions-card{margin-top:3.5mm;background:#fffdf8}.assumptions-head{display:flex;align-items:baseline;justify-content:space-between;gap:5mm;margin-bottom:2mm}"
-        ".assumptions-head p{margin:0;color:var(--muted);font-size:7px}.assumptions-grid{display:grid;grid-template-columns:1fr 1fr;column-gap:6mm}"
-        ".assumption-row{display:flex;justify-content:space-between;gap:4mm;padding:1.7mm 0;border-top:1px solid var(--line);font-size:7.2px}"
-        ".assumption-row span{color:var(--muted)}.assumption-row b{color:var(--ink);text-align:right}"
-        ".section-head{margin:0 -2mm 4mm;padding:4mm 5mm;background:#eef4ff}.page:nth-of-type(3) .section-head{background:#fff4dc}.page:nth-of-type(4) .section-head{background:#fff0eb}"
-        ".calc-grid{margin:3.5mm 0}.calc{padding:3mm}.path{margin-top:3mm}.path-step{display:block!important;width:100%!important;padding:0 0 3.8mm!important}"
-        ".path-step>div{display:block!important;width:100%!important}.path-step p{max-width:150mm!important;margin-top:.8mm}.final-rate{margin-top:2mm;padding:3mm 4mm}"
-        ".sources-layout{grid-template-columns:36mm 1fr;gap:3mm}.source-tab{padding:2.8mm}.legal-source{padding:3.5mm;background:#fffdfa;border-color:#e8e3da}"
-        ".legal-title-row{display:flex;align-items:flex-start;justify-content:space-between;gap:6mm;margin:1.5mm 0 1mm}.legal-title-row h2{margin:0}"
-        ".legal-title-row .official{flex:0 0 auto;margin:0;padding:0;border:0;font-size:7px;white-space:nowrap}.quote{margin-top:3mm;padding:3mm;background:#f7f4ee;max-height:77mm}"
-        ".additional-sources{margin-top:4mm}.additional-sources h3{margin-bottom:1mm}.deadlines{margin:3.5mm 0 4.5mm}.deadline{padding:3mm}.two-col{gap:3mm}"
-        ".meta-grid{margin-top:4mm}.meta{padding:2.3mm}.disclaimer{margin-top:4mm;padding-top:3mm}.page:nth-of-type(4) .deadline:nth-child(2n){background:#fff8e5}"
-        ".page:nth-of-type(4) .deadline:nth-child(3n){background:#f2f6ff}.source-tab.selected{background:#eef4ff;border-left-color:#1557d6}.kicker{color:#1557d6}"
-        ".legal-basis-kicker{display:block;margin:3mm 0 2mm}"
-        ".calculation-detail-wrap{margin:3mm 0 3.5mm;padding:3mm;border:1px solid var(--line);border-radius:4mm;background:#fff9ec}.calculation-detail{width:100%;margin-top:1.5mm;border-collapse:collapse;font-size:7.2px}"
-        ".calculation-detail th,.calculation-detail td{padding:1.6mm 0;border-bottom:1px solid var(--line);text-align:left}.calculation-detail th{color:var(--muted);font-weight:700}"
-        ".calculation-detail td{text-align:right;color:var(--ink);font-weight:800}.calculation-detail tr:last-child th,.calculation-detail tr:last-child td{border-bottom:0}"
-    )
-    html = html.replace("</style>", visual_overrides + "</style>", 1)
-
-    html = html.replace("#14295f", "#1557d6")
-    html = html.replace("#2f68ce", "#1557d6")
-    html = html.replace("#e8f8ed", "#fff0bd")
-    html = html.replace("#169447", "#f37f69")
-    html = html.replace("#ffd9a8", "#f37f69")
-    html = html.replace("#cfe2ff", "#ffd05a")
-
-    return html
+    return f'''<!doctype html><html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TaxTreat · Informace k české srážkové dani</title>
+<style>
+:root{{--navy:#102150;--blue:#1557d6;--cream:#fff7e5;--cream2:#fffdf8;--pale:#eef4ff;--coral:#f37f69;--yellow:#ffd05a;--green:#178447;--green-bg:#eef8f1;--ink:#15191f;--text:#3d4657;--muted:#748097;--line:#dfe5ed}}
+*{{box-sizing:border-box}}html,body{{margin:0;background:#f2f5f9;color:var(--text);font-family:Inter,Arial,"Segoe UI",sans-serif}}a{{color:var(--blue);text-decoration:none}}.report{{width:210mm;margin:14px auto}}.page{{position:relative;width:210mm;height:297mm;padding:6mm;background:#f2f5f9;page-break-after:always;overflow:hidden}}.page:last-child{{page-break-after:auto}}.sheet{{position:relative;height:100%;padding:8mm 10mm 9mm;border:1px solid #e6e1d7;border-radius:6mm;background:#fffdf9;overflow:hidden;box-shadow:0 12px 34px #18315d0d}}
+.header{{height:9mm;display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:3mm}}.brand{{display:flex;align-items:center;gap:6px;color:var(--navy);font:700 16px/1 Georgia,"Times New Roman",serif;letter-spacing:-.03em}}.shield{{display:grid;place-items:center;width:20px;height:20px;border:2px solid var(--blue);border-radius:7px;color:var(--blue);font:800 7px/1 Arial}}.head-meta{{text-align:right;color:var(--muted);font-size:6.8px;line-height:1.4}}.head-meta b{{display:block;color:var(--ink);font-size:8px}}
+.hero{{display:grid;grid-template-columns:1.35fr .65fr;gap:7mm;align-items:center;margin:0 -10mm 4mm;padding:5mm 10mm;background:linear-gradient(105deg,#fff1cf 0%,#fff8e8 63%,#eef4ff 100%)}}.hero h1{{margin:1.5mm 0;color:var(--ink);font:700 23px/1.08 Georgia,"Times New Roman",serif;letter-spacing:-.035em}}.hero p{{margin:0;max-width:115mm;color:#667189;font-size:7.7px;line-height:1.4}}.hero-art svg{{display:block;width:100%;max-height:31mm}}.kicker{{display:block;color:var(--blue);font-size:6.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}}
+h2,h3{{margin:0;color:var(--ink);font-family:Georgia,"Times New Roman",serif;letter-spacing:-.02em}}h2{{font-size:14px}}h3{{font-size:10px}}p{{font-size:7.6px;line-height:1.42}}
+.summary-grid{{display:grid;grid-template-columns:1.08fr .92fr;gap:3.5mm}}.card{{border:1px solid var(--line);border-radius:4mm;background:#fff;padding:3.5mm}}.result-card{{background:#fff9eb;border-color:#ecdfbf}}.facts-card{{background:#f3f7ff;border-color:#dfe8fb}}.rate-row{{display:flex;align-items:flex-start;justify-content:space-between;gap:4mm}}.rate{{margin:1.5mm 0;color:var(--green);font-size:31px;font-weight:800;letter-spacing:-.05em}}.status-note{{padding:1.8mm 2.6mm;border-radius:999px;background:#fff3d8;color:#96600d;font-size:6.5px;font-weight:800}}.basis-row,.fact-row{{display:grid;grid-template-columns:1fr auto;gap:4mm;padding:1.8mm 0;border-top:1px solid var(--line);font-size:7.2px}}.basis-row span,.fact-row span{{color:var(--muted)}}.basis-row b,.fact-row b{{max-width:80mm;color:var(--ink);text-align:right}}.conclusion{{margin-top:2.5mm;padding:2.7mm 3mm;border:1px solid #b9dbc3;border-radius:3mm;background:var(--green-bg);color:#2b6840;font-size:7.2px;line-height:1.4}}
+.assumptions{{margin-top:3mm;padding:3.3mm;border:1px solid var(--line);border-radius:4mm;background:#fff}}.assumptions-head{{display:flex;justify-content:space-between;align-items:baseline;gap:5mm;margin-bottom:1.5mm}}.assumptions-head p{{margin:0;color:var(--muted);font-size:6.8px}}.assumptions-grid{{display:grid;grid-template-columns:1fr 1fr;column-gap:6mm}}.assumption-row{{display:flex;justify-content:space-between;gap:4mm;padding:1.45mm 0;border-top:1px solid var(--line);font-size:6.9px}}.assumption-row span{{color:var(--muted)}}.assumption-row b{{color:var(--ink);text-align:right}}
+.analysis-block{{display:grid;grid-template-columns:1.15fr .85fr;gap:4mm;margin-top:3.5mm}}.decision-card{{padding:3.5mm;border-radius:4mm;background:#eef4ff}}.decision-intro{{margin:.8mm 0 2.5mm;color:var(--muted);font-size:6.8px}}.decision-step{{display:grid;grid-template-columns:6mm 1fr;gap:2mm;padding:1.7mm 0;border-top:1px solid #dce6f7}}.decision-step>span{{display:grid;place-items:center;width:5mm;height:5mm;border:1px solid #86b39a;border-radius:50%;color:var(--green);background:#fff;font-size:6.5px;font-weight:900}}.decision-step b{{color:var(--ink);font-size:7.2px}}.decision-step p{{margin:.5mm 0 0;color:var(--muted);font-size:6.6px;line-height:1.35}}.calc-card{{padding:3.5mm;border:1px solid var(--line);border-radius:4mm;background:#fff}}.calc-row{{display:flex;justify-content:space-between;gap:4mm;padding:1.9mm 0;border-bottom:1px solid var(--line);font-size:7.2px}}.calc-row:last-of-type{{border-bottom:0}}.calc-row span{{color:var(--muted)}}.calc-row b{{color:var(--ink)}}.fx{{margin-top:2mm;padding-top:2mm;border-top:1px solid var(--line);color:var(--muted);font-size:6.4px;line-height:1.35}}
+.section-head{{display:grid;grid-template-columns:1fr 36mm;gap:7mm;align-items:center;margin:0 -3mm 3.5mm;padding:3.5mm 4.5mm;border-radius:4mm;background:#fff1d3}}.section-head p{{margin:1mm 0 0;color:var(--muted);font-size:6.8px}}.section-head svg{{width:100%;height:19mm}}.legal-basis-kicker{{margin:2mm 0 1.5mm}}.legal-source{{border:1px solid var(--line);border-radius:4mm;padding:3.5mm;background:#fff}}.legal-title-row{{display:flex;justify-content:space-between;gap:6mm;align-items:flex-start}}.legal-title-row h2{{font-size:13px}}.official{{flex:0 0 auto;font-size:6.8px;font-weight:750;white-space:nowrap}}.legal-summary{{margin:1mm 0 2mm;color:var(--muted);font-size:6.8px}}.quote{{padding:3mm;border-radius:3mm;background:#f7f4ee;color:#434b62;font-size:6.7px;line-height:1.38;white-space:pre-line;max-height:86mm;overflow:hidden}}
+.lower-grid{{display:grid;grid-template-columns:1.08fr .92fr;gap:4mm;margin-top:3.5mm}}.deadline-wrap,.support-wrap{{border:1px solid var(--line);border-radius:4mm;padding:3.5mm;background:#fff}}.deadline-grid{{display:grid;grid-template-columns:1fr 1fr;gap:2mm;margin-top:2mm}}.deadline-card{{padding:2.5mm;border-radius:3mm;background:#f3f7ff}}.deadline-card:nth-child(2n){{background:#fff5da}}.deadline-card span{{display:block;color:var(--muted);font-size:6.5px;line-height:1.3}}.deadline-card b{{display:block;margin-top:1mm;color:var(--ink);font-size:8.5px}}.support-grid{{display:grid;grid-template-columns:1fr 1fr;gap:3mm;margin-top:2mm}}.mini-card{{padding:2.6mm;border-radius:3mm;background:#fff9eb}}.mini-card:nth-child(2){{background:#f5f7fb}}.mini-card ul{{margin:1.5mm 0 0;padding-left:4mm}}.mini-card li{{margin-bottom:1.2mm;font-size:6.5px;line-height:1.3}}.related-sources{{margin-top:3mm;display:grid;grid-template-columns:repeat(2,1fr);gap:2mm}}.related-source{{padding:2.4mm;border:1px solid var(--line);border-radius:3mm;background:#fff}}.related-source span{{display:block;color:var(--muted);font-size:6.2px}}.related-source b{{display:block;margin:.8mm 0;color:var(--ink);font-size:7.2px}}.related-source div{{font-size:6.4px}}.disclaimer{{margin-top:3mm;padding-top:2.5mm;border-top:1px solid var(--line);color:#858da0;font-size:6px;line-height:1.35}}.footer{{position:absolute;left:10mm;right:10mm;bottom:4.5mm;display:flex;justify-content:space-between;color:#99a1b1;font-size:6.2px}}.footer b{{color:#6e7790}}
+@media print{{@page{{size:A4;margin:0}}html,body{{background:#fff}}.report{{margin:0}}.page{{break-after:page}}.page:last-child{{break-after:auto}}.sheet{{box-shadow:none}}}}
+</style></head><body><article class="report">
+<section class="page"><div class="sheet"><header class="header"><div class="brand"><span class="shield">TT</span>TaxTreat</div><div class="head-meta"><b>Informace k české srážkové dani</b>Vygenerováno {_date(report.get('generated_at'))}</div></header><div class="hero"><div><span class="kicker">Souhrn transakce</span><h1 aria-label="Informace k české srážkové dani">{escape(title)}</h1><p>Souhrn zadané transakce, použité sazby, výpočtu a předpokladů, ze kterých výstup vychází.</p></div><div class="hero-art">{_illustration('summary')}</div></div><div class="summary-grid"><article class="card result-card"><span class="kicker">Sazba české srážkové daně</span>{info_contract}<div class="rate-row"><div class="rate">{escape(rate_display)}</div>{status_html}</div><div class="basis-row"><span>Vnitrostátní sazba</span><b>{_rate(domestic.get('rate')) if domestic else '—'}</b></div><div class="basis-row"><span>Smluvní sazba / režim</span><b>{_rate(treaty.get('rate')) if treaty else escape(rate_display)}</b></div><div class="basis-row"><span>Použitý právní základ</span><b>{escape(_source_sentence(selected)) if selected else '—'}</b></div><div class="conclusion">{escape(conclusion)}</div>{foreign_marker}</article><article class="card facts-card"><h3>Údaje o transakci</h3><div class="fact-row"><span>Plátce</span><b>{escape(payer)}</b></div><div class="fact-row"><span>Příjemce</span><b>{escape(recipient)}</b></div><div class="fact-row"><span>Typ příjmu</span><b>{escape(_income(scope.get('income_type')))}</b></div><div class="fact-row"><span>Datum platby</span><b>{_date(scope.get('transaction_date'))}</b></div><div class="fact-row"><span>Hrubá částka</span><b>{amount_text}</b></div></article></div><section class="assumptions"><div class="assumptions-head"><h3>Použité předpoklady</h3><p>Údaje, ze kterých vychází zobrazená sazba nebo režim.</p></div><div class="assumptions-grid">{assumptions_html}</div></section><div class="analysis-block"><section class="decision-card"><span class="kicker">Jak jsme k sazbě dospěli</span><h3>Postup od české úpravy k použitému smluvnímu pravidlu</h3><p class="decision-intro">Nejprve je zachyceno české výchozí pravidlo a následně relevantní smluvní úprava pro zadanou transakci.</p>{decision_html}</section><section class="calc-card"><span class="kicker">Výpočet</span><div class="calc-row"><span>Hrubá částka</span><b>{amount_text}</b></div><div class="calc-row"><span>Daňový základ</span><b>{calc_base}</b></div><div class="calc-row"><span>{tax_label}</span><b>{calc_tax}</b></div><div class="calc-row"{' aria-label="Sazba Neuplatňuje se"' if foreign_only else ''}><span>Použitá sazba</span><b>{escape(rate_text)}</b></div>{f'<div class="fx">Přepočet měny · {fx_line}</div>' if fx_line else ''}</section></div><div class="footer"><span>TaxTreat</span><b>01 / 02</b></div></div></section>
+<section class="page"><div class="sheet"><header class="header"><div class="brand"><span class="shield">TT</span>TaxTreat</div><div class="head-meta"><b>{escape(payer)} → {escape(recipient)}</b>{escape(_income(scope.get('income_type')))}</div></header><div class="section-head"><div><span class="kicker legal-basis-kicker">Právní základ</span><h2>Právní zdroje, lhůty a související podklady</h2><p>Relevantní ustanovení použité pro zobrazenou sazbu nebo režim a praktické informace navazující na transakci.</p></div><div>{_illustration('sources')}</div></div><article class="legal-source"><span class="kicker">Použité právní pravidlo</span><div class="legal-title-row"><h2>{selected_title}</h2><div class="official">{selected_link}</div></div><p class="legal-summary">{escape(_source_sentence(selected).capitalize()) if selected else ''}</p><div class="quote">{selected_excerpt}</div></article><div class="lower-grid"><section class="deadline-wrap"><h3>Lhůty</h3><div class="deadline-grid">{deadlines_html or '<div class="deadline-card"><span>Navazující lhůty</span><b>Nejsou pro tento výstup uvedeny</b></div>'}</div>{f'<div class="related-sources"><h3 style="grid-column:1/-1">Další související zdroje</h3>{related_html}</div>' if related_html else ''}</section><section class="support-wrap"><h3>Podklady a doplňující informace</h3><div class="support-grid"><div class="mini-card"><b>Související dokumentace</b><ul>{docs_html}</ul></div><div class="mini-card"><b>Údaje k doplnění</b><ul>{missing_html}</ul></div></div></section></div><div class="disclaimer">{escape(str(report.get('disclaimer') or ''))}</div><div class="footer"><span>TaxTreat</span><b>02 / 02</b></div></div></section>
+<template id="canonical-source-texts">{canonical_payload}</template></article></body></html>'''
