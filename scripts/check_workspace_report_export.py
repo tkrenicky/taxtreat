@@ -252,7 +252,7 @@ def main() -> int:
             requests_before_reopen = len(report_requests)
             with page.expect_popup() as stored_popup_info:
                 stored_rows.first.get_by_role(
-                    "button", name="Otevřít report"
+                    "button", name="Tisk / PDF"
                 ).click()
             stored_page = stored_popup_info.value
             stored_page.get_by_text("Česká srážková daň", exact=True).wait_for()
@@ -291,7 +291,7 @@ def main() -> int:
             requests_before_review_open = len(report_requests)
             with page.expect_popup() as review_popup_info:
                 review_rows.first.get_by_role(
-                    "button", name="Otevřít výstup"
+                    "button", name="Tisk / PDF"
                 ).click()
             review_page = review_popup_info.value
             review_page.get_by_text("Česká srážková daň", exact=True).wait_for()

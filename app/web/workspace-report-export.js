@@ -3,7 +3,7 @@
 
   const historyStyles = document.createElement("link");
   historyStyles.rel = "stylesheet";
-  historyStyles.href = "/ui-assets/workspace-output-history.css?v=20260817-1";
+  historyStyles.href = "/ui-assets/workspace-output-history.css?v=20260817-2";
   document.head.append(historyStyles);
 
   const nativeFetch = window.fetch.bind(window);
@@ -171,7 +171,6 @@
     const actions = document.createElement("div");
     actions.className = "output-history-actions";
     actions.append(
-      actionButton("Otevřít report", () => openStoredReport(record)),
       actionButton("Tisk / PDF", () => openStoredReport(record, true)),
     );
 
@@ -200,8 +199,8 @@
     status.textContent = statusLabel(record.status);
 
     const action = actionButton(
-      "Otevřít výstup",
-      () => openStoredReport(record)
+      "Tisk / PDF",
+      () => openStoredReport(record, true)
     );
 
     row.append(copy, status, action);
@@ -376,15 +375,8 @@
 
   openButton.removeAttribute("data-nav");
   openButton.type = "button";
-  openButton.textContent = "Otevřít profesionální report";
-  openButton.dataset.reportAction = "open";
-
-  const printButton = document.createElement("button");
-  printButton.type = "button";
-  printButton.className = "secondary";
-  printButton.textContent = "Tisk / uložit PDF";
-  printButton.dataset.reportAction = "print";
-  resultActions.insertBefore(printButton, openButton);
+  openButton.textContent = "Tisk / PDF reportu";
+  openButton.dataset.reportAction = "print";
 
   function showExportProblem(message) {
     window.alert(message);
@@ -410,7 +402,7 @@
     button.disabled = true;
     button.textContent = "Připravuji report…";
     reportWindow.document.write(
-      "<!doctype html><title>TaxTreat</title><p style='font-family:system-ui;padding:32px'>Připravuji profesionální report…</p>"
+      "<!doctype html><title>TaxTreat</title><p style='font-family:system-ui;padding:32px'>Připravuji PDF report…</p>"
     );
 
     try {
@@ -433,12 +425,8 @@
     (event) => {
       event.preventDefault();
       event.stopImmediatePropagation();
-      exportReport(false, openButton);
+      exportReport(true, openButton);
     },
     true
   );
-
-  printButton.addEventListener("click", () => {
-    exportReport(true, printButton);
-  });
 })();
