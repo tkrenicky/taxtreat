@@ -192,13 +192,13 @@ def test_design_lab_exposes_three_distinct_functional_directions():
     assert client.get("/design-lab/unknown").status_code == 404
 
 
-def test_browser_acceptance_uses_current_result_status_wording():
+def test_browser_acceptance_avoids_completed_process_wording():
     source = (
         Path("scripts/capture_stage7b_ui.py")
         .read_text(encoding="utf-8")
     )
 
-    assert "VÝPOČET DOKONČEN" in source
+    assert "VÝPOČET DOKONČEN" not in source
     assert "VÝSLEDEK DOKONČEN" not in source
 
 
