@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "source_country": "SK",
+  "as_of": "2026-08-18",
+  "status": "needs_consolidation_not_released",
+  "law": {
+    "title": "Zákon č. 595/2003 Z. z. o dani z príjmov",
+    "official_url": "https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2003/595",
+    "effective_version_from": "2026-01-01",
+    "effective_version_to": "2026-12-30"
+  },
+  "topics": [
+    {
+      "topic": "treaty_priority",
+      "seed_locator": "§ 1 ods. 2",
+      "status": "primary_source_located"
+    },
+    {
+      "topic": "non_cooperative_state_definition",
+      "seed_locator": "§ 2 písm. x)",
+      "status": "primary_source_located"
+    },
+    {
+      "topic": "corporate_dividend_tax_object_and_exceptions",
+      "seed_locator": "§ 12 ods. 7 písm. c)",
+      "status": "primary_source_located_needs_transaction_model"
+    },
+    {
+      "topic": "slovak_source_income_nonresidents",
+      "seed_locator": "§ 16",
+      "status": "primary_source_located_needs_income_mapping"
+    },
+    {
+      "topic": "withholding_tax",
+      "seed_locator": "§ 43",
+      "status": "primary_source_located_needs_rate_and_income_mapping"
+    },
+    {
+      "topic": "double_tax_relief",
+      "seed_locator": "§ 45",
+      "status": "primary_source_located"
+    }
+  ],
+  "income_types": {
+    "dividend": {
+      "status": "not_released",
+      "required_work": [
+        "determine domestic corporate-recipient treatment",
+        "map non-cooperative-state exception",
+        "map treaty interaction",
+        "identify any EU-law relief relevant to outbound corporate dividends",
+        "determine withholding and remittance mechanics"
+      ]
+    },
+    "interest": {
+      "status": "not_released",
+      "required_work": [
+        "map § 16 source rule",
+        "map § 43 withholding rule and domestic rate",
+        "map treaty caps and exclusive-residence cases",
+        "identify any EU interest/royalty relief",
+        "determine withholding and remittance mechanics"
+      ]
+    },
+    "royalty": {
+      "status": "not_released",
+      "required_work": [
+        "map § 16 source rule and royalty categories",
+        "map § 43 withholding rule and domestic rate",
+        "map treaty royalty definitions and category splits",
+        "identify any EU interest/royalty relief",
+        "determine withholding and remittance mechanics"
+      ]
+    }
+  },
+  "guardrails": [
+    "This file is an ingestion seed, not a legal conclusion.",
+    "No rate or exemption may enter the runtime from this file.",
+    "Current Czech compliance, FX, source and calculation logic must remain unchanged until country-specific adapters are released."
+  ]
+}
