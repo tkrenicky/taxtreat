@@ -6,7 +6,9 @@
   <meta name="description" content="TaxTreat – výpočet české srážkové daně podle zadaných údajů">
   <title>TaxTreat · Výpočet srážkové daně</title>
   <link rel="stylesheet" href="/ui-assets/styles.css">
+  <link rel="stylesheet" href="/ui-assets/client-polish.css">
   <script defer src="/ui-assets/app.js"></script>
+  <script defer src="/ui-assets/client-report-flow.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#case-form">Přejít na formulář</a>
@@ -58,13 +60,13 @@
       <article><strong>101</strong><span>podporovaných jurisdikcí</span></article>
       <article><strong>303</strong><span>pokrytých kombinací země a příjmu</span></article>
       <article><strong>3</strong><span>příjmové kategorie</span></article>
-      <article><strong>12. 8. 2026</strong><span>stav použitého datasetu</span></article>
+      <article><strong>12. 8. 2026</strong><span>právní stav</span></article>
     </section>
 
     <section class="trust-strip" aria-label="Informace o výstupu a datech">
       <span><b>✓</b> Sazby navázané na smluvní text a evidované zdroje</span>
       <span><b>◇</b> Zadané údaje se po zpracování neukládají</span>
-      <span><b>i</b> Informační výstup bez individuálního daňového doporučení</span>
+      <span><b>i</b> Právní stav ke dni 12. 8. 2026</span>
     </section>
 
     <div class="workspace">
@@ -248,7 +250,7 @@
           </details>
 
           <button id="report-button" class="secondary" type="button">
-            Tisk / PDF
+            Zobrazit klientský report
           </button>
           <div id="report-error" class="message error" role="alert" hidden></div>
         </div>
