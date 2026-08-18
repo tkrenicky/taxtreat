@@ -1,0 +1,429 @@
+:root{
+  --tt-bg:#F3F0E8;
+  --tt-paper:#FFFDF8;
+  --tt-card:#F7F5EF;
+  --tt-line:#DDE3DE;
+  --tt-navy:#173F39;
+  --tt-body:#18332D;
+  --tt-muted:#708079;
+  --tt-accent:#E8F0EC;
+  --tt-accent-line:#C8DAD2;
+  --tt-serif:Georgia,"Iowan Old Style","Palatino Linotype",serif;
+}
+
+[hidden]{display:none!important}
+
+/* Keep the full workspace/navigation product. */
+body{
+  background:var(--tt-bg);
+  color:var(--tt-body);
+}
+
+.app-header{
+  background:var(--tt-navy)!important;
+  box-shadow:none!important;
+}
+
+.app-header nav button,
+.logo,
+.account,
+.payer-context{
+  color:#fff!important;
+}
+
+.app-header nav button.active{
+  background:rgba(255,255,255,.12)!important;
+}
+
+.demo-notice{
+  border-color:var(--tt-line)!important;
+  background:var(--tt-paper)!important;
+  color:var(--tt-muted)!important;
+  box-shadow:none!important;
+}
+
+.page-title h1{
+  color:var(--tt-navy)!important;
+  font-family:var(--tt-serif);
+  font-weight:600!important;
+}
+
+.page-title > div > span,
+.page-title > div > p{
+  color:var(--tt-muted)!important;
+}
+
+.card,
+.payment-form,
+.select-card{
+  border-color:var(--tt-line)!important;
+  background:var(--tt-paper)!important;
+  box-shadow:none!important;
+}
+
+input,
+select{
+  border:1px solid #CED8D3!important;
+  background:#fff!important;
+  color:var(--tt-navy)!important;
+  box-shadow:none!important;
+}
+
+input:focus,
+select:focus{
+  border-color:var(--tt-navy)!important;
+  outline:none!important;
+  box-shadow:0 0 0 2px rgba(36,88,79,.10)!important;
+}
+
+.primary{
+  background:var(--tt-navy)!important;
+  color:#fff!important;
+  box-shadow:none!important;
+}
+
+.secondary{
+  border-color:var(--tt-navy)!important;
+  background:#fff!important;
+  color:var(--tt-navy)!important;
+  box-shadow:none!important;
+}
+
+.required-help{
+  margin:-3px 0 16px;
+  color:var(--tt-muted);
+  font-size:.78rem;
+}
+
+/* Assumptions are client inputs, not hidden prose. */
+.assumptions{
+  border:1px solid var(--tt-line)!important;
+  background:var(--tt-card)!important;
+  box-shadow:none!important;
+}
+
+.assumptions legend{
+  color:var(--tt-navy)!important;
+}
+
+.assumption-row{
+  border-color:var(--tt-line)!important;
+}
+
+.segmented{
+  background:#fff!important;
+  border-color:#CED8D3!important;
+}
+
+.segmented label span{
+  color:var(--tt-navy)!important;
+}
+
+/* Result must be readable — no washed-out blue text on blue background. */
+[data-step="4"] .result-hero{
+  border:1px solid var(--tt-accent-line)!important;
+  background:var(--tt-accent)!important;
+  color:var(--tt-navy)!important;
+  box-shadow:none!important;
+}
+
+[data-step="4"] .result-hero p,
+[data-step="4"] .result-hero small{
+  color:#536B63!important;
+}
+
+[data-step="4"] .result-hero strong{
+  color:var(--tt-navy)!important;
+}
+
+[data-step="4"] .card{
+  color:var(--tt-body)!important;
+}
+
+[data-step="4"] table{
+  width:100%;
+  border-collapse:collapse;
+  background:#fff!important;
+  color:var(--tt-body)!important;
+}
+
+[data-step="4"] th{
+  background:var(--tt-accent)!important;
+  color:var(--tt-navy)!important;
+  font-weight:700!important;
+}
+
+[data-step="4"] td{
+  background:#fff!important;
+  color:var(--tt-body)!important;
+}
+
+[data-step="4"] th,
+[data-step="4"] td{
+  border-color:var(--tt-line)!important;
+}
+
+/* Legal source presentation */
+.citation-card,
+.legal-path-item{
+  border-color:var(--tt-line)!important;
+  background:var(--tt-paper)!important;
+  color:var(--tt-body)!important;
+  box-shadow:none!important;
+}
+
+.citation-card blockquote,
+.citation-excerpt{
+  border-left:3px solid var(--tt-navy)!important;
+  background:var(--tt-accent)!important;
+  color:var(--tt-body)!important;
+}
+
+.citation-card a,
+.legal-path-item a{
+  color:var(--tt-navy)!important;
+  font-weight:700;
+}
+
+/* Never allow microscopic client text. */
+.payment-form small,
+.tooltip-panel,
+.citation-card small,
+.result-detail small{
+  font-size:.78rem!important;
+  line-height:1.45!important;
+}
+
+@media(max-width:900px){
+  .app-header{
+    position:static!important;
+  }
+}
+
+/* Required-field legend must be visibly associated with the form. */
+.required-help{
+  display:flex!important;
+  align-items:center;
+  gap:7px;
+  margin:0 0 18px!important;
+  padding:9px 12px;
+  border-left:3px solid var(--tt-navy);
+  background:rgba(232,240,236,.70);
+  color:var(--tt-muted)!important;
+  font-size:.82rem!important;
+  line-height:1.35;
+}
+
+.required-help > span:first-child{
+  color:var(--tt-navy);
+  font-size:1rem;
+  font-weight:800;
+}
+
+/* Assumption segmented controls — explicit readable states. */
+.assumptions .segmented label span{
+  min-width:52px;
+  padding:8px 13px!important;
+  background:#fff!important;
+  color:var(--tt-navy)!important;
+  font-weight:700!important;
+}
+
+.assumptions .segmented label input:checked + span{
+  background:var(--tt-navy)!important;
+  color:#fff!important;
+}
+
+.assumptions .segmented label input:focus-visible + span{
+  outline:2px solid var(--tt-navy)!important;
+  outline-offset:2px;
+}
+
+.assumptions .segmented label:hover span{
+  border-color:var(--tt-navy)!important;
+}
+
+/* Canonical client advice boundary: one visible notice below the header. */
+.demo-notice {
+  display: block !important;
+}
+
+.demo-notice .information-only-note {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+
+/*
+ Final canonical advice-boundary override.
+ Must outrank the design-catalog rules for the active Atlas workspace.
+*/
+body[data-design="atlas"] .demo-notice {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+}
+
+body[data-design="atlas"] .demo-notice .information-only-note {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+
+/* ==========================================================
+   Production Atlas visual identity
+   Forest / cream / green overrides must outrank design catalog
+   ========================================================== */
+
+body[data-design="atlas"]{
+  --blue:#173F39!important;
+  --blue-dark:#102F2A!important;
+  --green:#2E715E!important;
+  --green-bg:#E8F0EC!important;
+  --yellow:#E8F0EC!important;
+  --coral:#E8F0EC!important;
+  --powder:#E8F0EC!important;
+  --powder2:#F3F7F4!important;
+  --ink:#18332D!important;
+  --text:#31463F!important;
+  --muted:#708079!important;
+  --line:#DDE3DE!important;
+  --surface:#FFFDF8!important;
+  --canvas:#F3F0E8!important;
+}
+
+body[data-design="atlas"] .app-header{
+  background:#173F39!important;
+  border-bottom-color:#173F39!important;
+  backdrop-filter:none!important;
+}
+
+body[data-design="atlas"] .logo,
+body[data-design="atlas"] .logo b,
+body[data-design="atlas"] .app-header nav button,
+body[data-design="atlas"] .app-header nav button:hover,
+body[data-design="atlas"] .app-header nav button.active{
+  color:#FFFFFF!important;
+}
+
+body[data-design="atlas"] .app-header nav button{
+  opacity:.78!important;
+}
+
+body[data-design="atlas"] .app-header nav button.active{
+  opacity:1!important;
+  border-bottom-color:#FFFFFF!important;
+  background:rgba(255,255,255,.08)!important;
+}
+
+body[data-design="atlas"] .logo span{
+  background:rgba(255,255,255,.14)!important;
+  color:#FFFFFF!important;
+}
+
+body[data-design="atlas"] .payer-context{
+  border-color:rgba(255,255,255,.24)!important;
+  background:#FFFDF8!important;
+}
+
+body[data-design="atlas"] .payer-context span{
+  color:#708079!important;
+}
+
+body[data-design="atlas"] .payer-context select{
+  color:#173F39!important;
+  background:#FFFDF8!important;
+}
+
+body[data-design="atlas"] .demo-notice{
+  background:#FFFDF8!important;
+  border-bottom-color:#DDE3DE!important;
+  color:#708079!important;
+}
+
+body[data-design="atlas"] .demo-notice .information-only-note{
+  color:#708079!important;
+  line-height:1.4!important;
+}
+
+body[data-design="atlas"] .demo-notice .information-only-note strong{
+  color:#173F39!important;
+}
+
+body[data-design="atlas"] .primary{
+  border-color:#173F39!important;
+  background:#173F39!important;
+  color:#FFFFFF!important;
+}
+
+body[data-design="atlas"] .primary:hover{
+  background:#102F2A!important;
+}
+
+body[data-design="atlas"] .secondary,
+body[data-design="atlas"] .new-recipient-toggle{
+  border-color:#173F39!important;
+  color:#173F39!important;
+  background:#FFF!important;
+}
+
+body[data-design="atlas"] .flow-progress button.active b{
+  border-color:#173F39!important;
+  background:#173F39!important;
+  color:#FFF!important;
+}
+
+body[data-design="atlas"] .flow-progress button.active span{
+  color:#173F39!important;
+}
+
+body[data-design="atlas"] .flow-progress i{
+  background:#D4DED9!important;
+}
+
+body[data-design="atlas"] .result-hero{
+  border-color:#C8DAD2!important;
+  background:#E8F0EC!important;
+}
+
+body[data-design="atlas"] .result-hero > strong,
+body[data-design="atlas"] .result-rate,
+body[data-design="atlas"] .result-hero p{
+  color:#173F39!important;
+}
+
+body[data-design="atlas"] .citation-card blockquote,
+body[data-design="atlas"] .citation-excerpt{
+  border-left-color:#2E715E!important;
+  background:#EEF4F0!important;
+  color:#18332D!important;
+}
+
+body[data-design="atlas"] a{
+  color:#24584F!important;
+}
+
+body[data-design="atlas"] input:focus,
+body[data-design="atlas"] select:focus,
+body[data-design="atlas"] textarea:focus{
+  outline:2px solid rgba(46,113,94,.12)!important;
+  border-color:#2E715E!important;
+}
+
+@media(max-width:700px){
+  body[data-design="atlas"] .demo-notice{
+    padding-top:9px!important;
+    padding-bottom:9px!important;
+    font-size:.72rem!important;
+  }
+
+  body[data-design="atlas"] .demo-notice .information-only-note{
+    line-height:1.45!important;
+  }
+}
+

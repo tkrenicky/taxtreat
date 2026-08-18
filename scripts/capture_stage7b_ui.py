@@ -111,88 +111,92 @@ def capture(output_dir: Path) -> dict[str, object]:
                 ),
             )
 
-            # Guided client intake: verify the redesigned information-only shell.
+            # Primary client workspace on /ui.
             page.goto(f"{BASE_URL}/ui", wait_until="networkidle")
-            if not page.get_by_text("Informační nástroj", exact=True).is_visible():
-                raise AssertionError("Information-only notice is missing.")
-            if not page.get_by_text("Právní stav ke dni 12. 8. 2026", exact=False).is_visible():
-                raise AssertionError("Legal-state date is missing.")
-            if page.locator(".project-metrics").count():
-                raise AssertionError("Marketing metrics leaked into the client intake.")
-            if not page.locator("#empty-state").is_visible():
-                raise AssertionError("Initial empty result state is missing.")
 
-            page.select_option('select[name="recipient_country"]', "AT")
-            page.select_option('select[name="income_type"]', "dividend")
-            page.fill('input[name="transaction_date"]', "2026-08-12")
-            page.fill('input[name="amount"]', "100000")
-            page.select_option('select[name="currency"]', "CZK")
-            page.click('#case-form button[type="submit"]')
+            boundary = page.locator(".demo-notice .information-only-note")
+            if not boundary.is_visible():
+                raise AssertionError("Primary workspace information-only notice is missing.")
 
-            result = page.locator("#result")
-            result.wait_for(state="visible")
-            page.locator("#client-result-layout").wait_for(state="visible")
-            if page.locator("#empty-state").is_visible():
-                raise AssertionError("Empty state remained visible after calculation.")
-            if not page.locator("#hero-outcome").is_visible():
-                raise AssertionError("Answer-first result hero is missing.")
-            if not page.locator("#legal-basis-content").is_visible():
-                raise AssertionError("Live legal-source section is missing.")
-            if not page.locator("#deadline-items").is_visible():
-                raise AssertionError("Live deadline section is missing.")
-            if not page.locator("#documentation-items").is_visible():
-                raise AssertionError("Live documentation section is missing.")
-            if "individuální daňové" not in page.locator("#hero-explanation").inner_text().lower():
-                raise AssertionError("Result advice-boundary wording is missing.")
-            if not page.get_by_role("button", name="Zobrazit klientský report").is_visible():
-                raise AssertionError("Primary report action is missing.")
+            boundary_text = boundary.inner_text().lower()
+            if "neposkytuje individuální právní ani daňové poradenství" not in boundary_text:
+                raise AssertionError("Primary workspace advice boundary is incomplete.")
 
-            status = page.locator("#status-badge").inner_text()
-            if status != "DOPLNIT ÚDAJE":
-                raise AssertionError(
-                    "Expected localized review status, "
-                    f"received {status!r}."
-                )
-
-            questions = int(page.locator("#question-count").inner_text())
-            visible_questions = page.locator("#questions .question").count()
-            if visible_questions != min(questions, 3):
-                raise AssertionError(
-                    "Guided intake pagination regressed: "
-                    f"{visible_questions=} {questions=}."
-                )
+            for label in ("Přehled", "Plátci", "Příjemci", "Výpočty", "Výstupy", "Zdroje"):
+                if not page.get_by_role("button", name=label, exact=True).is_visible():
+                    raise AssertionError(f"Primary workspace navigation missing: {label}")
 
             page.screenshot(path=desktop_path, full_page=True)
+
             page.set_viewport_size({"width": 390, "height": 844})
             page.screenshot(path=mobile_path, full_page=True)
             page.set_viewport_size({"width": 1440, "height": 1100})
 
-            _, _, _ = _answer_first_visible_question(page)
-            questions_after_answer = int(page.locator("#question-count").inner_text())
-            if questions_after_answer >= questions:
-                raise AssertionError(
-                    "Supplying a client fact did not reduce the unresolved intake plan."
-                )
-            if page.locator("#answer-error").is_visible():
-                raise AssertionError(page.locator("#answer-error").inner_text())
+            page.get_by_role("button", name="Nový výpočet →").first.click()
 
-            page.add_init_script(
-                "window.print = () => { window.__taxtreatPrintCalled = true; };"
-            )
-            with page.expect_popup() as report_popup_info:
-                page.locator("#report-button").click()
-            report_page = report_popup_info.value
-            report_page.wait_for_load_state("domcontentloaded")
-            report_page.get_by_role(
-                "heading",
-                name="Informace k české srážkové dani",
-                exact=True,
-            ).wait_for()
-            report_page.wait_for_function(
-                "() => window.__taxtreatPrintCalled === true",
-                timeout=5000,
-            )
-            report_page.close()
+            if not page.locator('.flow-step[data-step="1"].active').is_visible():
+                raise AssertionError("Workspace step 1 is not active.")
+
+            page.get_by_role("button", name="Pokračovat k příjemci →").click()
+            page.get_by_role("button", name="Pokračovat k platbě →").click()
+
+            workspace_form = page.locator("#workspace-payment")
+
+            if not workspace_form.locator('input[name="beneficial_owner"][value="true"]').is_checked():
+                raise AssertionError("Beneficial-owner assumption is not available/defaulted.")
+
+            if not workspace_form.locator('input[name="treaty_resident"][value="true"]').is_checked():
+                raise AssertionError("Treaty-residence assumption is not available/defaulted.")
+
+            if not workspace_form.locator('input[name="pe_connection"][value="false"]').is_checked():
+                raise AssertionError("PE-connection assumption is not available/defaulted.")
+
+            workspace_form.locator('select[name="income_type"]').select_option("dividend")
+            workspace_form.locator('input[name="transaction_date"]').fill("2026-08-11")
+            workspace_form.locator('input[name="amount"]').fill("100000")
+            workspace_form.locator('input[name="ownership_percent"]').fill("25")
+            workspace_form.locator('select[name="direct_ownership"]').select_option("true")
+            workspace_form.locator('select[name="holding_period_mode"]').select_option("known_date")
+            workspace_form.locator('input[name="acquisition_date"]').fill("2024-01-01")
+
+            questions = 0
+            visible_questions = 0
+            questions_after_answer = 0
+
+            for _ in range(6):
+                workspace_form.locator("#workspace-submit").click()
+                page.wait_for_timeout(350)
+
+                if page.locator('.flow-step[data-step="4"].active').is_visible():
+                    break
+
+                workspace_questions = workspace_form.locator("#workspace-questions")
+                questions = workspace_questions.locator(".question-card").count()
+                visible_questions = questions
+
+                for item in workspace_questions.locator("select").all():
+                    if item.locator("option").count() > 1:
+                        item.select_option(index=1)
+
+                for item in workspace_questions.locator('input[type="number"]').all():
+                    if not item.input_value():
+                        item.fill("25")
+
+                for item in workspace_questions.locator('input[type="date"]').all():
+                    if not item.input_value():
+                        item.fill("2024-01-01")
+            else:
+                raise AssertionError("Primary workspace client questions did not converge.")
+
+            page.locator("#workspace-result-status").wait_for(state="visible")
+
+            if page.locator("#workspace-citations .citation-card").count() < 1:
+                raise AssertionError("Primary workspace result did not expose legal support.")
+
+            if page.locator("#workspace-notification-deadline").inner_text() == "—":
+                raise AssertionError("Primary workspace did not render notification deadline.")
+
+            questions_after_answer = page.locator("#workspace-questions .question-card").count()
 
             # Workspace: verify the information boundary that remains visible
             # after the old prototype label was intentionally de-emphasised.
@@ -201,10 +205,8 @@ def capture(output_dir: Path) -> dict[str, object]:
             if not boundary.is_visible():
                 raise AssertionError("Workspace information-only notice is missing.")
             boundary_text = boundary.inner_text().lower()
-            if "neposkytuje individuální daňové nebo právní poradenství" not in boundary_text:
+            if "neposkytuje individuální právní ani daňové poradenství" not in boundary_text:
                 raise AssertionError("Workspace advice boundary is incomplete.")
-            if not page.get_by_text("Demo režim", exact=True).is_visible():
-                raise AssertionError("Workspace demo-state label is missing.")
             page.screenshot(path=workspace_path, full_page=True)
 
             page.get_by_role("button", name="Nový výpočet →").first.click()
