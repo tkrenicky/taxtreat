@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "source_country": "SK",
+  "as_of": "2026-08-18",
+  "status": "discovery_only_not_released",
+  "scope": {
+    "income_types": ["dividend", "interest", "royalty"],
+    "treaty_partner_count": 75,
+    "treaty_scope_count": 225,
+    "mli_modified_relationship_count": 46
+  },
+  "primary_sources": [
+    {
+      "source_id": "SK-MF-DTT-LIST",
+      "authority": "Ministerstvo financií Slovenskej republiky",
+      "title": "Zoznam platných a účinných zmlúv o zamedzení dvojitého zdanenia",
+      "url": "https://www.mfsr.sk/sk/dane-cla-uctovnictvo/priame-dane/dane-z-prijmu/zmluvy-zamedzeni-dvojiteho-zdanenia/zmluvy-zamedzeni-dvojiteho-zdanenia/zoznam-platnych-ucinnych-zmluv-zamedzeni-dvojiteho-zdanenia/",
+      "use": "authoritative treaty-universe inventory",
+      "observed_count": 75
+    },
+    {
+      "source_id": "SK-MF-MLI-STATUS",
+      "authority": "Ministerstvo financií Slovenskej republiky",
+      "title": "Mnohostranný dohovor",
+      "url": "https://www.mfsr.sk/sk/dane-cla-uctovnictvo/priame-dane/dane-z-prijmu/zmluvy-zamedzeni-dvojiteho-zdanenia/multilateralny-nastroj/multilateralny-nastroj-2.html",
+      "use": "MLI modification status inventory",
+      "observed_count": 46,
+      "caution": "The general MLI effectiveness date shown by MF SR must not be treated automatically as the WHT-effective date for every treaty provision. Pair-specific matching and WHT-effective-date analysis remain required."
+    },
+    {
+      "source_id": "SK-SLOVLEX-ZDP-595-2003",
+      "authority": "Slov-Lex",
+      "title": "Zákon č. 595/2003 Z. z. o dani z príjmov",
+      "url": "https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2003/595",
+      "effective_version_from": "2026-01-01",
+      "effective_version_to": "2026-12-30",
+      "use": "domestic income-tax and withholding-tax legal basis",
+      "relevant_sections_seed": ["§ 1", "§ 2", "§ 12", "§ 16", "§ 43", "§ 45"]
+    }
+  ],
+  "release_constraints": [
+    "No Slovak treaty rate, domestic rate, exemption, deadline or filing obligation is released by this inventory.",
+    "Every treaty instrument and protocol must be resolved to official primary text before promotion.",
+    "MLI matching and WHT-effective dates must be determined treaty by treaty.",
+    "Domestic dividend, interest and royalty rules require a separate consolidated legal model before runtime activation."
+  ]
+}
