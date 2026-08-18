@@ -83,6 +83,39 @@ def test_canonical_decision_distinguishes_pending_from_out_of_scope():
     assert unsupported_income.requires_review is False
 
 
+def test_registered_unreleased_source_country_fails_closed():
+    result = canonical_analyze_transaction(
+        CanonicalAnalysisRequest(
+            source_country="SK",
+            recipient_country="CZ",
+            income_type="dividend",
+            transaction_date=date(2026, 8, 18),
+            facts={},
+        )
+    )
+
+    assert result.status == DecisionStatus.REVIEW_REQUIRED
+    assert result.requires_review is True
+    assert result.rate is None
+    assert result.missing_legal_layers == [
+        "domestic",
+        "mli",
+        "treaty_or_protocol",
+    ]
+    assert result.explanation == [
+        "SK source-country package has not been released."
+    ]
+
+
+def test_unknown_source_country_preserves_out_of_scope_behavior():
+    result = analyze_transaction(
+        request(source_country="ZZ", recipient_country="CH")
+    )
+
+    assert result.status == DecisionStatus.OUT_OF_SCOPE
+    assert result.requires_review is False
+
+
 def test_canonical_decision_without_legal_fact_condition_still_uses_rule_gate():
     result = analyze_transaction(
         request(

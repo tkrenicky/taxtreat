@@ -5,6 +5,7 @@ from datetime import date
 from pathlib import Path
 from typing import Any
 
+from taxtreat.countries.registry import get_country_config
 from taxtreat.engine.legal_facts import (
     load_legal_facts,
     resolve_legal_fact_candidates,
@@ -70,6 +71,27 @@ def analyze_transaction(
             status=DecisionStatus.OUT_OF_SCOPE,
             requires_review=False,
             explanation=[f"Unsupported income type: {request.income_type!r}."],
+        )
+
+    try:
+        country_config = get_country_config(request.source_country)
+    except KeyError:
+        country_config = None
+
+    if country_config is not None and not country_config.runtime_released:
+        return LegalDecisionResult(
+            status=DecisionStatus.REVIEW_REQUIRED,
+            requires_review=True,
+            rate=None,
+            eligible=False,
+            missing_legal_layers=[
+                "domestic",
+                "mli",
+                "treaty_or_protocol",
+            ],
+            explanation=[
+                f"{country_config.code} source-country package has not been released."
+            ],
         )
 
     runtime_gate = evaluate_runtime_gate(

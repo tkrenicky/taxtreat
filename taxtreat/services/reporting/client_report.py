@@ -143,12 +143,24 @@ def _legal_reference(report, source):
 def _source_link(source):
     if not source or not source.get("source_url"):
         return ""
-    url = escape(str(source["source_url"]), quote=True)
-    host = urlparse(str(source["source_url"])).netloc.replace("www.", "")
+    raw_url = str(source["source_url"]).strip()
+    parsed = urlparse(raw_url)
+    host_raw = (parsed.hostname or "").lower()
+    # Client reports may only expose an external public legal source.
+    # Internal TaxTreat/API routes are never shown as the legal-source link.
+    if (
+        parsed.scheme not in {"http", "https"}
+        or not host_raw
+        or host_raw in {"localhost", "127.0.0.1"}
+        or host_raw.endswith("taxtreat.vercel.app")
+    ):
+        return ""
+    url = escape(raw_url, quote=True)
+    host = parsed.netloc.replace("www.", "")
     label = "Oficiální zdroj"
     if host:
         label += f" · {host}"
-    return f'<a href="{url}">{escape(label)} ↗</a>'
+    return f'<a href="{url}" target="_blank" rel="noopener noreferrer">{escape(label)} ↗</a>'
 
 
 def _assumptions_html(report):
@@ -300,13 +312,26 @@ def _transaction_gloss(report):
     return "Pro použitou sazbu byly zohledněny zejména tyto zadané údaje: " + "; ".join(bits) + "."
 
 
-def _key_facts_html(rate_display, income_type, selected, schedule):
+def _key_facts_html(rate_display, income_type, selected, schedule, report=None):
     article = _article(selected) if selected else "—"
+    report = report or {}
+    scope = report.get("scope") or {}
+    recipient_country = str(scope.get("recipient_country") or "").upper()
+
+    if selected and selected.get("legal_layer") in {"treaty", "protocol"} and recipient_country:
+        legal_provision = f"{article} · SZDZ ČR–{recipient_country}"
+    elif selected and selected.get("legal_layer") == "mli":
+        legal_provision = f"{article} · MLI"
+    elif selected and selected.get("legal_layer") == "domestic":
+        legal_provision = f"{article} · ZDP"
+    else:
+        legal_provision = article
+
     deadline = schedule.get("notification_deadline") or schedule.get("remittance_deadline")
     cells = [
         ("Použitá sazba", rate_display),
         ("Typ příjmu", _income(income_type)),
-        ("Právní ustanovení", article),
+        ("Právní ustanovení", legal_provision),
     ]
     if deadline:
         cells.append(("Nejbližší uvedená lhůta", _date(deadline)))
@@ -318,11 +343,11 @@ def _key_facts_html(rate_display, income_type, selected, schedule):
 
 def _wht_flow_html(rate_display):
     nodes = (
-        ("01", "ZDP", "Vzniká česká srážková daň a jaký je výchozí režim?"),
-        ("02", "SZDZ", "Je použitelná smlouva o zamezení dvojího zdanění?"),
-        ("03", "Podmínky", "Rezidence, skutečné vlastnictví, typ příjmu a další podmínky."),
-        ("04", "MLI / PPT", "Je-li relevantní, zohlední se modifikace smlouvy a anti-abuse test."),
-        ("05", "Výsledek", f"Konečný český režim: {rate_display}."),
+        ("01", "ZDP", "Výchozí české pravidlo a sazba."),
+        ("02", "SZDZ", "Použitelnost příslušné smlouvy."),
+        ("03", "Podmínky", "Rezidence, skutečné vlastnictví a další podmínky."),
+        ("04", "MLI / PPT", "Je-li relevantní, modifikace smlouvy a test hlavního účelu."),
+        ("05", "Výsledek", f"Český režim: {rate_display}."),
     )
     html = []
     for index, (number, title, text) in enumerate(nodes):
@@ -393,7 +418,13 @@ def render_report_html(report):
     docs_html = _documentation_html(report)
     related_html = _related_sources(report, sources, selected_rule_id)
     transaction_gloss = _transaction_gloss(report)
-    key_facts = _key_facts_html(rate_display, scope.get("income_type"), selected, schedule)
+    key_facts = _key_facts_html(
+        rate_display,
+        scope.get("income_type"),
+        selected,
+        schedule,
+        report=report,
+    )
     flow_html = _wht_flow_html(rate_display)
 
     missing_block = ""
