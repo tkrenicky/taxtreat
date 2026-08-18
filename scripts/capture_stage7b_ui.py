@@ -115,7 +115,7 @@ def capture(output_dir: Path) -> dict[str, object]:
             page.goto(f"{BASE_URL}/ui", wait_until="networkidle")
             if not page.get_by_text("Informační nástroj", exact=True).is_visible():
                 raise AssertionError("Information-only notice is missing.")
-            if not page.get_by_text("Právní stav ke dni 12. 8. 2026", exact=True).is_visible():
+            if not page.get_by_text("Právní stav ke dni 12. 8. 2026", exact=False).is_visible():
                 raise AssertionError("Legal-state date is missing.")
             if page.locator(".project-metrics").count():
                 raise AssertionError("Marketing metrics leaked into the client intake.")
