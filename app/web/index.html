@@ -3,35 +3,22 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="TaxTreat – výpočet české srážkové daně podle zadaných údajů">
-  <title>TaxTreat · Výpočet srážkové daně</title>
+  <meta name="description" content="TaxTreat – informační výstup k české srážkové dani podle zadaných údajů">
+  <title>TaxTreat · Česká srážková daň</title>
   <link rel="stylesheet" href="/ui-assets/styles.css">
+  <link rel="stylesheet" href="/ui-assets/client-polish.css">
+  <script defer src="/ui-assets/client-polish.js"></script>
   <script defer src="/ui-assets/app.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#case-form">Přejít na formulář</a>
   <div class="app-shell">
-    <aside class="sidebar" aria-label="Hlavní navigace">
-      <a class="sidebar-brand" href="/ui" aria-label="TaxTreat domů">
-        <span class="brand-mark">TT</span>
-        <span><strong>TaxTreat</strong><small>Klientský portál</small></span>
-      </a>
-      <nav>
-        <a class="active" href="/ui"><span aria-hidden="true">⌂</span> Výpočet srážkové daně</a>
-        <a href="#napoveda"><span aria-hidden="true">?</span> Metodika a nápověda</a>
-      </nav>
-      <div class="sidebar-assurance">
-        <strong>Transparentní výstup</strong>
-        <p>Výstup zobrazuje právní pravidla přiřazená k zadaným údajům a výpočet podle zadaných údajů; neposkytuje doporučení ani individuální daňové posouzení.</p>
-      </div>
-    </aside>
-
     <div class="page">
       <header class="topbar">
-        <div>
-          <strong>Výpočet srážkové daně</strong>
-          <small>Česká srážková daň</small>
-        </div>
+        <a class="topbar-brand" href="/ui" aria-label="TaxTreat domů">
+          <span class="brand-mark">TT</span>
+          <span><strong>TaxTreat</strong><small>Česká srážková daň</small></span>
+        </a>
         <div class="top-actions">
           <span>CS</span>
           <a href="#napoveda">Nápověda</a>
@@ -39,254 +26,280 @@
       </header>
 
       <main>
-        <section class="notice" aria-label="Důležité upozornění">
-          <span class="notice-icon" aria-hidden="true">◇</span>
+        <section class="notice" aria-label="Informace o povaze výstupu">
           <div>
-            <strong>Důležité upozornění</strong>
-            <p>TaxTreat je informační nástroj. Automatizovaně zobrazuje informace z uvedených právních zdrojů a zadaných údajů. Neposkytuje individuální daňové nebo právní poradenství, doporučení ani závazné stanovisko a neurčuje postup uživatele.</p>
+            <strong>Informační nástroj</strong>
+            <p>TaxTreat automatizovaně zobrazuje informace z uvedených právních zdrojů a údajů zadaných uživatelem. Neposkytuje individuální daňové nebo právní poradenství, doporučení ani závazné stanovisko a neurčuje postup uživatele.</p>
           </div>
         </section>
 
         <section class="hero">
-      <p class="eyebrow">VÝPOČET PODLE ZADANÝCH ÚDAJŮ</p>
-      <h1>Výpočet české srážkové daně</h1>
-      <p>Zadejte údaje o plátci, příjemci a platbě. TaxTreat je porovná s evidovanými
-         pravidly, zobrazí pravidlo přiřazené k zadaným údajům a provede výpočet podle zadaných údajů v CZK.</p>
-    </section>
+          <p class="eyebrow">INFORMAČNÍ VÝSTUP PODLE ZADANÝCH ÚDAJŮ</p>
+          <h1>Česká srážková daň</h1>
+          <p>Zadejte údaje o plátci, příjemci a platbě. TaxTreat je propojí s evidovanými právními pravidly a zobrazí informační výsledek, výpočet a použité právní zdroje.</p>
+        </section>
 
-    <section class="project-metrics" aria-label="Rozsah TaxTreat">
-      <article><strong>101</strong><span>podporovaných jurisdikcí</span></article>
-      <article><strong>303</strong><span>pokrytých kombinací země a příjmu</span></article>
-      <article><strong>3</strong><span>příjmové kategorie</span></article>
-      <article><strong>12. 8. 2026</strong><span>stav použitého datasetu</span></article>
-    </section>
+        <section class="trust-strip" aria-label="Informace o výstupu a datech">
+          <span><b>✓</b> Právní zdroje jsou uvedeny u výsledku</span>
+          <span><b>◇</b> Zadané údaje se po zpracování neukládají</span>
+          <span><b>i</b> Právní stav ke dni 12. 8. 2026</span>
+        </section>
 
-    <section class="trust-strip" aria-label="Informace o výstupu a datech">
-      <span><b>✓</b> Sazby navázané na smluvní text a evidované zdroje</span>
-      <span><b>◇</b> Zadané údaje se po zpracování neukládají</span>
-      <span><b>i</b> Informační výstup bez individuálního daňového doporučení</span>
-    </section>
-
-    <div class="workspace">
-      <form id="case-form" class="panel form-panel">
-        <div class="panel-heading">
-          <div>
-            <p class="step-label">Krok 1</p>
-            <h2>Plátce a příjemce</h2>
-          </div>
-          <span class="required-note">* povinné</span>
-        </div>
-
-        <div class="field-grid">
-          <label>
-            <span>Stát plátce *</span>
-            <select name="source_country" required>
-              <option value="CZ">Česká republika (CZ)</option>
-            </select>
-          </label>
-          <label>
-            <span>Stát daňové rezidence příjemce *</span>
-            <select name="recipient_country" required>
-              <option value="">Vyberte zemi</option>
-              <option value="AT">Rakousko (AT)</option>
-              <option value="CH">Švýcarsko (CH)</option>
-              <option value="DE">Německo (DE)</option>
-              <option value="SG">Singapur (SG)</option>
-              <option value="TW">Tchaj-wan (TW)</option>
-            </select>
-          </label>
-          <label>
-            <span>Typ příjemce *</span>
-            <select name="recipient_entity_type" required>
-              <option value="company">Společnost</option>
-              <option value="individual">Fyzická osoba</option>
-              <option value="partnership">Partnerství nebo daňově transparentní entita</option>
-              <option value="fund">Fond</option>
-              <option value="public_entity">Veřejnoprávní subjekt</option>
-              <option value="other">Jiný typ příjemce</option>
-            </select>
-          </label>
-        </div>
-
-        <label class="assumption-toggle">
-          <input name="no_pe_connection" type="checkbox" checked>
-          <span>Platba nesouvisí se stálou provozovnou příjemce v České republice.</span>
-          <button class="info-button" type="button" aria-label="Vysvětlení stálé provozovny"
-                  title="Stálá provozovna je trvalé místo podnikání zahraniční osoby v České republice, například pobočka, kancelář nebo provozovna.">i</button>
-        </label>
-
-        <div class="assumptions">
-          <strong>Předpoklady výpočtu</strong>
-          <p>Příjemce je skutečným vlastníkem příjmu a daňovým rezidentem vybraného státu.
-             Pokud některý z těchto předpokladů neplatí, upravte vstupní údaje; TaxTreat podle nich znovu přiřadí relevantní pravidla.</p>
-        </div>
-
-        <hr>
-
-        <div class="section-heading">
-          <div>
-            <p class="step-label">Krok 2</p>
-            <h2>Údaje o platbě</h2>
-          </div>
-          <span class="optional">volitelné pro výpočet daně</span>
-        </div>
-
-        <div class="field-grid payment-grid">
-          <label>
-            <span>Druh příjmu *</span>
-            <select name="income_type" id="income-type" required>
-              <option value="">Vyberte druh</option>
-              <option value="dividend">Dividendy</option>
-              <option value="interest">Úroky</option>
-              <option value="royalty">Licenční poplatky</option>
-            </select>
-          </label>
-          <label>
-            <span>Datum transakce *</span>
-            <input name="transaction_date" type="date" required>
-          </label>
-          <label class="amount-field">
-            <span>Hrubá částka</span>
-            <input name="amount" id="amount" type="number" min="1" step="1" inputmode="numeric" placeholder="100000">
-          </label>
-          <label>
-            <span>Měna</span>
-            <select name="currency" id="currency">
-              <option value="CZK">CZK</option>
-              <option value="EUR">EUR</option>
-              <option value="USD">USD</option>
-              <option value="CHF">CHF</option>
-              <option value="GBP">GBP</option>
-            </select>
-          </label>
-        </div>
-
-        <fieldset id="dividend-fields" class="detail-box" hidden>
-          <legend>Údaje o podílu na českém plátci</legend>
-          <div class="field-grid">
-            <label><span>Podíl příjemce na základním kapitálu plátce (%)</span><input name="ownership_percent" type="number" min="0" max="100" step="0.01" placeholder="např. 25"></label>
-            <label><span>Podíl příjemce na hlasovacích právech plátce (%)</span><input name="voting_ownership_percent" type="number" min="0" max="100" step="0.01" placeholder="např. 25"></label>
-            <label><span>Datum nabytí podílu</span><input name="acquisition_date" type="date"></label>
-            <label class="checkbox-field"><input name="direct_ownership" type="checkbox" checked><span>Příjemce drží podíl přímo</span></label>
-          </div>
-        </fieldset>
-
-        <fieldset id="fx-fields" class="fx-box" hidden>
-          <legend>Kurzový podklad ČNB</legend>
-          <p>Rozhodný je dřívější den úhrady nebo zaúčtování.</p>
-          <div class="field-grid">
-            <label><span>Datum úhrady</span><input name="payment_date" type="date"></label>
-            <label><span>Datum zaúčtování</span><input name="accounting_date" type="date"></label>
-            <label><span>Kurz CZK za 1 jednotku</span><input name="czk_per_unit" inputmode="decimal" placeholder="24.850"></label>
-            <label><span>Datum kurzu</span><input name="rate_date" type="date"></label>
-          </div>
-          <label>
-            <span>Oficiální URL ČNB</span>
-            <input name="rate_url" type="url" placeholder="https://www.cnb.cz/...">
-          </label>
-        </fieldset>
-
-        <div id="form-error" class="message error" role="alert" hidden></div>
-        <button class="primary" type="submit">
-          Vypočítat srážkovou daň
-          <span aria-hidden="true">→</span>
-        </button>
-        <p class="fine-print">Výpočet vychází výhradně ze zadaných údajů a uvedených předpokladů.
-          TaxTreat nezobrazuje doporučení ani individuální daňové posouzení; výstup pouze propojuje zadané údaje s evidovanými pravidly.</p>
-      </form>
-
-      <aside class="panel result-panel" aria-live="polite">
-        <div id="empty-state" class="empty-state">
-          <div class="empty-icon">✓</div>
-          <h2>Informace podle zadaných údajů</h2>
-          <p>Po odeslání údajů se zobrazí přiřazené právní pravidlo, výpočet podle zadaných údajů v CZK a údaje, které vstupují do přiřazení pravidla.</p>
-        </div>
-
-        <div id="result" hidden>
-          <div class="result-header">
-            <div>
-              <p class="step-label">STAV VÝPOČTU</p>
-              <h2 id="status-title">—</h2>
+        <div class="workspace">
+          <form id="case-form" class="panel form-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="step-label">KROK 1</p>
+                <h2>Plátce a příjemce</h2>
+              </div>
+              <span class="required-note">* povinné</span>
             </div>
-            <span id="status-badge" class="status-badge">—</span>
-          </div>
-          <p id="status-description" class="status-description"></p>
 
-          <section id="calculation-card" class="calculation" hidden>
-            <p class="step-label">VÝPOČET V CZK</p>
-            <dl>
-              <div><dt>Základ v CZK</dt><dd id="gross-czk">—</dd></div>
-              <div class="tax-row"><dt id="tax-czk-label">Srážková daň</dt><dd id="tax-czk">—</dd></div>
-              <div><dt>Čistá částka v CZK</dt><dd id="net-czk">—</dd></div>
-            </dl>
-          </section>
-
-          <section id="client-questions-section">
-            <div class="list-heading">
-              <h3>Údaje k doplnění</h3>
-              <span id="question-count">0</span>
+            <div class="field-grid">
+              <label>
+                <span>Stát plátce *</span>
+                <select name="source_country" required>
+                  <option value="CZ">Česká republika (CZ)</option>
+                </select>
+              </label>
+              <label>
+                <span>Stát daňové rezidence příjemce *</span>
+                <select name="recipient_country" required>
+                  <option value="">Vyberte zemi</option>
+                  <option value="AT">Rakousko (AT)</option>
+                  <option value="CH">Švýcarsko (CH)</option>
+                  <option value="DE">Německo (DE)</option>
+                  <option value="SG">Singapur (SG)</option>
+                  <option value="TW">Tchaj-wan (TW)</option>
+                </select>
+              </label>
+              <label>
+                <span>Typ příjemce *</span>
+                <select name="recipient_entity_type" required>
+                  <option value="company">Společnost</option>
+                  <option value="individual">Fyzická osoba</option>
+                  <option value="partnership">Partnerství nebo daňově transparentní entita</option>
+                  <option value="fund">Fond</option>
+                  <option value="public_entity">Veřejnoprávní subjekt</option>
+                  <option value="other">Jiný typ příjemce</option>
+                </select>
+              </label>
             </div>
-            <div id="questions" class="questions"></div>
-            <div id="answer-error" class="message error" role="alert" hidden></div>
-          </section>
 
-          <section id="advisor-review-section" hidden>
-            <div class="list-heading">
-              <h3>Podmínky, které nelze určit z dostupných údajů</h3>
-              <span id="advisor-count">0</span>
+            <div class="field-grid party-name-grid">
+              <label>
+                <span>Název plátce <small>(volitelné)</small></span>
+                <input name="report_payer_name" type="text" autocomplete="organization" placeholder="např. ABC Czech s.r.o.">
+              </label>
+              <label>
+                <span>Název příjemce <small>(volitelné)</small></span>
+                <input name="report_recipient_name" type="text" autocomplete="organization" placeholder="např. ABC Holding GmbH">
+              </label>
             </div>
-            <div id="advisor-items" class="questions advisor-items"></div>
-          </section>
 
-          <details class="documents-panel">
-            <summary>
-              <span>Související podklady</span>
-              <span id="document-count">0</span>
-            </summary>
-            <p>Přehled podkladů souvisejících se skutkovými údaji a právními podmínkami zobrazenými ve výstupu.</p>
-            <ul id="documents" class="document-list"></ul>
-          </details>
+            <label class="assumption-toggle">
+              <input name="no_pe_connection" type="checkbox" checked>
+              <span>Platba nesouvisí se stálou provozovnou příjemce v České republice.</span>
+              <button class="info-button" type="button" aria-label="Vysvětlení stálé provozovny" title="Stálá provozovna je trvalé místo podnikání zahraniční osoby v České republice, například pobočka, kancelář nebo provozovna.">i</button>
+            </label>
 
-          <button id="report-button" class="secondary" type="button">
-            Tisk / PDF
-          </button>
-          <div id="report-error" class="message error" role="alert" hidden></div>
+            <div class="assumptions">
+              <strong>Výchozí předpoklady formuláře</strong>
+              <p>Výpočet pracuje s předpokladem, že příjemce je skutečným vlastníkem příjmu a daňovým rezidentem vybraného státu. TaxTreat tyto skutečnosti nezávisle neověřuje. Pokud předpoklady neodpovídají transakci, je nutné upravit zadání.</p>
+            </div>
+
+            <hr>
+
+            <div class="section-heading">
+              <div>
+                <p class="step-label">KROK 2</p>
+                <h2>Údaje o platbě</h2>
+              </div>
+              <span class="optional">částka je volitelná</span>
+            </div>
+
+            <div class="field-grid payment-grid">
+              <label>
+                <span>Druh příjmu *</span>
+                <select name="income_type" id="income-type" required>
+                  <option value="">Vyberte druh</option>
+                  <option value="dividend">Dividendy</option>
+                  <option value="interest">Úroky</option>
+                  <option value="royalty">Licenční poplatky</option>
+                </select>
+              </label>
+              <label>
+                <span>Datum transakce *</span>
+                <input name="transaction_date" type="date" required>
+              </label>
+              <label class="amount-field">
+                <span>Hrubá částka</span>
+                <input name="amount" id="amount" type="number" min="1" step="1" inputmode="numeric" placeholder="100000">
+              </label>
+              <label>
+                <span>Měna</span>
+                <select name="currency" id="currency">
+                  <option value="CZK">CZK</option>
+                  <option value="EUR">EUR</option>
+                  <option value="USD">USD</option>
+                  <option value="CHF">CHF</option>
+                  <option value="GBP">GBP</option>
+                </select>
+              </label>
+            </div>
+
+            <fieldset id="dividend-fields" class="detail-box" hidden>
+              <legend>Údaje o podílu na českém plátci</legend>
+              <div class="field-grid">
+                <label><span>Podíl příjemce na základním kapitálu plátce (%)</span><input name="ownership_percent" type="number" min="0" max="100" step="0.01" placeholder="např. 25"></label>
+                <label><span>Podíl příjemce na hlasovacích právech plátce (%)</span><input name="voting_ownership_percent" type="number" min="0" max="100" step="0.01" placeholder="např. 25"></label>
+                <label><span>Datum nabytí podílu</span><input name="acquisition_date" type="date"></label>
+                <label class="checkbox-field"><input name="direct_ownership" type="checkbox" checked><span>Příjemce drží podíl přímo</span></label>
+              </div>
+            </fieldset>
+
+            <fieldset id="fx-fields" class="fx-box" hidden>
+              <legend>Kurzový podklad ČNB</legend>
+              <p>Rozhodný je dřívější den úhrady nebo zaúčtování.</p>
+              <div class="field-grid">
+                <label><span>Datum úhrady</span><input name="payment_date" type="date"></label>
+                <label><span>Datum zaúčtování</span><input name="accounting_date" type="date"></label>
+                <label><span>Kurz CZK za 1 jednotku</span><input name="czk_per_unit" inputmode="decimal" placeholder="24.850"></label>
+                <label><span>Datum kurzu</span><input name="rate_date" type="date"></label>
+              </div>
+              <label>
+                <span>Oficiální URL ČNB</span>
+                <input name="rate_url" type="url" placeholder="https://www.cnb.cz/...">
+              </label>
+            </fieldset>
+
+            <div id="form-error" class="message error" role="alert" hidden></div>
+            <button class="primary" type="submit">
+              Zobrazit informační výsledek
+              <span aria-hidden="true">→</span>
+            </button>
+            <p class="fine-print">Výstup vychází výhradně ze zadaných údajů a výchozích předpokladů. Nejde o individuální daňové nebo právní posouzení ani o doporučení k postupu.</p>
+          </form>
+
+          <aside class="panel result-panel" aria-live="polite">
+            <div id="empty-state" class="empty-state">
+              <div class="empty-icon">TT</div>
+              <h2>Výsledek se zobrazí zde</h2>
+              <p>Po odeslání údajů TaxTreat zobrazí informační výsledek, výpočet, použité předpoklady a právní zdroje.</p>
+            </div>
+
+            <div id="result" hidden>
+              <div id="legacy-result-header">
+                <div class="result-header">
+                  <div>
+                    <p class="step-label">STAV VÝSTUPU</p>
+                    <h2 id="status-title">—</h2>
+                  </div>
+                  <span id="status-badge" class="status-badge">—</span>
+                </div>
+                <p id="status-description" class="status-description"></p>
+              </div>
+
+              <section id="client-result-layout" hidden>
+                <p id="transaction-context" class="transaction-context">—</p>
+
+                <article class="result-hero-card">
+                  <p class="eyebrow">INFORMAČNÍ VÝSLEDEK PODLE ZADANÝCH ÚDAJŮ</p>
+                  <strong id="hero-outcome" class="hero-outcome">—</strong>
+                  <p id="hero-explanation" class="hero-explanation"></p>
+                  <div id="result-comparison" class="result-comparison"></div>
+                </article>
+
+                <article class="client-card">
+                  <h3>Transakce</h3>
+                  <div id="transaction-facts"></div>
+                </article>
+
+                <article class="client-card">
+                  <h3>Údaje a předpoklady použité ve výpočtu</h3>
+                  <p class="card-note">Tyto údaje vycházejí ze zadání uživatele nebo z výchozích předpokladů formuláře a TaxTreat je nezávisle neověřuje.</p>
+                  <div id="assumption-items"></div>
+                </article>
+
+                <article class="client-card">
+                  <h3>Výpočet</h3>
+                  <div id="calculation-summary"></div>
+                </article>
+
+                <article class="client-card legal-card">
+                  <h3>Právní zdroj použitý pro výstup</h3>
+                  <p class="card-note">Níže je zobrazen zdroj evidovaný v TaxTreat pro tento výsledek. Zobrazení zdroje nepředstavuje právní ani daňové stanovisko.</p>
+                  <div id="legal-basis-content"></div>
+                </article>
+
+                <article class="client-card">
+                  <h3>Lhůty zobrazené pro transakci</h3>
+                  <p class="card-note">Lhůty jsou automatizovaně vypočteny podle zadaných údajů a evidovaných pravidel; uživatel odpovídá za ověření jejich použitelnosti na konkrétní situaci.</p>
+                  <div id="deadline-items" class="deadline-grid"></div>
+                </article>
+
+                <article class="client-card">
+                  <h3>Podklady související s výstupem</h3>
+                  <p class="card-note">Jde o informační přehled typů podkladů souvisejících se zadanými skutečnostmi, nikoli o individuální doporučení nebo úplný seznam dokumentů vyžadovaných v konkrétním případě.</p>
+                  <ul id="documentation-items" class="documentation-list"></ul>
+                </article>
+              </section>
+
+              <section id="calculation-card" class="calculation" hidden>
+                <p class="step-label">VÝPOČET V CZK</p>
+                <dl>
+                  <div><dt>Základ v CZK</dt><dd id="gross-czk">—</dd></div>
+                  <div class="tax-row"><dt id="tax-czk-label">Srážková daň</dt><dd id="tax-czk">—</dd></div>
+                  <div><dt>Čistá částka v CZK</dt><dd id="net-czk">—</dd></div>
+                </dl>
+              </section>
+
+              <section id="client-questions-section">
+                <div class="list-heading">
+                  <h3>Údaje k doplnění</h3>
+                  <span id="question-count">0</span>
+                </div>
+                <div id="questions" class="questions"></div>
+                <div id="answer-error" class="message error" role="alert" hidden></div>
+              </section>
+
+              <section id="advisor-review-section" hidden>
+                <div class="list-heading">
+                  <h3>Podmínky, které nelze určit z dostupných údajů</h3>
+                  <span id="advisor-count">0</span>
+                </div>
+                <div id="advisor-items" class="questions advisor-items"></div>
+              </section>
+
+              <details class="documents-panel">
+                <summary>
+                  <span>Doplňující podklady k zadaným údajům</span>
+                  <span id="document-count">0</span>
+                </summary>
+                <p>Přehled dalších podkladů evidovaných k otevřeným údajům nebo podmínkám.</p>
+                <ul id="documents" class="document-list"></ul>
+              </details>
+
+              <button id="report-button" class="primary" type="button">Zobrazit klientský report</button>
+              <div id="report-error" class="message error" role="alert" hidden></div>
+            </div>
+          </aside>
         </div>
-      </aside>
-    </div>
 
-    <section id="napoveda" class="help-section" aria-labelledby="help-title">
-      <p class="eyebrow">POSTUP A NÁPOVĚDA</p>
-      <h2 id="help-title">Jak výpočet probíhá</h2>
-      <div class="help-grid">
-        <article>
-          <span>01</span>
-          <h3>Parametry transakce</h3>
-          <p>Zadejte stát plátce, stát daňové rezidence příjemce, druh příjmu, datum a částku platby.</p>
-        </article>
-        <article>
-          <span>02</span>
-          <h3>Doplňující údaje</h3>
-          <p>Pokud základní údaje nestačí, aplikace zobrazí pouze konkrétní otázky, které může zadavatel spolehlivě zodpovědět.</p>
-        </article>
-        <article>
-          <span>03</span>
-          <h3>Pravidla a výpočet</h3>
-          <p>Výstup uvádí přiřazené právní pravidlo, výpočet podle zadaných údajů v CZK, použité vstupní údaje a samostatně podmínky, které nelze určit z dostupných údajů.</p>
-        </article>
-      </div>
-      <div class="status-guide">
-        <strong>Význam stavů</strong>
-        <p><b>Výpočet dokončen</b> – sazba a daň byly vypočteny podle zadaných údajů.
-           <b>Je třeba doplnit údaje</b> – pro výpočet chybí konkrétní informace.
-           <b>Chybí údaj pro přiřazení pravidla</b> – z dostupných vstupních údajů nelze konkrétní pravidlo automatizovaně přiřadit.</p>
-      </div>
-    </section>
+        <section id="napoveda" class="help-section" aria-labelledby="help-title">
+          <p class="eyebrow">POSTUP A NÁPOVĚDA</p>
+          <h2 id="help-title">Jak TaxTreat pracuje s údaji</h2>
+          <div class="help-grid">
+            <article><span>01</span><h3>Zadané údaje</h3><p>Uživatel zadá parametry transakce a potvrzuje nebo doplňuje skutečnosti, které TaxTreat používá jako vstup.</p></article>
+            <article><span>02</span><h3>Evidovaná pravidla</h3><p>TaxTreat propojí vstupy s pravidly a právními zdroji obsaženými v aktuálně používaných datech.</p></article>
+            <article><span>03</span><h3>Informační výstup</h3><p>Výstup ukazuje automatizovaný výsledek, výpočet a zdroje. Nepředstavuje individuální daňové nebo právní poradenství.</p></article>
+          </div>
+        </section>
       </main>
 
       <footer>
-        <p>TaxTreat je informační nástroj; neposkytuje individuální právní ani daňové poradenství, doporučení ani závazné stanovisko.</p>
-        <a href="#napoveda">Postup výpočtu</a>
+        <span>TaxTreat · informační nástroj</span>
+        <span>Právní stav dat: 12. 8. 2026 · Výstup není daňovým ani právním poradenstvím.</span>
       </footer>
     </div>
   </div>
