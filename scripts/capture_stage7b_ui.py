@@ -196,6 +196,10 @@ def capture(output_dir: Path) -> dict[str, object]:
             if page.locator("#workspace-notification-deadline").inner_text() == "—":
                 raise AssertionError("Primary workspace did not render notification deadline.")
 
+            report_button = page.get_by_role("button", name="Tisk / PDF reportu", exact=True)
+            if not report_button.is_visible():
+                raise AssertionError("Primary workspace report export action is missing.")
+
             questions_after_answer = page.locator("#workspace-questions .question-card").count()
 
             # Workspace: verify the information boundary that remains visible
