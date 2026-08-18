@@ -13,6 +13,11 @@
     }
   }
 
+  const reportFlow = document.createElement("script");
+  reportFlow.src = "/ui-assets/client-report-flow.js";
+  reportFlow.async = false;
+  document.head.append(reportFlow);
+
   document.addEventListener("DOMContentLoaded", () => {
     applyAdviceBoundary();
     const result = document.querySelector("#result");
