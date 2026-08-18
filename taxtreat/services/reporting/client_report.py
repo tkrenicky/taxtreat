@@ -312,13 +312,25 @@ def _transaction_gloss(report):
     return "Pro použitou sazbu byly zohledněny zejména tyto zadané údaje: " + "; ".join(bits) + "."
 
 
-def _key_facts_html(rate_display, income_type, selected, schedule):
+def _key_facts_html(report, rate_display, income_type, selected, schedule):
     article = _article(selected) if selected else "—"
+    scope = report.get("scope") or {}
+    recipient_country = str(scope.get("recipient_country") or "").upper()
+
+    if selected and selected.get("legal_layer") in {"treaty", "protocol"} and recipient_country:
+        legal_provision = f"{article} · SZDZ ČR–{recipient_country}"
+    elif selected and selected.get("legal_layer") == "mli":
+        legal_provision = f"{article} · MLI"
+    elif selected and selected.get("legal_layer") == "domestic":
+        legal_provision = f"{article} · ZDP"
+    else:
+        legal_provision = article
+
     deadline = schedule.get("notification_deadline") or schedule.get("remittance_deadline")
     cells = [
         ("Použitá sazba", rate_display),
         ("Typ příjmu", _income(income_type)),
-        ("Právní ustanovení", article),
+        ("Právní ustanovení", legal_provision),
     ]
     if deadline:
         cells.append(("Nejbližší uvedená lhůta", _date(deadline)))
@@ -405,7 +417,7 @@ def render_report_html(report):
     docs_html = _documentation_html(report)
     related_html = _related_sources(report, sources, selected_rule_id)
     transaction_gloss = _transaction_gloss(report)
-    key_facts = _key_facts_html(rate_display, scope.get("income_type"), selected, schedule)
+    key_facts = _key_facts_html(report, rate_display, scope.get("income_type"), selected, schedule)
     flow_html = _wht_flow_html(rate_display)
 
     missing_block = ""

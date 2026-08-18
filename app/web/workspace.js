@@ -11,7 +11,7 @@
   }
   "use strict";
 
-  const BUILD_VERSION = "20260817-2";
+  const BUILD_VERSION = "20260818-4";
 
   async function checkForNewBuild() {
     try {

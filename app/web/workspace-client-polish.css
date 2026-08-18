@@ -199,3 +199,46 @@ select:focus{
     position:static!important;
   }
 }
+
+/* Required-field legend must be visibly associated with the form. */
+.required-help{
+  display:flex!important;
+  align-items:center;
+  gap:7px;
+  margin:0 0 18px!important;
+  padding:9px 12px;
+  border-left:3px solid var(--tt-navy);
+  background:rgba(228,234,246,.55);
+  color:var(--tt-muted)!important;
+  font-size:.82rem!important;
+  line-height:1.35;
+}
+
+.required-help > span:first-child{
+  color:var(--tt-navy);
+  font-size:1rem;
+  font-weight:800;
+}
+
+/* Assumption segmented controls — explicit readable states. */
+.assumptions .segmented label span{
+  min-width:52px;
+  padding:8px 13px!important;
+  background:#fff!important;
+  color:var(--tt-navy)!important;
+  font-weight:700!important;
+}
+
+.assumptions .segmented label input:checked + span{
+  background:var(--tt-navy)!important;
+  color:#fff!important;
+}
+
+.assumptions .segmented label input:focus-visible + span{
+  outline:2px solid var(--tt-navy)!important;
+  outline-offset:2px;
+}
+
+.assumptions .segmented label:hover span{
+  border-color:var(--tt-navy)!important;
+}
