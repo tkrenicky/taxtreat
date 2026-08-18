@@ -27,40 +27,60 @@ def test_guided_intake_ui_is_served_without_changing_api_root():
     assert 'class="documents-panel"' in html
     assert 'id="calculation-card"' in html
     assert 'id="answer-error"' in html
-    assert 'class="sidebar"' in html
-    assert "Klientský portál" in html
+    assert 'class="sidebar"' not in html
+    assert 'class="topbar"' in html
+    assert 'class="topbar-brand"' in html
     assert "Moje případy" not in html
     assert "Doklady <small>Připravujeme" not in html
     assert 'href="/docs"' not in html
     assert 'id="napoveda"' in html
-    assert "Metodika a nápověda" in html
-    assert "Důležité upozornění" in html
-    assert "Výpočet české srážkové daně" in html
-    assert "výpočet podle zadaných údajů" in html.lower()
-    assert "101" in html
-    assert "303" in html
+    assert "Jak TaxTreat pracuje s údaji" in html
+    assert "Informační nástroj" in html
+    assert "Česká srážková daň" in html
+    assert "INFORMAČNÍ VÝSTUP PODLE ZADANÝCH ÚDAJŮ" in html
+    assert "Právní stav ke dni 12. 8. 2026" in html
     assert "Zadané údaje se po zpracování neukládají" in html
     assert "Stát plátce" in html
     assert "Stát daňové rezidence příjemce" in html
     assert "Typ příjemce" in html
+    assert 'name="report_payer_name"' in html
+    assert 'name="report_recipient_name"' in html
     assert 'name="no_pe_connection"' in html
     assert 'id="dividend-fields"' in html
     assert 'id="advisor-review-section"' in html
+    assert 'id="hero-outcome"' in html
+    assert 'id="legal-basis-content"' in html
+    assert 'id="deadline-items"' in html
+    assert 'id="documentation-items"' in html
+    assert "Zobrazit klientský report" in html
     assert "Stage 6 production rules" not in html
     assert "neposkytuje individuální daňové nebo právní poradenství" in html.lower()
+    assert "neurčuje postup uživatele" in html.lower()
     assert "TaxTreat poskytuje strukturované právní informace" not in html
     assert "orientační" not in html.lower()
     assert "Neuzavřené právní otázky" not in html
     assert "šifrov" not in html.lower()
+    assert "project-metrics" not in html
+    assert "/ui-assets/client-polish.css" in html
+    assert "/ui-assets/client-polish.js" in html
+    assert "/ui-assets/client-advice-boundary.js" in html
 
 
 def test_guided_intake_assets_are_local_and_accessible():
     html = client.get("/ui").text
     css = client.get("/ui-assets/styles.css")
+    polish_css = client.get("/ui-assets/client-polish.css")
     javascript = client.get("/ui-assets/app.js")
+    polish_js = client.get("/ui-assets/client-polish.js")
+    boundary_js = client.get("/ui-assets/client-advice-boundary.js")
+    report_flow_js = client.get("/ui-assets/client-report-flow.js")
 
     assert css.status_code == 200
+    assert polish_css.status_code == 200
     assert javascript.status_code == 200
+    assert polish_js.status_code == 200
+    assert boundary_js.status_code == 200
+    assert report_flow_js.status_code == 200
     assert "/ui-assets/styles.css" in html
     assert "/ui-assets/app.js" in html
     assert "https://cdn" not in html
@@ -75,6 +95,11 @@ def test_guided_intake_assets_are_local_and_accessible():
     assert ".project-metrics" in css.text
     assert ".trust-strip" in css.text
     assert ".assumption-toggle" in css.text
+    assert "[hidden] { display: none !important; }" in polish_css.text
+    assert "#1B2A4A" in polish_css.text
+    assert "SAFE_RESULT_COPY" in boundary_js.text
+    assert "client-report-flow.js" in boundary_js.text
+    assert "Připravuji klientský report" in report_flow_js.text
 
 
 def test_workspace_demo_exposes_recipient_payment_result_workflow():
@@ -167,13 +192,13 @@ def test_design_lab_exposes_three_distinct_functional_directions():
     assert client.get("/design-lab/unknown").status_code == 404
 
 
-def test_browser_acceptance_uses_current_result_status_wording():
+def test_browser_acceptance_avoids_completed_process_wording():
     source = (
         Path("scripts/capture_stage7b_ui.py")
         .read_text(encoding="utf-8")
     )
 
-    assert "VÝPOČET DOKONČEN" in source
+    assert "VÝPOČET DOKONČEN" not in source
     assert "VÝSLEDEK DOKONČEN" not in source
 
 

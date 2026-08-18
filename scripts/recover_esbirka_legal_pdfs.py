@@ -114,36 +114,54 @@ def _recover_one(
     item: dict[str, Any],
     pdf_dir: Path,
     timeout: int,
+    retries: int = 4,
+    retry_backoff: float = 1.5,
 ) -> tuple[int, dict[str, Any]]:
     document_id = int(item["document_id"])
-    session = _new_session()
-    try:
-        response, mode = download_pdf(session, document_id, timeout=timeout)
-    finally:
-        session.close()
+    last_response: requests.Response | None = None
+    last_error: Exception | None = None
 
-    update: dict[str, Any]
-    if not is_pdf_response(response):
-        update = {
+    for attempt in range(max(1, retries)):
+        session = _new_session()
+        try:
+            response, mode = download_pdf(session, document_id, timeout=timeout)
+            last_response = response
+            if is_pdf_response(response):
+                path = pdf_dir / f"{document_id}.pdf"
+                path.write_bytes(response.content)
+                return document_id, {
+                    "pdf_path": str(path),
+                    "pdf_sha256": hashlib.sha256(response.content).hexdigest(),
+                    "pdf_bytes": len(response.content),
+                    "download_status": "downloaded",
+                    "download_mode": mode,
+                    "resolved": True,
+                    "official_download_url": str(response.url),
+                    "download_attempts": attempt + 1,
+                }
+        except requests.RequestException as exc:
+            last_error = exc
+        finally:
+            session.close()
+
+        if attempt + 1 < max(1, retries):
+            time.sleep(retry_backoff * (2**attempt))
+
+    if last_response is not None:
+        return document_id, {
             "download_status": "unresolved_legal_pdf",
             "resolved": False,
-            "last_http_status": response.status_code,
-            "last_content_type": response.headers.get("content-type"),
+            "last_http_status": last_response.status_code,
+            "last_content_type": last_response.headers.get("content-type"),
+            "download_attempts": max(1, retries),
         }
-        return document_id, update
 
-    path = pdf_dir / f"{document_id}.pdf"
-    path.write_bytes(response.content)
-    update = {
-        "pdf_path": str(path),
-        "pdf_sha256": hashlib.sha256(response.content).hexdigest(),
-        "pdf_bytes": len(response.content),
-        "download_status": "downloaded",
-        "download_mode": mode,
-        "resolved": True,
-        "official_download_url": str(response.url),
+    return document_id, {
+        "download_status": "request_error",
+        "resolved": False,
+        "last_error": type(last_error).__name__ if last_error is not None else "UnknownError",
+        "download_attempts": max(1, retries),
     }
-    return document_id, update
 
 
 def recover_manifest(
@@ -151,6 +169,8 @@ def recover_manifest(
     pdf_dir: Path,
     timeout: int = 90,
     workers: int = 12,
+    retries: int = 4,
+    retry_backoff: float = 1.5,
 ) -> dict[str, int]:
     manifest: list[dict[str, Any]] = json.loads(manifest_path.read_text(encoding="utf-8"))
     pdf_dir.mkdir(parents=True, exist_ok=True)
@@ -159,12 +179,25 @@ def recover_manifest(
 
     if workers <= 1:
         for item in pending:
-            document_id, update = _recover_one(item, pdf_dir, timeout)
+            document_id, update = _recover_one(
+                item,
+                pdf_dir,
+                timeout,
+                retries=retries,
+                retry_backoff=retry_backoff,
+            )
             updates[document_id] = update
     else:
         with ThreadPoolExecutor(max_workers=workers) as executor:
             futures = {
-                executor.submit(_recover_one, item, pdf_dir, timeout): int(item["document_id"])
+                executor.submit(
+                    _recover_one,
+                    item,
+                    pdf_dir,
+                    timeout,
+                    retries,
+                    retry_backoff,
+                ): int(item["document_id"])
                 for item in pending
             }
             for future in as_completed(futures):
@@ -203,12 +236,16 @@ def main() -> int:
     parser.add_argument("--pdf-dir", default="data/legal_texts/verified_source_pdfs")
     parser.add_argument("--timeout", type=int, default=90)
     parser.add_argument("--workers", type=int, default=12)
+    parser.add_argument("--retries", type=int, default=4)
+    parser.add_argument("--retry-backoff", type=float, default=1.5)
     args = parser.parse_args()
     result = recover_manifest(
         Path(args.manifest),
         Path(args.pdf_dir),
         timeout=args.timeout,
         workers=max(1, args.workers),
+        retries=max(1, args.retries),
+        retry_backoff=max(0.0, args.retry_backoff),
     )
     print(f"Official instruments: {result['total']}")
     print(f"Valid official PDFs: {result['valid']}")
