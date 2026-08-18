@@ -48,17 +48,17 @@ def test_guided_intake_ui_is_served_without_changing_api_root():
 
 def test_guided_intake_assets_are_local_and_accessible():
     html = client.get("/ui").text
-    css = client.get("/ui-assets/workspace.css?v=20260817-2")
-    javascript = client.get("/ui-assets/workspace.js?v=20260817-2")
-    polish = client.get("/ui-assets/workspace-client-polish.css?v=20260818-1")
+    css = client.get("/ui-assets/workspace.css?v=20260818-4")
+    javascript = client.get("/ui-assets/workspace.js?v=20260818-4")
+    polish = client.get("/ui-assets/workspace-client-polish.css?v=20260818-4")
 
     assert css.status_code == 200
     assert javascript.status_code == 200
     assert polish.status_code == 200
 
-    assert "/ui-assets/workspace.css?v=20260817-2" in html
-    assert "/ui-assets/workspace.js?v=20260817-2" in html
-    assert "/ui-assets/workspace-client-polish.css?v=20260818-1" in html
+    assert "/ui-assets/workspace.css?v=20260818-4" in html
+    assert "/ui-assets/workspace.js?v=20260818-4" in html
+    assert "/ui-assets/workspace-client-polish.css?v=20260818-4" in html
 
     assert 'fetch("/jurisdictions"' in javascript.text
     assert "body.jurisdictions.length !== 101" in javascript.text
@@ -176,9 +176,9 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert css.status_code == 200
     assert javascript.status_code == 200
     assert designs.status_code == 200
-    assert "/ui-assets/workspace.css?v=20260817-2" in html
-    assert "/ui-assets/workspace.js?v=20260817-2" in html
-    assert "/ui-assets/workspace-designs.css?v=20260817-2" in html
+    assert "/ui-assets/workspace.css?v=20260818-4" in html
+    assert "/ui-assets/workspace.js?v=20260818-4" in html
+    assert "/ui-assets/workspace-designs.css?v=20260818-4" in html
     assert 'data-design-link="editorial"' in html
     assert 'data-design-link="atlas"' in html
     assert 'data-design-link="civic"' in html
@@ -266,7 +266,7 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert "non_taxing_interest_above_monthly_threshold_annual" in javascript.text
     assert "non_taxing_interest_monthly_threshold_not_exceeded" in javascript.text
     assert "§ 38da zákona č. 586/1992 Sb." in javascript.text
-    assert 'const BUILD_VERSION = "20260817-2"' in javascript.text
+    assert 'const BUILD_VERSION = "20260818-4"' in javascript.text
     assert "Načíst novou verzi" in javascript.text
     assert ".new-build-notice" in css.text
     assert ".dashboard-summary" in css.text
@@ -370,7 +370,7 @@ def test_cz_at_result_before_catalog_source_version_keeps_domestic_start():
 
 
 def test_ui_calls_canonical_endpoints_and_uses_safe_dom_rendering():
-    javascript = client.get("/ui-assets/workspace.js?v=20260817-2").text
+    javascript = client.get("/ui-assets/workspace.js?v=20260818-4").text
     html = client.get("/ui").text
 
     assert 'fetch("/analysis/intake"' in javascript

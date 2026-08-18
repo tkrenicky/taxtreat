@@ -312,8 +312,9 @@ def _transaction_gloss(report):
     return "Pro použitou sazbu byly zohledněny zejména tyto zadané údaje: " + "; ".join(bits) + "."
 
 
-def _key_facts_html(report, rate_display, income_type, selected, schedule):
+def _key_facts_html(rate_display, income_type, selected, schedule, report=None):
     article = _article(selected) if selected else "—"
+    report = report or {}
     scope = report.get("scope") or {}
     recipient_country = str(scope.get("recipient_country") or "").upper()
 
@@ -345,7 +346,7 @@ def _wht_flow_html(rate_display):
         ("01", "ZDP", "Výchozí české pravidlo a sazba."),
         ("02", "SZDZ", "Použitelnost příslušné smlouvy."),
         ("03", "Podmínky", "Rezidence, skutečné vlastnictví a další podmínky."),
-        ("04", "MLI / PPT", "Případné modifikace MLI a PPT."),
+        ("04", "MLI / PPT", "Je-li relevantní, modifikace smlouvy a test hlavního účelu."),
         ("05", "Výsledek", f"Český režim: {rate_display}."),
     )
     html = []
@@ -417,7 +418,13 @@ def render_report_html(report):
     docs_html = _documentation_html(report)
     related_html = _related_sources(report, sources, selected_rule_id)
     transaction_gloss = _transaction_gloss(report)
-    key_facts = _key_facts_html(report, rate_display, scope.get("income_type"), selected, schedule)
+    key_facts = _key_facts_html(
+        rate_display,
+        scope.get("income_type"),
+        selected,
+        schedule,
+        report=report,
+    )
     flow_html = _wht_flow_html(rate_display)
 
     missing_block = ""
