@@ -309,7 +309,30 @@
   openButton.textContent = "Tisk / PDF reportu";
   openButton.dataset.reportAction = "print";
 
-  function showExportProblem(message) { window.alert(message); }
+  function showExportProblem(message) {
+    let notice = document.querySelector("#report-export-notice");
+    if (!notice) {
+      notice = document.createElement("div");
+      notice.id = "report-export-notice";
+      notice.className = "report-export-notice";
+      notice.setAttribute("role", "alert");
+      notice.setAttribute("aria-live", "assertive");
+
+      const resultActions = document.querySelector(
+        '.flow-step[data-step="4"] .flow-actions'
+      );
+
+      if (resultActions) resultActions.before(notice);
+      else document.body.append(notice);
+    }
+
+    notice.textContent = message;
+    notice.hidden = false;
+    notice.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+    });
+  }
 
   async function exportReport(printAfterLoad, button) {
     if (!lastAnalysisPayload) {
@@ -324,7 +347,47 @@
     const originalLabel = button.textContent;
     button.disabled = true;
     button.textContent = "Připravuji report…";
-    reportWindow.document.write("<!doctype html><title>TaxTreat</title><p style='font-family:system-ui;padding:32px'>Připravuji PDF report…</p>");
+    reportWindow.document.write(`<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TaxTreat · Příprava reportu</title>
+<style>
+body{
+  margin:0;
+  background:#F3F0E8;
+  color:#18332D;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+main{
+  max-width:680px;
+  margin:12vh auto;
+  padding:36px;
+  border:1px solid #DDE3DE;
+  border-radius:12px;
+  background:#FFFDF8;
+}
+strong{
+  display:block;
+  margin-bottom:8px;
+  color:#173F39;
+  font:600 26px/1.15 Georgia,serif;
+}
+p{
+  margin:0;
+  color:#708079;
+  line-height:1.55;
+}
+</style>
+</head>
+<body>
+<main>
+<strong>Připravuji report</strong>
+<p>TaxTreat vytváří výstup podle dokončeného výpočtu.</p>
+</main>
+</body>
+</html>`);
     try {
       const body = await buildReport(lastAnalysisPayload);
       const record = rememberReport(body);

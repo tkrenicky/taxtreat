@@ -5,19 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="TaxTreat – informační pracovní prostor pro českou srážkovou daň">
   <title>TaxTreat · Pracovní prostor</title>
-  <link rel="stylesheet" href="/ui-assets/workspace.css?v=20260818-5">
-  <link rel="stylesheet" href="/ui-assets/workspace-designs.css?v=20260818-5">
-  <link rel="stylesheet" href="/ui-assets/workspace-client-polish.css?v=20260818-5">
-  <script defer src="/ui-assets/workspace.js?v=20260818-5"></script>
-  <script defer src="/ui-assets/workspace-report-export.js?v=20260818-5"></script>
+  <link rel="stylesheet" href="/ui-assets/workspace.css?v=20260818-6">
+  <link rel="stylesheet" href="/ui-assets/workspace-designs.css?v=20260818-6">
+  <link rel="stylesheet" href="/ui-assets/workspace-client-polish.css?v=20260818-6">
+  <script defer src="/ui-assets/workspace.js?v=20260818-6"></script>
+  <script defer src="/ui-assets/workspace-report-export.js?v=20260818-6"></script>
 </head>
 <body data-design="atlas">
-  <aside id="design-switcher" class="design-switcher" aria-label="Volba návrhu vzhledu" hidden>
-    <a href="/design-lab">← Porovnání</a>
-    <a href="/design-lab/editorial" data-design-link="editorial">Halo</a>
-    <a href="/design-lab/atlas" data-design-link="atlas">Moss</a>
-    <a href="/design-lab/civic" data-design-link="civic">Signal</a>
-  </aside>
   <header class="app-header">
     <a class="logo" href="#prehled" data-nav="dashboard"><span>TT</span><b>TaxTreat</b></a>
     <nav aria-label="Hlavní navigace">
@@ -206,7 +200,7 @@
         <article class="reason"><h2>Použité právní pravidlo</h2><p id="workspace-reason">Po zpracování zadaných údajů se zde zobrazí přiřazené právní pravidlo a související informace.</p></article>
         <div class="dashboard-grid">
           <article class="card summary"><h2>Souhrn platby</h2><dl><div><dt>Hrubá částka</dt><dd id="workspace-gross">—</dd></div><div><dt id="workspace-tax-row-label">Srážková daň</dt><dd id="workspace-tax-row">—</dd></div><div><dt>Čistá částka</dt><dd id="workspace-net">—</dd></div></dl></article>
-          <article class="card"><div class="card-head"><h2>Podmínky použitého pravidla</h2><span id="workspace-action-count">0</span></div><div id="workspace-actions" class="action-list"></div></article>
+          <article class="card"><div class="card-head"><h2>Podmínky použitého pravidla</h2><span id="workspace-action-count" hidden>0</span></div><div id="workspace-actions" class="action-list"></div></article>
         </div>
         <article class="card compliance-schedule">
           <div class="card-head"><div><p>DAŇOVÝ KALENDÁŘ</p><h2>Rozhodné datum a navazující lhůty</h2></div><span>§ 38d a § 38da zákona č. 586/1992 Sb., o daních z příjmů</span></div>

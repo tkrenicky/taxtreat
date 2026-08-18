@@ -33,9 +33,9 @@ def test_primary_client_surfaces_state_information_only_boundary():
     guided = (WEB / "index.html").read_text(encoding="utf-8").lower()
     workspace = (WEB / "workspace.html").read_text(encoding="utf-8").lower()
 
-    assert "neposkytuje individuální daňové nebo právní poradenství" in guided
+    assert "neposkytuje individuální právní ani daňové poradenství" in guided
     assert "neurčuje postup uživatele" in guided
-    assert "neposkytuje individuální daňové nebo právní poradenství" in workspace
+    assert "neposkytuje individuální právní ani daňové poradenství" in workspace
 
 
 def test_hero_boundary_describes_software_output_not_taxpayer_action():

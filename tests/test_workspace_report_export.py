@@ -11,7 +11,7 @@ def test_workspace_loads_pdf_report_export_asset():
     asset = client.get("/ui-assets/workspace-report-export.js")
 
     assert asset.status_code == 200
-    assert "/ui-assets/workspace-report-export.js?v=20260818-5" in html
+    assert "/ui-assets/workspace-report-export.js?v=20260818-6" in html
     assert "Tisk / PDF reportu" in html
     assert "Tisk / PDF reportu" in asset.text
     assert 'nativeFetch("/analysis/report"' in asset.text

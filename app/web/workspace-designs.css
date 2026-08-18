@@ -2,24 +2,24 @@
 html,body{max-width:100%;overflow-x:hidden}
 
 body[data-design="atlas"]{
-  --blue:#1B2A4A;
-  --blue-dark:#101d36;
+  --blue:#173F39;
+  --blue-dark:#102F2A;
   --cream:#FBFAF6;
   --cream-soft:#FBFAF6;
-  --yellow:#E4EAF6;
-  --coral:#E4EAF6;
-  --powder:#E4EAF6;
-  --powder2:#F4F5F8;
-  --green:#1B2A4A;
-  --green-bg:#E4EAF6;
+  --yellow:#E8F0EC;
+  --coral:#E8F0EC;
+  --powder:#E8F0EC;
+  --powder2:#F3F7F4;
+  --green:#2E715E;
+  --green-bg:#E8F0EC;
   --orange:#7b6542;
   --red:#8a2f2f;
-  --ink:#1B2A4A;
-  --text:#31415f;
-  --muted:#697183;
-  --line:#E1E0D8;
-  --surface:#FBFAF6;
-  --canvas:#EFEDE4;
+  --ink:#18332D;
+  --text:#31463F;
+  --muted:#708079;
+  --line:#DDE3DE;
+  --surface:#FFFDF8;
+  --canvas:#F3F0E8;
   color:var(--text)!important;
   background:var(--canvas)!important;
   background-image:none!important;
@@ -83,7 +83,7 @@ body[data-design="atlas"] .secondary,body[data-design="atlas"] .new-recipient-to
 body[data-design="atlas"] .secondary:hover,body[data-design="atlas"] .new-recipient-toggle:hover{background:var(--powder2)!important}
 
 body[data-design="atlas"] input,body[data-design="atlas"] select,body[data-design="atlas"] textarea,body[data-design="atlas"] .form-field,body[data-design="atlas"] .question-card,body[data-design="atlas"] .fact-question,body[data-design="atlas"] .tooltip-panel{border-color:#CFD6E2!important;border-radius:8px!important;color:var(--ink)!important;background:#fff!important;box-shadow:none!important}
-body[data-design="atlas"] input:focus,body[data-design="atlas"] select:focus,body[data-design="atlas"] textarea:focus{outline:2px solid rgba(27,42,74,.10)!important;border-color:var(--blue)!important}
+body[data-design="atlas"] input:focus,body[data-design="atlas"] select:focus,body[data-design="atlas"] textarea:focus{outline:2px solid rgba(46,113,94,.12)!important;border-color:var(--blue)!important}
 
 body[data-design="atlas"] .flow{max-width:900px!important;margin:0 auto!important}
 body[data-design="atlas"] .flow .page-title{background:transparent!important;border-color:var(--line)!important}

@@ -27,12 +27,13 @@ def test_workspace_production_palette_matches_report_family():
     css = (WEB / "workspace-designs.css").read_text(encoding="utf-8")
 
     for token in (
-        "#1B2A4A",
-        "#E4EAF6",
-        "#FBFAF6",
-        "#F4F5F8",
-        "#E1E0D8",
-        "#EFEDE4",
+        "#173F39",
+        "#2E715E",
+        "#E8F0EC",
+        "#FFFDF8",
+        "#F3F7F4",
+        "#DDE3DE",
+        "#F3F0E8",
     ):
         assert token in css
 

@@ -6,12 +6,14 @@
   if (["editorial", "atlas", "civic"].includes(design)) {
     document.body.dataset.design = design;
     const switcher = document.querySelector("#design-switcher");
-    switcher.hidden = false;
-    switcher.querySelector(`[data-design-link="${design}"]`).classList.add("active");
+    if (switcher) {
+      switcher.hidden = false;
+      switcher.querySelector(`[data-design-link="${design}"]`)?.classList.add("active");
+    }
   }
   "use strict";
 
-  const BUILD_VERSION = "20260818-5";
+  const BUILD_VERSION = "20260818-6";
 
   async function checkForNewBuild() {
     try {
@@ -872,14 +874,14 @@
     }
     const treatment = analysis.tax_treatment || analysis.candidate_tax_treatment;
     if (treatment === "exclusive_foreign_taxation") {
-      return `Podle ${reference} je v TaxTreat při zadaných údajích přiřazeno pravidlo, podle něhož se příjem v České republice nezdaňuje.`;
+      return `Podle ${reference} se při zadaných údajích příjem v České republice nezdaňuje.`;
     }
     if (treatment === "domestic_exemption") {
-      return `Podle ${reference} je v TaxTreat při zadaných údajích přiřazeno pravidlo osvobození.`;
+      return `Podle ${reference} je při zadaných údajích příjem v České republice osvobozen od srážkové daně.`;
     }
     const rate = analysis.rate ?? analysis.candidate_rate;
     if (rate !== null && rate !== undefined) {
-      return `Podle ${reference} je v TaxTreat při zadaných údajích přiřazena sazba ${new Intl.NumberFormat("cs-CZ", { maximumFractionDigits: 2 }).format(Number(rate))} %.`;
+      return `Podle ${reference} činí při zadaných údajích sazba srážkové daně ${new Intl.NumberFormat("cs-CZ", { maximumFractionDigits: 2 }).format(Number(rate))} %.`;
     }
     return `Zadané údaje zatím neumožňují v TaxTreat přiřadit konkrétní právní pravidlo a sazbu.`;
   }
@@ -908,11 +910,15 @@
     setText("#workspace-reason", informationalRuleStatement(analysis));
     const actions = document.querySelector("#workspace-actions"); actions.replaceChildren();
     reviewItems.forEach((item) => actions.append(item));
-    setText("#workspace-action-count", String(reviewItems.length));
+    const actionCount = document.querySelector("#workspace-action-count");
+    if (actionCount) {
+      actionCount.textContent = String(reviewItems.length);
+      actionCount.hidden = reviewItems.length === 0;
+    }
     if (!reviewItems.length) {
       const item = document.createElement("div"); item.className = "action-item complete";
-      const strong = document.createElement("strong"); strong.textContent = "Všechny údaje potřebné pro přiřazení pravidla jsou zadány";
-      const small = document.createElement("small"); small.textContent = "TaxTreat může z uvedených údajů zobrazit odpovídající pravidlo a výpočet podle zadaných údajů.";
+      const strong = document.createElement("strong"); strong.textContent = "Všechny údaje potřebné pro výpočet jsou zadány";
+      const small = document.createElement("small"); small.textContent = "Výsledek vychází z uvedených údajů a zobrazeného právního základu.";
       item.append(strong, small); actions.append(item);
     }
     const citations = document.querySelector("#workspace-citations"); citations.replaceChildren();
