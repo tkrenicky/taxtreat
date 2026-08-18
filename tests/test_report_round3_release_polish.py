@@ -72,7 +72,7 @@ def test_round3_copy_polish_is_applied():
     html = render_report_html(_report())
     assert "anti-abuse test" not in html
     assert "test hlavního účelu" in html
-    assert "Vzniká česká srážková daň? Jaký je její výchozí režim?" in html
+    assert "Výchozí české pravidlo a sazba." in html
     assert "Nejbližší uvedená lhůta" not in html
     assert "Nejbližší lhůta" in html
     assert "Lhůta pro odvod daně plátcem." not in html

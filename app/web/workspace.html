@@ -5,10 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="TaxTreat – informační pracovní prostor pro českou srážkovou daň">
   <title>TaxTreat · Pracovní prostor</title>
-  <link rel="stylesheet" href="/ui-assets/workspace.css?v=20260817-2">
-  <link rel="stylesheet" href="/ui-assets/workspace-designs.css?v=20260817-2">
-  <script defer src="/ui-assets/workspace.js?v=20260817-2"></script>
-  <script defer src="/ui-assets/workspace-report-export.js?v=20260817-2"></script>
+  <link rel="stylesheet" href="/ui-assets/workspace.css?v=20260818-4">
+  <link rel="stylesheet" href="/ui-assets/workspace-designs.css?v=20260818-4">
+  <link rel="stylesheet" href="/ui-assets/workspace-client-polish.css?v=20260818-4">
+  <script defer src="/ui-assets/workspace.js?v=20260818-4"></script>
+  <script defer src="/ui-assets/workspace-report-export.js?v=20260818-4"></script>
 </head>
 <body data-design="atlas">
   <aside id="design-switcher" class="design-switcher" aria-label="Volba návrhu vzhledu" hidden>
@@ -158,6 +159,10 @@
       <section class="flow-step" data-step="3">
         <div class="page-title"><div><p>KROK 3 ZE 4</p><h1>Údaje o platbě</h1><span><b data-payer-name>Demo CZ s.r.o.</b> → <b data-recipient-name>Demo GmbH</b></span></div></div>
         <form id="workspace-payment" class="card payment-form">
+          <div class="required-help">
+            <span aria-hidden="true">*</span>
+            <span>Označuje povinný údaj.</span>
+          </div>
           <div class="field-grid">
             <label class="payment-income-field"><span>Druh příjmu *</span><select name="income_type" required><option value="">Vyber druh</option><option value="dividend">Dividendy</option><option value="interest">Úroky</option><option value="royalty">Licenční poplatky</option></select></label>
             <label class="transaction-date-field"><span>Datum transakce * <button class="info-button" type="button" data-tooltip="date-help" aria-label="Vysvětlení data transakce">i</button></span><input name="transaction_date" type="date" required><small>Uveď dřívější z těchto dvou dat: datum úhrady nebo datum zaúčtování závazku.</small></label>
