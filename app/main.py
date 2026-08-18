@@ -155,7 +155,7 @@ def read_root():
 
 @app.get("/ui", include_in_schema=False)
 def guided_intake_ui():
-    return FileResponse(WEB_ROOT / "index.html")
+    return FileResponse(WEB_ROOT / "workspace.html")
 
 
 @app.get("/workspace-demo", include_in_schema=False)

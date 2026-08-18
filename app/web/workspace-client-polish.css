@@ -1,0 +1,201 @@
+:root{
+  --tt-bg:#EFEDE4;
+  --tt-paper:#FBFAF6;
+  --tt-card:#F4F5F8;
+  --tt-line:#DDDCD4;
+  --tt-navy:#1B2A4A;
+  --tt-body:#33394A;
+  --tt-muted:#697183;
+  --tt-accent:#E4EAF6;
+  --tt-accent-line:#C9D3E8;
+  --tt-serif:Georgia,"Iowan Old Style","Palatino Linotype",serif;
+}
+
+[hidden]{display:none!important}
+
+/* Keep the full workspace/navigation product. */
+body{
+  background:var(--tt-bg);
+  color:var(--tt-body);
+}
+
+.app-header{
+  background:var(--tt-navy)!important;
+  box-shadow:none!important;
+}
+
+.app-header nav button,
+.logo,
+.account,
+.payer-context{
+  color:#fff!important;
+}
+
+.app-header nav button.active{
+  background:rgba(255,255,255,.12)!important;
+}
+
+.demo-notice{
+  border-color:var(--tt-line)!important;
+  background:var(--tt-paper)!important;
+  color:var(--tt-muted)!important;
+  box-shadow:none!important;
+}
+
+.page-title h1{
+  color:var(--tt-navy)!important;
+  font-family:var(--tt-serif);
+  font-weight:600!important;
+}
+
+.page-title > div > span,
+.page-title > div > p{
+  color:var(--tt-muted)!important;
+}
+
+.card,
+.payment-form,
+.select-card{
+  border-color:var(--tt-line)!important;
+  background:var(--tt-paper)!important;
+  box-shadow:none!important;
+}
+
+input,
+select{
+  border:1px solid #CBD2DD!important;
+  background:#fff!important;
+  color:var(--tt-navy)!important;
+  box-shadow:none!important;
+}
+
+input:focus,
+select:focus{
+  border-color:var(--tt-navy)!important;
+  outline:none!important;
+  box-shadow:0 0 0 2px rgba(27,42,74,.09)!important;
+}
+
+.primary{
+  background:var(--tt-navy)!important;
+  color:#fff!important;
+  box-shadow:none!important;
+}
+
+.secondary{
+  border-color:var(--tt-navy)!important;
+  background:#fff!important;
+  color:var(--tt-navy)!important;
+  box-shadow:none!important;
+}
+
+.required-help{
+  margin:-3px 0 16px;
+  color:var(--tt-muted);
+  font-size:.78rem;
+}
+
+/* Assumptions are client inputs, not hidden prose. */
+.assumptions{
+  border:1px solid var(--tt-line)!important;
+  background:var(--tt-card)!important;
+  box-shadow:none!important;
+}
+
+.assumptions legend{
+  color:var(--tt-navy)!important;
+}
+
+.assumption-row{
+  border-color:var(--tt-line)!important;
+}
+
+.segmented{
+  background:#fff!important;
+  border-color:#CBD2DD!important;
+}
+
+.segmented label span{
+  color:var(--tt-navy)!important;
+}
+
+/* Result must be readable — no washed-out blue text on blue background. */
+[data-step="4"] .result-hero{
+  border:1px solid var(--tt-accent-line)!important;
+  background:var(--tt-accent)!important;
+  color:var(--tt-navy)!important;
+  box-shadow:none!important;
+}
+
+[data-step="4"] .result-hero p,
+[data-step="4"] .result-hero small{
+  color:#4D5870!important;
+}
+
+[data-step="4"] .result-hero strong{
+  color:var(--tt-navy)!important;
+}
+
+[data-step="4"] .card{
+  color:var(--tt-body)!important;
+}
+
+[data-step="4"] table{
+  width:100%;
+  border-collapse:collapse;
+  background:#fff!important;
+  color:var(--tt-body)!important;
+}
+
+[data-step="4"] th{
+  background:var(--tt-accent)!important;
+  color:var(--tt-navy)!important;
+  font-weight:700!important;
+}
+
+[data-step="4"] td{
+  background:#fff!important;
+  color:var(--tt-body)!important;
+}
+
+[data-step="4"] th,
+[data-step="4"] td{
+  border-color:var(--tt-line)!important;
+}
+
+/* Legal source presentation */
+.citation-card,
+.legal-path-item{
+  border-color:var(--tt-line)!important;
+  background:var(--tt-paper)!important;
+  color:var(--tt-body)!important;
+  box-shadow:none!important;
+}
+
+.citation-card blockquote,
+.citation-excerpt{
+  border-left:3px solid var(--tt-navy)!important;
+  background:var(--tt-accent)!important;
+  color:var(--tt-body)!important;
+}
+
+.citation-card a,
+.legal-path-item a{
+  color:var(--tt-navy)!important;
+  font-weight:700;
+}
+
+/* Never allow microscopic client text. */
+.payment-form small,
+.tooltip-panel,
+.citation-card small,
+.result-detail small{
+  font-size:.78rem!important;
+  line-height:1.45!important;
+}
+
+@media(max-width:900px){
+  .app-header{
+    position:static!important;
+  }
+}

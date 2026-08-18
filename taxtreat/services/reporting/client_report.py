@@ -143,12 +143,24 @@ def _legal_reference(report, source):
 def _source_link(source):
     if not source or not source.get("source_url"):
         return ""
-    url = escape(str(source["source_url"]), quote=True)
-    host = urlparse(str(source["source_url"])).netloc.replace("www.", "")
+    raw_url = str(source["source_url"]).strip()
+    parsed = urlparse(raw_url)
+    host_raw = (parsed.hostname or "").lower()
+    # Client reports may only expose an external public legal source.
+    # Internal TaxTreat/API routes are never shown as the legal-source link.
+    if (
+        parsed.scheme not in {"http", "https"}
+        or not host_raw
+        or host_raw in {"localhost", "127.0.0.1"}
+        or host_raw.endswith("taxtreat.vercel.app")
+    ):
+        return ""
+    url = escape(raw_url, quote=True)
+    host = parsed.netloc.replace("www.", "")
     label = "Oficiální zdroj"
     if host:
         label += f" · {host}"
-    return f'<a href="{url}">{escape(label)} ↗</a>'
+    return f'<a href="{url}" target="_blank" rel="noopener noreferrer">{escape(label)} ↗</a>'
 
 
 def _assumptions_html(report):
@@ -318,11 +330,11 @@ def _key_facts_html(rate_display, income_type, selected, schedule):
 
 def _wht_flow_html(rate_display):
     nodes = (
-        ("01", "ZDP", "Vzniká česká srážková daň a jaký je výchozí režim?"),
-        ("02", "SZDZ", "Je použitelná smlouva o zamezení dvojího zdanění?"),
-        ("03", "Podmínky", "Rezidence, skutečné vlastnictví, typ příjmu a další podmínky."),
-        ("04", "MLI / PPT", "Je-li relevantní, zohlední se modifikace smlouvy a anti-abuse test."),
-        ("05", "Výsledek", f"Konečný český režim: {rate_display}."),
+        ("01", "ZDP", "Výchozí české pravidlo a sazba."),
+        ("02", "SZDZ", "Použitelnost příslušné smlouvy."),
+        ("03", "Podmínky", "Rezidence, skutečné vlastnictví a další podmínky."),
+        ("04", "MLI / PPT", "Případné modifikace MLI a PPT."),
+        ("05", "Výsledek", f"Český režim: {rate_display}."),
     )
     html = []
     for index, (number, title, text) in enumerate(nodes):

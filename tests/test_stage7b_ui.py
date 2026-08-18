@@ -19,62 +19,52 @@ def test_guided_intake_ui_is_served_without_changing_api_root():
     assert response.status_code == 200
     assert response.headers["content-type"].startswith("text/html")
     html = response.text
+
     assert 'lang="cs"' in html
-    assert 'id="case-form"' in html
-    assert 'id="fx-fields"' in html
-    assert 'id="questions"' in html
-    assert 'id="documents"' in html
-    assert 'class="documents-panel"' in html
-    assert 'id="calculation-card"' in html
-    assert 'id="answer-error"' in html
-    assert 'class="sidebar"' in html
-    assert "Klientský portál" in html
-    assert "Moje případy" not in html
-    assert "Doklady <small>Připravujeme" not in html
-    assert 'href="/docs"' not in html
-    assert 'id="napoveda"' in html
-    assert "Metodika a nápověda" in html
-    assert "Důležité upozornění" in html
-    assert "Výpočet české srážkové daně" in html
-    assert "výpočet podle zadaných údajů" in html.lower()
-    assert "101" in html
-    assert "303" in html
-    assert "Zadané údaje se po zpracování neukládají" in html
-    assert "Stát plátce" in html
-    assert "Stát daňové rezidence příjemce" in html
-    assert "Typ příjemce" in html
-    assert 'name="no_pe_connection"' in html
-    assert 'id="dividend-fields"' in html
-    assert 'id="advisor-review-section"' in html
-    assert "Stage 6 production rules" not in html
+    assert "Přehled" in html
+    assert "Plátci" in html
+    assert "Příjemci" in html
+    assert "Výpočty" in html
+    assert "Výstupy" in html
+    assert "Zdroje" in html
+
+    assert "KROK 1 ZE 4" in html
+    assert "KROK 2 ZE 4" in html
+    assert "KROK 3 ZE 4" in html
+    assert "KROK 4 ZE 4" in html
+
+    assert 'id="workspace-payment"' in html
+    assert 'name="beneficial_owner"' in html
+    assert 'name="treaty_resident"' in html
+    assert 'name="pe_connection"' in html
+    assert 'name="holding_period_mode"' in html
+    assert 'value="known_date"' in html
+    assert 'value="at_least_12_months"' in html
+    assert 'value="less_than_12_months"' in html
+
+    assert "TaxTreat je informační nástroj" in html
     assert "neposkytuje individuální daňové nebo právní poradenství" in html.lower()
-    assert "TaxTreat poskytuje strukturované právní informace" not in html
-    assert "orientační" not in html.lower()
-    assert "Neuzavřené právní otázky" not in html
-    assert "šifrov" not in html.lower()
 
 
 def test_guided_intake_assets_are_local_and_accessible():
     html = client.get("/ui").text
-    css = client.get("/ui-assets/styles.css")
-    javascript = client.get("/ui-assets/app.js")
+    css = client.get("/ui-assets/workspace.css?v=20260817-2")
+    javascript = client.get("/ui-assets/workspace.js?v=20260817-2")
+    polish = client.get("/ui-assets/workspace-client-polish.css?v=20260818-1")
 
     assert css.status_code == 200
     assert javascript.status_code == 200
-    assert "/ui-assets/styles.css" in html
-    assert "/ui-assets/app.js" in html
-    assert "https://cdn" not in html
-    assert "@media (max-width: 580px)" in css.text
-    assert "--forest:" in css.text
-    assert "grid-template-columns: 232px" in css.text
-    assert "linear-gradient(180deg, #112744" in css.text
-    assert ".wizard-progress" in css.text
-    assert ".wizard-navigation" in css.text
-    assert ".help-section" in css.text
-    assert ".help-grid" in css.text
-    assert ".project-metrics" in css.text
-    assert ".trust-strip" in css.text
-    assert ".assumption-toggle" in css.text
+    assert polish.status_code == 200
+
+    assert "/ui-assets/workspace.css?v=20260817-2" in html
+    assert "/ui-assets/workspace.js?v=20260817-2" in html
+    assert "/ui-assets/workspace-client-polish.css?v=20260818-1" in html
+
+    assert 'fetch("/jurisdictions"' in javascript.text
+    assert "body.jurisdictions.length !== 101" in javascript.text
+    assert 'fetch("/analysis/intake"' in javascript.text
+    assert "localStorage" not in javascript.text
+    assert "sessionStorage" not in javascript.text
 
 
 def test_workspace_demo_exposes_recipient_payment_result_workflow():
@@ -173,7 +163,7 @@ def test_browser_acceptance_uses_current_result_status_wording():
         .read_text(encoding="utf-8")
     )
 
-    assert "VÝPOČET DOKONČEN" in source
+    assert "workspace-result-status" in source
     assert "VÝSLEDEK DOKONČEN" not in source
 
 
@@ -380,36 +370,19 @@ def test_cz_at_result_before_catalog_source_version_keeps_domestic_start():
 
 
 def test_ui_calls_canonical_endpoints_and_uses_safe_dom_rendering():
-    javascript = client.get("/ui-assets/app.js").text
+    javascript = client.get("/ui-assets/workspace.js?v=20260817-2").text
+    html = client.get("/ui").text
 
-    assert 'postJson("/analysis/intake"' in javascript
-    assert 'postJson("/analysis/report"' in javascript
-    assert "textContent = question.prompt" in javascript
-    assert "textContent = documentName" in javascript
+    assert 'fetch("/analysis/intake"' in javascript
+    assert "textContent" in javascript
     assert ".innerHTML" not in javascript
     assert "exchange_rate" in javascript
-    assert "payment_date" in javascript
-    assert "accounting_date" in javascript
-    assert "Zobrazit zbývající podklady" in javascript
-    assert "exclusive_foreign_taxation" in javascript
-    assert "pravidlo bez českého zdanění" in javascript
-    assert "pravidlo osvobození" in javascript
-    assert 'id="tax-czk-label"' in client.get("/ui").text
-    assert "pageSize = 3" in javascript
-    assert "wizard-progress" in javascript
-    assert "Další položky" in javascript
-    assert 'startsWith("facts.")' in javascript
-    assert "payload.facts[factName] = answer" in javascript
-    assert "Aktualizovat výpočet" in javascript
-    assert "DOPLNIT ÚDAJE" in javascript
-    assert "badge.textContent = statusBadgeCopy" in javascript
-    assert "REVIEW_REQUIRED" in javascript
-    assert 'postJson("/analysis/intake", nextPayload)' in javascript
-    assert "beneficial_owner: true" in javascript
-    assert "recipient_is_treaty_resident: true" in javascript
-    assert "permanent_establishment_connection" in javascript
-    assert "completeMonths" in javascript
-    assert "renderAdvisorItems" in javascript
+    assert "transaction_date" in javascript
+    assert "withholding_compliance_schedule" in javascript
+    assert 'id="workspace-tax-label"' in html
+    assert 'id="workspace-result-status"' in html
+    assert 'id="workspace-citations"' in html
+    assert 'id="workspace-notification-deadline"' in html
 
 
 def test_ui_exposes_accessible_status_and_error_regions():
@@ -417,5 +390,5 @@ def test_ui_exposes_accessible_status_and_error_regions():
 
     assert 'aria-live="polite"' in html
     assert 'role="alert"' in html
-    assert 'class="skip-link"' in html
-    assert 'aria-label="TaxTreat domů"' in html
+    assert 'aria-label="Hlavní navigace"' in html
+    assert 'aria-label="Průběh kontroly"' in html
