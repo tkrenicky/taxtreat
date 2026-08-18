@@ -157,7 +157,8 @@ jobs:
           python scripts/recover_esbirka_legal_pdfs.py \
             --manifest reports/treaty_verified_pdf_manifest.json \
             --pdf-dir artifacts/legal_pdfs \
-            --timeout 90
+            --timeout 120 \
+            --workers 3
 
       - name: Audit PDF text layers and article locators
         run: |
