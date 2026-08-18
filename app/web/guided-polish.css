@@ -1,0 +1,258 @@
+:root {
+  --tt-navy: #1B2A4A;
+  --tt-navy-soft: #35425d;
+  --tt-paper: #FBFAF6;
+  --tt-canvas: #EFEDE4;
+  --tt-neutral: #F4F5F8;
+  --tt-accent: #E4EAF6;
+  --tt-line: #DDDCD4;
+  --tt-muted: #697183;
+  --tt-serif: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+  --tt-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+}
+
+[hidden] { display: none !important; }
+
+html, body {
+  background: var(--tt-canvas);
+}
+
+body {
+  color: var(--tt-navy);
+  font-family: var(--tt-sans);
+}
+
+.app-shell {
+  background: var(--tt-canvas);
+}
+
+/* Preserve the original navigation and product structure. */
+.sidebar {
+  background: var(--tt-navy) !important;
+  box-shadow: none !important;
+}
+
+.sidebar-brand,
+.sidebar nav a {
+  color: #fff !important;
+}
+
+.sidebar-brand small,
+.sidebar-assurance p {
+  color: rgba(255,255,255,.68) !important;
+}
+
+.sidebar nav a.active {
+  background: rgba(255,255,255,.10) !important;
+}
+
+.sidebar-assurance {
+  border-color: rgba(255,255,255,.15) !important;
+  background: transparent !important;
+}
+
+.topbar {
+  background: rgba(251,250,246,.96) !important;
+  border-bottom: 1px solid var(--tt-line) !important;
+  box-shadow: none !important;
+}
+
+main {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.notice {
+  border: 1px solid var(--tt-line) !important;
+  border-radius: 10px !important;
+  background: rgba(251,250,246,.78) !important;
+  box-shadow: none !important;
+}
+
+.notice-icon {
+  display: none !important;
+}
+
+.notice p {
+  color: var(--tt-muted) !important;
+}
+
+.hero {
+  max-width: 760px;
+}
+
+.hero h1 {
+  color: var(--tt-navy) !important;
+  font-family: var(--tt-serif);
+  font-weight: 500 !important;
+  letter-spacing: -.025em;
+}
+
+.hero > p:last-child {
+  color: var(--tt-muted) !important;
+  line-height: 1.6;
+}
+
+.eyebrow,
+.step-label {
+  color: var(--tt-navy-soft) !important;
+  letter-spacing: .11em;
+}
+
+.project-metrics {
+  display: none !important;
+}
+
+.trust-strip {
+  border: 0 !important;
+  border-top: 1px solid var(--tt-line) !important;
+  border-bottom: 1px solid var(--tt-line) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--tt-muted) !important;
+}
+
+.trust-strip b {
+  color: var(--tt-navy) !important;
+}
+
+.workspace {
+  gap: 22px !important;
+  align-items: start;
+}
+
+.panel {
+  border: 1px solid var(--tt-line) !important;
+  border-radius: 12px !important;
+  background: var(--tt-paper) !important;
+  box-shadow: none !important;
+}
+
+.form-panel {
+  padding: 28px !important;
+}
+
+.result-panel {
+  position: sticky;
+  top: 78px;
+  padding: 25px !important;
+}
+
+.panel h2,
+.panel h3,
+.help-section h2 {
+  color: var(--tt-navy) !important;
+}
+
+.panel h2,
+.help-section h2 {
+  font-family: var(--tt-serif);
+  font-weight: 500 !important;
+}
+
+input,
+select {
+  border: 1px solid #CBD2DD !important;
+  border-radius: 8px !important;
+  background: #fff !important;
+  color: var(--tt-navy) !important;
+  box-shadow: none !important;
+}
+
+input:focus,
+select:focus {
+  outline: none !important;
+  border-color: var(--tt-navy) !important;
+  box-shadow: 0 0 0 2px rgba(27,42,74,.09) !important;
+}
+
+.assumption-toggle,
+.assumptions,
+.detail-box,
+.fx-box {
+  border: 1px solid var(--tt-line) !important;
+  border-radius: 10px !important;
+  background: var(--tt-neutral) !important;
+  box-shadow: none !important;
+}
+
+.primary,
+.secondary {
+  border-radius: 8px !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.primary {
+  background: var(--tt-navy) !important;
+  color: #fff !important;
+}
+
+.secondary {
+  border: 1px solid var(--tt-navy) !important;
+  background: #fff !important;
+  color: var(--tt-navy) !important;
+}
+
+.primary:hover,
+.secondary:hover {
+  opacity: .92;
+  transform: none !important;
+}
+
+.empty-state {
+  color: var(--tt-navy);
+}
+
+.empty-icon {
+  background: var(--tt-accent) !important;
+  color: var(--tt-navy) !important;
+}
+
+.empty-state p,
+.status-description,
+.fine-print,
+.documents-panel p {
+  color: var(--tt-muted) !important;
+}
+
+.calculation {
+  border: 1px solid #D4DBE8 !important;
+  border-radius: 11px !important;
+  background: var(--tt-accent) !important;
+  box-shadow: none !important;
+}
+
+.question,
+.advisor-items > *,
+.documents-panel {
+  border-color: var(--tt-line) !important;
+  box-shadow: none !important;
+}
+
+.help-section {
+  border-top: 1px solid var(--tt-line);
+}
+
+.help-grid article {
+  border: 1px solid var(--tt-line) !important;
+  border-radius: 10px !important;
+  background: var(--tt-paper) !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 980px) {
+  .result-panel {
+    position: static;
+  }
+}
+
+@media (max-width: 760px) {
+  .workspace {
+    display: block !important;
+  }
+
+  .result-panel {
+    margin-top: 20px;
+  }
+}
