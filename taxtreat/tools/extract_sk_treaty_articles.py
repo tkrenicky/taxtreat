@@ -56,13 +56,17 @@ EXPECTED = {
     },
 }
 
-# Some official Slov-Lex announcements publish the treaty body only as an
-# attachment. These are still primary sources; the override identifies the
-# official attachment without encoding any legal conclusion.
+# Some official publications expose the treaty body only as a PDF attachment
+# or, in Taiwan's case, in the official Ministry of Finance Financial Bulletin.
+# These remain primary official sources and encode no legal conclusion.
 OFFICIAL_PDF_OVERRIDES = {
     "OM": (
         "https://static.slov-lex.sk/pdf/prilohy/SK/ZZ/2021/548/"
         "vyhlasene_znenie_5381567-2.pdf"
+    ),
+    "TW": (
+        "https://www.mfsr.sk/files/archiv/financny-spravodajca/"
+        "3497/63/FS_09_2011.pdf"
     ),
 }
 
@@ -394,7 +398,7 @@ def build_extraction(*, fetch: bool = True) -> dict[str, Any]:
 
     return {
         "schema_version": 2,
-        "dataset_release": "sk-treaty-article-machine-extraction-2026-08-19.3",
+        "dataset_release": "sk-treaty-article-machine-extraction-2026-08-19.4",
         "source_country": "SK",
         "relationship_count": 75,
         "scope_count": 225,
@@ -463,8 +467,8 @@ def main() -> None:
         encoding="utf-8",
     )
     print("Treaty scopes:", summary["scope_count"])
-    print("Validated articles:", summary["article_extracted_scopes"])
-    print("Number variance:", summary["number_variance_scopes"])
+    print("Articles extracted:", summary["article_extracted_scopes"])
+    print("Number variances:", summary["number_variance_scopes"])
     print("Title mismatches:", summary["title_mismatch_scopes"])
     print("Unresolved articles:", summary["unresolved_article_scopes"])
     print("Non-standard sources:", summary["non_standard_source_scopes"])
