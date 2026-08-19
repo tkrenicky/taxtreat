@@ -12,7 +12,7 @@ SEMANTIC_PATH = SK_DIR / "treaty_semantic_candidates.json"
 MLI_PATH = SK_DIR / "mli_notice_machine_extraction.json"
 COMPLIANCE_PATH = SK_DIR / "compliance_profile_2026.json"
 DIVIDEND_MODEL_PATH = SK_DIR / "dividend_domestic_condition_model.json"
-DOMESTIC_MODEL_PATH = SK_DIR / "domestic_transaction_candidates.json"
+DOMESTIC_MODEL_PATH = SK_DIR / "domestic_transaction_condition_model.json"
 OUTPUT_PATH = SK_DIR / "prerelease_runtime_manifest.json"
 SUMMARY_PATH = SK_DIR / "prerelease_runtime_manifest_summary.json"
 
