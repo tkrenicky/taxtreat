@@ -1,6 +1,10 @@
 from __future__ import annotations
 
+import json
+
+import taxtreat.tools.build_sk_treaty_semantic_candidates as semantic_module
 from taxtreat.tools.build_sk_treaty_semantic_candidates import (
+    build_candidates,
     build_semantic_candidate,
 )
 
@@ -69,3 +73,42 @@ def test_candidate_parser_does_not_turn_percentages_into_final_legal_conclusion(
     assert "final_rate" not in result
     assert "treaty_rate" not in result
     assert result["human_review_status"] == "not_started"
+
+
+def test_title_mismatch_never_enters_semantic_candidate_layer(tmp_path, monkeypatch):
+    scopes = []
+    for i in range(225):
+        status = "article_extracted"
+        title_status = "expected_income_title_matched"
+        text = "Článok 10 Dividendy. Daň nepresiahne 10 %."
+        if i == 0:
+            status = "article_extracted_title_mismatch_requires_resolution"
+            title_status = "expected_income_title_not_matched"
+            text = "Článok 10 Prepojené podniky. 10 %."
+        scopes.append({
+            "packet_id": f"SK-X{i}-dividend-TREATY-SOURCE",
+            "recipient_country": f"X{i}",
+            "income_type": "dividend",
+            "article_text": text,
+            "machine_extraction_status": status,
+            "title_validation_status": title_status,
+            "source_url": "https://example.invalid",
+            "source_sha256": "x",
+            "approval_eligible": False,
+            "runtime_status": "not_released",
+        })
+
+    path = tmp_path / "extraction.json"
+    path.write_text(
+        json.dumps({"scope_count": 225, "scopes": scopes}),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(semantic_module, "EXTRACTION_PATH", path)
+
+    payload = build_candidates()
+    first = payload["scopes"][0]
+    assert first["semantic_status"] == "blocked_missing_validated_article_text"
+    assert first["source_extraction_status"] == (
+        "article_extracted_title_mismatch_requires_resolution"
+    )
+    assert all(row["approval_eligible"] is False for row in payload["scopes"])
