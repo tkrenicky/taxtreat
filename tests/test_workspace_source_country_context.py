@@ -39,3 +39,13 @@ def test_workspace_source_country_context_keeps_sk_prerelease_fail_closed():
     assert 'function finalAnalysisAllowed(code)' in text
     assert 'runtimeReleased === true' in text
     assert 'availability: "pre_release"' in text
+
+
+def test_workspace_source_country_context_carries_sk_monthly_compliance_timing():
+    text = CONTEXT_JS.read_text(encoding="utf-8")
+    sk_block = text.split('SK: Object.freeze({', 1)[1].split('}),', 1)[0]
+
+    assert 'notificationPeriodicity: "monthly"' in sk_block
+    assert 'notificationDeadlineRule: "15th_day_of_following_calendar_month"' in sk_block
+    assert 'remittanceDeadlineRule: "15th_day_of_following_calendar_month"' in sk_block
+    assert 'ordinaryAnnualWhtReturnConfigured: false' in sk_block
