@@ -66,9 +66,19 @@ def test_sk_dividend_domestic_model_is_slovak_specific_and_time_correct():
     assert "sk_dividend_domestic_model_incomplete" not in payload["blockers"]
 
 
-def test_sk_prerelease_runtime_manifest_is_complete_but_never_released():
+def test_sk_prerelease_runtime_manifest_is_fail_closed_when_not_generated():
     payload = build_readiness()
     manifest = payload["prerelease_runtime_manifest"]
+
+    # Clean clones intentionally do not contain machine-generated extraction artifacts.
+    # The dedicated runtime-manifest tests validate the complete 225-scope contract
+    # with synthetic fixtures. Readiness must therefore either expose a complete
+    # generated manifest or fail closed without crashing.
+    if manifest is None:
+        assert "sk_prerelease_runtime_manifest_not_ready" in payload["blockers"]
+        assert payload["human_review"]["may_start"] is False
+        assert payload["runtime"]["released"] is False
+        return
 
     assert manifest["scope_count"] == 225
     assert manifest["mli_scopes"] == 138
