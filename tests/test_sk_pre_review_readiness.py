@@ -34,3 +34,18 @@ def test_mli_instrument_chain_has_no_unexplained_silent_notice_replacement():
 
     assert chain["relationships"] == 46
     assert chain["resolved_relationships"] + chain["unresolved_notice_mismatches"] == 46
+
+
+def test_sk_compliance_is_country_specific_and_does_not_reuse_czech_rules():
+    payload = build_readiness()
+    compliance = payload["compliance"]
+
+    assert compliance["present"] is True
+    assert compliance["country_specific"] is True
+    assert compliance["monthly_section_43_11_modelled"] is True
+    assert compliance["czech_reuse_prohibited"] is True
+    assert compliance["form_code"] == "OZN4311v26"
+    assert compliance["ordinary_annual_wht_return_configured"] is False
+    assert compliance["runtime_release"] is False
+    assert "sk_2026_compliance_profile_missing" not in payload["blockers"]
+    assert "sk_2026_compliance_profile_incomplete" not in payload["blockers"]
