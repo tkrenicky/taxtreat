@@ -142,10 +142,17 @@ def build_readiness() -> dict[str, Any]:
     compliance = _compliance_profile_status()
     dividend_model = _dividend_model_status()
 
-    treaty_relationships_extracted = (
-        ingestion.get("treaty_relationships_machine_extracted", 0)
-        if ingestion else 0
-    )
+    treaty_relationships_ready = 0
+    treaty_primary_summary_fallbacks = 0
+    if ingestion:
+        treaty_relationships_ready = ingestion.get(
+            "treaty_relationships_machine_evidence_ready",
+            ingestion.get("treaty_relationships_machine_extracted", 0),
+        )
+        treaty_primary_summary_fallbacks = ingestion.get(
+            "treaty_primary_summary_fallback_relationships", 0
+        )
+
     mli_relationships_extracted = (
         ingestion.get("mli_relationships_machine_extracted", 0)
         if ingestion else 0
@@ -158,8 +165,8 @@ def build_readiness() -> dict[str, Any]:
     blockers: list[str] = []
     if ingestion is None:
         blockers.append("full_machine_ingestion_not_run")
-    if treaty_relationships_extracted != 75:
-        blockers.append("not_all_75_treaty_relationships_machine_extracted")
+    if treaty_relationships_ready != 75:
+        blockers.append("not_all_75_treaty_relationships_have_machine_evidence")
     if mli_relationships_extracted != 46:
         blockers.append("not_all_46_mli_relationships_machine_extracted")
     if semantic_candidates != 225:
@@ -190,8 +197,8 @@ def build_readiness() -> dict[str, Any]:
     all_machine_evidence_ready = not blockers
 
     return {
-        "schema_version": 3,
-        "dataset_release": "sk-pre-review-readiness-2026-08-19.3",
+        "schema_version": 4,
+        "dataset_release": "sk-pre-review-readiness-2026-08-19.4",
         "source_country": "SK",
         "target": {
             "country_relationships": 75,
@@ -208,7 +215,8 @@ def build_readiness() -> dict[str, Any]:
         },
         "machine_ingestion": {
             "run_completed": ingestion is not None,
-            "treaty_relationships_extracted": treaty_relationships_extracted,
+            "treaty_relationships_machine_evidence_ready": treaty_relationships_ready,
+            "treaty_primary_summary_fallback_relationships": treaty_primary_summary_fallbacks,
             "mli_relationships_extracted": mli_relationships_extracted,
             "semantic_candidate_scopes": semantic_candidates,
             "raw_summary": ingestion,
