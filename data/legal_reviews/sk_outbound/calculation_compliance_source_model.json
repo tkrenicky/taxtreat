@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "source_country": "SK",
+  "status": "machine_source_model_not_human_approval",
+  "as_of": "2026-08-19",
+  "human_review_status": "not_started",
+  "approval_eligible": false,
+  "runtime_release": false,
+  "withholding_calculation": {
+    "currency": "EUR",
+    "rounding": {
+      "rule": "all_calculations_two_decimal_half_up",
+      "legal_locator": "§ 47 zákona č. 595/2003 Z. z.",
+      "official_source_url": "https://static.slov-lex.sk/static/SK/ZZ/2003/595/20260101.print.html",
+      "effective_version": "2026-01-01_to_2026-12-30",
+      "machine_evidence_status": "verified_primary_source"
+    },
+    "foreign_currency_wht": {
+      "scope": "income_under_section_16_subject_to_withholding_under_section_43_2",
+      "sequence": "calculate_withholding_in_payment_currency_then_convert_withheld_tax_to_eur",
+      "rate_date": "date_withholding_is_performed",
+      "legal_locator": "§ 31 ods. 3 zákona č. 595/2003 Z. z.",
+      "tax_base_locator": "§ 43 ods. 4 zákona č. 595/2003 Z. z.",
+      "official_law_url": "https://static.slov-lex.sk/static/SK/ZZ/2003/595/20260101.print.html",
+      "official_tax_authority_interpretation_url": "https://podpora.financnasprava.sk/536256-Uplatnenie-prepo%C4%8D%C3%ADtacieho-kurzu-na-prepo%C4%8Det-dane-vyberanej-zr%C3%A1%C5%BEkou",
+      "machine_evidence_status": "verified_primary_source_and_tax_authority_guidance"
+    },
+    "exchange_rate_quotation": {
+      "providers": ["ECB", "NBS"],
+      "quotation": "foreign_currency_units_per_1_eur",
+      "official_source_url": "https://nbs.sk/statisticke-udaje/kurzovy-listok/denny-kurzovy-listok-ecb/",
+      "machine_evidence_status": "verified_primary_source"
+    }
+  },
+  "ordinary_withholding_compliance": {
+    "form": "OZN4311v26",
+    "periodicity": "monthly",
+    "statutory_deadline": "15th_day_of_following_calendar_month",
+    "withholding_timing_locator": "§ 43 ods. 10 zákona č. 595/2003 Z. z.",
+    "remittance_notification_locator": "§ 43 ods. 11 zákona č. 595/2003 Z. z.",
+    "official_form_url": "https://pfseform.financnasprava.sk/Formulare/eFormVzor/DP/form.626.html",
+    "deadline_adjustment": {
+      "rule": "if_last_day_is_saturday_sunday_or_day_of_rest_move_to_next_working_day",
+      "legal_locator": "§ 27 ods. 4 zákona č. 563/2009 Z. z.",
+      "holiday_source_url": "https://static.slov-lex.sk/static/SK/ZZ/1993/241/20251101.print.html",
+      "special_2026_rule": "8_may_and_15_september_are_not_days_of_rest_in_2026_under_section_4b",
+      "machine_evidence_status": "verified_primary_source"
+    },
+    "zero_withholding_notification_scope": {
+      "status": "unresolved_fail_closed",
+      "blocker": "sk_zero_withholding_notification_scope_requires_review",
+      "reason": "official_sources reviewed so far establish the notice for withheld_and_remitted_tax but do not expressly resolve whether a treaty_zero_rate transaction must be reported with zero tax"
+    }
+  }
+}
