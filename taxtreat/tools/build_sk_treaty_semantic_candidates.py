@@ -23,6 +23,11 @@ HOLDING_RE = re.compile(
     re.IGNORECASE,
 )
 
+VALIDATED_EXTRACTION_STATUSES = {
+    "article_extracted",
+    "article_extracted_by_title_number_variance",
+}
+
 EXCLUSIVE_RESIDENCE_PATTERNS = (
     "môžu zdaniť iba v tomto druhom štáte",
     "môžu byť zdanené iba v tomto druhom štáte",
@@ -30,6 +35,7 @@ EXCLUSIVE_RESIDENCE_PATTERNS = (
     "sa môžu zdaniť iba v tomto druhom štáte",
     "môžu zdaniť len v tomto druhom štáte",
     "môžu byť zdanené len v tomto druhom štáte",
+    "podliehajú zdaneniu len v tomto druhom štáte",
     "mohou být zdaněny pouze v tomto druhém státě",
     "mohou být zdaněny jen v tomto druhém státě",
     "shall be taxable only in that other state",
@@ -40,6 +46,7 @@ BENEFICIAL_OWNER_TOKENS = (
     "skutočným vlastníkom",
     "skutečný vlastník",
     "skutečným vlastníkem",
+    "skutočne právo na",
     "beneficial owner",
 )
 
@@ -147,13 +154,22 @@ def build_candidates() -> dict[str, Any]:
     rows: list[dict[str, Any]] = []
     for scope in extraction["scopes"]:
         article_text = scope.get("article_text")
-        if not article_text:
+        extraction_status = scope.get("machine_extraction_status")
+        title_status = scope.get("title_validation_status")
+
+        if (
+            not article_text
+            or extraction_status not in VALIDATED_EXTRACTION_STATUSES
+            or title_status != "expected_income_title_matched"
+        ):
             rows.append({
                 "packet_id": scope["packet_id"],
                 "source_country": "SK",
                 "recipient_country": scope["recipient_country"],
                 "income_type": scope["income_type"],
                 "semantic_status": "blocked_missing_validated_article_text",
+                "source_extraction_status": extraction_status,
+                "source_title_validation_status": title_status,
                 "human_review_status": "not_started",
                 "approval_eligible": False,
                 "runtime_status": "not_released",
@@ -166,6 +182,8 @@ def build_candidates() -> dict[str, Any]:
             "source_country": "SK",
             "recipient_country": scope["recipient_country"],
             "income_type": scope["income_type"],
+            "actual_article": scope.get("actual_article"),
+            "article_resolution_status": scope.get("article_resolution_status"),
             "source_url": scope.get("source_url"),
             "source_sha256": scope.get("source_sha256"),
         })
@@ -179,12 +197,14 @@ def build_candidates() -> dict[str, Any]:
         raise ValueError("Semantic candidates must remain fail-closed.")
 
     return {
-        "schema_version": 1,
-        "dataset_release": "sk-treaty-semantic-candidates-2026-08-19.1",
+        "schema_version": 2,
+        "dataset_release": "sk-treaty-semantic-candidates-2026-08-19.2",
         "source_country": "SK",
         "scope_count": 225,
         "policy": {
             "candidate_evidence_only": True,
+            "validated_income_article_required": True,
+            "title_mismatch_never_enters_semantic_candidate_layer": True,
             "no_rate_is_released_from_regex_extraction": True,
             "exclusive_residence_phrase_is_candidate_not_final_zero_rate": True,
             "pe_carveout_must_be_preserved": True,
@@ -198,7 +218,7 @@ def build_candidates() -> dict[str, Any]:
 def build_summary(payload: dict[str, Any]) -> dict[str, Any]:
     rows = payload["scopes"]
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "dataset_release": payload["dataset_release"],
         "scope_count": len(rows),
         "candidate_rows": sum(
