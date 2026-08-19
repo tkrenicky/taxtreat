@@ -21,6 +21,17 @@ INCOME_ARTICLES = {
 
 PUBLICATION_RE = re.compile(r"^(\d+)/(\d{4})$")
 
+OFFICIAL_PRIMARY_SOURCE_OVERRIDES = {
+    "TW": {
+        "url": (
+            "https://www.mfsr.sk/files/archiv/financny-spravodajca/"
+            "3497/63/FS_09_2011.pdf"
+        ),
+        "status": "official_mfsr_financial_bulletin_pdf_ready",
+        "publication": "FS 9/2011 ozn. č. 31",
+    },
+}
+
 
 def _load(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
@@ -48,21 +59,29 @@ def build_queue() -> dict[str, Any]:
     scopes: list[dict[str, Any]] = []
 
     for source in relationships:
+        country = source["recipient_country"]
         publication = source["treaty_publication"]
-        url = _slov_lex_publication_url(publication)
-        standard_source = url is not None
+        override = OFFICIAL_PRIMARY_SOURCE_OVERRIDES.get(country)
+        if override:
+            url = override["url"]
+            source_status = override["status"]
+            source_ready = True
+        else:
+            url = _slov_lex_publication_url(publication)
+            source_ready = url is not None
+            source_status = (
+                "official_slov_lex_url_ready"
+                if source_ready
+                else "non_standard_primary_source_resolution_required"
+            )
 
         relationship = {
-            "recipient_country": source["recipient_country"],
+            "recipient_country": country,
             "recipient_country_name": source["recipient_country_name"],
             "treaty_publication": publication,
             "treaty_valid_from": source["treaty_valid_from"],
             "official_primary_text_url": url,
-            "primary_text_source_status": (
-                "official_slov_lex_url_ready"
-                if standard_source
-                else "non_standard_primary_source_resolution_required"
-            ),
+            "primary_text_source_status": source_status,
             "instrument_flags": source.get("instrument_flags", []),
             "risk_reasons": source.get("risk_reasons", []),
             "mli_listed_modified": source["mli_listed_modified"],
@@ -86,7 +105,7 @@ def build_queue() -> dict[str, Any]:
                 f"article_{article}_semantic_extraction_pending",
                 "base_treaty_rule_confirmation_pending",
             ]
-            if not standard_source:
+            if not source_ready:
                 blockers.append("non_standard_primary_source_resolution_pending")
             if source["mli_listed_modified"]:
                 blockers.append("pair_specific_mli_overlay_pending")
@@ -96,9 +115,9 @@ def build_queue() -> dict[str, Any]:
                 blockers.append("correction_notice_pending")
 
             scopes.append({
-                "packet_id": f"SK-{source['recipient_country']}-{income_type}-TREATY-SOURCE",
+                "packet_id": f"SK-{country}-{income_type}-TREATY-SOURCE",
                 "source_country": "SK",
-                "recipient_country": source["recipient_country"],
+                "recipient_country": country,
                 "recipient_country_name": source["recipient_country_name"],
                 "income_type": income_type,
                 "target_article": article,
@@ -129,13 +148,14 @@ def build_queue() -> dict[str, Any]:
         raise ValueError("Treaty source review queue must remain fail-closed.")
 
     return {
-        "schema_version": 1,
-        "dataset_release": "sk-treaty-source-review-queue-2026-08-19.1",
+        "schema_version": 2,
+        "dataset_release": "sk-treaty-source-review-queue-2026-08-19.2",
         "source_country": "SK",
         "relationship_count": 75,
         "scope_count": 225,
         "policy": {
             "official_primary_source_required": True,
+            "official_mfsr_financial_bulletin_is_valid_primary_source": True,
             "non_standard_sources_must_not_be_guessed": True,
             "instrument_chain_must_include_protocols_corrections_and_mli": True,
             "human_review_starts_only_after_all_machine_evidence_is_ready": True,
@@ -150,7 +170,7 @@ def build_summary(payload: dict[str, Any]) -> dict[str, Any]:
     relationships = payload["relationships"]
     scopes = payload["scopes"]
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "dataset_release": payload["dataset_release"],
         "relationship_count": len(relationships),
         "scope_count": len(scopes),
@@ -158,7 +178,12 @@ def build_summary(payload: dict[str, Any]) -> dict[str, Any]:
             row["primary_text_source_status"] == "official_slov_lex_url_ready"
             for row in relationships
         ),
-        "non_standard_source_relationships": sum(
+        "official_mfsr_bulletin_urls_ready": sum(
+            row["primary_text_source_status"]
+            == "official_mfsr_financial_bulletin_pdf_ready"
+            for row in relationships
+        ),
+        "unresolved_primary_source_relationships": sum(
             row["primary_text_source_status"]
             == "non_standard_primary_source_resolution_required"
             for row in relationships
@@ -188,9 +213,10 @@ def main() -> None:
     print("Treaty relationships:", summary["relationship_count"])
     print("Treaty scopes:", summary["scope_count"])
     print("Slov-Lex URLs ready:", summary["official_slov_lex_urls_ready"])
+    print("MF bulletin URLs ready:", summary["official_mfsr_bulletin_urls_ready"])
     print(
-        "Non-standard source relationships:",
-        summary["non_standard_source_relationships"],
+        "Unresolved primary source relationships:",
+        summary["unresolved_primary_source_relationships"],
     )
     print("Review-ready scopes:", summary["review_ready_scopes"])
 
