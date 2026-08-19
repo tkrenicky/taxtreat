@@ -27,6 +27,7 @@ VALIDATED_EXTRACTION_STATUSES = {
     "article_extracted",
     "article_extracted_by_title_number_variance",
 }
+PRIMARY_SUMMARY_FALLBACK_STATUS = "article_evidence_primary_summary_fallback"
 
 EXCLUSIVE_RESIDENCE_PATTERNS = (
     "môžu zdaniť iba v tomto druhom štáte",
@@ -146,6 +147,42 @@ def build_semantic_candidate(article_text: str) -> dict[str, Any]:
     }
 
 
+def _candidate_from_primary_summary(scope: dict[str, Any]) -> dict[str, Any]:
+    evidence = scope["primary_summary_evidence"]
+    rate_candidates = [
+        {
+            "rate_percent": float(value),
+            "context": "primary_source_summary_fallback",
+            "context_sha256": None,
+            "ownership_context": False,
+            "beneficial_owner_context": bool(
+                evidence.get("beneficial_owner_wording_present")
+            ),
+        }
+        for value in evidence.get("rate_candidates_percent", [])
+    ]
+    return {
+        "article_text_sha256": None,
+        "rate_candidates": rate_candidates,
+        "exclusive_residence_taxation_candidate": bool(
+            evidence.get("exclusive_residence_taxation_candidate")
+        ),
+        "beneficial_owner_wording_present": bool(
+            evidence.get("beneficial_owner_wording_present")
+        ),
+        "pe_or_fixed_base_carveout_wording_present": bool(
+            evidence.get("pe_or_fixed_base_carveout_wording_present")
+        ),
+        "holding_period_candidates": evidence.get("holding_period_candidates", []),
+        "ownership_linked_rate_candidate_count": 0,
+        "semantic_status": "machine_candidate_primary_summary_fallback_not_legal_conclusion",
+        "evidence_quality": "official_primary_source_summary_fallback_not_byte_exact",
+        "human_review_status": "not_started",
+        "approval_eligible": False,
+        "runtime_status": "not_released",
+    }
+
+
 def build_candidates() -> dict[str, Any]:
     extraction = _load(EXTRACTION_PATH)
     if extraction["scope_count"] != 225:
@@ -156,6 +193,25 @@ def build_candidates() -> dict[str, Any]:
         article_text = scope.get("article_text")
         extraction_status = scope.get("machine_extraction_status")
         title_status = scope.get("title_validation_status")
+
+        if (
+            extraction_status == PRIMARY_SUMMARY_FALLBACK_STATUS
+            and scope.get("primary_summary_evidence")
+        ):
+            candidate = _candidate_from_primary_summary(scope)
+            candidate.update({
+                "packet_id": scope["packet_id"],
+                "source_country": "SK",
+                "recipient_country": scope["recipient_country"],
+                "income_type": scope["income_type"],
+                "actual_article": scope.get("actual_article"),
+                "article_resolution_status": scope.get("article_resolution_status"),
+                "source_url": scope.get("source_url"),
+                "source_sha256": None,
+                "source_snapshot_path": scope.get("source_snapshot_path"),
+            })
+            rows.append(candidate)
+            continue
 
         if (
             not article_text
@@ -197,13 +253,14 @@ def build_candidates() -> dict[str, Any]:
         raise ValueError("Semantic candidates must remain fail-closed.")
 
     return {
-        "schema_version": 2,
-        "dataset_release": "sk-treaty-semantic-candidates-2026-08-19.2",
+        "schema_version": 3,
+        "dataset_release": "sk-treaty-semantic-candidates-2026-08-19.3",
         "source_country": "SK",
         "scope_count": 225,
         "policy": {
             "candidate_evidence_only": True,
             "validated_income_article_required": True,
+            "primary_summary_fallback_must_be_explicit_and_never_byte_exact": True,
             "title_mismatch_never_enters_semantic_candidate_layer": True,
             "no_rate_is_released_from_regex_extraction": True,
             "exclusive_residence_phrase_is_candidate_not_final_zero_rate": True,
@@ -217,12 +274,18 @@ def build_candidates() -> dict[str, Any]:
 
 def build_summary(payload: dict[str, Any]) -> dict[str, Any]:
     rows = payload["scopes"]
+    candidate_statuses = {
+        "machine_candidate_not_legal_conclusion",
+        "machine_candidate_primary_summary_fallback_not_legal_conclusion",
+    }
     return {
-        "schema_version": 2,
+        "schema_version": 3,
         "dataset_release": payload["dataset_release"],
         "scope_count": len(rows),
-        "candidate_rows": sum(
-            row["semantic_status"] == "machine_candidate_not_legal_conclusion"
+        "candidate_rows": sum(row["semantic_status"] in candidate_statuses for row in rows),
+        "primary_summary_fallback_rows": sum(
+            row["semantic_status"]
+            == "machine_candidate_primary_summary_fallback_not_legal_conclusion"
             for row in rows
         ),
         "blocked_rows": sum(
@@ -257,6 +320,7 @@ def main() -> None:
         encoding="utf-8",
     )
     print("Semantic candidate scopes:", summary["candidate_rows"])
+    print("Primary-summary fallback scopes:", summary["primary_summary_fallback_rows"])
     print("Blocked scopes:", summary["blocked_rows"])
     print("Scopes with rate candidates:", summary["scopes_with_rate_candidates"])
     print("Exclusive-residence candidates:", summary["exclusive_residence_candidates"])
