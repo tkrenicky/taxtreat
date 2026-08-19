@@ -17,6 +17,16 @@ Act as an independent adversarial reviewer of a deterministic withholding-tax en
 
 Do **not** modify files. Do **not** approve scopes. Do **not** convert machine candidates into legal conclusions.
 
+## Review bundle / generated evidence
+
+The Git branch intentionally does **not** commit generated machine-review JSON outputs. When this review is supplied as a ZIP, use the bundle created by:
+
+`PYTHONPATH="$PWD" python scripts/build_sk_claude_review_bundle.py`
+
+The bundle builder must fail closed unless the expected local generated SK evidence exists and the pre-release runtime invariants still hold. The ZIP includes the full tracked repository snapshot, `main...HEAD` binary patch, git metadata/status, and the generated SK evidence enumerated in `claude_review_scope.json`.
+
+If you are reviewing a clean Git checkout rather than the prepared ZIP, do **not** treat missing generated JSON files as evidence that the implementation never produced them. Instead, report that the review input is incomplete unless the machine evidence has been regenerated from official sources. Do not fabricate or reconstruct missing generated evidence.
+
 ## Hard product invariants
 
 1. Slovakia is a legally distinct source-country package. Czech domestic law, Czech ZDP references, Czech exemptions, Czech deadlines, Czech CNB/CZK behavior, Czech source catalogs, or Czech runtime fallbacks must never be used for an SK transaction.
