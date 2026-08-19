@@ -1,10 +1,12 @@
 {
   "schema_version": 1,
-  "dataset_release": "sk-dividend-domestic-condition-model-2026-08-19.1",
+  "dataset_release": "sk-dividend-domestic-condition-model-2026-08-19.2",
   "source_country": "SK",
   "income_type": "dividend",
   "recipient_scope": "corporate_recipient",
   "status": "machine_evidence_not_human_reviewed",
+  "law_effective_from": "2026-01-01",
+  "law_effective_to": "2026-12-30",
   "policy": {
     "slovak_domestic_law_is_independent_from_czech_parent_subsidiary_rules": true,
     "treaty_rate_is_not_applied_when_income_is_outside_corporate_tax_subject_under_slovak_law": true,
@@ -82,7 +84,9 @@
       "act": "595/2003 Z. z.",
       "locator": "§ 12 ods. 7 písm. c)",
       "supports": "corporate dividend outside-subject rule and its exceptions",
-      "url": "https://static.slov-lex.sk/static/SK/ZZ/2003/595/20251201.print.html"
+      "url": "https://static.slov-lex.sk/static/SK/ZZ/2003/595/20260101.print.html",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-30"
     }
   ],
   "human_review_status": "not_started",
