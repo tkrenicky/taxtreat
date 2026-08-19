@@ -63,12 +63,23 @@ def _sk_report():
 def test_real_sk_report_render_has_no_czech_source_country_legal_markers():
     html = render_report_html(_sk_report())
 
+    assert '<html lang="sk">' in html
     assert "Informácie k slovenskej zrážkovej dani" in html
+    assert "Sadzba slovenskej zrážkovej dane" in html
     assert "Slovenská zrážková daň" in html
+    assert ">Platiteľ<" in html
+    assert ">Príjemca<" in html
+    assert "Slovenská vnútroštátna úprava" in html
+    assert "slovenské právo zdaniť" in html
     assert "595/2003 Z. z." in html
     assert "Informace k české srážkové dani" not in html
+    assert "Sazba české srážkové daně" not in html
     assert "Česká srážková daň" not in html
+    assert "Od českého pravidla" not in html
+    assert "Česká vnitrostátní úprava" not in html
     assert "české právo zdanit" not in html
+    assert ">Plátce<" not in html
+    assert ">Příjemce<" not in html
     assert "586/1992" not in html
     assert "§ 38da" not in html
     assert "§ 38d " not in html
