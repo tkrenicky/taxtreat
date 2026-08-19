@@ -90,6 +90,7 @@ def _require_committed_release_evidence(code: str) -> None:
     cooperating_ready = payload.get("cooperating_state_list_ready")
     calculation_ready = payload.get("final_calculation_policy_ready")
     zero_wht_notification_ready = payload.get("zero_withholding_notification_scope_ready")
+    compliance_calendar_ready = payload.get("compliance_calendar_adjustment_ready")
     report_gate_ready = payload.get("rendered_report_leakage_gate_ready")
     release_eligible = payload.get("release_eligible")
     status = str(payload.get("release_status") or "pre_release")
@@ -107,6 +108,8 @@ def _require_committed_release_evidence(code: str) -> None:
         blockers.append("source_country_final_calculation_policy_not_ready")
     if zero_wht_notification_ready is not True:
         blockers.append("source_country_zero_withholding_notification_scope_not_ready")
+    if compliance_calendar_ready is not True:
+        blockers.append("source_country_compliance_calendar_adjustment_not_ready")
     if report_gate_ready is not True:
         blockers.append("source_country_rendered_report_leakage_gate_not_ready")
     if release_eligible is not True:
