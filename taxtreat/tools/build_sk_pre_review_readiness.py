@@ -7,6 +7,10 @@ from typing import Any
 from taxtreat.tools.build_sk_domestic_review_readiness import (
     build_readiness as build_domestic_readiness,
 )
+from taxtreat.tools.build_sk_prerelease_runtime_manifest import (
+    build_manifest as build_runtime_manifest,
+    build_summary as build_runtime_manifest_summary,
+)
 from taxtreat.tools.build_sk_review_preparation import (
     build_machine_preparation,
     build_summary as build_machine_summary,
@@ -142,6 +146,15 @@ def build_readiness() -> dict[str, Any]:
     compliance = _compliance_profile_status()
     dividend_model = _dividend_model_status()
 
+    runtime_manifest = None
+    runtime_manifest_summary = None
+    try:
+        runtime_manifest = build_runtime_manifest()
+        runtime_manifest_summary = build_runtime_manifest_summary(runtime_manifest)
+    except (FileNotFoundError, ValueError, KeyError, TypeError):
+        runtime_manifest = None
+        runtime_manifest_summary = None
+
     treaty_relationships_ready = 0
     treaty_primary_summary_fallbacks = 0
     if ingestion:
@@ -193,12 +206,20 @@ def build_readiness() -> dict[str, Any]:
         and dividend_model["distribution_deductibility_required"]
     ):
         blockers.append("sk_dividend_domestic_model_incomplete")
+    if runtime_manifest_summary is None:
+        blockers.append("sk_prerelease_runtime_manifest_not_ready")
+    elif (
+        runtime_manifest_summary.get("scope_count") != 225
+        or runtime_manifest_summary.get("mli_scopes") != 138
+        or runtime_manifest_summary.get("production_released_scopes") != 0
+    ):
+        blockers.append("sk_prerelease_runtime_manifest_incomplete")
 
     all_machine_evidence_ready = not blockers
 
     return {
-        "schema_version": 4,
-        "dataset_release": "sk-pre-review-readiness-2026-08-19.4",
+        "schema_version": 5,
+        "dataset_release": "sk-pre-review-readiness-2026-08-19.5",
         "source_country": "SK",
         "target": {
             "country_relationships": 75,
@@ -233,6 +254,7 @@ def build_readiness() -> dict[str, Any]:
             "dividend_model": dividend_model,
         },
         "compliance": compliance,
+        "prerelease_runtime_manifest": runtime_manifest_summary,
         "mli_instrument_chain": {
             "relationships": reconciliation_summary["relationship_count"],
             "resolved_relationships": reconciliation_summary["resolved_relationships"],
