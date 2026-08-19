@@ -7,13 +7,16 @@ ROOT = Path(__file__).resolve().parents[2]
 MAIN_PATH = ROOT / "app" / "main.py"
 
 _IMPORT_ANCHOR = """from taxtreat.services.calculation import (\n    build_withholding_compliance_schedule,\n    build_withholding_tax_calculation,\n)\n"""
-_IMPORT_REPLACEMENT = _IMPORT_ANCHOR + """from taxtreat.services.source_country_calculation import (\n    build_source_country_withholding_compliance_schedule,\n    build_source_country_withholding_tax_calculation,\n)\n"""
+_IMPORT_REPLACEMENT = _IMPORT_ANCHOR + """from taxtreat.services.source_country_calculation import (\n    build_source_country_withholding_compliance_schedule,\n    build_source_country_withholding_tax_calculation,\n)\nfrom taxtreat.services.source_country_runtime_metadata import (\n    source_country_runtime_dataset_version,\n)\n"""
 
 _NON_CZ_ANCHOR = """    if source != \"CZ\":\n        try:\n            require_source_country_analysis_release(source)\n"""
 _NON_CZ_REPLACEMENT = """    if source != \"CZ\":\n        try:\n            return require_source_country_analysis_release(source)\n"""
 
 _FALLTHROUGH_ANCHOR = """        raise HTTPException(\n            status_code=409,\n            detail={\n                \"code\": \"SOURCE_COUNTRY_RELEASE_GATE_MISSING\",\n                \"source_country\": source,\n            },\n        )\n\n    treaty_pair_id = f\"{source}-{recipient}\"\n"""
 _FALLTHROUGH_REPLACEMENT = """\n    treaty_pair_id = f\"{source}-{recipient}\"\n"""
+
+_DATASET_ANCHOR = """    dataset_version = load_stage6_source_release()[\n        \"dataset_release\"\n    ]\n"""
+_DATASET_REPLACEMENT = """    dataset_version = source_country_runtime_dataset_version(\n        source_country,\n        cz_release_loader=load_stage6_source_release,\n    )\n"""
 
 _CALC_ANCHOR = """    calculation = build_withholding_tax_calculation(\n        amount,\n"""
 _CALC_REPLACEMENT = """    calculation = build_source_country_withholding_tax_calculation(\n        source_country,\n        amount,\n"""
@@ -38,6 +41,8 @@ def build_integrated_main(text: str) -> str:
         text = _replace_once(text, _NON_CZ_ANCHOR, _NON_CZ_REPLACEMENT, "non-CZ release return")
     if "SOURCE_COUNTRY_RELEASE_GATE_MISSING" in text:
         text = _replace_once(text, _FALLTHROUGH_ANCHOR, _FALLTHROUGH_REPLACEMENT, "non-CZ fallthrough")
+    if "source_country_runtime_dataset_version(" not in text:
+        text = _replace_once(text, _DATASET_ANCHOR, _DATASET_REPLACEMENT, "source dataset version")
     if "calculation = build_source_country_withholding_tax_calculation(" not in text:
         text = _replace_once(text, _CALC_ANCHOR, _CALC_REPLACEMENT, "source calculation call")
     if "build_source_country_withholding_compliance_schedule(" not in text:
