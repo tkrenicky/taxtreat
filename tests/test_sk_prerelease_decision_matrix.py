@@ -8,6 +8,7 @@ def _manifest():
         for income in ("dividend", "interest", "royalty"):
             rows.append({
                 "scope_key": ["SK", country, income],
+                "source_country": "SK",
                 "recipient_country": country,
                 "income_type": income,
                 "treaty_machine_evidence_status": "machine_candidate_not_legal_conclusion",
@@ -35,11 +36,13 @@ def _manifest():
 def test_prerelease_decision_matrix_covers_all_225_scopes_fail_closed():
     summary = validate_matrix(_manifest())
 
+    assert summary["schema_version"] == 2
     assert summary["scope_count"] == 225
     assert summary["evaluated_scopes"] == 225
     assert summary["review_required_scopes"] == 225
     assert summary["final_rate_scopes"] == 0
     assert summary["czech_runtime_fallback_scopes"] == 0
+    assert summary["foreign_runtime_dependency_scopes"] == 0
     assert summary["production_released_scopes"] == 0
     assert summary["scopes_blocked_by_cooperating_state_list"] == 225
     assert summary["fail_closed"] is True
