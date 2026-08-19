@@ -1,10 +1,74 @@
+import json
+
+import taxtreat.tools.build_sk_prerelease_runtime_manifest as manifest_module
 from taxtreat.tools.build_sk_prerelease_runtime_manifest import (
     build_manifest,
     build_summary,
 )
 
 
-def test_prerelease_runtime_manifest_covers_all_sk_scopes_fail_closed():
+def _write(path, payload):
+    path.write_text(json.dumps(payload), encoding="utf-8")
+
+
+def _seed_manifest_inputs(tmp_path, monkeypatch):
+    countries = [f"X{i:02d}" for i in range(74)] + ["TW"]
+    semantic_scopes = []
+    for country in countries:
+        for income in ("dividend", "interest", "royalty"):
+            fallback = country == "TW"
+            semantic_scopes.append({
+                "packet_id": f"SK-{country}-{income}-TREATY-SOURCE",
+                "recipient_country": country,
+                "income_type": income,
+                "semantic_status": (
+                    "machine_candidate_primary_summary_fallback_not_legal_conclusion"
+                    if fallback
+                    else "machine_candidate_not_legal_conclusion"
+                ),
+                "source_url": "https://official.example/source",
+                "source_sha256": None if fallback else "abc",
+                "actual_article": {"dividend": "10", "interest": "11", "royalty": "12"}[income],
+            })
+
+    mli_relationships = [
+        {
+            "recipient_country": country,
+            "machine_extraction_status": "completed",
+            "slovak_notice": f"{400+i}/2020",
+            "wht_effective_dates": ["2020-01-01"],
+        }
+        for i, country in enumerate(countries[:46])
+    ]
+
+    semantic_path = tmp_path / "semantic.json"
+    mli_path = tmp_path / "mli.json"
+    compliance_path = tmp_path / "compliance.json"
+    dividend_path = tmp_path / "dividend.json"
+    domestic_path = tmp_path / "domestic.json"
+
+    _write(semantic_path, {"scope_count": 225, "scopes": semantic_scopes})
+    _write(mli_path, {"relationships": mli_relationships})
+    _write(compliance_path, {
+        "ordinary_corporate_outbound_wht": {
+            "notification": {
+                "form_code": "OZN4311v26",
+                "legal_reference": "§ 43 ods. 11",
+            }
+        }
+    })
+    _write(dividend_path, {"source_country": "SK"})
+    _write(domestic_path, {"source_country": "SK"})
+
+    monkeypatch.setattr(manifest_module, "SEMANTIC_PATH", semantic_path)
+    monkeypatch.setattr(manifest_module, "MLI_PATH", mli_path)
+    monkeypatch.setattr(manifest_module, "COMPLIANCE_PATH", compliance_path)
+    monkeypatch.setattr(manifest_module, "DIVIDEND_MODEL_PATH", dividend_path)
+    monkeypatch.setattr(manifest_module, "DOMESTIC_MODEL_PATH", domestic_path)
+
+
+def test_prerelease_runtime_manifest_covers_all_sk_scopes_fail_closed(tmp_path, monkeypatch):
+    _seed_manifest_inputs(tmp_path, monkeypatch)
     payload = build_manifest()
     summary = build_summary(payload)
 
@@ -27,7 +91,8 @@ def test_prerelease_runtime_manifest_covers_all_sk_scopes_fail_closed():
     assert all(row["cooperating_state_list_ready"] is False for row in payload["scopes"])
 
 
-def test_prerelease_runtime_manifest_uses_only_sk_domestic_and_compliance_contracts():
+def test_prerelease_runtime_manifest_uses_only_sk_domestic_and_compliance_contracts(tmp_path, monkeypatch):
+    _seed_manifest_inputs(tmp_path, monkeypatch)
     payload = build_manifest()
 
     assert payload["policy"]["czech_runtime_fallback_prohibited"] is True
@@ -46,7 +111,8 @@ def test_prerelease_runtime_manifest_uses_only_sk_domestic_and_compliance_contra
     assert dividend["compliance_legal_reference"] == "§ 43 ods. 11"
 
 
-def test_taiwan_fallback_remains_machine_evidence_not_release():
+def test_taiwan_fallback_remains_machine_evidence_not_release(tmp_path, monkeypatch):
+    _seed_manifest_inputs(tmp_path, monkeypatch)
     payload = build_manifest()
     taiwan = [row for row in payload["scopes"] if row["recipient_country"] == "TW"]
 
