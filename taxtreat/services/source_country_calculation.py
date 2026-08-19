@@ -11,7 +11,7 @@ from taxtreat.services.calculation import (
 )
 
 
-EUR_CENT = Decimal("0.01")
+CENT = Decimal("0.01")
 
 
 def _parse_date(value: date | str) -> date:
@@ -68,11 +68,13 @@ def _sk_non_working_holidays(year: int) -> set[date]:
 
 
 def _next_sk_business_day(value: date) -> date:
-    holidays = _sk_non_working_holidays(value.year)
+    holiday_year = value.year
+    holidays = _sk_non_working_holidays(holiday_year)
     while value.weekday() >= 5 or value in holidays:
         value += timedelta(days=1)
-        if value.year != next(iter(holidays)).year:
-            holidays = _sk_non_working_holidays(value.year)
+        if value.year != holiday_year:
+            holiday_year = value.year
+            holidays = _sk_non_working_holidays(holiday_year)
     return value
 
 
@@ -206,30 +208,27 @@ def build_source_country_withholding_tax_calculation(
 
     currency = str(transaction_amount.get("currency") or "").upper()
     base = {
-        "schema_version": 2,
+        "schema_version": 3,
         "source_country": "SK",
         "status": "NOT_CALCULATED",
         "gross_amount": str(amount),
         "transaction_currency": currency,
         "tax_currency": config.currency,
-        "gross_amount_eur": None,
         "rate_percent": None,
+        "withholding_tax_transaction_currency": None,
         "withholding_tax_eur": None,
-        "net_amount_eur": None,
         "exchange_rate": None,
         "tax_treatment": tax_treatment,
         "rounding_policy": "section_47_two_decimal_half_up",
         "rounding_legal_basis": "§ 47 zákona č. 595/2003 Z. z.",
         "fx_legal_basis": "§ 31 ods. 3 zákona č. 595/2003 Z. z.",
+        "calculation_sequence": "calculate_withholding_in_payment_currency_then_convert_withheld_tax_to_eur",
     }
 
     if decision_status != "FINAL" or (
         rate_percent is None and tax_treatment is None
     ):
-        return {
-            **base,
-            "reason": "final_rate_unavailable",
-        }
+        return {**base, "reason": "final_rate_unavailable"}
 
     non_taxing = tax_treatment in {
         "exclusive_foreign_taxation",
@@ -245,8 +244,13 @@ def build_source_country_withholding_tax_calculation(
     if rate < 0 or rate > 100:
         raise ValueError("Final withholding-tax rate must be between 0 and 100.")
 
-    gross_eur = amount
+    tax_in_payment_currency = (amount * rate / Decimal("100")).quantize(
+        CENT,
+        rounding=ROUND_HALF_UP,
+    )
+    tax_eur = tax_in_payment_currency
     exchange_output = None
+
     if currency != "EUR":
         if transaction_date is None:
             return {**base, "reason": "sk_withholding_date_required_for_fx"}
@@ -266,35 +270,31 @@ def build_source_country_withholding_tax_calculation(
         if effective_date != withholding_date:
             return {**base, "reason": "sk_exchange_rate_date_mismatch"}
         try:
-            eur_per_unit = Decimal(str(evidence["eur_per_unit"]))
+            foreign_units_per_eur = Decimal(str(evidence["foreign_units_per_eur"]))
         except (InvalidOperation, KeyError) as exc:
-            raise ValueError("ECB/NBS EUR-per-unit rate must be a decimal number.") from exc
-        if eur_per_unit <= 0:
-            raise ValueError("ECB/NBS EUR-per-unit rate must be greater than zero.")
-        gross_eur = amount * eur_per_unit
+            raise ValueError("ECB/NBS foreign-units-per-EUR rate must be a decimal number.") from exc
+        if foreign_units_per_eur <= 0:
+            raise ValueError("ECB/NBS foreign-units-per-EUR rate must be greater than zero.")
+        tax_eur = (tax_in_payment_currency / foreign_units_per_eur).quantize(
+            CENT,
+            rounding=ROUND_HALF_UP,
+        )
         exchange_output = {
             "source": source,
             "currency": currency,
-            "eur_per_unit": str(eur_per_unit),
+            "foreign_units_per_eur": str(foreign_units_per_eur),
             "effective_date": effective_date.isoformat(),
             "source_url": evidence.get("source_url"),
+            "quotation": "foreign_currency_units_per_1_eur",
             "date_selection": "withholding_date_section_31_3",
         }
-
-    gross_eur = gross_eur.quantize(EUR_CENT, rounding=ROUND_HALF_UP)
-    tax = (gross_eur * rate / Decimal("100")).quantize(
-        EUR_CENT,
-        rounding=ROUND_HALF_UP,
-    )
-    net = (gross_eur - tax).quantize(EUR_CENT, rounding=ROUND_HALF_UP)
 
     return {
         **base,
         "status": "CALCULATED",
         "reason": None,
-        "gross_amount_eur": str(gross_eur),
         "rate_percent": None if non_taxing else str(rate),
-        "withholding_tax_eur": str(tax),
-        "net_amount_eur": str(net),
+        "withholding_tax_transaction_currency": str(tax_in_payment_currency),
+        "withholding_tax_eur": str(tax_eur),
         "exchange_rate": exchange_output,
     }
