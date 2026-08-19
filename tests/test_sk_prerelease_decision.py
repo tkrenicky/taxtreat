@@ -1,3 +1,4 @@
+import taxtreat.services.sk_prerelease_decision as decision_module
 from taxtreat.services.sk_prerelease_decision import (
     evaluate_sk_prerelease_candidate,
 )
@@ -9,6 +10,7 @@ def _manifest(*, fallback=False, mli=True, cooperating_ready=False):
         "policy": {"runtime_release": False},
         "scopes": [{
             "scope_key": ["SK", "AT", "dividend"],
+            "source_country": "SK",
             "treaty_machine_evidence_status": (
                 "machine_candidate_primary_summary_fallback_not_legal_conclusion"
                 if fallback
@@ -36,6 +38,7 @@ def _manifest(*, fallback=False, mli=True, cooperating_ready=False):
             "cooperating_state_list_ready": cooperating_ready,
         }, {
             "scope_key": ["SK", "AT", "interest"],
+            "source_country": "SK",
             "treaty_machine_evidence_status": "machine_candidate_not_legal_conclusion",
             "treaty_semantic_candidate": {
                 "rate_candidates": [{"rate_percent": 10.0}],
@@ -74,6 +77,7 @@ def test_dividend_candidate_never_trusts_user_non_cooperating_representation_bef
     )
     assert "official_2026_cooperating_state_list_body_not_ingested" in result.blockers
     assert "official_2026_cooperating_state_status_unresolved" in result.blockers
+    assert result.runtime_dependency_source_countries == ("SK",)
     assert result.czech_runtime_fallback_used is False
     assert result.runtime_released is False
 
@@ -140,7 +144,40 @@ def test_interest_eu_relief_can_be_candidate_but_never_final_before_release():
     assert result.candidate_domestic_treatment == "current_exemption_candidate"
     assert result.final_rate_percent is None
     assert result.status == "REVIEW_REQUIRED"
+    assert result.runtime_dependency_source_countries == ("SK",)
     assert result.czech_runtime_fallback_used is False
+
+
+def test_czech_dependency_is_detected_from_actual_domestic_helper_provenance(monkeypatch):
+    monkeypatch.setattr(
+        decision_module,
+        "evaluate_domestic_transaction_candidates",
+        lambda income, facts: {
+            "source_country": "CZ",
+            "registered_pe_exclusion": {
+                "applies": False,
+                "missing_facts": [],
+            },
+            "eu_relief": {
+                "candidate_treatment": None,
+                "missing_facts": [],
+            },
+        },
+    )
+
+    result = evaluate_sk_prerelease_candidate(
+        recipient_country="AT",
+        income_type="interest",
+        facts={},
+        manifest=_manifest(),
+    )
+
+    assert result.runtime_dependency_source_countries == ("CZ", "SK")
+    assert result.czech_runtime_fallback_used is True
+    assert "foreign_runtime_dependency_detected" in result.blockers
+    assert "czech_runtime_dependency_detected" in result.blockers
+    assert result.final_rate_percent is None
+    assert result.runtime_released is False
 
 
 def test_unknown_scope_is_out_of_scope_without_czech_fallback():
@@ -151,5 +188,6 @@ def test_unknown_scope_is_out_of_scope_without_czech_fallback():
     )
 
     assert result.status == "OUT_OF_SCOPE"
+    assert result.runtime_dependency_source_countries == ("SK",)
     assert result.czech_runtime_fallback_used is False
     assert result.runtime_released is False
