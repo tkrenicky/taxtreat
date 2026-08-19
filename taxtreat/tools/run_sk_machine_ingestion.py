@@ -10,6 +10,12 @@ from taxtreat.tools.build_sk_mli_notice_review_queue import (
     build_queue as build_mli_queue,
     build_summary as build_mli_queue_summary,
 )
+from taxtreat.tools.build_sk_prerelease_runtime_manifest import (
+    OUTPUT_PATH as RUNTIME_MANIFEST_OUTPUT,
+    SUMMARY_PATH as RUNTIME_MANIFEST_SUMMARY,
+    build_manifest as build_runtime_manifest,
+    build_summary as build_runtime_manifest_summary,
+)
 from taxtreat.tools.build_sk_treaty_semantic_candidates import (
     OUTPUT_PATH as SEMANTIC_OUTPUT,
     SUMMARY_PATH as SEMANTIC_SUMMARY,
@@ -326,6 +332,11 @@ def run() -> dict[str, Any]:
     _write(SEMANTIC_OUTPUT, semantic)
     _write(SEMANTIC_SUMMARY, build_semantic_summary(semantic))
 
+    runtime_manifest = build_runtime_manifest()
+    runtime_manifest_summary = build_runtime_manifest_summary(runtime_manifest)
+    _write(RUNTIME_MANIFEST_OUTPUT, runtime_manifest)
+    _write(RUNTIME_MANIFEST_SUMMARY, runtime_manifest_summary)
+
     mli_completed = sum(
         row.get("machine_extraction_status") == "completed"
         for row in mli_extraction["relationships"]
@@ -345,7 +356,7 @@ def run() -> dict[str, Any]:
     )
 
     summary = {
-        "schema_version": 3,
+        "schema_version": 4,
         "source_country": "SK",
         "mli_relationships_total": 46,
         "mli_relationships_machine_extracted": mli_completed,
@@ -359,6 +370,10 @@ def run() -> dict[str, Any]:
         ),
         "treaty_scopes_total": 225,
         "semantic_candidate_scopes": semantic_candidates,
+        "prerelease_runtime_manifest_scopes": runtime_manifest_summary["scope_count"],
+        "prerelease_runtime_manifest_released_scopes": runtime_manifest_summary[
+            "production_released_scopes"
+        ],
         "human_reviewed_scopes": 0,
         "production_released_scopes": 0,
         "fail_closed": True,
