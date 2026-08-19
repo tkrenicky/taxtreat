@@ -23,6 +23,13 @@ def test_country_registry_exposes_cz_and_fail_closed_sk():
     assert sk.currency == "EUR"
     assert sk.treaty_partner_registry is not None
     assert sk.treaty_partner_registry.name == "sk_treaty_partners.json"
+    assert sk.fx_provider is None
+    assert sk.domestic_law_label == "zákon č. 595/2003 Z. z."
+    assert "/2003/595/20260101.print.html" in sk.domestic_legal_source_url
+    assert "e-sbirka" not in sk.domestic_legal_source_url
+    assert sk.compliance_form_code == "OZN4311v26"
+    assert sk.compliance_legal_reference == "§ 43 ods. 11"
+    assert sk.compliance_periodicity == "monthly"
 
 
 def test_existing_cz_treaty_scope_inventory_remains_300():
