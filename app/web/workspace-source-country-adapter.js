@@ -42,6 +42,9 @@
   const complianceRows = [...document.querySelectorAll(".compliance-schedule dl > div")];
   const complianceNote = document.querySelector("#workspace-deadline-note");
   const interestMonthlyField = paymentForm.elements.prior_same_type_monthly_amount_czk?.closest("label");
+  const sourceMetrics = [...document.querySelectorAll('[data-view="sources"] .source-metrics article')];
+  const metaDescription = document.querySelector('meta[name="description"]');
+  const payersSubtitle = document.querySelector('[data-view="payers"] .page-title span');
 
   const prereleaseNotice = document.createElement("div");
   prereleaseNotice.id = "workspace-source-country-notice";
@@ -54,6 +57,26 @@
     document.querySelectorAll(selector).forEach((node) => {
       if (node.textContent.includes(from)) node.textContent = node.textContent.replaceAll(from, to);
     });
+  }
+
+  function setSourceMetrics(ctx) {
+    if (sourceMetrics.length < 3) return;
+    const jurisdictionLabel = sourceMetrics[0].querySelector("span");
+    const jurisdictionValue = sourceMetrics[0].querySelector("strong");
+    const scopeLabel = sourceMetrics[1].querySelector("span");
+    const scopeValue = sourceMetrics[1].querySelector("strong");
+
+    if (ctx.code === "SK") {
+      if (jurisdictionLabel) jurisdictionLabel.textContent = "SK treaty relationships";
+      if (jurisdictionValue) jurisdictionValue.textContent = "75";
+      if (scopeLabel) scopeLabel.textContent = "SK machine-evidence scopes";
+      if (scopeValue) scopeValue.textContent = "225";
+    } else {
+      if (jurisdictionLabel) jurisdictionLabel.textContent = "Podporované jurisdikce";
+      if (jurisdictionValue) jurisdictionValue.textContent = "101";
+      if (scopeLabel) scopeLabel.textContent = "Pokryté kombinace";
+      if (scopeValue) scopeValue.textContent = "303";
+    }
   }
 
   function applyCurrencyDefaults(ctx) {
@@ -85,7 +108,10 @@
 
     if (ctx.code === "SK") {
       prereleaseNotice.textContent = "Slovenský balík je dostupný pouze pro technický náhled. Standardní corporate outbound WHT compliance je modelována jako měsíční OZN4311v26 podle § 43 ods. 11; oznámení i odvod jsou do 15. dne následujícího kalendářního měsíce. Finální výpočet zůstává blokovaný do dokončení právního review a release gate.";
-      if (complianceNote) complianceNote.textContent = "SK compliance model: mesačné OZN4311v26 a odvod zrážkovej dane najneskôr do 15. dňa nasledujúceho kalendárneho mesiaca. Ordinary annual WHT return není pro standardní dividend/interest/royalty flow nakonfigurován.";
+      if (complianceNote) complianceNote.textContent = "SK compliance model: mesačné OZN4311v26 a odvod zrážkovej dane najneskôr do 15. dňa nasledujúceho kalendárneho mesiaca. Samostatné bežné ročné WHT priznanie nie je pre štandardný dividend/interest/royalty flow nakonfigurované.";
+      if (metaDescription) metaDescription.content = "TaxTreat – informačný pracovný priestor pre slovenskú zrážkovú daň";
+      if (payersSubtitle) payersSubtitle.textContent = "Slovenské subjekty, ktorých platby sú v TaxTreat spracovávané v technickom pre-release náhľade.";
+      setMatchingText('[data-view="recipient-detail"] dt', "Vazba ke stálé provozovně v ČR", "Väzba príjmu na stálu prevádzkareň v SR");
       setMatchingText('[data-view="flow"] span, [data-view="recipient-detail"] dt, [data-view="recipient-detail"] p', "v České republice", "v Slovenskej republike");
       setMatchingText('[data-view="flow"] span, [data-view="recipient-detail"] dt, [data-view="recipient-detail"] p', "v ČR", "v SR");
       setMatchingText('[data-view="flow"] span, [data-view="flow"] small, [data-view="flow"] legend', "českého plátce", "slovenského plátce");
@@ -93,11 +119,15 @@
     } else {
       prereleaseNotice.textContent = "";
       if (complianceNote) complianceNote.textContent = "Lhůty se zobrazí po dokončení výpočtu.";
+      if (metaDescription) metaDescription.content = "TaxTreat – informační pracovní prostor pro českou srážkovou daň";
+      if (payersSubtitle) payersSubtitle.textContent = "České subjekty, jejichž platby jsou v TaxTreat zpracovávány.";
+      setMatchingText('[data-view="recipient-detail"] dt', "Väzba príjmu na stálu prevádzkareň v SR", "Vazba ke stálé provozovně v ČR");
       setMatchingText('[data-view="flow"] span, [data-view="recipient-detail"] dt, [data-view="recipient-detail"] p', "v Slovenskej republike", "v České republice");
       setMatchingText('[data-view="flow"] span, [data-view="recipient-detail"] dt, [data-view="recipient-detail"] p', "v SR", "v ČR");
       setMatchingText('[data-view="flow"] span, [data-view="flow"] small, [data-view="flow"] legend', "slovenského plátce", "českého plátce");
       if (interestMonthlyField) interestMonthlyField.hidden = false;
     }
+    setSourceMetrics(ctx);
   }
 
   function applyReleaseState(ctx) {
