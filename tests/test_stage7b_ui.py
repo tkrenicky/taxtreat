@@ -24,8 +24,8 @@ def test_guided_intake_ui_is_served_without_changing_api_root():
     assert "Přehled" in html
     assert "Plátci" in html
     assert "Příjemci" in html
-    assert "Výpočty" in html
-    assert "Výstupy" in html
+    assert 'data-nav="reviews">Výsledky</button>' in html
+    assert 'data-nav="outputs"' not in html
     assert "Zdroje" in html
 
     assert "KROK 1 ZE 4" in html
@@ -48,17 +48,17 @@ def test_guided_intake_ui_is_served_without_changing_api_root():
 
 def test_guided_intake_assets_are_local_and_accessible():
     html = client.get("/ui").text
-    css = client.get("/ui-assets/workspace.css?v=20260818-6")
-    javascript = client.get("/ui-assets/workspace.js?v=20260818-6")
-    polish = client.get("/ui-assets/workspace-client-polish.css?v=20260818-6")
+    css = client.get("/ui-assets/workspace.css?v=20260819-3")
+    javascript = client.get("/ui-assets/workspace.js?v=20260819-3")
+    polish = client.get("/ui-assets/workspace-client-polish.css?v=20260819-3")
 
     assert css.status_code == 200
     assert javascript.status_code == 200
     assert polish.status_code == 200
 
-    assert "/ui-assets/workspace.css?v=20260818-6" in html
-    assert "/ui-assets/workspace.js?v=20260818-6" in html
-    assert "/ui-assets/workspace-client-polish.css?v=20260818-6" in html
+    assert "/ui-assets/workspace.css?v=20260819-3" in html
+    assert "/ui-assets/workspace.js?v=20260819-3" in html
+    assert "/ui-assets/workspace-client-polish.css?v=20260819-3" in html
 
     assert 'fetch("/jurisdictions"' in javascript.text
     assert "body.jurisdictions.length !== 101" in javascript.text
@@ -77,8 +77,8 @@ def test_workspace_demo_exposes_recipient_payment_result_workflow():
     assert "Přehled" in html
     assert "Plátci" in html
     assert "Příjemci" in html
-    assert "Výpočty" in html
-    assert "Výstupy" in html
+    assert 'data-nav="reviews">Výsledky</button>' in html
+    assert 'data-nav="outputs"' not in html
     assert "Která společnost platbu provádí?" in html
     assert "Komu je placeno?" in html
     assert "Údaje o platbě" in html
@@ -176,9 +176,9 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert css.status_code == 200
     assert javascript.status_code == 200
     assert designs.status_code == 200
-    assert "/ui-assets/workspace.css?v=20260818-6" in html
-    assert "/ui-assets/workspace.js?v=20260818-6" in html
-    assert "/ui-assets/workspace-designs.css?v=20260818-6" in html
+    assert "/ui-assets/workspace.css?v=20260819-3" in html
+    assert "/ui-assets/workspace.js?v=20260819-3" in html
+    assert "/ui-assets/workspace-designs.css?v=20260819-3" in html
     assert 'id="design-switcher"' not in html
     assert 'fetch("/analysis/intake"' in javascript.text
     assert "localStorage" not in javascript.text
@@ -264,7 +264,7 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert "non_taxing_interest_above_monthly_threshold_annual" in javascript.text
     assert "non_taxing_interest_monthly_threshold_not_exceeded" in javascript.text
     assert "§ 38da zákona č. 586/1992 Sb." in javascript.text
-    assert 'const BUILD_VERSION = "20260818-6"' in javascript.text
+    assert 'const BUILD_VERSION = "20260819-3"' in javascript.text
     assert "Načíst novou verzi" in javascript.text
     assert ".new-build-notice" in css.text
     assert ".dashboard-summary" in css.text
@@ -368,7 +368,7 @@ def test_cz_at_result_before_catalog_source_version_keeps_domestic_start():
 
 
 def test_ui_calls_canonical_endpoints_and_uses_safe_dom_rendering():
-    javascript = client.get("/ui-assets/workspace.js?v=20260818-6").text
+    javascript = client.get("/ui-assets/workspace.js?v=20260819-3").text
     html = client.get("/ui").text
 
     assert 'fetch("/analysis/intake"' in javascript

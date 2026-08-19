@@ -151,8 +151,8 @@ def test_client_report_uses_restrained_visual_contract():
     assert "Následující údaje byly zadány uživatelem" in html
     assert "Údaje k doplnění" not in html
     assert "Jak se stanoví sazba" in html
-    assert "Od českého pravidla ke konečnému režimu" in html
-    assert "ZDP" in html and "SZDZ" in html and "MLI / PPT" in html
+    assert "Od českého pravidla ke konečné sazbě" in html
+    assert "Česká srážková daň" in html and "SZDZ / osvobození" in html and "MLI / PPT" in html
 
 
 def test_automation_wording_is_not_repeated_in_report_body():

@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="TaxTreat – informační pracovní prostor pro českou srážkovou daň">
   <title>TaxTreat · Pracovní prostor</title>
-  <link rel="stylesheet" href="/ui-assets/workspace.css?v=20260818-6">
-  <link rel="stylesheet" href="/ui-assets/workspace-designs.css?v=20260818-6">
-  <link rel="stylesheet" href="/ui-assets/workspace-client-polish.css?v=20260818-6">
-  <script defer src="/ui-assets/workspace.js?v=20260818-6"></script>
-  <script defer src="/ui-assets/workspace-report-export.js?v=20260818-6"></script>
+  <link rel="stylesheet" href="/ui-assets/workspace.css?v=20260819-3">
+  <link rel="stylesheet" href="/ui-assets/workspace-designs.css?v=20260819-3">
+  <link rel="stylesheet" href="/ui-assets/workspace-client-polish.css?v=20260819-3">
+  <script defer src="/ui-assets/workspace.js?v=20260819-3"></script>
+  <script defer src="/ui-assets/workspace-report-export.js?v=20260819-3"></script>
 </head>
 <body data-design="atlas">
   <header class="app-header">
@@ -18,8 +18,7 @@
       <button class="active" data-nav="dashboard">Přehled</button>
       <button data-nav="payers">Plátci</button>
       <button data-nav="recipients">Příjemci</button>
-      <button data-nav="reviews">Výpočty</button>
-      <button data-nav="outputs">Výstupy</button>
+      <button data-nav="reviews">Výsledky</button>
       <button data-nav="sources">Zdroje</button>
     </nav>
     <label class="payer-context"><span>Aktivní plátce</span><select id="active-payer-select" aria-label="Aktivní plátce"></select></label>
@@ -93,13 +92,8 @@
     </section>
 
     <section class="view" data-view="reviews">
-      <div class="page-title"><div><p>TRANSAKCE</p><h1>Výpočty</h1><span>Samostatný záznam pro každou platbu a každou verzi výsledku.</span></div><button class="primary compact" data-start-flow>Nový výpočet →</button></div>
+      <div class="page-title"><div><p>VÝSLEDKY A REPORTY</p><h1>Výsledky</h1><span>Výsledek výpočtu a report pro každou dokončenou platbu.</span></div><button class="primary compact" data-start-flow>Nový výpočet →</button></div>
       <article class="card"><div class="empty"><strong>Zatím bez výpočtů</strong><p>Vyber příjemce a zadej údaje o první transakci.</p></div></article>
-    </section>
-
-    <section class="view" data-view="outputs">
-      <div class="page-title"><div><p>DOKUMENTACE</p><h1>Výstupy</h1><span>Reporty a další výstupy navázané na konkrétní platby.</span></div></div>
-      <article class="card"><div class="empty"><strong>Zatím bez výstupů</strong><p>Výstup vznikne po dokončení výpočtu podle zadaných údajů.</p></div></article>
     </section>
 
     <section class="view" data-view="sources">

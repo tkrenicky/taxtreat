@@ -3,7 +3,7 @@
 
   const historyStyles = document.createElement("link");
   historyStyles.rel = "stylesheet";
-  historyStyles.href = "/ui-assets/workspace-output-history.css?v=20260817-2";
+  historyStyles.href = "/ui-assets/workspace-output-history.css?v=20260819-3";
   document.head.append(historyStyles);
 
   const nativeFetch = window.fetch.bind(window);
@@ -14,6 +14,7 @@
     royalty: "Licenční poplatky",
   };
   let lastAnalysisPayload = null;
+  let lastAnalysisResponse = null;
   let pendingReportFingerprint = null;
 
   function requestUrl(resource) {
@@ -74,7 +75,7 @@
     return body;
   }
 
-  function reportRecord(body) {
+  function reportRecord(body, payload = null, analysisResponse = null) {
     const facts = body.report.assumptions?.transaction_facts || {};
     return {
       id: String(body.report.report_id),
@@ -86,6 +87,11 @@
       rate: body.report.result?.rate,
       payerName: String(facts.report_payer_name || ""),
       recipientName: String(facts.report_recipient_name || ""),
+      fingerprint: payload ? payloadFingerprint(payload) : "",
+      payload: payload ? structuredClone(payload) : null,
+      analysisResponse: analysisResponse
+        ? structuredClone(analysisResponse)
+        : null,
     };
   }
 
@@ -144,10 +150,30 @@
   function openStoredReport(record, printAfterLoad = false) {
     const reportWindow = window.open("", "_blank");
     if (!reportWindow) {
-      window.alert("Prohlížeč zablokoval nové okno. Povol vyskakovací okna pro TaxTreat a zkus export znovu.");
+      showExportProblem("Prohlížeč zablokoval nové okno. Povol vyskakovací okna pro TaxTreat a zkus export znovu.");
       return;
     }
     prepareReportWindow(reportWindow, record.html, printAfterLoad);
+  }
+
+  function openStoredResult(record) {
+    if (
+      record.payload &&
+      record.analysisResponse &&
+      window.TaxTreatWorkspace?.openStoredResult
+    ) {
+      lastAnalysisPayload = structuredClone(record.payload);
+      lastAnalysisResponse = structuredClone(record.analysisResponse);
+
+      window.TaxTreatWorkspace.openStoredResult(
+        record.payload,
+        record.analysisResponse
+      );
+      return;
+    }
+
+    // Fallback for any old in-memory record without the calculation body.
+    openStoredReport(record, false);
   }
 
   function actionButton(label, action) {
@@ -155,21 +181,52 @@
     button.type = "button";
     button.className = "secondary compact";
     button.textContent = label;
-    button.addEventListener("click", action);
+    button.addEventListener("click", (event) => {
+      event.stopPropagation();
+      action();
+    });
     return button;
   }
 
   function outputRow(record, compact = false) {
     const row = document.createElement("article");
-    row.className = compact ? "output-history-row compact" : "output-history-row";
+    row.className = compact
+      ? "output-history-row compact is-clickable"
+      : "output-history-row";
+
     row.dataset.outputReportId = record.id;
+
     const copy = document.createElement("div");
-    const title = document.createElement("strong"); title.textContent = historyTitle(record);
-    const meta = document.createElement("small"); meta.textContent = compactGeneratedAt(record.generatedAt);
+    const title = document.createElement("strong");
+    title.textContent = historyTitle(record);
+
+    const meta = document.createElement("small");
+    meta.textContent = `${compactGeneratedAt(record.generatedAt)} · ${formatRate(record.rate)}`;
+
     copy.append(title, meta);
-    const actions = document.createElement("div"); actions.className = "output-history-actions";
-    actions.append(actionButton("Tisk / PDF", () => openStoredReport(record, true)));
+
+    const actions = document.createElement("div");
+    actions.className = "output-history-actions";
+    actions.append(
+      actionButton("Tisk / PDF", () => openStoredReport(record, true))
+    );
+
     row.append(copy, actions);
+
+    if (compact) {
+      row.tabIndex = 0;
+      row.setAttribute("role", "button");
+      row.setAttribute("aria-label", `Otevřít výsledek: ${historyTitle(record)}`);
+
+      row.addEventListener("click", () => openStoredResult(record));
+      row.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openStoredResult(record);
+        }
+      });
+    }
+
     return row;
   }
 
@@ -177,52 +234,78 @@
     const row = document.createElement("article");
     row.className = "review-history-row";
     row.dataset.reviewReportId = record.id;
+
     const copy = document.createElement("div");
-    const eyebrow = document.createElement("small"); eyebrow.textContent = compactGeneratedAt(record.generatedAt);
-    const title = document.createElement("strong"); title.textContent = historyTitle(record, "Platba");
-    const meta = document.createElement("span"); meta.textContent = formatRate(record.rate);
+
+    const eyebrow = document.createElement("small");
+    eyebrow.textContent = compactGeneratedAt(record.generatedAt);
+
+    const title = document.createElement("strong");
+    title.textContent = historyTitle(record, "Platba");
+
+    const meta = document.createElement("span");
+    meta.textContent = formatRate(record.rate);
+
     copy.append(eyebrow, title, meta);
+
     const status = document.createElement("b");
-    status.className = statusNeedsReview(record.status) ? "review-history-status attention" : "review-history-status";
+    status.className = statusNeedsReview(record.status)
+      ? "review-history-status attention"
+      : "review-history-status";
     status.textContent = statusLabel(record.status);
-    row.append(copy, status, actionButton("Tisk / PDF", () => openStoredReport(record, true)));
+
+    const actions = document.createElement("div");
+    actions.className = "output-history-actions";
+    actions.append(
+      actionButton("Otevřít výsledek", () => openStoredResult(record)),
+      actionButton("Tisk / PDF", () => openStoredReport(record, true)),
+    );
+
+    row.append(copy, status, actions);
     return row;
   }
 
   function renderOutputHistory() {
-    const dashboardCards = document.querySelectorAll('[data-view="dashboard"] .dashboard-grid > article.card');
+    const dashboardCards = document.querySelectorAll(
+      '[data-view="dashboard"] .dashboard-grid > article.card'
+    );
     const dashboardCard = dashboardCards.item(1);
-    const outputsCard = document.querySelector('[data-view="outputs"] > article.card');
-    if (dashboardCard) {
-      dashboardCard.replaceChildren();
-      const head = document.createElement("div"); head.className = "card-head";
-      const heading = document.createElement("h2"); heading.textContent = "Poslední výstupy";
-      const count = document.createElement("span"); count.textContent = String(outputHistory.length);
-      head.append(heading, count); dashboardCard.append(head);
-      if (!outputHistory.length) {
-        const empty = document.createElement("div"); empty.className = "empty";
-        const title = document.createElement("strong"); title.textContent = "Zatím bez výstupů";
-        const copy = document.createElement("p"); copy.textContent = "Po dokončení výpočtu se zde zobrazí informační výstup podle zadaných údajů.";
-        empty.append(title, copy); dashboardCard.append(empty);
-      } else {
-        outputHistory.slice(0, 3).forEach((record) => dashboardCard.append(outputRow(record, true)));
-      }
+
+    if (!dashboardCard) return;
+
+    dashboardCard.replaceChildren();
+
+    const head = document.createElement("div");
+    head.className = "card-head";
+
+    const heading = document.createElement("h2");
+    heading.textContent = "Poslední výsledky";
+
+    const count = document.createElement("span");
+    count.textContent = String(outputHistory.length);
+
+    head.append(heading, count);
+    dashboardCard.append(head);
+
+    if (!outputHistory.length) {
+      const empty = document.createElement("div");
+      empty.className = "empty";
+
+      const title = document.createElement("strong");
+      title.textContent = "Zatím bez výsledků";
+
+      const copy = document.createElement("p");
+      copy.textContent =
+        "Po dokončení výpočtu se zde zobrazí poslední výsledky.";
+
+      empty.append(title, copy);
+      dashboardCard.append(empty);
+      return;
     }
-    if (outputsCard) {
-      outputsCard.replaceChildren();
-      if (!outputHistory.length) {
-        const empty = document.createElement("div"); empty.className = "empty";
-        const title = document.createElement("strong"); title.textContent = "Zatím bez výstupů";
-        const copy = document.createElement("p"); copy.textContent = "Výstup vznikne po dokončení informačního výpočtu.";
-        empty.append(title, copy); outputsCard.append(empty);
-      } else {
-        const head = document.createElement("div"); head.className = "card-head";
-        const heading = document.createElement("h2"); heading.textContent = "Vytvořené výstupy";
-        const count = document.createElement("span"); count.textContent = String(outputHistory.length);
-        head.append(heading, count); outputsCard.append(head);
-        outputHistory.forEach((record) => outputsCard.append(outputRow(record)));
-      }
-    }
+
+    outputHistory
+      .slice(0, 3)
+      .forEach((record) => dashboardCard.append(outputRow(record, true)));
   }
 
   function renderReviewHistory() {
@@ -231,12 +314,12 @@
     reviewsCard.replaceChildren();
     if (!outputHistory.length) {
       const empty = document.createElement("div"); empty.className = "empty";
-      const title = document.createElement("strong"); title.textContent = "Zatím bez výpočtů";
-      const copy = document.createElement("p"); copy.textContent = "Vyber příjemce a zadej údaje o první transakci.";
+      const title = document.createElement("strong"); title.textContent = "Zatím bez výsledků";
+      const copy = document.createElement("p"); copy.textContent = "Po dokončení prvního výpočtu se zde zobrazí výsledek a report.";
       empty.append(title, copy); reviewsCard.append(empty); return;
     }
     const head = document.createElement("div"); head.className = "card-head";
-    const heading = document.createElement("h2"); heading.textContent = "Dokončené výpočty";
+    const heading = document.createElement("h2"); heading.textContent = "Výsledky";
     const count = document.createElement("span"); count.textContent = String(outputHistory.length);
     head.append(heading, count); reviewsCard.append(head);
     outputHistory.forEach((record) => reviewsCard.append(reviewRow(record)));
@@ -264,22 +347,48 @@
     renderDashboardMetrics();
   }
 
-  function rememberReport(body) {
-    const record = reportRecord(body);
-    const existing = outputHistory.findIndex((item) => item.id === record.id);
-    if (existing >= 0) outputHistory.splice(existing, 1);
+  function rememberReport(
+    body,
+    payload = null,
+    analysisResponse = null
+  ) {
+    const record = reportRecord(body, payload, analysisResponse);
+
+    const existing = outputHistory.findIndex((item) =>
+      (record.fingerprint && item.fingerprint === record.fingerprint) ||
+      item.id === record.id
+    );
+
+    if (existing >= 0) {
+      const previous = outputHistory[existing];
+
+      if (!record.payload && previous.payload) {
+        record.payload = previous.payload;
+      }
+
+      if (!record.analysisResponse && previous.analysisResponse) {
+        record.analysisResponse = previous.analysisResponse;
+      }
+
+      outputHistory.splice(existing, 1);
+    }
+
     outputHistory.unshift(record);
-    if (outputHistory.length > 10) outputHistory.length = 10;
+
+    if (outputHistory.length > 10) {
+      outputHistory.length = 10;
+    }
+
     renderWorkspaceHistory();
     return record;
   }
 
-  async function cacheCompletedReport(payload) {
+  async function cacheCompletedReport(payload, analysisResponse) {
     const fingerprint = payloadFingerprint(payload);
     if (fingerprint === pendingReportFingerprint) return;
     pendingReportFingerprint = fingerprint;
     try {
-      rememberReport(await buildReport(payload));
+      rememberReport(await buildReport(payload), payload, analysisResponse);
     } catch (_problem) {
       // A failed convenience preload must not change the calculation result.
     } finally {
@@ -293,7 +402,10 @@
     const response = await nativeFetch(resource, mutableOptions);
     if (payload && response.ok) {
       response.clone().json().then((body) => {
-        if (!clientQuestionsRemain(body)) cacheCompletedReport(payload);
+        if (!clientQuestionsRemain(body)) {
+          lastAnalysisResponse = body;
+          cacheCompletedReport(payload, body);
+        }
       }).catch(() => {});
     }
     return response;
@@ -390,7 +502,7 @@ p{
 </html>`);
     try {
       const body = await buildReport(lastAnalysisPayload);
-      const record = rememberReport(body);
+      const record = rememberReport(body, lastAnalysisPayload, lastAnalysisResponse);
       prepareReportWindow(reportWindow, record.html, printAfterLoad);
     } catch (problem) {
       reportWindow.close();

@@ -13,7 +13,7 @@
   }
   "use strict";
 
-  const BUILD_VERSION = "20260818-6";
+  const BUILD_VERSION = "20260819-3";
 
   async function checkForNewBuild() {
     try {
@@ -785,6 +785,124 @@
     return "Pro toto pravidlo není v právním datasetu uložen text ustanovení.";
   }
 
+  function decisiveLegalParagraph(fullText, citation) {
+    const text = String(fullText || "")
+      .replace(/\r/g, "")
+      .trim();
+
+    if (!text) return "";
+
+    const reference = String(citation.paragraph || "").trim();
+    const numberMatch = reference.match(
+      /(?:odst(?:avec)?\.?\s*)?(\d+)/i
+    );
+    const paragraphNumber = numberMatch?.[1] || "";
+
+    let candidate = text;
+
+    if (paragraphNumber) {
+      const escapedNumber = paragraphNumber.replace(
+        /[.*+?^${}()|[\]\\]/g,
+        "\\$&"
+      );
+
+      const startPattern = new RegExp(
+        `(?:^|\\n)\\s*(?:\\(${escapedNumber}\\)|${escapedNumber}[.)])\\s+`,
+        "m"
+      );
+
+      const match = startPattern.exec(text);
+
+      if (match) {
+        const contentStart = match.index + match[0].length;
+        const tail = text.slice(contentStart);
+
+        const next = /(?:^|\n)\s*(?:\(\d+\)|\d+[.)])\s+/m;
+        const nextMatch = next.exec(tail);
+
+        const paragraph = (
+          nextMatch
+            ? text.slice(match.index, contentStart + nextMatch.index)
+            : text.slice(match.index)
+        ).trim();
+
+        if (paragraph) candidate = paragraph;
+      }
+    }
+
+    // For rate rules, identify the precise clause containing
+    // the selected rate. This mirrors the report's emphasis
+    // on the operative percentage instead of marking the whole article.
+    if (
+      citation.rate !== null &&
+      citation.rate !== undefined &&
+      citation.rate !== ""
+    ) {
+      const numericRate = String(citation.rate)
+        .replace(".", "[.,]");
+
+      const ratePattern = new RegExp(
+        `(?:^|[^0-9])${numericRate}\\s*(?:%|percent|per cent|procent)`,
+        "i"
+      );
+
+      const clauses = candidate
+        .split(/(?<=;)|(?<=\.)\s+(?=[A-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ0-9(])/)
+        .map((item) => item.trim())
+        .filter(Boolean);
+
+      const rateClause = clauses.find(
+        (item) => ratePattern.test(item)
+      );
+
+      if (
+        rateClause &&
+        rateClause.length < text.length * 0.9
+      ) {
+        return rateClause;
+      }
+    }
+
+    const treatment = String(citation.tax_treatment || "");
+
+    if (treatment === "exclusive_foreign_taxation") {
+      const clauses = candidate
+        .split(/(?<=\.)\s+/)
+        .map((item) => item.trim())
+        .filter(Boolean);
+
+      const exclusive = clauses.find(
+        (item) =>
+          /\b(?:only|pouze|jen)\b/i.test(item) &&
+          /tax|zdan/i.test(item)
+      );
+
+      if (exclusive && exclusive.length < text.length * 0.9) {
+        return exclusive;
+      }
+    }
+
+    if (
+      candidate &&
+      candidate !== text &&
+      candidate.length < text.length * 0.9
+    ) {
+      return candidate;
+    }
+
+    const excerpt = String(citation.excerpt || "").trim();
+
+    if (
+      excerpt &&
+      text.includes(excerpt) &&
+      excerpt.length < text.length * 0.72
+    ) {
+      return excerpt;
+    }
+
+    return "";
+  }
+
   function citationRole(citation, selected, position) {
     const layer = String(citation.legal_layer || "");
     if (layer === "domestic") return `${position}. Výchozí vnitrostátní pravidlo`;
@@ -816,7 +934,33 @@
     if ((citation.official_text || citation.excerpt) && layer !== "domestic") {
       const disclosure = document.createElement("details"); disclosure.className = "citation-excerpt"; disclosure.open = true;
       const summary = document.createElement("summary"); summary.textContent = citation.official_text ? "Znění použitého ustanovení" : "Evidované znění použitého ustanovení";
-      const excerpt = document.createElement("blockquote"); excerpt.textContent = displayLegalExcerpt(citation);
+      const excerpt = document.createElement("blockquote");
+      const fullText = displayLegalExcerpt(citation);
+      const decisiveText = selected
+        ? decisiveLegalParagraph(fullText, citation)
+        : "";
+
+      if (decisiveText && fullText.includes(decisiveText)) {
+        const start = fullText.indexOf(decisiveText);
+
+        excerpt.append(
+          document.createTextNode(fullText.slice(0, start))
+        );
+
+        const mark = document.createElement("mark");
+        mark.className = "legal-decisive-passage";
+        mark.textContent = decisiveText;
+        excerpt.append(mark);
+
+        excerpt.append(
+          document.createTextNode(
+            fullText.slice(start + decisiveText.length)
+          )
+        );
+      } else {
+        excerpt.textContent = fullText;
+      }
+
       disclosure.append(summary, excerpt); card.append(disclosure);
     }
     return card;
@@ -1009,6 +1153,21 @@
       else { renderClientQuestions([]); renderResult(payload, body); }
     } catch (problem) { error.textContent = problem.message; error.hidden = false; }
   });
+
+  window.TaxTreatWorkspace = {
+    ...(window.TaxTreatWorkspace || {}),
+    openStoredResult(payload, response) {
+      if (!payload || !response?.analysis) return false;
+
+      const restoredPayload = structuredClone(payload);
+      const restoredResponse = structuredClone(response);
+
+      lastPayload = restoredPayload;
+      renderClientQuestions([]);
+      renderResult(restoredPayload, restoredResponse);
+      return true;
+    }
+  };
 
   renderPayers();
   renderRecipient();

@@ -318,21 +318,49 @@ def _key_facts_html(rate_display, income_type, selected, schedule):
 
 def _wht_flow_html(rate_display):
     nodes = (
-        ("01", "ZDP", "Vzniká česká srážková daň a jaký je výchozí režim?"),
-        ("02", "SZDZ", "Je použitelná smlouva o zamezení dvojího zdanění?"),
-        ("03", "Podmínky", "Rezidence, skutečné vlastnictví, typ příjmu a další podmínky."),
-        ("04", "MLI / PPT", "Je-li relevantní, zohlední se modifikace smlouvy a anti-abuse test."),
-        ("05", "Výsledek", f"Konečný český režim: {rate_display}."),
+        (
+            "01",
+            "Česká srážková daň",
+            "Podléhá transakce české srážkové dani? Jaký je její výchozí režim?",
+        ),
+        (
+            "02",
+            "SZDZ / osvobození",
+            "Je použitelné smluvní pravidlo nebo jiné pravidlo, které výchozí český režim omezuje nebo nahrazuje?",
+        ),
+        (
+            "03",
+            "Podmínky použití",
+            "Jsou splněny podmínky daňové rezidence, skutečného vlastnictví, typu příjmu a další podmínky příslušného pravidla?",
+        ),
+        (
+            "04",
+            "MLI / PPT",
+            "Je-li relevantní, zohlední se modifikace smlouvy a test hlavního účelu.",
+        ),
+        (
+            "05",
+            "Konečná sazba",
+            rate_display,
+        ),
     )
+
     html = []
-    for index, (number, title, text) in enumerate(nodes):
+
+    for index, (number, title, description) in enumerate(nodes):
         if index:
-            html.append('<div class="flow-arrow">→</div>')
+            html.append(
+                '<div class="flow-arrow" aria-hidden="true">→</div>'
+            )
+
         html.append(
             '<div class="flow-node">'
-            f'<span>{number}</span><b>{escape(title)}</b><p>{escape(text)}</p>'
+            f'<span>{number}</span>'
+            f'<b>{escape(title)}</b>'
+            f'<p>{escape(description)}</p>'
             '</div>'
         )
+
     return "".join(html)
 
 

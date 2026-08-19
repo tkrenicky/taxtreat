@@ -441,3 +441,15 @@ body[data-design="atlas"] textarea:focus{
   }
 }
 
+
+
+/* Legally decisive wording within the selected source. */
+body[data-design="atlas"] .legal-decisive-passage{
+  padding:.08em .18em;
+  border-radius:3px;
+  background:#DCEBE3;
+  color:#173F39;
+  font-weight:700;
+  box-decoration-break:clone;
+  -webkit-box-decoration-break:clone;
+}

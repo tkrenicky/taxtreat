@@ -11,7 +11,7 @@ def test_workspace_loads_pdf_report_export_asset():
     asset = client.get("/ui-assets/workspace-report-export.js")
 
     assert asset.status_code == 200
-    assert "/ui-assets/workspace-report-export.js?v=20260818-6" in html
+    assert "/ui-assets/workspace-report-export.js?v=20260819-3" in html
     assert "Tisk / PDF reportu" in html
     assert "Tisk / PDF reportu" in asset.text
     assert 'nativeFetch("/analysis/report"' in asset.text
@@ -25,12 +25,13 @@ def test_workspace_output_history_is_in_memory_and_printable():
     styles = client.get("/ui-assets/workspace-output-history.css")
 
     assert styles.status_code == 200
-    assert "/ui-assets/workspace-output-history.css?v=20260817-2" in asset
+    assert "/ui-assets/workspace-output-history.css?v=20260819-3" in asset
     assert "const outputHistory = []" in asset
     assert "cacheCompletedReport" in asset
+    assert "openStoredResult" in asset
     assert "clientQuestionsRemain" in asset
-    assert "Vytvořené výstupy" in asset
-    assert "Poslední výstupy" in asset
+    assert "Otevřít výsledek" in asset
+    assert "Poslední výsledky" in asset
     assert "dataset.outputReportId" in asset
     assert "Tisk / PDF" in asset
     assert "Tisk / PDF" in asset

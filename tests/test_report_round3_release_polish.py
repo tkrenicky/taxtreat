@@ -72,7 +72,7 @@ def test_round3_copy_polish_is_applied():
     html = render_report_html(_report())
     assert "anti-abuse test" not in html
     assert "test hlavního účelu" in html
-    assert "Vzniká česká srážková daň? Jaký je její výchozí režim?" in html
+    assert "Podléhá transakce české srážkové dani? Jaký je její výchozí režim?" in html
     assert "Nejbližší uvedená lhůta" not in html
     assert "Nejbližší lhůta" in html
     assert "Lhůta pro odvod daně plátcem." not in html
@@ -96,4 +96,4 @@ def test_round3_flow_is_timeline_without_duplicate_principle():
     assert len(soup.select(".flow-node")) == 5
     assert soup.select_one(".flow-principle") is None
     assert ".flow::before" in html
-    assert "Výsledek" in soup.select(".flow-node")[-1].get_text(" ", strip=True)
+    assert "Konečná sazba" in soup.select(".flow-node")[-1].get_text(" ", strip=True)
