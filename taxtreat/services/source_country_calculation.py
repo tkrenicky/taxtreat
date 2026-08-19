@@ -59,9 +59,9 @@ def build_source_country_withholding_compliance_schedule(
 
     reference_date = _parse_date(transaction_date)
     statutory_deadline = _next_month_day(reference_date, 15)
-    operational_deadline = _next_weekday(statutory_deadline)
+    weekend_adjusted_candidate = _next_weekday(statutory_deadline)
     base = {
-        "schema_version": 1,
+        "schema_version": 2,
         "source_country": "SK",
         "status": "PENDING_FINAL_TREATMENT",
         "reference_date": reference_date.isoformat(),
@@ -69,6 +69,7 @@ def build_source_country_withholding_compliance_schedule(
         "tax_remittance_deadline": None,
         "notification_deadline": None,
         "statutory_deadline": statutory_deadline.isoformat(),
+        "operational_deadline_candidate": weekend_adjusted_candidate.isoformat(),
         "notification_regime": None,
         "notification_required": None,
         "notification_form": "OZN4311v26",
@@ -76,8 +77,9 @@ def build_source_country_withholding_compliance_schedule(
         "tax_remittance_legal_basis": "§ 43 ods. 11 zákona č. 595/2003 Z. z.",
         "withholding_timing_legal_basis": "§ 43 ods. 10 zákona č. 595/2003 Z. z.",
         "deadline_rule": "15th_day_of_following_calendar_month",
-        "weekend_adjustment_applied": operational_deadline != statutory_deadline,
+        "weekend_adjustment_candidate_applied": weekend_adjusted_candidate != statutory_deadline,
         "public_holiday_adjustment_not_modelled": True,
+        "deadline_candidate_only": True,
         "ordinary_annual_wht_return_configured": False,
         "dividend_timing_review_required": False,
     }
@@ -105,12 +107,9 @@ def build_source_country_withholding_compliance_schedule(
         raise ValueError("Final withholding-tax rate must be between 0 and 100.")
 
     if rate > 0:
-        deadline = operational_deadline.isoformat()
         return {
             **base,
-            "status": "READY",
-            "tax_remittance_deadline": deadline,
-            "notification_deadline": deadline,
+            "status": "REVIEW_DEADLINE_CALENDAR",
             "notification_regime": "monthly_withholding_section_43_11",
             "notification_required": True,
         }
