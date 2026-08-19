@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "dataset_release": "sk-dividend-domestic-condition-model-2026-08-19.1",
+  "source_country": "SK",
+  "income_type": "dividend",
+  "recipient_scope": "corporate_recipient",
+  "status": "machine_evidence_not_human_reviewed",
+  "policy": {
+    "slovak_domestic_law_is_independent_from_czech_parent_subsidiary_rules": true,
+    "treaty_rate_is_not_applied_when_income_is_outside_corporate_tax_subject_under_slovak_law": true,
+    "non_cooperating_state_exception_must_be_tested_separately": true,
+    "distribution_deductibility_must_be_known": true,
+    "runtime_release": false
+  },
+  "primary_rule": {
+    "legal_reference": "§ 12 ods. 7 písm. c)",
+    "treatment": "outside_subject_of_corporate_income_tax_candidate",
+    "description": "A profit share (dividend) paid from the profit of a company or cooperative, including a reverse hybrid entity, is not subject to corporate income tax to the extent that it is not a tax-deductible expense of the taxpayer paying the profit share.",
+    "conditions": [
+      {
+        "fact": "recipient_entity_type",
+        "operator": "==",
+        "value": "corporate"
+      },
+      {
+        "fact": "distribution_is_tax_deductible_for_payer",
+        "operator": "==",
+        "value": false
+      },
+      {
+        "fact": "recipient_is_non_cooperating_state_taxpayer",
+        "operator": "==",
+        "value": false
+      },
+      {
+        "fact": "distribution_category_is_section_3_1_f",
+        "operator": "==",
+        "value": false
+      }
+    ]
+  },
+  "exceptions": [
+    {
+      "exception_id": "non_cooperating_state_legal_entity",
+      "legal_reference": "§ 12 ods. 7 písm. c) bod 1 together with § 2 písm. x) and applicable § 43 provisions",
+      "effect": "primary_outside_subject_rule_not_available",
+      "required_fact": "recipient_is_non_cooperating_state_taxpayer",
+      "machine_status": "blocked_until_official_2026_cooperating_state_list_body_is_ingested"
+    },
+    {
+      "exception_id": "section_3_1_f_distribution",
+      "legal_reference": "§ 12 ods. 7 písm. c) bod 2",
+      "effect": "primary_outside_subject_rule_not_available",
+      "required_fact": "distribution_category_is_section_3_1_f",
+      "machine_status": "transaction_fact_required"
+    },
+    {
+      "exception_id": "payer_deductible_distribution",
+      "legal_reference": "§ 12 ods. 7 písm. c)",
+      "effect": "primary_outside_subject_rule_only_applies_to_non_deductible_extent",
+      "required_fact": "distribution_is_tax_deductible_for_payer",
+      "machine_status": "transaction_fact_required"
+    }
+  ],
+  "decision_order": [
+    "confirm_corporate_recipient_and_distribution_category",
+    "confirm_distribution_deductibility_at_payer",
+    "resolve_2026_non_cooperating_state_status",
+    "apply_section_12_7_c_outside_subject_rule_if_available",
+    "only_if_domestic_taxable_branch_remains_consider_treaty_and_mli_limitations"
+  ],
+  "required_transaction_facts": [
+    "recipient_entity_type",
+    "recipient_country",
+    "distribution_category_is_section_3_1_f",
+    "distribution_is_tax_deductible_for_payer",
+    "recipient_is_non_cooperating_state_taxpayer"
+  ],
+  "primary_sources": [
+    {
+      "authority": "Slov-Lex",
+      "act": "595/2003 Z. z.",
+      "locator": "§ 12 ods. 7 písm. c)",
+      "supports": "corporate dividend outside-subject rule and its exceptions",
+      "url": "https://static.slov-lex.sk/static/SK/ZZ/2003/595/20251201.print.html"
+    }
+  ],
+  "human_review_status": "not_started",
+  "approval_eligible": false,
+  "production_released": false
+}
