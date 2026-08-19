@@ -49,3 +49,18 @@ def test_sk_compliance_is_country_specific_and_does_not_reuse_czech_rules():
     assert compliance["runtime_release"] is False
     assert "sk_2026_compliance_profile_missing" not in payload["blockers"]
     assert "sk_2026_compliance_profile_incomplete" not in payload["blockers"]
+
+
+def test_sk_dividend_domestic_model_is_slovak_specific_and_time_correct():
+    payload = build_readiness()
+    dividend = payload["domestic"]["dividend_model"]
+
+    assert dividend["present"] is True
+    assert dividend["slovak_specific"] is True
+    assert dividend["outside_subject_rule_modelled"] is True
+    assert dividend["2026_source_version"] is True
+    assert dividend["non_cooperating_state_gate_preserved"] is True
+    assert dividend["distribution_deductibility_required"] is True
+    assert dividend["runtime_release"] is False
+    assert "sk_dividend_domestic_model_missing" not in payload["blockers"]
+    assert "sk_dividend_domestic_model_incomplete" not in payload["blockers"]
