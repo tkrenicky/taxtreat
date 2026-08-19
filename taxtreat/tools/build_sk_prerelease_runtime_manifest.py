@@ -66,6 +66,27 @@ def build_manifest() -> dict[str, Any]:
             "treaty_source_url": source.get("source_url"),
             "treaty_source_sha256": source.get("source_sha256"),
             "treaty_article": source.get("actual_article"),
+            "treaty_semantic_candidate": {
+                "rate_candidates": source.get("rate_candidates", []),
+                "exclusive_residence_taxation_candidate": bool(
+                    source.get("exclusive_residence_taxation_candidate")
+                ),
+                "beneficial_owner_wording_present": bool(
+                    source.get("beneficial_owner_wording_present")
+                ),
+                "pe_or_fixed_base_carveout_wording_present": bool(
+                    source.get("pe_or_fixed_base_carveout_wording_present")
+                ),
+                "holding_period_candidates": source.get(
+                    "holding_period_candidates", []
+                ),
+                "ownership_linked_rate_candidate_count": int(
+                    source.get("ownership_linked_rate_candidate_count") or 0
+                ),
+                "evidence_quality": source.get(
+                    "evidence_quality", "official_primary_source_byte_extracted"
+                ),
+            },
             "mli_applicable": mli_applicable,
             "mli_machine_evidence_status": (
                 mli_row.get("machine_extraction_status") if mli_row else "not_applicable"
@@ -112,8 +133,8 @@ def build_manifest() -> dict[str, Any]:
         raise ValueError("SK interest/royalty domestic model missing.")
 
     return {
-        "schema_version": 1,
-        "dataset_release": "sk-prerelease-runtime-manifest-2026-08-19.1",
+        "schema_version": 2,
+        "dataset_release": "sk-prerelease-runtime-manifest-2026-08-19.2",
         "source_country": "SK",
         "scope_count": 225,
         "policy": {
@@ -123,6 +144,7 @@ def build_manifest() -> dict[str, Any]:
             "czech_runtime_fallback_prohibited": True,
             "human_review_required_before_release": True,
             "cooperating_state_list_required_before_domestic_rate_release": True,
+            "semantic_candidates_must_never_be_promoted_without_human_review": True,
             "runtime_release": False,
         },
         "scopes": rows,
@@ -132,13 +154,23 @@ def build_manifest() -> dict[str, Any]:
 def build_summary(payload: dict[str, Any]) -> dict[str, Any]:
     rows = payload["scopes"]
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "dataset_release": payload["dataset_release"],
         "scope_count": len(rows),
         "mli_scopes": sum(row["mli_applicable"] for row in rows),
         "non_mli_scopes": sum(not row["mli_applicable"] for row in rows),
         "primary_summary_fallback_scopes": sum(
             "primary_summary_fallback" in row["treaty_machine_evidence_status"]
+            for row in rows
+        ),
+        "scopes_with_rate_candidates": sum(
+            bool(row["treaty_semantic_candidate"]["rate_candidates"])
+            for row in rows
+        ),
+        "exclusive_residence_candidate_scopes": sum(
+            row["treaty_semantic_candidate"][
+                "exclusive_residence_taxation_candidate"
+            ]
             for row in rows
         ),
         "cooperating_state_list_ready_scopes": sum(
