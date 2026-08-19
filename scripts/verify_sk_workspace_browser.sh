@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-PORT="${TAxTREAT_E2E_PORT:-8765}"
+PORT="${TAXTREAT_E2E_PORT:-8765}"
 BASE_URL="http://127.0.0.1:${PORT}"
 SESSION="taxtreat-sk-e2e"
 SERVER_LOG="/tmp/taxtreat-sk-e2e-uvicorn.log"
@@ -50,12 +50,17 @@ PY
       fi
     }
 
+    run_eval() {
+      EXPRESSION="$1"
+      agent-browser --session "$SESSION" eval "$EXPRESSION" >/dev/null 2>&1 || STATUS=1
+      agent-browser --session "$SESSION" wait 120 >/dev/null 2>&1 || STATUS=1
+    }
+
     check_eval "initial CZ source country" 'document.body.dataset.sourceCountry === "CZ"'
     check_eval "initial CZ currency" 'document.querySelector("#workspace-payment [name=currency]").value === "CZK"'
     check_eval "initial CZ runtime released" 'window.TaxTreatWorkspaceSourceCountry.getActiveContext().runtimeReleased === true'
 
-    agent-browser --session "$SESSION" select '#active-source-country' 'SK' >/dev/null 2>&1 || STATUS=1
-    agent-browser --session "$SESSION" wait 150 >/dev/null 2>&1 || STATUS=1
+    run_eval '(() => { const s=document.querySelector("#active-source-country"); s.value="SK"; s.dispatchEvent(new Event("change", {bubbles:true})); return true; })()'
 
     check_eval "SK source country" 'document.body.dataset.sourceCountry === "SK"'
     check_eval "SK EUR currency" 'document.querySelector("#workspace-payment [name=currency]").value === "EUR"'
@@ -66,39 +71,32 @@ PY
     check_eval "SK compliance form visible in contract" 'window.TaxTreatWorkspaceSourceCountry.getActiveContext().complianceFormCode === "OZN4311v26"'
     check_eval "SK 15-day compliance deadline contract" 'window.TaxTreatWorkspaceSourceCountry.getActiveContext().notificationDeadlineRule === "15th_day_of_following_calendar_month" && window.TaxTreatWorkspaceSourceCountry.getActiveContext().remittanceDeadlineRule === "15th_day_of_following_calendar_month"'
     check_eval "SK ordinary annual WHT return is not configured" 'window.TaxTreatWorkspaceSourceCountry.getActiveContext().ordinaryAnnualWhtReturnConfigured === false'
-    check_eval "SK CNB fetch is prohibited" 'window.fetch("/exchange-rates/cnb?currency=USD&date=2026-08-19").then(() => false).catch(e => e.message.includes("prohibited for Slovak"))'
+    check_eval "SK CNB fetch is prohibited" '(async () => { try { await window.fetch("/exchange-rates/cnb?currency=USD&date=2026-08-19"); return false; } catch (e) { return e.message.includes("prohibited for Slovak"); } })()'
 
-    agent-browser --session "$SESSION" find text "Plátci" click >/dev/null 2>&1 || STATUS=1
-    agent-browser --session "$SESSION" wait 100 >/dev/null 2>&1 || STATUS=1
+    run_eval '(() => { document.querySelector("[data-nav=payers]").click(); return true; })()'
     check_eval "SK payer page copy" 'document.querySelector("[data-view=payers] .page-title span").textContent.includes("Slovenské subjekty")'
 
-    agent-browser --session "$SESSION" find text "Příjemci" click >/dev/null 2>&1 || STATUS=1
-    agent-browser --session "$SESSION" wait 100 >/dev/null 2>&1 || STATUS=1
-    agent-browser --session "$SESSION" find text "Demo GmbH" click >/dev/null 2>&1 || STATUS=1
-    agent-browser --session "$SESSION" wait 100 >/dev/null 2>&1 || STATUS=1
+    run_eval '(() => { document.querySelector("[data-nav=recipients]").click(); return true; })()'
+    run_eval '(() => { document.querySelector("[data-view=recipients] [data-open-recipient]").click(); return true; })()'
     check_eval "SK PE label" '[...document.querySelectorAll("[data-view=recipient-detail] dt")].some(n => n.textContent.includes("Väzba príjmu na stálu prevádzkareň v SR"))'
 
-    agent-browser --session "$SESSION" find text "Zdroje" click >/dev/null 2>&1 || STATUS=1
-    agent-browser --session "$SESSION" wait 100 >/dev/null 2>&1 || STATUS=1
+    run_eval '(() => { document.querySelector("[data-nav=sources]").click(); return true; })()'
     check_eval "SK source metrics 75 / 225" '(() => { const a=[...document.querySelectorAll("[data-view=sources] .source-metrics strong")].map(n=>n.textContent.trim()); return a[0] === "75" && a[1] === "225"; })()'
 
-    agent-browser --session "$SESSION" select '#active-source-country' 'CZ' >/dev/null 2>&1 || STATUS=1
-    agent-browser --session "$SESSION" wait 150 >/dev/null 2>&1 || STATUS=1
+    run_eval '(() => { const s=document.querySelector("#active-source-country"); s.value="CZ"; s.dispatchEvent(new Event("change", {bubbles:true})); return true; })()'
     check_eval "return to CZ source country" 'document.body.dataset.sourceCountry === "CZ"'
     check_eval "return to CZ currency" 'document.querySelector("#workspace-payment [name=currency]").value === "CZK"'
     check_eval "return to CZ source metrics 101 / 303" '(() => { const a=[...document.querySelectorAll("[data-view=sources] .source-metrics strong")].map(n=>n.textContent.trim()); return a[0] === "101" && a[1] === "303"; })()'
 
-    agent-browser --session "$SESSION" find text "Příjemci" click >/dev/null 2>&1 || STATUS=1
-    agent-browser --session "$SESSION" wait 100 >/dev/null 2>&1 || STATUS=1
-    agent-browser --session "$SESSION" find text "Demo GmbH" click >/dev/null 2>&1 || STATUS=1
-    agent-browser --session "$SESSION" wait 100 >/dev/null 2>&1 || STATUS=1
+    run_eval '(() => { document.querySelector("[data-nav=recipients]").click(); return true; })()'
+    run_eval '(() => { document.querySelector("[data-view=recipients] [data-open-recipient]").click(); return true; })()'
     check_eval "return to CZ PE label" '[...document.querySelectorAll("[data-view=recipient-detail] dt")].some(n => n.textContent.includes("Vazba ke stálé provozovně v ČR"))'
 
     if [ "$STATUS" -eq 0 ]; then
       echo "BROWSER_SMOKE_OK"
     else
       echo "BROWSER_SMOKE_FAILED"
-      agent-browser --session "$SESSION" screenshot --full >/dev/null 2>&1
+      agent-browser --session "$SESSION" screenshot --full >/dev/null 2>&1 || true
     fi
   fi
 
