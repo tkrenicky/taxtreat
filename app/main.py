@@ -30,6 +30,13 @@ from taxtreat.services.calculation import (
     build_withholding_compliance_schedule,
     build_withholding_tax_calculation,
 )
+from taxtreat.services.source_country_calculation import (
+    build_source_country_withholding_compliance_schedule,
+    build_source_country_withholding_tax_calculation,
+)
+from taxtreat.services.source_country_runtime_metadata import (
+    source_country_runtime_dataset_version,
+)
 from taxtreat.services.decision import (
     CanonicalAnalysisRequest,
     analyze_transaction,
@@ -498,7 +505,7 @@ def require_analysis_source_release(
 
     if source != "CZ":
         try:
-            require_source_country_analysis_release(source)
+            return require_source_country_analysis_release(source)
         except UnsupportedSourceCountryError as exc:
             raise HTTPException(
                 status_code=422,
@@ -518,13 +525,6 @@ def require_analysis_source_release(
                     "release_blockers": list(decision.blockers),
                 },
             ) from exc
-        raise HTTPException(
-            status_code=409,
-            detail={
-                "code": "SOURCE_COUNTRY_RELEASE_GATE_MISSING",
-                "source_country": source,
-            },
-        )
 
     treaty_pair_id = f"{source}-{recipient}"
 
@@ -581,9 +581,10 @@ def analyze(payload: AnalysisPayload):
             determinations=payload.determinations,
         )
     )
-    dataset_version = load_stage6_source_release()[
-        "dataset_release"
-    ]
+    dataset_version = source_country_runtime_dataset_version(
+        source_country,
+        cz_release_loader=load_stage6_source_release,
+    )
     analysis = {
         "status": result.status.value,
         "rate": result.rate,
@@ -627,7 +628,8 @@ def analyze(payload: AnalysisPayload):
         if payload.transaction_amount is not None
         else None
     )
-    calculation = build_withholding_tax_calculation(
+    calculation = build_source_country_withholding_tax_calculation(
+        source_country,
         amount,
         decision_status=result.status.value,
         rate_percent=result.rate,
@@ -639,7 +641,8 @@ def analyze(payload: AnalysisPayload):
     )
     analysis["withholding_tax_calculation"] = calculation
     analysis["withholding_compliance_schedule"] = (
-        build_withholding_compliance_schedule(
+        build_source_country_withholding_compliance_schedule(
+            source_country,
             payload.transaction_date,
             income_type=payload.income_type,
             decision_status=result.status.value,
