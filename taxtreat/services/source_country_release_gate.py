@@ -42,19 +42,49 @@ def _release_manifest_path(code: str) -> Path:
     )
 
 
+def _fail_release_evidence(
+    code: str,
+    *,
+    decision_code: str,
+    blockers: tuple[str, ...],
+    release_status: str = "pre_release",
+) -> None:
+    raise SourceCountryNotReleasedError(
+        SourceCountryReleaseDecision(
+            source_country=code,
+            allowed=False,
+            code=decision_code,
+            release_status=release_status,
+            blockers=blockers,
+        )
+    )
+
+
 def _require_committed_release_evidence(code: str) -> None:
     path = _release_manifest_path(code)
     if not path.is_file():
-        decision = SourceCountryReleaseDecision(
-            source_country=code,
-            allowed=False,
-            code="SOURCE_COUNTRY_RELEASE_EVIDENCE_MISSING",
-            release_status="pre_release",
+        _fail_release_evidence(
+            code,
+            decision_code="SOURCE_COUNTRY_RELEASE_EVIDENCE_MISSING",
             blockers=("committed_source_country_release_manifest_missing",),
         )
-        raise SourceCountryNotReleasedError(decision)
 
-    payload = json.loads(path.read_text(encoding="utf-8"))
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError):
+        _fail_release_evidence(
+            code,
+            decision_code="SOURCE_COUNTRY_RELEASE_EVIDENCE_INVALID",
+            blockers=("committed_source_country_release_manifest_invalid",),
+        )
+
+    if not isinstance(payload, dict):
+        _fail_release_evidence(
+            code,
+            decision_code="SOURCE_COUNTRY_RELEASE_EVIDENCE_INVALID",
+            blockers=("committed_source_country_release_manifest_invalid",),
+        )
+
     expected = payload.get("expected_scope_count")
     reviewed = payload.get("human_reviewed_scopes")
     cooperating_ready = payload.get("cooperating_state_list_ready")
@@ -76,14 +106,12 @@ def _require_committed_release_evidence(code: str) -> None:
         blockers.append("release_manifest_status_not_released")
 
     if blockers:
-        decision = SourceCountryReleaseDecision(
-            source_country=code,
-            allowed=False,
-            code="SOURCE_COUNTRY_RELEASE_EVIDENCE_INCOMPLETE",
+        _fail_release_evidence(
+            code,
+            decision_code="SOURCE_COUNTRY_RELEASE_EVIDENCE_INCOMPLETE",
             release_status=status,
             blockers=tuple(dict.fromkeys(blockers)),
         )
-        raise SourceCountryNotReleasedError(decision)
 
 
 def require_source_country_analysis_release(
