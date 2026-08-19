@@ -46,6 +46,7 @@ from taxtreat.tools.extract_sk_treaty_articles import (
 ROOT = Path(__file__).resolve().parents[2]
 SK_DIR = ROOT / "data" / "legal_reviews" / "sk_outbound"
 RUN_SUMMARY_PATH = SK_DIR / "machine_ingestion_run_summary.json"
+TW_FALLBACK_PATH = SK_DIR / "tw_primary_summary_fallback.json"
 
 
 def _load(path: Path) -> Any:
@@ -93,7 +94,7 @@ def _run_mli_extraction() -> dict[str, Any]:
                 profile=profile,
             )
             row["machine_extraction_status"] = "completed"
-        except Exception as problem:  # fail closed per treaty pair
+        except Exception as problem:
             row = _mli_failure_row(source, url, problem)
         rows.append(row)
 
@@ -134,7 +135,6 @@ def _treaty_failure_scope(source_scope: dict[str, Any], problem: Exception) -> d
 
 
 def _resolve_treaty_source(source: dict[str, Any]) -> tuple[str | None, str]:
-    """Return authoritative fetch URL and content type for one treaty relationship."""
     country = source["recipient_country"]
     primary_url = source.get("official_primary_text_url")
 
@@ -145,11 +145,65 @@ def _resolve_treaty_source(source: dict[str, Any]) -> tuple[str | None, str]:
     if primary_url is None:
         return None, "unknown"
 
-    lowered = primary_url.lower()
-    if lowered.endswith(".pdf"):
+    if primary_url.lower().endswith(".pdf"):
         return primary_url, "pdf"
 
     return _static_source_url(primary_url), "html"
+
+
+def _taiwan_primary_summary_rows(
+    source: dict[str, Any],
+    country_scopes: list[dict[str, Any]],
+    problem: Exception,
+) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    fallback = _load(TW_FALLBACK_PATH)
+    if fallback.get("recipient_country") != "TW":
+        raise ValueError("Taiwan fallback evidence file is not scoped to TW.")
+    primary = fallback["primary_source"]
+    if primary.get("url") != source.get("official_primary_text_url"):
+        raise ValueError("Taiwan fallback source URL does not match treaty queue provenance.")
+
+    relationship = {
+        "recipient_country": "TW",
+        "recipient_country_name": source["recipient_country_name"],
+        "treaty_publication": source["treaty_publication"],
+        "source_url": primary["url"],
+        "source_content_type": "pdf",
+        "source_snapshot_path": str(TW_FALLBACK_PATH.relative_to(ROOT)),
+        "machine_extraction_status": "completed_primary_summary_fallback",
+        "primary_pdf_fetch_error_type": type(problem).__name__,
+        "primary_pdf_fetch_error_message": str(problem)[:500],
+        "evidence_quality": "official_primary_source_summary_fallback_not_byte_exact",
+        "human_review_status": "not_started",
+        "runtime_status": "not_released",
+    }
+
+    rows: list[dict[str, Any]] = []
+    for scope in country_scopes:
+        income = scope["income_type"]
+        evidence = fallback["scopes"][income]
+        rows.append({
+            "packet_id": scope["packet_id"],
+            "source_country": "SK",
+            "recipient_country": "TW",
+            "income_type": income,
+            "expected_article": str({"dividend": 10, "interest": 11, "royalty": 12}[income]),
+            "actual_article": evidence["article"],
+            "article_resolution_status": "official_primary_summary_fallback_after_pdf_timeout",
+            "article_text": None,
+            "article_text_sha256": None,
+            "source_url": primary["url"],
+            "source_sha256": None,
+            "source_snapshot_path": str(TW_FALLBACK_PATH.relative_to(ROOT)),
+            "primary_summary_evidence": evidence,
+            "machine_extraction_status": "article_evidence_primary_summary_fallback",
+            "title_validation_status": "expected_income_title_matched_from_primary_summary",
+            "review_ready": False,
+            "human_review_status": "not_started",
+            "approval_eligible": False,
+            "runtime_status": "not_released",
+        })
+    return relationship, rows
 
 
 def _run_treaty_extraction(treaty_queue: dict[str, Any]) -> dict[str, Any]:
@@ -204,7 +258,17 @@ def _run_treaty_extraction(treaty_queue: dict[str, Any]) -> dict[str, Any]:
             relationship_row["machine_extraction_status"] = "completed"
             relationships.append(relationship_row)
             scopes.extend(parsed["scopes"])
-        except Exception as problem:  # fail closed per treaty pair
+        except Exception as problem:
+            if country == "TW" and TW_FALLBACK_PATH.exists():
+                relationship_row, scope_rows = _taiwan_primary_summary_rows(
+                    source,
+                    country_scopes,
+                    problem,
+                )
+                relationships.append(relationship_row)
+                scopes.extend(scope_rows)
+                continue
+
             relationships.append({
                 "recipient_country": country,
                 "recipient_country_name": source["recipient_country_name"],
@@ -223,14 +287,15 @@ def _run_treaty_extraction(treaty_queue: dict[str, Any]) -> dict[str, Any]:
             )
 
     payload = {
-        "schema_version": 2,
-        "dataset_release": "sk-treaty-article-machine-extraction-2026-08-19.3",
+        "schema_version": 3,
+        "dataset_release": "sk-treaty-article-machine-extraction-2026-08-19.4",
         "source_country": "SK",
         "relationship_count": 75,
         "scope_count": 225,
         "policy": {
             "official_primary_text_only": True,
             "official_html_and_pdf_sources_supported": True,
+            "taiwan_primary_summary_fallback_is_explicit_not_byte_exact": True,
             "per_pair_failure_is_fail_closed_not_batch_fatal": True,
             "machine_extraction_is_not_semantic_legal_approval": True,
             "runtime_release": False,
@@ -265,24 +330,33 @@ def run() -> dict[str, Any]:
         row.get("machine_extraction_status") == "completed"
         for row in mli_extraction["relationships"]
     )
+    treaty_completed_statuses = {"completed", "completed_primary_summary_fallback"}
     treaty_completed = sum(
-        row.get("machine_extraction_status") == "completed"
+        row.get("machine_extraction_status") in treaty_completed_statuses
         for row in treaty_extraction["relationships"]
     )
+    semantic_candidate_statuses = {
+        "machine_candidate_not_legal_conclusion",
+        "machine_candidate_primary_summary_fallback_not_legal_conclusion",
+    }
     semantic_candidates = sum(
-        row.get("semantic_status") == "machine_candidate_not_legal_conclusion"
+        row.get("semantic_status") in semantic_candidate_statuses
         for row in semantic["scopes"]
     )
 
     summary = {
-        "schema_version": 2,
+        "schema_version": 3,
         "source_country": "SK",
         "mli_relationships_total": 46,
         "mli_relationships_machine_extracted": mli_completed,
         "mli_relationships_blocked": 46 - mli_completed,
         "treaty_relationships_total": 75,
-        "treaty_relationships_machine_extracted": treaty_completed,
+        "treaty_relationships_machine_evidence_ready": treaty_completed,
         "treaty_relationships_blocked": 75 - treaty_completed,
+        "treaty_primary_summary_fallback_relationships": sum(
+            row.get("machine_extraction_status") == "completed_primary_summary_fallback"
+            for row in treaty_extraction["relationships"]
+        ),
         "treaty_scopes_total": 225,
         "semantic_candidate_scopes": semantic_candidates,
         "human_reviewed_scopes": 0,
