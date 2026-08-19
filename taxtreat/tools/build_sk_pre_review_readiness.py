@@ -61,7 +61,7 @@ def _compliance_profile_status() -> dict[str, Any]:
             and notification.get("periodicity") == "monthly"
             and notification.get("legal_reference") == "§ 43 ods. 11"
             and remittance.get("legal_reference") == "§ 43 ods. 11"
-            and notification.get("same_deadline_as_notification", True) is True
+            and remittance.get("same_deadline_as_notification") is True
         ),
         "czech_reuse_prohibited": (
             policy.get("czech_deadlines_or_forms_must_not_be_reused") is True
