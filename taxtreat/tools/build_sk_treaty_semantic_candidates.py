@@ -1,0 +1,247 @@
+from __future__ import annotations
+
+import hashlib
+import json
+import re
+from pathlib import Path
+from typing import Any
+
+
+ROOT = Path(__file__).resolve().parents[2]
+SK_DIR = ROOT / "data" / "legal_reviews" / "sk_outbound"
+
+EXTRACTION_PATH = SK_DIR / "treaty_article_machine_extraction.json"
+OUTPUT_PATH = SK_DIR / "treaty_semantic_candidates.json"
+SUMMARY_PATH = SK_DIR / "treaty_semantic_candidates_summary.json"
+
+PERCENT_RE = re.compile(
+    r"(?<!\d)(\d{1,3}(?:[.,]\d+)?)\s*(?:%|percent|procent)",
+    re.IGNORECASE,
+)
+HOLDING_RE = re.compile(
+    r"(?<!\d)(\d{1,4})\s*(dní|dni|dňov|mesiacov|měsíců|mesicu|months?)",
+    re.IGNORECASE,
+)
+
+EXCLUSIVE_RESIDENCE_PATTERNS = (
+    "môžu zdaniť iba v tomto druhom štáte",
+    "môžu byť zdanené iba v tomto druhom štáte",
+    "môžu sa zdaniť iba v tomto druhom štáte",
+    "sa môžu zdaniť iba v tomto druhom štáte",
+    "môžu zdaniť len v tomto druhom štáte",
+    "môžu byť zdanené len v tomto druhom štáte",
+    "mohou být zdaněny pouze v tomto druhém státě",
+    "mohou být zdaněny jen v tomto druhém státě",
+    "shall be taxable only in that other state",
+)
+
+BENEFICIAL_OWNER_TOKENS = (
+    "skutočný vlastník",
+    "skutočným vlastníkom",
+    "skutečný vlastník",
+    "skutečným vlastníkem",
+    "beneficial owner",
+)
+
+PE_TOKENS = (
+    "stála prevádzkareň",
+    "stálej prevádzkarne",
+    "stálá provozovna",
+    "stálé provozovny",
+    "permanent establishment",
+    "trvalé zariadenie",
+    "trvalého zariadenia",
+)
+
+OWNERSHIP_TOKENS = (
+    "kapitálu",
+    "kapitalu",
+    "hlasovac",
+    "podiel",
+    "podíl",
+    "share capital",
+    "voting",
+)
+
+
+def _load(path: Path) -> Any:
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _compact(text: str) -> str:
+    return " ".join(text.split())
+
+
+def _context(text: str, start: int, end: int, radius: int = 240) -> str:
+    left = max(0, start - radius)
+    right = min(len(text), end + radius)
+    return _compact(text[left:right])
+
+
+def _rate_candidates(text: str) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for match in PERCENT_RE.finditer(text):
+        raw = match.group(1).replace(",", ".")
+        value = float(raw)
+        context = _context(text, match.start(), match.end())
+        lowered = context.lower()
+        rows.append({
+            "rate_percent": value,
+            "context": context,
+            "context_sha256": hashlib.sha256(context.encode("utf-8")).hexdigest(),
+            "ownership_context": any(token in lowered for token in OWNERSHIP_TOKENS),
+            "beneficial_owner_context": any(
+                token in lowered for token in BENEFICIAL_OWNER_TOKENS
+            ),
+        })
+    return rows
+
+
+def _holding_candidates(text: str) -> list[dict[str, Any]]:
+    rows = []
+    for match in HOLDING_RE.finditer(text):
+        context = _context(text, match.start(), match.end())
+        rows.append({
+            "value": int(match.group(1)),
+            "unit": match.group(2).lower(),
+            "context": context,
+            "context_sha256": hashlib.sha256(context.encode("utf-8")).hexdigest(),
+        })
+    return rows
+
+
+def build_semantic_candidate(article_text: str) -> dict[str, Any]:
+    text = _compact(article_text)
+    lowered = text.lower()
+    rates = _rate_candidates(text)
+    holdings = _holding_candidates(text)
+
+    return {
+        "article_text_sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
+        "rate_candidates": rates,
+        "exclusive_residence_taxation_candidate": any(
+            pattern in lowered for pattern in EXCLUSIVE_RESIDENCE_PATTERNS
+        ),
+        "beneficial_owner_wording_present": any(
+            token in lowered for token in BENEFICIAL_OWNER_TOKENS
+        ),
+        "pe_or_fixed_base_carveout_wording_present": any(
+            token in lowered for token in PE_TOKENS
+        ),
+        "holding_period_candidates": holdings,
+        "ownership_linked_rate_candidate_count": sum(
+            row["ownership_context"] for row in rates
+        ),
+        "semantic_status": "machine_candidate_not_legal_conclusion",
+        "human_review_status": "not_started",
+        "approval_eligible": False,
+        "runtime_status": "not_released",
+    }
+
+
+def build_candidates() -> dict[str, Any]:
+    extraction = _load(EXTRACTION_PATH)
+    if extraction["scope_count"] != 225:
+        raise ValueError("Treaty article extraction must cover 225 scopes.")
+
+    rows: list[dict[str, Any]] = []
+    for scope in extraction["scopes"]:
+        article_text = scope.get("article_text")
+        if not article_text:
+            rows.append({
+                "packet_id": scope["packet_id"],
+                "source_country": "SK",
+                "recipient_country": scope["recipient_country"],
+                "income_type": scope["income_type"],
+                "semantic_status": "blocked_missing_validated_article_text",
+                "human_review_status": "not_started",
+                "approval_eligible": False,
+                "runtime_status": "not_released",
+            })
+            continue
+
+        candidate = build_semantic_candidate(article_text)
+        candidate.update({
+            "packet_id": scope["packet_id"],
+            "source_country": "SK",
+            "recipient_country": scope["recipient_country"],
+            "income_type": scope["income_type"],
+            "source_url": scope.get("source_url"),
+            "source_sha256": scope.get("source_sha256"),
+        })
+        rows.append(candidate)
+
+    if len(rows) != 225:
+        raise ValueError("Expected 225 treaty semantic candidate rows.")
+    if any(row["approval_eligible"] for row in rows):
+        raise ValueError("Semantic candidates cannot be legal approvals.")
+    if any(row["runtime_status"] != "not_released" for row in rows):
+        raise ValueError("Semantic candidates must remain fail-closed.")
+
+    return {
+        "schema_version": 1,
+        "dataset_release": "sk-treaty-semantic-candidates-2026-08-19.1",
+        "source_country": "SK",
+        "scope_count": 225,
+        "policy": {
+            "candidate_evidence_only": True,
+            "no_rate_is_released_from_regex_extraction": True,
+            "exclusive_residence_phrase_is_candidate_not_final_zero_rate": True,
+            "pe_carveout_must_be_preserved": True,
+            "human_review_starts_only_after_all_machine_evidence_is_ready": True,
+            "runtime_release": False,
+        },
+        "scopes": rows,
+    }
+
+
+def build_summary(payload: dict[str, Any]) -> dict[str, Any]:
+    rows = payload["scopes"]
+    return {
+        "schema_version": 1,
+        "dataset_release": payload["dataset_release"],
+        "scope_count": len(rows),
+        "candidate_rows": sum(
+            row["semantic_status"] == "machine_candidate_not_legal_conclusion"
+            for row in rows
+        ),
+        "blocked_rows": sum(
+            row["semantic_status"] == "blocked_missing_validated_article_text"
+            for row in rows
+        ),
+        "scopes_with_rate_candidates": sum(bool(row.get("rate_candidates")) for row in rows),
+        "exclusive_residence_candidates": sum(
+            row.get("exclusive_residence_taxation_candidate") is True for row in rows
+        ),
+        "beneficial_owner_wording_scopes": sum(
+            row.get("beneficial_owner_wording_present") is True for row in rows
+        ),
+        "pe_carveout_wording_scopes": sum(
+            row.get("pe_or_fixed_base_carveout_wording_present") is True for row in rows
+        ),
+        "human_reviewed_scopes": 0,
+        "production_released_scopes": 0,
+        "fail_closed": True,
+    }
+
+
+def main() -> None:
+    payload = build_candidates()
+    summary = build_summary(payload)
+    OUTPUT_PATH.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    SUMMARY_PATH.write_text(
+        json.dumps(summary, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    print("Semantic candidate scopes:", summary["candidate_rows"])
+    print("Blocked scopes:", summary["blocked_rows"])
+    print("Scopes with rate candidates:", summary["scopes_with_rate_candidates"])
+    print("Exclusive-residence candidates:", summary["exclusive_residence_candidates"])
+    print("PE carve-out wording scopes:", summary["pe_carveout_wording_scopes"])
+
+
+if __name__ == "__main__":
+    main()
