@@ -9,6 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SK_DIR = ROOT / "data" / "legal_reviews" / "sk_outbound"
 OUT_DIR = ROOT / "artifacts"
+BROWSER_SMOKE_LOG = OUT_DIR / "sk_workspace_browser_smoke.log"
 
 REQUIRED_GENERATED_ARTIFACTS = (
     SK_DIR / "domestic_review_readiness.json",
@@ -56,6 +57,18 @@ def _require_review_inputs() -> None:
             "Claude review bundle requires generated SK evidence. Missing: "
             + ", ".join(missing)
             + ". Run the established SK machine/offline preparation first."
+        )
+
+    if not BROWSER_SMOKE_LOG.is_file():
+        raise RuntimeError(
+            "Claude review bundle requires artifacts/sk_workspace_browser_smoke.log "
+            "from a real CZ -> SK -> CZ browser run."
+        )
+    browser_log = BROWSER_SMOKE_LOG.read_text(encoding="utf-8", errors="replace")
+    if "BROWSER_SMOKE_OK" not in browser_log:
+        raise RuntimeError(
+            "Claude review bundle requires a successful browser smoke log containing "
+            "BROWSER_SMOKE_OK."
         )
 
     readiness = json.loads(
@@ -123,6 +136,7 @@ def build_bundle() -> Path:
         "head_sha": head,
         "human_reviewed_scopes": 0,
         "production_released_scopes": 0,
+        "browser_smoke_evidence": BROWSER_SMOKE_LOG.relative_to(ROOT).as_posix(),
         "generated_evidence_included": [
             path.relative_to(ROOT).as_posix()
             for path in REQUIRED_GENERATED_ARTIFACTS
@@ -142,6 +156,7 @@ def build_bundle() -> Path:
                 archive.write(path, path.relative_to(ROOT).as_posix())
         for path in REQUIRED_GENERATED_ARTIFACTS:
             archive.write(path, path.relative_to(ROOT).as_posix())
+        archive.write(BROWSER_SMOKE_LOG, BROWSER_SMOKE_LOG.relative_to(ROOT).as_posix())
         archive.writestr(
             "CLAUDE_REVIEW_BUNDLE_METADATA.json",
             json.dumps(metadata, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
