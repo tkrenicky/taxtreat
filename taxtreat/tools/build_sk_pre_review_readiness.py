@@ -25,6 +25,7 @@ MLI_EXTRACTION_SUMMARY_PATH = SK_DIR / "mli_notice_machine_extraction_summary.js
 TREATY_EXTRACTION_SUMMARY_PATH = SK_DIR / "treaty_article_machine_extraction_summary.json"
 SEMANTIC_SUMMARY_PATH = SK_DIR / "treaty_semantic_candidates_summary.json"
 COMPLIANCE_PROFILE_PATH = SK_DIR / "compliance_profile_2026.json"
+DIVIDEND_MODEL_PATH = SK_DIR / "dividend_domestic_condition_model.json"
 OUTPUT_PATH = SK_DIR / "pre_review_readiness.json"
 
 
@@ -75,6 +76,58 @@ def _compliance_profile_status() -> dict[str, Any]:
     }
 
 
+def _dividend_model_status() -> dict[str, Any]:
+    model = _load_if_exists(DIVIDEND_MODEL_PATH)
+    if model is None:
+        return {
+            "present": False,
+            "slovak_specific": False,
+            "outside_subject_rule_modelled": False,
+            "2026_source_version": False,
+            "non_cooperating_state_gate_preserved": False,
+            "runtime_release": False,
+        }
+
+    policy = model.get("policy", {})
+    primary_rule = model.get("primary_rule", {})
+    exceptions = {
+        row.get("exception_id"): row
+        for row in model.get("exceptions", [])
+    }
+    source = (model.get("primary_sources") or [{}])[0]
+
+    return {
+        "present": True,
+        "slovak_specific": (
+            model.get("source_country") == "SK"
+            and policy.get(
+                "slovak_domestic_law_is_independent_from_czech_parent_subsidiary_rules"
+            ) is True
+        ),
+        "outside_subject_rule_modelled": (
+            primary_rule.get("legal_reference") == "§ 12 ods. 7 písm. c)"
+            and primary_rule.get("treatment")
+            == "outside_subject_of_corporate_income_tax_candidate"
+        ),
+        "2026_source_version": (
+            model.get("law_effective_from") == "2026-01-01"
+            and model.get("law_effective_to") == "2026-12-30"
+            and str(source.get("url", "")).endswith("/20260101.print.html")
+        ),
+        "non_cooperating_state_gate_preserved": (
+            exceptions.get("non_cooperating_state_legal_entity", {}).get(
+                "machine_status"
+            )
+            == "blocked_until_official_2026_cooperating_state_list_body_is_ingested"
+        ),
+        "distribution_deductibility_required": (
+            "distribution_is_tax_deductible_for_payer"
+            in model.get("required_transaction_facts", [])
+        ),
+        "runtime_release": policy.get("runtime_release") is True,
+    }
+
+
 def build_readiness() -> dict[str, Any]:
     machine = build_machine_preparation()
     machine_summary = build_machine_summary(machine)
@@ -87,6 +140,7 @@ def build_readiness() -> dict[str, Any]:
     treaty_extraction = _load_if_exists(TREATY_EXTRACTION_SUMMARY_PATH)
     semantic = _load_if_exists(SEMANTIC_SUMMARY_PATH)
     compliance = _compliance_profile_status()
+    dividend_model = _dividend_model_status()
 
     treaty_relationships_extracted = (
         ingestion.get("treaty_relationships_machine_extracted", 0)
@@ -122,12 +176,22 @@ def build_readiness() -> dict[str, Any]:
         and compliance["czech_reuse_prohibited"]
     ):
         blockers.append("sk_2026_compliance_profile_incomplete")
+    if not dividend_model["present"]:
+        blockers.append("sk_dividend_domestic_model_missing")
+    elif not (
+        dividend_model["slovak_specific"]
+        and dividend_model["outside_subject_rule_modelled"]
+        and dividend_model["2026_source_version"]
+        and dividend_model["non_cooperating_state_gate_preserved"]
+        and dividend_model["distribution_deductibility_required"]
+    ):
+        blockers.append("sk_dividend_domestic_model_incomplete")
 
     all_machine_evidence_ready = not blockers
 
     return {
-        "schema_version": 2,
-        "dataset_release": "sk-pre-review-readiness-2026-08-19.2",
+        "schema_version": 3,
+        "dataset_release": "sk-pre-review-readiness-2026-08-19.3",
         "source_country": "SK",
         "target": {
             "country_relationships": 75,
@@ -158,6 +222,7 @@ def build_readiness() -> dict[str, Any]:
             ]["ingestion_complete"],
             "domestic_rate_branch_machine_ready": domestic["review_ready"],
             "eu_interest_royalty_and_pe_condition_model_present": True,
+            "dividend_model": dividend_model,
         },
         "compliance": compliance,
         "mli_instrument_chain": {
