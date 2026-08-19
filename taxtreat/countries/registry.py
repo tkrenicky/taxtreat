@@ -39,7 +39,7 @@ _COUNTRIES: dict[str, CountryConfig] = {
         supported_income_types=("dividend", "interest", "royalty"),
         treaty_partner_registry=ROOT / "data" / "sk_treaty_partners.json",
         runtime_released=False,
-        fx_provider=None,
+        fx_provider="ECB/NBS",
         domestic_legal_source_url=(
             "https://static.slov-lex.sk/static/SK/ZZ/2003/595/20260101.print.html"
         ),
