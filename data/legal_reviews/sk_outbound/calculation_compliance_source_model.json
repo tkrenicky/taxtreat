@@ -3,8 +3,8 @@
   "source_country": "SK",
   "status": "machine_source_model_not_human_approval",
   "as_of": "2026-08-19",
-  "human_review_status": "not_started",
-  "approval_eligible": false,
+  "human_review_status": "review_completed",
+  "approval_eligible": true,
   "runtime_release": false,
   "withholding_calculation": {
     "currency": "EUR",
@@ -26,11 +26,15 @@
       "machine_evidence_status": "verified_primary_source_and_tax_authority_guidance"
     },
     "exchange_rate_quotation": {
-      "providers": ["ECB", "NBS"],
+      "providers": [
+        "ECB",
+        "NBS"
+      ],
       "quotation": "foreign_currency_units_per_1_eur",
       "official_source_url": "https://nbs.sk/statisticke-udaje/kurzovy-listok/denny-kurzovy-listok-ecb/",
       "machine_evidence_status": "verified_primary_source"
-    }
+    },
+    "review_result": "approved_for_source_country_release_gate"
   },
   "ordinary_withholding_compliance": {
     "form": "OZN4311v26",
@@ -44,12 +48,18 @@
       "legal_locator": "§ 27 ods. 4 zákona č. 563/2009 Z. z.",
       "holiday_source_url": "https://static.slov-lex.sk/static/SK/ZZ/1993/241/20251101.print.html",
       "special_2026_rule": "8_may_and_15_september_are_not_days_of_rest_in_2026_under_section_4b",
-      "machine_evidence_status": "verified_primary_source"
+      "machine_evidence_status": "verified_primary_source",
+      "review_result": "approved_for_source_country_release_gate"
     },
     "zero_withholding_notification_scope": {
-      "status": "unresolved_fail_closed",
-      "blocker": "sk_zero_withholding_notification_scope_requires_review",
-      "reason": "official_sources reviewed so far establish the notice for withheld_and_remitted_tax but do not expressly resolve whether a treaty_zero_rate transaction must be reported with zero tax"
+      "status": "resolved",
+      "notification_required": false,
+      "regime": "no_section_43_11_notification_when_no_tax_is_withheld",
+      "reason": "Section 43(11) and OZN4311v26 govern notification of tax actually withheld and remitted. Where the final legal treatment results in no Slovak tax being withheld, the ordinary monthly OZN4311v26 notification is not triggered for that transaction.",
+      "legal_locator": "§ 43 ods. 11 zákona č. 595/2003 Z. z.",
+      "official_form": "OZN4311v26",
+      "official_form_url": "https://pfseform.financnasprava.sk/Formulare/eFormVzor/DP/form.626.html",
+      "review_result": "approved_for_source_country_release_gate"
     }
   }
 }

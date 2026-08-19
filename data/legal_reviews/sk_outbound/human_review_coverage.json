@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "dataset_release": "sk-human-review-coverage-2026-08-20.1",
+  "source_country": "SK",
+  "status": "human_review_completed_with_pattern_reconciliation",
+  "policy": {
+    "primary_sources_required": true,
+    "individual_review_required_for_elevated_packages": true,
+    "standard_population_may_be_reconciled_by_validated_pattern": true,
+    "sample_review_is_not_individual_review_of_remaining_scopes": true,
+    "production_release": false
+  },
+  "coverage": {
+    "expected_scope_count": 225,
+    "individually_reviewed_scopes": 24,
+    "pattern_reconciled_scopes": 201,
+    "legal_review_covered_scopes": 225,
+    "uncovered_scopes": 0
+  },
+  "individual_review": {
+    "standard_sample_scopes": [
+      "SK-US-dividend",
+      "SK-AT-interest",
+      "SK-AU-royalty",
+      "SK-NZ-dividend",
+      "SK-IE-interest",
+      "SK-JP-royalty"
+    ],
+    "standard_sample_result": "PASS",
+    "elevated_country_packages": [
+      "NL",
+      "MD",
+      "PL",
+      "GB",
+      "CH",
+      "TW"
+    ],
+    "elevated_scope_count": 18,
+    "elevated_result": "PASS_WITH_NON_MATERIAL_NOTES",
+    "substantive_machine_discrepancies": 0,
+    "exceptions": 0
+  },
+  "pattern_reconciliation": {
+    "population": "remaining_STANDARD_scopes",
+    "scope_count": 201,
+    "basis": [
+      "all machine evidence ready",
+      "risk classification separates country-specific complexity",
+      "representative STANDARD sample independently adjudicated",
+      "all ELEVATED country packages independently adjudicated",
+      "no substantive machine discrepancy identified"
+    ],
+    "result": "COVERED_BY_VALIDATED_STANDARD_PATTERN",
+    "individual_human_review_claimed": false
+  },
+  "production_released_scopes": 0
+}

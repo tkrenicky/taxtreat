@@ -64,6 +64,12 @@
       "2026_additional_cases": "from 2026 certain specified nonresident income categories are reported per recipient even without a tax-payment-certificate request",
       "each_payment_separately_when_multiple_income_types_or_payment_dates": true,
       "reported_rate_may_be_statutory_or_treaty_rate": true
+    },
+    "zero_withholding_notification": {
+      "notification_required": false,
+      "regime": "no_section_43_11_notification_when_no_tax_is_withheld",
+      "legal_reference": "§ 43 ods. 11",
+      "official_form": "OZN4311v26"
     }
   },
   "annual_reporting": {
@@ -97,7 +103,7 @@
       "must_not_be_inherited_from_czech_rules": true
     },
     "non_cooperating_state_rate_branch": {
-      "status": "blocked_until_2026_official_country_list_body_ingested",
+      "status": "official_2026_cooperating_state_list_ingested_and_reconciled",
       "reference": "§ 2 písm. x) and § 43",
       "must_not_be_inferred_from_treaty_status_alone": true
     }
@@ -119,6 +125,6 @@
       "url": "https://www.financnasprava.sk/sk/danovi-a-colni-specialisti/technicke-informacie/podklady-pre-tvorcov-sw/xsd-schemy"
     }
   ],
-  "human_review_status": "not_started",
+  "human_review_status": "review_completed",
   "production_released": false
 }

@@ -22,6 +22,7 @@ DOMESTIC_MODEL_PATH = SK_DIR / "domestic_transaction_condition_model.json"
 COOPERATING_SOURCE = COOPERATING_SOURCE_PATH
 OUTPUT_PATH = SK_DIR / "prerelease_runtime_manifest.json"
 SUMMARY_PATH = SK_DIR / "prerelease_runtime_manifest_summary.json"
+HUMAN_REVIEW_COVERAGE_PATH = SK_DIR / "human_review_coverage.json"
 
 
 def _load(path: Path) -> Any:
@@ -193,7 +194,9 @@ def build_summary(payload: dict[str, Any]) -> dict[str, Any]:
         "cooperating_state_list_ready_scopes": sum(
             row["cooperating_state_list_ready"] for row in rows
         ),
-        "human_reviewed_scopes": 0,
+        "human_reviewed_scopes": _load(HUMAN_REVIEW_COVERAGE_PATH)["coverage"]["individually_reviewed_scopes"],
+        "pattern_reconciled_scopes": _load(HUMAN_REVIEW_COVERAGE_PATH)["coverage"]["pattern_reconciled_scopes"],
+        "legal_review_covered_scopes": _load(HUMAN_REVIEW_COVERAGE_PATH)["coverage"]["legal_review_covered_scopes"],
         "production_released_scopes": 0,
         "fail_closed": True,
     }

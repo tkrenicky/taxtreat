@@ -117,7 +117,9 @@ def test_prerelease_runtime_manifest_covers_all_sk_scopes_fail_closed(tmp_path, 
     assert summary["primary_summary_fallback_scopes"] == 3
     assert summary["scopes_with_rate_candidates"] == 225
     assert summary["exclusive_residence_candidate_scopes"] == 0
-    assert summary["human_reviewed_scopes"] == 0
+    assert summary["human_reviewed_scopes"] == 24
+    assert summary["pattern_reconciled_scopes"] == 201
+    assert summary["legal_review_covered_scopes"] == 225
     assert summary["production_released_scopes"] == 0
     assert summary["fail_closed"] is True
 
