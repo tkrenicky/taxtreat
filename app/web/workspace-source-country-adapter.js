@@ -34,9 +34,13 @@
   const error = document.querySelector("#workspace-error");
   const submit = document.querySelector("#workspace-submit");
   const currency = paymentForm.elements.currency;
+  const transactionDate = paymentForm.elements.transaction_date;
   const fxField = document.querySelector("#workspace-exchange-rate-field");
   const fxStatus = document.querySelector("#workspace-fx-status");
   const complianceHeading = document.querySelector(".compliance-schedule .card-head span");
+  const complianceTitle = document.querySelector(".compliance-schedule h2");
+  const complianceRows = [...document.querySelectorAll(".compliance-schedule dl > div")];
+  const interestMonthlyField = paymentForm.elements.prior_same_type_monthly_amount_czk?.closest("label");
 
   const prereleaseNotice = document.createElement("div");
   prereleaseNotice.id = "workspace-source-country-notice";
@@ -45,6 +49,12 @@
   prereleaseNotice.setAttribute("role", "status");
   prereleaseNotice.textContent = "Slovenský balík je dostupný pouze pro technický náhled. Finální výpočet bude aktivován až po dokončení právního review a release gate.";
   document.querySelector('.flow-step[data-step="3"] .page-title')?.after(prereleaseNotice);
+
+  function setMatchingText(selector, from, to) {
+    document.querySelectorAll(selector).forEach((node) => {
+      if (node.textContent.includes(from)) node.textContent = node.textContent.replaceAll(from, to);
+    });
+  }
 
   function applyCurrencyDefaults(ctx) {
     if (!currency) return;
@@ -61,9 +71,29 @@
     document.body.dataset.sourceCountry = ctx.code;
     const taxLabel = document.querySelector("#workspace-tax-label");
     const taxRowLabel = document.querySelector("#workspace-tax-row-label");
-    if (taxLabel) taxLabel.textContent = ctx.code === "SK" ? "Slovenská zrážková daň" : "Srážková daň v CZK";
+    if (taxLabel) taxLabel.textContent = ctx.code === "SK" ? "Slovenská zrážková daň v EUR" : "Srážková daň v CZK";
     if (taxRowLabel) taxRowLabel.textContent = ctx.code === "SK" ? "Zrážková daň" : "Srážková daň";
     if (complianceHeading) complianceHeading.textContent = ctx.complianceLegalReference;
+    if (complianceTitle) complianceTitle.textContent = ctx.code === "SK" ? "Rozhodný dátum a nadväzujúce lehoty" : "Rozhodné datum a navazující lhůty";
+
+    if (complianceRows[1]?.querySelector("dt")) {
+      complianceRows[1].querySelector("dt").textContent = ctx.code === "SK" ? "Odvod zrážkovej dane" : "Odvod srážkové daně";
+    }
+    if (complianceRows[2]?.querySelector("dt")) {
+      complianceRows[2].querySelector("dt").textContent = ctx.code === "SK" ? "Mesačné oznámenie OZN4311v26" : "Oznámení příjmu plynoucího do zahraničí";
+    }
+
+    if (ctx.code === "SK") {
+      setMatchingText('[data-view="flow"] span, [data-view="recipient-detail"] dt, [data-view="recipient-detail"] p', "v České republice", "v Slovenskej republike");
+      setMatchingText('[data-view="flow"] span, [data-view="recipient-detail"] dt, [data-view="recipient-detail"] p', "v ČR", "v SR");
+      setMatchingText('[data-view="flow"] span, [data-view="flow"] small, [data-view="flow"] legend', "českého plátce", "slovenského plátce");
+      if (interestMonthlyField) interestMonthlyField.hidden = true;
+    } else {
+      setMatchingText('[data-view="flow"] span, [data-view="recipient-detail"] dt, [data-view="recipient-detail"] p', "v Slovenskej republike", "v České republice");
+      setMatchingText('[data-view="flow"] span, [data-view="recipient-detail"] dt, [data-view="recipient-detail"] p', "v SR", "v ČR");
+      setMatchingText('[data-view="flow"] span, [data-view="flow"] small, [data-view="flow"] legend', "slovenského plátce", "českého plátce");
+      if (interestMonthlyField) interestMonthlyField.hidden = false;
+    }
   }
 
   function applyReleaseState(ctx) {
@@ -92,6 +122,33 @@
   activePayerSelect.addEventListener("change", () => {
     applyContext(payerCountries.get(activePayerKey()) || "CZ");
   });
+
+  function blockCnbListenerForSk(event) {
+    if (currentCode !== "SK") return;
+    event.stopImmediatePropagation();
+    if (fxField) fxField.hidden = true;
+    if (fxStatus) fxStatus.hidden = true;
+  }
+  currency?.addEventListener("change", blockCnbListenerForSk, true);
+  transactionDate?.addEventListener("change", blockCnbListenerForSk, true);
+
+  const nativeFetch = window.fetch.bind(window);
+  window.fetch = async function sourceCountryAwareFetch(resource, options = {}) {
+    const url = typeof resource === "string" ? resource : String(resource?.url || "");
+    if (currentCode === "SK" && url.startsWith("/exchange-rates/cnb")) {
+      throw new Error("CNB exchange-rate service is prohibited for Slovak source-country context");
+    }
+    if (url.includes("/analysis") && options.body) {
+      try {
+        const payload = JSON.parse(String(options.body));
+        payload.source_country = currentCode;
+        options = { ...options, body: JSON.stringify(payload) };
+      } catch (_problem) {
+        // The analysis endpoint validates malformed payloads itself.
+      }
+    }
+    return nativeFetch(resource, options);
+  };
 
   paymentForm.addEventListener("submit", (event) => {
     const ctx = context();
