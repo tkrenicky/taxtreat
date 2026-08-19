@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "source_country": "SK",
+  "review_type": "independent_adversarial_code_and_legal_engine_review",
+  "base_ref": "main",
+  "head_ref": "feat/sk-review-ready-20260819",
+  "human_review_status": "not_started",
+  "human_reviewed_scopes": 0,
+  "production_released_scopes": 0,
+  "expected_scope_counts": {
+    "treaty_relationships": 75,
+    "treaty_scopes": 225,
+    "mli_relationships": 46,
+    "mli_scopes": 138,
+    "non_mli_scopes": 87,
+    "taiwan_primary_summary_fallback_scopes": 3
+  },
+  "expected_prerelease_runtime_invariants": {
+    "evaluated_scopes": 225,
+    "review_required_scopes": 225,
+    "final_rate_scopes": 0,
+    "czech_runtime_fallback_scopes": 0,
+    "production_released_scopes": 0,
+    "fail_closed": true
+  },
+  "known_blockers": [
+    "official_2026_cooperating_state_list_body_not_ingested"
+  ],
+  "authoritative_committed_models": [
+    "data/legal_reviews/sk_outbound/cooperating_states_source_2026.json",
+    "data/legal_reviews/sk_outbound/compliance_profile_2026.json",
+    "data/legal_reviews/sk_outbound/dividend_domestic_condition_model.json",
+    "data/legal_reviews/sk_outbound/domestic_transaction_condition_model.json",
+    "data/legal_reviews/sk_outbound/mli_wht_relevance_profile.json",
+    "data/legal_reviews/sk_outbound/mli_pair_specific_verified.json",
+    "data/legal_reviews/sk_outbound/runtime_integration_profile.json",
+    "data/legal_reviews/sk_outbound/tw_primary_summary_fallback.json",
+    "data/sk_treaty_partners.json"
+  ],
+  "machine_pipeline_code": [
+    "taxtreat/tools/extract_sk_treaty_articles.py",
+    "taxtreat/tools/build_sk_treaty_semantic_candidates.py",
+    "taxtreat/tools/extract_sk_mli_notices.py",
+    "taxtreat/tools/reconcile_sk_mli_instrument_chain.py",
+    "taxtreat/tools/build_sk_prerelease_runtime_manifest.py",
+    "taxtreat/tools/validate_sk_prerelease_decision_matrix.py",
+    "taxtreat/tools/run_sk_prerelease_runtime_validation.py"
+  ],
+  "runtime_and_api_code": [
+    "taxtreat/countries/registry.py",
+    "taxtreat/services/decision.py",
+    "taxtreat/services/source_country_capabilities.py",
+    "taxtreat/services/source_country_release_gate.py",
+    "taxtreat/services/sk_prerelease_decision.py",
+    "app/sk_prerelease.py",
+    "app/main.py"
+  ],
+  "report_and_web_code": [
+    "taxtreat/services/reporting/country_copy.py",
+    "taxtreat/services/reporting/localized_context.py",
+    "taxtreat/services/reporting/html_localization.py",
+    "app/web/source-country-context.js",
+    "app/web/workspace-source-country-adapter.js",
+    "app/web/workspace-report-export.js",
+    "app/web/workspace-report-export-core.js",
+    "app/web/workspace.html"
+  ],
+  "generated_artifacts_to_cross_check_but_not_treat_as_human_approval": [
+    "data/legal_reviews/sk_outbound/treaty_article_machine_extraction.json",
+    "data/legal_reviews/sk_outbound/treaty_semantic_candidates.json",
+    "data/legal_reviews/sk_outbound/mli_notice_machine_extraction.json",
+    "data/legal_reviews/sk_outbound/prerelease_runtime_manifest.json",
+    "data/legal_reviews/sk_outbound/prerelease_decision_matrix.json",
+    "data/legal_reviews/sk_outbound/pre_review_readiness.json"
+  ],
+  "review_brief": "data/legal_reviews/sk_outbound/CLAUDE_ADVERSARIAL_REVIEW.md",
+  "policy": {
+    "do_not_modify_files": true,
+    "do_not_approve_scopes": true,
+    "do_not_treat_machine_candidates_as_legal_conclusions": true,
+    "czech_runtime_fallback_prohibited": true,
+    "independent_primary_source_verification_required_for_legal_findings": true
+  }
+}
