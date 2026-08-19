@@ -22,7 +22,14 @@ RELATIONSHIP_FACTS = {
 
 
 def _load_model() -> dict[str, Any]:
-    return json.loads(MODEL_PATH.read_text(encoding="utf-8"))
+    model = json.loads(MODEL_PATH.read_text(encoding="utf-8"))
+    source_country = str(model.get("source_country") or "").upper()
+    if source_country != "SK":
+        raise ValueError(
+            "Slovak domestic candidate evaluator requires a source-backed SK model; "
+            f"got source_country={source_country!r}."
+        )
+    return model
 
 
 def evaluate_registered_pe_exclusion(facts: dict[str, Any]) -> dict[str, Any]:
@@ -50,6 +57,8 @@ def evaluate_registered_pe_exclusion(facts: dict[str, Any]) -> dict[str, Any]:
 def evaluate_eu_relief_candidate(
     income_type: str,
     facts: dict[str, Any],
+    *,
+    model: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     if income_type not in {"interest", "royalty"}:
         return {
@@ -58,7 +67,7 @@ def evaluate_eu_relief_candidate(
             "missing_facts": [],
         }
 
-    model = _load_model()
+    model = model or _load_model()
     key = "eu_interest_relief" if income_type == "interest" else "eu_royalty_relief"
     relief = model[key]
 
@@ -69,10 +78,7 @@ def evaluate_eu_relief_candidate(
     )
     missing = [name for name in required_boolean_facts if facts.get(name) is None]
 
-    relationship_values = [
-        facts.get(name)
-        for name in RELATIONSHIP_FACTS
-    ]
+    relationship_values = [facts.get(name) for name in RELATIONSHIP_FACTS]
     if all(value is None for value in relationship_values):
         missing.append("ownership_relationship")
 
@@ -92,9 +98,7 @@ def evaluate_eu_relief_candidate(
             "missing_facts": sorted(set(missing)),
         }
 
-    base_conditions = all(
-        facts[name] is True for name in required_boolean_facts
-    )
+    base_conditions = all(facts[name] is True for name in required_boolean_facts)
     relationship_ok = any(value is True for value in relationship_values)
     ownership_ok = float(ownership_percent) >= relief[
         "required_conditions"
@@ -141,10 +145,11 @@ def evaluate_domestic_transaction_candidates(
     income_type: str,
     facts: dict[str, Any],
 ) -> dict[str, Any]:
+    model = _load_model()
     pe = evaluate_registered_pe_exclusion(facts)
-    relief = evaluate_eu_relief_candidate(income_type, facts)
+    relief = evaluate_eu_relief_candidate(income_type, facts, model=model)
     return {
-        "source_country": "SK",
+        "source_country": str(model["source_country"]).upper(),
         "income_type": income_type,
         "registered_pe_exclusion": pe,
         "eu_relief": relief,
