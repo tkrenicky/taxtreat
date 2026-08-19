@@ -1,6 +1,8 @@
 from fastapi.testclient import TestClient
 
+import app.main as main_module
 from app.main import app
+from taxtreat.services.source_country_release_gate import SourceCountryReleaseDecision
 
 
 client = TestClient(app)
@@ -29,6 +31,25 @@ def test_production_analysis_rejects_unreleased_slovak_source_country_before_cz_
     assert detail["source_country"] == "SK"
     assert detail["release_status"] == "pre_release"
     assert "source_country_runtime_release_false" in detail["release_blockers"]
+
+
+def test_released_non_cz_source_country_returns_release_decision_without_fallthrough(monkeypatch):
+    expected = SourceCountryReleaseDecision(
+        source_country="SK",
+        allowed=True,
+        code="SOURCE_COUNTRY_RELEASED",
+        release_status="released",
+        blockers=(),
+    )
+    monkeypatch.setattr(
+        main_module,
+        "require_source_country_analysis_release",
+        lambda source: expected,
+    )
+
+    result = main_module.require_analysis_source_release("SK", "AT")
+
+    assert result is expected
 
 
 def test_slovak_prerelease_api_is_explicitly_candidate_only():
