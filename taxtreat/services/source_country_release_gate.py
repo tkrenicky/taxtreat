@@ -1,9 +1,14 @@
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass
-from typing import Callable, Any
+from pathlib import Path
+from typing import Any, Callable
 
 from taxtreat.countries.registry import get_country_config
+
+
+ROOT = Path(__file__).resolve().parents[2]
 
 
 @dataclass(frozen=True)
@@ -27,10 +32,65 @@ class UnsupportedSourceCountryError(ValueError):
     pass
 
 
+def _release_manifest_path(code: str) -> Path:
+    return (
+        ROOT
+        / "data"
+        / "legal_reviews"
+        / f"{code.lower()}_outbound"
+        / "source_country_release_manifest.json"
+    )
+
+
+def _require_committed_release_evidence(code: str) -> None:
+    path = _release_manifest_path(code)
+    if not path.is_file():
+        decision = SourceCountryReleaseDecision(
+            source_country=code,
+            allowed=False,
+            code="SOURCE_COUNTRY_RELEASE_EVIDENCE_MISSING",
+            release_status="pre_release",
+            blockers=("committed_source_country_release_manifest_missing",),
+        )
+        raise SourceCountryNotReleasedError(decision)
+
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    expected = payload.get("expected_scope_count")
+    reviewed = payload.get("human_reviewed_scopes")
+    cooperating_ready = payload.get("cooperating_state_list_ready")
+    release_eligible = payload.get("release_eligible")
+    status = str(payload.get("release_status") or "pre_release")
+
+    blockers = list(payload.get("blockers") or [])
+    if payload.get("source_country") != code:
+        blockers.append("release_manifest_source_country_mismatch")
+    if not isinstance(expected, int) or expected <= 0:
+        blockers.append("release_manifest_expected_scope_count_invalid")
+    if reviewed != expected:
+        blockers.append("full_human_legal_review_not_completed")
+    if cooperating_ready is not True:
+        blockers.append("country_specific_legal_source_gates_not_ready")
+    if release_eligible is not True:
+        blockers.append("release_manifest_not_eligible")
+    if status != "released":
+        blockers.append("release_manifest_status_not_released")
+
+    if blockers:
+        decision = SourceCountryReleaseDecision(
+            source_country=code,
+            allowed=False,
+            code="SOURCE_COUNTRY_RELEASE_EVIDENCE_INCOMPLETE",
+            release_status=status,
+            blockers=tuple(dict.fromkeys(blockers)),
+        )
+        raise SourceCountryNotReleasedError(decision)
+
+
 def require_source_country_analysis_release(
     source_country: str,
     *,
     released_country_gate: Callable[[str], Any] | None = None,
+    release_evidence_gate: Callable[[str], Any] | None = None,
 ) -> SourceCountryReleaseDecision:
     code = str(source_country or "").upper()
     try:
@@ -51,8 +111,11 @@ def require_source_country_analysis_release(
         )
         raise SourceCountryNotReleasedError(decision)
 
-    if released_country_gate is not None:
-        released_country_gate(code)
+    if code == "CZ":
+        if released_country_gate is not None:
+            released_country_gate(code)
+    else:
+        (release_evidence_gate or _require_committed_release_evidence)(code)
 
     return SourceCountryReleaseDecision(
         source_country=code,
