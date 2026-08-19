@@ -112,3 +112,55 @@ def test_title_mismatch_never_enters_semantic_candidate_layer(tmp_path, monkeypa
         "article_extracted_title_mismatch_requires_resolution"
     )
     assert all(row["approval_eligible"] is False for row in payload["scopes"])
+
+
+def test_primary_summary_fallback_is_candidate_only_not_approval(tmp_path, monkeypatch):
+    scopes = []
+    for i in range(225):
+        if i == 0:
+            scopes.append({
+                "packet_id": "SK-TW-dividend-TREATY-SOURCE",
+                "recipient_country": "TW",
+                "income_type": "dividend",
+                "actual_article": "10",
+                "article_resolution_status": "official_primary_summary_fallback_after_pdf_timeout",
+                "machine_extraction_status": "article_evidence_primary_summary_fallback",
+                "title_validation_status": "expected_income_title_matched_from_primary_summary",
+                "source_url": "https://www.mfsr.sk/example.pdf",
+                "source_snapshot_path": "data/legal_reviews/sk_outbound/tw_primary_summary_fallback.json",
+                "primary_summary_evidence": {
+                    "rate_candidates_percent": [10.0],
+                    "beneficial_owner_wording_present": True,
+                    "pe_or_fixed_base_carveout_wording_present": True,
+                    "exclusive_residence_taxation_candidate": False,
+                    "holding_period_candidates": [],
+                },
+                "approval_eligible": False,
+                "runtime_status": "not_released",
+            })
+        else:
+            scopes.append({
+                "packet_id": f"SK-X{i}-dividend-TREATY-SOURCE",
+                "recipient_country": f"X{i}",
+                "income_type": "dividend",
+                "article_text": "Článok 10 Dividendy. Daň nepresiahne 10 %.",
+                "machine_extraction_status": "article_extracted",
+                "title_validation_status": "expected_income_title_matched",
+                "source_url": "https://example.invalid",
+                "source_sha256": "x",
+                "approval_eligible": False,
+                "runtime_status": "not_released",
+            })
+
+    path = tmp_path / "extraction.json"
+    path.write_text(json.dumps({"scope_count": 225, "scopes": scopes}), encoding="utf-8")
+    monkeypatch.setattr(semantic_module, "EXTRACTION_PATH", path)
+
+    payload = build_candidates()
+    first = payload["scopes"][0]
+    assert first["semantic_status"] == (
+        "machine_candidate_primary_summary_fallback_not_legal_conclusion"
+    )
+    assert [row["rate_percent"] for row in first["rate_candidates"]] == [10.0]
+    assert first["approval_eligible"] is False
+    assert first["runtime_status"] == "not_released"
