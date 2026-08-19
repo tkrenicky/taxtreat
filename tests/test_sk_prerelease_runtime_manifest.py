@@ -67,6 +67,11 @@ def _seed_manifest_inputs(tmp_path, monkeypatch):
     monkeypatch.setattr(manifest_module, "DOMESTIC_MODEL_PATH", domestic_path)
 
 
+def test_default_domestic_manifest_input_is_committed_condition_model():
+    assert manifest_module.DOMESTIC_MODEL_PATH.name == "domestic_transaction_condition_model.json"
+    assert manifest_module.DOMESTIC_MODEL_PATH.is_file()
+
+
 def test_prerelease_runtime_manifest_covers_all_sk_scopes_fail_closed(tmp_path, monkeypatch):
     _seed_manifest_inputs(tmp_path, monkeypatch)
     payload = build_manifest()
