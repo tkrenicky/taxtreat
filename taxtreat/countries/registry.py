@@ -17,6 +17,9 @@ class CountryConfig:
     fx_provider: str | None
     domestic_legal_source_url: str | None
     domestic_law_label: str | None
+    compliance_form_code: str | None = None
+    compliance_legal_reference: str | None = None
+    compliance_periodicity: str | None = None
 
 
 _COUNTRIES: dict[str, CountryConfig] = {
@@ -37,8 +40,13 @@ _COUNTRIES: dict[str, CountryConfig] = {
         treaty_partner_registry=ROOT / "data" / "sk_treaty_partners.json",
         runtime_released=False,
         fx_provider=None,
-        domestic_legal_source_url=None,
-        domestic_law_label="ZDP-SK",
+        domestic_legal_source_url=(
+            "https://static.slov-lex.sk/static/SK/ZZ/2003/595/20260101.print.html"
+        ),
+        domestic_law_label="zákon č. 595/2003 Z. z.",
+        compliance_form_code="OZN4311v26",
+        compliance_legal_reference="§ 43 ods. 11",
+        compliance_periodicity="monthly",
     ),
 }
 
