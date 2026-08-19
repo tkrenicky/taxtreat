@@ -63,6 +63,7 @@ def _seed_manifest_inputs(tmp_path, monkeypatch):
     compliance_path = tmp_path / "compliance.json"
     dividend_path = tmp_path / "dividend.json"
     domestic_path = tmp_path / "domestic.json"
+    cooperating_path = tmp_path / "cooperating.json"
 
     _write(semantic_path, {"scope_count": 225, "scopes": semantic_scopes})
     _write(mli_path, {"relationships": mli_relationships})
@@ -76,12 +77,22 @@ def _seed_manifest_inputs(tmp_path, monkeypatch):
     })
     _write(dividend_path, {"source_country": "SK"})
     _write(domestic_path, {"source_country": "SK"})
+    _write(cooperating_path, {
+        "source_country": "SK",
+        "official_list": {
+            "valid_from": "2026-01-01",
+            "valid_to": "2026-12-31",
+            "mf_document_id": 49561,
+        },
+        "cooperating_state_codes": countries,
+    })
 
     monkeypatch.setattr(manifest_module, "SEMANTIC_PATH", semantic_path)
     monkeypatch.setattr(manifest_module, "MLI_PATH", mli_path)
     monkeypatch.setattr(manifest_module, "COMPLIANCE_PATH", compliance_path)
     monkeypatch.setattr(manifest_module, "DIVIDEND_MODEL_PATH", dividend_path)
     monkeypatch.setattr(manifest_module, "DOMESTIC_MODEL_PATH", domestic_path)
+    monkeypatch.setattr(manifest_module, "COOPERATING_SOURCE", cooperating_path)
 
 
 def test_default_domestic_manifest_input_is_committed_condition_model():
@@ -113,7 +124,7 @@ def test_prerelease_runtime_manifest_covers_all_sk_scopes_fail_closed(tmp_path, 
     assert all(row["candidate_only"] is True for row in payload["scopes"])
     assert all(row["approval_eligible"] is False for row in payload["scopes"])
     assert all(row["runtime_released"] is False for row in payload["scopes"])
-    assert all(row["cooperating_state_list_ready"] is False for row in payload["scopes"])
+    assert all(row["cooperating_state_list_ready"] is True for row in payload["scopes"])
 
 
 def test_prerelease_runtime_manifest_carries_treaty_semantics_without_approval(tmp_path, monkeypatch):

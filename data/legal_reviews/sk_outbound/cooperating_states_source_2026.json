@@ -1,56 +1,892 @@
 {
-  "schema_version": 2,
-  "source_country": "SK",
+  "approval_eligible": false,
+  "cooperating_state_codes": [
+    "AL",
+    "AD",
+    "AG",
+    "AR",
+    "AM",
+    "AW",
+    "AU",
+    "AZ",
+    "BB",
+    "BE",
+    "BJ",
+    "BY",
+    "BA",
+    "BW",
+    "BR",
+    "BN",
+    "BG",
+    "BF",
+    "CK",
+    "CW",
+    "CY",
+    "CZ",
+    "ME",
+    "CL",
+    "CN",
+    "DK",
+    "DM",
+    "DO",
+    "EC",
+    "SV",
+    "EE",
+    "SZ",
+    "ET",
+    "FO",
+    "PH",
+    "FI",
+    "FR",
+    "GH",
+    "GI",
+    "GR",
+    "GD",
+    "GL",
+    "GE",
+    "GT",
+    "NL",
+    "HK",
+    "HR",
+    "IN",
+    "ID",
+    "IR",
+    "IE",
+    "IS",
+    "IL",
+    "JM",
+    "JP",
+    "JO",
+    "ZA",
+    "CM",
+    "CA",
+    "CV",
+    "QA",
+    "KZ",
+    "KE",
+    "KG",
+    "CO",
+    "KR",
+    "CR",
+    "KW",
+    "LB",
+    "LR",
+    "LI",
+    "LT",
+    "LY",
+    "LV",
+    "LU",
+    "MO",
+    "MG",
+    "HU",
+    "MY",
+    "MV",
+    "MT",
+    "MA",
+    "MH",
+    "MU",
+    "MR",
+    "MX",
+    "MD",
+    "MC",
+    "MN",
+    "MS",
+    "NA",
+    "NR",
+    "DE",
+    "NG",
+    "NU",
+    "NO",
+    "NZ",
+    "OM",
+    "PK",
+    "PG",
+    "PY",
+    "PE",
+    "PL",
+    "PT",
+    "AT",
+    "RO",
+    "RW",
+    "SM",
+    "SA",
+    "SN",
+    "MK",
+    "SC",
+    "SG",
+    "SI",
+    "AE",
+    "GB",
+    "RS",
+    "LK",
+    "KN",
+    "LC",
+    "MF",
+    "VC",
+    "SY",
+    "ES",
+    "CH",
+    "SE",
+    "TW",
+    "IT",
+    "TH",
+    "TN",
+    "TR",
+    "TM",
+    "UG",
+    "UA",
+    "UY",
+    "US",
+    "UZ",
+    "VN"
+  ],
   "dataset_release": "sk-cooperating-states-source-2026.2",
+  "human_review_status": "not_started",
   "legal_basis": {
     "act": "595/2003 Z. z.",
     "act_version_effective_from": "2026-01-01",
     "act_version_effective_to": "2026-12-30",
     "definition_locator": "§ 2 písm. x)",
-    "withholding_rate_locator": "§ 43 ods. 1 písm. b) a c)",
-    "official_act_url": "https://static.slov-lex.sk/static/SK/ZZ/2003/595/20260101.print.html"
+    "official_act_url": "https://static.slov-lex.sk/static/SK/ZZ/2003/595/20260101.print.html",
+    "withholding_rate_locator": "§ 43 ods. 1 písm. b) a c)"
   },
+  "mapping_ambiguities": [],
   "official_list": {
+    "attachment_access_status": "official_body_ingested_and_hash_verified",
     "authority": "Ministerstvo financií Slovenskej republiky",
-    "title": "Zoznam spolupracujúcich štátov podľa § 2 písm. x) zákona č. 595/2003 Z. z.",
-    "valid_from": "2026-01-01",
-    "valid_to": "2026-12-31",
-    "landing_page_url": "https://www.mfsr.sk/sk/dane-cla-uctovnictvo/priame-dane/dane-z-prijmu/platne-ucinne-medzinarodne-zmluvy-podla-2-pism-x-zakona-c-595/2003-z-z-zneni-neskorsich-predpisov/",
-    "mf_document_id": 49561,
+    "country_list_ingestion_status": "official_document_body_parsed_deterministically",
     "document_size_kb": 209,
-    "official_attachment_url": "https://www.mfsr.sk/components/mfsrweb/file_archiv/file_list.jsp?file_bean_id=49561&formSend=true",
     "english_document_id": 49562,
     "english_landing_page_url": "https://www.mfsr.sk/en/taxes-customs-accounting/direct-taxes/income-tax/valid-effective-international-agreements-accordance-letter-x-article-2-act-595/2003-income-tax-act/",
     "english_official_attachment_url": "https://www.mfsr.sk/components/mfsrweb/file_archiv/file_list.jsp?file_bean_id=49562&formSend=true",
-    "attachment_access_status": "official_endpoint_identified_http_403_in_external_fetch_environment",
-    "country_list_ingestion_status": "official_document_and_attachment_identified_body_pending_machine_ingestion"
+    "landing_page_url": "https://www.mfsr.sk/sk/dane-cla-uctovnictvo/priame-dane/dane-z-prijmu/platne-ucinne-medzinarodne-zmluvy-podla-2-pism-x-zakona-c-595/2003-z-z-zneni-neskorsich-predpisov/",
+    "mf_document_id": 49561,
+    "official_attachment_url": "https://www.mfsr.sk/files/archiv/39/Zoznam-spolupracujucich-statov-podla-2-pism-x-zakona-c-595_2003-Z-z_1.1.2026.pdf",
+    "source_body_content_type": "application/pdf",
+    "source_body_path": "data/legal_sources/slovak_mf_cooperating_states_2026/49561.pdf",
+    "source_body_retrieved_at": "2026-08-19T14:05:48+00:00",
+    "source_body_sha256": "43e5a2732ef055bbc7de337b6776d73758894db423ce87197851f1c4a3cdbbaa",
+    "title": "Zoznam spolupracujúcich štátov podľa § 2 písm. x) zákona č. 595/2003 Z. z.",
+    "valid_from": "2026-01-01",
+    "valid_to": "2026-12-31"
   },
+  "parsed_countries": [
+    {
+      "canonical_code": "AL",
+      "entry_number": 1,
+      "source_name": "Albánsko"
+    },
+    {
+      "canonical_code": "AD",
+      "entry_number": 2,
+      "source_name": "Andorra"
+    },
+    {
+      "canonical_code": "AG",
+      "entry_number": 3,
+      "source_name": "Antigua a Barbuda"
+    },
+    {
+      "canonical_code": "AR",
+      "entry_number": 4,
+      "source_name": "Argentína"
+    },
+    {
+      "canonical_code": "AM",
+      "entry_number": 5,
+      "source_name": "Arménsko"
+    },
+    {
+      "canonical_code": "AW",
+      "entry_number": 6,
+      "source_name": "Aruba"
+    },
+    {
+      "canonical_code": "AU",
+      "entry_number": 7,
+      "source_name": "Austrália"
+    },
+    {
+      "canonical_code": "AZ",
+      "entry_number": 8,
+      "source_name": "Azerbajdžan"
+    },
+    {
+      "canonical_code": "BB",
+      "entry_number": 9,
+      "source_name": "Barbados"
+    },
+    {
+      "canonical_code": "BE",
+      "entry_number": 10,
+      "source_name": "Belgicko"
+    },
+    {
+      "canonical_code": "BJ",
+      "entry_number": 11,
+      "source_name": "Benin"
+    },
+    {
+      "canonical_code": "BY",
+      "entry_number": 12,
+      "source_name": "Bielorusko"
+    },
+    {
+      "canonical_code": "BA",
+      "entry_number": 13,
+      "source_name": "Bosna a Hercegovina"
+    },
+    {
+      "canonical_code": "BW",
+      "entry_number": 14,
+      "source_name": "Botswana"
+    },
+    {
+      "canonical_code": "BR",
+      "entry_number": 15,
+      "source_name": "Brazília"
+    },
+    {
+      "canonical_code": "BN",
+      "entry_number": 16,
+      "source_name": "Brunej"
+    },
+    {
+      "canonical_code": "BG",
+      "entry_number": 17,
+      "source_name": "Bulharsko"
+    },
+    {
+      "canonical_code": "BF",
+      "entry_number": 18,
+      "source_name": "Burkina Faso"
+    },
+    {
+      "canonical_code": "CK",
+      "entry_number": 19,
+      "source_name": "Cookove ostrovy"
+    },
+    {
+      "canonical_code": "CW",
+      "entry_number": 20,
+      "source_name": "Curacao"
+    },
+    {
+      "canonical_code": "CY",
+      "entry_number": 21,
+      "source_name": "Cyprus"
+    },
+    {
+      "canonical_code": "CZ",
+      "entry_number": 22,
+      "source_name": "Česká republika"
+    },
+    {
+      "canonical_code": "ME",
+      "entry_number": 23,
+      "source_name": "Čierna Hora"
+    },
+    {
+      "canonical_code": "CL",
+      "entry_number": 24,
+      "source_name": "Čile"
+    },
+    {
+      "canonical_code": "CN",
+      "entry_number": 25,
+      "source_name": "Čína"
+    },
+    {
+      "canonical_code": "DK",
+      "entry_number": 26,
+      "source_name": "Dánsko"
+    },
+    {
+      "canonical_code": "DM",
+      "entry_number": 27,
+      "source_name": "Dominika"
+    },
+    {
+      "canonical_code": "DO",
+      "entry_number": 28,
+      "source_name": "Dominikánska republika"
+    },
+    {
+      "canonical_code": "EC",
+      "entry_number": 29,
+      "source_name": "Ekvádor"
+    },
+    {
+      "canonical_code": "SV",
+      "entry_number": 30,
+      "source_name": "El Salvador"
+    },
+    {
+      "canonical_code": "EE",
+      "entry_number": 31,
+      "source_name": "Estónsko"
+    },
+    {
+      "canonical_code": "SZ",
+      "entry_number": 32,
+      "source_name": "Eswatini"
+    },
+    {
+      "canonical_code": "ET",
+      "entry_number": 33,
+      "source_name": "Etiópia"
+    },
+    {
+      "canonical_code": "FO",
+      "entry_number": 34,
+      "source_name": "Faerské ostrovy"
+    },
+    {
+      "canonical_code": "PH",
+      "entry_number": 35,
+      "source_name": "Filipíny"
+    },
+    {
+      "canonical_code": "FI",
+      "entry_number": 36,
+      "source_name": "Fínsko"
+    },
+    {
+      "canonical_code": "FR",
+      "entry_number": 37,
+      "source_name": "Francúzsko"
+    },
+    {
+      "canonical_code": "GH",
+      "entry_number": 38,
+      "source_name": "Ghana"
+    },
+    {
+      "canonical_code": "GI",
+      "entry_number": 39,
+      "source_name": "Gibraltár"
+    },
+    {
+      "canonical_code": "GR",
+      "entry_number": 40,
+      "source_name": "Grécko"
+    },
+    {
+      "canonical_code": "GD",
+      "entry_number": 41,
+      "source_name": "Grenada"
+    },
+    {
+      "canonical_code": "GL",
+      "entry_number": 42,
+      "source_name": "Grónsko"
+    },
+    {
+      "canonical_code": "GE",
+      "entry_number": 43,
+      "source_name": "Gruzínsko"
+    },
+    {
+      "canonical_code": "GT",
+      "entry_number": 44,
+      "source_name": "Guatemala"
+    },
+    {
+      "canonical_code": "NL",
+      "entry_number": 45,
+      "source_name": "Holandsko"
+    },
+    {
+      "canonical_code": "HK",
+      "entry_number": 46,
+      "source_name": "Hongkong"
+    },
+    {
+      "canonical_code": "HR",
+      "entry_number": 47,
+      "source_name": "Chorvátsko"
+    },
+    {
+      "canonical_code": "IN",
+      "entry_number": 48,
+      "source_name": "India"
+    },
+    {
+      "canonical_code": "ID",
+      "entry_number": 49,
+      "source_name": "Indonézia"
+    },
+    {
+      "canonical_code": "IR",
+      "entry_number": 50,
+      "source_name": "Irán"
+    },
+    {
+      "canonical_code": "IE",
+      "entry_number": 51,
+      "source_name": "Írsko"
+    },
+    {
+      "canonical_code": "IS",
+      "entry_number": 52,
+      "source_name": "Island"
+    },
+    {
+      "canonical_code": "IL",
+      "entry_number": 53,
+      "source_name": "Izrael"
+    },
+    {
+      "canonical_code": "JM",
+      "entry_number": 54,
+      "source_name": "Jamajka"
+    },
+    {
+      "canonical_code": "JP",
+      "entry_number": 55,
+      "source_name": "Japonsko"
+    },
+    {
+      "canonical_code": "JO",
+      "entry_number": 56,
+      "source_name": "Jordánsko"
+    },
+    {
+      "canonical_code": "ZA",
+      "entry_number": 57,
+      "source_name": "Juhoafrická republika"
+    },
+    {
+      "canonical_code": "CM",
+      "entry_number": 58,
+      "source_name": "Kamerun"
+    },
+    {
+      "canonical_code": "CA",
+      "entry_number": 59,
+      "source_name": "Kanada"
+    },
+    {
+      "canonical_code": "CV",
+      "entry_number": 60,
+      "source_name": "Kapverdské ostrovy"
+    },
+    {
+      "canonical_code": "QA",
+      "entry_number": 61,
+      "source_name": "Katar"
+    },
+    {
+      "canonical_code": "KZ",
+      "entry_number": 62,
+      "source_name": "Kazachstan"
+    },
+    {
+      "canonical_code": "KE",
+      "entry_number": 63,
+      "source_name": "Keňa"
+    },
+    {
+      "canonical_code": "KG",
+      "entry_number": 64,
+      "source_name": "Kirgizská republika"
+    },
+    {
+      "canonical_code": "CO",
+      "entry_number": 65,
+      "source_name": "Kolumbia"
+    },
+    {
+      "canonical_code": "KR",
+      "entry_number": 66,
+      "source_name": "Kórea"
+    },
+    {
+      "canonical_code": "CR",
+      "entry_number": 67,
+      "source_name": "Kostarika"
+    },
+    {
+      "canonical_code": "KW",
+      "entry_number": 68,
+      "source_name": "Kuvajt"
+    },
+    {
+      "canonical_code": "LB",
+      "entry_number": 69,
+      "source_name": "Libanon"
+    },
+    {
+      "canonical_code": "LR",
+      "entry_number": 70,
+      "source_name": "Libéria"
+    },
+    {
+      "canonical_code": "LI",
+      "entry_number": 71,
+      "source_name": "Lichtenštajnsko"
+    },
+    {
+      "canonical_code": "LT",
+      "entry_number": 72,
+      "source_name": "Litva"
+    },
+    {
+      "canonical_code": "LY",
+      "entry_number": 73,
+      "source_name": "Líbya"
+    },
+    {
+      "canonical_code": "LV",
+      "entry_number": 74,
+      "source_name": "Lotyšsko"
+    },
+    {
+      "canonical_code": "LU",
+      "entry_number": 75,
+      "source_name": "Luxembursko"
+    },
+    {
+      "canonical_code": "MO",
+      "entry_number": 76,
+      "source_name": "Macao"
+    },
+    {
+      "canonical_code": "MG",
+      "entry_number": 77,
+      "source_name": "Madagaskar"
+    },
+    {
+      "canonical_code": "HU",
+      "entry_number": 78,
+      "source_name": "Maďarsko"
+    },
+    {
+      "canonical_code": "MY",
+      "entry_number": 79,
+      "source_name": "Malajzia"
+    },
+    {
+      "canonical_code": "MV",
+      "entry_number": 80,
+      "source_name": "Maldivy"
+    },
+    {
+      "canonical_code": "MT",
+      "entry_number": 81,
+      "source_name": "Malta"
+    },
+    {
+      "canonical_code": "MA",
+      "entry_number": 82,
+      "source_name": "Maroko"
+    },
+    {
+      "canonical_code": "MH",
+      "entry_number": 83,
+      "source_name": "Maršalove ostrovy"
+    },
+    {
+      "canonical_code": "MU",
+      "entry_number": 84,
+      "source_name": "Maurícius"
+    },
+    {
+      "canonical_code": "MR",
+      "entry_number": 85,
+      "source_name": "Mauritánia"
+    },
+    {
+      "canonical_code": "MX",
+      "entry_number": 86,
+      "source_name": "Mexiko"
+    },
+    {
+      "canonical_code": "MD",
+      "entry_number": 87,
+      "source_name": "Moldavsko"
+    },
+    {
+      "canonical_code": "MC",
+      "entry_number": 88,
+      "source_name": "Monako"
+    },
+    {
+      "canonical_code": "MN",
+      "entry_number": 89,
+      "source_name": "Mongolsko"
+    },
+    {
+      "canonical_code": "MS",
+      "entry_number": 90,
+      "source_name": "Montserrat"
+    },
+    {
+      "canonical_code": "NA",
+      "entry_number": 91,
+      "source_name": "Namíbia"
+    },
+    {
+      "canonical_code": "NR",
+      "entry_number": 92,
+      "source_name": "Nauru"
+    },
+    {
+      "canonical_code": "DE",
+      "entry_number": 93,
+      "source_name": "Nemecko"
+    },
+    {
+      "canonical_code": "NG",
+      "entry_number": 94,
+      "source_name": "Nigéria"
+    },
+    {
+      "canonical_code": "NU",
+      "entry_number": 95,
+      "source_name": "Niue"
+    },
+    {
+      "canonical_code": "NO",
+      "entry_number": 96,
+      "source_name": "Nórsko"
+    },
+    {
+      "canonical_code": "NZ",
+      "entry_number": 97,
+      "source_name": "Nový Zéland"
+    },
+    {
+      "canonical_code": "OM",
+      "entry_number": 98,
+      "source_name": "Omán"
+    },
+    {
+      "canonical_code": "PK",
+      "entry_number": 99,
+      "source_name": "Pakistan"
+    },
+    {
+      "canonical_code": "PG",
+      "entry_number": 100,
+      "source_name": "Papua Nová Guinea"
+    },
+    {
+      "canonical_code": "PY",
+      "entry_number": 101,
+      "source_name": "Paraguaj"
+    },
+    {
+      "canonical_code": "PE",
+      "entry_number": 102,
+      "source_name": "Peru"
+    },
+    {
+      "canonical_code": "PL",
+      "entry_number": 103,
+      "source_name": "Poľsko"
+    },
+    {
+      "canonical_code": "PT",
+      "entry_number": 104,
+      "source_name": "Portugalsko"
+    },
+    {
+      "canonical_code": "AT",
+      "entry_number": 105,
+      "source_name": "Rakúsko"
+    },
+    {
+      "canonical_code": "RO",
+      "entry_number": 106,
+      "source_name": "Rumunsko"
+    },
+    {
+      "canonical_code": "RW",
+      "entry_number": 107,
+      "source_name": "Rwanda"
+    },
+    {
+      "canonical_code": "SM",
+      "entry_number": 108,
+      "source_name": "San Maríno"
+    },
+    {
+      "canonical_code": "SA",
+      "entry_number": 109,
+      "source_name": "Saudská Arábia"
+    },
+    {
+      "canonical_code": "SN",
+      "entry_number": 110,
+      "source_name": "Senegal"
+    },
+    {
+      "canonical_code": "MK",
+      "entry_number": 111,
+      "source_name": "Severné Macedónsko"
+    },
+    {
+      "canonical_code": "SC",
+      "entry_number": 112,
+      "source_name": "Seychely"
+    },
+    {
+      "canonical_code": "SG",
+      "entry_number": 113,
+      "source_name": "Singapur"
+    },
+    {
+      "canonical_code": "SI",
+      "entry_number": 114,
+      "source_name": "Slovinsko"
+    },
+    {
+      "canonical_code": "AE",
+      "entry_number": 115,
+      "source_name": "Spojené arabské emiráty"
+    },
+    {
+      "canonical_code": "GB",
+      "entry_number": 116,
+      "source_name": "Spojené kráľovstvo Veľkej Británie a Severného Írska"
+    },
+    {
+      "canonical_code": "RS",
+      "entry_number": 117,
+      "source_name": "Srbsko"
+    },
+    {
+      "canonical_code": "LK",
+      "entry_number": 118,
+      "source_name": "Srí Lanka"
+    },
+    {
+      "canonical_code": "KN",
+      "entry_number": 119,
+      "source_name": "Sv. Krištof a Nevis"
+    },
+    {
+      "canonical_code": "LC",
+      "entry_number": 120,
+      "source_name": "Sv. Lucia"
+    },
+    {
+      "canonical_code": "MF",
+      "entry_number": 121,
+      "source_name": "Sv. Martin"
+    },
+    {
+      "canonical_code": "VC",
+      "entry_number": 122,
+      "source_name": "Sv. Vincent a Grenadíny"
+    },
+    {
+      "canonical_code": "SY",
+      "entry_number": 123,
+      "source_name": "Sýria"
+    },
+    {
+      "canonical_code": "ES",
+      "entry_number": 124,
+      "source_name": "Španielsko"
+    },
+    {
+      "canonical_code": "CH",
+      "entry_number": 125,
+      "source_name": "Švajčiarsko"
+    },
+    {
+      "canonical_code": "SE",
+      "entry_number": 126,
+      "source_name": "Švédsko"
+    },
+    {
+      "canonical_code": "TW",
+      "entry_number": 127,
+      "source_name": "Taiwan"
+    },
+    {
+      "canonical_code": "IT",
+      "entry_number": 128,
+      "source_name": "Taliansko"
+    },
+    {
+      "canonical_code": "TH",
+      "entry_number": 129,
+      "source_name": "Thajsko"
+    },
+    {
+      "canonical_code": "TN",
+      "entry_number": 130,
+      "source_name": "Tunisko"
+    },
+    {
+      "canonical_code": "TR",
+      "entry_number": 131,
+      "source_name": "Turecko"
+    },
+    {
+      "canonical_code": "TM",
+      "entry_number": 132,
+      "source_name": "Turkmenistan"
+    },
+    {
+      "canonical_code": "UG",
+      "entry_number": 133,
+      "source_name": "Uganda"
+    },
+    {
+      "canonical_code": "UA",
+      "entry_number": 134,
+      "source_name": "Ukrajina"
+    },
+    {
+      "canonical_code": "UY",
+      "entry_number": 135,
+      "source_name": "Uruguaj"
+    },
+    {
+      "canonical_code": "US",
+      "entry_number": 136,
+      "source_name": "USA"
+    },
+    {
+      "canonical_code": "UZ",
+      "entry_number": 137,
+      "source_name": "Uzbekistan"
+    },
+    {
+      "canonical_code": "VN",
+      "entry_number": 138,
+      "source_name": "Vietnam"
+    }
+  ],
+  "policy": {
+    "absence_from_ingested_cooperating_state_list_must_not_be_assumed_until_list_is_complete": true,
+    "absence_from_treaty_partner_list_does_not_by_itself_prove_non_cooperative_status": true,
+    "country_list_values_must_come_from_official_mf_document": true,
+    "http_403_or_timeout_must_not_be_interpreted_as_absence_of_official_document": true,
+    "machine_ingestion_is_not_human_approval": true,
+    "runtime_release": false,
+    "transaction_date_must_select_valid_annual_list": true
+  },
+  "runtime_status": "not_released",
+  "schema_version": 2,
+  "source_country": "SK",
   "statutory_model": {
-    "non_cooperative_taxpayer_test": "individual_without_permanent_residence_or_legal_person_without_registered_seat_in_state_in_official_mf_cooperating_state_list",
-    "positive_list_entry_basis": [
-      "double_tax_treaty_with_slovakia",
-      "tax_information_exchange_agreement_with_slovakia",
-      "multilateral_instrument_with_comparable_tax_information_exchange_binding_both_states"
-    ],
+    "general_withholding_rate_percent": 19,
     "mandatory_list_exclusions": [
       "state_on_eu_non_cooperative_tax_jurisdictions_list_at_1_january_of_calendar_year",
       "state_does_not_apply_corporate_income_tax",
       "state_applies_zero_corporate_income_tax_rate"
     ],
-    "general_withholding_rate_percent": 19,
-    "non_cooperative_state_withholding_rate_percent": 35
-  },
-  "policy": {
-    "transaction_date_must_select_valid_annual_list": true,
-    "absence_from_treaty_partner_list_does_not_by_itself_prove_non_cooperative_status": true,
-    "absence_from_ingested_cooperating_state_list_must_not_be_assumed_until_list_is_complete": true,
-    "country_list_values_must_come_from_official_mf_document": true,
-    "http_403_or_timeout_must_not_be_interpreted_as_absence_of_official_document": true,
-    "machine_ingestion_is_not_human_approval": true,
-    "runtime_release": false
-  },
-  "cooperating_state_codes": null,
-  "human_review_status": "not_started",
-  "approval_eligible": false,
-  "runtime_status": "not_released"
+    "non_cooperative_state_withholding_rate_percent": 35,
+    "non_cooperative_taxpayer_test": "individual_without_permanent_residence_or_legal_person_without_registered_seat_in_state_in_official_mf_cooperating_state_list",
+    "positive_list_entry_basis": [
+      "double_tax_treaty_with_slovakia",
+      "tax_information_exchange_agreement_with_slovakia",
+      "multilateral_instrument_with_comparable_tax_information_exchange_binding_both_states"
+    ]
+  }
 }

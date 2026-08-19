@@ -82,12 +82,12 @@ def test_incomplete_list_never_defaults_to_35_percent():
     assert result["rate_status"] == "blocked"
 
 
-def test_current_repository_model_is_fail_closed_until_2026_list_body_is_ingested():
+def test_current_repository_model_has_complete_2026_list_but_is_not_released():
     payload = build_readiness()
     assert payload["policy"]["non_treaty_partner_does_not_equal_non_cooperative_state"] is True
     assert payload["policy"]["35_percent_rate_requires_resolved_non_cooperative_status"] is True
     assert payload["policy"]["incomplete_positive_list_blocks_rate_selection"] is True
-    assert payload["cooperating_state_list"]["ingestion_complete"] is False
-    assert payload["review_ready"] is False
+    assert payload["cooperating_state_list"]["ingestion_complete"] is True
+    assert payload["review_ready"] is True
     assert payload["approval_eligible"] is False
     assert payload["runtime_status"] == "not_released"

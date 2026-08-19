@@ -19,13 +19,13 @@ def test_pre_review_dashboard_preserves_full_scope_and_human_review_policy():
     assert payload["fail_closed"] is True
 
 
-def test_pre_review_dashboard_blocks_until_2026_cooperating_list_is_ingested():
+def test_pre_review_dashboard_allows_human_review_after_2026_list_ingestion():
     payload = build_readiness()
 
-    assert payload["domestic"]["cooperating_state_list_ingestion_complete"] is False
-    assert "official_2026_cooperating_state_list_body_not_ingested" in payload["blockers"]
-    assert payload["all_machine_evidence_ready"] is False
-    assert payload["human_review"]["may_start"] is False
+    assert payload["domestic"]["cooperating_state_list_ingestion_complete"] is True
+    assert "official_2026_cooperating_state_list_body_not_ingested" not in payload["blockers"]
+    assert payload["all_machine_evidence_ready"] is True
+    assert payload["human_review"]["may_start"] is True
 
 
 def test_mli_instrument_chain_has_no_unexplained_silent_notice_replacement():
@@ -83,7 +83,7 @@ def test_sk_prerelease_runtime_manifest_is_fail_closed_when_not_generated():
     assert manifest["scope_count"] == 225
     assert manifest["mli_scopes"] == 138
     assert manifest["non_mli_scopes"] == 87
-    assert manifest["primary_summary_fallback_scopes"] == 3
+    assert manifest["primary_summary_fallback_scopes"] == 0
     assert manifest["human_reviewed_scopes"] == 0
     assert manifest["production_released_scopes"] == 0
     assert manifest["fail_closed"] is True
