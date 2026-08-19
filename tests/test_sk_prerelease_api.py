@@ -65,7 +65,11 @@ def test_sk_prerelease_release_gate_is_explicitly_closed():
 
 
 def test_preview_app_exposes_only_explicit_prerelease_paths():
-    paths = {route.path for route in api_module.preview_app.routes}
+    paths = {
+        route.path
+        for route in api_module.preview_app.routes
+        if hasattr(route, "path")
+    }
 
     assert "/analysis/pre-release/sk" in paths
     assert "/analysis/pre-release/sk/release-gate" in paths
