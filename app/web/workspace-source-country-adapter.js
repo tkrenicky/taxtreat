@@ -40,6 +40,7 @@
   const complianceHeading = document.querySelector(".compliance-schedule .card-head span");
   const complianceTitle = document.querySelector(".compliance-schedule h2");
   const complianceRows = [...document.querySelectorAll(".compliance-schedule dl > div")];
+  const complianceNote = document.querySelector("#workspace-deadline-note");
   const interestMonthlyField = paymentForm.elements.prior_same_type_monthly_amount_czk?.closest("label");
 
   const prereleaseNotice = document.createElement("div");
@@ -47,7 +48,6 @@
   prereleaseNotice.className = "demo-notice";
   prereleaseNotice.hidden = true;
   prereleaseNotice.setAttribute("role", "status");
-  prereleaseNotice.textContent = "Slovenský balík je dostupný pouze pro technický náhled. Finální výpočet bude aktivován až po dokončení právního review a release gate.";
   document.querySelector('.flow-step[data-step="3"] .page-title')?.after(prereleaseNotice);
 
   function setMatchingText(selector, from, to) {
@@ -84,11 +84,15 @@
     }
 
     if (ctx.code === "SK") {
+      prereleaseNotice.textContent = "Slovenský balík je dostupný pouze pro technický náhled. Standardní corporate outbound WHT compliance je modelována jako měsíční OZN4311v26 podle § 43 ods. 11; oznámení i odvod jsou do 15. dne následujícího kalendářního měsíce. Finální výpočet zůstává blokovaný do dokončení právního review a release gate.";
+      if (complianceNote) complianceNote.textContent = "SK compliance model: mesačné OZN4311v26 a odvod zrážkovej dane najneskôr do 15. dňa nasledujúceho kalendárneho mesiaca. Ordinary annual WHT return není pro standardní dividend/interest/royalty flow nakonfigurován.";
       setMatchingText('[data-view="flow"] span, [data-view="recipient-detail"] dt, [data-view="recipient-detail"] p', "v České republice", "v Slovenskej republike");
       setMatchingText('[data-view="flow"] span, [data-view="recipient-detail"] dt, [data-view="recipient-detail"] p', "v ČR", "v SR");
       setMatchingText('[data-view="flow"] span, [data-view="flow"] small, [data-view="flow"] legend', "českého plátce", "slovenského plátce");
       if (interestMonthlyField) interestMonthlyField.hidden = true;
     } else {
+      prereleaseNotice.textContent = "";
+      if (complianceNote) complianceNote.textContent = "Lhůty se zobrazí po dokončení výpočtu.";
       setMatchingText('[data-view="flow"] span, [data-view="recipient-detail"] dt, [data-view="recipient-detail"] p', "v Slovenskej republike", "v České republice");
       setMatchingText('[data-view="flow"] span, [data-view="recipient-detail"] dt, [data-view="recipient-detail"] p', "v SR", "v ČR");
       setMatchingText('[data-view="flow"] span, [data-view="flow"] small, [data-view="flow"] legend', "slovenského plátce", "českého plátce");
