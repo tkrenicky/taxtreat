@@ -34,5 +34,25 @@ def test_workspace_sk_adapter_is_prerelease_fail_closed_and_uses_eur_context():
     assert 'ctx.baseCurrency' in adapter
     assert 'if (ctx.runtimeReleased) return;' in adapter
     assert 'event.stopImmediatePropagation();' in adapter
-    assert 'Slovenská zrážková daň' in adapter
+    assert 'Slovenská zrážková daň v EUR' in adapter
     assert 'ctx.complianceLegalReference' in adapter
+    assert 'Mesačné oznámenie OZN4311v26' in adapter
+
+
+def test_workspace_sk_adapter_blocks_cnb_and_czech_interest_only_field():
+    adapter = (WEB / "workspace-source-country-adapter.js").read_text(encoding="utf-8")
+
+    assert 'url.startsWith("/exchange-rates/cnb")' in adapter
+    assert 'CNB exchange-rate service is prohibited for Slovak source-country context' in adapter
+    assert 'prior_same_type_monthly_amount_czk' in adapter
+    assert 'interestMonthlyField.hidden = true' in adapter
+    assert 'currency?.addEventListener("change", blockCnbListenerForSk, true)' in adapter
+    assert 'transactionDate?.addEventListener("change", blockCnbListenerForSk, true)' in adapter
+
+
+def test_workspace_analysis_requests_are_bound_to_active_source_country():
+    adapter = (WEB / "workspace-source-country-adapter.js").read_text(encoding="utf-8")
+
+    assert 'url.includes("/analysis")' in adapter
+    assert 'payload.source_country = currentCode' in adapter
+    assert 'body: JSON.stringify(payload)' in adapter
