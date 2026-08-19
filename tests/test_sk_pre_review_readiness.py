@@ -64,3 +64,18 @@ def test_sk_dividend_domestic_model_is_slovak_specific_and_time_correct():
     assert dividend["runtime_release"] is False
     assert "sk_dividend_domestic_model_missing" not in payload["blockers"]
     assert "sk_dividend_domestic_model_incomplete" not in payload["blockers"]
+
+
+def test_sk_prerelease_runtime_manifest_is_complete_but_never_released():
+    payload = build_readiness()
+    manifest = payload["prerelease_runtime_manifest"]
+
+    assert manifest["scope_count"] == 225
+    assert manifest["mli_scopes"] == 138
+    assert manifest["non_mli_scopes"] == 87
+    assert manifest["primary_summary_fallback_scopes"] == 3
+    assert manifest["human_reviewed_scopes"] == 0
+    assert manifest["production_released_scopes"] == 0
+    assert manifest["fail_closed"] is True
+    assert "sk_prerelease_runtime_manifest_not_ready" not in payload["blockers"]
+    assert "sk_prerelease_runtime_manifest_incomplete" not in payload["blockers"]
