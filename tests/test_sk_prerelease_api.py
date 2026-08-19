@@ -65,12 +65,21 @@ def test_sk_prerelease_release_gate_is_explicitly_closed():
 
 
 def test_preview_app_exposes_only_explicit_prerelease_paths():
+    # Inspect the APIRouter contract directly. In this FastAPI version,
+    # preview_app.include_router(router) is represented internally by an
+    # _IncludedRouter entry, so preview_app.routes is not a stable source for
+    # enumerating the child route paths.
     paths = {
         route.path
-        for route in api_module.preview_app.routes
+        for route in api_module.router.routes
         if hasattr(route, "path")
     }
 
     assert "/analysis/pre-release/sk" in paths
     assert "/analysis/pre-release/sk/release-gate" in paths
     assert "/analysis" not in paths
+    assert any(
+        included is api_module.router
+        or getattr(included, "router", None) is api_module.router
+        for included in api_module.preview_app.routes
+    )
