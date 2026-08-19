@@ -26,6 +26,7 @@ def test_slovak_report_html_replaces_czech_legal_and_compliance_copy():
     assert "Odvod zrážkovej dane" in localized
     assert "Oznámenie o zrazení a odvedení dane (§ 43 ods. 11)" in localized
     assert "Väzba príjmu na stálu prevádzkareň v SR" in localized
+    assert "Vazba příjmu ke stálé provozovně v SR" not in localized
     assert "586/1992" not in localized
     assert "§ 38da" not in localized
 
