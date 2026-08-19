@@ -90,8 +90,11 @@ def test_sk_report_localization_fails_closed_on_new_czech_legal_marker():
     from taxtreat.services.reporting.html_localization import localize_report_html
     import pytest
 
+    # This is deliberately not one of the known replacement strings. It proves
+    # the post-render guard catches a newly introduced Czech-law marker rather
+    # than merely translating a phrase the table already knows about.
     with pytest.raises(ValueError, match="Czech-source-country legal leakage"):
         localize_report_html(
-            "Nová věta: české právo zdanit tento příjem.",
+            "Nová šablona: § 38da neočekávaný text.",
             {"scope": {"source_country": "SK"}},
         )
