@@ -101,6 +101,24 @@ class CnbExchangeRate(BaseModel):
         return value.upper()
 
 
+class SkExchangeRate(BaseModel):
+    source: str = Field(pattern=r"^(?i:ECB|NBS)$")
+    currency: str = Field(pattern=r"^[A-Za-z]{3}$")
+    foreign_units_per_eur: Decimal = Field(
+        gt=0,
+        max_digits=30,
+        decimal_places=12,
+    )
+    effective_date: date
+    source_url: str = Field(pattern=r"^https://")
+    entry_method: Literal["automatic", "manual_override"] = "automatic"
+
+    @field_validator("source", "currency")
+    @classmethod
+    def normalize_codes(cls, value: str) -> str:
+        return value.upper()
+
+
 class TransactionAmount(BaseModel):
     amount: Decimal = Field(
         gt=0,
@@ -114,7 +132,7 @@ class TransactionAmount(BaseModel):
     )
     payment_date: date | None = None
     accounting_date: date | None = None
-    exchange_rate: CnbExchangeRate | None = None
+    exchange_rate: CnbExchangeRate | SkExchangeRate | None = None
     prior_same_type_monthly_amount_czk: Decimal | None = Field(
         default=None,
         ge=0,

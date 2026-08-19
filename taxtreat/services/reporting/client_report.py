@@ -393,25 +393,52 @@ def render_report_html(report):
     calc_base = calc_tax = net_amount = "—"
     fx_line = ""
     if calculation.get("status") == "CALCULATED":
-        gross_czk = calculation.get("gross_amount_czk")
-        tax_czk = calculation.get("withholding_tax_czk")
-        net_czk = calculation.get("net_amount_czk")
-        if net_czk in (None, "") and gross_czk not in (None, "") and tax_czk not in (None, ""):
-            try:
-                net_czk = float(gross_czk) - float(tax_czk)
-            except (TypeError, ValueError):
-                net_czk = None
-        calc_base = f"{_number(gross_czk)} Kč"
-        calc_tax = f"{_number(tax_czk)} Kč"
-        net_amount = f"{_number(net_czk)} Kč" if net_czk not in (None, "") else "—"
+        source_country = str(scope.get("source_country") or "CZ").upper()
+        if source_country == "SK":
+            payment_currency = str(calculation.get("transaction_currency") or currency or "EUR")
+            gross_value = calculation.get("gross_amount")
+            tax_payment_value = calculation.get("withholding_tax_transaction_currency")
+            net_value = calculation.get("net_amount_transaction_currency")
+            if net_value in (None, "") and gross_value not in (None, "") and tax_payment_value not in (None, ""):
+                try:
+                    net_value = float(gross_value) - float(tax_payment_value)
+                except (TypeError, ValueError):
+                    net_value = None
+            calc_base = f"{_number(gross_value)} {escape(payment_currency)}"
+            calc_tax = f"{_number(calculation.get('withholding_tax_eur'))} EUR"
+            net_amount = (
+                f"{_number(net_value)} {escape(payment_currency)}"
+                if net_value not in (None, "")
+                else "—"
+            )
+        else:
+            gross_value = calculation.get("gross_amount_czk")
+            tax_value = calculation.get("withholding_tax_czk")
+            net_value = calculation.get("net_amount_czk")
+            if net_value in (None, "") and gross_value not in (None, "") and tax_value not in (None, ""):
+                try:
+                    net_value = float(gross_value) - float(tax_value)
+                except (TypeError, ValueError):
+                    net_value = None
+            calc_base = f"{_number(gross_value)} Kč"
+            calc_tax = f"{_number(tax_value)} Kč"
+            net_amount = f"{_number(net_value)} Kč" if net_value not in (None, "") else "—"
         fx = calculation.get("exchange_rate") or {}
         if fx:
             fx_url = escape(str(fx.get("source_url") or ""), quote=True)
-            fx_link = f'<a href="{fx_url}">Kurzovní lístek ČNB ↗</a>' if fx_url else ""
-            fx_line = (
-                f"1 {escape(str(fx.get('currency') or currency))} = {_number(fx.get('czk_per_unit'), 6)} Kč"
-                f" · {_date(fx.get('effective_date'))} · {fx_link}"
-            )
+            if source_country == "SK":
+                fx_source = escape(str(fx.get("source") or "ECB/NBS"))
+                fx_link = f'<a href="{fx_url}">Kurz {fx_source} ↗</a>' if fx_url else ""
+                fx_line = (
+                    f"1 EUR = {_number(fx.get('foreign_units_per_eur'), 6)} {escape(str(fx.get('currency') or currency))}"
+                    f" · {_date(fx.get('effective_date'))} · {fx_link}"
+                )
+            else:
+                fx_link = f'<a href="{fx_url}">Kurzovní lístek ČNB ↗</a>' if fx_url else ""
+                fx_line = (
+                    f"1 {escape(str(fx.get('currency') or currency))} = {_number(fx.get('czk_per_unit'), 6)} Kč"
+                    f" · {_date(fx.get('effective_date'))} · {fx_link}"
+                )
 
     selected_ref = _legal_reference(report, selected)
     selected_link = _source_link(selected)
