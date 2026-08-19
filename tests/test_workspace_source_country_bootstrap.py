@@ -56,3 +56,26 @@ def test_workspace_analysis_requests_are_bound_to_active_source_country():
     assert 'url.includes("/analysis")' in adapter
     assert 'payload.source_country = currentCode' in adapter
     assert 'body: JSON.stringify(payload)' in adapter
+
+
+def test_workspace_sk_preview_replaces_remaining_czech_visible_copy_and_metrics():
+    adapter = (WEB / "workspace-source-country-adapter.js").read_text(encoding="utf-8")
+
+    assert 'Vazba ke stálé provozovně v ČR' in adapter
+    assert 'Väzba príjmu na stálu prevádzkareň v SR' in adapter
+    assert 'Slovenské subjekty, ktorých platby sú v TaxTreat spracovávané' in adapter
+    assert 'České subjekty, jejichž platby jsou v TaxTreat zpracovávány.' in adapter
+    assert 'jurisdictionValue.textContent = "75"' in adapter
+    assert 'scopeValue.textContent = "225"' in adapter
+    assert 'jurisdictionValue.textContent = "101"' in adapter
+    assert 'scopeValue.textContent = "303"' in adapter
+
+
+def test_workspace_country_switch_restores_czech_copy_after_slovak_preview():
+    adapter = (WEB / "workspace-source-country-adapter.js").read_text(encoding="utf-8")
+
+    assert '"Väzba príjmu na stálu prevádzkareň v SR", "Vazba ke stálé provozovně v ČR"' in adapter
+    assert '"v Slovenskej republike", "v České republice"' in adapter
+    assert '"v SR", "v ČR"' in adapter
+    assert '"slovenského plátce", "českého plátce"' in adapter
+    assert 'interestMonthlyField.hidden = false' in adapter
