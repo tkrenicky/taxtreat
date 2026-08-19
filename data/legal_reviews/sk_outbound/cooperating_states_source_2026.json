@@ -1,7 +1,7 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "source_country": "SK",
-  "dataset_release": "sk-cooperating-states-source-2026.1",
+  "dataset_release": "sk-cooperating-states-source-2026.2",
   "legal_basis": {
     "act": "595/2003 Z. z.",
     "act_version_effective_from": "2026-01-01",
@@ -18,7 +18,12 @@
     "landing_page_url": "https://www.mfsr.sk/sk/dane-cla-uctovnictvo/priame-dane/dane-z-prijmu/platne-ucinne-medzinarodne-zmluvy-podla-2-pism-x-zakona-c-595/2003-z-z-zneni-neskorsich-predpisov/",
     "mf_document_id": 49561,
     "document_size_kb": 209,
-    "country_list_ingestion_status": "official_document_identified_body_pending_machine_ingestion"
+    "official_attachment_url": "https://www.mfsr.sk/components/mfsrweb/file_archiv/file_list.jsp?file_bean_id=49561&formSend=true",
+    "english_document_id": 49562,
+    "english_landing_page_url": "https://www.mfsr.sk/en/taxes-customs-accounting/direct-taxes/income-tax/valid-effective-international-agreements-accordance-letter-x-article-2-act-595/2003-income-tax-act/",
+    "english_official_attachment_url": "https://www.mfsr.sk/components/mfsrweb/file_archiv/file_list.jsp?file_bean_id=49562&formSend=true",
+    "attachment_access_status": "official_endpoint_identified_http_403_in_external_fetch_environment",
+    "country_list_ingestion_status": "official_document_and_attachment_identified_body_pending_machine_ingestion"
   },
   "statutory_model": {
     "non_cooperative_taxpayer_test": "individual_without_permanent_residence_or_legal_person_without_registered_seat_in_state_in_official_mf_cooperating_state_list",
@@ -40,6 +45,7 @@
     "absence_from_treaty_partner_list_does_not_by_itself_prove_non_cooperative_status": true,
     "absence_from_ingested_cooperating_state_list_must_not_be_assumed_until_list_is_complete": true,
     "country_list_values_must_come_from_official_mf_document": true,
+    "http_403_or_timeout_must_not_be_interpreted_as_absence_of_official_document": true,
     "machine_ingestion_is_not_human_approval": true,
     "runtime_release": false
   },
