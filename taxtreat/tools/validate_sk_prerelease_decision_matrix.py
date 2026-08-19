@@ -42,14 +42,19 @@ def validate_matrix(manifest: dict[str, Any]) -> dict[str, Any]:
         raise ValueError("Prerelease matrix emitted a final rate.")
     if any(result.czech_runtime_fallback_used for result in results):
         raise ValueError("Prerelease matrix used a Czech runtime fallback.")
+    if any(
+        result.runtime_dependency_source_countries != ("SK",)
+        for result in results
+    ):
+        raise ValueError("Prerelease matrix touched a non-SK runtime dependency.")
     if any(result.runtime_released for result in results):
         raise ValueError("Prerelease matrix released an SK runtime scope.")
     if any(not result.requires_review for result in results):
         raise ValueError("Prerelease matrix contains a scope not requiring review.")
 
     return {
-        "schema_version": 1,
-        "dataset_release": "sk-prerelease-decision-matrix-2026-08-19.1",
+        "schema_version": 2,
+        "dataset_release": "sk-prerelease-decision-matrix-2026-08-19.2",
         "source_country": "SK",
         "scope_count": 225,
         "evaluated_scopes": len(results),
@@ -61,6 +66,10 @@ def validate_matrix(manifest: dict[str, Any]) -> dict[str, Any]:
         ),
         "czech_runtime_fallback_scopes": sum(
             result.czech_runtime_fallback_used for result in results
+        ),
+        "foreign_runtime_dependency_scopes": sum(
+            result.runtime_dependency_source_countries != ("SK",)
+            for result in results
         ),
         "production_released_scopes": sum(
             result.runtime_released for result in results
