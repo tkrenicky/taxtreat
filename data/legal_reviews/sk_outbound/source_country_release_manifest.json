@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "source_country": "SK",
+  "expected_scope_count": 225,
+  "human_reviewed_scopes": 0,
+  "cooperating_state_list_ready": false,
+  "release_eligible": false,
+  "release_status": "pre_release",
+  "blockers": [
+    "official_2026_cooperating_state_list_body_not_ingested",
+    "full_human_legal_review_not_completed"
+  ],
+  "policy": {
+    "country_config_runtime_flag_is_insufficient_for_release": true,
+    "all_expected_scopes_must_be_human_reviewed": true,
+    "country_specific_legal_source_gates_must_be_ready": true,
+    "production_release_requires_explicit_manifest_eligibility": true
+  }
+}
