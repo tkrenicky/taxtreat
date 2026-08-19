@@ -5,7 +5,10 @@ import subprocess
 import zipfile
 from pathlib import Path
 
-import scripts.build_sk_claude_review_bundle as base_bundle
+try:
+    import scripts.build_sk_claude_review_bundle as base_bundle
+except ModuleNotFoundError:
+    import build_sk_claude_review_bundle as base_bundle
 
 
 ROOT = Path(__file__).resolve().parents[1]
