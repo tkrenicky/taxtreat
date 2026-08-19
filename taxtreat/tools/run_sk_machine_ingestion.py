@@ -33,6 +33,7 @@ from taxtreat.tools.extract_sk_mli_notices import (
     parse_notice,
 )
 from taxtreat.tools.extract_sk_treaty_articles import (
+    OFFICIAL_PDF_OVERRIDES,
     OUTPUT_PATH as TREATY_EXTRACTION_OUTPUT,
     SUMMARY_PATH as TREATY_EXTRACTION_SUMMARY,
     _fetch as fetch_treaty,
@@ -132,6 +133,25 @@ def _treaty_failure_scope(source_scope: dict[str, Any], problem: Exception) -> d
     }
 
 
+def _resolve_treaty_source(source: dict[str, Any]) -> tuple[str | None, str]:
+    """Return authoritative fetch URL and content type for one treaty relationship."""
+    country = source["recipient_country"]
+    primary_url = source.get("official_primary_text_url")
+
+    pdf_override = OFFICIAL_PDF_OVERRIDES.get(country)
+    if pdf_override:
+        return pdf_override, "pdf"
+
+    if primary_url is None:
+        return None, "unknown"
+
+    lowered = primary_url.lower()
+    if lowered.endswith(".pdf"):
+        return primary_url, "pdf"
+
+    return _static_source_url(primary_url), "html"
+
+
 def _run_treaty_extraction(treaty_queue: dict[str, Any]) -> dict[str, Any]:
     by_country_scopes: dict[str, list[dict[str, Any]]] = {}
     for scope in treaty_queue["scopes"]:
@@ -143,9 +163,9 @@ def _run_treaty_extraction(treaty_queue: dict[str, Any]) -> dict[str, Any]:
     for source in treaty_queue["relationships"]:
         country = source["recipient_country"]
         country_scopes = by_country_scopes[country]
-        primary_url = source["official_primary_text_url"]
+        url, content_type = _resolve_treaty_source(source)
 
-        if primary_url is None:
+        if url is None:
             relationships.append({
                 "recipient_country": country,
                 "recipient_country_name": source["recipient_country_name"],
@@ -169,13 +189,14 @@ def _run_treaty_extraction(treaty_queue: dict[str, Any]) -> dict[str, Any]:
                 })
             continue
 
-        url = _static_source_url(primary_url)
         try:
-            html = fetch_treaty(url)
+            source_bytes = fetch_treaty(url)
             parsed = parse_treaty(
                 source_relationship=source,
                 source_scopes=country_scopes,
-                html=html,
+                html=source_bytes,
+                source_url_override=url,
+                content_type=content_type,
             )
             relationship_row = {
                 key: value for key, value in parsed.items() if key != "scopes"
@@ -189,6 +210,7 @@ def _run_treaty_extraction(treaty_queue: dict[str, Any]) -> dict[str, Any]:
                 "recipient_country_name": source["recipient_country_name"],
                 "treaty_publication": source["treaty_publication"],
                 "source_url": url,
+                "source_content_type": content_type,
                 "machine_extraction_status": "fetch_or_parse_failed",
                 "error_type": type(problem).__name__,
                 "error_message": str(problem)[:500],
@@ -201,13 +223,14 @@ def _run_treaty_extraction(treaty_queue: dict[str, Any]) -> dict[str, Any]:
             )
 
     payload = {
-        "schema_version": 1,
-        "dataset_release": "sk-treaty-article-machine-extraction-2026-08-19.2",
+        "schema_version": 2,
+        "dataset_release": "sk-treaty-article-machine-extraction-2026-08-19.3",
         "source_country": "SK",
         "relationship_count": 75,
         "scope_count": 225,
         "policy": {
             "official_primary_text_only": True,
+            "official_html_and_pdf_sources_supported": True,
             "per_pair_failure_is_fail_closed_not_batch_fatal": True,
             "machine_extraction_is_not_semantic_legal_approval": True,
             "runtime_release": False,
@@ -252,7 +275,7 @@ def run() -> dict[str, Any]:
     )
 
     summary = {
-        "schema_version": 1,
+        "schema_version": 2,
         "source_country": "SK",
         "mli_relationships_total": 46,
         "mli_relationships_machine_extracted": mli_completed,
