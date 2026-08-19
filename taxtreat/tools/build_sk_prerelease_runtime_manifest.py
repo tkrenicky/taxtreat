@@ -47,7 +47,7 @@ def build_manifest() -> dict[str, Any]:
         semantic_status = source.get("semantic_status")
         if semantic_status not in {
             "machine_candidate_not_legal_conclusion",
-            "machine_candidate_from_primary_summary_fallback_not_legal_conclusion",
+            "machine_candidate_primary_summary_fallback_not_legal_conclusion",
         }:
             raise ValueError(f"{packet_id}: semantic evidence is not machine-ready.")
 
