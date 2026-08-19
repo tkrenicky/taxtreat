@@ -18,7 +18,7 @@ def test_cz_compliance_wrapper_preserves_legacy_output_exactly():
     assert routed == legacy
 
 
-def test_sk_withheld_tax_uses_section_43_11_monthly_deadline_not_czech_schedule():
+def test_sk_withheld_tax_uses_section_43_11_statutory_deadline_and_fails_closed_on_calendar_adjustment():
     schedule = build_source_country_withholding_compliance_schedule(
         "SK",
         "2026-02-10",
@@ -29,8 +29,12 @@ def test_sk_withheld_tax_uses_section_43_11_monthly_deadline_not_czech_schedule(
 
     assert schedule["source_country"] == "SK"
     assert schedule["statutory_deadline"] == "2026-03-15"
-    assert schedule["tax_remittance_deadline"] == "2026-03-16"
-    assert schedule["notification_deadline"] == "2026-03-16"
+    assert schedule["operational_deadline_candidate"] == "2026-03-16"
+    assert schedule["tax_remittance_deadline"] is None
+    assert schedule["notification_deadline"] is None
+    assert schedule["status"] == "REVIEW_DEADLINE_CALENDAR"
+    assert schedule["deadline_candidate_only"] is True
+    assert schedule["public_holiday_adjustment_not_modelled"] is True
     assert schedule["notification_form"] == "OZN4311v26"
     assert schedule["notification_regime"] == "monthly_withholding_section_43_11"
     assert schedule["notification_legal_basis"].startswith("§ 43 ods. 11")
