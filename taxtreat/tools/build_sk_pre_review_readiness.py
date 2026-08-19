@@ -24,6 +24,7 @@ INGESTION_SUMMARY_PATH = SK_DIR / "machine_ingestion_run_summary.json"
 MLI_EXTRACTION_SUMMARY_PATH = SK_DIR / "mli_notice_machine_extraction_summary.json"
 TREATY_EXTRACTION_SUMMARY_PATH = SK_DIR / "treaty_article_machine_extraction_summary.json"
 SEMANTIC_SUMMARY_PATH = SK_DIR / "treaty_semantic_candidates_summary.json"
+COMPLIANCE_PROFILE_PATH = SK_DIR / "compliance_profile_2026.json"
 OUTPUT_PATH = SK_DIR / "pre_review_readiness.json"
 
 
@@ -31,6 +32,47 @@ def _load_if_exists(path: Path) -> dict[str, Any] | None:
     if not path.exists():
         return None
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _compliance_profile_status() -> dict[str, Any]:
+    profile = _load_if_exists(COMPLIANCE_PROFILE_PATH)
+    if profile is None:
+        return {
+            "present": False,
+            "country_specific": False,
+            "monthly_section_43_11_modelled": False,
+            "czech_reuse_prohibited": False,
+            "runtime_release": False,
+        }
+
+    policy = profile.get("policy", {})
+    ordinary = profile.get("ordinary_corporate_outbound_wht", {})
+    notification = ordinary.get("notification", {})
+    remittance = ordinary.get("remittance", {})
+
+    return {
+        "present": True,
+        "country_specific": (
+            profile.get("source_country") == "SK"
+            and policy.get("country_specific_compliance_required") is True
+        ),
+        "monthly_section_43_11_modelled": (
+            notification.get("form_code") == "OZN4311v26"
+            and notification.get("periodicity") == "monthly"
+            and notification.get("legal_reference") == "§ 43 ods. 11"
+            and remittance.get("legal_reference") == "§ 43 ods. 11"
+            and notification.get("same_deadline_as_notification", True) is True
+        ),
+        "czech_reuse_prohibited": (
+            policy.get("czech_deadlines_or_forms_must_not_be_reused") is True
+            and policy.get("czech_statutory_references_must_not_be_reused") is True
+        ),
+        "ordinary_annual_wht_return_configured": profile.get(
+            "annual_reporting", {}
+        ).get("ordinary_dividend_interest_royalty_annual_wht_return_configured"),
+        "form_code": notification.get("form_code"),
+        "runtime_release": policy.get("runtime_release") is True,
+    }
 
 
 def build_readiness() -> dict[str, Any]:
@@ -44,6 +86,7 @@ def build_readiness() -> dict[str, Any]:
     mli_extraction = _load_if_exists(MLI_EXTRACTION_SUMMARY_PATH)
     treaty_extraction = _load_if_exists(TREATY_EXTRACTION_SUMMARY_PATH)
     semantic = _load_if_exists(SEMANTIC_SUMMARY_PATH)
+    compliance = _compliance_profile_status()
 
     treaty_relationships_extracted = (
         ingestion.get("treaty_relationships_machine_extracted", 0)
@@ -71,12 +114,20 @@ def build_readiness() -> dict[str, Any]:
         blockers.append("official_2026_cooperating_state_list_body_not_ingested")
     if reconciliation_summary["unresolved_notice_mismatches"]:
         blockers.append("mli_notice_instrument_chain_mismatch_unresolved")
+    if not compliance["present"]:
+        blockers.append("sk_2026_compliance_profile_missing")
+    elif not (
+        compliance["country_specific"]
+        and compliance["monthly_section_43_11_modelled"]
+        and compliance["czech_reuse_prohibited"]
+    ):
+        blockers.append("sk_2026_compliance_profile_incomplete")
 
     all_machine_evidence_ready = not blockers
 
     return {
-        "schema_version": 1,
-        "dataset_release": "sk-pre-review-readiness-2026-08-19.1",
+        "schema_version": 2,
+        "dataset_release": "sk-pre-review-readiness-2026-08-19.2",
         "source_country": "SK",
         "target": {
             "country_relationships": 75,
@@ -108,6 +159,7 @@ def build_readiness() -> dict[str, Any]:
             "domestic_rate_branch_machine_ready": domestic["review_ready"],
             "eu_interest_royalty_and_pe_condition_model_present": True,
         },
+        "compliance": compliance,
         "mli_instrument_chain": {
             "relationships": reconciliation_summary["relationship_count"],
             "resolved_relationships": reconciliation_summary["resolved_relationships"],
