@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "dataset_release": "sk-wht-compliance-profile-2026-08-19.1",
+  "source_country": "SK",
+  "tax_year": 2026,
+  "status": "machine_evidence_not_human_reviewed",
+  "policy": {
+    "country_specific_compliance_required": true,
+    "czech_deadlines_or_forms_must_not_be_reused": true,
+    "czech_statutory_references_must_not_be_reused": true,
+    "no_annual_filing_is_assumed_without_primary_source": true,
+    "runtime_release": false
+  },
+  "statutory_framework": {
+    "act": "Act No. 595/2003 Coll. on Income Tax",
+    "slovak_title": "zákon č. 595/2003 Z. z. o dani z príjmov",
+    "relevant_provisions": [
+      "§ 2 písm. v)",
+      "§ 2 písm. x)",
+      "§ 13 ods. 2 písm. f) a h)",
+      "§ 13 ods. 3",
+      "§ 16 ods. 1",
+      "§ 43 ods. 2",
+      "§ 43 ods. 10",
+      "§ 43 ods. 11",
+      "§ 43 ods. 21"
+    ],
+    "official_source_url": "https://www.slov-lex.sk/ezbierky-fe/pravne-predpisy/SK/ZZ/2003/595/",
+    "effective_version": "2026-01-01_to_2026-12-30"
+  },
+  "ordinary_corporate_outbound_wht": {
+    "income_scope": [
+      "dividend",
+      "interest",
+      "royalty"
+    ],
+    "withholding_event": {
+      "rule": "withhold on payment, remittance or credit in favour of the taxpayer",
+      "legal_reference": "§ 43 ods. 10"
+    },
+    "remittance": {
+      "deadline_rule": "no later than the 15th day of each month for the preceding calendar month",
+      "legal_reference": "§ 43 ods. 11",
+      "same_deadline_as_notification": true
+    },
+    "notification": {
+      "required_when_tax_is_withheld": true,
+      "form_code": "OZN4311v26",
+      "form_title": "Oznámenie platiteľa dane o zrazení a odvedení dane vyberanej zrážkou podľa § 43 ods. 11",
+      "periodicity": "monthly",
+      "filing_period": "preceding_calendar_month",
+      "deadline_rule": "no later than the 15th day of each month for the preceding calendar month",
+      "legal_reference": "§ 43 ods. 11",
+      "official_form_url": "https://pfseform.financnasprava.sk/Formulare/eFormVzor/DP/form.626.html",
+      "correction_method": "submit a new complete notification for the affected month and mark it as a correction",
+      "ordinary_nonresident_summary_row": "02",
+      "non_cooperating_state_summary_row": "03"
+    },
+    "recipient_level_reporting": {
+      "attachment": "Samostatná strana B",
+      "scope": "nonresident and non-cooperating-state taxpayers in cases prescribed by the form instructions",
+      "certificate_request_case": true,
+      "non_cooperating_state_case": true,
+      "2026_additional_cases": "from 2026 certain specified nonresident income categories are reported per recipient even without a tax-payment-certificate request",
+      "each_payment_separately_when_multiple_income_types_or_payment_dates": true,
+      "reported_rate_may_be_statutory_or_treaty_rate": true
+    }
+  },
+  "annual_reporting": {
+    "ordinary_dividend_interest_royalty_annual_wht_return_configured": false,
+    "status": "no_separate_annual_return_identified_in_current_primary_sources_for_ordinary_section_43_11_scope",
+    "caveat": "special notifications under other paragraphs of § 43 exist and must only be activated if their specific statutory facts apply",
+    "not_a_legal_conclusion": true
+  },
+  "special_section_43_forms": {
+    "policy": "do_not_apply_to_ordinary_dividend_interest_royalty_flow_without_specific_statutory_trigger",
+    "examples_visible_in_financial_administration_catalog": [
+      "OZN4313v20 - § 43 ods. 13",
+      "OZN4315v25 - § 43 ods. 15"
+    ],
+    "official_catalog_url": "https://www.financnasprava.sk/sk/danovi-a-colni-specialisti/technicke-informacie/podklady-pre-tvorcov-sw/xsd-schemy"
+  },
+  "domestic_relief_and_exclusions": {
+    "eu_interest_royalty_relief": {
+      "status": "separately_modelled_candidate",
+      "references": [
+        "§ 13 ods. 2 písm. f)",
+        "§ 13 ods. 2 písm. h)",
+        "§ 13 ods. 3",
+        "§ 43 ods. 21"
+      ],
+      "must_not_be_inherited_from_czech_rules": true
+    },
+    "registered_slovak_pe_exclusion": {
+      "status": "separately_modelled_candidate",
+      "reference": "§ 43 ods. 2",
+      "must_not_be_inherited_from_czech_rules": true
+    },
+    "non_cooperating_state_rate_branch": {
+      "status": "blocked_until_2026_official_country_list_body_ingested",
+      "reference": "§ 2 písm. x) and § 43",
+      "must_not_be_inferred_from_treaty_status_alone": true
+    }
+  },
+  "primary_sources": [
+    {
+      "authority": "Slov-Lex",
+      "title": "595/2003 Z. z. Zákon o dani z príjmov",
+      "url": "https://www.slov-lex.sk/ezbierky-fe/pravne-predpisy/SK/ZZ/2003/595/"
+    },
+    {
+      "authority": "Finančná správa Slovenskej republiky",
+      "title": "OZN4311v26",
+      "url": "https://pfseform.financnasprava.sk/Formulare/eFormVzor/DP/form.626.html"
+    },
+    {
+      "authority": "Finančná správa Slovenskej republiky",
+      "title": "XSD schémy - daň vyberaná zrážkou",
+      "url": "https://www.financnasprava.sk/sk/danovi-a-colni-specialisti/technicke-informacie/podklady-pre-tvorcov-sw/xsd-schemy"
+    }
+  ],
+  "human_review_status": "not_started",
+  "production_released": false
+}
