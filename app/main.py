@@ -44,6 +44,12 @@ from taxtreat.services.reporting import (
     build_professional_report,
     render_report_html,
 )
+from taxtreat.services.source_country_release_gate import (
+    SourceCountryNotReleasedError,
+    UnsupportedSourceCountryError,
+    require_source_country_analysis_release,
+)
+from app.sk_prerelease import router as sk_prerelease_router
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -61,6 +67,7 @@ app.mount(
     StaticFiles(directory=WEB_ROOT),
     name="ui-assets",
 )
+app.include_router(sk_prerelease_router)
 
 
 class CnbExchangeRate(BaseModel):
@@ -490,7 +497,34 @@ def require_analysis_source_release(
     recipient = recipient_country.upper()
 
     if source != "CZ":
-        return None
+        try:
+            require_source_country_analysis_release(source)
+        except UnsupportedSourceCountryError as exc:
+            raise HTTPException(
+                status_code=422,
+                detail={
+                    "code": "UNSUPPORTED_SOURCE_COUNTRY",
+                    "source_country": source,
+                },
+            ) from exc
+        except SourceCountryNotReleasedError as exc:
+            decision = exc.decision
+            raise HTTPException(
+                status_code=409,
+                detail={
+                    "code": decision.code,
+                    "source_country": source,
+                    "release_status": decision.release_status,
+                    "release_blockers": list(decision.blockers),
+                },
+            ) from exc
+        raise HTTPException(
+            status_code=409,
+            detail={
+                "code": "SOURCE_COUNTRY_RELEASE_GATE_MISSING",
+                "source_country": source,
+            },
+        )
 
     treaty_pair_id = f"{source}-{recipient}"
 
