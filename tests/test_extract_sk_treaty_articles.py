@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from taxtreat.tools.extract_sk_treaty_articles import (
     _article_blocks,
+    _resolve_article,
     _static_source_url,
     _title_matches,
     parse_treaty,
@@ -45,15 +46,15 @@ def test_static_source_url_is_deterministic():
     ).endswith("/1979/48/vyhlasene_znenie.html")
 
 
-def test_article_blocks_support_slovak_and_czech_heading_forms():
+def test_article_blocks_support_slovak_czech_and_abbreviated_heading_forms():
     text = (
-        "Úvod Článok 10 Dividendy text A "
+        "Úvod Čl. 10 Dividendy text A "
         "Článek 11 Úroky text B "
         "Článok 12 Licenčné poplatky text C "
         "Článok 13 Zisky zo scudzenia text D"
     )
     blocks = _article_blocks(text)
-    assert blocks["10"].startswith("Článok 10 Dividendy")
+    assert blocks["10"].startswith("Čl. 10 Dividendy")
     assert blocks["11"].startswith("Článek 11 Úroky")
     assert blocks["12"].startswith("Článok 12 Licenčné poplatky")
     assert "Článok 13" not in blocks["12"]
@@ -62,8 +63,25 @@ def test_article_blocks_support_slovak_and_czech_heading_forms():
 def test_income_title_validation_is_fail_closed():
     assert _title_matches("dividend", "Článok 10 Dividendy text") is True
     assert _title_matches("interest", "Článok 11 Úroky text") is True
+    assert _title_matches("interest", "Článok 10 Príjmy z dlhových pohľadávok") is True
     assert _title_matches("royalty", "Článok 12 Licenčné poplatky text") is True
     assert _title_matches("royalty", "Článok 12 Iné príjmy text") is False
+
+
+def test_resolves_shifted_article_number_by_unique_income_title():
+    blocks = {
+        "10": "Článok 10 Prepojené podniky text",
+        "11": "Článok 11 Dividendy text",
+        "12": "Článok 12 Úroky text",
+        "13": "Článok 13 Licenčné poplatky text",
+    }
+    article, block, status = _resolve_article(
+        income_type="dividend",
+        blocks=blocks,
+    )
+    assert article == "11"
+    assert block.startswith("Článok 11 Dividendy")
+    assert status == "resolved_by_unique_income_title"
 
 
 def test_parse_treaty_preserves_full_article_text_and_hash():
@@ -100,6 +118,36 @@ def test_parse_treaty_preserves_full_article_text_and_hash():
     assert all(row["runtime_status"] == "not_released" for row in result["scopes"])
 
 
+def test_shifted_articles_are_extracted_only_when_income_title_matches():
+    relationship = {
+        **_relationship(),
+        "recipient_country": "AE",
+        "recipient_country_name": "Spojené arabské emiráty",
+    }
+    html = """
+    <html><body>
+      <h2>Článok 10</h2><h3>Prepojené podniky</h3><p>text</p>
+      <h2>Článok 11</h2><h3>Dividendy</h3><p>podliehajú zdaneniu len v druhom štáte</p>
+      <h2>Článok 12</h2><h3>Úroky</h3><p>daň nepresiahne 10 %</p>
+      <h2>Článok 13</h2><h3>Licenčné poplatky</h3><p>daň nepresiahne 10 %</p>
+      <h2>Článok 14</h2><h3>Zisky zo scudzenia</h3>
+    </body></html>
+    """
+    result = parse_treaty(
+        source_relationship=relationship,
+        source_scopes=_scopes(),
+        html=html,
+    )
+    by_income = {row["income_type"]: row for row in result["scopes"]}
+    assert by_income["dividend"]["actual_article"] == "11"
+    assert by_income["interest"]["actual_article"] == "12"
+    assert by_income["royalty"]["actual_article"] == "13"
+    assert all(
+        row["machine_extraction_status"] == "article_extracted_by_title_number_variance"
+        for row in by_income.values()
+    )
+
+
 def test_missing_expected_article_is_not_silently_accepted():
     html = """
     <html><body>
@@ -114,5 +162,5 @@ def test_missing_expected_article_is_not_silently_accepted():
         html=html,
     )
     royalty = next(row for row in result["scopes"] if row["income_type"] == "royalty")
-    assert royalty["machine_extraction_status"] == "expected_article_heading_not_found"
+    assert royalty["machine_extraction_status"] == "validated_article_not_resolved"
     assert royalty["review_ready"] is False
