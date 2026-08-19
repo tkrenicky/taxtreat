@@ -30,8 +30,10 @@ def build_integrated_main(text: str) -> str:
         text = _replace_once(text, _IMPORT_ANCHOR, _IMPORT_REPLACEMENT, "import")
     if "app.include_router(sk_prerelease_router)" not in text:
         text = _replace_once(text, _MOUNT_ANCHOR, _MOUNT_REPLACEMENT, "router mount")
-    if '"SOURCE_COUNTRY_NOT_RELEASED"' not in text:
+
+    if _RELEASE_REPLACEMENT not in text:
         text = _replace_once(text, _RELEASE_ANCHOR, _RELEASE_REPLACEMENT, "release gate")
+
     return text
 
 
