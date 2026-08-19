@@ -35,6 +35,7 @@ class SkPrereleaseCandidateResult:
     mli_applicable: bool | None
     blockers: tuple[str, ...]
     missing_transaction_facts: tuple[str, ...]
+    runtime_dependency_source_countries: tuple[str, ...]
     czech_runtime_fallback_used: bool
     runtime_released: bool
 
@@ -62,6 +63,25 @@ def _scope_row(
     )
 
 
+def _dependency_sources(*values: Any) -> tuple[str, ...]:
+    sources = {
+        str(value).upper()
+        for value in values
+        if value is not None and str(value).strip()
+    }
+    return tuple(sorted(sources))
+
+
+def _dependency_blockers(sources: tuple[str, ...]) -> list[str]:
+    foreign = [source for source in sources if source != "SK"]
+    if not foreign:
+        return []
+    blockers = ["foreign_runtime_dependency_detected"]
+    if "CZ" in foreign:
+        blockers.append("czech_runtime_dependency_detected")
+    return blockers
+
+
 def _dividend_domestic_candidate(
     facts: dict[str, Any],
     *,
@@ -77,9 +97,6 @@ def _dividend_domestic_candidate(
     ]
     blockers: list[str] = []
 
-    # Cooperating/non-cooperating status is a legal fact derived from the
-    # official annual MF SR list. A user representation must never substitute
-    # for the unresolved official 2026 list.
     if not cooperating_state_list_ready:
         blockers.append("official_2026_cooperating_state_status_unresolved")
 
@@ -98,10 +115,6 @@ def _dividend_domestic_candidate(
     if not cooperating_state_list_ready:
         return "section_12_7_c_outside_subject_candidate_pending_cooperating_state_status", [], blockers
 
-    # This branch intentionally does not consume a user-supplied
-    # recipient_is_non_cooperating_state_taxpayer value. Once the official
-    # annual list is ingested, the legal fact must be injected from that
-    # source-backed dataset before this service can be promoted.
     return "section_12_7_c_candidate_requires_source_backed_cooperating_state_fact", [], [
         *blockers,
         "source_backed_cooperating_state_fact_not_connected",
@@ -127,6 +140,10 @@ def evaluate_sk_prerelease_candidate(
 
     row = _scope_row(manifest, country, income)
     scope_key = ("SK", country, income)
+    base_dependencies = _dependency_sources(
+        manifest.get("source_country"),
+        row.get("source_country") if row else None,
+    )
     if row is None:
         return SkPrereleaseCandidateResult(
             status="OUT_OF_SCOPE",
@@ -140,9 +157,10 @@ def evaluate_sk_prerelease_candidate(
             candidate_domestic_treatment=None,
             treaty_semantic_candidate=None,
             mli_applicable=None,
-            blockers=(),
+            blockers=tuple(_dependency_blockers(base_dependencies)),
             missing_transaction_facts=(),
-            czech_runtime_fallback_used=False,
+            runtime_dependency_source_countries=base_dependencies,
+            czech_runtime_fallback_used="CZ" in base_dependencies,
             runtime_released=False,
         )
 
@@ -151,6 +169,7 @@ def evaluate_sk_prerelease_candidate(
         "sk_runtime_release_not_completed",
     ]
     missing: list[str] = []
+    dependencies = base_dependencies
 
     if not row.get("cooperating_state_list_ready"):
         blockers.append("official_2026_cooperating_state_list_body_not_ingested")
@@ -175,6 +194,10 @@ def evaluate_sk_prerelease_candidate(
         blockers.extend(domestic_blockers)
     elif income in {"interest", "royalty"}:
         domestic = evaluate_domestic_transaction_candidates(income, facts)
+        dependencies = _dependency_sources(
+            *dependencies,
+            domestic.get("source_country"),
+        )
         pe = domestic["registered_pe_exclusion"]
         relief = domestic["eu_relief"]
         missing = sorted(
@@ -186,6 +209,7 @@ def evaluate_sk_prerelease_candidate(
         else:
             domestic_treatment = relief.get("candidate_treatment")
     else:
+        dependencies = base_dependencies
         return SkPrereleaseCandidateResult(
             status="OUT_OF_SCOPE",
             source_country="SK",
@@ -198,15 +222,15 @@ def evaluate_sk_prerelease_candidate(
             candidate_domestic_treatment=None,
             treaty_semantic_candidate=None,
             mli_applicable=bool(row.get("mli_applicable")),
-            blockers=(),
+            blockers=tuple(_dependency_blockers(dependencies)),
             missing_transaction_facts=(),
-            czech_runtime_fallback_used=False,
+            runtime_dependency_source_countries=dependencies,
+            czech_runtime_fallback_used="CZ" in dependencies,
             runtime_released=False,
         )
 
-    # Machine semantic candidates are evidence for review, not selectable
-    # legal rules. In particular, multiple treaty percentages must never be
-    # collapsed to the lowest number by this prerelease service.
+    blockers.extend(_dependency_blockers(dependencies))
+
     treaty_candidate = row.get("treaty_semantic_candidate")
 
     return SkPrereleaseCandidateResult(
@@ -223,6 +247,7 @@ def evaluate_sk_prerelease_candidate(
         mli_applicable=bool(row.get("mli_applicable")),
         blockers=tuple(dict.fromkeys(blockers)),
         missing_transaction_facts=tuple(missing),
-        czech_runtime_fallback_used=False,
+        runtime_dependency_source_countries=dependencies,
+        czech_runtime_fallback_used="CZ" in dependencies,
         runtime_released=False,
     )
