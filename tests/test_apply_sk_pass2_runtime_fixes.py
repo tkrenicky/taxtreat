@@ -31,6 +31,9 @@ def analyze(payload):
     source_country = payload.source_country.upper()
     amount = None
     result = object()
+    dataset_version = load_stage6_source_release()[
+        "dataset_release"
+    ]
     calculation = build_withholding_tax_calculation(
         amount,
         decision_status=result.status.value,
@@ -48,11 +51,12 @@ def analyze(payload):
 '''
 
 
-def test_patcher_removes_non_cz_fallthrough_and_routes_calculation_by_source_country():
+def test_patcher_removes_non_cz_fallthrough_and_routes_runtime_by_source_country():
     patched = build_integrated_main(BASE)
 
     assert "return require_source_country_analysis_release(source)" in patched
     assert "SOURCE_COUNTRY_RELEASE_GATE_MISSING" not in patched
+    assert "source_country_runtime_dataset_version(\n        source_country," in patched
     assert "build_source_country_withholding_tax_calculation(\n        source_country," in patched
     assert "build_source_country_withholding_compliance_schedule(\n            source_country," in patched
 
