@@ -1,6 +1,12 @@
 from __future__ import annotations
 
+import json
+
+import pytest
+
+import taxtreat.tools.evaluate_sk_domestic_transaction_candidates as domestic_module
 from taxtreat.tools.evaluate_sk_domestic_transaction_candidates import (
+    evaluate_domestic_transaction_candidates,
     evaluate_eu_relief_candidate,
     evaluate_registered_pe_exclusion,
 )
@@ -102,3 +108,15 @@ def test_registered_pe_exclusion_missing_facts_is_fail_closed():
     })
     assert result["status"] == "blocked_missing_transaction_facts"
     assert result["applies"] is None
+
+
+def test_domestic_evaluator_uses_model_provenance_not_hardcoded_sk(tmp_path, monkeypatch):
+    corrupted = tmp_path / "domestic_model.json"
+    corrupted.write_text(
+        json.dumps({"source_country": "CZ"}),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(domestic_module, "MODEL_PATH", corrupted)
+
+    with pytest.raises(ValueError, match="source-backed SK model"):
+        evaluate_domestic_transaction_candidates("interest", {})
