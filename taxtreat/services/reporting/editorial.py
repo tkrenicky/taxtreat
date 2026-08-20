@@ -127,6 +127,25 @@ def _source_sentence(source: Mapping[str, Any] | None) -> str:
     return f"{ref} zákona č. 586/1992 Sb., o daních z příjmů"
 
 
+def _dedupe_sources(sources: list[Mapping[str, Any]], selected_rule_id: Any) -> list[Mapping[str, Any]]:
+    """Preserve the legacy client-report source de-duplication contract."""
+    ordered: list[tuple[Any, ...]] = []
+    by_key: dict[tuple[Any, ...], Mapping[str, Any]] = {}
+    for source in sources:
+        key = (
+            source.get("legal_layer"),
+            source.get("source_url") or source.get("legal_instrument") or source.get("source_id"),
+            str(source.get("article") or ""),
+            _clean_paragraph(source.get("paragraph")),
+        )
+        if key not in by_key:
+            ordered.append(key)
+            by_key[key] = source
+        elif source.get("rule_id") == selected_rule_id:
+            by_key[key] = source
+    return [by_key[key] for key in ordered]
+
+
 def _result_copy(report: Mapping[str, Any]) -> tuple[str, str]:
     result = report.get("result", {})
     status = result.get("status")
