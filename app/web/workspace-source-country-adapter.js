@@ -19,18 +19,17 @@
     return api.get(currentCode);
   }
 
-  const countryControl = document.createElement("label");
-  countryControl.className = "payer-context source-country-context";
-  countryControl.innerHTML = `
-    <span>Stát plátce</span>
-    <select id="active-source-country" aria-label="Stát aktivního plátce">
-      <option value="CZ">Česká republika</option>
-      <option value="SK">Slovensko · před vydáním</option>
-    </select>
-  `;
-  activePayerSelect.closest(".payer-context")?.after(countryControl);
+  function inferredCountryForActivePayer() {
+    const explicit = payerCountries.get(activePayerKey());
+    if (explicit) return explicit;
+    const name = activePayerSelect.selectedOptions?.[0]?.textContent?.trim() || "";
+    const cards = [...document.querySelectorAll(".payer-record,.payer-choice")];
+    const card = cards.find((item) => item.querySelector("h2")?.textContent?.trim() === name);
+    const copy = String(card?.textContent || "");
+    if (/Slovensko|Slovak|IČ\s*DPH\s*SK|DIČ\s*SK/i.test(copy)) return "SK";
+    return "CZ";
+  }
 
-  const countrySelect = countryControl.querySelector("select");
   const error = document.querySelector("#workspace-error");
   const submit = document.querySelector("#workspace-submit");
   const currency = paymentForm.elements.currency;
@@ -65,7 +64,6 @@
     const jurisdictionValue = sourceMetrics[0].querySelector("strong");
     const scopeLabel = sourceMetrics[1].querySelector("span");
     const scopeValue = sourceMetrics[1].querySelector("strong");
-
     if (ctx.code === "SK") {
       if (jurisdictionLabel) jurisdictionLabel.textContent = "SK treaty relationships";
       if (jurisdictionValue) jurisdictionValue.textContent = "75";
@@ -81,9 +79,7 @@
 
   function applyCurrencyDefaults(ctx) {
     if (!currency) return;
-    if ([...currency.options].some((option) => option.value === ctx.baseCurrency)) {
-      currency.value = ctx.baseCurrency;
-    }
+    if ([...currency.options].some((option) => option.value === ctx.baseCurrency)) currency.value = ctx.baseCurrency;
     if (ctx.code === "SK") {
       if (fxField) fxField.hidden = true;
       if (fxStatus) fxStatus.hidden = true;
@@ -98,13 +94,8 @@
     if (taxRowLabel) taxRowLabel.textContent = ctx.code === "SK" ? "Zrážková daň" : "Srážková daň";
     if (complianceHeading) complianceHeading.textContent = ctx.complianceLegalReference;
     if (complianceTitle) complianceTitle.textContent = ctx.code === "SK" ? "Rozhodný dátum a nadväzujúce lehoty" : "Rozhodné datum a navazující lhůty";
-
-    if (complianceRows[1]?.querySelector("dt")) {
-      complianceRows[1].querySelector("dt").textContent = ctx.code === "SK" ? "Odvod zrážkovej dane" : "Odvod srážkové daně";
-    }
-    if (complianceRows[2]?.querySelector("dt")) {
-      complianceRows[2].querySelector("dt").textContent = ctx.code === "SK" ? "Mesačné oznámenie OZN4311v26" : "Oznámení příjmu plynoucího do zahraničí";
-    }
+    if (complianceRows[1]?.querySelector("dt")) complianceRows[1].querySelector("dt").textContent = ctx.code === "SK" ? "Odvod zrážkovej dane" : "Odvod srážkové daně";
+    if (complianceRows[2]?.querySelector("dt")) complianceRows[2].querySelector("dt").textContent = ctx.code === "SK" ? "Mesačné oznámenie OZN4311v26" : "Oznámení příjmu plynoucího do zahraničí";
 
     if (ctx.code === "SK") {
       prereleaseNotice.textContent = "Slovenský balík je dostupný pouze pro technický náhled. Standardní corporate outbound WHT compliance je modelována jako měsíční OZN4311v26 podle § 43 ods. 11; oznámení i odvod jsou do 15. dne následujícího kalendářního měsíce. Finální výpočet zůstává blokovaný do dokončení právního review a release gate.";
@@ -134,9 +125,7 @@
     prereleaseNotice.hidden = ctx.runtimeReleased;
     if (submit) {
       submit.dataset.sourceCountry = ctx.code;
-      submit.textContent = ctx.runtimeReleased
-        ? "Zobrazit pravidla a výpočet →"
-        : "Slovenský výpočet zatím není vydán";
+      submit.textContent = ctx.runtimeReleased ? "Zobrazit pravidla a výpočet →" : "Slovenský výpočet zatím není vydán";
       submit.setAttribute("aria-disabled", String(!ctx.runtimeReleased));
     }
   }
@@ -144,18 +133,13 @@
   function applyContext(code) {
     currentCode = String(code || "CZ").toUpperCase();
     const ctx = context();
-    payerCountries.set(activePayerKey(), currentCode);
-    countrySelect.value = currentCode;
     applyCurrencyDefaults(ctx);
     applyCopy(ctx);
     applyReleaseState(ctx);
     window.dispatchEvent(new CustomEvent("taxtreat:source-country-change", { detail: ctx }));
   }
 
-  countrySelect.addEventListener("change", () => applyContext(countrySelect.value));
-  activePayerSelect.addEventListener("change", () => {
-    applyContext(payerCountries.get(activePayerKey()) || "CZ");
-  });
+  activePayerSelect.addEventListener("change", () => applyContext(inferredCountryForActivePayer()));
 
   function blockCnbListenerForSk(event) {
     if (currentCode !== "SK") return;
@@ -169,17 +153,13 @@
   const nativeFetch = window.fetch.bind(window);
   window.fetch = async function sourceCountryAwareFetch(resource, options = {}) {
     const url = typeof resource === "string" ? resource : String(resource?.url || "");
-    if (currentCode === "SK" && url.startsWith("/exchange-rates/cnb")) {
-      throw new Error("CNB exchange-rate service is prohibited for Slovak source-country context");
-    }
+    if (currentCode === "SK" && url.startsWith("/exchange-rates/cnb")) throw new Error("CNB exchange-rate service is prohibited for Slovak source-country context");
     if (url.includes("/analysis") && options.body) {
       try {
         const payload = JSON.parse(String(options.body));
         payload.source_country = currentCode;
         options = { ...options, body: JSON.stringify(payload) };
-      } catch (_problem) {
-        // The analysis endpoint validates malformed payloads itself.
-      }
+      } catch (_problem) {}
     }
     return nativeFetch(resource, options);
   };
@@ -198,8 +178,15 @@
   window.TaxTreatWorkspaceSourceCountry = Object.freeze({
     getActiveCode: () => currentCode,
     getActiveContext: () => context(),
-    setActiveCode: (code) => applyContext(code),
+    setPayerCountry: (payerKey, code) => {
+      payerCountries.set(String(payerKey), String(code || "CZ").toUpperCase());
+      if (String(payerKey) === activePayerKey()) applyContext(inferredCountryForActivePayer());
+    },
+    setActiveCode: (code) => {
+      payerCountries.set(activePayerKey(), String(code || "CZ").toUpperCase());
+      applyContext(inferredCountryForActivePayer());
+    },
   });
 
-  applyContext(payerCountries.get(activePayerKey()) || "CZ");
+  applyContext(inferredCountryForActivePayer());
 })();
