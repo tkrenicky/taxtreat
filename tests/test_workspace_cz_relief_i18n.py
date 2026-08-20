@@ -6,6 +6,7 @@ LOADER = ROOT / "app" / "web" / "workspace-report-export.js"
 ENHANCEMENT = ROOT / "app" / "web" / "workspace-cz-relief-i18n.js"
 SOURCE_ADAPTER = ROOT / "app" / "web" / "workspace-source-country-adapter.js"
 PAYER_COUNTRY = ROOT / "app" / "web" / "workspace-payer-country.js"
+FINAL_POLISH = ROOT / "app" / "web" / "workspace-final-polish.js"
 REPORT_CONTEXT = ROOT / "app" / "web" / "workspace-report-context.js"
 
 
@@ -16,12 +17,15 @@ def test_workspace_loads_enhancements_in_safe_order_before_report_core():
         "source-country-context.js",
         "workspace-source-country-adapter.js",
         "workspace-payer-country.js",
+        "workspace-final-polish.js",
         "workspace-report-context.js",
         "workspace-report-export-core.js",
     ):
         assert script in text
     assert text.index("workspace-cz-relief-i18n.js") < text.index("workspace-source-country-adapter.js")
     assert text.index("workspace-source-country-adapter.js") < text.index("workspace-payer-country.js")
+    assert text.index("workspace-payer-country.js") < text.index("workspace-final-polish.js")
+    assert text.index("workspace-final-polish.js") < text.index("workspace-report-context.js")
     assert text.index("workspace-report-context.js") < text.index("workspace-report-export-core.js")
 
 
@@ -47,6 +51,14 @@ def test_section19_questions_are_plain_facts_not_legal_conclusions():
     assert "recipient_is_parent_company = Boolean" in text
     assert "Splňuje příjemce postavení mateřské společnosti" not in text
     assert "Je příjemce kvalifikovanou společností v přípustné právní formě" not in text
+
+
+def test_section19_unknown_answers_are_fail_closed_not_false():
+    text = FINAL_POLISH.read_text(encoding="utf-8")
+    assert 'option.value = "unknown"' in text
+    assert "Nevím / potřebuji ověřit" in text
+    assert "TaxTreat pak osvobození neuzavře" in text
+    assert "zvol raději „Ne“" not in text
 
 
 def test_section19_is_visible_in_result_and_precedes_treaty_conclusion():
@@ -75,6 +87,13 @@ def test_only_web_language_control_is_in_header_and_report_language_is_by_export
     assert "translateReportHtml" in text
 
 
+def test_payer_and_section19_polish_is_bilingual():
+    text = FINAL_POLISH.read_text(encoding="utf-8")
+    assert '"Stát plátce *", "Payer country *"' in text
+    assert '"Jazyk reportu", "Report language"' in text
+    assert '"Nevím / potřebuji ověřit", "I don\'t know / needs verification"' in text
+
+
 def test_source_country_is_payer_derived_and_not_user_selectable():
     text = SOURCE_ADAPTER.read_text(encoding="utf-8")
     assert "inferredCountryForActivePayer" in text
@@ -84,7 +103,7 @@ def test_source_country_is_payer_derived_and_not_user_selectable():
     assert "getPayerCountry" in text
 
 
-def test_payer_editor_contains_country_fact_and_explains_its_effect():
+def test_payer_editor_contains_country_fact_and_handles_dynamic_edit_dialog():
     text = PAYER_COUNTRY.read_text(encoding="utf-8")
     assert "Stát plátce *" in text
     assert '<option value="CZ">Česká republika</option>' in text
@@ -92,6 +111,8 @@ def test_payer_editor_contains_country_fact_and_explains_its_effect():
     assert "určuje, která vnitrostátní pravidla srážkové daně" in text
     assert "setPayerCountry" in text
     assert "ARES" in text
+    assert 'attributeFilter: ["open"]' in text
+    assert "refreshPayerCountryCopy" in text
 
 
 def test_report_regeneration_preserves_section19_facts_and_report_language():
