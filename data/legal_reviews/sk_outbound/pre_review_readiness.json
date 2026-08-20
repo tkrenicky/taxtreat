@@ -1,0 +1,141 @@
+{
+  "all_machine_evidence_ready": true,
+  "blockers": [],
+  "compliance": {
+    "country_specific": true,
+    "czech_reuse_prohibited": true,
+    "form_code": "OZN4311v26",
+    "monthly_section_43_11_modelled": true,
+    "ordinary_annual_wht_return_configured": false,
+    "present": true,
+    "runtime_release": false
+  },
+  "dataset_release": "sk-pre-review-readiness-2026-08-19.5",
+  "domestic": {
+    "cooperating_state_list_ingestion_complete": true,
+    "dividend_model": {
+      "2026_source_version": true,
+      "distribution_deductibility_required": true,
+      "non_cooperating_state_gate_preserved": true,
+      "outside_subject_rule_modelled": true,
+      "present": true,
+      "runtime_release": false,
+      "slovak_specific": true
+    },
+    "domestic_rate_branch_machine_ready": true,
+    "eu_interest_royalty_and_pe_condition_model_present": true
+  },
+  "fail_closed": true,
+  "human_review": {
+    "completed": true,
+    "legal_review_covered_scopes": 225,
+    "may_start": true,
+    "pattern_reconciled_scopes": 201,
+    "reviewed_scopes": 24,
+    "started": true
+  },
+  "machine_ingestion": {
+    "mli_extraction_summary": {
+      "dataset_release": "sk-mli-notice-machine-extraction-2026-08-19.2",
+      "fail_closed": true,
+      "human_reviewed_relationships": 0,
+      "machine_extraction_completed": 46,
+      "production_released_relationships": 0,
+      "relationship_count": 46,
+      "schema_version": 1,
+      "substantive_articles_extracted_relationships": 46,
+      "superseding_notice_relationships": 1,
+      "wht_date_extracted_relationships": 46
+    },
+    "mli_relationships_extracted": 46,
+    "raw_summary": {
+      "fail_closed": true,
+      "human_reviewed_scopes": 0,
+      "mli_relationships_blocked": 0,
+      "mli_relationships_machine_extracted": 46,
+      "mli_relationships_total": 46,
+      "prerelease_runtime_manifest_released_scopes": 0,
+      "prerelease_runtime_manifest_scopes": 225,
+      "production_released_scopes": 0,
+      "schema_version": 4,
+      "semantic_candidate_scopes": 225,
+      "source_country": "SK",
+      "treaty_primary_summary_fallback_relationships": 0,
+      "treaty_relationships_blocked": 0,
+      "treaty_relationships_machine_evidence_ready": 75,
+      "treaty_relationships_total": 75,
+      "treaty_scopes_total": 225
+    },
+    "run_completed": true,
+    "semantic_candidate_scopes": 225,
+    "semantic_summary": {
+      "beneficial_owner_wording_scopes": 149,
+      "blocked_rows": 0,
+      "candidate_rows": 225,
+      "dataset_release": "sk-treaty-semantic-candidates-2026-08-19.3",
+      "exclusive_residence_candidates": 13,
+      "fail_closed": true,
+      "human_reviewed_scopes": 0,
+      "pe_carveout_wording_scopes": 132,
+      "primary_summary_fallback_rows": 0,
+      "production_released_scopes": 0,
+      "schema_version": 3,
+      "scope_count": 225,
+      "scopes_with_rate_candidates": 152
+    },
+    "treaty_extraction_summary": {
+      "article_extracted_scopes": 225,
+      "dataset_release": "sk-treaty-article-machine-extraction-2026-08-19.4",
+      "fail_closed": true,
+      "human_reviewed_scopes": 0,
+      "non_standard_source_scopes": 0,
+      "number_variance_scopes": 11,
+      "production_released_scopes": 0,
+      "relationship_count": 75,
+      "schema_version": 2,
+      "scope_count": 225,
+      "title_mismatch_scopes": 0,
+      "unresolved_article_scopes": 0
+    },
+    "treaty_primary_summary_fallback_relationships": 0,
+    "treaty_relationships_machine_evidence_ready": 75
+  },
+  "machine_preparation": {
+    "review_ready_scopes_from_initial_preparation": 0,
+    "scopes": 225
+  },
+  "mli_instrument_chain": {
+    "relationships": 46,
+    "resolved_relationships": 46,
+    "unresolved_notice_mismatches": 0
+  },
+  "prerelease_runtime_manifest": {
+    "cooperating_state_list_ready_scopes": 225,
+    "dataset_release": "sk-prerelease-runtime-manifest-2026-08-19.2",
+    "exclusive_residence_candidate_scopes": 13,
+    "fail_closed": true,
+    "human_reviewed_scopes": 24,
+    "legal_review_covered_scopes": 225,
+    "mli_scopes": 138,
+    "non_mli_scopes": 87,
+    "pattern_reconciled_scopes": 201,
+    "primary_summary_fallback_scopes": 0,
+    "production_released_scopes": 0,
+    "schema_version": 2,
+    "scope_count": 225,
+    "scopes_with_rate_candidates": 152
+  },
+  "runtime": {
+    "production_released_scopes": 0,
+    "released": false
+  },
+  "schema_version": 5,
+  "source_country": "SK",
+  "target": {
+    "country_relationships": 75,
+    "human_review_start_policy": "only_after_complete_machine_evidence_for_entire_sk_scope",
+    "mli_relationships": 46,
+    "production_parity_target": "same_functional_and_legal_quality_as_current_czech_web_branch",
+    "treaty_scopes": 225
+  }
+}
