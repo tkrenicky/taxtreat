@@ -5,12 +5,24 @@ ROOT = Path(__file__).resolve().parents[1]
 LOADER = ROOT / "app" / "web" / "workspace-report-export.js"
 ENHANCEMENT = ROOT / "app" / "web" / "workspace-cz-relief-i18n.js"
 SOURCE_ADAPTER = ROOT / "app" / "web" / "workspace-source-country-adapter.js"
+PAYER_COUNTRY = ROOT / "app" / "web" / "workspace-payer-country.js"
+REPORT_CONTEXT = ROOT / "app" / "web" / "workspace-report-context.js"
 
 
-def test_workspace_loads_czech_relief_and_language_layer_before_report_core():
+def test_workspace_loads_enhancements_in_safe_order_before_report_core():
     text = LOADER.read_text(encoding="utf-8")
-    assert "workspace-cz-relief-i18n.js" in text
-    assert text.index("workspace-cz-relief-i18n.js") < text.index("workspace-report-export-core.js")
+    for script in (
+        "workspace-cz-relief-i18n.js",
+        "source-country-context.js",
+        "workspace-source-country-adapter.js",
+        "workspace-payer-country.js",
+        "workspace-report-context.js",
+        "workspace-report-export-core.js",
+    ):
+        assert script in text
+    assert text.index("workspace-cz-relief-i18n.js") < text.index("workspace-source-country-adapter.js")
+    assert text.index("workspace-source-country-adapter.js") < text.index("workspace-payer-country.js")
+    assert text.index("workspace-report-context.js") < text.index("workspace-report-export-core.js")
 
 
 def test_czech_dividend_section19_facts_are_sent_to_engine():
@@ -42,6 +54,7 @@ def test_section19_is_visible_in_result_and_precedes_treaty_conclusion():
     assert "Vnitrostátní osvobození podle § 19 ZDP" in text
     assert "Primárním právním titulem je § 19 ZDP" in text
     assert "§ 19 se posuzuje před smluvní úlevou" in text
+    assert "reason.before(box)" in text
 
 
 def test_interest_and_royalty_exemption_is_informational_only():
@@ -58,6 +71,7 @@ def test_only_web_language_control_is_in_header_and_report_language_is_by_export
     assert "taxtreat-report-language" in text
     assert 'const actions = document.querySelector(\'.flow-step[data-step="4"] .flow-actions\')' in text
     assert 'label.id = "taxtreat-language-controls"' in text
+    assert "Jazyk reportu" in text
     assert "translateReportHtml" in text
 
 
@@ -67,3 +81,24 @@ def test_source_country_is_payer_derived_and_not_user_selectable():
     assert 'activePayerSelect.addEventListener("change"' in text
     assert "active-source-country" not in text
     assert "setPayerCountry" in text
+    assert "getPayerCountry" in text
+
+
+def test_payer_editor_contains_country_fact_and_explains_its_effect():
+    text = PAYER_COUNTRY.read_text(encoding="utf-8")
+    assert "Stát plátce *" in text
+    assert '<option value="CZ">Česká republika</option>' in text
+    assert '<option value="SK">Slovensko</option>' in text
+    assert "určuje, která vnitrostátní pravidla srážkové daně" in text
+    assert "setPayerCountry" in text
+    assert "ARES" in text
+
+
+def test_report_regeneration_preserves_section19_facts_and_report_language():
+    text = REPORT_CONTEXT.read_text(encoding="utf-8")
+    assert 'url.endsWith("/analysis/report")' in text
+    assert "__report_language" in text
+    assert "recipient_is_qualifying_company_form" in text
+    assert "recipient_is_tax_resident_in_eligible_jurisdiction" in text
+    assert "recipient_subject_to_qualifying_corporate_tax" in text
+    assert "recipient_is_parent_company" in text
