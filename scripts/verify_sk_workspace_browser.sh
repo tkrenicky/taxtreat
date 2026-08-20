@@ -23,10 +23,7 @@ else
 from urllib.request import urlopen
 urlopen("$BASE_URL/health/live", timeout=1).read()
 PY
-    then
-      READY=1
-      break
-    fi
+    then READY=1; break; fi
     sleep 1
   done
 
@@ -39,15 +36,9 @@ PY
     agent-browser --session "$SESSION" wait --load networkidle >/dev/null 2>&1 || STATUS=1
 
     check_eval() {
-      LABEL="$1"
-      EXPRESSION="$2"
+      LABEL="$1"; EXPRESSION="$2"
       RESULT="$(agent-browser --session "$SESSION" eval "$EXPRESSION" 2>/dev/null)"
-      if [ "$RESULT" = "true" ]; then
-        echo "PASS: $LABEL"
-      else
-        echo "FAIL: $LABEL -> $RESULT"
-        STATUS=1
-      fi
+      if [ "$RESULT" = "true" ]; then echo "PASS: $LABEL"; else echo "FAIL: $LABEL -> $RESULT"; STATUS=1; fi
     }
 
     run_eval() {
@@ -57,10 +48,11 @@ PY
     }
 
     check_eval "initial CZ source country" 'document.body.dataset.sourceCountry === "CZ"'
+    check_eval "source country is not user-selectable" 'document.querySelector("#active-source-country") === null'
     check_eval "initial CZ currency" 'document.querySelector("#workspace-payment [name=currency]").value === "CZK"'
     check_eval "initial CZ runtime released" 'window.TaxTreatWorkspaceSourceCountry.getActiveContext().runtimeReleased === true'
 
-    run_eval '(() => { const s=document.querySelector("#active-source-country"); s.value="SK"; s.dispatchEvent(new Event("change", {bubbles:true})); return true; })()'
+    run_eval '(() => { window.TaxTreatWorkspaceSourceCountry.setActiveCode("SK"); return true; })()'
 
     check_eval "SK source country" 'document.body.dataset.sourceCountry === "SK"'
     check_eval "SK EUR currency" 'document.querySelector("#workspace-payment [name=currency]").value === "EUR"'
@@ -83,7 +75,7 @@ PY
     run_eval '(() => { document.querySelector("[data-nav=sources]").click(); return true; })()'
     check_eval "SK source metrics 75 / 225" '(() => { const a=[...document.querySelectorAll("[data-view=sources] .source-metrics strong")].map(n=>n.textContent.trim()); return a[0] === "75" && a[1] === "225"; })()'
 
-    run_eval '(() => { const s=document.querySelector("#active-source-country"); s.value="CZ"; s.dispatchEvent(new Event("change", {bubbles:true})); return true; })()'
+    run_eval '(() => { window.TaxTreatWorkspaceSourceCountry.setActiveCode("CZ"); return true; })()'
     check_eval "return to CZ source country" 'document.body.dataset.sourceCountry === "CZ"'
     check_eval "return to CZ currency" 'document.querySelector("#workspace-payment [name=currency]").value === "CZK"'
     check_eval "return to CZ source metrics 101 / 303" '(() => { const a=[...document.querySelectorAll("[data-view=sources] .source-metrics strong")].map(n=>n.textContent.trim()); return a[0] === "101" && a[1] === "303"; })()'
@@ -92,20 +84,12 @@ PY
     run_eval '(() => { document.querySelector("[data-view=recipients] [data-open-recipient]").click(); return true; })()'
     check_eval "return to CZ PE label" '[...document.querySelectorAll("[data-view=recipient-detail] dt")].some(n => n.textContent.includes("Vazba ke stálé provozovně v ČR"))'
 
-    if [ "$STATUS" -eq 0 ]; then
-      echo "BROWSER_SMOKE_OK"
-    else
-      echo "BROWSER_SMOKE_FAILED"
-      agent-browser --session "$SESSION" screenshot --full >/dev/null 2>&1 || true
-    fi
+    if [ "$STATUS" -eq 0 ]; then echo "BROWSER_SMOKE_OK"; else echo "BROWSER_SMOKE_FAILED"; agent-browser --session "$SESSION" screenshot --full >/dev/null 2>&1 || true; fi
   fi
 
   agent-browser --session "$SESSION" close >/dev/null 2>&1 || true
 fi
 
-if [ -n "$SERVER_PID" ]; then
-  kill "$SERVER_PID" >/dev/null 2>&1 || true
-  wait "$SERVER_PID" >/dev/null 2>&1 || true
-fi
+if [ -n "$SERVER_PID" ]; then kill "$SERVER_PID" >/dev/null 2>&1 || true; wait "$SERVER_PID" >/dev/null 2>&1 || true; fi
 
 echo "Browser smoke status: $STATUS"
