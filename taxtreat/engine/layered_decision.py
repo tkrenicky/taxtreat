@@ -23,6 +23,31 @@ _LAYER_ORDER = {
     "eu_relief": 4,
 }
 
+_TREATMENT_ORDER = {
+    TaxTreatment.DOMESTIC_EXEMPTION: 0,
+    TaxTreatment.EXCLUSIVE_FOREIGN_TAXATION: 1,
+    TaxTreatment.TAXABLE_AT_RATE: 2,
+    None: 9,
+}
+
+
+def _candidate_sort_key(rule: LegalRule) -> tuple[Any, ...]:
+    """Prefer the most favourable outcome and preserve its correct legal basis.
+
+    A Czech domestic exemption is a complete domestic-law outcome.  Where it
+    produces the same numerical result as treaty-exclusive taxation (normally
+    both are represented by a zero rate), the exemption must remain the
+    selected legal basis rather than being displaced by the treaty layer.
+    """
+
+    return (
+        float(rule.rate) if rule.rate is not None else float("inf"),
+        _TREATMENT_ORDER.get(resolve_tax_treatment(rule), 9),
+        -_LAYER_ORDER.get(rule.legal_layer, 99),
+        rule.priority,
+        rule.rule_id,
+    )
+
 
 def _normalize_missing(rule: LegalRule, missing: list[str]) -> list[str]:
     determination_names = {
@@ -203,14 +228,7 @@ def evaluate_layered_rules(
     candidates = [
         rule for rule, matches, _, _ in evaluated_rates if matches
     ]
-    candidates.sort(
-        key=lambda rule: (
-            float(rule.rate) if rule.rate is not None else float("inf"),
-            -_LAYER_ORDER.get(rule.legal_layer, 99),
-            rule.priority,
-            rule.rule_id,
-        )
-    )
+    candidates.sort(key=_candidate_sort_key)
     if not candidates:
         result.missing_facts = sorted(missing_material)
         result.explanation.append(
