@@ -35,22 +35,37 @@ def _flip_sk_runtime_flag(monkeypatch):
     )
 
 
-def test_sk_is_rejected_at_source_country_release_layer_before_analysis():
-    with pytest.raises(SourceCountryNotReleasedError) as exc_info:
-        require_source_country_analysis_release("sk")
+def test_sk_is_released_at_source_country_release_layer_before_analysis():
+    decision = require_source_country_analysis_release("sk")
 
-    decision = exc_info.value.decision
     assert decision.source_country == "SK"
-    assert decision.allowed is False
-    assert decision.code == "SOURCE_COUNTRY_NOT_RELEASED"
-    assert decision.release_status == "pre_release"
-    assert "source_country_runtime_release_false" in decision.blockers
-    assert "full_human_legal_review_not_completed" in decision.blockers
+    assert decision.allowed is True
+    assert decision.code == "SOURCE_COUNTRY_RELEASED"
+    assert decision.release_status == "released"
+    assert decision.blockers == ()
 
 
-def test_runtime_flag_alone_cannot_release_sk(monkeypatch):
+def test_runtime_flag_alone_cannot_release_sk(tmp_path, monkeypatch):
+    import json
+
     config = _released_sk_config()
     monkeypatch.setattr(gate_module, "get_country_config", lambda code: config)
+
+    manifest = json.loads(
+        gate_module._release_manifest_path("SK").read_text(encoding="utf-8")
+    )
+    manifest["release_eligible"] = False
+    manifest["release_status"] = "pre_release"
+    manifest["blockers"] = ["synthetic_release_not_completed"]
+
+    manifest_path = tmp_path / "source_country_release_manifest.json"
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+    monkeypatch.setattr(
+        gate_module,
+        "_release_manifest_path",
+        lambda code: manifest_path,
+    )
 
     with pytest.raises(SourceCountryNotReleasedError) as exc_info:
         require_source_country_analysis_release("SK")
@@ -59,7 +74,7 @@ def test_runtime_flag_alone_cannot_release_sk(monkeypatch):
     assert decision.allowed is False
     assert decision.code == "SOURCE_COUNTRY_RELEASE_EVIDENCE_INCOMPLETE"
     assert "release_manifest_not_eligible" in decision.blockers
-    assert "final_release_validation_not_completed" in decision.blockers
+    assert "synthetic_release_not_completed" in decision.blockers
 
 
 def test_missing_release_manifest_fails_closed_even_if_runtime_flag_true(tmp_path, monkeypatch):

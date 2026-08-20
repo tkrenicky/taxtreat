@@ -19,11 +19,11 @@ def test_country_registry_exposes_cz_and_fail_closed_sk():
     assert cz.currency == "CZK"
     assert cz.fx_provider == "CNB"
 
-    assert sk.runtime_released is False
+    assert sk.runtime_released is True
     assert sk.currency == "EUR"
     assert sk.treaty_partner_registry is not None
     assert sk.treaty_partner_registry.name == "sk_treaty_partners.json"
-    assert sk.fx_provider is None
+    assert sk.fx_provider == "ECB/NBS"
     assert sk.domestic_law_label == "zákon č. 595/2003 Z. z."
     assert "/2003/595/20260101.print.html" in sk.domestic_legal_source_url
     assert "e-sbirka" not in sk.domestic_legal_source_url

@@ -7,7 +7,7 @@ from taxtreat.services.decision import (
 )
 
 
-def test_registered_unreleased_sk_source_country_fails_closed():
+def test_registered_released_sk_source_country_reaches_normal_scope_evaluation():
     result = analyze_transaction(
         CanonicalAnalysisRequest(
             source_country="SK",
@@ -18,15 +18,11 @@ def test_registered_unreleased_sk_source_country_fails_closed():
         )
     )
 
-    assert result.status == DecisionStatus.REVIEW_REQUIRED
-    assert result.requires_review is True
+    assert result.status == DecisionStatus.OUT_OF_SCOPE
+    assert result.requires_review is False
     assert result.rate is None
     assert result.eligible is False
-    assert result.missing_legal_layers == [
-        "domestic",
-        "mli",
-        "treaty_or_protocol",
-    ]
+    assert result.missing_legal_layers == []
     assert result.explanation == [
-        "SK source-country package has not been released."
+        "The requested country-income scope is not supported."
     ]

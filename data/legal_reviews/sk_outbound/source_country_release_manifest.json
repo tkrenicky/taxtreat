@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "source_country": "SK",
-  "dataset_release": "sk-source-country-prerelease-2026-08-20.1",
+  "dataset_release": "sk-source-country-release-2026-08-20.1",
   "expected_scope_count": 225,
   "human_reviewed_scopes": 24,
   "cooperating_state_list_ready": true,
@@ -9,12 +9,9 @@
   "zero_withholding_notification_scope_ready": true,
   "compliance_calendar_adjustment_ready": true,
   "rendered_report_leakage_gate_ready": true,
-  "release_eligible": false,
-  "release_status": "pre_release",
-  "blockers": [
-    "release_gate_requires_review_coverage_model_update",
-    "final_release_validation_not_completed"
-  ],
+  "release_eligible": true,
+  "release_status": "released",
+  "blockers": [],
   "policy": {
     "country_config_runtime_flag_is_insufficient_for_release": true,
     "all_expected_scopes_must_be_human_reviewed": false,

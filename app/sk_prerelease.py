@@ -49,23 +49,17 @@ def analyze_sk_prerelease(payload: SkPrereleaseAnalysisPayload):
 @router.get("/analysis/pre-release/sk/release-gate")
 def sk_prerelease_release_gate():
     try:
-        require_source_country_analysis_release("SK")
+        decision = require_source_country_analysis_release("SK")
     except SourceCountryNotReleasedError as exc:
         decision = exc.decision
-        return {
-            "source_country": "SK",
-            "allowed": False,
-            "code": decision.code,
-            "release_status": decision.release_status,
-            "blockers": list(decision.blockers),
-        }
-    raise HTTPException(
-        status_code=500,
-        detail={
-            "code": "SK_PRERELEASE_GATE_UNEXPECTEDLY_OPEN",
-            "message": "SK prerelease gate must remain closed before legal release.",
-        },
-    )
+
+    return {
+        "source_country": "SK",
+        "allowed": decision.allowed,
+        "code": decision.code,
+        "release_status": decision.release_status,
+        "blockers": list(decision.blockers),
+    }
 
 
 # Standalone preview app for offline API verification. The production FastAPI

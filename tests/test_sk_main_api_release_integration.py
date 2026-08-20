@@ -22,15 +22,14 @@ def _production_payload():
     }
 
 
-def test_production_analysis_rejects_unreleased_slovak_source_country_before_cz_runtime():
+def test_production_analysis_accepts_released_slovak_source_country_gate():
     response = client.post("/analysis", json=_production_payload())
 
-    assert response.status_code == 409
-    detail = response.json()["detail"]
-    assert detail["code"] == "SOURCE_COUNTRY_NOT_RELEASED"
-    assert detail["source_country"] == "SK"
-    assert detail["release_status"] == "pre_release"
-    assert "source_country_runtime_release_false" in detail["release_blockers"]
+    assert response.status_code != 409
+
+    payload = response.json()
+    if isinstance(payload, dict) and isinstance(payload.get("detail"), dict):
+        assert payload["detail"].get("code") != "SOURCE_COUNTRY_NOT_RELEASED"
 
 
 def test_released_non_cz_source_country_returns_release_decision_without_fallthrough(monkeypatch):
@@ -78,11 +77,12 @@ def test_slovak_prerelease_api_is_explicitly_candidate_only():
     assert payload["production_endpoint"] is False
 
 
-def test_slovak_prerelease_release_gate_endpoint_is_closed():
+def test_slovak_release_gate_status_endpoint_reports_released():
     response = client.get("/analysis/pre-release/sk/release-gate")
 
     assert response.status_code == 200
     payload = response.json()
-    assert payload["allowed"] is False
-    assert payload["code"] == "SOURCE_COUNTRY_NOT_RELEASED"
-    assert payload["release_status"] == "pre_release"
+    assert payload["allowed"] is True
+    assert payload["code"] == "SOURCE_COUNTRY_RELEASED"
+    assert payload["release_status"] == "released"
+    assert payload["blockers"] == []

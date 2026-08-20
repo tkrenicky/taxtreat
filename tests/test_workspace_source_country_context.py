@@ -15,8 +15,8 @@ def test_workspace_source_country_context_distinguishes_cz_and_sk():
 
     assert 'code: "SK"' in text
     assert 'baseCurrency: "EUR"' in text
-    assert 'fxProvider: null' in text
-    assert 'runtimeReleased: false' in text
+    assert 'fxProvider: "ECB/NBS"' in text
+    assert text.count('runtimeReleased: true') >= 2
     assert 'complianceFormCode: "OZN4311v26"' in text
     assert '§ 43 ods. 11 zákona č. 595/2003 Z. z.' in text
     assert 'Slovenská zrážková daň' in text
@@ -27,18 +27,18 @@ def test_workspace_source_country_context_has_no_czech_fx_fallback_for_sk():
 
     sk_block = text.split('SK: Object.freeze({', 1)[1].split('}),', 1)[0]
     assert 'baseCurrency: "EUR"' in sk_block
-    assert 'fxProvider: null' in sk_block
+    assert 'fxProvider: "ECB/NBS"' in sk_block
     assert 'CNB' not in sk_block
     assert '586/1992' not in sk_block
     assert '38da' not in sk_block
 
 
-def test_workspace_source_country_context_keeps_sk_prerelease_fail_closed():
+def test_workspace_source_country_context_exposes_released_sk():
     text = CONTEXT_JS.read_text(encoding="utf-8")
 
     assert 'function finalAnalysisAllowed(code)' in text
     assert 'runtimeReleased === true' in text
-    assert 'availability: "pre_release"' in text
+    assert 'availability: "released"' in text
 
 
 def test_workspace_source_country_context_carries_sk_monthly_compliance_timing():

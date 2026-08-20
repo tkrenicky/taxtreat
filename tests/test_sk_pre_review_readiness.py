@@ -49,7 +49,7 @@ def test_sk_compliance_is_country_specific_and_does_not_reuse_czech_rules():
     assert compliance["czech_reuse_prohibited"] is True
     assert compliance["form_code"] == "OZN4311v26"
     assert compliance["ordinary_annual_wht_return_configured"] is False
-    assert compliance["runtime_release"] is False
+    assert compliance["runtime_release"] is True
     assert "sk_2026_compliance_profile_missing" not in payload["blockers"]
     assert "sk_2026_compliance_profile_incomplete" not in payload["blockers"]
 
