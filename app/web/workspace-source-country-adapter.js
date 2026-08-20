@@ -178,6 +178,7 @@
   window.TaxTreatWorkspaceSourceCountry = Object.freeze({
     getActiveCode: () => currentCode,
     getActiveContext: () => context(),
+    getPayerCountry: (payerKey) => payerCountries.get(String(payerKey)) || (String(payerKey) === activePayerKey() ? inferredCountryForActivePayer() : "CZ"),
     setPayerCountry: (payerKey, code) => {
       payerCountries.set(String(payerKey), String(code || "CZ").toUpperCase());
       if (String(payerKey) === activePayerKey()) applyContext(inferredCountryForActivePayer());
