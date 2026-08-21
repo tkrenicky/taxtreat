@@ -6,45 +6,46 @@
   const style = document.createElement("style");
   style.id = "tt-main-nav-size-fix-20260821";
   style.textContent = `
-    /* Main navigation tiles — intentionally and visibly larger. */
+    /* Main navigation tiles — deliberately much larger. */
     .app-header nav {
       display:flex!important;
       align-items:center!important;
-      gap:10px!important;
+      gap:12px!important;
     }
 
     .app-header nav button[data-nav] {
-      min-height:56px!important;
-      min-width:112px!important;
-      padding:0 22px!important;
-      border-radius:12px!important;
-      font-size:19px!important;
+      min-height:64px!important;
+      min-width:136px!important;
+      padding:0 28px!important;
+      border-radius:13px!important;
+      font-size:24px!important;
       line-height:1!important;
-      font-weight:760!important;
-      letter-spacing:-0.01em!important;
+      font-weight:780!important;
+      letter-spacing:-0.015em!important;
     }
 
     .app-header nav button[data-nav].active {
-      background:rgba(255,255,255,.14)!important;
-      box-shadow:inset 0 -3px 0 rgba(255,255,255,.95)!important;
+      background:rgba(255,255,255,.15)!important;
+      box-shadow:inset 0 -4px 0 rgba(255,255,255,.96)!important;
     }
 
-    @media (max-width:1180px) {
-      .app-header nav { gap:7px!important; }
+    @media (max-width:1320px) {
+      .app-header nav { gap:9px!important; }
       .app-header nav button[data-nav] {
-        min-width:98px!important;
-        min-height:52px!important;
-        padding:0 17px!important;
-        font-size:18px!important;
+        min-width:116px!important;
+        min-height:60px!important;
+        padding:0 22px!important;
+        font-size:22px!important;
       }
     }
 
-    @media (max-width:980px) {
+    @media (max-width:1080px) {
+      .app-header nav { gap:6px!important; }
       .app-header nav button[data-nav] {
         min-width:0!important;
-        min-height:48px!important;
-        padding:0 13px!important;
-        font-size:17px!important;
+        min-height:54px!important;
+        padding:0 15px!important;
+        font-size:20px!important;
       }
     }
   `;
