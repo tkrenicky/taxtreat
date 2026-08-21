@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "dataset_release": "sk-mli-pair-specific-verified-2026-08-19.1",
+  "source_country": "SK",
+  "policy": {
+    "bilateral_slovak_notice_is_primary_machine_evidence": true,
+    "matched_effects_only": true,
+    "wht_effective_date_is_income_tax_withholding_specific": true,
+    "capital_gains_only_mli_effects_do_not_modify_dividend_interest_royalty_scopes": true,
+    "human_review_status": "not_started",
+    "runtime_release": false
+  },
+  "verified_relationship_count": 3,
+  "relationships": [
+    {
+      "recipient_country": "AT",
+      "recipient_country_name": "Rakúsko",
+      "current_slovak_notice": "410/2018",
+      "current_notice_url": "https://static.slov-lex.sk/static/SK/ZZ/2018/410/vyhlasene_znenie.html",
+      "superseded_notices": [],
+      "wht_effective_from": "2019-01-01",
+      "wht_effective_date_status": "confirmed_from_notice",
+      "substantive_matching_status": "confirmed_from_bilateral_notice",
+      "result_relevant_effects": [
+        {
+          "mli_article": "7",
+          "effect": "principal_purpose_test",
+          "income_types": ["dividend", "interest", "royalty"],
+          "can_deny_treaty_benefit": true
+        },
+        {
+          "mli_article": "10",
+          "effect": "third_jurisdiction_pe_anti_abuse",
+          "income_types": ["dividend", "interest", "royalty"],
+          "can_deny_treaty_benefit": true
+        },
+        {
+          "mli_article": "13",
+          "effect": "specific_activity_pe_exemption_modification",
+          "income_types": ["dividend", "interest", "royalty"],
+          "can_change_pe_connection": true
+        }
+      ],
+      "non_product_scope_effects": ["MLI Article 5 relief-method modification", "MLI Article 17 corresponding adjustment"],
+      "review_ready": false,
+      "human_review_status": "not_started",
+      "runtime_status": "not_released"
+    },
+    {
+      "recipient_country": "NL",
+      "recipient_country_name": "Holandsko",
+      "current_slovak_notice": "486/2019",
+      "current_notice_url": "https://static.slov-lex.sk/static/SK/ZZ/2019/486/vyhlasene_znenie.html",
+      "superseded_notices": [],
+      "wht_effective_from": "2020-01-01",
+      "wht_effective_date_status": "confirmed_from_notice",
+      "substantive_matching_status": "confirmed_from_bilateral_notice",
+      "result_relevant_effects": [
+        {
+          "mli_article": "3",
+          "effect": "transparent_entity_treaty_entitlement",
+          "income_types": ["dividend", "interest", "royalty"],
+          "can_change_treaty_entitlement": true
+        },
+        {
+          "mli_article": "4",
+          "effect": "dual_resident_entity_mutual_agreement_entitlement",
+          "income_types": ["dividend", "interest", "royalty"],
+          "can_change_treaty_entitlement": true
+        },
+        {
+          "mli_article": "7",
+          "effect": "principal_purpose_test",
+          "income_types": ["dividend", "interest", "royalty"],
+          "can_deny_treaty_benefit": true
+        },
+        {
+          "mli_article": "8",
+          "effect": "dividend_ownership_365_day_test",
+          "income_types": ["dividend"],
+          "can_change_treaty_rate": true
+        },
+        {
+          "mli_article": "10",
+          "effect": "third_jurisdiction_pe_anti_abuse",
+          "income_types": ["dividend", "interest", "royalty"],
+          "can_deny_treaty_benefit": true
+        },
+        {
+          "mli_article": "13",
+          "effect": "specific_activity_pe_exemption_and_anti_fragmentation",
+          "income_types": ["dividend", "interest", "royalty"],
+          "can_change_pe_connection": true
+        },
+        {
+          "mli_article": "14",
+          "effect": "splitting_up_contracts_for_pe_threshold",
+          "income_types": ["dividend", "interest", "royalty"],
+          "can_change_pe_connection": true
+        },
+        {
+          "mli_article": "15",
+          "effect": "closely_related_enterprise_definition_for_pe_rules",
+          "income_types": ["dividend", "interest", "royalty"],
+          "can_change_pe_connection": true
+        }
+      ],
+      "instrument_chain": ["138/1974", "199/1997", "450/2010", "486/2019"],
+      "review_ready": false,
+      "human_review_status": "not_started",
+      "runtime_status": "not_released"
+    },
+    {
+      "recipient_country": "FI",
+      "recipient_country_name": "Fínsko",
+      "current_slovak_notice": "321/2023",
+      "current_notice_url": "https://static.slov-lex.sk/static/SK/ZZ/2023/321/vyhlasene_znenie.html",
+      "superseded_notices": ["255/2019"],
+      "supersession_effective_from": "2024-01-01",
+      "wht_effective_from": "2020-01-01",
+      "wht_effective_date_status": "confirmed_from_current_notice",
+      "substantive_matching_status": "confirmed_from_current_bilateral_notice",
+      "result_relevant_effects": [
+        {
+          "mli_article": "7",
+          "effect": "principal_purpose_test",
+          "income_types": ["dividend", "interest", "royalty"],
+          "can_deny_treaty_benefit": true,
+          "effective_from": "2020-01-01"
+        }
+      ],
+      "non_product_scope_effects": [
+        {
+          "mli_article": "9",
+          "effect": "land_rich_entity_capital_gains_365_day_test",
+          "effective_from_for_withholding_context": "2024-01-01",
+          "reason_excluded_from_product_scopes": "capital_gains_not_dividend_interest_royalty"
+        },
+        "MLI Article 16 MAP modification"
+      ],
+      "review_ready": false,
+      "human_review_status": "not_started",
+      "runtime_status": "not_released"
+    }
+  ]
+}

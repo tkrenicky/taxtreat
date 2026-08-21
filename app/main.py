@@ -30,6 +30,13 @@ from taxtreat.services.calculation import (
     build_withholding_compliance_schedule,
     build_withholding_tax_calculation,
 )
+from taxtreat.services.source_country_calculation import (
+    build_source_country_withholding_compliance_schedule,
+    build_source_country_withholding_tax_calculation,
+)
+from taxtreat.services.source_country_runtime_metadata import (
+    source_country_runtime_dataset_version,
+)
 from taxtreat.services.decision import (
     CanonicalAnalysisRequest,
     analyze_transaction,
@@ -44,6 +51,12 @@ from taxtreat.services.reporting import (
     build_professional_report,
     render_report_html,
 )
+from taxtreat.services.source_country_release_gate import (
+    SourceCountryNotReleasedError,
+    UnsupportedSourceCountryError,
+    require_source_country_analysis_release,
+)
+from app.sk_prerelease import router as sk_prerelease_router
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -61,6 +74,7 @@ app.mount(
     StaticFiles(directory=WEB_ROOT),
     name="ui-assets",
 )
+app.include_router(sk_prerelease_router)
 
 
 class CnbExchangeRate(BaseModel):
@@ -87,6 +101,24 @@ class CnbExchangeRate(BaseModel):
         return value.upper()
 
 
+class SkExchangeRate(BaseModel):
+    source: str = Field(pattern=r"^(?i:ECB|NBS)$")
+    currency: str = Field(pattern=r"^[A-Za-z]{3}$")
+    foreign_units_per_eur: Decimal = Field(
+        gt=0,
+        max_digits=30,
+        decimal_places=12,
+    )
+    effective_date: date
+    source_url: str = Field(pattern=r"^https://")
+    entry_method: Literal["automatic", "manual_override"] = "automatic"
+
+    @field_validator("source", "currency")
+    @classmethod
+    def normalize_codes(cls, value: str) -> str:
+        return value.upper()
+
+
 class TransactionAmount(BaseModel):
     amount: Decimal = Field(
         gt=0,
@@ -100,7 +132,7 @@ class TransactionAmount(BaseModel):
     )
     payment_date: date | None = None
     accounting_date: date | None = None
-    exchange_rate: CnbExchangeRate | None = None
+    exchange_rate: CnbExchangeRate | SkExchangeRate | None = None
     prior_same_type_monthly_amount_czk: Decimal | None = Field(
         default=None,
         ge=0,
@@ -490,7 +522,25 @@ def require_analysis_source_release(
     recipient = recipient_country.upper()
 
     if source != "CZ":
-        return None
+        try:
+            return require_source_country_analysis_release(source)
+        except UnsupportedSourceCountryError:
+            # Source-country release gating applies only to countries
+            # onboarded into the source-country registry. Other source
+            # directions retain the established downstream out-of-scope
+            # handling rather than becoming a new API validation error.
+            return None
+        except SourceCountryNotReleasedError as exc:
+            decision = exc.decision
+            raise HTTPException(
+                status_code=409,
+                detail={
+                    "code": decision.code,
+                    "source_country": source,
+                    "release_status": decision.release_status,
+                    "release_blockers": list(decision.blockers),
+                },
+            ) from exc
 
     treaty_pair_id = f"{source}-{recipient}"
 
@@ -547,9 +597,10 @@ def analyze(payload: AnalysisPayload):
             determinations=payload.determinations,
         )
     )
-    dataset_version = load_stage6_source_release()[
-        "dataset_release"
-    ]
+    dataset_version = source_country_runtime_dataset_version(
+        source_country,
+        cz_release_loader=load_stage6_source_release,
+    )
     analysis = {
         "status": result.status.value,
         "rate": result.rate,
@@ -593,7 +644,8 @@ def analyze(payload: AnalysisPayload):
         if payload.transaction_amount is not None
         else None
     )
-    calculation = build_withholding_tax_calculation(
+    calculation = build_source_country_withholding_tax_calculation(
+        source_country,
         amount,
         decision_status=result.status.value,
         rate_percent=result.rate,
@@ -605,7 +657,8 @@ def analyze(payload: AnalysisPayload):
     )
     analysis["withholding_tax_calculation"] = calculation
     analysis["withholding_compliance_schedule"] = (
-        build_withholding_compliance_schedule(
+        build_source_country_withholding_compliance_schedule(
+            source_country,
             payload.transaction_date,
             income_type=payload.income_type,
             decision_status=result.status.value,

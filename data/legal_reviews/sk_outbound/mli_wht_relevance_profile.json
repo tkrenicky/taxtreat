@@ -1,0 +1,186 @@
+{
+  "schema_version": 1,
+  "source_country": "SK",
+  "as_of": "2026-08-19",
+  "status": "review_model_not_runtime_release",
+  "policy": {
+    "pair_specific_matching_required": true,
+    "mli_listing_does_not_imply_every_article_applies": true,
+    "ppt_alone_does_not_elevate_review_risk": true,
+    "substantive_wht_effect_can_change_result": true,
+    "bilateral_slov_lex_modification_notice_is_primary_pair_effect_evidence": true,
+    "runtime_release": false
+  },
+  "official_sources": [
+    {
+      "source_id": "SK-MF-MLI",
+      "authority": "Ministerstvo financií Slovenskej republiky",
+      "url": "https://www.mfsr.sk/sk/dane-cla-uctovnictvo/priame-dane/dane-z-prijmu/zmluvy-zamedzeni-dvojiteho-zdanenia/multilateralny-nastroj/multilateralny-nastroj-2.html",
+      "supports": "Slovakia applies MLI beyond the minimum standard and pair matching with the other jurisdiction is required."
+    },
+    {
+      "source_id": "SK-SLOVLEX-MLI-339-2018",
+      "authority": "Slov-Lex",
+      "url": "https://static.slov-lex.sk/static/SK/ZZ/2018/339/vyhlasene_znenie.print.html",
+      "supports": "MLI text, Slovak ratification and requirement that treaty modifications follow Slovak reservations and notifications."
+    },
+    {
+      "source_id": "SK-SLOVLEX-AT-MLI-410-2018",
+      "authority": "Slov-Lex",
+      "url": "https://static.slov-lex.sk/static/SK/ZZ/2018/410/20181229.html",
+      "supports": "Observed matched Articles 6, 7, 10, 13 and 17 and WHT effective date for the Austria relationship."
+    },
+    {
+      "source_id": "SK-SLOVLEX-PL-MLI-409-2018",
+      "authority": "Slov-Lex",
+      "url": "https://static.slov-lex.sk/static/SK/ZZ/2018/409/20181229.print.html",
+      "supports": "Observed matched Articles 3, 4 and 11 among other modifications for the Poland relationship."
+    },
+    {
+      "source_id": "SK-SLOVLEX-SI-MLI-411-2018",
+      "authority": "Slov-Lex",
+      "url": "https://static.slov-lex.sk/static/SK/ZZ/2018/411/20181229.print.html",
+      "supports": "Observed matched Articles 4, 8, 12, 13 and other MLI modifications for the Slovenia relationship."
+    },
+    {
+      "source_id": "SK-SLOVLEX-IL-MLI-414-2018",
+      "authority": "Slov-Lex",
+      "url": "https://static.slov-lex.sk/static/SK/ZZ/2018/414/vyhlasene_znenie.print.html",
+      "supports": "Observed Article 8 365-day dividend holding rule and Article 14 for the Israel relationship."
+    },
+    {
+      "source_id": "SK-SLOVLEX-ZA-MLI-513-2022",
+      "authority": "Slov-Lex",
+      "url": "https://static.slov-lex.sk/static/SK/ZZ/2022/513/vyhlasene_znenie.print.html",
+      "supports": "Observed matched Articles 3, 4, 8, 11, 13 and 15 among other modifications for the South Africa relationship."
+    },
+    {
+      "source_id": "SK-SLOVLEX-ES-MLI-238-2022",
+      "authority": "Slov-Lex",
+      "url": "https://static.slov-lex.sk/static/SK/ZZ/2022/238/20220630.print.html",
+      "supports": "Observed matched Articles 8, 10, 12, 13 and 14 and pair-specific WHT effective date for the Spain relationship."
+    },
+    {
+      "source_id": "SK-SLOVLEX-VN-MLI-510-2023",
+      "authority": "Slov-Lex",
+      "url": "https://static.slov-lex.sk/static/SK/ZZ/2023/510/vyhlasene_znenie.print.html",
+      "supports": "Observed matched Articles 12, 13 and related PE modifications for the Vietnam relationship."
+    }
+  ],
+  "articles": {
+    "3": {
+      "title": "Transparent Entities",
+      "wht_relevance": "direct_entitlement",
+      "income_types": ["dividend", "interest", "royalty"],
+      "can_change_result": true,
+      "review_effect": "May change whether income is treated as income of a treaty resident and therefore whether treaty benefits are available."
+    },
+    "4": {
+      "title": "Dual Resident Entities",
+      "wht_relevance": "direct_entitlement",
+      "income_types": ["dividend", "interest", "royalty"],
+      "can_change_result": true,
+      "review_effect": "For a dual-resident non-individual, treaty residence may depend on competent-authority agreement; absent agreement treaty relief may be unavailable."
+    },
+    "6": {
+      "title": "Purpose of a Covered Tax Agreement",
+      "wht_relevance": "interpretive_anti_abuse_context",
+      "income_types": ["dividend", "interest", "royalty"],
+      "can_change_result": false,
+      "review_effect": "Preamble modification informs treaty interpretation but is not a standalone rate rule."
+    },
+    "7": {
+      "title": "Prevention of Treaty Abuse",
+      "wht_relevance": "direct_benefit_denial",
+      "income_types": ["dividend", "interest", "royalty"],
+      "can_change_result": true,
+      "review_effect": "PPT may deny an otherwise available treaty benefit."
+    },
+    "8": {
+      "title": "Dividend Transfer Transactions",
+      "wht_relevance": "direct_dividend_rate_condition",
+      "income_types": ["dividend"],
+      "can_change_result": true,
+      "review_effect": "Where matched, reduced dividend rates tied to ownership conditions may require the ownership condition to be satisfied throughout a 365-day period including the payment date."
+    },
+    "10": {
+      "title": "Anti-abuse Rule for Permanent Establishments Situated in Third Jurisdictions",
+      "wht_relevance": "direct_benefit_denial",
+      "income_types": ["dividend", "interest", "royalty"],
+      "can_change_result": true,
+      "review_effect": "Where matched, treaty benefits can be denied for low-taxed income attributed by the residence jurisdiction to a PE in a third jurisdiction, subject to the article conditions and exceptions."
+    },
+    "12": {
+      "title": "Artificial Avoidance of Permanent Establishment Status through Commissionnaire Arrangements and Similar Strategies",
+      "wht_relevance": "conditional_pe_connection",
+      "income_types": ["dividend", "interest", "royalty"],
+      "can_change_result": true,
+      "review_effect": "Can create a PE under a broader dependent-agent rule and therefore alter the PE-connection analysis used by the operative income article."
+    },
+    "13": {
+      "title": "Artificial Avoidance of Permanent Establishment Status through the Specific Activity Exemptions",
+      "wht_relevance": "conditional_pe_connection",
+      "income_types": ["dividend", "interest", "royalty"],
+      "can_change_result": true,
+      "review_effect": "Option A and/or anti-fragmentation matching can alter whether a PE exists and therefore the PE-connection analysis."
+    },
+    "14": {
+      "title": "Splitting-up of Contracts",
+      "wht_relevance": "conditional_pe_connection",
+      "income_types": ["dividend", "interest", "royalty"],
+      "can_change_result": true,
+      "review_effect": "Can aggregate connected contract periods for PE threshold purposes, potentially changing the PE-connection branch."
+    },
+    "15": {
+      "title": "Definition of a Person Closely Related to an Enterprise",
+      "wht_relevance": "supporting_pe_definition",
+      "income_types": ["dividend", "interest", "royalty"],
+      "can_change_result": true,
+      "review_effect": "Supports Articles 12-14 and can affect whether their PE anti-avoidance rules apply."
+    },
+    "5": {
+      "title": "Application of Methods for Elimination of Double Taxation",
+      "wht_relevance": "residence_state_relief_not_source_wht_rate",
+      "income_types": [],
+      "can_change_result": false,
+      "review_effect": "Relevant to residence-state double-tax relief, not normally the Slovak source WHT rate conclusion."
+    },
+    "9": {
+      "title": "Capital Gains from Alienation of Shares or Interests of Entities Deriving their Value Principally from Immovable Property",
+      "wht_relevance": "outside_current_income_scope",
+      "income_types": [],
+      "can_change_result": false,
+      "review_effect": "Capital-gains rule outside the current dividend, interest and royalty product scope."
+    },
+    "11": {
+      "title": "Application of Tax Agreements to Restrict a Party's Right to Tax its Own Residents",
+      "wht_relevance": "normally_outside_nonresident_source_wht_rate",
+      "income_types": [],
+      "can_change_result": false,
+      "review_effect": "Saving-clause rule primarily preserves taxation of a state's own residents; retain as treaty context but do not treat it as a Slovak outbound nonresident WHT rate modifier without a specific scenario."
+    },
+    "16": {
+      "title": "Mutual Agreement Procedure",
+      "wht_relevance": "procedural",
+      "income_types": [],
+      "can_change_result": false,
+      "review_effect": "Procedural dispute-resolution rule, not a transaction-level WHT rate rule."
+    },
+    "17": {
+      "title": "Corresponding Adjustments",
+      "wht_relevance": "transfer_pricing_procedural",
+      "income_types": [],
+      "can_change_result": false,
+      "review_effect": "Transfer-pricing corresponding-adjustment rule, not a direct dividend/interest/royalty WHT rate modifier."
+    }
+  },
+  "review_requirements": [
+    "For each of the 46 MLI-listed relationships ingest the Slov-Lex bilateral MLI modification notice or equivalent authoritative pair evidence.",
+    "Record which MLI articles actually match for that pair; do not infer matching from Slovakia's position alone.",
+    "Record the WHT-specific entry-into-effect date from the pair notice.",
+    "For dividend scopes test Article 8 before concluding that a reduced ownership-based treaty rate applies.",
+    "For all three income scopes test Articles 3, 4, 7 and 10 where matched.",
+    "Where transaction facts may involve a Slovak PE, test matched Articles 12-15 before resolving the PE-connection branch.",
+    "A relationship with only Article 6 context and Article 7 PPT may remain STANDARD if all matching and dates are mechanically clean; a matched substantive WHT article requires specific human attention."
+  ]
+}

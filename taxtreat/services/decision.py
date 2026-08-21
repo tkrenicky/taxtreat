@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
 from typing import Any
 
+from taxtreat.countries.registry import get_country_config
 from taxtreat.engine.legal_facts import (
     load_legal_facts,
     resolve_legal_fact_candidates,
@@ -58,6 +60,96 @@ def _legal_condition_names(rules: list[LegalRule]) -> set[str]:
     }
 
 
+
+
+def _apply_source_country_release_manifest_gate(
+    request: CanonicalAnalysisRequest,
+    result: LegalDecisionResult,
+    *,
+    country_config: Any | None = None,
+) -> LegalDecisionResult:
+    """Apply an optional country-package production release manifest."""
+
+    if result.status != DecisionStatus.FINAL:
+        return result
+
+    if country_config is None:
+        try:
+            country_config = get_country_config(
+                request.source_country
+            )
+        except KeyError:
+            return result
+
+    manifest_path = country_config.release_manifest_path
+    if manifest_path is None:
+        return result
+
+    try:
+        manifest = json.loads(
+            manifest_path.read_text(encoding="utf-8")
+        )
+    except (OSError, json.JSONDecodeError):
+        release_eligible = False
+        release_status = "manifest_unavailable"
+        blockers = [
+            "source_country_release_manifest_unavailable"
+        ]
+    else:
+        release_eligible = (
+            manifest.get("release_eligible") is True
+        )
+        release_status = str(
+            manifest.get("release_status") or "unknown"
+        )
+        blockers = list(manifest.get("blockers") or [])
+
+    if release_eligible:
+        return result
+
+    if result.candidate_rule_id is None:
+        result.candidate_rule_id = result.selected_rule_id
+
+    if result.candidate_tax_treatment is None:
+        result.candidate_tax_treatment = result.tax_treatment
+
+    if (
+        result.candidate_rate is None
+        and result.rate is not None
+    ):
+        result.candidate_rate = result.rate
+
+    result.status = DecisionStatus.REVIEW_REQUIRED
+    result.requires_review = True
+    result.eligible = False
+    result.rate = None
+    result.tax_treatment = None
+    result.selected_rule_id = None
+
+    if (
+        "source_country_release_manifest"
+        not in result.missing_legal_layers
+    ):
+        result.missing_legal_layers.append(
+            "source_country_release_manifest"
+        )
+
+    blocker_text = (
+        ", ".join(blockers)
+        if blockers
+        else "release_manifest_not_eligible"
+    )
+
+    result.explanation.append(
+        f"The {country_config.code} legal result has been "
+        "calculated, but the source-country release manifest "
+        "is not currently eligible for production "
+        f"(status={release_status}; blockers={blocker_text})."
+    )
+
+    return result
+
+
 def analyze_transaction(
     request: CanonicalAnalysisRequest,
     *,
@@ -70,6 +162,46 @@ def analyze_transaction(
             status=DecisionStatus.OUT_OF_SCOPE,
             requires_review=False,
             explanation=[f"Unsupported income type: {request.income_type!r}."],
+        )
+
+    try:
+        country_config = get_country_config(request.source_country)
+    except KeyError:
+        country_config = None
+
+    if country_config is not None and not country_config.runtime_released:
+        return LegalDecisionResult(
+            status=DecisionStatus.REVIEW_REQUIRED,
+            requires_review=True,
+            rate=None,
+            eligible=False,
+            missing_legal_layers=[
+                "domestic",
+                "mli",
+                "treaty_or_protocol",
+            ],
+            explanation=[
+                f"{country_config.code} source-country package has not been released."
+            ],
+        )
+
+    domestic_result = None
+    if (
+        country_config is not None
+        and country_config.domestic_precedence_handler is not None
+    ):
+        domestic_result = country_config.domestic_precedence_handler(
+            recipient_country=request.recipient_country,
+            income_type=normalized_income,
+            transaction_date=request.transaction_date,
+            facts=request.facts,
+        )
+
+    if domestic_result is not None:
+        return _apply_source_country_release_manifest_gate(
+            request,
+            domestic_result,
+            country_config=country_config,
         )
 
     runtime_gate = evaluate_runtime_gate(
@@ -194,4 +326,8 @@ def analyze_transaction(
             "Required legal facts have not completed provenance and "
             "independent-approval gates."
         )
-    return result
+    return _apply_source_country_release_manifest_gate(
+        request,
+        result,
+        country_config=country_config,
+    )

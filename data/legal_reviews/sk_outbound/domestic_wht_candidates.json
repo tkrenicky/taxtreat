@@ -1,0 +1,158 @@
+{
+  "schema_version": 1,
+  "source_country": "SK",
+  "as_of": "2026-08-18",
+  "law_version": {
+    "act": "595/2003 Z. z.",
+    "official_source": "https://static.slov-lex.sk/static/SK/ZZ/2003/595/20260101.print.html",
+    "effective_from": "2026-01-01",
+    "effective_to": "2026-12-30"
+  },
+  "status": "candidate_not_released",
+  "recipient_scope": "corporate_recipient_model_seed",
+  "common": {
+    "standard_withholding_rate_percent": 19,
+    "non_cooperative_state_rate_percent": 35,
+    "rate_locator": "§ 43 ods. 1 písm. b) a c)",
+    "withholding_event_locator": "§ 43 ods. 10",
+    "remittance_and_notification_locator": "§ 43 ods. 11",
+    "withholding_event": [
+      "payment",
+      "remittance",
+      "credit_to_recipient"
+    ],
+    "remittance_deadline": "15th day of each month for the preceding calendar month",
+    "notification_deadline": "same deadline as remittance",
+    "non_cooperative_state_definition_locator": "§ 2 písm. x)",
+    "runtime_status": "not_released"
+  },
+  "income_types": {
+    "dividend": {
+      "domestic_source_locator": "§ 16 ods. 1 písm. e) bod 9",
+      "corporate_recipient_general_treatment": "not_subject_to_corporate_income_tax_if_section_12_7_c_conditions_are_met",
+      "general_treatment_locator": "§ 12 ods. 7 písm. c)",
+      "non_cooperative_recipient_exception": {
+        "taxable": true,
+        "withholding_locator": "§ 43 ods. 2 in connection with § 16 ods. 1 písm. e) bod 9",
+        "rate_percent": 35
+      },
+      "required_transaction_facts": [
+        "recipient_entity_type",
+        "recipient_country",
+        "recipient_is_non_cooperative_state",
+        "distribution_is_deductible_for_payer",
+        "distribution_category"
+      ],
+      "runtime_status": "not_released"
+    },
+    "interest": {
+      "domestic_source_locator": "§ 16 ods. 1 písm. e) bod 3",
+      "withholding_locator": "§ 43 ods. 2",
+      "standard_rate_percent": 19,
+      "non_cooperative_state_rate_percent": 35,
+      "eu_relief": {
+        "locator": "§ 13 ods. 2 písm. f) and § 13 ods. 3",
+        "treatment": "exemption_candidate",
+        "conditions": {
+          "recipient_or_qualifying_pe_in_eu": true,
+          "beneficial_owner_required": true,
+          "direct_capital_percent_min": 25,
+          "holding_period_months_min": 24,
+          "relationship_alternatives": [
+            "payer_directly_owns_recipient",
+            "recipient_directly_owns_payer",
+            "third_eu_company_directly_owns_both"
+          ],
+          "holding_period_can_complete_after_payment": true,
+          "post_payment_refund_locator": "§ 43 ods. 21"
+        }
+      },
+      "required_transaction_facts": [
+        "recipient_country",
+        "recipient_is_non_cooperative_state",
+        "recipient_entity_type",
+        "beneficial_owner",
+        "pe_connection",
+        "eu_qualifying_entity_or_pe",
+        "ownership_percent",
+        "ownership_direction",
+        "holding_period_months"
+      ],
+      "runtime_status": "not_released"
+    },
+    "royalty": {
+      "domestic_source_locators": [
+        "§ 16 ods. 1 písm. e) bod 1",
+        "§ 16 ods. 1 písm. e) bod 2"
+      ],
+      "domestic_categories": [
+        "industrial_property_software_knowhow",
+        "copyright_and_related_rights"
+      ],
+      "withholding_locator": "§ 43 ods. 2",
+      "standard_rate_percent": 19,
+      "non_cooperative_state_rate_percent": 35,
+      "eu_relief": {
+        "locator": "§ 13 ods. 2 písm. h) and § 13 ods. 3",
+        "treatment": "exemption_candidate",
+        "covered_income_seed": [
+          "§ 16 ods. 1 písm. e) bod 1",
+          "§ 16 ods. 1 písm. e) bod 2",
+          "industrial_commercial_or_scientific_equipment"
+        ],
+        "conditions": {
+          "recipient_or_qualifying_pe_in_eu": true,
+          "beneficial_owner_required": true,
+          "direct_capital_percent_min": 25,
+          "holding_period_months_min": 24,
+          "relationship_alternatives": [
+            "payer_directly_owns_recipient",
+            "recipient_directly_owns_payer",
+            "third_eu_company_directly_owns_both"
+          ],
+          "holding_period_can_complete_after_payment": true,
+          "post_payment_refund_locator": "§ 43 ods. 21"
+        }
+      },
+      "required_transaction_facts": [
+        "recipient_country",
+        "recipient_is_non_cooperative_state",
+        "recipient_entity_type",
+        "royalty_category",
+        "beneficial_owner",
+        "pe_connection",
+        "eu_qualifying_entity_or_pe",
+        "ownership_percent",
+        "ownership_direction",
+        "holding_period_months"
+      ],
+      "runtime_status": "not_released"
+    }
+  },
+  "primary_source_evidence": [
+    {
+      "locator": "§ 12 ods. 7 písm. c)",
+      "supports": "corporate dividend general exclusion and non-cooperative-state exception"
+    },
+    {
+      "locator": "§ 13 ods. 2 písm. f), h) and ods. 3",
+      "supports": "EU interest and royalty exemption conditions and post-payment holding-period completion"
+    },
+    {
+      "locator": "§ 16 ods. 1 písm. e) body 1, 2, 3 and 9",
+      "supports": "Slovak-source classification for royalties, interest and dividends"
+    },
+    {
+      "locator": "§ 43 ods. 1, 2, 10, 11 and 21",
+      "supports": "withholding rates, covered nonresident income, withholding event, remittance/notification timing and refund after later satisfaction of the EU holding-period condition"
+    }
+  ],
+  "release_blockers": [
+    "Map treaty precedence and treaty-specific caps for all 75 relationships.",
+    "Resolve MLI matching and WHT-effective dates for each affected treaty relationship.",
+    "Complete the legal definition and authoritative country list for non-cooperative states as of the transaction date.",
+    "Confirm corporate-recipient/product-scope assumptions and dividend distribution categories.",
+    "Model PE attribution and registered-PE exclusions consistently with § 43 ods. 2.",
+    "Build country-specific compliance and EUR calculation adapters before runtime release."
+  ]
+}

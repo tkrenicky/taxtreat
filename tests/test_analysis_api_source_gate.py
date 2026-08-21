@@ -45,7 +45,6 @@ def test_non_cz_source_remains_outside_current_gate():
         is None
     )
 
-
 def test_released_pair_is_allowed(monkeypatch):
     release = SimpleNamespace(
         is_released=True,

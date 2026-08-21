@@ -1,0 +1,28 @@
+{
+  "approval_eligible": false,
+  "cooperating_state_list": {
+    "blocker": null,
+    "ingestion_complete": true,
+    "mf_document_id": 49561,
+    "valid_from": "2026-01-01",
+    "valid_to": "2026-12-31"
+  },
+  "dataset_release": "sk-domestic-review-readiness-2026-08-19.1",
+  "domestic_rates": {
+    "non_cooperative_state_rate_percent": 35,
+    "standard_rate_percent": 19
+  },
+  "human_review_status": "not_started",
+  "policy": {
+    "35_percent_rate_requires_resolved_non_cooperative_status": true,
+    "incomplete_positive_list_blocks_rate_selection": true,
+    "machine_candidate_is_not_human_approval": true,
+    "non_cooperative_status_is_date_specific": true,
+    "non_treaty_partner_does_not_equal_non_cooperative_state": true,
+    "runtime_release": false
+  },
+  "review_ready": true,
+  "runtime_status": "not_released",
+  "schema_version": 1,
+  "source_country": "SK"
+}

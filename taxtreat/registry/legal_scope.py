@@ -4,16 +4,24 @@ import json
 from pathlib import Path
 from typing import Any
 
+from taxtreat.countries.registry import get_country_config
 
-ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_PARTNER_REGISTRY = ROOT / "data" / "cz_treaty_partners.json"
+
 SUPPORTED_INCOME_TYPES = ("dividend", "interest", "royalty")
+DEFAULT_PARTNER_REGISTRY = get_country_config("CZ").treaty_partner_registry
 
 
 def load_partner_registry(
-    path: str | Path = DEFAULT_PARTNER_REGISTRY,
+    path: str | Path | None = None,
+    *,
+    source_country: str = "CZ",
 ) -> list[dict[str, str]]:
-    payload = json.loads(Path(path).read_text(encoding="utf-8"))
+    config = get_country_config(source_country)
+    registry_path = Path(path) if path is not None else config.treaty_partner_registry
+    if registry_path is None:
+        return []
+
+    payload = json.loads(registry_path.read_text(encoding="utf-8"))
     if not isinstance(payload, list):
         raise ValueError("Treaty-partner registry must be a JSON list.")
 
@@ -58,23 +66,31 @@ def load_partner_registry(
 
 
 def expected_legal_scopes(
-    path: str | Path = DEFAULT_PARTNER_REGISTRY,
+    path: str | Path | None = None,
+    *,
+    source_country: str = "CZ",
 ) -> list[dict[str, Any]]:
+    config = get_country_config(source_country)
     return [
         {
-            "source_country": "CZ",
+            "source_country": config.code,
             "recipient_country": partner["iso2"],
             "recipient_country_name": partner["country"],
             "parsed_file": partner["parsed_file"],
             "income_type": income_type,
         }
-        for partner in load_partner_registry(path)
-        for income_type in SUPPORTED_INCOME_TYPES
+        for partner in load_partner_registry(
+            path,
+            source_country=config.code,
+        )
+        for income_type in config.supported_income_types
     ]
 
 
 def supported_scope_keys(
-    path: str | Path = DEFAULT_PARTNER_REGISTRY,
+    path: str | Path | None = None,
+    *,
+    source_country: str = "CZ",
 ) -> set[tuple[str, str, str]]:
     return {
         (
@@ -82,5 +98,8 @@ def supported_scope_keys(
             scope["recipient_country"],
             scope["income_type"],
         )
-        for scope in expected_legal_scopes(path)
+        for scope in expected_legal_scopes(
+            path,
+            source_country=source_country,
+        )
     }

@@ -43,18 +43,28 @@ def verify_recipient_catalog_and_entry(page) -> None:
         timeout=5000,
     )
     if country.locator("option").count() != 102:
-        raise AssertionError("Recipient form does not expose all 101 jurisdictions.")
-    option_values = country.locator("option").evaluate_all("options => options.map(option => option.value)")
+        raise AssertionError(
+            "Recipient form does not expose all 101 jurisdictions."
+        )
+    option_values = country.locator("option").evaluate_all(
+        "options => options.map(option => option.value)"
+    )
     if "KR" not in option_values or "TW" not in option_values:
-        raise AssertionError("Recipient catalog must include both Korea and Taiwan.")
+        raise AssertionError(
+            "Recipient catalog must include both Korea and Taiwan."
+        )
     name = form.locator('input[name="recipient_name"]')
     name.fill("Test Korea Co.")
     if name.input_value() != "Test Korea Co.":
         raise AssertionError("Recipient name field is not writable.")
     country.select_option("KR")
-    form.get_by_role("button", name="Použít příjemce v této kontrole →").click()
+    form.get_by_role(
+        "button", name="Použít příjemce v této kontrole →"
+    ).click()
     if page.locator("#flow-recipient-name").inner_text() != "Test Korea Co.":
-        raise AssertionError("New recipient was not applied to the workspace.")
+        raise AssertionError(
+            "New recipient was not applied to the workspace."
+        )
     if "undefined" in page.locator("#flow-recipient-meta").inner_text().lower():
         raise AssertionError("Dynamic jurisdiction name was not rendered.")
 
@@ -64,7 +74,10 @@ def finish_workspace_calculation(page) -> None:
     if page.locator("#flow-recipient-name").inner_text() != "Demo GmbH":
         raise AssertionError("Fresh workspace did not reset the demo recipient.")
     if "Rakousko" not in page.locator("#flow-recipient-meta").inner_text():
-        raise AssertionError("Fresh workspace did not reset recipient residence to Austria.")
+        raise AssertionError(
+            "Fresh workspace did not reset recipient residence to Austria."
+        )
+
     page.get_by_role("button", name="Nový výpočet →").first.click()
     page.get_by_role("button", name="Pokračovat k příjemci →").click()
     page.get_by_role("button", name="Pokračovat k platbě →").click()
@@ -103,6 +116,49 @@ def finish_workspace_calculation(page) -> None:
         )
 
     page.locator("#workspace-result-status").wait_for(state="visible")
+
+
+def verify_report_popup(page, report_requests: list[str]) -> None:
+    print_button = page.locator('[data-report-action="print"]')
+    if print_button.count() != 1:
+        raise AssertionError("Workspace PDF report action is missing.")
+    if page.locator('[data-report-action="open"]').count() != 0:
+        raise AssertionError("Obsolete open-report action is still exposed.")
+
+    requests_before = len(report_requests)
+    with page.expect_popup() as popup_info:
+        print_button.click()
+    report_page = popup_info.value
+    report_page.wait_for_load_state("domcontentloaded")
+    report_page.get_by_role(
+        "heading",
+        name="Informace k české srážkové dani",
+        exact=True,
+    ).wait_for()
+    report_page.get_by_text("Použité právní pravidlo", exact=True).wait_for()
+    report_page.get_by_text("Právní základ", exact=True).wait_for()
+    report_body = report_page.locator("body").inner_text()
+    if "TAXTREAT-" in report_body:
+        raise AssertionError(
+            "PDF report still exposes an internal report identifier."
+        )
+    if (
+        "Otevřít profesionální report" in report_body
+        or "Withholding tax analysis" in report_body
+    ):
+        raise AssertionError(
+            "PDF report still exposes obsolete/internal-facing wording."
+        )
+    if report_page.locator(".legal-source").count() < 1:
+        raise AssertionError("PDF report contains no legal sources.")
+    report_page.wait_for_function(
+        "() => window.__taxtreatPrintCalled === true",
+        timeout=5000,
+    )
+    report_page.close()
+
+    if len(report_requests) < requests_before + 1:
+        raise AssertionError("PDF export did not request /analysis/report.")
 
 
 def main() -> int:
@@ -160,143 +216,98 @@ def main() -> int:
                     body='{"source":"ARES","ico":"27082440","name":"Google Czech Republic, s.r.o.","vat_id":"CZ27082440","address":"Stroupežnického 3191/17, 150 00 Praha 5","legal_form":"112","data_box":"amqg4i4","established_at":"2003-10-08"}',
                 ),
             )
+
             page.goto(f"{BASE_URL}/workspace-demo", wait_until="networkidle")
             page.get_by_role("button", name="Plátci", exact=True).click()
             page.get_by_role("button", name="Přidat plátce", exact=True).click()
             payer_form = page.locator("#payer-form")
             payer_form.locator('input[name="payer_id"]').fill("27082440")
             payer_form.locator('input[name="payer_name"]').wait_for()
-            page.wait_for_function("() => document.querySelector('#payer-form input[name=payer_name]').value.includes('Google Czech')", timeout=5000)
-            if payer_form.locator('input[name="payer_address"]').input_value() != "Stroupežnického 3191/17, 150 00 Praha 5":
+            page.wait_for_function(
+                "() => document.querySelector('#payer-form input[name=payer_name]').value.includes('Google Czech')",
+                timeout=5000,
+            )
+            if (
+                payer_form.locator('input[name="payer_address"]').input_value()
+                != "Stroupežnického 3191/17, 150 00 Praha 5"
+            ):
                 raise AssertionError("ARES lookup did not populate payer address.")
-            if payer_form.locator('input[name="payer_data_box"]').input_value() != "amqg4i4":
+            if (
+                payer_form.locator('input[name="payer_data_box"]').input_value()
+                != "amqg4i4"
+            ):
                 raise AssertionError("ARES lookup did not populate payer data box.")
             page.get_by_role("button", name="Zrušit", exact=True).last.click()
 
             verify_recipient_catalog_and_entry(page)
             finish_workspace_calculation(page)
 
-            output_rows = page.locator("[data-output-report-id]")
-            output_rows.first.wait_for(state="attached", timeout=5000)
-            if output_rows.count() < 2:
+            dashboard_rows = page.locator("[data-output-report-id]")
+            dashboard_rows.first.wait_for(state="attached", timeout=5000)
+            if dashboard_rows.count() != 1:
                 raise AssertionError(
-                    "Completed result was not exposed on dashboard and outputs."
+                    "Dashboard did not retain exactly one completed result."
                 )
-            if not any("Dividendy · AT" in text for text in output_rows.all_inner_texts()):
+            if "Dividendy · AT" not in dashboard_rows.first.inner_text():
                 raise AssertionError(
-                    "Output history is missing the transaction summary."
+                    "Dashboard result is missing the transaction summary."
                 )
             if len(report_requests) < 1:
                 raise AssertionError(
                     "Completed result did not preload /analysis/report."
                 )
 
-            print_button = page.locator('[data-report-action="print"]')
-            if print_button.count() != 1:
-                raise AssertionError("Workspace PDF report action is missing.")
-            if page.locator('[data-report-action="open"]').count() != 0:
-                raise AssertionError("Obsolete open-report action is still exposed.")
+            verify_report_popup(page, report_requests)
 
-            requests_before_direct_export = len(report_requests)
-            with page.expect_popup() as print_popup_info:
-                print_button.click()
-            print_page = print_popup_info.value
-            print_page.wait_for_load_state("domcontentloaded")
-            print_page.get_by_role("heading", name="Informace k české srážkové dani", exact=True).wait_for()
-            print_page.get_by_text("Použité právní pravidlo", exact=True).wait_for()
-            print_page.get_by_text("Právní základ", exact=True).wait_for()
-            report_body = print_page.locator("body").inner_text()
-            if "TAXTREAT-" in report_body:
-                raise AssertionError("PDF report still exposes an internal report identifier.")
-            if "Otevřít profesionální report" in report_body or "Withholding tax analysis" in report_body:
-                raise AssertionError("PDF report still exposes obsolete/internal-facing wording.")
-            if print_page.locator(".legal-source").count() < 1:
-                raise AssertionError("PDF report contains no legal sources.")
-            print_page.wait_for_function(
-                "() => window.__taxtreatPrintCalled === true", timeout=5000
-            )
-            print_page.close()
-
-            if len(report_requests) < requests_before_direct_export + 1:
-                raise AssertionError("PDF export did not request /analysis/report.")
-
-            page.get_by_role("button", name="Výstupy", exact=True).click()
-            outputs_view = page.locator('[data-view="outputs"].active')
-            outputs_view.wait_for(state="visible")
-            stored_rows = outputs_view.locator("[data-output-report-id]")
-            if stored_rows.count() != 1:
-                raise AssertionError(
-                    "Outputs view did not retain exactly one in-memory report."
-                )
-            if "Vytvořené výstupy" not in outputs_view.inner_text():
-                raise AssertionError("Outputs view did not leave its empty state.")
-
-            requests_before_reopen = len(report_requests)
-            with page.expect_popup() as stored_popup_info:
-                stored_rows.first.get_by_role(
-                    "button", name="Tisk / PDF"
-                ).click()
-            stored_page = stored_popup_info.value
-            stored_page.get_by_role("heading", name="Informace k české srážkové dani", exact=True).wait_for()
-            stored_page.close()
-            if len(report_requests) != requests_before_reopen:
-                raise AssertionError(
-                    "Reopening an in-memory output unexpectedly recalculated report."
-                )
-
-            page.get_by_role(
-                "button", name="Výpočty", exact=True
-            ).click()
+            page.get_by_role("button", name="Výsledky", exact=True).click()
             reviews_view = page.locator('[data-view="reviews"].active')
             reviews_view.wait_for(state="visible")
             review_rows = reviews_view.locator("[data-review-report-id]")
             if review_rows.count() != 1:
                 raise AssertionError(
-                    "Reviews view did not retain exactly one completed payment review."
+                    "Results view did not retain exactly one completed calculation."
                 )
             review_text = review_rows.first.inner_text()
             if "Dividendy · AT" not in review_text:
                 raise AssertionError(
-                    "Completed payment review is missing its transaction summary."
+                    "Completed result is missing its transaction summary."
                 )
-            if "Dokončené výpočty" not in reviews_view.inner_text():
-                raise AssertionError("Reviews view did not leave its empty state.")
-
             review_status = review_rows.first.locator(
                 ".review-history-status"
             ).inner_text()
             if review_status not in {"DOKONČENO", "VYŽADUJE DOPLNĚNÍ"}:
                 raise AssertionError(
-                    f"Unexpected completed-review status: {review_status!r}."
+                    f"Unexpected completed-result status: {review_status!r}."
                 )
 
-            requests_before_review_open = len(report_requests)
-            with page.expect_popup() as review_popup_info:
+            requests_before_stored_print = len(report_requests)
+            with page.expect_popup() as stored_popup_info:
                 review_rows.first.get_by_role(
                     "button", name="Tisk / PDF"
                 ).click()
-            review_page = review_popup_info.value
-            review_page.get_by_role("heading", name="Informace k české srážkové dani", exact=True).wait_for()
-            review_page.close()
-            if len(report_requests) != requests_before_review_open:
+            stored_page = stored_popup_info.value
+            stored_page.get_by_role(
+                "heading",
+                name="Informace k české srážkové dani",
+                exact=True,
+            ).wait_for()
+            stored_page.close()
+            if len(report_requests) != requests_before_stored_print:
                 raise AssertionError(
-                    "Opening a stored review unexpectedly recalculated report."
+                    "Printing a stored result unexpectedly recalculated report."
                 )
 
             page.get_by_role("button", name="Přehled", exact=True).click()
             dashboard = page.locator('[data-view="dashboard"].active')
             dashboard.wait_for(state="visible")
-            metrics = dashboard.locator(".dashboard-metrics > article")
-            completed_metric = metrics.nth(2)
-            attention_metric = metrics.nth(3)
-            if completed_metric.locator("span").inner_text() != "Dokončené výpočty":
-                raise AssertionError("Dashboard completed-review metric is not data-bound.")
-            if completed_metric.locator("strong").inner_text() != "1":
-                raise AssertionError("Dashboard completed-review count is incorrect.")
-            expected_attention = "1" if review_status == "VYŽADUJE DOPLNĚNÍ" else "0"
-            if attention_metric.locator("strong").inner_text() != expected_attention:
+            dashboard_rows = dashboard.locator("[data-output-report-id]")
+            if dashboard_rows.count() != 1:
                 raise AssertionError(
-                    "Dashboard attention count does not match stored review status."
+                    "Dashboard lost the completed result after navigation."
+                )
+            if "Poslední výsledky" not in dashboard.inner_text():
+                raise AssertionError(
+                    "Dashboard output card did not leave its empty state."
                 )
 
             if console_errors:
@@ -313,7 +324,7 @@ def main() -> int:
             process.kill()
             process.wait(timeout=5)
 
-    print("Workspace professional report, output and review history: PASS")
+    print("Workspace professional report and result history: PASS")
     return 0
 
 

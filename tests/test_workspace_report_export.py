@@ -6,6 +6,18 @@ from app.main import app
 client = TestClient(app)
 
 
+def _report_export_bundle_text():
+    bootstrap = client.get(
+        "/ui-assets/workspace-report-export.js"
+    ).text
+    core = client.get(
+        "/ui-assets/workspace-report-export-core.js?v=20260819-3"
+    )
+
+    assert core.status_code == 200
+    return bootstrap + "\n" + core.text
+
+
 def test_workspace_loads_pdf_report_export_asset():
     html = client.get("/workspace-demo").text
     asset = client.get("/ui-assets/workspace-report-export.js")
@@ -13,15 +25,16 @@ def test_workspace_loads_pdf_report_export_asset():
     assert asset.status_code == 200
     assert "/ui-assets/workspace-report-export.js?v=20260819-3" in html
     assert "Tisk / PDF reportu" in html
-    assert "Tisk / PDF reportu" in asset.text
-    assert 'nativeFetch("/analysis/report"' in asset.text
-    assert 'url.endsWith("/analysis/intake")' in asset.text
-    assert "reportWindow.print()" in asset.text
-    assert "details.open = true" in asset.text
+    bundle = _report_export_bundle_text()
+    assert "Tisk / PDF reportu" in bundle
+    assert 'nativeFetch("/analysis/report"' in bundle
+    assert 'url.endsWith("/analysis/intake")' in bundle
+    assert "reportWindow.print()" in bundle
+    assert "details.open = true" in bundle
 
 
 def test_workspace_output_history_is_in_memory_and_printable():
-    asset = client.get("/ui-assets/workspace-report-export.js").text
+    asset = _report_export_bundle_text()
     styles = client.get("/ui-assets/workspace-output-history.css")
 
     assert styles.status_code == 200
@@ -34,12 +47,11 @@ def test_workspace_output_history_is_in_memory_and_printable():
     assert "Poslední výsledky" in asset
     assert "dataset.outputReportId" in asset
     assert "Tisk / PDF" in asset
-    assert "Tisk / PDF" in asset
     assert ".output-history-row" in styles.text
 
 
 def test_workspace_completed_reviews_and_dashboard_metrics_are_data_bound():
-    asset = client.get("/ui-assets/workspace-report-export.js").text
+    asset = _report_export_bundle_text()
     styles = client.get("/ui-assets/workspace-output-history.css")
 
     assert "renderReviewHistory" in asset
@@ -54,7 +66,7 @@ def test_workspace_completed_reviews_and_dashboard_metrics_are_data_bound():
 
 
 def test_report_export_does_not_store_transaction_payload_in_browser_storage():
-    asset = client.get("/ui-assets/workspace-report-export.js").text
+    asset = _report_export_bundle_text()
 
     assert "localStorage" not in asset
     assert "sessionStorage" not in asset
