@@ -21,8 +21,7 @@
   ]);
 
   const originals = new WeakMap();
-  let scheduled = false;
-  const pendingRoots = new Set();
+  let refreshScheduled = false;
 
   function language() {
     return document.querySelector("#taxtreat-ui-language")?.value || localStorage.getItem("taxtreat-ui-language") || "cs";
@@ -46,7 +45,8 @@
     const original = originals.get(node);
     const key = original.trim();
     const translated = language() === "en" ? translateValue(key) : key;
-    node.nodeValue = original.replace(key, translated);
+    const next = original.replace(key, translated);
+    if (node.nodeValue !== next) node.nodeValue = next;
   }
 
   function translateRoot(root) {
@@ -61,7 +61,9 @@
 
   function renderNotice() {
     const notice = document.querySelector(".information-only-note");
-    if (notice) notice.innerHTML = language() === "en" ? EN_NOTICE : CS_NOTICE;
+    if (!notice) return;
+    const next = language() === "en" ? EN_NOTICE : CS_NOTICE;
+    if (notice.innerHTML !== next) notice.innerHTML = next;
   }
 
   function ensureUnknownOptions() {
@@ -120,30 +122,24 @@
     syncMini();
   }
 
-  function schedule(root) {
-    if (root) pendingRoots.add(root);
-    if (scheduled) return;
-    scheduled = true;
+  function scheduleRefresh() {
+    if (refreshScheduled) return;
+    refreshScheduled = true;
     requestAnimationFrame(() => {
-      scheduled = false;
-      const roots = [...pendingRoots];
-      pendingRoots.clear();
-      roots.forEach(translateRoot);
-      renderNotice();
-      ensureUnknownOptions();
-      syncMini();
+      refreshScheduled = false;
+      apply(document.body);
     });
   }
 
   function boot() {
     apply(document.body);
     document.querySelector("#taxtreat-ui-language")?.addEventListener("change", () => apply(document.body));
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => mutation.addedNodes.forEach((node) => {
-        if (node.nodeType === Node.ELEMENT_NODE || node.nodeType === Node.TEXT_NODE) schedule(node);
-      }));
-    });
-    observer.observe(document.body, { subtree: true, childList: true });
+    // Do not observe DOM mutations here. The main i18n layer already handles newly
+    // inserted UI. A second observer that rewrites innerHTML can feed back into the
+    // first observer and freeze the page. Refresh this supplemental polish only
+    // after user-driven UI transitions.
+    document.addEventListener("click", scheduleRefresh, true);
+    document.addEventListener("change", scheduleRefresh, true);
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot, { once: true });
