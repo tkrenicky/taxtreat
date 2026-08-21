@@ -3,6 +3,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTEXT_JS = ROOT / "app" / "web" / "source-country-context.js"
+ADAPTER_JS = ROOT / "app" / "web" / "workspace-source-country-adapter.js"
+
+
+def _sk_block(text: str) -> str:
+    return text.split('SK: Object.freeze({', 1)[1].split('}),', 1)[0]
 
 
 def test_workspace_source_country_context_distinguishes_cz_and_sk():
@@ -24,8 +29,8 @@ def test_workspace_source_country_context_distinguishes_cz_and_sk():
 
 def test_workspace_source_country_context_has_no_czech_fx_fallback_for_sk():
     text = CONTEXT_JS.read_text(encoding="utf-8")
+    sk_block = _sk_block(text)
 
-    sk_block = text.split('SK: Object.freeze({', 1)[1].split('}),', 1)[0]
     assert 'baseCurrency: "EUR"' in sk_block
     assert 'fxProvider: "ECB/NBS"' in sk_block
     assert 'CNB' not in sk_block
@@ -35,15 +40,21 @@ def test_workspace_source_country_context_has_no_czech_fx_fallback_for_sk():
 
 def test_workspace_source_country_context_exposes_released_sk():
     text = CONTEXT_JS.read_text(encoding="utf-8")
+    adapter = ADAPTER_JS.read_text(encoding="utf-8")
+    sk_block = _sk_block(text)
 
     assert 'function finalAnalysisAllowed(code)' in text
     assert 'runtimeReleased === true' in text
-    assert 'availability: "released"' in text
+    assert 'availability: "released"' in sk_block
+    assert 'prereleaseNotice: ""' in sk_block
+    assert 'technickom pre-release' not in sk_block
+    assert 'před vydáním' not in adapter
+    assert '<option value="SK">Slovensko</option>' in adapter
 
 
 def test_workspace_source_country_context_carries_sk_monthly_compliance_timing():
     text = CONTEXT_JS.read_text(encoding="utf-8")
-    sk_block = text.split('SK: Object.freeze({', 1)[1].split('}),', 1)[0]
+    sk_block = _sk_block(text)
 
     assert 'notificationPeriodicity: "monthly"' in sk_block
     assert 'notificationDeadlineRule: "15th_day_of_following_calendar_month"' in sk_block
