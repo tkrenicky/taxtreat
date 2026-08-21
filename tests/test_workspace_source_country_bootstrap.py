@@ -28,19 +28,20 @@ def test_workspace_existing_report_export_logic_is_preserved_as_core():
     assert 'Tisk / PDF reportu' in core
 
 
-def test_workspace_sk_adapter_is_prerelease_fail_closed_and_uses_eur_context():
+def test_workspace_sk_adapter_uses_registered_released_eur_context():
     adapter = (
         WEB / "workspace-source-country-adapter.js"
     ).read_text(encoding="utf-8")
     context = CONTEXT.read_text(encoding="utf-8")
 
-    assert 'Slovensko · před vydáním' in adapter
     assert 'ctx.baseCurrency' in adapter
     assert 'if (ctx.runtimeReleased) return;' in adapter
     assert 'event.stopImmediatePropagation();' in adapter
+    assert 'runtimeReleased: true' in context
     assert 'Slovenská zrážková daň v EUR' in context
 
-def test_workspace_sk_adapter_blocks_cnb_and_czech_interest_only_field():
+
+def test_workspace_sk_adapter_blocks_cnb_and_hides_czech_interest_only_field():
     adapter = (
         WEB / "workspace-source-country-adapter.js"
     ).read_text(encoding="utf-8")
@@ -48,9 +49,11 @@ def test_workspace_sk_adapter_blocks_cnb_and_czech_interest_only_field():
 
     combined = adapter + "\n" + context
 
-    assert "prohibitedRequestPrefixes" in combined
+    assert "prohibitedFxServicePrefixes" in combined
     assert "/exchange-rates/cnb" in combined
-    assert "hiddenFactKeys" in combined
+    assert "interestMonthlyAmountFieldVisible" in combined
+    assert "prohibitedPrefixes" in adapter
+
 
 def test_workspace_analysis_requests_are_bound_to_active_source_country():
     adapter = (WEB / "workspace-source-country-adapter.js").read_text(encoding="utf-8")
@@ -75,6 +78,7 @@ def test_workspace_sk_preview_replaces_remaining_czech_visible_copy_and_metrics(
         in combined
     )
 
+
 def test_workspace_country_switch_restores_czech_copy_after_slovak_preview():
     adapter = (
         WEB / "workspace-source-country-adapter.js"
@@ -86,4 +90,3 @@ def test_workspace_country_switch_restores_czech_copy_after_slovak_preview():
     assert 'Väzba príjmu na stálu prevádzkareň v SR' in combined
     assert 'Vazba ke stálé provozovně v ČR' in combined
     assert "applyContext" in adapter
-
