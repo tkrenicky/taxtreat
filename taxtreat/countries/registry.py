@@ -40,6 +40,7 @@ class CountryConfig:
     release_gate_strategy: str = "canonical_stage6"
     report_calculation_strategy: str = "czk"
     html_localization_strategy: str = "identity"
+    legacy_canonical_fallback_allowed: bool = False
 
 
 _COUNTRIES: dict[str, CountryConfig] = {
@@ -52,6 +53,7 @@ _COUNTRIES: dict[str, CountryConfig] = {
         fx_provider="CNB",
         domestic_legal_source_url="https://e-sbirka.gov.cz/sb/1992/586",
         domestic_law_label="ZDP",
+        legacy_canonical_fallback_allowed=True,
     ),
     "SK": CountryConfig(
         code="SK",
