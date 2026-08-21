@@ -7,7 +7,12 @@ ADAPTER_JS = ROOT / "app" / "web" / "workspace-source-country-adapter.js"
 
 
 def _sk_block(text: str) -> str:
-    return text.split('SK: Object.freeze({', 1)[1].split('}),', 1)[0]
+    start = text.index('SK: Object.freeze({')
+    end = text.index(
+        '\n  });\n\n  const TAX_TREATMENT_PRESENTATION',
+        start,
+    )
+    return text[start:end]
 
 
 def test_workspace_source_country_context_distinguishes_cz_and_sk():
