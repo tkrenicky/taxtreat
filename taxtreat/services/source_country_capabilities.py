@@ -27,7 +27,9 @@ def source_country_capability(code: str) -> dict[str, Any]:
         "policy": {
             "country_specific_domestic_logic_required": True,
             "country_specific_compliance_required": True,
-            "czech_fallback_allowed": config.code == "CZ",
+            "czech_fallback_allowed": (
+                config.legacy_canonical_fallback_allowed
+            ),
             "final_analysis_allowed": config.runtime_released,
         },
     }
