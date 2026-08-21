@@ -17,6 +17,8 @@ class ReportCountryCopy:
     treaty_name_prefix: str
     treaty_sentence_prefix: str
     treaty_short_prefix: str
+    treaty_join_word: str
+    treaty_generic_name: str
     official_source_label: str
     payer_missing_label: str
     recipient_missing_label: str
@@ -56,6 +58,8 @@ _COPY = {
         treaty_name_prefix="Smlouva mezi",
         treaty_sentence_prefix="smlouvy mezi",
         treaty_short_prefix="ČR",
+        treaty_join_word="státem",
+        treaty_generic_name="Smlouva o zamezení dvojího zdanění",
         official_source_label="Oficiální zdroj",
         payer_missing_label="Plátce – název neuveden",
         recipient_missing_label="Příjemce – název neuveden",
@@ -100,6 +104,8 @@ _COPY = {
         treaty_name_prefix="Zmluva medzi",
         treaty_sentence_prefix="zmluvy medzi",
         treaty_short_prefix="SR",
+        treaty_join_word="štátom",
+        treaty_generic_name="Zmluva o zamedzení dvojitého zdanenia",
         official_source_label="Oficiálny zdroj",
         payer_missing_label="Platiteľ – názov neuvedený",
         recipient_missing_label="Príjemca – názov neuvedený",

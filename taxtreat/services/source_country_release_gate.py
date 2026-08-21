@@ -33,6 +33,11 @@ class UnsupportedSourceCountryError(ValueError):
 
 
 def _release_manifest_path(code: str) -> Path:
+    config = get_country_config(code)
+
+    if config.release_manifest_path is not None:
+        return Path(config.release_manifest_path)
+
     return (
         ROOT
         / "data"
@@ -80,7 +85,10 @@ def _review_coverage_blockers(
     if evidence.get("source_country") != manifest.get("source_country"):
         blockers.append("legal_review_coverage_source_country_mismatch")
 
-    if evidence.get("status") != "human_review_completed_with_pattern_reconciliation":
+    coverage_status = str(evidence.get("status") or "")
+    if not coverage_status.startswith(
+        "human_review_completed_with_pattern_reconciliation"
+    ):
         blockers.append("legal_review_coverage_status_incomplete")
 
     coverage = evidence.get("coverage")
@@ -260,11 +268,18 @@ def require_source_country_analysis_release(
         )
         raise SourceCountryNotReleasedError(decision)
 
-    if code == "CZ":
+    if config.release_gate_strategy == "canonical_stage6":
         if released_country_gate is not None:
             released_country_gate(code)
-    else:
+
+    elif config.release_gate_strategy == "source_country_manifest":
         (release_evidence_gate or _require_committed_release_evidence)(code)
+
+    else:
+        raise ValueError(
+            f"Unsupported release gate strategy for {code}: "
+            f"{config.release_gate_strategy}"
+        )
 
     return SourceCountryReleaseDecision(
         source_country=code,

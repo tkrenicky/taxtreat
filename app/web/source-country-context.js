@@ -19,6 +19,26 @@
       permanentEstablishmentLocation: "České republice",
       permanentEstablishmentShortLocation: "ČR",
       taxLabel: "Česká srážková daň",
+      taxResultLabel: "Srážková daň",
+      taxResultLabelWithCurrency: "Srážková daň v CZK",
+      complianceTitle: "Rozhodné datum a navazující lhůty",
+      remittanceLabel: "Odvod srážkové daně",
+      notificationLabel: "Oznámení příjmu plynoucího do zahraničí",
+      sourceMetrics: Object.freeze({
+        jurisdictionLabel: "Podporované jurisdikce",
+        jurisdictionValue: "101",
+        scopeLabel: "Pokryté kombinace",
+        scopeValue: "303",
+      }),
+      hideWorkspaceFxControls: false,
+      prohibitedFxServicePrefixes: Object.freeze([]),
+      interestMonthlyAmountFieldVisible: true,
+      payerSubtitle: "České subjekty, jejichž platby jsou v TaxTreat zpracovávány.",
+      metaDescription: "TaxTreat – informační pracovní prostor pro českou srážkovou daň",
+      prereleaseNotice: "",
+      complianceNoteDefault: "Lhůty se zobrazí po dokončení výpočtu.",
+      peLocationLabel: "Vazba ke stálé provozovně v ČR",
+      payerGenitiveLabel: "českého plátce",
     }),
     SK: Object.freeze({
       code: "SK",
@@ -37,8 +57,58 @@
       permanentEstablishmentLocation: "Slovenskej republike",
       permanentEstablishmentShortLocation: "SR",
       taxLabel: "Slovenská zrážková daň",
+      taxResultLabel: "Zrážková daň",
+      taxResultLabelWithCurrency: "Slovenská zrážková daň v EUR",
+      complianceTitle: "Rozhodný dátum a nadväzujúce lehoty",
+      remittanceLabel: "Odvod zrážkovej dane",
+      notificationLabel: "Mesačné oznámenie OZN4311v26",
+      sourceMetrics: Object.freeze({
+        jurisdictionLabel: "SK treaty relationships",
+        jurisdictionValue: "75",
+        scopeLabel: "SK machine-evidence scopes",
+        scopeValue: "225",
+      }),
+      hideWorkspaceFxControls: true,
+      prohibitedFxServicePrefixes: Object.freeze([
+        "/exchange-rates/cnb",
+      ]),
+      interestMonthlyAmountFieldVisible: false,
+      payerSubtitle: "Slovenské subjekty, ktorých platby sú v TaxTreat spracovávané v technickom pre-release náhľade.",
+      metaDescription: "TaxTreat – informačný pracovný priestor pre slovenskú zrážkovú daň",
+      prereleaseNotice: "Slovenský balík je dostupný pouze pro technický náhled. Standardní corporate outbound WHT compliance je modelována jako měsíční OZN4311v26 podle § 43 ods. 11; oznámení i odvod jsou do 15. dne následujícího kalendářního měsíce. Finální výpočet zůstává blokovaný do dokončení právního review a release gate.",
+      complianceNoteDefault: "SK compliance model: mesačné OZN4311v26 a odvod zrážkovej dane najneskôr do 15. dňa nasledujúceho kalendárneho mesiaca. Samostatné bežné ročné WHT priznanie nie je pre štandardný dividend/interest/royalty flow nakonfigurované.",
+      peLocationLabel: "Väzba príjmu na stálu prevádzkareň v SR",
+      payerGenitiveLabel: "slovenského plátce",
     }),
   });
+
+  const TAX_TREATMENT_PRESENTATION = Object.freeze({
+    taxable_at_rate: Object.freeze({
+      kind: "rate",
+      resultLabel: null,
+      rateLabel: null,
+    }),
+    exclusive_foreign_taxation: Object.freeze({
+      kind: "non_rate",
+      resultLabel: "Neuplatňuje se",
+      rateLabel: "Neuplatňuje se",
+    }),
+    domestic_exemption: Object.freeze({
+      kind: "non_rate",
+      resultLabel: "Osvobození",
+      rateLabel: "0 %",
+    }),
+    outside_subject_of_tax: Object.freeze({
+      kind: "non_rate",
+      resultLabel: "Není předmětem daně",
+      rateLabel: "N/A",
+    }),
+  });
+
+  function taxTreatmentPresentation(treatment) {
+    const normalized = String(treatment || "").trim().toLowerCase();
+    return TAX_TREATMENT_PRESENTATION[normalized] || null;
+  }
 
   function getSourceCountryContext(code) {
     const normalized = String(code || "").toUpperCase();
@@ -61,5 +131,6 @@
     get: getSourceCountryContext,
     finalAnalysisAllowed,
     requiresCnbFx,
+    taxTreatmentPresentation,
   });
 })();

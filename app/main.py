@@ -524,14 +524,12 @@ def require_analysis_source_release(
     if source != "CZ":
         try:
             return require_source_country_analysis_release(source)
-        except UnsupportedSourceCountryError as exc:
-            raise HTTPException(
-                status_code=422,
-                detail={
-                    "code": "UNSUPPORTED_SOURCE_COUNTRY",
-                    "source_country": source,
-                },
-            ) from exc
+        except UnsupportedSourceCountryError:
+            # Source-country release gating applies only to countries
+            # onboarded into the source-country registry. Other source
+            # directions retain the established downstream out-of-scope
+            # handling rather than becoming a new API validation error.
+            return None
         except SourceCountryNotReleasedError as exc:
             decision = exc.decision
             raise HTTPException(

@@ -61,32 +61,37 @@
 
   function setSourceMetrics(ctx) {
     if (sourceMetrics.length < 3) return;
+
+    const metrics = ctx.sourceMetrics || {};
     const jurisdictionLabel = sourceMetrics[0].querySelector("span");
     const jurisdictionValue = sourceMetrics[0].querySelector("strong");
     const scopeLabel = sourceMetrics[1].querySelector("span");
     const scopeValue = sourceMetrics[1].querySelector("strong");
 
-    if (ctx.code === "SK") {
-      if (jurisdictionLabel) jurisdictionLabel.textContent = "SK treaty relationships";
-      if (jurisdictionValue) jurisdictionValue.textContent = "75";
-      if (scopeLabel) scopeLabel.textContent = "SK machine-evidence scopes";
-      if (scopeValue) scopeValue.textContent = "225";
-    } else {
-      if (jurisdictionLabel) jurisdictionLabel.textContent = "Podporované jurisdikce";
-      if (jurisdictionValue) jurisdictionValue.textContent = "101";
-      if (scopeLabel) scopeLabel.textContent = "Pokryté kombinace";
-      if (scopeValue) scopeValue.textContent = "303";
+    if (jurisdictionLabel) {
+      jurisdictionLabel.textContent = metrics.jurisdictionLabel || "";
+    }
+    if (jurisdictionValue) {
+      jurisdictionValue.textContent = metrics.jurisdictionValue || "";
+    }
+    if (scopeLabel) {
+      scopeLabel.textContent = metrics.scopeLabel || "";
+    }
+    if (scopeValue) {
+      scopeValue.textContent = metrics.scopeValue || "";
     }
   }
 
   function applyCurrencyDefaults(ctx) {
-    if (!currency) return;
-    if ([...currency.options].some((option) => option.value === ctx.baseCurrency)) {
+    if (currency && [...currency.options].some((option) => option.value === ctx.baseCurrency)) {
       currency.value = ctx.baseCurrency;
     }
-    if (ctx.code === "SK") {
-      if (fxField) fxField.hidden = true;
-      if (fxStatus) fxStatus.hidden = true;
+
+    if (fxField) {
+      fxField.hidden = ctx.hideWorkspaceFxControls === true;
+    }
+    if (fxStatus) {
+      fxStatus.hidden = ctx.hideWorkspaceFxControls === true;
     }
   }
 
@@ -94,39 +99,77 @@
     document.body.dataset.sourceCountry = ctx.code;
     const taxLabel = document.querySelector("#workspace-tax-label");
     const taxRowLabel = document.querySelector("#workspace-tax-row-label");
-    if (taxLabel) taxLabel.textContent = ctx.code === "SK" ? "Slovenská zrážková daň v EUR" : "Srážková daň v CZK";
-    if (taxRowLabel) taxRowLabel.textContent = ctx.code === "SK" ? "Zrážková daň" : "Srážková daň";
+    if (taxLabel) taxLabel.textContent = ctx.taxResultLabelWithCurrency;
+    if (taxRowLabel) taxRowLabel.textContent = ctx.taxResultLabel;
     if (complianceHeading) complianceHeading.textContent = ctx.complianceLegalReference;
-    if (complianceTitle) complianceTitle.textContent = ctx.code === "SK" ? "Rozhodný dátum a nadväzujúce lehoty" : "Rozhodné datum a navazující lhůty";
+    if (complianceTitle) complianceTitle.textContent = ctx.complianceTitle;
 
     if (complianceRows[1]?.querySelector("dt")) {
-      complianceRows[1].querySelector("dt").textContent = ctx.code === "SK" ? "Odvod zrážkovej dane" : "Odvod srážkové daně";
+      complianceRows[1].querySelector("dt").textContent = ctx.remittanceLabel;
     }
     if (complianceRows[2]?.querySelector("dt")) {
-      complianceRows[2].querySelector("dt").textContent = ctx.code === "SK" ? "Mesačné oznámenie OZN4311v26" : "Oznámení příjmu plynoucího do zahraničí";
+      complianceRows[2].querySelector("dt").textContent = ctx.notificationLabel;
     }
 
-    if (ctx.code === "SK") {
-      prereleaseNotice.textContent = "Slovenský balík je dostupný pouze pro technický náhled. Standardní corporate outbound WHT compliance je modelována jako měsíční OZN4311v26 podle § 43 ods. 11; oznámení i odvod jsou do 15. dne následujícího kalendářního měsíce. Finální výpočet zůstává blokovaný do dokončení právního review a release gate.";
-      if (complianceNote) complianceNote.textContent = "SK compliance model: mesačné OZN4311v26 a odvod zrážkovej dane najneskôr do 15. dňa nasledujúceho kalendárneho mesiaca. Samostatné bežné ročné WHT priznanie nie je pre štandardný dividend/interest/royalty flow nakonfigurované.";
-      if (metaDescription) metaDescription.content = "TaxTreat – informačný pracovný priestor pre slovenskú zrážkovú daň";
-      if (payersSubtitle) payersSubtitle.textContent = "Slovenské subjekty, ktorých platby sú v TaxTreat spracovávané v technickom pre-release náhľade.";
-      setMatchingText('[data-view="recipient-detail"] dt', "Vazba ke stálé provozovně v ČR", "Väzba príjmu na stálu prevádzkareň v SR");
-      setMatchingText('[data-view="flow"] span, [data-view="recipient-detail"] dt, [data-view="recipient-detail"] p', "v České republice", "v Slovenskej republike");
-      setMatchingText('[data-view="flow"] span, [data-view="recipient-detail"] dt, [data-view="recipient-detail"] p', "v ČR", "v SR");
-      setMatchingText('[data-view="flow"] span, [data-view="flow"] small, [data-view="flow"] legend', "českého plátce", "slovenského plátce");
-      if (interestMonthlyField) interestMonthlyField.hidden = true;
-    } else {
-      prereleaseNotice.textContent = "";
-      if (complianceNote) complianceNote.textContent = "Lhůty se zobrazí po dokončení výpočtu.";
-      if (metaDescription) metaDescription.content = "TaxTreat – informační pracovní prostor pro českou srážkovou daň";
-      if (payersSubtitle) payersSubtitle.textContent = "České subjekty, jejichž platby jsou v TaxTreat zpracovávány.";
-      setMatchingText('[data-view="recipient-detail"] dt', "Väzba príjmu na stálu prevádzkareň v SR", "Vazba ke stálé provozovně v ČR");
-      setMatchingText('[data-view="flow"] span, [data-view="recipient-detail"] dt, [data-view="recipient-detail"] p', "v Slovenskej republike", "v České republice");
-      setMatchingText('[data-view="flow"] span, [data-view="recipient-detail"] dt, [data-view="recipient-detail"] p', "v SR", "v ČR");
-      setMatchingText('[data-view="flow"] span, [data-view="flow"] small, [data-view="flow"] legend', "slovenského plátce", "českého plátce");
-      if (interestMonthlyField) interestMonthlyField.hidden = false;
+    prereleaseNotice.textContent = ctx.prereleaseNotice || "";
+    if (complianceNote) {
+      complianceNote.textContent = ctx.complianceNoteDefault || "";
     }
+    if (metaDescription) {
+      metaDescription.content = ctx.metaDescription || "";
+    }
+    if (payersSubtitle) {
+      payersSubtitle.textContent = ctx.payerSubtitle || "";
+    }
+
+    setMatchingText(
+      '[data-view="recipient-detail"] dt',
+      "Vazba ke stálé provozovně v ČR",
+      ctx.peLocationLabel
+    );
+    setMatchingText(
+      '[data-view="recipient-detail"] dt',
+      "Väzba príjmu na stálu prevádzkareň v SR",
+      ctx.peLocationLabel
+    );
+
+    setMatchingText(
+      '[data-view="flow"] span, [data-view="recipient-detail"] dt, [data-view="recipient-detail"] p',
+      "v České republice",
+      `v ${ctx.permanentEstablishmentLocation}`
+    );
+    setMatchingText(
+      '[data-view="flow"] span, [data-view="recipient-detail"] dt, [data-view="recipient-detail"] p',
+      "v Slovenskej republike",
+      `v ${ctx.permanentEstablishmentLocation}`
+    );
+    setMatchingText(
+      '[data-view="flow"] span, [data-view="recipient-detail"] dt, [data-view="recipient-detail"] p',
+      "v ČR",
+      `v ${ctx.permanentEstablishmentShortLocation}`
+    );
+    setMatchingText(
+      '[data-view="flow"] span, [data-view="recipient-detail"] dt, [data-view="recipient-detail"] p',
+      "v SR",
+      `v ${ctx.permanentEstablishmentShortLocation}`
+    );
+
+    setMatchingText(
+      '[data-view="flow"] span, [data-view="flow"] small, [data-view="flow"] legend',
+      "českého plátce",
+      ctx.payerGenitiveLabel
+    );
+    setMatchingText(
+      '[data-view="flow"] span, [data-view="flow"] small, [data-view="flow"] legend',
+      "slovenského plátce",
+      ctx.payerGenitiveLabel
+    );
+
+    if (interestMonthlyField) {
+      interestMonthlyField.hidden =
+        ctx.interestMonthlyAmountFieldVisible === false;
+    }
+
     setSourceMetrics(ctx);
   }
 
@@ -136,7 +179,7 @@
       submit.dataset.sourceCountry = ctx.code;
       submit.textContent = ctx.runtimeReleased
         ? "Zobrazit pravidla a výpočet →"
-        : "Slovenský výpočet zatím není vydán";
+        : `${ctx.label} · výpočet zatím není vydán`;
       submit.setAttribute("aria-disabled", String(!ctx.runtimeReleased));
     }
   }
@@ -157,20 +200,39 @@
     applyContext(payerCountries.get(activePayerKey()) || "CZ");
   });
 
-  function blockCnbListenerForSk(event) {
-    if (currentCode !== "SK") return;
+  function blockProhibitedFxListener(event) {
+    const ctx = context();
+    if (ctx.hideWorkspaceFxControls !== true) return;
+
     event.stopImmediatePropagation();
+
     if (fxField) fxField.hidden = true;
     if (fxStatus) fxStatus.hidden = true;
   }
-  currency?.addEventListener("change", blockCnbListenerForSk, true);
-  transactionDate?.addEventListener("change", blockCnbListenerForSk, true);
+
+  currency?.addEventListener(
+    "change",
+    blockProhibitedFxListener,
+    true
+  );
+  transactionDate?.addEventListener(
+    "change",
+    blockProhibitedFxListener,
+    true
+  );
 
   const nativeFetch = window.fetch.bind(window);
   window.fetch = async function sourceCountryAwareFetch(resource, options = {}) {
     const url = typeof resource === "string" ? resource : String(resource?.url || "");
-    if (currentCode === "SK" && url.startsWith("/exchange-rates/cnb")) {
-      throw new Error("CNB exchange-rate service is prohibited for Slovak source-country context");
+    const ctx = context();
+    const prohibitedPrefixes = Array.isArray(ctx.prohibitedFxServicePrefixes)
+      ? ctx.prohibitedFxServicePrefixes
+      : [];
+
+    if (prohibitedPrefixes.some((prefix) => url.startsWith(prefix))) {
+      throw new Error(
+        `FX service ${url} is prohibited for ${ctx.code} source-country context`
+      );
     }
     if (url.includes("/analysis") && options.body) {
       try {
@@ -191,7 +253,7 @@
     event.stopImmediatePropagation();
     if (error) {
       error.hidden = false;
-      error.textContent = "Slovenský balík je stále v pre-release režimu. Výpočet se záměrně nespustil, aby nebyl použit nezkontrolovaný právní výstup.";
+      error.textContent = `${ctx.label} je stále v pre-release režimu. Výpočet se záměrně nespustil, aby nebyl použit nevydaný právní výstup.`;
     }
   }, true);
 

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from taxtreat.countries.registry import get_country_config
+
 from typing import Any
 
 from .country_copy import report_country_copy
@@ -168,13 +170,21 @@ def _assert_no_czech_legal_leakage(html: str) -> None:
 def localize_report_html(html: str, report: dict[str, Any]) -> str:
     code = source_country(report)
     report_country_copy(code)
-    if code == "CZ":
-        return html
-    if code != "SK":
-        raise KeyError(f"No HTML report localization configured for source country: {code}")
+    config = get_country_config(code)
 
-    localized = html
-    for old, new in _SK_REPLACEMENTS:
-        localized = localized.replace(old, new)
-    _assert_no_czech_legal_leakage(localized)
-    return localized
+    strategy = config.html_localization_strategy
+
+    if strategy == "identity":
+        return html
+
+    if strategy == "sk":
+        localized = html
+        for old, new in _SK_REPLACEMENTS:
+            localized = localized.replace(old, new)
+        _assert_no_czech_legal_leakage(localized)
+        return localized
+
+    raise KeyError(
+        f"No HTML report localization strategy configured for "
+        f"source country {code}: {strategy}"
+    )

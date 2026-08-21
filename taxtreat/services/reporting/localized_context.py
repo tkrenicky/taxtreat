@@ -45,12 +45,11 @@ def treaty_name(report: dict[str, Any], copy: ReportCountryCopy) -> str:
     code = str(_scope(report).get("recipient_country") or "").upper()
     if code:
         return (
-            f"{copy.treaty_name_prefix} {copy.treaty_country_prefix} a štátom {code} "
-            "o zamedzení dvojitého zdanenia"
-            if copy.source_country == "SK"
-            else f"{copy.treaty_name_prefix} {copy.treaty_country_prefix} a státem {code} o zamezení dvojího zdanění"
+            f"{copy.treaty_name_prefix} {copy.treaty_country_prefix} "
+            f"a {copy.treaty_join_word} {code} "
+            f"{copy.treaty_generic_name.split(' ', 1)[1]}"
         )
-    return "Zmluva o zamedzení dvojitého zdanenia" if copy.source_country == "SK" else "Smlouva o zamezení dvojího zdanění"
+    return copy.treaty_generic_name
 
 
 def deadline_cards(report: dict[str, Any], copy: ReportCountryCopy) -> tuple[tuple[str, str], ...]:

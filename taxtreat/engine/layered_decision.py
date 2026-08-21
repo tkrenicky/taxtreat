@@ -203,14 +203,30 @@ def evaluate_layered_rules(
     candidates = [
         rule for rule, matches, _, _ in evaluated_rates if matches
     ]
-    candidates.sort(
-        key=lambda rule: (
+    def _candidate_sort_key(rule: LegalRule) -> tuple:
+        treatment = resolve_tax_treatment(rule)
+
+        # A matched domestic rule that removes the payment from the tax base /
+        # subject of tax (or otherwise gives a non-rate domestic treatment)
+        # must be resolved before treaty/protocol rate comparison.
+        #
+        # ``rate=None`` is therefore NOT equivalent to "no usable candidate".
+        # It can represent the legally decisive domestic result.
+        domestic_non_rate_treatment = (
+            rule.legal_layer == "domestic"
+            and treatment is not None
+            and treatment != TaxTreatment.TAXABLE_AT_RATE
+        )
+
+        return (
+            0 if domestic_non_rate_treatment else 1,
             float(rule.rate) if rule.rate is not None else float("inf"),
             -_LAYER_ORDER.get(rule.legal_layer, 99),
             rule.priority,
             rule.rule_id,
         )
-    )
+
+    candidates.sort(key=_candidate_sort_key)
     if not candidates:
         result.missing_facts = sorted(missing_material)
         result.explanation.append(

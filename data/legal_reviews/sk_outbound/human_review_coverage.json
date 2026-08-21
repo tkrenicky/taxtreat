@@ -1,32 +1,13 @@
 {
-  "schema_version": 1,
-  "dataset_release": "sk-human-review-coverage-2026-08-20.1",
-  "source_country": "SK",
-  "status": "human_review_completed_with_pattern_reconciliation",
-  "policy": {
-    "primary_sources_required": true,
-    "individual_review_required_for_elevated_packages": true,
-    "standard_population_may_be_reconciled_by_validated_pattern": true,
-    "sample_review_is_not_individual_review_of_remaining_scopes": true,
-    "production_release": false
-  },
   "coverage": {
     "expected_scope_count": 225,
     "individually_reviewed_scopes": 24,
-    "pattern_reconciled_scopes": 201,
     "legal_review_covered_scopes": 225,
+    "pattern_reconciled_scopes": 201,
     "uncovered_scopes": 0
   },
+  "dataset_release": "sk-human-review-coverage-2026-08-21.2",
   "individual_review": {
-    "standard_sample_scopes": [
-      "SK-US-dividend",
-      "SK-AT-interest",
-      "SK-AU-royalty",
-      "SK-NZ-dividend",
-      "SK-IE-interest",
-      "SK-JP-royalty"
-    ],
-    "standard_sample_result": "PASS",
     "elevated_country_packages": [
       "NL",
       "MD",
@@ -35,14 +16,53 @@
       "CH",
       "TW"
     ],
-    "elevated_scope_count": 18,
     "elevated_result": "PASS_WITH_NON_MATERIAL_NOTES",
-    "substantive_machine_discrepancies": 0,
-    "exceptions": 0
+    "elevated_scope_count": 18,
+    "exceptions": 0,
+    "prior_human_review_interpretation_corrections": 4,
+    "standard_sample_result": "PASS",
+    "standard_sample_scopes": [
+      "SK-US-dividend",
+      "SK-AT-interest",
+      "SK-AU-royalty",
+      "SK-NZ-dividend",
+      "SK-IE-interest",
+      "SK-JP-royalty"
+    ],
+    "substantive_machine_discrepancies": 0
+  },
+  "mli_post_review_adjudication": {
+    "article_8_match_count": 13,
+    "article_8_match_countries": [
+      "BE",
+      "CA",
+      "DE",
+      "ES",
+      "IE",
+      "IL",
+      "IN",
+      "KZ",
+      "NL",
+      "RS",
+      "SI",
+      "TN",
+      "ZA"
+    ],
+    "evidence": "mli_bilateral_adjudication_2026.json",
+    "explicit_article_8_negative_regressions": [
+      "GB",
+      "KR",
+      "LU",
+      "VN"
+    ],
+    "final_reviewer_reconfirmation_completed": true,
+    "final_reviewer_reconfirmation_evidence": "mli_final_reconfirmation_packet_2026.json",
+    "final_reviewer_reconfirmation_required": false,
+    "machine_extraction_discrepancies": 0,
+    "prior_human_review_interpretation_corrections": 4,
+    "relationship_count": 46
   },
   "pattern_reconciliation": {
-    "population": "remaining_STANDARD_scopes",
-    "scope_count": 201,
     "basis": [
       "all machine evidence ready",
       "risk classification separates country-specific complexity",
@@ -50,8 +70,20 @@
       "all ELEVATED country packages independently adjudicated",
       "no substantive machine discrepancy identified"
     ],
+    "individual_human_review_claimed": false,
+    "population": "remaining_STANDARD_scopes",
     "result": "COVERED_BY_VALIDATED_STANDARD_PATTERN",
-    "individual_human_review_claimed": false
+    "scope_count": 201
   },
-  "production_released_scopes": 0
+  "policy": {
+    "individual_review_required_for_elevated_packages": true,
+    "primary_sources_required": true,
+    "production_release": true,
+    "sample_review_is_not_individual_review_of_remaining_scopes": true,
+    "standard_population_may_be_reconciled_by_validated_pattern": true
+  },
+  "production_released_scopes": 0,
+  "schema_version": 2,
+  "source_country": "SK",
+  "status": "human_review_completed_with_pattern_reconciliation_and_mli_reconfirmation"
 }

@@ -7,7 +7,7 @@ from taxtreat.services.decision import (
 )
 
 
-def test_registered_released_sk_source_country_reaches_normal_scope_evaluation():
+def test_registered_released_sk_dividend_uses_domestic_first_gate():
     result = analyze_transaction(
         CanonicalAnalysisRequest(
             source_country="SK",
@@ -18,11 +18,14 @@ def test_registered_released_sk_source_country_reaches_normal_scope_evaluation()
         )
     )
 
-    assert result.status == DecisionStatus.OUT_OF_SCOPE
-    assert result.requires_review is False
+    assert result.status == DecisionStatus.REVIEW_REQUIRED
+    assert result.requires_review is True
     assert result.rate is None
     assert result.eligible is False
     assert result.missing_legal_layers == []
-    assert result.explanation == [
-        "The requested country-income scope is not supported."
+    assert result.missing_facts == [
+        "distribution_category_is_section_3_1_f",
+        "distribution_is_tax_deductible_for_payer",
+        "recipient_entity_type",
+        "recipient_is_non_cooperating_state_taxpayer",
     ]

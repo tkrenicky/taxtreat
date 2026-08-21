@@ -4,11 +4,18 @@ import json
 from pathlib import Path
 from typing import Any, Callable
 
+from taxtreat.countries.registry import get_country_config
+
 
 ROOT = Path(__file__).resolve().parents[2]
 
 
 def _source_release_manifest_path(code: str) -> Path:
+    config = get_country_config(code)
+
+    if config.release_manifest_path is not None:
+        return Path(config.release_manifest_path)
+
     return (
         ROOT
         / "data"
@@ -24,14 +31,26 @@ def source_country_runtime_dataset_version(
     cz_release_loader: Callable[[], dict[str, Any]] | None = None,
 ) -> str:
     code = str(source_country or "").upper()
-    if code == "CZ":
+    config = get_country_config(code)
+
+    if config.runtime_dataset_strategy == "canonical_stage6":
         if cz_release_loader is None:
-            raise ValueError("CZ runtime dataset version requires the canonical Stage 6 loader.")
+            raise ValueError(
+                f"{code} runtime dataset version requires the canonical Stage 6 loader."
+            )
         payload = cz_release_loader()
         dataset = str(payload.get("dataset_release") or "")
         if not dataset:
-            raise ValueError("CZ Stage 6 source release has no dataset identifier.")
+            raise ValueError(
+                f"{code} Stage 6 source release has no dataset identifier."
+            )
         return dataset
+
+    if config.runtime_dataset_strategy != "source_country_manifest":
+        raise ValueError(
+            f"Unsupported runtime dataset strategy for {code}: "
+            f"{config.runtime_dataset_strategy}"
+        )
 
     path = _source_release_manifest_path(code)
     if not path.is_file():

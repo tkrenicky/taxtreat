@@ -13,6 +13,20 @@ from taxtreat.services.calculation import (
 
 CENT = Decimal("0.01")
 
+NON_TAXING_TREATMENTS = frozenset({
+    "exclusive_foreign_taxation",
+    "domestic_exemption",
+    "outside_subject_of_tax",
+})
+
+
+def _is_non_taxing_treatment(tax_treatment: str | None) -> bool:
+    return tax_treatment in NON_TAXING_TREATMENTS
+
+
+def _is_outside_subject(tax_treatment: str | None) -> bool:
+    return tax_treatment == "outside_subject_of_tax"
+
 
 def _parse_date(value: date | str) -> date:
     if isinstance(value, date):
@@ -90,9 +104,9 @@ def build_source_country_withholding_compliance_schedule(
     prior_same_type_monthly_amount_czk: float | Decimal | None = None,
 ) -> dict[str, Any]:
     code = str(source_country or "").upper()
-    get_country_config(code)
+    config = get_country_config(code)
 
-    if code == "CZ":
+    if config.compliance_strategy == "cz":
         return build_withholding_compliance_schedule(
             transaction_date,
             income_type=income_type,
@@ -103,15 +117,17 @@ def build_source_country_withholding_compliance_schedule(
             prior_same_type_monthly_amount_czk=prior_same_type_monthly_amount_czk,
         )
 
-    if code != "SK":
-        raise ValueError(f"No compliance schedule configured for source country: {code}")
+    if config.compliance_strategy != "sk_monthly_section_43_11":
+        raise ValueError(
+            f"No compliance schedule strategy configured for source country: {code}"
+        )
 
     reference_date = _parse_date(transaction_date)
     statutory_deadline = _next_month_day(reference_date, 15)
     operational_deadline = _next_sk_business_day(statutory_deadline)
     base = {
         "schema_version": 3,
-        "source_country": "SK",
+        "source_country": code,
         "status": "PENDING_FINAL_TREATMENT",
         "reference_date": reference_date.isoformat(),
         "reference_date_basis": "payment_remittance_or_credit_to_taxpayer",
@@ -140,10 +156,18 @@ def build_source_country_withholding_compliance_schedule(
     ):
         return base
 
-    non_taxing = tax_treatment in {
-        "exclusive_foreign_taxation",
-        "domestic_exemption",
-    }
+    non_taxing = _is_non_taxing_treatment(tax_treatment)
+
+    if _is_outside_subject(tax_treatment):
+        return {
+            **base,
+            "status": "NOT_APPLICABLE",
+            "notification_regime": "outside_subject_of_tax",
+            "notification_required": False,
+            "tax_remittance_deadline": None,
+            "notification_deadline": None,
+        }
+
     if non_taxing:
         rate = Decimal("0")
     else:
@@ -186,7 +210,7 @@ def build_source_country_withholding_tax_calculation(
     code = str(source_country or "").upper()
     config = get_country_config(code)
 
-    if code == "CZ":
+    if config.calculation_strategy == "czk_domestic":
         return build_withholding_tax_calculation(
             transaction_amount,
             decision_status=decision_status,
@@ -194,8 +218,11 @@ def build_source_country_withholding_tax_calculation(
             tax_treatment=tax_treatment,
         )
 
-    if code != "SK":
-        raise ValueError(f"No tax calculation configured for source country: {code}")
+    if config.calculation_strategy != "payment_currency_then_eur":
+        raise ValueError(
+            f"No tax calculation strategy configured for source country: {code}"
+        )
+
     if transaction_amount is None:
         return None
 
@@ -209,7 +236,7 @@ def build_source_country_withholding_tax_calculation(
     currency = str(transaction_amount.get("currency") or "").upper()
     base = {
         "schema_version": 3,
-        "source_country": "SK",
+        "source_country": code,
         "status": "NOT_CALCULATED",
         "gross_amount": str(amount),
         "transaction_currency": currency,
@@ -230,10 +257,19 @@ def build_source_country_withholding_tax_calculation(
     ):
         return {**base, "reason": "final_rate_unavailable"}
 
-    non_taxing = tax_treatment in {
-        "exclusive_foreign_taxation",
-        "domestic_exemption",
-    }
+    non_taxing = _is_non_taxing_treatment(tax_treatment)
+
+    if _is_outside_subject(tax_treatment):
+        return {
+            **base,
+            "status": "NOT_APPLICABLE",
+            "reason": "outside_subject_of_tax",
+            "rate_percent": None,
+            "withholding_tax_transaction_currency": None,
+            "withholding_tax_eur": None,
+            "exchange_rate": None,
+        }
+
     if non_taxing:
         rate = Decimal("0")
     else:

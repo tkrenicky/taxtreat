@@ -13,6 +13,7 @@ from .editorial import (
     _number,
     _rate,
 )
+from taxtreat.services.reporting.calculation_context import build_report_calculation_context
 
 
 _FACT_PRESENTATION = (
@@ -376,10 +377,17 @@ def render_report_html(report):
     domestic = next((s for s in sources if s.get("legal_layer") == "domestic"), None)
     treaty = next((s for s in sources if s.get("legal_layer") == "treaty"), None)
 
-    foreign_only = result.get("tax_treatment") == "exclusive_foreign_taxation"
-    rate_display = "Neuplatňuje se" if foreign_only else _rate(result.get("rate"))
-    if result.get("tax_treatment") == "domestic_exemption":
+    treatment = result.get("tax_treatment")
+    foreign_only = treatment == "exclusive_foreign_taxation"
+
+    if treatment == "outside_subject_of_tax":
+        rate_display = "N/A"
+    elif treatment == "domestic_exemption":
         rate_display = "0 %"
+    elif foreign_only:
+        rate_display = "Neuplatňuje se"
+    else:
+        rate_display = _rate(result.get("rate"))
     payer, recipient = _party_names(report)
     title = _transaction_title(report)
     treaty_name = _treaty_name(report)
@@ -390,55 +398,19 @@ def render_report_html(report):
     amount_unit = "Kč" if currency == "CZK" else currency
     amount_text = f"{_number(amount.get('amount'))} {escape(amount_unit)}".strip() if amount else "—"
 
-    calc_base = calc_tax = net_amount = "—"
-    fx_line = ""
-    if calculation.get("status") == "CALCULATED":
-        source_country = str(scope.get("source_country") or "CZ").upper()
-        if source_country == "SK":
-            payment_currency = str(calculation.get("transaction_currency") or currency or "EUR")
-            gross_value = calculation.get("gross_amount")
-            tax_payment_value = calculation.get("withholding_tax_transaction_currency")
-            net_value = calculation.get("net_amount_transaction_currency")
-            if net_value in (None, "") and gross_value not in (None, "") and tax_payment_value not in (None, ""):
-                try:
-                    net_value = float(gross_value) - float(tax_payment_value)
-                except (TypeError, ValueError):
-                    net_value = None
-            calc_base = f"{_number(gross_value)} {escape(payment_currency)}"
-            calc_tax = f"{_number(calculation.get('withholding_tax_eur'))} EUR"
-            net_amount = (
-                f"{_number(net_value)} {escape(payment_currency)}"
-                if net_value not in (None, "")
-                else "—"
-            )
-        else:
-            gross_value = calculation.get("gross_amount_czk")
-            tax_value = calculation.get("withholding_tax_czk")
-            net_value = calculation.get("net_amount_czk")
-            if net_value in (None, "") and gross_value not in (None, "") and tax_value not in (None, ""):
-                try:
-                    net_value = float(gross_value) - float(tax_value)
-                except (TypeError, ValueError):
-                    net_value = None
-            calc_base = f"{_number(gross_value)} Kč"
-            calc_tax = f"{_number(tax_value)} Kč"
-            net_amount = f"{_number(net_value)} Kč" if net_value not in (None, "") else "—"
-        fx = calculation.get("exchange_rate") or {}
-        if fx:
-            fx_url = escape(str(fx.get("source_url") or ""), quote=True)
-            if source_country == "SK":
-                fx_source = escape(str(fx.get("source") or "ECB/NBS"))
-                fx_link = f'<a href="{fx_url}">Kurz {fx_source} ↗</a>' if fx_url else ""
-                fx_line = (
-                    f"1 EUR = {_number(fx.get('foreign_units_per_eur'), 6)} {escape(str(fx.get('currency') or currency))}"
-                    f" · {_date(fx.get('effective_date'))} · {fx_link}"
-                )
-            else:
-                fx_link = f'<a href="{fx_url}">Kurzovní lístek ČNB ↗</a>' if fx_url else ""
-                fx_line = (
-                    f"1 {escape(str(fx.get('currency') or currency))} = {_number(fx.get('czk_per_unit'), 6)} Kč"
-                    f" · {_date(fx.get('effective_date'))} · {fx_link}"
-                )
+    source_country = str(
+        scope.get("source_country") or "CZ"
+    ).upper()
+
+    calculation_context = build_report_calculation_context(
+        source_country=source_country,
+        calculation=calculation,
+        currency=currency,
+    )
+    calc_base = calculation_context.calculation_base
+    calc_tax = calculation_context.calculation_tax
+    net_amount = calculation_context.net_amount
+    fx_line = calculation_context.fx_line
 
     selected_ref = _legal_reference(report, selected)
     selected_link = _source_link(selected)
