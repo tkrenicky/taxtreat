@@ -19,6 +19,8 @@
     .then(() => loadScript("/ui-assets/workspace-final-polish-v2.js?v=20260821-freeze1"))
     .then(() => loadScript("/ui-assets/workspace-report-context.js?v=20260820-1"))
     .then(() => loadScript("/ui-assets/workspace-ui-report-batch-20260821.js?v=20260821-batch1"))
+    .then(() => loadScript("/ui-assets/workspace-header-language-20260821.js?v=20260821-batch1"))
+    .then(() => loadScript("/ui-assets/workspace-section19-fallback-20260821.js?v=20260821-batch1"))
     .then(() => loadScript("/ui-assets/workspace-report-export-core.js?v=20260819-3"))
     .catch((problem) => {
       console.error("TaxTreat workspace enhancement bootstrap failed", problem);
