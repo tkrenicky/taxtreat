@@ -55,9 +55,10 @@
       aresButton.disabled = isSk;
     }
     if (aresStatus) {
-      aresStatus.textContent = isSk
+      const nextStatus = isSk
         ? "Pro slovenského plátce se údaje z českého registru ARES nenačítají; identifikační údaje vyplň ručně."
         : "Po zadání 8 číslic TaxTreat načte identifikační údaje z ARES.";
+      if (aresStatus.textContent !== nextStatus) aresStatus.textContent = nextStatus;
     }
     const vat = form.elements.payer_vat_id;
     if (vat && !vat.value) vat.placeholder = isSk ? "např. SK2020000000" : "např. CZ12345678";
@@ -71,13 +72,16 @@
       const code = countryForKey(key);
       const meta = card.querySelector("p");
       if (!meta) return;
-      meta.textContent = meta.textContent
+      const current = meta.textContent;
+      const next = current
         .replace(/^Česká republika/, code === "SK" ? "Slovensko" : "Česká republika")
         .replace(/^Slovensko/, code === "CZ" ? "Česká republika" : "Slovensko");
+      if (next !== current) meta.textContent = next;
     });
   }
 
   country.addEventListener("change", applyCountryUi);
+  activePayerSelect.addEventListener("change", () => window.setTimeout(refreshPayerCountryCopy, 0));
 
   document.querySelectorAll("[data-create-payer]").forEach((button) => {
     button.addEventListener("click", () => window.setTimeout(() => {
@@ -86,9 +90,8 @@
     }, 0));
   });
 
-  // openPayerDialog() is invoked by dynamically created edit buttons. Watching the
-  // dialog's open state keeps the country field correct without requiring those
-  // buttons to carry special data attributes.
+  // This narrow observer only follows the dialog's own open attribute. It does not
+  // mutate the observed attribute and therefore cannot create a DOM feedback loop.
   new MutationObserver(() => {
     if (!dialog.open) return;
     country.value = inferredEditorCountry();
@@ -105,10 +108,14 @@
     }, 0);
   });
 
-  new MutationObserver(() => refreshPayerCountryCopy()).observe(
-    document.querySelector("main") || document.body,
-    { subtree: true, childList: true }
-  );
+  // Do not observe the whole workspace here. The previous broad childList observer
+  // called refreshPayerCountryCopy(), which wrote meta.textContent and immediately
+  // generated another childList mutation, creating an infinite feedback loop.
+  document.addEventListener("click", (event) => {
+    if (event.target.closest("[data-nav],[data-flow-step],[data-next-step],[data-start-flow],[data-open-recipient]")) {
+      window.setTimeout(refreshPayerCountryCopy, 0);
+    }
+  });
 
   // Default demo payers are Czech unless a payer-specific country is later saved.
   [...activePayerSelect.options].forEach((option) => {
