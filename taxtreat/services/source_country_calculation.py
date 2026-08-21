@@ -104,7 +104,21 @@ def build_source_country_withholding_compliance_schedule(
     prior_same_type_monthly_amount_czk: float | Decimal | None = None,
 ) -> dict[str, Any]:
     code = str(source_country or "").upper()
-    config = get_country_config(code)
+    try:
+        config = get_country_config(code)
+    except KeyError:
+        # Unregistered source directions remain in the legacy/out-of-scope
+        # path. They must not acquire a country package merely because they
+        # appear as source_country in a reverse-direction request.
+        return build_withholding_compliance_schedule(
+            transaction_date,
+            income_type=income_type,
+            decision_status=decision_status,
+            rate_percent=rate_percent,
+            tax_treatment=tax_treatment,
+            gross_amount_czk=gross_amount_czk,
+            prior_same_type_monthly_amount_czk=prior_same_type_monthly_amount_czk,
+        )
 
     if config.compliance_strategy == "cz":
         return build_withholding_compliance_schedule(
@@ -208,7 +222,15 @@ def build_source_country_withholding_tax_calculation(
     transaction_date: date | str | None = None,
 ) -> dict[str, Any] | None:
     code = str(source_country or "").upper()
-    config = get_country_config(code)
+    try:
+        config = get_country_config(code)
+    except KeyError:
+        return build_withholding_tax_calculation(
+            transaction_amount,
+            decision_status=decision_status,
+            rate_percent=rate_percent,
+            tax_treatment=tax_treatment,
+        )
 
     if config.calculation_strategy == "czk_domestic":
         return build_withholding_tax_calculation(
