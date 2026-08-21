@@ -25,7 +25,7 @@
     <span>Stát plátce</span>
     <select id="active-source-country" aria-label="Stát aktivního plátce">
       <option value="CZ">Česká republika</option>
-      <option value="SK">Slovensko · před vydáním</option>
+      <option value="SK">Slovensko</option>
     </select>
   `;
   activePayerSelect.closest(".payer-context")?.after(countryControl);
