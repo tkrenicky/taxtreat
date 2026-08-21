@@ -6,7 +6,8 @@ LOADER = ROOT / "app" / "web" / "workspace-report-export.js"
 ENHANCEMENT = ROOT / "app" / "web" / "workspace-cz-relief-i18n.js"
 SOURCE_ADAPTER = ROOT / "app" / "web" / "workspace-source-country-adapter.js"
 PAYER_COUNTRY = ROOT / "app" / "web" / "workspace-payer-country.js"
-FINAL_POLISH = ROOT / "app" / "web" / "workspace-final-polish.js"
+FINAL_POLISH = ROOT / "app" / "web" / "workspace-final-polish-v2.js"
+FINAL_FIXES = ROOT / "app" / "web" / "workspace-final-fixes-20260821.js"
 REPORT_CONTEXT = ROOT / "app" / "web" / "workspace-report-context.js"
 
 
@@ -17,16 +18,20 @@ def test_workspace_loads_enhancements_in_safe_order_before_report_core():
         "source-country-context.js",
         "workspace-source-country-adapter.js",
         "workspace-payer-country.js",
-        "workspace-final-polish.js",
+        "workspace-final-polish-v2.js",
         "workspace-report-context.js",
+        "workspace-section19-fallback-20260821.js",
+        "workspace-final-fixes-20260821.js",
         "workspace-report-export-core.js",
     ):
         assert script in text
     assert text.index("workspace-cz-relief-i18n.js") < text.index("workspace-source-country-adapter.js")
     assert text.index("workspace-source-country-adapter.js") < text.index("workspace-payer-country.js")
-    assert text.index("workspace-payer-country.js") < text.index("workspace-final-polish.js")
-    assert text.index("workspace-final-polish.js") < text.index("workspace-report-context.js")
-    assert text.index("workspace-report-context.js") < text.index("workspace-report-export-core.js")
+    assert text.index("workspace-payer-country.js") < text.index("workspace-final-polish-v2.js")
+    assert text.index("workspace-final-polish-v2.js") < text.index("workspace-report-context.js")
+    assert text.index("workspace-report-context.js") < text.index("workspace-section19-fallback-20260821.js")
+    assert text.index("workspace-section19-fallback-20260821.js") < text.index("workspace-final-fixes-20260821.js")
+    assert text.index("workspace-final-fixes-20260821.js") < text.index("workspace-report-export-core.js")
 
 
 def test_czech_dividend_section19_facts_are_sent_to_engine():
@@ -123,3 +128,11 @@ def test_report_regeneration_preserves_section19_facts_and_report_language():
     assert "recipient_is_tax_resident_in_eligible_jurisdiction" in text
     assert "recipient_subject_to_qualifying_corporate_tax" in text
     assert "recipient_is_parent_company" in text
+
+
+def test_final_report_fixes_do_not_present_exemption_as_zero_percent_rate():
+    text = FINAL_FIXES.read_text(encoding="utf-8")
+    assert "Neuplatňuje se – osvobození podle § 19 ZDP" in text
+    assert "Czech withholding tax therefore does not apply" in text
+    assert "Oficiální znění v e-Sbírce" in text
+    assert "§ 19 odst. 1 písm. ze) bodu 1" in text
