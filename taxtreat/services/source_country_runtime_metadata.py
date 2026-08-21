@@ -25,26 +25,41 @@ def _source_release_manifest_path(code: str) -> Path:
     )
 
 
+def _canonical_dataset_version(
+    code: str,
+    loader: Callable[[], dict[str, Any]] | None,
+) -> str:
+    if loader is None:
+        raise ValueError(
+            f"{code} runtime dataset version requires the canonical Stage 6 loader."
+        )
+    payload = loader()
+    dataset = str(payload.get("dataset_release") or "")
+    if not dataset:
+        raise ValueError(
+            f"{code} Stage 6 source release has no dataset identifier."
+        )
+    return dataset
+
+
 def source_country_runtime_dataset_version(
     source_country: str,
     *,
     cz_release_loader: Callable[[], dict[str, Any]] | None = None,
 ) -> str:
     code = str(source_country or "").upper()
-    config = get_country_config(code)
+
+    try:
+        config = get_country_config(code)
+    except KeyError:
+        # Unregistered source directions remain in the legacy/out-of-scope
+        # analysis flow. They do not acquire a source-country package merely
+        # by appearing in a request, but the response still needs the
+        # canonical dataset identity used by that legacy flow.
+        return _canonical_dataset_version(code, cz_release_loader)
 
     if config.runtime_dataset_strategy == "canonical_stage6":
-        if cz_release_loader is None:
-            raise ValueError(
-                f"{code} runtime dataset version requires the canonical Stage 6 loader."
-            )
-        payload = cz_release_loader()
-        dataset = str(payload.get("dataset_release") or "")
-        if not dataset:
-            raise ValueError(
-                f"{code} Stage 6 source release has no dataset identifier."
-            )
-        return dataset
+        return _canonical_dataset_version(code, cz_release_loader)
 
     if config.runtime_dataset_strategy != "source_country_manifest":
         raise ValueError(
