@@ -63,9 +63,9 @@
       remittanceLabel: "Odvod zrážkovej dane",
       notificationLabel: "Mesačné oznámenie OZN4311v26",
       sourceMetrics: Object.freeze({
-        jurisdictionLabel: "SK treaty relationships",
+        jurisdictionLabel: "Podporované jurisdikcie",
         jurisdictionValue: "75",
-        scopeLabel: "SK machine-evidence scopes",
+        scopeLabel: "Pokryté kombinácie",
         scopeValue: "225",
       }),
       hideWorkspaceFxControls: true,
@@ -73,12 +73,12 @@
         "/exchange-rates/cnb",
       ]),
       interestMonthlyAmountFieldVisible: false,
-      payerSubtitle: "Slovenské subjekty, ktorých platby sú v TaxTreat spracovávané v technickom pre-release náhľade.",
+      payerSubtitle: "Slovenské subjekty, ktorých platby sú v TaxTreat spracovávané.",
       metaDescription: "TaxTreat – informačný pracovný priestor pre slovenskú zrážkovú daň",
-      prereleaseNotice: "Slovenský balík je dostupný pouze pro technický náhled. Standardní corporate outbound WHT compliance je modelována jako měsíční OZN4311v26 podle § 43 ods. 11; oznámení i odvod jsou do 15. dne následujícího kalendářního měsíce. Finální výpočet zůstává blokovaný do dokončení právního review a release gate.",
+      prereleaseNotice: "",
       complianceNoteDefault: "SK compliance model: mesačné OZN4311v26 a odvod zrážkovej dane najneskôr do 15. dňa nasledujúceho kalendárneho mesiaca. Samostatné bežné ročné WHT priznanie nie je pre štandardný dividend/interest/royalty flow nakonfigurované.",
       peLocationLabel: "Väzba príjmu na stálu prevádzkareň v SR",
-      payerGenitiveLabel: "slovenského plátce",
+      payerGenitiveLabel: "slovenského platiteľa",
     }),
   });
 
