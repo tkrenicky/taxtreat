@@ -23,15 +23,17 @@ def _released_sk_config():
         compliance_form_code=real.compliance_form_code,
         compliance_legal_reference=real.compliance_legal_reference,
         compliance_periodicity=real.compliance_periodicity,
+        release_gate_strategy="source_country_manifest",
     )
 
 
 def _flip_sk_runtime_flag(monkeypatch):
     config = _released_sk_config()
+    original_get_country_config = gate_module.get_country_config
     monkeypatch.setattr(
         gate_module,
         "get_country_config",
-        lambda code: config if code == "SK" else gate_module.get_country_config(code),
+        lambda code: config if code == "SK" else original_get_country_config(code),
     )
 
 
@@ -141,7 +143,6 @@ def test_cz_remains_released_and_can_delegate_to_existing_pair_gate():
 def test_unknown_source_country_fails_closed():
     with pytest.raises(UnsupportedSourceCountryError):
         require_source_country_analysis_release("XX")
-
 
 
 def _write_pattern_release_evidence(tmp_path, *, pattern_scopes=201):
