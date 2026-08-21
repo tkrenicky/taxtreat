@@ -16,6 +16,14 @@ def test_cz_runtime_dataset_uses_existing_stage6_loader():
     assert value == "cz-stage6-test"
 
 
+def test_unregistered_source_direction_keeps_legacy_canonical_dataset_identity():
+    value = source_country_runtime_dataset_version(
+        "AT",
+        cz_release_loader=lambda: {"dataset_release": "cz-stage6-test"},
+    )
+    assert value == "cz-stage6-test"
+
+
 def test_sk_release_manifest_can_be_used_as_production_dataset():
     dataset_version = source_country_runtime_dataset_version("SK")
 
