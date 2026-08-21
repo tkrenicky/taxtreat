@@ -21,6 +21,7 @@
     .then(() => loadScript("/ui-assets/workspace-ui-report-batch-20260821.js?v=20260821-batch1"))
     .then(() => loadScript("/ui-assets/workspace-header-language-20260821.js?v=20260821-batch1"))
     .then(() => loadScript("/ui-assets/workspace-payer-dialog-i18n-20260821.js?v=20260821-batch1"))
+    .then(() => loadScript("/ui-assets/workspace-payer-detail-i18n-20260821.js?v=20260821-batch1"))
     .then(() => loadScript("/ui-assets/workspace-section19-fallback-20260821.js?v=20260821-batch1"))
     .then(() => loadScript("/ui-assets/workspace-report-export-core.js?v=20260819-3"))
     .catch((problem) => {
