@@ -18,6 +18,25 @@ def test_country_configs_select_calculation_strategy():
     )
 
 
+def test_unregistered_source_direction_preserves_legacy_out_of_scope_helpers():
+    calculation = build_source_country_withholding_tax_calculation(
+        "AT",
+        None,
+        decision_status="OUT_OF_SCOPE",
+        rate_percent=None,
+    )
+    schedule = build_source_country_withholding_compliance_schedule(
+        "AT",
+        date(2026, 8, 12),
+        income_type="dividend",
+        decision_status="OUT_OF_SCOPE",
+        rate_percent=None,
+    )
+
+    assert calculation is None
+    assert schedule["status"] == "PENDING_FINAL_TREATMENT"
+
+
 def test_sk_outside_subject_has_no_zero_rate_calculation():
     result = build_source_country_withholding_tax_calculation(
         "SK",
@@ -79,7 +98,6 @@ def test_literal_taxable_zero_rate_is_still_calculated_zero():
     assert result["status"] == "CALCULATED"
     assert result["rate_percent"] == "0"
     assert result["withholding_tax_eur"] == "0.00"
-
 
 
 def test_core_calculation_dispatch_has_no_country_code_branching():
