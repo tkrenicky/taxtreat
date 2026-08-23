@@ -3,8 +3,12 @@
 
   let lastAnalysis = null;
 
+  function uiLanguage() {
+    return document.querySelector("#taxtreat-ui-language")?.value || localStorage.getItem("taxtreat-ui-language") || "cs";
+  }
+
   function isCzech() {
-    return (document.querySelector("#taxtreat-ui-language")?.value || localStorage.getItem("taxtreat-ui-language") || "cs") === "cs";
+    return uiLanguage() === "cs";
   }
 
   function installStyles() {
@@ -16,35 +20,42 @@
     }
 
     style.textContent = `
-      /* PAYER LIST: actual DOM is avatar | copy | dl(metrics) | actions. */
+      /* PAYERS: actual DOM = avatar | company copy | dl(metrics) | actions. */
       [data-view="payers"] .payer-record{
         display:grid!important;
-        grid-template-columns:52px minmax(230px,1fr) 210px 260px!important;
-        column-gap:16px!important;
+        grid-template-columns:52px minmax(300px,1fr) 240px 330px!important;
+        column-gap:22px!important;
         align-items:center!important;
+        min-height:142px!important;
       }
       [data-view="payers"] .payer-record > .avatar{
         grid-column:1!important;
         justify-self:center!important;
+        align-self:center!important;
       }
       [data-view="payers"] .payer-record > .avatar + div{
         grid-column:2!important;
         min-width:0!important;
         align-self:center!important;
       }
+      [data-view="payers"] .payer-record > .avatar + div h2,
+      [data-view="payers"] .payer-record > .avatar + div p{
+        margin-left:0!important;
+        margin-right:0!important;
+      }
       [data-view="payers"] .payer-record > dl{
         grid-column:3!important;
         display:grid!important;
         grid-template-columns:repeat(3,minmax(0,1fr))!important;
-        gap:10px!important;
+        gap:14px!important;
         width:100%!important;
         margin:0!important;
-        align-items:center!important;
+        align-self:center!important;
       }
       [data-view="payers"] .payer-record > dl > div{
         display:grid!important;
-        grid-template-rows:auto auto!important;
-        gap:4px!important;
+        grid-template-rows:18px 26px!important;
+        gap:5px!important;
         justify-items:center!important;
         align-items:center!important;
         margin:0!important;
@@ -54,17 +65,19 @@
       [data-view="payers"] .payer-record > dl dt,
       [data-view="payers"] .payer-record > dl dd{
         margin:0!important;
-        line-height:1.15!important;
+        padding:0!important;
+        line-height:1!important;
         white-space:nowrap!important;
       }
       [data-view="payers"] .payer-record > .payer-actions{
         grid-column:4!important;
         display:grid!important;
-        grid-template-columns:minmax(158px,1fr) 88px!important;
-        gap:10px!important;
-        align-items:center!important;
+        grid-template-columns:minmax(210px,1fr) 110px!important;
+        gap:12px!important;
         width:100%!important;
         margin:0!important;
+        padding-top:23px!important;
+        align-self:center!important;
       }
       [data-view="payers"] .payer-record > .payer-actions button{
         width:100%!important;
@@ -72,7 +85,7 @@
         height:40px!important;
         min-height:40px!important;
         margin:0!important;
-        padding:0 10px!important;
+        padding:0 12px!important;
         display:flex!important;
         align-items:center!important;
         justify-content:center!important;
@@ -80,23 +93,39 @@
         line-height:1!important;
         font-size:14px!important;
       }
-      @media (max-width:900px){
-        [data-view="payers"] .payer-record{
-          grid-template-columns:48px minmax(0,1fr)!important;
-          row-gap:14px!important;
-        }
-        [data-view="payers"] .payer-record > dl{
-          grid-column:2!important;
-          grid-row:2!important;
-        }
-        [data-view="payers"] .payer-record > .payer-actions{
-          grid-column:2!important;
-          grid-row:3!important;
-          max-width:300px!important;
-        }
+
+      /* RECIPIENT LIST: align avatar, two-line copy and status badge around one visual centre. */
+      [data-view="recipients"] .recipient-row{
+        display:grid!important;
+        grid-template-columns:52px minmax(240px,auto) max-content minmax(0,1fr) max-content max-content!important;
+        column-gap:18px!important;
+        align-items:center!important;
+      }
+      [data-view="recipients"] .recipient-row > .avatar{
+        grid-column:1!important;
+        justify-self:center!important;
+        align-self:center!important;
+      }
+      [data-view="recipients"] .recipient-row > .avatar + div{
+        grid-column:2!important;
+        display:grid!important;
+        grid-template-rows:auto auto!important;
+        row-gap:7px!important;
+        align-content:center!important;
+        margin:0!important;
+      }
+      [data-view="recipients"] .recipient-row > .avatar + div h2,
+      [data-view="recipients"] .recipient-row > .avatar + div p{
+        margin:0!important;
+      }
+      [data-view="recipients"] .recipient-row > .badge{
+        grid-column:3!important;
+        align-self:center!important;
+        justify-self:start!important;
+        margin:0!important;
       }
 
-      /* STEP 3: one desktop row, first 3 equal, currency narrow; all controls share one top line. */
+      /* STEP 3: exactly one desktop row, first 3 equal, currency narrow. */
       .flow-step[data-step="3"] .payment-form .field-grid{
         display:grid!important;
         grid-template-columns:repeat(3,minmax(0,1fr)) 120px!important;
@@ -117,6 +146,7 @@
         margin:0!important;
       }
       .flow-step[data-step="3"] .payment-form .field-grid > label > span:first-child{
+        height:26px!important;
         min-height:26px!important;
         margin:0!important;
         display:flex!important;
@@ -142,7 +172,19 @@
         grid-row:2!important;
         max-width:none!important;
       }
-      @media (max-width:900px){
+
+      /* When Section 19 is the applied domestic exemption, treaty rule card is not shown as applied. */
+      .flow-step[data-step="4"].tt-section19-authoritative > article.reason{display:none!important}
+
+      @media (max-width:1050px){
+        [data-view="payers"] .payer-record{
+          grid-template-columns:48px minmax(0,1fr)!important;
+          row-gap:14px!important;
+        }
+        [data-view="payers"] .payer-record > dl{grid-column:2!important;grid-row:2!important}
+        [data-view="payers"] .payer-record > .payer-actions{
+          grid-column:2!important;grid-row:3!important;max-width:330px!important;padding-top:0!important;
+        }
         .flow-step[data-step="3"] .payment-form .field-grid{grid-template-columns:1fr 1fr!important}
         .flow-step[data-step="3"] .payment-income-field,
         .flow-step[data-step="3"] .transaction-date-field,
@@ -150,10 +192,20 @@
         .flow-step[data-step="3"] .payment-currency-field,
         .flow-step[data-step="3"] #workspace-exchange-rate-field{grid-column:auto!important;grid-row:auto!important}
       }
-
-      /* Section 19 result: no duplicate 'Applied legal rule' when domestic exemption is decisive. */
-      .flow-step[data-step="4"].tt-final-domestic-exemption > article.reason{display:none!important}
     `;
+  }
+
+  function section19Box() {
+    return document.querySelector('.flow-step[data-step="4"] #cz-section19-result');
+  }
+
+  function section19IsApplicableFromUi() {
+    const box = section19Box();
+    if (!box) return false;
+    const text = box.textContent || "";
+    return box.classList.contains("tt-section19-applicable") ||
+      /Osvobození\s+podle\s+§\s*19\s*ZDP\s+se\s+uplatní/i.test(text) ||
+      /§\s*19\s*ZDP\s+se\s+použije/i.test(text);
   }
 
   function selectedCitation(analysis) {
@@ -161,11 +213,14 @@
     return (analysis?.citations || analysis?.legal_path || []).find((item) => String(item.rule_id || "") === selected) || null;
   }
 
-  function domesticExemptionIsDecisive() {
-    const analysis = lastAnalysis;
-    if (!analysis) return false;
-    const citation = selectedCitation(analysis);
-    return analysis.tax_treatment === "domestic_exemption" || String(citation?.legal_layer || "") === "eu_relief";
+  function engineDomesticExemption() {
+    if (!lastAnalysis) return false;
+    const citation = selectedCitation(lastAnalysis);
+    return lastAnalysis.tax_treatment === "domestic_exemption" || String(citation?.legal_layer || "") === "eu_relief";
+  }
+
+  function section19Authoritative() {
+    return section19IsApplicableFromUi() || engineDomesticExemption();
   }
 
   function setText(node, text) {
@@ -175,27 +230,50 @@
   function normalizeSection19Result() {
     if (!isCzech()) return;
     const root = document.querySelector('.flow-step[data-step="4"]');
-    const box = root?.querySelector("#cz-section19-result");
+    const box = section19Box();
     if (!root || !box) return;
 
-    const decisive = domesticExemptionIsDecisive();
-    root.classList.toggle("tt-final-domestic-exemption", decisive);
+    const authoritative = section19Authoritative();
+    root.classList.toggle("tt-section19-authoritative", authoritative);
 
     const status = box.querySelector(".tt-legal-status");
     const heading = box.querySelector("h1,h2,h3,h4");
     const paragraph = box.querySelector("p");
 
-    if (decisive) {
+    if (authoritative) {
       box.classList.add("tt-section19-applicable");
       setText(status, "Osvobození podle § 19 ZDP se uplatní");
       setText(heading, "Vnitrostátní osvobození podle § 19 ZDP");
-      setText(paragraph, "Při zadaných údajích jsou splněny podmínky osvobození podle § 19 ZDP. Příjem proto nepodléhá české srážkové dani. Smluvní úprava představuje pouze sekundární ochranu.");
+      setText(paragraph, "Při zadaných údajích jsou splněny podmínky osvobození podle § 19 ZDP. Příjem proto nepodléhá české srážkové dani.");
     } else {
       const current = status?.textContent || "";
       if (/§\s*19\s*ZDP\s*posouzen/i.test(current)) {
         setText(status, "Posouzení vnitrostátního osvobození");
       }
+      const currentParagraph = paragraph?.textContent || "";
+      if (/Níže uvedený právní titul musí být s tímto výsledkem konzistentní/i.test(currentParagraph)) {
+        setText(paragraph, "Možnost vnitrostátního osvobození byla posouzena před použitím smluvního pravidla.");
+      }
     }
+  }
+
+  function enhanceSection19LegalSource() {
+    if (!isCzech() || !section19Authoritative()) return;
+    const root = document.querySelector('.flow-step[data-step="4"]');
+    const citations = root?.querySelector("#workspace-citations");
+    if (!citations) return;
+    const s19 = [...citations.querySelectorAll(":scope > .citation-card")].find((card) => /§\s*19(?:\D|$)/i.test(card.textContent || ""));
+    if (!s19) return;
+    const details = s19.querySelector("details.citation-excerpt");
+    const block = details?.querySelector("blockquote");
+    if (!details || !block) return;
+    const desired = [
+      "§ 19 odst. 1 písm. ze) – stanoví osvobození podílu na zisku při splnění zákonných podmínek.",
+      "§ 19 odst. 3 – vymezuje podmínky vztahující se ke kvalifikovaným společnostem a jejich daňovému postavení.",
+      "§ 19 odst. 6 – upravuje podmínky účasti a časového testu držby.",
+      "§ 19 odst. 11 – obsahuje navazující podmínky a vymezení relevantní pro osvobození."
+    ].join("\n");
+    setText(block, desired);
   }
 
   function normalizeZdpTerminology() {
@@ -242,6 +320,7 @@
     repairFlags();
     normalizeSection19Result();
     normalizeZdpTerminology();
+    enhanceSection19LegalSource();
   }
 
   function scheduleRefresh() {
