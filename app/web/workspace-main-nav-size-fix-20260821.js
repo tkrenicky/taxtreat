@@ -6,7 +6,7 @@
   const style = document.createElement("style");
   style.id = "tt-main-nav-size-fix-20260821";
   style.textContent = `
-    /* Main navigation tiles — deliberately much larger. */
+    /* Main navigation tiles — keep the tiles balanced, make the LABELS visibly larger. */
     .app-header nav {
       display:flex!important;
       align-items:center!important;
@@ -16,12 +16,12 @@
     .app-header nav button[data-nav] {
       min-height:64px!important;
       min-width:136px!important;
-      padding:0 28px!important;
+      padding:0 25px!important;
       border-radius:13px!important;
-      font-size:24px!important;
+      font-size:30px!important;
       line-height:1!important;
       font-weight:780!important;
-      letter-spacing:-0.015em!important;
+      letter-spacing:-0.02em!important;
     }
 
     .app-header nav button[data-nav].active {
@@ -34,8 +34,8 @@
       .app-header nav button[data-nav] {
         min-width:116px!important;
         min-height:60px!important;
-        padding:0 22px!important;
-        font-size:22px!important;
+        padding:0 20px!important;
+        font-size:27px!important;
       }
     }
 
@@ -44,8 +44,8 @@
       .app-header nav button[data-nav] {
         min-width:0!important;
         min-height:54px!important;
-        padding:0 15px!important;
-        font-size:20px!important;
+        padding:0 13px!important;
+        font-size:23px!important;
       }
     }
   `;
