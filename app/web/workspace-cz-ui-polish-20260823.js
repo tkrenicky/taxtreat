@@ -28,15 +28,34 @@
       }
       [data-view="payers"] .payer-record .secondary,
       [data-view="recipients"] .recipient-row .secondary{box-shadow:none!important}
+
+      /* Payer list: fixed visual columns so labels, values and actions line up between rows. */
       [data-view="payers"] .payer-record{
+        display:grid!important;
+        grid-template-columns:52px minmax(330px,1fr) 68px 58px 92px max-content max-content!important;
+        column-gap:18px!important;
         align-items:center!important;
       }
       [data-view="payers"] .payer-record > *{
-        align-self:center;
+        align-self:center!important;
+        margin-top:0!important;
+        margin-bottom:0!important;
       }
-      [data-view="payers"] .payer-record .payer-actions,
-      [data-view="payers"] .payer-record > div:last-child{
-        align-items:center!important;
+      [data-view="payers"] .payer-record > :nth-child(3),
+      [data-view="payers"] .payer-record > :nth-child(4),
+      [data-view="payers"] .payer-record > :nth-child(5){
+        min-width:0!important;
+        justify-self:start!important;
+      }
+      [data-view="payers"] .payer-record > :nth-last-child(2),
+      [data-view="payers"] .payer-record > :last-child{
+        justify-self:end!important;
+      }
+      @media (max-width:1150px){
+        [data-view="payers"] .payer-record{
+          grid-template-columns:46px minmax(250px,1fr) 58px 52px 82px max-content max-content!important;
+          column-gap:12px!important;
+        }
       }
 
       #taxtreat-language-controls .tt-lang-mini button{
@@ -56,7 +75,6 @@
       #workspace-citations details.citation-excerpt{margin-top:10px}
       #workspace-citations details.citation-excerpt:not([open]) blockquote{display:none}
 
-      /* Step 3 desktop layout: three normal fields plus a deliberately narrower currency field. */
       .flow-step[data-step="3"] .payment-form .field-grid{
         grid-template-columns:minmax(180px,1.15fr) minmax(190px,1.15fr) minmax(180px,1.15fr) minmax(110px,.55fr)!important;
         align-items:start!important;
@@ -79,11 +97,11 @@
 
   function enforceMainNavTypography() {
     const width = window.innerWidth || 1440;
-    const size = width <= 1080 ? "25px" : width <= 1320 ? "29px" : "32px";
+    const size = width <= 1080 ? "18px" : width <= 1320 ? "20px" : "21px";
     document.querySelectorAll('.app-header nav button[data-nav]').forEach((button) => {
       button.style.setProperty("font-size", size, "important");
-      button.style.setProperty("font-weight", "780", "important");
-      button.style.setProperty("line-height", "1", "important");
+      button.style.setProperty("font-weight", "700", "important");
+      button.style.setProperty("line-height", "1.1", "important");
     });
   }
 
