@@ -17,6 +17,7 @@ class TaxTreatment(str, Enum):
     TAXABLE_AT_RATE = "taxable_at_rate"
     EXCLUSIVE_FOREIGN_TAXATION = "exclusive_foreign_taxation"
     DOMESTIC_EXEMPTION = "domestic_exemption"
+    OUTSIDE_SUBJECT_OF_TAX = "outside_subject_of_tax"
 
 
 @dataclass(frozen=True)

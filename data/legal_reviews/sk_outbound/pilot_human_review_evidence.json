@@ -1,0 +1,202 @@
+{
+  "schema_version": 1,
+  "dataset_release": "sk-pilot-human-review-evidence-2026-08-19.1",
+  "source_country": "SK",
+  "policy": {
+    "primary_sources_required": true,
+    "mli_pair_specific_matching_required": true,
+    "review_ready_does_not_mean_approved": true,
+    "runtime_release": false
+  },
+  "summary": {
+    "sample_scope_count": 6,
+    "review_ready_scopes": 3,
+    "blocked_scopes": 3,
+    "human_reviewed_scopes": 0,
+    "production_released_scopes": 0
+  },
+  "scopes": [
+    {
+      "packet_id": "SK-US-dividend",
+      "recipient_country": "US",
+      "income_type": "dividend",
+      "review_status": "ready_for_human_review",
+      "base_treaty": {
+        "publication": "74/1994 Z. z.",
+        "official_url": "https://static.slov-lex.sk/static/SK/ZZ/1994/74/vyhlasene_znenie.html",
+        "operative_article": "Article 10",
+        "source_state_rate_rule": {
+          "qualifying_rate_percent": 5,
+          "qualifying_conditions": [
+            "beneficial owner is a company",
+            "company owns at least 10 percent of voting shares of the payer"
+          ],
+          "general_rate_percent": 15
+        },
+        "special_cases": [
+          "Article 10(3) contains special treatment for U.S. Regulated Investment Companies and Real Estate Investment Trusts.",
+          "Article 10(5) routes effectively connected dividends to the PE or fixed-base article instead of the dividend cap."
+        ]
+      },
+      "mli": {
+        "applies": false,
+        "status": "not_mli_listed_modified"
+      },
+      "candidate_conclusion": {
+        "treaty_source_rate_percent": 5,
+        "when": "corporate beneficial owner with at least 10 percent voting ownership, outside the special RIC/REIT and PE-connection cases",
+        "otherwise_treaty_source_rate_percent": 15,
+        "domestic_interaction_status": "pending_human_confirmation_against_current Slovak corporate-dividend domestic treatment"
+      },
+      "human_review_questions": [
+        "Confirm the 5 percent / 15 percent Article 10 rate structure and 10 percent voting-right threshold.",
+        "Confirm that RIC/REIT and PE-connection exceptions are represented correctly.",
+        "Confirm the interaction with the current Slovak domestic corporate-dividend exclusion before production release."
+      ]
+    },
+    {
+      "packet_id": "SK-NZ-dividend",
+      "recipient_country": "NZ",
+      "income_type": "dividend",
+      "review_status": "ready_for_human_review",
+      "base_treaty": {
+        "publication": "243/2024 Z. z.",
+        "official_url": "https://static.slov-lex.sk/static/SK/ZZ/2024/243/vyhlasene_znenie.print.html",
+        "operative_article": "Article 10",
+        "source_state_rate_rule": {
+          "qualifying_rate_percent": 5,
+          "qualifying_conditions": [
+            "beneficial owner is a company",
+            "direct holding of at least 10 percent of voting rights",
+            "the ownership condition is met throughout a 365-day period including the dividend payment date, disregarding qualifying reorganisation-driven ownership changes"
+          ],
+          "general_rate_percent": 15
+        },
+        "special_cases": [
+          "Article 10(5) routes effectively connected dividends to Article 7."
+        ]
+      },
+      "mli": {
+        "applies": false,
+        "status": "not_mli_listed_modified",
+        "note": "The modern treaty already contains BEPS-style transparent-entity, anti-abuse and 365-day dividend language in the base instrument."
+      },
+      "candidate_conclusion": {
+        "treaty_source_rate_percent": 5,
+        "when": "corporate beneficial owner with at least 10 percent direct voting ownership throughout the required 365-day period and no PE connection",
+        "otherwise_treaty_source_rate_percent": 15,
+        "domestic_interaction_status": "pending_human_confirmation_against_current Slovak corporate-dividend domestic treatment"
+      },
+      "human_review_questions": [
+        "Confirm the 5 percent / 15 percent Article 10 rate structure.",
+        "Confirm the 10 percent direct voting-right threshold and 365-day period formulation.",
+        "Confirm that the base-treaty anti-abuse/transparent-entity provisions are treated as treaty conditions even though this relationship is not MLI-listed."
+      ]
+    },
+    {
+      "packet_id": "SK-AT-interest",
+      "recipient_country": "AT",
+      "income_type": "interest",
+      "review_status": "ready_for_human_review",
+      "base_treaty": {
+        "publication": "48/1979 Zb.",
+        "official_url": "https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/1979/48/",
+        "operative_article": "Article 11",
+        "source_state_rate_rule": {
+          "ordinary_treaty_rate_percent": 0,
+          "rule": "Interest sourced in one treaty state and paid to a resident of the other state is taxable only in the residence state."
+        },
+        "special_cases": [
+          "The Article 11 exclusive-residence rule does not apply where the interest claim is effectively connected with a source-state permanent establishment or fixed base."
+        ]
+      },
+      "mli": {
+        "applies": true,
+        "notice": "410/2018 Z. z.",
+        "official_url": "https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/410/20181229",
+        "wht_effective_from": "2019-01-01",
+        "matched_effects_relevant_to_interest": [
+          {
+            "mli_article": "7",
+            "effect": "PPT may deny the treaty benefit when obtaining that benefit was one of the principal purposes unless granting it accords with the object and purpose of the relevant treaty provisions."
+          },
+          {
+            "mli_article": "10",
+            "effect": "Third-jurisdiction PE rule can deny treaty benefits for income attributable to a third-state PE where the MLI low-tax conditions are met; the source state may then tax under domestic law, subject to the article's active-business and competent-authority relief rules."
+          },
+          {
+            "mli_article": "13",
+            "effect": "Changes the treaty's PE-specific-activity exceptions and can therefore alter whether the interest claim is connected with a PE for purposes of the Article 11 carve-out."
+          },
+          {
+            "mli_article": "15",
+            "effect": "Closely-related-enterprise definition supports application of MLI PE provisions."
+          }
+        ]
+      },
+      "candidate_conclusion": {
+        "treaty_source_rate_percent": 0,
+        "when": "ordinary Article 11 case, provided treaty residence/entitlement is established, the claim is not effectively connected with a Slovak PE/fixed base, PPT does not deny the benefit, and the MLI Article 10 third-jurisdiction PE rule does not deny the benefit",
+        "fallback_if_treaty_benefit_denied": "Slovak domestic-law candidate applies; current domestic model records 19 percent standard WHT and 35 percent for a non-cooperative-state case, subject to domestic-law human confirmation and any applicable EU interest exemption.",
+        "eu_relief_overlay": "Austria is an EU jurisdiction; the separate Slovak EU interest exemption candidate must also be evaluated before final runtime output."
+      },
+      "human_review_questions": [
+        "Confirm that ordinary Article 11 produces a 0 percent Slovak source-state treaty rate.",
+        "Confirm the listed MLI Article 7, 10, 13 and 15 effects for the interest scope and WHT effectiveness from 1 January 2019.",
+        "Confirm that the runtime decision order tests the Slovak/EU exemption, treaty entitlement, MLI denial rules and PE connection without incorrectly presenting the 0 percent treaty rate as unconditional."
+      ]
+    },
+    {
+      "packet_id": "SK-AU-royalty",
+      "recipient_country": "AU",
+      "income_type": "royalty",
+      "review_status": "blocked_pending_primary_chain_completion",
+      "blockers": [
+        "Base Article 12 primary treaty text must be ingested byte-for-byte from the official Slovak publication before review-ready promotion.",
+        "Complete pair-specific review of all operative MLI modifications in 408/2018 Z. z. that can affect treaty entitlement or PE connection for royalties."
+      ],
+      "known_primary_overlay": {
+        "mli_notice": "408/2018 Z. z.",
+        "official_url": "https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/408/20181229",
+        "wht_effective_from": "2019-01-01",
+        "confirmed_effects": ["MLI Article 3 transparent-entity rule", "MLI Article 4 dual-resident-entity rule", "MLI PE modifications"]
+      }
+    },
+    {
+      "packet_id": "SK-NL-royalty",
+      "recipient_country": "NL",
+      "income_type": "royalty",
+      "review_status": "blocked_pending_instrument_chain_completion",
+      "blockers": [
+        "Confirm the Article 12 operative wording after both protocols 199/1997 and 450/2010.",
+        "Complete the scope-specific MLI matching from 486/2019 Z. z. and confirm which MLI PE/entitlement provisions can change the royalty conclusion."
+      ],
+      "known_primary_overlay": {
+        "base_treaty_publication": "138/1974 Zb.",
+        "protocol_publications": ["199/1997 Z. z.", "450/2010 Z. z."],
+        "mli_notice": "486/2019 Z. z.",
+        "mli_official_url": "https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2019/486/",
+        "wht_effective_from": "2020-01-01",
+        "confirmed_mli_effects": ["MLI Article 3 transparent-entity rule", "MLI Article 4 dual-resident-entity rule", "MLI Article 8 365-day dividend rule (not directly a royalty-rate modifier)", "MLI Article 7 PPT"]
+      }
+    },
+    {
+      "packet_id": "SK-GB-interest",
+      "recipient_country": "GB",
+      "income_type": "interest",
+      "review_status": "blocked_pending_instrument_chain_completion",
+      "blockers": [
+        "Ingest the corrected 89/1992 treaty wording after correction notice 420/2023.",
+        "Resolve the territorial-scope note applicable to the United Kingdom relationship.",
+        "Complete scope-specific substantive MLI matching under 412/2018 Z. z. before review-ready promotion."
+      ],
+      "known_primary_overlay": {
+        "base_treaty_publication": "89/1992 Zb.",
+        "correction_notice": "420/2023 Z. z.",
+        "mli_notice": "412/2018 Z. z.",
+        "wht_effective_from": "2019-01-01",
+        "official_inventory_url": "https://www.mfsr.sk/sk/dane-cla-uctovnictvo/priame-dane/dane-z-prijmu/zmluvy-zamedzeni-dvojiteho-zdanenia/zmluvy-zamedzeni-dvojiteho-zdanenia/zoznam-platnych-ucinnych-zmluv-zamedzeni-dvojiteho-zdanenia/"
+      }
+    }
+  ]
+}

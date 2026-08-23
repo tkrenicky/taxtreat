@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "dataset_release": "sk-domestic-transaction-condition-model-2026-08-19.1",
+  "source_country": "SK",
+  "law_version": {
+    "act": "595/2003 Z. z.",
+    "effective_from": "2026-01-01",
+    "effective_to": "2026-12-30",
+    "official_source_url": "https://static.slov-lex.sk/static/SK/ZZ/2003/595/20260101.print.html"
+  },
+  "eu_interest_relief": {
+    "locator": "§ 13 ods. 2 písm. f) a ods. 3",
+    "income_type": "interest",
+    "treatment_candidate": "exempt",
+    "required_conditions": {
+      "recipient_is_legal_person_or_qualifying_pe_of_eu_legal_person": true,
+      "recipient_is_eu_taxpayer_or_qualifying_pe": true,
+      "recipient_is_beneficial_owner": true,
+      "ownership_relationship_one_of": [
+        "payer_directly_owns_recipient",
+        "recipient_directly_owns_payer",
+        "third_eu_legal_person_directly_owns_both"
+      ],
+      "direct_capital_percent_min": 25,
+      "holding_period_months_min": 24
+    },
+    "holding_period_can_complete_after_payment": true,
+    "post_payment_refund_locator": "§ 43 ods. 21"
+  },
+  "eu_royalty_relief": {
+    "locator": "§ 13 ods. 2 písm. h) a ods. 3",
+    "income_type": "royalty",
+    "covered_domestic_source_categories": [
+      "§ 16 ods. 1 písm. e) bod 1",
+      "§ 16 ods. 1 písm. e) bod 2",
+      "industrial_commercial_or_scientific_equipment"
+    ],
+    "treatment_candidate": "exempt",
+    "required_conditions": {
+      "recipient_is_legal_person_or_qualifying_pe_of_eu_legal_person": true,
+      "recipient_is_eu_taxpayer_or_qualifying_pe": true,
+      "recipient_is_beneficial_owner": true,
+      "ownership_relationship_one_of": [
+        "payer_directly_owns_recipient",
+        "recipient_directly_owns_payer",
+        "third_eu_legal_person_directly_owns_both"
+      ],
+      "direct_capital_percent_min": 25,
+      "holding_period_months_min": 24
+    },
+    "holding_period_can_complete_after_payment": true,
+    "post_payment_refund_locator": "§ 43 ods. 21"
+  },
+  "registered_sk_pe_withholding_exclusion": {
+    "locator": "§ 43 ods. 2",
+    "conditions": {
+      "recipient_has_sk_permanent_establishment": true,
+      "recipient_sk_pe_registered_under_income_tax_act": true,
+      "income_attributable_to_registered_sk_pe": true
+    },
+    "effect": "section_43_2_nonresident_withholding_route_does_not_apply",
+    "treaty_or_mli_pe_definition_may_affect_pe_connection": true
+  },
+  "policy": {
+    "relief_is_transaction_fact_dependent": true,
+    "future_holding_period_completion_must_not_be_reported_as_current_exemption_without_refund_context": true,
+    "registered_pe_exclusion_requires_both_registration_and_income_attribution": true,
+    "mli_pe_effects_must_be_resolved_before_final_pe_connection_for_mli_pairs": true,
+    "machine_model_is_not_human_approval": true,
+    "runtime_release": false
+  },
+  "human_review_status": "not_started",
+  "approval_eligible": false,
+  "runtime_status": "not_released"
+}

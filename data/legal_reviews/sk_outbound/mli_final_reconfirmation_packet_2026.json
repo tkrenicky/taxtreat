@@ -1,0 +1,166 @@
+{
+  "corrections_requiring_reconfirmation": [
+    {
+      "applied_mli_articles": [
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "11",
+        "13",
+        "15",
+        "35"
+      ],
+      "article_8_365_day_test_applies": false,
+      "correct_conclusion": "MLI Article 8 does not apply to this Slovak bilateral relationship.",
+      "machine_extraction_was_correct": true,
+      "prior_review_correction_record": {
+        "corrected_conclusion": "MLI Article 8 does not apply to this bilateral relationship",
+        "machine_extraction_was_correct": true,
+        "prior_incorrect_conclusion": "MLI Article 8 / 365-day dividend holding test applies",
+        "recipient_country": "GB"
+      },
+      "recipient_country": "GB",
+      "result_changing_articles": [
+        "3",
+        "4",
+        "7",
+        "13",
+        "15"
+      ],
+      "slovak_notice": "412/2018",
+      "wht_effective_dates": [
+        "2019-01-01"
+      ]
+    },
+    {
+      "applied_mli_articles": [
+        "6",
+        "7",
+        "17",
+        "35"
+      ],
+      "article_8_365_day_test_applies": false,
+      "correct_conclusion": "MLI Article 8 does not apply to this Slovak bilateral relationship.",
+      "machine_extraction_was_correct": true,
+      "prior_review_correction_record": {
+        "corrected_conclusion": "MLI Article 8 does not apply to this bilateral relationship",
+        "machine_extraction_was_correct": true,
+        "prior_incorrect_conclusion": "MLI Article 8 / 365-day dividend holding test applies",
+        "recipient_country": "KR"
+      },
+      "recipient_country": "KR",
+      "result_changing_articles": [
+        "7"
+      ],
+      "slovak_notice": "231/2020",
+      "wht_effective_dates": [
+        "2021-01-01"
+      ]
+    },
+    {
+      "applied_mli_articles": [
+        "3",
+        "5",
+        "6",
+        "7",
+        "35"
+      ],
+      "article_8_365_day_test_applies": false,
+      "correct_conclusion": "MLI Article 8 does not apply to this Slovak bilateral relationship.",
+      "machine_extraction_was_correct": true,
+      "prior_review_correction_record": {
+        "corrected_conclusion": "MLI Article 8 does not apply to this bilateral relationship",
+        "machine_extraction_was_correct": true,
+        "prior_incorrect_conclusion": "MLI Article 8 / 365-day dividend holding test applies",
+        "recipient_country": "LU"
+      },
+      "recipient_country": "LU",
+      "result_changing_articles": [
+        "3",
+        "7"
+      ],
+      "slovak_notice": "485/2019",
+      "wht_effective_dates": [
+        "2020-01-01"
+      ]
+    },
+    {
+      "applied_mli_articles": [
+        "6",
+        "7",
+        "12",
+        "13",
+        "15",
+        "35"
+      ],
+      "article_8_365_day_test_applies": false,
+      "correct_conclusion": "MLI Article 8 does not apply to this Slovak bilateral relationship.",
+      "machine_extraction_was_correct": true,
+      "prior_review_correction_record": {
+        "corrected_conclusion": "MLI Article 8 does not apply to this bilateral relationship",
+        "machine_extraction_was_correct": true,
+        "prior_incorrect_conclusion": "MLI Article 8 / 365-day dividend holding test applies",
+        "recipient_country": "VN"
+      },
+      "recipient_country": "VN",
+      "result_changing_articles": [
+        "7",
+        "12",
+        "13",
+        "15"
+      ],
+      "slovak_notice": "510/2023",
+      "wht_effective_dates": [
+        "2024-01-01"
+      ]
+    }
+  ],
+  "evidence": {
+    "bilateral_adjudication": "mli_bilateral_adjudication_2026.json",
+    "human_review_coverage": "human_review_coverage.json",
+    "release_manifest": "source_country_release_manifest.json"
+  },
+  "locked_article_8_population": {
+    "negative_regressions": [
+      "GB",
+      "KR",
+      "LU",
+      "VN"
+    ],
+    "positive": [
+      "BE",
+      "CA",
+      "DE",
+      "ES",
+      "IE",
+      "IL",
+      "IN",
+      "KZ",
+      "NL",
+      "RS",
+      "SI",
+      "TN",
+      "ZA"
+    ]
+  },
+  "release_effect": "The MLI post-review reconfirmation blocker may now be cleared subject to all other release gates remaining satisfied.",
+  "required_confirmation_statement": "I reconfirm the corrected MLI Article 8 treatment for GB, KR, LU and VN as recorded in mli_bilateral_adjudication_2026.json and confirm that the prior four review interpretations, rather than the machine extraction, were incorrect.",
+  "review_type": "mli_post_review_final_reconfirmation",
+  "reviewer_confirmation": {
+    "confirmation_statement": "I reconfirm the corrected MLI Article 8 treatment for GB, KR, LU and VN as recorded in mli_bilateral_adjudication_2026.json and confirm that the prior four review interpretations, rather than the machine extraction, were incorrect.",
+    "confirmed": true,
+    "confirmed_at": "2026-08-21T08:44:27Z",
+    "confirmed_by": "explicit_user_reviewer_confirmation"
+  },
+  "schema_version": 1,
+  "scope": {
+    "article_8_positive_relationships": 13,
+    "machine_extraction_discrepancies": 0,
+    "mli_relationships_reconciled": 46,
+    "prior_human_review_interpretation_corrections": 4
+  },
+  "source_country": "SK",
+  "status": "RECONFIRMED"
+}

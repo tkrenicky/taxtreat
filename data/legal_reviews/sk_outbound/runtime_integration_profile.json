@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "dataset_release": "sk-runtime-integration-profile-2026-08-19.1",
+  "source_country": "SK",
+  "status": "pre_release_runtime_contract",
+  "runtime_release": false,
+  "production_released_scopes": 0,
+  "locale": "sk-SK",
+  "currency": "EUR",
+  "fx": {
+    "provider": null,
+    "external_fx_lookup_required_for_eur_input": false,
+    "cnb_must_not_be_used": true
+  },
+  "legal_sources": {
+    "domestic_law": {
+      "label": "zákon č. 595/2003 Z. z.",
+      "url": "https://static.slov-lex.sk/static/SK/ZZ/2003/595/20260101.print.html"
+    },
+    "czech_zdp_must_not_be_used": true,
+    "czech_e_sbirka_must_not_be_used_for_sk_domestic_law": true
+  },
+  "decision_layers": [
+    "domestic",
+    "treaty",
+    "protocol",
+    "mli",
+    "eu_relief"
+  ],
+  "domestic_precedence": {
+    "dividend": [
+      "section_12_7_c_outside_subject_test",
+      "non_cooperating_state_exception",
+      "distribution_deductibility_test",
+      "treaty_and_mli_only_if_domestic_taxable_branch_remains"
+    ],
+    "interest": [
+      "section_43_domestic_wht",
+      "registered_sk_pe_exclusion",
+      "section_13_eu_interest_relief",
+      "treaty_protocol_mli_limitations"
+    ],
+    "royalty": [
+      "section_43_domestic_wht",
+      "registered_sk_pe_exclusion",
+      "section_13_eu_royalty_relief",
+      "treaty_protocol_mli_limitations"
+    ]
+  },
+  "mli": {
+    "pair_specific_matching_required": true,
+    "ppt_only_assumption_prohibited": true,
+    "wht_effective_date_required": true,
+    "pe_effects_must_feed_pe_connection_branch": true
+  },
+  "compliance": {
+    "ordinary_form_code": "OZN4311v26",
+    "legal_reference": "§ 43 ods. 11",
+    "periodicity": "monthly",
+    "deadline_rule": "15th_day_of_following_month",
+    "ordinary_annual_wht_return_configured": false
+  },
+  "release_gates": {
+    "all_225_scopes_machine_evidence_required": true,
+    "all_46_mli_relationships_machine_evidence_required": true,
+    "official_2026_cooperating_state_list_required": true,
+    "full_human_legal_review_required": true,
+    "report_and_web_parity_tests_required": true,
+    "czech_runtime_fallback_prohibited": true
+  },
+  "human_review_status": "not_started",
+  "approval_eligible": false
+}

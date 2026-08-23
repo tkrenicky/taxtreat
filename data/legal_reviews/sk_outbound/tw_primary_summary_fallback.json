@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "dataset_release": "sk-tw-primary-summary-fallback-2026-08-19.1",
+  "source_country": "SK",
+  "recipient_country": "TW",
+  "status": "machine_primary_source_summary_not_human_reviewed",
+  "policy": {
+    "use_only_when_official_mf_pdf_fetch_fails": true,
+    "never_misrepresent_as_byte_exact_pdf_extraction": true,
+    "human_review_required_before_release": true,
+    "runtime_release": false
+  },
+  "primary_source": {
+    "authority": "Ministerstvo financií Slovenskej republiky",
+    "authority_english": "Ministry of Finance of the Slovak Republic",
+    "publication": "Finančný spravodajca č. 9/2011",
+    "announcement": "Oznámenie č. 31",
+    "url": "https://www.mfsr.sk/files/archiv/financny-spravodajca/3497/63/FS_09_2011.pdf",
+    "archive_url": "https://www.mfsr.sk/sk/financie/financny-spravodajca/2011/",
+    "relevant_pdf_pages_zero_based": [
+      6,
+      7
+    ],
+    "printed_pages": [
+      178,
+      179
+    ],
+    "source_classification": "authoritative_primary_source",
+    "machine_verification_date": "2026-08-19",
+    "entry_into_force_date": "2011-09-24",
+    "source_body_hash_status": "not_persisted"
+  },
+  "cross_check": {
+    "authority": "Ministry of Finance, R.O.C. (Taiwan)",
+    "treaty_network_confirms_slovakia": true,
+    "treaty_network_url": "https://www.mof.gov.tw/eng/singlehtml/264?cntId=82780",
+    "machine_verification_date": "2026-08-19"
+  },
+  "scopes": {
+    "dividend": {
+      "article": "10",
+      "title": "Dividendy",
+      "rate_candidates_percent": [
+        10.0
+      ],
+      "beneficial_owner_wording_present": true,
+      "pe_or_fixed_base_carveout_wording_present": true,
+      "exclusive_residence_taxation_candidate": false,
+      "holding_period_candidates": [],
+      "note": "Source-state tax capped at 10% of gross dividends where the beneficial owner is resident of the other territory; PE/fixed-base connection carve-out preserved."
+    },
+    "interest": {
+      "article": "11",
+      "title": "Uroky",
+      "rate_candidates_percent": [
+        10.0
+      ],
+      "beneficial_owner_wording_present": true,
+      "pe_or_fixed_base_carveout_wording_present": true,
+      "exclusive_residence_taxation_candidate": false,
+      "holding_period_candidates": [],
+      "special_exemption_candidate_present": true,
+      "note": "General source-state cap is 10%; specified government/central-bank and export-finance interest may be exempt; PE/fixed-base connection carve-out preserved."
+    },
+    "royalty": {
+      "article": "12",
+      "title": "Licencne poplatky",
+      "rate_candidates_percent": [
+        5.0,
+        10.0
+      ],
+      "beneficial_owner_wording_present": true,
+      "pe_or_fixed_base_carveout_wording_present": true,
+      "exclusive_residence_taxation_candidate": false,
+      "holding_period_candidates": [],
+      "equipment_rate_candidate_percent": 5.0,
+      "other_royalty_rate_candidate_percent": 10.0,
+      "note": "5% candidate for industrial/commercial/scientific equipment royalties and 10% candidate for other royalties; PE/fixed-base connection carve-out preserved."
+    }
+  },
+  "human_review_status": "not_started",
+  "approval_eligible": false,
+  "production_released": false
+}
