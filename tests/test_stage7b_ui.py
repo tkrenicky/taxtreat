@@ -67,6 +67,27 @@ def test_guided_intake_assets_are_local_and_accessible():
     assert "sessionStorage" not in javascript.text
 
 
+def test_workspace_runtime_result_ids_are_stable_and_not_repaired_by_overlay_scripts():
+    html = client.get("/workspace-demo").text
+    asset = client.get("/ui-assets/workspace-report-export.js").text
+
+    for runtime_id in (
+        "workspace-tax-label",
+        "workspace-tax-row-label",
+        "workspace-tax",
+        "workspace-rate",
+        "workspace-gross",
+        "workspace-tax-row",
+        "workspace-net",
+        "workspace-reason",
+    ):
+        assert f'id="{runtime_id}"' in html, runtime_id
+
+    assert "workspace-runtime-anchor-repair" not in asset
+    assert "workspace-step4-simplify-20260821.js" not in asset
+    assert "workspace-step4-en-complete-20260821.js" not in asset
+
+
 def test_workspace_demo_exposes_recipient_payment_result_workflow():
     response = client.get("/workspace-demo")
 

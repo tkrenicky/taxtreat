@@ -487,7 +487,81 @@
     return calculation[canonicalName] ?? calculation[legacyName] ?? null;
   }
 
-  function setText(selector, value) { document.querySelector(selector).textContent = value; }
+  function setText(selector, value) {
+    const element = document.querySelector(selector);
+    if (!element) {
+      const seen = window.__taxtreatMissingRuntimeIds || (window.__taxtreatMissingRuntimeIds = []);
+      if (!seen.includes(selector)) {
+        seen.push(selector);
+        console.warn(`[TaxTreat] Missing runtime element ${selector}; the Step 4 result card was likely rewritten by a UI overlay.`);
+      }
+      return;
+    }
+    element.textContent = value;
+  }
+
+  function ensureRuntimeResultAnchors() {
+    const step4 = document.querySelector('.flow-step[data-step="4"]');
+    if (!step4) return;
+
+    const ensure = (id, tag, parent) => {
+      let element = document.getElementById(id);
+      if (!element) {
+        element = document.createElement(tag);
+        element.id = id;
+        parent.append(element);
+      }
+      return element;
+    };
+
+    const hero = step4.querySelector(".result-hero");
+    if (hero) {
+      ensure("workspace-result-status", "span", hero);
+      ensure("workspace-tax-label", "p", hero);
+      ensure("workspace-tax", "strong", hero);
+      ensure("workspace-rate", "small", hero);
+    }
+
+    const reason = step4.querySelector(".reason");
+    if (reason) ensure("workspace-reason", "p", reason);
+
+    const summary = step4.querySelector(".summary") || step4.querySelector("article.summary") || step4.querySelector(".card.summary");
+    if (summary) {
+      const list = summary.querySelector("dl") || summary;
+      if (!summary.querySelector("#workspace-gross")) ensure("workspace-gross", "dd", list);
+      if (!summary.querySelector("#workspace-tax-row-label")) ensure("workspace-tax-row-label", "dt", list);
+      if (!summary.querySelector("#workspace-tax-row")) ensure("workspace-tax-row", "dd", list);
+      if (!summary.querySelector("#workspace-net")) ensure("workspace-net", "dd", list);
+    }
+
+    const actionsBlock = step4.querySelector("#workspace-actions") || step4.querySelector(".action-list");
+    if (actionsBlock) {
+      actionsBlock.id = actionsBlock.id || "workspace-actions";
+      if (!actionsBlock.querySelector("#workspace-action-count")) {
+        const count = document.createElement("span");
+        count.id = "workspace-action-count";
+        count.hidden = true;
+        actionsBlock.parentElement?.querySelector(".card-head")?.append(count);
+      }
+    } else {
+      const card = step4.querySelector(".card") || step4;
+      if (!document.getElementById("workspace-actions")) {
+        const actions = document.createElement("div");
+        actions.id = "workspace-actions";
+        card.append(actions);
+      }
+    }
+
+    const sources = step4.querySelector(".result-sources") || step4.querySelector(".card.result-sources");
+    if (sources) {
+      if (!document.getElementById("workspace-citations")) {
+        const citations = document.createElement("div");
+        citations.id = "workspace-citations";
+        citations.className = "citation-list";
+        sources.append(citations);
+      }
+    }
+  }
 
   function completeMonths(acquisitionDate, transactionDate) {
     const start = new Date(`${acquisitionDate}T00:00:00Z`);
@@ -1031,6 +1105,7 @@
   }
 
   function renderResult(payload, response) {
+    ensureRuntimeResultAnchors();
     const analysis = response.analysis;
     const calculation = analysis.withholding_tax_calculation;
     const professional = (response.intake?.questions || []).filter((question) => !question.client_answerable);

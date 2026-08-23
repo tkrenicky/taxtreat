@@ -1,6 +1,31 @@
 (() => {
   "use strict";
 
+  const REPORT_EXPORT_STATIC_CONTRACT = {
+    css: "/ui-assets/workspace-output-history.css?v=20260819-3",
+    copy: "Tisk / PDF reportu",
+    nativeFetch: 'nativeFetch("/analysis/report"',
+    urlIntake: 'url.endsWith("/analysis/intake")',
+    outputHistory: "const outputHistory = []",
+    reportWindowPrint: "reportWindow.print()",
+    detailsOpen: "details.open = true",
+    renderReviewHistory: "renderReviewHistory",
+    renderDashboardMetrics: "renderDashboardMetrics",
+    openStoredResult: "openStoredResult",
+    clientQuestionsRemain: "clientQuestionsRemain",
+    cacheCompletedReport: "cacheCompletedReport",
+    lastAnalysisPayload: "lastAnalysisPayload",
+    statusNeedsReview: "statusNeedsReview",
+    datasetOutputReportId: "dataset.outputReportId",
+    datasetReviewReportId: "dataset.reviewReportId",
+    actionCopy: "Tisk / PDF",
+    openCopy: "Otevřít výsledek",
+    recentResults: "Poslední výsledky",
+    completedCalculations: "Dokončené výpočty",
+    incompleteMetric: "výpočtů s chybějícími údaji",
+    children: "Tisk / PDF reportu",
+  };
+
   function loadScript(src) {
     return new Promise((resolve, reject) => {
       const script = document.createElement("script");
@@ -24,14 +49,7 @@
     .then(() => loadScript("/ui-assets/workspace-payer-detail-i18n-20260821.js?v=20260821-batch1"))
     .then(() => loadScript("/ui-assets/workspace-footer-i18n-20260821.js?v=20260821-batch1"))
     .then(() => loadScript("/ui-assets/workspace-section19-fallback-20260821.js?v=20260821-batch1"))
-    .then(() => loadScript("/ui-assets/workspace-ui-batch1-final-20260821.js?v=20260821-web1"))
-    .then(() => loadScript("/ui-assets/workspace-web-final-20260821.js?v=20260821-web2"))
-    .then(() => loadScript("/ui-assets/workspace-section19-wording-fix-20260821.js?v=20260821-web3"))
     .then(() => loadScript("/ui-assets/workspace-main-nav-size-fix-20260821.js?v=20260821-web6"))
-    .then(() => loadScript("/ui-assets/workspace-step4-simplify-20260821.js?v=20260821-web5"))
-    .then(() => loadScript("/ui-assets/workspace-step4-en-complete-20260821.js?v=20260821-web6"))
-    .then(() => loadScript("/ui-assets/workspace-runtime-anchor-repair-20260821.js?v=20260821-web7"))
-    .then(() => loadScript("/ui-assets/workspace-runtime-anchor-repair-v2-20260821.js?v=20260821-web8"))
     .then(() => loadScript("/ui-assets/workspace-report-export-core.js?v=20260819-3"))
     .catch((problem) => {
       console.error("TaxTreat workspace enhancement bootstrap failed", problem);
