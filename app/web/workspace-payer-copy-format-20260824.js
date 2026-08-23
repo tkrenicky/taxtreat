@@ -13,19 +13,16 @@
       const ico = rawMeta.match(/IČO\s+([^·\n]+)/i)?.[1]?.trim() || "";
       const dic = rawMeta.match(/DIČ\s+([^·\n]+)/i)?.[1]?.trim() || "";
 
-      title.textContent = `${baseName} (Česká republika)`;
+      title.textContent = baseName;
       meta.replaceChildren();
-
-      const icoLine = document.createElement("span");
-      icoLine.textContent = ico ? `IČO ${ico}` : "IČO neuvedeno";
-      icoLine.style.display = "block";
-      meta.append(icoLine);
+      meta.append(document.createTextNode(`Česká republika · IČO ${ico || "neuvedeno"}`));
 
       if (dic) {
-        const dicLine = document.createElement("span");
-        dicLine.textContent = `DIČ ${dic}`;
-        dicLine.style.display = "block";
-        meta.append(dicLine);
+        meta.append(document.createTextNode(" · "));
+        const dicGroup = document.createElement("span");
+        dicGroup.textContent = `DIČ ${dic}`;
+        dicGroup.style.whiteSpace = "nowrap";
+        meta.append(dicGroup);
       }
     });
   }
