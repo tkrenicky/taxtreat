@@ -3,7 +3,9 @@
 
   const SECTION19_URL = "https://e-sbirka.gov.cz/sb/1992/586";
   let languageObserver = null;
+  let observedLanguageControls = null;
   let section19Observer = null;
+  let observedSection19Box = null;
   let repairingFlags = false;
   let repairingSection19 = false;
 
@@ -162,8 +164,8 @@
           button.replaceChildren(svgFlag(lang), document.createTextNode(expected));
         }
         const active = lang === uiLanguage();
-        button.dataset.active = String(active);
-        button.setAttribute("aria-pressed", String(active));
+        if (button.dataset.active !== String(active)) button.dataset.active = String(active);
+        if (button.getAttribute("aria-pressed") !== String(active)) button.setAttribute("aria-pressed", String(active));
       });
     } finally {
       repairingFlags = false;
@@ -172,7 +174,10 @@
 
   function ensureLanguageObserver() {
     const controls = document.querySelector("#taxtreat-language-controls");
-    if (!controls || languageObserver) return;
+    if (!controls) return;
+    if (observedLanguageControls === controls && languageObserver) return;
+    languageObserver?.disconnect();
+    observedLanguageControls = controls;
     languageObserver = new MutationObserver(() => {
       if (!repairingFlags) window.setTimeout(repairLanguageFlags, 0);
     });
@@ -208,6 +213,10 @@
     return box.classList.contains("tt-section19-applicable") || /(?:§\s*19\s*ZDP\s*se\s*použije|osvobození\s+podle\s+§\s*19\s*ZDP\s+se\s+uplatní)/i.test(box.textContent || "");
   }
 
+  function setTextIfChanged(node, value) {
+    if (node && node.textContent !== value) node.textContent = value;
+  }
+
   function simplifySection19Result(root) {
     const applies = section19Applies(root);
     root.classList.toggle("tt-section19-active", applies);
@@ -217,14 +226,17 @@
     const status = box?.querySelector(".tt-legal-status");
     const heading = box?.querySelector("h1,h2,h3,h4");
     const paragraph = box?.querySelector("p");
-    if (status) status.textContent = "Osvobození podle § 19 ZDP se uplatní";
-    if (heading) heading.textContent = "Vnitrostátní osvobození podle § 19 ZDP";
-    if (paragraph) paragraph.textContent = "Při zadaných údajích jsou splněny podmínky osvobození podle § 19 ZDP. Příjem proto nepodléhá české srážkové dani. Smluvní úprava představuje pouze sekundární ochranu.";
+    setTextIfChanged(status, "Osvobození podle § 19 ZDP se uplatní");
+    setTextIfChanged(heading, "Vnitrostátní osvobození podle § 19 ZDP");
+    setTextIfChanged(paragraph, "Při zadaných údajích jsou splněny podmínky osvobození podle § 19 ZDP. Příjem proto nepodléhá české srážkové dani. Smluvní úprava představuje pouze sekundární ochranu.");
   }
 
   function ensureSection19Observer() {
     const box = document.querySelector("#cz-section19-result");
-    if (!box || section19Observer) return;
+    if (!box) return;
+    if (observedSection19Box === box && section19Observer) return;
+    section19Observer?.disconnect();
+    observedSection19Box = box;
     section19Observer = new MutationObserver(() => {
       if (repairingSection19 || !isCzech()) return;
       const root = document.querySelector('.flow-step[data-step="4"]');
@@ -311,14 +323,15 @@
       const role = card.querySelector(".citation-role");
       const detail = card.querySelector("p");
       if (card === s19) {
-        if (role) role.textContent = "1. Použité pravidlo";
+        setTextIfChanged(role, "1. Použité pravidlo");
       } else if (card === section36) {
-        if (role) role.textContent = `${index + 1}. Obecná česká sazba bez osvobození`;
-        if (detail) detail.textContent = "Pokud by se neuplatnilo osvobození podle § 19 ZDP ani příznivější smluvní pravidlo, česká vnitrostátní úprava stanoví u tohoto příjmu sazbu 15 %.";
+        setTextIfChanged(role, `${index + 1}. Obecná česká sazba bez osvobození`);
+        setTextIfChanged(detail, "Pokud by se neuplatnilo osvobození podle § 19 ZDP ani příznivější smluvní pravidlo, česká vnitrostátní úprava stanoví u tohoto příjmu sazbu 15 %.");
       } else if (treaty.includes(card)) {
-        if (role) role.textContent = `${index + 1}. Sekundární smluvní ochrana`;
+        setTextIfChanged(role, `${index + 1}. Sekundární smluvní ochrana`);
       } else if (role) {
-        role.textContent = role.textContent.replace(/^\d+\./, `${index + 1}.`);
+        const next = role.textContent.replace(/^\d+\./, `${index + 1}.`);
+        setTextIfChanged(role, next);
       }
     });
 
