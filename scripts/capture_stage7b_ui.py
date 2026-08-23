@@ -122,7 +122,7 @@ def capture(output_dir: Path) -> dict[str, object]:
             if "neposkytuje individuální právní ani daňové poradenství" not in boundary_text:
                 raise AssertionError("Primary workspace advice boundary is incomplete.")
 
-            for label in ("Přehled", "Plátci", "Příjemci", "Výpočty", "Výstupy", "Zdroje"):
+            for label in ("Přehled", "Plátci", "Příjemci", "Výsledky", "Zdroje"):
                 if not page.get_by_role("button", name=label, exact=True).is_visible():
                     raise AssertionError(f"Primary workspace navigation missing: {label}")
 
