@@ -34,8 +34,12 @@ RISK_PATTERNS = {
     "ownership_condition": (r"kapital", r"capital", r"stimmrecht", r"voting power", r"beteiligung", r"holding"),
 }
 
-OWNERSHIP_CONTEXT_RE = re.compile(
-    r"(?:kapital|capital|stimmrecht|voting\s+power|beteiligung|holding|shares?|anteil)",
+OWNERSHIP_BEFORE_RE = re.compile(
+    r"(?:kapital|capital|stimmrecht|voting\s+power|beteiligung|holding|shares?|anteil).{0,45}$",
+    flags=re.IGNORECASE | re.DOTALL,
+)
+OWNERSHIP_AFTER_RE = re.compile(
+    r"^\s*(?:des|der|am|of\s+(?:the\s+)?|in\s+(?:the\s+)?)?(?:kapitals?|capital|stimmrechte?|voting\s+power|shares?|anteile?)\b",
     flags=re.IGNORECASE,
 )
 
@@ -65,9 +69,9 @@ def _percentage_tokens(text: str) -> list[float]:
 def _ownership_threshold_tokens(text: str) -> list[float]:
     values: set[float] = set()
     for value, start, end in _percentage_mentions(text):
-        context_start = max(0, start - 70)
-        context_end = min(len(text), end + 70)
-        if OWNERSHIP_CONTEXT_RE.search(text[context_start:context_end]):
+        before = text[max(0, start - 70):start]
+        after = text[end:min(len(text), end + 45)]
+        if OWNERSHIP_BEFORE_RE.search(before) or OWNERSHIP_AFTER_RE.search(after):
             values.add(value)
     return sorted(values)
 
