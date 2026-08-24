@@ -138,6 +138,29 @@ def test_at_audit_rejects_missing_substantive_article_artifact(tmp_path: Path):
         build_audit(inventory, artifact_root=tmp_path)
 
 
+def test_at_audit_ignores_non_royalty_article_candidates_before_reading_artifacts(tmp_path: Path):
+    inventory = _inventory(tmp_path)
+    inventory["partners"][7]["sources"][0]["article_candidates"].insert(
+        0,
+        {
+            "article_number": 11,
+            "substantive_article_candidate": True,
+            "artifact_path": "artifacts/at/nonexistent-article-11.txt",
+        },
+    )
+    row = build_audit(inventory, artifact_root=tmp_path)["partners"][7]
+    assert row["candidate_text_count"] == 1
+    assert row["rejected_candidate_count"] == 0
+
+
+def test_at_audit_accepts_candidate_path_relative_to_artifact_root(tmp_path: Path):
+    inventory = _inventory(tmp_path)
+    inventory["partners"][8]["sources"][0]["article_candidates"][0]["artifact_path"] = "article-8.txt"
+    row = build_audit(inventory, artifact_root=tmp_path)["partners"][8]
+    assert row["candidate_text_count"] == 1
+    assert row["rate_candidates_machine"] == []
+
+
 def test_at_audit_never_assumes_seven_categories_are_exhaustive(tmp_path: Path):
     audit = build_audit(_inventory(tmp_path), artifact_root=tmp_path)
     assert audit["policy"]["seven_base_categories_are_not_assumed_to_be_legally_exhaustive"] is True
