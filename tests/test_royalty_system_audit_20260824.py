@@ -45,6 +45,18 @@ def _category_condition(rule):
     return next((c for c in rule.conditions if c.fact == "royalty_category"), None)
 
 
+def _category_value(rule):
+    condition = _category_condition(rule)
+    if condition is None or condition.operator != "==":
+        return None
+    return str(condition.value or "").strip().lower()
+
+
+def _is_residual(rule):
+    value = _category_value(rule)
+    return bool(value and (value == "other" or value.startswith("all_other_")))
+
+
 def _ui_matches(rule):
     condition = _category_condition(rule)
     if condition is None:
@@ -197,6 +209,7 @@ def test_no_mapper_overlap_can_silently_select_different_royalty_rate():
 
     unsafe_mapper_conflicts = []
     projection_conflicts = []
+    residual_overlaps = []
 
     for key, rules in grouped.items():
         for left, right in combinations(rules, 2):
@@ -214,13 +227,46 @@ def test_no_mapper_overlap_can_silently_select_different_royalty_rate():
             }
             if _condition_signature(left) == _condition_signature(right):
                 projection_conflicts.append((left, right, overlap, item))
+            elif _is_residual(left) != _is_residual(right):
+                residual_overlaps.append((left, right, overlap, item))
             else:
                 unsafe_mapper_conflicts.append(item)
 
     assert not unsafe_mapper_conflicts, (
-        "Different treaty categories with different rates remain reachable "
-        f"from the same refined UI category: {unsafe_mapper_conflicts}"
+        "Different non-residual treaty categories with different rates remain "
+        f"reachable from the same refined UI category: {unsafe_mapper_conflicts}"
     )
+
+    for left, right, overlap, item in residual_overlaps:
+        residual = left if _is_residual(left) else right
+        specific = right if residual is left else left
+        assert specific.priority < residual.priority, (
+            "Residual royalty rule must have lower precedence in the direct "
+            f"engine: {item}; priorities={specific.priority}/{residual.priority}"
+        )
+
+        package = load_legal_rules(RULE_DIR / f"{specific.recipient_country.lower()}.json")
+        for ui_category in overlap:
+            facts, legal_facts = _facts_satisfying(specific, ui_category)
+
+            direct = evaluate_legal_rules(
+                package,
+                facts,
+                as_of=date(2026, 8, 24),
+                legal_facts=legal_facts,
+            )
+            assert direct.status == DecisionStatus.FINAL, (item, direct.explanation)
+            assert direct.selected_rule_id == specific.rule_id, (item, direct.selected_rule_id)
+
+            layered = evaluate_layered_rules(
+                package,
+                facts,
+                as_of=date(2026, 8, 24),
+                legal_facts=legal_facts,
+            )
+            assert layered.status == DecisionStatus.FINAL, (item, layered.explanation)
+            assert layered.selected_rule_id == specific.rule_id, (item, layered.selected_rule_id)
+            assert layered.candidate_rule_id == specific.rule_id, (item, layered.candidate_rule_id)
 
     for left, right, overlap, item in projection_conflicts:
         package = load_legal_rules(RULE_DIR / f"{left.recipient_country.lower()}.json")
