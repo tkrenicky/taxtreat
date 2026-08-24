@@ -6,9 +6,10 @@ import json
 import re
 from pathlib import Path
 from typing import Any
-from urllib.parse import urlsplit
+from urllib.parse import urljoin, urlsplit
 
 import requests
+from bs4 import BeautifulSoup
 
 
 DEFAULT_INPUT = Path("artifacts/at/treaty_source_inventory_machine.json")
@@ -28,6 +29,14 @@ ALLOWED_HOSTS = frozenset({
     "www.bmf.gv.at",
 })
 MAX_SOURCE_BYTES = 25 * 1024 * 1024
+RIS_TREATY_TEXT_LABELS = (
+    "deutscher vertragstext",
+    "englischer vertragstext",
+    "deutscher text",
+    "englischer text",
+    "german treaty text",
+    "english treaty text",
+)
 
 
 def _safe_slug(value: str) -> str:
@@ -80,6 +89,35 @@ def _fetch_official_source(url: str, *, timeout: int = 30) -> tuple[bytes, str, 
     return content, str(response.headers.get("content-type") or ""), final_url
 
 
+def _discover_ris_treaty_text_attachments(
+    content: bytes,
+    content_type: str,
+    final_url: str,
+) -> tuple[str, ...]:
+    parsed = urlsplit(final_url)
+    if (parsed.hostname or "").lower() not in {"ris.bka.gv.at", "www.ris.bka.gv.at"}:
+        return ()
+    if "html" not in content_type.lower() and not parsed.path.lower().endswith((".html", ".htm")):
+        return ()
+
+    soup = BeautifulSoup(content, "lxml")
+    discovered: list[str] = []
+    seen: set[str] = set()
+    for anchor in soup.find_all("a", href=True):
+        label = " ".join(anchor.get_text(" ", strip=True).lower().split())
+        if not any(marker in label for marker in RIS_TREATY_TEXT_LABELS):
+            continue
+        candidate = urljoin(final_url, str(anchor["href"]))
+        if not urlsplit(candidate).path.lower().endswith(".pdf"):
+            continue
+        _validate_official_url(candidate)
+        if candidate in seen:
+            continue
+        seen.add(candidate)
+        discovered.append(candidate)
+    return tuple(discovered)
+
+
 def current_partner_labels(machine_inventory: dict[str, Any]) -> tuple[str, ...]:
     labels = tuple(
         str(row.get("partner_label"))
@@ -120,26 +158,51 @@ def acquire_pilot(
             raise ValueError(f"Current Austrian treaty partner has no treaty-text links: {partner}")
 
         sources: list[dict[str, Any]] = []
-        for index, url in enumerate(links, start=1):
-            content, content_type, final_url = _fetch_official_source(str(url))
+        seen_final_urls: set[str] = set()
+
+        def archive_source(
+            listed_url: str,
+            *,
+            discovered_from_url: str | None = None,
+        ) -> tuple[bytes, str, str] | None:
+            content, content_type, final_url = _fetch_official_source(listed_url)
+            if final_url in seen_final_urls:
+                return None
+            seen_final_urls.add(final_url)
             digest = hashlib.sha256(content).hexdigest()
             suffix = _extension(content_type, final_url)
-            filename = f"{_safe_slug(partner)}-{index:02d}-{digest[:12]}{suffix}"
+            source_order = len(sources) + 1
+            filename = f"{_safe_slug(partner)}-{source_order:02d}-{digest[:12]}{suffix}"
             path = raw_dir / filename
             path.write_bytes(content)
-            sources.append(
-                {
-                    "source_order": index,
-                    "listed_url": str(url),
-                    "final_url": final_url,
-                    "role_candidate": classify_official_link(final_url),
-                    "content_type": content_type,
-                    "byte_size": len(content),
-                    "sha256": digest,
-                    "artifact_path": str(path),
-                    "legal_review_completed": False,
-                }
-            )
+            row = {
+                "source_order": source_order,
+                "listed_url": listed_url,
+                "final_url": final_url,
+                "role_candidate": classify_official_link(final_url),
+                "content_type": content_type,
+                "byte_size": len(content),
+                "sha256": digest,
+                "artifact_path": str(path),
+                "legal_review_completed": False,
+            }
+            if discovered_from_url is not None:
+                row["discovered_from_url"] = discovered_from_url
+                row["discovery_method"] = "ris_treaty_text_attachment"
+            sources.append(row)
+            return content, content_type, final_url
+
+        for url in links:
+            archived = archive_source(str(url))
+            if archived is None:
+                continue
+            content, content_type, final_url = archived
+            for attachment_url in _discover_ris_treaty_text_attachments(
+                content,
+                content_type,
+                final_url,
+            ):
+                archive_source(attachment_url, discovered_from_url=final_url)
 
         output_records.append(
             {
@@ -155,7 +218,7 @@ def acquire_pilot(
 
     full_current = tuple(partners) == current_partner_labels(machine_inventory)
     return {
-        "schema_version": 2,
+        "schema_version": 3,
         "source_country": "AT",
         "status": "instrument_chain_pilot_acquired_not_reviewed",
         "acquisition_scope": "all_current_partners" if full_current else "selected_partners",
@@ -164,6 +227,7 @@ def acquire_pilot(
         "partners": output_records,
         "release_constraints": [
             "Successful HTTP acquisition and hashing do not establish which instrument controls a treaty result.",
+            "RIS landing pages may expose separate official treaty-text annex PDFs; discovered attachments remain machine evidence candidates only.",
             "Link-role classification is a machine candidate only and must be reconciled against the legal instrument chain.",
             "No Article 10, 11 or 12 rate may be released from this acquisition output without primary-text extraction and review.",
             "MLI and status-instrument flags remain discovery signals only."
