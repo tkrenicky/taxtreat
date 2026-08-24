@@ -44,7 +44,10 @@
   }
 
   function ensureOriginal(excerpt) {
-    if (!originalExcerpt.has(excerpt)) originalExcerpt.set(excerpt, excerpt.textContent || "");
+    if (originalExcerpt.has(excerpt)) return;
+    const declaredLanguage = String(excerpt.dataset.ttTreatyLanguage || excerpt.getAttribute("lang") || "").toLowerCase();
+    if (declaredLanguage.startsWith("en")) return;
+    originalExcerpt.set(excerpt, excerpt.textContent || "");
   }
 
   function inferRecipientCountry(registry) {
@@ -103,7 +106,9 @@
       ensureOriginal(excerpt);
 
       if (targetLanguage !== "en") {
-        excerpt.textContent = originalExcerpt.get(excerpt) || excerpt.textContent || "";
+        if (originalExcerpt.has(excerpt)) {
+          excerpt.textContent = originalExcerpt.get(excerpt) || "";
+        }
         excerpt.setAttribute("lang", "cs");
         delete excerpt.dataset.ttTreatyLanguage;
         delete excerpt.dataset.ttTreatyLocaleStatus;
@@ -114,7 +119,9 @@
 
       const locale = registry?.entries?.[country]?.[String(article)]?.en;
       if (!country || !locale?.text) {
-        excerpt.textContent = originalExcerpt.get(excerpt) || excerpt.textContent || "";
+        if (originalExcerpt.has(excerpt)) {
+          excerpt.textContent = originalExcerpt.get(excerpt) || "";
+        }
         excerpt.setAttribute("lang", "cs");
         excerpt.dataset.ttTreatyLanguage = "cs-fallback";
         showMissingNote(card, country || "?", article);
