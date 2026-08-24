@@ -50,6 +50,63 @@ def _candidate_sort_key(rule: LegalRule) -> tuple[Any, ...]:
     )
 
 
+def _royalty_category_value(rule: LegalRule) -> str | None:
+    for condition in rule.conditions:
+        if condition.fact == "royalty_category" and condition.operator == "==":
+            return str(condition.value or "").strip().lower()
+    return None
+
+
+def _is_residual_royalty_rule(rule: LegalRule) -> bool:
+    value = _royalty_category_value(rule)
+    return bool(value and (value == "other" or value.startswith("all_other_")))
+
+
+def _same_royalty_branch(left: LegalRule, right: LegalRule) -> bool:
+    return (
+        left.income_type == right.income_type == "royalty"
+        and left.source_country == right.source_country
+        and left.recipient_country == right.recipient_country
+        and left.legal_layer == right.legal_layer
+        and str(left.article) == str(right.article)
+        and left.effective_from == right.effective_from
+        and left.effective_to == right.effective_to
+    )
+
+
+def _suppress_residual_royalty_candidates(
+    candidates: list[LegalRule],
+) -> list[LegalRule]:
+    """Treat all-other Article 12 rules as true residual branches.
+
+    Some Stage 6 treaty projections intentionally contain a specific royalty
+    category plus an ``all_other_article_12_royalties`` fallback. Both can
+    match the same normalized UI category. The residual branch must never
+    compete numerically with a matching specific branch; otherwise the layered
+    evaluator's favourable-rate ordering could select the fallback instead of
+    the treaty-specific category.
+    """
+
+    specific = [
+        rule
+        for rule in candidates
+        if rule.income_type == "royalty"
+        and _royalty_category_value(rule) is not None
+        and not _is_residual_royalty_rule(rule)
+    ]
+    if not specific:
+        return candidates
+
+    return [
+        rule
+        for rule in candidates
+        if not (
+            _is_residual_royalty_rule(rule)
+            and any(_same_royalty_branch(rule, item) for item in specific)
+        )
+    ]
+
+
 def _normalize_missing(rule: LegalRule, missing: list[str]) -> list[str]:
     determination_names = {
         condition.fact
@@ -229,6 +286,7 @@ def evaluate_layered_rules(
     candidates = [
         rule for rule, matches, _, _ in evaluated_rates if matches
     ]
+    candidates = _suppress_residual_royalty_candidates(candidates)
     candidates.sort(key=_candidate_sort_key)
     if not candidates:
         result.missing_facts = sorted(missing_material)
