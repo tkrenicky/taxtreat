@@ -54,32 +54,68 @@ def test_step_two_and_step_three_strings_are_covered():
         "Předmět licenční platby",
         "Autorské dílo",
         "Odpovídá výše úroku běžným tržním podmínkám?",
+        "ÚDAJE PODLE DRUHU PŘÍJMU",
+        "Ano, přímo",
+        "K datu transakce alespoň 12 měsíců",
+        "Je příjemce běžnou obchodní společností",
+        "Podléhá příjemce ve státě své daňové rezidence běžné dani",
     ]
     for phrase in required:
         assert phrase in content
 
 
-def test_step_four_visual_qa_gaps_are_covered_in_english_pass():
-    content = CANONICAL.read_text(encoding="utf-8")
+def test_payer_and_step_four_english_residue_is_explicitly_covered():
+    script = DYNAMIC.read_text(encoding="utf-8")
     required = [
-        "Hrubá částka",
-        "DAŇOVÝ KALENDÁŘ",
-        "Odvod sražené daně a oznámení o příjmu plynoucího do zahraničí mají shodnou lhůtu",
-        "VÝCHOZÍ VNITROSTÁTNÍ PRAVIDLO",
-        "POUŽITÉ SMLUVNÍ PRAVIDLO",
-        "MONTHS_CS_EN",
-        "Podle článku",
-        "Czech Income Taxes Act (Act No. 586/1992 Coll.)",
-        "Sections 38d and 38da of the Czech Income Taxes Act",
-        "paragraph $1",
+        '["Platby", "Payments"]',
+        '["Stav", "Status"]',
+        '["Aktivní", "Active"]',
+        '["Připraven", "Ready"]',
+        '["Nastavit jako aktivního", "Set as active"]',
+        "DIČ",
+        "GENERAL CZECH RATE WITHOUT EXEMPTION",
+        "SECONDARY TREATY PROTECTION",
+        "No Czech tax is remitted under this tax treatment",
+        "For dividends, the obligation to withhold tax",
     ]
     for phrase in required:
-        assert phrase in content
+        assert phrase in script
 
 
-def test_czech_legal_excerpt_remains_intentionally_untranslated():
-    content = CANONICAL.read_text(encoding="utf-8")
-    assert 'closest("blockquote,.legal-excerpt,pre,code")' in content
+def test_english_amounts_use_czk_not_czech_kc_symbol():
+    script = DYNAMIC.read_text(encoding="utf-8")
+    assert r"\s*Kč$" in script
+    assert '" CZK"' in script
+    assert r"\s+CZK$" in script
+
+
+def test_pe_question_is_income_specific_in_all_three_income_types():
+    script = DYNAMIC.read_text(encoding="utf-8")
+    assert "The holding giving rise to this dividend" in script
+    assert "The debt-claim giving rise to this interest" in script
+    assert "The right or property giving rise to these royalties" in script
+    assert "Podíl, z něhož je dividenda vyplácena" in script
+    assert "Pohledávka, z níž plyne tento úrok" in script
+    assert "Právo nebo majetek, za který jsou placeny licenční poplatky" in script
+
+
+def test_section_19_english_wording_does_not_present_exemption_as_zero_percent_rate():
+    script = DYNAMIC.read_text(encoding="utf-8")
+    assert "Czech withholding tax does not apply; treaty protection is secondary." in script
+    assert '["Czech withholding tax is therefore 0%; treaty protection is secondary.",' in script
+
+
+def test_austrian_treaty_excerpt_switch_uses_verified_english_articles_10_11_12():
+    script = DYNAMIC.read_text(encoding="utf-8")
+    assert "AT_TREATY_EN" in script
+    assert '"10": `Article 10' in script
+    assert '"11": `Article 11' in script
+    assert '"12": `Article 12' in script
+    assert "tax so charged shall not exceed 10 per cent of the gross amount of the dividends" in script
+    assert "Interest arising in a Contracting State and beneficially owned by a resident of the other Contracting State shall be taxable only in that other State" in script
+    assert "tax so charged shall not exceed 5 per cent of the gross amount of the royalties" in script
+    assert 'excerpt.dataset.ttTreatyLanguage = "en-official"' in script
+    assert "originalTreatyText" in script
 
 
 def test_austrian_copyright_exclusive_result_never_highlights_unrelated_5_percent_clause():
