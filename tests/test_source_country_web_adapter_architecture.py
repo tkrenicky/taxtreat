@@ -4,6 +4,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 CONTEXT = ROOT / "app" / "web" / "source-country-context.js"
 ADAPTER = ROOT / "app" / "web" / "workspace-source-country-adapter.js"
+SK_BACKEND = ROOT / "taxtreat" / "countries" / "sk.py"
 
 
 def test_country_profile_contains_reusable_workspace_metadata():
@@ -65,14 +66,14 @@ def test_workspace_adapter_uses_country_profile_for_copy():
     assert "ctx.metaDescription" in text
 
 
-def test_sk_remains_profile_data_not_runtime_branch_logic():
+def test_public_web_is_cz_only_while_sk_remains_backend_onboarded():
     context = CONTEXT.read_text(encoding="utf-8")
     adapter = ADAPTER.read_text(encoding="utf-8")
+    backend = SK_BACKEND.read_text(encoding="utf-8")
 
-    assert 'SK: Object.freeze({' in context
-    assert 'baseCurrency: "EUR"' in context
-    assert 'fxProvider: "ECB/NBS"' in context
-    assert '"/exchange-rates/cnb"' in context
+    assert 'SK: Object.freeze({' not in context
+    assert '<option value="SK">' not in adapter
+    assert 'countryControl.hidden = true;' in adapter
 
-    # The adapter itself should not need to know that these belong to SK.
-    assert "Slovak source-country context" not in adapter
+    assert 'def evaluate_domestic_precedence(' in backend
+    assert 'OUTSIDE_SUBJECT_OF_TAX' in backend
