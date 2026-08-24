@@ -104,7 +104,13 @@ def _discover_ris_treaty_text_attachments(
     discovered: list[str] = []
     seen: set[str] = set()
     for anchor in soup.find_all("a", href=True):
-        label = " ".join(anchor.get_text(" ", strip=True).lower().split())
+        image = anchor.find("img")
+        label_parts = [
+            anchor.get_text(" ", strip=True),
+            str(anchor.get("title") or ""),
+            str(image.get("alt") or "") if image is not None else "",
+        ]
+        label = " ".join(" ".join(label_parts).lower().split())
         if not any(marker in label for marker in RIS_TREATY_TEXT_LABELS):
             continue
         candidate = urljoin(final_url, str(anchor["href"]))
