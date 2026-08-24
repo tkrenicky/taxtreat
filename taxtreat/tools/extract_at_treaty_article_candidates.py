@@ -19,6 +19,7 @@ ARTICLE_NUMBERS = (10, 11, 12)
 MIN_SUBSTANTIVE_CHARACTERS = 180
 MIN_SUBSTANTIVE_SENTENCES = 2
 ROMAN_ARTICLE_NUMBERS = {"X": 10, "XI": 11, "XII": 12}
+ROYALTY_TEXT_RE = re.compile(r"(?:lizenzgebühr|royalt)", flags=re.IGNORECASE)
 
 ARTICLE_HEADING = re.compile(
     r"(?im)^\s*(?:artikel|article|art\.?)[ \t\u00a0]*(?P<number>\d{1,2}|XII|XI|X)\b[^\n]*$"
@@ -79,19 +80,48 @@ def _article_quality(block: str) -> tuple[bool, list[str]]:
     return (not reasons, reasons)
 
 
-def extract_article_blocks(text: str) -> dict[int, str]:
+def _royalty_semantic_candidate(text: str) -> bool:
+    matches = list(ROYALTY_TEXT_RE.finditer(text))
+    if not matches:
+        return False
+    return matches[0].start() < 180 or len(matches) >= 2
+
+
+def _all_article_blocks(text: str) -> list[tuple[int, str]]:
     normalized = _normalize_text(text)
     headings = list(ARTICLE_HEADING.finditer(normalized))
-    blocks: dict[int, str] = {}
+    blocks: list[tuple[int, str]] = []
     for index, match in enumerate(headings):
         number = _article_number(match.group("number"))
-        if number not in ARTICLE_NUMBERS or number in blocks:
-            continue
         end = headings[index + 1].start() if index + 1 < len(headings) else len(normalized)
         block = normalized[match.start():end].strip()
         if block:
-            blocks[number] = block
+            blocks.append((number, block))
     return blocks
+
+
+def extract_article_blocks(text: str) -> dict[int, str]:
+    blocks: dict[int, str] = {}
+    for number, block in _all_article_blocks(text):
+        if number not in ARTICLE_NUMBERS or number in blocks:
+            continue
+        blocks[number] = block
+    return blocks
+
+
+def extract_nonstandard_royalty_blocks(text: str) -> list[tuple[int, str]]:
+    candidates: list[tuple[int, str]] = []
+    seen: set[tuple[int, str]] = set()
+    for number, block in _all_article_blocks(text):
+        if number in ARTICLE_NUMBERS or not _royalty_semantic_candidate(block):
+            continue
+        digest = hashlib.sha256(block.encode("utf-8")).hexdigest()
+        key = (number, digest)
+        if key in seen:
+            continue
+        seen.add(key)
+        candidates.append((number, block))
+    return candidates
 
 
 def build_article_candidate_inventory(
@@ -124,37 +154,49 @@ def build_article_candidate_inventory(
                     continue
                 digest = hashlib.sha256(block.encode("utf-8")).hexdigest()
                 substantive, quality_flags = _article_quality(block)
-                output_path = article_dir / (
-                    f"{path.stem}-article-{number}-{digest[:12]}.txt"
-                )
+                output_path = article_dir / f"{path.stem}-article-{number}-{digest[:12]}.txt"
                 output_path.write_text(block + "\n", encoding="utf-8")
-                candidates.append(
-                    {
-                        "article_number": number,
-                        "text_sha256": digest,
-                        "character_count": len(block),
-                        "artifact_path": str(output_path),
-                        "machine_text_candidate": True,
-                        "substantive_article_candidate": substantive,
-                        "quality_flags": quality_flags,
-                        "legal_review_completed": False,
-                    }
-                )
-            source_rows.append(
-                {
-                    "source_order": source.get("source_order"),
-                    "final_url": source.get("final_url"),
-                    "role_candidate": source.get("role_candidate"),
-                    "source_sha256": source.get("sha256"),
-                    "extracted_text_character_count": len(text),
-                    "article_candidates": candidates,
-                }
-            )
+                candidates.append({
+                    "article_number": number,
+                    "text_sha256": digest,
+                    "character_count": len(block),
+                    "artifact_path": str(output_path),
+                    "machine_text_candidate": True,
+                    "substantive_article_candidate": substantive,
+                    "semantic_income_candidate": None,
+                    "quality_flags": quality_flags,
+                    "legal_review_completed": False,
+                })
+            for number, block in extract_nonstandard_royalty_blocks(text):
+                digest = hashlib.sha256(block.encode("utf-8")).hexdigest()
+                substantive, quality_flags = _article_quality(block)
+                output_path = article_dir / f"{path.stem}-article-{number}-royalty-{digest[:12]}.txt"
+                output_path.write_text(block + "\n", encoding="utf-8")
+                candidates.append({
+                    "article_number": number,
+                    "text_sha256": digest,
+                    "character_count": len(block),
+                    "artifact_path": str(output_path),
+                    "machine_text_candidate": True,
+                    "substantive_article_candidate": substantive,
+                    "semantic_income_candidate": "royalty",
+                    "quality_flags": quality_flags,
+                    "legal_review_completed": False,
+                })
+            source_rows.append({
+                "source_order": source.get("source_order"),
+                "final_url": source.get("final_url"),
+                "role_candidate": source.get("role_candidate"),
+                "source_sha256": source.get("sha256"),
+                "extracted_text_character_count": len(text),
+                "article_candidates": candidates,
+            })
 
         article_presence = {
             str(number): sum(
                 candidate["article_number"] == number
                 and candidate["substantive_article_candidate"] is True
+                and candidate.get("semantic_income_candidate") is None
                 for row in source_rows
                 for candidate in row["article_candidates"]
             )
@@ -164,30 +206,30 @@ def build_article_candidate_inventory(
             str(number): sum(
                 candidate["article_number"] == number
                 and candidate["substantive_article_candidate"] is False
+                and candidate.get("semantic_income_candidate") is None
                 for row in source_rows
                 for candidate in row["article_candidates"]
             )
             for number in ARTICLE_NUMBERS
         }
-        partner_rows.append(
-            {
-                "partner_label": partner_label,
-                "sources": source_rows,
-                "article_candidate_presence": article_presence,
-                "rejected_article_candidate_presence": rejected_presence,
-                "primary_text_review_completed": False,
-                "rate_extraction_released": False,
-            }
-        )
+        partner_rows.append({
+            "partner_label": partner_label,
+            "sources": source_rows,
+            "article_candidate_presence": article_presence,
+            "rejected_article_candidate_presence": rejected_presence,
+            "primary_text_review_completed": False,
+            "rate_extraction_released": False,
+        })
 
     return {
-        "schema_version": 3,
+        "schema_version": 4,
         "source_country": "AT",
         "status": "article_text_candidates_not_reviewed",
         "partner_count": len(partner_rows),
         "partners": partner_rows,
         "release_constraints": [
-            "Article blocks are machine-extracted text candidates only; Arabic and Roman X/XI/XII headings are normalized to article numbers 10/11/12.",
+            "Article 10/11/12 blocks are machine-extracted text candidates only; Arabic and Roman X/XI/XII headings are normalized to article numbers 10/11/12.",
+            "Other numeric article headings may be retained only as semantic royalty candidates where royalty terminology is detected; they never become standard Article 12 candidates automatically.",
             "Short or cross-reference-only headings are retained for audit but excluded from substantive candidate counts.",
             "Multiple source instruments may contain different versions of an article; source chronology and legal effect must be resolved before interpretation.",
             "Article number alone does not establish income type; older treaties may place royalties outside Article 12.",
@@ -207,18 +249,10 @@ def main() -> None:
     pilot = json.loads(args.input.read_text(encoding="utf-8"))
     result = build_article_candidate_inventory(pilot, article_dir=args.article_dir)
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(
-        json.dumps(result, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
+    args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"AT article candidate extraction: {result['partner_count']} partners")
     for partner in result["partners"]:
-        print(
-            partner["partner_label"],
-            partner["article_candidate_presence"],
-            "rejected=",
-            partner["rejected_article_candidate_presence"],
-        )
+        print(partner["partner_label"], partner["article_candidate_presence"], "rejected=", partner["rejected_article_candidate_presence"])
 
 
 if __name__ == "__main__":
