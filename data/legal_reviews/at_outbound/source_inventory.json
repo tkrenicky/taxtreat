@@ -27,6 +27,13 @@
       "caution": "Pair-specific matching and withholding-tax effective dates must be established relationship by relationship; Austria-side notification alone is not sufficient to infer bilateral effect."
     },
     {
+      "source_id": "AT-RIS-ESTG-27",
+      "authority": "Rechtsinformationssystem des Bundes (RIS)",
+      "title": "Einkommensteuergesetz 1988 § 27",
+      "url": "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004570&Paragraf=27",
+      "use": "definition of capital income, including dividends and interest/other returns from debt claims"
+    },
+    {
       "source_id": "AT-RIS-ESTG-93",
       "authority": "Rechtsinformationssystem des Bundes (RIS)",
       "title": "Einkommensteuergesetz 1988 § 93",
@@ -43,12 +50,28 @@
       "relevant_observation": "Foreign EU qualifying parent companies may obtain no-withholding treatment for qualifying dividends where the statutory conditions are met, including at least 10% participation and an uninterrupted one-year holding period; anti-abuse/refund safeguards remain relevant."
     },
     {
+      "source_id": "AT-RIS-ESTG-98",
+      "authority": "Rechtsinformationssystem des Bundes (RIS)",
+      "title": "Einkommensteuergesetz 1988 § 98",
+      "url": "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004570&Paragraf=98",
+      "use": "limited-taxpayer Austrian-source nexus and interaction with § 99a",
+      "relevant_observation": "Section 98 defines the closed set of Austrian-source income subject to limited tax liability and expressly removes income from limited tax liability where § 99a exemption conditions are met."
+    },
+    {
       "source_id": "AT-RIS-ESTG-99",
       "authority": "Rechtsinformationssystem des Bundes (RIS)",
       "title": "Einkommensteuergesetz 1988 § 99",
       "url": "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004570&Paragraf=99",
-      "use": "special withholding tax for limited taxpayers; seed source for royalty/right-use analysis",
-      "caution": "The exact mapping of standard TaxTreat royalty categories to the current § 99 enumerated items must be completed before runtime promotion."
+      "use": "special withholding tax for limited taxpayers; § 99(1)(3) routes § 28(1)(3) right-use income into withholding",
+      "caution": "The exact mapping of standard TaxTreat royalty categories to § 28(1)(3), § 98 source nexus and the current § 99 enumerated items must be completed before runtime promotion."
+    },
+    {
+      "source_id": "AT-RIS-ESTG-99A",
+      "authority": "Rechtsinformationssystem des Bundes (RIS)",
+      "title": "Einkommensteuergesetz 1988 § 99a",
+      "url": "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004570&Paragraf=99a",
+      "use": "EU Interest and Royalties Directive withholding exemption for qualifying interest and royalties",
+      "relevant_observation": "The exemption requires a qualifying EU payer/PE and beneficial owner, a direct 25% qualifying relationship (or common direct 25% parent) held for at least one uninterrupted year, qualifying entity/tax conditions and specified confirmations available at payment; refund remains possible where the holding period or confirmations are not yet available."
     },
     {
       "source_id": "AT-RIS-ESTG-100",
@@ -70,16 +93,16 @@
   ],
   "domestic_model_seed": {
     "dividend": {
-      "candidate_regime": "KESt under §§ 93-95 EStG 1988",
+      "candidate_regime": "KESt under §§ 27, 93-95 EStG 1988",
       "eu_parent_relief_seed": "§ 94 EStG 1988",
       "status": "requires_structured_legal_model"
     },
     "interest": {
-      "candidate_regime": "domestic-source and KESt scope require instrument/category-specific analysis under §§ 27, 93-95 and limited-taxpayer source rules",
-      "status": "unresolved_fail_closed"
+      "candidate_regime": "§§ 27, 93-95 and 98 EStG 1988, with separate § 99a EU interest exemption where its conditions are met",
+      "status": "requires_source_nexus_mapping"
     },
     "royalty": {
-      "candidate_regime": "special withholding under §§ 99-100 EStG 1988 where the statutory category applies",
+      "candidate_regime": "§§ 28, 98, 99-100 EStG 1988, with separate § 99a EU royalty exemption where its conditions are met",
       "status": "requires_category_mapping"
     }
   },
@@ -89,6 +112,7 @@
     "Every treaty instrument and protocol must be resolved to official primary text before promotion.",
     "MLI matching and WHT-effective dates must be determined treaty by treaty.",
     "The interest scope must remain fail-closed until Austrian domestic-source and withholding applicability are mapped by instrument/category.",
+    "§ 99a substantive exemption, its documentary prerequisites at payment and later refund eligibility are distinct states and must not be collapsed into a single boolean.",
     "Treaty relief eligibility and the procedural ability to grant relief at source under the DBA-Entlastungsverordnung are distinct layers and must be modelled separately."
   ]
 }
