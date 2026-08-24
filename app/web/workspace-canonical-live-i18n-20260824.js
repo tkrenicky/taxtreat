@@ -35,7 +35,7 @@
     ["Další údaje a podklady doplníš v profilu příjemce. V tomto demu se nový profil po obnovení stránky odstraní.", "Additional facts and supporting documents can be completed in the recipient profile. In this demo, a newly created profile is removed after the page is refreshed."],
     ["Použít příjemce v této kontrole →", "Use recipient in this calculation →"], ["← Zpět k plátci", "← Back to payer"], ["Pokračovat k platbě →", "Continue to payment →"],
     ["Údaje o platbě", "Payment details"], ["Druh příjmu *", "Income type *"], ["Vyber druh", "Select type"], ["Dividendy", "Dividends"], ["Úroky", "Interest"], ["Licenční poplatky", "Royalties"],
-    ["Datum transakce *", "Transaction date *"], ["Hrubá částka *", "Gross amount *"], ["Měna *", "Currency *"], ["Kurz v CZK za 1 jednotku měny", "CZK exchange rate per 1 unit of currency"],
+    ["Datum transakce *", "Transaction date *"], ["Hrubá částka *", "Gross amount *"], ["Hrubá částka", "Gross amount"], ["Měna *", "Currency *"], ["Kurz v CZK za 1 jednotku měny", "CZK exchange rate per 1 unit of currency"],
     ["Výpočet vychází z níže uvedených předpokladů", "The calculation is based on the assumptions below"], ["Předvyplněné odpovědi zkontroluj a změň, pokud pro danou platbu neplatí.", "Review the pre-filled answers and change them if they do not apply to this payment."],
     ["Příjemce je skutečným vlastníkem příjmu.", "The recipient is the beneficial owner of the income."], ["Ano", "Yes"], ["Ne", "No"],
     ["DOPLŇUJÍCÍ ÚDAJE O TRANSAKCI", "ADDITIONAL TRANSACTION FACTS"], ["Doplňující údaje o transakci", "Additional transaction facts"],
@@ -46,7 +46,10 @@
     ["Zobrazit pravidla a výpočet →", "Show rules and calculation →"], ["Doplnit údaje a aktualizovat výpočet →", "Complete facts and update calculation →"],
     ["Použité právní pravidlo", "Applied legal rule"], ["Souhrn platby", "Payment summary"], ["Srážková daň", "Withholding tax"], ["Čistá částka", "Net amount"],
     ["Podmínky použitého pravidla", "Conditions of the applied rule"], ["Právní podklady", "Legal sources"], ["Rozhodné datum a navazující lhůty", "Reference date and compliance deadlines"],
-    ["Rozhodné datum zadané pro výpočet", "Reference date used for the calculation"], ["Odvod srážkové daně", "Withholding tax remittance"], ["Oznámení příjmu plynoucího do zahraničí", "Outbound income notification"],
+    ["DAŇOVÝ KALENDÁŘ", "TAX CALENDAR"], ["Rozhodné datum zadané pro výpočet", "Reference date used for the calculation"], ["Odvod srážkové daně", "Withholding tax remittance"], ["Oznámení příjmu plynoucího do zahraničí", "Outbound income notification"],
+    ["Odvod sražené daně a oznámení o příjmu plynoucího do zahraničí mají shodnou lhůtu: konec následujícího kalendářního měsíce.", "Withholding tax remittance and the outbound income notification have the same deadline: the end of the following calendar month."],
+    ["1. VÝCHOZÍ VNITROSTÁTNÍ PRAVIDLO", "1. DEFAULT DOMESTIC RULE"], ["2. POUŽITÉ SMLUVNÍ PRAVIDLO", "2. APPLIED TREATY RULE"],
+    ["VÝCHOZÍ VNITROSTÁTNÍ PRAVIDLO", "DEFAULT DOMESTIC RULE"], ["POUŽITÉ SMLUVNÍ PRAVIDLO", "APPLIED TREATY RULE"],
     ["← Upravit platbu", "← Edit payment"], ["Tisk / PDF reportu", "Print / PDF report"],
     ["Možné vnitrostátní osvobození", "Potential domestic exemption"], ["Základní podmínky:", "Key conditions:"],
     ["Relevantní ustanovení", "Relevant provisions"], ["Otevřít zdroj ↗", "Open source ↗"], ["Znění použitého ustanovení", "Text of the applied provision"], ["Evidované znění použitého ustanovení", "Recorded text of the applied provision"],
@@ -56,12 +59,23 @@
 
   const CS_EN = new Map(PAIRS);
   const EN_CS = new Map(PAIRS.map(([cs, en]) => [en, cs]));
+  const MONTHS_CS_EN = new Map([["ledna", "January"], ["února", "February"], ["března", "March"], ["dubna", "April"], ["května", "May"], ["června", "June"], ["července", "July"], ["srpna", "August"], ["září", "September"], ["října", "October"], ["listopadu", "November"], ["prosince", "December"]]);
+  const MONTHS_EN_CS = new Map(Array.from(MONTHS_CS_EN, ([cs, en]) => [en, cs]));
 
   function language() {
     return document.querySelector("#taxtreat-ui-language")?.value || localStorage.getItem(UI_KEY) || "cs";
   }
 
+  function translateDate(text, target) {
+    if (target === "en") {
+      return text.replace(/^(\d{1,2})\.\s+(ledna|února|března|dubna|května|června|července|srpna|září|října|listopadu|prosince)\s+(\d{4})$/i, (_m, day, month, year) => `${day} ${MONTHS_CS_EN.get(month.toLowerCase())} ${year}`);
+    }
+    return text.replace(/^(\d{1,2})\s+(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})$/i, (_m, day, month, year) => `${day}. ${MONTHS_EN_CS.get(month[0].toUpperCase() + month.slice(1).toLowerCase())} ${year}`);
+  }
+
   function translatePattern(text, target) {
+    const dated = translateDate(text, target);
+    if (dated !== text) return dated;
     if (target === "en") {
       return text
         .replace(/^Česká republika · IČO /, "Czech Republic · Company ID ")
@@ -73,7 +87,12 @@
         .replace(/^Podíl na plátci:\s*(.+)$/i, "Ownership in payer: $1")
         .replace(/^Datum nabytí podílu:\s*(.+)$/i, "Share acquisition date: $1")
         .replace(/^([0-9]+) údaje?$/i, "$1 facts")
-        .replace(/^KROK ([1-4]) ZE 4$/i, "STEP $1 OF 4");
+        .replace(/^KROK ([1-4]) ZE 4$/i, "STEP $1 OF 4")
+        .replace(/^Podle článku\s+([^\s]+)\s+smlouvy o zamezení dvojího zdanění,?\s*(.*)$/i, (_m, article, rest) => `Under Article ${article} of the double tax treaty, ${rest}`)
+        .replace(/^Zákon č\. 586\/1992 Sb\., o daních z příjmů\s*·\s*§\s*([^·]+)\s*·\s*odst\.\s*([^·]+)$/i, "Czech Income Taxes Act (Act No. 586/1992 Coll.) · Section $1 · paragraph $2")
+        .replace(/^§\s*38d\s+a\s+§\s*38da\s+zákona č\. 586\/1992 Sb\., o daních z příjmů$/i, "Sections 38d and 38da of the Czech Income Taxes Act")
+        .replace(/^§\s*38d\s+a\s+§\s*38da\s+ZDP$/i, "Sections 38d and 38da of the Czech Income Taxes Act")
+        .replace(/^odst\.\s*(\d+[a-z]?)$/i, "paragraph $1");
     }
     return text
       .replace(/^Czech Republic · Company ID /, "Česká republika · IČO ")
@@ -85,7 +104,11 @@
       .replace(/^Ownership in payer:\s*(.+)$/i, "Podíl na plátci: $1")
       .replace(/^Share acquisition date:\s*(.+)$/i, "Datum nabytí podílu: $1")
       .replace(/^([0-9]+) facts$/i, "$1 údaje")
-      .replace(/^STEP ([1-4]) OF 4$/i, "KROK $1 ZE 4");
+      .replace(/^STEP ([1-4]) OF 4$/i, "KROK $1 ZE 4")
+      .replace(/^Under Article\s+([^\s]+)\s+of the double tax treaty,?\s*(.*)$/i, (_m, article, rest) => `Podle článku ${article} smlouvy o zamezení dvojího zdanění, ${rest}`)
+      .replace(/^Czech Income Taxes Act \(Act No\. 586\/1992 Coll\.\)\s*·\s*Section\s*([^·]+)\s*·\s*paragraph\s*([^·]+)$/i, "Zákon č. 586/1992 Sb., o daních z příjmů · § $1 · odst. $2")
+      .replace(/^Sections 38d and 38da of the Czech Income Taxes Act$/i, "§ 38d a § 38da ZDP")
+      .replace(/^paragraph\s*(\d+[a-z]?)$/i, "odst. $1");
   }
 
   function translateTextNode(node) {
