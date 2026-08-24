@@ -10,6 +10,7 @@ from taxtreat.engine.legal_rule_engine import (
     TaxTreatment,
     _evaluate_rule,
     _is_effective,
+    _matching_rule_conflicts,
     _matches_scope,
     resolve_tax_treatment,
 )
@@ -233,6 +234,26 @@ def evaluate_layered_rules(
         result.missing_facts = sorted(missing_material)
         result.explanation.append(
             "No complete rate path remains after the mandatory legal gates."
+        )
+        return result
+
+    conflicts = _matching_rule_conflicts(candidates)
+    if conflicts:
+        result.status = DecisionStatus.REVIEW_REQUIRED
+        result.requires_review = True
+        result.citations = [
+            _citation(rule)
+            for conflict in conflicts
+            for rule in conflict
+        ]
+        result.explanation.append(
+            "Conflicting verified legal-rule projections have identical "
+            "applicability conditions but different outcomes: "
+            + "; ".join(
+                ", ".join(rule.rule_id for rule in conflict)
+                for conflict in conflicts
+            )
+            + "."
         )
         return result
 
