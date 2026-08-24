@@ -1,13 +1,18 @@
 (() => {
   "use strict";
 
+  const CS_MARKER = /Daňová rezidence:|Typ subjektu:|Skutečný vlastník(?: příjmu)?:|Vazba (?:na|ke) stálou provozovnu(?: v ČR)?:|Podíl na plátci:|Datum nabytí podílu:|profilové údaje vyplněny|základní údaje vyplněny/;
+  const EN_MARKER = /Tax residence:|Entity type:|Beneficial owner:|Permanent establishment connection:|Ownership in payer:|Share acquisition date:|profile details completed|basic details completed/;
+
   function language() {
     return document.querySelector("#taxtreat-ui-language")?.value || localStorage.getItem("taxtreat-ui-language") || "cs";
   }
 
   function translateDynamicLine(text, toEnglish) {
     if (toEnglish) {
+      if (!CS_MARKER.test(text)) return text;
       return text
+        .replace(/Daňová rezidence:\s*Rakouska/g, "Tax residence: Austria")
         .replace(/Daňová rezidence:/g, "Tax residence:")
         .replace(/Typ subjektu:/g, "Entity type:")
         .replace(/Skutečný vlastník(?: příjmu)?:/g, "Beneficial owner:")
@@ -16,13 +21,17 @@
         .replace(/Datum nabytí podílu:/g, "Share acquisition date:")
         .replace(/profilové údaje vyplněny/g, "profile details completed")
         .replace(/základní údaje vyplněny/g, "basic details completed")
-        .replace(/Rakouska/g, "Austria")
-        .replace(/Rakousko/g, "Austria")
-        .replace(/Společnost/g, "Company")
-        .replace(/společnost/g, "company")
-        .replace(/Nevyplněno/g, "Not provided");
+        .replace(/Rakouska|Rakousko/g, "Austria")
+        .replace(/\bSpolečnost\b/g, "Company")
+        .replace(/\bspolečnost\b/g, "company")
+        .replace(/\bNevyplněno\b/g, "Not provided")
+        .replace(/\bAno\b/g, "Yes")
+        .replace(/\bNe\b/g, "No");
     }
+
+    if (!EN_MARKER.test(text)) return text;
     return text
+      .replace(/Tax residence:\s*Austria/g, "Daňová rezidence: Rakouska")
       .replace(/Tax residence:/g, "Daňová rezidence:")
       .replace(/Entity type:/g, "Typ subjektu:")
       .replace(/Beneficial owner:/g, "Skutečný vlastník:")
@@ -31,10 +40,12 @@
       .replace(/Share acquisition date:/g, "Datum nabytí podílu:")
       .replace(/profile details completed/g, "profilové údaje vyplněny")
       .replace(/basic details completed/g, "základní údaje vyplněny")
-      .replace(/Austria/g, "Rakousko")
-      .replace(/Company/g, "Společnost")
-      .replace(/company/g, "společnost")
-      .replace(/Not provided/g, "Nevyplněno");
+      .replace(/\bAustria\b/g, "Rakousko")
+      .replace(/\bCompany\b/g, "Společnost")
+      .replace(/\bcompany\b/g, "společnost")
+      .replace(/\bNot provided\b/g, "Nevyplněno")
+      .replace(/\bYes\b/g, "Ano")
+      .replace(/\bNo\b/g, "Ne");
   }
 
   function refresh() {
