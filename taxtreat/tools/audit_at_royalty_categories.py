@@ -24,6 +24,10 @@ PERCENT_PATTERNS = (
     re.compile(r"(\d+(?:[.,]\d+)?)\s+vom\s+hundert", flags=re.IGNORECASE),
 )
 ROYALTY_TEXT_RE = re.compile(r"(?:lizenzgebühr|royalt)", flags=re.IGNORECASE)
+TECHNICAL_SERVICE_RE = re.compile(
+    r"(?:technische\w*\s+(?:dienstleistung|hilfe)|technical\s+(?:services?|assistance))",
+    flags=re.IGNORECASE,
+)
 
 RISK_PATTERNS = {
     "software": (r"software", r"computerprogramm", r"computer program"),
@@ -45,6 +49,7 @@ OWNERSHIP_AFTER_RE = re.compile(
     r"(?:kapitals?|capital|stimmrechte?|voting\s+power|shares?|anteile?)\b",
     flags=re.IGNORECASE,
 )
+CLAUSE_SPLIT_RE = re.compile(r"[;.!?]|\b(?:[a-z]|\d+)[.)]\s*", flags=re.IGNORECASE)
 
 
 def _artifact_text(path: Path, artifact_root: Path) -> str:
@@ -80,10 +85,24 @@ def _ownership_threshold_tokens(text: str) -> list[float]:
     return sorted(values)
 
 
+def _technical_service_rate_tokens(text: str) -> list[float]:
+    values: set[float] = set()
+    for value, start, end in _percentage_mentions(text):
+        before = text[max(0, start - 180):start]
+        local_before = CLAUSE_SPLIT_RE.split(before)[-1]
+        after = text[end:min(len(text), end + 100)]
+        local_after = CLAUSE_SPLIT_RE.split(after)[0]
+        local_context = f"{local_before} {local_after}"
+        if TECHNICAL_SERVICE_RE.search(local_context) and not ROYALTY_TEXT_RE.search(local_context):
+            values.add(value)
+    return sorted(values)
+
+
 def _rate_candidates(text: str) -> list[float]:
     raw = set(_percentage_tokens(text))
     ownership = set(_ownership_threshold_tokens(text))
-    return sorted(raw - ownership)
+    technical_services = set(_technical_service_rate_tokens(text))
+    return sorted(raw - ownership - technical_services)
 
 
 def _flags(text: str) -> dict[str, bool]:
@@ -145,9 +164,11 @@ def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> 
 
         per_candidate_rates = [_rate_candidates(text) for text in source_texts]
         per_candidate_ownership = [_ownership_threshold_tokens(text) for text in source_texts]
+        per_candidate_service_rates = [_technical_service_rate_tokens(text) for text in source_texts]
         combined = "\n".join(source_texts)
         percentages = _percentage_tokens(combined)
         ownership_thresholds = sorted({value for values in per_candidate_ownership for value in values})
+        technical_service_rates = sorted({value for values in per_candidate_service_rates for value in values})
         rates = sorted({value for values in per_candidate_rates for value in values})
         within_candidate_multi_rate = any(len(values) > 1 for values in per_candidate_rates)
         cross_instrument_rate_variance = len(rates) > 1 and not within_candidate_multi_rate
@@ -178,6 +199,7 @@ def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> 
             "nonstandard_royalty_article_number_candidate": nonstandard_numbering,
             "percentage_tokens_raw": percentages,
             "ownership_threshold_tokens_machine": ownership_thresholds,
+            "technical_service_rate_tokens_machine": technical_service_rates,
             "rate_candidates_machine": rates,
             "rate_candidates_by_text_machine": per_candidate_rates,
             "within_candidate_multi_rate_machine": within_candidate_multi_rate,
@@ -193,7 +215,7 @@ def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> 
 
     risk_rows = [row for row in rows if row["category_projection_review_required"]]
     return {
-        "schema_version": 4,
+        "schema_version": 5,
         "source_country": "AT",
         "status": "royalty_category_machine_risk_queue_not_released",
         "base_user_facing_categories": list(BASE_CATEGORIES),
@@ -204,6 +226,7 @@ def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> 
             "treaty_specific_discriminators_may_be_required": True,
             "raw_percentage_tokens_are_not_rate_candidates": True,
             "ownership_threshold_percentages_cannot_create_rate_branches": True,
+            "technical_service_percentages_cannot_create_royalty_rate_branches": True,
             "machine_rate_candidates_do_not_establish_category_rates": True,
             "article_number_alone_does_not_establish_income_type": True,
             "royalty_semantics_required_for_article_candidate": True,
