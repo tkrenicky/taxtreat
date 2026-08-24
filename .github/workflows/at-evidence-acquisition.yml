@@ -1,0 +1,63 @@
+name: AT evidence acquisition
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "taxtreat/tools/build_at_treaty_source_inventory.py"
+      - "taxtreat/tools/build_at_treaty_review_queue.py"
+      - "data/legal_reviews/at_outbound/**"
+      - ".github/workflows/at-evidence-acquisition.yml"
+
+jobs:
+  acquire-at-treaty-universe:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install acquisition dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests==2.32.3 beautifulsoup4==4.12.3 lxml==5.3.0
+      - name: Fetch official BMF treaty universe
+        run: |
+          python -m taxtreat.tools.build_at_treaty_source_inventory \
+            --output artifacts/at/treaty_source_inventory_machine.json
+          python -m taxtreat.tools.build_at_treaty_review_queue \
+            --input artifacts/at/treaty_source_inventory_machine.json \
+            --output artifacts/at/treaty_review_queue.json
+      - name: Validate fail-closed acquisition output
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          inventory = json.loads(Path("artifacts/at/treaty_source_inventory_machine.json").read_text(encoding="utf-8"))
+          queue = json.loads(Path("artifacts/at/treaty_review_queue.json").read_text(encoding="utf-8"))
+
+          assert inventory["source_country"] == "AT"
+          assert inventory["status"] == "machine_source_inventory_not_reviewed"
+          assert inventory["treaty_partner_count"] >= 80
+          assert inventory["treaty_scope_count"] == inventory["treaty_partner_count"] * 3
+          assert queue["status"] == "review_queue_not_released"
+          assert queue["treaty_partner_count"] == inventory["treaty_partner_count"]
+          assert queue["scope_count"] == inventory["treaty_scope_count"]
+          assert all(scope["release_eligible"] is False for scope in queue["scopes"])
+          assert all(scope["rate_extraction"]["reviewed"] is False for scope in queue["scopes"])
+          print(
+              "AT acquisition:",
+              inventory["treaty_partner_count"], "partners /",
+              inventory["treaty_scope_count"], "scopes /",
+              inventory["mli_flagged_relationship_count"], "MLI discovery flags",
+          )
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: at-treaty-acquisition
+          path: artifacts/at
+          if-no-files-found: error
+          retention-days: 30
