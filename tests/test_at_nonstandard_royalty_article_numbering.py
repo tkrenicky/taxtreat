@@ -22,6 +22,13 @@ Artikel XII
     assert "Lizenzgebühren" in blocks[11]
 
 
+def _pad_partners(first):
+    partners = [first]
+    for index in range(88):
+        partners.append({"partner_label": f"Partner {index}", "sources": []})
+    return {"source_country": "AT", "partner_count": 89, "partners": partners}
+
+
 def test_royalty_audit_uses_semantic_fallback_but_keeps_nonstandard_numbering_fail_closed(tmp_path: Path):
     article_11 = tmp_path / "japan-article-11.txt"
     article_11.write_text(
@@ -30,15 +37,11 @@ def test_royalty_audit_uses_semantic_fallback_but_keeps_nonstandard_numbering_fa
         "(3) Weitere Lizenzgebühren fallen unter dieselbe Bestimmung.",
         encoding="utf-8",
     )
-    partners = [{"partner_label": "Japan / Japan", "sources": [{"article_candidates": [{
+    inventory = _pad_partners({"partner_label": "Japan / Japan", "sources": [{"article_candidates": [{
         "article_number": 11,
         "substantive_article_candidate": True,
         "artifact_path": "japan-article-11.txt",
-    }]}]}]
-    for index in range(88):
-        partners.append({"partner_label": f"Partner {index}", "sources": []})
-
-    inventory = {"source_country": "AT", "partner_count": 89, "partners": partners}
+    }]}]})
     result = build_audit(inventory, artifact_root=tmp_path)
     japan = result["partners"][0]
 
@@ -52,3 +55,23 @@ def test_royalty_audit_uses_semantic_fallback_but_keeps_nonstandard_numbering_fa
     assert japan["projection_released"] is False
     assert result["policy"]["article_number_alone_does_not_establish_income_type"] is True
     assert result["policy"]["nonstandard_royalty_article_number_requires_review"] is True
+
+
+def test_royalty_audit_accepts_explicit_semantic_article_9_candidate(tmp_path: Path):
+    article_9 = tmp_path / "luxembourg-article-9.txt"
+    article_9.write_text(
+        "Artikel 9\nLizenzgebühren dürfen grundsätzlich nur im Ansässigkeitsstaat besteuert werden. "
+        "Bei einer qualifizierten Beteiligung kann der Quellenstaat bis zu 10 vom Hundert erheben. "
+        "Der Ausdruck Lizenzgebühren umfasst Patente, Marken und Urheberrechte.",
+        encoding="utf-8",
+    )
+    inventory = _pad_partners({"partner_label": "Luxemburg / Luxembourg", "sources": [{"article_candidates": [
+        {"article_number": 0, "substantive_article_candidate": True, "semantic_income_candidate": None, "artifact_path": "ignored.txt"},
+        {"article_number": 9, "substantive_article_candidate": True, "semantic_income_candidate": "royalty", "artifact_path": "luxembourg-article-9.txt"},
+    ]}]})
+    row = build_audit(inventory, artifact_root=tmp_path)["partners"][0]
+
+    assert row["royalty_article_numbers_machine"] == [9]
+    assert row["nonstandard_royalty_article_number_candidate"] is True
+    assert row["rate_candidates_machine"] == [10.0]
+    assert row["candidate_text_count"] == 1
