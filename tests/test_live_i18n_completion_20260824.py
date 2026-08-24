@@ -59,6 +59,29 @@ def test_step_two_and_step_three_strings_are_covered():
         assert phrase in content
 
 
+def test_step_four_visual_qa_gaps_are_covered_in_english_pass():
+    content = CANONICAL.read_text(encoding="utf-8")
+    required = [
+        "Hrubá částka",
+        "DAŇOVÝ KALENDÁŘ",
+        "Odvod sražené daně a oznámení o příjmu plynoucího do zahraničí mají shodnou lhůtu",
+        "VÝCHOZÍ VNITROSTÁTNÍ PRAVIDLO",
+        "POUŽITÉ SMLUVNÍ PRAVIDLO",
+        "MONTHS_CS_EN",
+        "Podle článku",
+        "Czech Income Taxes Act (Act No. 586/1992 Coll.)",
+        "Sections 38d and 38da of the Czech Income Taxes Act",
+        "paragraph $1",
+    ]
+    for phrase in required:
+        assert phrase in content
+
+
+def test_czech_legal_excerpt_remains_intentionally_untranslated():
+    content = CANONICAL.read_text(encoding="utf-8")
+    assert 'closest("blockquote,.legal-excerpt,pre,code")' in content
+
+
 def test_austrian_copyright_exclusive_result_never_highlights_unrelated_5_percent_clause():
     script = CANONICAL.read_text(encoding="utf-8")
     assert "isAtCopyrightExclusive" in script
