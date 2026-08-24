@@ -49,18 +49,37 @@ def test_at_interest_is_explicitly_unresolved_not_inferred_from_dividend_or_roya
     data = _inventory()
     interest = data["domestic_model_seed"]["interest"]
 
-    assert interest["status"] == "unresolved_fail_closed"
-    assert "instrument/category-specific" in interest["candidate_regime"]
+    assert interest["status"] == "requires_source_nexus_mapping"
+    assert "§§ 27, 93-95 and 98" in interest["candidate_regime"]
+    assert "§ 99a" in interest["candidate_regime"]
 
 
 def test_at_dividend_and_royalty_seed_preserves_distinct_domestic_regimes():
     data = _inventory()
     seed = data["domestic_model_seed"]
 
-    assert "§§ 93-95" in seed["dividend"]["candidate_regime"]
+    assert "§§ 27, 93-95" in seed["dividend"]["candidate_regime"]
     assert seed["dividend"]["eu_parent_relief_seed"] == "§ 94 EStG 1988"
-    assert "§§ 99-100" in seed["royalty"]["candidate_regime"]
+    assert "§§ 28, 98, 99-100" in seed["royalty"]["candidate_regime"]
+    assert "§ 99a" in seed["royalty"]["candidate_regime"]
     assert seed["royalty"]["status"] == "requires_category_mapping"
+
+
+def test_interest_and_royalty_eu_exemption_is_explicitly_separate_from_base_domestic_scope():
+    data = _inventory()
+    section_99a = next(
+        row for row in data["primary_sources"] if row["source_id"] == "AT-RIS-ESTG-99A"
+    )
+
+    observation = section_99a["relevant_observation"]
+    assert "25%" in observation
+    assert "one uninterrupted year" in observation
+    assert "beneficial owner" in observation
+    assert "confirmations available at payment" in observation
+
+    constraints = "\n".join(data["release_constraints"])
+    assert "documentary prerequisites at payment" in constraints
+    assert "later refund eligibility" in constraints
 
 
 def test_treaty_relief_substantive_and_relief_at_source_procedure_are_separate_layers():
