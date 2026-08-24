@@ -50,6 +50,19 @@ def test_article_block_extractor_accepts_english_and_art_abbreviation():
     assert set(blocks) == {10, 11, 12}
 
 
+def test_duplicate_ris_article_heading_prefers_substantive_block_over_text_placeholder():
+    blocks = extract_article_blocks(
+        "Art. 12 Text\n"
+        "Artikel 12 Lizenzgebühren\n"
+        "1. Lizenzgebühren dürfen im anderen Staat besteuert werden. "
+        "2. Die Steuer auf Lizenzgebühren darf 10 Prozent des Bruttobetrags nicht übersteigen. "
+        "3. Der Ausdruck Lizenzgebühren umfasst Urheberrechte, Patente und Marken.\n"
+        "Artikel 13 Andere Einkünfte\n1. Folgetext."
+    )
+    assert blocks[12].startswith("Artikel 12 Lizenzgebühren")
+    assert "10 Prozent" in blocks[12]
+
+
 def test_nonstandard_royalty_scanner_finds_article_9_without_reclassifying_target_inventory():
     text = """
 Artikel 8
@@ -64,6 +77,17 @@ Zinsen werden in diesem Artikel geregelt. Weitere Bestimmungen über Zinsen folg
     assert semantic[0][0] == 9
     assert semantic[0][1].startswith("Artikel 9")
     assert set(extract_article_blocks(text)) == {10}
+
+
+def test_nonstandard_royalty_scanner_accepts_single_explicit_royalty_marker():
+    text = (
+        "Artikel 13\nRoyalty income paid from one Contracting State may be taxed in the other State. "
+        "Further provisions define the applicable treaty treatment and source rule.\n"
+        "Artikel 14\nOther income follows."
+    )
+    semantic = extract_nonstandard_royalty_blocks(text)
+    assert len(semantic) == 1
+    assert semantic[0][0] == 13
 
 
 def test_candidate_inventory_hashes_substantive_text_without_releasing_rates(tmp_path: Path):
