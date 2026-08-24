@@ -7,6 +7,7 @@ REGISTRY = ROOT / "app/web/treaty-excerpt-locales-20260824.json"
 COUNTRY_DIR = ROOT / "app/web/treaty-excerpt-locales"
 RUNTIME = ROOT / "app/web/workspace-treaty-excerpt-locales-20260824.js"
 BOOTSTRAP = ROOT / "app/web/workspace-report-export.js"
+AUDIT = ROOT / "scripts/audit_treaty_excerpt_locale_coverage.py"
 
 
 def test_treaty_locale_registry_has_versioned_data_shape():
@@ -134,6 +135,16 @@ def test_runtime_restores_original_czech_markup_not_only_text():
     assert "function restoreOriginal(excerpt)" in script
     assert "excerpt.replaceChildren(...nodes.map((node) => node.cloneNode(true)))" in script
     assert 'declaredLanguage.startsWith("en")' in script
+
+
+def test_audit_measures_decisive_outcome_evidence_not_blanket_multi_rate_snippets():
+    script = AUDIT.read_text(encoding="utf-8")
+    assert "Rules with decisive EN outcome evidence" in script
+    assert "Rules without decisive EN outcome evidence" in script
+    assert "Rules requiring explicit rule-specific EN disambiguation" in script
+    assert "_article_supports_outcome" in script
+    assert "_condition_signature" in script
+    assert "Rules in materially multi-outcome articles" not in script
 
 
 def test_runtime_is_loaded_after_i18n_and_before_report_core():
