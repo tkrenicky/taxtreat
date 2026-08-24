@@ -28,6 +28,11 @@ TECHNICAL_SERVICE_RE = re.compile(
     r"(?:technische\w*\s+(?:dienstleistung|hilfe)|technical\s+(?:services?|assistance))",
     flags=re.IGNORECASE,
 )
+ROYALTY_SOURCE_EXEMPTION_RE = re.compile(
+    r"(?:lizenzgebühr|royalt).{0,260}(?:von\s+der\s+besteuerung\s+ausgenommen|steuerfrei|shall\s+be\s+exempt|exempt\s+from\s+(?:tax|taxation))"
+    r"|(?:von\s+der\s+besteuerung\s+ausgenommen|steuerfrei|shall\s+be\s+exempt|exempt\s+from\s+(?:tax|taxation)).{0,260}(?:lizenzgebühr|royalt)",
+    flags=re.IGNORECASE | re.DOTALL,
+)
 
 RISK_PATTERNS = {
     "software": (r"software", r"computerprogramm", r"computer program"),
@@ -120,6 +125,10 @@ def _royalty_semantic_candidate(text: str) -> bool:
     return matches[0].start() < 180 or len(matches) >= 2
 
 
+def _royalty_source_exemption_branch(text: str) -> bool:
+    return bool(ROYALTY_SOURCE_EXEMPTION_RE.search(text))
+
+
 def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> dict[str, Any]:
     if candidate_inventory.get("source_country") != "AT":
         raise ValueError("Expected Austrian article candidate inventory")
@@ -165,6 +174,7 @@ def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> 
         per_candidate_rates = [_rate_candidates(text) for text in source_texts]
         per_candidate_ownership = [_ownership_threshold_tokens(text) for text in source_texts]
         per_candidate_service_rates = [_technical_service_rate_tokens(text) for text in source_texts]
+        per_candidate_exemption = [_royalty_source_exemption_branch(text) for text in source_texts]
         combined = "\n".join(source_texts)
         percentages = _percentage_tokens(combined)
         ownership_thresholds = sorted({value for values in per_candidate_ownership for value in values})
@@ -172,6 +182,7 @@ def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> 
         rates = sorted({value for values in per_candidate_rates for value in values})
         within_candidate_multi_rate = any(len(values) > 1 for values in per_candidate_rates)
         cross_instrument_rate_variance = len(rates) > 1 and not within_candidate_multi_rate
+        source_exemption_branch = any(per_candidate_exemption)
         flags = _flags(combined)
 
         machine_risk_reasons: list[str] = []
@@ -183,6 +194,8 @@ def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> 
             machine_risk_reasons.append("multiple_rate_candidates_after_condition_filter")
         if cross_instrument_rate_variance:
             machine_risk_reasons.append("cross_instrument_rate_variance")
+        if source_exemption_branch:
+            machine_risk_reasons.append("royalty_source_exemption_branch_language")
         if flags["financial_lease"] or flags["operating_lease"]:
             machine_risk_reasons.append("lease_subcategory_language")
         if flags["technical_services"]:
@@ -204,6 +217,7 @@ def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> 
             "rate_candidates_by_text_machine": per_candidate_rates,
             "within_candidate_multi_rate_machine": within_candidate_multi_rate,
             "cross_instrument_rate_variance_machine": cross_instrument_rate_variance,
+            "royalty_source_exemption_branch_machine": source_exemption_branch,
             "non_rate_percentage_tokens": sorted(set(percentages) - set(rates)),
             "keyword_flags": flags,
             "machine_risk_reasons": machine_risk_reasons,
@@ -215,7 +229,7 @@ def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> 
 
     risk_rows = [row for row in rows if row["category_projection_review_required"]]
     return {
-        "schema_version": 5,
+        "schema_version": 6,
         "source_country": "AT",
         "status": "royalty_category_machine_risk_queue_not_released",
         "base_user_facing_categories": list(BASE_CATEGORIES),
@@ -227,6 +241,7 @@ def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> 
             "raw_percentage_tokens_are_not_rate_candidates": True,
             "ownership_threshold_percentages_cannot_create_rate_branches": True,
             "technical_service_percentages_cannot_create_royalty_rate_branches": True,
+            "source_exemption_language_is_a_branch_signal_not_a_synthetic_zero_rate": True,
             "machine_rate_candidates_do_not_establish_category_rates": True,
             "article_number_alone_does_not_establish_income_type": True,
             "royalty_semantics_required_for_article_candidate": True,
