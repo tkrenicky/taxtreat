@@ -40,46 +40,6 @@
       peLocationLabel: "Vazba ke stálé provozovně v ČR",
       payerGenitiveLabel: "českého plátce",
     }),
-    SK: Object.freeze({
-      code: "SK",
-      label: "Slovensko",
-      baseCurrency: "EUR",
-      fxProvider: "ECB/NBS",
-      runtimeReleased: true,
-      availability: "released",
-      domesticLawLabel: "zákon č. 595/2003 Z. z. o dani z príjmov",
-      complianceFormCode: "OZN4311v26",
-      complianceLegalReference: "§ 43 ods. 11 zákona č. 595/2003 Z. z.",
-      notificationPeriodicity: "monthly",
-      notificationDeadlineRule: "15th_day_of_following_calendar_month",
-      remittanceDeadlineRule: "15th_day_of_following_calendar_month",
-      ordinaryAnnualWhtReturnConfigured: false,
-      permanentEstablishmentLocation: "Slovenskej republike",
-      permanentEstablishmentShortLocation: "SR",
-      taxLabel: "Slovenská zrážková daň",
-      taxResultLabel: "Zrážková daň",
-      taxResultLabelWithCurrency: "Slovenská zrážková daň v EUR",
-      complianceTitle: "Rozhodný dátum a nadväzujúce lehoty",
-      remittanceLabel: "Odvod zrážkovej dane",
-      notificationLabel: "Mesačné oznámenie OZN4311v26",
-      sourceMetrics: Object.freeze({
-        jurisdictionLabel: "Podporované jurisdikcie",
-        jurisdictionValue: "75",
-        scopeLabel: "Pokryté kombinácie",
-        scopeValue: "225",
-      }),
-      hideWorkspaceFxControls: true,
-      prohibitedFxServicePrefixes: Object.freeze([
-        "/exchange-rates/cnb",
-      ]),
-      interestMonthlyAmountFieldVisible: false,
-      payerSubtitle: "Slovenské subjekty, ktorých platby sú v TaxTreat spracovávané.",
-      metaDescription: "TaxTreat – informačný pracovný priestor pre slovenskú zrážkovú daň",
-      prereleaseNotice: "",
-      complianceNoteDefault: "SK compliance model: mesačné OZN4311v26 a odvod zrážkovej dane najneskôr do 15. dňa nasledujúceho kalendárneho mesiaca. Samostatné bežné ročné WHT priznanie nie je pre štandardný dividend/interest/royalty flow nakonfigurované.",
-      peLocationLabel: "Väzba príjmu na stálu prevádzkareň v SR",
-      payerGenitiveLabel: "slovenského platiteľa",
-    }),
   });
 
   const TAX_TREATMENT_PRESENTATION = Object.freeze({
@@ -113,7 +73,7 @@
   function getSourceCountryContext(code) {
     const normalized = String(code || "").toUpperCase();
     const context = COUNTRY_CONTEXT[normalized];
-    if (!context) throw new Error(`Unsupported source country: ${normalized}`);
+    if (!context) throw new Error(`Unsupported public source country: ${normalized}`);
     return context;
   }
 

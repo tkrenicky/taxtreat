@@ -21,11 +21,11 @@
 
   const countryControl = document.createElement("label");
   countryControl.className = "payer-context source-country-context";
+  countryControl.hidden = true;
   countryControl.innerHTML = `
     <span>Stát plátce</span>
     <select id="active-source-country" aria-label="Stát aktivního plátce">
       <option value="CZ">Česká republika</option>
-      <option value="SK">Slovensko</option>
     </select>
   `;
   activePayerSelect.closest(".payer-context")?.after(countryControl);
@@ -68,18 +68,10 @@
     const scopeLabel = sourceMetrics[1].querySelector("span");
     const scopeValue = sourceMetrics[1].querySelector("strong");
 
-    if (jurisdictionLabel) {
-      jurisdictionLabel.textContent = metrics.jurisdictionLabel || "";
-    }
-    if (jurisdictionValue) {
-      jurisdictionValue.textContent = metrics.jurisdictionValue || "";
-    }
-    if (scopeLabel) {
-      scopeLabel.textContent = metrics.scopeLabel || "";
-    }
-    if (scopeValue) {
-      scopeValue.textContent = metrics.scopeValue || "";
-    }
+    if (jurisdictionLabel) jurisdictionLabel.textContent = metrics.jurisdictionLabel || "";
+    if (jurisdictionValue) jurisdictionValue.textContent = metrics.jurisdictionValue || "";
+    if (scopeLabel) scopeLabel.textContent = metrics.scopeLabel || "";
+    if (scopeValue) scopeValue.textContent = metrics.scopeValue || "";
   }
 
   function applyCurrencyDefaults(ctx) {
@@ -87,12 +79,8 @@
       currency.value = ctx.baseCurrency;
     }
 
-    if (fxField) {
-      fxField.hidden = ctx.hideWorkspaceFxControls === true;
-    }
-    if (fxStatus) {
-      fxStatus.hidden = ctx.hideWorkspaceFxControls === true;
-    }
+    if (fxField) fxField.hidden = ctx.hideWorkspaceFxControls === true;
+    if (fxStatus) fxStatus.hidden = ctx.hideWorkspaceFxControls === true;
   }
 
   function applyCopy(ctx) {
@@ -104,23 +92,13 @@
     if (complianceHeading) complianceHeading.textContent = ctx.complianceLegalReference;
     if (complianceTitle) complianceTitle.textContent = ctx.complianceTitle;
 
-    if (complianceRows[1]?.querySelector("dt")) {
-      complianceRows[1].querySelector("dt").textContent = ctx.remittanceLabel;
-    }
-    if (complianceRows[2]?.querySelector("dt")) {
-      complianceRows[2].querySelector("dt").textContent = ctx.notificationLabel;
-    }
+    if (complianceRows[1]?.querySelector("dt")) complianceRows[1].querySelector("dt").textContent = ctx.remittanceLabel;
+    if (complianceRows[2]?.querySelector("dt")) complianceRows[2].querySelector("dt").textContent = ctx.notificationLabel;
 
     prereleaseNotice.textContent = ctx.prereleaseNotice || "";
-    if (complianceNote) {
-      complianceNote.textContent = ctx.complianceNoteDefault || "";
-    }
-    if (metaDescription) {
-      metaDescription.content = ctx.metaDescription || "";
-    }
-    if (payersSubtitle) {
-      payersSubtitle.textContent = ctx.payerSubtitle || "";
-    }
+    if (complianceNote) complianceNote.textContent = ctx.complianceNoteDefault || "";
+    if (metaDescription) metaDescription.content = ctx.metaDescription || "";
+    if (payersSubtitle) payersSubtitle.textContent = ctx.payerSubtitle || "";
 
     setMatchingText(
       '[data-view="recipient-detail"] dt',
@@ -128,19 +106,8 @@
       ctx.peLocationLabel
     );
     setMatchingText(
-      '[data-view="recipient-detail"] dt',
-      "Väzba príjmu na stálu prevádzkareň v SR",
-      ctx.peLocationLabel
-    );
-
-    setMatchingText(
       '[data-view="flow"] span, [data-view="recipient-detail"] dt, [data-view="recipient-detail"] p',
       "v České republice",
-      `v ${ctx.permanentEstablishmentLocation}`
-    );
-    setMatchingText(
-      '[data-view="flow"] span, [data-view="recipient-detail"] dt, [data-view="recipient-detail"] p',
-      "v Slovenskej republike",
       `v ${ctx.permanentEstablishmentLocation}`
     );
     setMatchingText(
@@ -149,25 +116,13 @@
       `v ${ctx.permanentEstablishmentShortLocation}`
     );
     setMatchingText(
-      '[data-view="flow"] span, [data-view="recipient-detail"] dt, [data-view="recipient-detail"] p',
-      "v SR",
-      `v ${ctx.permanentEstablishmentShortLocation}`
-    );
-
-    setMatchingText(
       '[data-view="flow"] span, [data-view="flow"] small, [data-view="flow"] legend',
       "českého plátce",
       ctx.payerGenitiveLabel
     );
-    setMatchingText(
-      '[data-view="flow"] span, [data-view="flow"] small, [data-view="flow"] legend',
-      "slovenského plátce",
-      ctx.payerGenitiveLabel
-    );
 
     if (interestMonthlyField) {
-      interestMonthlyField.hidden =
-        ctx.interestMonthlyAmountFieldVisible === false;
+      interestMonthlyField.hidden = ctx.interestMonthlyAmountFieldVisible === false;
     }
 
     setSourceMetrics(ctx);
@@ -205,21 +160,12 @@
     if (ctx.hideWorkspaceFxControls !== true) return;
 
     event.stopImmediatePropagation();
-
     if (fxField) fxField.hidden = true;
     if (fxStatus) fxStatus.hidden = true;
   }
 
-  currency?.addEventListener(
-    "change",
-    blockProhibitedFxListener,
-    true
-  );
-  transactionDate?.addEventListener(
-    "change",
-    blockProhibitedFxListener,
-    true
-  );
+  currency?.addEventListener("change", blockProhibitedFxListener, true);
+  transactionDate?.addEventListener("change", blockProhibitedFxListener, true);
 
   const nativeFetch = window.fetch.bind(window);
   window.fetch = async function sourceCountryAwareFetch(resource, options = {}) {
@@ -230,9 +176,7 @@
       : [];
 
     if (prohibitedPrefixes.some((prefix) => url.startsWith(prefix))) {
-      throw new Error(
-        `FX service ${url} is prohibited for ${ctx.code} source-country context`
-      );
+      throw new Error(`FX service ${url} is prohibited for ${ctx.code} source-country context`);
     }
     if (url.includes("/analysis") && options.body) {
       try {
@@ -253,7 +197,7 @@
     event.stopImmediatePropagation();
     if (error) {
       error.hidden = false;
-      error.textContent = `${ctx.label} je stále v pre-release režimu. Výpočet se záměrně nespustil, aby nebyl použit nevydaný právní výstup.`;
+      error.textContent = `${ctx.label} source-country výpočet není na veřejném webu dostupný.`;
     }
   }, true);
 
@@ -263,5 +207,5 @@
     setActiveCode: (code) => applyContext(code),
   });
 
-  applyContext(payerCountries.get(activePayerKey()) || "CZ");
+  applyContext("CZ");
 })();

@@ -4,6 +4,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 WEB = ROOT / "app" / "web"
 CONTEXT = WEB / "source-country-context.js"
+ADAPTER = WEB / "workspace-source-country-adapter.js"
 
 
 def test_workspace_bootstrap_loads_country_context_and_adapter_before_existing_export_core():
@@ -28,65 +29,38 @@ def test_workspace_existing_report_export_logic_is_preserved_as_core():
     assert 'Tisk / PDF reportu' in core
 
 
-def test_workspace_sk_adapter_uses_registered_released_eur_context():
-    adapter = (
-        WEB / "workspace-source-country-adapter.js"
-    ).read_text(encoding="utf-8")
+def test_workspace_public_source_country_registry_is_cz_only():
     context = CONTEXT.read_text(encoding="utf-8")
+    adapter = ADAPTER.read_text(encoding="utf-8")
 
-    assert 'ctx.baseCurrency' in adapter
-    assert 'if (ctx.runtimeReleased) return;' in adapter
-    assert 'event.stopImmediatePropagation();' in adapter
-    assert 'runtimeReleased: true' in context
-    assert 'Slovenská zrážková daň v EUR' in context
-
-
-def test_workspace_sk_adapter_blocks_cnb_and_hides_czech_interest_only_field():
-    adapter = (
-        WEB / "workspace-source-country-adapter.js"
-    ).read_text(encoding="utf-8")
-    context = CONTEXT.read_text(encoding="utf-8")
-
-    combined = adapter + "\n" + context
-
-    assert "prohibitedFxServicePrefixes" in combined
-    assert "/exchange-rates/cnb" in combined
-    assert "interestMonthlyAmountFieldVisible" in combined
-    assert "prohibitedPrefixes" in adapter
+    assert 'code: "CZ"' in context
+    assert 'code: "SK"' not in context
+    assert '<option value="CZ">Česká republika</option>' in adapter
+    assert '<option value="SK">' not in adapter
+    assert 'countryControl.hidden = true;' in adapter
 
 
-def test_workspace_analysis_requests_are_bound_to_active_source_country():
-    adapter = (WEB / "workspace-source-country-adapter.js").read_text(encoding="utf-8")
+def test_workspace_analysis_requests_are_bound_to_cz_source_country():
+    adapter = ADAPTER.read_text(encoding="utf-8")
 
     assert 'url.includes("/analysis")' in adapter
     assert 'payload.source_country = currentCode' in adapter
+    assert 'applyContext("CZ")' in adapter
     assert 'body: JSON.stringify(payload)' in adapter
 
 
-def test_workspace_sk_preview_replaces_remaining_czech_visible_copy_and_metrics():
-    adapter = (
-        WEB / "workspace-source-country-adapter.js"
-    ).read_text(encoding="utf-8")
-    context = CONTEXT.read_text(encoding="utf-8")
-
-    combined = adapter + "\n" + context
+def test_workspace_keeps_czech_copy_and_metrics():
+    combined = ADAPTER.read_text(encoding="utf-8") + "\n" + CONTEXT.read_text(encoding="utf-8")
 
     assert 'Vazba ke stálé provozovně v ČR' in combined
-    assert 'Väzba príjmu na stálu prevádzkareň v SR' in combined
-    assert (
-        'Slovenské subjekty, ktorých platby sú v TaxTreat spracovávané'
-        in combined
-    )
+    assert 'České subjekty, jejichž platby jsou v TaxTreat zpracovávány' in combined
+    assert 'jurisdictionValue: "101"' in combined
+    assert 'scopeValue: "303"' in combined
 
 
-def test_workspace_country_switch_restores_czech_copy_after_slovak_preview():
-    adapter = (
-        WEB / "workspace-source-country-adapter.js"
-    ).read_text(encoding="utf-8")
-    context = CONTEXT.read_text(encoding="utf-8")
+def test_workspace_browser_bundle_contains_no_slovak_public_copy():
+    combined = ADAPTER.read_text(encoding="utf-8") + "\n" + CONTEXT.read_text(encoding="utf-8")
 
-    combined = adapter + "\n" + context
-
-    assert 'Väzba príjmu na stálu prevádzkareň v SR' in combined
-    assert 'Vazba ke stálé provozovně v ČR' in combined
-    assert "applyContext" in adapter
+    assert 'Slovensko' not in combined
+    assert 'Slovenská zrážková daň' not in combined
+    assert 'OZN4311v26' not in combined

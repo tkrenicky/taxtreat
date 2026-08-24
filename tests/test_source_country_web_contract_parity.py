@@ -12,31 +12,27 @@ def _country_block(text: str, code: str) -> str:
     return text.split(marker, 1)[1].split('}),', 1)[0]
 
 
-def test_web_country_contract_matches_backend_release_currency_and_fx():
+def test_public_web_country_contract_matches_cz_backend_release_currency_and_fx():
     text = CONTEXT_JS.read_text(encoding="utf-8")
+    backend = source_country_capability("CZ")
+    block = _country_block(text, "CZ")
 
-    for code in ("CZ", "SK"):
-        backend = source_country_capability(code)
-        block = _country_block(text, code)
-
-        assert f'baseCurrency: "{backend["currency"]}"' in block
-        expected_fx = "null" if backend["fx_provider"] is None else f'"{backend["fx_provider"]}"'
-        assert f'fxProvider: {expected_fx}' in block
-        assert f'runtimeReleased: {str(backend["runtime_released"]).lower()}' in block
-        assert f'availability: "{backend["availability"]}"' in block
+    assert f'baseCurrency: "{backend["currency"]}"' in block
+    expected_fx = "null" if backend["fx_provider"] is None else f'"{backend["fx_provider"]}"'
+    assert f'fxProvider: {expected_fx}' in block
+    assert f'runtimeReleased: {str(backend["runtime_released"]).lower()}' in block
+    assert f'availability: "{backend["availability"]}"' in block
 
 
-def test_slovak_web_contract_matches_backend_compliance_contract():
+def test_sk_backend_contract_exists_but_is_not_exposed_in_public_web_context():
     text = CONTEXT_JS.read_text(encoding="utf-8")
-    block = _country_block(text, "SK")
     backend = source_country_capability("SK")
-    compliance = backend["compliance"]
 
-    assert f'complianceFormCode: "{compliance["form_code"]}"' in block
-    assert compliance["legal_reference"] in block
-    assert f'notificationPeriodicity: "{compliance["periodicity"]}"' in block
-    assert 'notificationDeadlineRule: "15th_day_of_following_calendar_month"' in block
-    assert 'remittanceDeadlineRule: "15th_day_of_following_calendar_month"' in block
-    assert 'ordinaryAnnualWhtReturnConfigured: false' in block
-    assert '586/1992' not in block
-    assert 'CNB' not in block
+    assert backend["runtime_released"] is True
+    assert backend["currency"] == "EUR"
+    assert backend["compliance"]["form_code"] == "OZN4311v26"
+
+    assert 'SK: Object.freeze({' not in text
+    assert 'code: "SK"' not in text
+    assert 'OZN4311v26' not in text
+    assert 'Slovensko' not in text
