@@ -4,18 +4,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 CONTEXT_JS = ROOT / "app" / "web" / "source-country-context.js"
 ADAPTER_JS = ROOT / "app" / "web" / "workspace-source-country-adapter.js"
+SK_BACKEND = ROOT / "taxtreat" / "countries" / "sk.py"
 
 
-def _sk_block(text: str) -> str:
-    start = text.index('SK: Object.freeze({')
-    end = text.index(
-        '\n  });\n\n  const TAX_TREATMENT_PRESENTATION',
-        start,
-    )
-    return text[start:end]
-
-
-def test_workspace_source_country_context_distinguishes_cz_and_sk():
+def test_public_workspace_source_country_context_is_cz_only():
     text = CONTEXT_JS.read_text(encoding="utf-8")
 
     assert 'code: "CZ"' in text
@@ -23,45 +15,32 @@ def test_workspace_source_country_context_distinguishes_cz_and_sk():
     assert 'fxProvider: "CNB"' in text
     assert 'runtimeReleased: true' in text
 
-    assert 'code: "SK"' in text
-    assert 'baseCurrency: "EUR"' in text
-    assert 'fxProvider: "ECB/NBS"' in text
-    assert text.count('runtimeReleased: true') >= 2
-    assert 'complianceFormCode: "OZN4311v26"' in text
-    assert '§ 43 ods. 11 zákona č. 595/2003 Z. z.' in text
-    assert 'Slovenská zrážková daň' in text
+    assert 'code: "SK"' not in text
+    assert 'SK: Object.freeze({' not in text
+    assert 'Slovensko' not in text
+    assert 'OZN4311v26' not in text
+    assert 'Slovenská zrážková daň' not in text
 
 
-def test_workspace_source_country_context_has_no_czech_fx_fallback_for_sk():
-    text = CONTEXT_JS.read_text(encoding="utf-8")
-    sk_block = _sk_block(text)
-
-    assert 'baseCurrency: "EUR"' in sk_block
-    assert 'fxProvider: "ECB/NBS"' in sk_block
-    assert 'CNB' not in sk_block
-    assert '586/1992' not in sk_block
-    assert '38da' not in sk_block
-
-
-def test_workspace_source_country_context_exposes_released_sk():
-    text = CONTEXT_JS.read_text(encoding="utf-8")
+def test_public_workspace_does_not_offer_source_country_switching():
     adapter = ADAPTER_JS.read_text(encoding="utf-8")
-    sk_block = _sk_block(text)
 
-    assert 'function finalAnalysisAllowed(code)' in text
-    assert 'runtimeReleased === true' in text
-    assert 'availability: "released"' in sk_block
-    assert 'prereleaseNotice: ""' in sk_block
-    assert 'technickom pre-release' not in sk_block
-    assert 'před vydáním' not in adapter
-    assert '<option value="SK">Slovensko</option>' in adapter
+    assert '<option value="CZ">Česká republika</option>' in adapter
+    assert '<option value="SK">' not in adapter
+    assert 'countryControl.hidden = true;' in adapter
+    assert 'applyContext("CZ")' in adapter
 
 
-def test_workspace_source_country_context_carries_sk_monthly_compliance_timing():
+def test_public_workspace_rejects_nonpublic_source_country_context():
     text = CONTEXT_JS.read_text(encoding="utf-8")
-    sk_block = _sk_block(text)
 
-    assert 'notificationPeriodicity: "monthly"' in sk_block
-    assert 'notificationDeadlineRule: "15th_day_of_following_calendar_month"' in sk_block
-    assert 'remittanceDeadlineRule: "15th_day_of_following_calendar_month"' in sk_block
-    assert 'ordinaryAnnualWhtReturnConfigured: false' in sk_block
+    assert 'Unsupported public source country' in text
+    assert 'function getSourceCountryContext(code)' in text
+
+
+def test_sk_backend_package_remains_in_repository():
+    text = SK_BACKEND.read_text(encoding="utf-8")
+
+    assert 'def evaluate_domestic_precedence(' in text
+    assert 'OUTSIDE_SUBJECT_OF_TAX' in text
+    assert '§ 12 ods. 7 písm. c)' in text
