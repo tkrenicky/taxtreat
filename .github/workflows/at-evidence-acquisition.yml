@@ -61,65 +61,49 @@ jobs:
 
           inventory = json.loads(Path("artifacts/at/treaty_source_inventory_machine.json").read_text(encoding="utf-8"))
           queue = json.loads(Path("artifacts/at/treaty_review_queue.json").read_text(encoding="utf-8"))
-
           assert inventory["source_country"] == "AT"
           assert inventory["status"] == "machine_source_inventory_not_reviewed"
-          assert inventory["source_page_record_count"] >= 80
-          assert inventory["release_universe_candidate_count"] >= 80
-          assert inventory["release_universe_scope_count"] == inventory["release_universe_candidate_count"] * 3
+          assert inventory["source_page_record_count"] == 93
+          assert inventory["release_universe_candidate_count"] == 89
+          assert inventory["release_universe_scope_count"] == 267
           assert queue["status"] == "review_queue_not_released"
-          assert queue["treaty_partner_count"] == inventory["release_universe_candidate_count"]
-          assert queue["scope_count"] == inventory["release_universe_scope_count"]
-          assert len(queue["excluded_source_records"]) == (
-              inventory["source_page_record_count"] - inventory["release_universe_candidate_count"]
-          )
+          assert queue["treaty_partner_count"] == 89
+          assert queue["scope_count"] == 267
+          assert len(queue["excluded_source_records"]) == 4
           assert all(scope["release_eligible"] is False for scope in queue["scopes"])
           assert all(scope["rate_extraction"]["reviewed"] is False for scope in queue["scopes"])
           assert all(scope["instrument_chain"]["official_links"] for scope in queue["scopes"])
-          print(
-              "AT acquisition:",
-              inventory["source_page_record_count"], "page records /",
-              inventory["release_universe_candidate_count"], "current partners /",
-              inventory["release_universe_scope_count"], "current scopes /",
-              inventory["mli_flagged_relationship_count"], "MLI discovery flags /",
-              inventory["status_instrument_flagged_relationship_count"], "status-instrument flags",
-          )
-          print("Applicability statuses:", inventory["applicability_status_counts"])
+          print("AT universe: 93 page records / 89 current partners / 267 scopes")
           print("Excluded records:", queue["excluded_source_records"])
           PY
-      - name: Acquire pilot instrument chains from official BMF/RIS sources
+      - name: Acquire all current instrument chains from official BMF/RIS sources
         run: |
           python -m taxtreat.tools.acquire_at_instrument_chain_pilot \
             --input artifacts/at/treaty_source_inventory_machine.json \
             --output artifacts/at/instrument_chain_pilot.json \
-            --raw-dir artifacts/at/instrument_chain_sources
+            --raw-dir artifacts/at/instrument_chain_sources \
+            --all-current
           python - <<'PY'
           import json
           from pathlib import Path
-
-          pilot = json.loads(Path("artifacts/at/instrument_chain_pilot.json").read_text(encoding="utf-8"))
-          assert pilot["status"] == "instrument_chain_pilot_acquired_not_reviewed"
-          assert pilot["pilot_partner_count"] == 5
-          assert pilot["source_count"] >= 20
-          assert all(row["instrument_chain_resolved"] is False for row in pilot["partners"])
-          assert all(row["article_extraction_released"] is False for row in pilot["partners"])
+          data = json.loads(Path("artifacts/at/instrument_chain_pilot.json").read_text(encoding="utf-8"))
+          assert data["status"] == "instrument_chain_pilot_acquired_not_reviewed"
+          assert data["acquisition_scope"] == "all_current_partners"
+          assert data["pilot_partner_count"] == 89
+          assert data["source_count"] >= 89
+          assert all(row["instrument_chain_resolved"] is False for row in data["partners"])
+          assert all(row["article_extraction_released"] is False for row in data["partners"])
           assert all(
               source["final_url"].startswith("https://")
               and len(source["sha256"]) == 64
               and source["byte_size"] > 0
               and source["legal_review_completed"] is False
-              for row in pilot["partners"]
+              for row in data["partners"]
               for source in row["sources"]
           )
-          print(
-              "AT instrument-chain pilot:",
-              pilot["pilot_partner_count"], "partners /",
-              pilot["source_count"], "official sources"
-          )
-          for row in pilot["partners"]:
-              print(row["partner_label"], row["source_count"], [s["role_candidate"] for s in row["sources"]])
+          print("AT full instrument-chain acquisition:", data["pilot_partner_count"], "partners /", data["source_count"], "official sources")
           PY
-      - name: Extract Article 10 11 12 text candidates without legal interpretation
+      - name: Extract Article 10 11 12 text candidates with quality gate
         run: |
           python -m taxtreat.tools.extract_at_treaty_article_candidates \
             --input artifacts/at/instrument_chain_pilot.json \
@@ -128,15 +112,14 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
-
           data = json.loads(Path("artifacts/at/article_candidate_inventory.json").read_text(encoding="utf-8"))
           assert data["status"] == "article_text_candidates_not_reviewed"
-          assert data["partner_count"] == 5
+          assert data["partner_count"] == 89
           assert all(row["primary_text_review_completed"] is False for row in data["partners"])
           assert all(row["rate_extraction_released"] is False for row in data["partners"])
-          print("AT article candidate presence:")
-          for row in data["partners"]:
-              print(row["partner_label"], row["article_candidate_presence"])
+          substantive = sum(sum(row["article_candidate_presence"].values()) for row in data["partners"])
+          rejected = sum(sum(row["rejected_article_candidate_presence"].values()) for row in data["partners"])
+          print("AT article candidates:", substantive, "substantive /", rejected, "rejected by quality gate")
           PY
       - name: Build article variant reconciliation queue
         run: |
@@ -146,18 +129,25 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
-
           data = json.loads(Path("artifacts/at/article_candidate_reconciliation.json").read_text(encoding="utf-8"))
           assert data["status"] == "article_variant_reconciliation_queue_not_reviewed"
-          assert data["partner_count"] == 5
+          assert data["partner_count"] == 89
           assert all(row["instrument_chain_reconciliation_completed"] is False for row in data["partners"])
           assert all(row["release_eligible"] is False for row in data["partners"])
-          print("AT article variant reconciliation:")
-          for partner in data["partners"]:
-              print(
-                  partner["partner_label"],
-                  [(a["article_number"], a["unique_text_variant_count"], a["review_strategy"]) for a in partner["articles"]],
-              )
+          missing = [
+              (p["partner_label"], a["article_number"])
+              for p in data["partners"]
+              for a in p["articles"]
+              if a["candidate_count"] == 0
+          ]
+          multi = [
+              (p["partner_label"], a["article_number"], a["unique_text_variant_count"])
+              for p in data["partners"]
+              for a in p["articles"]
+              if a["unique_text_variant_count"] > 1
+          ]
+          print("AT article reconciliation: missing substantive candidates=", len(missing), "multi-variant scopes=", len(multi))
+          print("Missing candidates:", missing)
           PY
       - uses: actions/upload-artifact@v4
         with:
