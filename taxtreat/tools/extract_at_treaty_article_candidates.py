@@ -191,6 +191,7 @@ def build_article_candidate_inventory(
                 "final_url": source.get("final_url"),
                 "role_candidate": source.get("role_candidate"),
                 "source_sha256": source.get("sha256"),
+                "curated_royalty_source_override": source.get("curated_royalty_source_override") is True,
                 "extracted_text_character_count": len(text),
                 "article_candidates": candidates,
             })
@@ -218,6 +219,7 @@ def build_article_candidate_inventory(
         partner_rows.append({
             "partner_label": partner_label,
             "sources": source_rows,
+            "curated_royalty_source_override_count": sum(1 for row in source_rows if row["curated_royalty_source_override"]),
             "article_candidate_presence": article_presence,
             "rejected_article_candidate_presence": rejected_presence,
             "primary_text_review_completed": False,
@@ -225,15 +227,17 @@ def build_article_candidate_inventory(
         })
 
     return {
-        "schema_version": 4,
+        "schema_version": 5,
         "source_country": "AT",
         "status": "article_text_candidates_not_reviewed",
         "partner_count": len(partner_rows),
+        "curated_royalty_source_override_count": sum(row["curated_royalty_source_override_count"] for row in partner_rows),
         "partners": partner_rows,
         "release_constraints": [
             "Article 10/11/12 blocks are machine-extracted text candidates only; Arabic and Roman X/XI/XII headings are normalized to article numbers 10/11/12.",
             "Other numeric article headings may be retained only as semantic royalty candidates where royalty terminology is detected; they never become standard Article 12 candidates automatically.",
             "When RIS exposes duplicate headings for the same article number, the most substantive machine block is selected; this remains a candidate and not a legal conclusion.",
+            "Curated royalty source override provenance is preserved into the article-candidate inventory and does not itself establish the controlling treaty instrument.",
             "Short or cross-reference-only headings are retained for audit but excluded from substantive candidate counts.",
             "Multiple source instruments may contain different versions of an article; source chronology and legal effect must be resolved before interpretation.",
             "Article number alone does not establish income type; older treaties may place royalties outside Article 12.",
@@ -254,7 +258,7 @@ def main() -> None:
     result = build_article_candidate_inventory(pilot, article_dir=args.article_dir)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"AT article candidate extraction: {result['partner_count']} partners")
+    print(f"AT article candidate extraction: {result['partner_count']} partners / {result['curated_royalty_source_override_count']} curated royalty overrides")
     for partner in result["partners"]:
         print(partner["partner_label"], partner["article_candidate_presence"], "rejected=", partner["rejected_article_candidate_presence"])
 
