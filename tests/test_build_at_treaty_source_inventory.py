@@ -10,8 +10,8 @@ SAMPLE = """
     <tr><td>Inkrafttreten / <span>Entry into Force</span></td><td>28.10.1963</td></tr>
     <tr><td>Anwendbar ab / <span>Effective From</span></td><td>1961</td></tr>
     <tr><td>Abkommenstext / <span>Treaty Text</span></td><td>
-      <a href="https://www.ris.bka.gv.at/egypt">BGBl 293/1963</a>
-      <a href="https://www.ris.bka.gv.at/egypt-mli">MLI Text</a>
+      <a href="http://www.ris.bka.gv.at/egypt">BGBl 293/1963</a>
+      <a href="/dam/example/egypt-mli.pdf">MLI Text</a>
     </td></tr>
     <tr><td>Erlässe / Decrees</td><td><a href="https://findok.bmf.gv.at/not-treaty">Decree</a></td></tr>
   </tbody></table></div>
@@ -63,7 +63,7 @@ def test_parse_bmf_treaty_list_extracts_real_table_shape_dates_treaty_links_and_
     assert egypt.release_universe_candidate is True
     assert egypt.treaty_links == (
         "https://www.ris.bka.gv.at/egypt",
-        "https://www.ris.bka.gv.at/egypt-mli",
+        "https://www.bmf.gv.at/dam/example/egypt-mli.pdf",
     )
     assert "https://findok.bmf.gv.at/not-treaty" not in egypt.treaty_links
 
@@ -104,6 +104,7 @@ def test_machine_inventory_is_explicitly_non_release():
     assert "bilateral matching" in constraints
     assert "future-effective" in constraints
     assert "treaty-text row" in constraints
+    assert "absolute official URLs" in constraints
 
 
 def test_parser_fails_closed_when_official_page_shape_no_longer_contains_treaties():
