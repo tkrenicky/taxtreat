@@ -37,6 +37,17 @@ RIS_TREATY_TEXT_LABELS = (
     "german treaty text",
     "english treaty text",
 )
+RIS_TREATY_LANGUAGE_MARKERS = ("deutsch", "englisch", "german", "english")
+RIS_TREATY_DOCUMENT_MARKERS = (
+    "vertrag",
+    "abkommen",
+    "protokoll",
+    "treaty",
+    "agreement",
+    "protocol",
+    "sprachfassung",
+    "sprache",
+)
 
 
 def _safe_slug(value: str) -> str:
@@ -89,6 +100,19 @@ def _fetch_official_source(url: str, *, timeout: int = 30) -> tuple[bytes, str, 
     return content, str(response.headers.get("content-type") or ""), final_url
 
 
+def _is_relevant_ris_pdf(label: str, candidate_path: str) -> bool:
+    if "/geltendefassung/bundesnormen/" in candidate_path:
+        return True
+    basename = candidate_path.rsplit("/", 1)[-1]
+    if "/dokumente/bgblauth/" in candidate_path and basename.startswith("bgbla_"):
+        return True
+    if any(marker in label for marker in RIS_TREATY_TEXT_LABELS):
+        return True
+    has_language = any(marker in label for marker in RIS_TREATY_LANGUAGE_MARKERS)
+    has_document_context = any(marker in label for marker in RIS_TREATY_DOCUMENT_MARKERS)
+    return has_language and has_document_context
+
+
 def _discover_ris_treaty_text_attachments(
     content: bytes,
     content_type: str,
@@ -116,9 +140,7 @@ def _discover_ris_treaty_text_attachments(
             str(image.get("alt") or "") if image is not None else "",
         ]
         label = " ".join(" ".join(label_parts).lower().split())
-        is_treaty_text_annex = any(marker in label for marker in RIS_TREATY_TEXT_LABELS)
-        is_consolidated_export = "/geltendefassung/bundesnormen/" in candidate_path
-        if not is_treaty_text_annex and not is_consolidated_export:
+        if not _is_relevant_ris_pdf(label, candidate_path):
             continue
 
         _validate_official_url(candidate)
@@ -238,7 +260,7 @@ def acquire_pilot(
         "partners": output_records,
         "release_constraints": [
             "Successful HTTP acquisition and hashing do not establish which instrument controls a treaty result.",
-            "RIS landing and consolidated-view pages may expose separate official treaty-text or consolidated PDF attachments; discovered attachments remain machine evidence candidates only.",
+            "RIS landing and consolidated-view pages may expose separate official publication, treaty-text or consolidated PDF attachments; discovered attachments remain machine evidence candidates only.",
             "Link-role classification is a machine candidate only and must be reconciled against the legal instrument chain.",
             "No Article 10, 11 or 12 rate may be released from this acquisition output without primary-text extraction and review.",
             "MLI and status-instrument flags remain discovery signals only."
