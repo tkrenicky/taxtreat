@@ -7,6 +7,8 @@
   const originalExcerpt = new WeakMap();
   const countryRegistryPromises = new Map();
   let recipientCountry = null;
+  let selectedRuleId = null;
+  let selectedTreatyArticle = null;
   let registryPromise = null;
   let jurisdictionsPromise = null;
 
@@ -33,7 +35,7 @@
     const iso2 = String(country || "").toUpperCase();
     if (!iso2) return Promise.resolve(null);
     if (!countryRegistryPromises.has(iso2)) {
-      const url = `${COUNTRY_REGISTRY_ROOT}/${iso2}.json?v=20260824-1`;
+      const url = `${COUNTRY_REGISTRY_ROOT}/${iso2}.json?v=20260824-2`;
       countryRegistryPromises.set(iso2, fetch(url, { cache: "no-store" })
         .then((response) => response.ok ? response.json() : null)
         .catch(() => null));
@@ -72,7 +74,24 @@
     if (originalExcerpt.has(excerpt)) return;
     const declaredLanguage = String(excerpt.dataset.ttTreatyLanguage || excerpt.getAttribute("lang") || "").toLowerCase();
     if (declaredLanguage.startsWith("en")) return;
-    originalExcerpt.set(excerpt, excerpt.textContent || "");
+    originalExcerpt.set(excerpt, Array.from(excerpt.childNodes).map((node) => node.cloneNode(true)));
+  }
+
+  function restoreOriginal(excerpt) {
+    const nodes = originalExcerpt.get(excerpt);
+    if (!nodes) return;
+    excerpt.replaceChildren(...nodes.map((node) => node.cloneNode(true)));
+  }
+
+  function captureAnalysis(analysis) {
+    selectedRuleId = String(analysis?.selected_rule_id || analysis?.candidate_rule_id || "") || null;
+    selectedTreatyArticle = null;
+    if (!selectedRuleId) return;
+    const citations = analysis?.legal_path || analysis?.citations || [];
+    const selected = citations.find((citation) => String(citation?.rule_id || "") === selectedRuleId);
+    if (selected && ["treaty", "protocol", "mli"].includes(String(selected.legal_layer || ""))) {
+      selectedTreatyArticle = String(selected.article || "") || null;
+    }
   }
 
   function inferRecipientCountry(jurisdictions) {
@@ -102,9 +121,18 @@
   }
 
   function localeFor(registry, countryRegistry, country, article) {
-    return registry?.entries?.[country]?.[String(article)]?.en
+    const ruleEntry = selectedRuleId && String(selectedTreatyArticle || "") === String(article)
+      ? countryRegistry?.rules?.[selectedRuleId]
+      : null;
+    const ruleLocale = ruleEntry && (!ruleEntry.article || String(ruleEntry.article) === String(article))
+      ? ruleEntry.en
+      : null;
+    if (ruleLocale?.text) return { locale: ruleLocale, specificity: "rule" };
+
+    const articleLocale = registry?.entries?.[country]?.[String(article)]?.en
       || countryRegistry?.articles?.[String(article)]?.en
       || null;
+    return articleLocale?.text ? { locale: articleLocale, specificity: "article" } : null;
   }
 
   function removeMissingNote(card) {
@@ -125,6 +153,24 @@
     note.textContent = `Official English treaty wording is not yet registered for CZ–${country}, Article ${article}. The Czech official excerpt is shown below.`;
   }
 
+  function renderEnglishLocale(excerpt, resolved) {
+    const { locale, specificity } = resolved;
+    excerpt.replaceChildren();
+    if (specificity === "rule") {
+      const mark = document.createElement("mark");
+      mark.className = "legal-decisive-passage";
+      mark.textContent = locale.text;
+      excerpt.append(mark);
+    } else {
+      excerpt.textContent = locale.text;
+    }
+    excerpt.setAttribute("lang", "en");
+    excerpt.dataset.ttTreatyLanguage = "en";
+    excerpt.dataset.ttTreatyLocaleStatus = locale.status || "registered";
+    excerpt.dataset.ttTreatyLocaleSource = locale.source_url || "";
+    excerpt.dataset.ttTreatyLocaleSpecificity = specificity;
+  }
+
   async function refreshTreatyExcerpts() {
     const targetLanguage = language();
     const cards = treatyCards();
@@ -142,35 +188,48 @@
       ensureOriginal(excerpt);
 
       if (targetLanguage !== "en") {
-        if (originalExcerpt.has(excerpt)) excerpt.textContent = originalExcerpt.get(excerpt) || "";
+        restoreOriginal(excerpt);
         excerpt.setAttribute("lang", "cs");
         delete excerpt.dataset.ttTreatyLanguage;
         delete excerpt.dataset.ttTreatyLocaleStatus;
         delete excerpt.dataset.ttTreatyLocaleSource;
+        delete excerpt.dataset.ttTreatyLocaleSpecificity;
         removeMissingNote(card);
         return;
       }
 
-      const locale = localeFor(registry, countryRegistry, country, article);
-      if (!country || !locale?.text) {
-        if (originalExcerpt.has(excerpt)) excerpt.textContent = originalExcerpt.get(excerpt) || "";
+      const resolved = localeFor(registry, countryRegistry, country, article);
+      if (!country || !resolved?.locale?.text) {
+        restoreOriginal(excerpt);
         excerpt.setAttribute("lang", "cs");
         excerpt.dataset.ttTreatyLanguage = "cs-fallback";
+        delete excerpt.dataset.ttTreatyLocaleSpecificity;
         showMissingNote(card, country || "?", article);
         return;
       }
 
-      excerpt.textContent = locale.text;
-      excerpt.setAttribute("lang", "en");
-      excerpt.dataset.ttTreatyLanguage = "en";
-      excerpt.dataset.ttTreatyLocaleStatus = locale.status || "registered";
-      excerpt.dataset.ttTreatyLocaleSource = locale.source_url || "";
+      renderEnglishLocale(excerpt, resolved);
       removeMissingNote(card);
     });
   }
 
   function schedule() {
     [0, 60, 180, 450, 900].forEach((delay) => window.setTimeout(refreshTreatyExcerpts, delay));
+  }
+
+  function installStoredResultHook() {
+    const workspace = window.TaxTreatWorkspace;
+    if (!workspace?.openStoredResult || workspace.openStoredResult.__ttTreatyLocaleWrapped) return;
+    const original = workspace.openStoredResult;
+    const wrapped = function treatyLocaleStoredResult(payload, response) {
+      recipientCountry = String(payload?.recipient_country || "").toUpperCase() || recipientCountry;
+      captureAnalysis(response?.analysis);
+      const result = original.call(this, payload, response);
+      schedule();
+      return result;
+    };
+    wrapped.__ttTreatyLocaleWrapped = true;
+    workspace.openStoredResult = wrapped;
   }
 
   const previousFetch = window.fetch.bind(window);
@@ -183,7 +242,14 @@
       } catch (_problem) {}
     }
     const response = await previousFetch(resource, options);
-    if (url.endsWith("/analysis/intake") && response.ok) schedule();
+    if (url.endsWith("/analysis/intake") && response.ok) {
+      response.clone().json()
+        .then((body) => {
+          captureAnalysis(body?.analysis);
+          schedule();
+        })
+        .catch(() => schedule());
+    }
     return response;
   };
 
@@ -192,5 +258,6 @@
   }, true);
   document.addEventListener("click", () => window.setTimeout(schedule, 0), true);
 
+  installStoredResultHook();
   schedule();
 })();
