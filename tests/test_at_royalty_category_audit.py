@@ -86,13 +86,14 @@ def test_at_audit_excludes_ownership_threshold_from_rate_candidates():
 def test_at_audit_detects_post_percentage_ownership_wording_without_bleeding_into_rates(tmp_path: Path):
     inventory = _inventory(tmp_path)
     (tmp_path / "article-3.txt").write_text(
-        "Artikel 12. Bei einer Beteiligung von 25 Prozent des Kapitals beträgt die Lizenzgebühr "
-        "5 Prozent der Bruttosumme; sonst beträgt sie 10 Prozent der Bruttosumme.",
+        "Artikel 12. Lizenzgebühren an eine Person, die zu mehr als 50 vom Hundert am Kapital "
+        "der zahlenden Gesellschaft beteiligt ist, dürfen mit 10 vom Hundert des Bruttobetrages "
+        "besteuert werden; in allen anderen Fällen 5 vom Hundert des Bruttobetrages.",
         encoding="utf-8",
     )
     row = build_audit(inventory, artifact_root=tmp_path)["partners"][3]
-    assert row["percentage_tokens_raw"] == [5.0, 10.0, 25.0]
-    assert row["ownership_threshold_tokens_machine"] == [25.0]
+    assert row["percentage_tokens_raw"] == [5.0, 10.0, 50.0]
+    assert row["ownership_threshold_tokens_machine"] == [50.0]
     assert row["rate_candidates_machine"] == [5.0, 10.0]
 
 
