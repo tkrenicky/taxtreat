@@ -37,12 +37,14 @@ def test_runtime_is_country_article_language_driven_and_fail_visible():
     assert "MutationObserver" not in script
 
 
-def test_runtime_can_infer_country_for_stored_result_without_new_intake():
+def test_runtime_can_infer_country_for_stored_result_from_full_jurisdiction_catalog():
     script = RUNTIME.read_text(encoding="utf-8")
-    assert "function inferRecipientCountry(registry)" in script
+    assert 'fetch("/jurisdictions", { cache: "no-store" })' in script
+    assert "Array.isArray(payload?.jurisdictions)" in script
+    assert "function inferRecipientCountry(jurisdictions)" in script
     assert 'new Intl.DisplayNames(["en"], { type: "region" })' in script
     assert 'new Intl.DisplayNames(["cs"], { type: "region" })' in script
-    assert "Object.keys(registry?.entries || {})" in script
+    assert 'String(item?.iso2 || "").toUpperCase()' in script
 
 
 def test_runtime_restores_only_a_real_non_english_original_excerpt():
