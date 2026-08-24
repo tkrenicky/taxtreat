@@ -85,10 +85,12 @@ def test_runtime_prefers_resolved_rule_locale_then_article_fallback_and_is_fail_
     assert "MutationObserver" not in script
 
 
-def test_runtime_captures_resolved_rule_from_live_and_stored_results():
+def test_runtime_captures_selected_treaty_citation_from_live_and_stored_results():
     script = RUNTIME.read_text(encoding="utf-8")
+    assert "let selectedTreatyCitation = null" in script
     assert "function captureAnalysis(analysis)" in script
     assert "analysis?.selected_rule_id || analysis?.candidate_rule_id" in script
+    assert "selectedTreatyCitation = selected" in script
     assert "response.clone().json()" in script
     assert "captureAnalysis(body?.analysis)" in script
     assert "function installStoredResultHook()" in script
@@ -96,11 +98,22 @@ def test_runtime_captures_resolved_rule_from_live_and_stored_results():
     assert "captureAnalysis(response?.analysis)" in script
 
 
+def test_article_level_locale_only_highlights_uniquely_resolved_outcome_passage():
+    script = RUNTIME.read_text(encoding="utf-8")
+    assert "function decisiveArticlePassage(text, citation)" in script
+    assert "function ratePattern(rate)" in script
+    assert "minimal.length === 1" in script
+    assert "taxable only" in script
+    assert "exempt from tax" in script
+    assert "decisiveArticlePassage(locale.text, selectedTreatyCitation)" in script
+    assert 'excerpt.dataset.ttTreatyDecisivePassage = highlighted ? "resolved" : "not-isolated"' in script
+
+
 def test_rule_specific_locale_is_rendered_as_decisive_passage():
     script = RUNTIME.read_text(encoding="utf-8")
     assert 'specificity === "rule"' in script
     assert 'mark.className = "legal-decisive-passage"' in script
-    assert "mark.textContent = locale.text" in script
+    assert "appendWithMark(excerpt, locale.text, decisive)" in script
     assert "ttTreatyLocaleSpecificity" in script
 
 
