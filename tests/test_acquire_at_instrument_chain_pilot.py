@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 import pytest
@@ -50,6 +51,9 @@ def test_classify_official_link_distinguishes_synthesized_current_and_published_
         "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen"
     ) == "current_consolidated_view"
     assert pilot.classify_official_link(
+        "https://ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Artikel=12&Gesetzesnummer=20005011"
+    ) == "current_consolidated_view"
+    assert pilot.classify_official_link(
         "https://www.ris.bka.gv.at/Dokumente/BgblPdf/2002_182_3/2002_182_3.pdf"
     ) == "published_instrument_or_protocol"
 
@@ -67,9 +71,11 @@ def test_acquisition_hashes_official_sources_but_keeps_chain_and_articles_unrevi
         partners=("Deutschland / Germany", "Tschechische Republik / Czech Republic"),
     )
 
+    assert result["schema_version"] == 6
     assert result["status"] == "instrument_chain_pilot_acquired_not_reviewed"
     assert result["pilot_partner_count"] == 2
     assert result["source_count"] == 3
+    assert result["curated_royalty_source_override_count"] == 0
     assert all(row["instrument_chain_resolved"] is False for row in result["partners"])
     assert all(row["article_extraction_released"] is False for row in result["partners"])
     assert all(
@@ -77,7 +83,70 @@ def test_acquisition_hashes_official_sources_but_keeps_chain_and_articles_unrevi
         for row in result["partners"]
         for source in row["sources"]
     )
+    assert all(
+        source["curated_royalty_source_override"] is False
+        for row in result["partners"]
+        for source in row["sources"]
+    )
     assert len(list(tmp_path.iterdir())) == 3
+
+
+def test_curated_royalty_override_is_acquired_as_official_unreleased_evidence(monkeypatch, tmp_path: Path):
+    def fake_get(url, timeout, headers):
+        content_type = "text/html" if "NormDokument.wxe" in url else "application/pdf"
+        return FakeResponse(url, f"source:{url}".encode(), content_type)
+
+    monkeypatch.setattr(pilot.requests, "get", fake_get)
+    override_url = "https://ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Artikel=12&Gesetzesnummer=20005011"
+    result = pilot.acquire_pilot(
+        MACHINE,
+        raw_dir=tmp_path,
+        partners=("Deutschland / Germany",),
+        royalty_source_overrides={"Deutschland / Germany": (override_url,)},
+    )
+
+    assert result["curated_royalty_source_override_count"] == 1
+    row = result["partners"][0]
+    assert row["curated_royalty_source_override_count"] == 1
+    override = next(source for source in row["sources"] if source["curated_royalty_source_override"])
+    assert override["listed_url"] == override_url
+    assert override["role_candidate"] == "current_consolidated_view"
+    assert override["legal_review_completed"] is False
+    assert row["instrument_chain_resolved"] is False
+    assert row["article_extraction_released"] is False
+
+
+def test_override_registry_rejects_non_official_or_released_rows(tmp_path: Path):
+    path = tmp_path / "overrides.json"
+    path.write_text(json.dumps({
+        "source_country": "AT",
+        "status": "curated_official_source_overrides_not_reviewed",
+        "partners": {
+            "Deutschland / Germany": [{
+                "article_number": 12,
+                "url": "https://example.com/article12",
+                "legal_review_completed": False,
+                "projection_released": False,
+            }]
+        },
+    }), encoding="utf-8")
+    with pytest.raises(ValueError, match="Non-official"):
+        pilot.load_royalty_source_overrides(path)
+
+    path.write_text(json.dumps({
+        "source_country": "AT",
+        "status": "curated_official_source_overrides_not_reviewed",
+        "partners": {
+            "Deutschland / Germany": [{
+                "article_number": 12,
+                "url": "https://ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Artikel=12",
+                "legal_review_completed": True,
+                "projection_released": False,
+            }]
+        },
+    }), encoding="utf-8")
+    with pytest.raises(ValueError, match="must remain unreleased"):
+        pilot.load_royalty_source_overrides(path)
 
 
 def test_acquisition_rejects_non_official_source_and_cross_host_redirect(monkeypatch, tmp_path: Path):
@@ -113,3 +182,13 @@ def test_acquisition_fails_closed_on_missing_current_partner_or_empty_links(tmp_
     }
     with pytest.raises(ValueError, match="no treaty-text links"):
         pilot.acquire_pilot(broken, raw_dir=tmp_path, partners=("Deutschland / Germany",))
+
+
+def test_acquisition_rejects_override_for_partner_outside_current_universe(tmp_path: Path):
+    with pytest.raises(ValueError, match="outside current treaty universe"):
+        pilot.acquire_pilot(
+            MACHINE,
+            raw_dir=tmp_path,
+            partners=("Deutschland / Germany",),
+            royalty_source_overrides={"Missing / Missing": ("https://ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Artikel=12",)},
+        )
