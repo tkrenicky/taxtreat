@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "source_country": "AT",
+  "as_of": "2026-08-24",
+  "status": "targeted_ownership_condition_review_seed_not_released",
+  "source_workflow_run": 32736642192,
+  "source_workflow_head": "b7602eb2da541be5025147b10465dc88e5686aad",
+  "source_artifact_sha256": "b667a238a82114a12c420b0dcf95a6f1237e0c37017d6da4e1a60b333a774d09",
+  "partner_count": 5,
+  "rows": [
+    {
+      "partner_label": "Belgien / Belgium",
+      "threshold_percent": 50,
+      "classification": "ownership_condition_controls_source_taxing_right",
+      "observed_effect": "candidate text is residence-only generally, but permits source-state taxation up to 10% where the recipient holds more than 50% of payer capital",
+      "controlling_text_selected": false,
+      "legal_review_completed": false,
+      "projection_released": false
+    },
+    {
+      "partner_label": "Großbritannien / United Kingdom",
+      "threshold_percent": 50,
+      "classification": "ownership_condition_controls_source_taxing_right",
+      "observed_effect": "candidate text is residence-only generally, but permits source-state taxation up to 10% where the recipient company controls more than 50% of payer voting rights",
+      "controlling_text_selected": false,
+      "legal_review_completed": false,
+      "projection_released": false
+    },
+    {
+      "partner_label": "Italien / Italy",
+      "threshold_percent": 50,
+      "classification": "ownership_condition_controls_source_taxing_right",
+      "observed_effect": "candidate text is residence-only generally, but permits source-state taxation up to 10% where the recipient holds more than 50% of payer capital",
+      "controlling_text_selected": false,
+      "legal_review_completed": false,
+      "projection_released": false
+    },
+    {
+      "partner_label": "Portugal / Portugal",
+      "threshold_percent": 50,
+      "classification": "ownership_condition_selects_rate_branch",
+      "observed_effect": "candidate text provides 10% where the recipient holds more than 50% of payer capital and 5% in all other cases",
+      "controlling_text_selected": false,
+      "legal_review_completed": false,
+      "projection_released": false
+    },
+    {
+      "partner_label": "Slowenien / Slovenia",
+      "threshold_percent": 25,
+      "classification": "ownership_condition_in_older_candidate_requires_instrument_chronology",
+      "observed_effect": "published candidate links a 10% source-state rate to at least 25% direct ownership, while a synthesized candidate states a 5% general royalty rate",
+      "controlling_text_selected": false,
+      "legal_review_completed": false,
+      "projection_released": false
+    }
+  ],
+  "policy": {
+    "ownership_threshold_is_not_a_royalty_rate": true,
+    "ownership_condition_may_control_source_taxing_right_or_rate": true,
+    "single_rate_candidate_does_not_make_ownership_condition_irrelevant": true,
+    "instrument_chronology_must_be_resolved_before_projection": true,
+    "no_treaty_result_is_released_by_this_seed": true
+  }
+}
