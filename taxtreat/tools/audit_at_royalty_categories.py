@@ -30,7 +30,7 @@ RISK_PATTERNS = {
     "film_tv_radio": (r"kinematograph", r"film", r"fernseh", r"rundfunk", r"radio", r"television"),
     "equipment": (r"ausrüstung", r"ausruestung", r"equipment"),
     "financial_lease": (r"finanzierungsleasing", r"financial lease", r"finance lease"),
-    "operating_lease": (r"operatives leasing", r"operating lease", r"betriebsleasing"),
+    "operating_lease": (r"operativ\w*\s+leasing", r"operating lease", r"betriebsleasing"),
     "technical_services": (r"technische dienstleistung", r"technical services", r"technical assistance", r"technische hilfe"),
     "ownership_condition": (r"kapital", r"capital", r"stimmrecht", r"voting power", r"beteiligung", r"holding"),
 }
@@ -95,7 +95,10 @@ def _flags(text: str) -> dict[str, bool]:
 
 
 def _royalty_semantic_candidate(text: str) -> bool:
-    return bool(ROYALTY_TEXT_RE.search(text))
+    matches = list(ROYALTY_TEXT_RE.finditer(text))
+    if not matches:
+        return False
+    return matches[0].start() < 180 or len(matches) >= 2
 
 
 def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> dict[str, Any]:
