@@ -72,8 +72,6 @@ def test_at_audit_separates_technical_service_rate_from_royalty_category(tmp_pat
 
 
 def test_at_audit_excludes_ownership_threshold_from_rate_candidates():
-    # Unit-level regression for the same class of defect found in the SK/BR audit.
-    # The actual royalty rates are 10 and 5; 50 is only the ownership threshold.
     import tempfile
 
     with tempfile.TemporaryDirectory() as tmp:
@@ -178,8 +176,9 @@ def test_at_audit_never_assumes_seven_categories_are_exhaustive(tmp_path: Path):
 def test_static_at_audit_summary_matches_reconciled_machine_taxonomy():
     summary = json.loads(SUMMARY_PATH.read_text(encoding="utf-8"))
     counts = summary["risk_reason_counts"]
+    reconciliation = summary["preliminary_multi_rate_reconciliation"]
 
-    assert summary["schema_version"] == 2
+    assert summary["schema_version"] == 3
     assert summary["current_treaty_partner_count"] == 89
     assert summary["official_source_count"] == 281
     assert summary["royalty_machine_risk_partner_count"] == 50
@@ -198,5 +197,13 @@ def test_static_at_audit_summary_matches_reconciled_machine_taxonomy():
         "Portugal / Portugal",
         "Slowenien / Slovenia",
     }
+    assert len(reconciliation["category_split_partners"]) == 5
+    assert len(reconciliation["non_category_condition_partners"]) == 4
+    assert reconciliation["instrument_variant_chronology_partners"] == ["Slowenien / Slovenia"]
+    assert len(reconciliation["rows"]) == 10
+    assert {row["partner_label"] for row in reconciliation["rows"]} == set(summary["multiple_rate_candidate_partners"])
+    assert all(row["legal_review_completed"] is False for row in reconciliation["rows"])
+    assert all(row["projection_released"] is False for row in reconciliation["rows"])
     assert summary["policy"]["ownership_threshold_percentages_cannot_create_rate_branches"] is True
+    assert summary["policy"]["preliminary_reconciliation_does_not_select_controlling_text"] is True
     assert summary["policy"]["no_rate_projection_is_released_by_this_audit"] is True
