@@ -23,9 +23,28 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install requests==2.32.3 beautifulsoup4==4.12.3 lxml==5.3.0
-      - name: Fetch official BMF treaty universe
+      - name: Archive official BMF source snapshot
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import requests
+          from taxtreat.tools.build_at_treaty_source_inventory import BMF_DTT_LIST_URL
+
+          response = requests.get(
+              BMF_DTT_LIST_URL,
+              timeout=30,
+              headers={"User-Agent": "TaxTreat legal-source inventory/1.0"},
+          )
+          response.raise_for_status()
+          output = Path("artifacts/at/bmf_dba_list.html")
+          output.parent.mkdir(parents=True, exist_ok=True)
+          output.write_text(response.text, encoding="utf-8")
+          print("Archived BMF HTML bytes:", len(response.content))
+          PY
+      - name: Build treaty universe from archived source
         run: |
           python -m taxtreat.tools.build_at_treaty_source_inventory \
+            --input-html artifacts/at/bmf_dba_list.html \
             --output artifacts/at/treaty_source_inventory_machine.json
           python -m taxtreat.tools.build_at_treaty_review_queue \
             --input artifacts/at/treaty_source_inventory_machine.json \
