@@ -23,6 +23,7 @@ PERCENT_PATTERNS = (
     re.compile(r"(\d+(?:[.,]\d+)?)\s*(?:%|prozent|percent|per\s+cent)", flags=re.IGNORECASE),
     re.compile(r"(\d+(?:[.,]\d+)?)\s+vom\s+hundert", flags=re.IGNORECASE),
 )
+ROYALTY_TEXT_RE = re.compile(r"(?:lizenzgebühr|royalt)", flags=re.IGNORECASE)
 
 RISK_PATTERNS = {
     "software": (r"software", r"computerprogramm", r"computer program"),
@@ -72,8 +73,6 @@ def _ownership_threshold_tokens(text: str) -> list[float]:
     values: set[float] = set()
     for value, start, end in _percentage_mentions(text):
         before = text[max(0, start - 70):start]
-        # Do not let ownership language in an earlier rate/condition clause bleed into a
-        # following percentage (for example "... 50 vom Hundert besteht; sonst 5 vom Hundert").
         before_clause = re.split(r"[;.!?]", before)[-1]
         after = text[end:min(len(text), end + 45)]
         if OWNERSHIP_BEFORE_RE.search(before_clause) or OWNERSHIP_AFTER_RE.search(after):
@@ -95,6 +94,10 @@ def _flags(text: str) -> dict[str, bool]:
     }
 
 
+def _royalty_semantic_candidate(text: str) -> bool:
+    return len(ROYALTY_TEXT_RE.findall(text)) >= 2
+
+
 def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> dict[str, Any]:
     if candidate_inventory.get("source_country") != "AT":
         raise ValueError("Expected Austrian article candidate inventory")
@@ -104,16 +107,31 @@ def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> 
     rows: list[dict[str, Any]] = []
     for partner in candidate_inventory.get("partners", []):
         label = str(partner.get("partner_label") or "")
-        source_texts: list[str] = []
+        article_12_texts: list[str] = []
+        fallback_texts: list[str] = []
+        fallback_article_numbers: set[int] = set()
         rejected_count = 0
+
         for source in partner.get("sources", []):
             for candidate in source.get("article_candidates", []):
-                if candidate.get("article_number") != 12:
+                number = candidate.get("article_number")
+                if number not in {10, 11, 12}:
                     continue
                 if candidate.get("substantive_article_candidate") is not True:
-                    rejected_count += 1
+                    if number == 12:
+                        rejected_count += 1
                     continue
-                source_texts.append(_artifact_text(Path(str(candidate["artifact_path"])), artifact_root))
+                text = _artifact_text(Path(str(candidate["artifact_path"])), artifact_root)
+                if number == 12:
+                    article_12_texts.append(text)
+                elif _royalty_semantic_candidate(text):
+                    fallback_texts.append(text)
+                    fallback_article_numbers.add(int(number))
+
+        nonstandard_numbering = not article_12_texts and bool(fallback_texts)
+        source_texts = article_12_texts if article_12_texts else fallback_texts
+        royalty_article_numbers = [12] if article_12_texts else sorted(fallback_article_numbers)
+
         combined = "\n".join(source_texts)
         percentages = _percentage_tokens(combined)
         ownership_thresholds = _ownership_threshold_tokens(combined)
@@ -122,6 +140,8 @@ def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> 
         machine_risk_reasons: list[str] = []
         if not source_texts:
             machine_risk_reasons.append("no_substantive_article_12_candidate")
+        if nonstandard_numbering:
+            machine_risk_reasons.append("nonstandard_royalty_article_number_candidate")
         if len(rates) > 1:
             machine_risk_reasons.append("multiple_rate_candidates_after_condition_filter")
         if flags["financial_lease"] or flags["operating_lease"]:
@@ -135,6 +155,8 @@ def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> 
             "partner_label": label,
             "candidate_text_count": len(source_texts),
             "rejected_candidate_count": rejected_count,
+            "royalty_article_numbers_machine": royalty_article_numbers,
+            "nonstandard_royalty_article_number_candidate": nonstandard_numbering,
             "percentage_tokens_raw": percentages,
             "ownership_threshold_tokens_machine": ownership_thresholds,
             "rate_candidates_machine": rates,
@@ -149,7 +171,7 @@ def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> 
 
     risk_rows = [row for row in rows if row["category_projection_review_required"]]
     return {
-        "schema_version": 2,
+        "schema_version": 3,
         "source_country": "AT",
         "status": "royalty_category_machine_risk_queue_not_released",
         "base_user_facing_categories": list(BASE_CATEGORIES),
@@ -161,6 +183,8 @@ def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> 
             "raw_percentage_tokens_are_not_rate_candidates": True,
             "ownership_threshold_percentages_cannot_create_rate_branches": True,
             "machine_rate_candidates_do_not_establish_category_rates": True,
+            "article_number_alone_does_not_establish_income_type": True,
+            "nonstandard_royalty_article_number_requires_review": True,
             "ownership_or_service_rate_conditions_must_not_be_misclassified_as_royalty_categories": True,
             "multiple_applicable_branches_with_different_results_must_fail_closed": True,
             "no_rate_projection_is_released_by_this_audit": True,
