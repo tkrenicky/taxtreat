@@ -6,6 +6,7 @@ on:
     paths:
       - "taxtreat/tools/build_at_treaty_source_inventory.py"
       - "taxtreat/tools/build_at_treaty_review_queue.py"
+      - "taxtreat/tools/acquire_at_instrument_chain_pilot.py"
       - "data/legal_reviews/at_outbound/**"
       - ".github/workflows/at-evidence-acquisition.yml"
 
@@ -83,6 +84,38 @@ jobs:
           )
           print("Applicability statuses:", inventory["applicability_status_counts"])
           print("Excluded records:", queue["excluded_source_records"])
+          PY
+      - name: Acquire pilot instrument chains from official BMF/RIS sources
+        run: |
+          python -m taxtreat.tools.acquire_at_instrument_chain_pilot \
+            --input artifacts/at/treaty_source_inventory_machine.json \
+            --output artifacts/at/instrument_chain_pilot.json \
+            --raw-dir artifacts/at/instrument_chain_sources
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          pilot = json.loads(Path("artifacts/at/instrument_chain_pilot.json").read_text(encoding="utf-8"))
+          assert pilot["status"] == "instrument_chain_pilot_acquired_not_reviewed"
+          assert pilot["pilot_partner_count"] == 5
+          assert pilot["source_count"] >= 20
+          assert all(row["instrument_chain_resolved"] is False for row in pilot["partners"])
+          assert all(row["article_extraction_released"] is False for row in pilot["partners"])
+          assert all(
+              source["final_url"].startswith("https://")
+              and len(source["sha256"]) == 64
+              and source["byte_size"] > 0
+              and source["legal_review_completed"] is False
+              for row in pilot["partners"]
+              for source in row["sources"]
+          )
+          print(
+              "AT instrument-chain pilot:",
+              pilot["pilot_partner_count"], "partners /",
+              pilot["source_count"], "official sources"
+          )
+          for row in pilot["partners"]:
+              print(row["partner_label"], row["source_count"], [s["role_candidate"] for s in row["sources"]])
           PY
       - uses: actions/upload-artifact@v4
         with:
