@@ -7,6 +7,8 @@ def _candidate(number, role, digest):
         "text_sha256": digest,
         "character_count": 100,
         "artifact_path": f"artifacts/{digest}.txt",
+        "substantive_article_candidate": True,
+        "quality_flags": [],
     }
 
 
