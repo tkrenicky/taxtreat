@@ -54,7 +54,7 @@ def classify_official_link(url: str) -> str:
     lower = url.lower()
     if "bmf.gv.at/dam/" in lower and ("synth" in lower or "mli" in lower):
         return "synthesized_mli_text"
-    if "geltendefassung.wxe" in lower:
+    if "geltendefassung.wxe" in lower or "/geltendefassung/bundesnormen/" in lower:
         return "current_consolidated_view"
     if "/eli/" in lower or "bgbl" in lower:
         return "published_instrument_or_protocol"
@@ -104,6 +104,11 @@ def _discover_ris_treaty_text_attachments(
     discovered: list[str] = []
     seen: set[str] = set()
     for anchor in soup.find_all("a", href=True):
+        candidate = urljoin(final_url, str(anchor["href"]))
+        candidate_path = urlsplit(candidate).path.lower()
+        if not candidate_path.endswith(".pdf"):
+            continue
+
         image = anchor.find("img")
         label_parts = [
             anchor.get_text(" ", strip=True),
@@ -111,11 +116,11 @@ def _discover_ris_treaty_text_attachments(
             str(image.get("alt") or "") if image is not None else "",
         ]
         label = " ".join(" ".join(label_parts).lower().split())
-        if not any(marker in label for marker in RIS_TREATY_TEXT_LABELS):
+        is_treaty_text_annex = any(marker in label for marker in RIS_TREATY_TEXT_LABELS)
+        is_consolidated_export = "/geltendefassung/bundesnormen/" in candidate_path
+        if not is_treaty_text_annex and not is_consolidated_export:
             continue
-        candidate = urljoin(final_url, str(anchor["href"]))
-        if not urlsplit(candidate).path.lower().endswith(".pdf"):
-            continue
+
         _validate_official_url(candidate)
         if candidate in seen:
             continue
@@ -233,7 +238,7 @@ def acquire_pilot(
         "partners": output_records,
         "release_constraints": [
             "Successful HTTP acquisition and hashing do not establish which instrument controls a treaty result.",
-            "RIS landing pages may expose separate official treaty-text annex PDFs; discovered attachments remain machine evidence candidates only.",
+            "RIS landing and consolidated-view pages may expose separate official treaty-text or consolidated PDF attachments; discovered attachments remain machine evidence candidates only.",
             "Link-role classification is a machine candidate only and must be reconciled against the legal instrument chain.",
             "No Article 10, 11 or 12 rate may be released from this acquisition output without primary-text extraction and review.",
             "MLI and status-instrument flags remain discovery signals only."
