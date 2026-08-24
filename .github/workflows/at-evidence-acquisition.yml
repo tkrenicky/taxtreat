@@ -13,6 +13,10 @@ on:
       - "data/legal_reviews/at_outbound/**"
       - ".github/workflows/at-evidence-acquisition.yml"
 
+concurrency:
+  group: at-evidence-acquisition-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   acquire-at-treaty-universe:
     runs-on: ubuntu-24.04
@@ -88,10 +92,12 @@ jobs:
           import json
           from pathlib import Path
           data = json.loads(Path("artifacts/at/instrument_chain_pilot.json").read_text(encoding="utf-8"))
+          assert data["schema_version"] == 6
           assert data["status"] == "instrument_chain_pilot_acquired_not_reviewed"
           assert data["acquisition_scope"] == "all_current_partners"
           assert data["pilot_partner_count"] == 89
           assert data["source_count"] >= 89
+          assert data["curated_royalty_source_override_count"] == 2
           assert all(row["instrument_chain_resolved"] is False for row in data["partners"])
           assert all(row["article_extraction_released"] is False for row in data["partners"])
           assert all(
@@ -102,7 +108,10 @@ jobs:
               for row in data["partners"]
               for source in row["sources"]
           )
-          print("AT full instrument-chain acquisition:", data["pilot_partner_count"], "partners /", data["source_count"], "official sources")
+          override_partners = [row["partner_label"] for row in data["partners"] if row["curated_royalty_source_override_count"]]
+          assert set(override_partners) == {"Kuba / Cuba", "Marokko / Morocco"}
+          print("AT full instrument-chain acquisition:", data["pilot_partner_count"], "partners /", data["source_count"], "official sources /", data["curated_royalty_source_override_count"], "curated royalty overrides")
+          print("AT curated royalty override partners:", override_partners)
           PY
       - name: Extract Article 10 11 12 text candidates with quality gate
         run: |
@@ -114,13 +123,15 @@ jobs:
           import json
           from pathlib import Path
           data = json.loads(Path("artifacts/at/article_candidate_inventory.json").read_text(encoding="utf-8"))
+          assert data["schema_version"] == 5
           assert data["status"] == "article_text_candidates_not_reviewed"
           assert data["partner_count"] == 89
+          assert data["curated_royalty_source_override_count"] == 2
           assert all(row["primary_text_review_completed"] is False for row in data["partners"])
           assert all(row["rate_extraction_released"] is False for row in data["partners"])
           substantive = sum(sum(row["article_candidate_presence"].values()) for row in data["partners"])
           rejected = sum(sum(row["rejected_article_candidate_presence"].values()) for row in data["partners"])
-          print("AT article candidates:", substantive, "substantive /", rejected, "rejected by quality gate")
+          print("AT article candidates:", substantive, "substantive /", rejected, "rejected by quality gate /", data["curated_royalty_source_override_count"], "curated royalty overrides preserved")
           PY
       - name: Build article variant reconciliation queue
         run: |
@@ -160,19 +171,25 @@ jobs:
           import json
           from pathlib import Path
           data = json.loads(Path("artifacts/at/royalty_category_audit.json").read_text(encoding="utf-8"))
+          assert data["schema_version"] == 6
           assert data["source_country"] == "AT"
           assert data["partner_count"] == 89
           assert data["status"] == "royalty_category_machine_risk_queue_not_released"
           assert data["policy"]["raw_percentage_tokens_are_not_rate_candidates"] is True
           assert data["policy"]["ownership_threshold_percentages_cannot_create_rate_branches"] is True
+          assert data["policy"]["source_exemption_language_is_a_branch_signal_not_a_synthetic_zero_rate"] is True
           assert all(row["projection_released"] is False for row in data["partners"])
           assert all(row["legal_review_completed"] is False for row in data["partners"])
           missing = [row["partner_label"] for row in data["partners"] if "no_substantive_article_12_candidate" in row["machine_risk_reasons"]]
           multi = [row["partner_label"] for row in data["partners"] if "multiple_rate_candidates_after_condition_filter" in row["machine_risk_reasons"]]
+          cross_instrument = [row["partner_label"] for row in data["partners"] if "cross_instrument_rate_variance" in row["machine_risk_reasons"]]
+          exemptions = [row["partner_label"] for row in data["partners"] if row["royalty_source_exemption_branch_machine"]]
           ownership = [row["partner_label"] for row in data["partners"] if row["ownership_threshold_tokens_machine"]]
           print("AT royalty audit: risk partners=", data["risk_partner_count"])
-          print("AT royalty audit: missing Art.12=", len(missing), "multi-rate candidates=", len(multi), "ownership conditions=", len(ownership))
-          print("AT royalty audit multi-rate partners:", multi)
+          print("AT royalty audit: no usable royalty candidate=", len(missing), "within-text multi-rate=", len(multi), "cross-instrument variance=", len(cross_instrument), "source-exemption branches=", len(exemptions), "ownership conditions=", len(ownership))
+          print("AT royalty audit within-text multi-rate partners:", multi)
+          print("AT royalty audit cross-instrument variance partners:", cross_instrument)
+          print("AT royalty audit source-exemption partners:", exemptions)
           print("AT royalty audit ownership-condition partners:", ownership)
           PY
       - uses: actions/upload-artifact@v4
