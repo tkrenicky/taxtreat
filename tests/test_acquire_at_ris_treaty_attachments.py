@@ -69,6 +69,17 @@ def test_ris_landing_page_discovers_text_oriented_german_html_companion(monkeypa
     landing = "https://www.ris.bka.gv.at/eli/bgbl/III/2006/149/20060908"
     german_html = "https://www.ris.bka.gv.at/Dokumente/BgblAuth/BGBLA_2006_III_149/deutsch.html"
     german_pdf = "https://www.ris.bka.gv.at/Dokumente/BgblAuth/BGBLA_2006_III_149/deutsch.pdf"
+    machine = {
+        "source_country": "AT",
+        "status": "machine_source_inventory_not_reviewed",
+        "records": [{
+            "partner_label": "Kuba / Cuba",
+            "release_universe_candidate": True,
+            "treaty_links": [landing],
+            "mli_flag": False,
+            "status_instrument_flag": False,
+        }],
+    }
     html = f"""
     <html><body>
       <a href="{german_html}" title="Web-Seite: deutscher Vertragstext"></a>
@@ -86,7 +97,7 @@ def test_ris_landing_page_discovers_text_oriented_german_html_companion(monkeypa
         raise AssertionError(f"Unexpected acquisition URL: {url}")
 
     monkeypatch.setattr(pilot.requests, "get", fake_get)
-    result = pilot.acquire_pilot(MACHINE, raw_dir=tmp_path, partners=("Algerien / Algeria",))
+    result = pilot.acquire_pilot(machine, raw_dir=tmp_path, partners=("Kuba / Cuba",))
     assert [row["final_url"] for row in result["partners"][0]["sources"]] == [landing, german_html, german_pdf]
 
 
