@@ -45,9 +45,11 @@ def test_runtime_can_infer_country_for_stored_result_without_new_intake():
     assert "Object.keys(registry?.entries || {})" in script
 
 
-def test_runtime_restores_original_czech_excerpt_on_language_switch_back():
+def test_runtime_restores_only_a_real_non_english_original_excerpt():
     script = RUNTIME.read_text(encoding="utf-8")
     assert "const originalExcerpt = new WeakMap()" in script
+    assert 'declaredLanguage.startsWith("en")' in script
+    assert "if (originalExcerpt.has(excerpt))" in script
     assert "originalExcerpt.get(excerpt)" in script
     assert 'excerpt.setAttribute("lang", "cs")' in script
 
