@@ -115,12 +115,14 @@ def test_candidate_inventory_hashes_substantive_text_without_releasing_rates(tmp
 
     result = build_article_candidate_inventory(pilot, article_dir=tmp_path / "articles")
     row = result["partners"][0]
-    assert result["schema_version"] == 4
+    assert result["schema_version"] == 5
     assert result["status"] == "article_text_candidates_not_reviewed"
+    assert result["curated_royalty_source_override_count"] == 0
     assert row["article_candidate_presence"] == {"10": 1, "11": 1, "12": 1}
     assert row["rejected_article_candidate_presence"] == {"10": 0, "11": 0, "12": 0}
     assert row["primary_text_review_completed"] is False
     assert row["rate_extraction_released"] is False
+    assert row["sources"][0]["curated_royalty_source_override"] is False
     candidates = row["sources"][0]["article_candidates"]
     assert {candidate["article_number"] for candidate in candidates} == {10, 11, 12}
     assert all(candidate["substantive_article_candidate"] is True for candidate in candidates)
@@ -129,6 +131,35 @@ def test_candidate_inventory_hashes_substantive_text_without_releasing_rates(tmp
     assert all(len(candidate["text_sha256"]) == 64 for candidate in candidates)
     assert all(candidate["legal_review_completed"] is False for candidate in candidates)
     assert len(list((tmp_path / "articles").glob("*.txt"))) == 3
+
+
+def test_candidate_inventory_preserves_curated_royalty_override_provenance(tmp_path: Path):
+    source = tmp_path / "override.html"
+    source.write_text(f"<html><body><pre>{TEXT}</pre></body></html>", encoding="utf-8")
+    pilot = {
+        "source_country": "AT",
+        "status": "instrument_chain_pilot_acquired_not_reviewed",
+        "partners": [{
+            "partner_label": "Kuba / Cuba",
+            "sources": [{
+                "source_order": 1,
+                "artifact_path": str(source),
+                "content_type": "text/html",
+                "final_url": "https://ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Artikel=12&Gesetzesnummer=20005011",
+                "role_candidate": "current_consolidated_view",
+                "sha256": "d" * 64,
+                "curated_royalty_source_override": True,
+                "legal_review_completed": False,
+            }],
+        }],
+    }
+    result = build_article_candidate_inventory(pilot, article_dir=tmp_path / "articles")
+    row = result["partners"][0]
+    assert result["curated_royalty_source_override_count"] == 1
+    assert row["curated_royalty_source_override_count"] == 1
+    assert row["sources"][0]["curated_royalty_source_override"] is True
+    assert row["primary_text_review_completed"] is False
+    assert row["rate_extraction_released"] is False
 
 
 def test_candidate_inventory_retains_nonstandard_royalty_candidate_separately(tmp_path: Path):
