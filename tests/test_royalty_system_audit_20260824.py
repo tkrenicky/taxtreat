@@ -14,6 +14,7 @@ from taxtreat.engine.legal_rule_engine import (
     evaluate_legal_rules,
 )
 from taxtreat.engine.legal_rule_loader import load_legal_rules
+from taxtreat.engine.layered_decision import evaluate_layered_rules
 
 
 RULE_DIR = REPO_ROOT / "data/legal_rules_stage6"
@@ -225,15 +226,31 @@ def test_no_mapper_overlap_can_silently_select_different_royalty_rate():
         package = load_legal_rules(RULE_DIR / f"{left.recipient_country.lower()}.json")
         for ui_category in overlap:
             facts, legal_facts = _facts_satisfying(left, ui_category)
-            result = evaluate_legal_rules(
+
+            direct = evaluate_legal_rules(
                 package,
                 facts,
                 as_of=date(2026, 8, 24),
                 legal_facts=legal_facts,
             )
-            assert result.status == DecisionStatus.REVIEW_REQUIRED, item
-            assert result.requires_review is True, item
+            assert direct.status == DecisionStatus.REVIEW_REQUIRED, item
+            assert direct.requires_review is True, item
             assert any(
                 "Conflicting verified legal-rule projections" in line
-                for line in result.explanation
-            ), (item, result.explanation)
+                for line in direct.explanation
+            ), (item, direct.explanation)
+
+            layered = evaluate_layered_rules(
+                package,
+                facts,
+                as_of=date(2026, 8, 24),
+                legal_facts=legal_facts,
+            )
+            assert layered.status == DecisionStatus.REVIEW_REQUIRED, item
+            assert layered.requires_review is True, item
+            assert layered.rate is None, item
+            assert layered.candidate_rate is None, item
+            assert any(
+                "Conflicting verified legal-rule projections" in line
+                for line in layered.explanation
+            ), (item, layered.explanation)
