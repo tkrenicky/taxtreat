@@ -78,15 +78,23 @@ def _fetch_official_source(url: str, *, timeout: int = 30) -> tuple[bytes, str, 
     return content, str(response.headers.get("content-type") or ""), final_url
 
 
-def _is_relevant_ris_pdf(label: str, candidate_path: str) -> bool:
-    if "/geltendefassung/bundesnormen/" in candidate_path:
+def _is_relevant_ris_attachment(label: str, candidate_path: str) -> bool:
+    lower_path = candidate_path.lower()
+    if "/geltendefassung/bundesnormen/" in lower_path and lower_path.endswith(".pdf"):
         return True
-    basename = candidate_path.rsplit("/", 1)[-1]
-    if "/dokumente/bgblauth/" in candidate_path and basename.startswith("bgbla_"):
+    basename = lower_path.rsplit("/", 1)[-1]
+    if "/dokumente/bgblpdf/" in lower_path and lower_path.endswith(".pdf"):
         return True
-    if any(marker in label for marker in RIS_TREATY_TEXT_LABELS):
+    if "/dokumente/bgblauth/" in lower_path and basename.startswith("bgbla_") and lower_path.endswith(".pdf"):
         return True
-    return any(marker in label for marker in RIS_TREATY_LANGUAGE_MARKERS) and any(marker in label for marker in RIS_TREATY_DOCUMENT_MARKERS)
+    treaty_label = any(marker in label for marker in RIS_TREATY_TEXT_LABELS)
+    language_document_label = (
+        any(marker in label for marker in RIS_TREATY_LANGUAGE_MARKERS)
+        and any(marker in label for marker in RIS_TREATY_DOCUMENT_MARKERS)
+    )
+    if not treaty_label and not language_document_label:
+        return False
+    return lower_path.endswith((".pdf", ".html", ".htm"))
 
 
 def _discover_ris_treaty_text_attachments(content: bytes, content_type: str, final_url: str) -> tuple[str, ...]:
@@ -101,11 +109,13 @@ def _discover_ris_treaty_text_attachments(content: bytes, content_type: str, fin
     for anchor in soup.find_all("a", href=True):
         candidate = urljoin(final_url, str(anchor["href"]))
         candidate_path = urlsplit(candidate).path.lower()
-        if not candidate_path.endswith(".pdf"):
-            continue
         image = anchor.find("img")
-        label = " ".join(" ".join([anchor.get_text(" ", strip=True), str(anchor.get("title") or ""), str(image.get("alt") or "") if image is not None else ""]).lower().split())
-        if not _is_relevant_ris_pdf(label, candidate_path):
+        label = " ".join(" ".join([
+            anchor.get_text(" ", strip=True),
+            str(anchor.get("title") or ""),
+            str(image.get("alt") or "") if image is not None else "",
+        ]).lower().split())
+        if not _is_relevant_ris_attachment(label, candidate_path):
             continue
         _validate_official_url(candidate)
         if candidate not in seen:
@@ -194,7 +204,7 @@ def acquire_pilot(machine_inventory: dict[str, Any], *, raw_dir: Path, partners:
     full_current = tuple(partners) == current_partner_labels(machine_inventory)
     attachment_failure_count = sum(row["attachment_acquisition_failure_count"] for row in output_records)
     return {
-        "schema_version": 3,
+        "schema_version": 4,
         "source_country": "AT",
         "status": "instrument_chain_pilot_acquired_not_reviewed",
         "acquisition_scope": "all_current_partners" if full_current else "selected_partners",
@@ -206,7 +216,8 @@ def acquire_pilot(machine_inventory: dict[str, Any], *, raw_dir: Path, partners:
             "Successful HTTP acquisition and hashing do not establish which instrument controls a treaty result.",
             "Failure to acquire a discovered RIS attachment is retained as partner-specific unresolved evidence and never makes that partner release-eligible.",
             "A failure to acquire a listed primary source remains fatal to the acquisition run.",
-            "RIS landing and consolidated-view pages may expose separate official publication, treaty-text or consolidated PDF attachments; discovered attachments remain machine evidence candidates only.",
+            "RIS landing and consolidated-view pages may expose official publication PDFs and treaty-text PDF or HTML companions; discovered attachments remain machine evidence candidates only.",
+            "Text-oriented HTML treaty companions may be archived alongside signed PDFs when the PDF text layer is incomplete.",
             "Link-role classification is a machine candidate only and must be reconciled against the legal instrument chain.",
             "No Article 10, 11 or 12 rate may be released from this acquisition output without primary-text extraction and review.",
             "MLI and status-instrument flags remain discovery signals only."
