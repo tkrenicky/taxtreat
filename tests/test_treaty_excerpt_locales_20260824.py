@@ -37,6 +37,14 @@ def test_runtime_is_country_article_language_driven_and_fail_visible():
     assert "MutationObserver" not in script
 
 
+def test_runtime_can_infer_country_for_stored_result_without_new_intake():
+    script = RUNTIME.read_text(encoding="utf-8")
+    assert "function inferRecipientCountry(registry)" in script
+    assert 'new Intl.DisplayNames(["en"], { type: "region" })' in script
+    assert 'new Intl.DisplayNames(["cs"], { type: "region" })' in script
+    assert "Object.keys(registry?.entries || {})" in script
+
+
 def test_runtime_restores_original_czech_excerpt_on_language_switch_back():
     script = RUNTIME.read_text(encoding="utf-8")
     assert "const originalExcerpt = new WeakMap()" in script
