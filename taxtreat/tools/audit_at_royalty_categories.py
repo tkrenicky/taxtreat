@@ -76,7 +76,7 @@ def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> 
             for candidate in source.get("article_candidates", []):
                 if candidate.get("article_number") != 12:
                     continue
-                if candidate.get("quality_accepted") is False:
+                if candidate.get("substantive_article_candidate") is not True:
                     rejected_count += 1
                     continue
                 source_texts.append(_artifact_text(Path(str(candidate["artifact_path"])), artifact_root))
