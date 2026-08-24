@@ -141,18 +141,27 @@ def test_at_audit_rejects_missing_substantive_article_artifact(tmp_path: Path):
         build_audit(inventory, artifact_root=tmp_path)
 
 
-def test_at_audit_ignores_non_royalty_article_candidates_before_reading_artifacts(tmp_path: Path):
+def test_at_audit_semantically_ignores_non_royalty_article_11_when_article_12_exists(tmp_path: Path):
     inventory = _inventory(tmp_path)
+    article_11 = tmp_path / "article-11-nonroyalty.txt"
+    article_11.write_text(
+        "Artikel 11. Zinsen aus einem Vertragsstaat können im anderen Staat besteuert werden. "
+        "Der Ausdruck Zinsen bezeichnet Einkünfte aus Forderungen jeder Art. Weitere Regeln "
+        "betreffen ausschließlich Zinsen und enthalten keine Regel zu anderen Einkunftsarten.",
+        encoding="utf-8",
+    )
     inventory["partners"][7]["sources"][0]["article_candidates"].insert(
         0,
         {
             "article_number": 11,
             "substantive_article_candidate": True,
-            "artifact_path": "artifacts/at/nonexistent-article-11.txt",
+            "artifact_path": "artifacts/at/article-11-nonroyalty.txt",
         },
     )
     row = build_audit(inventory, artifact_root=tmp_path)["partners"][7]
     assert row["candidate_text_count"] == 1
+    assert row["royalty_article_numbers_machine"] == [12]
+    assert row["nonstandard_royalty_article_number_candidate"] is False
     assert row["rejected_candidate_count"] == 0
 
 
