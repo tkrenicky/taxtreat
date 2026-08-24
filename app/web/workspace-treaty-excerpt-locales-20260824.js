@@ -9,6 +9,7 @@
   let recipientCountry = null;
   let selectedRuleId = null;
   let selectedTreatyArticle = null;
+  let selectedTreatyCitation = null;
   let registryPromise = null;
   let jurisdictionsPromise = null;
 
@@ -35,7 +36,7 @@
     const iso2 = String(country || "").toUpperCase();
     if (!iso2) return Promise.resolve(null);
     if (!countryRegistryPromises.has(iso2)) {
-      const url = `${COUNTRY_REGISTRY_ROOT}/${iso2}.json?v=20260824-2`;
+      const url = `${COUNTRY_REGISTRY_ROOT}/${iso2}.json?v=20260824-3`;
       countryRegistryPromises.set(iso2, fetch(url, { cache: "no-store" })
         .then((response) => response.ok ? response.json() : null)
         .catch(() => null));
@@ -86,11 +87,13 @@
   function captureAnalysis(analysis) {
     selectedRuleId = String(analysis?.selected_rule_id || analysis?.candidate_rule_id || "") || null;
     selectedTreatyArticle = null;
+    selectedTreatyCitation = null;
     if (!selectedRuleId) return;
     const citations = analysis?.legal_path || analysis?.citations || [];
     const selected = citations.find((citation) => String(citation?.rule_id || "") === selectedRuleId);
     if (selected && ["treaty", "protocol", "mli"].includes(String(selected.legal_layer || ""))) {
       selectedTreatyArticle = String(selected.article || "") || null;
+      selectedTreatyCitation = selected;
     }
   }
 
@@ -135,6 +138,61 @@
     return articleLocale?.text ? { locale: articleLocale, specificity: "article" } : null;
   }
 
+  function candidateSegments(text) {
+    const normalized = String(text || "").replace(/\r/g, "").trim();
+    if (!normalized) return [];
+    const paragraphs = normalized.split(/\n{2,}/).map((part) => part.trim()).filter(Boolean);
+    const segments = [];
+    paragraphs.forEach((paragraph) => {
+      segments.push(paragraph);
+      paragraph.split(/(?<=\.)\s+(?=[A-Z0-9(])/).forEach((sentence) => {
+        const trimmed = sentence.trim();
+        if (trimmed && trimmed !== paragraph) segments.push(trimmed);
+      });
+    });
+    return [...new Set(segments)];
+  }
+
+  function ratePattern(rate) {
+    const numeric = Number(rate);
+    if (!Number.isFinite(numeric)) return null;
+    const canonical = String(numeric).replace(".", "[.,]");
+    return new RegExp(`(?:^|[^0-9])${canonical}(?:[.,]0+)?\\s*(?:%|percent|per cent)`, "i");
+  }
+
+  function decisiveArticlePassage(text, citation) {
+    if (!citation) return "";
+    const segments = candidateSegments(text);
+    if (!segments.length) return "";
+
+    const numericRate = citation.rate === null || citation.rate === undefined || citation.rate === ""
+      ? null
+      : Number(citation.rate);
+    if (numericRate !== null && Number.isFinite(numericRate) && numericRate > 0) {
+      const pattern = ratePattern(numericRate);
+      const matches = pattern ? segments.filter((segment) => pattern.test(segment)) : [];
+      const minimal = matches.filter((segment) => !matches.some((other) => other !== segment && segment.includes(other)));
+      if (minimal.length === 1) return minimal[0];
+      return "";
+    }
+
+    const treatment = String(citation.tax_treatment || citation.resolve_tax_treatment || "");
+    if (numericRate === 0 || treatment === "exclusive_foreign_taxation") {
+      const explicitPatterns = [
+        /\btaxable only\b/i,
+        /\bshall be taxable only\b/i,
+        /\bexempt from tax\b/i,
+        /\bshall be exempt\b/i,
+        /\bonly in (?:that|the) other (?:Contracting )?State\b/i,
+      ];
+      const matches = segments.filter((segment) => explicitPatterns.some((pattern) => pattern.test(segment)));
+      const minimal = matches.filter((segment) => !matches.some((other) => other !== segment && segment.includes(other)));
+      if (minimal.length === 1) return minimal[0];
+    }
+
+    return "";
+  }
+
   function removeMissingNote(card) {
     card.querySelector(".tt-treaty-locale-missing")?.remove();
   }
@@ -153,22 +211,36 @@
     note.textContent = `Official English treaty wording is not yet registered for CZ–${country}, Article ${article}. The Czech official excerpt is shown below.`;
   }
 
-  function renderEnglishLocale(excerpt, resolved) {
+  function appendWithMark(excerpt, text, decisive) {
+    const start = decisive ? text.indexOf(decisive) : -1;
+    if (start < 0) {
+      excerpt.textContent = text;
+      return false;
+    }
+    excerpt.append(document.createTextNode(text.slice(0, start)));
+    const mark = document.createElement("mark");
+    mark.className = "legal-decisive-passage";
+    mark.textContent = decisive;
+    excerpt.append(mark, document.createTextNode(text.slice(start + decisive.length)));
+    return true;
+  }
+
+  function renderEnglishLocale(excerpt, resolved, article) {
     const { locale, specificity } = resolved;
     excerpt.replaceChildren();
+    let decisive = "";
     if (specificity === "rule") {
-      const mark = document.createElement("mark");
-      mark.className = "legal-decisive-passage";
-      mark.textContent = locale.text;
-      excerpt.append(mark);
-    } else {
-      excerpt.textContent = locale.text;
+      decisive = locale.text;
+    } else if (String(selectedTreatyArticle || "") === String(article)) {
+      decisive = decisiveArticlePassage(locale.text, selectedTreatyCitation);
     }
+    const highlighted = appendWithMark(excerpt, locale.text, decisive);
     excerpt.setAttribute("lang", "en");
     excerpt.dataset.ttTreatyLanguage = "en";
     excerpt.dataset.ttTreatyLocaleStatus = locale.status || "registered";
     excerpt.dataset.ttTreatyLocaleSource = locale.source_url || "";
     excerpt.dataset.ttTreatyLocaleSpecificity = specificity;
+    excerpt.dataset.ttTreatyDecisivePassage = highlighted ? "resolved" : "not-isolated";
   }
 
   async function refreshTreatyExcerpts() {
@@ -194,6 +266,7 @@
         delete excerpt.dataset.ttTreatyLocaleStatus;
         delete excerpt.dataset.ttTreatyLocaleSource;
         delete excerpt.dataset.ttTreatyLocaleSpecificity;
+        delete excerpt.dataset.ttTreatyDecisivePassage;
         removeMissingNote(card);
         return;
       }
@@ -204,11 +277,12 @@
         excerpt.setAttribute("lang", "cs");
         excerpt.dataset.ttTreatyLanguage = "cs-fallback";
         delete excerpt.dataset.ttTreatyLocaleSpecificity;
+        delete excerpt.dataset.ttTreatyDecisivePassage;
         showMissingNote(card, country || "?", article);
         return;
       }
 
-      renderEnglishLocale(excerpt, resolved);
+      renderEnglishLocale(excerpt, resolved, article);
       removeMissingNote(card);
     });
   }
