@@ -18,9 +18,11 @@ PILOT_PARTNERS = ("Deutschland / Germany", "Tschechische Republik / Czech Republ
 ALLOWED_HOSTS = frozenset({"ris.bka.gv.at", "www.ris.bka.gv.at", "bmf.gv.at", "www.bmf.gv.at"})
 MAX_SOURCE_BYTES = 25 * 1024 * 1024
 FETCH_ATTEMPTS = 3
+MAX_GENERIC_ANNEX_ATTACHMENTS = 6
 RIS_TREATY_TEXT_LABELS = ("deutscher vertragstext", "englischer vertragstext", "deutscher text", "englischer text", "german treaty text", "english treaty text")
 RIS_TREATY_LANGUAGE_MARKERS = ("deutsch", "englisch", "german", "english")
 RIS_TREATY_DOCUMENT_MARKERS = ("vertrag", "abkommen", "protokoll", "treaty", "agreement", "protocol", "sprachfassung", "sprache")
+RIS_GENERIC_ANNEX_RE = re.compile(r"\b(?:anlage|annex|appendix)\s*\d+\b", flags=re.IGNORECASE)
 
 
 def _safe_slug(value: str) -> str:
@@ -78,6 +80,15 @@ def _fetch_official_source(url: str, *, timeout: int = 30) -> tuple[bytes, str, 
     return content, str(response.headers.get("content-type") or ""), final_url
 
 
+def _is_labeled_treaty_text(label: str) -> bool:
+    if any(marker in label for marker in RIS_TREATY_TEXT_LABELS):
+        return True
+    return (
+        any(marker in label for marker in RIS_TREATY_LANGUAGE_MARKERS)
+        and any(marker in label for marker in RIS_TREATY_DOCUMENT_MARKERS)
+    )
+
+
 def _is_relevant_ris_attachment(label: str, candidate_path: str) -> bool:
     lower_path = candidate_path.lower()
     if "/geltendefassung/bundesnormen/" in lower_path and lower_path.endswith(".pdf"):
@@ -87,12 +98,7 @@ def _is_relevant_ris_attachment(label: str, candidate_path: str) -> bool:
         return True
     if "/dokumente/bgblauth/" in lower_path and basename.startswith("bgbla_") and lower_path.endswith(".pdf"):
         return True
-    treaty_label = any(marker in label for marker in RIS_TREATY_TEXT_LABELS)
-    language_document_label = (
-        any(marker in label for marker in RIS_TREATY_LANGUAGE_MARKERS)
-        and any(marker in label for marker in RIS_TREATY_DOCUMENT_MARKERS)
-    )
-    if not treaty_label and not language_document_label:
+    if not _is_labeled_treaty_text(label):
         return False
     return lower_path.endswith((".pdf", ".html", ".htm"))
 
@@ -105,7 +111,10 @@ def _discover_ris_treaty_text_attachments(content: bytes, content_type: str, fin
         return ()
     soup = BeautifulSoup(content, "lxml")
     discovered: list[str] = []
+    generic_annexes: list[str] = []
     seen: set[str] = set()
+    has_labeled_treaty_text = False
+
     for anchor in soup.find_all("a", href=True):
         candidate = urljoin(final_url, str(anchor["href"]))
         candidate_path = urlsplit(candidate).path.lower()
@@ -115,12 +124,28 @@ def _discover_ris_treaty_text_attachments(content: bytes, content_type: str, fin
             str(anchor.get("title") or ""),
             str(image.get("alt") or "") if image is not None else "",
         ]).lower().split())
-        if not _is_relevant_ris_attachment(label, candidate_path):
+        labeled_treaty_text = _is_labeled_treaty_text(label)
+        if labeled_treaty_text:
+            has_labeled_treaty_text = True
+        if _is_relevant_ris_attachment(label, candidate_path):
+            _validate_official_url(candidate)
+            if candidate not in seen:
+                seen.add(candidate)
+                discovered.append(candidate)
             continue
-        _validate_official_url(candidate)
-        if candidate not in seen:
-            seen.add(candidate)
-            discovered.append(candidate)
+        if (
+            RIS_GENERIC_ANNEX_RE.search(label)
+            and candidate_path.endswith((".pdf", ".html", ".htm"))
+        ):
+            _validate_official_url(candidate)
+            if candidate not in seen and candidate not in generic_annexes:
+                generic_annexes.append(candidate)
+
+    if not has_labeled_treaty_text:
+        for candidate in generic_annexes[:MAX_GENERIC_ANNEX_ATTACHMENTS]:
+            if candidate not in seen:
+                seen.add(candidate)
+                discovered.append(candidate)
     return tuple(discovered)
 
 
@@ -204,7 +229,7 @@ def acquire_pilot(machine_inventory: dict[str, Any], *, raw_dir: Path, partners:
     full_current = tuple(partners) == current_partner_labels(machine_inventory)
     attachment_failure_count = sum(row["attachment_acquisition_failure_count"] for row in output_records)
     return {
-        "schema_version": 4,
+        "schema_version": 5,
         "source_country": "AT",
         "status": "instrument_chain_pilot_acquired_not_reviewed",
         "acquisition_scope": "all_current_partners" if full_current else "selected_partners",
@@ -218,6 +243,7 @@ def acquire_pilot(machine_inventory: dict[str, Any], *, raw_dir: Path, partners:
             "A failure to acquire a listed primary source remains fatal to the acquisition run.",
             "RIS landing and consolidated-view pages may expose official publication PDFs and treaty-text PDF or HTML companions; discovered attachments remain machine evidence candidates only.",
             "Text-oriented HTML treaty companions may be archived alongside signed PDFs when the PDF text layer is incomplete.",
+            "Generic numbered annexes are acquired only as a bounded fallback when a RIS page exposes no explicitly labeled German or English treaty-text attachment.",
             "Link-role classification is a machine candidate only and must be reconciled against the legal instrument chain.",
             "No Article 10, 11 or 12 rate may be released from this acquisition output without primary-text extraction and review.",
             "MLI and status-instrument flags remain discovery signals only."
