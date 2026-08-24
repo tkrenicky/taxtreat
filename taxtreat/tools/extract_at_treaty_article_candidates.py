@@ -81,10 +81,7 @@ def _article_quality(block: str) -> tuple[bool, list[str]]:
 
 
 def _royalty_semantic_candidate(text: str) -> bool:
-    matches = list(ROYALTY_TEXT_RE.finditer(text))
-    if not matches:
-        return False
-    return matches[0].start() < 180 or len(matches) >= 2
+    return bool(ROYALTY_TEXT_RE.search(text))
 
 
 def _all_article_blocks(text: str) -> list[tuple[int, str]]:
@@ -101,12 +98,18 @@ def _all_article_blocks(text: str) -> list[tuple[int, str]]:
 
 
 def extract_article_blocks(text: str) -> dict[int, str]:
-    blocks: dict[int, str] = {}
+    grouped: dict[int, list[str]] = {}
     for number, block in _all_article_blocks(text):
-        if number not in ARTICLE_NUMBERS or number in blocks:
-            continue
-        blocks[number] = block
-    return blocks
+        if number in ARTICLE_NUMBERS:
+            grouped.setdefault(number, []).append(block)
+
+    selected: dict[int, str] = {}
+    for number, candidates in grouped.items():
+        selected[number] = max(
+            candidates,
+            key=lambda block: (_article_quality(block)[0], len(block)),
+        )
+    return selected
 
 
 def extract_nonstandard_royalty_blocks(text: str) -> list[tuple[int, str]]:
@@ -230,6 +233,7 @@ def build_article_candidate_inventory(
         "release_constraints": [
             "Article 10/11/12 blocks are machine-extracted text candidates only; Arabic and Roman X/XI/XII headings are normalized to article numbers 10/11/12.",
             "Other numeric article headings may be retained only as semantic royalty candidates where royalty terminology is detected; they never become standard Article 12 candidates automatically.",
+            "When RIS exposes duplicate headings for the same article number, the most substantive machine block is selected; this remains a candidate and not a legal conclusion.",
             "Short or cross-reference-only headings are retained for audit but excluded from substantive candidate counts.",
             "Multiple source instruments may contain different versions of an article; source chronology and legal effect must be resolved before interpretation.",
             "Article number alone does not establish income type; older treaties may place royalties outside Article 12.",
