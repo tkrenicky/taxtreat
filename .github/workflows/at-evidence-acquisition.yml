@@ -9,6 +9,7 @@ on:
       - "taxtreat/tools/acquire_at_instrument_chain_pilot.py"
       - "taxtreat/tools/extract_at_treaty_article_candidates.py"
       - "taxtreat/tools/reconcile_at_article_text_candidates.py"
+      - "taxtreat/tools/audit_at_royalty_categories.py"
       - "data/legal_reviews/at_outbound/**"
       - ".github/workflows/at-evidence-acquisition.yml"
 
@@ -148,6 +149,31 @@ jobs:
           ]
           print("AT article reconciliation: missing substantive candidates=", len(missing), "multi-variant scopes=", len(multi))
           print("Missing candidates:", missing)
+          PY
+      - name: Audit royalty category branching across all 89 partners
+        run: |
+          python -m taxtreat.tools.audit_at_royalty_categories \
+            --input artifacts/at/article_candidate_inventory.json \
+            --artifact-root artifacts/at \
+            --output artifacts/at/royalty_category_audit.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path("artifacts/at/royalty_category_audit.json").read_text(encoding="utf-8"))
+          assert data["source_country"] == "AT"
+          assert data["partner_count"] == 89
+          assert data["status"] == "royalty_category_machine_risk_queue_not_released"
+          assert data["policy"]["raw_percentage_tokens_are_not_rate_candidates"] is True
+          assert data["policy"]["ownership_threshold_percentages_cannot_create_rate_branches"] is True
+          assert all(row["projection_released"] is False for row in data["partners"])
+          assert all(row["legal_review_completed"] is False for row in data["partners"])
+          missing = [row["partner_label"] for row in data["partners"] if "no_substantive_article_12_candidate" in row["machine_risk_reasons"]]
+          multi = [row["partner_label"] for row in data["partners"] if "multiple_rate_candidates_after_condition_filter" in row["machine_risk_reasons"]]
+          ownership = [row["partner_label"] for row in data["partners"] if row["ownership_threshold_tokens_machine"]]
+          print("AT royalty audit: risk partners=", data["risk_partner_count"])
+          print("AT royalty audit: missing Art.12=", len(missing), "multi-rate candidates=", len(multi), "ownership conditions=", len(ownership))
+          print("AT royalty audit multi-rate partners:", multi)
+          print("AT royalty audit ownership-condition partners:", ownership)
           PY
       - uses: actions/upload-artifact@v4
         with:
