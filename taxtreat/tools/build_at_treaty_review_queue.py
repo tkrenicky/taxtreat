@@ -25,14 +25,26 @@ def build_review_queue(machine_inventory: dict[str, Any]) -> dict[str, Any]:
     if not isinstance(records, list) or not records:
         raise ValueError("Austrian treaty machine inventory contains no records")
 
+    current_records = [
+        treaty for treaty in records
+        if treaty.get("release_universe_candidate") is True
+        and treaty.get("applicability_status") == "current_candidate"
+    ]
+    if not current_records:
+        raise ValueError("Austrian treaty machine inventory contains no current candidates")
+
     scopes: list[dict[str, Any]] = []
-    for treaty in records:
+    for treaty in current_records:
         partner_label = str(treaty.get("partner_label") or "").strip()
         if not partner_label:
             raise ValueError("Treaty record without partner label")
         treaty_links = treaty.get("treaty_links") or []
         if not isinstance(treaty_links, list):
             raise ValueError(f"Treaty links must be a list for {partner_label}")
+        if not treaty_links:
+            raise ValueError(
+                f"Current Austrian treaty candidate has no official treaty-text link: {partner_label}"
+            )
 
         for income_type in INCOME_TYPES:
             scopes.append(
@@ -42,6 +54,9 @@ def build_review_queue(machine_inventory: dict[str, Any]) -> dict[str, Any]:
                     "income_type": income_type,
                     "status": "needs_primary_text_review",
                     "machine_mli_flag": treaty.get("mli_flag") is True,
+                    "machine_status_instrument_flag": (
+                        treaty.get("status_instrument_flag") is True
+                    ),
                     "instrument_chain": {
                         "base_treaty_resolved": False,
                         "protocols_resolved": False,
@@ -60,16 +75,34 @@ def build_review_queue(machine_inventory: dict[str, Any]) -> dict[str, Any]:
                         "wht_effective_date_completed": False,
                         "result_changing_effects": [],
                     },
+                    "status_instrument": {
+                        "review_required": treaty.get("status_instrument_flag") is True,
+                        "review_completed": False,
+                        "effects": [],
+                    },
                     "release_eligible": False,
                 }
             )
 
+    excluded = [
+        {
+            "partner_label": treaty.get("partner_label"),
+            "applicability_status": treaty.get("applicability_status"),
+            "entry_into_force": treaty.get("entry_into_force"),
+            "effective_from": treaty.get("effective_from"),
+        }
+        for treaty in records
+        if treaty not in current_records
+    ]
+
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "source_country": "AT",
         "status": "review_queue_not_released",
-        "treaty_partner_count": len(records),
+        "source_page_record_count": len(records),
+        "treaty_partner_count": len(current_records),
         "scope_count": len(scopes),
+        "excluded_source_records": excluded,
         "scopes": scopes,
         "promotion_requirements": [
             "authoritative current treaty instrument chain resolved",
@@ -77,6 +110,7 @@ def build_review_queue(machine_inventory: dict[str, Any]) -> dict[str, Any]:
             "all qualifying conditions mapped without inference",
             "bilateral MLI matching completed where potentially applicable",
             "withholding-tax effective date completed for every result-changing MLI effect",
+            "status instruments reviewed where machine discovery flagged a suspension or analogous issue",
             "domestic-law precedence remains independently satisfied",
         ],
     }
@@ -96,8 +130,9 @@ def main() -> None:
         encoding="utf-8",
     )
     print(
-        f"AT treaty review queue: {queue['treaty_partner_count']} partners / "
-        f"{queue['scope_count']} scopes"
+        f"AT treaty review queue: {queue['treaty_partner_count']} current partners / "
+        f"{queue['scope_count']} scopes / "
+        f"{len(queue['excluded_source_records'])} excluded page records"
     )
 
 
