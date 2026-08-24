@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "source_country": "AT",
+  "as_of": "2026-08-24",
+  "status": "candidate_model_not_released",
+  "legal_ordering": [
+    "domestic_scope",
+    "domestic_non_rate_relief",
+    "treaty_or_other_international_relief",
+    "procedural_relief_at_source_or_refund"
+  ],
+  "income_types": {
+    "dividend": {
+      "base_domestic_layer": {
+        "legal_basis": ["§ 27 EStG 1988", "§ 93 EStG 1988", "§ 95 EStG 1988"],
+        "candidate_treatment": "taxable_at_rate",
+        "candidate_rate_percent": null,
+        "status": "rate_not_released",
+        "reason": "KESt applies to qualifying domestic capital income, but the production model must still resolve the recipient/status-specific rate path before release."
+      },
+      "eu_parent_relief": {
+        "legal_basis": "§ 94 EStG 1988",
+        "candidate_treatment": "domestic_exemption",
+        "minimum_participation_percent": 10,
+        "minimum_holding_period_months": 12,
+        "holding_period_must_be_uninterrupted": true,
+        "qualifying_recipient": "qualifying EU parent company",
+        "anti_abuse_review_required": true,
+        "source_relief_state": "conditional",
+        "refund_route_possible_if_source_relief_unavailable": true,
+        "status": "candidate_not_released"
+      }
+    },
+    "interest": {
+      "base_domestic_layer": {
+        "legal_basis": ["§ 27 EStG 1988", "§ 93 EStG 1988", "§ 98 EStG 1988"],
+        "candidate_treatment": null,
+        "candidate_rate_percent": null,
+        "status": "source_nexus_mapping_required",
+        "required_classification": [
+          "capital-income category under § 27",
+          "whether Austrian-source conditions in § 98 are met",
+          "whether a statutory § 98 exclusion applies",
+          "whether KESt or § 99 withholding is legally triggered"
+        ],
+        "fail_closed": true
+      },
+      "eu_interest_royalty_relief": {
+        "legal_basis": "§ 99a EStG 1988",
+        "candidate_treatment": "domestic_exemption",
+        "income_category": "interest",
+        "beneficial_owner_required": true,
+        "minimum_direct_participation_percent": 25,
+        "common_parent_direct_participation_alternative_percent": 25,
+        "minimum_holding_period_months": 12,
+        "holding_period_must_be_uninterrupted": true,
+        "eu_entity_form_residence_tax_conditions_required": true,
+        "pe_attribution_conditions_may_apply": true,
+        "documentary_confirmation_required_for_relief_at_source": true,
+        "source_relief_state": "conditional",
+        "refund_route_possible_if_holding_period_or_confirmation_not_yet_available": true,
+        "status": "candidate_not_released"
+      }
+    },
+    "royalty": {
+      "base_domestic_layer": {
+        "legal_basis": ["§ 28 Abs. 1 Z 3 EStG 1988", "§ 98 EStG 1988", "§ 99 Abs. 1 Z 3 EStG 1988", "§ 100 EStG 1988"],
+        "candidate_treatment": "taxable_at_rate",
+        "candidate_rate_percent": 20,
+        "status": "category_mapping_required_before_release",
+        "required_classification": [
+          "whether the payment is income from granting or exploiting a right within § 28 Abs. 1 Z 3",
+          "whether the Austrian source nexus in § 98 is met",
+          "whether § 99 Abs. 1 Z 3 withholding applies"
+        ],
+        "fail_closed": true
+      },
+      "eu_interest_royalty_relief": {
+        "legal_basis": "§ 99a EStG 1988",
+        "candidate_treatment": "domestic_exemption",
+        "income_category": "royalty",
+        "beneficial_owner_required": true,
+        "minimum_direct_participation_percent": 25,
+        "common_parent_direct_participation_alternative_percent": 25,
+        "minimum_holding_period_months": 12,
+        "holding_period_must_be_uninterrupted": true,
+        "eu_entity_form_residence_tax_conditions_required": true,
+        "pe_attribution_conditions_may_apply": true,
+        "documentary_confirmation_required_for_relief_at_source": true,
+        "source_relief_state": "conditional",
+        "refund_route_possible_if_holding_period_or_confirmation_not_yet_available": true,
+        "status": "candidate_not_released"
+      }
+    }
+  },
+  "procedural_relief_layer": {
+    "legal_source": "AT-BMF-RELIEF-AT-SOURCE",
+    "framework": "DBA-Entlastungsverordnung",
+    "substantive_treaty_entitlement_is_separate": true,
+    "relief_at_source_requires_documentation": true,
+    "relief_at_source_has_excluded_or_restricted_case_categories": true,
+    "refund_route_required_where_source_relief_is_not_permitted": true,
+    "status": "procedure_model_requires_completion"
+  },
+  "semantic_constraints": [
+    "A domestic exemption is a non-rate legal treatment and must not be represented merely as a treaty 0% rate.",
+    "Domestic scope and domestic exemption must be evaluated before treaty relief.",
+    "For § 99a, substantive eligibility, documentary readiness for relief at source and refund eligibility are separate states.",
+    "No interest result may be released until the § 98 source-nexus and exclusion classification is complete.",
+    "The 20% royalty rate is only a candidate for payments actually within the §§ 28/98/99 statutory route and is not a generic Austrian royalty rate.",
+    "This model is evidence preparation only and must not register AT as a production source country."
+  ]
+}
