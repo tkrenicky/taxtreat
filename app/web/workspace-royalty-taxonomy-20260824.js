@@ -37,10 +37,6 @@
   ];
 
   const LEGACY_SAFE_MAP = new Map([
-    [
-      "copyright_literary_artistic_or_scientific",
-      "copyright_literary_artistic_scientific_nonfilm_nonsoftware",
-    ],
     ["other", "other"],
   ]);
 
