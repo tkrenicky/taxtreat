@@ -41,6 +41,15 @@ def _all_royalty_rules():
     return rules
 
 
+def _treaty_royalty_rules(recipient_country):
+    return [
+        rule
+        for rule in load_legal_rules(RULE_DIR / f"{recipient_country.lower()}.json")
+        if rule.income_type == "royalty"
+        and rule.legal_layer in {"treaty", "protocol", "mli"}
+    ]
+
+
 def _category_condition(rule):
     return next((c for c in rule.conditions if c.fact == "royalty_category"), None)
 
@@ -245,7 +254,11 @@ def test_no_mapper_overlap_can_silently_select_different_royalty_rate():
             f"engine: {item}; priorities={specific.priority}/{residual.priority}"
         )
 
-        package = load_legal_rules(RULE_DIR / f"{specific.recipient_country.lower()}.json")
+        # This test isolates Article 12 precedence. Full country packages also
+        # contain domestic/EU-relief branches whose missing facts intentionally
+        # make the complete transaction REVIEW_REQUIRED; those are audited by
+        # the general tax-treatment/flow tests, not by this mapper test.
+        package = _treaty_royalty_rules(specific.recipient_country)
         for ui_category in overlap:
             facts, legal_facts = _facts_satisfying(specific, ui_category)
 
@@ -269,7 +282,10 @@ def test_no_mapper_overlap_can_silently_select_different_royalty_rate():
             assert layered.candidate_rule_id == specific.rule_id, (item, layered.candidate_rule_id)
 
     for left, right, overlap, item in projection_conflicts:
-        package = load_legal_rules(RULE_DIR / f"{left.recipient_country.lower()}.json")
+        # Projection-conflict safety is likewise tested on the treaty layer
+        # itself so an unrelated unresolved domestic/EU branch cannot mask the
+        # conflict we are asserting must fail closed.
+        package = _treaty_royalty_rules(left.recipient_country)
         for ui_category in overlap:
             facts, legal_facts = _facts_satisfying(left, ui_category)
 
