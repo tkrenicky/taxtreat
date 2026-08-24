@@ -80,6 +80,7 @@
       return text
         .replace(/^Česká republika · IČO /, "Czech Republic · Company ID ")
         .replace(/ · DIČ /g, " · Tax ID ")
+        .replace(/^TaxTreat\s*·\s*Zásady ochrany dat\s*·\s*Podmínky použití$/i, "TaxTreat · Data protection · Terms of use")
         .replace(/^Rakousko · společnost · základní údaje vyplněny$/i, "Austria · company · basic details completed")
         .replace(/^Rakousko · společnost · příjemce /i, "Austria · company · recipient of ")
         .replace(/^Daňová rezidence:\s*Rakouska$/i, "Tax residence: Austria")
@@ -90,6 +91,7 @@
         .replace(/^KROK ([1-4]) ZE 4$/i, "STEP $1 OF 4")
         .replace(/^Podle článku\s+([^\s]+)\s+smlouvy o zamezení dvojího zdanění,?\s*(.*)$/i, (_m, article, rest) => `Under Article ${article} of the double tax treaty, ${rest}`)
         .replace(/^Zákon č\. 586\/1992 Sb\., o daních z příjmů\s*·\s*§\s*([^·]+)\s*·\s*odst\.\s*([^·]+)$/i, "Czech Income Taxes Act (Act No. 586/1992 Coll.) · Section $1 · paragraph $2")
+        .replace(/^Czech Income Taxes Act \(Act No\. 586\/1992 Coll\.\)\s*·\s*Section\s*([^·]+)\s*·\s*odst\.\s*([^·]+)$/i, "Czech Income Taxes Act (Act No. 586/1992 Coll.) · Section $1 · paragraph $2")
         .replace(/^§\s*38d\s+a\s+§\s*38da\s+zákona č\. 586\/1992 Sb\., o daních z příjmů$/i, "Sections 38d and 38da of the Czech Income Taxes Act")
         .replace(/^§\s*38d\s+a\s+§\s*38da\s+ZDP$/i, "Sections 38d and 38da of the Czech Income Taxes Act")
         .replace(/^odst\.\s*(\d+[a-z]?)$/i, "paragraph $1");
@@ -97,6 +99,7 @@
     return text
       .replace(/^Czech Republic · Company ID /, "Česká republika · IČO ")
       .replace(/ · Tax ID /g, " · DIČ ")
+      .replace(/^TaxTreat\s*·\s*Data protection\s*·\s*Terms of use$/i, "TaxTreat · Zásady ochrany dat · Podmínky použití")
       .replace(/^Austria · company · basic details completed$/i, "Rakousko · společnost · základní údaje vyplněny")
       .replace(/^Austria · company · recipient of /i, "Rakousko · společnost · příjemce ")
       .replace(/^Tax residence: Austria$/i, "Daňová rezidence: Rakouska")
