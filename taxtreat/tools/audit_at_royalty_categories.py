@@ -98,9 +98,6 @@ def _royalty_semantic_candidate(text: str) -> bool:
     matches = list(ROYALTY_TEXT_RE.finditer(text))
     if not matches:
         return False
-    # A royalty label near the article heading is sufficient. Otherwise require repeated
-    # royalty terminology so a protocol article that merely cross-refers to royalties does
-    # not masquerade as the treaty royalty article because it uses Roman X/XI/XII numbering.
     return matches[0].start() < 180 or len(matches) >= 2
 
 
@@ -122,14 +119,17 @@ def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> 
         for source in partner.get("sources", []):
             for candidate in source.get("article_candidates", []):
                 number = candidate.get("article_number")
-                if number not in {10, 11, 12}:
+                semantic_income = candidate.get("semantic_income_candidate")
+                if not isinstance(number, int) or number <= 0:
+                    continue
+                if number not in {10, 11, 12} and semantic_income != "royalty":
                     continue
                 if candidate.get("substantive_article_candidate") is not True:
                     if number == 12:
                         rejected_count += 1
                     continue
                 text = _artifact_text(Path(str(candidate["artifact_path"])), artifact_root)
-                is_royalty_text = _royalty_semantic_candidate(text)
+                is_royalty_text = semantic_income == "royalty" or _royalty_semantic_candidate(text)
                 if number == 12:
                     if is_royalty_text:
                         article_12_texts.append(text)
@@ -137,7 +137,7 @@ def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> 
                         semantic_rejected_article_12_count += 1
                 elif is_royalty_text:
                     fallback_texts.append(text)
-                    fallback_article_numbers.add(int(number))
+                    fallback_article_numbers.add(number)
 
         nonstandard_numbering = not article_12_texts and bool(fallback_texts)
         source_texts = article_12_texts if article_12_texts else fallback_texts
