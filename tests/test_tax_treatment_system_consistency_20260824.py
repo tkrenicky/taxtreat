@@ -1,10 +1,15 @@
 from pathlib import Path
+import sys
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
 from taxtreat.engine.legal_rule_engine import TaxTreatment, resolve_tax_treatment
 from taxtreat.engine.legal_rule_loader import load_legal_rules
 
 
-RULE_DIR = Path("data/legal_rules_stage6")
+RULE_DIR = REPO_ROOT / "data/legal_rules_stage6"
 
 
 def _all_verified_rate_rules():
