@@ -45,6 +45,7 @@ jobs:
         run: |
           python -m taxtreat.tools.build_at_treaty_source_inventory \
             --input-html artifacts/at/bmf_dba_list.html \
+            --as-of 2026-08-24 \
             --output artifacts/at/treaty_source_inventory_machine.json
           python -m taxtreat.tools.build_at_treaty_review_queue \
             --input artifacts/at/treaty_source_inventory_machine.json \
@@ -60,19 +61,28 @@ jobs:
 
           assert inventory["source_country"] == "AT"
           assert inventory["status"] == "machine_source_inventory_not_reviewed"
-          assert inventory["treaty_partner_count"] >= 80
-          assert inventory["treaty_scope_count"] == inventory["treaty_partner_count"] * 3
+          assert inventory["source_page_record_count"] >= 80
+          assert inventory["release_universe_candidate_count"] >= 80
+          assert inventory["release_universe_scope_count"] == inventory["release_universe_candidate_count"] * 3
           assert queue["status"] == "review_queue_not_released"
-          assert queue["treaty_partner_count"] == inventory["treaty_partner_count"]
-          assert queue["scope_count"] == inventory["treaty_scope_count"]
+          assert queue["treaty_partner_count"] == inventory["release_universe_candidate_count"]
+          assert queue["scope_count"] == inventory["release_universe_scope_count"]
+          assert len(queue["excluded_source_records"]) == (
+              inventory["source_page_record_count"] - inventory["release_universe_candidate_count"]
+          )
           assert all(scope["release_eligible"] is False for scope in queue["scopes"])
           assert all(scope["rate_extraction"]["reviewed"] is False for scope in queue["scopes"])
+          assert all(scope["instrument_chain"]["official_links"] for scope in queue["scopes"])
           print(
               "AT acquisition:",
-              inventory["treaty_partner_count"], "partners /",
-              inventory["treaty_scope_count"], "scopes /",
-              inventory["mli_flagged_relationship_count"], "MLI discovery flags",
+              inventory["source_page_record_count"], "page records /",
+              inventory["release_universe_candidate_count"], "current partners /",
+              inventory["release_universe_scope_count"], "current scopes /",
+              inventory["mli_flagged_relationship_count"], "MLI discovery flags /",
+              inventory["status_instrument_flagged_relationship_count"], "status-instrument flags",
           )
+          print("Applicability statuses:", inventory["applicability_status_counts"])
+          print("Excluded records:", queue["excluded_source_records"])
           PY
       - uses: actions/upload-artifact@v4
         with:
