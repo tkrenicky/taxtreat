@@ -3,7 +3,9 @@
 
   const UI_KEY = "taxtreat-ui-language";
   const REGISTRY_URL = "/ui-assets/treaty-excerpt-locales-20260824.json?v=20260824-1";
+  const COUNTRY_REGISTRY_ROOT = "/ui-assets/treaty-excerpt-locales";
   const originalExcerpt = new WeakMap();
+  const countryRegistryPromises = new Map();
   let recipientCountry = null;
   let registryPromise = null;
   let jurisdictionsPromise = null;
@@ -25,6 +27,18 @@
         });
     }
     return registryPromise;
+  }
+
+  function loadCountryRegistry(country) {
+    const iso2 = String(country || "").toUpperCase();
+    if (!iso2) return Promise.resolve(null);
+    if (!countryRegistryPromises.has(iso2)) {
+      const url = `${COUNTRY_REGISTRY_ROOT}/${iso2}.json?v=20260824-1`;
+      countryRegistryPromises.set(iso2, fetch(url, { cache: "no-store" })
+        .then((response) => response.ok ? response.json() : null)
+        .catch(() => null));
+    }
+    return countryRegistryPromises.get(iso2);
   }
 
   function loadJurisdictions() {
@@ -87,6 +101,12 @@
     return null;
   }
 
+  function localeFor(registry, countryRegistry, country, article) {
+    return registry?.entries?.[country]?.[String(article)]?.en
+      || countryRegistry?.articles?.[String(article)]?.en
+      || null;
+  }
+
   function removeMissingNote(card) {
     card.querySelector(".tt-treaty-locale-missing")?.remove();
   }
@@ -111,6 +131,9 @@
     if (!cards.length) return;
     const [registry, jurisdictions] = await Promise.all([loadRegistry(), loadJurisdictions()]);
     const country = inferRecipientCountry(jurisdictions);
+    const countryRegistry = targetLanguage === "en" && country
+      ? await loadCountryRegistry(country)
+      : null;
 
     cards.forEach((card) => {
       const excerpt = excerptNode(card);
@@ -119,9 +142,7 @@
       ensureOriginal(excerpt);
 
       if (targetLanguage !== "en") {
-        if (originalExcerpt.has(excerpt)) {
-          excerpt.textContent = originalExcerpt.get(excerpt) || "";
-        }
+        if (originalExcerpt.has(excerpt)) excerpt.textContent = originalExcerpt.get(excerpt) || "";
         excerpt.setAttribute("lang", "cs");
         delete excerpt.dataset.ttTreatyLanguage;
         delete excerpt.dataset.ttTreatyLocaleStatus;
@@ -130,11 +151,9 @@
         return;
       }
 
-      const locale = registry?.entries?.[country]?.[String(article)]?.en;
+      const locale = localeFor(registry, countryRegistry, country, article);
       if (!country || !locale?.text) {
-        if (originalExcerpt.has(excerpt)) {
-          excerpt.textContent = originalExcerpt.get(excerpt) || "";
-        }
+        if (originalExcerpt.has(excerpt)) excerpt.textContent = originalExcerpt.get(excerpt) || "";
         excerpt.setAttribute("lang", "cs");
         excerpt.dataset.ttTreatyLanguage = "cs-fallback";
         showMissingNote(card, country || "?", article);
