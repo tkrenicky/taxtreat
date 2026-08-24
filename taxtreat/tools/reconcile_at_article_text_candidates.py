@@ -13,6 +13,8 @@ ARTICLE_NUMBERS = (10, 11, 12)
 
 def _review_strategy(candidates: list[dict[str, Any]]) -> str:
     roles = {str(row.get("role_candidate") or "") for row in candidates}
+    if not candidates:
+        return "no_substantive_candidate_fail_closed"
     if "synthesized_mli_text" in roles and "current_consolidated_view" in roles:
         return "compare_synthesized_mli_to_current_consolidated_and_published_chain"
     if "current_consolidated_view" in roles:
@@ -37,11 +39,13 @@ def reconcile_article_candidates(candidate_inventory: dict[str, Any]) -> dict[st
         article_rows: list[dict[str, Any]] = []
         for number in ARTICLE_NUMBERS:
             candidates: list[dict[str, Any]] = []
+            rejected_candidates: list[dict[str, Any]] = []
             for source in partner.get("sources", []):
                 for candidate in source.get("article_candidates", []):
                     if candidate.get("article_number") != number:
                         continue
-                    candidates.append(
+                    target = candidates if candidate.get("substantive_article_candidate") is True else rejected_candidates
+                    target.append(
                         {
                             "source_order": source.get("source_order"),
                             "final_url": source.get("final_url"),
@@ -50,6 +54,7 @@ def reconcile_article_candidates(candidate_inventory: dict[str, Any]) -> dict[st
                             "text_sha256": candidate.get("text_sha256"),
                             "character_count": candidate.get("character_count"),
                             "artifact_path": candidate.get("artifact_path"),
+                            "quality_flags": candidate.get("quality_flags") or [],
                         }
                     )
             hashes = {row["text_sha256"] for row in candidates if row.get("text_sha256")}
@@ -57,10 +62,12 @@ def reconcile_article_candidates(candidate_inventory: dict[str, Any]) -> dict[st
                 {
                     "article_number": number,
                     "candidate_count": len(candidates),
+                    "rejected_candidate_count": len(rejected_candidates),
                     "unique_text_variant_count": len(hashes),
                     "candidate_roles": sorted({row["role_candidate"] for row in candidates}),
                     "review_strategy": _review_strategy(candidates),
                     "candidates": candidates,
+                    "rejected_candidates": rejected_candidates,
                     "controlling_text_selected": False,
                     "legal_review_completed": False,
                     "rate_interpretation_released": False,
@@ -77,12 +84,13 @@ def reconcile_article_candidates(candidate_inventory: dict[str, Any]) -> dict[st
         )
 
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "source_country": "AT",
         "status": "article_variant_reconciliation_queue_not_reviewed",
         "partner_count": len(partners),
         "partners": partners,
         "release_constraints": [
+            "Candidates rejected by the article-quality gate remain auditable but cannot enter legal text reconciliation.",
             "Different hashes are text variants, not automatically legal conflicts; formatting, language and protocol history may explain differences.",
             "A current consolidated RIS view and an MLI synthesized BMF text must be compared where both exist; neither is selected automatically as the controlling text.",
             "MLI presence by itself does not increase legal-risk classification and does not establish a result-changing modification.",
@@ -108,7 +116,7 @@ def main() -> None:
     for partner in result["partners"]:
         print(
             partner["partner_label"],
-            [(a["article_number"], a["unique_text_variant_count"], a["review_strategy"]) for a in partner["articles"]],
+            [(a["article_number"], a["unique_text_variant_count"], a["review_strategy"], a["rejected_candidate_count"]) for a in partner["articles"]],
         )
 
 
