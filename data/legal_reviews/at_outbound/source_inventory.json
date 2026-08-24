@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "source_country": "AT",
+  "as_of": "2026-08-24",
+  "status": "discovery_only_not_released",
+  "scope": {
+    "income_types": ["dividend", "interest", "royalty"],
+    "treaty_partner_count": null,
+    "treaty_scope_count": null,
+    "mli_modified_relationship_count": null
+  },
+  "primary_sources": [
+    {
+      "source_id": "AT-BMF-DTT-LIST",
+      "authority": "Bundesministerium für Finanzen (Österreich)",
+      "title": "Liste der österreichischen Doppelbesteuerungsabkommen",
+      "url": "https://www.bmf.gv.at/themen/steuern/internationales-steuerrecht/doppelbesteuerungsabkommen/dba-liste.html",
+      "use": "authoritative treaty-universe inventory and links to current treaty/protocol/synthesized texts",
+      "last_observed_update": "2026-06-26"
+    },
+    {
+      "source_id": "AT-BMF-MLI",
+      "authority": "Bundesministerium für Finanzen (Österreich)",
+      "title": "Multilaterales Instrument",
+      "url": "https://www.bmf.gv.at/themen/steuern/internationales-steuerrecht/doppelbesteuerungsabkommen/massnahmen-gewinnverkuerzung-gewinnverlagerung.html",
+      "use": "Austria MLI instrument, reservations and notifications",
+      "caution": "Pair-specific matching and withholding-tax effective dates must be established relationship by relationship; Austria-side notification alone is not sufficient to infer bilateral effect."
+    },
+    {
+      "source_id": "AT-RIS-ESTG-93",
+      "authority": "Rechtsinformationssystem des Bundes (RIS)",
+      "title": "Einkommensteuergesetz 1988 § 93",
+      "url": "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004570&Paragraf=93",
+      "use": "capital-yield withholding-tax obligation and corporate-recipient KESt rate framework",
+      "relevant_observation": "Section 93 imposes KESt on domestic capital income; for corporate KESt debtors the withholding agent may apply 23% to income received from 2024 onward."
+    },
+    {
+      "source_id": "AT-RIS-ESTG-94",
+      "authority": "Rechtsinformationssystem des Bundes (RIS)",
+      "title": "Einkommensteuergesetz 1988 § 94",
+      "url": "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004570&Paragraf=94",
+      "use": "exceptions from KESt withholding, including EU parent-company dividend relief",
+      "relevant_observation": "Foreign EU qualifying parent companies may obtain no-withholding treatment for qualifying dividends where the statutory conditions are met, including at least 10% participation and an uninterrupted one-year holding period; anti-abuse/refund safeguards remain relevant."
+    },
+    {
+      "source_id": "AT-RIS-ESTG-99",
+      "authority": "Rechtsinformationssystem des Bundes (RIS)",
+      "title": "Einkommensteuergesetz 1988 § 99",
+      "url": "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004570&Paragraf=99",
+      "use": "special withholding tax for limited taxpayers; seed source for royalty/right-use analysis",
+      "caution": "The exact mapping of standard TaxTreat royalty categories to the current § 99 enumerated items must be completed before runtime promotion."
+    },
+    {
+      "source_id": "AT-RIS-ESTG-100",
+      "authority": "Rechtsinformationssystem des Bundes (RIS)",
+      "title": "Einkommensteuergesetz 1988 § 100",
+      "url": "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004570&Paragraf=100",
+      "use": "rate and withholding mechanics for § 99 withholding tax",
+      "relevant_observation": "The standard § 99 withholding-tax rate is 20%, subject to the special categories listed in § 100."
+    },
+    {
+      "source_id": "AT-BMF-RELIEF-AT-SOURCE",
+      "authority": "Bundesministerium für Finanzen (Österreich)",
+      "title": "Entlastung von österreichischen Abzugsteuern an der Quelle",
+      "url": "https://www.bmf.gv.at/themen/steuern/internationales-steuerrecht/rueckerstattung/Entlastung-von-%C3%B6sterreichischen-Abzugsteuern-an-der-Quelle.html",
+      "use": "procedural framework for treaty relief at source under the DBA-Entlastungsverordnung",
+      "last_observed_update": "2026-07-16",
+      "caution": "Relief at source is documentation- and case-dependent and is excluded for specified recipient/situation categories; these procedural constraints must not be collapsed into treaty-rate eligibility."
+    }
+  ],
+  "domestic_model_seed": {
+    "dividend": {
+      "candidate_regime": "KESt under §§ 93-95 EStG 1988",
+      "eu_parent_relief_seed": "§ 94 EStG 1988",
+      "status": "requires_structured_legal_model"
+    },
+    "interest": {
+      "candidate_regime": "domestic-source and KESt scope require instrument/category-specific analysis under §§ 27, 93-95 and limited-taxpayer source rules",
+      "status": "unresolved_fail_closed"
+    },
+    "royalty": {
+      "candidate_regime": "special withholding under §§ 99-100 EStG 1988 where the statutory category applies",
+      "status": "requires_category_mapping"
+    }
+  },
+  "release_constraints": [
+    "No Austrian treaty rate, domestic rate, exemption, deadline or filing obligation is released by this inventory.",
+    "AT must remain unregistered in the production source-country registry until domestic, treaty, MLI, calculation, compliance and release evidence are complete.",
+    "Every treaty instrument and protocol must be resolved to official primary text before promotion.",
+    "MLI matching and WHT-effective dates must be determined treaty by treaty.",
+    "The interest scope must remain fail-closed until Austrian domestic-source and withholding applicability are mapped by instrument/category.",
+    "Treaty relief eligibility and the procedural ability to grant relief at source under the DBA-Entlastungsverordnung are distinct layers and must be modelled separately."
+  ]
+}
