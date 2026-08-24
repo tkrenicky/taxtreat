@@ -6,6 +6,7 @@
   const originalExcerpt = new WeakMap();
   let recipientCountry = null;
   let registryPromise = null;
+  let jurisdictionsPromise = null;
 
   function language() {
     return document.querySelector("#taxtreat-ui-language")?.value || localStorage.getItem(UI_KEY) || "cs";
@@ -24,6 +25,16 @@
         });
     }
     return registryPromise;
+  }
+
+  function loadJurisdictions() {
+    if (!jurisdictionsPromise) {
+      jurisdictionsPromise = fetch("/jurisdictions", { cache: "no-store" })
+        .then((response) => response.ok ? response.json() : { jurisdictions: [] })
+        .then((payload) => Array.isArray(payload?.jurisdictions) ? payload.jurisdictions : [])
+        .catch(() => []);
+    }
+    return jurisdictionsPromise;
   }
 
   function articleNumber(card) {
@@ -50,9 +61,9 @@
     originalExcerpt.set(excerpt, excerpt.textContent || "");
   }
 
-  function inferRecipientCountry(registry) {
+  function inferRecipientCountry(jurisdictions) {
     const explicit = String(recipientCountry || "").toUpperCase();
-    if (explicit && registry?.entries?.[explicit]) return explicit;
+    if (explicit) return explicit;
 
     const bodyText = document.body?.textContent || "";
     let englishNames;
@@ -61,17 +72,19 @@
       englishNames = new Intl.DisplayNames(["en"], { type: "region" });
       czechNames = new Intl.DisplayNames(["cs"], { type: "region" });
     } catch (_problem) {
-      return explicit || null;
+      return null;
     }
 
-    for (const country of Object.keys(registry?.entries || {})) {
+    for (const item of jurisdictions || []) {
+      const country = String(item?.iso2 || "").toUpperCase();
+      if (!country) continue;
       const names = [englishNames.of(country), czechNames.of(country)].filter(Boolean);
       if (names.some((name) => bodyText.includes(name))) {
         recipientCountry = country;
         return country;
       }
     }
-    return explicit || null;
+    return null;
   }
 
   function removeMissingNote(card) {
@@ -96,8 +109,8 @@
     const targetLanguage = language();
     const cards = treatyCards();
     if (!cards.length) return;
-    const registry = await loadRegistry();
-    const country = inferRecipientCountry(registry);
+    const [registry, jurisdictions] = await Promise.all([loadRegistry(), loadJurisdictions()]);
+    const country = inferRecipientCountry(jurisdictions);
 
     cards.forEach((card) => {
       const excerpt = excerptNode(card);
