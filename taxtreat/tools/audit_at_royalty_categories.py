@@ -95,10 +95,7 @@ def _flags(text: str) -> dict[str, bool]:
 
 
 def _royalty_semantic_candidate(text: str) -> bool:
-    matches = list(ROYALTY_TEXT_RE.finditer(text))
-    if not matches:
-        return False
-    return matches[0].start() < 180 or len(matches) >= 2
+    return bool(ROYALTY_TEXT_RE.search(text))
 
 
 def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> dict[str, Any]:
