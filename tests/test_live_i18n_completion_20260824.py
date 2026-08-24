@@ -102,7 +102,8 @@ def test_pe_question_is_income_specific_in_all_three_income_types():
 def test_section_19_english_wording_does_not_present_exemption_as_zero_percent_rate():
     script = DYNAMIC.read_text(encoding="utf-8")
     assert "Czech withholding tax does not apply; treaty protection is secondary." in script
-    assert '["Czech withholding tax is therefore 0%; treaty protection is secondary.",' in script
+    assert "Czech withholding tax is therefore 0\\s*%; treaty protection is secondary" in script
+    assert "Česká srážková daň se neuplatní; smluvní ochrana je sekundární." in script
 
 
 def test_austrian_treaty_excerpt_switch_uses_verified_english_articles_10_11_12():
