@@ -51,6 +51,7 @@ def _inventory(tmp_path: Path):
 def test_at_royalty_audit_is_fail_closed_and_preserves_89_partner_population(tmp_path: Path):
     audit = build_audit(_inventory(tmp_path), artifact_root=tmp_path)
     assert audit["partner_count"] == 89
+    assert audit["schema_version"] == 4
     assert len(BASE_CATEGORIES) == 7
     assert audit["status"] == "royalty_category_machine_risk_queue_not_released"
     assert all(row["projection_released"] is False for row in audit["partners"])
@@ -61,6 +62,8 @@ def test_at_audit_flags_multiple_rate_category_split(tmp_path: Path):
     audit = build_audit(_inventory(tmp_path), artifact_root=tmp_path)
     row = audit["partners"][0]
     assert row["rate_candidates_machine"] == [5.0, 10.0]
+    assert row["within_candidate_multi_rate_machine"] is True
+    assert row["cross_instrument_rate_variance_machine"] is False
     assert "multiple_rate_candidates_after_condition_filter" in row["machine_risk_reasons"]
 
 
@@ -102,8 +105,8 @@ def test_at_audit_detects_post_percentage_ownership_wording_without_bleeding_int
 def test_at_audit_flags_lease_subcategory_language(tmp_path: Path):
     inventory = _inventory(tmp_path)
     (tmp_path / "article-4.txt").write_text(
-        "Artikel 12. Finanzierungsleasing wird mit 5 Prozent der Bruttosumme besteuert; "
-        "operatives Leasing mit 10 Prozent der Bruttosumme.",
+        "Artikel 12. Lizenzgebühren aus Finanzierungsleasing werden mit 5 Prozent der Bruttosumme besteuert; "
+        "Lizenzgebühren aus operativem Leasing mit 10 Prozent der Bruttosumme.",
         encoding="utf-8",
     )
     row = build_audit(inventory, artifact_root=tmp_path)["partners"][4]
@@ -165,10 +168,58 @@ def test_at_audit_semantically_ignores_non_royalty_article_11_when_article_12_ex
     assert row["rejected_candidate_count"] == 0
 
 
+def test_at_audit_semantically_rejects_protocol_article_xii_that_changes_other_article(tmp_path: Path):
+    inventory = _inventory(tmp_path)
+    protocol = tmp_path / "protocol-article-xii.txt"
+    protocol.write_text(
+        "Article XII The following new paragraph 5 shall be added to Article 24 Mutual Agreement Procedure. "
+        "Where 60 per cent of the cases are unresolved after 15 per cent of the period has elapsed, "
+        "the competent authorities shall continue consultations under Article 24.",
+        encoding="utf-8",
+    )
+    inventory["partners"][8]["sources"].append({
+        "article_candidates": [{
+            "article_number": 12,
+            "substantive_article_candidate": True,
+            "artifact_path": "artifacts/at/protocol-article-xii.txt",
+        }]
+    })
+    row = build_audit(inventory, artifact_root=tmp_path)["partners"][8]
+    assert row["candidate_text_count"] == 1
+    assert row["semantic_rejected_article_12_count"] == 1
+    assert row["rate_candidates_machine"] == []
+    assert "multiple_rate_candidates_after_condition_filter" not in row["machine_risk_reasons"]
+
+
+def test_at_audit_separates_cross_instrument_rate_variance_from_within_text_multi_rate(tmp_path: Path):
+    inventory = _inventory(tmp_path)
+    first = tmp_path / "variant-one.txt"
+    second = tmp_path / "variant-two.txt"
+    first.write_text(
+        "Artikel 12 Lizenzgebühren. Lizenzgebühren dürfen mit 10 Prozent des Bruttobetrags besteuert werden.",
+        encoding="utf-8",
+    )
+    second.write_text(
+        "Artikel 12 Lizenzgebühren. Lizenzgebühren dürfen mit 5 Prozent des Bruttobetrags besteuert werden.",
+        encoding="utf-8",
+    )
+    inventory["partners"][9]["sources"] = [
+        {"article_candidates": [{"article_number": 12, "substantive_article_candidate": True, "artifact_path": "artifacts/at/variant-one.txt"}]},
+        {"article_candidates": [{"article_number": 12, "substantive_article_candidate": True, "artifact_path": "artifacts/at/variant-two.txt"}]},
+    ]
+    row = build_audit(inventory, artifact_root=tmp_path)["partners"][9]
+    assert row["rate_candidates_machine"] == [5.0, 10.0]
+    assert row["rate_candidates_by_text_machine"] == [[10.0], [5.0]]
+    assert row["within_candidate_multi_rate_machine"] is False
+    assert row["cross_instrument_rate_variance_machine"] is True
+    assert "multiple_rate_candidates_after_condition_filter" not in row["machine_risk_reasons"]
+    assert "cross_instrument_rate_variance" in row["machine_risk_reasons"]
+
+
 def test_at_audit_accepts_candidate_path_relative_to_artifact_root(tmp_path: Path):
     inventory = _inventory(tmp_path)
-    inventory["partners"][8]["sources"][0]["article_candidates"][0]["artifact_path"] = "article-8.txt"
-    row = build_audit(inventory, artifact_root=tmp_path)["partners"][8]
+    inventory["partners"][10]["sources"][0]["article_candidates"][0]["artifact_path"] = "article-10.txt"
+    row = build_audit(inventory, artifact_root=tmp_path)["partners"][10]
     assert row["candidate_text_count"] == 1
     assert row["rate_candidates_machine"] == []
 
@@ -179,6 +230,8 @@ def test_at_audit_never_assumes_seven_categories_are_exhaustive(tmp_path: Path):
     assert audit["policy"]["treaty_specific_discriminators_may_be_required"] is True
     assert audit["policy"]["raw_percentage_tokens_are_not_rate_candidates"] is True
     assert audit["policy"]["ownership_threshold_percentages_cannot_create_rate_branches"] is True
+    assert audit["policy"]["royalty_semantics_required_for_article_candidate"] is True
+    assert audit["policy"]["cross_instrument_rate_variance_is_not_a_category_split"] is True
     assert audit["policy"]["multiple_applicable_branches_with_different_results_must_fail_closed"] is True
 
 
