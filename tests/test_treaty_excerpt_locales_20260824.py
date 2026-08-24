@@ -28,10 +28,11 @@ def test_austria_articles_10_11_12_use_official_english_source():
         assert "Contracting State" in locale["text"]
 
 
-def test_country_split_registry_has_gb_and_us_articles_10_11_12():
+def test_country_split_registry_has_verified_articles_10_11_12():
     expectations = {
         "GB": ("HM Revenue & Customs", "official_synthesised_text"),
         "US": ("Internal Revenue Service / United States Government", "official_treaty_text"),
+        "IE": ("Irish Revenue", "official_synthesised_text"),
     }
     for country, (authority, status) in expectations.items():
         payload = json.loads((COUNTRY_DIR / f"{country}.json").read_text(encoding="utf-8"))
