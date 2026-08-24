@@ -51,7 +51,7 @@ def _inventory(tmp_path: Path):
 def test_at_royalty_audit_is_fail_closed_and_preserves_89_partner_population(tmp_path: Path):
     audit = build_audit(_inventory(tmp_path), artifact_root=tmp_path)
     assert audit["partner_count"] == 89
-    assert audit["schema_version"] == 4
+    assert audit["schema_version"] == 6
     assert len(BASE_CATEGORIES) == 7
     assert audit["status"] == "royalty_category_machine_risk_queue_not_released"
     assert all(row["projection_released"] is False for row in audit["partners"])
@@ -113,6 +113,35 @@ def test_at_audit_flags_lease_subcategory_language(tmp_path: Path):
     assert row["keyword_flags"]["financial_lease"] is True
     assert row["keyword_flags"]["operating_lease"] is True
     assert "lease_subcategory_language" in row["machine_risk_reasons"]
+
+
+def test_at_audit_detects_royalty_source_exemption_branch_without_synthetic_zero_rate(tmp_path: Path):
+    inventory = _inventory(tmp_path)
+    (tmp_path / "article-11.txt").write_text(
+        "Artikel 12 Lizenzgebühren. Die Steuer im Quellenstaat darf 5 vom Hundert des Bruttobetrags "
+        "der Lizenzgebühren nicht übersteigen. Ungeachtet dessen sind Lizenzgebühren für Urheberrechte "
+        "eines Autors für literarische, dramatische, musikalische oder künstlerische Arbeiten im Quellenstaat "
+        "von der Besteuerung ausgenommen.",
+        encoding="utf-8",
+    )
+    row = build_audit(inventory, artifact_root=tmp_path)["partners"][11]
+    assert row["rate_candidates_machine"] == [5.0]
+    assert row["royalty_source_exemption_branch_machine"] is True
+    assert row["within_candidate_multi_rate_machine"] is False
+    assert "royalty_source_exemption_branch_language" in row["machine_risk_reasons"]
+
+
+def test_at_audit_single_rate_without_exemption_does_not_create_branch_signal(tmp_path: Path):
+    inventory = _inventory(tmp_path)
+    (tmp_path / "article-12.txt").write_text(
+        "Artikel 12 Lizenzgebühren. Die Steuer darf 10 vom Hundert des Bruttobetrags der Lizenzgebühren "
+        "nicht übersteigen. Der Ausdruck Lizenzgebühren umfasst Urheberrechte, Patente und Marken.",
+        encoding="utf-8",
+    )
+    row = build_audit(inventory, artifact_root=tmp_path)["partners"][12]
+    assert row["rate_candidates_machine"] == [10.0]
+    assert row["royalty_source_exemption_branch_machine"] is False
+    assert "royalty_source_exemption_branch_language" not in row["machine_risk_reasons"]
 
 
 def test_at_audit_keeps_rejected_article_12_auditable_and_fails_closed(tmp_path: Path):
@@ -230,6 +259,7 @@ def test_at_audit_never_assumes_seven_categories_are_exhaustive(tmp_path: Path):
     assert audit["policy"]["treaty_specific_discriminators_may_be_required"] is True
     assert audit["policy"]["raw_percentage_tokens_are_not_rate_candidates"] is True
     assert audit["policy"]["ownership_threshold_percentages_cannot_create_rate_branches"] is True
+    assert audit["policy"]["source_exemption_language_is_a_branch_signal_not_a_synthetic_zero_rate"] is True
     assert audit["policy"]["royalty_semantics_required_for_article_candidate"] is True
     assert audit["policy"]["cross_instrument_rate_variance_is_not_a_category_split"] is True
     assert audit["policy"]["multiple_applicable_branches_with_different_results_must_fail_closed"] is True
