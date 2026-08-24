@@ -95,9 +95,13 @@ def _flags(text: str) -> dict[str, bool]:
 
 
 def _royalty_semantic_candidate(text: str) -> bool:
-    # Repeated royalty terminology is required because protocol articles may use Roman
-    # numbering identical to treaty income articles while actually amending a different article.
-    return len(ROYALTY_TEXT_RE.findall(text)) >= 2
+    matches = list(ROYALTY_TEXT_RE.finditer(text))
+    if not matches:
+        return False
+    # A royalty label near the article heading is sufficient. Otherwise require repeated
+    # royalty terminology so a protocol article that merely cross-refers to royalties does
+    # not masquerade as the treaty royalty article because it uses Roman X/XI/XII numbering.
+    return matches[0].start() < 180 or len(matches) >= 2
 
 
 def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> dict[str, Any]:
