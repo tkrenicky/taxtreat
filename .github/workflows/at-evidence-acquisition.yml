@@ -7,6 +7,7 @@ on:
       - "taxtreat/tools/build_at_treaty_source_inventory.py"
       - "taxtreat/tools/build_at_treaty_review_queue.py"
       - "taxtreat/tools/acquire_at_instrument_chain_pilot.py"
+      - "taxtreat/tools/extract_at_treaty_article_candidates.py"
       - "data/legal_reviews/at_outbound/**"
       - ".github/workflows/at-evidence-acquisition.yml"
 
@@ -23,7 +24,7 @@ jobs:
       - name: Install acquisition dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install requests==2.32.3 beautifulsoup4==4.12.3 lxml==5.3.0
+          pip install requests==2.32.3 beautifulsoup4==4.12.3 lxml==5.3.0 pypdf==5.9.0
       - name: Archive official BMF source snapshot
         run: |
           python - <<'PY'
@@ -116,6 +117,25 @@ jobs:
           )
           for row in pilot["partners"]:
               print(row["partner_label"], row["source_count"], [s["role_candidate"] for s in row["sources"]])
+          PY
+      - name: Extract Article 10 11 12 text candidates without legal interpretation
+        run: |
+          python -m taxtreat.tools.extract_at_treaty_article_candidates \
+            --input artifacts/at/instrument_chain_pilot.json \
+            --output artifacts/at/article_candidate_inventory.json \
+            --article-dir artifacts/at/article_candidates
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path("artifacts/at/article_candidate_inventory.json").read_text(encoding="utf-8"))
+          assert data["status"] == "article_text_candidates_not_reviewed"
+          assert data["partner_count"] == 5
+          assert all(row["primary_text_review_completed"] is False for row in data["partners"])
+          assert all(row["rate_extraction_released"] is False for row in data["partners"])
+          print("AT article candidate presence:")
+          for row in data["partners"]:
+              print(row["partner_label"], row["article_candidate_presence"])
           PY
       - uses: actions/upload-artifact@v4
         with:
