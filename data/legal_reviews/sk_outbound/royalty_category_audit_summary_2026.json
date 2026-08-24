@@ -1,12 +1,35 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "source_country": "SK",
   "as_of": "2026-08-24",
   "status": "audit_seed_not_released",
   "source_dataset": "data/legal_reviews/sk_outbound/treaty_article_machine_extraction.json",
   "royalty_scope_count": 75,
-  "multiple_rate_token_scope_count": 8,
-  "multiple_rate_token_countries": [
+  "category_sensitive_review_count": 20,
+  "category_sensitive_review_countries": [
+    "AT",
+    "AZ",
+    "BR",
+    "BY",
+    "CA",
+    "CH",
+    "CY",
+    "CZ",
+    "DK",
+    "ES",
+    "FI",
+    "GB",
+    "IE",
+    "IT",
+    "KR",
+    "NO",
+    "RO",
+    "TN",
+    "TW",
+    "VN"
+  ],
+  "raw_multiple_percentage_scope_count_before_context_filter": 8,
+  "raw_multiple_percentage_countries_before_context_filter": [
     "AZ",
     "BY",
     "BR",
@@ -58,11 +81,18 @@
       "commercial_vs_industrial_or_scientific_knowhow"
     ]
   },
+  "brazil_rate_candidate_correction": {
+    "raw_percentage_tokens": [15.0, 25.0, 50.0],
+    "rate_candidates": [15.0, 25.0],
+    "non_rate_percentage_tokens": [50.0],
+    "reason": "50 percent is an ownership threshold in the historical related-party transition clause, not an Article 12 royalty rate"
+  },
   "policy": {
     "seven_user_facing_categories_are_base_taxonomy_only": true,
     "treaty_specific_secondary_discriminators_may_be_required": true,
-    "machine_rate_tokens_are_not_current_legal_rates": true,
-    "historical_or_ownership_condition_percentages_must_not_be_misclassified_as_category_rates": true,
+    "raw_percentage_tokens_are_not_rate_candidates": true,
+    "ownership_and_historical_condition_percentages_cannot_create_rate_branches": true,
+    "review_queue_is_explicit_reconciliation_output_not_percentage_count_heuristic": true,
     "ambiguous_category_projection_must_fail_closed": true,
     "runtime_changes_are_out_of_scope_for_this_audit_pr": true
   }
