@@ -47,6 +47,30 @@
     if (!originalExcerpt.has(excerpt)) originalExcerpt.set(excerpt, excerpt.textContent || "");
   }
 
+  function inferRecipientCountry(registry) {
+    const explicit = String(recipientCountry || "").toUpperCase();
+    if (explicit && registry?.entries?.[explicit]) return explicit;
+
+    const bodyText = document.body?.textContent || "";
+    let englishNames;
+    let czechNames;
+    try {
+      englishNames = new Intl.DisplayNames(["en"], { type: "region" });
+      czechNames = new Intl.DisplayNames(["cs"], { type: "region" });
+    } catch (_problem) {
+      return explicit || null;
+    }
+
+    for (const country of Object.keys(registry?.entries || {})) {
+      const names = [englishNames.of(country), czechNames.of(country)].filter(Boolean);
+      if (names.some((name) => bodyText.includes(name))) {
+        recipientCountry = country;
+        return country;
+      }
+    }
+    return explicit || null;
+  }
+
   function removeMissingNote(card) {
     card.querySelector(".tt-treaty-locale-missing")?.remove();
   }
@@ -70,6 +94,7 @@
     const cards = treatyCards();
     if (!cards.length) return;
     const registry = await loadRegistry();
+    const country = inferRecipientCountry(registry);
 
     cards.forEach((card) => {
       const excerpt = excerptNode(card);
@@ -87,7 +112,6 @@
         return;
       }
 
-      const country = String(recipientCountry || "").toUpperCase();
       const locale = registry?.entries?.[country]?.[String(article)]?.en;
       if (!country || !locale?.text) {
         excerpt.textContent = originalExcerpt.get(excerpt) || excerpt.textContent || "";
