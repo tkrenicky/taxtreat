@@ -143,7 +143,10 @@ def _discover_ris_treaty_text_attachments(content: bytes, content_type: str, fin
             if candidate not in seen and candidate not in generic_annexes:
                 generic_annexes.append(candidate)
 
-    if not has_labeled_treaty_text:
+    # Numbered annexes are a fallback for ELI publication landing pages such as special-form
+    # publications. Consolidated GeltendeFassung pages also expose many "Anlage" navigation
+    # links; treating those as treaty-text attachments would over-acquire unrelated material.
+    if not has_labeled_treaty_text and "/eli/" in parsed.path.lower():
         for candidate in generic_annexes[:MAX_GENERIC_ANNEX_ATTACHMENTS]:
             if candidate not in seen:
                 seen.add(candidate)
@@ -245,7 +248,7 @@ def acquire_pilot(machine_inventory: dict[str, Any], *, raw_dir: Path, partners:
             "A failure to acquire a listed primary source remains fatal to the acquisition run.",
             "RIS landing and consolidated-view pages may expose official publication PDFs and treaty-text PDF or HTML companions; discovered attachments remain machine evidence candidates only.",
             "Text-oriented HTML treaty companions may be archived alongside signed PDFs when the PDF text layer is incomplete.",
-            "Generic numbered annexes are acquired only as a bounded fallback when a RIS page exposes no explicitly labeled German or English treaty-text attachment.",
+            "Generic numbered annexes are acquired only as a bounded fallback on ELI publication landing pages that expose no explicitly labeled German or English treaty-text attachment.",
             "Link-role classification is a machine candidate only and must be reconciled against the legal instrument chain.",
             "No Article 10, 11 or 12 rate may be released from this acquisition output without primary-text extraction and review.",
             "MLI and status-instrument flags remain discovery signals only."
