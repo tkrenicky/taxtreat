@@ -16,7 +16,8 @@ DEFAULT_INPUT = Path("artifacts/at/instrument_chain_pilot.json")
 DEFAULT_OUTPUT = Path("artifacts/at/article_candidate_inventory.json")
 DEFAULT_ARTICLE_DIR = Path("artifacts/at/article_candidates")
 ARTICLE_NUMBERS = (10, 11, 12)
-
+MIN_SUBSTANTIVE_CHARACTERS = 180
+MIN_SUBSTANTIVE_SENTENCES = 2
 
 ARTICLE_HEADING = re.compile(
     r"(?im)^\s*(?:artikel|article|art\.?)[ \t\u00a0]*(?P<number>\d{1,2})\b[^\n]*$"
@@ -46,6 +47,21 @@ def extract_text(path: Path, content_type: str) -> str:
         return _normalize_text(data.decode("utf-8"))
     except UnicodeDecodeError as exc:
         raise ValueError(f"Unsupported source text format: {path}") from exc
+
+
+def _article_quality(block: str) -> tuple[bool, list[str]]:
+    reasons: list[str] = []
+    body = ARTICLE_HEADING.sub("", block, count=1).strip()
+    if len(body) < MIN_SUBSTANTIVE_CHARACTERS:
+        reasons.append("article_body_too_short")
+    sentence_like = len(re.findall(r"(?:\.|;|:)\s", body))
+    numbered_paragraphs = len(re.findall(r"(?m)^\s*\d+[\.)]\s+", body))
+    if sentence_like < MIN_SUBSTANTIVE_SENTENCES and numbered_paragraphs < 2:
+        reasons.append("insufficient_substantive_structure")
+    cross_refs = len(re.findall(r"(?i)\b(?:artikel|article|art\.)\s*\d{1,2}\b", body))
+    if cross_refs and len(body) < 320 and numbered_paragraphs == 0:
+        reasons.append("possible_cross_reference_only")
+    return (not reasons, reasons)
 
 
 def extract_article_blocks(text: str) -> dict[int, str]:
@@ -92,6 +108,7 @@ def build_article_candidate_inventory(
                 if block is None:
                     continue
                 digest = hashlib.sha256(block.encode("utf-8")).hexdigest()
+                substantive, quality_flags = _article_quality(block)
                 output_path = article_dir / (
                     f"{path.stem}-article-{number}-{digest[:12]}.txt"
                 )
@@ -103,6 +120,8 @@ def build_article_candidate_inventory(
                         "character_count": len(block),
                         "artifact_path": str(output_path),
                         "machine_text_candidate": True,
+                        "substantive_article_candidate": substantive,
+                        "quality_flags": quality_flags,
                         "legal_review_completed": False,
                     }
                 )
@@ -120,6 +139,16 @@ def build_article_candidate_inventory(
         article_presence = {
             str(number): sum(
                 candidate["article_number"] == number
+                and candidate["substantive_article_candidate"] is True
+                for row in source_rows
+                for candidate in row["article_candidates"]
+            )
+            for number in ARTICLE_NUMBERS
+        }
+        rejected_presence = {
+            str(number): sum(
+                candidate["article_number"] == number
+                and candidate["substantive_article_candidate"] is False
                 for row in source_rows
                 for candidate in row["article_candidates"]
             )
@@ -130,19 +159,21 @@ def build_article_candidate_inventory(
                 "partner_label": partner_label,
                 "sources": source_rows,
                 "article_candidate_presence": article_presence,
+                "rejected_article_candidate_presence": rejected_presence,
                 "primary_text_review_completed": False,
                 "rate_extraction_released": False,
             }
         )
 
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "source_country": "AT",
         "status": "article_text_candidates_not_reviewed",
         "partner_count": len(partner_rows),
         "partners": partner_rows,
         "release_constraints": [
             "Article blocks are machine-extracted text candidates only.",
+            "Short or cross-reference-only headings are retained for audit but excluded from substantive candidate counts.",
             "Multiple source instruments may contain different versions of an article; source chronology and legal effect must be resolved before interpretation.",
             "No rate, ownership threshold, beneficial-owner condition or other treaty condition is released by this output.",
             "MLI synthesized text is evidence of a candidate consolidated reading, not a substitute for bilateral matching and effective-date adjudication."
@@ -164,9 +195,14 @@ def main() -> None:
         json.dumps(result, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
-    print(f"AT article candidate extraction: {result['partner_count']} pilot partners")
+    print(f"AT article candidate extraction: {result['partner_count']} partners")
     for partner in result["partners"]:
-        print(partner["partner_label"], partner["article_candidate_presence"])
+        print(
+            partner["partner_label"],
+            partner["article_candidate_presence"],
+            "rejected=",
+            partner["rejected_article_candidate_presence"],
+        )
 
 
 if __name__ == "__main__":
