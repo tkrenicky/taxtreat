@@ -40,7 +40,8 @@ OWNERSHIP_BEFORE_RE = re.compile(
     flags=re.IGNORECASE | re.DOTALL,
 )
 OWNERSHIP_AFTER_RE = re.compile(
-    r"^\s*(?:des|der|am|of\s+(?:the\s+)?|in\s+(?:the\s+)?)?(?:kapitals?|capital|stimmrechte?|voting\s+power|shares?|anteile?)\b",
+    r"^\s*(?:(?:des|der|am)\s+|of\s+(?:the\s+)?|in\s+(?:the\s+)?)?"
+    r"(?:kapitals?|capital|stimmrechte?|voting\s+power|shares?|anteile?)\b",
     flags=re.IGNORECASE,
 )
 
