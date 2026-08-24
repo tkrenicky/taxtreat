@@ -8,6 +8,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 RULE_DIR = ROOT / "data" / "legal_rules_stage6"
 LOCALE_REGISTRY = ROOT / "app" / "web" / "treaty-excerpt-locales-20260824.json"
+LOCALE_DIR = ROOT / "app" / "web" / "treaty-excerpt-locales"
 
 
 def _load_rules() -> list[dict]:
@@ -18,10 +19,29 @@ def _load_rules() -> list[dict]:
     return rules
 
 
+def _load_locale_entries() -> dict[str, dict]:
+    payload = json.loads(LOCALE_REGISTRY.read_text(encoding="utf-8"))
+    entries = dict(payload.get("entries", {}))
+    if LOCALE_DIR.is_dir():
+        for path in sorted(LOCALE_DIR.glob("*.json")):
+            country_payload = json.loads(path.read_text(encoding="utf-8"))
+            country = str(country_payload.get("recipient_country") or path.stem).upper()
+            articles = country_payload.get("articles", {})
+            if not isinstance(articles, dict):
+                continue
+            target = entries.setdefault(country, {})
+            for article, locale_payload in articles.items():
+                if article in target and target[article] != locale_payload:
+                    raise RuntimeError(
+                        f"Conflicting treaty locale entry for {country} Article {article}"
+                    )
+                target[str(article)] = locale_payload
+    return entries
+
+
 def main() -> int:
     rules = _load_rules()
-    locale_registry = json.loads(LOCALE_REGISTRY.read_text(encoding="utf-8"))
-    locale_entries = locale_registry.get("entries", {})
+    locale_entries = _load_locale_entries()
 
     required: set[tuple[str, str]] = set()
     income_types: dict[tuple[str, str], set[str]] = defaultdict(set)
@@ -55,7 +75,7 @@ def main() -> int:
     missing = sorted(required - covered)
     extra = sorted(covered - required)
     packages = sorted({country for country, _ in required})
-    covered_packages = sorted({country for country, _ in covered if (country, _) in required})
+    covered_packages = sorted({country for country, article in covered if (country, article) in required})
 
     print("TaxTreat treaty excerpt EN locale coverage")
     print(f"Verified treaty packages: {len(packages)}")
