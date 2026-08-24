@@ -34,9 +34,7 @@
     ["3. SEKUNDÁRNÍ SMLUVNÍ OCHRANA", "3. SECONDARY TREATY PROTECTION"],
     ["Pokud by se neuplatnilo osvobození podle § 19 ZDP ani příznivější smluvní pravidlo, česká vnitrostátní úprava stanoví u tohoto příjmu sazbu 15 %.", "If neither the exemption under Section 19 of the Czech Income Taxes Act nor a more favourable treaty rule applied, Czech domestic law would impose a 15% withholding tax rate on this income."],
     ["Česká daň se při tomto daňovém zacházení neodvádí. Oznámení podle § 38da ZDP se u dividend a licenčních poplatků podává do 31. ledna následujícího roku.", "No Czech tax is remitted under this tax treatment. For dividends and royalties, the outbound-income notification under Section 38da of the Czech Income Taxes Act is due by 31 January of the following year."],
-    ["U dividend může povinnost srazit daň podle § 38d odst. 2 zákona č. 586/1992 Sb., o daních z příjmů vzniknout i před zadaným datem. Pro úplné určení je nutné zohlednit také schválení účetní závěrky a rozhodnutí o rozdělení zisku.", "For dividends, the obligation to withhold tax under Section 38d(2) of the Czech Income Taxes Act may arise before the entered date. A complete determination must also take into account approval of the financial statements and the decision on profit distribution."],
-    ["Czech withholding tax is therefore 0%; treaty protection is secondary.", "Czech withholding tax does not apply; treaty protection is secondary."],
-    ["Czech withholding tax is therefore 0 %; treaty protection is secondary.", "Czech withholding tax does not apply; treaty protection is secondary."]
+    ["U dividend může povinnost srazit daň podle § 38d odst. 2 zákona č. 586/1992 Sb., o daních z příjmů vzniknout i před zadaným datem. Pro úplné určení je nutné zohlednit také schválení účetní závěrky a rozhodnutí o rozdělení zisku.", "For dividends, the obligation to withhold tax under Section 38d(2) of the Czech Income Taxes Act may arise before the entered date. A complete determination must also take into account approval of the financial statements and the decision on profit distribution."]
   ]);
   const REVERSE = new Map(Array.from(EXACT, ([cs, en]) => [en, cs]));
 
@@ -87,6 +85,14 @@
   function translateGeneralText(text, toEnglish) {
     const key = text.trim();
     if (!key) return text;
+
+    if (toEnglish && /^Czech withholding tax is therefore 0\s*%; treaty protection is secondary\.$/i.test(key)) {
+      return text.replace(key, "Czech withholding tax does not apply; treaty protection is secondary.");
+    }
+    if (!toEnglish && key === "Czech withholding tax does not apply; treaty protection is secondary.") {
+      return text.replace(key, "Česká srážková daň se neuplatní; smluvní ochrana je sekundární.");
+    }
+
     let translated = toEnglish ? EXACT.get(key) : REVERSE.get(key);
     if (translated) return text.replace(key, translated);
 
