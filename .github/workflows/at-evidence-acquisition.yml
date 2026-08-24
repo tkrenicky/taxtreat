@@ -8,6 +8,7 @@ on:
       - "taxtreat/tools/build_at_treaty_review_queue.py"
       - "taxtreat/tools/acquire_at_instrument_chain_pilot.py"
       - "taxtreat/tools/extract_at_treaty_article_candidates.py"
+      - "taxtreat/tools/reconcile_at_article_text_candidates.py"
       - "data/legal_reviews/at_outbound/**"
       - ".github/workflows/at-evidence-acquisition.yml"
 
@@ -136,6 +137,27 @@ jobs:
           print("AT article candidate presence:")
           for row in data["partners"]:
               print(row["partner_label"], row["article_candidate_presence"])
+          PY
+      - name: Build article variant reconciliation queue
+        run: |
+          python -m taxtreat.tools.reconcile_at_article_text_candidates \
+            --input artifacts/at/article_candidate_inventory.json \
+            --output artifacts/at/article_candidate_reconciliation.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path("artifacts/at/article_candidate_reconciliation.json").read_text(encoding="utf-8"))
+          assert data["status"] == "article_variant_reconciliation_queue_not_reviewed"
+          assert data["partner_count"] == 5
+          assert all(row["instrument_chain_reconciliation_completed"] is False for row in data["partners"])
+          assert all(row["release_eligible"] is False for row in data["partners"])
+          print("AT article variant reconciliation:")
+          for partner in data["partners"]:
+              print(
+                  partner["partner_label"],
+                  [(a["article_number"], a["unique_text_variant_count"], a["review_strategy"]) for a in partner["articles"]],
+              )
           PY
       - uses: actions/upload-artifact@v4
         with:
