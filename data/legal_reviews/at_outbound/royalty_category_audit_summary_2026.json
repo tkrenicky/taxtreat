@@ -1,5 +1,5 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "source_country": "AT",
   "as_of": "2026-08-24",
   "status": "machine_audit_seed_not_released",
@@ -30,6 +30,107 @@
     "Serbien / Serbia",
     "Slowenien / Slovenia"
   ],
+  "preliminary_multi_rate_reconciliation": {
+    "status": "targeted_text_classification_not_legally_released",
+    "category_split_partners": [
+      "Brasilien / Brazil",
+      "Estland / Estonia",
+      "Lettland / Latvia",
+      "Malaysia / Malaysia",
+      "Serbien / Serbia"
+    ],
+    "non_category_condition_partners": [
+      "Aserbaidschan / Azerbaijan",
+      "Liechtenstein / Liechtenstein",
+      "Philippinen / Philippines",
+      "Portugal / Portugal"
+    ],
+    "instrument_variant_chronology_partners": [
+      "Slowenien / Slovenia"
+    ],
+    "rows": [
+      {
+        "partner_label": "Aserbaidschan / Azerbaijan",
+        "classification": "non_category_temporal_ip_condition",
+        "observed_discriminator": "5% applies where specified IP or know-how is not older than three years; otherwise 10%",
+        "next_review": "confirm controlling instrument and model a treaty-specific IP-age condition if still current",
+        "legal_review_completed": false,
+        "projection_released": false
+      },
+      {
+        "partner_label": "Brasilien / Brazil",
+        "classification": "royalty_category_split",
+        "observed_discriminator": "10% copyright excluding film/broadcast material; 25% trademarks; 15% other royalties",
+        "next_review": "map treaty categories to base taxonomy and add trademark-specific discriminator where needed",
+        "legal_review_completed": false,
+        "projection_released": false
+      },
+      {
+        "partner_label": "Estland / Estonia",
+        "classification": "royalty_category_split",
+        "observed_discriminator": "5% equipment royalties; 10% all other royalties",
+        "next_review": "confirm equipment branch against controlling text and taxonomy",
+        "legal_review_completed": false,
+        "projection_released": false
+      },
+      {
+        "partner_label": "Lettland / Latvia",
+        "classification": "royalty_category_split",
+        "observed_discriminator": "5% equipment royalties; 10% all other royalties",
+        "next_review": "reconcile synthesized MLI text with published instrument chain before release",
+        "legal_review_completed": false,
+        "projection_released": false
+      },
+      {
+        "partner_label": "Liechtenstein / Liechtenstein",
+        "classification": "non_category_recipient_business_condition",
+        "observed_discriminator": "5% where royalties are received by an enterprise with an industrial production business, directly or through a resident patent exploitation company; otherwise 10%",
+        "next_review": "treat as treaty-specific recipient/business-status condition rather than royalty category",
+        "legal_review_completed": false,
+        "projection_released": false
+      },
+      {
+        "partner_label": "Malaysia / Malaysia",
+        "classification": "royalty_category_split",
+        "observed_discriminator": "10% for Article 12(3)(a) industrial/scientific IP, equipment and know-how; 15% for Article 12(3)(b) film/broadcast and literary/artistic copyright",
+        "next_review": "map Article 12(3)(a)/(b) branches to base taxonomy",
+        "legal_review_completed": false,
+        "projection_released": false
+      },
+      {
+        "partner_label": "Philippinen / Philippines",
+        "classification": "non_category_payer_incentive_condition",
+        "observed_discriminator": "15% general rate; 10% for qualifying Philippine registered pioneer-investment payer circumstances",
+        "next_review": "model as treaty-specific payer/incentive condition if legally current, not as royalty category",
+        "legal_review_completed": false,
+        "projection_released": false
+      },
+      {
+        "partner_label": "Portugal / Portugal",
+        "classification": "non_category_ownership_condition",
+        "observed_discriminator": "10% where recipient holds more than 50% of payer capital; 5% otherwise",
+        "next_review": "model ownership threshold separately from royalty taxonomy",
+        "legal_review_completed": false,
+        "projection_released": false
+      },
+      {
+        "partner_label": "Serbien / Serbia",
+        "classification": "royalty_category_split",
+        "observed_discriminator": "5% copyright including film/broadcast; 10% patents, trademarks, designs, equipment and know-how",
+        "next_review": "reconcile synthesized MLI text with published chain and map categories",
+        "legal_review_completed": false,
+        "projection_released": false
+      },
+      {
+        "partner_label": "Slowenien / Slovenia",
+        "classification": "instrument_variant_chronology",
+        "observed_discriminator": "published candidate contains 25% ownership condition with 10% rate while synthesized candidate states 5% general royalty rate",
+        "next_review": "resolve instrument chronology and controlling Article 12 before any category or ownership projection",
+        "legal_review_completed": false,
+        "projection_released": false
+      }
+    ]
+  },
   "ownership_condition_partners": [
     "Belgien / Belgium",
     "Großbritannien / United Kingdom",
@@ -88,6 +189,7 @@
     "ownership_or_service_conditions_must_not_be_misclassified_as_royalty_categories": true,
     "missing_substantive_candidate_requires_manual_or_improved_source_acquisition": true,
     "multiple_applicable_branches_with_different_results_must_fail_closed": true,
+    "preliminary_reconciliation_does_not_select_controlling_text": true,
     "no_rate_projection_is_released_by_this_audit": true
   }
 }
