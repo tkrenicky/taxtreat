@@ -80,6 +80,17 @@ def _fetch_official_source(url: str, *, timeout: int = 30) -> tuple[bytes, str, 
     return content, str(response.headers.get("content-type") or ""), final_url
 
 
+def current_partner_labels(machine_inventory: dict[str, Any]) -> tuple[str, ...]:
+    labels = tuple(
+        str(row.get("partner_label"))
+        for row in machine_inventory.get("records", [])
+        if row.get("release_universe_candidate") is True and row.get("partner_label")
+    )
+    if not labels:
+        raise ValueError("Austrian treaty inventory has no current release-universe candidates")
+    return labels
+
+
 def acquire_pilot(
     machine_inventory: dict[str, Any],
     *,
@@ -98,7 +109,7 @@ def acquire_pilot(
     }
     missing = [partner for partner in partners if partner not in records]
     if missing:
-        raise ValueError(f"Pilot partners missing from current Austrian treaty universe: {missing}")
+        raise ValueError(f"Requested partners missing from current Austrian treaty universe: {missing}")
 
     raw_dir.mkdir(parents=True, exist_ok=True)
     output_records: list[dict[str, Any]] = []
@@ -106,7 +117,7 @@ def acquire_pilot(
         treaty = records[partner]
         links = treaty.get("treaty_links") or []
         if not links:
-            raise ValueError(f"Pilot partner has no treaty-text links: {partner}")
+            raise ValueError(f"Current Austrian treaty partner has no treaty-text links: {partner}")
 
         sources: list[dict[str, Any]] = []
         for index, url in enumerate(links, start=1):
@@ -142,10 +153,12 @@ def acquire_pilot(
             }
         )
 
+    full_current = tuple(partners) == current_partner_labels(machine_inventory)
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "source_country": "AT",
         "status": "instrument_chain_pilot_acquired_not_reviewed",
+        "acquisition_scope": "all_current_partners" if full_current else "selected_partners",
         "pilot_partner_count": len(output_records),
         "source_count": sum(row["source_count"] for row in output_records),
         "partners": output_records,
@@ -164,10 +177,16 @@ def main() -> None:
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--raw-dir", type=Path, default=DEFAULT_RAW_DIR)
     parser.add_argument("--partner", action="append", dest="partners")
+    parser.add_argument("--all-current", action="store_true")
     args = parser.parse_args()
 
+    if args.partners and args.all_current:
+        raise SystemExit("Use either --partner or --all-current, not both")
     inventory = json.loads(args.input.read_text(encoding="utf-8"))
-    partners = tuple(args.partners) if args.partners else PILOT_PARTNERS
+    if args.all_current:
+        partners = current_partner_labels(inventory)
+    else:
+        partners = tuple(args.partners) if args.partners else PILOT_PARTNERS
     result = acquire_pilot(inventory, raw_dir=args.raw_dir, partners=partners)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(
@@ -175,8 +194,8 @@ def main() -> None:
         encoding="utf-8",
     )
     print(
-        f"AT instrument-chain pilot: {result['pilot_partner_count']} partners / "
-        f"{result['source_count']} official sources acquired"
+        f"AT instrument-chain acquisition: {result['pilot_partner_count']} partners / "
+        f"{result['source_count']} official sources acquired / {result['acquisition_scope']}"
     )
 
 
