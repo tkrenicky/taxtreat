@@ -35,7 +35,8 @@ RISK_PATTERNS = {
 }
 
 OWNERSHIP_BEFORE_RE = re.compile(
-    r"(?:kapital|capital|stimmrecht|voting\s+power|beteiligung|holding|shares?|anteil).{0,45}$",
+    r"(?:beteiligung|holding|holds?|owns?|anteil|kapital|capital|stimmrecht|voting\s+power|shares?)"
+    r".{0,50}(?:von|of|mindestens|at\s+least|mehr\s+als|more\s+than|not\s+less\s+than)\s*$",
     flags=re.IGNORECASE | re.DOTALL,
 )
 OWNERSHIP_AFTER_RE = re.compile(
