@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - export/sk-claude-review-74bcd248
+  pull_request:
+    branches:
+      - main
 
 jobs:
   export:
@@ -13,7 +16,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 2
       - name: Verify pinned parent snapshot
         run: |
           test "$(git rev-parse HEAD^)" = "74bcd2488e96e2f1e505a3995e6f60eecc674a61"
@@ -21,24 +25,25 @@ jobs:
         run: |
           mkdir -p export
           python - <<'PY'
-          import os, zipfile
+          import zipfile
           from pathlib import Path
           root = Path('.')
           out = Path('export/taxtreat-sk-review-pinned-74bcd248.zip')
           excluded = {'.git', 'export'}
+          workflow = Path('.github/workflows/export-sk-claude-review.yml')
           with zipfile.ZipFile(out, 'w', zipfile.ZIP_DEFLATED) as z:
               for path in root.rglob('*'):
                   if not path.is_file():
                       continue
-                  parts = path.parts
-                  if any(part in excluded for part in parts):
+                  if path == workflow:
+                      continue
+                  if any(part in excluded for part in path.parts):
                       continue
                   z.write(path, arcname=path.as_posix())
           print(out, out.stat().st_size)
           PY
           sha256sum export/taxtreat-sk-review-pinned-74bcd248.zip > export/SHA256SUMS.txt
-          printf '%s\n' 'Repository source snapshot is pinned to parent commit 74bcd2488e96e2f1e505a3995e6f60eecc674a61.' > export/PINNED_COMMIT.txt
-          printf '%s\n' 'The export-only workflow commit itself is not part of the source snapshot content under review.' >> export/PINNED_COMMIT.txt
+          printf '%s\n' 'Repository source snapshot equals pinned parent commit 74bcd2488e96e2f1e505a3995e6f60eecc674a61; the temporary export workflow is excluded.' > export/PINNED_COMMIT.txt
       - uses: actions/upload-artifact@v4
         with:
           name: sk-claude-review-repository-snapshot
