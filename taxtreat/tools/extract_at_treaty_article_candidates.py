@@ -18,9 +18,10 @@ DEFAULT_ARTICLE_DIR = Path("artifacts/at/article_candidates")
 ARTICLE_NUMBERS = (10, 11, 12)
 MIN_SUBSTANTIVE_CHARACTERS = 180
 MIN_SUBSTANTIVE_SENTENCES = 2
+ROMAN_ARTICLE_NUMBERS = {"X": 10, "XI": 11, "XII": 12}
 
 ARTICLE_HEADING = re.compile(
-    r"(?im)^\s*(?:artikel|article|art\.?)[ \t\u00a0]*(?P<number>\d{1,2})\b[^\n]*$"
+    r"(?im)^\s*(?:artikel|article|art\.?)[ \t\u00a0]*(?P<number>\d{1,2}|XII|XI|X)\b[^\n]*$"
 )
 
 
@@ -29,6 +30,15 @@ def _normalize_text(text: str) -> str:
     text = re.sub(r"[ \t\u00a0]+", " ", text)
     text = re.sub(r"\n{3,}", "\n\n", text)
     return text.strip()
+
+
+def _article_number(token: str) -> int:
+    normalized = token.strip().upper()
+    if normalized.isdigit():
+        return int(normalized)
+    if normalized in ROMAN_ARTICLE_NUMBERS:
+        return ROMAN_ARTICLE_NUMBERS[normalized]
+    raise ValueError(f"Unsupported treaty article number token: {token}")
 
 
 def extract_text(path: Path, content_type: str) -> str:
@@ -58,7 +68,12 @@ def _article_quality(block: str) -> tuple[bool, list[str]]:
     numbered_paragraphs = len(re.findall(r"(?m)^\s*\d+[\.)]\s+", body))
     if sentence_like < MIN_SUBSTANTIVE_SENTENCES and numbered_paragraphs < 2:
         reasons.append("insufficient_substantive_structure")
-    cross_refs = len(re.findall(r"(?i)\b(?:artikel|article|art\.)\s*\d{1,2}\b", body))
+    cross_refs = len(
+        re.findall(
+            r"(?i)\b(?:artikel|article|art\.)\s*(?:\d{1,2}|XII|XI|X)\b",
+            body,
+        )
+    )
     if cross_refs and len(body) < 320 and numbered_paragraphs == 0:
         reasons.append("possible_cross_reference_only")
     return (not reasons, reasons)
@@ -69,15 +84,11 @@ def extract_article_blocks(text: str) -> dict[int, str]:
     headings = list(ARTICLE_HEADING.finditer(normalized))
     blocks: dict[int, str] = {}
     for index, match in enumerate(headings):
-        number = int(match.group("number"))
+        number = _article_number(match.group("number"))
         if number not in ARTICLE_NUMBERS or number in blocks:
             continue
         end = headings[index + 1].start() if index + 1 < len(headings) else len(normalized)
         block = normalized[match.start():end].strip()
-        # Preserve every detected target heading as audit evidence. The quality gate below,
-        # rather than a length cutoff here, decides whether the block is substantive. This
-        # keeps short protocol statements such as "Artikel 11 bleibt unverändert" visible as
-        # rejected candidates instead of silently dropping them.
         if block:
             blocks[number] = block
     return blocks
@@ -170,15 +181,16 @@ def build_article_candidate_inventory(
         )
 
     return {
-        "schema_version": 2,
+        "schema_version": 3,
         "source_country": "AT",
         "status": "article_text_candidates_not_reviewed",
         "partner_count": len(partner_rows),
         "partners": partner_rows,
         "release_constraints": [
-            "Article blocks are machine-extracted text candidates only.",
+            "Article blocks are machine-extracted text candidates only; Arabic and Roman X/XI/XII headings are normalized to article numbers 10/11/12.",
             "Short or cross-reference-only headings are retained for audit but excluded from substantive candidate counts.",
             "Multiple source instruments may contain different versions of an article; source chronology and legal effect must be resolved before interpretation.",
+            "Article number alone does not establish income type; older treaties may place royalties outside Article 12.",
             "No rate, ownership threshold, beneficial-owner condition or other treaty condition is released by this output.",
             "MLI synthesized text is evidence of a candidate consolidated reading, not a substitute for bilateral matching and effective-date adjudication."
         ],
