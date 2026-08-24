@@ -4,6 +4,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = ROOT / "app/web/treaty-excerpt-locales-20260824.json"
+COUNTRY_DIR = ROOT / "app/web/treaty-excerpt-locales"
 RUNTIME = ROOT / "app/web/workspace-treaty-excerpt-locales-20260824.js"
 BOOTSTRAP = ROOT / "app/web/workspace-report-export.js"
 
@@ -27,9 +28,30 @@ def test_austria_articles_10_11_12_use_official_english_source():
         assert "Contracting State" in locale["text"]
 
 
+def test_country_split_registry_has_gb_and_us_articles_10_11_12():
+    expectations = {
+        "GB": ("HM Revenue & Customs", "official_synthesised_text"),
+        "US": ("Internal Revenue Service / United States Government", "official_treaty_text"),
+    }
+    for country, (authority, status) in expectations.items():
+        payload = json.loads((COUNTRY_DIR / f"{country}.json").read_text(encoding="utf-8"))
+        assert payload["source_country"] == "CZ"
+        assert payload["recipient_country"] == country
+        for article in ("10", "11", "12"):
+            locale = payload["articles"][article]["en"]
+            assert locale["language"] == "en"
+            assert locale["status"] == status
+            assert locale["authority"] == authority
+            assert locale["source_url"].startswith("https://")
+            assert locale["text"]
+
+
 def test_runtime_is_country_article_language_driven_and_fail_visible():
     script = RUNTIME.read_text(encoding="utf-8")
     assert "registry?.entries?.[country]?.[String(article)]?.en" in script
+    assert "countryRegistry?.articles?.[String(article)]?.en" in script
+    assert "COUNTRY_REGISTRY_ROOT" in script
+    assert "loadCountryRegistry(country)" in script
     assert 'url.endsWith("/analysis/intake")' in script
     assert "recipient_country" in script
     assert "Official English treaty wording is not yet registered" in script
