@@ -4,6 +4,8 @@ from pathlib import Path
 BOOTSTRAP = Path("app/web/workspace-report-export.js")
 CANONICAL = Path("app/web/workspace-canonical-live-i18n-20260824.js")
 DYNAMIC = Path("app/web/workspace-canonical-live-i18n-dynamic-20260824.js")
+TREATY_LOCALE_RUNTIME = Path("app/web/workspace-treaty-excerpt-locales-20260824.js")
+TREATY_LOCALE_REGISTRY = Path("app/web/treaty-excerpt-locales-20260824.json")
 
 
 def test_final_i18n_passes_are_loaded_after_income_visibility_fix():
@@ -11,13 +13,15 @@ def test_final_i18n_passes_are_loaded_after_income_visibility_fix():
     visibility = bootstrap.index("workspace-income-type-visibility-fix-20260824.js")
     canonical = bootstrap.index("workspace-canonical-live-i18n-20260824.js")
     dynamic = bootstrap.index("workspace-canonical-live-i18n-dynamic-20260824.js")
+    treaty_locale = bootstrap.index("workspace-treaty-excerpt-locales-20260824.js")
     report_core = bootstrap.index("workspace-report-export-core.js")
-    assert visibility < canonical < dynamic < report_core
+    assert visibility < canonical < dynamic < treaty_locale < report_core
 
 
 def test_final_i18n_passes_do_not_add_broad_mutation_observer():
     assert "MutationObserver" not in CANONICAL.read_text(encoding="utf-8")
     assert "MutationObserver" not in DYNAMIC.read_text(encoding="utf-8")
+    assert "MutationObserver" not in TREATY_LOCALE_RUNTIME.read_text(encoding="utf-8")
 
 
 def test_language_button_drives_underlying_language_state():
@@ -106,17 +110,19 @@ def test_section_19_english_wording_does_not_present_exemption_as_zero_percent_r
     assert "Česká srážková daň se neuplatní; smluvní ochrana je sekundární." in script
 
 
-def test_austrian_treaty_excerpt_switch_uses_verified_english_articles_10_11_12():
-    script = DYNAMIC.read_text(encoding="utf-8")
-    assert "AT_TREATY_EN" in script
-    assert '"10": `Article 10' in script
-    assert '"11": `Article 11' in script
-    assert '"12": `Article 12' in script
-    assert "tax so charged shall not exceed 10 per cent of the gross amount of the dividends" in script
-    assert "Interest arising in a Contracting State and beneficially owned by a resident of the other Contracting State shall be taxable only in that other State" in script
-    assert "tax so charged shall not exceed 5 per cent of the gross amount of the royalties" in script
-    assert 'excerpt.dataset.ttTreatyLanguage = "en-official"' in script
-    assert "originalTreatyText" in script
+def test_treaty_excerpt_switch_is_data_driven_and_at_10_11_12_are_registered():
+    runtime = TREATY_LOCALE_RUNTIME.read_text(encoding="utf-8")
+    registry = TREATY_LOCALE_REGISTRY.read_text(encoding="utf-8")
+    assert "registry?.entries?.[country]?.[String(article)]?.en" in runtime
+    assert "recipient_country" in runtime
+    assert "official_synthesised_text" in registry
+    assert '"10"' in registry and "Article 10" in registry
+    assert '"11"' in registry and "Article 11" in registry
+    assert '"12"' in registry and "Article 12" in registry
+    assert "Austrian Federal Ministry of Finance" in registry
+    assert "tax so charged shall not exceed 10 per cent of the gross amount of the dividends" in registry
+    assert "Interest arising in a Contracting State and beneficially owned by a resident of the other Contracting State shall be taxable only in that other State" in registry
+    assert "tax so charged shall not exceed 5 per cent of the gross amount of the royalties" in registry
 
 
 def test_austrian_copyright_exclusive_result_never_highlights_unrelated_5_percent_clause():
