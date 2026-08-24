@@ -70,8 +70,11 @@ def _ownership_threshold_tokens(text: str) -> list[float]:
     values: set[float] = set()
     for value, start, end in _percentage_mentions(text):
         before = text[max(0, start - 70):start]
+        # Do not let ownership language in an earlier rate/condition clause bleed into a
+        # following percentage (for example "... 50 vom Hundert besteht; sonst 5 vom Hundert").
+        before_clause = re.split(r"[;.!?]", before)[-1]
         after = text[end:min(len(text), end + 45)]
-        if OWNERSHIP_BEFORE_RE.search(before) or OWNERSHIP_AFTER_RE.search(after):
+        if OWNERSHIP_BEFORE_RE.search(before_clause) or OWNERSHIP_AFTER_RE.search(after):
             values.add(value)
     return sorted(values)
 
