@@ -1,5 +1,10 @@
 from itertools import combinations
 from pathlib import Path
+import sys
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
 from taxtreat.engine.legal_rule_engine import (
     _evaluate_rule,
@@ -8,10 +13,10 @@ from taxtreat.engine.legal_rule_engine import (
 from taxtreat.engine.legal_rule_loader import load_legal_rules
 
 
-RULE_DIR = Path("data/legal_rules_stage6")
-BOOTSTRAP = Path("app/web/workspace-report-export.js")
-CANONICAL_I18N = Path("app/web/workspace-canonical-live-i18n-20260824.js")
-VISIBILITY_FIX = Path("app/web/workspace-income-type-visibility-fix-20260824.js")
+RULE_DIR = REPO_ROOT / "data/legal_rules_stage6"
+BOOTSTRAP = REPO_ROOT / "app/web/workspace-report-export.js"
+CANONICAL_I18N = REPO_ROOT / "app/web/workspace-canonical-live-i18n-20260824.js"
+VISIBILITY_FIX = REPO_ROOT / "app/web/workspace-income-type-visibility-fix-20260824.js"
 
 UI_CATEGORIES = (
     "copyright_literary_artistic_or_scientific",
