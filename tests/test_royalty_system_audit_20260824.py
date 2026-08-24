@@ -1,3 +1,4 @@
+from datetime import date
 from itertools import combinations
 from pathlib import Path
 import sys
@@ -7,8 +8,10 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from taxtreat.engine.legal_rule_engine import (
+    DecisionStatus,
     _evaluate_rule,
     _royalty_categories_match,
+    evaluate_legal_rules,
 )
 from taxtreat.engine.legal_rule_loader import load_legal_rules
 
@@ -17,11 +20,15 @@ RULE_DIR = REPO_ROOT / "data/legal_rules_stage6"
 BOOTSTRAP = REPO_ROOT / "app/web/workspace-report-export.js"
 CANONICAL_I18N = REPO_ROOT / "app/web/workspace-canonical-live-i18n-20260824.js"
 VISIBILITY_FIX = REPO_ROOT / "app/web/workspace-income-type-visibility-fix-20260824.js"
+ROYALTY_UI = REPO_ROOT / "app/web/workspace-royalty-taxonomy-20260824.js"
 
 UI_CATEGORIES = (
-    "copyright_literary_artistic_or_scientific",
-    "software_patent_trademark_design_model_plan_secret_formula_process_or_knowhow",
-    "industrial_commercial_or_scientific_equipment",
+    "copyright_literary_artistic_scientific_nonfilm_nonsoftware",
+    "cinematographic_films_or_broadcast_media",
+    "computer_software",
+    "patent_trademark_design_model_plan_secret_formula_process_or_knowhow",
+    "financial_lease_of_equipment",
+    "operating_lease_or_other_use_of_equipment",
     "other",
 )
 
@@ -48,7 +55,7 @@ def _ui_matches(rule):
     return set()
 
 
-def _non_category_signature(rule):
+def _condition_signature(rule, *, include_category=True):
     return tuple(
         sorted(
             (
@@ -58,7 +65,7 @@ def _non_category_signature(rule):
                 repr(condition.value),
             )
             for condition in rule.conditions
-            if condition.fact != "royalty_category"
+            if include_category or condition.fact != "royalty_category"
         )
     )
 
@@ -72,6 +79,7 @@ def _facts_satisfying(rule, royalty_category):
         "income_type": "royalty",
         "source_country": rule.source_country,
         "recipient_country": rule.recipient_country,
+        "royalty_category": royalty_category,
     }
     legal_facts = {}
     for condition in rule.conditions:
@@ -97,11 +105,20 @@ def test_income_specific_hidden_state_cannot_be_overridden_by_layout_css():
     assert "#royalty-facts:not([hidden])" in script
 
 
-def test_canonical_live_i18n_is_loaded_after_income_visibility_fix():
+def test_refined_royalty_taxonomy_is_loaded_before_final_i18n_pass():
     bootstrap = BOOTSTRAP.read_text(encoding="utf-8")
     visibility = bootstrap.index("workspace-income-type-visibility-fix-20260824.js")
+    taxonomy = bootstrap.index("workspace-royalty-taxonomy-20260824.js")
     canonical = bootstrap.index("workspace-canonical-live-i18n-20260824.js")
-    assert canonical > visibility
+    assert taxonomy > visibility
+    assert canonical > taxonomy
+
+
+def test_refined_royalty_ui_contains_all_audited_categories():
+    script = ROYALTY_UI.read_text(encoding="utf-8")
+    for category in UI_CATEGORIES:
+        assert category in script
+    assert "MutationObserver" not in script
 
 
 def test_canonical_live_i18n_has_no_broad_mutation_observer():
@@ -122,8 +139,8 @@ def test_at_copyright_and_industrial_ip_are_distinct_article_12_outcomes():
     assert copyright_rule.rate == 0.0
     assert industrial_rule.rate == 5.0
 
-    copyright_ui = "copyright_literary_artistic_or_scientific"
-    industrial_ui = "software_patent_trademark_design_model_plan_secret_formula_process_or_knowhow"
+    copyright_ui = "copyright_literary_artistic_scientific_nonfilm_nonsoftware"
+    industrial_ui = "patent_trademark_design_model_plan_secret_formula_process_or_knowhow"
 
     facts, legal = _facts_satisfying(copyright_rule, copyright_ui)
     assert _evaluate_rule(copyright_rule, facts, legal)[0] is True
@@ -134,6 +151,19 @@ def test_at_copyright_and_industrial_ip_are_distinct_article_12_outcomes():
     assert _evaluate_rule(industrial_rule, facts, legal)[0] is True
     facts, legal = _facts_satisfying(copyright_rule, industrial_ui)
     assert _evaluate_rule(copyright_rule, facts, legal)[0] is False
+
+
+def test_excluding_software_taxonomy_does_not_match_software_ui_category():
+    examples = (
+        "copyright_literary_artistic_scientific_excluding_computer_program_including_films_and_broadcast_media",
+        "copyright_literary_artistic_scientific_excluding_computer_software_including_films_and_broadcast_media",
+    )
+    for category in examples:
+        assert not _royalty_categories_match("computer_software", category)
+        assert _royalty_categories_match(
+            "copyright_literary_artistic_scientific_nonfilm_nonsoftware",
+            category,
+        )
 
 
 def test_every_verified_royalty_category_rule_maps_to_at_least_one_ui_category():
@@ -147,7 +177,7 @@ def test_every_verified_royalty_category_rule_maps_to_at_least_one_ui_category()
     assert not unmapped, f"Verified royalty rules not reachable from UI taxonomy: {unmapped}"
 
 
-def test_no_identical_royalty_legal_branch_has_overlapping_ui_category_with_different_rate():
+def test_no_mapper_overlap_can_silently_select_different_royalty_rate():
     grouped = {}
     for rule in _all_royalty_rules():
         if rule.effect != "rate" or rule.verification_status != "verified":
@@ -160,23 +190,50 @@ def test_no_identical_royalty_legal_branch_has_overlapping_ui_category_with_diff
             rule.legal_layer,
             str(rule.article),
             _effective_signature(rule),
-            _non_category_signature(rule),
+            _condition_signature(rule, include_category=False),
         )
         grouped.setdefault(key, []).append(rule)
 
-    conflicts = []
+    unsafe_mapper_conflicts = []
+    projection_conflicts = []
+
     for key, rules in grouped.items():
         for left, right in combinations(rules, 2):
             if left.rate == right.rate:
                 continue
             overlap = sorted(_ui_matches(left).intersection(_ui_matches(right)))
-            if overlap:
-                conflicts.append(
-                    {
-                        "scope": key[:4],
-                        "left": (left.rule_id, left.rate),
-                        "right": (right.rule_id, right.rate),
-                        "ui_categories": overlap,
-                    }
-                )
-    assert not conflicts, f"Conflicting royalty branches reachable from the same UI category: {conflicts}"
+            if not overlap:
+                continue
+
+            item = {
+                "scope": key[:4],
+                "left": (left.rule_id, left.rate),
+                "right": (right.rule_id, right.rate),
+                "ui_categories": overlap,
+            }
+            if _condition_signature(left) == _condition_signature(right):
+                projection_conflicts.append((left, right, overlap, item))
+            else:
+                unsafe_mapper_conflicts.append(item)
+
+    assert not unsafe_mapper_conflicts, (
+        "Different treaty categories with different rates remain reachable "
+        f"from the same refined UI category: {unsafe_mapper_conflicts}"
+    )
+
+    for left, right, overlap, item in projection_conflicts:
+        package = load_legal_rules(RULE_DIR / f"{left.recipient_country.lower()}.json")
+        for ui_category in overlap:
+            facts, legal_facts = _facts_satisfying(left, ui_category)
+            result = evaluate_legal_rules(
+                package,
+                facts,
+                as_of=date(2026, 8, 24),
+                legal_facts=legal_facts,
+            )
+            assert result.status == DecisionStatus.REVIEW_REQUIRED, item
+            assert result.requires_review is True, item
+            assert any(
+                "Conflicting verified legal-rule projections" in line
+                for line in result.explanation
+            ), (item, result.explanation)
