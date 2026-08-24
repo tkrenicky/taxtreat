@@ -55,6 +55,7 @@
     .then(() => loadScript("/ui-assets/workspace-payer-copy-format-20260824.js?v=20260824-cz2"))
     .then(() => loadScript("/ui-assets/workspace-live-language-and-ir-layout-20260824.js?v=20260824-live1"))
     .then(() => loadScript("/ui-assets/workspace-income-type-visibility-fix-20260824.js?v=20260824-income1"))
+    .then(() => loadScript("/ui-assets/workspace-canonical-live-i18n-20260824.js?v=20260824-canonical1"))
     .then(() => loadScript("/ui-assets/workspace-report-export-core.js?v=20260819-3"))
     .catch((problem) => {
       console.error("TaxTreat workspace enhancement bootstrap failed", problem);
