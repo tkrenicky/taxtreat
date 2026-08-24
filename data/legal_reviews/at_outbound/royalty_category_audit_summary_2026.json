@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "source_country": "AT",
+  "as_of": "2026-08-24",
+  "status": "machine_audit_seed_not_released",
+  "source_workflow_run": 32725160381,
+  "source_workflow_head": "5b264a044729d894e84e50f361dac6f5629395ea",
+  "source_artifact_sha256": "59bf70ec83096b8688c23059f038bb07372c66ec404300da247f555acc3cdbb9",
+  "current_treaty_partner_count": 89,
+  "royalty_machine_risk_partner_count": 37,
+  "risk_reason_counts": {
+    "no_substantive_article_12_candidate": 19,
+    "multiple_numeric_rate_tokens": 17,
+    "multiple_rates_may_be_non_category_ownership_condition": 5,
+    "technical_services_or_assistance_language": 2
+  },
+  "multiple_rate_token_partners": [
+    "Aserbaidschan / Azerbaijan",
+    "Belgien / Belgium",
+    "Brasilien / Brazil",
+    "Chile / Chile",
+    "Estland / Estonia",
+    "Großbritannien / United Kingdom",
+    "Italien / Italy",
+    "Lettland / Latvia",
+    "Liechtenstein / Liechtenstein",
+    "Litauen / Lithuania",
+    "Malaysia / Malaysia",
+    "Mongolei / Mongolia",
+    "Philippinen / Philippines",
+    "Portugal / Portugal",
+    "Serbien / Serbia",
+    "Slowenien / Slovenia",
+    "Vietnam / Vietnam"
+  ],
+  "ownership_condition_overlap_partners": [
+    "Belgien / Belgium",
+    "Großbritannien / United Kingdom",
+    "Italien / Italy",
+    "Portugal / Portugal",
+    "Slowenien / Slovenia"
+  ],
+  "technical_services_language_partners": [
+    "Indien / India",
+    "Vietnam / Vietnam"
+  ],
+  "no_substantive_article_12_candidate_partners": [
+    "Algerien / Algeria",
+    "Bahrain / Bahrain",
+    "Iran / Iran",
+    "Japan / Japan",
+    "Katar / Qatar",
+    "Kirgisistan / Kyrgyzstan",
+    "Kosovo / Kosovo",
+    "Kuba / Cuba",
+    "Kuwait / Kuwait",
+    "Marokko / Morocco",
+    "Mazedonien / Macedonia",
+    "Moldau / Moldova",
+    "Montenegro / Montenegro",
+    "Schweden / Sweden",
+    "Tadschikistan / Tajikistan",
+    "Taiwan / Taiwan",
+    "Türkei / Turkey",
+    "Turkmenistan / Turkmenistan",
+    "Venezuela / Venezuela"
+  ],
+  "policy": {
+    "seven_user_facing_categories_are_base_taxonomy_only": true,
+    "treaty_specific_secondary_discriminators_may_be_required": true,
+    "multiple_rate_tokens_do_not_establish_multiple_royalty_categories": true,
+    "ownership_or_service_conditions_must_be_separated_from_royalty_category_conditions": true,
+    "missing_substantive_candidate_requires_manual_or_improved_source_acquisition": true,
+    "ambiguous_category_projection_must_fail_closed": true,
+    "no_rate_projection_is_released_by_this_audit": true
+  }
+}
