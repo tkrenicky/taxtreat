@@ -138,10 +138,24 @@ def acquire_pilot(machine_inventory: dict[str, Any], *, raw_dir: Path, partners:
         if not links:
             raise ValueError(f"Current Austrian treaty partner has no treaty-text links: {partner}")
         sources: list[dict[str, Any]] = []
+        attachment_failures: list[dict[str, Any]] = []
         seen_final_urls: set[str] = set()
 
         def archive_source(listed_url: str, *, discovered_from_url: str | None = None) -> tuple[bytes, str, str] | None:
-            content, content_type, final_url = _fetch_official_source(listed_url)
+            try:
+                content, content_type, final_url = _fetch_official_source(listed_url)
+            except (ValueError, requests.RequestException) as exc:
+                if discovered_from_url is None:
+                    raise
+                attachment_failures.append({
+                    "listed_url": listed_url,
+                    "discovered_from_url": discovered_from_url,
+                    "discovery_method": "ris_treaty_text_attachment",
+                    "status": "discovered_attachment_not_acquired",
+                    "error_type": type(exc).__name__,
+                    "legal_review_completed": False,
+                })
+                return None
             if final_url in seen_final_urls:
                 return None
             seen_final_urls.add(final_url)
@@ -164,10 +178,40 @@ def acquire_pilot(machine_inventory: dict[str, Any], *, raw_dir: Path, partners:
             content, content_type, final_url = archived
             for attachment_url in _discover_ris_treaty_text_attachments(content, content_type, final_url):
                 archive_source(attachment_url, discovered_from_url=final_url)
-        output_records.append({"partner_label": partner, "machine_mli_flag": treaty.get("mli_flag") is True, "machine_status_instrument_flag": treaty.get("status_instrument_flag") is True, "source_count": len(sources), "sources": sources, "instrument_chain_resolved": False, "article_extraction_released": False})
+        output_records.append({
+            "partner_label": partner,
+            "machine_mli_flag": treaty.get("mli_flag") is True,
+            "machine_status_instrument_flag": treaty.get("status_instrument_flag") is True,
+            "source_count": len(sources),
+            "sources": sources,
+            "attachment_acquisition_failure_count": len(attachment_failures),
+            "attachment_acquisition_failures": attachment_failures,
+            "attachment_acquisition_complete": not attachment_failures,
+            "instrument_chain_resolved": False,
+            "article_extraction_released": False,
+        })
 
     full_current = tuple(partners) == current_partner_labels(machine_inventory)
-    return {"schema_version": 3, "source_country": "AT", "status": "instrument_chain_pilot_acquired_not_reviewed", "acquisition_scope": "all_current_partners" if full_current else "selected_partners", "pilot_partner_count": len(output_records), "source_count": sum(row["source_count"] for row in output_records), "partners": output_records, "release_constraints": ["Successful HTTP acquisition and hashing do not establish which instrument controls a treaty result.", "RIS landing and consolidated-view pages may expose separate official publication, treaty-text or consolidated PDF attachments; discovered attachments remain machine evidence candidates only.", "Link-role classification is a machine candidate only and must be reconciled against the legal instrument chain.", "No Article 10, 11 or 12 rate may be released from this acquisition output without primary-text extraction and review.", "MLI and status-instrument flags remain discovery signals only."]}
+    attachment_failure_count = sum(row["attachment_acquisition_failure_count"] for row in output_records)
+    return {
+        "schema_version": 3,
+        "source_country": "AT",
+        "status": "instrument_chain_pilot_acquired_not_reviewed",
+        "acquisition_scope": "all_current_partners" if full_current else "selected_partners",
+        "pilot_partner_count": len(output_records),
+        "source_count": sum(row["source_count"] for row in output_records),
+        "attachment_acquisition_failure_count": attachment_failure_count,
+        "partners": output_records,
+        "release_constraints": [
+            "Successful HTTP acquisition and hashing do not establish which instrument controls a treaty result.",
+            "Failure to acquire a discovered RIS attachment is retained as partner-specific unresolved evidence and never makes that partner release-eligible.",
+            "A failure to acquire a listed primary source remains fatal to the acquisition run.",
+            "RIS landing and consolidated-view pages may expose separate official publication, treaty-text or consolidated PDF attachments; discovered attachments remain machine evidence candidates only.",
+            "Link-role classification is a machine candidate only and must be reconciled against the legal instrument chain.",
+            "No Article 10, 11 or 12 rate may be released from this acquisition output without primary-text extraction and review.",
+            "MLI and status-instrument flags remain discovery signals only."
+        ],
+    }
 
 
 def main() -> None:
@@ -185,7 +229,7 @@ def main() -> None:
     result = acquire_pilot(inventory, raw_dir=args.raw_dir, partners=partners)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"AT instrument-chain acquisition: {result['pilot_partner_count']} partners / {result['source_count']} official sources acquired / {result['acquisition_scope']}")
+    print(f"AT instrument-chain acquisition: {result['pilot_partner_count']} partners / {result['source_count']} official sources acquired / {result['attachment_acquisition_failure_count']} unresolved discovered attachments / {result['acquisition_scope']}")
 
 
 if __name__ == "__main__":
