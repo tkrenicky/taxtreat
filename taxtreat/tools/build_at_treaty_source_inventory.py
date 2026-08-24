@@ -7,6 +7,7 @@ from dataclasses import asdict, dataclass
 from datetime import date, datetime
 from pathlib import Path
 from typing import Iterable
+from urllib.parse import urljoin, urlsplit, urlunsplit
 
 import requests
 from bs4 import BeautifulSoup, Tag
@@ -84,6 +85,15 @@ def _field_value(
     return None
 
 
+def _normalize_official_link(href: str) -> str:
+    absolute = urljoin(BMF_DTT_LIST_URL, href.strip())
+    parsed = urlsplit(absolute)
+    if parsed.scheme == "http" and parsed.hostname in {"ris.bka.gv.at", "www.ris.bka.gv.at"}:
+        parsed = parsed._replace(scheme="https")
+        return urlunsplit(parsed)
+    return absolute
+
+
 def _treaty_text_links(nodes: list[Tag]) -> tuple[str, ...]:
     links: list[str] = []
     for node in nodes:
@@ -95,7 +105,7 @@ def _treaty_text_links(nodes: list[Tag]) -> tuple[str, ...]:
             if "abkommenstext" not in label and "treaty text" not in label:
                 continue
             for anchor in cells[1].find_all("a", href=True):
-                href = str(anchor["href"]).strip()
+                href = _normalize_official_link(str(anchor["href"]))
                 if href and href not in links:
                     links.append(href)
 
@@ -110,7 +120,7 @@ def _treaty_text_links(nodes: list[Tag]) -> tuple[str, ...]:
         if "abkommenstext" not in label and "treaty text" not in label:
             continue
         for anchor in node.find_all("a", href=True):
-            href = str(anchor["href"]).strip()
+            href = _normalize_official_link(str(anchor["href"]))
             if href and href not in links:
                 links.append(href)
     return tuple(links)
@@ -270,7 +280,7 @@ def build_inventory(html: str, *, as_of: str | None = None) -> dict:
             "Only records classified as current_candidate may enter the current treaty review universe; signed-not-in-force, future-effective and historical parent instruments remain excluded until their status changes or is specifically resolved.",
             "MLI flags are discovery signals only and require bilateral matching and WHT-effective-date adjudication.",
             "Status-instrument flags are discovery signals only and require primary-source legal effect review.",
-            "Treaty links are restricted to the BMF treaty-text row and must be resolved to authoritative current instrument chains before rate extraction.",
+            "Treaty links are restricted to the BMF treaty-text row, normalized to absolute official URLs, and must be resolved to authoritative current instrument chains before rate extraction.",
         ],
     }
 
