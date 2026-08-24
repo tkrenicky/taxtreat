@@ -33,6 +33,7 @@ def test_country_split_registry_has_verified_articles_10_11_12():
         "GB": ("HM Revenue & Customs", "official_synthesised_text"),
         "US": ("Internal Revenue Service / United States Government", "official_treaty_text"),
         "IE": ("Irish Revenue", "official_synthesised_text"),
+        "CA": ("Department of Justice Canada", "official_treaty_text"),
     }
     for country, (authority, status) in expectations.items():
         payload = json.loads((COUNTRY_DIR / f"{country}.json").read_text(encoding="utf-8"))
