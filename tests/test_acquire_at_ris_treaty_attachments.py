@@ -35,10 +35,18 @@ def test_ris_landing_page_discovers_german_and_english_treaty_text_pdfs_only(mon
     french = "https://www.ris.bka.gv.at/Dokumente/BgblAuth/example/francais.pdf"
     html = f"""
     <html><body>
-      <a href="{german}">deutscher Vertragstext</a>
-      <a href="{english}">englischer Vertragstext samt Protokoll</a>
-      <a href="{french}">französischer Vertragstext</a>
-      <a href="{german}">deutscher Vertragstext</a>
+      <a href="{german}" title="Signiertes PDF-Dokument: deutscher Vertragstext" class="iconOnlyLink">
+        <img alt="Signiertes PDF-Dokument" />
+      </a>
+      <a href="{english}" title="Signiertes PDF-Dokument: englischer Vertragstext samt Protokoll" class="iconOnlyLink">
+        <img alt="Signiertes PDF-Dokument" />
+      </a>
+      <a href="{french}" title="Signiertes PDF-Dokument: französischer Vertragstext" class="iconOnlyLink">
+        <img alt="Signiertes PDF-Dokument" />
+      </a>
+      <a href="{german}" title="Signiertes PDF-Dokument: deutscher Vertragstext" class="iconOnlyLink">
+        <img alt="Signiertes PDF-Dokument" />
+      </a>
     </body></html>
     """.encode()
 
@@ -70,7 +78,7 @@ def test_attachment_discovery_ignores_non_html_and_non_ris_sources():
         "https://www.ris.bka.gv.at/Dokumente/BgblPdf/base.pdf",
     ) == ()
     assert pilot._discover_ris_treaty_text_attachments(
-        b'<a href="https://www.bmf.gv.at/dam/example.pdf">deutscher Vertragstext</a>',
+        b'<a href="https://www.bmf.gv.at/dam/example.pdf" title="deutscher Vertragstext"></a>',
         "text/html",
         "https://www.bmf.gv.at/example",
     ) == ()
