@@ -134,7 +134,21 @@ def build_audit(source: dict[str, Any]) -> dict[str, Any]:
             "legal_review_completed": False,
         })
 
+    scope_countries = {row["scope_key"][1] for row in scopes}
+    missing_review_countries = [
+        country for country in CATEGORY_SENSITIVE_REVIEW_COUNTRIES if country not in scope_countries
+    ]
+    if missing_review_countries:
+        raise ValueError(
+            "SK royalty reconciliation queue references countries missing from the 75-scope universe: "
+            + ", ".join(missing_review_countries)
+        )
+
     elevated = [row for row in scopes if row["category_projection_review_required"]]
+    elevated_countries = {row["scope_key"][1] for row in elevated}
+    if elevated_countries != set(CATEGORY_SENSITIVE_REVIEW_COUNTRIES):
+        raise ValueError("SK royalty reconciliation queue membership drifted from the explicit 20-country set")
+
     return {
         "schema_version": 2,
         "source_country": "SK",
@@ -142,7 +156,7 @@ def build_audit(source: dict[str, Any]) -> dict[str, Any]:
         "base_user_facing_categories": list(BASE_CATEGORIES),
         "royalty_scope_count": len(scopes),
         "category_review_required_count": len(elevated),
-        "category_review_required_countries": [row["scope_key"][1] for row in elevated],
+        "category_review_required_countries": list(CATEGORY_SENSITIVE_REVIEW_COUNTRIES),
         "policy": {
             "seven_base_categories_are_not_assumed_to_be_legally_exhaustive": True,
             "treaty_specific_discriminators_may_be_required": True,
