@@ -1,5 +1,7 @@
 from pathlib import Path
 
+import pytest
+
 from taxtreat.tools.audit_at_royalty_categories import BASE_CATEGORIES, build_audit
 
 
@@ -79,6 +81,61 @@ def test_at_audit_excludes_ownership_threshold_from_rate_candidates():
         assert row["rate_candidates_machine"] == [5.0, 10.0]
         assert row["non_rate_percentage_tokens"] == [50.0]
         assert "ownership_percentage_condition_present" in row["machine_risk_reasons"]
+
+
+def test_at_audit_detects_post_percentage_ownership_wording_without_bleeding_into_rates(tmp_path: Path):
+    inventory = _inventory(tmp_path)
+    (tmp_path / "article-3.txt").write_text(
+        "Artikel 12. Bei einer Beteiligung von 25 Prozent des Kapitals beträgt die Lizenzgebühr "
+        "5 Prozent der Bruttosumme; sonst beträgt sie 10 Prozent der Bruttosumme.",
+        encoding="utf-8",
+    )
+    row = build_audit(inventory, artifact_root=tmp_path)["partners"][3]
+    assert row["percentage_tokens_raw"] == [5.0, 10.0, 25.0]
+    assert row["ownership_threshold_tokens_machine"] == [25.0]
+    assert row["rate_candidates_machine"] == [5.0, 10.0]
+
+
+def test_at_audit_flags_lease_subcategory_language(tmp_path: Path):
+    inventory = _inventory(tmp_path)
+    (tmp_path / "article-4.txt").write_text(
+        "Artikel 12. Finanzierungsleasing wird mit 5 Prozent der Bruttosumme besteuert; "
+        "operatives Leasing mit 10 Prozent der Bruttosumme.",
+        encoding="utf-8",
+    )
+    row = build_audit(inventory, artifact_root=tmp_path)["partners"][4]
+    assert row["keyword_flags"]["financial_lease"] is True
+    assert row["keyword_flags"]["operating_lease"] is True
+    assert "lease_subcategory_language" in row["machine_risk_reasons"]
+
+
+def test_at_audit_keeps_rejected_article_12_auditable_and_fails_closed(tmp_path: Path):
+    inventory = _inventory(tmp_path)
+    inventory["partners"][5]["sources"][0]["article_candidates"][0]["substantive_article_candidate"] = False
+    row = build_audit(inventory, artifact_root=tmp_path)["partners"][5]
+    assert row["candidate_text_count"] == 0
+    assert row["rejected_candidate_count"] == 1
+    assert "no_substantive_article_12_candidate" in row["machine_risk_reasons"]
+    assert row["category_projection_review_required"] is True
+
+
+def test_at_audit_rejects_wrong_country_or_incomplete_partner_universe(tmp_path: Path):
+    wrong_country = _inventory(tmp_path)
+    wrong_country["source_country"] = "SK"
+    with pytest.raises(ValueError, match="Expected Austrian"):
+        build_audit(wrong_country, artifact_root=tmp_path)
+
+    incomplete = _inventory(tmp_path)
+    incomplete["partner_count"] = 88
+    with pytest.raises(ValueError, match="Expected 89"):
+        build_audit(incomplete, artifact_root=tmp_path)
+
+
+def test_at_audit_rejects_missing_substantive_article_artifact(tmp_path: Path):
+    inventory = _inventory(tmp_path)
+    inventory["partners"][6]["sources"][0]["article_candidates"][0]["artifact_path"] = "artifacts/at/missing.txt"
+    with pytest.raises(ValueError, match="Missing AT article candidate text"):
+        build_audit(inventory, artifact_root=tmp_path)
 
 
 def test_at_audit_never_assumes_seven_categories_are_exhaustive(tmp_path: Path):
