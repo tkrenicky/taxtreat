@@ -34,6 +34,9 @@ def test_country_split_registry_has_verified_articles_10_11_12():
         "US": ("Internal Revenue Service / United States Government", "official_treaty_text"),
         "IE": ("Irish Revenue", "official_synthesised_text"),
         "CA": ("Department of Justice Canada", "official_treaty_text"),
+        "AU": ("Australian Taxation Office", "official_synthesised_text"),
+        "HK": ("Hong Kong Inland Revenue Department", "official_synthesised_text"),
+        "NZ": ("New Zealand Legislation / Inland Revenue Department", "official_treaty_text"),
     }
     for country, (authority, status) in expectations.items():
         payload = json.loads((COUNTRY_DIR / f"{country}.json").read_text(encoding="utf-8"))
@@ -48,17 +51,57 @@ def test_country_split_registry_has_verified_articles_10_11_12():
             assert locale["text"]
 
 
-def test_runtime_is_country_article_language_driven_and_fail_visible():
+def test_austria_royalty_and_new_zealand_interest_have_rule_specific_english_excerpts():
+    at = json.loads((COUNTRY_DIR / "AT.json").read_text(encoding="utf-8"))
+    nz = json.loads((COUNTRY_DIR / "NZ.json").read_text(encoding="utf-8"))
+
+    for rule_id in ("CZ-AT-ROYALTY-CURRENT-1", "CZ-AT-ROYALTY-CURRENT-2"):
+        entry = at["rules"][rule_id]
+        assert entry["article"] == "12"
+        assert entry["en"]["status"] == "official_synthesised_text"
+        assert "Article 12(2)" in entry["en"]["text"]
+
+    assert "Article 12(3)(b)" in at["rules"]["CZ-AT-ROYALTY-CURRENT-1"]["en"]["text"]
+    assert "Article 12(3)(a)" in at["rules"]["CZ-AT-ROYALTY-CURRENT-2"]["en"]["text"]
+
+    for rule_id in ("CZ-NZ-INTEREST-CURRENT-1", "CZ-NZ-INTEREST-CURRENT-2"):
+        entry = nz["rules"][rule_id]
+        assert entry["article"] == "11"
+        assert entry["en"]["status"] == "official_treaty_text"
+    assert "shall not exceed 10 per cent" in nz["rules"]["CZ-NZ-INTEREST-CURRENT-1"]["en"]["text"]
+    assert "shall be exempt from tax" in nz["rules"]["CZ-NZ-INTEREST-CURRENT-2"]["en"]["text"]
+
+
+def test_runtime_prefers_resolved_rule_locale_then_article_fallback_and_is_fail_visible():
     script = RUNTIME.read_text(encoding="utf-8")
-    assert "registry?.entries?.[country]?.[String(article)]?.en" in script
+    assert "countryRegistry?.rules?.[selectedRuleId]" in script
     assert "countryRegistry?.articles?.[String(article)]?.en" in script
+    assert "specificity: \"rule\"" in script
+    assert "specificity: \"article\"" in script
     assert "COUNTRY_REGISTRY_ROOT" in script
     assert "loadCountryRegistry(country)" in script
-    assert 'url.endsWith("/analysis/intake")' in script
-    assert "recipient_country" in script
     assert "Official English treaty wording is not yet registered" in script
     assert "cs-fallback" in script
     assert "MutationObserver" not in script
+
+
+def test_runtime_captures_resolved_rule_from_live_and_stored_results():
+    script = RUNTIME.read_text(encoding="utf-8")
+    assert "function captureAnalysis(analysis)" in script
+    assert "analysis?.selected_rule_id || analysis?.candidate_rule_id" in script
+    assert "response.clone().json()" in script
+    assert "captureAnalysis(body?.analysis)" in script
+    assert "function installStoredResultHook()" in script
+    assert "workspace.openStoredResult = wrapped" in script
+    assert "captureAnalysis(response?.analysis)" in script
+
+
+def test_rule_specific_locale_is_rendered_as_decisive_passage():
+    script = RUNTIME.read_text(encoding="utf-8")
+    assert 'specificity === "rule"' in script
+    assert 'mark.className = "legal-decisive-passage"' in script
+    assert "mark.textContent = locale.text" in script
+    assert "ttTreatyLocaleSpecificity" in script
 
 
 def test_runtime_can_infer_country_for_stored_result_from_full_jurisdiction_catalog():
@@ -71,13 +114,13 @@ def test_runtime_can_infer_country_for_stored_result_from_full_jurisdiction_cata
     assert 'String(item?.iso2 || "").toUpperCase()' in script
 
 
-def test_runtime_restores_only_a_real_non_english_original_excerpt():
+def test_runtime_restores_original_czech_markup_not_only_text():
     script = RUNTIME.read_text(encoding="utf-8")
     assert "const originalExcerpt = new WeakMap()" in script
+    assert "Array.from(excerpt.childNodes).map((node) => node.cloneNode(true))" in script
+    assert "function restoreOriginal(excerpt)" in script
+    assert "excerpt.replaceChildren(...nodes.map((node) => node.cloneNode(true)))" in script
     assert 'declaredLanguage.startsWith("en")' in script
-    assert "if (originalExcerpt.has(excerpt))" in script
-    assert "originalExcerpt.get(excerpt)" in script
-    assert 'excerpt.setAttribute("lang", "cs")' in script
 
 
 def test_runtime_is_loaded_after_i18n_and_before_report_core():
