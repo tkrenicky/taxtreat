@@ -103,6 +103,11 @@ def _is_relevant_ris_attachment(label: str, candidate_path: str) -> bool:
     return lower_path.endswith((".pdf", ".html", ".htm"))
 
 
+def _is_relevant_ris_pdf(label: str, candidate_path: str) -> bool:
+    """Backward-compatible PDF-only view of the broader RIS attachment selector."""
+    return candidate_path.lower().endswith(".pdf") and _is_relevant_ris_attachment(label, candidate_path)
+
+
 def _discover_ris_treaty_text_attachments(content: bytes, content_type: str, final_url: str) -> tuple[str, ...]:
     parsed = urlsplit(final_url)
     if (parsed.hostname or "").lower() not in {"ris.bka.gv.at", "www.ris.bka.gv.at"}:
@@ -133,10 +138,7 @@ def _discover_ris_treaty_text_attachments(content: bytes, content_type: str, fin
                 seen.add(candidate)
                 discovered.append(candidate)
             continue
-        if (
-            RIS_GENERIC_ANNEX_RE.search(label)
-            and candidate_path.endswith((".pdf", ".html", ".htm"))
-        ):
+        if RIS_GENERIC_ANNEX_RE.search(label) and candidate_path.endswith((".pdf", ".html", ".htm")):
             _validate_official_url(candidate)
             if candidate not in seen and candidate not in generic_annexes:
                 generic_annexes.append(candidate)
