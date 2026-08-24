@@ -95,6 +95,8 @@ def _flags(text: str) -> dict[str, bool]:
 
 
 def _royalty_semantic_candidate(text: str) -> bool:
+    # Repeated royalty terminology is required because protocol articles may use Roman
+    # numbering identical to treaty income articles while actually amending a different article.
     return len(ROYALTY_TEXT_RE.findall(text)) >= 2
 
 
@@ -111,6 +113,7 @@ def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> 
         fallback_texts: list[str] = []
         fallback_article_numbers: set[int] = set()
         rejected_count = 0
+        semantic_rejected_article_12_count = 0
 
         for source in partner.get("sources", []):
             for candidate in source.get("article_candidates", []):
@@ -122,9 +125,13 @@ def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> 
                         rejected_count += 1
                     continue
                 text = _artifact_text(Path(str(candidate["artifact_path"])), artifact_root)
+                is_royalty_text = _royalty_semantic_candidate(text)
                 if number == 12:
-                    article_12_texts.append(text)
-                elif _royalty_semantic_candidate(text):
+                    if is_royalty_text:
+                        article_12_texts.append(text)
+                    else:
+                        semantic_rejected_article_12_count += 1
+                elif is_royalty_text:
                     fallback_texts.append(text)
                     fallback_article_numbers.add(int(number))
 
@@ -132,18 +139,25 @@ def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> 
         source_texts = article_12_texts if article_12_texts else fallback_texts
         royalty_article_numbers = [12] if article_12_texts else sorted(fallback_article_numbers)
 
+        per_candidate_rates = [_rate_candidates(text) for text in source_texts]
+        per_candidate_ownership = [_ownership_threshold_tokens(text) for text in source_texts]
         combined = "\n".join(source_texts)
         percentages = _percentage_tokens(combined)
-        ownership_thresholds = _ownership_threshold_tokens(combined)
-        rates = _rate_candidates(combined)
+        ownership_thresholds = sorted({value for values in per_candidate_ownership for value in values})
+        rates = sorted({value for values in per_candidate_rates for value in values})
+        within_candidate_multi_rate = any(len(values) > 1 for values in per_candidate_rates)
+        cross_instrument_rate_variance = len(rates) > 1 and not within_candidate_multi_rate
         flags = _flags(combined)
+
         machine_risk_reasons: list[str] = []
         if not source_texts:
             machine_risk_reasons.append("no_substantive_article_12_candidate")
         if nonstandard_numbering:
             machine_risk_reasons.append("nonstandard_royalty_article_number_candidate")
-        if len(rates) > 1:
+        if within_candidate_multi_rate:
             machine_risk_reasons.append("multiple_rate_candidates_after_condition_filter")
+        if cross_instrument_rate_variance:
+            machine_risk_reasons.append("cross_instrument_rate_variance")
         if flags["financial_lease"] or flags["operating_lease"]:
             machine_risk_reasons.append("lease_subcategory_language")
         if flags["technical_services"]:
@@ -155,11 +169,15 @@ def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> 
             "partner_label": label,
             "candidate_text_count": len(source_texts),
             "rejected_candidate_count": rejected_count,
+            "semantic_rejected_article_12_count": semantic_rejected_article_12_count,
             "royalty_article_numbers_machine": royalty_article_numbers,
             "nonstandard_royalty_article_number_candidate": nonstandard_numbering,
             "percentage_tokens_raw": percentages,
             "ownership_threshold_tokens_machine": ownership_thresholds,
             "rate_candidates_machine": rates,
+            "rate_candidates_by_text_machine": per_candidate_rates,
+            "within_candidate_multi_rate_machine": within_candidate_multi_rate,
+            "cross_instrument_rate_variance_machine": cross_instrument_rate_variance,
             "non_rate_percentage_tokens": sorted(set(percentages) - set(rates)),
             "keyword_flags": flags,
             "machine_risk_reasons": machine_risk_reasons,
@@ -171,7 +189,7 @@ def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> 
 
     risk_rows = [row for row in rows if row["category_projection_review_required"]]
     return {
-        "schema_version": 3,
+        "schema_version": 4,
         "source_country": "AT",
         "status": "royalty_category_machine_risk_queue_not_released",
         "base_user_facing_categories": list(BASE_CATEGORIES),
@@ -184,7 +202,9 @@ def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> 
             "ownership_threshold_percentages_cannot_create_rate_branches": True,
             "machine_rate_candidates_do_not_establish_category_rates": True,
             "article_number_alone_does_not_establish_income_type": True,
+            "royalty_semantics_required_for_article_candidate": True,
             "nonstandard_royalty_article_number_requires_review": True,
+            "cross_instrument_rate_variance_is_not_a_category_split": True,
             "ownership_or_service_rate_conditions_must_not_be_misclassified_as_royalty_categories": True,
             "multiple_applicable_branches_with_different_results_must_fail_closed": True,
             "no_rate_projection_is_released_by_this_audit": True,
