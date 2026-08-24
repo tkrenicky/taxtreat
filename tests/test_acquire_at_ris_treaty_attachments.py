@@ -71,6 +71,49 @@ def test_ris_landing_page_discovers_german_and_english_treaty_text_pdfs_only(mon
     assert len(list(tmp_path.iterdir())) == 3
 
 
+def test_ris_current_view_discovers_full_consolidated_pdf(monkeypatch, tmp_path: Path):
+    current = "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20005944"
+    consolidated = (
+        "https://www.ris.bka.gv.at/GeltendeFassung/Bundesnormen/20005944/"
+        "Doppelbesteuerung%20Albanien%2c%20Fassung%20vom%2024.08.2026.pdf"
+    )
+    machine = {
+        "source_country": "AT",
+        "status": "machine_source_inventory_not_reviewed",
+        "records": [{
+            "partner_label": "Albanien / Albania",
+            "release_universe_candidate": True,
+            "treaty_links": [current],
+            "mli_flag": True,
+            "status_instrument_flag": False,
+        }],
+    }
+    html = f"""
+    <html><body>
+      <a href="{consolidated}" title="PDF-Dokument: Doppelbesteuerung Albanien, Fassung vom 24.08.2026">
+        <img alt="PDF-Dokument" />
+      </a>
+    </body></html>
+    """.encode()
+
+    def fake_get(url, timeout, headers):
+        if url == current:
+            return FakeResponse(url, html, "text/html; charset=utf-8")
+        if url == consolidated:
+            return FakeResponse(url, b"full consolidated treaty pdf", "application/pdf")
+        raise AssertionError(f"Unexpected acquisition URL: {url}")
+
+    monkeypatch.setattr(pilot.requests, "get", fake_get)
+    result = pilot.acquire_pilot(machine, raw_dir=tmp_path, partners=("Albanien / Albania",))
+    sources = result["partners"][0]["sources"]
+
+    assert result["source_count"] == 2
+    assert sources[1]["final_url"] == consolidated
+    assert sources[1]["role_candidate"] == "current_consolidated_view"
+    assert sources[1]["discovered_from_url"] == current
+    assert sources[1]["discovery_method"] == "ris_treaty_text_attachment"
+
+
 def test_attachment_discovery_ignores_non_html_and_non_ris_sources():
     assert pilot._discover_ris_treaty_text_attachments(
         b"pdf",
