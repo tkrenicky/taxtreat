@@ -74,7 +74,11 @@ def extract_article_blocks(text: str) -> dict[int, str]:
             continue
         end = headings[index + 1].start() if index + 1 < len(headings) else len(normalized)
         block = normalized[match.start():end].strip()
-        if len(block) >= 40:
+        # Preserve every detected target heading as audit evidence. The quality gate below,
+        # rather than a length cutoff here, decides whether the block is substantive. This
+        # keeps short protocol statements such as "Artikel 11 bleibt unverändert" visible as
+        # rejected candidates instead of silently dropping them.
+        if block:
             blocks[number] = block
     return blocks
 
