@@ -21,6 +21,7 @@ def prepare_country_review(
     review_queue: dict[str, Any],
     article_inventory: dict[str, Any],
     artifact_root: Path,
+    acquisition_manifest: dict[str, Any] | None = None,
     royalty_audit: dict[str, Any] | None = None,
     language_evidence: dict[str, Any] | None = None,
     article_reconciliation: dict[str, Any] | None = None,
@@ -35,6 +36,7 @@ def prepare_country_review(
     provenance = build_review_bundle_provenance(
         review_queue=review_queue,
         article_inventory=article_inventory,
+        acquisition_manifest=acquisition_manifest,
         royalty_audit=royalty_audit,
         language_evidence=language_evidence,
         article_reconciliation=article_reconciliation,
@@ -97,6 +99,7 @@ def main() -> None:
     parser.add_argument("--queue", type=Path, required=True)
     parser.add_argument("--articles", type=Path, required=True)
     parser.add_argument("--artifact-root", type=Path, required=True)
+    parser.add_argument("--acquisition-manifest", type=Path)
     parser.add_argument("--royalty-audit", type=Path)
     parser.add_argument("--language-evidence", type=Path)
     parser.add_argument("--article-reconciliation", type=Path)
@@ -109,6 +112,7 @@ def main() -> None:
         review_queue=_load(args.queue) or {},
         article_inventory=_load(args.articles) or {},
         artifact_root=args.artifact_root,
+        acquisition_manifest=_load(args.acquisition_manifest),
         royalty_audit=_load(args.royalty_audit),
         language_evidence=_load(args.language_evidence),
         article_reconciliation=_load(args.article_reconciliation),
