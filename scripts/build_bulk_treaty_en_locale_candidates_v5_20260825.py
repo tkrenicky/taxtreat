@@ -6,9 +6,10 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any
 
+import build_bulk_treaty_en_locale_candidates_v3_20260825 as core
 import build_bulk_treaty_en_locale_candidates_v4_20260825 as v4
 
-ROOT = v4.ROOT
+ROOT = core.ROOT
 OUT_DIR = ROOT / "reports" / "treaty_en_locale_bulk_candidates_v5_20260825"
 SUMMARY = ROOT / "reports" / "treaty_en_locale_bulk_candidates_v5_20260825.json"
 SOURCE_CACHE = ROOT / "reports" / "treaty_en_official_source_cache_v5_20260825.json"
@@ -34,7 +35,6 @@ def _json_files() -> list[Path]:
         for path in base.rglob("*.json"):
             if path in {SUMMARY, SOURCE_CACHE}:
                 continue
-            # Generated locale candidate outputs are not source evidence.
             if "treaty_en_locale_bulk_candidates" in str(path):
                 continue
             paths.append(path)
@@ -70,7 +70,6 @@ def _walk(node: Any, inherited: set[str], collected: dict[str, list[dict]], path
     if isinstance(node, dict):
         local = set(inherited)
         local.update(_country_values(node))
-
         direct_urls: list[str] = []
         for key, value in node.items():
             if key.lower() in URL_KEYS:
@@ -82,7 +81,6 @@ def _walk(node: Any, inherited: set[str], collected: dict[str, list[dict]], path
                         "url": url.rstrip(".,);]"),
                         "origin": str(path.relative_to(ROOT)),
                     })
-
         for value in node.values():
             _walk(value, local, collected, path)
     elif isinstance(node, list):
@@ -116,11 +114,9 @@ def _harvest_local_sources() -> tuple[dict[str, list[dict]], dict[str, int]]:
 
 
 def _official_or_governmentish(country: str, url: str) -> bool:
-    if v4._is_official(country, url):
+    if core._is_official(country, url):
         return True
-    host = v4._host(url)
-    # Local evidence registries are allowed to introduce official domains not yet present
-    # in the hard-coded hint map, but only if the hostname itself is government-like.
+    host = core._host(url)
     return any(token in host for token in (
         ".gov.", ".gouv.", ".gob.", ".gv.", ".go.", ".admin.",
         "minfin", "finance", "financ", "tax", "revenue", "legis", "law",
@@ -150,10 +146,10 @@ def _process_country(country: str, articles: dict[str, list[dict]], harvested: d
         "source_attempts": [],
         "articles": {
             article: {
-                "expected_rates": v4._expected_rates(article_rules),
+                "expected_rates": core._expected_rates(article_rules),
                 "status": "NO_EN_ARTICLE",
                 "excerpt_length": 0,
-                "missing_rates": v4._expected_rates(article_rules),
+                "missing_rates": core._expected_rates(article_rules),
             }
             for article, article_rules in articles.items()
         },
@@ -164,10 +160,10 @@ def _process_country(country: str, articles: dict[str, list[dict]], harvested: d
         url = source["url"]
         attempt = {"url": url, "origin": source["origin"], "status": "SOURCE_RESOLUTION"}
         try:
-            body, resolved = v4._discover_document(url)
+            body, resolved = v4._discover_document_bounded(url)
             if not _official_or_governmentish(country, resolved):
                 raise RuntimeError("resolved URL is outside official/government boundary")
-            text = v4._document_text(body, resolved)
+            text = core._document_text(body, resolved)
         except Exception as exc:
             attempt["status"] = "ERROR"
             attempt["error"] = f"{type(exc).__name__}: {exc}"
@@ -179,17 +175,17 @@ def _process_country(country: str, articles: dict[str, list[dict]], harvested: d
         attempt["text_length"] = len(text)
         attempt["articles"] = {}
         for article, article_rules in articles.items():
-            candidate, excerpt = v4._analyse_article(text, article, article_rules)
+            candidate, excerpt = core._analyse_article(text, article, article_rules)
             attempt["articles"][article] = candidate["status"]
             current = row["articles"][article]
-            if v4.STATUS_RANK[candidate["status"]] > v4.STATUS_RANK[current["status"]]:
+            if core.STATUS_RANK[candidate["status"]] > core.STATUS_RANK[current["status"]]:
                 row["articles"][article] = candidate
                 if excerpt:
                     best_locales[article] = {
                         "en": {
                             "language": "en",
                             "status": "candidate_official_treaty_text",
-                            "authority": v4._host(resolved),
+                            "authority": core._host(resolved),
                             "source_url": resolved,
                             "text": excerpt,
                         }
@@ -223,8 +219,8 @@ def _process_country(country: str, articles: dict[str, list[dict]], harvested: d
 
 def main() -> int:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    rules = v4._verified_treaty_rules()
-    covered = v4._covered_pairs()
+    rules = core._verified_treaty_rules()
+    covered = core._covered_pairs()
     grouped: dict[tuple[str, str], list[dict]] = {}
     for rule in rules:
         country = str(rule.get("recipient_country") or "").upper()
