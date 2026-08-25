@@ -55,7 +55,7 @@ def test_ris_landing_page_discovers_german_and_english_treaty_text_pdfs_only(mon
     result = pilot.acquire_pilot(MACHINE, raw_dir=tmp_path, partners=("Algerien / Algeria",))
     sources = result["partners"][0]["sources"]
 
-    assert result["schema_version"] == 5
+    assert result["schema_version"] == 6
     assert result["source_count"] == 3
     assert [row["final_url"] for row in sources] == [landing, german, english]
     assert sources[1]["discovered_from_url"] == landing
