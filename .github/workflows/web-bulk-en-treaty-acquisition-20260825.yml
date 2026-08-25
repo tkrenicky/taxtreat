@@ -5,7 +5,8 @@ on:
     branches:
       - feat/web-bulk-en-treaty-acquisition-20260825
     paths:
-      - 'scripts/build_bulk_treaty_en_locale_candidates_v*.py'
+      - 'data/web/cz_treaty_en_official_sources_20260825.json'
+      - 'scripts/build_bulk_treaty_en_locale_candidates_v7_20260825.py'
       - 'scripts/promote_bulk_treaty_en_locale_candidates_20260825.py'
       - 'scripts/run_bulk_treaty_en_locale_pipeline_20260825.sh'
       - '.github/workflows/web-bulk-en-treaty-acquisition-20260825.yml'
@@ -14,7 +15,7 @@ on:
 jobs:
   run-batch:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 15
     permissions:
       contents: read
     steps:
@@ -25,16 +26,11 @@ jobs:
         run: |
           python -m py_compile \
             scripts/build_bulk_treaty_en_locale_candidates_v3_20260825.py \
-            scripts/build_bulk_treaty_en_locale_candidates_v4_20260825.py \
-            scripts/build_bulk_treaty_en_locale_candidates_v5_20260825.py \
-            scripts/build_bulk_treaty_en_locale_candidates_v6_20260825.py \
+            scripts/build_bulk_treaty_en_locale_candidates_v7_20260825.py \
             scripts/promote_bulk_treaty_en_locale_candidates_20260825.py
-      - name: Run batch
+      - name: Run explicit-source batch
         env:
           PYTHONUNBUFFERED: '1'
-          TAXTREAT_EN_WORKERS: '12'
-          TAXTREAT_EN_SEARCH_TIMEOUT: '6'
-          TAXTREAT_EN_DOC_TIMEOUT: '9'
         run: bash scripts/run_bulk_treaty_en_locale_pipeline_20260825.sh
       - name: Upload batch reports
         if: always()
@@ -42,9 +38,8 @@ jobs:
         with:
           name: web-bulk-en-treaty-results
           path: |
-            reports/treaty_en_locale_bulk_candidates_v6_20260825.json
-            reports/treaty_en_locale_bulk_candidates_v6_20260825/
+            reports/treaty_en_locale_bulk_candidates_v7_20260825.json
+            reports/treaty_en_locale_bulk_candidates_v7_20260825/
             reports/treaty_en_locale_bulk_promotion_20260825.json
-            reports/treaty_en_official_source_cache_v6_20260825.json
             app/web/treaty-excerpt-locales/
           if-no-files-found: warn
