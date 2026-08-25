@@ -2,6 +2,8 @@
 
 Status: **human review preparation only / not released**
 
+The generated XLSX is a reviewer handoff artifact and is intentionally not a canonical legal dataset. This repository file records its provenance and review state only.
+
 ## Source snapshot
 
 The reviewer workbook is built over the immutable successful Austrian acquisition snapshot from GitHub Actions run **#96** (`at-treaty-acquisition`, artifact SHA-256 `9fe8af155561e3545275362e99431683edc9f2331da91a27efcf3d33c185ec41`).
@@ -47,7 +49,7 @@ All reviewer decisions start as `Not reviewed`; no machine conclusion is human a
 
 ## QA / performance
 
-Current code/QA head at workbook generation: `5dc0a197875004a7234cc904df900fa94d25c090`.
+Current code/QA head used for workbook generation: `5dc0a197875004a7234cc904df900fa94d25c090`.
 
 Required CI was green at that head:
 
