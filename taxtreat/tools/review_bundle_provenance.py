@@ -5,13 +5,6 @@ import json
 from typing import Any
 
 
-OPTIONAL_INPUT_NAMES = (
-    "royalty_audit",
-    "language_evidence",
-    "article_reconciliation",
-)
-
-
 def canonical_json_bytes(payload: Any) -> bytes:
     """Return deterministic JSON bytes for review-bundle provenance hashing."""
     return json.dumps(
@@ -59,10 +52,38 @@ def _queue_partner_set(review_queue: dict[str, Any]) -> set[str]:
     return partners
 
 
+def _validate_acquisition_manifest(
+    acquisition_manifest: dict[str, Any],
+    *,
+    source_country: str,
+    queue_partners: set[str],
+) -> None:
+    manifest_country = _country(acquisition_manifest)
+    if manifest_country != source_country:
+        raise ValueError(
+            f"acquisition_manifest source-country mismatch: {manifest_country!r} vs {source_country!r}"
+        )
+    partners = _partner_set(acquisition_manifest)
+    if partners is None or partners != queue_partners:
+        raise ValueError("acquisition_manifest treaty-partner universe mismatch")
+    if int(acquisition_manifest.get("attachment_acquisition_failure_count") or 0) != 0:
+        raise ValueError("acquisition_manifest contains unresolved discovered attachments")
+    for partner in acquisition_manifest.get("partners") or []:
+        if partner.get("attachment_acquisition_complete") is not True:
+            raise ValueError(
+                f"acquisition_manifest incomplete for partner: {partner.get('partner_label')!r}"
+            )
+        if int(partner.get("source_count") or 0) <= 0:
+            raise ValueError(
+                f"acquisition_manifest has no archived official source for partner: {partner.get('partner_label')!r}"
+            )
+
+
 def build_review_bundle_provenance(
     *,
     review_queue: dict[str, Any],
     article_inventory: dict[str, Any],
+    acquisition_manifest: dict[str, Any] | None = None,
     royalty_audit: dict[str, Any] | None = None,
     language_evidence: dict[str, Any] | None = None,
     article_reconciliation: dict[str, Any] | None = None,
@@ -83,6 +104,13 @@ def build_review_bundle_provenance(
     if article_partners is not None and article_partners != queue_partners:
         raise ValueError("Review queue/article inventory treaty-partner universe mismatch")
 
+    if acquisition_manifest is not None:
+        _validate_acquisition_manifest(
+            acquisition_manifest,
+            source_country=source_country,
+            queue_partners=queue_partners,
+        )
+
     optional_inputs = {
         "royalty_audit": royalty_audit,
         "language_evidence": language_evidence,
@@ -102,13 +130,15 @@ def build_review_bundle_provenance(
         "review_queue": review_queue,
         "article_inventory": article_inventory,
     }
+    if acquisition_manifest is not None:
+        payloads["acquisition_manifest"] = acquisition_manifest
     payloads.update({name: payload for name, payload in optional_inputs.items() if payload is not None})
     input_digests = {
         name: payload_sha256(payload)
         for name, payload in sorted(payloads.items())
     }
     bundle_material = {
-        "schema_version": 1,
+        "schema_version": 2,
         "source_country": source_country,
         "input_digests": input_digests,
     }
@@ -119,6 +149,8 @@ def build_review_bundle_provenance(
         "policy": {
             "identity_only_not_legal_approval": True,
             "all_machine_inputs_are_bound": True,
+            "acquisition_manifest_bound_when_supplied": acquisition_manifest is not None,
+            "unresolved_acquisition_failures_rejected": acquisition_manifest is not None,
             "cross_run_input_mixing_rejected": True,
         },
     }
