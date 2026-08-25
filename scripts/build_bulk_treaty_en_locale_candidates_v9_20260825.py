@@ -10,6 +10,7 @@ import build_bulk_treaty_en_locale_candidates_v3_20260825 as core
 
 ROOT = core.ROOT
 REGISTRY = ROOT / "data" / "web" / "cz_treaty_en_official_sources_20260825.json"
+REGISTRY_GLOB = "cz_treaty_en_official_sources*_20260825.json"
 OUT_DIR = ROOT / "reports" / "treaty_en_locale_bulk_candidates_v9_20260825"
 SUMMARY = ROOT / "reports" / "treaty_en_locale_bulk_candidates_v9_20260825.json"
 MAX_WORKERS = 8
@@ -26,6 +27,19 @@ SUBJECT = {"10": "dividend", "11": "interest", "12": "royalt"}
 
 def _load(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _registry_entries() -> dict:
+    merged: dict = {}
+    registry_dir = REGISTRY.parent
+    paths = sorted(registry_dir.glob(REGISTRY_GLOB))
+    if REGISTRY not in paths and REGISTRY.exists():
+        paths.insert(0, REGISTRY)
+    for path in paths:
+        payload = _load(path)
+        for country, entry in (payload.get("entries") or {}).items():
+            merged[str(country).upper()] = entry
+    return merged
 
 
 def _rules() -> list[dict]:
@@ -139,7 +153,7 @@ def _process(country: str, articles: dict[str, list[dict]], entry: dict | None) 
 
 
 def main() -> int:
-    OUT_DIR.mkdir(parents=True, exist_ok=True); registry = _load(REGISTRY).get("entries") or {}; covered = core._covered_pairs(); grouped = {}
+    OUT_DIR.mkdir(parents=True, exist_ok=True); registry = _registry_entries(); covered = core._covered_pairs(); grouped = {}
     for rule in _rules():
         country, article = str(rule.get("recipient_country") or "").upper(), str(rule.get("article") or "").strip()
         if country and article and (country, article) not in covered: grouped.setdefault((country, article), []).append(rule)
