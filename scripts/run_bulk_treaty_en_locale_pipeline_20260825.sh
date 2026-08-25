@@ -5,16 +5,13 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
 export PYTHONUNBUFFERED=1
-export TAXTREAT_EN_WORKERS="${TAXTREAT_EN_WORKERS:-8}"
-export TAXTREAT_EN_SEARCH_TIMEOUT="${TAXTREAT_EN_SEARCH_TIMEOUT:-7}"
-export TAXTREAT_EN_DOC_TIMEOUT="${TAXTREAT_EN_DOC_TIMEOUT:-10}"
 
 python -m py_compile \
-  scripts/build_bulk_treaty_en_locale_candidates_v3_20260825.py \
   scripts/build_bulk_treaty_en_locale_candidates_v4_20260825.py \
+  scripts/build_bulk_treaty_en_locale_candidates_v5_20260825.py \
   scripts/promote_bulk_treaty_en_locale_candidates_20260825.py
 
-python -u scripts/build_bulk_treaty_en_locale_candidates_v4_20260825.py
+python -u scripts/build_bulk_treaty_en_locale_candidates_v5_20260825.py
 python -u scripts/promote_bulk_treaty_en_locale_candidates_20260825.py
 
 if [ -f scripts/validate_treaty_excerpt_locales_20260824.py ]; then
