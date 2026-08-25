@@ -13,6 +13,10 @@ _INDEX_RESOLVERS = {
         "country_markers": ("جمهورية التشيك", "czech republic"),
         "language_markers": ("الإنجليزية", "english"),
     },
+    "istd.gov.jo/EN/ListDetails/Agreements_signed_with_the_Jordanian_government__Double_taxation_avoidance_agreements/1102/1": {
+        "country_markers": ("czechre", "czech republic", "czech"),
+        "language_markers": ("english", "agreement"),
+    },
 }
 
 
@@ -44,9 +48,9 @@ def _resolve_index(url: str, timeout: int) -> tuple[bytes, str, str] | None:
         raise RuntimeError("official index page does not contain Czech Republic section")
     start = min(marker_positions)
 
-    # Stay inside the Czech treaty block. The NBR page repeats the same structural
-    # heading for every treaty; 20k chars is deliberately bounded to avoid choosing
-    # an English PDF belonging to a neighbouring country.
+    # Stay inside the Czech treaty block. Government treaty indexes repeat a similar
+    # structure for each partner; the bounded slice prevents selecting a document
+    # belonging to a neighbouring country.
     segment = raw[start:start + 20000]
     links = _absolute_links(resolved, segment)
     candidates: list[str] = []
@@ -56,14 +60,13 @@ def _resolve_index(url: str, timeout: int) -> tuple[bytes, str, str] | None:
             candidates.append(href)
     if not candidates:
         # Some government templates render the language label outside the anchor.
-        # Accept only PDF/download links from the bounded Czech block, never a link
-        # from another treaty section.
-        candidates = [href for href, _ in links if re.search(r"(?i)(\.pdf(?:$|[?#])|download|attachment)", href)]
+        # Accept only PDF/download/attachment links from the bounded Czech block.
+        candidates = [href for href, _ in links if re.search(r"(?i)(\.pdf(?:$|[?#])|download|attachment|root_storage)", href)]
     if not candidates:
-        raise RuntimeError("no English treaty document link found in Czech Republic section")
+        raise RuntimeError("no treaty document link found in Czech Republic section")
 
     last_error: Exception | None = None
-    for candidate in candidates[:6]:
+    for candidate in candidates[:8]:
         try:
             doc_body, doc_type, doc_resolved = v10._resilient_request(candidate, timeout=timeout)
             if doc_body.startswith(b"%PDF") or len(doc_body) >= 2000:
