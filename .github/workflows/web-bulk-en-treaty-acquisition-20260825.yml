@@ -12,6 +12,10 @@ on:
       - '.github/workflows/web-bulk-en-treaty-acquisition-20260825.yml'
   workflow_dispatch:
 
+concurrency:
+  group: web-bulk-en-treaty-acquisition-20260825
+  cancel-in-progress: true
+
 jobs:
   run-batch:
     runs-on: ubuntu-latest
