@@ -46,3 +46,15 @@ def test_intervening_indirect_wording_still_marks_ownership_threshold(tmp_path: 
     assert row["ownership_threshold_tokens_machine"] == [50.0]
     assert row["rate_candidates_machine"] == [10.0]
     assert row["within_candidate_multi_rate_machine"] is False
+
+
+def test_legacy_exemption_wording_with_intervening_source_state_is_detected(tmp_path: Path):
+    text = (
+        "Artikel 12 Lizenzgebühren. Lizenzgebühren, die aus Quellen eines Vertragsstaates bezogen werden, "
+        "sind von der Besteuerung im erstgenannten Staat ausgenommen. Lizenzgebühren für kinematographische "
+        "Filme werden ungeachtet dessen weiterhin nach den Gesetzen der Vertragsstaaten besteuert."
+    )
+    row = build_audit(_inventory(tmp_path, text), artifact_root=tmp_path)["partners"][0]
+    assert row["rate_candidates_machine"] == []
+    assert row["royalty_source_exemption_branch_machine"] is True
+    assert "royalty_source_exemption_branch_language" in row["machine_risk_reasons"]
