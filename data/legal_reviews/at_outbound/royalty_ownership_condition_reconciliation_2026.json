@@ -1,12 +1,12 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "source_country": "AT",
-  "as_of": "2026-08-24",
+  "as_of": "2026-08-25",
   "status": "targeted_ownership_condition_review_seed_not_released",
-  "source_workflow_run": 32736642192,
-  "source_workflow_head": "b7602eb2da541be5025147b10465dc88e5686aad",
-  "source_artifact_sha256": "b667a238a82114a12c420b0dcf95a6f1237e0c37017d6da4e1a60b333a774d09",
-  "partner_count": 5,
+  "source_workflow_run": 32774128048,
+  "source_workflow_head": "2702cf95aa0f0206dfdc11d5ae2c738da18e7256",
+  "source_artifact_sha256": "9fe8af155561e3545275362e99431683edc9f2331da91a27efcf3d33c185ec41",
+  "partner_count": 9,
   "rows": [
     {
       "partner_label": "Belgien / Belgium",
@@ -27,6 +27,15 @@
       "projection_released": false
     },
     {
+      "partner_label": "Irland / Ireland",
+      "threshold_percent": 50,
+      "classification": "ownership_condition_controls_source_taxing_right_nonstandard_article_numbering",
+      "observed_effect": "royalties are placed in Article 10; candidate text is residence-only generally, but Austrian-source royalties paid to an Irish recipient owning more than 50% of payer share capital may be taxed in Austria up to 10% of the gross amount",
+      "controlling_text_selected": false,
+      "legal_review_completed": false,
+      "projection_released": false
+    },
+    {
       "partner_label": "Italien / Italy",
       "threshold_percent": 50,
       "classification": "ownership_condition_controls_source_taxing_right",
@@ -36,10 +45,37 @@
       "projection_released": false
     },
     {
+      "partner_label": "Luxemburg / Luxembourg",
+      "threshold_percent": 50,
+      "classification": "ownership_condition_with_nonstandard_numbering_requires_instrument_chronology",
+      "observed_effect": "machine evidence contains royalty provisions under nonstandard article numbering, including Article 9/11 variants; the observed rule generally permits source-state taxation up to 10% where the recipient holds more than 50% of payer capital",
+      "controlling_text_selected": false,
+      "legal_review_completed": false,
+      "projection_released": false
+    },
+    {
+      "partner_label": "Niederlande / Netherlands",
+      "threshold_percent": 50,
+      "classification": "ownership_condition_controls_source_taxing_right_nonstandard_article_numbering",
+      "observed_effect": "royalties are placed in Article 13; residence-only treatment is displaced where the recipient controls directly or indirectly more than 50% of payer capital, with source-state tax capped at one half of the statutory rate and in any case 10% of gross royalties",
+      "controlling_text_selected": false,
+      "legal_review_completed": false,
+      "projection_released": false
+    },
+    {
       "partner_label": "Portugal / Portugal",
       "threshold_percent": 50,
       "classification": "ownership_condition_selects_rate_branch",
       "observed_effect": "candidate text provides 10% where the recipient holds more than 50% of payer capital and 5% in all other cases",
+      "controlling_text_selected": false,
+      "legal_review_completed": false,
+      "projection_released": false
+    },
+    {
+      "partner_label": "Schweden / Sweden",
+      "threshold_percent": 50,
+      "classification": "ownership_condition_controls_source_taxing_right_nonstandard_article_numbering",
+      "observed_effect": "royalties are placed in Article 9; candidate text generally permits source-state taxation up to 10% where the recipient holds more than 50% of payer share capital",
       "controlling_text_selected": false,
       "legal_review_completed": false,
       "projection_released": false
@@ -58,6 +94,7 @@
     "ownership_threshold_is_not_a_royalty_rate": true,
     "ownership_condition_may_control_source_taxing_right_or_rate": true,
     "single_rate_candidate_does_not_make_ownership_condition_irrelevant": true,
+    "nonstandard_article_numbering_does_not_establish_controlling_text": true,
     "instrument_chronology_must_be_resolved_before_projection": true,
     "no_treaty_result_is_released_by_this_seed": true
   }
