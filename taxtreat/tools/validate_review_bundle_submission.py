@@ -8,6 +8,14 @@ from typing import Any
 APPROVABLE_DECISIONS = frozenset({"approve", "correct"})
 
 
+def _controlling_evidence_required(row: dict[str, Any]) -> bool:
+    return (
+        int(row.get("unique_text_variant_count_machine") or 0) > 1
+        or row.get("machine_status_instrument_flag") is True
+        or row.get("nonstandard_article_number_machine") is True
+    )
+
+
 def validate_review_bundle_submission(
     review_pack: dict[str, Any],
     *,
@@ -41,12 +49,16 @@ def validate_review_bundle_submission(
             blockers.append("machine_review_scope_not_ready")
 
         decision = str(row.get("reviewer_decision") or "").strip().lower()
+        evidence_refs = list(row.get("reviewer_evidence_references") or [])
         if decision not in APPROVABLE_DECISIONS:
             blockers.append("primary_review_not_approved")
         if decision == "correct" and not str(row.get("reviewer_corrected_conclusion") or "").strip():
             blockers.append("corrected_conclusion_missing")
-        if decision == "correct" and not list(row.get("reviewer_evidence_references") or []):
+        if decision == "correct" and not evidence_refs:
             blockers.append("correction_evidence_reference_missing")
+        controlling_required = _controlling_evidence_required(row)
+        if controlling_required and not evidence_refs:
+            blockers.append("controlling_evidence_reference_missing")
         if not str(row.get("reviewer_name") or "").strip():
             blockers.append("reviewer_name_missing")
         if not str(row.get("reviewed_at") or "").strip():
@@ -58,13 +70,14 @@ def validate_review_bundle_submission(
             "row_number": index,
             "partner_label": partner,
             "income_type": income_type,
+            "controlling_evidence_selection_required": controlling_required,
             "eligible_for_later_canonical_materialization": not blockers,
             "promotion_blockers": blockers,
         })
 
     eligible = sum(row["eligible_for_later_canonical_materialization"] for row in results)
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "source_country": str(review_pack.get("source_country") or "").strip().upper(),
         "review_bundle_id": actual_bundle_id,
         "status": "review_bundle_promotion_validation_only_not_released",
@@ -79,6 +92,7 @@ def validate_review_bundle_submission(
             "primary_review_required": True,
             "independent_approval_required": True,
             "corrections_require_evidence_reference": True,
+            "multi_variant_status_or_nonstandard_scope_requires_controlling_evidence_reference": True,
             "fail_closed": True,
         },
         "rows": results,
