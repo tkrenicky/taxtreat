@@ -1,16 +1,19 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "source_country": "CZ",
-  "purpose": "Explicit official English treaty-text sources for web Step 4 locale extraction. No discovery or redirect traversal is permitted by the v7 extractor.",
+  "purpose": "Explicit official English treaty-text sources for web Step 4 locale extraction. Sources are fetched exactly; no search/discovery is permitted.",
   "entries": {
-    "PL": {"url": "https://www.podatki.gov.pl/media/ooujskio/czechy-konwencja-tekst-angielski.pdf", "authority": "Polish Ministry of Finance / podatki.gov.pl", "kind": "official_treaty_text", "format": "pdf"},
-    "SI": {"url": "https://www.gov.si/assets/ministrstva/MF/Davcni-direktorat/KIDO-2021/ZB-MLI-KIDO-SLO-CES-angl.pdf", "authority": "Ministry of Finance of the Republic of Slovenia / GOV.SI", "kind": "official_synthesised_text", "format": "pdf"},
-    "NO": {"url": "https://www.regjeringen.no/contentassets/95cc6167619d4b3b8e1cc3f0b20ba4cb/czech_republic.pdf", "authority": "Norwegian Ministry of Finance / regjeringen.no", "kind": "official_synthesised_text", "format": "pdf"},
-    "NL": {"url": "https://open.overheid.nl/documenten/ronl-29262f639a830e43807b69f536a6a2ca470c881d/pdf", "authority": "Government of the Netherlands / open.overheid.nl", "kind": "official_synthesised_text", "format": "pdf"},
-    "FI": {"url": "https://www.finlex.fi/en/treaties/tax-treaties/1995/80", "authority": "Finlex / Ministry of Justice of Finland", "kind": "official_synthesised_text", "format": "html"},
-    "EE": {"url": "https://www.riigiteataja.ee/akt/13117436", "authority": "Riigi Teataja / Republic of Estonia", "kind": "official_treaty_text", "format": "html"},
-    "LV": {"url": "https://likumi.lv/ta/en/starptautiskie-ligumi/id/272-convention-between-the-republic-of-latvia-and-the-czech-republic-for-the-avoidance-of-double-taxation-and-the-prevention-of-fiscal", "authority": "Likumi.lv / Official Publisher Latvijas Vēstnesis", "kind": "official_treaty_text", "format": "html"},
-    "IE": {"url": "https://www.revenue.ie/en/tax-professionals/documents/double-taxation-treaties/c/czech.pdf", "authority": "Irish Revenue", "kind": "official_treaty_text", "format": "pdf"},
-    "MT": {"url": "https://mtca.gov.mt/docs/default-source/documents/business-tax/international-affairs/double-taxation-agreements/malta---czech-republic-%28synthesised-text%29.pdf?sfvrsn=2e4d2a6_1", "authority": "Malta Tax and Customs Administration", "kind": "official_synthesised_text", "format": "pdf"}
+    "PL": {"sources": [{"url": "https://www.podatki.gov.pl/media/1545/czecy-nowa-umowa-ang.pdf", "authority": "Polish Ministry of Finance / podatki.gov.pl", "kind": "official_treaty_text", "format": "pdf"}]},
+    "SI": {"sources": [{"url": "https://www.gov.si/assets/ministrstva/MF/Davcni-direktorat/KIDO-2021/ZB-MLI-KIDO-SLO-CES-angl.pdf", "authority": "Ministry of Finance of the Republic of Slovenia / GOV.SI", "kind": "official_synthesised_text", "format": "pdf"}]},
+    "NO": {"sources": [{"url": "https://www.regjeringen.no/contentassets/95cc6167619d4b3b8e1cc3f0b20ba4cb/czech_republic.pdf", "authority": "Norwegian Ministry of Finance / regjeringen.no", "kind": "official_synthesised_text", "format": "pdf"}]},
+    "NL": {"sources": [{"url": "https://open.overheid.nl/documenten/ronl-29262f639a830e43807b69f536a6a2ca470c881d/pdf", "authority": "Government of the Netherlands / open.overheid.nl", "kind": "official_synthesised_text", "format": "pdf"}]},
+    "FI": {"sources": [{"url": "https://www.finlex.fi/en/treaties/tax-treaties/1995/80", "authority": "Finlex / Ministry of Justice of Finland", "kind": "official_synthesised_text", "format": "html"}]},
+    "EE": {"sources": [{"url": "https://www.riigiteataja.ee/akt/13117436", "authority": "Riigi Teataja / Republic of Estonia", "kind": "official_treaty_text", "format": "html"}]},
+    "LV": {"sources": [{"url": "https://likumi.lv/ta/en/starptautiskie-ligumi/id/272-convention-between-the-republic-of-latvia-and-the-czech-republic-for-the-avoidance-of-double-taxation-and-the-prevention-of-fiscal", "authority": "Likumi.lv / Official Publisher Latvijas Vēstnesis", "kind": "official_treaty_text", "format": "html"}]},
+    "MT": {"sources": [{"url": "https://mtca.gov.mt/docs/default-source/documents/business-tax/international-affairs/double-taxation-agreements/malta---czech-republic-%28synthesised-text%29.pdf?sfvrsn=2e4d2a6_1", "authority": "Malta Tax and Customs Administration", "kind": "official_synthesised_text", "format": "pdf"}]},
+    "DK": {"sources": [{"url": "https://www.retsinformation.dk/eli/ltc/2012/31", "authority": "Retsinformation / Kingdom of Denmark", "kind": "official_treaty_text", "format": "html"}]},
+    "ID": {"sources": [{"url": "https://www.pajak.go.id/sites/default/files/2025-05/Tax%20Treaty%20Ceko%20%28Modified%20by%20MLI%29%20-%20EN.pdf", "authority": "Directorate General of Taxes of Indonesia / pajak.go.id", "kind": "official_synthesised_text", "format": "pdf"}]},
+    "TH": {"sources": [{"url": "https://www.rd.go.th/english/2475.html", "authority": "Thailand Revenue Department", "kind": "official_treaty_text", "format": "html", "articles": ["10"]}, {"url": "https://www.rd.go.th/english/2474.html", "authority": "Thailand Revenue Department", "kind": "official_treaty_text", "format": "html", "articles": ["11", "12"]}]},
+    "TW": {"sources": [{"url": "https://www.mof.gov.tw/Eng/download/ac8dbf41d46246459b11a59ef022d9d0", "authority": "Ministry of Finance, R.O.C. (Taiwan)", "kind": "official_treaty_text", "format": "download"}]}
   }
 }
