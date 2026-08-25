@@ -52,6 +52,26 @@ def test_country_split_registry_has_verified_articles_10_11_12():
             assert locale["text"]
 
 
+def test_za_my_ph_batch_has_official_decisive_english_excerpts():
+    expectations = {
+        "ZA": "South African Revenue Service",
+        "MY": "Inland Revenue Board of Malaysia",
+        "PH": "Bureau of Internal Revenue, Philippines",
+    }
+    for country, authority in expectations.items():
+        payload = json.loads((COUNTRY_DIR / f"{country}.json").read_text(encoding="utf-8"))
+        assert payload["source_country"] == "CZ"
+        assert payload["recipient_country"] == country
+        for article in ("10", "11", "12"):
+            locale = payload["articles"][article]["en"]
+            assert locale["language"] == "en"
+            assert locale["status"].startswith("official_")
+            assert locale["authority"] == authority
+            assert locale["source_url"].startswith("https://")
+            assert locale["text"].startswith(f"Article {article}")
+            assert "Decisive treaty wording:" in locale["text"]
+
+
 def test_austria_royalty_and_new_zealand_interest_have_rule_specific_english_excerpts():
     at = json.loads((COUNTRY_DIR / "AT.json").read_text(encoding="utf-8"))
     nz = json.loads((COUNTRY_DIR / "NZ.json").read_text(encoding="utf-8"))
