@@ -1,15 +1,14 @@
 {
   "schema_version": 1,
   "registered_missing_country_count": 25,
-  "missing_country_article_pairs_at_start": 206,
+  "missing_country_article_pairs_at_start": 204,
   "country_status_counts": {
     "NO_REGISTERED_SOURCE": 46,
     "NO_EN_TEXT": 13,
-    "REVIEW": 7,
-    "SOURCE_ERROR": 4,
-    "PARTIAL": 1
+    "REVIEW": 8,
+    "SOURCE_ERROR": 4
   },
-  "article_candidates_pass": 2,
+  "article_candidates_pass": 0,
   "article_candidates_review": 13,
   "results": [
     {
@@ -2140,7 +2139,7 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://open.overheid.nl/documenten/ronl-29262f639a830e43807b69f536a6a2ca470c881d/pdf",
+          "url": "https://open.overheid.nl/documenten/ronl-451f0adf8f6b17329694f1483f1ab49e00952a48/pdf",
           "authority": "Government of the Netherlands / open.overheid.nl",
           "status": "SOURCE_ERROR",
           "articles": {},
@@ -2187,7 +2186,7 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://www.regjeringen.no/contentassets/95cc6167619d4b3b8e1cc3f0b20ba4cb/czech_republic.pdf",
+          "url": "https://www.regjeringen.no/no/dokumenter/stprp-nr-42-2004-/id138803/?ch=6",
           "authority": "Norwegian Ministry of Finance / regjeringen.no",
           "status": "SOURCE_ERROR",
           "articles": {},
@@ -2235,30 +2234,20 @@
     },
     {
       "country": "PL",
-      "status": "PARTIAL",
+      "status": "REVIEW",
       "source_attempts": [
         {
           "url": "https://www.podatki.gov.pl/media/wpccdltv/dta-pl-cz-mli-synthesised-text.pdf",
           "authority": "Polish Ministry of Finance / podatki.gov.pl",
           "status": "PARSED",
           "articles": {
-            "10": "PASS",
-            "11": "REVIEW",
-            "12": "PASS"
+            "11": "REVIEW"
           },
           "resolved_url": "https://www.podatki.gov.pl/media/wpccdltv/dta-pl-cz-mli-synthesised-text.pdf",
           "text_length": 55018
         }
       ],
       "articles": {
-        "10": {
-          "expected_rates": [
-            5.0
-          ],
-          "status": "PASS",
-          "excerpt_length": 2096,
-          "missing_rates": []
-        },
         "11": {
           "expected_rates": [
             0.0,
@@ -2269,14 +2258,6 @@
           "missing_rates": [
             5.0
           ]
-        },
-        "12": {
-          "expected_rates": [
-            10.0
-          ],
-          "status": "PASS",
-          "excerpt_length": 2473,
-          "missing_rates": []
         }
       }
     },
