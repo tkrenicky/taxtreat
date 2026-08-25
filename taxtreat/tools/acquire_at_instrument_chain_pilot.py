@@ -11,6 +11,8 @@ from urllib.parse import urljoin, urlsplit
 import requests
 from bs4 import BeautifulSoup
 
+from taxtreat.tools.official_source_cache import load_cached_source, store_cached_source
+
 DEFAULT_INPUT = Path("artifacts/at/treaty_source_inventory_machine.json")
 DEFAULT_OUTPUT = Path("artifacts/at/instrument_chain_pilot.json")
 DEFAULT_RAW_DIR = Path("artifacts/at/instrument_chain_sources")
@@ -105,6 +107,48 @@ def _fetch_official_source(url: str, *, timeout: int = 30) -> tuple[bytes, str, 
     return content, str(response.headers.get("content-type") or ""), final_url
 
 
+def _fetch_official_source_cached(
+    url: str,
+    *,
+    cache_root: Path | None,
+    cache_namespace: str | None,
+    cache_max_age_seconds: int,
+) -> tuple[bytes, str, str, bool, str | None]:
+    _validate_official_url(url)
+    if cache_root is not None and cache_namespace and cache_max_age_seconds > 0:
+        cached = load_cached_source(
+            url,
+            cache_root=cache_root,
+            namespace=cache_namespace,
+            max_age_seconds=cache_max_age_seconds,
+        )
+        if cached is not None:
+            _validate_official_url(cached.final_url)
+            if not cached.content or len(cached.content) > MAX_SOURCE_BYTES:
+                raise ValueError(f"Invalid cached Austrian treaty source: {cached.final_url}")
+            return (
+                cached.content,
+                cached.content_type,
+                cached.final_url,
+                True,
+                cached.fetched_at,
+            )
+
+    content, content_type, final_url = _fetch_official_source(url)
+    fetched_at: str | None = None
+    if cache_root is not None and cache_namespace and cache_max_age_seconds > 0:
+        meta = store_cached_source(
+            url,
+            final_url=final_url,
+            content_type=content_type,
+            content=content,
+            cache_root=cache_root,
+            namespace=cache_namespace,
+        )
+        fetched_at = str(meta["fetched_at"])
+    return content, content_type, final_url, False, fetched_at
+
+
 def _is_labeled_treaty_text(label: str) -> bool:
     if any(marker in label for marker in RIS_TREATY_TEXT_LABELS):
         return True
@@ -189,11 +233,18 @@ def acquire_pilot(
     raw_dir: Path,
     partners: tuple[str, ...] = PILOT_PARTNERS,
     royalty_source_overrides: dict[str, tuple[str, ...]] | None = None,
+    cache_root: Path | None = None,
+    cache_namespace: str | None = None,
+    cache_max_age_seconds: int = 0,
 ) -> dict[str, Any]:
     if machine_inventory.get("source_country") != "AT":
         raise ValueError("Expected Austrian treaty machine inventory")
     if machine_inventory.get("status") != "machine_source_inventory_not_reviewed":
         raise ValueError("Austrian treaty inventory is not in machine discovery state")
+    if cache_max_age_seconds < 0:
+        raise ValueError("cache_max_age_seconds must be non-negative")
+    if cache_root is not None and not cache_namespace:
+        raise ValueError("cache_namespace is required when cache_root is configured")
     records = {str(row.get("partner_label")): row for row in machine_inventory.get("records", []) if row.get("release_universe_candidate") is True}
     missing = [partner for partner in partners if partner not in records]
     if missing:
@@ -217,7 +268,12 @@ def acquire_pilot(
 
         def archive_source(listed_url: str, *, discovered_from_url: str | None = None) -> tuple[bytes, str, str] | None:
             try:
-                content, content_type, final_url = _fetch_official_source(listed_url)
+                content, content_type, final_url, cache_hit, transport_fetched_at = _fetch_official_source_cached(
+                    listed_url,
+                    cache_root=cache_root,
+                    cache_namespace=cache_namespace,
+                    cache_max_age_seconds=cache_max_age_seconds,
+                )
             except (ValueError, requests.RequestException) as exc:
                 if discovered_from_url is None:
                     raise
@@ -248,6 +304,8 @@ def acquire_pilot(
                 "sha256": digest,
                 "artifact_path": str(path),
                 "curated_royalty_source_override": listed_url in override_urls,
+                "transport_cache_hit": cache_hit,
+                "transport_fetched_at": transport_fetched_at,
                 "legal_review_completed": False,
             }
             if discovered_from_url is not None:
@@ -268,6 +326,7 @@ def acquire_pilot(
             "machine_mli_flag": treaty.get("mli_flag") is True,
             "machine_status_instrument_flag": treaty.get("status_instrument_flag") is True,
             "source_count": len(sources),
+            "transport_cache_hit_count": sum(source["transport_cache_hit"] for source in sources),
             "curated_royalty_source_override_count": sum(1 for source in sources if source["curated_royalty_source_override"]),
             "sources": sources,
             "attachment_acquisition_failure_count": len(attachment_failures),
@@ -280,6 +339,7 @@ def acquire_pilot(
     full_current = tuple(partners) == current_partner_labels(machine_inventory)
     attachment_failure_count = sum(row["attachment_acquisition_failure_count"] for row in output_records)
     royalty_override_count = sum(row["curated_royalty_source_override_count"] for row in output_records)
+    cache_hit_count = sum(row["transport_cache_hit_count"] for row in output_records)
     return {
         "schema_version": 6,
         "source_country": "AT",
@@ -287,11 +347,14 @@ def acquire_pilot(
         "acquisition_scope": "all_current_partners" if full_current else "selected_partners",
         "pilot_partner_count": len(output_records),
         "source_count": sum(row["source_count"] for row in output_records),
+        "transport_cache_hit_count": cache_hit_count,
+        "transport_cache_enabled": cache_root is not None and bool(cache_namespace) and cache_max_age_seconds > 0,
         "curated_royalty_source_override_count": royalty_override_count,
         "attachment_acquisition_failure_count": attachment_failure_count,
         "partners": output_records,
         "release_constraints": [
             "Successful HTTP acquisition and hashing do not establish which instrument controls a treaty result.",
+            "Transport-cache reuse is an acquisition optimization only; every cached source is hash-validated and remains subject to the same legal-review requirements as a fresh download.",
             "Failure to acquire a discovered RIS attachment is retained as partner-specific unresolved evidence and never makes that partner release-eligible.",
             "A failure to acquire a listed primary source or curated official royalty source override remains fatal to the acquisition run.",
             "Curated Article 12 source overrides supplement scanned or text-incomplete publication evidence only; they do not establish Article 10 or Article 11 completeness or select a controlling instrument.",
@@ -311,6 +374,9 @@ def main() -> None:
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--raw-dir", type=Path, default=DEFAULT_RAW_DIR)
     parser.add_argument("--royalty-source-overrides", type=Path, default=DEFAULT_ROYALTY_SOURCE_OVERRIDES)
+    parser.add_argument("--cache-root", type=Path)
+    parser.add_argument("--cache-namespace")
+    parser.add_argument("--cache-max-age-seconds", type=int, default=0)
     parser.add_argument("--partner", action="append", dest="partners")
     parser.add_argument("--all-current", action="store_true")
     args = parser.parse_args()
@@ -319,10 +385,18 @@ def main() -> None:
     inventory = json.loads(args.input.read_text(encoding="utf-8"))
     partners = current_partner_labels(inventory) if args.all_current else (tuple(args.partners) if args.partners else PILOT_PARTNERS)
     overrides = load_royalty_source_overrides(args.royalty_source_overrides)
-    result = acquire_pilot(inventory, raw_dir=args.raw_dir, partners=partners, royalty_source_overrides=overrides)
+    result = acquire_pilot(
+        inventory,
+        raw_dir=args.raw_dir,
+        partners=partners,
+        royalty_source_overrides=overrides,
+        cache_root=args.cache_root,
+        cache_namespace=args.cache_namespace,
+        cache_max_age_seconds=args.cache_max_age_seconds,
+    )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"AT instrument-chain acquisition: {result['pilot_partner_count']} partners / {result['source_count']} official sources acquired / {result['curated_royalty_source_override_count']} curated royalty overrides / {result['attachment_acquisition_failure_count']} unresolved discovered attachments / {result['acquisition_scope']}")
+    print(f"AT instrument-chain acquisition: {result['pilot_partner_count']} partners / {result['source_count']} official sources acquired / {result['curated_royalty_source_override_count']} curated royalty overrides / {result['attachment_acquisition_failure_count']} unresolved discovered attachments / {result['transport_cache_hit_count']} transport cache hits / {result['acquisition_scope']}")
 
 
 if __name__ == "__main__":
