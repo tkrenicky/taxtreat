@@ -27,6 +27,7 @@ jobs:
             scripts/build_bulk_treaty_en_locale_candidates_v3_20260825.py \
             scripts/build_bulk_treaty_en_locale_candidates_v4_20260825.py \
             scripts/build_bulk_treaty_en_locale_candidates_v5_20260825.py \
+            scripts/build_bulk_treaty_en_locale_candidates_v6_20260825.py \
             scripts/promote_bulk_treaty_en_locale_candidates_20260825.py
       - name: Run batch
         env:
@@ -41,9 +42,9 @@ jobs:
         with:
           name: web-bulk-en-treaty-results
           path: |
-            reports/treaty_en_locale_bulk_candidates_v5_20260825.json
-            reports/treaty_en_locale_bulk_candidates_v5_20260825/
+            reports/treaty_en_locale_bulk_candidates_v6_20260825.json
+            reports/treaty_en_locale_bulk_candidates_v6_20260825/
             reports/treaty_en_locale_bulk_promotion_20260825.json
-            reports/treaty_en_official_source_cache_v5_20260825.json
+            reports/treaty_en_official_source_cache_v6_20260825.json
             app/web/treaty-excerpt-locales/
           if-no-files-found: warn
