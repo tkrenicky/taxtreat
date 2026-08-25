@@ -12,12 +12,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 RULE_DIR = ROOT / "data" / "legal_rules_stage6"
+MF_INVENTORY = ROOT / "data" / "legal_consolidation" / "mf_inventory.json"
 LOCALE_REGISTRY = ROOT / "app" / "web" / "treaty-excerpt-locales-20260824.json"
 LOCALE_DIR = ROOT / "app" / "web" / "treaty-excerpt-locales"
 OUT_DIR = ROOT / "reports" / "treaty_en_locale_bulk_candidates_20260825"
 SUMMARY = ROOT / "reports" / "treaty_en_locale_bulk_candidates_20260825.json"
 
-USER_AGENT = "TaxTreat treaty-locale evidence preparation/2026-08-25"
+USER_AGENT = "Mozilla/5.0 (compatible; TaxTreat treaty-locale evidence preparation/2026-08-25)"
+STATUS_RANK = {"NO_EN_ARTICLE": 0, "REVIEW": 1, "PASS": 2}
 
 
 def _load_json(path: Path) -> dict:
@@ -55,8 +57,69 @@ def _covered_pairs() -> set[tuple[str, str]]:
     return covered
 
 
+def _mf_sources() -> dict[str, list[dict]]:
+    if not MF_INVENTORY.exists():
+        return {}
+    payload = _load_json(MF_INVENTORY)
+    result: dict[str, list[dict]] = {}
+    for partner in payload.get("partners", []):
+        country = str(partner.get("iso2") or "").upper()
+        if not country:
+            continue
+        ordered_groups = (
+            ("base_instrument", partner.get("base_instruments") or []),
+            ("financial_reporter", partner.get("financial_reporter_sources") or []),
+            ("related_instrument", partner.get("related_instruments") or []),
+        )
+        for source_kind, items in ordered_groups:
+            for item in items:
+                url = str(item.get("url") or "")
+                if not url.startswith("http"):
+                    continue
+                result.setdefault(country, []).append({
+                    "url": url,
+                    "authority": str(item.get("authority") or "Czech Ministry of Finance / official publication"),
+                    "label": str(item.get("label") or ""),
+                    "source_id": str(item.get("source_id") or ""),
+                    "source_kind": source_kind,
+                    "origin": "mf_inventory",
+                })
+    return result
+
+
+def _source_candidates(country: str, articles: dict[str, list[dict]], mf_sources: dict[str, list[dict]]) -> list[dict]:
+    candidates = list(mf_sources.get(country, []))
+    for article_rules in articles.values():
+        for rule in article_rules:
+            url = str(rule.get("source_url") or "")
+            if url.startswith("http"):
+                candidates.append({
+                    "url": url,
+                    "authority": "Stage 6 approved official source",
+                    "label": str(rule.get("source_id") or ""),
+                    "source_id": str(rule.get("source_id") or ""),
+                    "source_kind": "stage6_rule_source",
+                    "origin": "stage6",
+                })
+    deduped: list[dict] = []
+    seen: set[str] = set()
+    for candidate in candidates:
+        url = candidate["url"]
+        if url in seen:
+            continue
+        seen.add(url)
+        deduped.append(candidate)
+    return deduped
+
+
 def _request(url: str) -> tuple[bytes, str, str]:
-    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+    req = urllib.request.Request(
+        url,
+        headers={
+            "User-Agent": USER_AGENT,
+            "Accept": "application/pdf,text/html,application/xhtml+xml;q=0.9,*/*;q=0.8",
+        },
+    )
     with urllib.request.urlopen(req, timeout=35) as response:
         return response.read(), response.headers.get_content_type(), response.geturl()
 
@@ -67,18 +130,31 @@ def _discover_pdf(url: str) -> tuple[bytes, str]:
         return body, final_url
 
     text = body.decode("utf-8", errors="ignore")
-    candidates = re.findall(r'href=["\']([^"\']+)["\']', text, flags=re.I)
+    hrefs = re.findall(r'href=["\']([^"\']+)["\']', text, flags=re.I)
     preferred: list[str] = []
     fallback: list[str] = []
-    for href in candidates:
+    for href in hrefs:
         absolute = urllib.parse.urljoin(final_url, href)
         lower = absolute.lower()
-        if "viewfile.aspx" in lower or lower.endswith(".pdf") or ".pdf?" in lower:
-            if any(token in lower for token in ("smlouv", "treat", "sbirka", "viewfile")):
-                preferred.append(absolute)
-            else:
-                fallback.append(absolute)
+        is_download = any(token in lower for token in (
+            "viewfile.aspx",
+            "/stahni/",
+            "overena-zneni",
+            ".pdf",
+            "download",
+        ))
+        if not is_download:
+            continue
+        if any(token in lower for token in ("smlouv", "treat", "sbirka", "viewfile", "overena-zneni")):
+            preferred.append(absolute)
+        else:
+            fallback.append(absolute)
+
+    seen: set[str] = set()
     for candidate in preferred + fallback:
+        if candidate in seen:
+            continue
+        seen.add(candidate)
         try:
             pdf, pdf_type, resolved = _request(candidate)
         except Exception:
@@ -94,12 +170,15 @@ def _pdf_text(pdf: bytes) -> str:
         txt_path = Path(tmp) / "source.txt"
         pdf_path.write_bytes(pdf)
         if shutil.which("pdftotext"):
-            subprocess.run(
+            completed = subprocess.run(
                 ["pdftotext", "-layout", str(pdf_path), str(txt_path)],
-                check=True,
+                check=False,
                 stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,
+                stderr=subprocess.PIPE,
+                text=True,
             )
+            if completed.returncode != 0:
+                raise RuntimeError(f"pdftotext failed: {completed.stderr.strip()[:300]}")
             return txt_path.read_text(encoding="utf-8", errors="ignore")
         try:
             from pypdf import PdfReader  # type: ignore
@@ -153,7 +232,7 @@ def _expected_rates(rules: list[dict]) -> list[float]:
 def _rate_present(text: str, rate: float) -> bool:
     if rate == 0:
         return bool(re.search(
-            r"\b(taxable only|taxed only|shall be exempt|exempt from tax|exempted from tax|may be taxed only)\b",
+            r"\b(taxable only|taxed only|shall be exempt|exempt from tax|exempted from tax|may be taxed only|shall not be taxed)\b",
             text,
             re.I,
         ))
@@ -170,10 +249,32 @@ def _english_likelihood(text: str) -> bool:
     return len(markers.intersection(tokens)) >= 3
 
 
+def _analyse_article(text: str, article: str, article_rules: list[dict]) -> tuple[dict, str | None]:
+    excerpt = _extract_article(text, article)
+    rates = _expected_rates(article_rules)
+    result = {
+        "expected_rates": rates,
+        "status": "NO_EN_ARTICLE",
+        "excerpt_length": 0,
+        "missing_rates": rates,
+    }
+    if not excerpt or not _english_likelihood(excerpt):
+        return result, None
+    missing_rates = [rate for rate in rates if not _rate_present(excerpt, rate)]
+    result.update({
+        "status": "PASS" if not missing_rates else "REVIEW",
+        "excerpt_length": len(excerpt),
+        "missing_rates": missing_rates,
+    })
+    return result, excerpt
+
+
 def main() -> int:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     rules = _verified_treaty_rules()
     covered = _covered_pairs()
+    mf_sources = _mf_sources()
+
     grouped: dict[tuple[str, str], list[dict]] = {}
     for rule in rules:
         country = str(rule.get("recipient_country") or "").upper()
@@ -188,96 +289,134 @@ def main() -> int:
 
     results: list[dict] = []
     for country, articles in sorted(countries.items()):
-        source_urls = [
-            str(rule.get("source_url") or "")
-            for article_rules in articles.values()
-            for rule in article_rules
-            if str(rule.get("source_url") or "").startswith("http")
-        ]
-        source_url = source_urls[0] if source_urls else ""
+        sources = _source_candidates(country, articles, mf_sources)
         row = {
             "country": country,
-            "source_url": source_url,
-            "resolved_pdf_url": None,
-            "status": "NO_SOURCE",
-            "articles": {},
+            "status": "NO_SOURCE" if not sources else "NO_EN_TEXT",
+            "source_attempts": [],
+            "articles": {
+                article: {
+                    "expected_rates": _expected_rates(article_rules),
+                    "status": "NO_EN_ARTICLE",
+                    "excerpt_length": 0,
+                    "missing_rates": _expected_rates(article_rules),
+                }
+                for article, article_rules in articles.items()
+            },
         }
-        if not source_url:
-            results.append(row)
-            continue
-        try:
-            pdf, resolved_pdf_url = _discover_pdf(source_url)
-            text = _pdf_text(pdf)
-            row["resolved_pdf_url"] = resolved_pdf_url
+        best_locales: dict[str, dict] = {}
+
+        for source in sources:
+            attempt = {
+                "url": source["url"],
+                "origin": source["origin"],
+                "source_kind": source["source_kind"],
+                "source_id": source["source_id"],
+                "label": source["label"],
+                "status": "SOURCE_RESOLUTION",
+            }
+            try:
+                pdf, resolved_pdf_url = _discover_pdf(source["url"])
+                attempt["resolved_pdf_url"] = resolved_pdf_url
+            except Exception as exc:
+                attempt["status"] = "DOWNLOAD_ERROR"
+                attempt["error"] = f"{type(exc).__name__}: {exc}"
+                row["source_attempts"].append(attempt)
+                continue
+
+            try:
+                text = _pdf_text(pdf)
+            except Exception as exc:
+                attempt["status"] = "PDF_TEXT_ERROR"
+                attempt["error"] = f"{type(exc).__name__}: {exc}"
+                row["source_attempts"].append(attempt)
+                continue
+
+            attempt["status"] = "PARSED"
+            attempt["text_length"] = len(text)
+            article_attempts: dict[str, str] = {}
+            for article, article_rules in articles.items():
+                candidate_result, excerpt = _analyse_article(text, article, article_rules)
+                article_attempts[article] = candidate_result["status"]
+                current = row["articles"][article]
+                if STATUS_RANK[candidate_result["status"]] > STATUS_RANK[current["status"]]:
+                    row["articles"][article] = candidate_result
+                    if excerpt:
+                        best_locales[article] = {
+                            "en": {
+                                "language": "en",
+                                "status": "candidate_official_treaty_text",
+                                "authority": source["authority"],
+                                "source_url": resolved_pdf_url,
+                                "text": excerpt,
+                            }
+                        }
+            attempt["articles"] = article_attempts
+            row["source_attempts"].append(attempt)
+
+            if all(value["status"] == "PASS" for value in row["articles"].values()):
+                break
+
+        pass_count = sum(1 for value in row["articles"].values() if value["status"] == "PASS")
+        review_count = sum(1 for value in row["articles"].values() if value["status"] == "REVIEW")
+        if pass_count == len(articles):
+            row["status"] = "PASS"
+        elif pass_count:
+            row["status"] = "PARTIAL"
+        elif review_count:
+            row["status"] = "REVIEW"
+        elif sources and all(attempt["status"] == "DOWNLOAD_ERROR" for attempt in row["source_attempts"]):
+            row["status"] = "DOWNLOAD_ERROR"
+        elif sources and any(attempt["status"] == "PDF_TEXT_ERROR" for attempt in row["source_attempts"]):
+            row["status"] = "PDF_TEXT_ERROR"
+        elif sources:
+            row["status"] = "NO_EN_TEXT"
+
+        if best_locales:
             candidate_payload = {
                 "schema_version": 1,
                 "source_country": "CZ",
                 "recipient_country": country,
                 "candidate_only": True,
-                "official_source_url": source_url,
-                "resolved_pdf_url": resolved_pdf_url,
-                "articles": {},
+                "articles": best_locales,
             }
-            pass_count = 0
-            for article, article_rules in sorted(articles.items(), key=lambda item: int(re.sub(r"\D", "", item[0]) or 0)):
-                excerpt = _extract_article(text, article)
-                rates = _expected_rates(article_rules)
-                article_result = {
-                    "expected_rates": rates,
-                    "status": "NO_EN_ARTICLE",
-                    "excerpt_length": 0,
-                    "missing_rates": rates,
-                }
-                if excerpt and _english_likelihood(excerpt):
-                    missing_rates = [rate for rate in rates if not _rate_present(excerpt, rate)]
-                    article_result.update({
-                        "status": "PASS" if not missing_rates else "REVIEW",
-                        "excerpt_length": len(excerpt),
-                        "missing_rates": missing_rates,
-                    })
-                    candidate_payload["articles"][article] = {
-                        "en": {
-                            "language": "en",
-                            "status": "candidate_official_treaty_text",
-                            "authority": "Official Czech treaty publication",
-                            "source_url": resolved_pdf_url,
-                            "text": excerpt,
-                        }
-                    }
-                    if not missing_rates:
-                        pass_count += 1
-                row["articles"][article] = article_result
-            row["status"] = "PASS" if pass_count == len(articles) else ("PARTIAL" if pass_count else "NO_EN_TEXT")
-            if candidate_payload["articles"]:
-                (OUT_DIR / f"{country}.json").write_text(
-                    json.dumps(candidate_payload, ensure_ascii=False, indent=2) + "\n",
-                    encoding="utf-8",
-                )
-        except Exception as exc:
-            row["status"] = "ERROR"
-            row["error"] = f"{type(exc).__name__}: {exc}"
+            (OUT_DIR / f"{country}.json").write_text(
+                json.dumps(candidate_payload, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+
         results.append(row)
         print(f"{country}: {row['status']}")
 
     counts: dict[str, int] = {}
+    attempt_counts: dict[str, int] = {}
     article_pass = 0
+    article_review = 0
     for row in results:
         counts[row["status"]] = counts.get(row["status"], 0) + 1
+        for attempt in row.get("source_attempts", []):
+            attempt_counts[attempt["status"]] = attempt_counts.get(attempt["status"], 0) + 1
         article_pass += sum(1 for value in row.get("articles", {}).values() if value.get("status") == "PASS")
+        article_review += sum(1 for value in row.get("articles", {}).values() if value.get("status") == "REVIEW")
 
     summary = {
-        "schema_version": 1,
+        "schema_version": 2,
         "missing_country_article_pairs_at_start": len(grouped),
         "countries_scanned": len(results),
         "country_status_counts": counts,
+        "source_attempt_status_counts": attempt_counts,
         "article_candidates_pass": article_pass,
+        "article_candidates_review": article_review,
         "results": results,
     }
     SUMMARY.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print("\nBulk EN treaty locale candidate extraction")
     print(f"Missing country/article pairs at start: {len(grouped)}")
     print(f"Countries scanned: {len(results)}")
+    print(f"Country status counts: {json.dumps(counts, sort_keys=True)}")
+    print(f"Source attempt status counts: {json.dumps(attempt_counts, sort_keys=True)}")
     print(f"Article candidates PASS: {article_pass}")
+    print(f"Article candidates REVIEW: {article_review}")
     print(f"Summary: {SUMMARY.relative_to(ROOT)}")
     print(f"Candidates: {OUT_DIR.relative_to(ROOT)}")
     return 0
