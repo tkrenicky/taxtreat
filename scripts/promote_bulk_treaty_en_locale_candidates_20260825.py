@@ -5,8 +5,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-CANDIDATE_DIR = ROOT / "reports" / "treaty_en_locale_bulk_candidates_v3_20260825"
-SUMMARY = ROOT / "reports" / "treaty_en_locale_bulk_candidates_v3_20260825.json"
+CANDIDATE_DIR = ROOT / "reports" / "treaty_en_locale_bulk_candidates_v4_20260825"
+SUMMARY = ROOT / "reports" / "treaty_en_locale_bulk_candidates_v4_20260825.json"
 LOCALE_DIR = ROOT / "app" / "web" / "treaty-excerpt-locales"
 PROMOTION_SUMMARY = ROOT / "reports" / "treaty_en_locale_bulk_promotion_20260825.json"
 
@@ -83,10 +83,10 @@ def main() -> int:
         json.dumps(promotion_summary, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
-    print("Bulk EN locale promotion")
-    print(f"Promoted PASS articles: {len(promoted)}")
-    print(f"Skipped articles: {len(skipped)}")
-    print(f"Summary: {PROMOTION_SUMMARY.relative_to(ROOT)}")
+    print("Bulk EN locale promotion", flush=True)
+    print(f"Promoted PASS articles: {len(promoted)}", flush=True)
+    print(f"Skipped articles: {len(skipped)}", flush=True)
+    print(f"Summary: {PROMOTION_SUMMARY.relative_to(ROOT)}", flush=True)
     return 0
 
 
