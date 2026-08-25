@@ -22,6 +22,7 @@ BASE_CATEGORIES = (
 PERCENT_PATTERNS = (
     re.compile(r"(\d+(?:[.,]\d+)?)\s*(?:%|prozent|percent|per\s+cent)", flags=re.IGNORECASE),
     re.compile(r"(\d+(?:[.,]\d+)?)\s+vom\s+hundert", flags=re.IGNORECASE),
+    re.compile(r"(\d+(?:[.,]\d+)?)\s*v\.?\s*h\.?", flags=re.IGNORECASE),
 )
 ROYALTY_TEXT_RE = re.compile(r"(?:lizenzgebühr|royalt)", flags=re.IGNORECASE)
 TECHNICAL_SERVICE_RE = re.compile(
@@ -51,7 +52,7 @@ OWNERSHIP_BEFORE_RE = re.compile(
 )
 OWNERSHIP_AFTER_RE = re.compile(
     r"^\s*(?:(?:des|der|am)\s+|of\s+(?:the\s+)?|in\s+(?:the\s+)?)?"
-    r"(?:kapitals?|capital|stimmrechte?|voting\s+power|shares?|anteile?)\b",
+    r"(?:(?:grund-?\s*(?:oder\s+)?stamm)?kapitals?|capital|stimmrechte?|voting\s+power|shares?|anteile?)\b",
     flags=re.IGNORECASE,
 )
 CLAUSE_SPLIT_RE = re.compile(r"[;.!?]|\b(?:[a-z]|\d+)[.)]\s*", flags=re.IGNORECASE)
@@ -84,7 +85,7 @@ def _ownership_threshold_tokens(text: str) -> list[float]:
     for value, start, end in _percentage_mentions(text):
         before = text[max(0, start - 70):start]
         before_clause = re.split(r"[;.!?]", before)[-1]
-        after = text[end:min(len(text), end + 45)]
+        after = text[end:min(len(text), end + 60)]
         if OWNERSHIP_BEFORE_RE.search(before_clause) or OWNERSHIP_AFTER_RE.search(after):
             values.add(value)
     return sorted(values)
@@ -119,10 +120,8 @@ def _flags(text: str) -> dict[str, bool]:
 
 
 def _royalty_semantic_candidate(text: str) -> bool:
-    matches = list(ROYALTY_TEXT_RE.finditer(text))
-    if not matches:
-        return False
-    return matches[0].start() < 180 or len(matches) >= 2
+    match = ROYALTY_TEXT_RE.search(text)
+    return bool(match and match.start() < 180)
 
 
 def _royalty_source_exemption_branch(text: str) -> bool:
@@ -157,7 +156,7 @@ def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> 
                         rejected_count += 1
                     continue
                 text = _artifact_text(Path(str(candidate["artifact_path"])), artifact_root)
-                is_royalty_text = semantic_income == "royalty" or _royalty_semantic_candidate(text)
+                is_royalty_text = _royalty_semantic_candidate(text)
                 if number == 12:
                     if is_royalty_text:
                         article_12_texts.append(text)
@@ -229,7 +228,7 @@ def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> 
 
     risk_rows = [row for row in rows if row["category_projection_review_required"]]
     return {
-        "schema_version": 6,
+        "schema_version": 7,
         "source_country": "AT",
         "status": "royalty_category_machine_risk_queue_not_released",
         "base_user_facing_categories": list(BASE_CATEGORIES),
@@ -239,12 +238,13 @@ def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> 
             "seven_base_categories_are_not_assumed_to_be_legally_exhaustive": True,
             "treaty_specific_discriminators_may_be_required": True,
             "raw_percentage_tokens_are_not_rate_candidates": True,
+            "legacy_v_h_percentage_notation_is_supported": True,
             "ownership_threshold_percentages_cannot_create_rate_branches": True,
             "technical_service_percentages_cannot_create_royalty_rate_branches": True,
             "source_exemption_language_is_a_branch_signal_not_a_synthetic_zero_rate": True,
             "machine_rate_candidates_do_not_establish_category_rates": True,
             "article_number_alone_does_not_establish_income_type": True,
-            "royalty_semantics_required_for_article_candidate": True,
+            "royalty_semantics_required_near_article_start_for_fallback_candidate": True,
             "nonstandard_royalty_article_number_requires_review": True,
             "cross_instrument_rate_variance_is_not_a_category_split": True,
             "ownership_or_service_rate_conditions_must_not_be_misclassified_as_royalty_categories": True,
