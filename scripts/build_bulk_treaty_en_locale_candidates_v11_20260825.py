@@ -12,10 +12,12 @@ _INDEX_RESOLVERS = {
     "www.nbr.gov.bh/FTR/bahrain_tax_treaties_network": {
         "country_markers": ("جمهورية التشيك", "czech republic"),
         "language_markers": ("الإنجليزية", "english"),
+        "scope": "bounded_section",
     },
     "istd.gov.jo/EN/ListDetails/Agreements_signed_with_the_Jordanian_government__Double_taxation_avoidance_agreements/1102/1": {
         "country_markers": ("czechre", "czech republic", "czech"),
-        "language_markers": ("english", "agreement"),
+        "language_markers": ("english",),
+        "scope": "table_row",
     },
 }
 
@@ -29,6 +31,21 @@ def _absolute_links(base_url: str, raw: str) -> list[tuple[str, str]]:
         if href and not href.lower().startswith(("javascript:", "mailto:")):
             links.append((urllib.parse.urljoin(base_url, href), label))
     return links
+
+
+def _scoped_segment(raw: str, start: int, scope: str) -> str:
+    if scope == "table_row":
+        before = raw.rfind("<tr", 0, start)
+        after = raw.lower().find("</tr>", start)
+        if before < 0 or after < 0:
+            raise RuntimeError("Czech Republic marker is not contained in a complete treaty table row")
+        segment = raw[before:after + len("</tr>")]
+        if len(segment) > 15000:
+            raise RuntimeError("Czech Republic treaty row is unexpectedly large")
+        return segment
+    if scope == "bounded_section":
+        return raw[start:start + 20000]
+    raise RuntimeError(f"unsupported official index scope: {scope}")
 
 
 def _resolve_index(url: str, timeout: int) -> tuple[bytes, str, str] | None:
@@ -47,11 +64,11 @@ def _resolve_index(url: str, timeout: int) -> tuple[bytes, str, str] | None:
     if not marker_positions:
         raise RuntimeError("official index page does not contain Czech Republic section")
     start = min(marker_positions)
+    segment = _scoped_segment(raw, start, str(config.get("scope") or "bounded_section"))
+    segment_lower = html.unescape(segment).lower()
+    if not any(marker.lower() in segment_lower for marker in config["country_markers"]):
+        raise RuntimeError("scoped treaty block no longer contains Czech Republic marker")
 
-    # Stay inside the Czech treaty block. Government treaty indexes repeat a similar
-    # structure for each partner; the bounded slice prevents selecting a document
-    # belonging to a neighbouring country.
-    segment = raw[start:start + 20000]
     links = _absolute_links(resolved, segment)
     candidates: list[str] = []
     for href, label in links:
@@ -59,11 +76,13 @@ def _resolve_index(url: str, timeout: int) -> tuple[bytes, str, str] | None:
         if any(marker.lower() in probe for marker in config["language_markers"]):
             candidates.append(href)
     if not candidates:
-        # Some government templates render the language label outside the anchor.
-        # Accept only PDF/download/attachment links from the bounded Czech block.
+        # Row/section is already strictly scoped to Czech Republic. Accept only
+        # document-like links from that exact scope and let pair/rate validation
+        # downstream reject anything that is not the intended treaty.
         candidates = [href for href, _ in links if re.search(r"(?i)(\.pdf(?:$|[?#])|download|attachment|root_storage)", href)]
+    candidates = list(dict.fromkeys(candidates))
     if not candidates:
-        raise RuntimeError("no treaty document link found in Czech Republic section")
+        raise RuntimeError("no treaty document link found inside Czech Republic scope")
 
     last_error: Exception | None = None
     for candidate in candidates[:8]:
@@ -73,7 +92,7 @@ def _resolve_index(url: str, timeout: int) -> tuple[bytes, str, str] | None:
                 return doc_body, doc_type, doc_resolved
         except Exception as exc:
             last_error = exc
-    raise RuntimeError(f"Czech Republic index links did not yield a treaty document: {last_error}")
+    raise RuntimeError(f"Czech Republic scoped links did not yield a treaty document: {last_error}")
 
 
 def _request(url: str, timeout: int = 25) -> tuple[bytes, str, str]:
