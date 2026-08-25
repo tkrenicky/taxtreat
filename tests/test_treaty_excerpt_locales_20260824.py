@@ -73,6 +73,22 @@ def test_austria_royalty_and_new_zealand_interest_have_rule_specific_english_exc
     assert "shall be exempt from tax" in nz["rules"]["CZ-NZ-INTEREST-CURRENT-2"]["en"]["text"]
 
 
+def test_remaining_ambiguous_au_gb_us_rules_have_rule_specific_english_excerpts():
+    expectations = {
+        "AU": ("CZ-AU-INTEREST-CURRENT-2", "11", "shall be exempt from tax"),
+        "GB": ("CZ-GB-ROYALTY-CURRENT-1", "12", "shall be taxable only in that other State"),
+        "US": ("CZ-US-ROYALTY-CURRENT-1", "12", "may be taxed only in that State"),
+    }
+    for country, (rule_id, article, decisive_phrase) in expectations.items():
+        payload = json.loads((COUNTRY_DIR / f"{country}.json").read_text(encoding="utf-8"))
+        entry = payload["rules"][rule_id]
+        assert entry["article"] == article
+        assert entry["en"]["language"] == "en"
+        assert entry["en"]["status"].startswith("official_")
+        assert entry["en"]["source_url"].startswith("https://")
+        assert decisive_phrase in entry["en"]["text"]
+
+
 def test_runtime_prefers_resolved_rule_locale_then_article_fallback_and_is_fail_visible():
     script = RUNTIME.read_text(encoding="utf-8")
     assert "countryRegistry?.rules?.[selectedRuleId]" in script
