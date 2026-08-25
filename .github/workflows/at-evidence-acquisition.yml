@@ -11,18 +11,82 @@ on:
       - "taxtreat/tools/build_at_language_evidence.py"
       - "taxtreat/tools/reconcile_at_article_text_candidates.py"
       - "taxtreat/tools/audit_at_royalty_categories.py"
+      - "taxtreat/tools/treaty_income_semantics.py"
       - "data/legal_reviews/at_outbound/**"
       - ".github/workflows/at-evidence-acquisition.yml"
 
-concurrency:
-  group: at-evidence-acquisition-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
-
 jobs:
-  acquire-at-treaty-universe:
+  detect-at-pipeline-changes:
     runs-on: ubuntu-24.04
     permissions:
       contents: read
+    outputs:
+      run_pipeline: ${{ steps.detect.outputs.run_pipeline }}
+    steps:
+      - uses: actions/checkout@v4
+        if: github.event_name == 'pull_request'
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - name: Detect changes that require AT evidence reprocessing
+        id: detect
+        shell: bash
+        run: |
+          python - <<'PY'
+          import fnmatch
+          import json
+          import os
+          import subprocess
+          from pathlib import Path
+
+          event_name = os.environ.get("GITHUB_EVENT_NAME", "")
+          if event_name == "workflow_dispatch":
+              run_pipeline = True
+              changed = ["workflow_dispatch"]
+          else:
+              event = json.loads(Path(os.environ["GITHUB_EVENT_PATH"]).read_text(encoding="utf-8"))
+              before = str(event.get("before") or "")
+              after = str((event.get("pull_request") or {}).get("head", {}).get("sha") or "")
+              if not before or not after or set(before) == {"0"}:
+                  run_pipeline = True
+                  changed = ["initial_or_unresolved_pr_event"]
+              else:
+                  subprocess.run(["git", "fetch", "--no-tags", "origin", before, after], check=True)
+                  changed = subprocess.check_output(
+                      ["git", "diff", "--name-only", before, after],
+                      text=True,
+                  ).splitlines()
+                  pipeline_paths = (
+                      "taxtreat/tools/build_at_treaty_source_inventory.py",
+                      "taxtreat/tools/acquire_at_instrument_chain_pilot.py",
+                      "taxtreat/tools/extract_at_treaty_article_candidates.py",
+                      "taxtreat/tools/build_at_language_evidence.py",
+                      "taxtreat/tools/reconcile_at_article_text_candidates.py",
+                      "taxtreat/tools/audit_at_royalty_categories.py",
+                      "taxtreat/tools/treaty_income_semantics.py",
+                      "data/legal_reviews/at_outbound/official_royalty_source_overrides_2026.json",
+                  )
+                  run_pipeline = any(
+                      any(fnmatch.fnmatch(path, pattern) for pattern in pipeline_paths)
+                      for path in changed
+                  )
+
+          output = Path(os.environ["GITHUB_OUTPUT"])
+          with output.open("a", encoding="utf-8") as handle:
+              handle.write(f"run_pipeline={'true' if run_pipeline else 'false'}\n")
+          print("Changed files:", changed)
+          print("AT evidence pipeline required:", run_pipeline)
+          PY
+
+  acquire-at-treaty-universe:
+    needs: detect-at-pipeline-changes
+    if: needs.detect-at-pipeline-changes.outputs.run_pipeline == 'true'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    concurrency:
+      group: at-evidence-acquisition-${{ github.event.pull_request.number || github.ref }}
+      cancel-in-progress: true
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -32,6 +96,13 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install requests==2.32.3 beautifulsoup4==4.12.3 lxml==5.3.0 pypdf==5.9.0
+      - name: Restore verified transport cache
+        uses: actions/cache@v4
+        with:
+          path: .cache/taxtreat/official-sources
+          key: at-official-source-v1-${{ github.run_id }}
+          restore-keys: |
+            at-official-source-v1-
       - name: Archive official BMF source snapshot
         run: |
           python - <<'PY'
@@ -88,6 +159,9 @@ jobs:
             --input artifacts/at/treaty_source_inventory_machine.json \
             --output artifacts/at/instrument_chain_pilot.json \
             --raw-dir artifacts/at/instrument_chain_sources \
+            --cache-root .cache/taxtreat/official-sources \
+            --cache-namespace AT-official-source-v1 \
+            --cache-max-age-seconds 604800 \
             --all-current
           python - <<'PY'
           import json
@@ -111,7 +185,7 @@ jobs:
           )
           override_partners = [row["partner_label"] for row in data["partners"] if row["curated_royalty_source_override_count"]]
           assert set(override_partners) == {"Kuba / Cuba", "Marokko / Morocco"}
-          print("AT full instrument-chain acquisition:", data["pilot_partner_count"], "partners /", data["source_count"], "official sources /", data["curated_royalty_source_override_count"], "curated royalty overrides")
+          print("AT full instrument-chain acquisition:", data["pilot_partner_count"], "partners /", data["source_count"], "official sources /", data["curated_royalty_source_override_count"], "curated royalty overrides /", data.get("transport_cache_hit_count", 0), "cache hits")
           print("AT curated royalty override partners:", override_partners)
           PY
       - name: Extract Article 10 11 12 text candidates with quality gate
