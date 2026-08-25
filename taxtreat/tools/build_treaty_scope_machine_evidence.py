@@ -23,15 +23,15 @@ OWNERSHIP_BEFORE_RE = re.compile(
     re.IGNORECASE | re.DOTALL,
 )
 OWNERSHIP_AFTER_RE = re.compile(
-    r"^.{0,90}(?:capital|voting\s+power|shares?|participation|kapital|stimmrecht|anteil|beteiligung)",
+    r"^.{0,55}(?:capital|voting\s+power|shares?|participation|kapital|stimmrecht|anteil|beteiligung)",
     re.IGNORECASE | re.DOTALL,
 )
 RATE_CONTEXT_AFTER_RE = re.compile(
-    r"^.{0,100}(?:gross\s+amount|bruttobetrag|bruttobetrages|brutto(?:betrag|einnahmen)|of\s+the\s+gross)",
+    r"^.{0,65}(?:gross\s+amount|bruttobetrag|bruttobetrages|brutto(?:betrag|einnahmen)|of\s+the\s+gross)",
     re.IGNORECASE | re.DOTALL,
 )
 RATE_CONTEXT_BEFORE_RE = re.compile(
-    r"(?:tax|steuer|rate|sazb|nicht\s+übersteigen|not\s+exceed).{0,100}$",
+    r"(?:tax|steuer|rate|nicht\s+übersteigen|not\s+exceed|höchstens|hoechstens).{0,55}$",
     re.IGNORECASE | re.DOTALL,
 )
 RESIDENCE_ONLY_RE = re.compile(
@@ -86,9 +86,17 @@ def _percentage_mentions(text: str) -> list[tuple[float, int, int]]:
 def _is_ownership_percentage(text: str, start: int, end: int) -> bool:
     before = text[max(0, start - 100):start]
     after = text[end:min(len(text), end + 120)]
-    if RATE_CONTEXT_AFTER_RE.search(after) or RATE_CONTEXT_BEFORE_RE.search(before):
+    # Nearest legal phrase controls: a rate normally has a rate-cap phrase
+    # immediately before it, while an ownership threshold normally has
+    # capital/shares immediately after it. This prevents a later 5% rate in
+    # the same sentence from turning an earlier 10/25% threshold into a rate.
+    if RATE_CONTEXT_BEFORE_RE.search(before):
         return False
-    return bool(OWNERSHIP_BEFORE_RE.search(before) or OWNERSHIP_AFTER_RE.search(after))
+    if OWNERSHIP_AFTER_RE.search(after):
+        return True
+    if RATE_CONTEXT_AFTER_RE.search(after):
+        return False
+    return bool(OWNERSHIP_BEFORE_RE.search(before))
 
 
 def _ownership_thresholds(text: str) -> list[float]:
@@ -126,10 +134,11 @@ def _branch_rows(text: str, *, income_type: str, source_url: str) -> list[dict[s
     branches: list[dict[str, Any]] = []
     seen: set[tuple[Any, ...]] = set()
     article_pe_carveout = bool(PE_CARVEOUT_RE.search(text))
+    article_beneficial_owner = bool(BENEFICIAL_OWNER_RE.search(text))
     for clause in _clauses(text):
         ownership = _ownership_thresholds(clause)
         holding_value, holding_unit = _holding_signal(clause)
-        beneficial_owner = bool(BENEFICIAL_OWNER_RE.search(clause))
+        beneficial_owner = bool(BENEFICIAL_OWNER_RE.search(clause)) or article_beneficial_owner
         category = _royalty_category(clause) if income_type == "royalty" else None
         for value, start, end in _percentage_mentions(clause):
             if _is_ownership_percentage(clause, start, end):
