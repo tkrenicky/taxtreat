@@ -55,18 +55,22 @@ def _income_overlay(income_type: str, model: dict[str, Any]) -> dict[str, Any]:
         baseline_treatment = base.get("corporate_recipient_current_treatment_candidate")
 
     return {
+        "domestic_review_role": "domestic_law_reviewer",
         "domestic_baseline_treatment_candidate": baseline_treatment,
         "domestic_baseline_rate_percent_candidate": baseline_rate,
         "domestic_relief_paths_candidate": relief_paths,
         "domestic_relief_legal_basis": sorted(set(legal_basis)),
         "domestic_relief_review_required": True,
-        "reviewer_substantive_treatment": None,
-        "reviewer_withholding_rate_now_percent": None,
-        "reviewer_relief_mechanism": None,
-        "reviewer_refund_eligibility": None,
-        "reviewer_documentary_readiness": None,
-        "reviewer_domestic_relief_facts_confirmed": None,
-        "reviewer_domestic_relief_notes": None,
+        "domestic_reviewer_substantive_treatment": None,
+        "domestic_reviewer_withholding_rate_now_percent": None,
+        "domestic_reviewer_relief_mechanism": None,
+        "domestic_reviewer_refund_eligibility": None,
+        "domestic_reviewer_documentary_readiness": None,
+        "domestic_reviewer_facts_confirmed": None,
+        "domestic_reviewer_notes": None,
+        "domestic_reviewer_name": None,
+        "domestic_reviewed_at": None,
+        "domestic_review_status": "not_started",
     }
 
 
@@ -91,16 +95,18 @@ def add_domestic_relief_overlay(
         rows.append(row)
 
     result = dict(review_pack)
-    result["schema_version"] = max(int(review_pack.get("schema_version") or 0), 3)
-    result["status"] = "human_review_pack_with_domestic_relief_not_reviewed_not_released"
+    result["schema_version"] = max(int(review_pack.get("schema_version") or 0), 4)
+    result["status"] = "human_review_pack_with_separate_domestic_review_not_reviewed_not_released"
     result["rows"] = rows
     policy = dict(review_pack.get("policy") or {})
     policy.update({
-        "domestic_precedence_must_be_reviewed_before_treaty_promotion": True,
+        "domestic_precedence_must_be_reviewed_before_final_release": True,
+        "treaty_and_domestic_review_are_separate_roles": True,
+        "treaty_reviewer_decision_must_not_approve_domestic_law": True,
+        "domestic_reviewer_fields_are_namespaced_and_start_blank": True,
         "substantive_treatment_is_separate_from_withholding_due_at_payment": True,
         "refund_eligibility_is_separate_from_relief_at_source": True,
         "treaty_rate_must_not_be_assumed_to_equal_payment_date_withholding": True,
-        "reviewer_domestic_relief_fields_start_blank": True,
         "fail_closed": True,
     })
     result["policy"] = policy
@@ -112,14 +118,15 @@ def write_review_csv(pack: dict[str, Any], path: Path) -> None:
         raise ValueError("Review pack contains no rows")
     preferred = [
         "source_country", "partner_label", "income_type", "review_priority",
-        "domestic_baseline_treatment_candidate", "domestic_baseline_rate_percent_candidate",
+        "domestic_review_role", "domestic_baseline_treatment_candidate", "domestic_baseline_rate_percent_candidate",
         "domestic_relief_legal_basis", "domestic_relief_paths_candidate",
         "candidate_rates_percent_machine", "rate_branches_machine",
-        "reviewer_substantive_treatment", "reviewer_withholding_rate_now_percent",
-        "reviewer_relief_mechanism", "reviewer_refund_eligibility",
-        "reviewer_documentary_readiness", "reviewer_domestic_relief_facts_confirmed",
-        "reviewer_domestic_relief_notes", "reviewer_decision", "reviewer_notes",
-        "official_source_urls", "review_ready", "review_blockers", "promotable_to_canonical",
+        "domestic_reviewer_substantive_treatment", "domestic_reviewer_withholding_rate_now_percent",
+        "domestic_reviewer_relief_mechanism", "domestic_reviewer_refund_eligibility",
+        "domestic_reviewer_documentary_readiness", "domestic_reviewer_facts_confirmed",
+        "domestic_reviewer_notes", "domestic_reviewer_name", "domestic_reviewed_at", "domestic_review_status",
+        "reviewer_decision", "reviewer_notes", "official_source_urls", "review_ready", "review_blockers",
+        "promotable_to_canonical",
     ]
     all_fields = {key for row in pack["rows"] for key in row}
     fields = [field for field in preferred if field in all_fields]
