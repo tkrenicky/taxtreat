@@ -7,6 +7,7 @@ from typing import Any
 
 from taxtreat.tools.build_country_human_review_pack import build_human_review_pack, write_csv
 from taxtreat.tools.build_treaty_scope_machine_evidence import build_scope_machine_evidence
+from taxtreat.tools.review_bundle_provenance import build_review_bundle_provenance
 
 
 def _load(path: Path | None) -> dict[str, Any] | None:
@@ -31,6 +32,14 @@ def prepare_country_review(
             f"Review queue/article inventory source-country mismatch: {queue_country!r} vs {article_country!r}"
         )
 
+    provenance = build_review_bundle_provenance(
+        review_queue=review_queue,
+        article_inventory=article_inventory,
+        royalty_audit=royalty_audit,
+        language_evidence=language_evidence,
+        article_reconciliation=article_reconciliation,
+    )
+
     scope_evidence = build_scope_machine_evidence(article_inventory, artifact_root=artifact_root)
     if scope_evidence["source_country"] != queue_country:
         raise ValueError("Scope evidence source country does not match review queue")
@@ -43,15 +52,21 @@ def prepare_country_review(
             f"Scope-count mismatch: review queue {expected_scope_count} vs machine evidence {scope_evidence['scope_count']}"
         )
 
+    scope_evidence["review_bundle_id"] = provenance["review_bundle_id"]
+    scope_evidence["review_bundle_provenance"] = provenance
+
     review_pack = build_human_review_pack(
         review_queue,
         royalty_audit=royalty_audit,
         language_evidence=language_evidence,
         article_reconciliation=article_reconciliation,
         scope_evidence=scope_evidence,
+        review_bundle_provenance=provenance,
     )
     if review_pack["scope_count"] != expected_scope_count:
         raise ValueError("Human-review pack scope count does not match review queue")
+    if review_pack.get("review_bundle_id") != provenance["review_bundle_id"]:
+        raise ValueError("Human-review pack provenance binding failed")
 
     return scope_evidence, review_pack
 
@@ -113,7 +128,8 @@ def main() -> None:
         review_pack["review_ready_scope_count"],
         "review-ready /",
         review_pack["blocked_scope_count"],
-        "blocked",
+        "blocked / bundle",
+        review_pack["review_bundle_id"],
     )
 
 
