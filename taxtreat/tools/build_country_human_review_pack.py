@@ -70,7 +70,8 @@ def _validated_rate_branches(scope_evidence: dict[str, Any] | None) -> tuple[lis
             "source_url": source_url,
             "beneficial_owner_required_machine": branch.get("beneficial_owner_required_machine"),
             "ownership_threshold_percent_machine": branch.get("ownership_threshold_percent_machine"),
-            "holding_period_days_machine": branch.get("holding_period_days_machine"),
+            "holding_period_value_machine": branch.get("holding_period_value_machine"),
+            "holding_period_unit_machine": branch.get("holding_period_unit_machine"),
             "category_discriminator_machine": branch.get("category_discriminator_machine"),
             "pe_carveout_machine": branch.get("pe_carveout_machine"),
         })
