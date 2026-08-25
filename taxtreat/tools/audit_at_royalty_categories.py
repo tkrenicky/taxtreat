@@ -50,10 +50,18 @@ OWNERSHIP_BEFORE_RE = re.compile(
     r".{0,50}(?:von|of|mindestens|at\s+least|mehr\s+als|more\s+than|not\s+less\s+than)\s*$",
     flags=re.IGNORECASE | re.DOTALL,
 )
+OWNERSHIP_COMPARATIVE_BEFORE_RE = re.compile(
+    r"(?:mehr\s+als|more\s+than|mindestens|at\s+least|not\s+less\s+than)\s*$",
+    flags=re.IGNORECASE,
+)
 OWNERSHIP_AFTER_RE = re.compile(
     r"^\s*(?:(?:des|der|am)\s+|of\s+(?:the\s+)?|in\s+(?:the\s+)?)?"
     r"(?:(?:grund-?\s*(?:oder\s+)?stamm)?kapitals?|capital|stimmrechte?|voting\s+power|shares?|anteile?)\b",
     flags=re.IGNORECASE,
+)
+OWNERSHIP_CAPITAL_AFTER_RE = re.compile(
+    r"^.{0,100}\b(?:grund\s*-?\s*(?:oder\s+)?stamm\s*-?\s*kapital|stamm\s*-?\s*kapital|kapital|capital|stimmrechte?|voting\s+power|shares?|anteile?)\b",
+    flags=re.IGNORECASE | re.DOTALL,
 )
 CLAUSE_SPLIT_RE = re.compile(r"[;.!?]|\b(?:[a-z]|\d+)[.)]\s*", flags=re.IGNORECASE)
 
@@ -83,10 +91,15 @@ def _percentage_tokens(text: str) -> list[float]:
 def _ownership_threshold_tokens(text: str) -> list[float]:
     values: set[float] = set()
     for value, start, end in _percentage_mentions(text):
-        before = text[max(0, start - 70):start]
+        before = text[max(0, start - 90):start]
         before_clause = re.split(r"[;.!?]", before)[-1]
-        after = text[end:min(len(text), end + 60)]
-        if OWNERSHIP_BEFORE_RE.search(before_clause) or OWNERSHIP_AFTER_RE.search(after):
+        after = text[end:min(len(text), end + 120)]
+        direct_context = OWNERSHIP_BEFORE_RE.search(before_clause) or OWNERSHIP_AFTER_RE.search(after)
+        comparative_capital_context = (
+            OWNERSHIP_COMPARATIVE_BEFORE_RE.search(before_clause)
+            and OWNERSHIP_CAPITAL_AFTER_RE.search(after)
+        )
+        if direct_context or comparative_capital_context:
             values.add(value)
     return sorted(values)
 
