@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "registered_missing_country_count": 26,
-  "missing_country_article_pairs_at_start": 209,
+  "registered_missing_country_count": 25,
+  "missing_country_article_pairs_at_start": 206,
   "country_status_counts": {
     "NO_REGISTERED_SOURCE": 46,
-    "NO_EN_TEXT": 12,
-    "SOURCE_ERROR": 6,
+    "NO_EN_TEXT": 13,
     "REVIEW": 7,
-    "PASS": 1
+    "SOURCE_ERROR": 4,
+    "PARTIAL": 1
   },
-  "article_candidates_pass": 3,
-  "article_candidates_review": 12,
+  "article_candidates_pass": 2,
+  "article_candidates_review": 13,
   "results": [
     {
       "country": "AD",
@@ -755,14 +755,19 @@
     },
     {
       "country": "CY",
-      "status": "SOURCE_ERROR",
+      "status": "NO_EN_TEXT",
       "source_attempts": [
         {
           "url": "https://www.gov.cy/media/sites/11/2024/03/czech_en_new.pdf",
           "authority": "Government of Cyprus",
-          "status": "SOURCE_ERROR",
-          "articles": {},
-          "error": "HTTPError: HTTP Error 403: Forbidden"
+          "status": "PARSED",
+          "articles": {
+            "10": "NO_EN_ARTICLE",
+            "11": "NO_EN_ARTICLE",
+            "12": "NO_EN_ARTICLE"
+          },
+          "resolved_url": "https://www.gov.cy/media/sites/11/2024/03/czech_en_new.pdf",
+          "text_length": 21
         }
       ],
       "articles": {
@@ -1110,11 +1115,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://mof.ge/images/File/gakopa-dabegvra-sintezurebi/2022/Czech/Czech%20Republic%20Synthesised%20text%2C%20MLI%20in%20force%2001.07.19.pdf",
+          "url": "https://mof.ge/images/File/gakopa-dabegvra-sintezurebi/2022/15-07-2022/Czech_Rep/Czech%20Republic%20Synthesised%20text%2C%20MLI%20in%20force%2001.07.19.pdf",
           "authority": "Ministry of Finance of Georgia",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "HTTPError: HTTP Error 404: Not Found"
+          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
         }
       ],
       "articles": {
@@ -1325,51 +1330,6 @@
           "missing_rates": [
             10.0
           ]
-        }
-      }
-    },
-    {
-      "country": "IN",
-      "status": "PASS",
-      "source_attempts": [
-        {
-          "url": "https://www.incometaxindia.gov.in/w/czech-republic-synthesised-text-1",
-          "authority": "Income Tax Department, Ministry of Finance, Government of India",
-          "status": "PARSED",
-          "articles": {
-            "10": "PASS",
-            "11": "PASS",
-            "12": "PASS"
-          },
-          "resolved_url": "https://www.incometaxindia.gov.in/w/czech-republic-synthesised-text-1",
-          "text_length": 136488
-        }
-      ],
-      "articles": {
-        "10": {
-          "expected_rates": [
-            10.0
-          ],
-          "status": "PASS",
-          "excerpt_length": 2284,
-          "missing_rates": []
-        },
-        "11": {
-          "expected_rates": [
-            0.0,
-            10.0
-          ],
-          "status": "PASS",
-          "excerpt_length": 3881,
-          "missing_rates": []
-        },
-        "12": {
-          "expected_rates": [
-            10.0
-          ],
-          "status": "PASS",
-          "excerpt_length": 3628,
-          "missing_rates": []
         }
       }
     },
@@ -1762,7 +1722,7 @@
           "authority": "Fiscal Authority of the Principality of Liechtenstein",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "HTTPError: HTTP Error 403: Forbidden"
+          "error": "RuntimeError: urllib=HTTPError: HTTP Error 403: Forbidden; curl=curl failed (22): curl: (22) The requested URL returned error: 403"
         }
       ],
       "articles": {
@@ -2184,7 +2144,7 @@
           "authority": "Government of the Netherlands / open.overheid.nl",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "HTTPError: HTTP Error 400: Bad Request"
+          "error": "RuntimeError: urllib=HTTPError: HTTP Error 400: Bad Request; curl=curl failed (22): curl: (22) The requested URL returned error: 400"
         }
       ],
       "articles": {
@@ -2231,7 +2191,7 @@
           "authority": "Norwegian Ministry of Finance / regjeringen.no",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "HTTPError: HTTP Error 403: Forbidden"
+          "error": "RuntimeError: urllib=HTTPError: HTTP Error 403: Forbidden; curl=curl failed (22): curl: (22) The requested URL returned error: 403"
         }
       ],
       "articles": {
@@ -2275,14 +2235,19 @@
     },
     {
       "country": "PL",
-      "status": "SOURCE_ERROR",
+      "status": "PARTIAL",
       "source_attempts": [
         {
-          "url": "https://www.podatki.gov.pl/media/1545/czecy-nowa-umowa-ang.pdf",
+          "url": "https://www.podatki.gov.pl/media/wpccdltv/dta-pl-cz-mli-synthesised-text.pdf",
           "authority": "Polish Ministry of Finance / podatki.gov.pl",
-          "status": "SOURCE_ERROR",
-          "articles": {},
-          "error": "HTTPError: HTTP Error 404: Not Found"
+          "status": "PARSED",
+          "articles": {
+            "10": "PASS",
+            "11": "REVIEW",
+            "12": "PASS"
+          },
+          "resolved_url": "https://www.podatki.gov.pl/media/wpccdltv/dta-pl-cz-mli-synthesised-text.pdf",
+          "text_length": 55018
         }
       ],
       "articles": {
@@ -2290,21 +2255,18 @@
           "expected_rates": [
             5.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            5.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 2096,
+          "missing_rates": []
         },
         "11": {
           "expected_rates": [
             0.0,
             5.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
+          "status": "REVIEW",
+          "excerpt_length": 3441,
           "missing_rates": [
-            0.0,
             5.0
           ]
         },
@@ -2312,11 +2274,9 @@
           "expected_rates": [
             10.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            10.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 2473,
+          "missing_rates": []
         }
       }
     },
