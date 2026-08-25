@@ -9,9 +9,10 @@ export PYTHONUNBUFFERED=1
 python -m py_compile \
   scripts/build_bulk_treaty_en_locale_candidates_v4_20260825.py \
   scripts/build_bulk_treaty_en_locale_candidates_v5_20260825.py \
+  scripts/build_bulk_treaty_en_locale_candidates_v6_20260825.py \
   scripts/promote_bulk_treaty_en_locale_candidates_20260825.py
 
-python -u scripts/build_bulk_treaty_en_locale_candidates_v5_20260825.py
+python -u scripts/build_bulk_treaty_en_locale_candidates_v6_20260825.py
 python -u scripts/promote_bulk_treaty_en_locale_candidates_20260825.py
 
 if [ -f scripts/validate_treaty_excerpt_locales_20260824.py ]; then
