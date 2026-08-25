@@ -1,6 +1,14 @@
 from pathlib import Path
+import json
+import sys
 
-from taxtreat.tools.build_at_language_evidence import build_language_evidence
+import pytest
+
+from taxtreat.tools import build_at_language_evidence as language_module
+from taxtreat.tools.build_at_language_evidence import (
+    build_language_evidence,
+    classify_source_language,
+)
 
 
 def _fixture(tmp_path: Path):
@@ -37,6 +45,7 @@ def _fixture(tmp_path: Path):
                 },
                 {
                     "source_order": 2,
+                    "listed_url": "https://www.ris.bka.gv.at/Dokumente/BgblAuth/example/deutsch.pdf",
                     "final_url": "https://www.ris.bka.gv.at/Dokumente/BgblAuth/example/deutsch.pdf",
                     "discovered_from_url": "https://www.ris.bka.gv.at/eli/bgbl/III/2020/1/20200101",
                     "role_candidate": "official_text_attachment",
@@ -46,6 +55,7 @@ def _fixture(tmp_path: Path):
                 },
                 {
                     "source_order": 3,
+                    "listed_url": "https://www.ris.bka.gv.at/Dokumente/BgblAuth/example/english.pdf",
                     "final_url": "https://www.ris.bka.gv.at/Dokumente/BgblAuth/example/english.pdf",
                     "discovered_from_url": "https://www.ris.bka.gv.at/eli/bgbl/III/2020/1/20200101",
                     "role_candidate": "official_text_attachment",
@@ -64,7 +74,14 @@ def _fixture(tmp_path: Path):
                             "artifact_path": "artifacts/at/article-de.txt",
                             "substantive_article_candidate": True,
                             "semantic_income_candidate": None,
-                        }
+                        },
+                        {
+                            "article_number": 11,
+                            "text_sha256": "rejected-article",
+                            "artifact_path": "artifacts/at/rejected.txt",
+                            "substantive_article_candidate": False,
+                            "semantic_income_candidate": None,
+                        },
                     ],
                 },
                 {
@@ -180,9 +197,110 @@ def test_at_unknown_language_source_never_becomes_english_by_assumption(tmp_path
 def test_at_language_evidence_rejects_partial_partner_population(tmp_path: Path):
     pilot, articles = _fixture(tmp_path)
     pilot["pilot_partner_count"] = 88
-    try:
+    with pytest.raises(ValueError, match="full 89-partner"):
         build_language_evidence(pilot, articles, artifact_root=tmp_path)
-    except ValueError as exc:
-        assert "full 89-partner" in str(exc)
-    else:
-        raise AssertionError("Expected fail-closed rejection of partial AT language evidence population")
+
+
+def test_at_language_evidence_rejects_wrong_source_country_and_missing_article_partner(tmp_path: Path):
+    pilot, articles = _fixture(tmp_path)
+    pilot["source_country"] = "CZ"
+    with pytest.raises(ValueError, match="Expected Austrian"):
+        build_language_evidence(pilot, articles, artifact_root=tmp_path)
+
+    pilot, articles = _fixture(tmp_path)
+    articles["partners"] = articles["partners"][1:]
+    with pytest.raises(ValueError, match="Missing AT article inventory partner"):
+        build_language_evidence(pilot, articles, artifact_root=tmp_path)
+
+
+def test_at_language_classifier_handles_redirected_attachment_label_and_url_marker(tmp_path: Path):
+    landing = tmp_path / "landing.html"
+    landing.write_text(
+        '<a href="https://www.ris.bka.gv.at/source/english.pdf" title="englischer Vertragstext">English</a>',
+        encoding="utf-8",
+    )
+    parent = {
+        "final_url": "https://www.ris.bka.gv.at/eli/bgbl/III/2020/1/20200101",
+        "content_type": "text/html",
+        "artifact_path": str(landing),
+    }
+    redirected = {
+        "listed_url": "https://www.ris.bka.gv.at/source/english.pdf",
+        "final_url": "https://www.ris.bka.gv.at/cache/document-123.pdf",
+        "discovered_from_url": parent["final_url"],
+        "role_candidate": "official_text_attachment",
+    }
+    language, method = classify_source_language(
+        redirected,
+        sources_by_url={parent["final_url"]: parent},
+        artifact_root=tmp_path,
+    )
+    assert (language, method) == ("en", "ris_attachment_label")
+
+    direct = {
+        "final_url": "https://www.ris.bka.gv.at/files/german-treaty-text.pdf",
+        "role_candidate": "official_text_attachment",
+    }
+    assert classify_source_language(direct, sources_by_url={}, artifact_root=tmp_path) == (
+        "de",
+        "url_language_marker",
+    )
+
+
+def test_at_language_classifier_falls_back_when_parent_or_html_evidence_is_unusable(tmp_path: Path):
+    missing_parent_source = {
+        "final_url": "https://www.ris.bka.gv.at/files/document.pdf",
+        "discovered_from_url": "https://www.ris.bka.gv.at/missing-parent",
+        "role_candidate": "official_text_attachment",
+    }
+    assert classify_source_language(
+        missing_parent_source,
+        sources_by_url={},
+        artifact_root=tmp_path,
+    ) == ("unknown", "not_determined")
+
+    parent = {
+        "final_url": "https://www.ris.bka.gv.at/parent",
+        "content_type": "application/pdf",
+        "artifact_path": str(tmp_path / "missing.pdf"),
+    }
+    child = {
+        "final_url": "https://www.ris.bka.gv.at/files/document.pdf",
+        "discovered_from_url": parent["final_url"],
+        "role_candidate": "official_text_attachment",
+    }
+    assert classify_source_language(
+        child,
+        sources_by_url={parent["final_url"]: parent},
+        artifact_root=tmp_path,
+    ) == ("unknown", "not_determined")
+
+
+def test_at_language_evidence_cli_writes_full_fail_closed_inventory(tmp_path: Path, monkeypatch):
+    pilot, articles = _fixture(tmp_path)
+    pilot_path = tmp_path / "pilot.json"
+    article_path = tmp_path / "articles.json"
+    output_path = tmp_path / "language.json"
+    pilot_path.write_text(json.dumps(pilot), encoding="utf-8")
+    article_path.write_text(json.dumps(articles), encoding="utf-8")
+
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "build_at_language_evidence",
+            "--pilot",
+            str(pilot_path),
+            "--articles",
+            str(article_path),
+            "--artifact-root",
+            str(tmp_path),
+            "--output",
+            str(output_path),
+        ],
+    )
+    language_module.main()
+    result = json.loads(output_path.read_text(encoding="utf-8"))
+    assert result["partner_count"] == 89
+    assert result["status"] == "treaty_language_evidence_candidates_not_reviewed"
+    assert all(row["web_wording_released"] is False for row in result["partners"])
