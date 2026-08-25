@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 from pathlib import Path
@@ -8,6 +9,7 @@ from typing import Any
 
 INCOME_TYPES = ("dividend", "interest", "royalty")
 EXPECTED_ARTICLE = {"dividend": 10, "interest": 11, "royalty": 12}
+SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 
 PERCENT_PATTERNS = (
     re.compile(r"(\d+(?:[.,]\d+)?)\s*(?:%|prozent|percent|per\s+cent)", re.IGNORECASE),
@@ -70,6 +72,23 @@ def _artifact_text(path_value: str, artifact_root: Path) -> str:
     return candidate.read_text(encoding="utf-8", errors="replace")
 
 
+def _verified_artifact_text(path_value: str, artifact_root: Path, expected_sha256: Any) -> str:
+    expected = str(expected_sha256 or "").strip().lower()
+    if not SHA256_RE.fullmatch(expected):
+        raise ValueError(f"Treaty article evidence is missing a valid text_sha256: {path_value}")
+    text = _artifact_text(path_value, artifact_root)
+    # Candidate extraction hashes the article block before writing one trailing
+    # line break to the text artifact. Normalize only that serialization detail;
+    # all substantive text bytes remain hash-bound.
+    hashed_text = text[:-2] if text.endswith("\r\n") else (text[:-1] if text.endswith("\n") else text)
+    actual = hashlib.sha256(hashed_text.encode("utf-8")).hexdigest()
+    if actual != expected:
+        raise ValueError(
+            f"Treaty article evidence hash mismatch: {path_value}; expected {expected}, got {actual}"
+        )
+    return text
+
+
 def _clauses(text: str) -> list[str]:
     chunks = [chunk.strip() for chunk in CLAUSE_BOUNDARY_RE.split(text) if chunk.strip()]
     return chunks or [text.strip()]
@@ -86,10 +105,6 @@ def _percentage_mentions(text: str) -> list[tuple[float, int, int]]:
 def _is_ownership_percentage(text: str, start: int, end: int) -> bool:
     before = text[max(0, start - 100):start]
     after = text[end:min(len(text), end + 120)]
-    # Nearest legal phrase controls: a rate normally has a rate-cap phrase
-    # immediately before it, while an ownership threshold normally has
-    # capital/shares immediately after it. This prevents a later 5% rate in
-    # the same sentence from turning an earlier 10/25% threshold into a rate.
     if RATE_CONTEXT_BEFORE_RE.search(before):
         return False
     if OWNERSHIP_AFTER_RE.search(after):
@@ -202,7 +217,11 @@ def build_scope_machine_evidence(candidate_inventory: dict[str, Any], *, artifac
                     number = candidate.get("article_number")
                     if semantic != income_type and not (semantic is None and number == expected):
                         continue
-                    text = _artifact_text(str(candidate.get("artifact_path") or ""), artifact_root)
+                    text = _verified_artifact_text(
+                        str(candidate.get("artifact_path") or ""),
+                        artifact_root,
+                        candidate.get("text_sha256"),
+                    )
                     evidence_candidates.append({
                         "article_number": number,
                         "source_url": source_url,
@@ -251,13 +270,14 @@ def build_scope_machine_evidence(candidate_inventory: dict[str, Any], *, artifac
                 "rate_branches_machine": unique_branches,
                 "machine_evidence_complete": not blockers,
                 "machine_evidence_blockers": blockers,
+                "content_hashes_verified": True,
                 "controlling_text_selected": False,
                 "legal_review_completed": False,
                 "promotable_to_canonical": False,
             })
 
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "source_country": source_country,
         "status": "scope_machine_evidence_not_reviewed_not_released",
         "scope_count": len(scopes),
@@ -269,6 +289,7 @@ def build_scope_machine_evidence(candidate_inventory: dict[str, Any], *, artifac
             "residence_only_is_non_rate_treatment_not_synthetic_zero": True,
             "exact_condition_evidence_required_for_every_branch": True,
             "source_url_required_for_every_branch": True,
+            "article_artifact_hash_must_match_candidate_inventory": True,
             "machine_evidence_is_not_legal_approval": True,
             "fail_closed": True
         },
