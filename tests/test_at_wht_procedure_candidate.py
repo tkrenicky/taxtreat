@@ -51,12 +51,52 @@ def test_low_value_dba_source_relief_can_use_simplified_documentation_candidate(
     assert result["relief_at_source_available_candidate"] is True
 
 
+def test_individual_dba_source_relief_uses_zs_qu1():
+    facts = _source_relief(recipient_is_legal_entity=False)
+    facts.pop("ZS-QU2_completed_and_signed")
+    facts["ZS-QU1_completed_and_signed"] = True
+    result = evaluate_treaty_source_relief_procedure_candidate(facts)
+    assert result["documentation_route_candidate"] == "ZS-QU1"
+    assert result["relief_at_source_available_candidate"] is True
+
+
+def test_source_relief_missing_core_or_documentary_facts_fails_closed():
+    core = _source_relief()
+    core.pop("annual_austrian_source_income_eur")
+    result = evaluate_treaty_source_relief_procedure_candidate(core)
+    assert result["relief_at_source_available_candidate"] is None
+    assert "annual_austrian_source_income_eur" in result["missing_facts"]
+
+    docs = _source_relief()
+    docs.pop("ZS-QU2_completed_and_signed")
+    blocked = evaluate_treaty_source_relief_procedure_candidate(docs)
+    assert blocked["relief_at_source_available_candidate"] is False
+    assert "ZS-QU2_completed_and_signed_missing" in blocked["legal_blockers"]
+
+    residence = _source_relief()
+    residence.pop("foreign_tax_authority_residence_certificate_available")
+    blocked = evaluate_treaty_source_relief_procedure_candidate(residence)
+    assert "foreign_tax_authority_residence_certificate_available_missing" in blocked["legal_blockers"]
+
+
 def test_payer_may_choose_refund_route_even_if_treaty_entitlement_exists():
     result = evaluate_treaty_source_relief_procedure_candidate(
         _source_relief(payer_chooses_dba_relief_at_source=False)
     )
     assert result["relief_at_source_available_candidate"] is False
     assert "payer_did_not_choose_optional_dba_relief_at_source" in result["legal_blockers"]
+
+
+def test_dba_source_relief_restriction_and_missing_additional_documents_are_explicit_blockers():
+    restricted = evaluate_treaty_source_relief_procedure_candidate(
+        _source_relief(dba_relief_at_source_restricted_for_case=True)
+    )
+    assert "dba_entlastungsverordnung_source_relief_restricted_for_case" in restricted["legal_blockers"]
+
+    missing_docs = evaluate_treaty_source_relief_procedure_candidate(
+        _source_relief(additional_treaty_documents_available=False)
+    )
+    assert "additional_treaty_documentation_missing" in missing_docs["legal_blockers"]
 
 
 def test_current_refund_procedure_requires_electronic_prenotification_then_signed_postal_filing():
@@ -67,6 +107,30 @@ def test_current_refund_procedure_requires_electronic_prenotification_then_signe
     assert result["prenotification_only_after_end_of_withholding_year"] is True
     assert result["printed_signed_submission_required"] is True
     assert result["postal_submission_required"] is True
+
+
+def test_refund_missing_core_facts_fails_closed_before_procedure_conclusion():
+    facts = _refund()
+    facts.pop("years_since_end_of_withholding_year")
+    result = evaluate_refund_procedure_candidate(facts)
+    assert result["refund_filing_ready_candidate"] is False
+    assert "years_since_end_of_withholding_year" in result["missing_facts"]
+
+
+def test_each_current_refund_filing_step_is_independently_required():
+    cases = (
+        ("electronic_refund_prenotification_submitted", "electronic_prenotification_missing"),
+        ("prenotification_printed_and_signed", "printed_signed_prenotification_missing"),
+        ("foreign_residence_confirmation_obtained", "foreign_residence_confirmation_missing"),
+        (
+            "postal_submission_to_finanzamt_fuer_grossbetriebe_ready",
+            "postal_submission_to_finanzamt_fuer_grossbetriebe_not_ready",
+        ),
+    )
+    for fact, blocker in cases:
+        result = evaluate_refund_procedure_candidate(_refund(**{fact: False}))
+        assert result["refund_filing_ready_candidate"] is False
+        assert blocker in result["legal_blockers"]
 
 
 def test_refund_before_end_of_year_or_after_candidate_five_year_period_fails_closed():
@@ -97,3 +161,12 @@ def test_royalty_without_pe_attribution_does_not_create_assessment_credit_candid
     })
     assert result["withholding_creditable_candidate"] is False
     assert result["payment_date_wht_exemption_created_by_pe_attribution"] is False
+
+
+def test_royalty_pe_assessment_missing_facts_fail_closed():
+    result = evaluate_royalty_pe_assessment_candidate({
+        "recipient_has_austrian_business_or_pe": True,
+    })
+    assert result["assessment_character_candidate"] is None
+    assert "royalty_attributable_to_austrian_business_or_pe" in result["missing_facts"]
+    assert result["review_required"] is True
