@@ -11,6 +11,8 @@ from typing import Any
 from bs4 import BeautifulSoup
 from pypdf import PdfReader
 
+from taxtreat.tools.treaty_income_semantics import article_number, classify_income
+
 
 DEFAULT_INPUT = Path("artifacts/at/instrument_chain_pilot.json")
 DEFAULT_OUTPUT = Path("artifacts/at/article_candidate_inventory.json")
@@ -18,11 +20,9 @@ DEFAULT_ARTICLE_DIR = Path("artifacts/at/article_candidates")
 ARTICLE_NUMBERS = (10, 11, 12)
 MIN_SUBSTANTIVE_CHARACTERS = 180
 MIN_SUBSTANTIVE_SENTENCES = 2
-ROMAN_ARTICLE_NUMBERS = {"X": 10, "XI": 11, "XII": 12}
-ROYALTY_TEXT_RE = re.compile(r"(?:lizenzgebühr|royalt)", flags=re.IGNORECASE)
 
 ARTICLE_HEADING = re.compile(
-    r"(?im)^\s*(?:artikel|article|art\.?)[ \t\u00a0]*(?P<number>\d{1,2}|XII|XI|X)\b[^\n]*$"
+    r"(?im)^\s*(?:artikel|article|art\.?)[ \t\u00a0]*(?P<number>\d{1,2}|[IVXLC]{1,8})\b[^\n]*$"
 )
 
 
@@ -34,12 +34,7 @@ def _normalize_text(text: str) -> str:
 
 
 def _article_number(token: str) -> int:
-    normalized = token.strip().upper()
-    if normalized.isdigit():
-        return int(normalized)
-    if normalized in ROMAN_ARTICLE_NUMBERS:
-        return ROMAN_ARTICLE_NUMBERS[normalized]
-    raise ValueError(f"Unsupported treaty article number token: {token}")
+    return article_number(token)
 
 
 def extract_text(path: Path, content_type: str) -> str:
@@ -71,7 +66,7 @@ def _article_quality(block: str) -> tuple[bool, list[str]]:
         reasons.append("insufficient_substantive_structure")
     cross_refs = len(
         re.findall(
-            r"(?i)\b(?:artikel|article|art\.)\s*(?:\d{1,2}|XII|XI|X)\b",
+            r"(?i)\b(?:artikel|article|art\.)\s*(?:\d{1,2}|[IVXLC]{1,8})\b",
             body,
         )
     )
@@ -80,16 +75,15 @@ def _article_quality(block: str) -> tuple[bool, list[str]]:
     return (not reasons, reasons)
 
 
-def _royalty_semantic_candidate(text: str) -> bool:
-    return bool(ROYALTY_TEXT_RE.search(text))
-
-
 def _all_article_blocks(text: str) -> list[tuple[int, str]]:
     normalized = _normalize_text(text)
     headings = list(ARTICLE_HEADING.finditer(normalized))
     blocks: list[tuple[int, str]] = []
     for index, match in enumerate(headings):
-        number = _article_number(match.group("number"))
+        try:
+            number = _article_number(match.group("number"))
+        except ValueError:
+            continue
         end = headings[index + 1].start() if index + 1 < len(headings) else len(normalized)
         block = normalized[match.start():end].strip()
         if block:
@@ -112,19 +106,31 @@ def extract_article_blocks(text: str) -> dict[int, str]:
     return selected
 
 
-def extract_nonstandard_royalty_blocks(text: str) -> list[tuple[int, str]]:
-    candidates: list[tuple[int, str]] = []
-    seen: set[tuple[int, str]] = set()
+def extract_nonstandard_income_blocks(text: str) -> list[tuple[int, str, str]]:
+    candidates: list[tuple[int, str, str]] = []
+    seen: set[tuple[int, str, str]] = set()
     for number, block in _all_article_blocks(text):
-        if number in ARTICLE_NUMBERS or not _royalty_semantic_candidate(block):
+        if number in ARTICLE_NUMBERS:
+            continue
+        income_type = classify_income(block)
+        if income_type is None:
             continue
         digest = hashlib.sha256(block.encode("utf-8")).hexdigest()
-        key = (number, digest)
+        key = (number, income_type, digest)
         if key in seen:
             continue
         seen.add(key)
-        candidates.append((number, block))
+        candidates.append((number, block, income_type))
     return candidates
+
+
+def extract_nonstandard_royalty_blocks(text: str) -> list[tuple[int, str]]:
+    """Backward-compatible view used by older AT royalty tests/callers."""
+    return [
+        (number, block)
+        for number, block, income_type in extract_nonstandard_income_blocks(text)
+        if income_type == "royalty"
+    ]
 
 
 def build_article_candidate_inventory(
@@ -167,13 +173,14 @@ def build_article_candidate_inventory(
                     "machine_text_candidate": True,
                     "substantive_article_candidate": substantive,
                     "semantic_income_candidate": None,
+                    "semantic_income_detected": classify_income(block),
                     "quality_flags": quality_flags,
                     "legal_review_completed": False,
                 })
-            for number, block in extract_nonstandard_royalty_blocks(text):
+            for number, block, income_type in extract_nonstandard_income_blocks(text):
                 digest = hashlib.sha256(block.encode("utf-8")).hexdigest()
                 substantive, quality_flags = _article_quality(block)
-                output_path = article_dir / f"{path.stem}-article-{number}-royalty-{digest[:12]}.txt"
+                output_path = article_dir / f"{path.stem}-article-{number}-{income_type}-{digest[:12]}.txt"
                 output_path.write_text(block + "\n", encoding="utf-8")
                 candidates.append({
                     "article_number": number,
@@ -182,7 +189,8 @@ def build_article_candidate_inventory(
                     "artifact_path": str(output_path),
                     "machine_text_candidate": True,
                     "substantive_article_candidate": substantive,
-                    "semantic_income_candidate": "royalty",
+                    "semantic_income_candidate": income_type,
+                    "semantic_income_detected": income_type,
                     "quality_flags": quality_flags,
                     "legal_review_completed": False,
                 })
@@ -216,12 +224,22 @@ def build_article_candidate_inventory(
             )
             for number in ARTICLE_NUMBERS
         }
+        semantic_presence = {
+            income_type: sum(
+                candidate.get("semantic_income_detected") == income_type
+                and candidate.get("substantive_article_candidate") is True
+                for row in source_rows
+                for candidate in row["article_candidates"]
+            )
+            for income_type in ("dividend", "interest", "royalty")
+        }
         partner_rows.append({
             "partner_label": partner_label,
             "sources": source_rows,
             "curated_royalty_source_override_count": sum(1 for row in source_rows if row["curated_royalty_source_override"]),
             "article_candidate_presence": article_presence,
             "rejected_article_candidate_presence": rejected_presence,
+            "semantic_income_candidate_presence": semantic_presence,
             "primary_text_review_completed": False,
             "rate_extraction_released": False,
         })
@@ -234,13 +252,14 @@ def build_article_candidate_inventory(
         "curated_royalty_source_override_count": sum(row["curated_royalty_source_override_count"] for row in partner_rows),
         "partners": partner_rows,
         "release_constraints": [
-            "Article 10/11/12 blocks are machine-extracted text candidates only; Arabic and Roman X/XI/XII headings are normalized to article numbers 10/11/12.",
-            "Other numeric article headings may be retained only as semantic royalty candidates where royalty terminology is detected; they never become standard Article 12 candidates automatically.",
+            "Article blocks are machine-extracted text candidates only; Arabic and general Roman headings are normalized to numeric article numbers.",
+            "Dividend, interest and royalty income semantics are detected conservatively from article headings/lead clauses; ambiguous blocks remain unclassified and fail closed.",
+            "Nonstandard article numbering is retained for all three WHT income types and never remapped to OECD article numbers automatically.",
             "When RIS exposes duplicate headings for the same article number, the most substantive machine block is selected; this remains a candidate and not a legal conclusion.",
             "Curated royalty source override provenance is preserved into the article-candidate inventory and does not itself establish the controlling treaty instrument.",
             "Short or cross-reference-only headings are retained for audit but excluded from substantive candidate counts.",
             "Multiple source instruments may contain different versions of an article; source chronology and legal effect must be resolved before interpretation.",
-            "Article number alone does not establish income type; older treaties may place royalties outside Article 12.",
+            "Article number alone does not establish income type.",
             "No rate, ownership threshold, beneficial-owner condition or other treaty condition is released by this output.",
             "MLI synthesized text is evidence of a candidate consolidated reading, not a substitute for bilateral matching and effective-date adjudication."
         ],
@@ -260,7 +279,7 @@ def main() -> None:
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"AT article candidate extraction: {result['partner_count']} partners / {result['curated_royalty_source_override_count']} curated royalty overrides")
     for partner in result["partners"]:
-        print(partner["partner_label"], partner["article_candidate_presence"], "rejected=", partner["rejected_article_candidate_presence"])
+        print(partner["partner_label"], partner["article_candidate_presence"], "semantic=", partner["semantic_income_candidate_presence"], "rejected=", partner["rejected_article_candidate_presence"])
 
 
 if __name__ == "__main__":
