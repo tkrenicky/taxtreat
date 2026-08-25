@@ -5,7 +5,7 @@ on:
     branches:
       - feat/web-bulk-en-treaty-acquisition-20260825
     paths:
-      - 'data/web/cz_treaty_en_official_sources_20260825.json'
+      - 'data/web/cz_treaty_en_official_sources*_20260825.json'
       - 'scripts/build_bulk_treaty_en_locale_candidates_v*.py'
       - 'scripts/promote_bulk_treaty_en_locale_candidates_20260825.py'
       - 'scripts/run_bulk_treaty_en_locale_pipeline_20260825.sh'
