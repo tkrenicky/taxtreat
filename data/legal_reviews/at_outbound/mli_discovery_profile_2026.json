@@ -1,7 +1,7 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "source_country": "AT",
-  "as_of": "2026-08-24",
+  "as_of": "2026-08-25",
   "status": "discovery_only_bilateral_adjudication_required",
   "instrument": {
     "title": "Multilateral Convention to Implement Tax Treaty Related Measures to Prevent Base Erosion and Profit Shifting",
@@ -24,34 +24,37 @@
       "source": "Austrian amended reservations and notifications 2023"
     }
   ],
-  "bmf_implementation_snapshot": {
-    "snapshot_date": "2025-09-30",
-    "first_notification_treaties": 38,
-    "first_notification_in_force": 35,
-    "second_notification_treaties": 34,
-    "second_notification_in_force": 17,
-    "status": "context_only_not_bilateral_release_evidence"
+  "wht_engine_scope": {
+    "article_7_ppt": {
+      "austria_position": "accepted",
+      "engine_effect": "general_treaty_benefit_abuse_overlay",
+      "bilateral_match_required": true,
+      "withholding_tax_effective_date_required": true
+    },
+    "article_8_dividend_transfer_transactions": {
+      "austria_position": "reserved_in_full",
+      "engine_effect": "none",
+      "bilateral_match_required": false,
+      "withholding_tax_effective_date_required": false
+    },
+    "other_mli_articles": {
+      "engine_effect": "no_separate_dividend_interest_royalty_rate_branch",
+      "note": "Retain outside the TaxTreat WHT rate engine only where another product or legal analysis needs them."
+    }
   },
   "bilateral_adjudication_method": [
-    "identify treaty as a potential Covered Tax Agreement from Austria's current notification layers",
-    "verify the partner jurisdiction's MLI party/signatory status and its own CTA notification",
-    "match reservations and optional provisions on both sides article by article",
-    "resolve changes caused by Austria's 2023 notification/reservation amendment",
-    "determine entry into force for both jurisdictions",
+    "identify whether the treaty is potentially covered by Austria's current CTA notification",
+    "verify the partner jurisdiction's CTA notification",
+    "match Article 7 PPT bilaterally",
     "determine Article 35 effective date specifically for withholding taxes",
     "cross-check against the current Austrian synthesized treaty text where available",
-    "record only mutually effective WHT-relevant modifications as legal effects"
+    "record PPT as a WHT overlay only when bilaterally effective"
   ],
-  "wht_relevant_article_seed": {
-    "article_7_ppt": "evaluate pair-specific matching; standard cross-cutting abuse condition alone does not create elevated review classification",
-    "article_8_dividend_transfer_transactions": "evaluate pair-specific matching and any reservations/holding-period interaction",
-    "other_articles": "retain only where they can affect dividend, interest, royalty entitlement, beneficial ownership/treaty access, or source-country WHT treatment"
-  },
   "release_constraints": [
     "Austria-side CTA notification is not sufficient evidence of bilateral MLI effect.",
-    "The BMF implementation counts are contextual snapshots and must not be used as a production relationship inventory.",
-    "No MLI article effect may be promoted without bilateral matching.",
-    "No withholding-tax MLI effect may be promoted without pair-specific Article 35 effective-date analysis.",
+    "No PPT effect may be promoted without bilateral matching.",
+    "No withholding-tax PPT effect may be promoted without pair-specific Article 35 effective-date analysis.",
+    "Austria reserved MLI Article 8 in full; the onboarding engine must not create an MLI 365-day dividend holding-period condition.",
     "A synthesized treaty text is strong pair-level implementation evidence where available but does not replace preservation of the underlying instrument chain."
   ]
 }
