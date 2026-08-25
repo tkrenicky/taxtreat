@@ -1,14 +1,15 @@
 {
   "schema_version": 1,
-  "registered_missing_country_count": 25,
+  "registered_missing_country_count": 26,
   "missing_country_article_pairs_at_start": 209,
   "country_status_counts": {
-    "NO_REGISTERED_SOURCE": 47,
+    "NO_REGISTERED_SOURCE": 46,
     "NO_EN_TEXT": 12,
     "SOURCE_ERROR": 6,
-    "REVIEW": 7
+    "REVIEW": 7,
+    "PASS": 1
   },
-  "article_candidates_pass": 0,
+  "article_candidates_pass": 3,
   "article_candidates_review": 12,
   "results": [
     {
@@ -1329,40 +1330,46 @@
     },
     {
       "country": "IN",
-      "status": "NO_REGISTERED_SOURCE",
-      "source_attempts": [],
+      "status": "PASS",
+      "source_attempts": [
+        {
+          "url": "https://www.incometaxindia.gov.in/w/czech-republic-synthesised-text-1",
+          "authority": "Income Tax Department, Ministry of Finance, Government of India",
+          "status": "PARSED",
+          "articles": {
+            "10": "PASS",
+            "11": "PASS",
+            "12": "PASS"
+          },
+          "resolved_url": "https://www.incometaxindia.gov.in/w/czech-republic-synthesised-text-1",
+          "text_length": 136488
+        }
+      ],
       "articles": {
         "10": {
           "expected_rates": [
             10.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            10.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 2284,
+          "missing_rates": []
         },
         "11": {
           "expected_rates": [
             0.0,
             10.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            0.0,
-            10.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 3881,
+          "missing_rates": []
         },
         "12": {
           "expected_rates": [
             10.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            10.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 3628,
+          "missing_rates": []
         }
       }
     },
