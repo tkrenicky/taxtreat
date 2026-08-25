@@ -1,9 +1,11 @@
 {
   "schema_version": 2,
   "source_country": "CZ",
-  "purpose": "Overlay registry replacing stale official English treaty source URLs.",
+  "purpose": "Overlay registry replacing stale or blocked official English treaty source URLs.",
   "entries": {
     "PL": {"sources": [{"url": "https://www.podatki.gov.pl/media/wpccdltv/dta-pl-cz-mli-synthesised-text.pdf", "authority": "Polish Ministry of Finance / podatki.gov.pl", "kind": "official_synthesised_text", "format": "pdf", "pair_verified": true}]},
-    "GE": {"sources": [{"url": "https://mof.ge/images/File/gakopa-dabegvra-sintezurebi/2022/15-07-2022/Czech_Rep/Czech%20Republic%20Synthesised%20text%2C%20MLI%20in%20force%2001.07.19.pdf", "authority": "Ministry of Finance of Georgia", "kind": "official_synthesised_text", "format": "pdf", "pair_verified": true}]}
+    "GE": {"sources": [{"url": "https://mof.ge/images/File/gakopa-dabegvra-sintezurebi/2022/15-07-2022/Czech_Rep/Czech%20Republic%20Synthesised%20text%2C%20MLI%20in%20force%2001.07.19.pdf", "authority": "Ministry of Finance of Georgia", "kind": "official_synthesised_text", "format": "pdf", "pair_verified": true}]},
+    "NL": {"sources": [{"url": "https://open.overheid.nl/documenten/ronl-451f0adf8f6b17329694f1483f1ab49e00952a48/pdf", "authority": "Government of the Netherlands / open.overheid.nl", "kind": "official_synthesised_text", "format": "pdf", "pair_verified": true}]},
+    "NO": {"sources": [{"url": "https://www.regjeringen.no/no/dokumenter/stprp-nr-42-2004-/id138803/?ch=6", "authority": "Norwegian Ministry of Finance / regjeringen.no", "kind": "official_treaty_text_in_ratification_material", "format": "html", "pair_verified": true}]}
   }
 }
