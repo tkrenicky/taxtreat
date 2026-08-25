@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
 from pathlib import Path
 from typing import Any
 from urllib.parse import urljoin
@@ -35,16 +34,22 @@ def _language_from_text(value: str) -> str | None:
     return None
 
 
-def _attachment_label(parent: dict[str, Any], child_url: str, *, artifact_root: Path) -> str:
+def _attachment_label(
+    parent: dict[str, Any],
+    child_urls: tuple[str, ...],
+    *,
+    artifact_root: Path,
+) -> str:
     parent_path = _artifact_path(str(parent.get("artifact_path") or ""), artifact_root)
     content_type = str(parent.get("content_type") or "").lower()
     if not parent_path.is_file() or "html" not in content_type:
         return ""
     soup = BeautifulSoup(parent_path.read_bytes(), "lxml")
     base_url = str(parent.get("final_url") or "")
+    targets = {url for url in child_urls if url}
     for anchor in soup.find_all("a", href=True):
         candidate = urljoin(base_url, str(anchor["href"]))
-        if candidate != child_url:
+        if candidate not in targets:
             continue
         image = anchor.find("img")
         return " ".join(
@@ -66,16 +71,21 @@ def classify_source_language(
     artifact_root: Path,
 ) -> tuple[str, str]:
     final_url = str(source.get("final_url") or "")
+    listed_url = str(source.get("listed_url") or "")
     discovered_from = str(source.get("discovered_from_url") or "")
     if discovered_from:
         parent = sources_by_url.get(discovered_from)
         if parent is not None:
-            label = _attachment_label(parent, final_url, artifact_root=artifact_root)
+            label = _attachment_label(
+                parent,
+                (listed_url, final_url),
+                artifact_root=artifact_root,
+            )
             language = _language_from_text(label)
             if language:
                 return language, "ris_attachment_label"
 
-    language = _language_from_text(final_url)
+    language = _language_from_text(f"{listed_url} {final_url}")
     if language:
         return language, "url_language_marker"
 
@@ -105,7 +115,13 @@ def build_language_evidence(
             raise ValueError(f"Missing AT article inventory partner: {label}")
 
         sources = list(partner.get("sources", []))
-        sources_by_url = {str(row.get("final_url") or ""): row for row in sources}
+        sources_by_url: dict[str, dict[str, Any]] = {}
+        for row in sources:
+            for key in ("listed_url", "final_url"):
+                url = str(row.get(key) or "")
+                if url:
+                    sources_by_url[url] = row
+
         source_languages: dict[str, tuple[str, str]] = {}
         source_rows: list[dict[str, Any]] = []
         for source in sources:
@@ -119,6 +135,7 @@ def build_language_evidence(
             source_rows.append(
                 {
                     "source_order": source.get("source_order"),
+                    "listed_url": source.get("listed_url"),
                     "final_url": source.get("final_url"),
                     "source_sha256": sha,
                     "role_candidate": source.get("role_candidate"),
