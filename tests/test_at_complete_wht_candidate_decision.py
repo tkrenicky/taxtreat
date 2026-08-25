@@ -94,6 +94,27 @@ def test_gross_royalty_route_remains_20_percent_when_net_option_not_elected():
     assert result["collection_candidates"][0]["withholding_base"] == "gross_revenue"
 
 
+def test_royalty_collection_basis_missing_and_net_route_blocker_branches_fail_closed():
+    missing = evaluate_royalty_collection_basis_candidate({"recipient_is_corporation": True})
+    assert "expense_deduction_option_elected" in missing["missing_facts"]
+    assert missing["selected_route_candidate"] is None
+
+    partial = _net_route()
+    partial.pop("recipient_is_eu_or_eea_resident")
+    result = evaluate_royalty_collection_basis_candidate(partial)
+    assert "recipient_is_eu_or_eea_resident" in result["missing_facts"]
+
+    non_eu = evaluate_royalty_collection_basis_candidate(
+        _net_route(recipient_is_eu_or_eea_resident=False)
+    )
+    assert "net_expense_route_requires_eu_or_eea_residence" in non_eu["legal_blockers"]
+
+    undisclosed = evaluate_royalty_collection_basis_candidate(
+        _net_route(directly_related_expenses_disclosed_in_writing_before_payment=False)
+    )
+    assert "direct_expenses_not_disclosed_in_writing_before_payment" in undisclosed["legal_blockers"]
+
+
 def test_current_eu_swiss_article9_dividend_candidate_requires_25_percent_for_two_years():
     eligible = evaluate_eu_swiss_article9_candidate(
         recipient_country="CH", income_type="dividend", facts=_swiss()
@@ -120,10 +141,36 @@ def test_current_eu_swiss_article9_interest_and_royalty_use_association_test():
         assert result["must_be_compared_with_dtt"] is True
 
 
-def test_non_swiss_recipient_never_gets_swiss_special_relief_candidate():
+def test_non_swiss_or_unsupported_income_never_gets_swiss_special_relief_candidate():
     assert evaluate_eu_swiss_article9_candidate(
         recipient_country="DE", income_type="royalty", facts=_swiss()
     ) is None
+    assert evaluate_eu_swiss_article9_candidate(
+        recipient_country="CH", income_type="capital_gain", facts=_swiss()
+    ) is None
+
+
+def test_swiss_article9_missing_and_failed_common_or_relationship_conditions_fail_closed():
+    incomplete = _swiss()
+    incomplete.pop("holding_period_months_completed")
+    missing = evaluate_eu_swiss_article9_candidate(
+        recipient_country="CH", income_type="interest", facts=incomplete
+    )
+    assert "holding_period_months_completed" in missing["missing_facts"]
+
+    bad_common = evaluate_eu_swiss_article9_candidate(
+        recipient_country="CH",
+        income_type="dividend",
+        facts=_swiss(eu_swiss_anti_abuse_clear=False),
+    )
+    assert "eu_swiss_article9_common_company_conditions_not_satisfied" in bad_common["legal_blockers"]
+
+    bad_relation = evaluate_eu_swiss_article9_candidate(
+        recipient_country="CH",
+        income_type="interest",
+        facts=_swiss(eu_swiss_association_25_percent_test_satisfied=False),
+    )
+    assert "eu_swiss_article9_25_percent_relationship_not_satisfied" in bad_relation["legal_blockers"]
 
 
 def test_complete_at_orchestrator_keeps_royalty_domestic_basis_visible_when_section_99a_fails():
@@ -152,6 +199,47 @@ def test_complete_at_orchestrator_can_record_treaty_source_relief_without_releas
     assert result["final_payment_date_withholding_rate_percent"] == 5.0
     assert result["selected_legal_route"] == "treaty_relief_at_source_candidate"
     assert result["production_release_allowed"] is False
+
+
+def test_complete_orchestrator_returns_terminal_domestic_zero_before_treaty_for_current_corporate_interest():
+    result = evaluate_at_wht_candidate(
+        recipient_country="US",
+        income_type="interest",
+        facts={
+            "recipient_is_natural_person": False,
+            "interest_is_special_section_99_category": False,
+        },
+        treaty_rate_percent=10,
+        treaty_substantive_entitlement_confirmed=True,
+        treaty_relief_at_source_documentation_ready=True,
+    )
+    assert result["selected_legal_route"] == "domestic"
+    assert result["final_payment_date_withholding_rate_percent"] == 0.0
+    assert result["treaty_collection"] is None
+    assert result["review_required"] is False
+
+
+def test_complete_orchestrator_keeps_unresolved_or_refund_only_treaty_collection_fail_closed():
+    unresolved = evaluate_at_wht_candidate(
+        recipient_country="US",
+        income_type="royalty",
+        facts=_royalty(expense_deduction_option_elected=False),
+        treaty_rate_percent=5,
+        treaty_substantive_entitlement_confirmed=False,
+    )
+    assert unresolved["treaty_collection"]["status"] == "unresolved"
+    assert unresolved["final_payment_date_withholding_rate_percent"] is None
+
+    refund = evaluate_at_wht_candidate(
+        recipient_country="US",
+        income_type="royalty",
+        facts=_royalty(expense_deduction_option_elected=False),
+        treaty_rate_percent=5,
+        treaty_substantive_entitlement_confirmed=True,
+        treaty_relief_at_source_documentation_ready=False,
+    )
+    assert refund["treaty_collection"]["refund_candidate"] is True
+    assert refund["final_payment_date_withholding_rate_percent"] is None
 
 
 def test_swiss_article9_zero_is_kept_parallel_to_dtt_and_still_requires_review():
