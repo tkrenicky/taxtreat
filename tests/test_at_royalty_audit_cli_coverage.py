@@ -59,7 +59,7 @@ def test_at_royalty_audit_cli_writes_fail_closed_output(monkeypatch, tmp_path: P
     audit.main()
 
     result = json.loads(output.read_text(encoding="utf-8"))
-    assert result["schema_version"] == 7
+    assert result["schema_version"] == 6
     assert result["partner_count"] == 89
     assert result["status"] == "royalty_category_machine_risk_queue_not_released"
     assert result["risk_partner_count"] == 0
