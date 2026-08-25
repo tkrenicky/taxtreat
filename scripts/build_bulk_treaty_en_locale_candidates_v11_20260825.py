@@ -18,6 +18,7 @@ _INDEX_RESOLVERS = {
         "country_markers": ("czechre", "czech republic", "czech"),
         "language_markers": ("english",),
         "scope": "table_row",
+        "document_timeout": 90,
     },
 }
 
@@ -76,18 +77,16 @@ def _resolve_index(url: str, timeout: int) -> tuple[bytes, str, str] | None:
         if any(marker.lower() in probe for marker in config["language_markers"]):
             candidates.append(href)
     if not candidates:
-        # Row/section is already strictly scoped to Czech Republic. Accept only
-        # document-like links from that exact scope and let pair/rate validation
-        # downstream reject anything that is not the intended treaty.
         candidates = [href for href, _ in links if re.search(r"(?i)(\.pdf(?:$|[?#])|download|attachment|root_storage)", href)]
     candidates = list(dict.fromkeys(candidates))
     if not candidates:
         raise RuntimeError("no treaty document link found inside Czech Republic scope")
 
+    doc_timeout = int(config.get("document_timeout") or timeout)
     last_error: Exception | None = None
     for candidate in candidates[:8]:
         try:
-            doc_body, doc_type, doc_resolved = v10._resilient_request(candidate, timeout=timeout)
+            doc_body, doc_type, doc_resolved = v10._resilient_request(candidate, timeout=doc_timeout)
             if doc_body.startswith(b"%PDF") or len(doc_body) >= 2000:
                 return doc_body, doc_type, doc_resolved
         except Exception as exc:
