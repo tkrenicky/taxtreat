@@ -58,6 +58,7 @@ def add_at_wht_review_fields(pack: dict[str, Any]) -> dict[str, Any]:
         row = dict(original)
         income_type = str(row.get("income_type") or "")
         swiss = _is_swiss_partner(str(row.get("partner_label") or ""))
+        royalty = income_type == "royalty"
 
         row.update({
             "payment_date_wht_review_required": True,
@@ -68,15 +69,22 @@ def add_at_wht_review_fields(pack: dict[str, Any]) -> dict[str, Any]:
             "reviewer_refund_route_available": None,
             "reviewer_required_form_or_documentation": None,
             "reviewer_procedure_notes": None,
+            "reviewer_refund_prenotification_required": None,
+            "reviewer_refund_competent_authority": None,
+            "reviewer_refund_period_confirmed": None,
             "swiss_article9_review_required": swiss,
             "reviewer_eu_swiss_article9_eligible": None if swiss else False,
             "reviewer_dtt_more_favourable_than_special_agreement": None if swiss else False,
             "reviewer_special_international_relief_notes": None,
-            "royalty_collection_candidates": _royalty_collection_candidates() if income_type == "royalty" else [],
-            "reviewer_expense_deduction_option_elected": None if income_type == "royalty" else False,
-            "reviewer_expense_deduction_conditions_confirmed": None if income_type == "royalty" else False,
+            "royalty_collection_candidates": _royalty_collection_candidates() if royalty else [],
+            "reviewer_expense_deduction_option_elected": None if royalty else False,
+            "reviewer_expense_deduction_conditions_confirmed": None if royalty else False,
             "reviewer_net_expense_amount": None,
-            "reviewer_section99_expense_security_test_confirmed": None if income_type == "royalty" else False,
+            "reviewer_section99_expense_security_test_confirmed": None if royalty else False,
+            "reviewer_recipient_has_austrian_pe": None if royalty else False,
+            "reviewer_royalty_attributable_to_austrian_pe": None if royalty else False,
+            "reviewer_assessment_character": None if royalty else "not_applicable",
+            "reviewer_withholding_creditable_in_assessment": None if royalty else False,
             "promotable_to_canonical": False,
         })
         rows.append(row)
@@ -90,6 +98,8 @@ def add_at_wht_review_fields(pack: dict[str, Any]) -> dict[str, Any]:
         "reviewer_must_confirm_payment_date_withholding_not_only_treaty_rate": True,
         "reviewer_must_confirm_withholding_base_for_royalties": True,
         "gross_and_net_royalty_rates_are_not_comparable_without_tax_base": True,
+        "royalty_pe_attribution_changes_assessment_character_not_automatically_payment_date_rate": True,
+        "refund_filing_procedure_is_separate_from_refund_substantive_entitlement": True,
         "swiss_article9_and_dtt_must_be_compared_where_applicable": True,
         "current_section99_expense_security_threshold_eur": 2463.0,
         "corporate_net_expense_wht_rate_from_2024_percent": 23.0,
@@ -112,9 +122,13 @@ def write_csv(pack: dict[str, Any], path: Path) -> None:
         "reviewer_withholding_base", "reviewer_payment_date_wht_rate_percent",
         "reviewer_relief_at_source_available", "reviewer_refund_route_available",
         "reviewer_required_form_or_documentation", "reviewer_procedure_notes",
+        "reviewer_refund_prenotification_required", "reviewer_refund_competent_authority",
+        "reviewer_refund_period_confirmed",
         "royalty_collection_candidates", "reviewer_expense_deduction_option_elected",
         "reviewer_expense_deduction_conditions_confirmed", "reviewer_net_expense_amount",
         "reviewer_section99_expense_security_test_confirmed",
+        "reviewer_recipient_has_austrian_pe", "reviewer_royalty_attributable_to_austrian_pe",
+        "reviewer_assessment_character", "reviewer_withholding_creditable_in_assessment",
         "swiss_article9_review_required", "reviewer_eu_swiss_article9_eligible",
         "reviewer_dtt_more_favourable_than_special_agreement",
         "reviewer_special_international_relief_notes", "reviewer_decision",
