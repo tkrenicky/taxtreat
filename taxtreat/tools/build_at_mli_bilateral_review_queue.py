@@ -31,19 +31,20 @@ def build_mli_review_queue(inventory: dict[str, Any]) -> dict[str, Any]:
                 "partner_mli_party_status_verified": False,
                 "partner_cta_notification_verified": False,
                 "austria_cta_notification_verified": False,
-                "article_7": {
-                    "austria_position_verified": False,
-                    "partner_position_verified": False,
-                    "bilateral_match_resolved": False,
-                    "result_changing_effects": [],
+                "wht_overlay": {
+                    "article_7_ppt": {
+                        "austria_position": "accepted",
+                        "partner_position_verified": False,
+                        "bilateral_match_resolved": False,
+                        "result_changing_effects": [],
+                    },
+                    "article_8_dividend_transfer_transactions": {
+                        "austria_position": "reserved_in_full",
+                        "applicable": False,
+                        "result_changing_effects": [],
+                    },
+                    "other_rate_changing_articles": [],
                 },
-                "article_8": {
-                    "austria_position_verified": False,
-                    "partner_position_verified": False,
-                    "bilateral_match_resolved": False,
-                    "result_changing_effects": [],
-                },
-                "other_wht_relevant_articles": [],
                 "article_35": {
                     "austria_entry_into_force_verified": False,
                     "partner_entry_into_force_verified": False,
@@ -59,16 +60,18 @@ def build_mli_review_queue(inventory: dict[str, Any]) -> dict[str, Any]:
     if not relationships:
         raise ValueError("No current Austrian MLI discovery relationships found")
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "source_country": "AT",
         "status": "bilateral_mli_review_queue_not_adjudicated",
         "relationship_count": len(relationships),
+        "wht_scope": "article_7_ppt_and_pair_specific_withholding_effective_date_only",
         "relationships": relationships,
         "release_constraints": [
             "Austria-side machine MLI flags are discovery signals only.",
-            "Partner CTA notification and partner-side positions must be verified independently.",
-            "Reservations and optional provisions must be matched bilaterally before any legal effect is recorded.",
+            "Partner CTA notification and partner-side Article 7 position must be verified independently.",
+            "Article 7 PPT must be matched bilaterally before any WHT legal effect is recorded.",
             "Article 35 withholding-tax effective date must be resolved pair by pair.",
+            "Austria reserved Article 8 in full; no MLI 365-day dividend holding-period condition may be created.",
             "PPT applicability alone does not make a package elevated; complexity classification requires an additional country-specific issue.",
             "No MLI result-changing effect is released by this queue."
         ],
@@ -84,7 +87,7 @@ def main() -> None:
     result = build_mli_review_queue(inventory)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"AT bilateral MLI review queue: {result['relationship_count']} relationships")
+    print(f"AT bilateral MLI review queue: {result['relationship_count']} relationships / PPT-only WHT overlay")
 
 
 if __name__ == "__main__":
