@@ -85,6 +85,7 @@ def build_human_review_pack(
     language_evidence: dict[str, Any] | None = None,
     article_reconciliation: dict[str, Any] | None = None,
     scope_evidence: dict[str, Any] | None = None,
+    review_bundle_provenance: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     source_country = str(review_queue.get("source_country") or "").strip().upper()
     scopes = review_queue.get("scopes")
@@ -94,6 +95,15 @@ def build_human_review_pack(
         raise ValueError("Human-review pack requires an unreleased review queue")
     if not isinstance(scopes, list) or not scopes:
         raise ValueError("Human-review queue contains no scopes")
+
+    bundle_id: str | None = None
+    if review_bundle_provenance is not None:
+        provenance_country = str(review_bundle_provenance.get("source_country") or "").strip().upper()
+        bundle_id = str(review_bundle_provenance.get("review_bundle_id") or "").strip()
+        if provenance_country != source_country:
+            raise ValueError("Human-review provenance source country mismatch")
+        if not bundle_id.startswith("sha256:"):
+            raise ValueError("Human-review provenance is missing a valid review_bundle_id")
 
     royalty_by_partner = _index_by_partner(royalty_audit)
     language_by_partner = _index_by_partner(language_evidence)
@@ -177,6 +187,7 @@ def build_human_review_pack(
 
         rows.append(
             {
+                "review_bundle_id": bundle_id,
                 "source_country": source_country,
                 "partner_label": partner,
                 "income_type": income_type,
@@ -217,9 +228,11 @@ def build_human_review_pack(
     ready = sum(row["review_ready"] for row in rows)
 
     return {
-        "schema_version": 2,
+        "schema_version": 3,
         "source_country": source_country,
         "status": "human_review_pack_not_reviewed_not_released",
+        "review_bundle_id": bundle_id,
+        "review_bundle_provenance": review_bundle_provenance,
         "scope_count": len(rows),
         "review_ready_scope_count": ready,
         "blocked_scope_count": len(rows) - ready,
@@ -235,6 +248,7 @@ def build_human_review_pack(
             "review_ready_requires_complete_rate_to_condition_mapping": True,
             "machine_translation_never_establishes_authentic_treaty_wording": True,
             "canonical_materialization_requires_approved_review": True,
+            "review_bundle_identity_required_for_orchestrated_promotion": True,
             "fail_closed": True,
         },
         "rows": rows,
@@ -243,6 +257,7 @@ def build_human_review_pack(
 
 def write_csv(pack: dict[str, Any], path: Path) -> None:
     fields = [
+        "review_bundle_id",
         "source_country",
         "partner_label",
         "income_type",
