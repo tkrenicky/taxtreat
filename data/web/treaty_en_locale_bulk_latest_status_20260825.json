@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "registered_missing_country_count": 25,
+  "registered_missing_country_count": 26,
   "missing_country_article_pairs_at_start": 204,
   "country_status_counts": {
-    "NO_REGISTERED_SOURCE": 46,
+    "NO_REGISTERED_SOURCE": 45,
     "NO_EN_TEXT": 13,
-    "REVIEW": 8,
-    "SOURCE_ERROR": 4
+    "SOURCE_ERROR": 5,
+    "REVIEW": 8
   },
   "article_candidates_pass": 0,
   "article_candidates_review": 13,
@@ -406,8 +406,16 @@
     },
     {
       "country": "BH",
-      "status": "NO_REGISTERED_SOURCE",
-      "source_attempts": [],
+      "status": "SOURCE_ERROR",
+      "source_attempts": [
+        {
+          "url": "https://www.nbr.gov.bh/FTR/bahrain_tax_treaties_network",
+          "authority": "National Bureau for Revenue, Kingdom of Bahrain",
+          "status": "SOURCE_ERROR",
+          "articles": {},
+          "error": "RuntimeError: urllib=HTTPError: HTTP Error 403: Forbidden; curl=curl failed (22): curl: (22) The requested URL returned error: 403"
+        }
+      ],
       "articles": {
         "10": {
           "expected_rates": [
