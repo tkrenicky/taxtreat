@@ -87,6 +87,24 @@ def test_corrected_review_requires_conclusion_and_evidence_reference():
     assert result["all_scopes_eligible"] is True
 
 
+def test_multi_variant_or_status_scope_requires_controlling_evidence_reference():
+    for field, value in (
+        ("unique_text_variant_count_machine", 2),
+        ("machine_status_instrument_flag", True),
+        ("nonstandard_article_number_machine", True),
+    ):
+        pack = _pack()
+        pack["rows"][0][field] = value
+        result = validate_review_bundle_submission(pack, expected_review_bundle_id=BUNDLE)
+        row = result["rows"][0]
+        assert row["controlling_evidence_selection_required"] is True
+        assert "controlling_evidence_reference_missing" in row["promotion_blockers"]
+
+        pack["rows"][0]["reviewer_evidence_references"] = ["official-source:controlling-text"]
+        result = validate_review_bundle_submission(pack, expected_review_bundle_id=BUNDLE)
+        assert result["all_scopes_eligible"] is True
+
+
 def test_review_bundle_submission_requires_rows():
     pack = _pack()
     pack["rows"] = []
