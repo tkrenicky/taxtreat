@@ -103,10 +103,22 @@ def build_language_evidence(
 ) -> dict[str, Any]:
     if pilot.get("source_country") != "AT" or article_inventory.get("source_country") != "AT":
         raise ValueError("Expected Austrian acquisition and article inventories")
-    if pilot.get("pilot_partner_count") != 89 or article_inventory.get("partner_count") != 89:
-        raise ValueError("AT language evidence requires the full 89-partner acquisition universe")
+    pilot_count = int(pilot.get("pilot_partner_count") or 0)
+    article_count = int(article_inventory.get("partner_count") or 0)
+    if pilot_count <= 0 or article_count <= 0:
+        raise ValueError("AT language evidence requires a non-empty full acquisition universe")
+    if pilot.get("acquisition_scope") != "all_current_partners":
+        raise ValueError("AT language evidence requires the full current-partner acquisition scope")
+    if pilot_count != article_count:
+        raise ValueError(
+            f"AT acquisition/article universe mismatch: {pilot_count} vs {article_count}"
+        )
 
     article_partners = {str(row.get("partner_label")): row for row in article_inventory.get("partners", [])}
+    pilot_labels = {str(row.get("partner_label")) for row in pilot.get("partners", [])}
+    if set(article_partners) != pilot_labels:
+        raise ValueError("AT acquisition/article partner labels do not match")
+
     rows: list[dict[str, Any]] = []
     for partner in pilot.get("partners", []):
         label = str(partner.get("partner_label") or "")
@@ -160,6 +172,7 @@ def build_language_evidence(
                         "text_sha256": candidate.get("text_sha256"),
                         "artifact_path": candidate.get("artifact_path"),
                         "semantic_income_candidate": candidate.get("semantic_income_candidate"),
+                        "semantic_income_detected": candidate.get("semantic_income_detected"),
                         "source_sha256": source_sha,
                         "language_candidate": language,
                         "language_evidence_method": method,
@@ -200,7 +213,7 @@ def build_language_evidence(
         )
 
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "source_country": "AT",
         "status": "treaty_language_evidence_candidates_not_reviewed",
         "partner_count": len(rows),
@@ -214,6 +227,7 @@ def build_language_evidence(
             "translated_english_may_be_created_only_from_selected_controlling_text": True,
             "step4_wording_requires_controlling_text_and_language_authority_review": True,
             "no_web_wording_is_released_by_this_inventory": True,
+            "universe_size_is_derived_from_current_acquisition_not_hard_coded": True
         },
     }
 
