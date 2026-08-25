@@ -5,8 +5,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-CANDIDATE_DIR = ROOT / "reports" / "treaty_en_locale_bulk_candidates_v4_20260825"
-SUMMARY = ROOT / "reports" / "treaty_en_locale_bulk_candidates_v4_20260825.json"
+CANDIDATE_DIR = ROOT / "reports" / "treaty_en_locale_bulk_candidates_v5_20260825"
+SUMMARY = ROOT / "reports" / "treaty_en_locale_bulk_candidates_v5_20260825.json"
 LOCALE_DIR = ROOT / "app" / "web" / "treaty-excerpt-locales"
 PROMOTION_SUMMARY = ROOT / "reports" / "treaty_en_locale_bulk_promotion_20260825.json"
 
