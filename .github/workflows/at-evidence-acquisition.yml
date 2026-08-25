@@ -8,6 +8,7 @@ on:
       - "taxtreat/tools/build_at_treaty_review_queue.py"
       - "taxtreat/tools/acquire_at_instrument_chain_pilot.py"
       - "taxtreat/tools/extract_at_treaty_article_candidates.py"
+      - "taxtreat/tools/build_at_language_evidence.py"
       - "taxtreat/tools/reconcile_at_article_text_candidates.py"
       - "taxtreat/tools/audit_at_royalty_categories.py"
       - "data/legal_reviews/at_outbound/**"
@@ -132,6 +133,33 @@ jobs:
           substantive = sum(sum(row["article_candidate_presence"].values()) for row in data["partners"])
           rejected = sum(sum(row["rejected_article_candidate_presence"].values()) for row in data["partners"])
           print("AT article candidates:", substantive, "substantive /", rejected, "rejected by quality gate /", data["curated_royalty_source_override_count"], "curated royalty overrides preserved")
+          PY
+      - name: Build German and English treaty language evidence
+        run: |
+          python -m taxtreat.tools.build_at_language_evidence \
+            --pilot artifacts/at/instrument_chain_pilot.json \
+            --articles artifacts/at/article_candidate_inventory.json \
+            --artifact-root artifacts/at \
+            --output artifacts/at/treaty_language_evidence.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path("artifacts/at/treaty_language_evidence.json").read_text(encoding="utf-8"))
+          assert data["schema_version"] == 1
+          assert data["source_country"] == "AT"
+          assert data["status"] == "treaty_language_evidence_candidates_not_reviewed"
+          assert data["partner_count"] == 89
+          assert data["policy"]["german_and_english_wording_are_tracked_separately"] is True
+          assert data["policy"]["machine_translation_must_never_be_presented_as_authentic_treaty_text"] is True
+          assert data["policy"]["step4_wording_requires_controlling_text_and_language_authority_review"] is True
+          assert all(row["step4_web_wording_readiness"]["de"] is False for row in data["partners"])
+          assert all(row["step4_web_wording_readiness"]["en"] is False for row in data["partners"])
+          assert all(row["web_wording_released"] is False for row in data["partners"])
+          assert all(row["translated_en_from_controlling_text"]["status"] == "not_created" for row in data["partners"])
+          de = [row["partner_label"] for row in data["partners"] if row["language_evidence_coverage_machine"]["german_official_source_candidate_available"]]
+          en = [row["partner_label"] for row in data["partners"] if row["language_evidence_coverage_machine"]["english_official_source_candidate_available"]]
+          print("AT language evidence: DE official-source candidates=", len(de), "EN official-source candidates=", len(en))
+          print("AT partners with explicit EN official-source candidates:", en)
           PY
       - name: Build article variant reconciliation queue
         run: |
