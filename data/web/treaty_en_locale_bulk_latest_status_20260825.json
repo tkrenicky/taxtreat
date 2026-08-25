@@ -4,8 +4,8 @@
   "missing_country_article_pairs_at_start": 204,
   "country_status_counts": {
     "NO_REGISTERED_SOURCE": 44,
-    "NO_EN_TEXT": 13,
-    "SOURCE_ERROR": 6,
+    "NO_EN_TEXT": 14,
+    "SOURCE_ERROR": 5,
     "REVIEW": 8
   },
   "article_candidates_pass": 0,
@@ -1432,14 +1432,19 @@
     },
     {
       "country": "JO",
-      "status": "SOURCE_ERROR",
+      "status": "NO_EN_TEXT",
       "source_attempts": [
         {
           "url": "https://istd.gov.jo/EN/ListDetails/Agreements_signed_with_the_Jordanian_government__Double_taxation_avoidance_agreements/1102/1",
           "authority": "Income and Sales Tax Department, Hashemite Kingdom of Jordan",
-          "status": "SOURCE_ERROR",
-          "articles": {},
-          "error": "RuntimeError: Czech Republic scoped links did not yield a treaty document: urllib=UnicodeEncodeError: 'ascii' codec can't encode characters in position 44-49: ordinal not in range(128); curl=curl failed (28): curl: (28) Operation timed out after 25000 milliseconds with 20868244 bytes received\ncurl: (28) Operation timed out after 25000 milliseconds with 21624517 bytes received"
+          "status": "PARSED",
+          "articles": {
+            "10": "NO_EN_ARTICLE",
+            "11": "NO_EN_ARTICLE",
+            "12": "NO_EN_ARTICLE"
+          },
+          "resolved_url": "https://istd.gov.jo/EBV4.0/Root_Storage/AR/EB_UsefullLinks/التشيك_-en.pdf",
+          "text_length": 45
         }
       ],
       "articles": {
