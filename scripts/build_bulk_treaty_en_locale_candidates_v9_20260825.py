@@ -48,6 +48,12 @@ def _pair_valid(country: str, text: str) -> bool:
     return any(x in probe for x in CZECH_MARKERS) and any(x in probe for x in PARTNER_MARKERS.get(country, ()))
 
 
+def _rate_present(text: str, rate: float) -> bool:
+    if rate == 0 and re.search(r"(?<!\d)0(?:[.,]0+)?\s*(?:%|percent|per cent)\b", text, re.I):
+        return True
+    return core._rate_present(text, rate)
+
+
 def _extract_flexible(text: str, article: str, rules: list[dict]) -> str | None:
     raw = text.replace("\r", "\n").replace("\u00a0", " ")
     start_re = re.compile(rf"(?im)^\s*article\s+(?:no\.?\s*)?{re.escape(article)}\b")
@@ -70,7 +76,7 @@ def _extract_flexible(text: str, article: str, rules: list[dict]) -> str | None:
             continue
         lowered = excerpt[:600].lower()
         score = (10 if subject and subject in lowered else 0) + (5 if core._english_likelihood(excerpt) else 0)
-        score += sum(3 for rate in expected if core._rate_present(excerpt, rate))
+        score += sum(3 for rate in expected if _rate_present(excerpt, rate))
         score += min(len(excerpt) // 1000, 4)
         if best is None or score > best[0]:
             best = (score, excerpt)
@@ -83,7 +89,7 @@ def _analyse(text: str, article: str, rules: list[dict]) -> tuple[dict, str | No
     excerpt = _extract_flexible(text, article, rules)
     if not excerpt or not core._english_likelihood(excerpt):
         return result, None
-    missing = [rate for rate in rates if not core._rate_present(excerpt, rate)]
+    missing = [rate for rate in rates if not _rate_present(excerpt, rate)]
     result.update({"status": "PASS" if not missing else "REVIEW", "excerpt_length": len(excerpt), "missing_rates": missing})
     return result, excerpt
 
