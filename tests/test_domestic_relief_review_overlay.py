@@ -1,10 +1,14 @@
 import csv
 import json
+import sys
 from pathlib import Path
 
 import pytest
 
+from taxtreat.tools import add_domestic_relief_review_overlay as overlay_module
 from taxtreat.tools.add_domestic_relief_review_overlay import (
+    _income_overlay,
+    _legal_basis_values,
     add_domestic_relief_overlay,
     write_review_csv,
 )
@@ -136,3 +140,50 @@ def test_overlay_rejects_country_mismatch_or_released_input():
     pack["status"] = "released"
     with pytest.raises(ValueError, match="unreleased human-review pack"):
         add_domestic_relief_overlay(pack, _model())
+
+
+def test_overlay_helper_normalizes_legal_basis_values_and_missing_income():
+    assert _legal_basis_values(None) == []
+    assert _legal_basis_values("§ 99a EStG") == ["§ 99a EStG"]
+    assert _legal_basis_values(["§ 99 EStG", 100]) == ["§ 99 EStG", "100"]
+    with pytest.raises(ValueError, match="missing income type"):
+        _income_overlay("dividend", {"income_types": {}})
+
+
+def test_overlay_ignores_non_dict_relief_entries_and_uses_empty_legal_basis():
+    model = _model()
+    model["income_types"]["dividend"]["note"] = "not a relief mapping"
+    model["income_types"]["dividend"]["eu_parent_relief"]["legal_basis"] = None
+    overlay = _income_overlay("dividend", model)
+    assert [item["path_id"] for item in overlay["domestic_relief_paths_candidate"]] == ["eu_parent_relief"]
+    assert overlay["domestic_relief_paths_candidate"][0]["legal_basis"] == []
+
+
+def test_overlay_csv_rejects_empty_rows(tmp_path: Path):
+    with pytest.raises(ValueError, match="no rows"):
+        write_review_csv({"rows": []}, tmp_path / "empty.csv")
+
+
+def test_overlay_cli_writes_json_and_csv(tmp_path: Path, monkeypatch, capsys):
+    review_path = tmp_path / "pack.json"
+    model_path = tmp_path / "model.json"
+    output_json = tmp_path / "out" / "review.json"
+    output_csv = tmp_path / "out" / "review.csv"
+    review_path.write_text(json.dumps(_pack()), encoding="utf-8")
+    model_path.write_text(json.dumps(_model()), encoding="utf-8")
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "add_domestic_relief_review_overlay",
+            "--review-pack", str(review_path),
+            "--domestic-model", str(model_path),
+            "--output-json", str(output_json),
+            "--output-csv", str(output_csv),
+        ],
+    )
+    overlay_module.main()
+    payload = json.loads(output_json.read_text(encoding="utf-8"))
+    assert payload["status"] == "human_review_pack_with_domestic_relief_not_reviewed_not_released"
+    assert output_csv.exists()
+    assert "Domestic relief review overlay: AT 3 scopes" in capsys.readouterr().out
