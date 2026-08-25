@@ -125,7 +125,8 @@ def _process(country: str, articles: dict[str, list[dict]], entry: dict | None) 
             attempt["error"] = f"{type(exc).__name__}: {exc}"
             row["source_attempts"].append(attempt)
             continue
-        if not _pair_valid(country, text):
+        pair_ok = bool(source.get("pair_verified")) or _pair_valid(country, text)
+        if not pair_ok:
             attempt["status"] = "WRONG_TREATY_PAIR"
             row["source_attempts"].append(attempt)
             continue
