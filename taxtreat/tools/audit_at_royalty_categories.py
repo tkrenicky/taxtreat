@@ -30,8 +30,8 @@ TECHNICAL_SERVICE_RE = re.compile(
     flags=re.IGNORECASE,
 )
 ROYALTY_SOURCE_EXEMPTION_RE = re.compile(
-    r"(?:lizenzgebühr|royalt).{0,260}(?:von\s+der\s+besteuerung\s+ausgenommen|steuerfrei|shall\s+be\s+exempt|exempt\s+from\s+(?:tax|taxation))"
-    r"|(?:von\s+der\s+besteuerung\s+ausgenommen|steuerfrei|shall\s+be\s+exempt|exempt\s+from\s+(?:tax|taxation)).{0,260}(?:lizenzgebühr|royalt)",
+    r"(?:lizenzgebühr|royalt).{0,260}(?:von\s+der\s+besteuerung.{0,100}(?:ausgenommen|ausge-?\s*nommen)|steuerfrei|shall\s+be\s+exempt|exempt\s+from\s+(?:tax|taxation))"
+    r"|(?:von\s+der\s+besteuerung.{0,100}(?:ausgenommen|ausge-?\s*nommen)|steuerfrei|shall\s+be\s+exempt|exempt\s+from\s+(?:tax|taxation)).{0,260}(?:lizenzgebühr|royalt)",
     flags=re.IGNORECASE | re.DOTALL,
 )
 
