@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import json
-from pathlib import Path
+import urllib.parse
 
 import build_bulk_treaty_en_locale_candidates_v9_20260825 as v9
 import build_bulk_treaty_en_locale_candidates_v12_20260825 as v12
@@ -9,6 +9,13 @@ import build_bulk_treaty_en_locale_candidates_v12_20260825 as v12
 
 MF_INVENTORY = v9.ROOT / "data" / "legal_consolidation" / "mf_inventory.json"
 _original_registry_entries = v9._registry_entries
+
+
+def _is_psp_print_source(source: dict) -> bool:
+    url = str(source.get("url") or "")
+    parsed = urllib.parse.urlparse(url)
+    host = (parsed.hostname or "").lower().removeprefix("www.")
+    return host == "psp.cz" and parsed.path.lower().endswith("/sqw/text/tiskt.sqw")
 
 
 def _mf_base_sources() -> dict[str, list[dict]]:
@@ -41,24 +48,27 @@ def _mf_base_sources() -> dict[str, list[dict]]:
 
 def _registry_entries_with_mf() -> dict:
     merged = _original_registry_entries()
-    for country, mf_sources in _mf_base_sources().items():
-        current = merged.get(country)
-        if current is None:
-            merged[country] = {"sources": mf_sources}
-            continue
-        explicit = v9._sources(current)
+    mf = _mf_base_sources()
+    countries = set(merged) | set(mf)
+    rebuilt: dict = {}
+    for country in countries:
+        explicit = v9._sources(merged.get(country)) if country in merged else []
+        # PSP ratification-print discovery is retained in the registry for targeted
+        # later use, but omitted from this scalable batch after proving expensive and
+        # low-yield. Partner-government sources remain first-class.
+        explicit = [source for source in explicit if not _is_psp_print_source(source)]
         seen = {str(source.get("url") or "") for source in explicit}
         combined = list(explicit)
-        combined.extend(source for source in mf_sources if source["url"] not in seen)
-        merged[country] = {"sources": combined}
-    return merged
+        combined.extend(source for source in mf.get(country, []) if source["url"] not in seen)
+        if combined:
+            rebuilt[country] = {"sources": combined}
+    return rebuilt
 
 
 def main() -> int:
-    # Source-acquisition extension only. Existing explicit partner sources retain
-    # priority; exact Czech official base-treaty publications are appended as a
-    # fallback. Pair validation, article extraction, Stage6 expected-rate checks and
-    # PASS-only promotion remain v9 behavior.
+    # Source-acquisition extension only. Exact partner-government sources plus Czech
+    # official base-treaty publications are evaluated by the existing pair/article/
+    # Stage6 rate gates. Nothing here can promote REVIEW or overwrite an EN locale.
     v9._registry_entries = _registry_entries_with_mf
     v9.core._request = v12._request
     return v9.main()
