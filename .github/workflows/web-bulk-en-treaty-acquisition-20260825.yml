@@ -1,0 +1,49 @@
+name: WEB bulk EN treaty acquisition
+
+on:
+  push:
+    branches:
+      - feat/web-bulk-en-treaty-acquisition-20260825
+    paths:
+      - 'scripts/build_bulk_treaty_en_locale_candidates_v*.py'
+      - 'scripts/promote_bulk_treaty_en_locale_candidates_20260825.py'
+      - 'scripts/run_bulk_treaty_en_locale_pipeline_20260825.sh'
+      - '.github/workflows/web-bulk-en-treaty-acquisition-20260825.yml'
+  workflow_dispatch:
+
+jobs:
+  run-batch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install PDF tooling
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils
+      - name: Compile pipeline
+        run: |
+          python -m py_compile \
+            scripts/build_bulk_treaty_en_locale_candidates_v3_20260825.py \
+            scripts/build_bulk_treaty_en_locale_candidates_v4_20260825.py \
+            scripts/build_bulk_treaty_en_locale_candidates_v5_20260825.py \
+            scripts/promote_bulk_treaty_en_locale_candidates_20260825.py
+      - name: Run batch
+        env:
+          PYTHONUNBUFFERED: '1'
+          TAXTREAT_EN_WORKERS: '12'
+          TAXTREAT_EN_SEARCH_TIMEOUT: '6'
+          TAXTREAT_EN_DOC_TIMEOUT: '9'
+        run: bash scripts/run_bulk_treaty_en_locale_pipeline_20260825.sh
+      - name: Upload batch reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-bulk-en-treaty-results
+          path: |
+            reports/treaty_en_locale_bulk_candidates_v5_20260825.json
+            reports/treaty_en_locale_bulk_candidates_v5_20260825/
+            reports/treaty_en_locale_bulk_promotion_20260825.json
+            reports/treaty_en_official_source_cache_v5_20260825.json
+            app/web/treaty-excerpt-locales/
+          if-no-files-found: warn
