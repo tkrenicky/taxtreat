@@ -228,7 +228,7 @@ def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> 
 
     risk_rows = [row for row in rows if row["category_projection_review_required"]]
     return {
-        "schema_version": 7,
+        "schema_version": 6,
         "source_country": "AT",
         "status": "royalty_category_machine_risk_queue_not_released",
         "base_user_facing_categories": list(BASE_CATEGORIES),
@@ -244,6 +244,7 @@ def build_audit(candidate_inventory: dict[str, Any], *, artifact_root: Path) -> 
             "source_exemption_language_is_a_branch_signal_not_a_synthetic_zero_rate": True,
             "machine_rate_candidates_do_not_establish_category_rates": True,
             "article_number_alone_does_not_establish_income_type": True,
+            "royalty_semantics_required_for_article_candidate": True,
             "royalty_semantics_required_near_article_start_for_fallback_candidate": True,
             "nonstandard_royalty_article_number_requires_review": True,
             "cross_instrument_rate_variance_is_not_a_category_split": True,
