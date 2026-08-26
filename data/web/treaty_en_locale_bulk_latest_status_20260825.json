@@ -1,27 +1,27 @@
 {
   "schema_version": 1,
-  "registered_missing_country_count": 71,
-  "missing_country_article_pairs_at_start": 200,
+  "registered_missing_country_count": 65,
+  "missing_country_article_pairs_at_start": 176,
   "country_status_counts": {
     "SOURCE_ERROR": 44,
-    "NO_EN_TEXT": 9,
-    "PASS": 6,
-    "PARTIAL": 5,
-    "REVIEW": 7
+    "PASS": 1,
+    "NO_EN_TEXT": 6,
+    "REVIEW": 12,
+    "PARTIAL": 2
   },
-  "article_candidates_pass": 24,
-  "article_candidates_review": 15,
+  "article_candidates_pass": 7,
+  "article_candidates_review": 17,
   "results": [
     {
       "country": "AD",
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39732",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2023/46?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -63,19 +63,19 @@
     },
     {
       "country": "AE",
-      "status": "NO_EN_TEXT",
+      "status": "PASS",
       "source_attempts": [
         {
           "url": "https://e-sbirka.gov.cz/sb/2024/206?zalozka=text",
           "authority": "Czech Ministry of Finance / official publication",
           "status": "PARSED",
           "articles": {
-            "11": "NO_EN_ARTICLE",
-            "12": "NO_EN_ARTICLE",
-            "13": "NO_EN_ARTICLE"
+            "11": "PASS",
+            "12": "PASS",
+            "13": "PASS"
           },
           "resolved_url": "https://e-sbirka.gov.cz/sb/2024/206?zalozka=text",
-          "text_length": 84
+          "text_length": 106335
         }
       ],
       "articles": {
@@ -84,32 +84,25 @@
             0.0,
             5.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            0.0,
-            5.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 2775,
+          "missing_rates": []
         },
         "12": {
           "expected_rates": [
             0.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            0.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 2404,
+          "missing_rates": []
         },
         "13": {
           "expected_rates": [
             10.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            10.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 2649,
+          "missing_rates": []
         }
       }
     },
@@ -130,11 +123,11 @@
           "text_length": 15518
         },
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=2974",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/1996/270?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -179,11 +172,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=5562",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2009/86?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -230,11 +223,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=4822",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2006/74?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -271,103 +264,32 @@
           "missing_rates": [
             10.0
           ]
-        }
-      }
-    },
-    {
-      "country": "BA",
-      "status": "PASS",
-      "source_attempts": [
-        {
-          "url": "https://mft.gov.ba/data/Fiskalni%20sporazumi%202/Czech-_eng..pdf",
-          "authority": "Ministry of Finance and Treasury of Bosnia and Herzegovina",
-          "status": "PARSED",
-          "articles": {
-            "10": "PASS",
-            "11": "PASS",
-            "12": "PASS"
-          },
-          "resolved_url": "https://mft.gov.ba/data/Fiskalni%20sporazumi%202/Czech-_eng..pdf",
-          "text_length": 64819
-        },
-        {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=5761",
-          "authority": "Czech Ministry of Finance / official publication",
-          "status": "SOURCE_ERROR",
-          "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
-        }
-      ],
-      "articles": {
-        "10": {
-          "expected_rates": [
-            5.0
-          ],
-          "status": "PASS",
-          "excerpt_length": 4750,
-          "missing_rates": []
-        },
-        "11": {
-          "expected_rates": [
-            0.0
-          ],
-          "status": "PASS",
-          "excerpt_length": 2416,
-          "missing_rates": []
-        },
-        "12": {
-          "expected_rates": [
-            10.0
-          ],
-          "status": "PASS",
-          "excerpt_length": 2906,
-          "missing_rates": []
         }
       }
     },
     {
       "country": "BB",
-      "status": "PARTIAL",
+      "status": "REVIEW",
       "source_attempts": [
         {
           "url": "https://bra.gov.bb/attachment?file=Attachments%2FDTA-The-Czech-Republic_1.pdf&name=DTA-The-Czech-Republic",
           "authority": "Barbados Revenue Authority",
           "status": "PARSED",
           "articles": {
-            "10": "PASS",
-            "11": "PASS",
             "12": "REVIEW"
           },
           "resolved_url": "https://bra.gov.bb/attachment?file=Attachments%2FDTA-The-Czech-Republic_1.pdf&name=DTA-The-Czech-Republic",
           "text_length": 57718
         },
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=6223",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2012/69?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
-        "10": {
-          "expected_rates": [
-            5.0,
-            15.0
-          ],
-          "status": "PASS",
-          "excerpt_length": 1900,
-          "missing_rates": []
-        },
-        "11": {
-          "expected_rates": [
-            0.0,
-            5.0
-          ],
-          "status": "PASS",
-          "excerpt_length": 2637,
-          "missing_rates": []
-        },
         "12": {
           "expected_rates": [
             5.0,
@@ -386,11 +308,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=3369",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2000/95?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -437,11 +359,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=3286",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/1999/203?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -496,11 +418,11 @@
           "text_length": 38433
         },
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=6190",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2012/59?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -541,11 +463,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=2452",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/1991/200?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -589,37 +511,27 @@
     },
     {
       "country": "BW",
-      "status": "PARTIAL",
+      "status": "REVIEW",
       "source_attempts": [
         {
           "url": "https://www.burs.org.bw/index.php/treaties-and-legislation/treaties/bilateral-agreements?download=734%3Abotswana-czech-republic-dtaa",
           "authority": "Botswana Unified Revenue Service",
           "status": "PARSED",
           "articles": {
-            "10": "PASS",
-            "11": "REVIEW",
-            "12": "PASS"
+            "11": "REVIEW"
           },
           "resolved_url": "https://www.burs.org.bw/index.php/treaties-and-legislation/treaties/bilateral-agreements?download=734%3Abotswana-czech-republic-dtaa",
           "text_length": 65247
         },
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39019",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2020/49?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
-        "10": {
-          "expected_rates": [
-            5.0
-          ],
-          "status": "PASS",
-          "excerpt_length": 2350,
-          "missing_rates": []
-        },
         "11": {
           "expected_rates": [
             0.0,
@@ -630,14 +542,6 @@
           "missing_rates": [
             0.0
           ]
-        },
-        "12": {
-          "expected_rates": [
-            7.5
-          ],
-          "status": "PASS",
-          "excerpt_length": 3675,
-          "missing_rates": []
         }
       }
     },
@@ -646,11 +550,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=3121",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/1998/31?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -695,11 +599,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=2979",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/1996/281?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -741,37 +645,27 @@
     },
     {
       "country": "CL",
-      "status": "PARTIAL",
+      "status": "REVIEW",
       "source_attempts": [
         {
           "url": "https://www.sii.cl/pagina/jurisprudencia/convenios/chile_republicacheca_ing.pdf",
           "authority": "Servicio de Impuestos Internos de Chile / SII",
           "status": "PARSED",
           "articles": {
-            "10": "PASS",
-            "11": "REVIEW",
-            "12": "PASS"
+            "11": "REVIEW"
           },
           "resolved_url": "https://www.sii.cl/pagina/jurisprudencia/convenios/chile_republicacheca_ing.pdf",
           "text_length": 65554
         },
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38164",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2017/5?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
-        "10": {
-          "expected_rates": [
-            15.0
-          ],
-          "status": "PASS",
-          "excerpt_length": 2505,
-          "missing_rates": []
-        },
         "11": {
           "expected_rates": [
             4.0,
@@ -783,33 +677,24 @@
             4.0,
             15.0
           ]
-        },
-        "12": {
-          "expected_rates": [
-            5.0,
-            10.0
-          ],
-          "status": "PASS",
-          "excerpt_length": 3180,
-          "missing_rates": []
         }
       }
     },
     {
       "country": "CM",
-      "status": "NO_EN_TEXT",
+      "status": "PARTIAL",
       "source_attempts": [
         {
           "url": "https://e-sbirka.gov.cz/sb/2025/415?zalozka=text",
           "authority": "Czech Ministry of Finance / official publication",
           "status": "PARSED",
           "articles": {
-            "10": "NO_EN_ARTICLE",
-            "11": "NO_EN_ARTICLE",
-            "12": "NO_EN_ARTICLE"
+            "10": "PASS",
+            "11": "REVIEW",
+            "12": "PASS"
           },
           "resolved_url": "https://e-sbirka.gov.cz/sb/2025/415?zalozka=text",
-          "text_length": 84
+          "text_length": 147582
         }
       ],
       "articles": {
@@ -817,33 +702,28 @@
           "expected_rates": [
             10.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            10.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 2822,
+          "missing_rates": []
         },
         "11": {
           "expected_rates": [
             0.0,
             10.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
+          "status": "REVIEW",
+          "excerpt_length": 2464,
           "missing_rates": [
-            0.0,
-            10.0
+            0.0
           ]
         },
         "12": {
           "expected_rates": [
             10.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            10.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 3611,
+          "missing_rates": []
         }
       }
     },
@@ -852,11 +732,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=29960",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2015/39?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -898,7 +778,7 @@
     },
     {
       "country": "CY",
-      "status": "PARTIAL",
+      "status": "REVIEW",
       "source_attempts": [
         {
           "url": "https://www.gov.cy/media/sites/11/2024/03/czech_en_new.pdf",
@@ -906,18 +786,17 @@
           "status": "PARSED",
           "articles": {
             "10": "REVIEW",
-            "11": "REVIEW",
-            "12": "PASS"
+            "11": "REVIEW"
           },
           "resolved_url": "https://www.gov.cy/media/sites/11/2024/03/czech_en_new.pdf",
           "text_length": 51086
         },
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=5629",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2009/120?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -942,14 +821,6 @@
           "missing_rates": [
             0.0
           ]
-        },
-        "12": {
-          "expected_rates": [
-            10.0
-          ],
-          "status": "PASS",
-          "excerpt_length": 2752,
-          "missing_rates": []
         }
       }
     },
@@ -958,11 +829,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=2102",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/1984/18?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -1017,11 +888,11 @@
           "text_length": 127311
         },
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=6358",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2013/14?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -1055,11 +926,11 @@
           "text_length": 355
         },
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=2860",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/1995/184?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -1104,11 +975,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=2033",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/1982/23?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -1153,11 +1024,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=5443",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2008/54?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -1212,11 +1083,11 @@
           "text_length": 130446
         },
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=2908",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/1996/43?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -1265,11 +1136,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=4576",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2005/79?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -1323,11 +1194,11 @@
           "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
         },
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=5068",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2007/40?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -1368,94 +1239,32 @@
             5.0,
             10.0
           ]
-        }
-      }
-    },
-    {
-      "country": "GH",
-      "status": "PASS",
-      "source_attempts": [
-        {
-          "url": "https://gra.gov.gh/wp-content/uploads/2024/05/Agreement-between-the-Czech-Republic-and-The-Republic-of-Ghana-DTA.pdf",
-          "authority": "Ghana Revenue Authority",
-          "status": "PARSED",
-          "articles": {
-            "10": "PASS",
-            "11": "PASS",
-            "12": "PASS"
-          },
-          "resolved_url": "https://gra.gov.gh/wp-content/uploads/2024/05/Agreement-between-the-Czech-Republic-and-The-Republic-of-Ghana-DTA.pdf",
-          "text_length": 86212
-        },
-        {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38941",
-          "authority": "Czech Ministry of Finance / official publication",
-          "status": "SOURCE_ERROR",
-          "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
-        }
-      ],
-      "articles": {
-        "10": {
-          "expected_rates": [
-            6.0
-          ],
-          "status": "PASS",
-          "excerpt_length": 2364,
-          "missing_rates": []
-        },
-        "11": {
-          "expected_rates": [
-            0.0,
-            10.0
-          ],
-          "status": "PASS",
-          "excerpt_length": 3745,
-          "missing_rates": []
-        },
-        "12": {
-          "expected_rates": [
-            8.0
-          ],
-          "status": "PASS",
-          "excerpt_length": 3397,
-          "missing_rates": []
         }
       }
     },
     {
       "country": "GR",
-      "status": "PARTIAL",
+      "status": "REVIEW",
       "source_attempts": [
         {
           "url": "https://www.aade.gr/sites/default/files/2017-03/FEK_CZECHIA.pdf",
           "authority": "Independent Authority for Public Revenue of Greece / AADE",
           "status": "PARSED",
           "articles": {
-            "11": "PASS",
             "12": "REVIEW"
           },
           "resolved_url": "https://www.aade.gr/sites/default/files/2017-03/FEK_CZECHIA.pdf",
           "text_length": 91008
         },
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=2294",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/1989/98?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
-        "11": {
-          "expected_rates": [
-            0.0,
-            10.0
-          ],
-          "status": "PASS",
-          "excerpt_length": 3163,
-          "missing_rates": []
-        },
         "12": {
           "expected_rates": [
             0.0,
@@ -1474,11 +1283,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=3353",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2000/42?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -1519,11 +1328,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=2816",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/1995/22?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -1566,11 +1375,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=37073",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2016/47?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -1620,11 +1429,11 @@
           "error": "RuntimeError: urllib=HTTPError: HTTP Error 403: Forbidden; curl=curl failed (22): curl: (22) The requested URL returned error: 403"
         },
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=2135",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/1985/17?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -1674,11 +1483,11 @@
           "error": "RuntimeError: urllib=HTTPError: HTTP Error 502: Bad Gateway; curl=curl failed (22): curl: (22) The requested URL returned error: 502\ncurl: (22) The requested URL returned error: 502"
         },
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=5091",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2007/88?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -1721,11 +1530,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39035",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2020/50?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -1770,11 +1579,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=4788",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2006/3?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -1817,11 +1626,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38771",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2020/1?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -1866,11 +1675,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=4262",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2004/48?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -1913,11 +1722,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=3332",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2000/3?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -1952,58 +1761,6 @@
           "missing_rates": [
             10.0
           ]
-        }
-      }
-    },
-    {
-      "country": "LB",
-      "status": "PASS",
-      "source_attempts": [
-        {
-          "url": "https://www.finance.gov.lb/en-us/Finance/IA/TC/Documents/Czech%20Republic.pdf",
-          "authority": "Ministry of Finance of Lebanon",
-          "status": "PARSED",
-          "articles": {
-            "10": "PASS",
-            "11": "PASS",
-            "12": "PASS"
-          },
-          "resolved_url": "https://www.finance.gov.lb/en-us/Finance/IA/TC/Documents/Czech%20Republic.pdf",
-          "text_length": 113548
-        },
-        {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=3345",
-          "authority": "Czech Ministry of Finance / official publication",
-          "status": "SOURCE_ERROR",
-          "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
-        }
-      ],
-      "articles": {
-        "10": {
-          "expected_rates": [
-            5.0
-          ],
-          "status": "PASS",
-          "excerpt_length": 1823,
-          "missing_rates": []
-        },
-        "11": {
-          "expected_rates": [
-            0.0
-          ],
-          "status": "PASS",
-          "excerpt_length": 1855,
-          "missing_rates": []
-        },
-        "12": {
-          "expected_rates": [
-            5.0,
-            10.0
-          ],
-          "status": "PASS",
-          "excerpt_length": 2805,
-          "missing_rates": []
         }
       }
     },
@@ -2019,11 +1776,11 @@
           "error": "RuntimeError: urllib=HTTPError: HTTP Error 403: Forbidden; curl=curl failed (22): curl: (22) The requested URL returned error: 403"
         },
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=15977",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2016/8?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -2065,19 +1822,19 @@
     },
     {
       "country": "LK",
-      "status": "NO_EN_TEXT",
+      "status": "PARTIAL",
       "source_attempts": [
         {
           "url": "https://e-sbirka.gov.cz/sb/2024/483?zalozka=text",
           "authority": "Czech Ministry of Finance / official publication",
           "status": "PARSED",
           "articles": {
-            "10": "NO_EN_ARTICLE",
-            "11": "NO_EN_ARTICLE",
-            "12": "NO_EN_ARTICLE"
+            "10": "PASS",
+            "11": "REVIEW",
+            "12": "PASS"
           },
           "resolved_url": "https://e-sbirka.gov.cz/sb/2024/483?zalozka=text",
-          "text_length": 84
+          "text_length": 130837
         }
       ],
       "articles": {
@@ -2086,20 +1843,17 @@
             7.5,
             10.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            7.5,
-            10.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 6628,
+          "missing_rates": []
         },
         "11": {
           "expected_rates": [
             0.0,
             5.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
+          "status": "REVIEW",
+          "excerpt_length": 1031,
           "missing_rates": [
             0.0,
             5.0
@@ -2109,11 +1863,9 @@
           "expected_rates": [
             10.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            10.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 3855,
+          "missing_rates": []
         }
       }
     },
@@ -2132,11 +1884,11 @@
           "text_length": 61927
         },
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=27103",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2014/51?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -2170,11 +1922,11 @@
           "text_length": 6136
         },
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=2856",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/1995/170?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -2219,11 +1971,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=4826",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2006/83?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -2278,11 +2030,11 @@
           "text_length": 11758
         },
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=3797",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2002/88?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -2325,11 +2077,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=3224",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/1999/18?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -2383,11 +2135,11 @@
           "text_length": 52769
         },
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=3049",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/1997/164?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -2418,11 +2170,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=4022",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2003/7?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -2465,11 +2217,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=2478",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/1991/339?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -2524,11 +2276,11 @@
           "text_length": 62680
         },
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=1782",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/1974/138?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -2557,14 +2309,14 @@
             "12": "REVIEW"
           },
           "resolved_url": "https://www.regjeringen.no/no/dokumenter/stprp-nr-42-2004-/id138803/?ch=6",
-          "text_length": 78307
+          "text_length": 78271
         },
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=4595",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2005/121?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -2579,40 +2331,6 @@
           "missing_rates": [
             0.0
           ]
-        }
-      }
-    },
-    {
-      "country": "PL",
-      "status": "PASS",
-      "source_attempts": [
-        {
-          "url": "https://www.podatki.gov.pl/media/wpccdltv/dta-pl-cz-mli-synthesised-text.pdf",
-          "authority": "Polish Ministry of Finance / podatki.gov.pl",
-          "status": "PARSED",
-          "articles": {
-            "11": "PASS"
-          },
-          "resolved_url": "https://www.podatki.gov.pl/media/wpccdltv/dta-pl-cz-mli-synthesised-text.pdf",
-          "text_length": 55018
-        },
-        {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=6330",
-          "authority": "Czech Ministry of Finance / official publication",
-          "status": "SOURCE_ERROR",
-          "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
-        }
-      ],
-      "articles": {
-        "11": {
-          "expected_rates": [
-            0.0,
-            5.0
-          ],
-          "status": "PASS",
-          "excerpt_length": 3441,
-          "missing_rates": []
         }
       }
     },
@@ -2632,11 +2350,11 @@
           "text_length": 190040
         },
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=3082",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/1997/275?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -2665,68 +2383,15 @@
       }
     },
     {
-      "country": "QA",
-      "status": "PASS",
-      "source_attempts": [
-        {
-          "url": "https://gta.gov.qa/assets/pdf/DTA%20Czech%20%28EN%292026-11.pdf",
-          "authority": "General Tax Authority of Qatar",
-          "status": "PARSED",
-          "articles": {
-            "10": "PASS",
-            "11": "PASS",
-            "12": "PASS"
-          },
-          "resolved_url": "https://gta.gov.qa/assets/pdf/DTA%20Czech%20%28EN%292026-11.pdf",
-          "text_length": 50321
-        },
-        {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39503",
-          "authority": "Czech Ministry of Finance / official publication",
-          "status": "SOURCE_ERROR",
-          "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
-        }
-      ],
-      "articles": {
-        "10": {
-          "expected_rates": [
-            0.0,
-            5.0,
-            10.0
-          ],
-          "status": "PASS",
-          "excerpt_length": 3110,
-          "missing_rates": []
-        },
-        "11": {
-          "expected_rates": [
-            0.0
-          ],
-          "status": "PASS",
-          "excerpt_length": 2383,
-          "missing_rates": []
-        },
-        "12": {
-          "expected_rates": [
-            10.0
-          ],
-          "status": "PASS",
-          "excerpt_length": 2659,
-          "missing_rates": []
-        }
-      }
-    },
-    {
       "country": "RO",
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=2787",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/1994/180?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -2769,11 +2434,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=4581",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2005/88?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -2818,11 +2483,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=3082",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/1997/278?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -2875,11 +2540,11 @@
           "text_length": 125344
         },
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=1998",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/1981/9?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -2924,11 +2589,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=4063",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2003/100?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -2973,11 +2638,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39429",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2022/27?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -3020,11 +2685,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39454",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2022/32?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -3069,11 +2734,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=5607",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2009/115?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -3116,11 +2781,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=5091",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2007/89?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -3163,11 +2828,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38427",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2018/23?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -3210,11 +2875,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=2606",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/1992/419?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -3261,11 +2926,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=4250",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2004/19?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -3300,71 +2965,6 @@
           "missing_rates": [
             10.0
           ]
-        }
-      }
-    },
-    {
-      "country": "UA",
-      "status": "PASS",
-      "source_attempts": [
-        {
-          "url": "https://mof.gov.ua/storage/files/%D0%9A%D0%BE%D0%BD%D0%B2%D0%B5%D0%BD%D1%86%D1%96%D1%8F_%D0%A7%D0%B5%D1%81%D1%8C%D0%BA%D0%BE%D1%97%20%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D1%96%D0%BA%D0%B8.pdf",
-          "authority": "Ministry of Finance of Ukraine",
-          "status": "PARSED",
-          "articles": {
-            "10": "PASS",
-            "11": "PASS",
-            "12": "PASS"
-          },
-          "resolved_url": "https://mof.gov.ua/storage/files/%D0%9A%D0%BE%D0%BD%D0%B2%D0%B5%D0%BD%D1%86%D1%96%D1%8F_%D0%A7%D0%B5%D1%81%D1%8C%D0%BA%D0%BE%D1%97%20%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D1%96%D0%BA%D0%B8.pdf",
-          "text_length": 65909
-        },
-        {
-          "url": "https://mof.gov.ua/storage/files/%D0%9F%D1%80%D0%BE%D1%82%D0%BE%D0%BA%D0%BE%D0%BB%20_%D0%A7%D0%B5%D1%81%D1%8C%D0%BA%D0%BE%D1%97%20%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D1%96%D0%BA%D0%B8.pdf",
-          "authority": "Ministry of Finance of Ukraine",
-          "status": "PARSED",
-          "articles": {
-            "10": "NO_EN_ARTICLE",
-            "11": "NO_EN_ARTICLE",
-            "12": "NO_EN_ARTICLE"
-          },
-          "resolved_url": "https://mof.gov.ua/storage/files/%D0%9F%D1%80%D0%BE%D1%82%D0%BE%D0%BA%D0%BE%D0%BB%20_%D0%A7%D0%B5%D1%81%D1%8C%D0%BA%D0%BE%D1%97%20%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D1%96%D0%BA%D0%B8.pdf",
-          "text_length": 16350
-        },
-        {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=3255",
-          "authority": "Czech Ministry of Finance / official publication",
-          "status": "SOURCE_ERROR",
-          "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
-        }
-      ],
-      "articles": {
-        "10": {
-          "expected_rates": [
-            5.0,
-            15.0
-          ],
-          "status": "PASS",
-          "excerpt_length": 2693,
-          "missing_rates": []
-        },
-        "11": {
-          "expected_rates": [
-            0.0,
-            5.0
-          ],
-          "status": "PASS",
-          "excerpt_length": 3352,
-          "missing_rates": []
-        },
-        "12": {
-          "expected_rates": [
-            10.0
-          ],
-          "status": "PASS",
-          "excerpt_length": 1659,
-          "missing_rates": []
         }
       }
     },
@@ -3373,11 +2973,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=3529",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2001/28?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -3422,11 +3022,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=3109",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/1998/6?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -3471,11 +3071,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=3144",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/1998/108?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
@@ -3518,11 +3118,11 @@
       "status": "SOURCE_ERROR",
       "source_attempts": [
         {
-          "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39710",
-          "authority": "Czech Ministry of Finance / official publication",
+          "url": "https://e-sbirka.gov.cz/sb/2023/38?zalozka=text",
+          "authority": "Czech e-Sbírka / official treaty publication",
           "status": "SOURCE_ERROR",
           "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 404: Not Found; curl=curl failed (22): curl: (22) The requested URL returned error: 404"
+          "error": "HTTPError: HTTP Error 400: "
         }
       ],
       "articles": {
