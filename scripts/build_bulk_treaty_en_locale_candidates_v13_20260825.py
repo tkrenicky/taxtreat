@@ -69,6 +69,8 @@ def main() -> int:
     # Extend pair validation only for explicitly verified partner names that were not
     # present in the original v9 marker table. This does not relax the pair gate.
     v9.PARTNER_MARKERS.update({
+        "AT": ("austria", "republic of austria"),
+        "BE": ("belgium", "kingdom of belgium"),
         "BR": ("brazil", "federative republic of brazil"),
     })
     # Source-acquisition extension only. Exact partner-government sources plus Czech
