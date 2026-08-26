@@ -59,8 +59,8 @@ def main() -> int:
             assert "Tasks" in text
 
             page.locator("[data-start-flow]").first.click()
-            page.locator('[data-next-step="2"]').click()
-            page.locator('[data-next-step="3"]').click()
+            page.locator('.flow-step[data-step="1"] [data-next-step="2"]').click()
+            page.locator('.flow-step[data-step="2"] [data-next-step="3"]').click()
             page.wait_for_timeout(500)
 
             form = page.locator("#workspace-payment")
