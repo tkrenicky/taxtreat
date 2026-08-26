@@ -10,6 +10,7 @@
     ["OBECNÁ ČESKÁ SAZBA BEZ OSVOBOZENÍ", "GENERAL CZECH RATE WITHOUT EXEMPTION"],
     ["SEKUNDÁRNÍ SMLUVNÍ OCHRANA", "SECONDARY TREATY PROTECTION"],
     ["Relevantní ustanovení", "Relevant provisions"],
+    ["Uplatní se § 19 zákona o daních z příjmů. Na základě zadaných údajů vnitrostátní osvobození znamená, že česká srážková daň není splatná.", "Section 19 of the Czech Income Taxes Act applies. Based on the entered facts, the domestic exemption means that no Czech withholding tax is payable."],
     ["§ 19 odst. 1 písm. ze) – stanoví osvobození podílu na zisku při splnění zákonných podmínek.", "Section 19(1)(ze) – provides the exemption for profit distributions where the statutory conditions are met."],
     ["§ 19 odst. 3 – vymezuje podmínky vztahující se ke kvalifikovaným společnostem a jejich daňovému postavení.", "Section 19(3) – defines the conditions relating to qualifying companies and their tax status."],
     ["§ 19 odst. 6 – upravuje podmínky účasti a časového testu držby.", "Section 19(6) – sets out the participation and holding-period conditions."],
@@ -47,20 +48,21 @@
     let next = String(value || "");
     if (language() === "en") {
       next = next
-        .replace(/Česká daň se neodvádí\.\s*Měsíční úhrn úroků stejného druhu činí\s*([\d\s.,]+)\s*Kč\s*a přesáhl\s*([\d\s.,]+)\s*Kč;\s*oznámení podle §\s*38da zákona č\.\s*586\/1992 Sb\., o daních z příjmů se podává do uvedeného data\./gi,
+        .replace(/Česká daň se neodvádí\.\s*Měsíční úhrn úroků stejného druhu činí\s*([\d\s.,]+)\s*Kč\s*a přesáhl\s*([\d\s.,]+)\s*Kč;\s*oznámení podle §\s*38da(?:\s+ZDP|\s+zákona č\.\s*586\/1992 Sb\.,?\s*o daních z příjmů)?\s*se podává do uvedeného data\./gi,
           "No Czech tax is remitted. The monthly aggregate of interest of the same type is $1 CZK and exceeded $2 CZK; the notification under Section 38da of the Czech Income Taxes Act is due on the date shown.")
         .replace(/(\d[\d\s.,]*)\s*Kč\b/g, "$1 CZK");
     } else {
       next = next
         .replace(/No Czech tax is remitted\.\s*The monthly aggregate of interest of the same type is\s*([\d\s.,]+)\s*CZK\s*and exceeded\s*([\d\s.,]+)\s*CZK;\s*the notification under Section 38da of the Czech Income Taxes Act is due on the date shown\./gi,
-          "Česká daň se neodvádí. Měsíční úhrn úroků stejného druhu činí $1 Kč a přesáhl $2 Kč; oznámení podle § 38da zákona č. 586/1992 Sb., o daních z příjmů se podává do uvedeného data.")
+          "Česká daň se neodvádí. Měsíční úhrn úroků stejného druhu činí $1 Kč a přesáhl $2 Kč; oznámení podle § 38da ZDP se podává do uvedeného data.")
         .replace(/(\d[\d\s.,]*)\s*CZK\b/g, "$1 Kč");
     }
     return next;
   }
 
   function translateTextNodes(root, pairs) {
-    const walker = document.createTreeWalker(root || document.body, NodeFilter.SHOW_TEXT);
+    if (!root) return;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
     const nodes = [];
     while (walker.nextNode()) nodes.push(walker.currentNode);
     for (const node of nodes) {
@@ -74,46 +76,45 @@
   function translateCountryLabels() {
     const pairs = countryPairs();
     document.querySelectorAll('[data-recipient-country-name], #flow-recipient-meta, .recipient-row p, .profile-head p').forEach((element) => {
-      const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
-      const nodes = [];
-      while (walker.nextNode()) nodes.push(walker.currentNode);
-      for (const node of nodes) {
-        const current = node.nodeValue || "";
-        const next = swapText(current, pairs);
-        if (next !== current) node.nodeValue = next;
-      }
+      translateTextNodes(element, pairs);
     });
   }
 
-  function translateActiveResult() {
-    const result = document.querySelector('.flow-step[data-step="4"].active');
-    if (!result) return;
-    translateTextNodes(result, PAIRS);
-  }
-
-  function translateAssumptions() {
-    const payment = document.querySelector('.flow-step[data-step="3"].active');
-    if (payment) translateTextNodes(payment, PAIRS);
+  function syncReportLanguageDefault() {
+    const select = document.querySelector("#taxtreat-report-language");
+    if (!select || select.dataset.userSelected === "true") return;
+    const target = language() === "en" ? "en" : "cs";
+    if (select.value !== target) {
+      select.value = target;
+      localStorage.setItem("taxtreat-report-language", target);
+    }
   }
 
   function refresh() {
     translateCountryLabels();
-    translateAssumptions();
-    translateActiveResult();
+    const payment = document.querySelector('.flow-step[data-step="3"].active');
+    const result = document.querySelector('.flow-step[data-step="4"].active');
+    if (payment) translateTextNodes(payment, PAIRS);
+    if (result) translateTextNodes(result, PAIRS);
+    syncReportLanguageDefault();
   }
 
   let timer = 0;
   function schedule() {
     clearTimeout(timer);
-    timer = setTimeout(refresh, 30);
+    timer = setTimeout(refresh, 20);
   }
 
   document.addEventListener("change", (event) => {
+    if (event.target?.id === "taxtreat-report-language") {
+      event.target.dataset.userSelected = "true";
+      return;
+    }
     if (event.target?.id === "taxtreat-ui-language" || event.target?.matches?.('[name="income_type"],[name="recipient_country"]')) {
-      [0, 80, 250].forEach((delay) => setTimeout(refresh, delay));
+      [0, 60, 180, 400].forEach((delay) => setTimeout(refresh, delay));
     }
   }, true);
 
-  new MutationObserver(schedule).observe(document.documentElement, { childList: true, subtree: true });
-  [0, 100, 350, 900, 1600].forEach((delay) => setTimeout(refresh, delay));
+  new MutationObserver(schedule).observe(document.documentElement, { childList: true, subtree: true, characterData: true });
+  [0, 80, 250, 700, 1500].forEach((delay) => setTimeout(refresh, delay));
 })();
