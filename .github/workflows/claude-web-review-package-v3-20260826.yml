@@ -1,0 +1,118 @@
+name: Claude web review package v3
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [feat/web-bulk-en-treaty-acquisition-20260825]
+    paths: ['.github/workflows/claude-web-review-package-v3-20260826.yml']
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/web-bulk-en-treaty-acquisition-20260825
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: |
+          pip install -r requirements-dev.txt
+          pip install --no-deps -e .
+          python -m playwright install --with-deps chromium
+      - name: Capture screenshots (best effort, never blocks package)
+        continue-on-error: true
+        run: |
+          mkdir -p claude_web_review/SCREENSHOTS
+          cat > /tmp/capture.py <<'PY'
+          from pathlib import Path
+          import subprocess, sys, time, traceback
+          from urllib.request import urlopen
+          from playwright.sync_api import sync_playwright
+          out=Path('claude_web_review/SCREENSHOTS'); notes=Path('claude_web_review/CAPTURE_NOTES.txt'); host='127.0.0.1'; port=8777; base=f'http://{host}:{port}'
+          p=subprocess.Popen([sys.executable,'-m','uvicorn','app.main:app','--host',host,'--port',str(port)],stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+          try:
+              for _ in range(150):
+                  try:
+                      with urlopen(base+'/health/live',timeout=1) as r:
+                          if r.status==200: break
+                  except Exception: time.sleep(.2)
+              with sync_playwright() as pw:
+                  b=pw.chromium.launch(headless=True); page=b.new_page(viewport={'width':1440,'height':1100})
+                  page.goto(base+'/ui',wait_until='networkidle'); page.screenshot(path=out/'01-overview-cs.png',full_page=True)
+                  page.locator('#taxtreat-ui-language').select_option('en'); page.wait_for_timeout(900); page.screenshot(path=out/'02-overview-en.png',full_page=True)
+                  page.locator('[data-start-flow]').first.click(); page.get_by_role('button',name='Continue to recipient →',exact=True).click(); page.get_by_role('button',name='Continue to payment →',exact=True).click(); page.wait_for_timeout(500)
+                  page.screenshot(path=out/'03-payment-step-en.png',full_page=True)
+                  form=page.locator('#workspace-payment')
+                  def setv(selector,value):
+                      loc=form.locator(selector)
+                      if not loc.count(): return
+                      loc.first.evaluate('(el,v)=>{el.value=v;el.dispatchEvent(new Event("input",{bubbles:true}));el.dispatchEvent(new Event("change",{bubbles:true}));}', value)
+                  def converge():
+                      for _ in range(10):
+                          form.locator('#workspace-submit').click(); page.wait_for_timeout(500)
+                          if page.locator('.flow-step[data-step="4"].active').is_visible(): return True
+                          q=form.locator('#workspace-questions')
+                          for x in q.locator('select').all():
+                              try:
+                                  if x.locator('option').count()>1 and not x.input_value(): x.select_option(index=1,force=True)
+                              except Exception: pass
+                          for x in q.locator('input[type="number"]').all():
+                              try:
+                                  if not x.input_value(): x.evaluate('(el)=>{el.value="25";el.dispatchEvent(new Event("input",{bubbles:true}));el.dispatchEvent(new Event("change",{bubbles:true}));}')
+                              except Exception: pass
+                          for x in q.locator('input[type="date"]').all():
+                              try:
+                                  if not x.input_value(): x.evaluate('(el)=>{el.value="2024-01-01";el.dispatchEvent(new Event("input",{bubbles:true}));el.dispatchEvent(new Event("change",{bubbles:true}));}')
+                              except Exception: pass
+                      return False
+                  setv('select[name="income_type"]','dividend'); setv('input[name="transaction_date"]','2026-08-11'); setv('input[name="amount"]','2000000'); setv('input[name="ownership_percent"]','25'); setv('input[name="voting_ownership_percent"]','25'); setv('select[name="direct_ownership"]','true'); setv('select[name="holding_period_mode"]','at_least_12_months'); setv('select[name="section19_company_form"]','true'); setv('select[name="section19_taxable_company"]','true')
+                  if converge(): page.wait_for_timeout(900); page.screenshot(path=out/'04-dividend-result-en.png',full_page=True)
+                  else: notes.write_text('Dividend result did not converge; overview/payment screenshots still captured.\n',encoding='utf-8')
+                  page.goto(base+'/ui',wait_until='networkidle'); page.locator('#taxtreat-ui-language').select_option('en'); page.wait_for_timeout(700); page.set_viewport_size({'width':390,'height':844}); page.screenshot(path=out/'05-overview-en-mobile.png',full_page=True); b.close()
+          except Exception:
+              notes.write_text(traceback.format_exc(),encoding='utf-8')
+              raise
+          finally:
+              p.terminate();
+              try: p.wait(timeout=10)
+              except Exception: p.kill()
+          PY
+          python /tmp/capture.py
+      - name: Assemble package
+        run: |
+          mkdir -p claude_web_review/SOURCE
+          cat > claude_web_review/PROMPT_CLAUDE_WEB_REVIEW.md <<'EOF'
+          # Independent review request — TaxTreat web application
+          Perform a critical independent review of the TaxTreat website/web application in this package. Do not assume prior AI conclusions are correct. Review the website only; PDF/report output is a separate next phase.
+
+          Assess functional correctness; CZ/EN parity and i18n race conditions; legal hierarchy; fail-closed behavior; treaty-source provenance/status handling; UX/accessibility/responsiveness; security/privacy; maintainability; and missing regression tests.
+
+          Specific constraints: public source-country scope is currently CZ; CZ dividends evaluate Section 19 domestic exemption before treaty relief and Section 19 is primary if applicable; CZ interest/royalties keep the treaty engine primary while separately flagging possible domestic exemption and Section 38nb ruling conditions; official/legal sources only; verified Stage-6 English summaries must not be presented as authentic treaty wording; informational tool, not individualized legal/tax advice.
+
+          Return findings in severity order BLOCKER/HIGH/MEDIUM/LOW. For each give exact file/function or UI area, defect, impact and concrete fix. Separate confirmed defects from design recommendations. End with merge recommendation for PR #169, smallest must-fix list and regression tests.
+          EOF
+          cat > claude_web_review/REVIEW_CONTEXT.md <<EOF
+          Repository: tkrenicky/taxtreat
+          Branch: feat/web-bulk-en-treaty-acquisition-20260825
+          Commit: $(git rev-parse HEAD)
+          PR: #169
+          Base SHA: 2d4226955a3681063b898c48995bb7fa8c8b1fc5
+          Screenshots were generated from this exact checkout using app.main:app + Chromium/Playwright. Any capture limitation is recorded in CAPTURE_NOTES.txt.
+          EOF
+          git diff --binary 2d4226955a3681063b898c48995bb7fa8c8b1fc5...HEAD > claude_web_review/PR169_FULL.patch
+          git log --oneline -60 > claude_web_review/RECENT_COMMITS.txt
+          rsync -a ./ claude_web_review/SOURCE/ --exclude='.git/' --exclude='claude_web_review/' --exclude='.venv/' --exclude='node_modules/' --exclude='__pycache__/' --exclude='.pytest_cache/' --exclude='artifacts/'
+          printf '%s\n' 'Start with PROMPT_CLAUDE_WEB_REVIEW.md. SCREENSHOTS contains current rendered evidence. SOURCE is the full reviewable repository snapshot. PR169_FULL.patch is the complete PR diff. Do not review the PDF/report yet.' > claude_web_review/README_FIRST.md
+          zip -qr TaxTreat_Claude_Web_Review_20260826.zip claude_web_review
+          sha256sum TaxTreat_Claude_Web_Review_20260826.zip > TaxTreat_Claude_Web_Review_20260826.zip.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TaxTreat-Claude-Web-Review-20260826-v3
+          path: |
+            TaxTreat_Claude_Web_Review_20260826.zip
+            TaxTreat_Claude_Web_Review_20260826.zip.sha256
+          retention-days: 30
