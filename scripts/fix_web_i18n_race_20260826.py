@@ -72,7 +72,7 @@ p.write_text(text, encoding="utf-8")
 # 4) Load the final residue pass after report core as the last authoritative UI pass.
 p = Path("app/web/workspace-report-export.js")
 text = p.read_text(encoding="utf-8")
-old = '    .then(() => loadScript("/ui-assets/workspace-en-final-residue2-20260826.js?v=20260826-enfinal1"))\n    .then(() => loadScript("/ui-assets/workspace-treaty-excerpt-locales-20260824.js?v=20260824-treatylocale1"))\n    .then(() => loadScript("/ui-assets/workspace-report-export-core.js?v=20260819-3"))'
+old = '    .then(() => loadScript("/ui-assets/workspace-en-final-residue2-20260826.js?v=20260826-enfix4"))\n    .then(() => loadScript("/ui-assets/workspace-treaty-excerpt-locales-20260824.js?v=20260824-treatylocale1"))\n    .then(() => loadScript("/ui-assets/workspace-report-export-core.js?v=20260819-3"))'
 new = '    .then(() => loadScript("/ui-assets/workspace-treaty-excerpt-locales-20260824.js?v=20260824-treatylocale1"))\n    .then(() => loadScript("/ui-assets/workspace-report-export-core.js?v=20260819-3"))\n    .then(() => loadScript("/ui-assets/workspace-en-final-residue2-20260826.js?v=20260826-enfinal2"))'
 if old not in text:
     raise SystemExit("bootstrap order marker missing")
