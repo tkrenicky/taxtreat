@@ -6,10 +6,9 @@
     ["Předvyplněné odpovědi zkontroluj a změň, pokud pro danou platbu neplatí.", "Review the pre-filled answers and change them if they do not apply to this payment."],
     ["VÝCHOZÍ VNITROSTÁTNÍ PRAVIDLO", "BASE DOMESTIC RULE"],
     ["POUŽITÉ PRAVIDLO", "APPLIED DOMESTIC RULE"],
+    ["POUŽITÉ SMLUVNÍ PRAVIDLO", "APPLIED TREATY RULE"],
     ["OBECNÁ ČESKÁ SAZBA BEZ OSVOBOZENÍ", "GENERAL CZECH RATE WITHOUT EXEMPTION"],
-    ["1. VÝCHOZÍ VNITROSTÁTNÍ PRAVIDLO", "1. BASE DOMESTIC RULE"],
-    ["1. POUŽITÉ PRAVIDLO", "1. APPLIED DOMESTIC RULE"],
-    ["2. OBECNÁ ČESKÁ SAZBA BEZ OSVOBOZENÍ", "2. GENERAL CZECH RATE WITHOUT EXEMPTION"],
+    ["SEKUNDÁRNÍ SMLUVNÍ OCHRANA", "SECONDARY TREATY PROTECTION"],
     ["Relevantní ustanovení", "Relevant provisions"],
     ["§ 19 odst. 1 písm. ze) – stanoví osvobození podílu na zisku při splnění zákonných podmínek.", "Section 19(1)(ze) – provides the exemption for profit distributions where the statutory conditions are met."],
     ["§ 19 odst. 3 – vymezuje podmínky vztahující se ke kvalifikovaným společnostem a jejich daňovému postavení.", "Section 19(3) – defines the conditions relating to qualifying companies and their tax status."],
@@ -35,10 +34,27 @@
   function swapText(value, pairs) {
     let next = String(value || "");
     const toEnglish = language() === "en";
-    for (const [cs, en] of pairs) {
+    const ordered = [...pairs].sort((a, b) => Math.max(b[0].length, b[1].length) - Math.max(a[0].length, a[1].length));
+    for (const [cs, en] of ordered) {
       const from = toEnglish ? cs : en;
       const to = toEnglish ? en : cs;
       if (next.includes(from)) next = next.split(from).join(to);
+    }
+    return next;
+  }
+
+  function normalizeDynamicResultText(value) {
+    let next = String(value || "");
+    if (language() === "en") {
+      next = next
+        .replace(/Česká daň se neodvádí\.\s*Měsíční úhrn úroků stejného druhu činí\s*([\d\s.,]+)\s*Kč\s*a přesáhl\s*([\d\s.,]+)\s*Kč;\s*oznámení podle §\s*38da zákona č\.\s*586\/1992 Sb\., o daních z příjmů se podává do uvedeného data\./gi,
+          "No Czech tax is remitted. The monthly aggregate of interest of the same type is $1 CZK and exceeded $2 CZK; the notification under Section 38da of the Czech Income Taxes Act is due on the date shown.")
+        .replace(/(\d[\d\s.,]*)\s*Kč\b/g, "$1 CZK");
+    } else {
+      next = next
+        .replace(/No Czech tax is remitted\.\s*The monthly aggregate of interest of the same type is\s*([\d\s.,]+)\s*CZK\s*and exceeded\s*([\d\s.,]+)\s*CZK;\s*the notification under Section 38da of the Czech Income Taxes Act is due on the date shown\./gi,
+          "Česká daň se neodvádí. Měsíční úhrn úroků stejného druhu činí $1 Kč a přesáhl $2 Kč; oznámení podle § 38da zákona č. 586/1992 Sb., o daních z příjmů se podává do uvedeného data.")
+        .replace(/(\d[\d\s.,]*)\s*CZK\b/g, "$1 Kč");
     }
     return next;
   }
@@ -49,7 +65,8 @@
     while (walker.nextNode()) nodes.push(walker.currentNode);
     for (const node of nodes) {
       const current = node.nodeValue || "";
-      const next = swapText(current, pairs);
+      let next = swapText(current, pairs);
+      next = normalizeDynamicResultText(next);
       if (next !== current) node.nodeValue = next;
     }
   }
@@ -68,17 +85,21 @@
     });
   }
 
-  function translateSection19Evidence() {
+  function translateActiveResult() {
     const result = document.querySelector('.flow-step[data-step="4"].active');
     if (!result) return;
-    const text = result.textContent || "";
-    if (!/Section 19|§\s*19/.test(text)) return;
     translateTextNodes(result, PAIRS);
+  }
+
+  function translateAssumptions() {
+    const payment = document.querySelector('.flow-step[data-step="3"].active');
+    if (payment) translateTextNodes(payment, PAIRS);
   }
 
   function refresh() {
     translateCountryLabels();
-    translateSection19Evidence();
+    translateAssumptions();
+    translateActiveResult();
   }
 
   let timer = 0;
@@ -88,12 +109,8 @@
   }
 
   document.addEventListener("change", (event) => {
-    if (event.target?.id === "taxtreat-ui-language" || event.target?.matches?.('[name="income_type"],[name="recipient_country"]')) schedule();
-  }, true);
-
-  document.addEventListener("click", (event) => {
-    if (event.target?.closest?.("[data-nav],[data-next-step],[data-flow-step],[data-start-flow],#workspace-submit,#taxtreat-language-controls")) {
-      [0, 80, 250, 700].forEach((delay) => setTimeout(refresh, delay));
+    if (event.target?.id === "taxtreat-ui-language" || event.target?.matches?.('[name="income_type"],[name="recipient_country"]')) {
+      [0, 80, 250].forEach((delay) => setTimeout(refresh, delay));
     }
   }, true);
 
