@@ -6,6 +6,8 @@ from datetime import datetime, timezone
 from html import escape
 from typing import Any, Mapping
 
+from taxtreat.services.report_locales import english_excerpt_for_citation
+
 
 REPORT_SCHEMA_VERSION = 4
 LEGAL_DATA_CUTOFF = "2026-08-12"
@@ -158,6 +160,23 @@ def build_professional_report(
         }
         for citation in source_path
     ]
+    if language == "en":
+        recipient_country = str(request.get("recipient_country") or "")
+        for citation in citations:
+            if citation.get("legal_layer") not in {"treaty", "protocol", "mli"}:
+                continue
+            locale = english_excerpt_for_citation(citation, recipient_country)
+            citation["canonical_source_url"] = citation.get("source_url")
+            if locale:
+                citation.update(locale)
+                if locale.get("excerpt_source_url"):
+                    citation["source_url"] = locale["excerpt_source_url"]
+            else:
+                citation["excerpt"] = None
+                citation["excerpt_language"] = None
+                citation["excerpt_status"] = "english_excerpt_unavailable"
+                citation["excerpt_status_label"] = "English excerpt unavailable"
+
 
     report = {
         "schema_version": REPORT_SCHEMA_VERSION,
@@ -364,7 +383,17 @@ def render_report_html(report: Mapping[str, Any]) -> str:
         url = escape(str(source.get("source_url") or ""), quote=True)
         excerpt = escape(str(source.get("excerpt") or ""))
         excerpt_html = f"<blockquote>{excerpt}</blockquote>" if excerpt else ""
-        source_items.append(f'''<article class="legal-source"><div class="source-head"><h3>{_source_title(source, language)}</h3><a href="{url}">{"Official source" if en else "Oficiální zdroj"} ↗</a></div>{excerpt_html}</article>''')
+        provenance = ""
+        if en and source.get("legal_layer") in {"treaty", "protocol", "mli"}:
+            status_label = escape(str(source.get("excerpt_status_label") or "English source status not available"))
+            authority = escape(str(source.get("excerpt_authority") or ""))
+            detail = f" · {authority}" if authority else ""
+            provenance = f'<p class="source-provenance"><strong>English text status:</strong> {status_label}{detail}</p>'
+        link_label = "Source for displayed text" if en else "Oficiální zdroj"
+        source_items.append(
+            f'<article class="legal-source"><div class="source-head"><h3>{_source_title(source, language)}</h3>'
+            f'<a href="{url}">{link_label} ↗</a></div>{provenance}{excerpt_html}</article>'
+        )
     if not source_items:
         source_items.append(f'<p class="empty-note">{"No specific legal source was assigned to this information output." if en else "Pro tento informační výstup nebyl přiřazen konkrétní právní zdroj."}</p>')
 
@@ -408,6 +437,7 @@ section{{padding:27px 0;border-bottom:1px solid var(--line)}} section:last-child
 .deadlines{{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}} .deadlines div{{padding:14px;border:1px solid var(--line);border-radius:9px;background:#fafbf9}} .deadlines span{{display:block;color:#7b8984;font-size:9px;text-transform:uppercase;font-weight:800;letter-spacing:.05em}} .deadlines strong{{display:block;margin-top:6px}}
 .legal-source{{padding:14px 0;border-top:1px solid var(--line)}} .legal-source:first-of-type{{border-top:0}} .source-head{{display:flex;justify-content:space-between;gap:20px}} .legal-source a{{color:var(--forest2);font-weight:700;text-decoration:none;font-size:11px}}
 blockquote{{margin:12px 0 0;padding:14px 16px;border-left:3px solid #9ebcb1;background:#f7f9f7;color:#40534d;white-space:pre-line;font:11px/1.55 Georgia,serif}}
+.source-provenance{{margin:8px 0 0;color:var(--muted);font-size:10px}} .source-provenance strong{{color:#536a63}}
 .empty-note{{color:var(--muted)}} footer{{padding:18px 34px 24px;color:#78847f;background:#fafaf8;border-top:1px solid var(--line);font-size:9px}}
 @media(max-width:720px){{.report{{width:100%;margin:0}} main{{padding:22px}} .hero,.two-col{{grid-template-columns:1fr}} .transaction-strip{{grid-template-columns:1fr 1fr}} .deadlines{{grid-template-columns:1fr}}}}
 @media print{{@page{{size:A4;margin:11mm}} body{{background:#fff}} .report{{width:auto;margin:0;box-shadow:none}} .masthead{{print-color-adjust:exact;-webkit-print-color-adjust:exact}} section,.hero,.result-card,.calculation-table{{break-inside:avoid}} .legal-source{{break-inside:auto}} blockquote{{break-inside:auto}} a{{color:inherit;text-decoration:none}}}}
