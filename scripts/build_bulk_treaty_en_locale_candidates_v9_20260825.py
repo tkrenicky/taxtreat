@@ -116,6 +116,17 @@ def _sources(entry: dict | None) -> list[dict]:
     return [entry] if str(entry.get("url") or "").startswith("http") else []
 
 
+def _candidate_locale_status(source: dict) -> str:
+    explicit = str(source.get("locale_status") or "").strip()
+    if explicit.startswith("official_"):
+        return f"candidate_{explicit}"
+    # The acquisition gate verifies that the text is English and comes from the
+    # registered official authority. It does NOT prove that English is an authentic
+    # treaty language. Keep the default deliberately neutral so promotion cannot
+    # overstate authenticity.
+    return "candidate_official_source_english_text"
+
+
 def _process(country: str, articles: dict[str, list[dict]], entry: dict | None) -> tuple[dict, dict | None]:
     sources = _sources(entry)
     row = {"country": country, "status": "NO_REGISTERED_SOURCE" if not sources else "NO_EN_TEXT", "source_attempts": [], "articles": {a: {"expected_rates": core._expected_rates(r), "status": "NO_EN_ARTICLE", "excerpt_length": 0, "missing_rates": core._expected_rates(r)} for a, r in articles.items()}}
@@ -139,7 +150,7 @@ def _process(country: str, articles: dict[str, list[dict]], entry: dict | None) 
             candidate, excerpt = _analyse(text, article, rules); attempt["articles"][article] = candidate["status"]
             if STATUS_RANK[candidate["status"]] > STATUS_RANK[row["articles"][article]["status"]]:
                 row["articles"][article] = candidate
-                if excerpt: best_locales[article] = {"en": {"language": "en", "status": "candidate_official_treaty_text", "authority": source.get("authority"), "source_url": resolved, "text": excerpt}}
+                if excerpt: best_locales[article] = {"en": {"language": "en", "status": _candidate_locale_status(source), "authority": source.get("authority"), "source_url": resolved, "text": excerpt}}
         row["source_attempts"].append(attempt)
     pass_count = sum(1 for x in row["articles"].values() if x["status"] == "PASS"); review_count = sum(1 for x in row["articles"].values() if x["status"] == "REVIEW")
     if pass_count == len(articles): row["status"] = "PASS"
