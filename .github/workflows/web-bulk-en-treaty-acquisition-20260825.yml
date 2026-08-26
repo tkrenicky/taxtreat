@@ -7,6 +7,7 @@ on:
     paths:
       - 'data/web/cz_treaty_en_official_sources*_20260825.json'
       - 'scripts/build_bulk_treaty_en_locale_candidates_v*.py'
+      - 'scripts/build_stage6_en_rule_summary_locales_20260826.py'
       - 'scripts/promote_bulk_treaty_en_locale_candidates_20260825.py'
       - 'scripts/run_bulk_treaty_en_locale_pipeline_20260825.sh'
       - '.github/workflows/web-bulk-en-treaty-acquisition-20260825.yml'
@@ -35,11 +36,14 @@ jobs:
             scripts/build_bulk_treaty_en_locale_candidates_v9_20260825.py \
             scripts/build_bulk_treaty_en_locale_candidates_v10_20260825.py \
             scripts/build_bulk_treaty_en_locale_candidates_v11_20260825.py \
+            scripts/build_stage6_en_rule_summary_locales_20260826.py \
             scripts/promote_bulk_treaty_en_locale_candidates_20260825.py
       - name: Run explicit-source batch
         env:
           PYTHONUNBUFFERED: '1'
         run: bash scripts/run_bulk_treaty_en_locale_pipeline_20260825.sh
+      - name: Fill and verify EN coverage from approved Stage 6 rules
+        run: python scripts/build_stage6_en_rule_summary_locales_20260826.py
       - name: Prepare latest status snapshot
         if: always()
         run: |
@@ -51,9 +55,9 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add app/web/treaty-excerpt-locales/ data/web/treaty_en_locale_bulk_latest_status_20260825.json || true
+          git add app/web/treaty-excerpt-locales/ data/web/treaty_en_locale_bulk_latest_status_20260825.json reports/treaty_en_rule_summary_coverage_20260826.json || true
           if ! git diff --cached --quiet; then
-            git commit -m "Update verified English treaty excerpts and batch status"
+            git commit -m "Complete verified English rule-summary coverage"
             git push origin HEAD:feat/web-bulk-en-treaty-acquisition-20260825
           fi
       - name: Upload batch reports
@@ -65,6 +69,7 @@ jobs:
             reports/treaty_en_locale_bulk_candidates_v9_20260825.json
             reports/treaty_en_locale_bulk_candidates_v9_20260825/
             reports/treaty_en_locale_bulk_promotion_20260825.json
+            reports/treaty_en_rule_summary_coverage_20260826.json
             data/web/treaty_en_locale_bulk_latest_status_20260825.json
             app/web/treaty-excerpt-locales/
           if-no-files-found: warn
