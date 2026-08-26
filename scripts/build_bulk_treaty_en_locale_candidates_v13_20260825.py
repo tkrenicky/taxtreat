@@ -66,6 +66,11 @@ def _registry_entries_with_mf() -> dict:
 
 
 def main() -> int:
+    # Extend pair validation only for explicitly verified partner names that were not
+    # present in the original v9 marker table. This does not relax the pair gate.
+    v9.PARTNER_MARKERS.update({
+        "BR": ("brazil", "federative republic of brazil"),
+    })
     # Source-acquisition extension only. Exact partner-government sources plus Czech
     # official base-treaty publications are evaluated by the existing pair/article/
     # Stage6 rate gates. Nothing here can promote REVIEW or overwrite an EN locale.
