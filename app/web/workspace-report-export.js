@@ -62,7 +62,8 @@
     .then(() => loadScript("/ui-assets/workspace-treaty-excerpt-locales-20260824.js?v=20260824-treatylocale1"))
     .then(() => loadScript("/ui-assets/workspace-report-export-core.js?v=20260819-3"))
     .then(() => loadScript("/ui-assets/workspace-en-final-residue2-20260826.js?v=20260826-enfinal4"))
-    .then(() => loadScript("/ui-assets/workspace-en-stabilizer-20260826.js?v=20260826-enstable2"))
+    .then(() => loadScript("/ui-assets/workspace-en-stabilizer-20260826.js?v=20260826-enstable3"))
+    .then(() => loadScript("/ui-assets/workspace-result-integrity-20260826.js?v=20260826-integrity1"))
     .catch((problem) => {
       console.error("TaxTreat workspace enhancement bootstrap failed", problem);
     });
