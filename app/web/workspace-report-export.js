@@ -58,7 +58,7 @@
     .then(() => loadScript("/ui-assets/workspace-royalty-taxonomy-20260824.js?v=20260824-royalty1"))
     .then(() => loadScript("/ui-assets/workspace-canonical-live-i18n-20260824.js?v=20260824-canonical1"))
     .then(() => loadScript("/ui-assets/workspace-canonical-live-i18n-dynamic-20260824.js?v=20260824-canonical2"))
-    .then(() => loadScript("/ui-assets/workspace-en-residual-hardening-20260826.js?v=20260826-enfix2"))
+    .then(() => loadScript("/ui-assets/workspace-en-residual-hardening-20260826.js?v=20260826-enfix3"))
     .then(() => loadScript("/ui-assets/workspace-treaty-excerpt-locales-20260824.js?v=20260824-treatylocale1"))
     .then(() => loadScript("/ui-assets/workspace-report-export-core.js?v=20260819-3"))
     .catch((problem) => {
