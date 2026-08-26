@@ -9,8 +9,21 @@ SUMMARY = ROOT / "reports" / "treaty_en_locale_bulk_candidates_v9_20260825.json"
 LOCALE_DIR = ROOT / "app" / "web" / "treaty-excerpt-locales"
 PROMOTION_SUMMARY = ROOT / "reports" / "treaty_en_locale_bulk_promotion_20260825.json"
 
+
 def _load(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _promotion_status(en: dict) -> str:
+    status = str(en.get("status") or "").strip()
+    if status.startswith("candidate_official_"):
+        return status.removeprefix("candidate_")
+    if status.startswith("official_"):
+        return status
+    # Fail-safe metadata: the promotion gate proves official-source provenance and
+    # English text, but authenticity must be established separately.
+    return "official_source_english_text"
+
 
 def main() -> int:
     if not SUMMARY.exists():
@@ -48,16 +61,17 @@ def main() -> int:
                 continue
             promoted_entry = dict(locale_entry)
             promoted_en = dict(en)
-            promoted_en["status"] = "official_treaty_text"
+            promoted_en["status"] = _promotion_status(en)
             promoted_entry["en"] = promoted_en
             target_articles[article] = promoted_entry
-            promoted.append({"country": country, "article": article, "source_url": source_url})
+            promoted.append({"country": country, "article": article, "source_url": source_url, "locale_status": promoted_en["status"]})
             changed = True
         if changed:
             target_path.write_text(json.dumps(target, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     PROMOTION_SUMMARY.write_text(json.dumps({"schema_version": 1, "promoted_count": len(promoted), "skipped_count": len(skipped), "promoted": promoted, "skipped": skipped}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Bulk EN locale promotion: promoted={len(promoted)} skipped={len(skipped)}", flush=True)
     return 0
+
 
 if __name__ == "__main__":
     raise SystemExit(main())
