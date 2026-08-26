@@ -1,0 +1,144 @@
+name: Apply report EN source provenance fix
+
+on:
+  push:
+    branches:
+      - feat/web-bulk-en-treaty-acquisition-20260825
+    paths:
+      - '.github/workflows/report-en-source-provenance-fix-20260826.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/web-bulk-en-treaty-acquisition-20260825
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Patch report renderer
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('taxtreat/services/reporting.py')
+          text = p.read_text(encoding='utf-8')
+
+          import_anchor = 'from typing import Any, Mapping\n'
+          import_line = 'from taxtreat.services.report_locales import english_excerpt_for_citation\n'
+          if import_line not in text:
+              if import_anchor not in text:
+                  raise SystemExit('import anchor not found')
+              text = text.replace(import_anchor, import_anchor + '\n' + import_line, 1)
+
+          citation_anchor = '''    citations = [
+              {
+                  "rule_id": citation.get("rule_id"),
+                  "source_id": citation.get("source_id"),
+                  "source_url": citation.get("source_url"),
+                  "article": citation.get("article"),
+                  "paragraph": citation.get("paragraph"),
+                  "legal_layer": citation.get("legal_layer"),
+                  "legal_instrument": citation.get("legal_instrument"),
+                  "rate": citation.get("rate"),
+                  "tax_treatment": citation.get("tax_treatment"),
+                  "path_role": citation.get("path_role"),
+                  "excerpt": citation.get("excerpt") if citation.get("legal_layer") in {"treaty", "protocol", "mli"} else None,
+                  "excerpt_sha256": citation.get("excerpt_sha256") if citation.get("legal_layer") in {"treaty", "protocol", "mli"} else None,
+              }
+              for citation in source_path
+          ]
+          '''
+          locale_block = citation_anchor + '''    if language == "en":
+              recipient_country = str(request.get("recipient_country") or "")
+              for citation in citations:
+                  if citation.get("legal_layer") not in {"treaty", "protocol", "mli"}:
+                      continue
+                  locale = english_excerpt_for_citation(citation, recipient_country)
+                  citation["canonical_source_url"] = citation.get("source_url")
+                  if locale:
+                      citation.update(locale)
+                      if locale.get("excerpt_source_url"):
+                          citation["source_url"] = locale["excerpt_source_url"]
+                  else:
+                      # Never present canonical non-English wording as if it were an
+                      # English treaty excerpt. Missing locale data fails closed.
+                      citation["excerpt"] = None
+                      citation["excerpt_language"] = None
+                      citation["excerpt_status"] = "english_excerpt_unavailable"
+                      citation["excerpt_status_label"] = "English excerpt unavailable"
+
+          '''
+          if 'english_excerpt_unavailable' not in text:
+              if citation_anchor not in text:
+                  raise SystemExit('citation block not found')
+              text = text.replace(citation_anchor, locale_block, 1)
+
+          old_source = '''    source_items = []
+              for source in sources:
+                  url = escape(str(source.get("source_url") or ""), quote=True)
+                  excerpt = escape(str(source.get("excerpt") or ""))
+                  excerpt_html = f"<blockquote>{excerpt}</blockquote>" if excerpt else ""
+                  source_items.append(f\'\'\'<article class="legal-source"><div class="source-head"><h3>{_source_title(source, language)}</h3><a href="{url}">{"Official source" if en else "Oficiální zdroj"} ↗</a></div>{excerpt_html}</article>\'\'\')
+          '''.replace('      ', '')
+          new_source = '''    source_items = []
+              for source in sources:
+                  url = escape(str(source.get("source_url") or ""), quote=True)
+                  excerpt = escape(str(source.get("excerpt") or ""))
+                  excerpt_html = f"<blockquote>{excerpt}</blockquote>" if excerpt else ""
+                  provenance = ""
+                  if en and source.get("legal_layer") in {"treaty", "protocol", "mli"}:
+                      status_label = escape(str(source.get("excerpt_status_label") or "English source status not available"))
+                      authority = escape(str(source.get("excerpt_authority") or ""))
+                      detail = f" · {authority}" if authority else ""
+                      provenance = f\'<p class="source-provenance"><strong>English text status:</strong> {status_label}{detail}</p>\'
+                  source_items.append(f\'\'\'<article class="legal-source"><div class="source-head"><h3>{_source_title(source, language)}</h3><a href="{url}">{"Source for displayed text" if en else "Oficiální zdroj"} ↗</a></div>{provenance}{excerpt_html}</article>\'\'\')
+          '''.replace('      ', '')
+          if 'source-provenance' not in text:
+              if old_source not in text:
+                  raise SystemExit('source rendering block not found')
+              text = text.replace(old_source, new_source, 1)
+
+          css_anchor = 'blockquote{{margin:12px 0 0;padding:14px 16px;border-left:3px solid #9ebcb1;background:#f7f9f7;color:#40534d;white-space:pre-line;font:11px/1.55 Georgia,serif}}\n'
+          css_extra = '.source-provenance{{margin:8px 0 0;color:var(--muted);font-size:10px}} .source-provenance strong{{color:#536a63}}\n'
+          if css_extra not in text:
+              if css_anchor not in text:
+                  raise SystemExit('CSS anchor not found')
+              text = text.replace(css_anchor, css_anchor + css_extra, 1)
+
+          p.write_text(text, encoding='utf-8')
+          PY
+      - name: Test locale resolver and renderer contracts
+        run: |
+          pip install -r requirements-dev.txt
+          pip install --no-deps -e .
+          python - <<'PY'
+          from taxtreat.services.report_locales import english_excerpt_for_citation
+          from pathlib import Path
+
+          at11 = english_excerpt_for_citation({"rule_id":"CZ-AT-INTEREST-CURRENT","article":"11"}, "AT")
+          assert at11 and at11["excerpt_language"] == "en"
+          assert at11["excerpt_status"] == "official_translation_non_authentic"
+          assert "Interest" in at11["excerpt"]
+          assert english_excerpt_for_citation({"article":"11"}, "ZZ") is None
+
+          text = Path('taxtreat/services/reporting.py').read_text(encoding='utf-8')
+          assert 'english_excerpt_for_citation' in text
+          assert 'English excerpt unavailable' in text
+          assert 'English text status:' in text
+          print('report EN source provenance checks: PASS')
+          PY
+      - name: Commit and push
+        run: |
+          git config user.name "TaxTreat automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add taxtreat/services/reporting.py
+          git diff --cached --check
+          git commit -m "Use verified EN treaty excerpts in reports"
+          git push origin HEAD:feat/web-bulk-en-treaty-acquisition-20260825
