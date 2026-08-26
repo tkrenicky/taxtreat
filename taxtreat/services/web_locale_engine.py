@@ -1,13 +1,5 @@
 from __future__ import annotations
 
-from pathlib import Path
-
-ROOT = Path(__file__).resolve().parents[1]
-MAIN = ROOT / "app" / "main.py"
-LOCALE_MODULE = ROOT / "taxtreat" / "services" / "web_locale_engine.py"
-
-MODULE = r"""from __future__ import annotations
-
 import json
 import re
 from functools import lru_cache
@@ -246,43 +238,3 @@ def localize_intake_response(payload: dict[str, Any], web_root: Path, locale: Lo
     if locale != "en":
         return payload
     return _translate_payload_value(payload, web_root)
-"""
-
-
-def replace_once(text: str, old: str, new: str, label: str) -> str:
-    if old not in text:
-        raise SystemExit(f"missing patch marker: {label}")
-    return text.replace(old, new, 1)
-
-
-def main() -> None:
-    LOCALE_MODULE.write_text(MODULE, encoding="utf-8")
-    source = MAIN.read_text(encoding="utf-8")
-
-    source = replace_once(
-        source,
-        "from fastapi.responses import FileResponse\n",
-        "from fastapi.responses import FileResponse, HTMLResponse, Response\n",
-        "response imports",
-    )
-    source = replace_once(
-        source,
-        "from taxtreat.services.reporting import (\n    build_professional_report,\n    render_report_html,\n)\n",
-        "from taxtreat.services.reporting import (\n    build_professional_report,\n    render_report_html,\n)\nfrom taxtreat.services.web_locale_engine import (\n    localize_intake_response,\n    render_workspace_asset,\n    render_workspace_document,\n)\n",
-        "locale imports",
-    )
-
-    old_ui = '''@app.get("/ui", include_in_schema=False)\ndef guided_intake_ui():\n    return FileResponse(\n        WEB_ROOT / "workspace.html",\n        headers={"Cache-Control": "no-store, no-cache, must-revalidate"},\n    )\n'''
-    new_ui = '''@app.get("/ui", include_in_schema=False)\ndef guided_intake_ui(lang: Literal["cs", "en"] = "cs"):\n    return HTMLResponse(\n        render_workspace_document(WEB_ROOT, lang),\n        headers={"Cache-Control": "no-store, no-cache, must-revalidate"},\n    )\n\n\n@app.get("/ui/{lang}", include_in_schema=False)\ndef guided_intake_ui_locale(lang: Literal["cs", "en"]):\n    return HTMLResponse(\n        render_workspace_document(WEB_ROOT, lang),\n        headers={"Cache-Control": "no-store, no-cache, must-revalidate"},\n    )\n\n\n@app.get("/ui-engine/{lang}/{asset_path:path}", include_in_schema=False)\ndef guided_intake_ui_engine(lang: Literal["cs", "en"], asset_path: str):\n    try:\n        content = render_workspace_asset(WEB_ROOT, asset_path, lang)\n    except FileNotFoundError as exc:\n        raise HTTPException(status_code=404, detail="Unknown UI engine asset") from exc\n    return Response(\n        content=content,\n        media_type="application/javascript",\n        headers={"Cache-Control": "no-store, no-cache, must-revalidate"},\n    )\n'''
-    source = replace_once(source, old_ui, new_ui, "ui routes")
-
-    old_intake = '''@app.post("/analysis/intake")\ndef analysis_intake(payload: AnalysisPayload):\n    analysis = analyze(payload)\n    request = payload.model_dump(mode="json")\n    return {\n        "analysis": analysis,\n        "intake": build_intake_plan(request, analysis),\n    }\n'''
-    new_intake = '''@app.post("/analysis/intake")\ndef analysis_intake(payload: AnalysisPayload, lang: Literal["cs", "en"] = "cs"):\n    analysis = analyze(payload)\n    request = payload.model_dump(mode="json")\n    response = {\n        "analysis": analysis,\n        "intake": build_intake_plan(request, analysis),\n    }\n    return localize_intake_response(response, WEB_ROOT, lang)\n'''
-    source = replace_once(source, old_intake, new_intake, "intake locale")
-
-    MAIN.write_text(source, encoding="utf-8")
-    print("dual locale web engines rebuilt")
-
-
-if __name__ == "__main__":
-    main()
