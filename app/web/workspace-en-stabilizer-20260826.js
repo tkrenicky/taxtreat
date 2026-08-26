@@ -6,6 +6,12 @@
     ["ÚDAJE PODLE DRUHU PŘÍJMU", "INCOME-SPECIFIC FACTS"],
     ["Vyplň dostupné skutkové údaje před výpočtem. Údaje uložené v profilu příjemce jsou předvyplněny a lze je pro tuto platbu změnit.", "Complete the available transaction facts before calculation. Facts stored in the recipient profile are pre-filled and can be changed for this payment."],
     ["← Zpět k příjemci", "← Back to recipient"],
+    ["CHYBÍ ÚDAJE PRO PŘIŘAZENÍ PRAVIDLA", "FACTS REQUIRED TO ASSIGN A RULE"],
+    ["Srážková daň v CZK", "Withholding tax in CZK"],
+    ["Sazbu nelze určit bez doplnění potřebných podmínek", "The rate cannot be determined until the required facts are completed"],
+    ["Zadané údaje zatím neumožňují v TaxTreat přiřadit konkrétní právní pravidlo a sazbu.", "The entered facts do not yet allow TaxTreat to assign a specific legal rule and rate."],
+    ["Po doplnění údajů", "After completing the facts"],
+    ["Lhůty nelze uzavřít, dokud zadané údaje neumožní přiřadit příslušné pravidlo nebo měsíční úhrn rozhodný pro oznamovací povinnost.", "The deadlines cannot be finalized until the entered facts allow the applicable rule to be assigned or the monthly aggregate relevant for the notification obligation to be determined."],
     ["1. VÝCHOZÍ VNITROSTÁTNÍ PRAVIDLO", "1. BASE DOMESTIC RULE"],
     ["2. POUŽITÉ SMLUVNÍ PRAVIDLO", "2. APPLIED TREATY RULE"],
     ["1. POUŽITÉ PRAVIDLO", "1. APPLIED DOMESTIC RULE"],
@@ -44,7 +50,8 @@
           "Under Article $1 of the double tax treaty, the entered facts result in no Czech taxation.")
         .replace(/Podle článku\s+(\d+)\s+smlouvy o zamezení dvojího zdanění se při zadaných údajích příjem v České republice nezdaňuje\./gi,
           "Under Article $1 of the double tax treaty, the entered facts result in no Czech taxation.")
-        .replace(/\b([0-9][0-9\s.,]*)\s*Kč\b/g, "$1 CZK");
+        .replace(/\b([0-9][0-9\s.,]*)\s*Kč\b/g, "$1 CZK")
+        .replace(/\bKč\b/g, "CZK");
     } else {
       text = text
         .replace(/Under Article\s+(\d+)\s+of the double tax treaty,\s*the entered facts result in no Czech taxation\./gi,
@@ -66,18 +73,14 @@
     }
   }
 
-  function activeRoots() {
-    return [...document.querySelectorAll('.flow-step.active, #workspace-payment, [data-view="workspace"]')];
-  }
-
   let translating = false;
   function refresh() {
     if (translating) return;
     translating = true;
     try {
-      const roots = activeRoots();
-      if (roots.length) roots.forEach(translateRoot);
-      else translateRoot(document.body);
+      // In EN mode translate the full workspace body. This is deliberate: result copy
+      // is injected by several late renderers and must not escape the final EN pass.
+      translateRoot(document.body);
       const reportLanguage = document.querySelector("#taxtreat-report-language");
       if (reportLanguage && !reportLanguage.dataset.userChosen && language() === "en" && reportLanguage.value !== "en") {
         reportLanguage.value = "en";
@@ -91,24 +94,24 @@
   let timer = 0;
   function schedule() {
     clearTimeout(timer);
-    timer = window.setTimeout(refresh, 20);
+    timer = window.setTimeout(refresh, 10);
   }
 
   document.addEventListener("change", (event) => {
     if (event.target?.id === "taxtreat-report-language") event.target.dataset.userChosen = "true";
     if (event.target?.id === "taxtreat-ui-language" || event.target?.matches?.('[name="income_type"],[name="recipient_country"]')) {
-      [0, 60, 180, 420].forEach((delay) => window.setTimeout(refresh, delay));
+      [0, 40, 120, 300, 700].forEach((delay) => window.setTimeout(refresh, delay));
     }
   }, true);
 
   document.addEventListener("click", (event) => {
     if (event.target?.closest?.("#taxtreat-language-controls")) {
-      [0, 40, 120, 300].forEach((delay) => window.setTimeout(refresh, delay));
+      [0, 40, 120, 300, 700].forEach((delay) => window.setTimeout(refresh, delay));
       return;
     }
     const target = event.target?.closest?.('[data-next-step], [data-nav], [data-report-action], button[type="submit"]');
     if (!target) return;
-    [0, 80, 250, 600].forEach((delay) => window.setTimeout(refresh, delay));
+    [0, 60, 180, 420, 900].forEach((delay) => window.setTimeout(refresh, delay));
   }, true);
 
   const observer = new MutationObserver((mutations) => {
@@ -118,5 +121,5 @@
   });
   observer.observe(document.documentElement, { childList: true, subtree: true, characterData: true });
 
-  [0, 100, 300, 800, 1600].forEach((delay) => window.setTimeout(refresh, delay));
+  [0, 80, 220, 600, 1200, 2200].forEach((delay) => window.setTimeout(refresh, delay));
 })();
