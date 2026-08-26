@@ -645,9 +645,14 @@ def analysis_intake(payload: AnalysisPayload):
 def analysis_report(payload: AnalysisPayload):
     analysis = analyze(payload)
     request = payload.model_dump(mode="json")
+    facts = request.get("facts")
+    report_language = "cs"
+    if isinstance(facts, dict):
+        report_language = "en" if str(facts.pop("__report_language", "cs")).lower() == "en" else "cs"
     report = build_professional_report(
         request,
         analysis,
+        language=report_language,
     )
     return {
         "report": report,

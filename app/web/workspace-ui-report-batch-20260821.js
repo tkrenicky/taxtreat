@@ -261,15 +261,12 @@
   }
 
   function fixReportLayout(doc) {
-    replaceExactText(doc, "Neuplatňuje se", "0 %");
-    replaceExactText(doc, "Not applicable", "0%");
     [...doc.querySelectorAll("body *")].forEach((el) => {
       if (el.children.length === 0 && ["0 %","0%"].includes(el.textContent.trim())) el.classList.add("tt-report-zero");
       if (/^\d{2}\s*\/\s*\d{2}$/.test(el.textContent.trim())) el.style.display = "none";
     });
     markReportSections(doc);
     addProfessionalReportCss(doc);
-    addSection19ToReport(doc);
   }
 
   function transformReportHtml(html) {
