@@ -11,7 +11,7 @@ on:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
         with:
@@ -30,17 +30,8 @@ jobs:
           python -m taxtreat.pipeline.run_pipeline
       - name: Run 101-country runtime QA
         run: python scripts/run_101_country_e2e_qa.py
-      - name: Run web and decision tests
-        run: |
-          python -m pytest \
-            tests/test_web_api.py \
-            tests/test_web_workspace.py \
-            tests/test_legal_rule_engine.py \
-            tests/test_legal_rule_reliability.py \
-            tests/test_legal_facts.py \
-            tests/test_canonical_decision.py \
-            tests/test_layered_decision.py \
-            tests/test_legal_sources.py
+      - name: Run full project test suite
+        run: python -m pytest
       - name: Recheck EN coverage
         run: python scripts/build_stage6_en_rule_summary_locales_20260826.py
       - name: Upload QA evidence
