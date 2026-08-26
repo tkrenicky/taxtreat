@@ -1,14 +1,16 @@
 {
   "schema_version": 1,
   "registered_missing_country_count": 71,
-  "missing_country_article_pairs_at_start": 204,
+  "missing_country_article_pairs_at_start": 200,
   "country_status_counts": {
-    "SOURCE_ERROR": 46,
-    "NO_EN_TEXT": 17,
-    "REVIEW": 8
+    "SOURCE_ERROR": 44,
+    "NO_EN_TEXT": 9,
+    "PASS": 6,
+    "PARTIAL": 5,
+    "REVIEW": 7
   },
-  "article_candidates_pass": 0,
-  "article_candidates_review": 13,
+  "article_candidates_pass": 24,
+  "article_candidates_review": 15,
   "results": [
     {
       "country": "AD",
@@ -274,19 +276,19 @@
     },
     {
       "country": "BA",
-      "status": "NO_EN_TEXT",
+      "status": "PASS",
       "source_attempts": [
         {
           "url": "https://mft.gov.ba/data/Fiskalni%20sporazumi%202/Czech-_eng..pdf",
           "authority": "Ministry of Finance and Treasury of Bosnia and Herzegovina",
           "status": "PARSED",
           "articles": {
-            "10": "NO_EN_ARTICLE",
-            "11": "NO_EN_ARTICLE",
-            "12": "NO_EN_ARTICLE"
+            "10": "PASS",
+            "11": "PASS",
+            "12": "PASS"
           },
           "resolved_url": "https://mft.gov.ba/data/Fiskalni%20sporazumi%202/Czech-_eng..pdf",
-          "text_length": 19
+          "text_length": 64819
         },
         {
           "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=5761",
@@ -301,49 +303,43 @@
           "expected_rates": [
             5.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            5.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 4750,
+          "missing_rates": []
         },
         "11": {
           "expected_rates": [
             0.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            0.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 2416,
+          "missing_rates": []
         },
         "12": {
           "expected_rates": [
             10.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            10.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 2906,
+          "missing_rates": []
         }
       }
     },
     {
       "country": "BB",
-      "status": "NO_EN_TEXT",
+      "status": "PARTIAL",
       "source_attempts": [
         {
           "url": "https://bra.gov.bb/attachment?file=Attachments%2FDTA-The-Czech-Republic_1.pdf&name=DTA-The-Czech-Republic",
           "authority": "Barbados Revenue Authority",
           "status": "PARSED",
           "articles": {
-            "10": "NO_EN_ARTICLE",
-            "11": "NO_EN_ARTICLE",
-            "12": "NO_EN_ARTICLE"
+            "10": "PASS",
+            "11": "PASS",
+            "12": "REVIEW"
           },
           "resolved_url": "https://bra.gov.bb/attachment?file=Attachments%2FDTA-The-Czech-Republic_1.pdf&name=DTA-The-Czech-Republic",
-          "text_length": 27
+          "text_length": 57718
         },
         {
           "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=6223",
@@ -359,35 +355,28 @@
             5.0,
             15.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            5.0,
-            15.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 1900,
+          "missing_rates": []
         },
         "11": {
           "expected_rates": [
             0.0,
             5.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            0.0,
-            5.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 2637,
+          "missing_rates": []
         },
         "12": {
           "expected_rates": [
             5.0,
             10.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
+          "status": "REVIEW",
+          "excerpt_length": 3102,
           "missing_rates": [
-            5.0,
-            10.0
+            5.0
           ]
         }
       }
@@ -492,14 +481,19 @@
     },
     {
       "country": "BH",
-      "status": "SOURCE_ERROR",
+      "status": "NO_EN_TEXT",
       "source_attempts": [
         {
           "url": "https://www.nbr.gov.bh/FTR/bahrain_tax_treaties_network",
           "authority": "National Bureau for Revenue, Kingdom of Bahrain",
-          "status": "SOURCE_ERROR",
-          "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 403: Forbidden; curl=curl failed (22): curl: (22) The requested URL returned error: 403"
+          "status": "PARSED",
+          "articles": {
+            "10": "NO_EN_ARTICLE",
+            "11": "NO_EN_ARTICLE",
+            "12": "NO_EN_ARTICLE"
+          },
+          "resolved_url": "https://www.nbr.gov.bh/treaties/czech_republic_dtts_en",
+          "text_length": 38433
         },
         {
           "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=6190",
@@ -595,19 +589,19 @@
     },
     {
       "country": "BW",
-      "status": "NO_EN_TEXT",
+      "status": "PARTIAL",
       "source_attempts": [
         {
           "url": "https://www.burs.org.bw/index.php/treaties-and-legislation/treaties/bilateral-agreements?download=734%3Abotswana-czech-republic-dtaa",
           "authority": "Botswana Unified Revenue Service",
           "status": "PARSED",
           "articles": {
-            "10": "NO_EN_ARTICLE",
-            "11": "NO_EN_ARTICLE",
-            "12": "NO_EN_ARTICLE"
+            "10": "PASS",
+            "11": "REVIEW",
+            "12": "PASS"
           },
           "resolved_url": "https://www.burs.org.bw/index.php/treaties-and-legislation/treaties/bilateral-agreements?download=734%3Abotswana-czech-republic-dtaa",
-          "text_length": 35
+          "text_length": 65247
         },
         {
           "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39019",
@@ -622,33 +616,28 @@
           "expected_rates": [
             5.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            5.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 2350,
+          "missing_rates": []
         },
         "11": {
           "expected_rates": [
             0.0,
             7.5
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
+          "status": "REVIEW",
+          "excerpt_length": 4094,
           "missing_rates": [
-            0.0,
-            7.5
+            0.0
           ]
         },
         "12": {
           "expected_rates": [
             7.5
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            7.5
-          ]
+          "status": "PASS",
+          "excerpt_length": 3675,
+          "missing_rates": []
         }
       }
     },
@@ -752,19 +741,19 @@
     },
     {
       "country": "CL",
-      "status": "NO_EN_TEXT",
+      "status": "PARTIAL",
       "source_attempts": [
         {
           "url": "https://www.sii.cl/pagina/jurisprudencia/convenios/chile_republicacheca_ing.pdf",
           "authority": "Servicio de Impuestos Internos de Chile / SII",
           "status": "PARSED",
           "articles": {
-            "10": "NO_EN_ARTICLE",
-            "11": "NO_EN_ARTICLE",
-            "12": "NO_EN_ARTICLE"
+            "10": "PASS",
+            "11": "REVIEW",
+            "12": "PASS"
           },
           "resolved_url": "https://www.sii.cl/pagina/jurisprudencia/convenios/chile_republicacheca_ing.pdf",
-          "text_length": 29
+          "text_length": 65554
         },
         {
           "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38164",
@@ -779,19 +768,17 @@
           "expected_rates": [
             15.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            15.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 2505,
+          "missing_rates": []
         },
         "11": {
           "expected_rates": [
             4.0,
             15.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
+          "status": "REVIEW",
+          "excerpt_length": 1252,
           "missing_rates": [
             4.0,
             15.0
@@ -802,12 +789,9 @@
             5.0,
             10.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            5.0,
-            10.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 3180,
+          "missing_rates": []
         }
       }
     },
@@ -914,19 +898,19 @@
     },
     {
       "country": "CY",
-      "status": "NO_EN_TEXT",
+      "status": "PARTIAL",
       "source_attempts": [
         {
           "url": "https://www.gov.cy/media/sites/11/2024/03/czech_en_new.pdf",
           "authority": "Government of Cyprus",
           "status": "PARSED",
           "articles": {
-            "10": "NO_EN_ARTICLE",
-            "11": "NO_EN_ARTICLE",
-            "12": "NO_EN_ARTICLE"
+            "10": "REVIEW",
+            "11": "REVIEW",
+            "12": "PASS"
           },
           "resolved_url": "https://www.gov.cy/media/sites/11/2024/03/czech_en_new.pdf",
-          "text_length": 21
+          "text_length": 51086
         },
         {
           "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=5629",
@@ -942,8 +926,8 @@
             0.0,
             5.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
+          "status": "REVIEW",
+          "excerpt_length": 1584,
           "missing_rates": [
             0.0,
             5.0
@@ -953,8 +937,8 @@
           "expected_rates": [
             0.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
+          "status": "REVIEW",
+          "excerpt_length": 980,
           "missing_rates": [
             0.0
           ]
@@ -963,11 +947,9 @@
           "expected_rates": [
             10.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            10.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 2752,
+          "missing_rates": []
         }
       }
     },
@@ -1032,7 +1014,7 @@
             "12": "REVIEW"
           },
           "resolved_url": "https://www.retsinformation.dk/api/pdf/144429",
-          "text_length": 127312
+          "text_length": 127311
         },
         {
           "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=6358",
@@ -1391,19 +1373,19 @@
     },
     {
       "country": "GH",
-      "status": "NO_EN_TEXT",
+      "status": "PASS",
       "source_attempts": [
         {
           "url": "https://gra.gov.gh/wp-content/uploads/2024/05/Agreement-between-the-Czech-Republic-and-The-Republic-of-Ghana-DTA.pdf",
           "authority": "Ghana Revenue Authority",
           "status": "PARSED",
           "articles": {
-            "10": "NO_EN_ARTICLE",
-            "11": "NO_EN_ARTICLE",
-            "12": "NO_EN_ARTICLE"
+            "10": "PASS",
+            "11": "PASS",
+            "12": "PASS"
           },
           "resolved_url": "https://gra.gov.gh/wp-content/uploads/2024/05/Agreement-between-the-Czech-Republic-and-The-Republic-of-Ghana-DTA.pdf",
-          "text_length": 40
+          "text_length": 86212
         },
         {
           "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=38941",
@@ -1418,46 +1400,39 @@
           "expected_rates": [
             6.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            6.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 2364,
+          "missing_rates": []
         },
         "11": {
           "expected_rates": [
             0.0,
             10.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            0.0,
-            10.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 3745,
+          "missing_rates": []
         },
         "12": {
           "expected_rates": [
             8.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            8.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 3397,
+          "missing_rates": []
         }
       }
     },
     {
       "country": "GR",
-      "status": "REVIEW",
+      "status": "PARTIAL",
       "source_attempts": [
         {
           "url": "https://www.aade.gr/sites/default/files/2017-03/FEK_CZECHIA.pdf",
           "authority": "Independent Authority for Public Revenue of Greece / AADE",
           "status": "PARSED",
           "articles": {
-            "11": "REVIEW",
+            "11": "PASS",
             "12": "REVIEW"
           },
           "resolved_url": "https://www.aade.gr/sites/default/files/2017-03/FEK_CZECHIA.pdf",
@@ -1477,11 +1452,9 @@
             0.0,
             10.0
           ],
-          "status": "REVIEW",
+          "status": "PASS",
           "excerpt_length": 3163,
-          "missing_rates": [
-            10.0
-          ]
+          "missing_rates": []
         },
         "12": {
           "expected_rates": [
@@ -1491,8 +1464,7 @@
           "status": "REVIEW",
           "excerpt_length": 2896,
           "missing_rates": [
-            0.0,
-            10.0
+            0.0
           ]
         }
       }
@@ -1638,19 +1610,14 @@
     },
     {
       "country": "IT",
-      "status": "REVIEW",
+      "status": "SOURCE_ERROR",
       "source_attempts": [
         {
           "url": "https://www.finanze.gov.it/export/sites/finanze/.galleries/Documenti/dipartimento_pol_fisc/chec-en.pdf",
           "authority": "Italian Ministry of Economy and Finance",
-          "status": "PARSED",
-          "articles": {
-            "10": "REVIEW",
-            "11": "REVIEW",
-            "12": "REVIEW"
-          },
-          "resolved_url": "https://www.finanze.gov.it/export/sites/finanze/.galleries/Documenti/dipartimento_pol_fisc/chec-en.pdf",
-          "text_length": 43166
+          "status": "SOURCE_ERROR",
+          "articles": {},
+          "error": "RuntimeError: urllib=HTTPError: HTTP Error 403: Forbidden; curl=curl failed (22): curl: (22) The requested URL returned error: 403"
         },
         {
           "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=2135",
@@ -1665,8 +1632,8 @@
           "expected_rates": [
             15.0
           ],
-          "status": "REVIEW",
-          "excerpt_length": 2492,
+          "status": "NO_EN_ARTICLE",
+          "excerpt_length": 0,
           "missing_rates": [
             15.0
           ]
@@ -1675,8 +1642,8 @@
           "expected_rates": [
             0.0
           ],
-          "status": "REVIEW",
-          "excerpt_length": 1817,
+          "status": "NO_EN_ARTICLE",
+          "excerpt_length": 0,
           "missing_rates": [
             0.0
           ]
@@ -1686,9 +1653,10 @@
             0.0,
             5.0
           ],
-          "status": "REVIEW",
-          "excerpt_length": 1099,
+          "status": "NO_EN_ARTICLE",
+          "excerpt_length": 0,
           "missing_rates": [
+            0.0,
             5.0
           ]
         }
@@ -1696,19 +1664,14 @@
     },
     {
       "country": "JO",
-      "status": "NO_EN_TEXT",
+      "status": "SOURCE_ERROR",
       "source_attempts": [
         {
           "url": "https://istd.gov.jo/EN/ListDetails/Agreements_signed_with_the_Jordanian_government__Double_taxation_avoidance_agreements/1102/1",
           "authority": "Income and Sales Tax Department, Hashemite Kingdom of Jordan",
-          "status": "PARSED",
-          "articles": {
-            "10": "NO_EN_ARTICLE",
-            "11": "NO_EN_ARTICLE",
-            "12": "NO_EN_ARTICLE"
-          },
-          "resolved_url": "https://istd.gov.jo/EBV4.0/Root_Storage/AR/EB_UsefullLinks/التشيك_-en.pdf",
-          "text_length": 45
+          "status": "SOURCE_ERROR",
+          "articles": {},
+          "error": "RuntimeError: urllib=HTTPError: HTTP Error 502: Bad Gateway; curl=curl failed (22): curl: (22) The requested URL returned error: 502\ncurl: (22) The requested URL returned error: 502"
         },
         {
           "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=5091",
@@ -1994,14 +1957,19 @@
     },
     {
       "country": "LB",
-      "status": "SOURCE_ERROR",
+      "status": "PASS",
       "source_attempts": [
         {
           "url": "https://www.finance.gov.lb/en-us/Finance/IA/TC/Documents/Czech%20Republic.pdf",
           "authority": "Ministry of Finance of Lebanon",
-          "status": "SOURCE_ERROR",
-          "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 503: Service Unavailable; curl=curl failed (22): curl: (22) The requested URL returned error: 503\ncurl: (22) The requested URL returned error: 503"
+          "status": "PARSED",
+          "articles": {
+            "10": "PASS",
+            "11": "PASS",
+            "12": "PASS"
+          },
+          "resolved_url": "https://www.finance.gov.lb/en-us/Finance/IA/TC/Documents/Czech%20Republic.pdf",
+          "text_length": 113548
         },
         {
           "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=3345",
@@ -2016,33 +1984,26 @@
           "expected_rates": [
             5.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            5.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 1823,
+          "missing_rates": []
         },
         "11": {
           "expected_rates": [
             0.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            0.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 1855,
+          "missing_rates": []
         },
         "12": {
           "expected_rates": [
             5.0,
             10.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            5.0,
-            10.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 2805,
+          "missing_rates": []
         }
       }
     },
@@ -2550,14 +2511,17 @@
     },
     {
       "country": "NL",
-      "status": "SOURCE_ERROR",
+      "status": "REVIEW",
       "source_attempts": [
         {
           "url": "https://open.overheid.nl/documenten/ronl-451f0adf8f6b17329694f1483f1ab49e00952a48/pdf",
           "authority": "Government of the Netherlands / open.overheid.nl",
-          "status": "SOURCE_ERROR",
-          "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 400: Bad Request; curl=curl failed (22): curl: (22) The requested URL returned error: 400"
+          "status": "PARSED",
+          "articles": {
+            "10": "REVIEW"
+          },
+          "resolved_url": "https://open.overheid.nl/documenten/ronl-451f0adf8f6b17329694f1483f1ab49e00952a48/pdf",
+          "text_length": 62680
         },
         {
           "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=1782",
@@ -2573,45 +2537,27 @@
             0.0,
             10.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            0.0,
-            10.0
-          ]
-        },
-        "11": {
-          "expected_rates": [
-            0.0
-          ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
+          "status": "REVIEW",
+          "excerpt_length": 873,
           "missing_rates": [
             0.0
-          ]
-        },
-        "12": {
-          "expected_rates": [
-            5.0
-          ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            5.0
           ]
         }
       }
     },
     {
       "country": "NO",
-      "status": "SOURCE_ERROR",
+      "status": "REVIEW",
       "source_attempts": [
         {
           "url": "https://www.regjeringen.no/no/dokumenter/stprp-nr-42-2004-/id138803/?ch=6",
           "authority": "Norwegian Ministry of Finance / regjeringen.no",
-          "status": "SOURCE_ERROR",
-          "articles": {},
-          "error": "RuntimeError: urllib=HTTPError: HTTP Error 403: Forbidden; curl=curl failed (22): curl: (22) The requested URL returned error: 403"
+          "status": "PARSED",
+          "articles": {
+            "12": "REVIEW"
+          },
+          "resolved_url": "https://www.regjeringen.no/no/dokumenter/stprp-nr-42-2004-/id138803/?ch=6",
+          "text_length": 78307
         },
         {
           "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=4595",
@@ -2622,54 +2568,30 @@
         }
       ],
       "articles": {
-        "10": {
-          "expected_rates": [
-            0.0,
-            15.0
-          ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            0.0,
-            15.0
-          ]
-        },
-        "11": {
-          "expected_rates": [
-            0.0
-          ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            0.0
-          ]
-        },
         "12": {
           "expected_rates": [
             0.0,
             5.0,
             10.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
+          "status": "REVIEW",
+          "excerpt_length": 2867,
           "missing_rates": [
-            0.0,
-            5.0,
-            10.0
+            0.0
           ]
         }
       }
     },
     {
       "country": "PL",
-      "status": "REVIEW",
+      "status": "PASS",
       "source_attempts": [
         {
           "url": "https://www.podatki.gov.pl/media/wpccdltv/dta-pl-cz-mli-synthesised-text.pdf",
           "authority": "Polish Ministry of Finance / podatki.gov.pl",
           "status": "PARSED",
           "articles": {
-            "11": "REVIEW"
+            "11": "PASS"
           },
           "resolved_url": "https://www.podatki.gov.pl/media/wpccdltv/dta-pl-cz-mli-synthesised-text.pdf",
           "text_length": 55018
@@ -2688,11 +2610,9 @@
             0.0,
             5.0
           ],
-          "status": "REVIEW",
+          "status": "PASS",
           "excerpt_length": 3441,
-          "missing_rates": [
-            5.0
-          ]
+          "missing_rates": []
         }
       }
     },
@@ -2746,19 +2666,19 @@
     },
     {
       "country": "QA",
-      "status": "NO_EN_TEXT",
+      "status": "PASS",
       "source_attempts": [
         {
           "url": "https://gta.gov.qa/assets/pdf/DTA%20Czech%20%28EN%292026-11.pdf",
           "authority": "General Tax Authority of Qatar",
           "status": "PARSED",
           "articles": {
-            "10": "NO_EN_ARTICLE",
-            "11": "NO_EN_ARTICLE",
-            "12": "NO_EN_ARTICLE"
+            "10": "PASS",
+            "11": "PASS",
+            "12": "PASS"
           },
           "resolved_url": "https://gta.gov.qa/assets/pdf/DTA%20Czech%20%28EN%292026-11.pdf",
-          "text_length": 20
+          "text_length": 50321
         },
         {
           "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=39503",
@@ -2775,33 +2695,25 @@
             5.0,
             10.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            0.0,
-            5.0,
-            10.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 3110,
+          "missing_rates": []
         },
         "11": {
           "expected_rates": [
             0.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            0.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 2383,
+          "missing_rates": []
         },
         "12": {
           "expected_rates": [
             10.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            10.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 2659,
+          "missing_rates": []
         }
       }
     },
@@ -3393,19 +3305,19 @@
     },
     {
       "country": "UA",
-      "status": "NO_EN_TEXT",
+      "status": "PASS",
       "source_attempts": [
         {
           "url": "https://mof.gov.ua/storage/files/%D0%9A%D0%BE%D0%BD%D0%B2%D0%B5%D0%BD%D1%86%D1%96%D1%8F_%D0%A7%D0%B5%D1%81%D1%8C%D0%BA%D0%BE%D1%97%20%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D1%96%D0%BA%D0%B8.pdf",
           "authority": "Ministry of Finance of Ukraine",
           "status": "PARSED",
           "articles": {
-            "10": "NO_EN_ARTICLE",
-            "11": "NO_EN_ARTICLE",
-            "12": "NO_EN_ARTICLE"
+            "10": "PASS",
+            "11": "PASS",
+            "12": "PASS"
           },
           "resolved_url": "https://mof.gov.ua/storage/files/%D0%9A%D0%BE%D0%BD%D0%B2%D0%B5%D0%BD%D1%86%D1%96%D1%8F_%D0%A7%D0%B5%D1%81%D1%8C%D0%BA%D0%BE%D1%97%20%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D1%96%D0%BA%D0%B8.pdf",
-          "text_length": 24
+          "text_length": 65909
         },
         {
           "url": "https://mof.gov.ua/storage/files/%D0%9F%D1%80%D0%BE%D1%82%D0%BE%D0%BA%D0%BE%D0%BB%20_%D0%A7%D0%B5%D1%81%D1%8C%D0%BA%D0%BE%D1%97%20%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D1%96%D0%BA%D0%B8.pdf",
@@ -3417,7 +3329,7 @@
             "12": "NO_EN_ARTICLE"
           },
           "resolved_url": "https://mof.gov.ua/storage/files/%D0%9F%D1%80%D0%BE%D1%82%D0%BE%D0%BA%D0%BE%D0%BB%20_%D0%A7%D0%B5%D1%81%D1%8C%D0%BA%D0%BE%D1%97%20%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D1%96%D0%BA%D0%B8.pdf",
-          "text_length": 8
+          "text_length": 16350
         },
         {
           "url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=c&id=3255",
@@ -3433,34 +3345,26 @@
             5.0,
             15.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            5.0,
-            15.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 2693,
+          "missing_rates": []
         },
         "11": {
           "expected_rates": [
             0.0,
             5.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            0.0,
-            5.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 3352,
+          "missing_rates": []
         },
         "12": {
           "expected_rates": [
             10.0
           ],
-          "status": "NO_EN_ARTICLE",
-          "excerpt_length": 0,
-          "missing_rates": [
-            10.0
-          ]
+          "status": "PASS",
+          "excerpt_length": 1659,
+          "missing_rates": []
         }
       }
     },
