@@ -1,0 +1,67 @@
+name: WEB dual locale engine rebuild
+
+on:
+  push:
+    branches:
+      - feat/web-bulk-en-treaty-acquisition-20260825
+    paths:
+      - scripts/rebuild_web_locale_engines_20260826.py
+      - .github/workflows/web-dual-locale-engine-rebuild-20260826.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/web-bulk-en-treaty-acquisition-20260825
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Rebuild locale engines
+        run: python scripts/rebuild_web_locale_engines_20260826.py
+
+      - name: Static compile checks
+        run: |
+          python -m py_compile app/main.py taxtreat/services/web_locale_engine.py
+          python - <<'PY'
+          from pathlib import Path
+          from taxtreat.services.web_locale_engine import render_workspace_document, render_workspace_asset
+          root = Path('app/web')
+          en = render_workspace_document(root, 'en')
+          assert 'lang="en"' in en
+          assert '/ui-engine/en/workspace.js' in en
+          js = render_workspace_asset(root, 'workspace.js', 'en')
+          assert 'new Intl.DisplayNames(["en-GB"]' in js or 'new Intl.DisplayNames(["en"]' in js or 'Intl.DisplayNames(["en-GB"]' in js
+          assert 'fetch("/analysis/intake?lang=en"' in js
+          bootstrap = render_workspace_asset(root, 'workspace-report-export.js', 'en')
+          forbidden = [
+              'workspace-canonical-live-i18n-20260824.js',
+              'workspace-canonical-live-i18n-dynamic-20260824.js',
+              'workspace-en-residual-hardening-20260826.js',
+              'workspace-en-final-residue2-20260826.js',
+              'workspace-en-stabilizer-20260826.js',
+          ]
+          for item in forbidden:
+              assert item not in bootstrap, item
+          print('dual-locale static checks: PASS')
+          PY
+
+      - name: Commit rebuilt engine
+        run: |
+          if git diff --quiet; then
+            echo "No generated changes"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/main.py taxtreat/services/web_locale_engine.py
+          git commit -m "Rebuild web as separate CZ and EN engines"
+          git push origin HEAD:feat/web-bulk-en-treaty-acquisition-20260825
