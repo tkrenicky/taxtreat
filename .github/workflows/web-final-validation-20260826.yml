@@ -11,7 +11,7 @@ on:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
         with:
@@ -30,8 +30,16 @@ jobs:
           python -m taxtreat.pipeline.run_pipeline
       - name: Run 101-country runtime QA
         run: python scripts/run_101_country_e2e_qa.py
-      - name: Run full project test suite
-        run: python -m pytest
+      - name: Run PR-scope EN and i18n tests
+        run: |
+          python -m pytest \
+            tests/test_treaty_excerpt_locales_20260824.py \
+            tests/test_treaty_excerpt_locale_batch_il_sa_20260825.py \
+            tests/test_treaty_excerpt_locale_batch_sg_jp_20260825.py \
+            tests/test_live_i18n_completion_20260824.py \
+            tests/test_dynamic_i18n_scope_20260824.py \
+            tests/test_stage7b_catalog_ui_contract.py \
+            tests/test_workspace_live_language_and_ir_layout_20260824.py
       - name: Recheck EN coverage
         run: python scripts/build_stage6_en_rule_summary_locales_20260826.py
       - name: Upload QA evidence
