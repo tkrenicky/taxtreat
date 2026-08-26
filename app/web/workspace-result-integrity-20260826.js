@@ -13,30 +13,51 @@
     return stored === "en" ? "en" : "cs";
   }
 
+  const EN_TEXT = [
+    [/CHYBÍ ÚDAJE PRO PŘIŘAZENÍ PRAVIDLA/g, "FACTS REQUIRED TO ASSIGN A RULE"],
+    [/Srážková daň v CZK/g, "Withholding tax in CZK"],
+    [/Sazbu nelze určit bez doplnění potřebných podmínek/g, "The rate cannot be determined until the required facts are completed"],
+    [/Zadané údaje zatím neumožňují v TaxTreat přiřadit konkrétní právní pravidlo a sazbu\./g, "The entered facts do not yet allow TaxTreat to assign a specific legal rule and rate."],
+    [/Po doplnění údajů/g, "After completing the facts"],
+    [/Lhůty nelze uzavřít, dokud zadané údaje neumožní přiřadit příslušné pravidlo nebo měsíční úhrn rozhodný pro oznamovací povinnost\./g, "The deadlines cannot be finalized until the entered facts allow the applicable rule to be assigned or the monthly aggregate relevant for the notification obligation to be determined."],
+    [/VÝCHOZÍ VNITROSTÁTNÍ PRAVIDLO/g, "BASE DOMESTIC RULE"],
+    [/POUŽITÉ SMLUVNÍ PRAVIDLO/g, "APPLIED TREATY RULE"],
+    [/SMLUVNÍ PRAVIDLO/g, "TREATY RULE"],
+    [/POUŽITÉ PRAVIDLO/g, "APPLIED DOMESTIC RULE"],
+    [/OBECNÁ ČESKÁ SAZBA BEZ OSVOBOZENÍ/g, "GENERAL CZECH RATE WITHOUT EXEMPTION"],
+    [/SEKUNDÁRNÍ SMLUVNÍ OCHRANA/g, "SECONDARY TREATY PROTECTION"],
+    [/Výše úroku mezi spojenými osobami/g, "Interest amount between associated enterprises"],
+    [/Zadané údaje nepotvrzují, že výše úroku odpovídá obvyklým podmínkám\./g, "The entered facts do not confirm that the interest amount is consistent with arm's length conditions."],
+    [/Oznámení se nepodává/g, "No notification required"],
+    [/Česká daň se neodvádí\./g, "No Czech tax is remitted."],
+    [/\b([0-9][0-9\s.,]*)\s*Kč\b/g, "$1 CZK"],
+    [/\bKč\b/g, "CZK"]
+  ];
+
   function translateEnglish(root) {
     if (!root || uiLanguage() !== "en") return;
-    const replacements = [
-      [/CHYBÍ ÚDAJE PRO PŘIŘAZENÍ PRAVIDLA/g, "FACTS REQUIRED TO ASSIGN A RULE"],
-      [/Srážková daň v CZK/g, "Withholding tax in CZK"],
-      [/Sazbu nelze určit bez doplnění potřebných podmínek/g, "The rate cannot be determined until the required facts are completed"],
-      [/Zadané údaje zatím neumožňují v TaxTreat přiřadit konkrétní právní pravidlo a sazbu\./g, "The entered facts do not yet allow TaxTreat to assign a specific legal rule and rate."],
-      [/Po doplnění údajů/g, "After completing the facts"],
-      [/Lhůty nelze uzavřít, dokud zadané údaje neumožní přiřadit příslušné pravidlo nebo měsíční úhrn rozhodný pro oznamovací povinnost\./g, "The deadlines cannot be finalized until the entered facts allow the applicable rule to be assigned or the monthly aggregate relevant for the notification obligation to be determined."],
-      [/VÝCHOZÍ VNITROSTÁTNÍ PRAVIDLO/g, "BASE DOMESTIC RULE"],
-      [/POUŽITÉ SMLUVNÍ PRAVIDLO/g, "APPLIED TREATY RULE"],
-      [/POUŽITÉ PRAVIDLO/g, "APPLIED DOMESTIC RULE"],
-      [/OBECNÁ ČESKÁ SAZBA BEZ OSVOBOZENÍ/g, "GENERAL CZECH RATE WITHOUT EXEMPTION"],
-      [/SEKUNDÁRNÍ SMLUVNÍ OCHRANA/g, "SECONDARY TREATY PROTECTION"],
-      [/\b([0-9][0-9\s.,]*)\s*Kč\b/g, "$1 CZK"],
-      [/\bKč\b/g, "CZK"]
-    ];
     const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
     const nodes = [];
     while (walker.nextNode()) nodes.push(walker.currentNode);
     nodes.forEach((node) => {
       let value = node.nodeValue || "";
-      replacements.forEach(([pattern, replacement]) => { value = value.replace(pattern, replacement); });
+      EN_TEXT.forEach(([pattern, replacement]) => { value = value.replace(pattern, replacement); });
       if (value !== node.nodeValue) node.nodeValue = value;
+    });
+  }
+
+  function forceLegalSourceRoles(step) {
+    if (uiLanguage() !== "en") return;
+    step.querySelectorAll('.citation-role').forEach((role) => {
+      const raw = String(role.textContent || "").trim();
+      const position = raw.match(/^\s*(\d+)\./)?.[1] || "";
+      const prefix = position ? `${position}. ` : "";
+      if (/VÝCHOZÍ VNITROSTÁTNÍ PRAVIDLO/i.test(raw)) role.textContent = `${prefix}BASE DOMESTIC RULE`;
+      else if (/POUŽITÉ SMLUVNÍ PRAVIDLO/i.test(raw)) role.textContent = `${prefix}APPLIED TREATY RULE`;
+      else if (/SMLUVNÍ PRAVIDLO/i.test(raw)) role.textContent = `${prefix}TREATY RULE`;
+      else if (/POUŽITÉ PRAVIDLO/i.test(raw)) role.textContent = `${prefix}APPLIED DOMESTIC RULE`;
+      else if (/OBECNÁ ČESKÁ SAZBA BEZ OSVOBOZENÍ/i.test(raw)) role.textContent = `${prefix}GENERAL CZECH RATE WITHOUT EXEMPTION`;
+      else if (/SEKUNDÁRNÍ SMLUVNÍ OCHRANA/i.test(raw)) role.textContent = `${prefix}SECONDARY TREATY PROTECTION`;
     });
   }
 
@@ -55,6 +76,12 @@
     (latest.intake?.review_reasons || []).forEach((item) => push(item.title, item.detail));
     (latest.intake?.questions || []).forEach((q) => push(q.prompt, q.why));
     return items;
+  }
+
+  function enReason(value) {
+    let text = String(value || "");
+    EN_TEXT.forEach(([pattern, replacement]) => { text = text.replace(pattern, replacement); });
+    return text;
   }
 
   function renderWhyUnresolved(step) {
@@ -80,13 +107,12 @@
       : "TaxTreat chybí alespoň jeden skutkový údaj potřebný k určení použitelného právního pravidla. Vrať se ke kroku platby a doplň chybějící údaj(e).";
     let html = `<h2>${title}</h2>`;
     if (!items.length) html += `<p>${fallback}</p>`;
-    else {
-      html += "<ul>" + items.map((item) => {
-        const heading = item.title || (en ? "Missing condition" : "Chybějící podmínka");
-        const detail = item.detail ? `<br><small>${item.detail}</small>` : "";
-        return `<li><strong>${heading}</strong>${detail}</li>`;
-      }).join("") + "</ul>";
-    }
+    else html += "<ul>" + items.map((item) => {
+      const heading = en ? enReason(item.title || "Missing condition") : (item.title || "Chybějící podmínka");
+      const detailText = en ? enReason(item.detail) : item.detail;
+      const detail = detailText ? `<br><small>${detailText}</small>` : "";
+      return `<li><strong>${heading}</strong>${detail}</li>`;
+    }).join("") + "</ul>";
     card.innerHTML = html;
   }
 
@@ -94,7 +120,6 @@
     const notice = step.querySelector("#cz-ir-exemption-notice");
     if (!notice) return;
     const final = latest?.analysis?.status === "FINAL";
-    // Do not advertise an unassessed exemption while the main result itself is unresolved.
     notice.hidden = !final;
     if (!final) return;
     if (uiLanguage() === "en") {
@@ -110,6 +135,11 @@
     renderWhyUnresolved(step);
     fixExemptionNotice(step);
     translateEnglish(step);
+    forceLegalSourceRoles(step);
+  }
+
+  function patchBurst() {
+    [0, 25, 75, 160, 350, 700].forEach((delay) => window.setTimeout(patch, delay));
   }
 
   window.fetch = async function taxTreatResultIntegrityFetch(resource, options = {}) {
@@ -117,18 +147,27 @@
     const response = await previousFetch(resource, options);
     if (url.endsWith("/analysis/intake") && response.ok) {
       try { latest = await response.clone().json(); } catch (_problem) {}
-      [0, 50, 150, 400].forEach((delay) => window.setTimeout(patch, delay));
+      patchBurst();
     }
     return response;
   };
 
   document.addEventListener("click", (event) => {
-    if (event.target?.closest?.('[data-next-step], #taxtreat-language-controls, button[type="submit"]')) {
-      [0, 50, 150, 400].forEach((delay) => window.setTimeout(patch, delay));
-    }
+    if (event.target?.closest?.('[data-next-step], #taxtreat-language-controls, button[type="submit"]')) patchBurst();
   }, true);
   document.addEventListener("change", (event) => {
-    if (event.target?.id === "taxtreat-ui-language") [0, 50, 150].forEach((delay) => window.setTimeout(patch, delay));
+    if (event.target?.id === "taxtreat-ui-language") patchBurst();
   }, true);
-  new MutationObserver(() => window.setTimeout(patch, 20)).observe(document.documentElement, { childList:true, subtree:true, characterData:true });
+
+  let observerTimer = 0;
+  new MutationObserver((mutations) => {
+    if (!mutations.some((m) => m.type === "characterData" || m.addedNodes?.length)) return;
+    clearTimeout(observerTimer);
+    observerTimer = window.setTimeout(() => {
+      patch();
+      window.setTimeout(patch, 60);
+    }, 10);
+  }).observe(document.documentElement, { childList:true, subtree:true, characterData:true });
+
+  patchBurst();
 })();
