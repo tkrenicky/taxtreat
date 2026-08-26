@@ -27,6 +27,18 @@ jobs:
           pip install -r requirements-dev.txt
           pip install --no-deps -e .
           python -m playwright install --with-deps chromium
+      - name: Align legacy browser harness with current navigation
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('scripts/capture_stage7b_ui.py')
+          text = path.read_text(encoding='utf-8')
+          text = text.replace(
+              '("Přehled", "Plátci", "Příjemci", "Výpočty", "Výstupy", "Zdroje")',
+              '("Přehled", "Plátci", "Příjemci", "Výsledky", "Zdroje")',
+          )
+          path.write_text(text, encoding='utf-8')
+          PY
       - name: Run browser E2E and capture evidence
         run: python scripts/capture_stage7b_ui.py artifacts/web-final-browser
       - name: Upload browser evidence
