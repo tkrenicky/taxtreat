@@ -1,7 +1,13 @@
 (() => {
   "use strict";
 
-  const translations = new Map([
+  const PAIRS = [
+    ["PRACOVNÍ PROSTOR", "WORKSPACE"],
+    ["Přehled", "Overview"],
+    ["Platby, příjemci a informace navázané na zadané údaje.", "Payments, recipients and information linked to the entered data."],
+    ["Úkoly", "Tasks"],
+    ["Doklad k případnému smluvnímu nároku není evidován", "No supporting document for a potential treaty claim is recorded."],
+    ["Otevřít profil →", "Open profile →"],
     ["Příjemce je daňovým rezidentem státu", "The recipient is a tax resident of"],
     ["pro účely příslušné smlouvy.", "for the purposes of the applicable treaty."],
     ["Jaký podíl na základním kapitálu českého plátce příjemce drží?", "What percentage of the Czech payer's registered capital does the recipient hold?"],
@@ -10,14 +16,12 @@
     ["Jaký podíl na hlasovacích právech českého plátce příjemce drží?", "What percentage of the Czech payer's voting rights does the recipient hold?"],
     ["Předvyplněno podle podílu na základním kapitálu. Uprav, pokud se podíl na hlasovacích právech liší.", "Pre-filled based on the registered-capital percentage. Adjust if the voting-rights percentage differs."],
     ["Podíl, přímé držení, dobu držby, skutečné vlastnictví a vazbu ke stálé provozovně už TaxTreat používá z odpovědí výše.", "TaxTreat already uses the answers above for ownership percentage, direct holding, holding period, beneficial ownership and permanent-establishment connection."],
-    ["Je příjemce běžnou obchodní společností (např. GmbH, AG, Ltd. nebo S.A.), nikoli fyzickou osobou, fondem nebo daňově transparentním subjektem?", "Is the recipient an ordinary trading company (e.g. GmbH, AG, Ltd. or S.A.), rather than an individual, fund or tax-transparent entity?"],
-    ["Pokud si nejsi jistý právní formou příjemce, zvol raději „Ne“ nebo údaj ověř v korporátních podkladech.", "If you are unsure about the recipient's legal form, choose 'No' or verify it in the corporate documents."],
-    ["Podléhá příjemce ve státě své daňové rezidence běžné dani z příjmů právnických osob a není od této daně osvobozen ani v režimu s nulovou sazbou?", "Is the recipient subject to ordinary corporate income tax in its state of tax residence and not exempt from that tax, including under a zero-rate regime?"],
-    ["Jde o faktické daňové postavení příjemce, nikoli o posouzení českého § 19.", "This concerns the recipient's actual tax position, not an assessment under Czech Section 19."],
+    ["Je příjemce běžnou obchodní společností (např. GmbH, AG, Ltd. nebo S.A.), nikoli fyzickou osobou, fondem nebo daňově transparentním subjektem?", "Is the recipient an ordinary commercial company (e.g. GmbH, AG, Ltd. or S.A.), rather than an individual, fund or tax-transparent entity?"],
+    ["Pokud si nejsi jistý právní formou příjemce, zvol raději „Ne“ nebo údaj ověř v korporátních podkladech.", "If you are unsure about the recipient's legal form, select “No” or verify it in the corporate documentation."],
+    ["Podléhá příjemce ve státě své daňové rezidence běžné dani z příjmů právnických osob a není od této daně osvobozen ani v režimu s nulovou sazbou?", "Is the recipient subject to ordinary corporate income tax in its state of tax residence and neither exempt from that tax nor subject to a zero-rate regime?"],
+    ["Jde o faktické daňové postavení příjemce, nikoli o posouzení českého § 19.", "This concerns the recipient's actual tax status, not the assessment under Section 19 of the Czech Income Taxes Act."],
     ["Ještě dva údaje pro možné osvobození podle § 19 ZDP", "Additional facts for potential domestic exemption"],
     ["Vyber odpověď", "Select answer"],
-    ["Ano", "Yes"],
-    ["Ne", "No"],
     ["Ano, přímo", "Yes, directly"],
     ["Ne, nepřímo", "No, indirectly"],
     ["Znám datum nabytí podílu", "I know the acquisition date"],
@@ -25,64 +29,188 @@
     ["K datu transakce méně než 12 měsíců", "Less than 12 months as of the transaction date"],
     ["Datum nabytí podílu", "Share acquisition date"],
     ["Doba držby se vypočte automaticky k datu transakce.", "The holding period is calculated automatically as of the transaction date."],
+    ["VÝPOČET DOKONČEN", "CALCULATION COMPLETE"],
     ["Česká daň k odvodu", "Czech withholding tax payable"],
-    ["Daň se neodvádí", "No tax remittance required"],
+    ["Daň se neodvádí", "No withholding tax remittance required"],
+    ["Souhrn platby", "Payment summary"],
+    ["Hrubá částka", "Gross amount"],
+    ["Čistá částka", "Net amount"],
+    ["1. VÝCHOZÍ VNITROSTÁTNÍ PRAVIDLO", "1. BASE DOMESTIC RULE"],
+    ["2. POUŽITÉ SMLUVNÍ PRAVIDLO", "2. APPLIED TREATY RULE"],
+    ["3. SEKUNDÁRNÍ SMLUVNÍ OCHRANA", "3. SECONDARY TREATY PROTECTION"],
+    ["Otevřít zdroj ↗", "Open source ↗"],
+    ["Otevřít zdroj", "Open source"],
+    ["Oficiální zdroj e-Sbírka ↗", "Official e-Sbírka source ↗"],
+    ["Oficiální zdroj e-Sbírka", "Official e-Sbírka source"],
+    ["Znění použitého ustanovení", "Text of the applied provision"],
+    ["Použité právní pravidlo", "Applied legal rule"],
+    ["Smlouva o zamezení dvojího zdanění", "Double Tax Treaty"],
+    ["Článek", "Article"],
+    ["článek", "Article"],
     ["Česká daň se při tomto daňovém zacházení neodvádí. Oznámení podle § 38da zákona č. 586/1992 Sb., o daních z příjmů se u dividend a licenčních poplatků podává do 31. ledna následujícího roku.", "No Czech tax is remitted under this tax treatment. For dividends and royalties, the outbound-income notification under Section 38da of the Czech Income Taxes Act is due by 31 January of the following year."],
     ["U dividend může povinnost srazit daň podle § 38d odst. 2 zákona č. 586/1992 Sb., o daních z příjmů vzniknout i před zadaným datem. Pro úplné určení je nutné zohlednit také schválení účetní závěrky a rozhodnutí o rozdělení zisku.", "For dividends, the obligation to withhold tax under Section 38d(2) of the Czech Income Taxes Act may arise before the entered date. A complete determination must also take into account approval of the financial statements and the decision on profit distribution."],
-    ["VÝPOČET DOKONČEN", "CALCULATION COMPLETE"]
-  ]);
+    ["Ano", "Yes"],
+    ["Ne", "No"]
+  ];
+
+  const PLACEHOLDERS = [
+    ["např. 25", "e.g. 25"],
+    ["např. Example GmbH", "e.g. Example GmbH"]
+  ];
+
+  const LONG_PAIRS = [...PAIRS].sort((a, b) => Math.max(b[0].length, b[1].length) - Math.max(a[0].length, a[1].length));
 
   function language() {
     return document.querySelector("#taxtreat-ui-language")?.value || localStorage.getItem("taxtreat-ui-language") || "cs";
   }
 
-  function replaceTextNodes(root) {
-    if (!root || language() !== "en") return;
+  function swap(value, from, to) {
+    if (!value.includes(from)) return value;
+    if (from.length <= 4) {
+      const trimmed = value.trim();
+      if (trimmed !== from) return value;
+      return value.replace(trimmed, to);
+    }
+    return value.split(from).join(to);
+  }
+
+  function translateString(value) {
+    const toEnglish = language() === "en";
+    let next = String(value || "");
+    for (const [cs, en] of LONG_PAIRS) next = swap(next, toEnglish ? cs : en, toEnglish ? en : cs);
+
+    if (toEnglish) {
+      next = next
+        .replace(/Smlouva o zamezení dvojího zdanění\s*·\s*(?:Č|č)lánek\s*(\d+)/g, "Double Tax Treaty · Article $1")
+        .replace(/(\d[\d\s.,]*)\s*Kč\b/g, "$1 CZK");
+    } else {
+      next = next
+        .replace(/Double Tax Treaty\s*·\s*Article\s*(\d+)/g, "Smlouva o zamezení dvojího zdanění · článek $1")
+        .replace(/(\d[\d\s.,]*)\s*CZK\b/g, "$1 Kč");
+    }
+    return next;
+  }
+
+  function translateTextNodes(root) {
+    if (!root) return;
     const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
     const nodes = [];
     while (walker.nextNode()) nodes.push(walker.currentNode);
     for (const node of nodes) {
       if (node.parentElement?.closest("blockquote,.legal-excerpt,pre,code")) continue;
-      let value = node.nodeValue || "";
-      for (const [cs, en] of translations) {
-        if (value.includes(cs)) value = value.split(cs).join(en);
+      const next = translateString(node.nodeValue || "");
+      if (next !== node.nodeValue) node.nodeValue = next;
+    }
+  }
+
+  function translateAttributes(root) {
+    const elements = [];
+    if (root?.nodeType === Node.ELEMENT_NODE) elements.push(root);
+    if (root?.querySelectorAll) elements.push(...root.querySelectorAll("[placeholder],[title],[aria-label]"));
+    const toEnglish = language() === "en";
+    for (const element of elements) {
+      for (const attr of ["placeholder", "title", "aria-label"]) {
+        if (!element.hasAttribute?.(attr)) continue;
+        let value = element.getAttribute(attr) || "";
+        for (const [cs, en] of PLACEHOLDERS) value = swap(value, toEnglish ? cs : en, toEnglish ? en : cs);
+        value = translateString(value);
+        if (value !== element.getAttribute(attr)) element.setAttribute(attr, value);
       }
-      if (value !== node.nodeValue) node.nodeValue = value;
     }
   }
 
   function fixTreatyResidenceSentence() {
-    if (language() !== "en") return;
     document.querySelectorAll(".assumption-row > span").forEach((span) => {
       const text = (span.textContent || "").trim();
-      if (!/^Příjemce je daňovým rezidentem státu\s+/i.test(text) && !/^The recipient is a tax resident of\s+/i.test(text)) return;
+      if (!/^(?:Příjemce je daňovým rezidentem státu|The recipient is a tax resident of)\s+/i.test(text)) return;
       const countryNode = span.querySelector("[data-recipient-country-name]");
-      const country = (countryNode?.textContent || "").trim() || "the recipient's jurisdiction";
+      const currentCountry = (countryNode?.textContent || "").trim() || (/Austria|Rakousko/i.test(text) ? (language() === "en" ? "Austria" : "Rakousko") : "");
+      const country = language() === "en"
+        ? currentCountry.replace(/^Rakousko$/i, "Austria")
+        : currentCountry.replace(/^Austria$/i, "Rakousko");
+      const desired = language() === "en"
+        ? `The recipient is a tax resident of ${country} for the purposes of the applicable treaty.`
+        : `Příjemce je daňovým rezidentem státu ${country} pro účely příslušné smlouvy.`;
+      if (text === desired) return;
+      const b = document.createElement("b");
+      b.textContent = country;
+      b.setAttribute("data-recipient-country-name", "");
       span.replaceChildren(
-        document.createTextNode("The recipient is a tax resident of "),
-        Object.assign(document.createElement("b"), { textContent: country }),
-        document.createTextNode(" for the purposes of the applicable treaty.")
+        document.createTextNode(language() === "en" ? "The recipient is a tax resident of " : "Příjemce je daňovým rezidentem státu "),
+        b,
+        document.createTextNode(language() === "en" ? " for the purposes of the applicable treaty." : " pro účely příslušné smlouvy.")
       );
-      const b = span.querySelector("b");
-      if (b) b.setAttribute("data-recipient-country-name", "");
     });
   }
 
-  function refresh() {
-    if (language() !== "en") return;
-    replaceTextNodes(document.body);
+  function section19Active() {
+    const text = document.body?.textContent || "";
+    return /Section 19 applies|Domestic exemption under Section 19|§\s*19\s*(?:ZDP|applies)|osvobozen[íi]\s+podle\s+§\s*19/i.test(text);
+  }
+
+  function fixSection19AppliedRule() {
+    if (!section19Active()) return;
+    const candidates = [...document.querySelectorAll("h1,h2,h3,h4,strong,b")];
+    const heading = candidates.find((element) => /^(Applied legal rule|Použité právní pravidlo)$/i.test((element.textContent || "").trim()));
+    if (!heading) return;
+    const card = heading.closest(".card") || heading.parentElement;
+    if (!card) return;
+    const body = card.querySelector("p") || heading.nextElementSibling;
+    if (!body) return;
+    const desired = language() === "en"
+      ? "Section 19 of the Czech Income Taxes Act applies. The domestic exemption results in no Czech withholding tax based on the entered facts."
+      : "Uplatní se § 19 zákona o daních z příjmů. Na základě zadaných údajů vede vnitrostátní osvobození k tomu, že se česká srážková daň neuplatní.";
+    if ((body.textContent || "").trim() !== desired) body.textContent = desired;
+  }
+
+  function fixTreatySourceRole() {
+    if (!section19Active()) return;
+    const toEnglish = language() === "en";
+    document.querySelectorAll("h1,h2,h3,h4,strong,b,div,p,span").forEach((element) => {
+      if (element.children.length) return;
+      const text = (element.textContent || "").trim();
+      const match = text.match(/^(\d+)\.\s*(?:POUŽITÉ SMLUVNÍ PRAVIDLO|APPLIED TREATY RULE|SEKUNDÁRNÍ SMLUVNÍ OCHRANA|SECONDARY TREATY PROTECTION)$/i);
+      if (!match) return;
+      const desired = `${match[1]}. ${toEnglish ? "SECONDARY TREATY PROTECTION" : "SEKUNDÁRNÍ SMLUVNÍ OCHRANA"}`;
+      if (text !== desired) element.textContent = desired;
+    });
+  }
+
+  function fixDividendQuestionTypography() {
+    const reference = document.querySelector('.fact-question[data-dividend-step="2"] > span') || document.querySelector('.fact-question[data-dividend-step="1"] > span');
+    const target = document.querySelector('.fact-question[data-dividend-step="3"] > span');
+    if (!reference || !target) return;
+    const style = getComputedStyle(reference);
+    target.style.setProperty("font-size", style.fontSize, "important");
+    target.style.setProperty("font-weight", style.fontWeight, "important");
+    target.style.setProperty("line-height", style.lineHeight, "important");
+    target.style.setProperty("font-family", style.fontFamily, "important");
+  }
+
+  function refresh(root = document.body) {
+    document.documentElement.lang = language() === "en" ? "en" : "cs";
+    translateTextNodes(root);
+    translateAttributes(root);
     fixTreatyResidenceSentence();
+    fixSection19AppliedRule();
+    fixTreatySourceRole();
+    fixDividendQuestionTypography();
   }
 
   let timer = 0;
-  function schedule() {
+  function schedule(root = document.body) {
     window.clearTimeout(timer);
-    timer = window.setTimeout(refresh, 25);
+    timer = window.setTimeout(() => refresh(root), 20);
   }
 
-  document.addEventListener("change", schedule, true);
-  document.addEventListener("click", schedule, true);
-  const observer = new MutationObserver(schedule);
+  document.addEventListener("change", () => schedule(document.body), true);
+  document.addEventListener("click", () => schedule(document.body), true);
+
+  const observer = new MutationObserver((records) => {
+    const added = records.flatMap((record) => [...record.addedNodes]).find((node) => node.nodeType === Node.ELEMENT_NODE);
+    schedule(added || document.body);
+  });
   observer.observe(document.documentElement, { childList: true, subtree: true, characterData: true });
-  [0, 50, 150, 400, 900, 1600].forEach((delay) => window.setTimeout(refresh, delay));
+
+  [0, 50, 150, 400, 900, 1600].forEach((delay) => window.setTimeout(() => refresh(document.body), delay));
 })();
