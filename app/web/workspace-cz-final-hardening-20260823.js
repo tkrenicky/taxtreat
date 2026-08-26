@@ -258,7 +258,7 @@
   }
 
   function enhanceSection19LegalSource() {
-    if (!isCzech() || !section19Authoritative()) return;
+    if (!section19Authoritative()) return;
     const root = document.querySelector('.flow-step[data-step="4"]');
     const citations = root?.querySelector("#workspace-citations");
     if (!citations) return;

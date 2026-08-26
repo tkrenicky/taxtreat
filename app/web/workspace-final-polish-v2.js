@@ -138,7 +138,6 @@
     // inserted UI. A second observer that rewrites innerHTML can feed back into the
     // first observer and freeze the page. Refresh this supplemental polish only
     // after user-driven UI transitions.
-    document.addEventListener("click", scheduleRefresh, true);
     document.addEventListener("change", scheduleRefresh, true);
   }
 

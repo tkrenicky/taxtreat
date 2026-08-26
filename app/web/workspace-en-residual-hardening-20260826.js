@@ -190,10 +190,9 @@
   }
 
   document.addEventListener("change", () => schedule(document.body), true);
-  document.addEventListener("click", () => schedule(document.body), true);
   new MutationObserver((records) => {
     const added = records.flatMap((record) => [...record.addedNodes]).find((node) => node.nodeType === Node.ELEMENT_NODE);
     schedule(added || document.body);
-  }).observe(document.documentElement, { childList: true, subtree: true, characterData: true });
+  }).observe(document.documentElement, { childList: true, subtree: true });
   [0, 50, 150, 400, 900, 1600].forEach((delay) => setTimeout(() => refresh(document.body), delay));
 })();

@@ -2,6 +2,10 @@
   "use strict";
 
   const PAIRS = [
+    ["Výpočet vychází z níže uvedených předpokladů", "The calculation is based on the assumptions below"],
+    ["Předvyplněné odpovědi zkontroluj a změň, pokud pro danou platbu neplatí.", "Review the pre-filled answers and change them if they do not apply to this payment."],
+    ["VÝCHOZÍ VNITROSTÁTNÍ PRAVIDLO", "BASE DOMESTIC RULE"],
+    ["POUŽITÉ PRAVIDLO", "APPLIED DOMESTIC RULE"],
     ["1. VÝCHOZÍ VNITROSTÁTNÍ PRAVIDLO", "1. BASE DOMESTIC RULE"],
     ["1. POUŽITÉ PRAVIDLO", "1. APPLIED DOMESTIC RULE"],
     ["Relevantní ustanovení", "Relevant provisions"],
@@ -82,7 +86,6 @@
   }
 
   document.addEventListener("change", schedule, true);
-  document.addEventListener("click", schedule, true);
-  new MutationObserver(schedule).observe(document.documentElement, { childList: true, subtree: true, characterData: true });
+  new MutationObserver(schedule).observe(document.documentElement, { childList: true, subtree: true });
   [0, 100, 350, 900, 1600].forEach((delay) => setTimeout(refresh, delay));
 })();
