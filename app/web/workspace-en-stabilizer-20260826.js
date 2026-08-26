@@ -10,7 +10,6 @@
     ["2. POUŽITÉ SMLUVNÍ PRAVIDLO", "2. APPLIED TREATY RULE"],
     ["1. POUŽITÉ PRAVIDLO", "1. APPLIED DOMESTIC RULE"],
     ["2. OBECNÁ ČESKÁ SAZBA BEZ OSVOBOZENÍ", "2. GENERAL CZECH RATE WITHOUT EXEMPTION"],
-    ["1. VÝCHOZÍ VNITROSTÁTNÍ PRAVIDLO", "1. BASE DOMESTIC RULE"],
     ["VÝCHOZÍ VNITROSTÁTNÍ PRAVIDLO", "BASE DOMESTIC RULE"],
     ["POUŽITÉ SMLUVNÍ PRAVIDLO", "APPLIED TREATY RULE"],
     ["POUŽITÉ PRAVIDLO", "APPLIED DOMESTIC RULE"],
@@ -20,7 +19,14 @@
   const REVERSE = new Map([...EXACT].map(([cs, en]) => [en, cs]));
 
   function language() {
-    return document.querySelector("#taxtreat-ui-language")?.value || localStorage.getItem("taxtreat-ui-language") || "cs";
+    const pressed = document.querySelector('#taxtreat-language-controls .tt-lang-mini button[aria-pressed="true"]')?.dataset.lang;
+    if (pressed === "en" || pressed === "cs") return pressed;
+    const active = document.querySelector('#taxtreat-language-controls .tt-lang-mini button[data-active="true"]')?.dataset.lang;
+    if (active === "en" || active === "cs") return active;
+    const stored = localStorage.getItem("taxtreat-ui-language");
+    if (stored === "en" || stored === "cs") return stored;
+    const select = document.querySelector("#taxtreat-ui-language")?.value;
+    return select === "en" ? "en" : "cs";
   }
 
   function translateValue(value) {
@@ -96,6 +102,10 @@
   }, true);
 
   document.addEventListener("click", (event) => {
+    if (event.target?.closest?.("#taxtreat-language-controls")) {
+      [0, 40, 120, 300].forEach((delay) => window.setTimeout(refresh, delay));
+      return;
+    }
     const target = event.target?.closest?.('[data-next-step], [data-nav], [data-report-action], button[type="submit"]');
     if (!target) return;
     [0, 80, 250, 600].forEach((delay) => window.setTimeout(refresh, delay));
