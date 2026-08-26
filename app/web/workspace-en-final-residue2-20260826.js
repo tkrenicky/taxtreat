@@ -18,7 +18,14 @@
   ];
 
   function language() {
-    return document.querySelector("#taxtreat-ui-language")?.value || localStorage.getItem("taxtreat-ui-language") || "cs";
+    const pressed = document.querySelector('#taxtreat-language-controls .tt-lang-mini button[aria-pressed="true"]')?.dataset.lang;
+    if (pressed === "en" || pressed === "cs") return pressed;
+    const active = document.querySelector('#taxtreat-language-controls .tt-lang-mini button[data-active="true"]')?.dataset.lang;
+    if (active === "en" || active === "cs") return active;
+    const stored = localStorage.getItem("taxtreat-ui-language");
+    if (stored === "en" || stored === "cs") return stored;
+    const select = document.querySelector("#taxtreat-ui-language")?.value;
+    return select === "en" ? "en" : "cs";
   }
 
   function countryPairs() {
@@ -112,6 +119,12 @@
     }
     if (event.target?.id === "taxtreat-ui-language" || event.target?.matches?.('[name="income_type"],[name="recipient_country"]')) {
       [0, 60, 180, 400].forEach((delay) => setTimeout(refresh, delay));
+    }
+  }, true);
+
+  document.addEventListener("click", (event) => {
+    if (event.target?.closest?.("#taxtreat-language-controls")) {
+      [0, 40, 120, 300].forEach((delay) => setTimeout(refresh, delay));
     }
   }, true);
 
