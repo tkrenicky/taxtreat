@@ -6,8 +6,10 @@
     ["Předvyplněné odpovědi zkontroluj a změň, pokud pro danou platbu neplatí.", "Review the pre-filled answers and change them if they do not apply to this payment."],
     ["VÝCHOZÍ VNITROSTÁTNÍ PRAVIDLO", "BASE DOMESTIC RULE"],
     ["POUŽITÉ PRAVIDLO", "APPLIED DOMESTIC RULE"],
+    ["OBECNÁ ČESKÁ SAZBA BEZ OSVOBOZENÍ", "GENERAL CZECH RATE WITHOUT EXEMPTION"],
     ["1. VÝCHOZÍ VNITROSTÁTNÍ PRAVIDLO", "1. BASE DOMESTIC RULE"],
     ["1. POUŽITÉ PRAVIDLO", "1. APPLIED DOMESTIC RULE"],
+    ["2. OBECNÁ ČESKÁ SAZBA BEZ OSVOBOZENÍ", "2. GENERAL CZECH RATE WITHOUT EXEMPTION"],
     ["Relevantní ustanovení", "Relevant provisions"],
     ["§ 19 odst. 1 písm. ze) – stanoví osvobození podílu na zisku při splnění zákonných podmínek.", "Section 19(1)(ze) – provides the exemption for profit distributions where the statutory conditions are met."],
     ["§ 19 odst. 3 – vymezuje podmínky vztahující se ke kvalifikovaným společnostem a jejich daňovému postavení.", "Section 19(3) – defines the conditions relating to qualifying companies and their tax status."],
@@ -85,7 +87,16 @@
     timer = setTimeout(refresh, 30);
   }
 
-  document.addEventListener("change", schedule, true);
+  document.addEventListener("change", (event) => {
+    if (event.target?.id === "taxtreat-ui-language" || event.target?.matches?.('[name="income_type"],[name="recipient_country"]')) schedule();
+  }, true);
+
+  document.addEventListener("click", (event) => {
+    if (event.target?.closest?.("[data-nav],[data-next-step],[data-flow-step],[data-start-flow],#workspace-submit,#taxtreat-language-controls")) {
+      [0, 80, 250, 700].forEach((delay) => setTimeout(refresh, delay));
+    }
+  }, true);
+
   new MutationObserver(schedule).observe(document.documentElement, { childList: true, subtree: true });
   [0, 100, 350, 900, 1600].forEach((delay) => setTimeout(refresh, delay));
 })();
