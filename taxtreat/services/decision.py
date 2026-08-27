@@ -131,18 +131,18 @@ def analyze_transaction(
     ]
     # Historical CZ dividend exemption overlay.
     #
-    # The released Stage 6 projection currently carries the domestic/EU
-    # dividend-relief rule with a 2026 source-version date. That date is a
-    # source snapshot date, not the beginning of the legal regime. For
-    # transactions from 1 January 2020 onward, the same 10% / 12-month
-    # parent-subsidiary exemption framework is evidenced by the historical
-    # Czech Income Taxes Act in e-Sbírka. Clone the already released rule
-    # structure into that historical window without altering the approved
-    # Stage 6 package on disk.
+    # The 2026 date in the released Stage 6 projection is a source-version
+    # date, not the beginning of Section 19. The parent-subsidiary exemption
+    # existed materially earlier. The historical Czech Income Taxes Act
+    # verifies the 10% / 12-month version by 1 July 2008. Use that verified
+    # historical window here without altering the approved Stage 6 package
+    # on disk. Earlier historical versions had different thresholds and must
+    # be modelled as separate date-versioned rules rather than by projecting
+    # the current conditions backwards.
     if (
         request.source_country == "CZ"
         and normalized_income == "dividend"
-        and date(2020, 1, 1) <= request.transaction_date < date(2026, 4, 1)
+        and date(2008, 7, 1) <= request.transaction_date < date(2026, 4, 1)
     ):
         historical_relief = []
         for rule in scoped_rules:
@@ -151,21 +151,21 @@ def analyze_transaction(
             historical_relief.append(
                 replace(
                     rule,
-                    rule_id=f"{rule.rule_id}-HIST-2020",
-                    effective_from=date(2020, 1, 1),
+                    rule_id=f"{rule.rule_id}-HIST-2008",
+                    effective_from=date(2008, 7, 1),
                     effective_to=date(2026, 3, 31),
-                    source_id="CZ-ZDP-2020-HISTORICAL-ESBIRKA",
-                    source_url="https://e-sbirka.gov.cz/sb/1992/586/2020-01-01",
+                    source_id="CZ-ZDP-2008-07-01-HISTORICAL-ESBIRKA",
+                    source_url="https://e-sbirka.gov.cz/sb/1992/586/2008-07-01",
                     source_text=(
-                        "Historical Czech Income Taxes Act: domestic "
-                        "parent-subsidiary dividend exemption under Section 19 "
-                        "using the same released 10% participation and "
-                        "12-month holding-period rule structure."
+                        "Historical Czech Income Taxes Act as of 1 July 2008: "
+                        "domestic parent-subsidiary dividend exemption under "
+                        "Section 19 with a 10% participation threshold and "
+                        "12-month holding period."
                     ),
                     source_excerpt_hash=None,
                     evidence_source_ids=[
                         *rule.evidence_source_ids,
-                        "CZ-ZDP-2020-HISTORICAL-ESBIRKA",
+                        "CZ-ZDP-2008-07-01-HISTORICAL-ESBIRKA",
                     ],
                     verification_authority=(
                         "official_historical_statute_runtime_equivalence"
