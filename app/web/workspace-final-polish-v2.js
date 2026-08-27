@@ -12,7 +12,7 @@
     ["Údaje se z ARES nepodařilo načíst. Pole můžeš vyplnit ručně.", "The data could not be retrieved from ARES. You can complete the fields manually."],
     ["IČO *", "Company ID *"], ["IČO", "Company ID"], ["Název *", "Name *"], ["DIČ", "Tax ID"], ["Sídlo", "Registered office"], ["Právní forma", "Legal form"], ["Datová schránka", "Data box"], ["Datum vzniku", "Date of incorporation"],
     ["Zrušit", "Cancel"], ["Uložit změny", "Save changes"], ["PŘÍJEMCE", "RECIPIENT"], ["PLÁTCE", "PAYER"],
-    ["Ještě dva údaje pro možné osvobození podle § 19 ZDP", "Two more facts for the potential Section 19 exemption"],
+    ["Ještě dva údaje pro možné osvobození podle § 19 ZDP", "Two more facts for the potential exemption"],
     ["Nevím / potřebuji ověřit", "I don't know / needs verification"],
     ["Potvrzení o daňovém rezidentství", "Tax residence certificate"], ["Datum vystavení *", "Issue date *"], ["Platnost do *", "Valid until *"], ["Teď ne", "Not now"], ["Uložit evidenci", "Save record"],
     ["Základní údaje", "Basic details"], ["Daňová rezidence", "Tax residence"], ["Typ subjektu", "Entity type"], ["Podíl na plátci", "Ownership in payer"], ["Datum nabytí podílu", "Share acquisition date"],
