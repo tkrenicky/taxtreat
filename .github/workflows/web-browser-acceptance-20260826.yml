@@ -8,6 +8,7 @@ on:
       - '.github/workflows/web-browser-acceptance-20260826.yml'
       - 'scripts/capture_stage7b_ui.py'
       - 'scripts/verify_manual_qa_i18n_20260826.py'
+      - 'scripts/verify_web_integrity_guards_20260827.py'
       - 'app/web/**'
   workflow_dispatch:
 
@@ -40,6 +41,8 @@ jobs:
           )
           path.write_text(text, encoding='utf-8')
           PY
+      - name: Verify bootstrap assets and treaty provenance mapping
+        run: python scripts/verify_web_integrity_guards_20260827.py
       - name: Run browser E2E and capture evidence
         run: python scripts/capture_stage7b_ui.py artifacts/web-final-browser
       - name: Run bilingual manual-QA acceptance
