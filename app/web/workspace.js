@@ -1097,9 +1097,12 @@
     let reference = "použitého právního pravidla";
     if (citation) {
       const paragraph = citation.paragraph ? `, ${citation.paragraph}` : "";
-      reference = ["treaty", "protocol", "mli"].includes(String(citation.legal_layer || ""))
+      const layer = String(citation.legal_layer || "");
+      reference = ["treaty", "protocol", "mli"].includes(layer)
         ? `článku ${citation.article || "—"}${paragraph} smlouvy o zamezení dvojího zdanění`
-        : `§ ${citation.article || "—"}${paragraph} zákona č. 586/1992 Sb., o daních z příjmů`;
+        : layer === "eu_relief"
+          ? "§ 19 zákona č. 586/1992 Sb., o daních z příjmů"
+          : `§ ${citation.article || "—"}${paragraph} zákona č. 586/1992 Sb., o daních z příjmů`;
     }
     const treatment = analysis.tax_treatment || analysis.candidate_tax_treatment;
     if (treatment === "exclusive_foreign_taxation") {
@@ -1136,7 +1139,7 @@
     const incomeTypeLabels = { dividend: "Dividendy", interest: "Úroky", royalty: "Licenční poplatky" };
     const resultStep = document.querySelector('.flow-step[data-step="4"]');
     if (resultStep) resultStep.dataset.incomeType = payload.income_type || "";
-    setText("#workspace-income-type", `Typ příjmu: ${incomeTypeLabels[payload.income_type] || payload.income_type || "—"}`);
+    setText("#workspace-income-type", incomeTypeLabels[payload.income_type] || payload.income_type || "—");
     setText("#workspace-rate", treatment === "exclusive_foreign_taxation" ? `Zdanění pouze ve státě rezidence příjemce (${countryName(recipient.country)})` : treatment === "domestic_exemption" ? "Příjem je v České republice osvobozen" : analysis.rate === null ? analysis.candidate_rate === null ? "Sazbu nelze určit bez doplnění potřebných podmínek" : `Sazba přiřazená podle dostupných údajů: ${analysis.candidate_rate} %` : `${analysis.rate} % z hodnoty transakce`);
     setText("#workspace-gross", grossCzk !== null ? money(grossCzk) : payload.transaction_amount.currency === "CZK" ? money(payload.transaction_amount.amount) : `${payload.transaction_amount.amount} ${payload.transaction_amount.currency}`);
     setText("#workspace-tax-row", calculation ? money(taxCzk) : "—");
@@ -1150,7 +1153,10 @@
       actionCount.hidden = reviewItems.length === 0;
     }
     const conditionsCard = actions.closest("article.card");
-    if (conditionsCard) conditionsCard.hidden = reviewItems.length === 0;
+    const resultGrid = conditionsCard?.closest(".dashboard-grid");
+    const unresolved = analysis.status !== "FINAL";
+    if (conditionsCard) conditionsCard.hidden = reviewItems.length === 0 || unresolved;
+    if (resultGrid) resultGrid.classList.toggle("single-column", !conditionsCard || conditionsCard.hidden);
     const citations = document.querySelector("#workspace-citations"); citations.replaceChildren();
     decisiveCitations(analysis).forEach((citation, index) => citations.append(citationCard(citation, analysis, index + 1)));
     if (!citations.children.length) { const p = document.createElement("p"); p.textContent = "Pro tento informační výstup nebyl vrácen konkrétní odkaz na právní zdroj."; citations.append(p); }
