@@ -76,6 +76,8 @@ EXTRA_TRANSLATIONS: dict[str, str] = {
     "OBECNÁ ČESKÁ SAZBA BEZ OSVOBOZENÍ": "GENERAL CZECH RATE WITHOUT EXEMPTION",
     "SEKUNDÁRNÍ SMLUVNÍ OCHRANA": "SECONDARY TREATY PROTECTION",
     "Výše úroku mezi spojenými osobami": "Interest amount between associated enterprises",
+    "Historické vnitrostátní osvobození není pro zadané datum uvolněno": "Historical domestic exemption is not released for the selected date",
+    "Skutkové údaje mohou být kompletní, ale TaxTreat pro zadané historické datum nemá uvolněnou ověřenou vrstvu vnitrostátního osvobození dividend. Smluvní výsledek proto nelze prezentovat jako konečný právní titul.": "The factual inputs may be complete, but TaxTreat does not have a released verified domestic dividend-exemption layer for the selected historical date. The treaty result therefore cannot be presented as the final legal basis.",
     "Zadané údaje nepotvrzují, že výše úroku odpovídá obvyklým podmínkám.": "The entered facts do not confirm that the interest amount is consistent with arm's length conditions.",
     "Oznámení se nepodává": "No notification required",
     "Daň se neodvádí": "No tax remittance required",
