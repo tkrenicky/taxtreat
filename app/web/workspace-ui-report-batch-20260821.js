@@ -122,12 +122,10 @@
   function section19Status(analysis) {
     const treatment = analysis?.tax_treatment || analysis?.candidate_tax_treatment;
     const layers = section19Layers(analysis);
-    const applicable = analysis?.status === "FINAL" && treatment === "domestic_exemption" || layers.some((item) => item.outcome === "applicable");
-    const unresolved = !analysis || layers.some((item) => item.outcome === "unresolved");
-    const notApplicable = layers.length > 0 && layers.every((item) => ["not_applicable", "failed"].includes(item.outcome));
-    if (applicable) return "applicable";
-    if (notApplicable) return "not_applicable";
-    if (unresolved) return "unresolved";
+    if (analysis?.status === "FINAL" && treatment === "domestic_exemption") return "applicable";
+    if (!layers.length) return null;
+    if (layers.some((item) => item.outcome === "unresolved")) return "unresolved";
+    if (layers.every((item) => ["not_applicable", "failed"].includes(item.outcome))) return "not_applicable";
     return "reviewed";
   }
 
@@ -143,20 +141,22 @@
     const box = document.querySelector("#cz-section19-result");
     if (!box || sourceCountry() !== "CZ" || incomeType() !== "dividend") return;
     const status = section19Status(state.lastAnalysis);
+    box.hidden = !status;
+    if (!status) return;
     box.classList.remove("tt-section19-applicable", "tt-section19-not-applicable");
     if (status === "applicable") box.classList.add("tt-section19-applicable");
     if (status === "not_applicable") box.classList.add("tt-section19-not-applicable");
     const en = isEnglish();
     const copy = {
       applicable: en
-        ? ["Section 19 applies", "The Czech domestic exemption is the primary legal basis. Czech withholding tax is therefore 0%. The treaty remains a secondary protection only."]
-        : ["§ 19 ZDP se použije", "Primárním právním titulem je české vnitrostátní osvobození podle § 19 ZDP. Česká srážková daň je proto 0 %. Smlouva zůstává pouze sekundární ochranou."],
+        ? ["Exemption applies", "The Czech domestic exemption is the primary legal basis. Czech withholding tax is therefore 0%. The treaty remains a secondary protection only."]
+        : ["Osvobození se uplatní", "Primárním právním titulem je české vnitrostátní osvobození podle § 19 ZDP. Česká srážková daň je proto 0 %. Smlouva zůstává pouze sekundární ochranou."],
       not_applicable: en
-        ? ["Section 19 does not apply", "The domestic exemption was assessed first but is not available on the entered facts. The final treatment therefore follows the applicable treaty or the domestic rate."]
-        : ["§ 19 ZDP se neuplatní", "Vnitrostátní osvobození bylo posouzeno jako první, ale podle zadaných údajů není dostupné. Konečné daňové zacházení proto určuje příslušná smlouva nebo vnitrostátní sazba."],
+        ? ["Exemption not available", "The domestic exemption was assessed first but is not available on the entered facts. The final treatment therefore follows the applicable treaty or the domestic rate."]
+        : ["Osvobození se neuplatní", "Vnitrostátní osvobození bylo posouzeno jako první, ale podle zadaných údajů není dostupné. Konečné daňové zacházení proto určuje příslušná smlouva nebo vnitrostátní sazba."],
       unresolved: en
-        ? ["Section 19 is not yet resolved", "Complete the remaining factual items. Until then, TaxTreat must not present the treaty result as the sole final legal basis."]
-        : ["§ 19 ZDP zatím nelze uzavřít", "Je nutné doplnit zbývající skutkové údaje. Do té doby TaxTreat nesmí prezentovat smluvní výsledek jako jediný konečný právní titul."],
+        ? ["Exemption not yet resolved", "Complete the remaining factual items. Until then, TaxTreat must not present the treaty result as the sole final legal basis."]
+        : ["Osvobození zatím nelze uzavřít", "Je nutné doplnit zbývající skutkové údaje. Do té doby TaxTreat nesmí prezentovat smluvní výsledek jako jediný konečný právní titul."],
       reviewed: en
         ? ["Exemption assessed", "The domestic exemption was assessed before treaty relief. The legal basis shown below must remain consistent with that assessment."]
         : ["Osvobození posouzeno", "Vnitrostátní osvobození bylo posouzeno před smluvní úlevou. Níže uvedený právní titul musí být s tímto výsledkem konzistentní."],
@@ -164,7 +164,7 @@
 
     box.innerHTML = `
       <div class="tt-legal-status">${copy[0]}</div>
-      <h2>${en ? "Domestic exemption under the Czech Income Taxes Act" : "Vnitrostátní osvobození podle zákona o daních z příjmů"}</h2>
+      <h2>${en ? "Domestic exemption" : "Vnitrostátní osvobození"}</h2>
       <p>${copy[1]}</p>
       <div class="tt-section19-source">
         <strong>${en ? "Relevant Czech legal basis" : "Relevantní český právní základ"}</strong><br>
