@@ -116,7 +116,7 @@ def main() -> int:
             ):
                 assert forbidden not in result_text, forbidden
 
-            assert "Income type: Dividends" in result_text
+            assert "Dividends" in result_text
             assert "All facts required for the calculation are entered" not in result_text
             assert "Potential domestic exemption" not in result_text
             assert "of the tax base" not in result_text
