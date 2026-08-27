@@ -977,10 +977,11 @@
     return "";
   }
 
-  function citationRole(citation, selected, position) {
+  function citationRole(citation, selected, position, analysis) {
     const layer = String(citation.legal_layer || "");
     const en = document.documentElement.lang === "en";
     const role = String(citation.path_role || "");
+    const domesticExemptionSelected = (analysis?.tax_treatment || analysis?.candidate_tax_treatment) === "domestic_exemption";
     if (role === "domestic_exemption_basis") {
       return `${position}. ${en ? "APPLIED DOMESTIC EXEMPTION" : "POUŽITÉ VNITROSTÁTNÍ OSVOBOZENÍ"}`;
     }
@@ -989,6 +990,9 @@
     }
     if (layer === "domestic") return `${position}. ${en ? "DOMESTIC RULE" : "VNITROSTÁTNÍ PRAVIDLO"}`;
     if (["treaty", "protocol", "mli"].includes(layer)) {
+      if (domesticExemptionSelected && !selected) {
+        return `${position}. ${en ? "SECONDARY TREATY PROTECTION" : "SEKUNDÁRNÍ SMLUVNÍ OCHRANA"}`;
+      }
       return `${position}. ${en ? (selected ? "APPLIED TREATY RULE" : "TREATY RULE") : (selected ? "POUŽITÉ SMLUVNÍ PRAVIDLO" : "SMLUVNÍ PRAVIDLO")}`;
     }
     if (layer === "eu_relief") {
@@ -1015,10 +1019,12 @@
     const layer = String(citation.legal_layer || "");
     if (!selected) card.classList.add("context");
     const role = document.createElement("span"); role.className = "citation-role";
-    role.textContent = citationRole(citation, selected, position);
-    const paragraph = citation.paragraph ? ` · ${citationParagraphLabel(citation.paragraph)}` : "";
-    const en = document.documentElement.lang === "en";
+    role.textContent = citationRole(citation, selected, position, analysis);
     const pathRole = String(citation.path_role || "");
+    const paragraph = citation.paragraph && pathRole !== "domestic_exemption_basis"
+      ? ` · ${citationParagraphLabel(citation.paragraph)}`
+      : "";
+    const en = document.documentElement.lang === "en";
     title.textContent = ["treaty", "protocol", "mli"].includes(layer)
       ? `${en ? "Double Tax Treaty" : "Smlouva o zamezení dvojího zdanění"} · ${en ? "Article" : "článek"} ${citation.article || "—"}${paragraph}`
       : `${en ? "Czech Income Taxes Act (Act No. 586/1992 Coll.)" : "Zákon č. 586/1992 Sb., o daních z příjmů"} · § ${citation.article || "—"}${paragraph}`;
