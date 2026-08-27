@@ -1122,7 +1122,11 @@
     setText("#workspace-tax-label", nonTaxing ? "Česká daň k odvodu" : "Srážková daň v CZK");
     setText("#workspace-tax-row-label", nonTaxing ? "Česká daň k odvodu" : "Srážková daň");
     setText("#workspace-tax", calculation ? money(taxCzk) : "—");
-    setText("#workspace-rate", treatment === "exclusive_foreign_taxation" ? `Zdanění pouze ve státě rezidence příjemce (${countryName(recipient.country)})` : treatment === "domestic_exemption" ? "Příjem je v České republice osvobozen" : analysis.rate === null ? analysis.candidate_rate === null ? "Sazbu nelze určit bez doplnění potřebných podmínek" : `Sazba přiřazená podle dostupných údajů: ${analysis.candidate_rate} %` : `${analysis.rate} % z daňového základu`);
+    const incomeTypeLabels = { dividend: "Dividendy", interest: "Úroky", royalty: "Licenční poplatky" };
+    const resultStep = document.querySelector('.flow-step[data-step="4"]');
+    if (resultStep) resultStep.dataset.incomeType = payload.income_type || "";
+    setText("#workspace-income-type", `Typ příjmu: ${incomeTypeLabels[payload.income_type] || payload.income_type || "—"}`);
+    setText("#workspace-rate", treatment === "exclusive_foreign_taxation" ? `Zdanění pouze ve státě rezidence příjemce (${countryName(recipient.country)})` : treatment === "domestic_exemption" ? "Příjem je v České republice osvobozen" : analysis.rate === null ? analysis.candidate_rate === null ? "Sazbu nelze určit bez doplnění potřebných podmínek" : `Sazba přiřazená podle dostupných údajů: ${analysis.candidate_rate} %` : `${analysis.rate} % z hodnoty transakce`);
     setText("#workspace-gross", grossCzk !== null ? money(grossCzk) : payload.transaction_amount.currency === "CZK" ? money(payload.transaction_amount.amount) : `${payload.transaction_amount.amount} ${payload.transaction_amount.currency}`);
     setText("#workspace-tax-row", calculation ? money(taxCzk) : "—");
     setText("#workspace-net", calculation ? money(netCzk) : "—");
@@ -1134,12 +1138,8 @@
       actionCount.textContent = String(reviewItems.length);
       actionCount.hidden = reviewItems.length === 0;
     }
-    if (!reviewItems.length) {
-      const item = document.createElement("div"); item.className = "action-item complete";
-      const strong = document.createElement("strong"); strong.textContent = "Všechny údaje potřebné pro výpočet jsou zadány";
-      const small = document.createElement("small"); small.textContent = "Výsledek vychází z uvedených údajů a zobrazeného právního základu.";
-      item.append(strong, small); actions.append(item);
-    }
+    const conditionsCard = actions.closest("article.card");
+    if (conditionsCard) conditionsCard.hidden = reviewItems.length === 0;
     const citations = document.querySelector("#workspace-citations"); citations.replaceChildren();
     decisiveCitations(analysis).forEach((citation, index) => citations.append(citationCard(citation, analysis, index + 1)));
     if (!citations.children.length) { const p = document.createElement("p"); p.textContent = "Pro tento informační výstup nebyl vrácen konkrétní odkaz na právní zdroj."; citations.append(p); }
