@@ -979,14 +979,22 @@
 
   function citationRole(citation, selected, position) {
     const layer = String(citation.legal_layer || "");
-    if (layer === "domestic") return `${position}. Výchozí vnitrostátní pravidlo`;
+    const en = document.documentElement.lang === "en";
+    const role = String(citation.path_role || "");
+    if (role === "domestic_exemption_basis") {
+      return `${position}. ${en ? "APPLIED DOMESTIC EXEMPTION" : "POUŽITÉ VNITROSTÁTNÍ OSVOBOZENÍ"}`;
+    }
+    if (role === "domestic_starting_point") {
+      return `${position}. ${en ? "GENERAL DOMESTIC RATE WITHOUT EXEMPTION" : "OBECNÁ VNITROSTÁTNÍ SAZBA BEZ OSVOBOZENÍ"}`;
+    }
+    if (layer === "domestic") return `${position}. ${en ? "DOMESTIC RULE" : "VNITROSTÁTNÍ PRAVIDLO"}`;
     if (["treaty", "protocol", "mli"].includes(layer)) {
-      return `${position}. ${selected ? "Použité smluvní pravidlo" : "Smluvní pravidlo"}`;
+      return `${position}. ${en ? (selected ? "APPLIED TREATY RULE" : "TREATY RULE") : (selected ? "POUŽITÉ SMLUVNÍ PRAVIDLO" : "SMLUVNÍ PRAVIDLO")}`;
     }
     if (layer === "eu_relief") {
-      return `${position}. ${selected ? "Použité osvobození" : "Pravidlo osvobození"}`;
+      return `${position}. ${en ? (selected ? "APPLIED EXEMPTION" : "EXEMPTION RULE") : (selected ? "POUŽITÉ OSVOBOZENÍ" : "PRAVIDLO OSVOBOZENÍ")}`;
     }
-    return `${position}. ${selected ? "Použité pravidlo" : "Související právní pravidlo"}`;
+    return `${position}. ${en ? (selected ? "APPLIED RULE" : "RELATED LEGAL RULE") : (selected ? "POUŽITÉ PRAVIDLO" : "SOUVISEJÍCÍ PRÁVNÍ PRAVIDLO")}`;
   }
 
   function citationParagraphLabel(value) {
@@ -1009,18 +1017,45 @@
     const role = document.createElement("span"); role.className = "citation-role";
     role.textContent = citationRole(citation, selected, position);
     const paragraph = citation.paragraph ? ` · ${citationParagraphLabel(citation.paragraph)}` : "";
-    title.textContent = ["treaty", "protocol", "mli"].includes(layer) ? `Smlouva o zamezení dvojího zdanění · článek ${citation.article || "—"}${paragraph}` : `Zákon č. 586/1992 Sb., o daních z příjmů · § ${citation.article || "—"}${paragraph}`;
-    const link = document.createElement("a"); link.href = citation.source_url; link.target = "_blank"; link.rel = "noreferrer noopener"; link.textContent = "Otevřít zdroj ↗";
+    const en = document.documentElement.lang === "en";
+    const pathRole = String(citation.path_role || "");
+    title.textContent = ["treaty", "protocol", "mli"].includes(layer)
+      ? `${en ? "Double Tax Treaty" : "Smlouva o zamezení dvojího zdanění"} · ${en ? "Article" : "článek"} ${citation.article || "—"}${paragraph}`
+      : `${en ? "Czech Income Taxes Act (Act No. 586/1992 Coll.)" : "Zákon č. 586/1992 Sb., o daních z příjmů"} · § ${citation.article || "—"}${paragraph}`;
+    const link = document.createElement("a"); link.href = citation.source_url; link.target = "_blank"; link.rel = "noreferrer noopener"; link.textContent = en ? "Open source ↗" : "Otevřít zdroj ↗";
     const detail = document.createElement("p");
-    detail.textContent = !selected && layer === "domestic"
-      ? `Výchozí vnitrostátní sazba činí ${citation.rate} %. V následujícím kroku je zohledněno pravidlo, které tuto sazbu omezuje nebo nahrazuje.`
-      : citationDetail(citation);
+    if (pathRole === "domestic_exemption_basis") {
+      detail.textContent = en
+        ? "The domestic exemption is the primary legal basis for this result."
+        : "Vnitrostátní osvobození je primárním právním titulem tohoto výsledku.";
+    } else if (pathRole === "domestic_starting_point") {
+      detail.textContent = en
+        ? "Without an applicable exemption or treaty limitation, the Czech domestic withholding tax rate is 15%."
+        : "Pokud se neuplatní osvobození ani smluvní omezení, česká vnitrostátní sazba srážkové daně činí 15 %.";
+    } else {
+      detail.textContent = citationDetail(citation);
+    }
     card.append(role, title, link, detail);
-    if ((citation.official_text || citation.excerpt) && layer !== "domestic") {
+
+    const hasDomesticDisclosure = pathRole === "domestic_exemption_basis" || pathRole === "domestic_starting_point";
+    if ((citation.official_text || citation.excerpt || hasDomesticDisclosure) && (layer !== "domestic" || hasDomesticDisclosure)) {
       const disclosure = document.createElement("details"); disclosure.className = "citation-excerpt"; disclosure.open = true;
-      const summary = document.createElement("summary"); summary.textContent = citation.official_text ? "Znění použitého ustanovení" : "Evidované znění použitého ustanovení";
+      const summary = document.createElement("summary");
+      summary.textContent = hasDomesticDisclosure
+        ? (en ? "Relevant provisions" : "Relevantní ustanovení")
+        : citation.official_text
+          ? (en ? "Text of the applied provision" : "Znění použitého ustanovení")
+          : (en ? "Recorded text of the applied provision" : "Evidované znění použitého ustanovení");
       const excerpt = document.createElement("blockquote");
-      const fullText = displayLegalExcerpt(citation);
+      const fullText = pathRole === "domestic_exemption_basis"
+        ? (en
+            ? "Section 19(1)(ze), Section 19(3), Section 19(4), Section 19(6), Section 19(8) and Section 19(11) of the Czech Income Taxes Act."
+            : "§ 19 odst. 1 písm. ze), § 19 odst. 3, § 19 odst. 4, § 19 odst. 6, § 19 odst. 8 a § 19 odst. 11 zákona o daních z příjmů.")
+        : pathRole === "domestic_starting_point"
+          ? (en
+              ? "Section 36(1) of the Czech Income Taxes Act provides the general domestic withholding-tax rate applicable where no exemption or treaty limitation replaces it."
+              : "§ 36 odst. 1 zákona o daních z příjmů stanoví obecnou vnitrostátní sazbu srážkové daně pro případy, kdy ji nenahrazuje osvobození ani smluvní omezení.")
+          : displayLegalExcerpt(citation);
       const decisiveText = selected
         ? decisiveLegalParagraph(fullText, citation)
         : "";
@@ -1103,30 +1138,43 @@
 
   function informationalRuleStatement(analysis) {
     const selected = selectedRuleId(analysis);
+    const en = document.documentElement.lang === "en";
     const citation = [...(analysis.legal_path || analysis.citations || [])]
       .find((item) => String(item.rule_id || "") === selected);
-    let reference = "použitého právního pravidla";
+    let reference = en ? "the applied legal rule" : "použitého právního pravidla";
     if (citation) {
       const paragraph = citation.paragraph ? `, ${citation.paragraph}` : "";
       const layer = String(citation.legal_layer || "");
       reference = ["treaty", "protocol", "mli"].includes(layer)
-        ? `článku ${citation.article || "—"}${paragraph} smlouvy o zamezení dvojího zdanění`
-        : layer === "eu_relief"
-          ? "§ 19 zákona č. 586/1992 Sb., o daních z příjmů"
-          : `§ ${citation.article || "—"}${paragraph} zákona č. 586/1992 Sb., o daních z příjmů`;
+        ? (en
+            ? `Article ${citation.article || "—"}${paragraph} of the Double Tax Treaty`
+            : `článku ${citation.article || "—"}${paragraph} smlouvy o zamezení dvojího zdanění`)
+        : layer === "eu_relief" || String(citation.path_role || "") === "domestic_exemption_basis"
+          ? (en ? "Section 19 of the Czech Income Taxes Act" : "§ 19 zákona č. 586/1992 Sb., o daních z příjmů")
+          : (en
+              ? `Section ${citation.article || "—"}${paragraph} of the Czech Income Taxes Act`
+              : `§ ${citation.article || "—"}${paragraph} zákona č. 586/1992 Sb., o daních z příjmů`);
     }
     const treatment = analysis.tax_treatment || analysis.candidate_tax_treatment;
     if (treatment === "exclusive_foreign_taxation") {
-      return `Podle ${reference} se při zadaných údajích příjem v České republice nezdaňuje.`;
+      return en
+        ? `Under ${reference}, the income is not taxable in the Czech Republic based on the entered facts.`
+        : `Podle ${reference} se při zadaných údajích příjem v České republice nezdaňuje.`;
     }
     if (treatment === "domestic_exemption") {
-      return `Podle ${reference} je při zadaných údajích příjem v České republice osvobozen od srážkové daně.`;
+      return en
+        ? `Under ${reference}, the income is exempt from Czech withholding tax based on the entered facts.`
+        : `Podle ${reference} je při zadaných údajích příjem v České republice osvobozen od srážkové daně.`;
     }
     const rate = analysis.rate ?? analysis.candidate_rate;
     if (rate !== null && rate !== undefined) {
-      return `Podle ${reference} činí při zadaných údajích sazba srážkové daně ${new Intl.NumberFormat("cs-CZ", { maximumFractionDigits: 2 }).format(Number(rate))} %.`;
+      return en
+        ? `Under ${reference}, the Czech withholding tax rate is ${new Intl.NumberFormat("en-GB", { maximumFractionDigits: 2 }).format(Number(rate))}% based on the entered facts.`
+        : `Podle ${reference} činí při zadaných údajích sazba srážkové daně ${new Intl.NumberFormat("cs-CZ", { maximumFractionDigits: 2 }).format(Number(rate))} %.`;
     }
-    return `Zadané údaje zatím neumožňují v TaxTreat přiřadit konkrétní právní pravidlo a sazbu.`;
+    return en
+      ? "The entered facts do not yet allow TaxTreat to assign a specific legal rule and rate."
+      : "Zadané údaje zatím neumožňují v TaxTreat přiřadit konkrétní právní pravidlo a sazbu.";
   }
 
   function renderResult(payload, response) {
@@ -1150,7 +1198,7 @@
     const incomeTypeLabels = { dividend: "Dividendy", interest: "Úroky", royalty: "Licenční poplatky" };
     const resultStep = document.querySelector('.flow-step[data-step="4"]');
     if (resultStep) resultStep.dataset.incomeType = payload.income_type || "";
-    setText("#workspace-income-type", incomeTypeLabels[payload.income_type] || payload.income_type || "—");
+    setText("#workspace-income-type", `${document.documentElement.lang === "en" ? "Transaction" : "Transakce"}: ${incomeTypeLabels[payload.income_type] || payload.income_type || "—"}`);
     setText("#workspace-rate", treatment === "exclusive_foreign_taxation" ? `Zdanění pouze ve státě rezidence příjemce (${countryName(recipient.country)})` : treatment === "domestic_exemption" ? "Příjem je v České republice osvobozen" : analysis.rate === null ? analysis.candidate_rate === null ? "Sazbu nelze určit bez doplnění potřebných podmínek" : `Sazba přiřazená podle dostupných údajů: ${analysis.candidate_rate} %` : `${analysis.rate} % z hodnoty transakce`);
     setText("#workspace-gross", grossCzk !== null ? money(grossCzk) : payload.transaction_amount.currency === "CZK" ? money(payload.transaction_amount.amount) : `${payload.transaction_amount.amount} ${payload.transaction_amount.currency}`);
     setText("#workspace-tax-row", calculation ? money(taxCzk) : "—");
