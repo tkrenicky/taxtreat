@@ -177,6 +177,27 @@ def build_legal_path(
     if source_country.upper() == "CZ" and has_relief_layer:
         relief_basis = _domestic_relief_basis(normalized_income_type)
         if relief_basis is not None:
+            if normalized_income_type == "dividend":
+                selected_relief = next(
+                    (
+                        citation
+                        for citation in supplied
+                        if str(citation.get("rule_id") or "") == selected
+                        and str(citation.get("legal_layer") or "") == "eu_relief"
+                    ),
+                    None,
+                )
+                if selected_relief is not None:
+                    relief_basis["rule_id"] = selected
+                # For dividends the public legal path should identify the
+                # domestic statutory basis once. The raw EU/directive
+                # projection is engine provenance, not a fourth user-facing
+                # legal source duplicating Section 19.
+                supplied = [
+                    citation
+                    for citation in supplied
+                    if str(citation.get("legal_layer") or "") != "eu_relief"
+                ]
             supplied.append(relief_basis)
 
     ordered = sorted(
