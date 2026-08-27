@@ -107,12 +107,12 @@
       : "TaxTreat chybí alespoň jeden skutkový údaj potřebný k určení použitelného právního pravidla. Vrať se ke kroku platby a doplň chybějící údaj(e).";
     let html = `<h2>${title}</h2>`;
     if (!items.length) html += `<p>${fallback}</p>`;
-    else html += "<ul>" + items.map((item) => {
+    else html += '<div class="tt-unresolved-list">' + items.map((item) => {
       const heading = en ? enReason(item.title || "Missing condition") : (item.title || "Chybějící podmínka");
       const detailText = en ? enReason(item.detail) : item.detail;
-      const detail = detailText ? `<br><small>${detailText}</small>` : "";
-      return `<li><strong>${heading}</strong>${detail}</li>`;
-    }).join("") + "</ul>";
+      const detail = detailText ? `<small>${detailText}</small>` : "";
+      return `<div class="tt-unresolved-item"><strong>${heading}</strong>${detail}</div>`;
+    }).join("") + "</div>";
     card.innerHTML = html;
   }
 
@@ -120,8 +120,10 @@
     const notice = step.querySelector("#cz-ir-exemption-notice");
     if (!notice) return;
     const final = latest?.analysis?.status === "FINAL";
-    notice.hidden = !final;
-    if (!final) return;
+    const incomeType = step.dataset.incomeType || "";
+    const eligibleIncomeType = incomeType === "interest" || incomeType === "royalty";
+    notice.hidden = !(final && eligibleIncomeType);
+    if (!final || !eligibleIncomeType) return;
     if (uiLanguage() === "en") {
       notice.innerHTML = '<h2>Potential domestic exemption — not assessed in this calculation</h2><p>This calculation does not test the statutory conditions for the Czech interest/royalty exemption. A separate exemption may be available only if all statutory conditions are met and an effective Czech tax authority decision under Section 38nb is obtained.</p><p><strong>Eligibility snapshot:</strong> qualifying company and jurisdiction; qualifying 25% direct relationship; 24-month holding period; beneficial ownership; relevant tax/legal status; no disqualifying PE attribution; and the Section 38nb decision.</p>';
     } else {
