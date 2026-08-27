@@ -242,13 +242,13 @@
 
     if (authoritative) {
       box.classList.add("tt-section19-applicable");
-      setText(status, "Osvobození podle § 19 ZDP se uplatní");
-      setText(heading, "Vnitrostátní osvobození podle § 19 ZDP");
-      setText(paragraph, "Při zadaných údajích jsou splněny podmínky osvobození podle § 19 ZDP. Příjem proto nepodléhá české srážkové dani.");
+      setText(status, "Osvobození se uplatní");
+      setText(heading, "Vnitrostátní osvobození podle zákona o daních z příjmů");
+      setText(paragraph, "Při zadaných údajích je jako primární právní titul použito vnitrostátní osvobození podle § 19 zákona č. 586/1992 Sb., o daních z příjmů. Příjem proto nepodléhá české srážkové dani.");
     } else {
       const current = status?.textContent || "";
       if (/§\s*19\s*ZDP\s*posouzen/i.test(current)) {
-        setText(status, "Posouzení vnitrostátního osvobození");
+        setText(status, "Posouzení osvobození");
       }
       const currentParagraph = paragraph?.textContent || "";
       if (/Níže uvedený právní titul musí být s tímto výsledkem konzistentní/i.test(currentParagraph)) {
