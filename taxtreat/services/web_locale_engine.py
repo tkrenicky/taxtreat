@@ -198,7 +198,6 @@ def render_workspace_asset(web_root: Path, asset_path: str, locale: Locale) -> s
     if candidate.name == "workspace-report-export.js":
         source = _strip_live_i18n_bootstrap(source)
     source = _translate(source, web_root)
-    # Every dependency loaded by the EN bootstrap is itself compiled as EN.
     # Compile JavaScript dependencies only. CSS/JSON/treaty registries stay
     # on /ui-assets so the EN engine cannot accidentally request them from
     # the JavaScript-only /ui-engine endpoint.
@@ -267,10 +266,8 @@ def localize_intake_response(payload: dict[str, Any], web_root: Path, locale: Lo
     if locale != "en":
         return payload
 
-    # Legal analysis/citations are evidence, not UI copy. Never recursively
-    # translate or replace official treaty excerpts. Only the guided intake
-    # prompts/reasons are localized here; the EN treaty excerpt layer then
-    # renders the verified English legal wording from its locale registry.
+    # Preserve legal analysis and official citation text verbatim. Only
+    # guided intake prompts/reasons are UI copy and are localized here.
     localized = dict(payload)
     localized["intake"] = _translate_payload_value(payload.get("intake"), web_root)
     return localized
