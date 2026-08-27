@@ -40,6 +40,29 @@ PAIR_FILES = (
 EXTRA_TRANSLATIONS: dict[str, str] = {
     "CHYBÍ ÚDAJE PRO PŘIŘAZENÍ PRAVIDLA": "FACTS REQUIRED TO ASSIGN A RULE",
     "VÝPOČET DOKONČEN": "CALCULATION COMPLETED",
+    "Platba": "Payment",
+    "Typ příjmu:": "Income type:",
+    "% z hodnoty transakce": "% of the transaction value",
+    "§ 38d a § 38da zákona č. 586/1992 Sb., o daních z příjmů": "Sections 38d and 38da of the Czech Income Taxes Act (Act No. 586/1992 Coll.)",
+    "Odvod sražené daně a oznámení o příjmu plynoucím do zahraničí mají shodnou lhůtu: konec následujícího kalendářního měsíce.": "The withholding tax remittance and outbound-income notification have the same deadline: the end of the following calendar month.",
+    "Ještě dva údaje pro možné osvobození": "Two more facts for the potential exemption",
+    "Osvobození posouzeno": "Exemption assessed",
+    "Vnitrostátní osvobození podle zákona o daních z příjmů": "Domestic exemption under the Czech Income Taxes Act",
+    "Relevantní český právní základ": "Relevant Czech legal basis",
+    "Poslední výsledky": "Latest results",
+    "Výsledky": "Results",
+    "Otevřít výsledek": "Open result",
+    "DOKONČENO": "COMPLETED",
+    "VYŽADUJE DOPLNĚNÍ": "REQUIRES COMPLETION",
+    "Zatím bez výsledků": "No results yet",
+    "Po dokončení výpočtu se zde zobrazí poslední výsledky.": "Your latest calculation results will appear here.",
+    "Po dokončení prvního výpočtu se zde zobrazí výsledek a report.": "The result and report will appear here after the first calculation.",
+    "Dokončené výpočty": "Completed calculations",
+    "v této relaci stránky": "in this browser session",
+    "výpočtů s chybějícími údaji": "calculations with missing facts",
+    "Tisk / PDF": "Print / PDF",
+    "Tisk / PDF reportu": "Print / PDF report",
+    "odst. ": "paragraph ",
     "Srážková daň v CZK": "Withholding tax in CZK",
     "Česká daň k odvodu": "Czech tax payable",
     "Sazbu nelze určit bez doplnění potřebných podmínek": "The rate cannot be determined until the required facts are completed",
@@ -183,9 +206,14 @@ def render_workspace_asset(web_root: Path, asset_path: str, locale: Locale) -> s
     if candidate.name == "workspace-report-export.js":
         source = _strip_live_i18n_bootstrap(source)
     source = _translate(source, web_root)
-    # Every dependency loaded by the EN bootstrap is itself compiled as EN.
-    source = source.replace('"/ui-assets/', '"/ui-engine/en/')
-    source = source.replace("'/ui-assets/", "'/ui-engine/en/")
+    # Compile JavaScript dependencies only. CSS/JSON/treaty registries stay
+    # on /ui-assets so the EN engine cannot accidentally request them from
+    # the JavaScript-only /ui-engine endpoint.
+    source = re.sub(
+        r'(["\'])/ui-assets/([^"\']+\.js(?:\?[^"\']*)?)\1',
+        r'\1/ui-engine/en/\2\1',
+        source,
+    )
     # Intake payload returned to the EN engine is server-localised as structured
     # data before rendering; no browser text-node translation is required.
     source = source.replace('fetch("/analysis/intake"', 'fetch("/analysis/intake?lang=en"')
@@ -245,7 +273,12 @@ def _translate_payload_value(value: Any, web_root: Path) -> Any:
 def localize_intake_response(payload: dict[str, Any], web_root: Path, locale: Locale) -> dict[str, Any]:
     if locale != "en":
         return payload
-    return _translate_payload_value(payload, web_root)
+
+    # Preserve legal analysis and official citation text verbatim. Only
+    # guided intake prompts/reasons are UI copy and are localized here.
+    localized = dict(payload)
+    localized["intake"] = _translate_payload_value(payload.get("intake"), web_root)
+    return localized
 """
 
 
