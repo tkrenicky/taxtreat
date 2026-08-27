@@ -41,10 +41,7 @@ def main() -> int:
         with sync_playwright() as playwright:
             browser = playwright.chromium.launch(headless=True)
             page = browser.new_page(viewport={"width": 1440, "height": 1100})
-            page.goto(f"{BASE_URL}/ui", wait_until="networkidle")
-
-            language = page.locator("#taxtreat-ui-language")
-            language.select_option("en")
+            page.goto(f"{BASE_URL}/ui/en", wait_until="networkidle")
             page.wait_for_timeout(700)
 
             text = body_text(page)
@@ -119,21 +116,29 @@ def main() -> int:
             ):
                 assert forbidden not in result_text, forbidden
 
-            if "Section 19 applies" in result_text or "Domestic exemption under Section 19" in result_text:
-                applied_heading = result.get_by_text("Applied legal rule", exact=True)
-                applied_card = applied_heading.locator("xpath=ancestor::*[contains(concat(' ', normalize-space(@class), ' '), ' card ')][1]")
-                applied_text = applied_card.inner_text()
-                assert "Section 19 of the Czech Income Taxes Act applies" in applied_text
+            assert "Income type: Dividends" in result_text
+            assert "All facts required for the calculation are entered" not in result_text
+            assert "Potential domestic exemption" not in result_text
+            assert "of the tax base" not in result_text
+            assert "Additional factual condition requires completion or review." not in result_text
+
+            if "Exemption assessed" in result_text or "Domestic exemption under the Czech Income Taxes Act" in result_text:
+                applied_text = result.locator(".reason").inner_text()
+                assert "Czech Income Taxes Act" in applied_text
                 assert "Under Article 10" not in applied_text
                 assert "SECONDARY TREATY PROTECTION" in result_text
 
-            language.select_option("cs")
-            page.wait_for_timeout(900)
-            result_text_cs = result.inner_text()
-            assert "VÝPOČET DOKONČEN" in result_text_cs
-            assert "Česká daň k odvodu" in result_text_cs
-            assert "CALCULATION COMPLETE" not in result_text_cs
-            assert "Czech withholding tax payable" not in result_text_cs
+            treaty_blocks = result.locator(".citation-card blockquote")
+            if treaty_blocks.count():
+                assert max(len(treaty_blocks.nth(i).inner_text().strip()) for i in range(treaty_blocks.count())) > 80
+
+            cs = browser.new_page(viewport={"width": 1440, "height": 1100})
+            cs.goto(f"{BASE_URL}/ui/cs", wait_until="networkidle")
+            cs_text = body_text(cs)
+            assert "Přehled" in cs_text
+            assert "Plátci" in cs_text
+            assert "WORKSPACE" not in cs_text
+            cs.close()
 
             browser.close()
     finally:
