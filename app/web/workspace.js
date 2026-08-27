@@ -989,6 +989,17 @@
     return `${position}. ${selected ? "Použité pravidlo" : "Související právní pravidlo"}`;
   }
 
+  function citationParagraphLabel(value) {
+    const raw = String(value || "").trim();
+    if (!raw) return "";
+    if (document.documentElement.lang === "en") {
+      return raw
+        .replace(/^odst\.\s*/i, "paragraph ")
+        .replace(/^písm\.\s*/i, "point ");
+    }
+    return raw;
+  }
+
   function citationCard(citation, analysis, position) {
     const card = document.createElement("article"); card.className = "citation-card";
     const selected = String(citation.rule_id || "") === selectedRuleId(analysis);
@@ -997,7 +1008,7 @@
     if (!selected) card.classList.add("context");
     const role = document.createElement("span"); role.className = "citation-role";
     role.textContent = citationRole(citation, selected, position);
-    const paragraph = citation.paragraph ? ` · ${citation.paragraph}` : "";
+    const paragraph = citation.paragraph ? ` · ${citationParagraphLabel(citation.paragraph)}` : "";
     title.textContent = ["treaty", "protocol", "mli"].includes(layer) ? `Smlouva o zamezení dvojího zdanění · článek ${citation.article || "—"}${paragraph}` : `Zákon č. 586/1992 Sb., o daních z příjmů · § ${citation.article || "—"}${paragraph}`;
     const link = document.createElement("a"); link.href = citation.source_url; link.target = "_blank"; link.rel = "noreferrer noopener"; link.textContent = "Otevřít zdroj ↗";
     const detail = document.createElement("p");
