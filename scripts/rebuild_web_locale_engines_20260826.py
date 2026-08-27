@@ -292,6 +292,13 @@ def main() -> None:
     LOCALE_MODULE.write_text(MODULE, encoding="utf-8")
     source = MAIN.read_text(encoding="utf-8")
 
+    # The branch may already contain the locale routes/imports. In that case
+    # rebuilding the generated locale module is sufficient and must be
+    # idempotent rather than trying to apply the original migration twice.
+    if "from taxtreat.services.web_locale_engine import (" in source:
+        print("dual locale web engines refreshed (main.py already wired)")
+        return
+
     source = replace_once(
         source,
         "from fastapi.responses import FileResponse\n",
