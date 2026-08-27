@@ -48,7 +48,6 @@
     .then(() => loadScript("/ui-assets/workspace-payer-dialog-i18n-20260821.js?v=20260821-batch1"))
     .then(() => loadScript("/ui-assets/workspace-payer-detail-i18n-20260821.js?v=20260821-batch1"))
     .then(() => loadScript("/ui-assets/workspace-footer-i18n-20260821.js?v=20260821-batch1"))
-    .then(() => loadScript("/ui-assets/workspace-section19-fallback-20260821.js?v=20260821-batch1"))
     .then(() => loadScript("/ui-assets/workspace-main-nav-size-fix-20260821.js?v=20260823-cz1"))
     .then(() => loadScript("/ui-assets/workspace-cz-ui-polish-20260823.js?v=20260823-czfinal3"))
     .then(() => loadScript("/ui-assets/workspace-cz-final-hardening-20260823.js?v=20260823-czfinal4"))
