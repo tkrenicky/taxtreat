@@ -399,3 +399,17 @@
   font-size:.82rem;
   line-height:1.45;
 }
+
+
+/* 2026-08-27 result hierarchy and single-card layout */
+.dashboard-grid.single-column{grid-template-columns:minmax(0,1fr)!important}
+.dashboard-grid.single-column>.summary{width:100%}
+.result-income-type{
+  display:block;
+  margin:0 0 10px!important;
+  color:var(--blue)!important;
+  font-size:1.08rem!important;
+  font-weight:850!important;
+  line-height:1.2!important;
+  text-align:center;
+}
