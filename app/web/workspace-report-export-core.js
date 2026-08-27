@@ -114,10 +114,10 @@
   }
 
   function formatRate(rate) {
-    if (rate === null || rate === undefined || rate === "") return "sazba —";
+    if (rate === null || rate === undefined || rate === "") return "—";
     const numeric = Number(rate);
-    if (Number.isNaN(numeric)) return `sazba ${rate}`;
-    return `sazba ${new Intl.NumberFormat("cs-CZ", { maximumFractionDigits: 2 }).format(numeric)} %`;
+    if (Number.isNaN(numeric)) return String(rate);
+    return `${new Intl.NumberFormat("cs-CZ", { maximumFractionDigits: 2 }).format(numeric)} %`;
   }
 
   function historyTitle(record, fallback = "Výstup") {
