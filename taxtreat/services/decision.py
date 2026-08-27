@@ -187,6 +187,45 @@ def analyze_transaction(
         legal_facts=legal_facts,
         determinations=request.determinations,
     )
+
+    # A treaty result must not silently become final for a historical CZ
+    # dividend if the released catalog contains a domestic-exemption layer
+    # for the scope but none of those rules is effective for the selected
+    # date. Domestic exemption is legally evaluated before treaty relief.
+    relief_rules = [
+        rule for rule in scoped_rules
+        if rule.legal_layer == "eu_relief" and rule.effect == "rate"
+    ]
+    effective_relief_rules = [
+        rule for rule in relief_rules
+        if (rule.effective_from is None or rule.effective_from <= request.transaction_date)
+        and (rule.effective_to is None or request.transaction_date <= rule.effective_to)
+    ]
+    if (
+        request.source_country == "CZ"
+        and normalized_income == "dividend"
+        and relief_rules
+        and not effective_relief_rules
+        and result.status == DecisionStatus.FINAL
+        and getattr(result.tax_treatment, "value", result.tax_treatment) != "domestic_exemption"
+    ):
+        result.status = DecisionStatus.REVIEW_REQUIRED
+        result.requires_review = True
+        result.rate = None
+        result.tax_treatment = None
+        result.eligible = False
+        result.selected_rule_id = None
+        result.missing_legal_layers = sorted(
+            set(result.missing_legal_layers).union(
+                {"historical_domestic_dividend_exemption"}
+            )
+        )
+        result.explanation.append(
+            "Historical domestic dividend-exemption rules are not released "
+            "for the selected transaction date, so treaty relief cannot be "
+            "presented as the final legal basis."
+        )
+
     selected_path_ids = set(result.applied_rule_ids)
     if result.candidate_rule_id:
         selected_path_ids.add(result.candidate_rule_id)
