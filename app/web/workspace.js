@@ -1059,16 +1059,27 @@
   function renderComplianceSchedule(analysis) {
     const schedule = analysis.withholding_compliance_schedule;
     if (!schedule) return;
+    const en = document.documentElement.lang === "en";
     setText("#workspace-reference-date", formatCzechDate(schedule.reference_date));
     const nonTaxing = ["exclusive_foreign_taxation", "domestic_exemption"].includes(analysis.tax_treatment);
-    setText("#workspace-remittance-deadline", schedule.tax_remittance_deadline ? formatCzechDate(schedule.tax_remittance_deadline) : analysis.status === "FINAL" && nonTaxing ? "Daň se neodvádí" : "Po doplnění údajů");
-    setText("#workspace-notification-deadline", schedule.notification_deadline ? formatCzechDate(schedule.notification_deadline) : schedule.notification_required === false ? "Oznámení se nepodává" : "Po doplnění údajů");
+    setText("#workspace-remittance-deadline", schedule.tax_remittance_deadline ? formatCzechDate(schedule.tax_remittance_deadline) : analysis.status === "FINAL" && nonTaxing ? (en ? "No tax remittance required" : "Daň se neodvádí") : (en ? "After completing the facts" : "Po doplnění údajů"));
+    setText("#workspace-notification-deadline", schedule.notification_deadline ? formatCzechDate(schedule.notification_deadline) : schedule.notification_required === false ? (en ? "No notification required" : "Oznámení se nepodává") : (en ? "After completing the facts" : "Po doplnění údajů"));
     const note = document.querySelector("#workspace-deadline-note");
-    if (schedule.status !== "READY") note.textContent = "Lhůty nelze uzavřít, dokud zadané údaje neumožní přiřadit příslušné pravidlo nebo měsíční úhrn rozhodný pro oznamovací povinnost.";
-    else if (schedule.notification_regime === "exempt_or_treaty_non_taxable_annual") note.textContent = "Česká daň se při tomto daňovém zacházení neodvádí. Oznámení podle § 38da zákona č. 586/1992 Sb., o daních z příjmů se u dividend a licenčních poplatků podává do 31. ledna následujícího roku.";
-    else if (schedule.notification_regime === "non_taxing_interest_above_monthly_threshold_annual") note.textContent = `Česká daň se neodvádí. Měsíční úhrn úroků stejného druhu činí ${money(schedule.monthly_same_type_income_czk)} a přesáhl 300 000 Kč; oznámení podle § 38da zákona č. 586/1992 Sb., o daních z příjmů se podává do uvedeného data.`;
-    else if (schedule.notification_regime === "non_taxing_interest_monthly_threshold_not_exceeded") note.textContent = `Česká daň se neodvádí. Měsíční úhrn úroků stejného druhu činí ${money(schedule.monthly_same_type_income_czk)} a nepřesáhl 300 000 Kč; oznamovací povinnost podle § 38da zákona č. 586/1992 Sb., o daních z příjmů proto nevzniká.`;
-    else note.textContent = "Odvod sražené daně a oznámení o příjmu plynoucím do zahraničí mají shodnou lhůtu: konec následujícího kalendářního měsíce.";
+    if (schedule.status !== "READY") note.textContent = en
+      ? "The deadlines cannot be finalized until the applicable rule or the monthly aggregate relevant for the notification obligation can be determined."
+      : "Lhůty nelze uzavřít, dokud zadané údaje neumožní přiřadit příslušné pravidlo nebo měsíční úhrn rozhodný pro oznamovací povinnost.";
+    else if (schedule.notification_regime === "exempt_or_treaty_non_taxable_annual") note.textContent = en
+      ? "No Czech tax is remitted under this treatment. For dividends and royalties, the outbound-income notification under Section 38da of the Czech Income Taxes Act is due by 31 January of the following year."
+      : "Česká daň se při tomto daňovém zacházení neodvádí. Oznámení podle § 38da zákona č. 586/1992 Sb., o daních z příjmů se u dividend a licenčních poplatků podává do 31. ledna následujícího roku.";
+    else if (schedule.notification_regime === "non_taxing_interest_above_monthly_threshold_annual") note.textContent = en
+      ? `No Czech tax is remitted. The monthly aggregate of interest of the same type is ${money(schedule.monthly_same_type_income_czk)} and exceeds CZK 300,000; the notification under Section 38da of the Czech Income Taxes Act is due by the date shown.`
+      : `Česká daň se neodvádí. Měsíční úhrn úroků stejného druhu činí ${money(schedule.monthly_same_type_income_czk)} a přesáhl 300 000 Kč; oznámení podle § 38da zákona č. 586/1992 Sb., o daních z příjmů se podává do uvedeného data.`;
+    else if (schedule.notification_regime === "non_taxing_interest_monthly_threshold_not_exceeded") note.textContent = en
+      ? `No Czech tax is remitted. The monthly aggregate of interest of the same type is ${money(schedule.monthly_same_type_income_czk)} and does not exceed CZK 300,000; no notification obligation arises under Section 38da of the Czech Income Taxes Act.`
+      : `Česká daň se neodvádí. Měsíční úhrn úroků stejného druhu činí ${money(schedule.monthly_same_type_income_czk)} a nepřesáhl 300 000 Kč; oznamovací povinnost podle § 38da zákona č. 586/1992 Sb., o daních z příjmů proto nevzniká.`;
+    else note.textContent = en
+      ? "The withholding tax remittance and outbound-income notification have the same deadline: the end of the following calendar month."
+      : "Odvod sražené daně a oznámení o příjmu plynoucím do zahraničí mají shodnou lhůtu: konec následujícího kalendářního měsíce.";
     const caution = document.querySelector("#workspace-dividend-deadline-caution");
     caution.hidden = !schedule.dividend_timing_review_required;
   }
