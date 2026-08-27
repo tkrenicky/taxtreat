@@ -585,6 +585,20 @@ def build_review_reasons(
         for fact in sorted(blockers)
     ]
     for layer in analysis.get("missing_legal_layers", []):
+        if layer == "historical_domestic_dividend_exemption":
+            reasons.append(
+                {
+                    "code": f"missing_legal_layer:{layer}",
+                    "title": "Historické vnitrostátní osvobození není pro zadané datum uvolněno",
+                    "detail": (
+                        "Skutkové údaje mohou být kompletní, ale TaxTreat pro zadané "
+                        "historické datum nemá uvolněnou ověřenou vrstvu vnitrostátního "
+                        "osvobození dividend. Smluvní výsledek proto nelze prezentovat "
+                        "jako konečný právní titul."
+                    ),
+                }
+            )
+            continue
         reasons.append(
             {
                 "code": f"missing_legal_layer:{layer}",
