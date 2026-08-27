@@ -355,3 +355,46 @@
 .new-build-notice{position:fixed;z-index:80;right:24px;bottom:24px;display:flex;align-items:center;gap:18px;max-width:560px;padding:16px 18px;border:1px solid #b9c9ee;border-radius:14px;color:#1c315d;background:#f4f7ff;box-shadow:0 18px 50px #263c6d26}.new-build-notice button{flex:none;padding:10px 14px;border:0;border-radius:9px;color:#fff;background:#315ed5;font:700 13px inherit;cursor:pointer}
 
 .ico-lookup{display:grid;grid-template-columns:1fr auto;gap:8px}.ico-lookup .secondary{min-width:132px;padding:10px 12px}.lookup-status{display:block;margin-top:6px;color:var(--muted);font-size:.72rem}.lookup-status.success{color:var(--green)}.lookup-status.error{color:var(--red)}@media(max-width:700px){.ico-lookup{grid-template-columns:1fr}.ico-lookup .secondary{width:100%}}
+
+
+/* 2026-08-27 result/QA consistency */
+.result-income-type{
+  display:block;
+  margin-top:6px;
+  color:var(--muted);
+  font-size:.82rem;
+  font-weight:700;
+}
+.assumption-row>span,
+.fact-grid label>span,
+.question-card strong,
+#cz-section19-facts label>span{
+  font-size:.86rem!important;
+  font-weight:700!important;
+  line-height:1.45!important;
+}
+#tt-unresolved-reasons h2{
+  margin:0 0 12px;
+  font-size:.9rem;
+}
+#tt-unresolved-reasons .tt-unresolved-list{
+  display:grid;
+  gap:10px;
+}
+#tt-unresolved-reasons .tt-unresolved-item{
+  display:grid;
+  gap:4px;
+  padding:0;
+  font-size:.86rem;
+  line-height:1.45;
+}
+#tt-unresolved-reasons .tt-unresolved-item strong{
+  font-size:inherit;
+}
+#tt-unresolved-reasons .tt-unresolved-item small{
+  display:block;
+  margin:0;
+  color:var(--muted);
+  font-size:.82rem;
+  line-height:1.45;
+}
