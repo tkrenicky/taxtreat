@@ -158,17 +158,17 @@
         ? ["Section 19 is not yet resolved", "Complete the remaining factual items. Until then, TaxTreat must not present the treaty result as the sole final legal basis."]
         : ["§ 19 ZDP zatím nelze uzavřít", "Je nutné doplnit zbývající skutkové údaje. Do té doby TaxTreat nesmí prezentovat smluvní výsledek jako jediný konečný právní titul."],
       reviewed: en
-        ? ["Section 19 assessed", "The domestic exemption was assessed before treaty relief. The legal basis shown below must remain consistent with that assessment."]
-        : ["§ 19 ZDP posouzen", "Vnitrostátní osvobození bylo posouzeno před smluvní úlevou. Níže uvedený právní titul musí být s tímto výsledkem konzistentní."],
+        ? ["Exemption assessed", "The domestic exemption was assessed before treaty relief. The legal basis shown below must remain consistent with that assessment."]
+        : ["Osvobození posouzeno", "Vnitrostátní osvobození bylo posouzeno před smluvní úlevou. Níže uvedený právní titul musí být s tímto výsledkem konzistentní."],
     }[status];
 
     box.innerHTML = `
       <div class="tt-legal-status">${copy[0]}</div>
-      <h2>${en ? "Domestic exemption under Section 19" : "Vnitrostátní osvobození podle § 19 ZDP"}</h2>
+      <h2>${en ? "Domestic exemption under the Czech Income Taxes Act" : "Vnitrostátní osvobození podle zákona o daních z příjmů"}</h2>
       <p>${copy[1]}</p>
       <div class="tt-section19-source">
         <strong>${en ? "Relevant Czech legal basis" : "Relevantní český právní základ"}</strong><br>
-        ${en ? "Section 19(1)(ze), Section 19(3), Section 19(6) and Section 19(11) of the Czech Income Taxes Act." : "§ 19 odst. 1 písm. ze), § 19 odst. 3, § 19 odst. 6 a § 19 odst. 11 ZDP."}
+        ${en ? "Section 19(1)(ze), Section 19(3), Section 19(6) and Section 19(11) of the Czech Income Taxes Act (Act No. 586/1992 Coll.)." : "§ 19 odst. 1 písm. ze), § 19 odst. 3, § 19 odst. 6 a § 19 odst. 11 ZDP."}
         <br><a href="${SECTION19_SOURCE}" target="_blank" rel="noopener">${en ? "Official e-Sbírka source ↗" : "Oficiální zdroj e-Sbírka ↗"}</a>
       </div>`;
   }
