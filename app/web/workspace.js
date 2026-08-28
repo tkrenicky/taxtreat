@@ -405,8 +405,23 @@
   recipientEditForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const data = new FormData(recipientEditForm);
-    recipient = { ...recipient, name: String(data.get("recipient_name")).trim(), country: String(data.get("recipient_country")), type: String(data.get("recipient_type")), beneficialOwner: String(data.get("beneficial_owner")) === "true", treatyResident: String(data.get("treaty_resident")) === "true" };
-    Object.assign(currentRelationship(), { ownershipPercent: String(data.get("ownership_percent")), acquisitionDate: String(data.get("acquisition_date")), directOwnership: String(data.get("direct_ownership")), peConnection: String(data.get("pe_connection")) === "true" });
+    const beneficialOwner = String(data.get("beneficial_owner") || "");
+    const treatyResident = String(data.get("treaty_resident") || "");
+    const peConnection = String(data.get("pe_connection") || "");
+    recipient = {
+      ...recipient,
+      name: String(data.get("recipient_name")).trim(),
+      country: String(data.get("recipient_country")),
+      type: String(data.get("recipient_type")),
+      beneficialOwner: beneficialOwner === "" ? "" : beneficialOwner === "true",
+      treatyResident: treatyResident === "" ? "" : treatyResident === "true"
+    };
+    Object.assign(currentRelationship(), {
+      ownershipPercent: String(data.get("ownership_percent")),
+      acquisitionDate: String(data.get("acquisition_date")),
+      directOwnership: String(data.get("direct_ownership")),
+      peConnection: peConnection === "" ? "" : peConnection === "true"
+    });
     resetClientAnswers();
     saveWorkspaceProfiles();
     renderRecipient();
