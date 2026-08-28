@@ -10,17 +10,19 @@ It is not a new legal approval.
 
 ### Core treaty assumptions
 
-The workspace previously preselected:
+The workspace originally preselected:
 - beneficial owner = yes;
 - treaty residence = yes;
 - Czech PE connection = no.
 
-Those values could reach the engine without an active user decision. The same
-defaults also existed in the demo/profile object and recipient edit dialog.
+Following product review, the beneficial-owner and no-PE-connection defaults are
+intentionally retained as usability defaults: the user confirms or changes them
+as part of proceeding with the transaction. Treaty residence is different and
+remains an explicit unanswered fact until the user selects a value.
 
-All three facts are now explicit tri-state inputs. Unknown stays unknown through
-HTML, profile persistence, and payload construction. Transaction calculations
-do not inherit these profile values automatically.
+The safety requirement is therefore not "no defaults at all", but that only
+these two approved transaction assumptions may be prefilled and that no other
+missing treaty fact is silently synthesized.
 
 ### Cross-calculation stale facts
 
