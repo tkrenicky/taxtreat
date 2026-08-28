@@ -12,6 +12,7 @@ on:
       - 'scripts/verify_dividend_treaty_fallback_all_partners_20260828.py'
       - 'scripts/verify_en_treaty_locale_all_rules_20260828.py'
       - 'scripts/verify_workspace_profile_and_fallback_20260828.py'
+      - 'scripts/verify_en_fallback_report_locale_20260828.py'
       - 'app/web/**'
       - 'taxtreat/services/**'
   workflow_dispatch:
@@ -51,6 +52,8 @@ jobs:
         run: python scripts/verify_dividend_treaty_fallback_all_partners_20260828.py
       - name: Verify English treaty locale coverage across all treaty rules
         run: python scripts/verify_en_treaty_locale_all_rules_20260828.py
+      - name: Verify EN fallback report locale
+        run: python scripts/verify_en_fallback_report_locale_20260828.py
       - name: Run browser E2E and capture evidence
         run: python scripts/capture_stage7b_ui.py artifacts/web-final-browser
       - name: Run bilingual manual-QA acceptance
