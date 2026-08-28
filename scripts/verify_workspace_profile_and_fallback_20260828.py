@@ -46,7 +46,7 @@ def main() -> int:
             payer = page.locator("#payer-form")
             payer.locator('[name="payer_id"]').fill("12345679")
             payer.locator('[name="payer_name"]').fill("QA Payer s.r.o.")
-            payer.locator('button[type="submit"]').click()
+            payer.locator('[data-save-payer]').click()
             page.wait_for_timeout(250)
             active = page.locator("#active-payer-select")
             assert "QA Payer s.r.o." in active.locator("option").all_text_contents()
