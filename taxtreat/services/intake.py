@@ -277,6 +277,15 @@ FACT_GUIDANCE.update({
 # an ordinary True/False value. The UI asks a human Yes/No question,
 # while intake translates Yes to the exact value required by the
 # selected country's Stage 6 rule.
+CLIENT_SAFE_RULE_VALUE_ENUMS = {
+    # Objective fact that the user can answer without interpreting a compound
+    # treaty exemption. Composite public-body / guaranteed-financing / credit-
+    # sale enums remain professional review even when only one encoded value
+    # occurs in a country package.
+    "bank",
+}
+
+
 RULE_VALUE_BOOLEAN_GUIDANCE: dict[str, dict[str, str]] = {
     "article_11_3_exemption": {
         "prompt": (
@@ -804,6 +813,31 @@ def _rule_value_boolean_question(
             "why": (
                 "Pro zvolenou smlouvu existuje více možných právních "
                 "variant této podmínky; je nutné odborné posouzení."
+            ),
+            "required_documents": [
+                "Úvěrová nebo zápůjční smlouva"
+            ],
+            "advisor_topic": (
+                "interest_treaty_special_condition"
+            ),
+        }
+
+    # A single encoded Stage 6 value is not automatically a simple client
+    # fact. Long composite values often encode the legal conclusion of an
+    # entire treaty exemption (public bodies, guarantees, credit sales, etc.).
+    # Only explicitly allowlisted objective enums may be reduced to Yes/No.
+    if values[0] not in CLIENT_SAFE_RULE_VALUE_ENUMS:
+        return {
+            "question_id": missing,
+            "input_path": None,
+            "category": "professional_review",
+            "client_answerable": False,
+            "response_type": "professional_review",
+            "prompt": guidance["prompt"],
+            "why": (
+                "Podmínka představuje složenou smluvní klasifikaci a "
+                "nelze ji bezpečně převést na jednoduchou klientskou "
+                "odpověď Ano/Ne."
             ),
             "required_documents": [
                 "Úvěrová nebo zápůjční smlouva"
