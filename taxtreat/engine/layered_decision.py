@@ -340,6 +340,14 @@ def evaluate_layered_rules(
         and rule.rate is not None
         and selected.rate is not None
         and float(rule.rate) < float(selected.rate)
+        # A not-yet-proven Czech domestic exemption must not prevent release
+        # of an otherwise complete treaty outcome. The exemption remains
+        # visible in layer_results for UI/context, but the treaty rate is a
+        # legally usable fallback if all treaty conditions are satisfied.
+        and not (
+            selected.legal_layer in {"treaty", "protocol", "mli"}
+            and rule.legal_layer == "eu_relief"
+        )
     ]
     for _, missing in unresolved_better:
         missing_material.update(missing)
