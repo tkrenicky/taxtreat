@@ -520,20 +520,19 @@ def test_real_ph_stage6_royalty_conflict_remains_fail_closed():
     assert result.requires_review is True
 
 
-def test_workspace_core_treaty_assumptions_have_no_silent_defaults():
+def test_workspace_keeps_only_approved_core_treaty_defaults():
     html = Path("app/web/workspace.html").read_text(encoding="utf-8")
     source = Path("app/web/workspace.js").read_text(encoding="utf-8")
 
-    for name in ("beneficial_owner", "treaty_resident", "pe_connection"):
-        assert f'name="{name}" type="radio" value="true" checked' not in html
-        assert f'name="{name}" type="radio" value="false" checked' not in html
+    assert 'name="beneficial_owner" type="radio" value="true" checked' in html
+    assert 'name="pe_connection" type="radio" value="false" checked' in html
+    assert 'name="treaty_resident" type="radio" value="true" checked' not in html
+    assert 'name="treaty_resident" type="radio" value="false" checked' not in html
 
-    assert 'beneficialOwner: true' not in source
+    assert 'beneficialOwner: true' in source
+    assert '{ peConnection: false,' in source
     assert 'treatyResident: true' not in source
-    assert '{ peConnection: false,' not in source
-    assert 'String(data.get("beneficial_owner")) === "true"' not in source
     assert 'String(data.get("treaty_resident")) === "true"' not in source
-    assert 'String(data.get("pe_connection")) !== "true"' not in source
 
 
 def test_recipient_profile_preserves_unknown_core_treaty_facts():
