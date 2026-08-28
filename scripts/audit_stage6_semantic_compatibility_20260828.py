@@ -6,6 +6,8 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
+from taxtreat.engine.legal_rule_engine import _royalty_categories_match
+
 
 ROOT = Path(__file__).resolve().parents[1]
 RULE_DIR = ROOT / "data" / "legal_rules_stage6"
@@ -130,6 +132,73 @@ def build_inventory() -> dict[str, Any]:
     royalty_multi = [
         row for row in multi_rate_rows if row["income_type"] == "royalty"
     ]
+
+    royalty_atomic_coverage_gaps = []
+    royalty_ambiguous_catchalls = []
+    royalty_rules_by_country = defaultdict(list)
+
+    for path in sorted(RULE_DIR.glob("*.json")):
+        payload = _load(path)
+        country = path.stem.upper()
+        for rule in payload.get("rules", []):
+            if (
+                rule.get("income_type") == "royalty"
+                and rule.get("legal_layer") in {"treaty", "protocol", "mli"}
+            ):
+                royalty_rules_by_country[country].append(rule)
+                for condition in rule.get("conditions", []):
+                    if (
+                        condition.get("fact") == "royalty_category"
+                        and condition.get("operator") == "=="
+                        and condition.get("value")
+                        in {"other", "all_other_article_12_royalties"}
+                    ):
+                        royalty_ambiguous_catchalls.append(
+                            {
+                                "country": country,
+                                "rule_id": rule.get("rule_id"),
+                                "rate": rule.get("rate"),
+                                "value": condition.get("value"),
+                            }
+                        )
+
+    for country, country_rules in sorted(royalty_rules_by_country.items()):
+        category_rules = [
+            rule
+            for rule in country_rules
+            if any(
+                condition.get("fact") == "royalty_category"
+                and condition.get("operator") == "=="
+                for condition in rule.get("conditions", [])
+            )
+        ]
+        if not category_rules:
+            continue
+
+        for atomic in sorted(ATOMIC_ROYALTY_VALUES):
+            matched_rule_ids = [
+                rule.get("rule_id")
+                for rule in category_rules
+                if any(
+                    _royalty_categories_match(
+                        atomic,
+                        condition.get("value"),
+                    )
+                    for condition in rule.get("conditions", [])
+                    if (
+                        condition.get("fact") == "royalty_category"
+                        and condition.get("operator") == "=="
+                    )
+                )
+            ]
+            if not matched_rule_ids:
+                royalty_atomic_coverage_gaps.append(
+                    {
+                        "country": country,
+                        "atomic_category": atomic,
+                    }
+                )
+
     entity_sensitive = [
         row
         for row in multi_rate_rows
@@ -149,8 +218,12 @@ def build_inventory() -> dict[str, Any]:
             "multi_outcome_royalty_scopes": len(royalty_multi),
             "entity_type_sensitive_multi_outcome_scopes": len(entity_sensitive),
             "unique_condition_facts": len(all_facts),
+            "royalty_atomic_coverage_gaps": len(royalty_atomic_coverage_gaps),
+            "royalty_ambiguous_catchall_rules": len(royalty_ambiguous_catchalls),
         },
         "atomic_browser_royalty_values": sorted(ATOMIC_ROYALTY_VALUES),
+        "royalty_atomic_coverage_gaps": royalty_atomic_coverage_gaps,
+        "royalty_ambiguous_catchalls": royalty_ambiguous_catchalls,
         "condition_fact_country_counts": {
             fact: len(countries)
             for fact, countries in sorted(all_facts.items())
