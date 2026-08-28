@@ -434,7 +434,7 @@
     form.elements.direct_ownership.value = relationship.directOwnership;
     form.elements.acquisition_date.value = relationship.acquisitionDate;
     form.elements.holding_period_mode.value = relationship.acquisitionDate ? "known_date" : "";
-    form.elements.voting_ownership_percent.value = relationship.votingOwnershipPercent || relationship.ownershipPercent;
+    form.elements.voting_ownership_percent.value = relationship.votingOwnershipPercent || "";
     votingWasEdited = Boolean(relationship.votingOwnershipPercent);
     updateDividendProgress();
   }
@@ -693,7 +693,6 @@
   }
 
   form.elements.ownership_percent.addEventListener("input", () => {
-    if (!votingWasEdited) form.elements.voting_ownership_percent.value = form.elements.ownership_percent.value;
     updateDividendProgress();
   });
   form.elements.direct_ownership.addEventListener("change", updateDividendProgress);
