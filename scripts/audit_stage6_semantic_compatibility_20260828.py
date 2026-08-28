@@ -11,6 +11,7 @@ from taxtreat.services.intake import (
     DERIVED_TRANSACTION_FACTS,
     FACT_GUIDANCE,
     RULE_VALUE_BOOLEAN_GUIDANCE,
+    PROFESSIONAL_FACT_GROUPS,
 )
 
 
@@ -92,7 +93,12 @@ def _fact_mode(fact: str) -> str:
             return "professional_review"
         return "guided_client_input"
     if fact in RULE_VALUE_BOOLEAN_GUIDANCE:
-        return "dynamic_treaty_enum"
+        # Runtime intake only exposes explicitly allowlisted objective enum
+        # values (currently e.g. bank) as client-answerable. Compound treaty
+        # enums are deliberately routed to professional review.
+        return "guided_or_professional_treaty_enum"
+    if fact in PROFESSIONAL_FACT_GROUPS:
+        return "professional_review"
     return "unsupported_or_unclassified"
 
 
@@ -161,7 +167,6 @@ def build_inventory() -> dict[str, Any]:
         unsafe_modes = {
             "coarse_browser",
             "unsupported_or_unclassified",
-            "dynamic_treaty_enum",
         }
         safety_findings = sorted(
             fact
