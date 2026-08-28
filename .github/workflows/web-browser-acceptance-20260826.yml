@@ -11,6 +11,7 @@ on:
       - 'scripts/verify_web_integrity_guards_20260827.py'
       - 'scripts/verify_workspace_profile_and_fallback_20260828.py'
       - 'app/web/**'
+      - 'taxtreat/services/**'
   workflow_dispatch:
 
 jobs:
