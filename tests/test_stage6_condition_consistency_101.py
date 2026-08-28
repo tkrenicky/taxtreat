@@ -103,3 +103,41 @@ def test_direct_ownership_is_never_silently_treated_as_numeric_boolean():
     # Legacy model migrated:
     # directness is boolean, threshold uses ownership_percent.
     assert findings == []
+
+
+def test_generic_entity_type_cannot_disprove_narrower_treaty_status():
+    from taxtreat.engine.legal_rule_engine import LegalCondition, _evaluate_condition
+
+    satisfied, missing = _evaluate_condition(
+        LegalCondition(
+            fact="recipient_entity_type",
+            operator="==",
+            value="company_other_than_partnership",
+        ),
+        {"recipient_entity_type": "company"},
+        {},
+    )
+
+    assert satisfied is None
+    assert missing == "recipient_entity_type"
+
+
+def test_atomic_royalty_categories_are_exposed_by_workspace():
+    html = Path("app/web/workspace.html").read_text(encoding="utf-8")
+
+    for value in (
+        "copyright_literary_artistic_scientific_nonfilm_nonsoftware",
+        "cinematographic_films_or_broadcast_media",
+        "computer_software",
+        "patent_trademark_design_model_plan_secret_formula_process_or_knowhow",
+        "financial_lease_of_equipment",
+        "operating_lease_or_other_use_of_equipment",
+        "other",
+    ):
+        assert f'value="{value}"' in html
+
+    assert (
+        'value="software_patent_trademark_design_model_plan_secret_formula_process_or_knowhow"'
+        not in html
+    )
+    assert 'value="industrial_commercial_or_scientific_equipment"' not in html
