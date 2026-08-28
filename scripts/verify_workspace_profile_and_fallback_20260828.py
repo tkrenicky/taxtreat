@@ -103,6 +103,8 @@ def main() -> int:
         result = page.locator('.flow-step[data-step="4"].active')
         assert result.is_visible()
         result_text = result.inner_text()
+        print("checkpoint: result text", flush=True)
+        print(result_text, flush=True)
         assert "CALCULATION COMPLETED" in result_text
         assert ("10%" in result_text or "10 %" in result_text)
         assert "FACTS REQUIRED TO ASSIGN A RULE" not in result_text
