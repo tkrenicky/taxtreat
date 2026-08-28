@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import os
-import signal
 import subprocess
 import sys
 import time
@@ -43,67 +42,65 @@ def main() -> int:
         page.goto(f"{BASE_URL}/ui/en", wait_until="domcontentloaded", timeout=10000)
         page.wait_for_timeout(700)
 
-        # New payer must save, become active and remain switchable.
         print("checkpoint: open payers", flush=True)
         page.locator('[data-nav="payers"]').click()
         page.locator('[data-create-payer]').first.click()
         payer = page.locator("#payer-form")
-            payer.locator('[name="payer_id"]').fill("12345679")
-            payer.locator('[name="payer_name"]').fill("QA Payer s.r.o.")
+        payer.locator('[name="payer_id"]').fill("12345679")
+        payer.locator('[name="payer_name"]').fill("QA Payer s.r.o.")
+
         print("checkpoint: save payer", flush=True)
-            payer.locator('[data-save-payer]').click()
+        payer.locator('[data-save-payer]').click()
         page.wait_for_timeout(250)
+
         active = page.locator("#active-payer-select")
         assert "QA Payer s.r.o." in active.locator("option").all_text_contents()
         assert active.locator("option:checked").inner_text() == "QA Payer s.r.o."
+
         print("checkpoint: switch payer", flush=True)
-            active.select_option("demo-cz")
+        active.select_option("demo-cz")
         assert active.locator("option:checked").inner_text() == "Demo CZ s.r.o."
         qa_value = active.locator("option", has_text="QA Payer s.r.o.").get_attribute("value")
-            active.select_option(qa_value)
+        active.select_option(qa_value)
         assert active.locator("option:checked").inner_text() == "QA Payer s.r.o."
 
-        # New recipient must save into the working profile.
         print("checkpoint: create recipient", flush=True)
         page.locator('[data-start-flow]').first.click()
         page.locator('.flow-step[data-step="1"] [data-next-step="2"]').click()
         page.locator("[data-show-recipient-form]").click()
         recipient = page.locator("#new-recipient-form")
-            recipient.locator('[name="recipient_name"]').fill("QA GmbH")
-            recipient.locator('[name="recipient_country"]').select_option("AT")
-            recipient.locator('button[type="submit"]').click()
+        recipient.locator('[name="recipient_name"]').fill("QA GmbH")
+        recipient.locator('[name="recipient_country"]').select_option("AT")
+        recipient.locator('button[type="submit"]').click()
         assert page.locator("#flow-recipient-name").inner_text() == "QA GmbH"
 
-        # Dividend with unresolved exemption facts must still expose the
-        # treaty fallback instead of a blank result.
         page.locator('.flow-step[data-step="2"] [data-next-step="3"]').click()
         form = page.locator("#workspace-payment")
-            form.locator('select[name="income_type"]').select_option("dividend")
-            form.locator('input[name="transaction_date"]').fill("2026-08-11")
-            form.locator('input[name="amount"]').fill("100000")
-            form.locator('input[name="ownership_percent"]').fill("25")
-            form.locator('select[name="direct_ownership"]').select_option("true")
-            form.locator('select[name="holding_period_mode"]').select_option("at_least_12_months")
-            form.locator('input[name="voting_ownership_percent"]').fill("25")
-        # Intentionally leave section19_company_form and
-        # section19_taxable_company blank.
+        form.locator('select[name="income_type"]').select_option("dividend")
+        form.locator('input[name="transaction_date"]').fill("2026-08-11")
+        form.locator('input[name="amount"]').fill("100000")
+        form.locator('input[name="ownership_percent"]').fill("25")
+        form.locator('select[name="direct_ownership"]').select_option("true")
+        form.locator('select[name="holding_period_mode"]').select_option("at_least_12_months")
+        form.locator('input[name="voting_ownership_percent"]').fill("25")
+
+        # Intentionally leave exemption-specific factual inputs blank.
         print("checkpoint: submit dividend fallback", flush=True)
-            form.locator("#workspace-submit").click()
+        form.locator("#workspace-submit").click()
         page.wait_for_timeout(900)
 
         result = page.locator('.flow-step[data-step="4"].active')
         assert result.is_visible()
-        text = result.inner_text()
-        assert "Treaty fallback" in text
-        assert "FACTS REQUIRED TO ASSIGN A RULE" not in text
-        assert "Additional factual condition requires completion or review." not in text
+        result_text = result.inner_text()
+        assert "Treaty fallback" in result_text
+        assert "FACTS REQUIRED TO ASSIGN A RULE" not in result_text
+        assert "Additional factual condition requires completion or review." not in result_text
         assert (
-                "Recipient legal form for the exemption" in text
-                or "Recipient taxation for the exemption" in text
-            )
+            "Recipient legal form for the exemption" in result_text
+            or "Recipient taxation for the exemption" in result_text
+        )
         assert result.locator("#workspace-tax").inner_text() != "—"
 
-        # Profile state must survive a reload in this browser.
         print("checkpoint: reload persistence", flush=True)
         page.reload(wait_until="domcontentloaded", timeout=10000)
         page.wait_for_timeout(500)
@@ -111,9 +108,8 @@ def main() -> int:
         assert "QA Payer s.r.o." in active.locator("option").all_text_contents()
 
         print("Workspace profile and dividend fallback acceptance: PASS", flush=True)
-        # Do not wait on Playwright/Chromium teardown in CI. All assertions
-        # are complete at this point; terminate the isolated server/browser
-        # process group and exit deterministically.
+
+        # All assertions have completed. Avoid waiting on browser teardown in CI.
         if process.poll() is None:
             process.kill()
         try:
