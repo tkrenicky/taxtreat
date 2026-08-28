@@ -177,25 +177,25 @@
   }
 
   function resetTransactionLegalFacts() {
-    for (const name of (
+    for (const name of [
       "beneficial_owner",
       "treaty_resident",
       "pe_connection",
       "direct_ownership"
-    )) {
+    ]) {
       form.querySelectorAll(`[name="${name}"]`).forEach((field) => {
         field.checked = false;
         if (field.tagName === "SELECT") field.value = "";
       });
     }
-    for (const name of (
+    for (const name of [
       "ownership_percent",
       "voting_ownership_percent",
       "acquisition_date",
       "arm_length_amount",
       "royalty_category",
       "holding_period_mode"
-    )) {
+    ]) {
       const field = form.elements[name];
       if (field) field.value = "";
     }
