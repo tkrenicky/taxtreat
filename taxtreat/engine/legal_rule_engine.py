@@ -634,6 +634,38 @@ def evaluate_legal_rules(
     ]
     matching_rules.sort(key=lambda rule: (rule.priority, rule.rule_id))
 
+    if facts.get("income_type") == "royalty" and facts.get("royalty_category"):
+        category_rules = [
+            rule
+            for rule in relevant_rules
+            if rule.legal_layer in {"treaty", "protocol", "mli"}
+            and any(
+                condition.fact == "royalty_category"
+                and condition.operator == "=="
+                for condition in rule.conditions
+            )
+        ]
+        if category_rules:
+            category_covered = any(
+                _royalty_categories_match(
+                    facts.get("royalty_category"),
+                    condition.value,
+                )
+                for rule in category_rules
+                for condition in rule.conditions
+                if condition.fact == "royalty_category"
+                and condition.operator == "=="
+            )
+            if not category_covered:
+                result.requires_review = True
+                result.missing_facts = ["royalty_category"]
+                result.explanation.append(
+                    "The selected royalty category is not covered by any "
+                    "structured treaty royalty branch for this jurisdiction. "
+                    "Treaty classification requires review."
+                )
+                return result
+
     if matching_rules:
         # A legacy/broad royalty UI value may semantically match more than one
         # treaty category. Priority is not a legal tie-breaker in that case:
