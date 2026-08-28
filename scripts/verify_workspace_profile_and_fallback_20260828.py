@@ -50,8 +50,10 @@ def main() -> int:
         payer.locator('[name="payer_name"]').fill("QA Payer s.r.o.")
 
         print("checkpoint: save payer", flush=True)
-        payer.locator('[data-save-payer]').click()
-        page.wait_for_timeout(250)
+        save_button = payer.locator('[data-save-payer]')
+        assert save_button.is_visible() and save_button.is_enabled()
+        page.evaluate("document.querySelector('#payer-form [data-save-payer]').click()")
+        page.wait_for_timeout(300)
 
         active = page.locator("#active-payer-select")
         assert "QA Payer s.r.o." in active.locator("option").all_text_contents()
