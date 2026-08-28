@@ -202,19 +202,37 @@
     return null;
   }
 
-  function localeFor(registry, countryRegistry, country, article) {
-    const ruleEntry = selectedRuleId && String(selectedTreatyArticle || "") === String(article)
+  function localeFor(registry, countryRegistry, country, article, cardRuleId = "") {
+    const exactRuleId = String(cardRuleId || "");
+    const exactEntry = exactRuleId ? countryRegistry?.rules?.[exactRuleId] : null;
+    const exactLocale = exactEntry && (!exactEntry.article || String(exactEntry.article) === String(article))
+      ? exactEntry.en
+      : null;
+    if (exactLocale?.text) return { locale: exactLocale, specificity: "rule" };
+
+    const selectedEntry = selectedRuleId && String(selectedTreatyArticle || "") === String(article)
       ? countryRegistry?.rules?.[selectedRuleId]
       : null;
-    const ruleLocale = ruleEntry && (!ruleEntry.article || String(ruleEntry.article) === String(article))
-      ? ruleEntry.en
+    const selectedLocale = selectedEntry && (!selectedEntry.article || String(selectedEntry.article) === String(article))
+      ? selectedEntry.en
       : null;
-    if (ruleLocale?.text) return { locale: ruleLocale, specificity: "rule" };
+    if (selectedLocale?.text) return { locale: selectedLocale, specificity: "rule" };
 
     const articleLocale = registry?.entries?.[country]?.[String(article)]?.en
       || countryRegistry?.articles?.[String(article)]?.en
       || null;
-    return articleLocale?.text ? { locale: articleLocale, specificity: "article" } : null;
+    if (articleLocale?.text) return { locale: articleLocale, specificity: "article" };
+
+    // Last-resort verified rule summary for this article. This is especially
+    // important when the treaty is displayed as secondary protection and
+    // therefore is not the selected rule, but a verified EN rule summary is
+    // already present in the country registry.
+    const matchingRule = Object.values(countryRegistry?.rules || {}).find((entry) =>
+      String(entry?.article || "") === String(article) && entry?.en?.text
+    );
+    return matchingRule?.en?.text
+      ? { locale: matchingRule.en, specificity: "rule" }
+      : null;
   }
 
   function candidateSegments(text) {
@@ -357,7 +375,7 @@
         return;
       }
 
-      const resolved = localeFor(registry, countryRegistry, country, article);
+      const resolved = localeFor(registry, countryRegistry, country, article, card.dataset.ruleId || "");
       if (!country || !resolved?.locale?.text) {
         restoreOriginal(excerpt);
         excerpt.setAttribute("lang", "cs");
