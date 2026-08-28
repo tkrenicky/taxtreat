@@ -110,12 +110,9 @@ def main() -> int:
 
             browser.close()
     finally:
-        process.terminate()
-        try:
-            process.wait(timeout=10)
-        except subprocess.TimeoutExpired:
+        if process.poll() is None:
             process.kill()
-            process.wait(timeout=5)
+        process.wait(timeout=5)
 
     print("Workspace profile and dividend fallback acceptance: PASS")
     return 0
