@@ -320,3 +320,14 @@ def test_workspace_does_not_infer_voting_rights_from_capital_ownership():
         "voting_ownership_percent.value = form.elements.ownership_percent.value"
         not in source
     )
+
+
+def test_workspace_resets_treaty_specific_answers_between_calculations():
+    source = Path("app/web/workspace.js").read_text(encoding="utf-8")
+
+    assert "function resetClientAnswers()" in source
+    assert "clientAnswers.facts = {}" in source
+    assert "clientAnswers.acquisitionDate = null" in source
+    assert "clientAnswers.exchangeRate = null" in source
+    assert 'resetClientAnswers();\n    showStep(1);' in source
+    assert 'function renderTransactionFacts() {\n    resetClientAnswers();' in source
