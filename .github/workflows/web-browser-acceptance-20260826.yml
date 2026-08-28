@@ -50,6 +50,7 @@ jobs:
       - name: Run bilingual manual-QA acceptance
         run: python scripts/verify_manual_qa_i18n_20260826.py
       - name: Run profile controls and dividend fallback acceptance
+        timeout-minutes: 3
         run: python scripts/verify_workspace_profile_and_fallback_20260828.py
       - name: Upload browser evidence
         if: always()
