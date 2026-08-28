@@ -179,3 +179,24 @@ def test_atomic_royalty_value_selects_one_branch():
     assert result.status == DecisionStatus.FINAL
     assert result.rate == 1
     assert result.selected_rule_id == "financial"
+
+
+def test_advisor_only_rule_value_fact_stays_professional_review():
+    from taxtreat.services.intake import _question_for_missing_fact
+
+    question = _question_for_missing_fact(
+        "special_article_11_3_exemption",
+        {
+            "source_country": "CZ",
+            "recipient_country": "TW",
+            "income_type": "interest",
+            "transaction_date": "2026-08-28",
+            "facts": {},
+            "determinations": {},
+        },
+    )
+
+    assert question["client_answerable"] is False
+    assert question["response_type"] == "professional_review"
+    assert question["input_path"] is None
+    assert question["category"] == "professional_review"
