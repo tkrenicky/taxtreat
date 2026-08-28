@@ -1264,6 +1264,13 @@
       && analysis.candidate_rate !== null
       && analysis.candidate_rate !== undefined
       && ["treaty", "protocol", "mli"].includes(String(candidateCitation?.legal_layer || ""));
+    if (treatyFallback) {
+      status.textContent = document.documentElement.lang === "en"
+        ? "DOMESTIC EXEMPTION FACTS INCOMPLETE"
+        : "NEÚPLNÉ ÚDAJE PRO VNITROSTÁTNÍ OSVOBOZENÍ";
+    }
+    const reasonCard = document.querySelector('.flow-step[data-step="4"] > article.reason');
+    if (reasonCard) reasonCard.hidden = analysis.status !== "FINAL" && !treatyFallback;
     const nonTaxing = ["exclusive_foreign_taxation", "domestic_exemption"].includes(treatment);
     const en = document.documentElement.lang === "en";
     setText("#workspace-tax-label", treatyFallback
