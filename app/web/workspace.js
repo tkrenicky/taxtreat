@@ -1076,8 +1076,11 @@
     if (!raw) return "";
     if (document.documentElement.lang === "en") {
       return raw
-        .replace(/^odst\.\s*/i, "paragraph ")
-        .replace(/^písm\.\s*/i, "point ");
+        .replace(/paragraph\s+(\d+)\s+písm\.\s*([a-z])\)\s+bod\s+(\d+)/gi, "paragraph $1($2)($3)")
+        .replace(/paragraph\s+(\d+)\s+písm\.\s*([a-z])\)/gi, "paragraph $1($2)")
+        .replace(/\bodst\.\s*/gi, "paragraph ")
+        .replace(/\bpísm\.\s*/gi, "point ")
+        .replace(/\bbod\s+/gi, "item ");
     }
     return raw;
   }
