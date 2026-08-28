@@ -167,6 +167,15 @@
   let pendingQuestions = [];
   const clientAnswers = { facts: {}, acquisitionDate: null, exchangeRate: null };
 
+  function resetClientAnswers() {
+    clientAnswers.facts = {};
+    clientAnswers.acquisitionDate = null;
+    clientAnswers.exchangeRate = null;
+    pendingQuestions = [];
+    questionsRoot.replaceChildren();
+    followUp.hidden = true;
+  }
+
   function showView(name) {
     views.forEach((view) => view.classList.toggle("active", view.dataset.view === name));
     navButtons.forEach((button) => button.classList.toggle("active", button.dataset.nav === name));
@@ -191,7 +200,10 @@
   }
 
   navButtons.forEach((button) => button.addEventListener("click", () => showView(button.dataset.nav)));
-  document.querySelectorAll("[data-start-flow]").forEach((button) => button.addEventListener("click", () => showStep(1)));
+  document.querySelectorAll("[data-start-flow]").forEach((button) => button.addEventListener("click", () => {
+    resetClientAnswers();
+    showStep(1);
+  }));
   document.querySelectorAll("[data-open-recipient]").forEach((button) => button.addEventListener("click", () => showView("recipient-detail")));
   document.querySelectorAll("[data-next-step]").forEach((button) => button.addEventListener("click", () => showStep(Number(button.dataset.nextStep))));
   progressButtons.forEach((button) => button.addEventListener("click", () => {
@@ -395,6 +407,7 @@
     const data = new FormData(recipientEditForm);
     recipient = { ...recipient, name: String(data.get("recipient_name")).trim(), country: String(data.get("recipient_country")), type: String(data.get("recipient_type")), beneficialOwner: String(data.get("beneficial_owner")) === "true", treatyResident: String(data.get("treaty_resident")) === "true" };
     Object.assign(currentRelationship(), { ownershipPercent: String(data.get("ownership_percent")), acquisitionDate: String(data.get("acquisition_date")), directOwnership: String(data.get("direct_ownership")), peConnection: String(data.get("pe_connection")) === "true" });
+    resetClientAnswers();
     saveWorkspaceProfiles();
     renderRecipient();
     recipientDialog.close();
@@ -701,6 +714,7 @@
   form.elements.voting_ownership_percent.addEventListener("input", () => { votingWasEdited = true; });
 
   function renderTransactionFacts() {
+    resetClientAnswers();
     const incomeType = form.elements.income_type.value;
     transactionFacts.hidden = !incomeType;
     dividendFacts.hidden = incomeType !== "dividend";
