@@ -547,3 +547,15 @@ def test_recipient_profile_preserves_unknown_core_treaty_facts():
     assert 'beneficialOwner: beneficialOwner === "" ? "" : beneficialOwner === "true"' in source
     assert 'treatyResident: treatyResident === "" ? "" : treatyResident === "true"' in source
     assert 'peConnection: peConnection === "" ? "" : peConnection === "true"' in source
+
+
+def test_new_calculation_resets_transaction_specific_legal_facts():
+    source = Path("app/web/workspace.js").read_text(encoding="utf-8")
+
+    assert "function resetTransactionLegalFacts()" in source
+    assert '"beneficial_owner",' in source
+    assert '"treaty_resident",' in source
+    assert '"pe_connection",' in source
+    assert '"royalty_category",' in source
+    assert '"arm_length_amount",' in source
+    assert 'resetClientAnswers();\n    resetTransactionLegalFacts();\n    showStep(1);' in source
