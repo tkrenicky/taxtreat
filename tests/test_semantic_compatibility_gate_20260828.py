@@ -307,3 +307,16 @@ def test_composite_interest_exemption_enum_requires_professional_review():
     assert question["response_type"] == "professional_review"
     assert question["input_path"] is None
     assert question["advisor_topic"] == "interest_treaty_special_condition"
+
+
+def test_workspace_does_not_infer_voting_rights_from_capital_ownership():
+    source = Path("app/web/workspace.js").read_text(encoding="utf-8")
+
+    assert (
+        "relationship.votingOwnershipPercent || relationship.ownershipPercent"
+        not in source
+    )
+    assert (
+        "voting_ownership_percent.value = form.elements.ownership_percent.value"
+        not in source
+    )
