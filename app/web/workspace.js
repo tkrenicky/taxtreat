@@ -1481,8 +1481,6 @@
           transactionDate,
         );
       }
-      if (holdingPeriodMode === "at_least_12_months") facts.holding_period_months = 12;
-      if (holdingPeriodMode === "less_than_12_months") facts.holding_period_months = 0;
     }
     if (incomeType === "interest" && armLengthAmount) facts.arm_length_amount = armLengthAmount === "true";
     if (incomeType === "royalty" && royaltyCategory) facts.royalty_category = royaltyCategory;
