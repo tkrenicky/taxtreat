@@ -37,20 +37,24 @@ def main() -> int:
         with sync_playwright() as p:
             browser = p.chromium.launch(headless=True)
             page = browser.new_page(viewport={"width": 1440, "height": 1100})
+            page.set_default_timeout(5000)
             page.goto(f"{BASE_URL}/ui/en", wait_until="networkidle")
             page.wait_for_timeout(700)
 
             # New payer must save, become active and remain switchable.
+            print("checkpoint: open payers", flush=True)
             page.locator('[data-nav="payers"]').click()
             page.locator('[data-create-payer]').first.click()
             payer = page.locator("#payer-form")
             payer.locator('[name="payer_id"]').fill("12345679")
             payer.locator('[name="payer_name"]').fill("QA Payer s.r.o.")
+            print("checkpoint: save payer", flush=True)
             payer.locator('[data-save-payer]').click()
             page.wait_for_timeout(250)
             active = page.locator("#active-payer-select")
             assert "QA Payer s.r.o." in active.locator("option").all_text_contents()
             assert active.locator("option:checked").inner_text() == "QA Payer s.r.o."
+            print("checkpoint: switch payer", flush=True)
             active.select_option("demo-cz")
             assert active.locator("option:checked").inner_text() == "Demo CZ s.r.o."
             qa_value = active.locator("option", has_text="QA Payer s.r.o.").get_attribute("value")
@@ -58,6 +62,7 @@ def main() -> int:
             assert active.locator("option:checked").inner_text() == "QA Payer s.r.o."
 
             # New recipient must save into the working profile.
+            print("checkpoint: create recipient", flush=True)
             page.locator('[data-start-flow]').first.click()
             page.locator('.flow-step[data-step="1"] [data-next-step="2"]').click()
             page.locator("[data-show-recipient-form]").click()
@@ -80,6 +85,7 @@ def main() -> int:
             form.locator('input[name="voting_ownership_percent"]').fill("25")
             # Intentionally leave section19_company_form and
             # section19_taxable_company blank.
+            print("checkpoint: submit dividend fallback", flush=True)
             form.locator("#workspace-submit").click()
             page.wait_for_timeout(900)
 
@@ -96,6 +102,7 @@ def main() -> int:
             assert result.locator("#workspace-tax").inner_text() != "—"
 
             # Profile state must survive a reload in this browser.
+            print("checkpoint: reload persistence", flush=True)
             page.reload(wait_until="networkidle")
             page.wait_for_timeout(500)
             active = page.locator("#active-payer-select")
