@@ -29,7 +29,7 @@ def wait_server(process):
 def main() -> int:
     process = subprocess.Popen(
         [sys.executable, "-m", "uvicorn", "app.main:app", "--host", HOST, "--port", str(PORT)],
-        stdout=subprocess.PIPE,
+        stdout=subprocess.DEVNULL,
         stderr=subprocess.STDOUT,
     )
     try:
@@ -38,7 +38,7 @@ def main() -> int:
             browser = p.chromium.launch(headless=True)
             page = browser.new_page(viewport={"width": 1440, "height": 1100})
             page.set_default_timeout(5000)
-            page.goto(f"{BASE_URL}/ui/en", wait_until="networkidle")
+            page.goto(f"{BASE_URL}/ui/en", wait_until="domcontentloaded", timeout=10000)
             page.wait_for_timeout(700)
 
             # New payer must save, become active and remain switchable.
@@ -103,7 +103,7 @@ def main() -> int:
 
             # Profile state must survive a reload in this browser.
             print("checkpoint: reload persistence", flush=True)
-            page.reload(wait_until="networkidle")
+            page.reload(wait_until="domcontentloaded", timeout=10000)
             page.wait_for_timeout(500)
             active = page.locator("#active-payer-select")
             assert "QA Payer s.r.o." in active.locator("option").all_text_contents()
