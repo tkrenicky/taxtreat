@@ -34,25 +34,42 @@ def satisfying_value(operator, value):
     raise AssertionError(f"unsupported operator {operator!r}")
 
 
-def rule_facts(rule):
+def complete_treaty_facts(country, treaty_rules):
+    """Populate every fact used by any treaty-rate branch.
+
+    This mirrors a fully completed UI transaction: lower treaty branches must
+    be either satisfied or explicitly failed, never left unresolved. Domestic
+    exemption-only facts are deliberately omitted so the test isolates the
+    treaty fallback rule.
+    """
     facts = {
         "income_type": "dividend",
         "source_country": "CZ",
-        "recipient_country": rule.recipient_country,
+        "recipient_country": country,
+        "beneficial_owner": True,
+        "recipient_is_treaty_resident": True,
+        "permanent_establishment_connection": False,
+        "right_or_property_not_effectively_connected_to_czech_pe_or_fixed_base": True,
+        "claim_not_effectively_connected_to_czech_pe": True,
     }
     legal = {}
     determinations = {}
-    for condition in rule.conditions:
-        if condition.fact in RULE_CONTROL_FACTS:
-            continue
-        target = (
-            legal
-            if condition.fact_source == "legal"
-            else determinations
-            if condition.fact_source == "determination"
-            else facts
-        )
-        target[condition.fact] = satisfying_value(condition.operator, condition.value)
+    for rule in treaty_rules:
+        for condition in rule.conditions:
+            if condition.fact in RULE_CONTROL_FACTS:
+                continue
+            target = (
+                legal
+                if condition.fact_source == "legal"
+                else determinations
+                if condition.fact_source == "determination"
+                else facts
+            )
+            if condition.fact not in target:
+                target[condition.fact] = satisfying_value(
+                    condition.operator,
+                    condition.value,
+                )
     return facts, legal, determinations
 
 
@@ -83,21 +100,8 @@ def main() -> int:
         if not treaty or not relief:
             continue
 
-        # Pick the treaty branch requiring the fewest facts; then satisfy all
-        # of those facts while deliberately leaving domestic-exemption-only
-        # facts unresolved. This models the user's core scenario: treaty facts
-        # are complete, Section 19 is not established.
-        candidate = min(
-            treaty,
-            key=lambda rule: (
-                len([c for c in rule.conditions if c.fact not in RULE_CONTROL_FACTS]),
-                float(rule.rate) if rule.rate is not None else 999.0,
-                rule.priority,
-                rule.rule_id,
-            ),
-        )
-        facts, legal, determinations = rule_facts(candidate)
-        facts.update(determinations)
+        country = treaty[0].recipient_country
+        facts, legal, determinations = complete_treaty_facts(country, treaty)
 
         result = evaluate_layered_rules(
             dividend,
@@ -118,20 +122,20 @@ def main() -> int:
         )
         if result.status.value != "FINAL":
             failures.append(
-                f"{candidate.recipient_country}: expected FINAL treaty fallback, "
+                f"{country}: expected FINAL treaty fallback with all treaty facts completed, "
                 f"got {result.status.value}; missing={result.missing_facts}; "
                 f"candidate={result.candidate_rule_id}"
             )
             continue
         if selected_layer not in {"treaty", "protocol", "mli"}:
             failures.append(
-                f"{candidate.recipient_country}: expected treaty/protocol/MLI selection, "
+                f"{country}: expected treaty/protocol/MLI selection, "
                 f"got {result.selected_rule_id} ({selected_layer})"
             )
             continue
         if result.rate is None and str(result.tax_treatment.value if result.tax_treatment else "") != "exclusive_foreign_taxation":
             failures.append(
-                f"{candidate.recipient_country}: final treaty outcome has neither rate nor exclusive-foreign treatment"
+                f"{country}: final treaty outcome has neither rate nor exclusive-foreign treatment"
             )
 
     if failures:
