@@ -475,3 +475,25 @@ def test_spanish_all_other_royalty_branch_is_true_complement():
         "equipment_operating",
         "other",
     }.issubset(groups)
+
+
+def test_real_gb_stage6_software_gap_fails_closed():
+    from taxtreat.engine.legal_rule_loader import load_legal_rules
+    from pathlib import Path
+
+    rules = load_legal_rules(Path("data/legal_rules_stage6/gb.json"))
+    result = evaluate_legal_rules(
+        rules,
+        {
+            "income_type": "royalty",
+            "source_country": "CZ",
+            "recipient_country": "GB",
+            "beneficial_owner": True,
+            "royalty_category": "computer_software",
+        },
+        as_of=AS_OF,
+    )
+
+    assert result.status == DecisionStatus.REVIEW_REQUIRED
+    assert result.rate is None
+    assert result.missing_facts == ["royalty_category"]
