@@ -471,6 +471,29 @@ PROFESSIONAL_FACT_GROUPS = {
 }
 
 PROFESSIONAL_FACT_GROUPS.update({
+    "detailed_eligibility_review_required": {
+        "topic": "interest_treaty_special_condition",
+        "prompt": (
+            "Ověřte detailní podmínky zvláštní úrokové sazby podle "
+            "příslušné smlouvy."
+        ),
+        "why": (
+            "Tato větev smlouvy vyžaduje detailní právní posouzení "
+            "kategorie financování a nelze ji bezpečně potvrdit "
+            "pouze ze základních klientských údajů."
+        ),
+    },
+    "distributed_vs_undistributed_corporate_tax_rate_difference": {
+        "topic": "historical_dividend_treaty_condition",
+        "prompt": (
+            "Ověřte zvláštní historickou podmínku rozdílu zdanění "
+            "distribuovaného a nerozděleného zisku."
+        ),
+        "why": (
+            "Jde o odbornou historickou smluvní podmínku, kterou "
+            "nelze odvozovat z běžných údajů o příjemci nebo podílu."
+        ),
+    },
     "recipient_country_imposes_royalty_wht_on_nonresidents": {
         "topic": "royalty_treaty_legal_condition",
         "prompt": (
