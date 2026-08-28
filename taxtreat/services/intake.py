@@ -513,6 +513,34 @@ REVIEW_REASON_GUIDANCE = {
         "Zvolený předmět licence neodpovídá podmínkám nejbližšího "
         "posuzovaného pravidla.",
     ),
+    "recipient_is_qualifying_company_form": (
+        "Právní forma příjemce pro osvobození",
+        "Chybí potvrzení, zda příjemce splňuje podmínku kvalifikované právní formy pro vnitrostátní osvobození dividend.",
+    ),
+    "recipient_is_tax_resident_in_eligible_jurisdiction": (
+        "Jurisdikce příjemce pro osvobození",
+        "Je nutné potvrdit, že příjemce je rezidentem jurisdikce způsobilé pro vnitrostátní osvobození dividend.",
+    ),
+    "recipient_subject_to_qualifying_corporate_tax": (
+        "Zdanění příjemce pro osvobození",
+        "Chybí potvrzení, že příjemce podléhá kvalifikované dani z příjmů právnických osob ve státě své rezidence.",
+    ),
+    "recipient_has_no_tax_exemption_or_zero_rate_option": (
+        "Daňové osvobození nebo nulová sazba příjemce",
+        "Chybí potvrzení, že příjemce není od kvalifikované daně osvobozen ani nepodléhá režimu s nulovou sazbou.",
+    ),
+    "recipient_is_parent_company": (
+        "Postavení mateřské společnosti",
+        "Zadané údaje nepotvrzují, že jsou pro osvobození splněny podmínky kvalifikované mateřské společnosti.",
+    ),
+    "holding_period_will_reach_months": (
+        "Budoucí splnění doby držby",
+        "Pro tuto větev osvobození chybí potvrzení, že bude dosažena požadovaná minimální doba držby.",
+    ),
+    "statutory_clawback_acknowledged": (
+        "Postup při dodatečném splnění doby držby",
+        "Chybí údaj potřebný pro posouzení režimu při dodatečném splnění minimální doby držby.",
+    ),
 }
 
 
