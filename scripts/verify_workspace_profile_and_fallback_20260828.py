@@ -77,7 +77,7 @@ def main() -> int:
         page.locator("[data-show-recipient-form]").click()
         recipient = page.locator("#new-recipient-form")
         recipient.locator('[name="recipient_name"]').fill("QA GmbH")
-        recipient.locator('[name="recipient_country"]').select_option("AT")
+        recipient.locator('[name="recipient_country"]').select_option("BG")
         recipient.locator('button[type="submit"]').click()
         assert page.locator("#flow-recipient-name").inner_text() == "QA GmbH"
 
@@ -90,8 +90,12 @@ def main() -> int:
         form.locator('select[name="direct_ownership"]').select_option("true")
         form.locator('select[name="holding_period_mode"]').select_option("at_least_12_months")
         form.locator('input[name="voting_ownership_percent"]').fill("25")
+        form.locator('select[name="section19_company_form"]').select_option("true")
+        form.locator('select[name="section19_taxable_company"]').select_option("false")
 
-        # Intentionally leave exemption-specific factual inputs blank.
+        # All visible facts are completed and the domestic exemption is
+        # explicitly unavailable. The treaty must therefore produce the
+        # final result (BG Article 10: 10%).
         print("checkpoint: submit dividend fallback", flush=True)
         form.locator("#workspace-submit").click()
         page.wait_for_timeout(900)
@@ -99,17 +103,22 @@ def main() -> int:
         result = page.locator('.flow-step[data-step="4"].active')
         assert result.is_visible()
         result_text = result.inner_text()
-        # The requirement is a usable treaty outcome when exemption facts are
-        # incomplete. For AT dividends the treaty itself can already yield 0,
-        # so the engine may legitimately release a final 0 treaty result
-        # instead of labeling it as a provisional fallback.
-        assert (
-            "Treaty fallback" in result_text
-            or "CALCULATION COMPLETED" in result_text
-        )
+        assert "CALCULATION COMPLETED" in result_text
+        assert ("10%" in result_text or "10 %" in result_text)
         assert "FACTS REQUIRED TO ASSIGN A RULE" not in result_text
         assert "Additional factual condition requires completion or review." not in result_text
         assert result.locator("#workspace-tax").inner_text() != "—"
+
+        # EN legal-source rendering must use the registered verified English
+        # rule summary even when the treaty card is contextual/secondary.
+        page.wait_for_timeout(1000)
+        treaty_excerpt = result.locator(
+            '#workspace-citations .citation-card[data-legal-layer="treaty"] .legal-excerpt'
+        ).first
+        assert treaty_excerpt.get_attribute("lang") == "en"
+        excerpt_text = treaty_excerpt.inner_text()
+        assert "maximum Czech source-state withholding rate of 10%" in excerpt_text
+        assert "Dividendy" not in excerpt_text
 
         print("checkpoint: reload persistence", flush=True)
         page.reload(wait_until="domcontentloaded", timeout=10000)
