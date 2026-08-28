@@ -274,10 +274,9 @@
     if (ico.length === 8) aresLookupTimer = window.setTimeout(lookupPayerFromAres, 450);
   });
 
-  payerForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    event.stopPropagation();
+  function savePayerProfile() {
     window.clearTimeout(aresLookupTimer);
+    if (!payerForm.reportValidity()) return false;
     const data = new FormData(payerForm);
     const values = {
       name: String(data.get("payer_name")).trim(),
@@ -289,7 +288,8 @@
       establishedAt: String(data.get("payer_established_at")).trim()
     };
     if (editingPayerKey) {
-      Object.assign(payers.find((item) => item.key === editingPayerKey), values);
+      const existing = payers.find((item) => item.key === editingPayerKey);
+      if (existing) Object.assign(existing, values);
     } else {
       const key = `payer-${Date.now()}`;
       payers.push({ key, ...values });
@@ -299,6 +299,18 @@
     renderPayers();
     renderRecipient();
     if (payerDialog.open) payerDialog.close();
+    return true;
+  }
+
+  payerForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    savePayerProfile();
+  });
+  document.querySelector("[data-save-payer]").addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    savePayerProfile();
   });
 
   function switchActivePayer(key) {
