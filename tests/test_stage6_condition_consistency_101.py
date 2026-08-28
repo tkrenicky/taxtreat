@@ -141,3 +141,28 @@ def test_atomic_royalty_categories_are_exposed_by_workspace():
         not in html
     )
     assert 'value="industrial_commercial_or_scientific_equipment"' not in html
+
+
+def test_every_stage6_condition_fact_has_explicit_semantic_classification():
+    import json
+    from pathlib import Path
+
+    from scripts.audit_stage6_semantic_compatibility_20260828 import _fact_mode
+
+    unclassified = {}
+
+    for path in sorted(Path("data/legal_rules_stage6").glob("*.json")):
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        rules = payload.get("rules", payload if isinstance(payload, list) else [])
+        for rule in rules:
+            for condition in rule.get("conditions", []):
+                fact = condition.get("fact")
+                if not fact:
+                    continue
+                if _fact_mode(str(fact)) == "unsupported_or_unclassified":
+                    unclassified.setdefault(str(fact), set()).add(path.stem.upper())
+
+    assert {
+        fact: sorted(countries)
+        for fact, countries in sorted(unclassified.items())
+    } == {}
