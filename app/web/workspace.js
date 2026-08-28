@@ -276,6 +276,8 @@
 
   payerForm.addEventListener("submit", (event) => {
     event.preventDefault();
+    event.stopPropagation();
+    window.clearTimeout(aresLookupTimer);
     const data = new FormData(payerForm);
     const values = {
       name: String(data.get("payer_name")).trim(),
@@ -296,7 +298,7 @@
     saveWorkspaceProfiles();
     renderPayers();
     renderRecipient();
-    payerDialog.close();
+    if (payerDialog.open) payerDialog.close();
   });
 
   function switchActivePayer(key) {
