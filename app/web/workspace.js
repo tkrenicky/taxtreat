@@ -232,7 +232,7 @@
     payerForm.elements.payer_data_box.value = selected?.dataBox || "";
     payerForm.elements.payer_established_at.value = selected?.establishedAt || "";
     document.querySelector("#ares-lookup-status").className = "lookup-status";
-    document.querySelector("#ares-lookup-status").textContent = "Po zadání 8 číslic TaxTreat načte identifikační údaje z ARES.";
+    document.querySelector("#ares-lookup-status").textContent = "Po zadání IČO můžeš identifikační údaje načíst z ARES.";
     payerDialog.showModal();
   }
   document.querySelectorAll("[data-create-payer]").forEach((button) => button.addEventListener("click", () => openPayerDialog()));
@@ -268,11 +268,8 @@
     }
   }
   document.querySelector("[data-ares-lookup]").addEventListener("click", lookupPayerFromAres);
-  payerForm.elements.payer_id.addEventListener("input", () => {
-    window.clearTimeout(aresLookupTimer);
-    const ico = String(payerForm.elements.payer_id.value || "").replace(/\D/g, "");
-    if (ico.length === 8) aresLookupTimer = window.setTimeout(lookupPayerFromAres, 450);
-  });
+  // ARES lookup is explicit. Saving a payer must never depend on an
+  // in-flight external registry request or network availability.
 
   function savePayerProfile() {
     window.clearTimeout(aresLookupTimer);
