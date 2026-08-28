@@ -20,6 +20,13 @@
     return document.querySelector("#taxtreat-ui-language")?.value || localStorage.getItem(UI_KEY) || "cs";
   }
 
+  const PUBLIC_TREATY_TEXT_STATUSES = new Set([
+    "official_treaty_text",
+    "official_protocol_text",
+    "official_translation_non_authentic",
+    "current_application_suspended"
+  ]);
+
   const STATUS_UI = {
     official_treaty_text: null,
     official_protocol_text: null,
@@ -305,7 +312,7 @@
       const details = card.querySelector("details.citation-excerpt");
       if (details) card.insertBefore(note, details); else card.append(note);
     }
-    note.textContent = `Official English treaty wording is not yet registered for CZ–${country}, Article ${article}. The Czech official excerpt is shown below.`;
+    note.textContent = `Official English treaty text is not yet registered for CZ–${country}, Article ${article}. TaxTreat will not present a synthetic summary as treaty wording.`;
   }
 
   function appendWithMark(excerpt, text, decisive) {
@@ -376,10 +383,17 @@
       }
 
       const resolved = localeFor(registry, countryRegistry, country, article, card.dataset.ruleId || "");
-      if (!country || !resolved?.locale?.text) {
+      const publicStatus = String(resolved?.locale?.status || "");
+      const usableOfficialEnglish = Boolean(
+        country
+        && resolved?.locale?.text
+        && PUBLIC_TREATY_TEXT_STATUSES.has(publicStatus)
+      );
+      if (!usableOfficialEnglish) {
         restoreOriginal(excerpt);
         excerpt.setAttribute("lang", "cs");
         excerpt.dataset.ttTreatyLanguage = "cs-fallback";
+        excerpt.dataset.ttTreatyLocaleStatus = publicStatus || "missing_official_english";
         delete excerpt.dataset.ttTreatyLocaleSpecificity;
         delete excerpt.dataset.ttTreatyDecisivePassage;
         showMissingNote(card, country || "?", article);
