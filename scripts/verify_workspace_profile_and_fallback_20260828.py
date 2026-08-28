@@ -51,9 +51,13 @@ def main() -> int:
 
         print("checkpoint: save payer", flush=True)
         save_button = payer.locator('[data-save-payer]')
+        print("checkpoint: save button located", flush=True)
         assert save_button.is_visible() and save_button.is_enabled()
+        print("checkpoint: save button actionable", flush=True)
         page.evaluate("document.querySelector('#payer-form [data-save-payer]').click()")
+        print("checkpoint: save event dispatched", flush=True)
         page.wait_for_timeout(300)
+        print("checkpoint: save callback window elapsed", flush=True)
 
         active = page.locator("#active-payer-select")
         assert "QA Payer s.r.o." in active.locator("option").all_text_contents()
