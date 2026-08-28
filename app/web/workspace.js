@@ -1084,6 +1084,8 @@
 
   function citationCard(citation, analysis, position) {
     const card = document.createElement("article"); card.className = "citation-card";
+    card.dataset.ruleId = String(citation.rule_id || "");
+    card.dataset.legalLayer = String(citation.legal_layer || "");
     const selected = String(citation.rule_id || "") === selectedRuleId(analysis);
     const title = document.createElement("strong");
     const layer = String(citation.legal_layer || "");
