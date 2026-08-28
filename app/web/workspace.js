@@ -1256,19 +1256,51 @@
     const taxCzk = calculationValue(calculation, "withholding_tax_czk", "withholding_tax_czk");
     const netCzk = calculationValue(calculation, "net_amount_czk", "net_amount_czk");
     const treatment = analysis.tax_treatment || analysis.candidate_tax_treatment;
+    const candidateCitation = selectedCitation(analysis);
+    const unresolvedDomesticExemption = analysis.status !== "FINAL" && (analysis.layer_results || []).some(
+      (item) => item.layer === "eu_relief" && item.outcome === "unresolved"
+    );
+    const treatyFallback = unresolvedDomesticExemption
+      && analysis.candidate_rate !== null
+      && analysis.candidate_rate !== undefined
+      && ["treaty", "protocol", "mli"].includes(String(candidateCitation?.legal_layer || ""));
     const nonTaxing = ["exclusive_foreign_taxation", "domestic_exemption"].includes(treatment);
-    setText("#workspace-tax-label", nonTaxing ? "Česká daň k odvodu" : "Srážková daň v CZK");
-    setText("#workspace-tax-row-label", nonTaxing ? "Česká daň k odvodu" : "Srážková daň");
-    setText("#workspace-tax", calculation ? money(taxCzk) : "—");
+    const en = document.documentElement.lang === "en";
+    setText("#workspace-tax-label", treatyFallback
+      ? (en ? "Treaty fallback withholding tax" : "Srážková daň podle smluvního fallbacku")
+      : nonTaxing ? "Česká daň k odvodu" : "Srážková daň v CZK");
+    setText("#workspace-tax-row-label", treatyFallback
+      ? (en ? "Treaty fallback withholding tax" : "Srážková daň podle smluvního fallbacku")
+      : nonTaxing ? "Česká daň k odvodu" : "Srážková daň");
+    const fallbackGross = grossCzk !== null
+      ? Number(grossCzk)
+      : payload.transaction_amount.currency === "CZK"
+        ? Number(payload.transaction_amount.amount)
+        : null;
+    const fallbackTax = treatyFallback && Number.isFinite(fallbackGross)
+      ? fallbackGross * Number(analysis.candidate_rate) / 100
+      : null;
+    setText("#workspace-tax", calculation ? money(taxCzk) : fallbackTax !== null ? money(fallbackTax) : "—");
     const incomeTypeLabels = { dividend: "Dividendy", interest: "Úroky", royalty: "Licenční poplatky" };
     const resultStep = document.querySelector('.flow-step[data-step="4"]');
     if (resultStep) resultStep.dataset.incomeType = payload.income_type || "";
     setText("#workspace-income-type", `${document.documentElement.lang === "en" ? "Transaction" : "Transakce"}: ${incomeTypeLabels[payload.income_type] || payload.income_type || "—"}`);
-    setText("#workspace-rate", treatment === "exclusive_foreign_taxation" ? `Zdanění pouze ve státě rezidence příjemce (${countryName(recipient.country)})` : treatment === "domestic_exemption" ? "Příjem je v České republice osvobozen" : analysis.rate === null ? analysis.candidate_rate === null ? "Sazbu nelze určit bez doplnění potřebných podmínek" : `Sazba přiřazená podle dostupných údajů: ${analysis.candidate_rate} %` : `${analysis.rate} % z hodnoty transakce`);
+    setText("#workspace-rate", treatyFallback
+      ? (en
+          ? `Treaty fallback: ${analysis.candidate_rate}% of the transaction value. The final Czech tax may be lower or zero if the domestic exemption applies.`
+          : `Smluvní fallback: ${analysis.candidate_rate} % z hodnoty transakce. Konečná česká daň může být nižší nebo nulová, pokud se uplatní vnitrostátní osvobození.`)
+      : treatment === "exclusive_foreign_taxation" ? `Zdanění pouze ve státě rezidence příjemce (${countryName(recipient.country)})`
+      : treatment === "domestic_exemption" ? "Příjem je v České republice osvobozen"
+      : analysis.rate === null ? analysis.candidate_rate === null ? "Sazbu nelze určit bez doplnění potřebných podmínek" : `Sazba přiřazená podle dostupných údajů: ${analysis.candidate_rate} %`
+      : `${analysis.rate} % z hodnoty transakce`);
     setText("#workspace-gross", grossCzk !== null ? money(grossCzk) : payload.transaction_amount.currency === "CZK" ? money(payload.transaction_amount.amount) : `${payload.transaction_amount.amount} ${payload.transaction_amount.currency}`);
-    setText("#workspace-tax-row", calculation ? money(taxCzk) : "—");
-    setText("#workspace-net", calculation ? money(netCzk) : "—");
-    setText("#workspace-reason", informationalRuleStatement(analysis));
+    setText("#workspace-tax-row", calculation ? money(taxCzk) : fallbackTax !== null ? money(fallbackTax) : "—");
+    setText("#workspace-net", calculation ? money(netCzk) : fallbackTax !== null && fallbackGross !== null ? money(fallbackGross - fallbackTax) : "—");
+    setText("#workspace-reason", treatyFallback
+      ? (en
+          ? `The domestic exemption cannot yet be concluded. If it is not available, the fallback treaty rule is ${candidateCitation?.article ? `Article ${candidateCitation.article}` : "the applicable treaty provision"} at ${analysis.candidate_rate}%.`
+          : `Vnitrostátní osvobození zatím nelze uzavřít. Pokud se neuplatní, smluvním fallbackem je ${candidateCitation?.article ? `článek ${candidateCitation.article}` : "příslušné smluvní ustanovení"} se sazbou ${analysis.candidate_rate} %.`)
+      : informationalRuleStatement(analysis));
     const actions = document.querySelector("#workspace-actions"); actions.replaceChildren();
     reviewItems.forEach((item) => actions.append(item));
     const actionCount = document.querySelector("#workspace-action-count");
