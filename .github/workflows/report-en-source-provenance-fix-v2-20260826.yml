@@ -1,11 +1,6 @@
 name: Apply report EN source provenance fix v2
 
 on:
-  push:
-    branches:
-      - feat/web-bulk-en-treaty-acquisition-20260825
-    paths:
-      - '.github/workflows/report-en-source-provenance-fix-v2-20260826.yml'
   workflow_dispatch:
 
 permissions:
