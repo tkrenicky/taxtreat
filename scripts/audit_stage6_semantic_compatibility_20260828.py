@@ -7,6 +7,11 @@ from pathlib import Path
 from typing import Any
 
 from taxtreat.engine.legal_rule_engine import _royalty_categories_match
+from taxtreat.services.intake import (
+    DERIVED_TRANSACTION_FACTS,
+    FACT_GUIDANCE,
+    RULE_VALUE_BOOLEAN_GUIDANCE,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -54,6 +59,41 @@ ATOMIC_ROYALTY_VALUES = {
     "operating_lease_or_other_use_of_equipment",
     "other",
 }
+
+
+CORE_EXPLICIT_FACTS = {
+    "beneficial_owner",
+    "recipient_is_treaty_resident",
+    "permanent_establishment_connection",
+    "ownership_percent",
+    "direct_ownership",
+    "direct_or_indirect_voting_ownership",
+    "voting_ownership",
+    "voting_power_control",
+    "holding_period_months",
+    "holding_period_years",
+    "continuous_holding_period_days",
+    "arm_length_amount",
+    "royalty_category",
+}
+
+def _fact_mode(fact: str) -> str:
+    if fact in CONTROL_FACTS:
+        return "internal_control"
+    if fact in COARSE_BROWSER_FACTS:
+        return "coarse_browser"
+    if fact in DERIVED_TRANSACTION_FACTS:
+        return "derived"
+    if fact in CORE_EXPLICIT_FACTS:
+        return "explicit_browser"
+    guidance = FACT_GUIDANCE.get(fact)
+    if guidance is not None:
+        if guidance.get("client_answerable") is False:
+            return "professional_review"
+        return "guided_client_input"
+    if fact in RULE_VALUE_BOOLEAN_GUIDANCE:
+        return "dynamic_treaty_enum"
+    return "unsupported_or_unclassified"
 
 
 def _load(path: Path) -> dict[str, Any]:
@@ -114,6 +154,21 @@ def build_inventory() -> dict[str, Any]:
         browser_direct = sorted(set(facts) & BROWSER_DIRECT_FACTS)
         non_browser = sorted(set(facts) - BROWSER_DIRECT_FACTS - CONTROL_FACTS)
 
+        fact_modes = {
+            fact: _fact_mode(fact)
+            for fact in facts
+        }
+        unsafe_modes = {
+            "coarse_browser",
+            "unsupported_or_unclassified",
+            "dynamic_treaty_enum",
+        }
+        safety_findings = sorted(
+            fact
+            for fact, mode in fact_modes.items()
+            if mode in unsafe_modes
+        )
+
         row = {
             "country": country,
             "income_type": income_type,
@@ -121,9 +176,11 @@ def build_inventory() -> dict[str, Any]:
             "distinct_treaty_outcomes": outcomes,
             "multi_outcome": len(outcomes) > 1,
             "decision_facts": facts,
+            "fact_modes": fact_modes,
             "browser_direct_facts": browser_direct,
             "coarse_browser_facts": coarse,
             "non_browser_facts": non_browser,
+            "semantic_safety_findings": safety_findings,
         }
         rows.append(row)
         if row["multi_outcome"]:
@@ -204,6 +261,19 @@ def build_inventory() -> dict[str, Any]:
         for row in multi_rate_rows
         if "recipient_entity_type" in row["decision_facts"]
     ]
+    unsafe_multi_outcome_scopes = [
+        row
+        for row in multi_rate_rows
+        if row["semantic_safety_findings"]
+    ]
+    unsupported_multi_outcome_scopes = [
+        row
+        for row in multi_rate_rows
+        if any(
+            mode == "unsupported_or_unclassified"
+            for mode in row["fact_modes"].values()
+        )
+    ]
 
     return {
         "schema_version": 1,
@@ -217,6 +287,8 @@ def build_inventory() -> dict[str, Any]:
             "multi_outcome_scopes": len(multi_rate_rows),
             "multi_outcome_royalty_scopes": len(royalty_multi),
             "entity_type_sensitive_multi_outcome_scopes": len(entity_sensitive),
+            "unsafe_multi_outcome_scopes": len(unsafe_multi_outcome_scopes),
+            "unsupported_multi_outcome_scopes": len(unsupported_multi_outcome_scopes),
             "unique_condition_facts": len(all_facts),
             "royalty_atomic_coverage_gaps": len(royalty_atomic_coverage_gaps),
             "royalty_ambiguous_catchall_rules": len(royalty_ambiguous_catchalls),
@@ -224,6 +296,8 @@ def build_inventory() -> dict[str, Any]:
         "atomic_browser_royalty_values": sorted(ATOMIC_ROYALTY_VALUES),
         "royalty_atomic_coverage_gaps": royalty_atomic_coverage_gaps,
         "royalty_ambiguous_catchalls": royalty_ambiguous_catchalls,
+        "unsafe_multi_outcome_scopes": unsafe_multi_outcome_scopes,
+        "unsupported_multi_outcome_scopes": unsupported_multi_outcome_scopes,
         "condition_fact_country_counts": {
             fact: len(countries)
             for fact, countries in sorted(all_facts.items())
