@@ -266,3 +266,44 @@ def test_real_fi_stage6_atomic_financial_lease_selects_1_percent_treaty_rule():
     assert result.status == DecisionStatus.FINAL
     assert result.rate == 1
     assert result.selected_rule_id == "CZ-FI-ROYALTY-CURRENT-2"
+
+
+def test_simple_bank_enum_remains_client_answerable():
+    from taxtreat.services.intake import _question_for_missing_fact
+
+    question = _question_for_missing_fact(
+        "loan_or_credit_provider",
+        {
+            "source_country": "CZ",
+            "recipient_country": "AM",
+            "income_type": "interest",
+            "transaction_date": "2026-08-28",
+            "facts": {},
+            "determinations": {},
+        },
+    )
+
+    assert question["client_answerable"] is True
+    assert question["response_type"] == "boolean_rule_value"
+    assert question["true_value"] == "bank"
+
+
+def test_composite_interest_exemption_enum_requires_professional_review():
+    from taxtreat.services.intake import _question_for_missing_fact
+
+    question = _question_for_missing_fact(
+        "article_11_3_exemption",
+        {
+            "source_country": "CZ",
+            "recipient_country": "BE",
+            "income_type": "interest",
+            "transaction_date": "2026-08-28",
+            "facts": {},
+            "determinations": {},
+        },
+    )
+
+    assert question["client_answerable"] is False
+    assert question["response_type"] == "professional_review"
+    assert question["input_path"] is None
+    assert question["advisor_topic"] == "interest_treaty_special_condition"
