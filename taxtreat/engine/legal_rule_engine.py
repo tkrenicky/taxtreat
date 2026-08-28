@@ -188,11 +188,17 @@ def _royalty_category_groups(value: Any) -> set[str]:
         }
 
     if normalized == "all_other_article_12_royalties":
+        # "All other" is a complement branch. It must not re-include the
+        # ordinary copyright class where another rule already carves that
+        # class out explicitly. It does include equipment where Article 12
+        # otherwise covers use/right to use industrial, commercial or
+        # scientific equipment.
         return {
-            "copyright_nonfilm",
             "film_broadcast",
             "software",
             "industrial_ip",
+            "equipment_financial",
+            "equipment_operating",
             "other",
         }
 
