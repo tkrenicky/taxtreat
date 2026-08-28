@@ -461,6 +461,7 @@
       country: String(data.get("recipient_country")),
       type: String(data.get("recipient_type"))
     };
+    resetClientAnswers();
     saveWorkspaceProfiles();
     renderRecipient();
     recipientForm.hidden = true;
