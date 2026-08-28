@@ -331,3 +331,131 @@ def test_workspace_resets_treaty_specific_answers_between_calculations():
     assert "clientAnswers.exchangeRate = null" in source
     assert 'resetClientAnswers();\n    showStep(1);' in source
     assert 'function renderTransactionFacts() {\n    resetClientAnswers();' in source
+
+
+def _stage6_royalty_rules():
+    import json
+
+    for path in sorted(Path("data/legal_rules_stage6").glob("*.json")):
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        rules = payload.get("rules", []) if isinstance(payload, dict) else payload
+        for rule in rules:
+            if (
+                rule.get("income_type") == "royalty"
+                and rule.get("legal_layer") in {"treaty", "protocol", "mli"}
+            ):
+                yield path.stem.upper(), rule
+
+
+def test_every_stage6_treaty_royalty_category_is_semantically_parseable():
+    from taxtreat.engine.legal_rule_engine import _royalty_category_groups
+
+    unparseable = []
+
+    for country, rule in _stage6_royalty_rules():
+        for condition in rule.get("conditions", []):
+            if (
+                condition.get("fact") == "royalty_category"
+                and condition.get("operator") == "=="
+            ):
+                value = condition.get("value")
+                if not _royalty_category_groups(value):
+                    unparseable.append(
+                        (country, rule.get("rule_id"), value)
+                    )
+
+    assert unparseable == []
+
+
+def test_atomic_royalty_ui_does_not_collapse_distinct_rates_under_same_other_conditions():
+    from taxtreat.engine.legal_rule_engine import _royalty_categories_match
+
+    atomic_values = (
+        "copyright_literary_artistic_scientific_nonfilm_nonsoftware",
+        "cinematographic_films_or_broadcast_media",
+        "computer_software",
+        "patent_trademark_design_model_plan_secret_formula_process_or_knowhow",
+        "financial_lease_of_equipment",
+        "operating_lease_or_other_use_of_equipment",
+        "other",
+    )
+    control_facts = {
+        "fallback_case",
+        "source_state_taxation",
+        "general_article_11_2_rate",
+    }
+
+    by_country = {}
+    for country, rule in _stage6_royalty_rules():
+        by_country.setdefault(country, []).append(rule)
+
+    conflicts = []
+
+    for country, rules in sorted(by_country.items()):
+        for atomic in atomic_values:
+            matched = []
+            for rule in rules:
+                category_conditions = [
+                    condition
+                    for condition in rule.get("conditions", [])
+                    if (
+                        condition.get("fact") == "royalty_category"
+                        and condition.get("operator") == "=="
+                    )
+                ]
+                if not category_conditions:
+                    continue
+                if not any(
+                    _royalty_categories_match(
+                        atomic,
+                        condition.get("value"),
+                    )
+                    for condition in category_conditions
+                ):
+                    continue
+
+                other_signature = tuple(
+                    sorted(
+                        (
+                            condition.get("fact"),
+                            condition.get("operator"),
+                            repr(condition.get("value")),
+                        )
+                        for condition in rule.get("conditions", [])
+                        if (
+                            condition.get("fact") != "royalty_category"
+                            and condition.get("fact") not in control_facts
+                        )
+                    )
+                )
+                matched.append(
+                    (
+                        other_signature,
+                        rule.get("rate"),
+                        rule.get("tax_treatment"),
+                        rule.get("rule_id"),
+                    )
+                )
+
+            grouped = {}
+            for signature, rate, treatment, rule_id in matched:
+                grouped.setdefault(signature, []).append(
+                    (rate, treatment, rule_id)
+                )
+
+            for signature, outcomes in grouped.items():
+                distinct = {
+                    (rate, treatment)
+                    for rate, treatment, _rule_id in outcomes
+                }
+                if len(distinct) > 1:
+                    conflicts.append(
+                        (
+                            country,
+                            atomic,
+                            signature,
+                            tuple(outcomes),
+                        )
+                    )
+
+    assert conflicts == []
