@@ -534,3 +534,16 @@ def test_workspace_core_treaty_assumptions_have_no_silent_defaults():
     assert 'String(data.get("beneficial_owner")) === "true"' not in source
     assert 'String(data.get("treaty_resident")) === "true"' not in source
     assert 'String(data.get("pe_connection")) !== "true"' not in source
+
+
+def test_recipient_profile_preserves_unknown_core_treaty_facts():
+    html = Path("app/web/workspace.html").read_text(encoding="utf-8")
+    source = Path("app/web/workspace.js").read_text(encoding="utf-8")
+
+    assert '<select name="beneficial_owner"><option value="">Nevyplněno</option>' in html
+    assert '<select name="treaty_resident"><option value="">Nevyplněno</option>' in html
+    assert '<select name="pe_connection"><option value="">Nevyplněno</option>' in html
+
+    assert 'beneficialOwner: beneficialOwner === "" ? "" : beneficialOwner === "true"' in source
+    assert 'treatyResident: treatyResident === "" ? "" : treatyResident === "true"' in source
+    assert 'peConnection: peConnection === "" ? "" : peConnection === "true"' in source
