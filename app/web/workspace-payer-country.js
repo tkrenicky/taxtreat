@@ -10,15 +10,18 @@
     label.querySelector("span")?.textContent.trim() === "Stát"
   );
 
+  const en = String(document.documentElement.lang || "").toLowerCase().startsWith("en");
   const label = originalCountryInput || document.createElement("label");
   label.id = "payer-country-field";
   label.innerHTML = `
-    <span>Stát plátce *</span>
+    <span>${en ? "Payer country *" : "Stát plátce *"}</span>
     <select name="payer_country" required>
-      <option value="CZ">Česká republika</option>
-      <option value="SK">Slovensko</option>
+      <option value="CZ">${en ? "Czech Republic" : "Česká republika"}</option>
+      <option value="SK">${en ? "Slovakia" : "Slovensko"}</option>
     </select>
-    <small>Stát plátce určuje, která vnitrostátní pravidla srážkové daně TaxTreat použije. Nejde o samostatný přepínač režimu aplikace.</small>`;
+    <small>${en
+      ? "The payer’s country determines which domestic withholding tax rules TaxTreat applies. This is not a separate application-mode switch."
+      : "Stát plátce určuje, která vnitrostátní pravidla srážkové daně TaxTreat použije. Nejde o samostatný přepínač režimu aplikace."}</small>`;
   if (!originalCountryInput) form.querySelector(".flow-actions")?.before(label);
 
   const country = label.querySelector("select");
@@ -56,8 +59,12 @@
     }
     if (aresStatus) {
       const nextStatus = isSk
-        ? "Pro slovenského plátce se údaje z českého registru ARES nenačítají; identifikační údaje vyplň ručně."
-        : "Po zadání 8 číslic TaxTreat načte identifikační údaje z ARES.";
+        ? (en
+            ? "For a Slovak payer, data are not retrieved from the Czech ARES register; enter the identification details manually."
+            : "Pro slovenského plátce se údaje z českého registru ARES nenačítají; identifikační údaje vyplň ručně.")
+        : (en
+            ? "After entering the Company ID, you can retrieve identification details from ARES."
+            : "Po zadání IČO můžeš identifikační údaje načíst z ARES.");
       if (aresStatus.textContent !== nextStatus) aresStatus.textContent = nextStatus;
     }
     const vat = form.elements.payer_vat_id;
