@@ -1,0 +1,38 @@
+name: Temporary semantic compatibility QA
+
+on:
+  push:
+    branches:
+      - fix/semantic-compatibility-gate-20260828
+
+jobs:
+  semantic-compatibility:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+          pip install --no-deps -e .
+      - name: Run semantic regression tests
+        run: |
+          python -m pytest -q \
+            tests/test_semantic_compatibility_gate_20260828.py \
+            tests/test_stage6_condition_consistency_101.py \
+            tests/test_stage7b_ui.py
+      - name: Build semantic compatibility inventory
+        run: |
+          python scripts/audit_stage6_semantic_compatibility_20260828.py
+          cat reports/stage6_semantic_compatibility_inventory_20260828.json | head -n 80
+      - name: Upload inventory
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage6-semantic-compatibility-inventory
+          path: reports/stage6_semantic_compatibility_inventory_20260828.json
+          if-no-files-found: error
+          retention-days: 30
