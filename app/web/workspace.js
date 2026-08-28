@@ -1376,13 +1376,24 @@
     const error = document.querySelector("#workspace-error"); error.hidden = true;
     const transactionDate = String(data.get("transaction_date"));
     const facts = {
-      beneficial_owner: String(data.get("beneficial_owner")) === "true",
-      recipient_is_treaty_resident: String(data.get("treaty_resident")) === "true",
-      permanent_establishment_connection: String(data.get("pe_connection")) === "true",
-      right_or_property_not_effectively_connected_to_czech_pe_or_fixed_base: String(data.get("pe_connection")) !== "true",
-      claim_not_effectively_connected_to_czech_pe: String(data.get("pe_connection")) !== "true",
       recipient_entity_type: recipient.type === "Fyzická osoba" ? "individual" : recipient.type === "Fond" ? "fund" : recipient.type === "Společnost" ? "company" : "other"
     };
+    const beneficialOwner = data.get("beneficial_owner");
+    const treatyResident = data.get("treaty_resident");
+    const peConnection = data.get("pe_connection");
+
+    if (beneficialOwner !== null) {
+      facts.beneficial_owner = String(beneficialOwner) === "true";
+    }
+    if (treatyResident !== null) {
+      facts.recipient_is_treaty_resident = String(treatyResident) === "true";
+    }
+    if (peConnection !== null) {
+      const connected = String(peConnection) === "true";
+      facts.permanent_establishment_connection = connected;
+      facts.right_or_property_not_effectively_connected_to_czech_pe_or_fixed_base = !connected;
+      facts.claim_not_effectively_connected_to_czech_pe = !connected;
+    }
     const incomeType = String(data.get("income_type"));
     const ownershipPercent = String(data.get("ownership_percent"));
     const directOwnership = String(data.get("direct_ownership"));
@@ -1392,7 +1403,7 @@
     const armLengthAmount = String(data.get("arm_length_amount"));
     const royaltyCategory = String(data.get("royalty_category"));
     Object.assign(currentRelationship(), {
-      peConnection: String(data.get("pe_connection")) === "true",
+      peConnection: peConnection === null ? "" : String(peConnection) === "true",
       ownershipPercent,
       directOwnership,
       acquisitionDate,
