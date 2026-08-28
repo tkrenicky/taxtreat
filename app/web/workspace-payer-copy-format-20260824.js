@@ -3,6 +3,7 @@
 
   function formatPayerCopy(root = document) {
     root.querySelectorAll('[data-view="payers"] .payer-record').forEach((card) => {
+      if (card.dataset.ttPayerCopyFormatted === "true") return;
       const copy = card.querySelector(':scope > .avatar + div');
       const title = copy?.querySelector('h2');
       const meta = copy?.querySelector('p');
@@ -13,7 +14,7 @@
       const ico = rawMeta.match(/IČO\s+([^·\n]+)/i)?.[1]?.trim() || "";
       const dic = rawMeta.match(/DIČ\s+([^·\n]+)/i)?.[1]?.trim() || "";
 
-      title.textContent = baseName;
+      if (title.textContent !== baseName) title.textContent = baseName;
       meta.replaceChildren();
       meta.append(document.createTextNode(`Česká republika · IČO ${ico || "neuvedeno"}`));
 
@@ -24,6 +25,9 @@
         dicGroup.style.whiteSpace = "nowrap";
         meta.append(dicGroup);
       }
+      // Mark after the one intentional rewrite. The observer sees the
+      // mutations produced above, but subsequent callbacks are no-ops.
+      card.dataset.ttPayerCopyFormatted = "true";
     });
   }
 
