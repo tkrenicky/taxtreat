@@ -559,3 +559,51 @@ def test_new_calculation_resets_transaction_specific_legal_facts():
     assert '"royalty_category",' in source
     assert '"arm_length_amount",' in source
     assert 'resetClientAnswers();\n    resetTransactionLegalFacts();\n    showStep(1);' in source
+
+
+def test_workspace_does_not_approximate_holding_period_from_broad_buckets():
+    html = Path("app/web/workspace.html").read_text(encoding="utf-8")
+    source = Path("app/web/workspace.js").read_text(encoding="utf-8")
+
+    assert 'value="at_least_12_months"' not in html
+    assert 'value="less_than_12_months"' not in html
+    assert 'value="unknown_date"' in html
+    assert 'facts.holding_period_months = 12' not in source
+    assert 'facts.holding_period_months = 0' not in source
+
+
+def test_real_jp_dividend_holding_period_requires_exact_duration():
+    from taxtreat.engine.legal_rule_loader import load_legal_rules
+    from pathlib import Path
+
+    rules = load_legal_rules(Path("data/legal_rules_stage6/jp.json"))
+
+    eight_months = evaluate_legal_rules(
+        rules,
+        {
+            "income_type": "dividend",
+            "source_country": "CZ",
+            "recipient_country": "JP",
+            "recipient_entity_type": "company",
+            "voting_ownership": 30,
+            "holding_period_months": 8,
+        },
+        as_of=AS_OF,
+    )
+    assert eight_months.status == DecisionStatus.FINAL
+    assert eight_months.rate == 10
+
+    unknown_duration = evaluate_legal_rules(
+        rules,
+        {
+            "income_type": "dividend",
+            "source_country": "CZ",
+            "recipient_country": "JP",
+            "recipient_entity_type": "company",
+            "voting_ownership": 30,
+        },
+        as_of=AS_OF,
+    )
+    assert unknown_duration.status == DecisionStatus.REVIEW_REQUIRED
+    assert unknown_duration.rate is None
+    assert "holding_period_months" in unknown_duration.missing_facts
