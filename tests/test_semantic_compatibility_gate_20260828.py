@@ -200,3 +200,69 @@ def test_advisor_only_rule_value_fact_stays_professional_review():
     assert question["response_type"] == "professional_review"
     assert question["input_path"] is None
     assert question["category"] == "professional_review"
+
+
+def test_real_au_stage6_company_input_does_not_silently_select_15_percent():
+    from taxtreat.engine.legal_rule_loader import load_legal_rules
+    from pathlib import Path
+
+    rules = load_legal_rules(Path("data/legal_rules_stage6/au.json"))
+    result = evaluate_legal_rules(
+        rules,
+        {
+            "income_type": "dividend",
+            "source_country": "CZ",
+            "recipient_country": "AU",
+            "recipient_entity_type": "company",
+            "ownership_percent": 100,
+        },
+        as_of=AS_OF,
+    )
+
+    assert result.status == DecisionStatus.REVIEW_REQUIRED
+    assert result.rate is None
+    assert "recipient_entity_type" in result.missing_facts
+
+
+def test_real_fi_stage6_broad_equipment_input_does_not_silently_select_1_percent():
+    from taxtreat.engine.legal_rule_loader import load_legal_rules
+    from pathlib import Path
+
+    rules = load_legal_rules(Path("data/legal_rules_stage6/fi.json"))
+    result = evaluate_legal_rules(
+        rules,
+        {
+            "income_type": "royalty",
+            "source_country": "CZ",
+            "recipient_country": "FI",
+            "beneficial_owner": True,
+            "royalty_category": "industrial_commercial_or_scientific_equipment",
+        },
+        as_of=AS_OF,
+    )
+
+    assert result.status == DecisionStatus.REVIEW_REQUIRED
+    assert result.rate is None
+    assert result.missing_facts == ["royalty_category"]
+
+
+def test_real_fi_stage6_atomic_financial_lease_selects_1_percent_treaty_rule():
+    from taxtreat.engine.legal_rule_loader import load_legal_rules
+    from pathlib import Path
+
+    rules = load_legal_rules(Path("data/legal_rules_stage6/fi.json"))
+    result = evaluate_legal_rules(
+        rules,
+        {
+            "income_type": "royalty",
+            "source_country": "CZ",
+            "recipient_country": "FI",
+            "beneficial_owner": True,
+            "royalty_category": "financial_lease_of_equipment",
+        },
+        as_of=AS_OF,
+    )
+
+    assert result.status == DecisionStatus.FINAL
+    assert result.rate == 1
+    assert result.selected_rule_id == "CZ-FI-ROYALTY-CURRENT-2"
