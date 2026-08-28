@@ -7,6 +7,8 @@
   const translations = new Map([
     ["Jazyk", "Language"], ["Jazyk webu", "Website language"], ["Jazyk reportu", "Report language"],
     ["Stát plátce *", "Payer country *"], ["Česká republika", "Czech Republic"], ["Slovensko", "Slovakia"],
+    ["Stát plátce určuje, která vnitrostátní pravidla srážkové daně TaxTreat použije. Nejde o samostatný přepínač režimu aplikace.", "The payer’s country determines which domestic withholding tax rules TaxTreat applies. This is not a separate application-mode switch."],
+    ["Další údaje a podklady doplníš v profilu příjemce. Profil zůstává uložený v tomto prohlížeči i po obnovení stránky.", "Additional facts and supporting documents can be completed in the recipient profile. The profile remains saved in this browser even after the page is refreshed."],
     ["Načíst z ARES", "Retrieve from ARES"], ["Načítám údaje z ARES…", "Retrieving data from ARES…"],
     ["Údaje byly načteny z ARES. Před uložením je můžeš upravit.", "The data were retrieved from ARES. You can edit them before saving."],
     ["Údaje se z ARES nepodařilo načíst. Pole můžeš vyplnit ručně.", "The data could not be retrieved from ARES. You can complete the fields manually."],
