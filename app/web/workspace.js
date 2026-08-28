@@ -106,11 +106,11 @@
     name: "Demo GmbH",
     country: "AT",
     type: "Společnost",
-    beneficialOwner: true,
-    treatyResident: true,
+    beneficialOwner: "",
+    treatyResident: "",
     relationships: {
-      "demo-cz": { peConnection: false, ownershipPercent: "", directOwnership: "", acquisitionDate: "", votingOwnershipPercent: "" },
-      "alfa-cz": { peConnection: false, ownershipPercent: "25", directOwnership: "true", acquisitionDate: "2024-06-01", votingOwnershipPercent: "25" }
+      "demo-cz": { peConnection: "", ownershipPercent: "", directOwnership: "", acquisitionDate: "", votingOwnershipPercent: "" },
+      "alfa-cz": { peConnection: "", ownershipPercent: "25", directOwnership: "true", acquisitionDate: "2024-06-01", votingOwnershipPercent: "25" }
     }
   };
   let payers = [
@@ -194,7 +194,7 @@
 
   function currentRelationship() {
     if (!recipient.relationships[activePayerKey]) {
-      recipient.relationships[activePayerKey] = { peConnection: false, ownershipPercent: "", directOwnership: "", acquisitionDate: "", votingOwnershipPercent: "" };
+      recipient.relationships[activePayerKey] = { peConnection: "", ownershipPercent: "", directOwnership: "", acquisitionDate: "", votingOwnershipPercent: "" };
     }
     return recipient.relationships[activePayerKey];
   }
@@ -396,9 +396,9 @@
     recipientEditForm.elements.ownership_percent.value = relationship.ownershipPercent;
     recipientEditForm.elements.acquisition_date.value = relationship.acquisitionDate;
     recipientEditForm.elements.direct_ownership.value = relationship.directOwnership;
-    recipientEditForm.elements.beneficial_owner.value = String(recipient.beneficialOwner);
-    recipientEditForm.elements.treaty_resident.value = String(recipient.treatyResident);
-    recipientEditForm.elements.pe_connection.value = String(relationship.peConnection);
+    recipientEditForm.elements.beneficial_owner.value = recipient.beneficialOwner === "" ? "" : String(recipient.beneficialOwner);
+    recipientEditForm.elements.treaty_resident.value = recipient.treatyResident === "" ? "" : String(recipient.treatyResident);
+    recipientEditForm.elements.pe_connection.value = relationship.peConnection === "" ? "" : String(relationship.peConnection);
     recipientDialog.showModal();
   }));
   document.querySelectorAll("[data-close-recipient]").forEach((button) => button.addEventListener("click", () => recipientDialog.close()));
@@ -436,13 +436,17 @@
     document.querySelectorAll("[data-recipient-country]").forEach((node) => { node.textContent = countryGenitive(recipient.country); });
     document.querySelectorAll("[data-recipient-country-name]").forEach((node) => { node.textContent = country; });
     document.querySelectorAll("[data-recipient-type]").forEach((node) => { node.textContent = recipient.type.toLowerCase(); });
-    document.querySelectorAll("[data-profile-beneficial]").forEach((node) => { node.textContent = recipient.beneficialOwner ? "Ano" : "Ne"; });
-    document.querySelectorAll("[data-profile-pe]").forEach((node) => { node.textContent = relationship.peConnection ? "Ano" : "Ne"; });
+    document.querySelectorAll("[data-profile-beneficial]").forEach((node) => {
+      node.textContent = recipient.beneficialOwner === "" ? "Nevyplněno" : recipient.beneficialOwner ? "Ano" : "Ne";
+    });
+    document.querySelectorAll("[data-profile-pe]").forEach((node) => {
+      node.textContent = relationship.peConnection === "" ? "Nevyplněno" : relationship.peConnection ? "Ano" : "Ne";
+    });
     document.querySelectorAll("[data-profile-ownership]").forEach((node) => { node.textContent = relationship.ownershipPercent ? `${relationship.ownershipPercent} %` : "Nevyplněno"; });
     document.querySelectorAll("[data-profile-acquisition]").forEach((node) => { node.textContent = relationship.acquisitionDate || "Nevyplněno"; });
-    form.elements.beneficial_owner.value = String(recipient.beneficialOwner);
-    form.elements.treaty_resident.value = String(recipient.treatyResident);
-    form.elements.pe_connection.value = String(relationship.peConnection);
+    form.elements.beneficial_owner.value = recipient.beneficialOwner === "" ? "" : String(recipient.beneficialOwner);
+    form.elements.treaty_resident.value = recipient.treatyResident === "" ? "" : String(recipient.treatyResident);
+    form.elements.pe_connection.value = relationship.peConnection === "" ? "" : String(relationship.peConnection);
     form.elements.ownership_percent.value = relationship.ownershipPercent;
     form.elements.direct_ownership.value = relationship.directOwnership;
     form.elements.acquisition_date.value = relationship.acquisitionDate;
