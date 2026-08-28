@@ -758,6 +758,36 @@ def _rule_value_boolean_question(
     if guidance is None:
         return None
 
+    # An explicit advisor-only classification in FACT_GUIDANCE is a hard
+    # safety boundary. Dynamic enum-to-boolean translation must never turn
+    # that legal judgement into a client Yes/No question merely because the
+    # selected treaty happens to contain a single encoded value.
+    explicit_guidance = FACT_GUIDANCE.get(name, {})
+    if explicit_guidance.get("client_answerable") is False:
+        return {
+            "question_id": missing,
+            "input_path": None,
+            "category": "professional_review",
+            "client_answerable": False,
+            "response_type": "professional_review",
+            "prompt": explicit_guidance.get(
+                "prompt",
+                guidance["prompt"],
+            ),
+            "why": explicit_guidance.get(
+                "why",
+                guidance["why"],
+            ),
+            "required_documents": explicit_guidance.get(
+                "documents",
+                ["Úvěrová nebo zápůjční smlouva"],
+            ),
+            "advisor_topic": explicit_guidance.get(
+                "advisor_topic",
+                "interest_treaty_special_condition",
+            ),
+        }
+
     values = _stage6_condition_values(
         request,
         name,
