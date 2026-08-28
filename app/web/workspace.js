@@ -118,6 +118,50 @@
     { key: "alfa-cz", name: "Alfa Services CZ a.s.", id: "87654321", vatId: "CZ87654321", address: "", legalForm: "", dataBox: "", establishedAt: "" }
   ];
   let activePayerKey = "demo-cz";
+  const PROFILE_STORAGE_KEY = "taxtreat-workspace-profiles-v1";
+
+  function saveWorkspaceProfiles() {
+    try {
+      localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify({
+        payers,
+        activePayerKey,
+        recipient
+      }));
+    } catch (_problem) {
+      // Profile persistence is a convenience layer; calculation must keep working.
+    }
+  }
+
+  function restoreWorkspaceProfiles() {
+    try {
+      const raw = localStorage.getItem(PROFILE_STORAGE_KEY);
+      if (!raw) return;
+      const stored = JSON.parse(raw);
+      if (Array.isArray(stored?.payers) && stored.payers.length) {
+        payers = stored.payers.filter((item) => item && item.key && item.name);
+      }
+      if (stored?.recipient && typeof stored.recipient === "object") {
+        recipient = {
+          ...recipient,
+          ...stored.recipient,
+          relationships: {
+            ...(recipient.relationships || {}),
+            ...(stored.recipient.relationships || {})
+          }
+        };
+      }
+      if (stored?.activePayerKey && payers.some((item) => item.key === stored.activePayerKey)) {
+        activePayerKey = stored.activePayerKey;
+      } else if (!payers.some((item) => item.key === activePayerKey)) {
+        activePayerKey = payers[0]?.key || "demo-cz";
+      }
+    } catch (_problem) {
+      // Ignore malformed/stale browser storage and retain safe demo defaults.
+    }
+  }
+
+  restoreWorkspaceProfiles();
+
   let editingPayerKey = null;
   let lastPayload = null;
   let pendingQuestions = [];
@@ -249,16 +293,29 @@
       payers.push({ key, ...values });
       activePayerKey = key;
     }
+    saveWorkspaceProfiles();
     renderPayers();
     renderRecipient();
     payerDialog.close();
   });
 
-  activePayerSelect.addEventListener("change", () => {
-    activePayerKey = activePayerSelect.value;
+  function switchActivePayer(key) {
+    if (!payers.some((item) => item.key === key)) return;
+    activePayerKey = key;
+    saveWorkspaceProfiles();
     renderPayers();
     renderRecipient();
+  }
+
+  activePayerSelect.addEventListener("change", () => {
+    switchActivePayer(activePayerSelect.value);
   });
+
+  document.addEventListener("change", (event) => {
+    if (event.target?.id === "active-payer-select") {
+      switchActivePayer(event.target.value);
+    }
+  }, true);
 
   function payerCard(item, compact = false) {
     const article = document.createElement("article");
@@ -272,10 +329,10 @@
     if (compact) {
       const label = document.createElement("label");
       const radio = document.createElement("input"); radio.type = "radio"; radio.name = "flow-payer"; radio.value = item.key; radio.checked = item.key === activePayerKey;
-      radio.addEventListener("change", () => { activePayerKey = item.key; renderPayers(); renderRecipient(); });
+      radio.addEventListener("change", () => switchActivePayer(item.key));
       const state = document.createElement("em"); state.textContent = radio.checked ? "Vybráno" : "Vybrat";
       const edit = document.createElement("button"); edit.className = "secondary compact payer-choice-edit"; edit.type = "button"; edit.textContent = "Upravit plátce";
-      edit.addEventListener("click", (event) => { event.preventDefault(); event.stopPropagation(); activePayerKey = item.key; renderPayers(); renderRecipient(); openPayerDialog(item.key); });
+      edit.addEventListener("click", (event) => { event.preventDefault(); event.stopPropagation(); switchActivePayer(item.key); openPayerDialog(item.key); });
       label.append(radio, avatar, copy, state); article.append(label, edit);
       return article;
     }
@@ -287,7 +344,7 @@
     const actions = document.createElement("div"); actions.className = "payer-actions";
     const activate = document.createElement("button"); activate.className = "secondary compact"; activate.type = "button";
     activate.textContent = item.key === activePayerKey ? "Aktivní plátce" : "Nastavit jako aktivního"; activate.disabled = item.key === activePayerKey;
-    activate.addEventListener("click", () => { activePayerKey = item.key; renderPayers(); renderRecipient(); });
+    activate.addEventListener("click", () => switchActivePayer(item.key));
     const edit = document.createElement("button"); edit.className = "secondary compact"; edit.type = "button"; edit.textContent = "Upravit";
     edit.addEventListener("click", () => openPayerDialog(item.key)); actions.append(activate, edit);
     article.append(avatar, copy, details, actions);
@@ -327,6 +384,7 @@
     const data = new FormData(recipientEditForm);
     recipient = { ...recipient, name: String(data.get("recipient_name")).trim(), country: String(data.get("recipient_country")), type: String(data.get("recipient_type")), beneficialOwner: String(data.get("beneficial_owner")) === "true", treatyResident: String(data.get("treaty_resident")) === "true" };
     Object.assign(currentRelationship(), { ownershipPercent: String(data.get("ownership_percent")), acquisitionDate: String(data.get("acquisition_date")), directOwnership: String(data.get("direct_ownership")), peConnection: String(data.get("pe_connection")) === "true" });
+    saveWorkspaceProfiles();
     renderRecipient();
     recipientDialog.close();
   });
@@ -379,6 +437,7 @@
       country: String(data.get("recipient_country")),
       type: String(data.get("recipient_type"))
     };
+    saveWorkspaceProfiles();
     renderRecipient();
     recipientForm.hidden = true;
   });
