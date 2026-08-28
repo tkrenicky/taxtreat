@@ -71,6 +71,7 @@ def main() -> int:
         assert active.locator("option:checked").inner_text() == "QA Payer s.r.o."
 
         print("checkpoint: create recipient", flush=True)
+        page.locator('[data-nav="dashboard"]').click()
         page.locator('[data-start-flow]').first.click()
         page.locator('.flow-step[data-step="1"] [data-next-step="2"]').click()
         page.locator("[data-show-recipient-form]").click()
