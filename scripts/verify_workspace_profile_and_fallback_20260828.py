@@ -114,9 +114,11 @@ def main() -> int:
         # EN legal-source rendering must use the registered verified English
         # rule summary even when the treaty card is contextual/secondary.
         page.wait_for_timeout(1000)
-        treaty_excerpt = result.locator(
-            '#workspace-citations .citation-card[data-legal-layer="treaty"] .legal-excerpt'
+        treaty_card = result.locator(
+            '#workspace-citations .citation-card',
+            has_text="APPLIED TREATY RULE",
         ).first
+        treaty_excerpt = treaty_card.locator(".legal-excerpt, blockquote").first
         assert treaty_excerpt.get_attribute("lang") == "en"
         excerpt_text = treaty_excerpt.inner_text()
         assert "maximum Czech source-state withholding rate of 10%" in excerpt_text
