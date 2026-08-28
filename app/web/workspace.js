@@ -305,12 +305,12 @@
   payerForm.addEventListener("submit", (event) => {
     event.preventDefault();
     event.stopPropagation();
-    savePayerProfile();
+    window.setTimeout(savePayerProfile, 0);
   });
   document.querySelector("[data-save-payer]").addEventListener("click", (event) => {
     event.preventDefault();
     event.stopImmediatePropagation();
-    savePayerProfile();
+    window.setTimeout(savePayerProfile, 0);
   });
 
   function switchActivePayer(key) {
