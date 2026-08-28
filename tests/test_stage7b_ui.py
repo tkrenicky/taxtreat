@@ -39,8 +39,9 @@ def test_guided_intake_ui_is_served_without_changing_api_root():
     assert 'name="pe_connection"' in html
     assert 'name="holding_period_mode"' in html
     assert 'value="known_date"' in html
-    assert 'value="at_least_12_months"' in html
-    assert 'value="less_than_12_months"' in html
+    assert 'value="unknown_date"' in html
+    assert 'value="at_least_12_months"' not in html
+    assert 'value="less_than_12_months"' not in html
 
     assert "Informační nástroj:" in html
     assert "neposkytuje individuální právní ani daňové poradenství" in html.lower()
@@ -139,7 +140,8 @@ def test_workspace_demo_exposes_recipient_payment_result_workflow():
     assert 'name="direct_ownership"' in html
     assert 'name="acquisition_date"' in html
     assert 'name="holding_period_mode"' in html
-    assert 'value="at_least_12_months"' in html
+    assert 'value="unknown_date"' in html
+    assert 'value="at_least_12_months"' not in html
     assert 'data-dividend-step="4"' in html
     assert 'id="interest-facts"' in html
     assert 'name="prior_same_type_monthly_amount_czk"' in html
