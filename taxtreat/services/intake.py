@@ -132,9 +132,27 @@ FACT_GUIDANCE: dict[str, dict[str, Any]] = {
         "why": "Sazba může záviset na předmětu licence.",
         "response_type": "choice",
         "options": [
-            ["copyright_literary_artistic_or_scientific", "Autorské dílo"],
-            ["software_patent_trademark_design_model_plan_secret_formula_process_knowhow", "Software, patent, ochranná známka nebo know-how"],
-            ["industrial_commercial_or_scientific_equipment", "Průmyslové, obchodní nebo vědecké zařízení"],
+            [
+                "copyright_literary_artistic_scientific_nonfilm_nonsoftware",
+                "Autorské dílo (mimo software, film, TV a rozhlas)",
+            ],
+            [
+                "cinematographic_films_or_broadcast_media",
+                "Film, televizní nebo rozhlasové vysílání",
+            ],
+            ["computer_software", "Počítačový software"],
+            [
+                "patent_trademark_design_model_plan_secret_formula_process_or_knowhow",
+                "Patent, ochranná známka, průmyslový vzor, postup nebo know-how",
+            ],
+            [
+                "financial_lease_of_equipment",
+                "Finanční leasing průmyslového, obchodního nebo vědeckého zařízení",
+            ],
+            [
+                "operating_lease_or_other_use_of_equipment",
+                "Operativní leasing nebo jiné užívání průmyslového, obchodního nebo vědeckého zařízení",
+            ],
             ["other", "Jiný předmět licence"],
         ],
         "documents": ["Licenční smlouva", "Popis licencovaných práv"],
