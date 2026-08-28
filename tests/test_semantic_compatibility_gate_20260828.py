@@ -459,3 +459,19 @@ def test_atomic_royalty_ui_does_not_collapse_distinct_rates_under_same_other_con
                     )
 
     assert conflicts == []
+
+
+def test_spanish_all_other_royalty_branch_is_true_complement():
+    from taxtreat.engine.legal_rule_engine import _royalty_category_groups
+
+    groups = _royalty_category_groups("all_other_article_12_royalties")
+
+    assert "copyright_nonfilm" not in groups
+    assert {
+        "film_broadcast",
+        "software",
+        "industrial_ip",
+        "equipment_financial",
+        "equipment_operating",
+        "other",
+    }.issubset(groups)
