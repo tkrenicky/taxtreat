@@ -606,3 +606,33 @@ def test_real_jp_dividend_holding_period_requires_exact_duration():
     assert unknown_duration.status == DecisionStatus.REVIEW_REQUIRED
     assert unknown_duration.rate is None
     assert "holding_period_months" in unknown_duration.missing_facts
+
+
+def test_chile_detailed_interest_eligibility_is_professional_review():
+    from taxtreat.services.intake import _question_for_missing_fact
+
+    question = _question_for_missing_fact(
+        "detailed_eligibility_review_required",
+        {
+            "income_type": "interest",
+            "recipient_country": "CL",
+        },
+    )
+
+    assert question["client_answerable"] is False
+    assert question["response_type"] == "professional_review"
+
+
+def test_german_historical_dividend_tax_difference_is_professional_review():
+    from taxtreat.services.intake import _question_for_missing_fact
+
+    question = _question_for_missing_fact(
+        "distributed_vs_undistributed_corporate_tax_rate_difference",
+        {
+            "income_type": "dividend",
+            "recipient_country": "DE",
+        },
+    )
+
+    assert question["client_answerable"] is False
+    assert question["response_type"] == "professional_review"
