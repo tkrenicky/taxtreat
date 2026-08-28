@@ -446,6 +446,27 @@ def _evaluate_condition(
     condition_value = condition.value
 
     if (
+        condition.fact == "recipient_entity_type"
+        and condition.operator in {"==", "!="}
+        and isinstance(fact_value, str)
+        and isinstance(condition_value, str)
+    ):
+        # Browser/profile entity types are intentionally coarse. A generic
+        # value such as "company" cannot safely disprove a treaty branch that
+        # requires a narrower legal status (for example
+        # "company_other_than_partnership", a bank, central bank, government
+        # body, or a wholly government-owned financial institution). Treat
+        # that comparison as unresolved so a general fallback cannot become
+        # FINAL merely because the UI taxonomy is less granular than the
+        # treaty taxonomy.
+        coarse_entity_types = {"company", "individual", "fund", "other"}
+        if (
+            fact_value in coarse_entity_types
+            and condition_value not in coarse_entity_types
+        ):
+            return None, condition.fact
+
+    if (
         condition.fact == "royalty_category"
         and condition.operator in {"==", "!="}
     ):
@@ -608,6 +629,38 @@ def evaluate_legal_rules(
     matching_rules.sort(key=lambda rule: (rule.priority, rule.rule_id))
 
     if matching_rules:
+        # A legacy/broad royalty UI value may semantically match more than one
+        # treaty category. Priority is not a legal tie-breaker in that case:
+        # if those matched treaty branches produce different outcomes, the
+        # transaction classification is insufficient and must fail closed.
+        if facts.get("income_type") == "royalty":
+            royalty_matches = []
+            for rule in matching_rules:
+                if rule.legal_layer not in {"treaty", "protocol", "mli"}:
+                    continue
+                category_conditions = [
+                    condition
+                    for condition in rule.conditions
+                    if condition.fact == "royalty_category"
+                    and condition.operator == "=="
+                ]
+                if category_conditions:
+                    royalty_matches.append(rule)
+
+            royalty_outcomes = {
+                (rule.rate, resolve_tax_treatment(rule))
+                for rule in royalty_matches
+            }
+            if len(royalty_matches) > 1 and len(royalty_outcomes) > 1:
+                result.requires_review = True
+                result.missing_facts = ["royalty_category"]
+                result.explanation.append(
+                    "The supplied royalty classification matches multiple "
+                    "treaty branches with different outcomes. A more precise "
+                    "royalty category is required."
+                )
+                return result
+
         conflicts = _matching_rule_conflicts(matching_rules)
         if conflicts:
             result.requires_review = True
