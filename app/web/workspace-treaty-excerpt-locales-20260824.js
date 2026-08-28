@@ -24,6 +24,7 @@
     "official_treaty_text",
     "official_protocol_text",
     "official_translation_non_authentic",
+    "verified_stage6_rule_summary",
     "current_application_suspended"
   ]);
 
