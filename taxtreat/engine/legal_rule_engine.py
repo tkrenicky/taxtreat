@@ -464,6 +464,18 @@ def _evaluate_condition(
     condition_value = condition.value
 
     if (
+        condition.fact == "beneficial_owner"
+        and condition.operator in {"==", "!="}
+        and isinstance(condition_value, str)
+        and _boolean_like(condition_value) is None
+    ):
+        # Legacy Stage 6 projection defect: some public-body/entity
+        # classifications were encoded under beneficial_owner. A boolean
+        # browser value must not silently disprove such a narrower legal
+        # classification and release a general fallback as FINAL.
+        return None, condition.fact
+
+    if (
         condition.fact == "recipient_entity_type"
         and condition.operator in {"==", "!="}
         and isinstance(fact_value, str)
