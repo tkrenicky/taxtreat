@@ -2,9 +2,9 @@ name: Tests
 
 on:
   push:
-    branches: [ main, fix/semantic-compatibility-gate-20260828 ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, feat/web-bulk-en-treaty-acquisition-20260825 ]
+    branches: [ main ]
 
 jobs:
   test:
