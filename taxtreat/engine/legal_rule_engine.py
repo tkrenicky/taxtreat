@@ -120,6 +120,45 @@ def _boolean_like(value: Any) -> bool | None:
     return None
 
 
+_PENDING_SEMANTIC_REMEDIATION_SCOPES = {
+    ("AD", "dividend"),
+    ("AL", "dividend"),
+    ("BB", "dividend"),
+    ("BD", "dividend"),
+    ("BE", "dividend"),
+    ("CN", "dividend"),
+    ("CY", "dividend"),
+    ("EE", "dividend"),
+    ("EG", "dividend"),
+    ("ES", "dividend"),
+    ("FR", "dividend"),
+    ("GB", "dividend"),
+    ("GE", "dividend"),
+    ("HU", "dividend"),
+    ("IE", "dividend"),
+    ("IL", "dividend"),
+    ("IS", "dividend"),
+    ("KG", "dividend"),
+    ("KW", "dividend"),
+    ("LI", "dividend"),
+    ("LK", "dividend"),
+    ("LT", "dividend"),
+    ("LU", "dividend"),
+    ("LV", "dividend"),
+    ("MD", "dividend"),
+    ("MK", "dividend"),
+    ("NG", "dividend"),
+    ("PH", "royalty"),
+    ("PK", "dividend"),
+    ("QA", "dividend"),
+    ("SK", "dividend"),
+    ("TN", "dividend"),
+    ("TW", "royalty"),
+    ("US", "dividend"),
+    ("XK", "dividend"),
+    ("ZA", "dividend"),
+}
+
 _UI_ROYALTY_CATEGORY_GROUPS = {
     # Current fail-closed UI taxonomy. Each value is intentionally atomic
     # enough to distinguish treaty branches that carry different rates.
@@ -595,6 +634,19 @@ def evaluate_legal_rules(
         result.requires_review = True
         result.missing_facts = missing_scope_facts
         result.explanation.append("The transaction scope is incomplete.")
+        return result
+
+    semantic_scope = (
+        str(facts.get("recipient_country", "")).upper(),
+        str(facts.get("income_type", "")),
+    )
+    if semantic_scope in _PENDING_SEMANTIC_REMEDIATION_SCOPES:
+        result.status = DecisionStatus.REVIEW_REQUIRED
+        result.requires_review = True
+        result.explanation.append(
+            "This treaty scope is quarantined pending a source-backed "
+            "semantic reprojection and new hash-bound legal approval."
+        )
         return result
 
     relevant_rules = [
