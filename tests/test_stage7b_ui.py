@@ -429,3 +429,22 @@ def test_step4_english_exact_translation_is_case_insensitive_for_section19():
     assert 'toLocaleLowerCase("cs-CZ")' in javascript
     assert '["Vnitrostátní osvobození podle § 19 ZDP", "Domestic exemption under Section 19"]' in javascript
     assert '["§ 19 ZDP se použije", "Section 19 applies"]' in javascript
+
+
+def test_english_treaty_locale_provenance_statuses_are_public_and_badged():
+    javascript = client.get("/ui-assets/workspace-treaty-excerpt-locales-20260824.js").text
+
+    for status in (
+        "official_translation_non_authentic",
+        "official_synthesised_text",
+        "official_synthesised_excerpt",
+        "machine_translation_from_official_text",
+        "current_application_suspended",
+    ):
+        assert f'"{status}"' in javascript
+
+    assert "Official English translation — non-authentic" in javascript
+    assert "Official-source synthesised English text" in javascript
+    assert "Machine translation of official text" in javascript
+    assert "Application currently suspended" in javascript
+    assert "renderStatusNotice(card, locale);" in javascript
