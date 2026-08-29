@@ -636,3 +636,44 @@ def test_german_historical_dividend_tax_difference_is_professional_review():
 
     assert question["client_answerable"] is False
     assert question["response_type"] == "professional_review"
+
+
+def test_ird_association_facts_are_explicit_professional_review():
+    from taxtreat.services.intake import _question_for_missing_fact
+
+    facts = (
+        "ird_association_payer_directly_holds_25_percent_recipient",
+        "ird_association_recipient_directly_holds_25_percent_payer",
+        "ird_association_common_person_directly_holds_25_percent_both",
+    )
+
+    for fact in facts:
+        question = _question_for_missing_fact(
+            fact,
+            {
+                "income_type": "interest",
+                "recipient_country": "AT",
+            },
+        )
+        assert question["client_answerable"] is False
+        assert question["response_type"] == "professional_review"
+        assert question["advisor_topic"] == "domestic_exemption_association"
+
+
+def test_bangladesh_special_holding_facts_are_professional_review():
+    from taxtreat.services.intake import _question_for_missing_fact
+
+    for fact in (
+        "holding_period_includes_payment_date",
+        "holding_period_reorganisation_continuity",
+    ):
+        question = _question_for_missing_fact(
+            fact,
+            {
+                "income_type": "dividend",
+                "recipient_country": "BD",
+            },
+        )
+        assert question["client_answerable"] is False
+        assert question["response_type"] == "professional_review"
+        assert question["advisor_topic"] == "dividend_holding_period_special_condition"
