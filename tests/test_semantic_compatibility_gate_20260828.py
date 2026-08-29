@@ -772,3 +772,125 @@ def test_overloaded_beneficial_owner_legal_status_fails_closed():
 
     assert matched is None
     assert missing == "beneficial_owner"
+
+
+def test_pending_semantic_remediation_registry_matches_engine_quarantine():
+    import json
+    from pathlib import Path
+
+    from taxtreat.engine.legal_rule_engine import (
+        _PENDING_SEMANTIC_REMEDIATION_SCOPES,
+    )
+
+    payload = json.loads(
+        Path(
+            "data/legal_consolidation/"
+            "semantic_remediation_condition_candidates_20260829.json"
+        ).read_text(encoding="utf-8")
+    )
+    candidate_scopes = {
+        (row["country"], row["income_type"])
+        for row in payload["corrections"]
+    }
+
+    assert len(candidate_scopes) == 36
+    assert candidate_scopes == _PENDING_SEMANTIC_REMEDIATION_SCOPES
+
+
+def test_all_detectable_reduced_dividend_projection_gaps_are_quarantined():
+    import json
+    import re
+    from pathlib import Path
+
+    from taxtreat.engine.legal_rule_engine import (
+        _PENDING_SEMANTIC_REMEDIATION_SCOPES,
+    )
+
+    uncovered = []
+
+    for path in sorted(Path("data/legal_rules_stage6").glob("*.json")):
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        rules = payload.get("rules", payload if isinstance(payload, list) else [])
+        dividend_rules = [
+            rule for rule in rules
+            if rule.get("income_type") == "dividend"
+            and rule.get("legal_layer") in {"treaty", "protocol", "mli"}
+            and rule.get("rate") is not None
+        ]
+        if not dividend_rules:
+            continue
+
+        max_rate = max(float(rule["rate"]) for rule in dividend_rules)
+        country = path.stem.upper()
+
+        for rule in dividend_rules:
+            if float(rule["rate"]) >= max_rate:
+                continue
+
+            conditions = rule.get("conditions", [])
+            facts = {condition.get("fact") for condition in conditions}
+            text = re.sub(r"\s+", " ", str(rule.get("source_text") or "")).lower()
+
+            company_required = bool(
+                re.search(
+                    r"(skute.{0,20}vlastn.{0,20}|p[rř]ijemce|prõjemce)"
+                    r".{0,220}(společnost|spolecnost)",
+                    text,
+                )
+            )
+            direct_required = bool(
+                re.search(r"(přímo|prõmo|directly).{0,100}(drží|vlastn|holds|owns)", text)
+            )
+            voting_required = bool(re.search(r"(hlasovac|voting)", text))
+            one_year_required = bool(
+                re.search(r"(alespoň|nejméně|at least).{0,40}(jeden rok|jednoho roku|one year)", text)
+            )
+
+            gaps = []
+            if company_required and "recipient_entity_type" not in facts:
+                gaps.append("company")
+            if direct_required and "direct_ownership" not in facts:
+                gaps.append("direct")
+            if voting_required and not any("voting" in str(fact) for fact in facts):
+                gaps.append("voting")
+            if one_year_required and not any(
+                fact in {
+                    "holding_period_months",
+                    "holding_period_years",
+                    "continuous_holding_period_days",
+                }
+                for fact in facts
+            ):
+                gaps.append("holding")
+
+            if gaps and (country, "dividend") not in _PENDING_SEMANTIC_REMEDIATION_SCOPES:
+                uncovered.append((country, rule.get("rule_id"), gaps))
+
+    assert uncovered == []
+
+
+def test_quarantined_scope_never_returns_old_final_rate():
+    from pathlib import Path
+
+    from taxtreat.engine.legal_rule_loader import load_legal_rules
+
+    rules = load_legal_rules(Path("data/legal_rules_stage6/us.json"))
+
+    result = evaluate_legal_rules(
+        rules,
+        {
+            "income_type": "dividend",
+            "source_country": "CZ",
+            "recipient_country": "US",
+            "beneficial_owner": True,
+            "recipient_entity_type": "company",
+            "ownership_percent": 100,
+            "voting_ownership": 100,
+        },
+        as_of=AS_OF,
+    )
+
+    assert result.status == DecisionStatus.REVIEW_REQUIRED
+    assert result.rate is None
+    assert result.requires_review is True
+    assert any("quarantined" in line.lower() for line in result.explanation)
