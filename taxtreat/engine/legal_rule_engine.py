@@ -187,6 +187,18 @@ def _royalty_category_groups(value: Any) -> set[str]:
             "other",
         }
 
+    if normalized in {
+        "all_royalties_except_industrial_commercial_scientific_equipment",
+        "all_royalties_excluding_industrial_commercial_scientific_equipment",
+    }:
+        return {
+            "copyright_nonfilm",
+            "film_broadcast",
+            "software",
+            "industrial_ip",
+            "other",
+        }
+
     if normalized == "all_other_article_12_royalties":
         # "All other" is a complement branch. It must not re-include the
         # ordinary copyright class where another rule already carves that
