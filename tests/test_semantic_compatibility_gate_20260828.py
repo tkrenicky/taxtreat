@@ -894,3 +894,36 @@ def test_quarantined_scope_never_returns_old_final_rate():
     assert result.rate is None
     assert result.requires_review is True
     assert any("quarantined" in line.lower() for line in result.explanation)
+
+
+def test_all_nonboolean_beneficial_owner_projection_defects_are_quarantined():
+    import json
+    from pathlib import Path
+
+    from taxtreat.engine.legal_rule_engine import (
+        _PENDING_SEMANTIC_REMEDIATION_SCOPES,
+    )
+
+    defects = []
+    boolean_tokens = {"true", "false", "yes", "no", "1", "0"}
+
+    for path in sorted(Path("data/legal_rules_stage6").glob("*.json")):
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        rules = payload.get("rules", payload if isinstance(payload, list) else [])
+        for rule in rules:
+            for condition in rule.get("conditions", []):
+                if condition.get("fact") != "beneficial_owner":
+                    continue
+                value = condition.get("value")
+                if isinstance(value, bool):
+                    continue
+                if str(value).strip().lower() in boolean_tokens:
+                    continue
+                scope = (path.stem.upper(), rule.get("income_type"))
+                defects.append((scope, rule.get("rule_id"), value))
+                assert scope in _PENDING_SEMANTIC_REMEDIATION_SCOPES
+
+    assert {scope for scope, _, _ in defects} == {
+        ("KW", "dividend"),
+        ("QA", "dividend"),
+    }
