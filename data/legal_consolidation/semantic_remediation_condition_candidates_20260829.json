@@ -6,6 +6,108 @@
   "automatic_production_approval_forbidden": true,
   "corrections": [
     {
+      "country": "GB",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-4253A70D066D161D",
+      "evidence_note": "Article 10(2)(a) applies 5% where the beneficial owner is a company controlling at least 25% of the voting interest/shares of the paying company. The current Stage 6 projection uses general ownership_percent and omits the company condition.",
+      "rate_candidates": [
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company"
+            },
+            {
+              "condition_type": "voting_ownership",
+              "operator": ">=",
+              "unit": "%",
+              "value": "25"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "IE",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-DC652FA09D142B61",
+      "evidence_note": "Article 10(2)(a) applies 5% where the beneficial owner is a company directly owning at least 25% of the voting interest in the paying company. The current Stage 6 projection uses general ownership_percent and omits both company and direct-voting conditions.",
+      "rate_candidates": [
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "voting_ownership",
+              "operator": ">=",
+              "unit": "%",
+              "value": "25"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "country": "NG",
       "income_type": "dividend",
       "evidence_source_id": "SRC-3606886A4EB55B88",
