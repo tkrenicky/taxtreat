@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "dataset_release": "semantic-remediation-condition-candidates-2026-08-29.1",
+  "purpose": "Machine-prepared, source-backed semantic corrections discovered after Stage 6 release audit. These corrections modify only the pending country-QA candidate package. They do not constitute human review, verification, production approval, rule promotion, or source release.",
+  "verification_status": "needs_review",
+  "automatic_production_approval_forbidden": true,
+  "corrections": [
+    {
+      "country": "PH",
+      "income_type": "royalty",
+      "evidence_source_id": "SRC-1E2D0264FEB4040D",
+      "evidence_note": "Article 12(2)(a) limits ordinary copyright other than film/broadcast, patents/trademarks/designs/processes, equipment and industrial/commercial/scientific experience to 10%; Article 12(2)(b) limits cinematographic films and films/recordings for television or radio to 15%.",
+      "rate_candidates": [
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "copyright_literary_artistic_scientific_excluding_cinematographic_films_and_broadcast_media_or_patent_trademark_design_model_plan_secret_formula_process_equipment_or_industrial_commercial_scientific_knowhow"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "cinematographic_films_or_television_radio_films_or_recordings"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "TW",
+      "income_type": "royalty",
+      "evidence_source_id": "CZ-TW-LAW-45-2020",
+      "evidence_note": "Article 12(2) applies 5% to industrial, commercial or scientific equipment and 10% in all other cases.",
+      "rate_candidates": [
+        {
+          "rate": 5.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "industrial_commercial_scientific_equipment"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10.0,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "all_royalties_except_industrial_commercial_scientific_equipment"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
