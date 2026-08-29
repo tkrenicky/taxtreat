@@ -6,13 +6,61 @@
   "automatic_production_approval_forbidden": true,
   "corrections": [
     {
+      "country": "NG",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-3606886A4EB55B88",
+      "evidence_note": "Article 10(2)(a) applies 12.5% where the beneficial owner is a company owning directly or indirectly at least 10% of the voting interest in the paying company; the current Stage 6 projection uses general ownership_percent and omits the company condition.",
+      "rate_candidates": [
+        {
+          "rate": 12.5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company"
+            },
+            {
+              "condition_type": "direct_or_indirect_voting_ownership",
+              "operator": ">=",
+              "unit": "%",
+              "value": "10"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "country": "PH",
       "income_type": "royalty",
       "evidence_source_id": "SRC-1E2D0264FEB4040D",
       "evidence_note": "Article 12(2)(a) limits ordinary copyright other than film/broadcast, patents/trademarks/designs/processes, equipment and industrial/commercial/scientific experience to 10%; Article 12(2)(b) limits cinematographic films and films/recordings for television or radio to 15%.",
       "rate_candidates": [
         {
-          "rate": 10.0,
+          "rate": 10,
           "conditions": [
             {
               "condition_type": "royalty_category",
@@ -29,7 +77,7 @@
           ]
         },
         {
-          "rate": 15.0,
+          "rate": 15,
           "conditions": [
             {
               "condition_type": "royalty_category",
@@ -54,7 +102,7 @@
       "evidence_note": "Article 12(2) applies 5% to industrial, commercial or scientific equipment and 10% in all other cases.",
       "rate_candidates": [
         {
-          "rate": 5.0,
+          "rate": 5,
           "conditions": [
             {
               "condition_type": "royalty_category",
@@ -71,13 +119,61 @@
           ]
         },
         {
-          "rate": 10.0,
+          "rate": 10,
           "conditions": [
             {
               "condition_type": "royalty_category",
               "operator": "==",
               "unit": null,
               "value": "all_royalties_except_industrial_commercial_scientific_equipment"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "US",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-EADD5B70920D588C",
+      "evidence_note": "Article 10(2)(a) applies 5% where the beneficial owner is a company owning at least 10% of the voting stock of the paying company. The US RIC/REIT carve-outs in Article 10(3) concern dividends paid by US RICs/REITs and therefore do not alter the CZ-source direction represented here.",
+      "rate_candidates": [
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company"
+            },
+            {
+              "condition_type": "voting_ownership",
+              "operator": ">=",
+              "unit": "%",
+              "value": "10"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
             },
             {
               "condition_type": "beneficial_owner",
