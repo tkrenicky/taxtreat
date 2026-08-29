@@ -677,3 +677,78 @@ def test_bangladesh_special_holding_facts_are_professional_review():
         assert question["client_answerable"] is False
         assert question["response_type"] == "professional_review"
         assert question["advisor_topic"] == "dividend_holding_period_special_condition"
+
+
+def test_taiwan_complement_excludes_equipment_but_covers_other_atomic_royalties():
+    from taxtreat.engine.legal_rule_engine import _royalty_category_groups
+
+    groups = _royalty_category_groups(
+        "all_royalties_except_industrial_commercial_scientific_equipment"
+    )
+
+    assert "equipment_financial" not in groups
+    assert "equipment_operating" not in groups
+    assert {
+        "copyright_nonfilm",
+        "film_broadcast",
+        "software",
+        "industrial_ip",
+        "other",
+    }.issubset(groups)
+
+
+def test_semantic_remediation_candidates_remain_unapproved_and_source_backed():
+    import json
+    from pathlib import Path
+
+    payload = json.loads(
+        Path(
+            "data/legal_consolidation/"
+            "semantic_remediation_condition_candidates_20260829.json"
+        ).read_text(encoding="utf-8")
+    )
+
+    assert payload["verification_status"] == "needs_review"
+    assert payload["automatic_production_approval_forbidden"] is True
+
+    by_key = {
+        (row["country"], row["income_type"]): row
+        for row in payload["corrections"]
+    }
+
+    assert ("PH", "royalty") in by_key
+    assert ("TW", "royalty") in by_key
+    assert by_key[("PH", "royalty")]["evidence_source_id"] == "SRC-1E2D0264FEB4040D"
+    assert by_key[("TW", "royalty")]["evidence_source_id"] == "CZ-TW-LAW-45-2020"
+
+
+def test_philippine_pending_remediation_restores_category_distinction():
+    import json
+    from pathlib import Path
+
+    payload = json.loads(
+        Path(
+            "data/legal_consolidation/"
+            "semantic_remediation_condition_candidates_20260829.json"
+        ).read_text(encoding="utf-8")
+    )
+    correction = next(
+        row
+        for row in payload["corrections"]
+        if row["country"] == "PH" and row["income_type"] == "royalty"
+    )
+    by_rate = {
+        row["rate"]: row["conditions"]
+        for row in correction["rate_candidates"]
+    }
+
+    assert any(
+        condition["condition_type"] == "royalty_category"
+        and "excluding_cinematographic" in condition["value"]
+        for condition in by_rate[10.0]
+    )
+    assert any(
+        condition["condition_type"] == "royalty_category"
+        and "cinematographic_films" in condition["value"]
+        for condition in by_rate[15.0]
+    )
