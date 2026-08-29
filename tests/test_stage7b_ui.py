@@ -421,3 +421,11 @@ def test_ui_does_not_render_raw_eu_relief_structured_excerpt():
     assert 'const canShowRawExcerpt = ["treaty", "protocol", "mli"].includes(layer);' in javascript
     assert '|| (canShowRawExcerpt && Boolean(citation.excerpt));' in javascript
     assert '(layer !== "domestic" || hasDomesticDisclosure)' not in javascript
+
+
+def test_step4_english_exact_translation_is_case_insensitive_for_section19():
+    javascript = client.get("/ui-assets/workspace-step4-en-complete-20260821.js").text
+
+    assert 'toLocaleLowerCase("cs-CZ")' in javascript
+    assert '["Vnitrostátní osvobození podle § 19 ZDP", "Domestic exemption under Section 19"]' in javascript
+    assert '["§ 19 ZDP se použije", "Section 19 applies"]' in javascript
