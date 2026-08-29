@@ -752,3 +752,23 @@ def test_philippine_pending_remediation_restores_category_distinction():
         and "cinematographic_films" in condition["value"]
         for condition in by_rate[15.0]
     )
+
+
+def test_overloaded_beneficial_owner_legal_status_fails_closed():
+    from taxtreat.engine.legal_rule_engine import LegalCondition, _evaluate_condition
+
+    condition = LegalCondition(
+        fact="beneficial_owner",
+        operator="==",
+        value="government_or_public_body_special_status",
+        fact_source="transaction",
+    )
+
+    matched, missing = _evaluate_condition(
+        condition,
+        {"beneficial_owner": True},
+        {},
+    )
+
+    assert matched is None
+    assert missing == "beneficial_owner"
