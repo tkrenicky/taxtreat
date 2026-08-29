@@ -471,6 +471,31 @@ PROFESSIONAL_FACT_GROUPS = {
 }
 
 PROFESSIONAL_FACT_GROUPS.update({
+    "ird_association_payer_directly_holds_25_percent_recipient": {
+        "topic": "domestic_exemption_association",
+        "prompt": "Ověřte kvalifikovaný vztah mezi plátcem a příjemcem pro případné osvobození.",
+        "why": "Podmínka 25% kvalifikovaného vztahu je součástí odborného posouzení vnitrostátního osvobození.",
+    },
+    "ird_association_recipient_directly_holds_25_percent_payer": {
+        "topic": "domestic_exemption_association",
+        "prompt": "Ověřte kvalifikovaný vztah mezi příjemcem a plátcem pro případné osvobození.",
+        "why": "Podmínka 25% kvalifikovaného vztahu je součástí odborného posouzení vnitrostátního osvobození.",
+    },
+    "ird_association_common_person_directly_holds_25_percent_both": {
+        "topic": "domestic_exemption_association",
+        "prompt": "Ověřte kvalifikovaný vztah přes společnou osobu pro případné osvobození.",
+        "why": "Tato alternativní 25% vazba vyžaduje posouzení vlastnické struktury a nelze ji bezpečně odvozovat z jednoho klientského údaje.",
+    },
+    "holding_period_includes_payment_date": {
+        "topic": "dividend_holding_period_special_condition",
+        "prompt": "Ověřte zvláštní pravidlo započtení dne výplaty do doby držby.",
+        "why": "Jde o smluvní technickou podmínku výpočtu doby držby, nikoli o samostatný klientský fakt.",
+    },
+    "holding_period_reorganisation_continuity": {
+        "topic": "dividend_holding_period_special_condition",
+        "prompt": "Ověřte kontinuitu doby držby při reorganizaci.",
+        "why": "Započtení předchozí doby držby při reorganizaci vyžaduje posouzení konkrétní transakční historie.",
+    },
     "detailed_eligibility_review_required": {
         "topic": "interest_treaty_special_condition",
         "prompt": (
