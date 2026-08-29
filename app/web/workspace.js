@@ -1182,7 +1182,11 @@
     card.append(role, title, link, detail);
 
     const hasDomesticDisclosure = pathRole === "domestic_exemption_basis" || pathRole === "domestic_starting_point";
-    if ((citation.official_text || citation.excerpt || hasDomesticDisclosure) && (layer !== "domestic" || hasDomesticDisclosure)) {
+    const canShowRawExcerpt = ["treaty", "protocol", "mli"].includes(layer);
+    const canShowLegalDisclosure = Boolean(citation.official_text)
+      || hasDomesticDisclosure
+      || (canShowRawExcerpt && Boolean(citation.excerpt));
+    if (canShowLegalDisclosure) {
       const disclosure = document.createElement("details"); disclosure.className = "citation-excerpt"; disclosure.open = true;
       const summary = document.createElement("summary");
       summary.textContent = hasDomesticDisclosure
