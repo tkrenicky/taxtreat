@@ -413,3 +413,11 @@ def test_ui_exposes_accessible_status_and_error_regions():
     assert 'role="alert"' in html
     assert 'aria-label="Hlavní navigace"' in html
     assert 'aria-label="Průběh kontroly"' in html
+
+
+def test_ui_does_not_render_raw_eu_relief_structured_excerpt():
+    javascript = client.get("/ui-assets/workspace.js?v=20260819-3").text
+
+    assert 'const canShowRawExcerpt = ["treaty", "protocol", "mli"].includes(layer);' in javascript
+    assert '|| (canShowRawExcerpt && Boolean(citation.excerpt));' in javascript
+    assert '(layer !== "domestic" || hasDomesticDisclosure)' not in javascript
