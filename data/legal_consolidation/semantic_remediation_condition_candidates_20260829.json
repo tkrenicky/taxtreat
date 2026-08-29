@@ -990,6 +990,48 @@
       ]
     },
     {
+      "country": "KW",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-BF7674A114B0103D",
+      "evidence_note": "Article 10(3) gives a 0% source-state result only for specified government/public bodies or a resident company controlled by, or at least 25% directly or indirectly owned by, such public bodies. The current Stage 6 projection incorrectly stores that classification as a non-boolean beneficial_owner value.",
+      "rate_candidates": [
+        {
+          "rate": 0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "government_or_government_institution_or_article_4_2_public_organization_or_company_controlled_by_or_at_least_25_percent_directly_or_indirectly_owned_by_such_public_body"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "country": "LI",
       "income_type": "dividend",
       "evidence_source_id": "SRC-2FCAE2F83ACB4BD7",
@@ -1506,6 +1548,77 @@
         },
         {
           "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "QA",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-A4B3C2125350DA5C",
+      "evidence_note": "Article 10(3) gives a 0% source-state result for specified government/public bodies and wholly owned public entities. The current Stage 6 projection incorrectly stores that classification as a non-boolean beneficial_owner value. Article 10(2)(a) separately provides 5% for a company directly holding at least 10% of capital; 10% applies otherwise.",
+      "rate_candidates": [
+        {
+          "rate": 0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "other_state_government_subnational_local_authority_central_bank_other_public_law_body_or_entity_directly_or_indirectly_wholly_owned_by_such_public_body"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "10"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10,
           "conditions": [
             {
               "condition_type": "fallback_case",
