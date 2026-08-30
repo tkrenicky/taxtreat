@@ -38,6 +38,19 @@ EXPECTED_FACTS = {
         "holding_period_months",
         "beneficial_owner",
     },
+    "CZ-HU-DIVIDEND-CURRENT-1": {
+        "recipient_entity_type",
+        "direct_ownership",
+        "ownership_percent",
+        "beneficial_owner",
+    },
+    "CZ-SK-DIVIDEND-CURRENT-1": {
+        "recipient_entity_type",
+        "recipient_is_partnership",
+        "direct_ownership",
+        "ownership_percent",
+        "beneficial_owner",
+    },
 }
 
 COUNTRY_BY_RULE = {
