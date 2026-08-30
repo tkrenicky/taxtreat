@@ -4,13 +4,19 @@ on:
   push:
     branches:
       - feat/web-bulk-en-treaty-acquisition-20260825
+      - feat/cz-ui-batch1-20260821
     paths:
       - '.github/workflows/condition-aware-verification-20260830.yml'
       - 'data/legal_rules_stage6/**'
       - 'app/web/treaty-excerpt-locales/**'
       - 'app/web/workspace.js'
+      - 'app/web/workspace-report-context.js'
+      - 'app/web/workspace-report-export.js'
+      - 'app/web/workspace-dynamic-intake-en-20260830.js'
+      - 'app/web/workspace-output-status-integrity-20260830.js'
       - 'taxtreat/engine/**'
       - 'taxtreat/services/**'
+      - 'app/main.py'
       - 'scripts/verify_en_treaty_locale_all_rules_20260828.py'
       - 'scripts/verify_condition_sensitive_intake_coverage_20260830.py'
       - 'scripts/verify_special_interest_priority_20260830.py'
@@ -21,6 +27,7 @@ on:
       - 'scripts/verify_dividend_condition_semantics_20260830.py'
       - 'scripts/verify_dividend_rule_normalization_20260830.py'
       - 'scripts/verify_en_fallback_report_locale_20260828.py'
+      - 'scripts/verify_web_report_condition_aware_integration_20260830.py'
   workflow_dispatch:
 
 jobs:
@@ -51,6 +58,7 @@ jobs:
             verify_dividend_condition_semantics_20260830.py
             verify_dividend_rule_normalization_20260830.py
             verify_en_fallback_report_locale_20260828.py
+            verify_web_report_condition_aware_integration_20260830.py
           )
           for script in "${scripts[@]}"; do
             name="${script%.py}"
