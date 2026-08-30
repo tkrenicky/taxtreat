@@ -1,20 +1,23 @@
 (() => {
   "use strict";
 
-  const PROMPTS = {
+  const previousFetch = window.fetch.bind(window);
+
+  const COPY = {
     ownership_percent: ["What percentage of the Czech payer's share capital is held by the recipient?", "The ownership percentage may determine whether a reduced dividend rate is available."],
     direct_ownership: ["Does the recipient hold the stated interest in the Czech payer directly?", "Some exemptions or reduced treaty rates require direct ownership."],
     direct_or_indirect_voting_ownership: ["What percentage of the voting rights in the Czech payer is held or controlled by the recipient?", "Some treaty dividend thresholds are based on voting rights rather than share capital."],
     holding_period_months: ["From what date has the recipient held the interest in the Czech payer?", "TaxTreat uses the acquisition date to determine the relevant holding period."],
     article_10_public_body_exemption: ["Does the recipient fall within the treaty's qualifying public-body category for the Article 10 dividend exemption?", "Some treaties contain a separate zero-rate dividend branch for a government, central bank or another expressly qualifying public body."],
-    article_11_public_body_exemption: ["Does this interest fall within the treaty's qualifying public or government-supported exemption under Article 11?", "The exemption applies only if the specific public-body or government-supported financing conditions of the treaty are met."],
+    article_10_3_public_body_exemption: ["Does the recipient fall within the qualifying public-body category described in Article 10(3)?", "This zero-rate dividend branch applies only to the public bodies expressly covered by the treaty."],
+    article_11_public_body_exemption: ["Does this interest fall within the treaty's qualifying public or government-supported exemption under Article 11?", "The exemption applies only if the treaty's specific public-body or government-supported financing conditions are met."],
     article_11_3_public_financing_exemption: ["Does this interest qualify for the public or government-backed financing exemption under Article 11(3)?", "This branch is available only for the public institutions or qualifying government-backed financing expressly covered by the treaty."],
     article_11_3_exemption: ["Does this interest qualify for the special exemption under Article 11(3)?", "The applicable treaty contains a special interest branch whose factual conditions must be confirmed."],
     article_11_3a_exemption: ["Does this interest qualify for the special exemption under Article 11(3)(a)?", "The applicable treaty contains a special interest branch whose factual conditions must be confirmed."],
     special_article_11_3_exemption: ["Does this interest qualify for the treaty's special Article 11(3) exemption?", "The special branch applies only if the conditions stated in the relevant treaty are met."],
     recipient_is_bank: ["Is the interest recipient a bank for purposes of the applicable treaty?", "Some treaties provide a reduced interest rate only to qualifying banks."],
     recipient_is_financial_institution_or_insurer: ["Is the recipient a qualifying financial institution, including an insurer, for purposes of the applicable treaty?", "Some treaties provide a special interest rate only to a qualifying financial institution."],
-    recipient_has_share_capital: ["Is the recipient a company whose capital is wholly or partly divided into shares for purposes of the applicable treaty?", "Some older treaties condition the dividend exemption on this specific company characteristic."],
+    recipient_has_share_capital: ["Is the recipient a company whose capital is wholly or partly divided into shares for purposes of the applicable treaty?", "Some older treaties condition a dividend exemption on this specific company characteristic."],
     recipient_is_qualifying_pension_fund: ["Is the recipient a qualifying pension fund for purposes of the applicable treaty?", "A qualifying pension fund may fall within a separate treaty dividend branch."],
     recipient_is_central_bank: ["Is the recipient a central bank for purposes of the applicable treaty?", "A central bank may fall within a separate treaty branch."],
     recipient_is_partnership: ["Is the recipient a partnership for purposes of the applicable treaty?", "Some reduced dividend branches expressly exclude partnerships."],
@@ -31,12 +34,12 @@
     qualifying_article_11_2a_case: ["Does the interest fall within the qualifying case described in Article 11(2)(a)?", "The applicable treaty provides a separate interest treatment for this specific category."],
     loan_is_noncommercial: ["Is the loan non-commercial within the meaning of the applicable treaty?", "The treaty distinguishes this category from ordinary commercial financing."],
     minimum_loan_term_years: ["Does the financing satisfy the minimum term required by the applicable treaty?", "The special treaty branch is available only if the financing term meets the stated threshold."],
-    recipient_country_royalty_wht: ["Does the residence-state royalty tax condition required by the treaty apply?", "The treaty branch depends on the specified residence-state royalty taxation condition."],
+    recipient_country_royalty_wht: ["Does the residence-state royalty-tax condition required by the treaty apply?", "The treaty branch depends on the specified residence-state royalty taxation condition."],
     detailed_eligibility_review_required: ["A detailed treaty eligibility review is required for this branch.", "This condition cannot be reduced to a single factual confirmation without reviewing the relevant legal and transaction documents."],
     distributed_vs_undistributed_corporate_tax_rate_difference: ["Does the relevant corporate-tax-rate difference meet the treaty threshold?", "The applicable dividend rule depends on the specified difference between the taxation of distributed and undistributed profits."],
   };
 
-  const HUMAN_LABELS = {
+  const LABELS = {
     beneficial_owner: "beneficial ownership of the income",
     recipient_is_treaty_resident: "treaty residence of the recipient",
     permanent_establishment_connection: "connection with a Czech permanent establishment",
@@ -48,22 +51,17 @@
     source_state_taxation: "source-state taxation condition",
   };
 
-  function language() {
-    const control = document.querySelector("#taxtreat-ui-language");
-    if (control?.value === "en") return "en";
-    const stored = localStorage.getItem("taxtreat-ui-language");
-    return stored === "en" || document.documentElement.lang === "en" ? "en" : "cs";
+  function isEnglish() {
+    return document.documentElement.lang === "en" || window.__TAXTREAT_LOCALE__ === "en";
   }
 
-  function factFromCard(card) {
-    const input = card.querySelector("[data-input-path]");
-    const path = String(input?.dataset.inputPath || "");
-    if (!path.startsWith("facts.")) return "";
-    return path.slice(6);
+  function factFromQuestion(question) {
+    const path = String(question?.input_path || "");
+    return path.startsWith("facts.") ? path.slice(6) : "";
   }
 
-  function humanizeFact(fact) {
-    if (HUMAN_LABELS[fact]) return HUMAN_LABELS[fact];
+  function humanize(fact) {
+    if (LABELS[fact]) return LABELS[fact];
     return String(fact || "")
       .replace(/^article_(\d+)_/i, "Article $1 ")
       .replace(/_(\d+)([a-z])_/gi, " $1($2) ")
@@ -72,64 +70,44 @@
       .trim();
   }
 
-  function genericCopy(fact) {
-    const label = humanizeFact(fact) || "the required treaty fact";
+  function copyFor(question) {
+    const fact = factFromQuestion(question);
+    if (!fact) return null;
+    if (COPY[fact]) return COPY[fact];
+    const label = humanize(fact) || "the required treaty fact";
     return [
       `Please confirm the following treaty fact: ${label}.`,
       "This fact is required to determine which branch of the applicable treaty rule applies to the transaction.",
     ];
   }
 
-  function translateControls(card) {
-    card.querySelectorAll("option").forEach((option) => {
-      const text = String(option.textContent || "").trim();
-      if (text === "Vyber odpověď") option.textContent = "Select an answer";
-      else if (text === "Vyber možnost") option.textContent = "Select an option";
-      else if (text === "Ano") option.textContent = "Yes";
-      else if (text === "Ne") option.textContent = "No";
+  function localizeIntake(body) {
+    const questions = body?.intake?.questions;
+    if (!Array.isArray(questions)) return body;
+    questions.forEach((question) => {
+      const copy = copyFor(question);
+      if (!copy) return;
+      question.prompt = copy[0];
+      question.why = copy[1];
     });
-    card.querySelectorAll("input").forEach((input) => {
-      if (input.placeholder === "např. 25") input.placeholder = "e.g. 25";
-      if (input.placeholder === "CZK za 1 jednotku měny") input.placeholder = "CZK per 1 unit of currency";
-    });
-    card.querySelectorAll("small").forEach((node) => {
-      if (String(node.textContent || "").includes("Rozhodné datum bylo převzato ze zadání")) {
-        node.textContent = "The relevant date is taken from the transaction details. TaxTreat will add the corresponding Czech National Bank exchange-rate source automatically.";
-      }
-    });
+    return body;
   }
 
-  function translateCard(card) {
-    if (language() !== "en") return;
-    const fact = factFromCard(card);
-    if (!fact) return;
-    const [prompt, why] = PROMPTS[fact] || genericCopy(fact);
-    const copy = card.firstElementChild;
-    const title = copy?.querySelector("strong");
-    const detail = copy?.querySelector("p");
-    if (title) title.textContent = prompt;
-    if (detail) detail.textContent = why;
-    translateControls(card);
-  }
-
-  function patch() {
-    if (language() !== "en") return;
-    document.querySelectorAll("#workspace-questions .question-card").forEach(translateCard);
-  }
-
-  let timer = 0;
-  new MutationObserver((mutations) => {
-    if (!mutations.some((item) => item.addedNodes?.length || item.type === "characterData")) return;
-    window.clearTimeout(timer);
-    timer = window.setTimeout(patch, 0);
-  }).observe(document.documentElement, { subtree: true, childList: true, characterData: true });
-
-  document.addEventListener("change", (event) => {
-    if (event.target?.id === "taxtreat-ui-language") window.setTimeout(patch, 0);
-  }, true);
-  document.addEventListener("click", (event) => {
-    if (event.target?.closest?.("#taxtreat-language-controls")) window.setTimeout(patch, 0);
-  }, true);
-
-  patch();
+  window.fetch = async function taxTreatConditionAwareEnglishFetch(resource, options = {}) {
+    const response = await previousFetch(resource, options);
+    const url = typeof resource === "string" ? resource : resource?.url || "";
+    if (!isEnglish() || !url.includes("/analysis/intake") || !response.ok) return response;
+    try {
+      const body = localizeIntake(await response.clone().json());
+      const headers = new Headers(response.headers);
+      headers.set("content-type", "application/json; charset=utf-8");
+      return new Response(JSON.stringify(body), {
+        status: response.status,
+        statusText: response.statusText,
+        headers,
+      });
+    } catch (_problem) {
+      return response;
+    }
+  };
 })();
