@@ -4,6 +4,8 @@ import json
 from collections import defaultdict
 from pathlib import Path
 
+from taxtreat.engine.dividend_rule_normalization import normalize_raw_legal_rule
+
 ROOT = Path(__file__).resolve().parents[1]
 RULE_DIR = ROOT / "data" / "legal_rules_stage6"
 
@@ -42,7 +44,8 @@ def main() -> int:
         country = package.get("country_pair", {}).get("recipient_country")
         groups: dict[tuple[str, str], list[dict]] = defaultdict(list)
 
-        for rule in package.get("rules", []):
+        for raw_rule in package.get("rules", []):
+            rule = normalize_raw_legal_rule(raw_rule)
             if rule.get("legal_layer") not in {"treaty", "protocol", "mli"}:
                 continue
             if rule.get("effect") != "rate" or rule.get("income_type") != "interest":
@@ -80,7 +83,7 @@ def main() -> int:
             "Special-interest priority failures:\n" + "\n".join(sorted(set(failures)))
         )
 
-    print("Special-interest priority ordering: PASS")
+    print("Special-interest priority ordering after runtime remediation: PASS")
     return 0
 
 
