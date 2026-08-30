@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 RULE_DIR = ROOT / "data" / "legal_rules_stage6"
 
 GENERIC_FACTS = {"beneficial_owner", "fallback_case"}
+BASE_RECIPIENT_ENTITY_TYPES = {"company", "individual", "fund", "other"}
 
 
 def main() -> int:
@@ -37,6 +38,16 @@ def main() -> int:
                 if not fact or fact in GENERIC_FACTS:
                     continue
                 seen.add(fact)
+
+                if fact == "recipient_entity_type":
+                    value = condition.get("value")
+                    if value not in BASE_RECIPIENT_ENTITY_TYPES:
+                        failures.append(
+                            f"{country} {rule.get('rule_id')}: recipient_entity_type={value!r} "
+                            "is not representable by the base UI entity-type field; split the "
+                            "special treaty qualification into its own fact"
+                        )
+                        continue
 
                 if source == "determination":
                     if fact in DETERMINATION_GUIDANCE:
