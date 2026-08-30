@@ -220,7 +220,7 @@
         select.dispatchEvent(new Event("change", { bubbles: true }));
       }
     }
-    window.setTimeout(schedule, 0);
+    if (button) window.setTimeout(schedule, 0);
   }, true);
 
   document.addEventListener("change", (event) => {

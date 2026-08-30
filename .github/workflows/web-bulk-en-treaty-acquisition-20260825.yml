@@ -1,0 +1,71 @@
+name: WEB bulk EN treaty acquisition
+
+on:
+  push:
+    branches:
+      - feat/web-bulk-en-treaty-acquisition-20260825
+    paths:
+      - 'data/web/cz_treaty_en_official_sources*_20260825.json'
+      - 'scripts/build_bulk_treaty_en_locale_candidates_v*.py'
+      - 'scripts/promote_bulk_treaty_en_locale_candidates_20260825.py'
+      - 'scripts/run_bulk_treaty_en_locale_pipeline_20260825.sh'
+      - '.github/workflows/web-bulk-en-treaty-acquisition-20260825.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: web-bulk-en-treaty-acquisition-20260825
+  cancel-in-progress: true
+
+jobs:
+  run-batch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/web-bulk-en-treaty-acquisition-20260825
+      - name: Install PDF tooling
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils
+      - name: Compile pipeline
+        run: |
+          python -m py_compile \
+            scripts/build_bulk_treaty_en_locale_candidates_v3_20260825.py \
+            scripts/build_bulk_treaty_en_locale_candidates_v9_20260825.py \
+            scripts/build_bulk_treaty_en_locale_candidates_v10_20260825.py \
+            scripts/build_bulk_treaty_en_locale_candidates_v11_20260825.py \
+            scripts/promote_bulk_treaty_en_locale_candidates_20260825.py
+      - name: Run explicit-source batch
+        env:
+          PYTHONUNBUFFERED: '1'
+        run: bash scripts/run_bulk_treaty_en_locale_pipeline_20260825.sh
+      - name: Prepare latest status snapshot
+        if: always()
+        run: |
+          if [ -f reports/treaty_en_locale_bulk_candidates_v9_20260825.json ]; then
+            cp reports/treaty_en_locale_bulk_candidates_v9_20260825.json data/web/treaty_en_locale_bulk_latest_status_20260825.json
+          fi
+      - name: Commit verified locale additions and status
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/web/treaty-excerpt-locales/ data/web/treaty_en_locale_bulk_latest_status_20260825.json || true
+          if ! git diff --cached --quiet; then
+            git commit -m "Update verified English treaty excerpts and batch status"
+            git pull --rebase origin feat/web-bulk-en-treaty-acquisition-20260825
+            git push origin HEAD:feat/web-bulk-en-treaty-acquisition-20260825
+          fi
+      - name: Upload batch reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-bulk-en-treaty-results
+          path: |
+            reports/treaty_en_locale_bulk_candidates_v9_20260825.json
+            reports/treaty_en_locale_bulk_candidates_v9_20260825/
+            reports/treaty_en_locale_bulk_promotion_20260825.json
+            data/web/treaty_en_locale_bulk_latest_status_20260825.json
+            app/web/treaty-excerpt-locales/
+          if-no-files-found: warn

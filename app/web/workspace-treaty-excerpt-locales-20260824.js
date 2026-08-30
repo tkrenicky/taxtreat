@@ -14,7 +14,94 @@
   let jurisdictionsPromise = null;
 
   function language() {
+    const htmlLang = String(document.documentElement.lang || "").toLowerCase();
+    if (htmlLang.startsWith("en")) return "en";
+    if (htmlLang.startsWith("cs") || htmlLang.startsWith("cz")) return "cs";
     return document.querySelector("#taxtreat-ui-language")?.value || localStorage.getItem(UI_KEY) || "cs";
+  }
+
+  const PUBLIC_TREATY_TEXT_STATUSES = new Set([
+    "official_treaty_text",
+    "official_protocol_text",
+    "official_translation_non_authentic",
+    "verified_stage6_rule_summary",
+    "current_application_suspended"
+  ]);
+
+  const STATUS_UI = {
+    official_treaty_text: null,
+    official_protocol_text: null,
+    official_translation_non_authentic: {
+      level: "info",
+      label: "Official English translation — non-authentic",
+      detail: "This English wording is published by an official source but is not the authentic treaty text."
+    },
+    official_synthesised_text: {
+      level: "info",
+      label: "Official-source synthesised English text",
+      detail: "This English wording is synthesised from official treaty materials and is not presented as authentic treaty wording."
+    },
+    official_synthesised_excerpt: {
+      level: "info",
+      label: "Official-source synthesised English excerpt",
+      detail: "This English excerpt is synthesised from official treaty materials and is not presented as authentic treaty wording."
+    },
+    machine_translation_from_official_text: {
+      level: "warning",
+      label: "Machine translation of official text",
+      detail: "This is a machine translation of official treaty text. Consult the official-language source for authoritative wording."
+    },
+    verified_stage6_rule_summary: {
+      level: "info",
+      label: "Verified English rule summary",
+      detail: "This is a verified English summary of the legal rule, not authentic treaty wording."
+    },
+    current_application_suspended: {
+      level: "danger",
+      label: "Application currently suspended",
+      detail: "This provision is currently suspended. The wording below is shown for legal context only and must not be treated as an operative treaty rule."
+    }
+  };
+
+  function removeStatusNotice(card) {
+    card.querySelector(".tt-treaty-status")?.remove();
+  }
+
+  function renderStatusNotice(card, locale) {
+    removeStatusNotice(card);
+    const status = String(locale?.status || "");
+    const meta = STATUS_UI[status];
+    if (!meta) return;
+
+    const note = document.createElement("div");
+    note.className = `tt-treaty-status tt-treaty-status-${meta.level}`;
+    note.dataset.treatyStatus = status;
+
+    const strong = document.createElement("strong");
+    strong.textContent = meta.label;
+    const small = document.createElement("small");
+    small.textContent = meta.detail;
+    note.append(strong, small);
+
+    const details = card.querySelector("details.citation-excerpt");
+    if (details) card.insertBefore(note, details);
+    else card.append(note);
+  }
+
+  function installStatusStyles() {
+    if (document.querySelector("#tt-treaty-status-styles")) return;
+    const style = document.createElement("style");
+    style.id = "tt-treaty-status-styles";
+    style.textContent = `
+      .tt-treaty-status{margin:10px 0 8px;padding:10px 12px;border-radius:8px;border:1px solid #d8e3df;display:grid;gap:3px;font-size:.82rem;line-height:1.4}
+      .tt-treaty-status strong{font-size:.82rem}
+      .tt-treaty-status small{font-size:.78rem;color:#566662}
+      .tt-treaty-status-info{background:#f4f8f7}
+      .tt-treaty-status-warning{background:#fff8e8;border-color:#ead7a3}
+      .tt-treaty-status-danger{background:#fff1ef;border-color:#dfb4ae}
+      .tt-treaty-status-danger strong{color:#8b2f25}
+    `;
+    document.head.append(style);
   }
 
   function loadRegistry() {
@@ -123,19 +210,37 @@
     return null;
   }
 
-  function localeFor(registry, countryRegistry, country, article) {
-    const ruleEntry = selectedRuleId && String(selectedTreatyArticle || "") === String(article)
+  function localeFor(registry, countryRegistry, country, article, cardRuleId = "") {
+    const exactRuleId = String(cardRuleId || "");
+    const exactEntry = exactRuleId ? countryRegistry?.rules?.[exactRuleId] : null;
+    const exactLocale = exactEntry && (!exactEntry.article || String(exactEntry.article) === String(article))
+      ? exactEntry.en
+      : null;
+    if (exactLocale?.text) return { locale: exactLocale, specificity: "rule" };
+
+    const selectedEntry = selectedRuleId && String(selectedTreatyArticle || "") === String(article)
       ? countryRegistry?.rules?.[selectedRuleId]
       : null;
-    const ruleLocale = ruleEntry && (!ruleEntry.article || String(ruleEntry.article) === String(article))
-      ? ruleEntry.en
+    const selectedLocale = selectedEntry && (!selectedEntry.article || String(selectedEntry.article) === String(article))
+      ? selectedEntry.en
       : null;
-    if (ruleLocale?.text) return { locale: ruleLocale, specificity: "rule" };
+    if (selectedLocale?.text) return { locale: selectedLocale, specificity: "rule" };
 
     const articleLocale = registry?.entries?.[country]?.[String(article)]?.en
       || countryRegistry?.articles?.[String(article)]?.en
       || null;
-    return articleLocale?.text ? { locale: articleLocale, specificity: "article" } : null;
+    if (articleLocale?.text) return { locale: articleLocale, specificity: "article" };
+
+    // Last-resort verified rule summary for this article. This is especially
+    // important when the treaty is displayed as secondary protection and
+    // therefore is not the selected rule, but a verified EN rule summary is
+    // already present in the country registry.
+    const matchingRule = Object.values(countryRegistry?.rules || {}).find((entry) =>
+      String(entry?.article || "") === String(article) && entry?.en?.text
+    );
+    return matchingRule?.en?.text
+      ? { locale: matchingRule.en, specificity: "rule" }
+      : null;
   }
 
   function candidateSegments(text) {
@@ -208,7 +313,7 @@
       const details = card.querySelector("details.citation-excerpt");
       if (details) card.insertBefore(note, details); else card.append(note);
     }
-    note.textContent = `Official English treaty wording is not yet registered for CZ–${country}, Article ${article}. The Czech official excerpt is shown below.`;
+    note.textContent = `Official English treaty text is not yet registered for CZ–${country}, Article ${article}. TaxTreat will not present a synthetic summary as treaty wording.`;
   }
 
   function appendWithMark(excerpt, text, decisive) {
@@ -225,7 +330,7 @@
     return true;
   }
 
-  function renderEnglishLocale(excerpt, resolved, article) {
+  function renderEnglishLocale(card, excerpt, resolved, article) {
     const { locale, specificity } = resolved;
     excerpt.replaceChildren();
     let decisive = "";
@@ -241,6 +346,12 @@
     excerpt.dataset.ttTreatyLocaleSource = locale.source_url || "";
     excerpt.dataset.ttTreatyLocaleSpecificity = specificity;
     excerpt.dataset.ttTreatyDecisivePassage = highlighted ? "resolved" : "not-isolated";
+    renderStatusNotice(card, locale);
+    const details = card.querySelector("details.citation-excerpt");
+    if (details && locale.status === "current_application_suspended") {
+      const summary = details.querySelector("summary");
+      if (summary) summary.textContent = "Treaty wording — application currently suspended";
+    }
   }
 
   async function refreshTreatyExcerpts() {
@@ -268,21 +379,30 @@
         delete excerpt.dataset.ttTreatyLocaleSpecificity;
         delete excerpt.dataset.ttTreatyDecisivePassage;
         removeMissingNote(card);
+        removeStatusNotice(card);
         return;
       }
 
-      const resolved = localeFor(registry, countryRegistry, country, article);
-      if (!country || !resolved?.locale?.text) {
+      const resolved = localeFor(registry, countryRegistry, country, article, card.dataset.ruleId || "");
+      const publicStatus = String(resolved?.locale?.status || "");
+      const usableOfficialEnglish = Boolean(
+        country
+        && resolved?.locale?.text
+        && PUBLIC_TREATY_TEXT_STATUSES.has(publicStatus)
+      );
+      if (!usableOfficialEnglish) {
         restoreOriginal(excerpt);
         excerpt.setAttribute("lang", "cs");
         excerpt.dataset.ttTreatyLanguage = "cs-fallback";
+        excerpt.dataset.ttTreatyLocaleStatus = publicStatus || "missing_official_english";
         delete excerpt.dataset.ttTreatyLocaleSpecificity;
         delete excerpt.dataset.ttTreatyDecisivePassage;
         showMissingNote(card, country || "?", article);
+        removeStatusNotice(card);
         return;
       }
 
-      renderEnglishLocale(excerpt, resolved, article);
+      renderEnglishLocale(card, excerpt, resolved, article);
       removeMissingNote(card);
     });
   }
@@ -330,8 +450,13 @@
   document.addEventListener("change", (event) => {
     if (event.target?.id === "taxtreat-ui-language") schedule();
   }, true);
-  document.addEventListener("click", () => window.setTimeout(schedule, 0), true);
+  document.addEventListener("click", (event) => {
+    if (event.target?.closest?.('[data-next-step],[data-flow-step],[data-nav],#workspace-submit,#taxtreat-language-controls')) {
+      window.setTimeout(schedule, 0);
+    }
+  }, true);
 
+  installStatusStyles();
   installStoredResultHook();
   schedule();
 })();

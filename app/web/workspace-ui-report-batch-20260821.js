@@ -122,12 +122,10 @@
   function section19Status(analysis) {
     const treatment = analysis?.tax_treatment || analysis?.candidate_tax_treatment;
     const layers = section19Layers(analysis);
-    const applicable = analysis?.status === "FINAL" && treatment === "domestic_exemption" || layers.some((item) => item.outcome === "applicable");
-    const unresolved = !analysis || layers.some((item) => item.outcome === "unresolved");
-    const notApplicable = layers.length > 0 && layers.every((item) => ["not_applicable", "failed"].includes(item.outcome));
-    if (applicable) return "applicable";
-    if (notApplicable) return "not_applicable";
-    if (unresolved) return "unresolved";
+    if (analysis?.status === "FINAL" && treatment === "domestic_exemption") return "applicable";
+    if (!layers.length) return null;
+    if (layers.some((item) => item.outcome === "unresolved")) return "unresolved";
+    if (layers.every((item) => ["not_applicable", "failed"].includes(item.outcome))) return "not_applicable";
     return "reviewed";
   }
 
@@ -143,32 +141,34 @@
     const box = document.querySelector("#cz-section19-result");
     if (!box || sourceCountry() !== "CZ" || incomeType() !== "dividend") return;
     const status = section19Status(state.lastAnalysis);
+    box.hidden = !status;
+    if (!status) return;
     box.classList.remove("tt-section19-applicable", "tt-section19-not-applicable");
     if (status === "applicable") box.classList.add("tt-section19-applicable");
     if (status === "not_applicable") box.classList.add("tt-section19-not-applicable");
     const en = isEnglish();
     const copy = {
       applicable: en
-        ? ["Section 19 applies", "The Czech domestic exemption is the primary legal basis. Czech withholding tax is therefore 0%. The treaty remains a secondary protection only."]
-        : ["§ 19 ZDP se použije", "Primárním právním titulem je české vnitrostátní osvobození podle § 19 ZDP. Česká srážková daň je proto 0 %. Smlouva zůstává pouze sekundární ochranou."],
+        ? ["Exemption applies", "The Czech domestic exemption is the primary legal basis. Czech withholding tax is therefore 0%. The treaty remains a secondary protection only."]
+        : ["Osvobození se uplatní", "Primárním právním titulem je české vnitrostátní osvobození podle § 19 ZDP. Česká srážková daň je proto 0 %. Smlouva zůstává pouze sekundární ochranou."],
       not_applicable: en
-        ? ["Section 19 does not apply", "The domestic exemption was assessed first but is not available on the entered facts. The final treatment therefore follows the applicable treaty or the domestic rate."]
-        : ["§ 19 ZDP se neuplatní", "Vnitrostátní osvobození bylo posouzeno jako první, ale podle zadaných údajů není dostupné. Konečné daňové zacházení proto určuje příslušná smlouva nebo vnitrostátní sazba."],
+        ? ["Exemption not available", "The domestic exemption was assessed first but is not available on the entered facts. The final treatment therefore follows the applicable treaty or the domestic rate."]
+        : ["Osvobození se neuplatní", "Vnitrostátní osvobození bylo posouzeno jako první, ale podle zadaných údajů není dostupné. Konečné daňové zacházení proto určuje příslušná smlouva nebo vnitrostátní sazba."],
       unresolved: en
-        ? ["Section 19 is not yet resolved", "Complete the remaining factual items. Until then, TaxTreat must not present the treaty result as the sole final legal basis."]
-        : ["§ 19 ZDP zatím nelze uzavřít", "Je nutné doplnit zbývající skutkové údaje. Do té doby TaxTreat nesmí prezentovat smluvní výsledek jako jediný konečný právní titul."],
+        ? ["Exemption not yet resolved", "Complete the remaining factual items. Until then, TaxTreat must not present the treaty result as the sole final legal basis."]
+        : ["Osvobození zatím nelze uzavřít", "Je nutné doplnit zbývající skutkové údaje. Do té doby TaxTreat nesmí prezentovat smluvní výsledek jako jediný konečný právní titul."],
       reviewed: en
-        ? ["Section 19 assessed", "The domestic exemption was assessed before treaty relief. The legal basis shown below must remain consistent with that assessment."]
-        : ["§ 19 ZDP posouzen", "Vnitrostátní osvobození bylo posouzeno před smluvní úlevou. Níže uvedený právní titul musí být s tímto výsledkem konzistentní."],
+        ? ["Exemption assessed", "The domestic exemption was assessed before treaty relief. The legal basis shown below must remain consistent with that assessment."]
+        : ["Osvobození posouzeno", "Vnitrostátní osvobození bylo posouzeno před smluvní úlevou. Níže uvedený právní titul musí být s tímto výsledkem konzistentní."],
     }[status];
 
     box.innerHTML = `
       <div class="tt-legal-status">${copy[0]}</div>
-      <h2>${en ? "Domestic exemption under Section 19" : "Vnitrostátní osvobození podle § 19 ZDP"}</h2>
+      <h2>${en ? "Domestic exemption" : "Vnitrostátní osvobození"}</h2>
       <p>${copy[1]}</p>
       <div class="tt-section19-source">
         <strong>${en ? "Relevant Czech legal basis" : "Relevantní český právní základ"}</strong><br>
-        ${en ? "Section 19(1)(ze), Section 19(3), Section 19(6) and Section 19(11) of the Czech Income Taxes Act." : "§ 19 odst. 1 písm. ze), § 19 odst. 3, § 19 odst. 6 a § 19 odst. 11 ZDP."}
+        ${en ? "Section 19(1)(ze), Section 19(3), Section 19(6) and Section 19(11) of the Czech Income Taxes Act (Act No. 586/1992 Coll.)." : "§ 19 odst. 1 písm. ze), § 19 odst. 3, § 19 odst. 6 a § 19 odst. 11 ZDP."}
         <br><a href="${SECTION19_SOURCE}" target="_blank" rel="noopener">${en ? "Official e-Sbírka source ↗" : "Oficiální zdroj e-Sbírka ↗"}</a>
       </div>`;
   }
@@ -261,15 +261,12 @@
   }
 
   function fixReportLayout(doc) {
-    replaceExactText(doc, "Neuplatňuje se", "0 %");
-    replaceExactText(doc, "Not applicable", "0%");
     [...doc.querySelectorAll("body *")].forEach((el) => {
       if (el.children.length === 0 && ["0 %","0%"].includes(el.textContent.trim())) el.classList.add("tt-report-zero");
       if (/^\d{2}\s*\/\s*\d{2}$/.test(el.textContent.trim())) el.style.display = "none";
     });
     markReportSections(doc);
     addProfessionalReportCss(doc);
-    addSection19ToReport(doc);
   }
 
   function transformReportHtml(html) {

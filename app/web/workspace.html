@@ -132,7 +132,7 @@
             <label class="form-field"><span>Stát daňové rezidence *</span><select name="recipient_country" required><option value="">Vyber stát</option><option value="AT">Rakousko</option><option value="CH">Švýcarsko</option><option value="DE">Německo</option><option value="SG">Singapur</option><option value="TW">Tchaj-wan</option></select></label>
             <label class="form-field"><span>Typ příjemce *</span><select name="recipient_type"><option>Společnost</option><option>Fyzická osoba</option><option>Fond</option><option>Jiný subjekt</option></select></label>
           </div>
-          <p>Další údaje a podklady doplníš v profilu příjemce. V tomto demu se nový profil po obnovení stránky odstraní.</p>
+          <p>Další údaje a podklady doplníš v profilu příjemce. Profil zůstává uložený v tomto prohlížeči i po obnovení stránky.</p>
           <button class="primary" type="submit">Použít příjemce v této kontrole →</button>
         </form>
         <div class="flow-actions"><button class="secondary" data-next-step="1">← Zpět k plátci</button><button class="primary" data-next-step="3">Pokračovat k platbě →</button></div>
@@ -188,6 +188,7 @@
       <section class="flow-step" data-step="4">
         <div class="page-title"><div><p>KROK 4 ZE 4</p><h1>Výsledek</h1><span><b data-payer-name>Demo CZ s.r.o.</b> → <b data-recipient-name>Demo GmbH</b></span></div></div>
         <article class="card result-hero">
+          <div id="workspace-income-type" class="result-income-type">—</div>
           <span id="workspace-result-status" class="badge warning">ČEKÁ NA VÝPOČET</span>
           <p id="workspace-tax-label">Srážková daň v CZK</p><strong id="workspace-tax">—</strong><small id="workspace-rate">—</small>
         </article>
@@ -209,7 +210,7 @@
   </main>
 
   <dialog id="recipient-dialog" class="modal">
-    <form method="dialog" id="recipient-edit-form"><div class="modal-head"><div><p>PŘÍJEMCE</p><h2>Upravit příjemce</h2></div><button type="button" data-close-recipient aria-label="Zavřít">×</button></div>
+    <form id="recipient-edit-form"><div class="modal-head"><div><p>PŘÍJEMCE</p><h2>Upravit příjemce</h2></div><button type="button" data-close-recipient aria-label="Zavřít">×</button></div>
       <label><span>Název nebo jméno *</span><input name="recipient_name" required></label>
       <label><span>Stát daňové rezidence *</span><select name="recipient_country" required><option value="AT">Rakousko</option><option value="CH">Švýcarsko</option><option value="DE">Německo</option><option value="SG">Singapur</option><option value="TW">Tchaj-wan</option></select></label>
       <label><span>Typ příjemce *</span><select name="recipient_type"><option>Společnost</option><option>Fyzická osoba</option><option>Fond</option><option>Jiný subjekt</option></select></label>
@@ -224,8 +225,8 @@
   </dialog>
 
   <dialog id="payer-dialog" class="modal">
-    <form method="dialog" id="payer-form"><div class="modal-head"><div><p>PLÁTCE</p><h2 id="payer-dialog-title">Upravit plátce</h2></div><button type="button" data-close-payer aria-label="Zavřít">×</button></div>
-      <label><span>IČO *</span><div class="ico-lookup"><input name="payer_id" inputmode="numeric" maxlength="8" pattern="[0-9]{8}" placeholder="např. 27082440" required><button class="secondary compact" type="button" data-ares-lookup>Načíst z ARES</button></div><small id="ares-lookup-status" class="lookup-status" aria-live="polite">Po zadání 8 číslic TaxTreat načte identifikační údaje z ARES.</small></label>
+    <form id="payer-form"><div class="modal-head"><div><p>PLÁTCE</p><h2 id="payer-dialog-title">Upravit plátce</h2></div><button type="button" data-close-payer aria-label="Zavřít">×</button></div>
+      <label><span>IČO *</span><div class="ico-lookup"><input name="payer_id" inputmode="numeric" maxlength="8" pattern="[0-9]{8}" placeholder="např. 27082440" required><button class="secondary compact" type="button" data-ares-lookup>Načíst z ARES</button></div><small id="ares-lookup-status" class="lookup-status" aria-live="polite">Po zadání IČO můžeš identifikační údaje načíst z ARES.</small></label>
       <label><span>Název *</span><input name="payer_name" value="Demo CZ s.r.o." required></label>
       <label><span>DIČ</span><input name="payer_vat_id" placeholder="např. CZ12345678"></label>
       <label><span>Sídlo</span><input name="payer_address" placeholder="Načte se z ARES"></label>
@@ -233,7 +234,7 @@
       <label><span>Datová schránka</span><input name="payer_data_box" placeholder="Načte se z ARES"></label>
       <label><span>Datum vzniku</span><input name="payer_established_at" type="date"></label>
       <label><span>Stát</span><input value="Česká republika" disabled></label>
-      <div class="flow-actions"><button class="secondary" type="button" data-close-payer>Zrušit</button><button class="primary" type="submit">Uložit změny</button></div>
+      <div class="flow-actions"><button class="secondary" type="button" data-close-payer>Zrušit</button><button class="primary" type="button" data-save-payer>Uložit změny</button></div>
     </form>
   </dialog>
 

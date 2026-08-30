@@ -20,7 +20,7 @@
       "legal_layer": "domestic",
       "paragraph": "1(b)(1)",
       "priority": 900,
-      "rate": 15.0,
+      "rate": 15,
       "recipient_country": "PH",
       "review_package_sha256": "1a385625bd2000bef394e680dedbc90075d133fcbd66b7c3541821df267ad3ce",
       "rule_id": "CZ-PH-DIVIDEND-DOMESTIC",
@@ -74,7 +74,7 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 671,
-      "rate": 10.0,
+      "rate": 10,
       "recipient_country": "PH",
       "review_package_sha256": "1a385625bd2000bef394e680dedbc90075d133fcbd66b7c3541821df267ad3ce",
       "rule_id": "CZ-PH-DIVIDEND-CURRENT-1",
@@ -117,7 +117,7 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 682,
-      "rate": 15.0,
+      "rate": 15,
       "recipient_country": "PH",
       "review_package_sha256": "1a385625bd2000bef394e680dedbc90075d133fcbd66b7c3541821df267ad3ce",
       "rule_id": "CZ-PH-DIVIDEND-CURRENT-2",
@@ -146,7 +146,7 @@
       "legal_layer": "domestic",
       "paragraph": "1(a)(1)",
       "priority": 900,
-      "rate": 15.0,
+      "rate": 15,
       "recipient_country": "PH",
       "review_package_sha256": "1a385625bd2000bef394e680dedbc90075d133fcbd66b7c3541821df267ad3ce",
       "rule_id": "CZ-PH-INTEREST-DOMESTIC",
@@ -183,7 +183,7 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 691,
-      "rate": 10.0,
+      "rate": 10,
       "recipient_country": "PH",
       "review_package_sha256": "1a385625bd2000bef394e680dedbc90075d133fcbd66b7c3541821df267ad3ce",
       "rule_id": "CZ-PH-INTEREST-CURRENT-1",
@@ -203,10 +203,10 @@
       "article": 11,
       "conditions": [
         {
-          "fact": "recipient_entity_type",
+          "fact": "article_11_public_body_exemption",
           "fact_source": "transaction",
           "operator": "==",
-          "value": "government_subnational_local_authority_central_bank_wholly_government_owned_financial_institution_or_qualifying_government_guaranteed_financing"
+          "value": true
         },
         {
           "fact": "beneficial_owner",
@@ -226,7 +226,7 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 682,
-      "rate": 0.0,
+      "rate": 0,
       "recipient_country": "PH",
       "review_package_sha256": "1a385625bd2000bef394e680dedbc90075d133fcbd66b7c3541821df267ad3ce",
       "rule_id": "CZ-PH-INTEREST-CURRENT-2",
@@ -255,7 +255,7 @@
       "legal_layer": "domestic",
       "paragraph": "1(a)(1)",
       "priority": 900,
-      "rate": 15.0,
+      "rate": 15,
       "recipient_country": "PH",
       "review_package_sha256": "1a385625bd2000bef394e680dedbc90075d133fcbd66b7c3541821df267ad3ce",
       "rule_id": "CZ-PH-ROYALTY-DOMESTIC",
@@ -275,6 +275,12 @@
       "article": 12,
       "conditions": [
         {
+          "fact": "royalty_category",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "all_royalties_except_cinematographic_and_broadcast_media"
+        },
+        {
           "fact": "beneficial_owner",
           "fact_source": "transaction",
           "operator": "==",
@@ -292,7 +298,7 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 691,
-      "rate": 10.0,
+      "rate": 10,
       "recipient_country": "PH",
       "review_package_sha256": "1a385625bd2000bef394e680dedbc90075d133fcbd66b7c3541821df267ad3ce",
       "rule_id": "CZ-PH-ROYALTY-CURRENT-1",
@@ -312,6 +318,12 @@
       "article": 12,
       "conditions": [
         {
+          "fact": "royalty_category",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "cinematographic_films_or_broadcast_media"
+        },
+        {
           "fact": "beneficial_owner",
           "fact_source": "transaction",
           "operator": "==",
@@ -329,7 +341,7 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 692,
-      "rate": 15.0,
+      "rate": 15,
       "recipient_country": "PH",
       "review_package_sha256": "1a385625bd2000bef394e680dedbc90075d133fcbd66b7c3541821df267ad3ce",
       "rule_id": "CZ-PH-ROYALTY-CURRENT-2",

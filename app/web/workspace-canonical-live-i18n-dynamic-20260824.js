@@ -200,6 +200,5 @@
   document.addEventListener("change", (event) => {
     if (event.target?.id === "taxtreat-ui-language" || event.target?.matches?.('[name="income_type"]')) schedule();
   }, true);
-  document.addEventListener("click", () => window.setTimeout(schedule, 0), true);
   schedule();
 })();

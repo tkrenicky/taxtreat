@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from datetime import date
 from pathlib import Path
 from typing import Any
@@ -129,6 +129,54 @@ def analyze_transaction(
         and rule.recipient_country == request.recipient_country
         and rule.income_type == normalized_income
     ]
+    # Historical CZ dividend exemption overlay.
+    #
+    # The 2026 date in the released Stage 6 projection is a source-version
+    # date, not the beginning of Section 19. The parent-subsidiary exemption
+    # existed materially earlier. The historical Czech Income Taxes Act
+    # verifies the 10% / 12-month version by 1 July 2008. Use that verified
+    # historical window here without altering the approved Stage 6 package
+    # on disk. Earlier historical versions had different thresholds and must
+    # be modelled as separate date-versioned rules rather than by projecting
+    # the current conditions backwards.
+    if (
+        request.source_country == "CZ"
+        and normalized_income == "dividend"
+        and date(2008, 7, 1) <= request.transaction_date < date(2026, 4, 1)
+    ):
+        historical_relief = []
+        for rule in scoped_rules:
+            if rule.legal_layer != "eu_relief" or rule.effect != "rate":
+                continue
+            historical_relief.append(
+                replace(
+                    rule,
+                    rule_id=f"{rule.rule_id}-HIST-2008",
+                    effective_from=date(2008, 7, 1),
+                    effective_to=date(2026, 3, 31),
+                    source_id="CZ-ZDP-2008-07-01-HISTORICAL-ESBIRKA",
+                    source_url="https://e-sbirka.gov.cz/sb/1992/586/2008-07-01",
+                    source_text=(
+                        "Historical Czech Income Taxes Act as of 1 July 2008: "
+                        "domestic parent-subsidiary dividend exemption under "
+                        "Section 19 with a 10% participation threshold and "
+                        "12-month holding period."
+                    ),
+                    source_excerpt_hash=None,
+                    evidence_source_ids=[
+                        *rule.evidence_source_ids,
+                        "CZ-ZDP-2008-07-01-HISTORICAL-ESBIRKA",
+                    ],
+                    verification_authority=(
+                        "official_historical_statute_runtime_equivalence"
+                    ),
+                    review_package_sha256=None,
+                    approval_dataset_release=None,
+                    approval_created_at=None,
+                )
+            )
+        scoped_rules.extend(historical_relief)
+
     if not scoped_rules:
         scope_key = (
             request.source_country,
@@ -187,6 +235,7 @@ def analyze_transaction(
         legal_facts=legal_facts,
         determinations=request.determinations,
     )
+
     selected_path_ids = set(result.applied_rule_ids)
     if result.candidate_rule_id:
         selected_path_ids.add(result.candidate_rule_id)

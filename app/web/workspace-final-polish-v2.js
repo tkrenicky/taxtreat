@@ -7,12 +7,14 @@
   const translations = new Map([
     ["Jazyk", "Language"], ["Jazyk webu", "Website language"], ["Jazyk reportu", "Report language"],
     ["Stát plátce *", "Payer country *"], ["Česká republika", "Czech Republic"], ["Slovensko", "Slovakia"],
+    ["Stát plátce určuje, která vnitrostátní pravidla srážkové daně TaxTreat použije. Nejde o samostatný přepínač režimu aplikace.", "The payer’s country determines which domestic withholding tax rules TaxTreat applies. This is not a separate application-mode switch."],
+    ["Další údaje a podklady doplníš v profilu příjemce. Profil zůstává uložený v tomto prohlížeči i po obnovení stránky.", "Additional facts and supporting documents can be completed in the recipient profile. The profile remains saved in this browser even after the page is refreshed."],
     ["Načíst z ARES", "Retrieve from ARES"], ["Načítám údaje z ARES…", "Retrieving data from ARES…"],
     ["Údaje byly načteny z ARES. Před uložením je můžeš upravit.", "The data were retrieved from ARES. You can edit them before saving."],
     ["Údaje se z ARES nepodařilo načíst. Pole můžeš vyplnit ručně.", "The data could not be retrieved from ARES. You can complete the fields manually."],
     ["IČO *", "Company ID *"], ["IČO", "Company ID"], ["Název *", "Name *"], ["DIČ", "Tax ID"], ["Sídlo", "Registered office"], ["Právní forma", "Legal form"], ["Datová schránka", "Data box"], ["Datum vzniku", "Date of incorporation"],
     ["Zrušit", "Cancel"], ["Uložit změny", "Save changes"], ["PŘÍJEMCE", "RECIPIENT"], ["PLÁTCE", "PAYER"],
-    ["Ještě dva údaje pro možné osvobození podle § 19 ZDP", "Two more facts for the potential Section 19 exemption"],
+    ["Ještě dva údaje pro možné osvobození podle § 19 ZDP", "Two more facts for the potential exemption"],
     ["Nevím / potřebuji ověřit", "I don't know / needs verification"],
     ["Potvrzení o daňovém rezidentství", "Tax residence certificate"], ["Datum vystavení *", "Issue date *"], ["Platnost do *", "Valid until *"], ["Teď ne", "Not now"], ["Uložit evidenci", "Save record"],
     ["Základní údaje", "Basic details"], ["Daňová rezidence", "Tax residence"], ["Typ subjektu", "Entity type"], ["Podíl na plátci", "Ownership in payer"], ["Datum nabytí podílu", "Share acquisition date"],
@@ -138,7 +140,6 @@
     // inserted UI. A second observer that rewrites innerHTML can feed back into the
     // first observer and freeze the page. Refresh this supplemental polish only
     // after user-driven UI transitions.
-    document.addEventListener("click", scheduleRefresh, true);
     document.addEventListener("change", scheduleRefresh, true);
   }
 

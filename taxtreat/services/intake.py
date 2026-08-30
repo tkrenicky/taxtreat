@@ -150,6 +150,122 @@ FACT_GUIDANCE: dict[str, dict[str, Any]] = {
 # Treaty-specific facts that can be answered by the user. They are
 # presented only when the selected treaty actually needs them.
 FACT_GUIDANCE.update({
+    "article_10_public_body_exemption": {
+        "prompt": (
+            "Spadá příjemce do zvláštní veřejné kategorie pro dividendovou "
+            "výjimku podle čl. 10 příslušné smlouvy?"
+        ),
+        "why": (
+            "Některé smlouvy mají samostatnou 0% větev pro vládu, centrální "
+            "banku nebo jiný výslovně kvalifikovaný veřejný subjekt."
+        ),
+        "response_type": "boolean",
+        "documents": [
+            "Doklady k právnímu postavení příjemce",
+            "Doklady k případnému veřejnému vlastnictví nebo kontrole",
+        ],
+    },
+    "article_11_public_body_exemption": {
+        "prompt": (
+            "Spadá tento úrok do zvláštní veřejné nebo státem podporované "
+            "výjimky podle čl. 11 příslušné smlouvy?"
+        ),
+        "why": (
+            "Výjimka se použije pouze při přesném splnění podmínek dané smlouvy, "
+            "například u vlády, centrální banky, vybrané veřejné finanční instituce "
+            "nebo kvalifikovaného státem zajištěného financování."
+        ),
+        "response_type": "boolean",
+        "documents": [
+            "Úvěrová nebo zápůjční smlouva",
+            "Doklady k postavení příjemce nebo státnímu zajištění financování",
+        ],
+    },
+    "recipient_is_bank": {
+        "prompt": "Je příjemce úroku bankou pro účely příslušné smlouvy?",
+        "why": (
+            "U některých smluv je snížená sazba úroku dostupná pouze bankám."
+        ),
+        "response_type": "boolean",
+        "documents": ["Doklady k regulatornímu postavení příjemce"],
+    },
+    "recipient_is_financial_institution_or_insurer": {
+        "prompt": (
+            "Je příjemce finanční institucí, včetně pojišťovny, "
+            "ve smyslu příslušné smlouvy?"
+        ),
+        "why": (
+            "U některých smluv je zvláštní úroková sazba dostupná pouze "
+            "kvalifikované finanční instituci."
+        ),
+        "response_type": "boolean",
+        "documents": ["Doklady k regulatornímu postavení příjemce"],
+    },
+    "recipient_has_share_capital": {
+        "prompt": (
+            "Je jmění příjemce zcela nebo zčásti rozděleno na akcie "
+            "ve smyslu příslušné smlouvy?"
+        ),
+        "why": (
+            "U některých starších smluv je osvobození dividend vázáno "
+            "na společnost s jměním rozděleným na akcie."
+        ),
+        "response_type": "boolean",
+        "documents": ["Zakladatelské dokumenty příjemce"],
+    },
+    "article_11_3_public_financing_exemption": {
+        "prompt": (
+            "Spadá tento úrok do veřejné nebo státem zajištěné "
+            "finanční výjimky podle čl. 11 odst. 3 příslušné smlouvy?"
+        ),
+        "why": (
+            "Japonská smlouva osvobozuje vybrané úroky placené vládě, "
+            "místním orgánům, centrální bance, plně státní finanční instituci "
+            "nebo z kvalifikovaně zajištěných či financovaných pohledávek."
+        ),
+        "response_type": "boolean",
+        "documents": [
+            "Úvěrová nebo zápůjční smlouva",
+            "Doklady k veřejnému nebo státnímu financování",
+        ],
+    },
+    "recipient_is_qualifying_pension_fund": {
+        "prompt": (
+            "Je příjemce kvalifikovaným penzijním fondem pro účely "
+            "příslušné smlouvy?"
+        ),
+        "why": (
+            "U smlouvy se Švýcarskem může kvalifikovaný penzijní fond "
+            "splňovat samostatnou 0% dividendovou větev."
+        ),
+        "response_type": "boolean",
+        "documents": ["Doklady k právnímu a daňovému postavení příjemce"],
+    },
+    "recipient_is_central_bank": {
+        "prompt": "Je příjemcem centrální banka ve smyslu příslušné smlouvy?",
+        "why": (
+            "U smlouvy se Švýcarskem má centrální banka samostatnou "
+            "dividendovou větev."
+        ),
+        "response_type": "boolean",
+        "documents": ["Doklady k právnímu postavení příjemce"],
+    },
+    "article_10_3_public_body_exemption": {
+        "prompt": (
+            "Spadá příjemce do zvláštní veřejné kategorie pro osvobození "
+            "dividend podle čl. 10 odst. 3 příslušné smlouvy?"
+        ),
+        "why": (
+            "U smlouvy s Kuvajtem může být 0% sazba dostupná vládě, "
+            "vládní instituci, vymezené veřejné organizaci nebo kvalifikované "
+            "společnosti ovládané či alespoň z 25 % vlastněné takovým subjektem."
+        ),
+        "response_type": "boolean",
+        "documents": [
+            "Doklady k právnímu postavení příjemce",
+            "Schéma vlastnické struktury",
+        ],
+    },
     "continuous_holding_period_days": {
         "prompt": "Od jakého data příjemce nepřetržitě drží podíl na českém plátci?",
         "why": (
@@ -513,6 +629,34 @@ REVIEW_REASON_GUIDANCE = {
         "Zvolený předmět licence neodpovídá podmínkám nejbližšího "
         "posuzovaného pravidla.",
     ),
+    "recipient_is_qualifying_company_form": (
+        "Právní forma příjemce pro osvobození",
+        "Chybí potvrzení, zda příjemce splňuje podmínku kvalifikované právní formy pro vnitrostátní osvobození dividend.",
+    ),
+    "recipient_is_tax_resident_in_eligible_jurisdiction": (
+        "Jurisdikce příjemce pro osvobození",
+        "Je nutné potvrdit, že příjemce je rezidentem jurisdikce způsobilé pro vnitrostátní osvobození dividend.",
+    ),
+    "recipient_subject_to_qualifying_corporate_tax": (
+        "Zdanění příjemce pro osvobození",
+        "Chybí potvrzení, že příjemce podléhá kvalifikované dani z příjmů právnických osob ve státě své rezidence.",
+    ),
+    "recipient_has_no_tax_exemption_or_zero_rate_option": (
+        "Daňové osvobození nebo nulová sazba příjemce",
+        "Chybí potvrzení, že příjemce není od kvalifikované daně osvobozen ani nepodléhá režimu s nulovou sazbou.",
+    ),
+    "recipient_is_parent_company": (
+        "Postavení mateřské společnosti",
+        "Zadané údaje nepotvrzují, že jsou pro osvobození splněny podmínky kvalifikované mateřské společnosti.",
+    ),
+    "holding_period_will_reach_months": (
+        "Budoucí splnění doby držby",
+        "Pro tuto větev osvobození chybí potvrzení, že bude dosažena požadovaná minimální doba držby.",
+    ),
+    "statutory_clawback_acknowledged": (
+        "Postup při dodatečném splnění doby držby",
+        "Chybí údaj potřebný pro posouzení režimu při dodatečném splnění minimální doby držby.",
+    ),
 }
 
 
@@ -585,6 +729,20 @@ def build_review_reasons(
         for fact in sorted(blockers)
     ]
     for layer in analysis.get("missing_legal_layers", []):
+        if layer == "historical_domestic_dividend_exemption":
+            reasons.append(
+                {
+                    "code": f"missing_legal_layer:{layer}",
+                    "title": "Historické vnitrostátní osvobození není pro zadané datum uvolněno",
+                    "detail": (
+                        "Skutkové údaje mohou být kompletní, ale TaxTreat pro zadané "
+                        "historické datum nemá uvolněnou ověřenou vrstvu vnitrostátního "
+                        "osvobození dividend. Smluvní výsledek proto nelze prezentovat "
+                        "jako konečný právní titul."
+                    ),
+                }
+            )
+            continue
         reasons.append(
             {
                 "code": f"missing_legal_layer:{layer}",

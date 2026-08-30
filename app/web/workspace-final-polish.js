@@ -14,7 +14,7 @@
     ["Načte se z ARES", "Retrieved from ARES"], ["Zrušit", "Cancel"], ["Uložit změny", "Save changes"], ["PŘÍJEMCE", "RECIPIENT"], ["PLÁTCE", "PAYER"],
     ["Skutečný vlastník příjmu", "Beneficial owner of the income"], ["Daňový rezident vybraného státu pro účely smlouvy", "Tax resident of the selected country for treaty purposes"], ["Přímé držení podílu", "Direct ownership"],
     ["Vazba účasti, pohledávky nebo práva ke stálé provozovně v ČR", "Connection of the participation, receivable or right to a Czech permanent establishment"],
-    ["Ještě dva údaje pro možné osvobození podle § 19 ZDP", "Two more facts for the potential Section 19 exemption"],
+    ["Ještě dva údaje pro možné osvobození podle § 19 ZDP", "Two more facts for the potential exemption"],
     ["Podíl, přímé držení, dobu držby, skutečné vlastnictví a vazbu ke stálé provozovně už TaxTreat používá z odpovědí výše.", "TaxTreat already uses the ownership percentage, direct holding, holding period, beneficial ownership and permanent-establishment connection from the answers above."],
     ["Je příjemce běžnou obchodní společností (např. GmbH, AG, Ltd. nebo S.A.), nikoli fyzickou osobou, fondem nebo daňově transparentním subjektem?", "Is the recipient an ordinary corporate entity (for example GmbH, AG, Ltd. or S.A.), rather than an individual, fund or tax-transparent entity?"],
     ["Pokud si nejsi jistý právní formou příjemce, zvol „Nevím / potřebuji ověřit“. TaxTreat pak osvobození neuzavře, dokud nebude údaj ověřen.", "If you are unsure about the recipient's legal form, select “I don't know / needs verification”. TaxTreat will not finalise the exemption until the fact is verified."],

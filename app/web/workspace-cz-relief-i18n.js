@@ -41,7 +41,7 @@
     ["Výsledek", "Result"], ["Použité právní pravidlo", "Applied legal rule"], ["Souhrn platby", "Payment summary"], ["Hrubá částka", "Gross amount"], ["Srážková daň", "Withholding tax"], ["Čistá částka", "Net amount"], ["Podmínky použitého pravidla", "Conditions of the applied rule"], ["Právní podklady", "Legal sources"],
     ["Rozhodné datum a navazující lhůty", "Reference date and compliance deadlines"], ["Rozhodné datum zadané pro výpočet", "Reference date used for the calculation"], ["Odvod srážkové daně", "Withholding tax remittance"], ["Oznámení příjmu plynoucího do zahraničí", "Outbound income notification"], ["← Upravit platbu", "← Edit payment"], ["Tisk / PDF reportu", "Print / PDF report"], ["ČEKÁ NA VÝPOČET", "WAITING FOR CALCULATION"], ["VÝPOČET DOKONČEN", "CALCULATION COMPLETED"], ["CHYBÍ ÚDAJE PRO PŘIŘAZENÍ PRAVIDLA", "FACTS REQUIRED TO ASSIGN A RULE"], ["Srážková daň v CZK", "Withholding tax in CZK"], ["Česká daň k odvodu", "Czech tax payable"], ["Příjem je v České republice osvobozen", "Income is exempt from Czech withholding tax"], ["Daň se neodvádí", "No tax remittance"], ["Oznámení se nepodává", "No notification required"], ["Po doplnění údajů", "After completing the facts"],
     ["Všechny údaje potřebné pro výpočet jsou zadány", "All facts required for the calculation are entered"], ["Výsledek vychází z uvedených údajů a zobrazeného právního základu.", "The result is based on the entered facts and the legal basis shown."], ["Oficiální zdroj ↗", "Official source ↗"], ["Informační nástroj:", "Information tool:"],
-    ["Možné vnitrostátní osvobození", "Potential domestic exemption"], ["Vnitrostátní osvobození podle § 19 ZDP", "Domestic exemption under Section 19"],
+    ["Možné vnitrostátní osvobození", "Potential domestic exemption"], ["Vnitrostátní osvobození", "Domestic exemption"],
   ]);
 
   const ORIGINAL_TEXT = new WeakMap();
@@ -151,7 +151,7 @@
     box.className = "fact-question";
     box.style.cssText = "display:grid;gap:14px;padding:16px;margin-top:12px;border:1px solid #d9e3de;border-radius:10px;background:#f7faf8";
     box.innerHTML = `
-      <div><strong>Ještě dva údaje pro možné osvobození podle § 19 ZDP</strong><small style="display:block;margin-top:5px">Podíl, přímé držení, dobu držby, skutečné vlastnictví a vazbu ke stálé provozovně už TaxTreat používá z odpovědí výše.</small></div>
+      <div><strong>Ještě dva údaje pro možné osvobození</strong><small style="display:block;margin-top:5px">Podíl, přímé držení, dobu držby, skutečné vlastnictví a vazbu ke stálé provozovně už TaxTreat používá z odpovědí výše.</small></div>
       <label><span>Je příjemce běžnou obchodní společností (např. GmbH, AG, Ltd. nebo S.A.), nikoli fyzickou osobou, fondem nebo daňově transparentním subjektem?</span><select name="section19_company_form"><option value="">Vyber odpověď</option><option value="true">Ano</option><option value="false">Ne</option></select><small>Pokud si nejsi jistý právní formou příjemce, zvol raději „Ne“ nebo údaj ověř v korporátních podkladech.</small></label>
       <label><span>Podléhá příjemce ve státě své daňové rezidence běžné dani z příjmů právnických osob a není od této daně osvobozen ani v režimu s nulovou sazbou?</span><select name="section19_taxable_company"><option value="">Vyber odpověď</option><option value="true">Ano</option><option value="false">Ne</option></select><small>Jde o faktické daňové postavení příjemce, nikoli o posouzení českého § 19.</small></label>`;
     root.append(box);
@@ -185,8 +185,12 @@
     return payload;
   }
 
+  function resultIncomeType() {
+    return document.querySelector('.flow-step[data-step="4"]')?.dataset.incomeType || state.lastIncomeType || "";
+  }
+
   function isCzechDividend() {
-    return String(document.body.dataset.sourceCountry || "CZ").toUpperCase() === "CZ" && state.lastIncomeType === "dividend";
+    return String(document.body.dataset.sourceCountry || "CZ").toUpperCase() === "CZ" && resultIncomeType() === "dividend";
   }
 
   function section19Layers(analysis) {
@@ -205,27 +209,26 @@
       box.style.cssText = "margin-top:14px;border-left:4px solid #28584f";
       reason.before(box);
     }
-    box.hidden = !isCzechDividend();
-    if (box.hidden) return;
-
     const analysis = state.lastAnalysis;
     const treatment = analysis?.tax_treatment || analysis?.candidate_tax_treatment;
     const layers = section19Layers(analysis);
     const finalExemption = analysis?.status === "FINAL" && treatment === "domestic_exemption";
+    box.hidden = !isCzechDividend() || (!finalExemption && !layers.length);
+    if (box.hidden) return;
     const applicable = layers.some((item) => item.outcome === "applicable");
     const unresolved = layers.some((item) => item.outcome === "unresolved");
     const allNotApplicable = layers.length > 0 && layers.every((item) => ["not_applicable","failed"].includes(item.outcome));
 
     if (state.uiLanguage === "en") {
-      if (finalExemption || applicable) box.innerHTML = '<h2>Domestic exemption under Section 19</h2><p><strong>Applicable – Czech withholding tax is not due.</strong> The domestic exemption under Section 19 of the Czech Income Taxes Act is the primary legal basis. Treaty treatment is supplementary.</p>';
-      else if (allNotApplicable) box.innerHTML = '<h2>Domestic exemption under Section 19</h2><p>The domestic exemption was assessed first and is not available based on the entered facts. The treaty analysis therefore determines the withholding tax treatment.</p>';
-      else if (unresolved || !analysis) box.innerHTML = '<h2>Domestic exemption under Section 19</h2><p><strong>Not yet resolved.</strong> Section 19 is assessed before treaty relief. Complete the factual Section 19 questions in the payment step; any remaining legal qualification stays an internal TaxTreat review item rather than a question requiring the payer to interpret Czech tax law.</p>';
-      else box.innerHTML = '<h2>Domestic exemption under Section 19</h2><p>Section 19 was assessed before treaty relief. The treaty result shown below applies only if the domestic exemption is not available.</p>';
+      if (finalExemption || applicable) box.innerHTML = '<h2>Domestic exemption</h2><p><strong>Applicable – Czech withholding tax is not due.</strong> The domestic exemption under Section 19 of the Czech Income Taxes Act is the primary legal basis. Treaty treatment is supplementary.</p>';
+      else if (allNotApplicable) box.innerHTML = '<h2>Domestic exemption</h2><p>The domestic exemption was assessed first and is not available based on the entered facts. The treaty analysis therefore determines the withholding tax treatment.</p>';
+      else if (unresolved || !analysis) box.innerHTML = '<h2>Domestic exemption</h2><p><strong>Not yet resolved.</strong> Complete the remaining factual items before the exemption can be concluded.</p>';
+      else box.innerHTML = '<h2>Domestic exemption</h2><p>Section 19 was assessed before treaty relief. The treaty result shown below applies only if the domestic exemption is not available.</p>';
     } else {
-      if (finalExemption || applicable) box.innerHTML = '<h2>Vnitrostátní osvobození podle § 19 ZDP</h2><p><strong>Osvobození se použije – česká srážková daň se neodvádí.</strong> Primárním právním titulem je § 19 ZDP; smluvní režim je pouze doplňkový.</p>';
-      else if (allNotApplicable) box.innerHTML = '<h2>Vnitrostátní osvobození podle § 19 ZDP</h2><p>Osvobození bylo posouzeno jako první a podle zadaných údajů se neuplatní. Daňové zacházení proto určuje smluvní analýza.</p>';
-      else if (unresolved || !analysis) box.innerHTML = '<h2>Vnitrostátní osvobození podle § 19 ZDP</h2><p><strong>Zatím nelze uzavřít.</strong> § 19 se posuzuje před smluvní úlevou. Doplň jednoduché skutkové otázky k § 19 v kroku platby; případná zbývající právní kvalifikace zůstane interním bodem pro TaxTreat a nebude přenesena na plátce.</p>';
-      else box.innerHTML = '<h2>Vnitrostátní osvobození podle § 19 ZDP</h2><p>§ 19 byl posouzen před smluvní úlevou. Smluvní výsledek uvedený níže se použije pouze tehdy, pokud vnitrostátní osvobození není dostupné.</p>';
+      if (finalExemption || applicable) box.innerHTML = '<h2>Vnitrostátní osvobození</h2><p><strong>Osvobození se použije – česká srážková daň se neodvádí.</strong> Primárním právním titulem je § 19 ZDP; smluvní režim je pouze doplňkový.</p>';
+      else if (allNotApplicable) box.innerHTML = '<h2>Vnitrostátní osvobození</h2><p>Osvobození bylo posouzeno jako první a podle zadaných údajů se neuplatní. Daňové zacházení proto určuje smluvní analýza.</p>';
+      else if (unresolved || !analysis) box.innerHTML = '<h2>Vnitrostátní osvobození</h2><p><strong>Zatím nelze uzavřít.</strong> Pro uzavření osvobození je nutné doplnit zbývající skutkové údaje.</p>';
+      else box.innerHTML = '<h2>Vnitrostátní osvobození</h2><p>§ 19 byl posouzen před smluvní úlevou. Smluvní výsledek uvedený níže se použije pouze tehdy, pokud vnitrostátní osvobození není dostupné.</p>';
     }
   }
 
@@ -241,7 +244,7 @@
       notice.style.cssText = "margin-top:14px;border-left:4px solid #28584f";
       reason.after(notice);
     }
-    const show = String(document.body.dataset.sourceCountry || "CZ").toUpperCase() === "CZ" && ["interest", "royalty"].includes(state.lastIncomeType);
+    const show = String(document.body.dataset.sourceCountry || "CZ").toUpperCase() === "CZ" && ["interest", "royalty"].includes(resultIncomeType());
     notice.hidden = !show;
     if (!show) return;
     if (state.uiLanguage === "en") {

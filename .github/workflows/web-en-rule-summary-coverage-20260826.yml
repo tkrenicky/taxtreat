@@ -1,0 +1,41 @@
+name: WEB EN rule-summary coverage
+
+on:
+  push:
+    branches:
+      - feat/web-bulk-en-treaty-acquisition-20260825
+    paths:
+      - 'scripts/build_stage6_en_rule_summary_locales_20260826.py'
+      - '.github/workflows/web-en-rule-summary-coverage-20260826.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: web-en-rule-summary-coverage-20260826
+  cancel-in-progress: true
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/web-bulk-en-treaty-acquisition-20260825
+      - name: Build and enforce complete EN rule-summary coverage
+        run: python scripts/build_stage6_en_rule_summary_locales_20260826.py
+      - name: Commit EN coverage
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/web/treaty-excerpt-locales/ reports/treaty_en_rule_summary_coverage_20260826.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Complete verified English rule-summary coverage"
+            git push origin HEAD:feat/web-bulk-en-treaty-acquisition-20260825
+          fi
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-en-rule-summary-coverage
+          path: reports/treaty_en_rule_summary_coverage_20260826.json

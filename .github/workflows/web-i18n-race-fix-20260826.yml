@@ -1,0 +1,35 @@
+name: WEB i18n race fix
+
+on:
+  push:
+    branches:
+      - feat/web-bulk-en-treaty-acquisition-20260825
+    paths:
+      - 'scripts/fix_web_i18n_race_20260826.py'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/web-bulk-en-treaty-acquisition-20260825
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Apply deterministic i18n patch
+        run: python scripts/fix_web_i18n_race_20260826.py
+      - name: Commit patched UI
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/web
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "Fix UI language click race and EN/CZ result parity"
+            git push origin HEAD:feat/web-bulk-en-treaty-acquisition-20260825
+          fi
