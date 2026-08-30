@@ -17,10 +17,13 @@ on:
       - 'scripts/verify_royalty_taxonomy_coverage_20260830.py'
       - 'scripts/verify_royalty_mapping_regressions_20260830.py'
       - 'scripts/verify_holding_period_regressions_20260830.py'
+      - 'scripts/verify_dividend_condition_semantics_20260830.py'
+      - 'scripts/verify_dividend_rule_normalization_20260830.py'
       - 'scripts/verify_workspace_profile_and_fallback_20260828.py'
       - 'scripts/verify_en_fallback_report_locale_20260828.py'
       - 'app/web/**'
       - 'taxtreat/services/**'
+      - 'taxtreat/engine/**'
   workflow_dispatch:
 
 jobs:
@@ -70,6 +73,10 @@ jobs:
         run: python scripts/verify_royalty_mapping_regressions_20260830.py
       - name: Verify holding-period regressions
         run: python scripts/verify_holding_period_regressions_20260830.py
+      - name: Verify dividend condition semantics
+        run: python scripts/verify_dividend_condition_semantics_20260830.py
+      - name: Verify dividend rule normalization
+        run: python scripts/verify_dividend_rule_normalization_20260830.py
       - name: Verify EN fallback report locale
         run: python scripts/verify_en_fallback_report_locale_20260828.py
       - name: Run browser E2E and capture evidence
