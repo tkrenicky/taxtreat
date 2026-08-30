@@ -34,31 +34,44 @@ jobs:
           python-version: '3.12'
       - name: Install project without external dependencies
         run: python -m pip install --no-deps -e .
-      - name: Verify English treaty locale coverage
-        run: python scripts/verify_en_treaty_locale_all_rules_20260828.py
-      - name: Verify condition-sensitive intake coverage
-        run: python scripts/verify_condition_sensitive_intake_coverage_20260830.py
-      - name: Verify special interest priority ordering
-        run: python scripts/verify_special_interest_priority_20260830.py
-      - name: Verify specific branch priority ordering
-        run: python scripts/verify_specific_branch_priority_20260830.py
-      - name: Verify royalty taxonomy coverage
-        run: python scripts/verify_royalty_taxonomy_coverage_20260830.py
-      - name: Verify royalty mapping regressions
-        run: python scripts/verify_royalty_mapping_regressions_20260830.py
-      - name: Verify holding-period regressions
-        run: python scripts/verify_holding_period_regressions_20260830.py
-      - name: Verify dividend condition semantics
-        run: python scripts/verify_dividend_condition_semantics_20260830.py
-      - name: Verify dividend rule normalization
-        run: python scripts/verify_dividend_rule_normalization_20260830.py
-      - name: Verify EN fallback report locale
-        run: python scripts/verify_en_fallback_report_locale_20260828.py
-      - name: Upload locale diagnostics
+      - name: Run complete verifier suite and capture diagnostics
+        id: suite
+        shell: bash
+        run: |
+          mkdir -p artifacts/condition-aware-verification
+          status=0
+          scripts=(
+            verify_en_treaty_locale_all_rules_20260828.py
+            verify_condition_sensitive_intake_coverage_20260830.py
+            verify_special_interest_priority_20260830.py
+            verify_specific_branch_priority_20260830.py
+            verify_royalty_taxonomy_coverage_20260830.py
+            verify_royalty_mapping_regressions_20260830.py
+            verify_holding_period_regressions_20260830.py
+            verify_dividend_condition_semantics_20260830.py
+            verify_dividend_rule_normalization_20260830.py
+            verify_en_fallback_report_locale_20260828.py
+          )
+          for script in "${scripts[@]}"; do
+            name="${script%.py}"
+            echo "=== $script ==="
+            set +e
+            python "scripts/$script" >"artifacts/condition-aware-verification/$name.txt" 2>&1
+            code=$?
+            set -e
+            cat "artifacts/condition-aware-verification/$name.txt"
+            printf 'exit_code=%s\n' "$code" >>"artifacts/condition-aware-verification/$name.txt"
+            if [ "$code" -ne 0 ]; then
+              status=1
+            fi
+          done
+          echo "suite_status=$status" > artifacts/condition-aware-verification/SUMMARY.txt
+          exit "$status"
+      - name: Upload complete verifier diagnostics
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: condition-aware-en-locale-diagnostics
-          path: artifacts/en-treaty-locale-coverage.txt
-          if-no-files-found: warn
+          name: condition-aware-verification
+          path: artifacts/condition-aware-verification
+          if-no-files-found: error
           retention-days: 30
