@@ -669,8 +669,10 @@
     facts.holding_period_months =
       completeMonths(acquisitionDate, transactionDate);
 
+    // Treaty tests expressed as a continuous N-day period that includes
+    // the payment date are inclusive of both endpoints.
     facts.continuous_holding_period_days =
-      completeDays(acquisitionDate, transactionDate);
+      completeDays(acquisitionDate, transactionDate) + 1;
 
     facts.holding_period_years =
       completeYears(acquisitionDate, transactionDate);
