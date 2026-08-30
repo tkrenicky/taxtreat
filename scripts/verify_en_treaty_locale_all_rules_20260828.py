@@ -22,14 +22,34 @@ def _rate_rules(package: dict) -> list[dict]:
 
 
 def _is_condition_sensitive(rule: dict, siblings: list[dict]) -> bool:
-    facts = {
-        str(condition.get("fact") or "")
-        for condition in rule.get("conditions", [])
-        if str(condition.get("fact") or "")
-    }
-    non_generic = facts - GENERIC_CONDITION_FACTS
+    non_generic = False
+    for condition in rule.get("conditions", []):
+        fact = str(condition.get("fact") or "")
+        value = condition.get("value")
+        if not fact:
+            continue
+        if fact == "beneficial_owner" and value in {True, "true"}:
+            continue
+        if fact == "fallback_case" and value == "all_other_cases":
+            continue
+        non_generic = True
+        break
     rates = {rule_item.get("rate") for rule_item in siblings}
     return bool(non_generic or len(rates) > 1)
+
+
+def _condition_signature(rule: dict) -> tuple:
+    items = []
+    for condition in rule.get("conditions", []):
+        items.append(
+            (
+                str(condition.get("fact_source") or "transaction"),
+                str(condition.get("fact") or ""),
+                str(condition.get("operator") or ""),
+                json.dumps(condition.get("value"), sort_keys=True),
+            )
+        )
+    return tuple(sorted(items))
 
 
 def main() -> int:
@@ -56,6 +76,22 @@ def main() -> int:
         rules = _rate_rules(package)
         for rule in rules:
             grouped[(str(rule.get("income_type") or ""), str(rule.get("article") or ""))].append(rule)
+
+        for (income_type, article), siblings in grouped.items():
+            by_signature: dict[tuple, set[float]] = defaultdict(set)
+            for sibling in siblings:
+                by_signature[_condition_signature(sibling)].add(float(sibling.get("rate")))
+            for signature, rates in by_signature.items():
+                if len(rates) > 1:
+                    ids = [
+                        str(item.get("rule_id"))
+                        for item in siblings
+                        if _condition_signature(item) == signature
+                    ]
+                    failures.append(
+                        f"{country} {income_type} Article {article}: ambiguous multi-rate "
+                        f"branches {ids} share identical conditions but rates {sorted(rates)}"
+                    )
 
         for rule in rules:
             checked += 1
