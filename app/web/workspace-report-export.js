@@ -61,11 +61,11 @@
     "/ui-assets/workspace-canonical-live-i18n-dynamic-20260824.js?v=20260824-canonical2",
     "/ui-assets/workspace-en-residual-hardening-20260826.js?v=20260826-enfix3",
     "/ui-assets/workspace-treaty-excerpt-locales-20260824.js?v=20260827-provenance1",
+    "/ui-assets/workspace-output-status-integrity-20260830.js?v=20260830-status2",
     "/ui-assets/workspace-report-export-core.js?v=20260819-3",
     "/ui-assets/workspace-en-final-residue2-20260826.js?v=20260826-enfinal4",
     "/ui-assets/workspace-en-stabilizer-20260826.js?v=20260826-enstable3",
     "/ui-assets/workspace-dynamic-intake-en-20260830.js?v=20260830-intake1",
-    "/ui-assets/workspace-output-status-integrity-20260830.js?v=20260830-status1",
     "/ui-assets/workspace-result-integrity-20260826.js?v=20260826-integrity1"
   ];
 
