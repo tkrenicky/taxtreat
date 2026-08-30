@@ -150,6 +150,21 @@ FACT_GUIDANCE: dict[str, dict[str, Any]] = {
 # Treaty-specific facts that can be answered by the user. They are
 # presented only when the selected treaty actually needs them.
 FACT_GUIDANCE.update({
+    "article_10_public_body_exemption": {
+        "prompt": (
+            "Spadá příjemce do zvláštní veřejné kategorie pro dividendovou "
+            "výjimku podle čl. 10 příslušné smlouvy?"
+        ),
+        "why": (
+            "Některé smlouvy mají samostatnou 0% větev pro vládu, centrální "
+            "banku nebo jiný výslovně kvalifikovaný veřejný subjekt."
+        ),
+        "response_type": "boolean",
+        "documents": [
+            "Doklady k právnímu postavení příjemce",
+            "Doklady k případnému veřejnému vlastnictví nebo kontrole",
+        ],
+    },
     "article_11_public_body_exemption": {
         "prompt": (
             "Spadá tento úrok do zvláštní veřejné nebo státem podporované "
