@@ -7,6 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 RULE_DIR = ROOT / "data" / "legal_rules_stage6"
 LOCALE_DIR = ROOT / "app" / "web" / "treaty-excerpt-locales"
+REPORT = ROOT / "artifacts" / "en-treaty-locale-coverage.txt"
 
 GENERIC_CONDITION_FACTS = {"beneficial_owner", "fallback_case"}
 SUMMARY_STATUSES = {"verified_stage6_rule_summary", "machine_translation_from_official_text"}
@@ -50,6 +51,18 @@ def _condition_signature(rule: dict) -> tuple:
             )
         )
     return tuple(sorted(items))
+
+
+def _write_report(failures: list[str], checked: int, condition_sensitive: int) -> None:
+    REPORT.parent.mkdir(parents=True, exist_ok=True)
+    lines = [
+        f"checked={checked}",
+        f"condition_sensitive={condition_sensitive}",
+        f"failures={len(failures)}",
+        "",
+    ]
+    lines.extend(failures or ["PASS"])
+    REPORT.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 def main() -> int:
@@ -113,10 +126,6 @@ def main() -> int:
             if sensitive:
                 condition_sensitive += 1
 
-            # An article-level official treaty text may safely cover all branches because
-            # the actual wording is preserved. A synthetic/translated summary may not:
-            # condition-sensitive rules need their own rule-specific entry, otherwise a
-            # generic article summary can silently flatten special treaty conditions.
             status = str(selected.get("status") or "")
             using_article_fallback = not bool(exact.get("text"))
             if sensitive and using_article_fallback and status in SUMMARY_STATUSES:
@@ -125,6 +134,8 @@ def main() -> int:
                     f"uses article-level {status}; add a rule-specific EN entry preserving "
                     "the rule conditions"
                 )
+
+    _write_report(failures, checked, condition_sensitive)
 
     if failures:
         raise AssertionError(
