@@ -58,18 +58,32 @@ def main() -> int:
             # The positive Section 19 branch is factually complete.
             form.locator('select[name="section19_company_form"]').select_option("true")
             form.locator('select[name="section19_taxable_company"]').select_option("true")
-            form.locator("#workspace-submit").click()
+            with page.expect_response(lambda response: "/analysis/intake" in response.url) as analysis_response_info:
+                form.locator("#workspace-submit").click()
+            analysis_response = analysis_response_info.value
+            if not analysis_response.ok:
+                raise AssertionError(f"Analysis endpoint failed with HTTP {analysis_response.status}.")
+            analysis_body = analysis_response.json()
+            analysis = analysis_body.get("analysis") or {}
+            if analysis.get("status") != "FINAL":
+                raise AssertionError(
+                    f"Positive Section 19 path is not FINAL: {analysis.get('status')!r}; "
+                    f"missing={analysis.get('missing_facts')!r}"
+                )
+            if analysis.get("tax_treatment") != "domestic_exemption":
+                raise AssertionError(
+                    "Positive Section 19 path did not select domestic_exemption: "
+                    f"{analysis.get('tax_treatment')!r}"
+                )
 
             page.locator('.flow-step[data-step="4"].active').wait_for(state="visible")
             page.wait_for_timeout(500)
             result = page.locator('.flow-step[data-step="4"].active')
             text = result.inner_text()
-            if "CALCULATION COMPLETED" not in text:
-                raise AssertionError("Positive Section 19 path did not produce a completed result.")
             if "Domestic exemption" not in text:
-                raise AssertionError("Positive Section 19 path does not identify the domestic exemption.")
+                raise AssertionError(f"Positive Section 19 UI does not identify the domestic exemption. Result text: {text!r}")
             if "primary legal basis" not in text.lower():
-                raise AssertionError("Section 19 is not presented as the primary legal basis in the EN result.")
+                raise AssertionError(f"Section 19 is not presented as the primary legal basis in the EN result. Result text: {text!r}")
 
             report_button = page.get_by_role("button", name="Print / PDF report", exact=True)
             with page.expect_response(lambda response: response.url.endswith("/analysis/report")) as response_info:
