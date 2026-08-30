@@ -203,10 +203,10 @@
       "article": 11,
       "conditions": [
         {
-          "fact": "recipient_entity_type",
+          "fact": "article_11_public_body_exemption",
           "fact_source": "transaction",
           "operator": "==",
-          "value": "government_subnational_local_authority_central_bank_wholly_government_owned_financial_institution_or_qualifying_government_guaranteed_financing"
+          "value": true
         },
         {
           "fact": "beneficial_owner",
