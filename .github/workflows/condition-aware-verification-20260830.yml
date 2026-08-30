@@ -21,6 +21,19 @@ on:
       - 'scripts/verify_dividend_condition_semantics_20260830.py'
       - 'scripts/verify_dividend_rule_normalization_20260830.py'
       - 'scripts/verify_en_fallback_report_locale_20260828.py'
+      - 'scripts/verify_web_report_locale_integrity_20260830.py'
+  pull_request:
+    branches:
+      - feat/cz-ui-batch1-20260821
+    paths:
+      - '.github/workflows/condition-aware-verification-20260830.yml'
+      - 'app/web/**'
+      - 'taxtreat/services/**'
+      - 'taxtreat/engine/**'
+      - 'data/legal_rules_stage6/**'
+      - 'scripts/verify_*20260830.py'
+      - 'scripts/verify_en_treaty_locale_all_rules_20260828.py'
+      - 'scripts/verify_en_fallback_report_locale_20260828.py'
   workflow_dispatch:
 
 jobs:
@@ -51,6 +64,7 @@ jobs:
             verify_dividend_condition_semantics_20260830.py
             verify_dividend_rule_normalization_20260830.py
             verify_en_fallback_report_locale_20260828.py
+            verify_web_report_locale_integrity_20260830.py
           )
           for script in "${scripts[@]}"; do
             name="${script%.py}"
