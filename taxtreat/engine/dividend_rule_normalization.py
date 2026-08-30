@@ -94,6 +94,15 @@ DIVIDEND_CONDITION_PATCHES: dict[str, list[dict]] = {
 }
 
 
+# Exact non-condition fields corrected by the condition-aware audit. Lower
+# numeric priority means higher precedence in the legal-rule engine.
+RULE_FIELD_PATCHES: dict[str, dict] = {
+    # Egypt Article 11 public-body exemption must outrank the 15% all-other
+    # branch (raw Stage 6 priorities 691 vs 682 would otherwise select 15%).
+    "CZ-EG-INTEREST-CURRENT-1": {"priority": 671},
+}
+
+
 # Stage 6 correctly projected the UZ protocol rates/conditions but attached the
 # base-treaty Article 10 excerpt and base-treaty source. Keep the approved raw
 # package immutable and repair the runtime citation explicitly. The protocol
@@ -142,8 +151,9 @@ def normalize_raw_legal_rule(raw_rule: dict) -> dict:
     rule_id = str(raw_rule.get("rule_id"))
     conditions = DIVIDEND_CONDITION_PATCHES.get(rule_id)
     source_patch = DIVIDEND_SOURCE_PATCHES.get(rule_id)
+    field_patch = RULE_FIELD_PATCHES.get(rule_id)
 
-    if conditions is None and source_patch is None:
+    if conditions is None and source_patch is None and field_patch is None:
         return raw_rule
 
     normalized = deepcopy(raw_rule)
@@ -151,6 +161,8 @@ def normalize_raw_legal_rule(raw_rule: dict) -> dict:
         normalized["conditions"] = deepcopy(conditions)
     if source_patch is not None:
         normalized.update(deepcopy(source_patch))
+    if field_patch is not None:
+        normalized.update(deepcopy(field_patch))
 
     normalized["runtime_remediation_id"] = "condition-aware-audit-2026-08-30"
     return normalized
