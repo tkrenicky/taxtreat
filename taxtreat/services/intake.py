@@ -150,6 +150,42 @@ FACT_GUIDANCE: dict[str, dict[str, Any]] = {
 # Treaty-specific facts that can be answered by the user. They are
 # presented only when the selected treaty actually needs them.
 FACT_GUIDANCE.update({
+    "article_11_public_body_exemption": {
+        "prompt": (
+            "Spadá tento úrok do zvláštní veřejné nebo státem podporované "
+            "výjimky podle čl. 11 příslušné smlouvy?"
+        ),
+        "why": (
+            "Výjimka se použije pouze při přesném splnění podmínek dané smlouvy, "
+            "například u vlády, centrální banky, vybrané veřejné finanční instituce "
+            "nebo kvalifikovaného státem zajištěného financování."
+        ),
+        "response_type": "boolean",
+        "documents": [
+            "Úvěrová nebo zápůjční smlouva",
+            "Doklady k postavení příjemce nebo státnímu zajištění financování",
+        ],
+    },
+    "recipient_is_bank": {
+        "prompt": "Je příjemce úroku bankou pro účely příslušné smlouvy?",
+        "why": (
+            "U některých smluv je snížená sazba úroku dostupná pouze bankám."
+        ),
+        "response_type": "boolean",
+        "documents": ["Doklady k regulatornímu postavení příjemce"],
+    },
+    "recipient_is_financial_institution_or_insurer": {
+        "prompt": (
+            "Je příjemce finanční institucí, včetně pojišťovny, "
+            "ve smyslu příslušné smlouvy?"
+        ),
+        "why": (
+            "U některých smluv je zvláštní úroková sazba dostupná pouze "
+            "kvalifikované finanční instituci."
+        ),
+        "response_type": "boolean",
+        "documents": ["Doklady k regulatornímu postavení příjemce"],
+    },
     "recipient_has_share_capital": {
         "prompt": (
             "Je jmění příjemce zcela nebo zčásti rozděleno na akcie "
