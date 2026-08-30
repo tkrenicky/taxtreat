@@ -150,6 +150,55 @@ FACT_GUIDANCE: dict[str, dict[str, Any]] = {
 # Treaty-specific facts that can be answered by the user. They are
 # presented only when the selected treaty actually needs them.
 FACT_GUIDANCE.update({
+    "recipient_has_share_capital": {
+        "prompt": (
+            "Je jmění příjemce zcela nebo zčásti rozděleno na akcie "
+            "ve smyslu příslušné smlouvy?"
+        ),
+        "why": (
+            "U některých starších smluv je osvobození dividend vázáno "
+            "na společnost s jměním rozděleným na akcie."
+        ),
+        "response_type": "boolean",
+        "documents": ["Zakladatelské dokumenty příjemce"],
+    },
+    "article_11_3_public_financing_exemption": {
+        "prompt": (
+            "Spadá tento úrok do veřejné nebo státem zajištěné "
+            "finanční výjimky podle čl. 11 odst. 3 příslušné smlouvy?"
+        ),
+        "why": (
+            "Japonská smlouva osvobozuje vybrané úroky placené vládě, "
+            "místním orgánům, centrální bance, plně státní finanční instituci "
+            "nebo z kvalifikovaně zajištěných či financovaných pohledávek."
+        ),
+        "response_type": "boolean",
+        "documents": [
+            "Úvěrová nebo zápůjční smlouva",
+            "Doklady k veřejnému nebo státnímu financování",
+        ],
+    },
+    "recipient_is_qualifying_pension_fund": {
+        "prompt": (
+            "Je příjemce kvalifikovaným penzijním fondem pro účely "
+            "příslušné smlouvy?"
+        ),
+        "why": (
+            "U smlouvy se Švýcarskem může kvalifikovaný penzijní fond "
+            "splňovat samostatnou 0% dividendovou větev."
+        ),
+        "response_type": "boolean",
+        "documents": ["Doklady k právnímu a daňovému postavení příjemce"],
+    },
+    "recipient_is_central_bank": {
+        "prompt": "Je příjemcem centrální banka ve smyslu příslušné smlouvy?",
+        "why": (
+            "U smlouvy se Švýcarskem má centrální banka samostatnou "
+            "dividendovou větev."
+        ),
+        "response_type": "boolean",
+        "documents": ["Doklady k právnímu postavení příjemce"],
+    },
     "article_10_3_public_body_exemption": {
         "prompt": (
             "Spadá příjemce do zvláštní veřejné kategorie pro osvobození "
