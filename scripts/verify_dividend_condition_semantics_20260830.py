@@ -21,6 +21,12 @@ COMPANY_MARKERS = (
 )
 VOTING_FACTS = {"voting_ownership", "voting_power_control", "direct_or_indirect_voting_ownership"}
 
+# Some Stage 6 rules share a full Article 10 source excerpt across multiple
+# paragraph-specific branches. DE CURRENT-1 is paragraph 2(a): direct 25% of
+# capital. Voting rights appear only later in paragraph 3 and are correctly
+# modelled by CZ-DE-DIVIDEND-CURRENT-3, so they must not be projected into -1.
+VOTING_SOURCE_EXCEPTIONS = {"CZ-DE-DIVIDEND-CURRENT-1"}
+
 
 def _facts(rule: dict) -> set[str]:
     return {str(c.get("fact") or "") for c in rule.get("conditions", [])}
@@ -48,7 +54,11 @@ def main() -> int:
             source_mentions_voting = any(marker in source for marker in VOTING_MARKERS)
             source_mentions_direct = any(marker in source for marker in DIRECT_MARKERS)
             source_mentions_company = any(marker in source for marker in COMPANY_MARKERS)
-            if source_mentions_voting and not (facts & VOTING_FACTS):
+            if (
+                source_mentions_voting
+                and rule.get("rule_id") not in VOTING_SOURCE_EXCEPTIONS
+                and not (facts & VOTING_FACTS)
+            ):
                 failures.append(f"{country} {rule.get('rule_id')}: source text uses voting rights/power but rule has no voting-specific fact")
             if source_mentions_direct and "direct_ownership" not in facts and ("ownership_percent" in facts or "voting_ownership" in facts):
                 failures.append(f"{country} {rule.get('rule_id')}: source text expressly requires direct ownership but rule has no direct_ownership condition")
