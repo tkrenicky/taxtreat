@@ -20,8 +20,9 @@ def main() -> int:
     require(loader, "workspace-output-status-integrity-20260830.js", "output status integrity asset in loader")
 
     require(dynamic_intake, 'url.includes("/analysis/intake")', "structured intake interception")
-    require(dynamic_intake, "question.input_path", "fact-aware intake localization")
-    require(dynamic_intake, "client_answerable", "client-only structured localization guard")
+    require(dynamic_intake, "question?.input_path", "fact-aware intake localization")
+    require(dynamic_intake, "body?.intake?.questions", "structured question localization")
+    require(dynamic_intake, "response.clone().json()", "response-level localization")
     if "MutationObserver" in dynamic_intake or "question-card" in dynamic_intake:
         raise AssertionError("Dynamic EN intake must localize structured response data, not patch rendered DOM")
 
