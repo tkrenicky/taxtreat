@@ -4,6 +4,7 @@ import json
 from datetime import date
 from pathlib import Path
 
+from taxtreat.engine.dividend_rule_normalization import normalize_raw_legal_rule
 from taxtreat.engine.legal_rule_engine import (
     LegalCondition,
     LegalRule,
@@ -28,7 +29,8 @@ def load_legal_rules(path: str | Path) -> list[LegalRule]:
     rules: list[LegalRule] = []
     seen_ids: set[str] = set()
 
-    for raw_rule in raw_rules:
+    for raw_rule_original in raw_rules:
+        raw_rule = normalize_raw_legal_rule(raw_rule_original)
         rule_id = raw_rule["rule_id"]
         if rule_id in seen_ids:
             raise ValueError(f"Duplicate legal-rule id: {rule_id}")
