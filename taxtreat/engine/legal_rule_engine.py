@@ -189,10 +189,10 @@ def _royalty_category_groups(value: Any) -> set[str]:
 
     if normalized == "all_other_article_12_royalties":
         return {
-            "copyright_nonfilm",
-            "film_broadcast",
             "software",
             "industrial_ip",
+            "equipment_financial",
+            "equipment_operating",
             "other",
         }
 
