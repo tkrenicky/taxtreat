@@ -19,10 +19,9 @@ def main() -> int:
             "equipment_operating",
             "other",
         },
-        "copyright_literary_artistic_or_scientific": {
-            "copyright_nonfilm",
-            "film_broadcast",
-        },
+        # This legacy browser value is deliberately fail-closed to non-film
+        # copyright only. Film/broadcast has its own atomic UI category.
+        "copyright_literary_artistic_or_scientific": {"copyright_nonfilm"},
         "industrial_commercial_scientific_equipment": {
             "equipment_financial",
             "equipment_operating",
@@ -32,28 +31,16 @@ def main() -> int:
     for value, groups in expected.items():
         actual = _royalty_category_groups(value)
         if actual != groups:
-            failures.append(
-                f"{value}: expected {sorted(groups)}, got {sorted(actual)}"
-            )
+            failures.append(f"{value}: expected {sorted(groups)}, got {sorted(actual)}")
 
-    tw = json.loads(
-        (ROOT / "data" / "legal_rules_stage6" / "tw.json").read_text(encoding="utf-8")
-    )
-    tw_rule = next(
-        r for r in tw["rules"] if r["rule_id"] == "CZ-TW-ROYALTY-CURRENT-2"
-    )
-    tw_category = next(
-        c["value"] for c in tw_rule["conditions"] if c["fact"] == "royalty_category"
-    )
+    tw = json.loads((ROOT / "data" / "legal_rules_stage6" / "tw.json").read_text(encoding="utf-8"))
+    tw_rule = next(r for r in tw["rules"] if r["rule_id"] == "CZ-TW-ROYALTY-CURRENT-2")
+    tw_category = next(c["value"] for c in tw_rule["conditions"] if c["fact"] == "royalty_category")
     if tw_category != "all_other_article_12_royalties":
-        failures.append(
-            "TW 10% royalty branch must use all_other_article_12_royalties"
-        )
+        failures.append("TW 10% royalty branch must use all_other_article_12_royalties")
 
     if failures:
-        raise AssertionError(
-            "Royalty mapping regression failures:\n" + "\n".join(failures)
-        )
+        raise AssertionError("Royalty mapping regression failures:\n" + "\n".join(failures))
 
     print("Royalty mapping regressions: PASS")
     return 0
