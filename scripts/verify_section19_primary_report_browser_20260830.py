@@ -91,6 +91,9 @@ def main() -> int:
             response = response_info.value
             if not response.ok:
                 raise AssertionError(f"Report endpoint failed with HTTP {response.status}.")
+            request_payload = response.request.post_data_json or {}
+            request_facts = request_payload.get("facts") or {}
+            report_language = request_facts.get("__report_language")
             body = response.json()
             report = body.get("report") or {}
             report_result = report.get("result") or {}
@@ -102,8 +105,17 @@ def main() -> int:
                 raise AssertionError(
                     f"Section 19 report treatment is not domestic_exemption: {report_result.get('tax_treatment')!r}"
                 )
+            if report_language != "en":
+                raise AssertionError(
+                    "Report request from /ui/en did not carry __report_language='en': "
+                    f"{report_language!r}; document_lang={page.locator('html').get_attribute('lang')!r}; "
+                    f"route_locale={page.evaluate('window.__TAXTREAT_LOCALE__')!r}"
+                )
             if 'lang="en"' not in html:
-                raise AssertionError("Report requested from /ui/en is not rendered as English HTML.")
+                raise AssertionError(
+                    "Report request carried EN locale but returned non-English HTML; "
+                    f"report_language={report_language!r}"
+                )
             if "domestic exemption" not in html.lower() or "primary legal basis" not in html.lower():
                 raise AssertionError("English report does not present the domestic exemption as the primary legal basis.")
             supplementary = html.lower()
