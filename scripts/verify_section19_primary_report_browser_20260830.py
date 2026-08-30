@@ -38,7 +38,6 @@ def main() -> int:
             browser = playwright.chromium.launch(headless=True)
             page = browser.new_page(viewport={"width": 1440, "height": 1100})
             page.set_default_timeout(7000)
-            page.on("popup", lambda popup: popup.close())
             page.goto(f"{BASE_URL}/ui/en", wait_until="networkidle")
 
             page.locator("[data-start-flow]").first.click()
@@ -86,46 +85,61 @@ def main() -> int:
                 raise AssertionError(f"Section 19 is not presented as the primary legal basis in the EN result. Result text: {text!r}")
 
             report_button = page.get_by_role("button", name="Print / PDF report", exact=True)
-            with page.expect_response(lambda response: response.url.endswith("/analysis/report")) as response_info:
-                report_button.click()
+            with page.expect_popup() as popup_info:
+                with page.expect_response(lambda response: response.url.endswith("/analysis/report")) as response_info:
+                    report_button.click()
             response = response_info.value
+            popup = popup_info.value
             if not response.ok:
                 raise AssertionError(f"Report endpoint failed with HTTP {response.status}.")
+
             request_payload = response.request.post_data_json or {}
             request_facts = request_payload.get("facts") or {}
             report_language = request_facts.get("__report_language")
-            body = response.json()
-            report = body.get("report") or {}
-            report_result = report.get("result") or {}
-            html = str(body.get("html") or "")
-
-            if report_result.get("status") != "FINAL":
-                raise AssertionError(f"Section 19 report is not FINAL: {report_result.get('status')!r}")
-            if report_result.get("tax_treatment") != "domestic_exemption":
-                raise AssertionError(
-                    f"Section 19 report treatment is not domestic_exemption: {report_result.get('tax_treatment')!r}"
-                )
             if report_language != "en":
                 raise AssertionError(
                     "Report request from /ui/en did not carry __report_language='en': "
                     f"{report_language!r}; document_lang={page.locator('html').get_attribute('lang')!r}; "
                     f"route_locale={page.evaluate('window.__TAXTREAT_LOCALE__')!r}"
                 )
-            if 'lang="en"' not in html:
-                raise AssertionError(
-                    "Report request carried EN locale but returned non-English HTML; "
-                    f"report_language={report_language!r}"
-                )
-            if "domestic exemption" not in html.lower() or "primary legal basis" not in html.lower():
-                raise AssertionError("English report does not present the domestic exemption as the primary legal basis.")
-            supplementary = html.lower()
-            if (
-                "secondary treaty" not in supplementary
-                and "treaty protection is secondary" not in supplementary
-                and "treaty treatment is supplementary" not in supplementary
-            ):
-                raise AssertionError("English report does not identify treaty treatment as supplementary/secondary.")
 
+            body = response.json()
+            report = body.get("report") or {}
+            report_result = report.get("result") or {}
+            if report_result.get("status") != "FINAL":
+                raise AssertionError(f"Section 19 report is not FINAL: {report_result.get('status')!r}")
+            if report_result.get("tax_treatment") != "domestic_exemption":
+                raise AssertionError(
+                    f"Section 19 report treatment is not domestic_exemption: {report_result.get('tax_treatment')!r}"
+                )
+
+            # Product acceptance is the document actually opened for the user.
+            # The browser may receive a raw server response and then localize it
+            # through the report response layer before writing the popup.
+            popup.wait_for_load_state("domcontentloaded")
+            page.wait_for_timeout(300)
+            popup_html_lang = popup.locator("html").get_attribute("lang")
+            popup_text = popup.locator("body").inner_text()
+            popup_lower = popup_text.lower()
+            if popup_html_lang != "en":
+                raise AssertionError(
+                    "Report opened from /ui/en is not an English document: "
+                    f"popup_lang={popup_html_lang!r}; raw_report_language={report.get('language')!r}"
+                )
+            if "domestic exemption" not in popup_lower or "primary legal basis" not in popup_lower:
+                raise AssertionError(
+                    "English report popup does not present the domestic exemption as the primary legal basis."
+                )
+            if (
+                "secondary treaty" not in popup_lower
+                and "treaty protection is secondary" not in popup_lower
+                and "treaty treatment is supplementary" not in popup_lower
+            ):
+                raise AssertionError(
+                    "English report popup does not identify treaty treatment as supplementary/secondary."
+                )
+
+            popup.close()
             browser.close()
 
         print("Section 19 primary result/report browser acceptance: PASS")
