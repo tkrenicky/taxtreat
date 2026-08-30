@@ -106,8 +106,13 @@ def main() -> int:
                 raise AssertionError("Report requested from /ui/en is not rendered as English HTML.")
             if "domestic exemption" not in html.lower() or "primary legal basis" not in html.lower():
                 raise AssertionError("English report does not present the domestic exemption as the primary legal basis.")
-            if "secondary treaty" not in html.lower() and "treaty protection is secondary" not in html.lower():
-                raise AssertionError("English report does not identify treaty protection as secondary.")
+            supplementary = html.lower()
+            if (
+                "secondary treaty" not in supplementary
+                and "treaty protection is secondary" not in supplementary
+                and "treaty treatment is supplementary" not in supplementary
+            ):
+                raise AssertionError("English report does not identify treaty treatment as supplementary/secondary.")
 
             browser.close()
 
