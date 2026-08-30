@@ -2,48 +2,32 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from taxtreat.engine.dividend_rule_normalization import DIVIDEND_CONDITION_PATCHES
 from taxtreat.engine.legal_rule_loader import load_legal_rules
 
 ROOT = Path(__file__).resolve().parents[1]
 RULE_DIR = ROOT / "data" / "legal_rules_stage6"
 
-EXPECTED_FACTS = {
-    "CZ-GB-DIVIDEND-CURRENT-1": {"recipient_entity_type", "voting_ownership", "beneficial_owner"},
-    "CZ-US-DIVIDEND-CURRENT-1": {"recipient_entity_type", "voting_ownership", "beneficial_owner"},
-    "CZ-IE-DIVIDEND-CURRENT-1": {"recipient_entity_type", "direct_ownership", "voting_ownership", "beneficial_owner"},
-    "CZ-FR-DIVIDEND-CURRENT-1": {"recipient_entity_type", "direct_ownership", "ownership_percent", "beneficial_owner"},
-    "CZ-LU-DIVIDEND-CURRENT-1": {"recipient_entity_type", "recipient_is_partnership", "direct_ownership", "ownership_percent", "holding_period_months", "beneficial_owner"},
-    "CZ-HU-DIVIDEND-CURRENT-1": {"recipient_entity_type", "direct_ownership", "ownership_percent", "beneficial_owner"},
-    "CZ-SK-DIVIDEND-CURRENT-1": {"recipient_entity_type", "recipient_is_partnership", "direct_ownership", "ownership_percent", "beneficial_owner"},
-    "CZ-CY-DIVIDEND-CURRENT-1": {"recipient_entity_type", "recipient_is_partnership", "direct_ownership", "ownership_percent", "holding_period_months", "beneficial_owner"},
-    "CZ-IS-DIVIDEND-CURRENT-1": {"recipient_entity_type", "recipient_is_partnership", "direct_ownership", "ownership_percent", "beneficial_owner"},
-    "CZ-LI-DIVIDEND-CURRENT-1": {"recipient_entity_type", "recipient_is_partnership", "direct_ownership", "ownership_percent", "holding_period_months", "beneficial_owner"},
-    "CZ-MD-DIVIDEND-CURRENT-1": {"recipient_entity_type", "recipient_is_partnership", "direct_ownership", "ownership_percent", "beneficial_owner"},
-}
-
-COUNTRY_BY_RULE = {
-    rule_id: rule_id.split("-")[1].lower()
-    for rule_id in EXPECTED_FACTS
-}
-
 
 def main() -> int:
     failures: list[str] = []
 
-    for rule_id, expected in EXPECTED_FACTS.items():
-        country = COUNTRY_BY_RULE[rule_id]
+    for rule_id, expected_conditions in sorted(DIVIDEND_CONDITION_PATCHES.items()):
+        country = rule_id.split("-")[1].lower()
         rules = load_legal_rules(RULE_DIR / f"{country}.json")
         rule = next(item for item in rules if item.rule_id == rule_id)
-        actual = {condition.fact for condition in rule.conditions}
 
-        if actual != expected:
+        expected_facts = {str(condition["fact"]) for condition in expected_conditions}
+        actual_facts = {condition.fact for condition in rule.conditions}
+        if actual_facts != expected_facts:
             failures.append(
-                f"{rule_id}: expected facts {sorted(expected)}, got {sorted(actual)}"
+                f"{rule_id}: expected facts {sorted(expected_facts)}, "
+                f"got {sorted(actual_facts)}"
             )
 
-        if "voting_ownership" in expected and "ownership_percent" in actual:
+        if "voting_ownership" in expected_facts and "ownership_percent" in actual_facts:
             failures.append(
-                f"{rule_id}: voting-rights treaty branch still depends on capital ownership_percent"
+                f"{rule_id}: voting-rights branch still depends on capital ownership_percent"
             )
 
     workspace = (ROOT / "app" / "web" / "workspace.js").read_text(encoding="utf-8")
@@ -51,10 +35,11 @@ def main() -> int:
         "facts.voting_ownership =",
         "facts.voting_power_control =",
         "facts.direct_or_indirect_voting_ownership =",
+        "facts.direct_ownership =",
     )
     for fragment in required_web_fragments:
         if fragment not in workspace:
-            failures.append(f"workspace does not emit required voting fact: {fragment}")
+            failures.append(f"workspace does not emit required dividend fact: {fragment}")
 
     if failures:
         raise AssertionError(
@@ -63,7 +48,7 @@ def main() -> int:
 
     print(
         "Dividend rule normalization regressions: PASS "
-        f"({len(EXPECTED_FACTS)} confirmed treaty branches)"
+        f"({len(DIVIDEND_CONDITION_PATCHES)} explicit treaty branches)"
     )
     return 0
 
