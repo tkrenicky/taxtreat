@@ -1,0 +1,64 @@
+name: Condition-aware legal verification
+
+on:
+  push:
+    branches:
+      - feat/web-bulk-en-treaty-acquisition-20260825
+    paths:
+      - '.github/workflows/condition-aware-verification-20260830.yml'
+      - 'data/legal_rules_stage6/**'
+      - 'app/web/treaty-excerpt-locales/**'
+      - 'app/web/workspace.js'
+      - 'taxtreat/engine/**'
+      - 'taxtreat/services/**'
+      - 'scripts/verify_en_treaty_locale_all_rules_20260828.py'
+      - 'scripts/verify_condition_sensitive_intake_coverage_20260830.py'
+      - 'scripts/verify_special_interest_priority_20260830.py'
+      - 'scripts/verify_specific_branch_priority_20260830.py'
+      - 'scripts/verify_royalty_taxonomy_coverage_20260830.py'
+      - 'scripts/verify_royalty_mapping_regressions_20260830.py'
+      - 'scripts/verify_holding_period_regressions_20260830.py'
+      - 'scripts/verify_dividend_condition_semantics_20260830.py'
+      - 'scripts/verify_dividend_rule_normalization_20260830.py'
+      - 'scripts/verify_en_fallback_report_locale_20260828.py'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install project without external dependencies
+        run: python -m pip install --no-deps -e .
+      - name: Verify English treaty locale coverage
+        run: python scripts/verify_en_treaty_locale_all_rules_20260828.py
+      - name: Verify condition-sensitive intake coverage
+        run: python scripts/verify_condition_sensitive_intake_coverage_20260830.py
+      - name: Verify special interest priority ordering
+        run: python scripts/verify_special_interest_priority_20260830.py
+      - name: Verify specific branch priority ordering
+        run: python scripts/verify_specific_branch_priority_20260830.py
+      - name: Verify royalty taxonomy coverage
+        run: python scripts/verify_royalty_taxonomy_coverage_20260830.py
+      - name: Verify royalty mapping regressions
+        run: python scripts/verify_royalty_mapping_regressions_20260830.py
+      - name: Verify holding-period regressions
+        run: python scripts/verify_holding_period_regressions_20260830.py
+      - name: Verify dividend condition semantics
+        run: python scripts/verify_dividend_condition_semantics_20260830.py
+      - name: Verify dividend rule normalization
+        run: python scripts/verify_dividend_rule_normalization_20260830.py
+      - name: Verify EN fallback report locale
+        run: python scripts/verify_en_fallback_report_locale_20260828.py
+      - name: Upload locale diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: condition-aware-en-locale-diagnostics
+          path: artifacts/en-treaty-locale-coverage.txt
+          if-no-files-found: warn
+          retention-days: 30
