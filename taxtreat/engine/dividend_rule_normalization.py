@@ -32,9 +32,6 @@ def _company_direct(
     return conditions
 
 
-# Confirmed against the approved treaty source_text embedded in Stage 6.
-# Patches are deliberately explicit by rule_id; no heuristic source-text
-# rewriting is performed at runtime.
 DIVIDEND_CONDITION_PATCHES: dict[str, list[dict]] = {
     "CZ-GB-DIVIDEND-CURRENT-1": [
         _c("recipient_entity_type", "==", "company"),
@@ -48,18 +45,12 @@ DIVIDEND_CONDITION_PATCHES: dict[str, list[dict]] = {
     ],
     "CZ-IE-DIVIDEND-CURRENT-1": _company_direct("25", voting=True),
     "CZ-FR-DIVIDEND-CURRENT-1": _company_direct("25"),
-    "CZ-LU-DIVIDEND-CURRENT-1": _company_direct(
-        "10", non_partnership=True, holding_months=12
-    ),
+    "CZ-LU-DIVIDEND-CURRENT-1": _company_direct("10", non_partnership=True, holding_months=12),
     "CZ-HU-DIVIDEND-CURRENT-1": _company_direct("25"),
     "CZ-SK-DIVIDEND-CURRENT-1": _company_direct("10", non_partnership=True),
-    "CZ-CY-DIVIDEND-CURRENT-1": _company_direct(
-        "10", non_partnership=True, holding_months=12
-    ),
+    "CZ-CY-DIVIDEND-CURRENT-1": _company_direct("10", non_partnership=True, holding_months=12),
     "CZ-IS-DIVIDEND-CURRENT-1": _company_direct("25", non_partnership=True),
-    "CZ-LI-DIVIDEND-CURRENT-1": _company_direct(
-        "10", non_partnership=True, holding_months=12
-    ),
+    "CZ-LI-DIVIDEND-CURRENT-1": _company_direct("10", non_partnership=True, holding_months=12),
     "CZ-MD-DIVIDEND-CURRENT-1": _company_direct("25", non_partnership=True),
     "CZ-AL-DIVIDEND-CURRENT-1": _company_direct("25", non_partnership=True),
     "CZ-LT-DIVIDEND-CURRENT-1": _company_direct("25", non_partnership=True),
@@ -89,24 +80,27 @@ DIVIDEND_CONDITION_PATCHES: dict[str, list[dict]] = {
         _c("ownership_percent", ">=", "25"),
         _c("beneficial_owner", "==", "true"),
     ],
-    # Protocol No. 92/2012 Sb.m.s., Article II replaced Article 10(2).
     "CZ-UZ-DIVIDEND-CURRENT-1": _company_direct("25", non_partnership=True),
+    "CZ-CN-DIVIDEND-CURRENT-1": _company_direct("25", non_partnership=True),
+    "CZ-ES-DIVIDEND-CURRENT-1": _company_direct("25", non_partnership=True),
+    "CZ-CO-DIVIDEND-CURRENT-1": _company_direct("25", non_partnership=True),
+    "CZ-NG-DIVIDEND-CURRENT-1": [
+        _c("recipient_entity_type", "==", "company"),
+        _c("direct_or_indirect_voting_ownership", ">=", "10"),
+        _c("beneficial_owner", "==", "true"),
+    ],
 }
 
 
-# Exact non-condition fields corrected by the condition-aware audit. Lower
-# numeric priority means higher precedence in the legal-rule engine.
 RULE_FIELD_PATCHES: dict[str, dict] = {
-    # Egypt Article 11 public-body exemption must outrank the 15% all-other
-    # branch (raw Stage 6 priorities 691 vs 682 would otherwise select 15%).
     "CZ-EG-INTEREST-CURRENT-1": {"priority": 671},
+    "CZ-AL-INTEREST-CURRENT-2": {"priority": 671},
+    "CZ-BR-INTEREST-CURRENT-1": {"priority": 671},
+    "CZ-PT-INTEREST-CURRENT-1": {"priority": 671},
+    "CZ-KW-DIVIDEND-CURRENT-1": {"priority": 671},
 }
 
 
-# Stage 6 correctly projected the UZ protocol rates/conditions but attached the
-# base-treaty Article 10 excerpt and base-treaty source. Keep the approved raw
-# package immutable and repair the runtime citation explicitly. The protocol
-# source id and official URL already exist in legal_evidence_sources.json.
 DIVIDEND_SOURCE_PATCHES: dict[str, dict] = {
     "CZ-UZ-DIVIDEND-CURRENT-1": {
         "legal_instrument": "protocol",
@@ -141,21 +135,13 @@ DIVIDEND_SOURCE_PATCHES: dict[str, dict] = {
 
 
 def normalize_raw_legal_rule(raw_rule: dict) -> dict:
-    """Return one rule with only explicitly verified projection corrections.
-
-    The Stage 6 file itself remains the approved immutable snapshot. Runtime
-    remediation is keyed only by exact rule_id and preserves the original
-    review-package hash as the link back to that snapshot.
-    """
-
+    """Apply only exact-rule remediations verified by the condition-aware audit."""
     rule_id = str(raw_rule.get("rule_id"))
     conditions = DIVIDEND_CONDITION_PATCHES.get(rule_id)
     source_patch = DIVIDEND_SOURCE_PATCHES.get(rule_id)
     field_patch = RULE_FIELD_PATCHES.get(rule_id)
-
     if conditions is None and source_patch is None and field_patch is None:
         return raw_rule
-
     normalized = deepcopy(raw_rule)
     if conditions is not None:
         normalized["conditions"] = deepcopy(conditions)
@@ -163,6 +149,5 @@ def normalize_raw_legal_rule(raw_rule: dict) -> dict:
         normalized.update(deepcopy(source_patch))
     if field_patch is not None:
         normalized.update(deepcopy(field_patch))
-
     normalized["runtime_remediation_id"] = "condition-aware-audit-2026-08-30"
     return normalized
