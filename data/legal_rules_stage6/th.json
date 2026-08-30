@@ -20,7 +20,7 @@
       "legal_layer": "domestic",
       "paragraph": "1(b)(1)",
       "priority": 900,
-      "rate": 15.0,
+      "rate": 15,
       "recipient_country": "TH",
       "review_package_sha256": "24a82c79a84f5ed8a573ac3dc743e495a22dcac5833de3a96d420c755ad8ca10",
       "rule_id": "CZ-TH-DIVIDEND-DOMESTIC",
@@ -57,7 +57,7 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 691,
-      "rate": 10.0,
+      "rate": 10,
       "recipient_country": "TH",
       "review_package_sha256": "24a82c79a84f5ed8a573ac3dc743e495a22dcac5833de3a96d420c755ad8ca10",
       "rule_id": "CZ-TH-DIVIDEND-CURRENT-1",
@@ -86,7 +86,7 @@
       "legal_layer": "domestic",
       "paragraph": "1(a)(1)",
       "priority": 900,
-      "rate": 15.0,
+      "rate": 15,
       "recipient_country": "TH",
       "review_package_sha256": "24a82c79a84f5ed8a573ac3dc743e495a22dcac5833de3a96d420c755ad8ca10",
       "rule_id": "CZ-TH-INTEREST-DOMESTIC",
@@ -109,7 +109,13 @@
           "fact": "recipient_entity_type",
           "fact_source": "transaction",
           "operator": "==",
-          "value": "company_and_financial_institution_including_insurer"
+          "value": "company"
+        },
+        {
+          "fact": "recipient_is_financial_institution_or_insurer",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
         },
         {
           "fact": "beneficial_owner",
@@ -129,7 +135,7 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 681,
-      "rate": 10.0,
+      "rate": 10,
       "recipient_country": "TH",
       "review_package_sha256": "24a82c79a84f5ed8a573ac3dc743e495a22dcac5833de3a96d420c755ad8ca10",
       "rule_id": "CZ-TH-INTEREST-CURRENT-1",
@@ -149,10 +155,10 @@
       "article": 11,
       "conditions": [
         {
-          "fact": "recipient_entity_type",
+          "fact": "article_11_public_body_exemption",
           "fact_source": "transaction",
           "operator": "==",
-          "value": "government_of_thailand_including_bank_of_thailand_export_import_bank_local_authority_or_agreed_wholly_government_owned_institution"
+          "value": true
         }
       ],
       "dataset_release": "stage6-production-rules-2026-08-12.1",
@@ -166,7 +172,7 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 692,
-      "rate": 0.0,
+      "rate": 0,
       "recipient_country": "TH",
       "review_package_sha256": "24a82c79a84f5ed8a573ac3dc743e495a22dcac5833de3a96d420c755ad8ca10",
       "rule_id": "CZ-TH-INTEREST-CURRENT-2",
@@ -195,7 +201,7 @@
       "legal_layer": "domestic",
       "paragraph": "1(a)(1)",
       "priority": 900,
-      "rate": 15.0,
+      "rate": 15,
       "recipient_country": "TH",
       "review_package_sha256": "24a82c79a84f5ed8a573ac3dc743e495a22dcac5833de3a96d420c755ad8ca10",
       "rule_id": "CZ-TH-ROYALTY-DOMESTIC",
@@ -238,7 +244,7 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 681,
-      "rate": 5.0,
+      "rate": 5,
       "recipient_country": "TH",
       "review_package_sha256": "24a82c79a84f5ed8a573ac3dc743e495a22dcac5833de3a96d420c755ad8ca10",
       "rule_id": "CZ-TH-ROYALTY-CURRENT-1",
@@ -281,7 +287,7 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 682,
-      "rate": 10.0,
+      "rate": 10,
       "recipient_country": "TH",
       "review_package_sha256": "24a82c79a84f5ed8a573ac3dc743e495a22dcac5833de3a96d420c755ad8ca10",
       "rule_id": "CZ-TH-ROYALTY-CURRENT-2",
@@ -324,7 +330,7 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 683,
-      "rate": 15.0,
+      "rate": 15,
       "recipient_country": "TH",
       "review_package_sha256": "24a82c79a84f5ed8a573ac3dc743e495a22dcac5833de3a96d420c755ad8ca10",
       "rule_id": "CZ-TH-ROYALTY-CURRENT-3",
