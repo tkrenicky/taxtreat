@@ -44,7 +44,7 @@ jobs:
           pip install -r requirements-dev.txt
           pip install --no-deps -e .
           python -m playwright install --with-deps chromium
-      - name: Align legacy browser harness with current navigation
+      - name: Align browser harness with current navigation and Section 19 completion
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -54,6 +54,22 @@ jobs:
               '("Přehled", "Plátci", "Příjemci", "Výpočty", "Výstupy", "Zdroje")',
               '("Přehled", "Plátci", "Příjemci", "Výsledky", "Zdroje")',
           )
+          needle = '            workspace_form.locator(\'input[name="acquisition_date"]\').fill("2024-01-01")'
+          replacement = needle + '''
+
+            # CZ dividends must not reach a FINAL-looking result while the
+            # domestic Section 19 branch is factually unresolved.
+            workspace_form.locator("#workspace-submit").click()
+            page.wait_for_timeout(80)
+            if page.locator('.flow-step[data-step="4"].active').is_visible():
+                raise AssertionError("CZ dividend escaped to result before Section 19 facts were completed.")
+            if "§ 19" not in page.locator("#workspace-error").inner_text():
+                raise AssertionError("Missing Section 19 completion error was not shown.")
+            workspace_form.locator('select[name="section19_company_form"]').select_option("true")
+            workspace_form.locator('select[name="section19_taxable_company"]').select_option("true")'''
+          if needle not in text:
+              raise SystemExit('Section 19 browser patch anchor not found')
+          text = text.replace(needle, replacement)
           path.write_text(text, encoding='utf-8')
           PY
       - name: Verify bootstrap assets and treaty provenance mapping
