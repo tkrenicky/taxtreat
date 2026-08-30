@@ -27,9 +27,11 @@ def main() -> int:
     )
     require(
         loader,
-        "/ui-assets/workspace-output-status-integrity-20260830.js?v=20260830-status1",
+        "/ui-assets/workspace-output-status-integrity-20260830.js?v=20260830-status2",
         "workspace loader",
     )
+    if loader.index("workspace-output-status-integrity-20260830.js") > loader.index("workspace-report-export-core.js"):
+        raise AssertionError("Report status capture must load before report history core")
 
     # Dynamic treaty questions must be localized from the structured response,
     # keyed by the condition fact, rather than by rewriting already-rendered DOM.
@@ -53,9 +55,15 @@ def main() -> int:
     require(main_py, "language=report_language", "report endpoint")
     require(locale_engine, 'localStorage.setItem("taxtreat-report-language", "en")', "locale router")
 
-    # REVIEW outputs may stay in history but must not be counted as completed.
-    require(status_integrity, ".review-history-status.attention", "output status integrity")
-    require(status_integrity, "completedCount = Math.max(0, rows.length - reviewCount)", "output status integrity")
+    # History semantics are fail-closed: only FINAL is completed. Conditional,
+    # review-required and out-of-scope outputs remain visible but never inflate
+    # completed-result metrics or receive a completed badge.
+    require(status_integrity, '=== "FINAL"', "output status integrity")
+    require(status_integrity, 'normalized === "OUT_OF_SCOPE"', "output status integrity")
+    require(status_integrity, 'badge.classList.toggle("attention", !isFinal(status))', "output status integrity")
+    require(status_integrity, 'row.dataset.analysisStatus = status', "output status integrity")
+    require(status_integrity, 'row.dataset.analysisStatus === "FINAL"', "output status integrity")
+    require(status_integrity, 'row.dataset.analysisStatus !== "FINAL"', "output status integrity")
     require(status_integrity, "FINAL results in this browser session", "output status integrity")
 
     print("Web/report condition-aware integration regressions: PASS")
