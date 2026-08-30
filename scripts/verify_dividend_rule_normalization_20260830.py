@@ -8,49 +8,17 @@ ROOT = Path(__file__).resolve().parents[1]
 RULE_DIR = ROOT / "data" / "legal_rules_stage6"
 
 EXPECTED_FACTS = {
-    "CZ-GB-DIVIDEND-CURRENT-1": {
-        "recipient_entity_type",
-        "voting_ownership",
-        "beneficial_owner",
-    },
-    "CZ-US-DIVIDEND-CURRENT-1": {
-        "recipient_entity_type",
-        "voting_ownership",
-        "beneficial_owner",
-    },
-    "CZ-IE-DIVIDEND-CURRENT-1": {
-        "recipient_entity_type",
-        "direct_ownership",
-        "voting_ownership",
-        "beneficial_owner",
-    },
-    "CZ-FR-DIVIDEND-CURRENT-1": {
-        "recipient_entity_type",
-        "direct_ownership",
-        "ownership_percent",
-        "beneficial_owner",
-    },
-    "CZ-LU-DIVIDEND-CURRENT-1": {
-        "recipient_entity_type",
-        "recipient_is_partnership",
-        "direct_ownership",
-        "ownership_percent",
-        "holding_period_months",
-        "beneficial_owner",
-    },
-    "CZ-HU-DIVIDEND-CURRENT-1": {
-        "recipient_entity_type",
-        "direct_ownership",
-        "ownership_percent",
-        "beneficial_owner",
-    },
-    "CZ-SK-DIVIDEND-CURRENT-1": {
-        "recipient_entity_type",
-        "recipient_is_partnership",
-        "direct_ownership",
-        "ownership_percent",
-        "beneficial_owner",
-    },
+    "CZ-GB-DIVIDEND-CURRENT-1": {"recipient_entity_type", "voting_ownership", "beneficial_owner"},
+    "CZ-US-DIVIDEND-CURRENT-1": {"recipient_entity_type", "voting_ownership", "beneficial_owner"},
+    "CZ-IE-DIVIDEND-CURRENT-1": {"recipient_entity_type", "direct_ownership", "voting_ownership", "beneficial_owner"},
+    "CZ-FR-DIVIDEND-CURRENT-1": {"recipient_entity_type", "direct_ownership", "ownership_percent", "beneficial_owner"},
+    "CZ-LU-DIVIDEND-CURRENT-1": {"recipient_entity_type", "recipient_is_partnership", "direct_ownership", "ownership_percent", "holding_period_months", "beneficial_owner"},
+    "CZ-HU-DIVIDEND-CURRENT-1": {"recipient_entity_type", "direct_ownership", "ownership_percent", "beneficial_owner"},
+    "CZ-SK-DIVIDEND-CURRENT-1": {"recipient_entity_type", "recipient_is_partnership", "direct_ownership", "ownership_percent", "beneficial_owner"},
+    "CZ-CY-DIVIDEND-CURRENT-1": {"recipient_entity_type", "recipient_is_partnership", "direct_ownership", "ownership_percent", "holding_period_months", "beneficial_owner"},
+    "CZ-IS-DIVIDEND-CURRENT-1": {"recipient_entity_type", "recipient_is_partnership", "direct_ownership", "ownership_percent", "beneficial_owner"},
+    "CZ-LI-DIVIDEND-CURRENT-1": {"recipient_entity_type", "recipient_is_partnership", "direct_ownership", "ownership_percent", "holding_period_months", "beneficial_owner"},
+    "CZ-MD-DIVIDEND-CURRENT-1": {"recipient_entity_type", "recipient_is_partnership", "direct_ownership", "ownership_percent", "beneficial_owner"},
 }
 
 COUNTRY_BY_RULE = {
@@ -93,7 +61,10 @@ def main() -> int:
             "Dividend normalization regression failures:\n" + "\n".join(failures)
         )
 
-    print("Dividend rule normalization regressions: PASS")
+    print(
+        "Dividend rule normalization regressions: PASS "
+        f"({len(EXPECTED_FACTS)} confirmed treaty branches)"
+    )
     return 0
 
 
