@@ -40,13 +40,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements-dev.txt
-          pip install --no-deps -e .
-          python -m playwright install --with-deps chromium
-      - name: Align legacy browser harness with current navigation
+      - name: Align legacy browser harness with current navigation and required dividend facts
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -56,8 +50,22 @@ jobs:
               '("Přehled", "Plátci", "Příjemci", "Výpočty", "Výstupy", "Zdroje")',
               '("Přehled", "Plátci", "Příjemci", "Výsledky", "Zdroje")',
           )
+          needle = '            workspace_form.locator(\'input[name="acquisition_date"]\').fill("2024-01-01")'
+          addition = (
+              '\n            workspace_form.locator(\'select[name="section19_company_form"]\').select_option("true")'
+              '\n            workspace_form.locator(\'select[name="section19_taxable_company"]\').select_option("true")'
+          )
+          if needle not in text:
+              raise SystemExit('Section 19 capture anchor not found')
+          text = text.replace(needle, needle + addition)
           path.write_text(text, encoding='utf-8')
           PY
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+          pip install --no-deps -e .
+          python -m playwright install --with-deps chromium
       - name: Verify bootstrap assets and treaty provenance mapping
         run: python scripts/verify_web_integrity_guards_20260827.py
       - name: Verify dividend treaty fallback across all partner packages
