@@ -80,6 +80,27 @@ DIVIDEND_CONDITION_PATCHES: dict[str, list[dict]] = {
         {"fact": "ownership_percent", "fact_source": "transaction", "operator": ">=", "value": "25"},
         {"fact": "beneficial_owner", "fact_source": "transaction", "operator": "==", "value": "true"},
     ],
+    "CZ-AL-DIVIDEND-CURRENT-1": [
+        {"fact": "recipient_entity_type", "fact_source": "transaction", "operator": "==", "value": "company"},
+        {"fact": "recipient_is_partnership", "fact_source": "transaction", "operator": "==", "value": False},
+        {"fact": "direct_ownership", "fact_source": "transaction", "operator": "==", "value": True},
+        {"fact": "ownership_percent", "fact_source": "transaction", "operator": ">=", "value": "25"},
+        {"fact": "beneficial_owner", "fact_source": "transaction", "operator": "==", "value": "true"},
+    ],
+    "CZ-LT-DIVIDEND-CURRENT-1": [
+        {"fact": "recipient_entity_type", "fact_source": "transaction", "operator": "==", "value": "company"},
+        {"fact": "recipient_is_partnership", "fact_source": "transaction", "operator": "==", "value": False},
+        {"fact": "direct_ownership", "fact_source": "transaction", "operator": "==", "value": True},
+        {"fact": "ownership_percent", "fact_source": "transaction", "operator": ">=", "value": "25"},
+        {"fact": "beneficial_owner", "fact_source": "transaction", "operator": "==", "value": "true"},
+    ],
+    "CZ-EG-DIVIDEND-CURRENT-1": [
+        {"fact": "recipient_entity_type", "fact_source": "transaction", "operator": "==", "value": "company"},
+        {"fact": "recipient_is_partnership", "fact_source": "transaction", "operator": "==", "value": False},
+        {"fact": "direct_ownership", "fact_source": "transaction", "operator": "==", "value": True},
+        {"fact": "ownership_percent", "fact_source": "transaction", "operator": ">=", "value": "25"},
+        {"fact": "beneficial_owner", "fact_source": "transaction", "operator": "==", "value": "true"},
+    ],
 }
 
 
