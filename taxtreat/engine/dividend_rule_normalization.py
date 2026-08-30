@@ -137,6 +137,64 @@ DIVIDEND_CONDITION_PATCHES: dict[str, list[dict]] = {
             "value": "true",
         },
     ],
+    "CZ-HU-DIVIDEND-CURRENT-1": [
+        {
+            "fact": "recipient_entity_type",
+            "fact_source": "transaction",
+            "operator": "==",
+            "value": "company",
+        },
+        {
+            "fact": "direct_ownership",
+            "fact_source": "transaction",
+            "operator": "==",
+            "value": True,
+        },
+        {
+            "fact": "ownership_percent",
+            "fact_source": "transaction",
+            "operator": ">=",
+            "value": "25",
+        },
+        {
+            "fact": "beneficial_owner",
+            "fact_source": "transaction",
+            "operator": "==",
+            "value": "true",
+        },
+    ],
+    "CZ-SK-DIVIDEND-CURRENT-1": [
+        {
+            "fact": "recipient_entity_type",
+            "fact_source": "transaction",
+            "operator": "==",
+            "value": "company",
+        },
+        {
+            "fact": "recipient_is_partnership",
+            "fact_source": "transaction",
+            "operator": "==",
+            "value": False,
+        },
+        {
+            "fact": "direct_ownership",
+            "fact_source": "transaction",
+            "operator": "==",
+            "value": True,
+        },
+        {
+            "fact": "ownership_percent",
+            "fact_source": "transaction",
+            "operator": ">=",
+            "value": "10",
+        },
+        {
+            "fact": "beneficial_owner",
+            "fact_source": "transaction",
+            "operator": "==",
+            "value": "true",
+        },
+    ],
 }
 
 
