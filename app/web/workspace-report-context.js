@@ -13,10 +13,19 @@
     return null;
   }
 
+  function reportLanguage() {
+    const explicit = document.querySelector("#taxtreat-report-language")?.value;
+    if (explicit === "en" || explicit === "cs") return explicit;
+    if (window.__TAXTREAT_LOCALE__ === "en" || window.__TAXTREAT_LOCALE__ === "cs") {
+      return window.__TAXTREAT_LOCALE__;
+    }
+    return localStorage.getItem("taxtreat-report-language") === "en" ? "en" : "cs";
+  }
+
   function enrichReportPayload(payload) {
     if (!payload || typeof payload !== "object") return payload;
     payload.facts = payload.facts && typeof payload.facts === "object" ? payload.facts : {};
-    payload.facts.__report_language = document.querySelector("#taxtreat-report-language")?.value || "cs";
+    payload.facts.__report_language = reportLanguage();
 
     if (String(payload.source_country || "").toUpperCase() !== "CZ" || payload.income_type !== "dividend") return payload;
 
