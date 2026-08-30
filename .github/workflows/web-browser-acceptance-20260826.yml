@@ -14,6 +14,7 @@ on:
       - 'scripts/verify_condition_sensitive_intake_coverage_20260830.py'
       - 'scripts/verify_special_interest_priority_20260830.py'
       - 'scripts/verify_specific_branch_priority_20260830.py'
+      - 'scripts/verify_royalty_taxonomy_coverage_20260830.py'
       - 'scripts/verify_workspace_profile_and_fallback_20260828.py'
       - 'scripts/verify_en_fallback_report_locale_20260828.py'
       - 'app/web/**'
@@ -61,6 +62,8 @@ jobs:
         run: python scripts/verify_special_interest_priority_20260830.py
       - name: Verify specific branch priority ordering
         run: python scripts/verify_specific_branch_priority_20260830.py
+      - name: Verify royalty taxonomy coverage
+        run: python scripts/verify_royalty_taxonomy_coverage_20260830.py
       - name: Verify EN fallback report locale
         run: python scripts/verify_en_fallback_report_locale_20260828.py
       - name: Run browser E2E and capture evidence
