@@ -89,16 +89,68 @@ DIVIDEND_CONDITION_PATCHES: dict[str, list[dict]] = {
         _c("ownership_percent", ">=", "25"),
         _c("beneficial_owner", "==", "true"),
     ],
+    # Protocol No. 92/2012 Sb.m.s., Article II replaced Article 10(2).
+    "CZ-UZ-DIVIDEND-CURRENT-1": _company_direct("25", non_partnership=True),
+}
+
+
+# Stage 6 correctly projected the UZ protocol rates/conditions but attached the
+# base-treaty Article 10 excerpt and base-treaty source. Keep the approved raw
+# package immutable and repair the runtime citation explicitly. The protocol
+# source id and official URL already exist in legal_evidence_sources.json.
+DIVIDEND_SOURCE_PATCHES: dict[str, dict] = {
+    "CZ-UZ-DIVIDEND-CURRENT-1": {
+        "legal_instrument": "protocol",
+        "legal_layer": "protocol",
+        "effective_from": "2013-01-01",
+        "source_id": "CZ-MF-UZ-91E56630154D",
+        "source_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=25317",
+        "source_text": (
+            "Protocol No. 92/2012 Sb.m.s., Article II amends Article 10(2): "
+            "5% for a beneficial-owner company other than a partnership directly "
+            "holding at least 25% of the payer's capital."
+        ),
+        "source_excerpt_hash": "96a4279c10a8e81ad8733dc35a9631339119dfc3250c7b9dc4d3f1f908bd48cf",
+        "evidence_source_ids": ["CZ-MF-UZ-91E56630154D"],
+        "source_representation": "runtime_protocol_remediation_summary",
+    },
+    "CZ-UZ-DIVIDEND-CURRENT-2": {
+        "legal_instrument": "protocol",
+        "legal_layer": "protocol",
+        "effective_from": "2013-01-01",
+        "source_id": "CZ-MF-UZ-91E56630154D",
+        "source_url": "https://aplikace.mv.gov.cz/sbirka-zakonu/ViewFile.aspx?type=z&id=25317",
+        "source_text": (
+            "Protocol No. 92/2012 Sb.m.s., Article II amends Article 10(2): "
+            "10% in all other beneficial-owner dividend cases."
+        ),
+        "source_excerpt_hash": "82ff2525a18b72616cfd967bb94c2960298dc1dba8683ac798ad83ffb10b4570",
+        "evidence_source_ids": ["CZ-MF-UZ-91E56630154D"],
+        "source_representation": "runtime_protocol_remediation_summary",
+    },
 }
 
 
 def normalize_raw_legal_rule(raw_rule: dict) -> dict:
-    """Return one rule with only explicitly verified projection corrections."""
+    """Return one rule with only explicitly verified projection corrections.
 
-    conditions = DIVIDEND_CONDITION_PATCHES.get(str(raw_rule.get("rule_id")))
-    if conditions is None:
+    The Stage 6 file itself remains the approved immutable snapshot. Runtime
+    remediation is keyed only by exact rule_id and preserves the original
+    review-package hash as the link back to that snapshot.
+    """
+
+    rule_id = str(raw_rule.get("rule_id"))
+    conditions = DIVIDEND_CONDITION_PATCHES.get(rule_id)
+    source_patch = DIVIDEND_SOURCE_PATCHES.get(rule_id)
+
+    if conditions is None and source_patch is None:
         return raw_rule
 
     normalized = deepcopy(raw_rule)
-    normalized["conditions"] = deepcopy(conditions)
+    if conditions is not None:
+        normalized["conditions"] = deepcopy(conditions)
+    if source_patch is not None:
+        normalized.update(deepcopy(source_patch))
+
+    normalized["runtime_remediation_id"] = "condition-aware-audit-2026-08-30"
     return normalized
