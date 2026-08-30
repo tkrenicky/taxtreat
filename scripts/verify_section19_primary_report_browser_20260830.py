@@ -128,7 +128,8 @@ def main() -> int:
                 )
             if "domestic exemption" not in popup_lower or "primary legal basis" not in popup_lower:
                 raise AssertionError(
-                    "English report popup does not present the domestic exemption as the primary legal basis."
+                    "English report popup does not present the domestic exemption as the primary legal basis. "
+                    f"Popup text: {popup_text!r}"
                 )
             if (
                 "secondary treaty" not in popup_lower
@@ -136,7 +137,8 @@ def main() -> int:
                 and "treaty treatment is supplementary" not in popup_lower
             ):
                 raise AssertionError(
-                    "English report popup does not identify treaty treatment as supplementary/secondary."
+                    "English report popup does not identify treaty treatment as supplementary/secondary. "
+                    f"Popup text: {popup_text!r}"
                 )
 
             popup.close()
