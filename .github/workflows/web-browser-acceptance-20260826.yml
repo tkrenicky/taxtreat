@@ -21,6 +21,7 @@ on:
       - 'scripts/verify_dividend_condition_semantics_20260830.py'
       - 'scripts/verify_dividend_rule_normalization_20260830.py'
       - 'scripts/verify_workspace_profile_and_fallback_20260828.py'
+      - 'scripts/verify_section19_primary_report_browser_20260830.py'
       - 'scripts/verify_en_fallback_report_locale_20260828.py'
       - 'scripts/verify_web_report_condition_aware_integration_20260830.py'
       - 'app/web/**'
@@ -113,6 +114,9 @@ jobs:
       - name: Run profile controls and dividend fallback acceptance
         timeout-minutes: 3
         run: python scripts/verify_workspace_profile_and_fallback_20260828.py
+      - name: Run Section 19 primary result/report browser acceptance
+        timeout-minutes: 3
+        run: python scripts/verify_section19_primary_report_browser_20260830.py
       - name: Upload browser evidence
         if: always()
         uses: actions/upload-artifact@v4
