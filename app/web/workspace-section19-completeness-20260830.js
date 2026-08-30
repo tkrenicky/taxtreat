@@ -37,14 +37,9 @@
       : "Před dokončením výpočtu doplň oba skutkové údaje pro možné vnitrostátní osvobození dividend podle § 19 ZDP.";
   }
 
-  function blockIncompleteSubmit(event) {
-    const form = paymentForm();
-    if (!form || event.target !== form) return;
+  function showIncompleteError(form, firstMissing = null) {
     const missing = missingFields(form);
-    if (!missing.length) return;
-
-    event.preventDefault();
-    event.stopImmediatePropagation();
+    if (!missing.length) return false;
 
     const error = document.querySelector("#workspace-error");
     if (error) {
@@ -54,7 +49,23 @@
 
     const section = document.querySelector("#cz-section19-facts");
     section?.scrollIntoView({ behavior: "smooth", block: "center" });
-    missing[0].focus({ preventScroll: true });
+    (firstMissing || missing[0])?.focus({ preventScroll: true });
+    return true;
+  }
+
+  function blockIncompleteSubmit(event) {
+    const form = paymentForm();
+    if (!form || event.target !== form || !showIncompleteError(form)) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  }
+
+  function handleInvalid(event) {
+    const form = paymentForm();
+    const field = event.target;
+    if (!form || !FIELD_NAMES.includes(field?.name) || !isCzechDividend(form)) return;
+    event.preventDefault();
+    showIncompleteError(form, field);
   }
 
   function boot() {
@@ -62,6 +73,7 @@
     const form = paymentForm();
     form?.elements?.income_type?.addEventListener("change", syncRequiredState);
     form?.addEventListener("submit", blockIncompleteSubmit, true);
+    fields(form).forEach((field) => field.addEventListener("invalid", handleInvalid));
   }
 
   if (document.readyState === "loading") {
