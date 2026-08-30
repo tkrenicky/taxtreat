@@ -3,19 +3,28 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from taxtreat.engine.dividend_rule_normalization import normalize_raw_legal_rule
 from taxtreat.services.intake import (
     DERIVED_TRANSACTION_FACTS,
     DETERMINATION_GUIDANCE,
     FACT_GUIDANCE,
     PROFESSIONAL_FACT_GROUPS,
     RULE_CONTROL_FACTS,
+    RULE_VALUE_BOOLEAN_GUIDANCE,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
 RULE_DIR = ROOT / "data" / "legal_rules_stage6"
 
-GENERIC_FACTS = {"beneficial_owner", "fallback_case"}
 BASE_RECIPIENT_ENTITY_TYPES = {"company", "individual", "fund", "other"}
+
+# These aliases intentionally remain fail-closed professional-review facts.
+# Listing them here makes that treatment explicit instead of silently accepting
+# arbitrary unknown facts.
+EXPLICIT_PROFESSIONAL_ONLY_FACTS = {
+    "detailed_eligibility_review_required",
+    "distributed_vs_undistributed_corporate_tax_rate_difference",
+}
 
 
 def main() -> int:
@@ -26,7 +35,8 @@ def main() -> int:
     for path in sorted(RULE_DIR.glob("*.json")):
         package = json.loads(path.read_text(encoding="utf-8"))
         country = package.get("country_pair", {}).get("recipient_country")
-        for rule in package.get("rules", []):
+        for raw_rule in package.get("rules", []):
+            rule = normalize_raw_legal_rule(raw_rule)
             if rule.get("legal_layer") not in {"treaty", "protocol", "mli"}:
                 continue
             if rule.get("effect") != "rate":
@@ -75,9 +85,11 @@ def main() -> int:
 
                 if (
                     fact in FACT_GUIDANCE
+                    or fact in RULE_VALUE_BOOLEAN_GUIDANCE
                     or fact in DERIVED_TRANSACTION_FACTS
                     or fact in RULE_CONTROL_FACTS
                     or fact in PROFESSIONAL_FACT_GROUPS
+                    or fact in EXPLICIT_PROFESSIONAL_ONLY_FACTS
                 ):
                     explicit.add(fact)
                     continue
@@ -93,7 +105,7 @@ def main() -> int:
         )
 
     print(
-        "Condition-sensitive intake coverage: PASS "
+        "Condition-sensitive intake coverage after runtime remediation: PASS "
         f"({len(seen)} special treaty facts; {len(explicit)} explicitly classified)"
     )
     return 0
