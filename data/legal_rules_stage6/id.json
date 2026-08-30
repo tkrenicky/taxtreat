@@ -43,7 +43,13 @@
           "fact": "recipient_entity_type",
           "fact_source": "transaction",
           "operator": "==",
-          "value": "company_other_than_partnership"
+          "value": "company"
+        },
+        {
+          "fact": "recipient_is_partnership",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
         },
         {
           "fact": "direct_ownership",
