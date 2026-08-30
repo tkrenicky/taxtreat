@@ -3,14 +3,16 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 WEB = ROOT / "app" / "web"
+CONTEXT = WEB / "source-country-context.js"
+ADAPTER = WEB / "workspace-source-country-adapter.js"
 
 
 def test_workspace_bootstrap_loads_country_context_and_adapter_before_existing_export_core():
     bootstrap = (WEB / "workspace-report-export.js").read_text(encoding="utf-8")
 
-    country = '/ui-assets/source-country-context.js?v=20260819-sk1'
-    adapter = '/ui-assets/workspace-source-country-adapter.js?v=20260819-sk1'
-    core = '/ui-assets/workspace-report-export-core.js?v=20260819-3'
+    country = "/ui-assets/source-country-context.js"
+    adapter = "/ui-assets/workspace-source-country-adapter.js"
+    core = "/ui-assets/workspace-report-export-core.js"
 
     assert country in bootstrap
     assert adapter in bootstrap
@@ -27,55 +29,38 @@ def test_workspace_existing_report_export_logic_is_preserved_as_core():
     assert 'Tisk / PDF reportu' in core
 
 
-def test_workspace_sk_adapter_is_prerelease_fail_closed_and_uses_eur_context():
-    adapter = (WEB / "workspace-source-country-adapter.js").read_text(encoding="utf-8")
+def test_workspace_public_source_country_registry_is_cz_only():
+    context = CONTEXT.read_text(encoding="utf-8")
+    adapter = ADAPTER.read_text(encoding="utf-8")
 
-    assert 'Slovensko · před vydáním' in adapter
-    assert 'ctx.baseCurrency' in adapter
-    assert 'if (ctx.runtimeReleased) return;' in adapter
-    assert 'event.stopImmediatePropagation();' in adapter
-    assert 'Slovenská zrážková daň v EUR' in adapter
-    assert 'ctx.complianceLegalReference' in adapter
-    assert 'Mesačné oznámenie OZN4311v26' in adapter
-
-
-def test_workspace_sk_adapter_blocks_cnb_and_czech_interest_only_field():
-    adapter = (WEB / "workspace-source-country-adapter.js").read_text(encoding="utf-8")
-
-    assert 'url.startsWith("/exchange-rates/cnb")' in adapter
-    assert 'CNB exchange-rate service is prohibited for Slovak source-country context' in adapter
-    assert 'prior_same_type_monthly_amount_czk' in adapter
-    assert 'interestMonthlyField.hidden = true' in adapter
-    assert 'currency?.addEventListener("change", blockCnbListenerForSk, true)' in adapter
-    assert 'transactionDate?.addEventListener("change", blockCnbListenerForSk, true)' in adapter
+    assert 'code: "CZ"' in context
+    assert 'code: "SK"' not in context
+    assert '<option value="CZ">Česká republika</option>' in adapter
+    assert '<option value="SK">' not in adapter
+    assert 'countryControl.hidden = true;' in adapter
 
 
-def test_workspace_analysis_requests_are_bound_to_active_source_country():
-    adapter = (WEB / "workspace-source-country-adapter.js").read_text(encoding="utf-8")
+def test_workspace_analysis_requests_are_bound_to_cz_source_country():
+    adapter = ADAPTER.read_text(encoding="utf-8")
 
     assert 'url.includes("/analysis")' in adapter
     assert 'payload.source_country = currentCode' in adapter
+    assert 'applyContext("CZ")' in adapter
     assert 'body: JSON.stringify(payload)' in adapter
 
 
-def test_workspace_sk_preview_replaces_remaining_czech_visible_copy_and_metrics():
-    adapter = (WEB / "workspace-source-country-adapter.js").read_text(encoding="utf-8")
+def test_workspace_keeps_czech_copy_and_metrics():
+    combined = ADAPTER.read_text(encoding="utf-8") + "\n" + CONTEXT.read_text(encoding="utf-8")
 
-    assert 'Vazba ke stálé provozovně v ČR' in adapter
-    assert 'Väzba príjmu na stálu prevádzkareň v SR' in adapter
-    assert 'Slovenské subjekty, ktorých platby sú v TaxTreat spracovávané' in adapter
-    assert 'České subjekty, jejichž platby jsou v TaxTreat zpracovávány.' in adapter
-    assert 'jurisdictionValue.textContent = "75"' in adapter
-    assert 'scopeValue.textContent = "225"' in adapter
-    assert 'jurisdictionValue.textContent = "101"' in adapter
-    assert 'scopeValue.textContent = "303"' in adapter
+    assert 'Vazba ke stálé provozovně v ČR' in combined
+    assert 'České subjekty, jejichž platby jsou v TaxTreat zpracovávány' in combined
+    assert 'jurisdictionValue: "101"' in combined
+    assert 'scopeValue: "303"' in combined
 
 
-def test_workspace_country_switch_restores_czech_copy_after_slovak_preview():
-    adapter = (WEB / "workspace-source-country-adapter.js").read_text(encoding="utf-8")
+def test_workspace_browser_bundle_contains_no_slovak_public_copy():
+    combined = ADAPTER.read_text(encoding="utf-8") + "\n" + CONTEXT.read_text(encoding="utf-8")
 
-    assert '"Väzba príjmu na stálu prevádzkareň v SR", "Vazba ke stálé provozovně v ČR"' in adapter
-    assert '"v Slovenskej republike", "v České republice"' in adapter
-    assert '"v SR", "v ČR"' in adapter
-    assert '"slovenského plátce", "českého plátce"' in adapter
-    assert 'interestMonthlyField.hidden = false' in adapter
+    assert 'Slovensko' not in combined
+    assert 'Slovenská zrážková daň' not in combined
+    assert 'OZN4311v26' not in combined

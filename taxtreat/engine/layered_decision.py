@@ -33,22 +33,25 @@ _TREATMENT_ORDER = {
 
 
 def _candidate_sort_key(rule: LegalRule) -> tuple[Any, ...]:
-    """Prefer the most favourable outcome and preserve its correct legal basis.
+    """Prefer decisive domestic treatment, then the most favourable valid path."""
+    treatment = resolve_tax_treatment(rule)
 
-    A Czech domestic exemption is a complete domestic-law outcome.  Where it
-    produces the same numerical result as treaty-exclusive taxation (normally
-    both are represented by a zero rate), the exemption must remain the
-    selected legal basis rather than being displaced by the treaty layer.
-    """
+    # A matched domestic non-rate treatment can be legally decisive even when
+    # rate=None; do not push it behind ordinary treaty-rate candidates.
+    domestic_non_rate_treatment = (
+        rule.legal_layer == "domestic"
+        and treatment is not None
+        and treatment != TaxTreatment.TAXABLE_AT_RATE
+    )
 
     return (
+        0 if domestic_non_rate_treatment else 1,
         float(rule.rate) if rule.rate is not None else float("inf"),
-        _TREATMENT_ORDER.get(resolve_tax_treatment(rule), 9),
+        _TREATMENT_ORDER.get(treatment, 9),
         -_LAYER_ORDER.get(rule.legal_layer, 99),
         rule.priority,
         rule.rule_id,
     )
-
 
 def _royalty_category_value(rule: LegalRule) -> str | None:
     for condition in rule.conditions:

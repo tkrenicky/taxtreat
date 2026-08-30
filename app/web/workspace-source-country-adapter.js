@@ -19,17 +19,18 @@
     return api.get(currentCode);
   }
 
-  function inferredCountryForActivePayer() {
-    const explicit = payerCountries.get(activePayerKey());
-    if (explicit) return explicit;
-    const name = activePayerSelect.selectedOptions?.[0]?.textContent?.trim() || "";
-    const cards = [...document.querySelectorAll(".payer-record,.payer-choice")];
-    const card = cards.find((item) => item.querySelector("h2")?.textContent?.trim() === name);
-    const copy = String(card?.textContent || "");
-    if (/Slovensko|Slovak|IČ\s*DPH\s*SK|DIČ\s*SK/i.test(copy)) return "SK";
-    return "CZ";
-  }
+  const countryControl = document.createElement("label");
+  countryControl.className = "payer-context source-country-context";
+  countryControl.hidden = true;
+  countryControl.innerHTML = `
+    <span>Stát plátce</span>
+    <select id="active-source-country" aria-label="Stát aktivního plátce">
+      <option value="CZ">Česká republika</option>
+    </select>
+  `;
+  activePayerSelect.closest(".payer-context")?.after(countryControl);
 
+  const countrySelect = countryControl.querySelector("select");
   const error = document.querySelector("#workspace-error");
   const submit = document.querySelector("#workspace-submit");
   const currency = paymentForm.elements.currency;
@@ -60,64 +61,70 @@
 
   function setSourceMetrics(ctx) {
     if (sourceMetrics.length < 3) return;
+
+    const metrics = ctx.sourceMetrics || {};
     const jurisdictionLabel = sourceMetrics[0].querySelector("span");
     const jurisdictionValue = sourceMetrics[0].querySelector("strong");
     const scopeLabel = sourceMetrics[1].querySelector("span");
     const scopeValue = sourceMetrics[1].querySelector("strong");
-    if (ctx.code === "SK") {
-      if (jurisdictionLabel) jurisdictionLabel.textContent = "SK treaty relationships";
-      if (jurisdictionValue) jurisdictionValue.textContent = "75";
-      if (scopeLabel) scopeLabel.textContent = "SK machine-evidence scopes";
-      if (scopeValue) scopeValue.textContent = "225";
-    } else {
-      if (jurisdictionLabel) jurisdictionLabel.textContent = "Podporované jurisdikce";
-      if (jurisdictionValue) jurisdictionValue.textContent = "101";
-      if (scopeLabel) scopeLabel.textContent = "Pokryté kombinace";
-      if (scopeValue) scopeValue.textContent = "303";
-    }
+
+    if (jurisdictionLabel) jurisdictionLabel.textContent = metrics.jurisdictionLabel || "";
+    if (jurisdictionValue) jurisdictionValue.textContent = metrics.jurisdictionValue || "";
+    if (scopeLabel) scopeLabel.textContent = metrics.scopeLabel || "";
+    if (scopeValue) scopeValue.textContent = metrics.scopeValue || "";
   }
 
   function applyCurrencyDefaults(ctx) {
-    if (!currency) return;
-    if ([...currency.options].some((option) => option.value === ctx.baseCurrency)) currency.value = ctx.baseCurrency;
-    if (ctx.code === "SK") {
-      if (fxField) fxField.hidden = true;
-      if (fxStatus) fxStatus.hidden = true;
+    if (currency && [...currency.options].some((option) => option.value === ctx.baseCurrency)) {
+      currency.value = ctx.baseCurrency;
     }
+
+    if (fxField) fxField.hidden = ctx.hideWorkspaceFxControls === true;
+    if (fxStatus) fxStatus.hidden = ctx.hideWorkspaceFxControls === true;
   }
 
   function applyCopy(ctx) {
     document.body.dataset.sourceCountry = ctx.code;
     const taxLabel = document.querySelector("#workspace-tax-label");
     const taxRowLabel = document.querySelector("#workspace-tax-row-label");
-    if (taxLabel) taxLabel.textContent = ctx.code === "SK" ? "Slovenská zrážková daň v EUR" : "Srážková daň v CZK";
-    if (taxRowLabel) taxRowLabel.textContent = ctx.code === "SK" ? "Zrážková daň" : "Srážková daň";
+    if (taxLabel) taxLabel.textContent = ctx.taxResultLabelWithCurrency;
+    if (taxRowLabel) taxRowLabel.textContent = ctx.taxResultLabel;
     if (complianceHeading) complianceHeading.textContent = ctx.complianceLegalReference;
-    if (complianceTitle) complianceTitle.textContent = ctx.code === "SK" ? "Rozhodný dátum a nadväzujúce lehoty" : "Rozhodné datum a navazující lhůty";
-    if (complianceRows[1]?.querySelector("dt")) complianceRows[1].querySelector("dt").textContent = ctx.code === "SK" ? "Odvod zrážkovej dane" : "Odvod srážkové daně";
-    if (complianceRows[2]?.querySelector("dt")) complianceRows[2].querySelector("dt").textContent = ctx.code === "SK" ? "Mesačné oznámenie OZN4311v26" : "Oznámení příjmu plynoucího do zahraničí";
+    if (complianceTitle) complianceTitle.textContent = ctx.complianceTitle;
 
-    if (ctx.code === "SK") {
-      prereleaseNotice.textContent = "Slovenský balík je dostupný pouze pro technický náhled. Standardní corporate outbound WHT compliance je modelována jako měsíční OZN4311v26 podle § 43 ods. 11; oznámení i odvod jsou do 15. dne následujícího kalendářního měsíce. Finální výpočet zůstává blokovaný do dokončení právního review a release gate.";
-      if (complianceNote) complianceNote.textContent = "SK compliance model: mesačné OZN4311v26 a odvod zrážkovej dane najneskôr do 15. dňa nasledujúceho kalendárneho mesiaca. Samostatné bežné ročné WHT priznanie nie je pre štandardný dividend/interest/royalty flow nakonfigurované.";
-      if (metaDescription) metaDescription.content = "TaxTreat – informačný pracovný priestor pre slovenskú zrážkovú daň";
-      if (payersSubtitle) payersSubtitle.textContent = "Slovenské subjekty, ktorých platby sú v TaxTreat spracovávané v technickom pre-release náhľade.";
-      setMatchingText('[data-view="recipient-detail"] dt', "Vazba ke stálé provozovně v ČR", "Väzba príjmu na stálu prevádzkareň v SR");
-      setMatchingText('[data-view="flow"] span, [data-view="recipient-detail"] dt, [data-view="recipient-detail"] p', "v České republice", "v Slovenskej republike");
-      setMatchingText('[data-view="flow"] span, [data-view="recipient-detail"] dt, [data-view="recipient-detail"] p', "v ČR", "v SR");
-      setMatchingText('[data-view="flow"] span, [data-view="flow"] small, [data-view="flow"] legend', "českého plátce", "slovenského plátce");
-      if (interestMonthlyField) interestMonthlyField.hidden = true;
-    } else {
-      prereleaseNotice.textContent = "";
-      if (complianceNote) complianceNote.textContent = "Lhůty se zobrazí po dokončení výpočtu.";
-      if (metaDescription) metaDescription.content = "TaxTreat – informační pracovní prostor pro českou srážkovou daň";
-      if (payersSubtitle) payersSubtitle.textContent = "České subjekty, jejichž platby jsou v TaxTreat zpracovávány.";
-      setMatchingText('[data-view="recipient-detail"] dt', "Väzba príjmu na stálu prevádzkareň v SR", "Vazba ke stálé provozovně v ČR");
-      setMatchingText('[data-view="flow"] span, [data-view="recipient-detail"] dt, [data-view="recipient-detail"] p', "v Slovenskej republike", "v České republice");
-      setMatchingText('[data-view="flow"] span, [data-view="recipient-detail"] dt, [data-view="recipient-detail"] p', "v SR", "v ČR");
-      setMatchingText('[data-view="flow"] span, [data-view="flow"] small, [data-view="flow"] legend', "slovenského plátce", "českého plátce");
-      if (interestMonthlyField) interestMonthlyField.hidden = false;
+    if (complianceRows[1]?.querySelector("dt")) complianceRows[1].querySelector("dt").textContent = ctx.remittanceLabel;
+    if (complianceRows[2]?.querySelector("dt")) complianceRows[2].querySelector("dt").textContent = ctx.notificationLabel;
+
+    prereleaseNotice.textContent = ctx.prereleaseNotice || "";
+    if (complianceNote) complianceNote.textContent = ctx.complianceNoteDefault || "";
+    if (metaDescription) metaDescription.content = ctx.metaDescription || "";
+    if (payersSubtitle) payersSubtitle.textContent = ctx.payerSubtitle || "";
+
+    setMatchingText(
+      '[data-view="recipient-detail"] dt',
+      "Vazba ke stálé provozovně v ČR",
+      ctx.peLocationLabel
+    );
+    setMatchingText(
+      '[data-view="flow"] span, [data-view="recipient-detail"] dt, [data-view="recipient-detail"] p',
+      "v České republice",
+      `v ${ctx.permanentEstablishmentLocation}`
+    );
+    setMatchingText(
+      '[data-view="flow"] span, [data-view="recipient-detail"] dt, [data-view="recipient-detail"] p',
+      "v ČR",
+      `v ${ctx.permanentEstablishmentShortLocation}`
+    );
+    setMatchingText(
+      '[data-view="flow"] span, [data-view="flow"] small, [data-view="flow"] legend',
+      "českého plátce",
+      ctx.payerGenitiveLabel
+    );
+
+    if (interestMonthlyField) {
+      interestMonthlyField.hidden = ctx.interestMonthlyAmountFieldVisible === false;
     }
+
     setSourceMetrics(ctx);
   }
 
@@ -125,7 +132,9 @@
     prereleaseNotice.hidden = ctx.runtimeReleased;
     if (submit) {
       submit.dataset.sourceCountry = ctx.code;
-      submit.textContent = ctx.runtimeReleased ? "Zobrazit pravidla a výpočet →" : "Slovenský výpočet zatím není vydán";
+      submit.textContent = ctx.runtimeReleased
+        ? "Zobrazit pravidla a výpočet →"
+        : `${ctx.label} · výpočet zatím není vydán`;
       submit.setAttribute("aria-disabled", String(!ctx.runtimeReleased));
     }
   }
@@ -133,33 +142,50 @@
   function applyContext(code) {
     currentCode = String(code || "CZ").toUpperCase();
     const ctx = context();
+    payerCountries.set(activePayerKey(), currentCode);
+    countrySelect.value = currentCode;
     applyCurrencyDefaults(ctx);
     applyCopy(ctx);
     applyReleaseState(ctx);
     window.dispatchEvent(new CustomEvent("taxtreat:source-country-change", { detail: ctx }));
   }
 
-  activePayerSelect.addEventListener("change", () => applyContext(inferredCountryForActivePayer()));
+  countrySelect.addEventListener("change", () => applyContext(countrySelect.value));
+  activePayerSelect.addEventListener("change", () => {
+    applyContext(payerCountries.get(activePayerKey()) || "CZ");
+  });
 
-  function blockCnbListenerForSk(event) {
-    if (currentCode !== "SK") return;
+  function blockProhibitedFxListener(event) {
+    const ctx = context();
+    if (ctx.hideWorkspaceFxControls !== true) return;
+
     event.stopImmediatePropagation();
     if (fxField) fxField.hidden = true;
     if (fxStatus) fxStatus.hidden = true;
   }
-  currency?.addEventListener("change", blockCnbListenerForSk, true);
-  transactionDate?.addEventListener("change", blockCnbListenerForSk, true);
+
+  currency?.addEventListener("change", blockProhibitedFxListener, true);
+  transactionDate?.addEventListener("change", blockProhibitedFxListener, true);
 
   const nativeFetch = window.fetch.bind(window);
   window.fetch = async function sourceCountryAwareFetch(resource, options = {}) {
     const url = typeof resource === "string" ? resource : String(resource?.url || "");
-    if (currentCode === "SK" && url.startsWith("/exchange-rates/cnb")) throw new Error("CNB exchange-rate service is prohibited for Slovak source-country context");
+    const ctx = context();
+    const prohibitedPrefixes = Array.isArray(ctx.prohibitedFxServicePrefixes)
+      ? ctx.prohibitedFxServicePrefixes
+      : [];
+
+    if (prohibitedPrefixes.some((prefix) => url.startsWith(prefix))) {
+      throw new Error(`FX service ${url} is prohibited for ${ctx.code} source-country context`);
+    }
     if (url.includes("/analysis") && options.body) {
       try {
         const payload = JSON.parse(String(options.body));
         payload.source_country = currentCode;
         options = { ...options, body: JSON.stringify(payload) };
-      } catch (_problem) {}
+      } catch (_problem) {
+        // The analysis endpoint validates malformed payloads itself.
+      }
     }
     return nativeFetch(resource, options);
   };
@@ -171,23 +197,15 @@
     event.stopImmediatePropagation();
     if (error) {
       error.hidden = false;
-      error.textContent = "Slovenský balík je stále v pre-release režimu. Výpočet se záměrně nespustil, aby nebyl použit nezkontrolovaný právní výstup.";
+      error.textContent = `${ctx.label} source-country výpočet není na veřejném webu dostupný.`;
     }
   }, true);
 
   window.TaxTreatWorkspaceSourceCountry = Object.freeze({
     getActiveCode: () => currentCode,
     getActiveContext: () => context(),
-    getPayerCountry: (payerKey) => payerCountries.get(String(payerKey)) || (String(payerKey) === activePayerKey() ? inferredCountryForActivePayer() : "CZ"),
-    setPayerCountry: (payerKey, code) => {
-      payerCountries.set(String(payerKey), String(code || "CZ").toUpperCase());
-      if (String(payerKey) === activePayerKey()) applyContext(inferredCountryForActivePayer());
-    },
-    setActiveCode: (code) => {
-      payerCountries.set(activePayerKey(), String(code || "CZ").toUpperCase());
-      applyContext(inferredCountryForActivePayer());
-    },
+    setActiveCode: (code) => applyContext(code),
   });
 
-  applyContext(inferredCountryForActivePayer());
+  applyContext("CZ");
 })();

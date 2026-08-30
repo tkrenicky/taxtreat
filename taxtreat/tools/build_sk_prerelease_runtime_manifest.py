@@ -1,8 +1,14 @@
 from __future__ import annotations
 
 import json
+from datetime import date
 from pathlib import Path
 from typing import Any
+
+from taxtreat.tools.build_sk_domestic_review_readiness import (
+    COOPERATING_SOURCE_PATH,
+    cooperating_state_status,
+)
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -13,8 +19,10 @@ MLI_PATH = SK_DIR / "mli_notice_machine_extraction.json"
 COMPLIANCE_PATH = SK_DIR / "compliance_profile_2026.json"
 DIVIDEND_MODEL_PATH = SK_DIR / "dividend_domestic_condition_model.json"
 DOMESTIC_MODEL_PATH = SK_DIR / "domestic_transaction_condition_model.json"
+COOPERATING_SOURCE = COOPERATING_SOURCE_PATH
 OUTPUT_PATH = SK_DIR / "prerelease_runtime_manifest.json"
 SUMMARY_PATH = SK_DIR / "prerelease_runtime_manifest_summary.json"
+HUMAN_REVIEW_COVERAGE_PATH = SK_DIR / "human_review_coverage.json"
 
 
 def _load(path: Path) -> Any:
@@ -34,6 +42,7 @@ def build_manifest() -> dict[str, Any]:
     compliance = _load(COMPLIANCE_PATH)
     dividend_model = _load(DIVIDEND_MODEL_PATH)
     domestic = _load(DOMESTIC_MODEL_PATH)
+    cooperating_source = _load(COOPERATING_SOURCE)
     mli = _mli_by_country()
 
     if semantic.get("scope_count") != 225:
@@ -56,6 +65,13 @@ def build_manifest() -> dict[str, Any]:
         if mli_applicable and mli_row.get("machine_extraction_status") != "completed":
             raise ValueError(f"{packet_id}: MLI relationship is not machine-ready.")
 
+        cooperating_status = cooperating_state_status(
+            recipient_country=country,
+            transaction_date=date(2026, 1, 1),
+            source=cooperating_source,
+        )
+        list_ready = cooperating_status["status"] == "resolved_from_official_annual_list"
+
         rows.append({
             "scope_key": ["SK", country, income],
             "packet_id": packet_id,
@@ -66,6 +82,27 @@ def build_manifest() -> dict[str, Any]:
             "treaty_source_url": source.get("source_url"),
             "treaty_source_sha256": source.get("source_sha256"),
             "treaty_article": source.get("actual_article"),
+            "treaty_semantic_candidate": {
+                "rate_candidates": source.get("rate_candidates", []),
+                "exclusive_residence_taxation_candidate": bool(
+                    source.get("exclusive_residence_taxation_candidate")
+                ),
+                "beneficial_owner_wording_present": bool(
+                    source.get("beneficial_owner_wording_present")
+                ),
+                "pe_or_fixed_base_carveout_wording_present": bool(
+                    source.get("pe_or_fixed_base_carveout_wording_present")
+                ),
+                "holding_period_candidates": source.get(
+                    "holding_period_candidates", []
+                ),
+                "ownership_linked_rate_candidate_count": int(
+                    source.get("ownership_linked_rate_candidate_count") or 0
+                ),
+                "evidence_quality": source.get(
+                    "evidence_quality", "official_primary_source_byte_extracted"
+                ),
+            },
             "mli_applicable": mli_applicable,
             "mli_machine_evidence_status": (
                 mli_row.get("machine_extraction_status") if mli_row else "not_applicable"
@@ -90,7 +127,9 @@ def build_manifest() -> dict[str, Any]:
                 .get("legal_reference")
             ),
             "cooperating_state_status_required": True,
-            "cooperating_state_list_ready": False,
+            "cooperating_state_list_ready": list_ready,
+            "cooperating_state_status": cooperating_status["status"],
+            "is_cooperating_state": cooperating_status["is_cooperating_state"],
             "candidate_only": True,
             "human_review_status": "not_started",
             "approval_eligible": False,
@@ -112,8 +151,8 @@ def build_manifest() -> dict[str, Any]:
         raise ValueError("SK interest/royalty domestic model missing.")
 
     return {
-        "schema_version": 1,
-        "dataset_release": "sk-prerelease-runtime-manifest-2026-08-19.1",
+        "schema_version": 2,
+        "dataset_release": "sk-prerelease-runtime-manifest-2026-08-19.2",
         "source_country": "SK",
         "scope_count": 225,
         "policy": {
@@ -123,6 +162,7 @@ def build_manifest() -> dict[str, Any]:
             "czech_runtime_fallback_prohibited": True,
             "human_review_required_before_release": True,
             "cooperating_state_list_required_before_domestic_rate_release": True,
+            "semantic_candidates_must_never_be_promoted_without_human_review": True,
             "runtime_release": False,
         },
         "scopes": rows,
@@ -132,7 +172,7 @@ def build_manifest() -> dict[str, Any]:
 def build_summary(payload: dict[str, Any]) -> dict[str, Any]:
     rows = payload["scopes"]
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "dataset_release": payload["dataset_release"],
         "scope_count": len(rows),
         "mli_scopes": sum(row["mli_applicable"] for row in rows),
@@ -141,10 +181,22 @@ def build_summary(payload: dict[str, Any]) -> dict[str, Any]:
             "primary_summary_fallback" in row["treaty_machine_evidence_status"]
             for row in rows
         ),
+        "scopes_with_rate_candidates": sum(
+            bool(row["treaty_semantic_candidate"]["rate_candidates"])
+            for row in rows
+        ),
+        "exclusive_residence_candidate_scopes": sum(
+            row["treaty_semantic_candidate"][
+                "exclusive_residence_taxation_candidate"
+            ]
+            for row in rows
+        ),
         "cooperating_state_list_ready_scopes": sum(
             row["cooperating_state_list_ready"] for row in rows
         ),
-        "human_reviewed_scopes": 0,
+        "human_reviewed_scopes": _load(HUMAN_REVIEW_COVERAGE_PATH)["coverage"]["individually_reviewed_scopes"],
+        "pattern_reconciled_scopes": _load(HUMAN_REVIEW_COVERAGE_PATH)["coverage"]["pattern_reconciled_scopes"],
+        "legal_review_covered_scopes": _load(HUMAN_REVIEW_COVERAGE_PATH)["coverage"]["legal_review_covered_scopes"],
         "production_released_scopes": 0,
         "fail_closed": True,
     }

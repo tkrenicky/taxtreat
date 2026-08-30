@@ -19,31 +19,61 @@
       permanentEstablishmentLocation: "České republice",
       permanentEstablishmentShortLocation: "ČR",
       taxLabel: "Česká srážková daň",
-    }),
-    SK: Object.freeze({
-      code: "SK",
-      label: "Slovensko",
-      baseCurrency: "EUR",
-      fxProvider: null,
-      runtimeReleased: false,
-      availability: "pre_release",
-      domesticLawLabel: "zákon č. 595/2003 Z. z. o dani z príjmov",
-      complianceFormCode: "OZN4311v26",
-      complianceLegalReference: "§ 43 ods. 11 zákona č. 595/2003 Z. z.",
-      notificationPeriodicity: "monthly",
-      notificationDeadlineRule: "15th_day_of_following_calendar_month",
-      remittanceDeadlineRule: "15th_day_of_following_calendar_month",
-      ordinaryAnnualWhtReturnConfigured: false,
-      permanentEstablishmentLocation: "Slovenskej republike",
-      permanentEstablishmentShortLocation: "SR",
-      taxLabel: "Slovenská zrážková daň",
+      taxResultLabel: "Srážková daň",
+      taxResultLabelWithCurrency: "Srážková daň v CZK",
+      complianceTitle: "Rozhodné datum a navazující lhůty",
+      remittanceLabel: "Odvod srážkové daně",
+      notificationLabel: "Oznámení příjmu plynoucího do zahraničí",
+      sourceMetrics: Object.freeze({
+        jurisdictionLabel: "Podporované jurisdikce",
+        jurisdictionValue: "101",
+        scopeLabel: "Pokryté kombinace",
+        scopeValue: "303",
+      }),
+      hideWorkspaceFxControls: false,
+      prohibitedFxServicePrefixes: Object.freeze([]),
+      interestMonthlyAmountFieldVisible: true,
+      payerSubtitle: "České subjekty, jejichž platby jsou v TaxTreat zpracovávány.",
+      metaDescription: "TaxTreat – informační pracovní prostor pro českou srážkovou daň",
+      prereleaseNotice: "",
+      complianceNoteDefault: "Lhůty se zobrazí po dokončení výpočtu.",
+      peLocationLabel: "Vazba ke stálé provozovně v ČR",
+      payerGenitiveLabel: "českého plátce",
     }),
   });
+
+  const TAX_TREATMENT_PRESENTATION = Object.freeze({
+    taxable_at_rate: Object.freeze({
+      kind: "rate",
+      resultLabel: null,
+      rateLabel: null,
+    }),
+    exclusive_foreign_taxation: Object.freeze({
+      kind: "non_rate",
+      resultLabel: "Neuplatňuje se",
+      rateLabel: "Neuplatňuje se",
+    }),
+    domestic_exemption: Object.freeze({
+      kind: "non_rate",
+      resultLabel: "Osvobození",
+      rateLabel: "0 %",
+    }),
+    outside_subject_of_tax: Object.freeze({
+      kind: "non_rate",
+      resultLabel: "Není předmětem daně",
+      rateLabel: "N/A",
+    }),
+  });
+
+  function taxTreatmentPresentation(treatment) {
+    const normalized = String(treatment || "").trim().toLowerCase();
+    return TAX_TREATMENT_PRESENTATION[normalized] || null;
+  }
 
   function getSourceCountryContext(code) {
     const normalized = String(code || "").toUpperCase();
     const context = COUNTRY_CONTEXT[normalized];
-    if (!context) throw new Error(`Unsupported source country: ${normalized}`);
+    if (!context) throw new Error(`Unsupported public source country: ${normalized}`);
     return context;
   }
 
@@ -61,5 +91,6 @@
     get: getSourceCountryContext,
     finalAnalysisAllowed,
     requiresCnbFx,
+    taxTreatmentPresentation,
   });
 })();

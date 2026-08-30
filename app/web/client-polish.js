@@ -82,12 +82,26 @@
     return (report?.official_sources || []).find((source) => ["treaty", "protocol"].includes(source.legal_layer)) || null;
   }
 
+  function treatmentPresentation(analysis) {
+    return window.TaxTreatSourceCountries?.taxTreatmentPresentation(
+      analysis?.tax_treatment
+    ) || null;
+  }
+
   function outcomeCopy(analysis) {
-    const treatment = analysis?.tax_treatment;
-    if (analysis?.status !== "FINAL") return { value: "Je třeba doplnit údaje", mode: "incomplete" };
-    if (treatment === "exclusive_foreign_taxation") return { value: "Neuplatňuje se", mode: "final" };
-    if (treatment === "domestic_exemption") return { value: "0 %", mode: "final" };
-    if (analysis?.rate !== null && analysis?.rate !== undefined) return { value: formatRate(analysis.rate), mode: "final" };
+    if (analysis?.status !== "FINAL") {
+      return { value: "Je třeba doplnit údaje", mode: "incomplete" };
+    }
+
+    const presentation = treatmentPresentation(analysis);
+    if (presentation?.kind === "non_rate") {
+      return { value: presentation.resultLabel, mode: "final" };
+    }
+
+    if (analysis?.rate !== null && analysis?.rate !== undefined) {
+      return { value: formatRate(analysis.rate), mode: "final" };
+    }
+
     return { value: "—", mode: "incomplete" };
   }
 
@@ -95,12 +109,21 @@
     if (analysis?.status !== "FINAL") {
       return "Zadané údaje zatím neumožňují zobrazit uzavřený režim nebo sazbu. Doplňte údaje uvedené níže; TaxTreat poté výstup přepočítá.";
     }
-    if (analysis?.tax_treatment === "exclusive_foreign_taxation") {
-      return "TaxTreat při zadaných údajích a uvedených předpokladech zobrazuje režim, při kterém ve výpočtu nevzniká česká srážková daň. Jde o informační výstup založený na níže uvedeném právním zdroji, nikoli o doporučení k postupu.";
+
+    const treatment = analysis?.tax_treatment;
+
+    if (treatment === "outside_subject_of_tax") {
+      return "TaxTreat při zadaných údajích a uvedených předpokladech vyhodnotil příjem jako příjem, který není předmětem daně. Nejde o sazbu 0 % ani o osvobození; sazba a částka srážkové daně jsou proto N/A.";
     }
-    if (analysis?.tax_treatment === "domestic_exemption") {
+
+    if (treatment === "exclusive_foreign_taxation") {
+      return "TaxTreat při zadaných údajích a uvedených předpokladech zobrazuje režim, při kterém se daň ve státě zdroje neuplatňuje. Jde o informační výstup založený na níže uvedeném právním zdroji, nikoli o doporučení k postupu.";
+    }
+
+    if (treatment === "domestic_exemption") {
       return "TaxTreat při zadaných údajích a uvedených předpokladech zobrazuje režim osvobození. Jde o informační výstup založený na níže uvedeném právním zdroji, nikoli o doporučení k postupu.";
     }
+
     return `TaxTreat pro zadané údaje zobrazuje sazbu ${formatRate(analysis?.rate)}. Výstup vychází z údajů zadaných uživatelem a z níže uvedených právních zdrojů; nepředstavuje individuální daňové posouzení ani doporučení.`;
   }
 
@@ -146,12 +169,27 @@
   function renderCalculation(report, analysis) {
     const calculation = report?.result?.withholding_tax_calculation || analysis?.withholding_tax_calculation;
     const root = document.querySelector("#calculation-summary");
+    const presentation = treatmentPresentation(analysis);
+
+    if (analysis?.tax_treatment === "outside_subject_of_tax") {
+      root.innerHTML = [
+        ["Daňový režim", presentation?.resultLabel || "Není předmětem daně"],
+        ["Sazba srážkové daně", "N/A"],
+        ["Srážková daň k odvodu", "N/A"],
+      ].map(([label, value]) => `
+        <div class="calculation-row"><span>${escapeHtml(label)}</span><b>${escapeHtml(value)}</b></div>
+      `).join("");
+      return;
+    }
+
     if (!calculation || calculation.status !== "CALCULATED") {
       root.innerHTML = '<p class="quiet-copy">Částkový výpočet není pro aktuální stav k dispozici.</p>';
       return;
     }
-    const treatment = analysis?.tax_treatment;
-    const appliedRate = ["exclusive_foreign_taxation", "domestic_exemption"].includes(treatment) ? "Neuplatňuje se" : formatRate(analysis?.rate);
+
+    const appliedRate = presentation?.kind === "non_rate"
+      ? presentation.rateLabel
+      : formatRate(analysis?.rate);
     const rows = [
       ["Hrubá částka", `${formatNumber(calculation.gross_amount)} ${calculation.transaction_currency || ""}`.trim()],
       ["Daňový základ", `${formatNumber(calculation.gross_amount_czk)} Kč`],
@@ -204,9 +242,9 @@
     const domestic = domesticSource(report);
     const treaty = treatySource(report);
     const selected = selectedSource(report);
-    const treatment = analysis?.tax_treatment;
-    const selectedDisplay = ["exclusive_foreign_taxation", "domestic_exemption"].includes(treatment)
-      ? (treatment === "domestic_exemption" ? "Osvobození" : "Neuplatňuje se")
+    const presentation = treatmentPresentation(analysis);
+    const selectedDisplay = presentation?.kind === "non_rate"
+      ? presentation.resultLabel
       : formatRate(analysis?.rate);
     const rows = [];
     if (domestic) rows.push(["Vnitrostátní pravidlo", domestic.rate !== null && domestic.rate !== undefined ? formatRate(domestic.rate) : "—"]);

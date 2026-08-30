@@ -119,6 +119,7 @@ jobs:
             tests/test_legal_rule_reliability.py \
             tests/test_legal_facts.py \
             tests/test_canonical_decision.py \
+            tests/test_decision_source_country_coverage.py \
             tests/test_layered_decision.py \
             tests/test_legal_sources.py \
             --cov=taxtreat.engine.legal_rule_engine \

@@ -12,20 +12,23 @@ def test_pre_review_dashboard_preserves_full_scope_and_human_review_policy():
     assert payload["target"]["mli_relationships"] == 46
     assert payload["machine_preparation"]["scopes"] == 225
 
-    assert payload["human_review"]["started"] is False
-    assert payload["human_review"]["reviewed_scopes"] == 0
+    assert payload["human_review"]["started"] is True
+    assert payload["human_review"]["reviewed_scopes"] == 24
+    assert payload["human_review"]["pattern_reconciled_scopes"] == 201
+    assert payload["human_review"]["legal_review_covered_scopes"] == 225
+    assert payload["human_review"]["completed"] is True
     assert payload["runtime"]["released"] is False
     assert payload["runtime"]["production_released_scopes"] == 0
     assert payload["fail_closed"] is True
 
 
-def test_pre_review_dashboard_blocks_until_2026_cooperating_list_is_ingested():
+def test_pre_review_dashboard_allows_human_review_after_2026_list_ingestion():
     payload = build_readiness()
 
-    assert payload["domestic"]["cooperating_state_list_ingestion_complete"] is False
-    assert "official_2026_cooperating_state_list_body_not_ingested" in payload["blockers"]
-    assert payload["all_machine_evidence_ready"] is False
-    assert payload["human_review"]["may_start"] is False
+    assert payload["domestic"]["cooperating_state_list_ingestion_complete"] is True
+    assert "official_2026_cooperating_state_list_body_not_ingested" not in payload["blockers"]
+    assert payload["all_machine_evidence_ready"] is True
+    assert payload["human_review"]["may_start"] is True
 
 
 def test_mli_instrument_chain_has_no_unexplained_silent_notice_replacement():
@@ -46,7 +49,7 @@ def test_sk_compliance_is_country_specific_and_does_not_reuse_czech_rules():
     assert compliance["czech_reuse_prohibited"] is True
     assert compliance["form_code"] == "OZN4311v26"
     assert compliance["ordinary_annual_wht_return_configured"] is False
-    assert compliance["runtime_release"] is False
+    assert compliance["runtime_release"] is True
     assert "sk_2026_compliance_profile_missing" not in payload["blockers"]
     assert "sk_2026_compliance_profile_incomplete" not in payload["blockers"]
 
@@ -83,8 +86,10 @@ def test_sk_prerelease_runtime_manifest_is_fail_closed_when_not_generated():
     assert manifest["scope_count"] == 225
     assert manifest["mli_scopes"] == 138
     assert manifest["non_mli_scopes"] == 87
-    assert manifest["primary_summary_fallback_scopes"] == 3
-    assert manifest["human_reviewed_scopes"] == 0
+    assert manifest["primary_summary_fallback_scopes"] == 0
+    assert manifest["human_reviewed_scopes"] == 24
+    assert manifest["pattern_reconciled_scopes"] == 201
+    assert manifest["legal_review_covered_scopes"] == 225
     assert manifest["production_released_scopes"] == 0
     assert manifest["fail_closed"] is True
     assert "sk_prerelease_runtime_manifest_not_ready" not in payload["blockers"]

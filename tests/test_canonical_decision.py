@@ -83,7 +83,7 @@ def test_canonical_decision_distinguishes_pending_from_out_of_scope():
     assert unsupported_income.requires_review is False
 
 
-def test_registered_unreleased_source_country_fails_closed():
+def test_registered_released_sk_dividend_enters_domestic_first_evaluation():
     result = canonical_analyze_transaction(
         CanonicalAnalysisRequest(
             source_country="SK",
@@ -97,13 +97,13 @@ def test_registered_unreleased_source_country_fails_closed():
     assert result.status == DecisionStatus.REVIEW_REQUIRED
     assert result.requires_review is True
     assert result.rate is None
-    assert result.missing_legal_layers == [
-        "domestic",
-        "mli",
-        "treaty_or_protocol",
-    ]
-    assert result.explanation == [
-        "SK source-country package has not been released."
+    assert result.tax_treatment is None
+    assert result.missing_legal_layers == []
+    assert result.missing_facts == [
+        "distribution_category_is_section_3_1_f",
+        "distribution_is_tax_deductible_for_payer",
+        "recipient_entity_type",
+        "recipient_is_non_cooperating_state_taxpayer",
     ]
 
 
@@ -192,9 +192,15 @@ def test_legal_normalizers_cover_legacy_boundary_values():
     assert legal_engine._royalty_category_groups(None) == set()
     assert legal_engine._royalty_category_groups(
         "all_other_article_12_royalties"
-    ) == {"other"}
+    ) == {
+        "software",
+        "industrial_ip",
+        "equipment_financial",
+        "equipment_operating",
+        "other",
+    }
     assert legal_engine._royalty_category_groups("financial_lease") == {
-        "equipment"
+        "equipment_financial"
     }
     assert legal_engine._royalty_category_groups("other") == {"other"}
     assert legal_engine._royalty_category_groups("technical_assistance") == {
@@ -213,7 +219,7 @@ def test_royalty_category_matching_covers_residual_and_empty_groups():
     assert legal_engine._royalty_categories_match(
         "copyright_literary_artistic_or_scientific",
         "all_other_article_12_royalties",
-    ) is True
+    ) is False
     assert legal_engine._royalty_categories_match(
         "industrial_commercial_or_scientific_equipment",
         "other",

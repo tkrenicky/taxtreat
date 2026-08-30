@@ -13,6 +13,7 @@ from .editorial import (
     _number,
     _rate,
 )
+from taxtreat.services.reporting.calculation_context import build_report_calculation_context
 
 
 _FACT_PRESENTATION = (
@@ -376,10 +377,17 @@ def render_report_html(report):
     domestic = next((s for s in sources if s.get("legal_layer") == "domestic"), None)
     treaty = next((s for s in sources if s.get("legal_layer") == "treaty"), None)
 
-    foreign_only = result.get("tax_treatment") == "exclusive_foreign_taxation"
-    rate_display = "Neuplatňuje se" if foreign_only else _rate(result.get("rate"))
-    if result.get("tax_treatment") == "domestic_exemption":
+    treatment = result.get("tax_treatment")
+    foreign_only = treatment == "exclusive_foreign_taxation"
+
+    if treatment == "outside_subject_of_tax":
+        rate_display = "N/A"
+    elif treatment == "domestic_exemption":
         rate_display = "0 %"
+    elif foreign_only:
+        rate_display = "Neuplatňuje se"
+    else:
+        rate_display = _rate(result.get("rate"))
     payer, recipient = _party_names(report)
     title = _transaction_title(report)
     treaty_name = _treaty_name(report)
@@ -390,28 +398,19 @@ def render_report_html(report):
     amount_unit = "Kč" if currency == "CZK" else currency
     amount_text = f"{_number(amount.get('amount'))} {escape(amount_unit)}".strip() if amount else "—"
 
-    calc_base = calc_tax = net_amount = "—"
-    fx_line = ""
-    if calculation.get("status") == "CALCULATED":
-        gross_czk = calculation.get("gross_amount_czk")
-        tax_czk = calculation.get("withholding_tax_czk")
-        net_czk = calculation.get("net_amount_czk")
-        if net_czk in (None, "") and gross_czk not in (None, "") and tax_czk not in (None, ""):
-            try:
-                net_czk = float(gross_czk) - float(tax_czk)
-            except (TypeError, ValueError):
-                net_czk = None
-        calc_base = f"{_number(gross_czk)} Kč"
-        calc_tax = f"{_number(tax_czk)} Kč"
-        net_amount = f"{_number(net_czk)} Kč" if net_czk not in (None, "") else "—"
-        fx = calculation.get("exchange_rate") or {}
-        if fx:
-            fx_url = escape(str(fx.get("source_url") or ""), quote=True)
-            fx_link = f'<a href="{fx_url}">Kurzovní lístek ČNB ↗</a>' if fx_url else ""
-            fx_line = (
-                f"1 {escape(str(fx.get('currency') or currency))} = {_number(fx.get('czk_per_unit'), 6)} Kč"
-                f" · {_date(fx.get('effective_date'))} · {fx_link}"
-            )
+    source_country = str(
+        scope.get("source_country") or "CZ"
+    ).upper()
+
+    calculation_context = build_report_calculation_context(
+        source_country=source_country,
+        calculation=calculation,
+        currency=currency,
+    )
+    calc_base = calculation_context.calculation_base
+    calc_tax = calculation_context.calculation_tax
+    net_amount = calculation_context.net_amount
+    fx_line = calculation_context.fx_line
 
     selected_ref = _legal_reference(report, selected)
     selected_link = _source_link(selected)

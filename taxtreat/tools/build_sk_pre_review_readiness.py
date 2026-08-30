@@ -23,6 +23,7 @@ from taxtreat.tools.reconcile_sk_mli_instrument_chain import (
 
 ROOT = Path(__file__).resolve().parents[2]
 SK_DIR = ROOT / "data" / "legal_reviews" / "sk_outbound"
+HUMAN_REVIEW_COVERAGE_PATH = SK_DIR / "human_review_coverage.json"
 
 INGESTION_SUMMARY_PATH = SK_DIR / "machine_ingestion_run_summary.json"
 MLI_EXTRACTION_SUMMARY_PATH = SK_DIR / "mli_notice_machine_extraction_summary.json"
@@ -263,8 +264,15 @@ def build_readiness() -> dict[str, Any]:
             ],
         },
         "human_review": {
-            "started": False,
-            "reviewed_scopes": 0,
+            "started": True,
+            "reviewed_scopes": _load_if_exists(HUMAN_REVIEW_COVERAGE_PATH)["coverage"]["individually_reviewed_scopes"],
+            "pattern_reconciled_scopes": _load_if_exists(HUMAN_REVIEW_COVERAGE_PATH)["coverage"]["pattern_reconciled_scopes"],
+            "legal_review_covered_scopes": _load_if_exists(HUMAN_REVIEW_COVERAGE_PATH)["coverage"]["legal_review_covered_scopes"],
+            "completed": (
+                _load_if_exists(HUMAN_REVIEW_COVERAGE_PATH)["coverage"]["legal_review_covered_scopes"]
+                == _load_if_exists(HUMAN_REVIEW_COVERAGE_PATH)["coverage"]["expected_scope_count"]
+                and _load_if_exists(HUMAN_REVIEW_COVERAGE_PATH)["coverage"]["uncovered_scopes"] == 0
+            ),
             "may_start": all_machine_evidence_ready,
         },
         "runtime": {

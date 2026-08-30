@@ -201,7 +201,9 @@ def test_repository_lookup_boundaries_and_id_access(tmp_path):
     create_test_database(db_path)
     repository = TreatyRepository(db_path)
 
-    assert get_repo_root().name == "taxtreat"
+    repo_root = get_repo_root()
+    assert (repo_root / "taxtreat").is_dir()
+    assert (repo_root / "tests").is_dir()
     assert repository.get_article_by_id(1) == {
         "id": 1,
         "treaty_version_id": 100,

@@ -17,6 +17,8 @@ class ReportCountryCopy:
     treaty_name_prefix: str
     treaty_sentence_prefix: str
     treaty_short_prefix: str
+    treaty_join_word: str
+    treaty_generic_name: str
     official_source_label: str
     payer_missing_label: str
     recipient_missing_label: str
@@ -56,6 +58,8 @@ _COPY = {
         treaty_name_prefix="Smlouva mezi",
         treaty_sentence_prefix="smlouvy mezi",
         treaty_short_prefix="ČR",
+        treaty_join_word="státem",
+        treaty_generic_name="Smlouva o zamezení dvojího zdanění",
         official_source_label="Oficiální zdroj",
         payer_missing_label="Plátce – název neuveden",
         recipient_missing_label="Příjemce – název neuveden",
@@ -100,6 +104,8 @@ _COPY = {
         treaty_name_prefix="Zmluva medzi",
         treaty_sentence_prefix="zmluvy medzi",
         treaty_short_prefix="SR",
+        treaty_join_word="štátom",
+        treaty_generic_name="Zmluva o zamedzení dvojitého zdanenia",
         official_source_label="Oficiálny zdroj",
         payer_missing_label="Platiteľ – názov neuvedený",
         recipient_missing_label="Príjemca – názov neuvedený",
@@ -136,10 +142,56 @@ _COPY = {
 }
 
 
+def _generic_report_copy(source_country: str) -> ReportCountryCopy:
+    config = get_country_config(source_country)
+    code = config.code
+    domestic_reference = config.domestic_law_label or "applicable domestic tax law"
+    return ReportCountryCopy(
+        source_country=code,
+        language="en",
+        withholding_tax_label=f"{code} withholding tax",
+        withholding_tax_lower=f"{code} withholding tax",
+        permanent_establishment_fact_label=f"Income attributable to a permanent establishment in {code}",
+        domestic_law_reference=domestic_reference,
+        treaty_country_prefix=code,
+        treaty_name_prefix="Tax treaty between",
+        treaty_sentence_prefix="tax treaty between",
+        treaty_short_prefix=code,
+        treaty_join_word="and",
+        treaty_generic_name="Double taxation treaty",
+        official_source_label="Official source",
+        payer_missing_label="Payer – name not provided",
+        recipient_missing_label="Recipient – name not provided",
+        yes_label="Yes",
+        no_label="No",
+        months_label="months",
+        transaction_labels={
+            "dividend": "Dividend payment",
+            "interest": "Interest payment",
+            "royalty": "Royalty payment",
+        },
+        cross_border_payment_label="Cross-border payment",
+        remittance_deadline_label="Withholding tax remittance",
+        remittance_deadline_note="Deadline for remittance by the payer.",
+        notification_deadline_label="Withholding tax notification",
+        notification_deadline_note="Country-specific filing requirements must be confirmed before production release.",
+        residence_certificate_document="Recipient tax residence certificate valid for the payment period.",
+        beneficial_owner_document="Evidence supporting the recipient's beneficial-owner status.",
+        ownership_document="Evidence supporting the ownership percentage and holding structure relevant to treaty relief.",
+        holding_period_document="Evidence supporting the holding period where relevant.",
+        transaction_document="Contractual and payment documentation for the transaction.",
+        flow_domestic_question=f"Is the transaction subject to {code} withholding tax and what is the domestic starting position?",
+        flow_treaty_relief_title="Treaty / domestic relief",
+        flow_treaty_relief_question="Does an applicable treaty or domestic rule limit or replace the domestic starting position?",
+        flow_conditions_title="Conditions",
+        flow_conditions_question="Are the residence, beneficial ownership, income classification and other applicable conditions satisfied?",
+        flow_mli_title="MLI / anti-abuse",
+        flow_mli_question="Where relevant, apply pair-specific MLI modifications and treaty anti-abuse conditions.",
+        flow_final_rate_title="Final treatment / rate",
+    )
+
+
 def report_country_copy(source_country: str) -> ReportCountryCopy:
     code = str(source_country or "").upper()
     get_country_config(code)
-    try:
-        return _COPY[code]
-    except KeyError as exc:
-        raise KeyError(f"No report copy configured for source country: {code}") from exc
+    return _COPY.get(code) or _generic_report_copy(code)

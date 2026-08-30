@@ -151,7 +151,6 @@ def test_non_cz_source_is_outside_current_cz_gate_scope():
         is None
     )
 
-
 def test_legacy_gate_file_is_not_runtime_authority():
     assert LEGACY_GATE.is_file()
 
