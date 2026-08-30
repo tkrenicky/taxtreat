@@ -35,8 +35,22 @@ def main() -> int:
             for condition in rule.get("conditions", []):
                 fact = str(condition.get("fact") or "").strip()
                 source = str(condition.get("fact_source") or "transaction").strip()
-                if not fact or fact in GENERIC_FACTS:
+                if not fact:
                     continue
+
+                if fact == "beneficial_owner":
+                    value = condition.get("value")
+                    if value not in {True, False, "true", "false"}:
+                        failures.append(
+                            f"{country} {rule.get('rule_id')}: beneficial_owner={value!r} "
+                            "overloads the UBO fact with a treaty-specific category; split it "
+                            "into a dedicated condition fact"
+                        )
+                    continue
+
+                if fact == "fallback_case":
+                    continue
+
                 seen.add(fact)
 
                 if fact == "recipient_entity_type":
