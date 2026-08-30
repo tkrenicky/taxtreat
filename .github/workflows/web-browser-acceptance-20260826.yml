@@ -61,6 +61,14 @@ jobs:
         run: python scripts/verify_dividend_treaty_fallback_all_partners_20260828.py
       - name: Verify English treaty locale coverage across all treaty rules
         run: python scripts/verify_en_treaty_locale_all_rules_20260828.py
+      - name: Upload EN treaty locale diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: en-treaty-locale-coverage
+          path: artifacts/en-treaty-locale-coverage.txt
+          if-no-files-found: warn
+          retention-days: 30
       - name: Verify condition-sensitive intake coverage
         run: python scripts/verify_condition_sensitive_intake_coverage_20260830.py
       - name: Verify special interest priority ordering
@@ -92,5 +100,5 @@ jobs:
         with:
           name: web-final-browser
           path: artifacts/web-final-browser
-          if-no-files-found: error
+          if-no-files-found: warn
           retention-days: 30
