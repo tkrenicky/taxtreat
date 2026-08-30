@@ -14,13 +14,14 @@
   }
 
   function reportLanguage() {
-    const stored = localStorage.getItem("taxtreat-report-language");
-    if (stored === "en" || stored === "cs") return stored;
     if (window.__TAXTREAT_LOCALE__ === "en" || window.__TAXTREAT_LOCALE__ === "cs") {
       return window.__TAXTREAT_LOCALE__;
     }
     const explicit = document.querySelector("#taxtreat-report-language")?.value;
-    return explicit === "en" ? "en" : "cs";
+    if (explicit === "en" || explicit === "cs") return explicit;
+    const stored = localStorage.getItem("taxtreat-report-language");
+    if (stored === "en" || stored === "cs") return stored;
+    return "cs";
   }
 
   function enrichReportPayload(payload) {
