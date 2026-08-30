@@ -4,6 +4,8 @@ import json
 from collections import defaultdict
 from pathlib import Path
 
+from taxtreat.engine.dividend_rule_normalization import normalize_raw_legal_rule
+
 ROOT = Path(__file__).resolve().parents[1]
 RULE_DIR = ROOT / "data" / "legal_rules_stage6"
 
@@ -32,11 +34,7 @@ def _material_conditions(rule: dict) -> set[tuple[str, str, str, str]]:
 
 
 def _outcome(rule: dict) -> tuple:
-    return (
-        rule.get("effect"),
-        rule.get("rate"),
-        rule.get("tax_treatment"),
-    )
+    return (rule.get("effect"), rule.get("rate"), rule.get("tax_treatment"))
 
 
 def main() -> int:
@@ -47,7 +45,8 @@ def main() -> int:
         country = package.get("country_pair", {}).get("recipient_country")
         groups: dict[tuple[str, str, str, str, str], list[dict]] = defaultdict(list)
 
-        for rule in package.get("rules", []):
+        for raw_rule in package.get("rules", []):
+            rule = normalize_raw_legal_rule(raw_rule)
             if rule.get("legal_layer") not in {"treaty", "protocol", "mli"}:
                 continue
             if rule.get("effect") != "rate":
@@ -66,20 +65,12 @@ def main() -> int:
                 special_conditions = _material_conditions(special)
                 if not special_conditions:
                     continue
-
                 for broader in rules:
                     if special is broader or _outcome(special) == _outcome(broader):
                         continue
-
                     broader_conditions = _material_conditions(broader)
-
-                    # A branch with every material condition of another branch
-                    # plus additional requirements is more specific. If both can
-                    # match the same transaction, the specific branch must be
-                    # considered first; otherwise the broader branch shadows it.
                     if not broader_conditions < special_conditions:
                         continue
-
                     if int(special.get("priority", 100)) >= int(broader.get("priority", 100)):
                         failures.append(
                             f"{country} {key[0]} Article {key[2]}: "
@@ -94,7 +85,7 @@ def main() -> int:
             "Specific-branch priority failures:\n" + "\n".join(sorted(set(failures)))
         )
 
-    print("Specific-branch priority ordering: PASS")
+    print("Specific-branch priority ordering after runtime remediation: PASS")
     return 0
 
 
