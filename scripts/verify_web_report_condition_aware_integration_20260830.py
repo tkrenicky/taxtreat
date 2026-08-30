@@ -34,12 +34,14 @@ def main() -> int:
     # Dynamic treaty questions must be localized from the structured response,
     # keyed by the condition fact, rather than by rewriting already-rendered DOM.
     require(intake_en, "url.includes(\"/analysis/intake\")", "EN dynamic intake")
-    require(intake_en, "localizeResponseBody", "EN dynamic intake")
-    require(intake_en, "question.input_path", "EN dynamic intake")
+    require(intake_en, "localizeIntake", "EN dynamic intake")
+    require(intake_en, "question?.input_path", "EN dynamic intake")
+    require(intake_en, "response.clone().json()", "EN dynamic intake")
+    require(intake_en, "new Response(JSON.stringify(body)", "EN dynamic intake")
     require(intake_en, "article_10_public_body_exemption", "EN dynamic intake")
     require(intake_en, "article_11_public_body_exemption", "EN dynamic intake")
     require(intake_en, "recipient_is_bank", "EN dynamic intake")
-    if "MutationObserver" in intake_en or "querySelectorAll(\"#workspace-questions" in intake_en:
+    if "MutationObserver" in intake_en or "#workspace-questions" in intake_en:
         raise AssertionError("EN dynamic intake regressed to DOM text translation")
 
     # /ui/en is a locale-owned runtime. Report language must therefore fall
