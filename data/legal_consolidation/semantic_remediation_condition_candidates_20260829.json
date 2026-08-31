@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "dataset_release": "semantic-remediation-condition-candidates-2026-08-29.1",
+  "dataset_release": "semantic-remediation-condition-candidates-2026-08-31.2",
   "purpose": "Machine-prepared, source-backed semantic corrections discovered after Stage 6 release audit. These corrections modify only the pending country-QA candidate package. They do not constitute human review, verification, production approval, rule promotion, or source release.",
   "verification_status": "needs_review",
   "automatic_production_approval_forbidden": true,
@@ -253,6 +253,60 @@
               "operator": "==",
               "unit": null,
               "value": "company"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "25"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "CH",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-773D5F8BD93AE73A",
+      "evidence_note": "Article 10 reduced dividend branch requires the beneficial owner to be a company other than a partnership with direct ownership of at least 25%. Current Stage 6 branch omits the company/direct-ownership conditions and therefore remains unsafe.",
+      "rate_candidates": [
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_other_than_partnership"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
             },
             {
               "condition_type": "ownership_percent",
@@ -1637,6 +1691,60 @@
       ]
     },
     {
+      "country": "SI",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-F28CC9AC4CDF9D59",
+      "evidence_note": "Article 10 reduced dividend branch requires a corporate beneficial owner with direct ownership of at least 25%. Current Stage 6 branch omits the company/direct-ownership conditions.",
+      "rate_candidates": [
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "25"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "country": "SK",
       "income_type": "dividend",
       "evidence_source_id": "SRC-4CBD2AF601C94743",
@@ -1781,6 +1889,60 @@
       ]
     },
     {
+      "country": "UA",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-1D74C3BA794BFE66",
+      "evidence_note": "Article 10 reduced dividend branch requires the beneficial owner to be a company other than a partnership with direct ownership of at least 25%. Current Stage 6 branch omits the company/direct-ownership conditions.",
+      "rate_candidates": [
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_other_than_partnership"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "25"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "country": "US",
       "income_type": "dividend",
       "evidence_source_id": "SRC-EADD5B70920D588C",
@@ -1811,6 +1973,60 @@
         },
         {
           "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "VE",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-5C857626A8532345",
+      "evidence_note": "Article 10 reduced dividend branch requires the beneficial owner to be a company other than a partnership with direct ownership of at least 15%. Current Stage 6 branch omits the company/direct-ownership conditions.",
+      "rate_candidates": [
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_other_than_partnership"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "15"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10,
           "conditions": [
             {
               "condition_type": "fallback_case",
