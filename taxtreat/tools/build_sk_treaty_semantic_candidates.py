@@ -198,8 +198,22 @@ def _percentage_is_other_tax_in_article(
     if income_type != "dividend":
         return False
 
-    close = _compact(text[max(0, match.start() - 150):match.end() + 150]).lower()
-    dividend_near = any(token in close for token in ("dividend", "dividendy", "dividendov"))
+    left_candidates = [
+        text.rfind(".", 0, match.start()),
+        text.rfind(";", 0, match.start()),
+    ]
+    left = max(left_candidates) + 1
+    right_candidates = [
+        position
+        for position in (
+            text.find(".", match.end()),
+            text.find(";", match.end()),
+        )
+        if position >= 0
+    ]
+    right = min(right_candidates) if right_candidates else min(len(text), match.end() + 180)
+    clause = _compact(text[left:right]).lower()
+    dividend_near = any(token in clause for token in ("dividend", "dividendy", "dividendov"))
 
     other_tax_markers = (
         "stála prevádzkáreň",
@@ -215,7 +229,7 @@ def _percentage_is_other_tax_in_article(
         "nehnuteľného majetku",
         "immovable property",
     )
-    return (not dividend_near) and any(marker in close for marker in other_tax_markers)
+    return (not dividend_near) and any(marker in clause for marker in other_tax_markers)
 
 
 def _rate_candidates(text: str, *, income_type: str | None = None) -> list[dict[str, Any]]:
