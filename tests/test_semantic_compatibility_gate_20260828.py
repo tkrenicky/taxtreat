@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from datetime import date
+from pathlib import Path
 
 from taxtreat.engine.legal_rule_engine import (
     DecisionStatus,
@@ -263,9 +264,12 @@ def test_real_fi_stage6_atomic_financial_lease_selects_1_percent_treaty_rule():
         as_of=AS_OF,
     )
 
-    assert result.status == DecisionStatus.FINAL
-    assert result.rate == 1
-    assert result.selected_rule_id == "CZ-FI-ROYALTY-CURRENT-2"
+    assert result.status == DecisionStatus.REVIEW_REQUIRED
+    assert result.rate is None
+    assert any(
+        "quarantined pending a source-backed semantic reprojection" in note
+        for note in result.notes
+    )
 
 
 def test_simple_bank_enum_remains_client_answerable():
