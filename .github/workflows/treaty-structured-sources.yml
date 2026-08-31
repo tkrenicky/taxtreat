@@ -83,7 +83,7 @@ jobs:
             --upgrade-output reports/canonical_treaty_texts_pdf_checked.json
 
       - name: Materialize canonical corpus on the PR branch
-        if: github.event.pull_request.head.repo.full_name == github.repository
+        if: github.event_name == 'workflow_dispatch' && github.event.pull_request.head.repo.full_name == github.repository
         run: |
           cp reports/canonical_treaty_texts_pdf_checked.json data/legal_texts/canonical_provisions.json
           git config user.name "github-actions[bot]"
