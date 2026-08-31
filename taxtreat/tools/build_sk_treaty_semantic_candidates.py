@@ -121,9 +121,46 @@ def _percentage_is_ownership_threshold(text: str, match: re.Match[str]) -> bool:
         "share",
         "capital",
         "voting",
+        "imania",
+        "základného imania",
+        "zakladneho imania",
+        "equity",
+        "stock",
     )
-    return any(lead in before for lead in ownership_leads) and any(
+    if any(lead in before for lead in ownership_leads) and any(
         noun in after.lower() for noun in ownership_nouns
+    ):
+        return True
+
+    # Other percentage-based legal thresholds can sit beside the actual WHT
+    # ceiling. Example: an old treaty may permit a 25% dividend tax only if a
+    # corporate-tax-rate differential is 20% or more. The 20% value is a
+    # condition, not a WHT rate.
+    condition_before = (
+        "rozdiel je",
+        "rozdíl je",
+        "difference is",
+        "difference amounts to",
+        "najmenej",
+        "aspoň",
+        "alespoň",
+        "at least",
+    )
+    condition_after = (
+        "alebo viac",
+        "nebo více",
+        "or more",
+        "or greater",
+        "základného imania",
+        "zakladneho imania",
+        "imania",
+        "equity",
+        "capital",
+        "voting",
+        "shares",
+    )
+    return any(token in before for token in condition_before) and any(
+        token in after.lower() for token in condition_after
     )
 
 
