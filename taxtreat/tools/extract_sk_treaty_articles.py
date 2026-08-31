@@ -156,6 +156,14 @@ def _title_matches(income_type: str, block: str) -> bool:
     return any(token in prefix for token in EXPECTED[income_type]["titles"])
 
 
+def _article_text_is_substantive(block: str) -> bool:
+    # A number of Slov-Lex static pages expose only the article heading and
+    # paragraph/list markers (e.g. "Článok 10 Dividendy 1. 2. a) b) ...").
+    # Such a block is not legal text and must never enter semantic extraction.
+    words = re.findall(r"[A-Za-zÀ-ž]{3,}", block)
+    return len(block) >= 300 and len(words) >= 30
+
+
 def _resolve_article(
     *,
     income_type: str,
@@ -227,6 +235,15 @@ def _extract_scope(
 
     title_ok = _title_matches(income_type, block)
     article_sha256 = hashlib.sha256(block.encode("utf-8")).hexdigest()
+
+    if title_ok and not _article_text_is_substantive(block):
+        return {
+            **base,
+            "article_text": block,
+            "article_text_sha256": article_sha256,
+            "machine_extraction_status": "article_extracted_non_substantive_requires_recovery",
+            "title_validation_status": "expected_income_title_matched_but_content_missing",
+        }
 
     if not title_ok:
         return {
@@ -379,7 +396,62 @@ def build_extraction(*, fetch: bool = True) -> dict[str, Any]:
             source_url_override=source_url,
             content_type=content_type,
         )
-        parsed["machine_extraction_status"] = "completed"
+
+        # Slov-Lex's static rendering can contain only headings/list markers.
+        # Retry the official public eZbierka page, which exposes the expanded
+        # legal text server-side, before declaring the relationship unresolved.
+        weak_status = "article_extracted_non_substantive_requires_recovery"
+        if (
+            pdf_override is None
+            and primary_url is not None
+            and any(
+                row.get("machine_extraction_status") == weak_status
+                for row in parsed["scopes"]
+            )
+        ):
+            try:
+                public_source = _fetch(primary_url)
+                recovered = parse_treaty(
+                    source_relationship=relationship,
+                    source_scopes=country_scopes,
+                    html=public_source,
+                    source_url_override=primary_url,
+                    content_type="html",
+                )
+            except Exception:
+                recovered = None
+            if recovered is not None:
+                recovered_valid = sum(
+                    row.get("machine_extraction_status") in {
+                        "article_extracted",
+                        "article_extracted_by_title_number_variance",
+                    }
+                    for row in recovered["scopes"]
+                )
+                parsed_valid = sum(
+                    row.get("machine_extraction_status") in {
+                        "article_extracted",
+                        "article_extracted_by_title_number_variance",
+                    }
+                    for row in parsed["scopes"]
+                )
+                if recovered_valid > parsed_valid:
+                    parsed = recovered
+                    parsed["source_recovery_method"] = (
+                        "official_public_slov_lex_page_after_static_non_substantive"
+                    )
+
+        parsed["machine_extraction_status"] = (
+            "completed"
+            if all(
+                row.get("machine_extraction_status") in {
+                    "article_extracted",
+                    "article_extracted_by_title_number_variance",
+                }
+                for row in parsed["scopes"]
+            )
+            else "completed_with_scope_recovery_blockers"
+        )
         output_relationships.append({
             key: value
             for key, value in parsed.items()
@@ -447,6 +519,11 @@ def build_summary(payload: dict[str, Any]) -> dict[str, Any]:
         ),
         "non_standard_source_scopes": sum(
             row.get("machine_extraction_status") == "non_standard_primary_source_pending"
+            for row in scopes
+        ),
+        "non_substantive_article_scopes": sum(
+            row.get("machine_extraction_status")
+            == "article_extracted_non_substantive_requires_recovery"
             for row in scopes
         ),
         "human_reviewed_scopes": 0,
