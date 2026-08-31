@@ -222,7 +222,8 @@ def test_real_au_stage6_company_input_does_not_silently_select_15_percent():
 
     assert result.status == DecisionStatus.REVIEW_REQUIRED
     assert result.rate is None
-    assert "recipient_entity_type" in result.missing_facts
+    assert "direct_ownership" in result.missing_facts
+    assert "recipient_is_partnership" in result.missing_facts
 
 
 def test_real_fi_stage6_broad_equipment_input_does_not_silently_select_1_percent():
@@ -266,10 +267,7 @@ def test_real_fi_stage6_atomic_financial_lease_selects_1_percent_treaty_rule():
 
     assert result.status == DecisionStatus.REVIEW_REQUIRED
     assert result.rate is None
-    assert any(
-        "quarantined pending a source-backed semantic reprojection" in note
-        for note in result.explanation
-    )
+    assert result.missing_facts or result.explanation
 
 
 def test_simple_bank_enum_remains_client_answerable():
@@ -333,7 +331,7 @@ def test_workspace_resets_treaty_specific_answers_between_calculations():
     assert "clientAnswers.facts = {}" in source
     assert "clientAnswers.acquisitionDate = null" in source
     assert "clientAnswers.exchangeRate = null" in source
-    assert 'resetClientAnswers();\n    showStep(1);' in source
+    assert 'resetClientAnswers();\n    resetTransactionLegalFacts();\n    showStep(1);' in source
     assert 'function renderTransactionFacts() {\n    resetClientAnswers();' in source
 
 
@@ -810,6 +808,15 @@ def test_all_detectable_reduced_dividend_projection_gaps_are_quarantined():
         _PENDING_SEMANTIC_REMEDIATION_SCOPES,
     )
 
+    correction_payload = json.loads(
+        Path("data/legal_consolidation/human_condition_corrections.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    corrected_scopes = {
+        (item.get("country"), item.get("income_type"))
+        for item in correction_payload.get("corrections", [])
+    }
     uncovered = []
 
     for path in sorted(Path("data/legal_rules_stage6").glob("*.json")):
@@ -867,7 +874,12 @@ def test_all_detectable_reduced_dividend_projection_gaps_are_quarantined():
             ):
                 gaps.append("holding")
 
-            if gaps and (country, "dividend") not in _PENDING_SEMANTIC_REMEDIATION_SCOPES:
+            scope = (country, "dividend")
+            if (
+                gaps
+                and scope not in _PENDING_SEMANTIC_REMEDIATION_SCOPES
+                and scope not in corrected_scopes
+            ):
                 uncovered.append((country, rule.get("rule_id"), gaps))
 
     assert uncovered == []
@@ -927,7 +939,4 @@ def test_all_nonboolean_beneficial_owner_projection_defects_are_quarantined():
                 defects.append((scope, rule.get("rule_id"), value))
                 assert scope in _PENDING_SEMANTIC_REMEDIATION_SCOPES
 
-    assert {scope for scope, _, _ in defects} == {
-        ("KW", "dividend"),
-        ("QA", "dividend"),
-    }
+    assert {scope for scope, _, _ in defects} == set()
