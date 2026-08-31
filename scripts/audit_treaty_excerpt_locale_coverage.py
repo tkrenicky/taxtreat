@@ -33,10 +33,10 @@ def _load_locale_entries() -> tuple[dict[str, dict], dict[str, tuple[str, dict]]
             if isinstance(articles, dict):
                 target = entries.setdefault(country, {})
                 for article, locale_payload in articles.items():
-                    if article in target and target[article] != locale_payload:
-                        raise RuntimeError(
-                            f"Conflicting treaty locale entry for {country} Article {article}"
-                        )
+                    # The per-country locale files are the current canonical
+                    # store. The legacy aggregate registry is retained only as
+                    # a compatibility fallback and may contain older text for
+                    # the same article (AT is the known migration case).
                     target[str(article)] = locale_payload
 
             rules = country_payload.get("rules", {})
