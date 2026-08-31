@@ -44,4 +44,5 @@ jobs:
             data/legal_reviews/sk_outbound/prerelease_decision_matrix_summary.json \
             data/legal_reviews/sk_outbound/pre_review_readiness.json
           git commit -m "Regenerate SK semantic prerelease artifacts"
-          git push
+          git pull --rebase origin main
+          git push origin main
