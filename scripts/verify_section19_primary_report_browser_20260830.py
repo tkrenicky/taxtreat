@@ -53,6 +53,11 @@ def main() -> int:
             form.locator('select[name="holding_period_mode"]').select_option("known_date")
             form.locator('input[name="acquisition_date"]').fill("2024-01-01")
             form.locator('input[name="voting_ownership_percent"]').fill("25")
+            treaty_resident_yes = form.locator('input[name="treaty_resident"][value="true"]')
+            if not treaty_resident_yes.is_checked():
+                treaty_resident_yes.evaluate(
+                    "el => { el.checked = true; el.dispatchEvent(new Event('input', { bubbles: true })); el.dispatchEvent(new Event('change', { bubbles: true })); }"
+                )
 
             # The positive Section 19 branch is factually complete.
             form.locator('select[name="section19_company_form"]').select_option("true")
