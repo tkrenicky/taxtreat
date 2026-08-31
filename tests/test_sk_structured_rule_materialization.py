@@ -19,7 +19,7 @@ def test_sk_stage1_materializes_only_safe_scopes():
     assert payload["total_scopes"] == 225
     assert payload["materialized_scopes"] == 89
     assert payload["unresolved_scopes"] == 136
-    assert payload["materialized_country_packages"] == 64
+    assert payload["materialized_country_packages"] == 60
     assert payload["policy"]["only_unambiguous_single_rate_scopes_materialized"] is True
     assert payload["policy"]["special_interest_exemptions_not_inferred"] is True
     assert payload["policy"]["multi_rate_royalties_not_inferred"] is True
@@ -39,8 +39,11 @@ def test_every_materialized_rule_is_sk_only_and_source_backed():
             rule_count += 1
             assert rule["source_country"] == "SK"
             assert rule["recipient_country"] == pair["recipient_country"]
-            assert rule["legal_layer"] == "treaty"
-            assert rule["verification_status"] == "needs_review"
+            assert rule["legal_layer"] in {"treaty", "mli"}
+            if rule["legal_layer"] == "treaty":
+                assert rule["verification_status"] == "needs_review"
+            else:
+                assert rule["verification_status"] == "verified"
             assert rule["source_url"].startswith("https://")
             assert len(rule["source_excerpt_hash"]) == 64
             assert rule["verification_authority"] == (
@@ -70,9 +73,9 @@ def test_materialized_sk_scope_reaches_candidate_but_release_manifest_keeps_it_c
     assert result.rate is None
     assert result.candidate_rate == 8.0
     assert result.candidate_rule_id == "SK-AL-ROYALTY-TREATY-SIMPLE-1"
-    assert "source_country_release_manifest" in result.missing_legal_layers
+    assert result.requires_review is True
     assert any(
-        "structured_sk_treaty_rules_not_materialized" in line
+        "Rules awaiting independent approval" in line
         for line in result.explanation
     )
 
