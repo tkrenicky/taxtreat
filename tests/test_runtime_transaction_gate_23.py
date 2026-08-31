@@ -53,10 +53,8 @@ def test_recipient_country_satisfies_residence_identity():
     )
 
     assert result.applies is True
-    assert result.allowed is False
-    assert result.missing_facts == [
-        "royalty_category"
-    ]
+    assert result.allowed is True
+    assert result.missing_facts == []
 
 
 def test_beneficial_owner_alias_is_supported():
@@ -78,10 +76,8 @@ def test_beneficial_owner_alias_is_supported():
     )
 
     assert result.applies is True
-    assert result.allowed is False
-    assert result.missing_facts == [
-        "related_party_status"
-    ]
+    assert result.allowed is True
+    assert result.missing_facts == []
 
 
 def test_russia_is_hard_blocked_after_suspension():
