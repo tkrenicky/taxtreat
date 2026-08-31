@@ -18,12 +18,33 @@ def test_extracts_rate_candidates_without_releasing_rate():
     result = build_semantic_candidate(article)
 
     rates = [row["rate_percent"] for row in result["rate_candidates"]]
-    assert rates == [5.0, 10.0, 15.0]
+    assert rates == [5.0, 15.0]
     assert result["beneficial_owner_wording_present"] is True
     assert result["ownership_linked_rate_candidate_count"] >= 1
     assert result["semantic_status"] == "machine_candidate_not_legal_conclusion"
     assert result["approval_eligible"] is False
     assert result["runtime_status"] == "not_released"
+
+
+def test_ownership_percentages_are_not_rate_candidates():
+    article = (
+        "Daň nepresiahne 5 % hrubej sumy dividend, ak skutočným vlastníkom "
+        "je spoločnosť, ktorá priamo vlastní najmenej 10 % majetku spoločnosti. "
+        "Vo všetkých ostatných prípadoch daň nepresiahne 8 % hrubej sumy dividend."
+    )
+    result = build_semantic_candidate(article)
+    assert [row["rate_percent"] for row in result["rate_candidates"]] == [5.0, 8.0]
+
+
+def test_english_voting_threshold_is_not_rate_candidate():
+    article = (
+        "The tax shall not exceed 5 percent of the gross amount of dividends "
+        "if the beneficial owner is a company which directly holds at least "
+        "10 percent of the voting shares of the payer; in all other cases "
+        "the tax shall not exceed 15 percent of the gross amount."
+    )
+    result = build_semantic_candidate(article)
+    assert [row["rate_percent"] for row in result["rate_candidates"]] == [5.0, 15.0]
 
 
 def test_detects_exclusive_residence_taxation_as_candidate_only():
