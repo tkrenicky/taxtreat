@@ -61,7 +61,7 @@ def main() -> int:
         for row in mli["relationships"]
     }
     assert len(rel_by_country) == 46
-    assert mli["status"] == "ADJUDICATED"
+    assert mli["status"] == "post_review_bilateral_adjudication_completed"
     assert mli["relationship_count"] == 46
 
     gate_count = 0
