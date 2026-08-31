@@ -233,7 +233,11 @@ def test_html_localization_cz_and_sk_paths(monkeypatch):
     localized = html_localization.localize_report_html(cz_html, cz_report)
     assert 'lang="en"' in localized
     assert "Double Tax Treaty between the Czech Republic and AT" in localized
-    assert "the Double Tax Treaty between the Czech Republic and AT" in localized
+    lower_only = html_localization._localize_cz_to_en(
+        "smlouvy mezi Českou republikou a Rakouskem o zamezení dvojího zdanění",
+        cz_report,
+    )
+    assert "the Double Tax Treaty between the Czech Republic and AT" in lower_only
 
     cz_report["language"] = "cs"
     assert html_localization.localize_report_html(cz_html, cz_report) == cz_html
@@ -265,3 +269,30 @@ def test_html_localization_cz_and_sk_paths(monkeypatch):
     DummyConfig.html_localization_strategy = "unsupported"
     with pytest.raises(KeyError, match="No HTML report localization strategy"):
         html_localization.localize_report_html("x", {"scope": {"source_country": "XT"}})
+
+
+def test_additional_locale_runtime_edges(tmp_path):
+    web_locale_engine.translation_map.cache_clear()
+    assert web_locale_engine.translation_map(str(tmp_path)) == web_locale_engine.EXTRA_TRANSLATIONS
+
+    ordinary = tmp_path / "ordinary.js"
+    ordinary.write_text(
+        "const x='/ui-assets/child.js'; const y='/ui-assets/data.json'; "
+        "fetch(\"/analysis/intake\", {}); if (url.endsWith('/analysis/intake')) {}",
+        encoding="utf-8",
+    )
+    rendered = web_locale_engine.render_workspace_asset(tmp_path, "ordinary.js", "en")
+    assert "/ui-engine/en/child.js" in rendered
+    assert "/ui-assets/data.json" in rendered
+    assert "url.includes('/analysis/intake')" in rendered
+
+    no_newline = 'loadScript("/ui-assets/workspace-header-language-20260821.js");'
+    assert web_locale_engine._strip_live_i18n_bootstrap(no_newline) == ""
+
+    assert report_locales.english_excerpt_for_citation({}, "ZZ") is None
+
+    report = {"language": "en", "scope": {"source_country": "CZ"}}
+    html = '<html lang="cs">Applied legal basis</html>'
+    out = english_release_localization.finalize_english_report_html(html, report)
+    assert 'lang="en"' in out
+    assert "Primary legal basis" not in out
