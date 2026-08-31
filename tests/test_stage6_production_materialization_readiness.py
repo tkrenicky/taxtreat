@@ -48,37 +48,26 @@ def test_materialization_audit_covers_exact_universe():
     ) == 303
 
 
-def test_materialization_audit_is_hash_bound():
+def test_materialization_audit_is_historical_for_exactly_the_semantic_rehash_set():
     audit = load(AUDIT)
     approval = load(APPROVAL)
     gate = load(GATE)
-
-    audit_hashes = {
-        row["treaty_pair_id"]:
-            row["package_sha256"]
-        for row in audit["records"]
-    }
-
-    approval_hashes = {
-        row["treaty_pair_id"]:
-            row["package_sha256"]
-        for row in approval["records"]
-    }
-
-    gate_hashes = {
-        row["treaty_pair_id"]:
-            row["package_sha256"]
-        for row in gate["treaty_partners"]
-    }
-
-    assert (
-        audit_hashes
-        == approval_hashes
-        == gate_hashes
+    remediation = load(
+        ROOT / "data/legal_consolidation/semantic_remediation_condition_candidates_20260829.json"
     )
 
+    audit_hashes = {row["treaty_pair_id"]: row["package_sha256"] for row in audit["records"]}
+    approval_hashes = {row["treaty_pair_id"]: row["package_sha256"] for row in approval["records"]}
+    gate_hashes = {row["treaty_pair_id"]: row["package_sha256"] for row in gate["treaty_partners"]}
+    remediation_pairs = {f"CZ-{row['country']}" for row in remediation["corrections"]}
 
-def test_readiness_audit_is_historical_but_final_gate_is_released():
+    assert audit_hashes == approval_hashes
+    stale = {pair for pair in gate_hashes if gate_hashes[pair] != audit_hashes[pair]}
+    assert stale == remediation_pairs
+    assert len(stale) == 40
+
+
+def test_readiness_audit_is_historical_and_final_gate_blocks_rehashed_packages():
     audit = load(AUDIT)
     gate = load(GATE)
 
@@ -99,15 +88,10 @@ def test_readiness_audit_is_historical_but_final_gate_is_released():
         "released_packages"
     ] == 0
 
-    assert gate["counts"][
-        "rule_promoted_packages"
-    ] == 101
-    assert gate["counts"][
-        "released_packages"
-    ] == 101
-    assert gate["counts"][
-        "released_scopes"
-    ] == 303
+    assert gate["counts"]["rule_promoted_packages"] == 61
+    assert gate["counts"]["released_packages"] == 61
+    assert gate["counts"]["released_scopes"] == 183
+    assert gate["counts"]["semantic_remediation_pending_packages"] == 40
 
 
 def test_every_package_has_three_income_scopes():
