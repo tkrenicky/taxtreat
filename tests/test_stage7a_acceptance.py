@@ -42,7 +42,7 @@ def test_stage7a_fixture_has_exact_pilot_matrix():
     assert {
         case["request"]["recipient_country"]
         for case in discovery
-    } == {"AT", "CA", "DE", "JP", "SG"}
+    } == {"AT", "CA", "DE", "KZ", "SG"}
     assert {
         case["request"]["income_type"]
         for case in discovery
