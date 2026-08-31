@@ -50,6 +50,25 @@ def is_safe_simple(scope: dict, article: dict) -> bool:
         return False
     if income == "dividend" and ("osloboden" in text or "nepresiahne:" in text):
         return False
+    if income == "royalty":
+        # A single machine-detected percentage is not sufficient when
+        # Article 12(2) itself points to lettered royalty categories. Older
+        # Slovak treaties often tax only one category at the detected rate
+        # while another category is residence-state-only or uses another
+        # ceiling. Keep those scopes out of the simple-rule layer.
+        start = re.search(r"(?:\\(2\\)|\\b2\\.\\s)", text)
+        paragraph_2 = text[:1200]
+        if start:
+            tail = text[start.start():]
+            end = re.search(r"(?:\\(3\\)|\\b3\\.\\s)", tail[3:])
+            paragraph_2 = tail[: (3 + end.start()) if end else 1200]
+        if (
+            "písm" in paragraph_2
+            or "podľa písmena" in paragraph_2
+            or "len v tomto" in paragraph_2
+            or "iba v tomto" in paragraph_2
+        ):
+            return False
     return True
 
 
