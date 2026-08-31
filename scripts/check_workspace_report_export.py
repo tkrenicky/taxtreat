@@ -70,6 +70,9 @@ def verify_recipient_catalog_and_entry(page) -> None:
 
 
 def finish_workspace_calculation(page) -> None:
+    # Isolate this acceptance scenario from the profile-persistence checks
+    # performed earlier in the same browser context.
+    page.evaluate("localStorage.removeItem('taxtreat-workspace-profiles-v1')")
     page.goto(f"{BASE_URL}/workspace-demo", wait_until="networkidle")
     if page.locator("#flow-recipient-name").inner_text() != "Demo GmbH":
         raise AssertionError("Fresh workspace did not reset the demo recipient.")
