@@ -36,6 +36,34 @@ def test_ownership_percentages_are_not_rate_candidates():
     assert [row["rate_percent"] for row in result["rate_candidates"]] == [5.0, 8.0]
 
 
+def test_dividend_parser_ignores_branch_profits_tax_percentage():
+    article = (
+        "Dividendy: daň nepresiahne 8 % hrubej sumy dividend. "
+        "Ak má rezident stálu prevádzkáreň, zisky tejto stálej prevádzkarne "
+        "môžu podliehať dani vyberanej zrážkou, ktorá nepresiahne 2 % sumy týchto ziskov."
+    )
+    result = build_semantic_candidate(article, income_type="dividend")
+    assert [row["rate_percent"] for row in result["rate_candidates"]] == [8.0]
+
+
+def test_dividend_parser_ignores_unrelated_additional_property_tax_percentage():
+    article = (
+        "Dividendy: daň nepresiahne 5 % hrubej sumy dividend. "
+        "Dodatočná daň z výnosov z nehnuteľného majetku neprekročí 5 % sumy takýchto výnosov."
+    )
+    result = build_semantic_candidate(article, income_type="dividend")
+    assert [row["rate_percent"] for row in result["rate_candidates"]] == [5.0]
+
+
+def test_direct_voting_interest_threshold_is_not_rate_candidate():
+    article = (
+        "Daň nepresiahne 5 % hrubej sumy dividend, ak spoločnosť má najmenej "
+        "10 % priamy podiel na hlasovacích právach; inak 15 % hrubej sumy dividend."
+    )
+    result = build_semantic_candidate(article, income_type="dividend")
+    assert [row["rate_percent"] for row in result["rate_candidates"]] == [5.0, 15.0]
+
+
 def test_basic_capital_threshold_is_not_rate_candidate():
     article = (
         "Ak skutočným vlastníkom je spoločnosť, ktorá vlastní priamo aspoň "
