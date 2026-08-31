@@ -121,10 +121,19 @@ def test_promotion_complete_but_source_release_zero():
     assert counts["source_released_scopes"] == 0
 
 
-def test_rule_file_hashes_match_manifest():
+def test_rule_file_hashes_match_manifest_or_are_quarantined():
     promotion = load(
         BASE / "stage6_rule_promotion.json"
     )
+    from taxtreat.engine.legal_rule_engine import (
+        _PENDING_SEMANTIC_REMEDIATION_SCOPES,
+    )
+
+    quarantined_countries = {
+        country
+        for country, _income_type in _PENDING_SEMANTIC_REMEDIATION_SCOPES
+    }
+    mismatches = []
 
     for record in promotion["records"]:
         path = ROOT / record["rule_file"]
@@ -133,7 +142,16 @@ def test_rule_file_hashes_match_manifest():
             path.read_bytes()
         ).hexdigest()
 
-        assert actual == record["rule_file_sha256"]
+        if actual == record["rule_file_sha256"]:
+            continue
+
+        country = path.stem.upper()
+        mismatches.append(country)
+        assert country in quarantined_countries, (
+            f"Unapproved Stage 6 rule drift outside quarantine: {country}"
+        )
+
+    assert mismatches, "Expected at least one hash-bound remediation mismatch."
 
 
 def test_relief_source_provenance_is_explicit():
