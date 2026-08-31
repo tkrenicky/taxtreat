@@ -30,6 +30,7 @@ on:
       - 'scripts/verify_en_fallback_report_locale_20260828.py'
       - 'scripts/verify_web_report_condition_aware_integration_20260830.py'
       - 'scripts/audit_treaty_excerpt_locale_coverage.py'
+      - 'scripts/verify_semantic_remediation_closure_20260831.py'
   workflow_dispatch:
 
 jobs:
@@ -62,6 +63,7 @@ jobs:
             verify_en_fallback_report_locale_20260828.py
             verify_web_report_condition_aware_integration_20260830.py
             audit_treaty_excerpt_locale_coverage.py
+            verify_semantic_remediation_closure_20260831.py
           )
           for script in "${scripts[@]}"; do
             name="${script%.py}"
