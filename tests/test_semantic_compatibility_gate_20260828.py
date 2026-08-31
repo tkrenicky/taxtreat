@@ -268,7 +268,7 @@ def test_real_fi_stage6_atomic_financial_lease_selects_1_percent_treaty_rule():
     assert result.rate is None
     assert any(
         "quarantined pending a source-backed semantic reprojection" in note
-        for note in result.notes
+        for note in result.explanation
     )
 
 
