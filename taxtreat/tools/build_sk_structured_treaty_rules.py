@@ -31,9 +31,16 @@ def load(path: Path):
 
 def is_safe_simple(scope: dict, article: dict) -> bool:
     rates = scope.get("rate_candidates") or []
-    if len(rates) != 1:
-        return False
     if scope.get("exclusive_residence_taxation_candidate"):
+        return (
+            scope.get("income_type") == "interest"
+            and len(rates) <= 1
+            and int(scope.get("ownership_linked_rate_candidate_count") or 0) == 0
+            and not scope.get("holding_period_candidates")
+            and bool(scope.get("source_sha256"))
+            and scope.get("semantic_status") == "machine_candidate_not_legal_conclusion"
+        )
+    if len(rates) != 1:
         return False
     if int(scope.get("ownership_linked_rate_candidate_count") or 0) != 0:
         return False
@@ -142,7 +149,12 @@ def main() -> int:
 
         country = scope["recipient_country"]
         income = scope["income_type"]
-        rate = float(scope["rate_candidates"][0]["rate_percent"])
+        exclusive_residence = bool(scope.get("exclusive_residence_taxation_candidate"))
+        rate = (
+            0.0
+            if exclusive_residence
+            else float(scope["rate_candidates"][0]["rate_percent"])
+        )
         article_text = str(article["article_text"])
         source_hash = str(scope["source_sha256"])
         rule = {
@@ -158,6 +170,11 @@ def main() -> int:
             "priority": 600,
             "conditions": conditions(scope),
             "effect": "rate",
+            **(
+                {"tax_treatment": "exclusive_foreign_taxation"}
+                if exclusive_residence
+                else {}
+            ),
             "effective_from": treaty_valid_from[country],
             "verification_status": "needs_review",
             "source_text": article_text,
@@ -206,6 +223,7 @@ def main() -> int:
             "only_unambiguous_single_rate_scopes_materialized": True,
             "stage1_rules_remain_needs_review_until_protocol_mli_gates_are_materialized": True,
             "special_interest_exemptions_not_inferred": True,
+            "explicit_exclusive_residence_interest_scopes_materialized_as_structural_zero": True,
             "ownership_linked_dividend_branches_not_inferred": True,
             "multi_rate_royalties_not_inferred": True,
             "czech_rule_reuse_forbidden": True,
