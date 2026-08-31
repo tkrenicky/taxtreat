@@ -116,7 +116,7 @@ def test_analysis_reaches_decision_engine(
     response = main.analyze(
         main.AnalysisPayload(
             source_country="CZ",
-            recipient_country="CH",
+            recipient_country="AT",
             income_type="royalty",
             transaction_date="2026-08-06",
         )
