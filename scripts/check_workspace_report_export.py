@@ -223,6 +223,7 @@ def main() -> int:
             payer_form = page.locator("#payer-form")
             payer_form.locator('input[name="payer_id"]').fill("27082440")
             payer_form.locator('input[name="payer_name"]').wait_for()
+            page.locator("[data-ares-lookup]").click()
             page.wait_for_function(
                 "() => document.querySelector('#payer-form input[name=payer_name]').value.includes('Google Czech')",
                 timeout=5000,
