@@ -96,6 +96,13 @@ def finish_workspace_calculation(page) -> None:
         "known_date"
     )
     form.locator('input[name="acquisition_date"]').fill("2024-01-01")
+    form.locator('select[name="section19_company_form"]').select_option("true")
+    form.locator('select[name="section19_taxable_company"]').select_option("false")
+    treaty_resident_yes = form.locator('input[name="treaty_resident"][value="true"]')
+    if not treaty_resident_yes.is_checked():
+        treaty_resident_yes.evaluate(
+            "el => { el.checked = true; el.dispatchEvent(new Event('input', { bubbles: true })); el.dispatchEvent(new Event('change', { bubbles: true })); }"
+        )
 
     for _ in range(6):
         form.locator("#workspace-submit").click()
