@@ -192,6 +192,18 @@ def capture(output_dir: Path) -> dict[str, object]:
                 for item in workspace_questions.locator('input[type="date"]').all():
                     if not item.input_value():
                         item.fill("2024-01-01")
+
+                radio_names = workspace_questions.locator('input[type="radio"]').evaluate_all(
+                    "els => [...new Set(els.map(el => el.name).filter(Boolean))]"
+                )
+                for name in radio_names:
+                    radios = workspace_questions.locator(f'input[type="radio"][name="{name}"]')
+                    if radios.count() and not any(radio.is_checked() for radio in radios.all()):
+                        preferred_true = radios.locator('[value="true"]')
+                        target = preferred_true.first if preferred_true.count() else radios.first
+                        target.evaluate(
+                            "el => { el.checked = true; el.dispatchEvent(new Event('input', { bubbles: true })); el.dispatchEvent(new Event('change', { bubbles: true })); }"
+                        )
             else:
                 raise AssertionError("Primary workspace client questions did not converge.")
 
@@ -250,6 +262,17 @@ def capture(output_dir: Path) -> dict[str, object]:
                     item.fill("25")
                 for item in workspace_questions.locator('input[type="date"]').all():
                     item.fill("2024-01-01")
+                radio_names = workspace_questions.locator('input[type="radio"]').evaluate_all(
+                    "els => [...new Set(els.map(el => el.name).filter(Boolean))]"
+                )
+                for name in radio_names:
+                    radios = workspace_questions.locator(f'input[type="radio"][name="{name}"]')
+                    if radios.count() and not any(radio.is_checked() for radio in radios.all()):
+                        preferred_true = radios.locator('[value="true"]')
+                        target = preferred_true.first if preferred_true.count() else radios.first
+                        target.evaluate(
+                            "el => { el.checked = true; el.dispatchEvent(new Event('input', { bubbles: true })); el.dispatchEvent(new Event('change', { bubbles: true })); }"
+                        )
             else:
                 raise AssertionError("Workspace client questions did not converge.")
 
