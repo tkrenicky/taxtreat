@@ -39,6 +39,43 @@
       "evidence_source_ids": [
         "SK-SLOVLEX-26B4EE2A2A832313"
       ]
+    },
+    {
+      "rule_id": "SK-IT-INTEREST-TREATY-SIMPLE-1",
+      "income_type": "interest",
+      "source_country": "SK",
+      "recipient_country": "IT",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "11",
+      "paragraph": null,
+      "rate": 0.0,
+      "priority": 600,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "rate",
+      "tax_treatment": "exclusive_foreign_taxation",
+      "effective_from": "1984-06-26",
+      "verification_status": "needs_review",
+      "source_text": "Článok 11 Úroky 1. Úroky majúce zdroj v jednom zmluvnom štáte a vyplácané osobe majúcej bydlisko alebo sídlo v druhom zmluvnom štáte môžu sa zdaniť iba v tomto druhom štáte, ak je táto osoba ich skutočným príjemcom. 2. Výraz „úroky“ použitý v tomto článku označuje príjmy z verejných pôžičiek, obligácií, zabezpečených aj nezabezpečených záložným právom na nehnuteľnosti alebo doložkou o účasti na zisku a z pohľadávok každého druhu, ako aj všetky iné výnosy postavené na roveň príjmov z pôžičiek daňovými právnymi predpismi štátu, v ktorom je zdroj týchto príjmov. 3. Ustanovenie odseku 1 sa nepoužije, ak príjemca úrokov, ktorý má bydlisko alebo sídlo v jednom zmluvnom štáte, vykonáva v druhom zmluvnom štáte, v ktorom majú úroky zdroj, priemyselnú alebo obchodnú činnosť prostredníctvom stálej prevádzkárne, ktorá je tam umiestnená, alebo nezávislé povolanie prostredníctvom stálej základne tam umiestnenej a ak pohľadávka, z ktorej sa úroky platia, skutočne patrí k tejto stálej prevádzkárni alebo k tejto stálej základni. V takom prípade sa môžu úroky zdaniť v tomto druhom zmluvnom štáte podľa jeho vnútroštátnych právnych predpisov. 4. Ak suma úrokov, posudzované so zreteľom na pohľadávku, z ktorej sa platia, presahuje v dôsledku osobitných vzťahov existujúcich medzi dlžníkom a skutočným príjemcom úrokov, alebo ktoré jeden aj druhý udržiavajú s tretími osobami, sumu, ktorú by bol dojednal dlžník so skutočným príjemcom, keby také vzťahy neboli, použijú sa ustanovenia tohto článku len na túto naposledy spomenutú sumu. Suma platieb, ktorá ju presahuje, sa môže v tomto prípade zdaniť podľa právnych predpisov každého zmluvného štátu a s prihliadnutím na ostatné ustanovenia tejto Zmluvy.",
+      "source_id": "SK-SLOVLEX-26B4EE2A2A832313",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/1985/17/vyhlasene_znenie.html",
+      "source_excerpt_hash": "85303320d6f53f5c279db166eb1cf1e1283b9d822c0b69f89e72e058f898eec5",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-08-31",
+      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-26B4EE2A2A832313"
+      ]
     }
   ]
 }

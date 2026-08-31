@@ -5,6 +5,98 @@
   },
   "rules": [
     {
+      "rule_id": "SK-IS-MLI-GATE-INTEREST-A7",
+      "income_type": "interest",
+      "source_country": "SK",
+      "recipient_country": "IS",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "7",
+      "paragraph": null,
+      "rate": null,
+      "priority": 57,
+      "conditions": [
+        {
+          "fact": "treaty_ppt_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2020-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-IS: notice 483/2019; result-changing articles ['7']; WHT effective date(s) ['2020-01-01']. Gate: MLI Article 7 principal purpose test.",
+      "source_id": "SK-MLI-483-2019",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2019/483/vyhlasene_znenie.html",
+      "source_excerpt_hash": "90880474414c44f1eaea1e197406f97872997755bcbc342725d19a15d06e6702",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "evidence_source_ids": [
+        "SK-MLI-483-2019"
+      ]
+    },
+    {
+      "rule_id": "SK-IS-INTEREST-TREATY-SIMPLE-1",
+      "income_type": "interest",
+      "source_country": "SK",
+      "recipient_country": "IS",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "11",
+      "paragraph": null,
+      "rate": 0.0,
+      "priority": 600,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "effect": "rate",
+      "tax_treatment": "exclusive_foreign_taxation",
+      "effective_from": "2003-06-19",
+      "verification_status": "needs_review",
+      "source_text": "Článok 11 Úroky 1. Úroky majúce zdroj v jednom zmluvnom štáte a vyplácané rezidentovi druhého zmluvného štátu podliehajú zdaneniu len v tomto druhom štáte, ak je tento rezident skutočným vlastníkom úrokov. 2. Výraz „úroky“ použitý v tomto článku označuje príjmy z pohľadávok akéhokoľvek druhu zabezpečených alebo nezabezpečených záložným právom na nehnuteľnosť bez ohľadu na to, či majú alebo nemajú právo účasti na ziskoch dlžníka, a najmä príjmy z vládnych cenných papierov a príjmy z obligácií alebo z dlhopisov vrátane prémií a výhier spojených s týmito cennými papiermi, obligáciami alebo dlhopismi. Penále za oneskorenú platbu sa nepovažuje za úroky na účely tohto článku. 3. Ustanovenie odseku 1 sa nepoužije, ak skutočný vlastník úrokov, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, v ktorom majú úroky zdroj, podnikateľskú činnosť prostredníctvom stálej prevádzkarne, ktorá sa tam nachádza, alebo v tomto druhom štáte vykonáva nezávislé osobné činnosti zo stálej základne, ktorá sa tam nachádza, a ak pohľadávka, z ktorej sa úroky platia, sa skutočne viaže na túto stálu prevádzkareň alebo na túto stálu základňu. V takom prípade sa podľa okolností použijú ustanovenia článku 7 alebo 14 . 4. Ak v dôsledku osobitných vzťahov existujúcich medzi platiteľom a skutočným vlastníkom úrokov alebo medzi nimi a treťou osobou suma úrokov vzťahujúca sa na pohľadávku, z ktorej sa platia, presahuje sumu, ktorú by bol dohodol platiteľ so skutočným vlastníkom, keby takéto vzťahy neexistovali, použijú sa ustanovenia tohto článku len na túto naposledy uvedenú sumu. Časť platieb presahujúca túto sumu sa v tomto prípade zdaní podľa právnych predpisov každého zmluvného štátu s prihliadnutím na ostatné ustanovenia tejto zmluvy.",
+      "source_id": "SK-SLOVLEX-D0E620B2EB17A8C7",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2003/225/vyhlasene_znenie.html",
+      "source_excerpt_hash": "bba85709217e6d7b31169615a561b4fb4945b9d59b613cb1be4729934624ff41",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-08-31",
+      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-D0E620B2EB17A8C7"
+      ]
+    },
+    {
       "rule_id": "SK-IS-MLI-GATE-ROYALTY-A7",
       "income_type": "royalty",
       "source_country": "SK",

@@ -1,0 +1,180 @@
+{
+  "country_pair": {
+    "source_country": "SK",
+    "recipient_country": "AT"
+  },
+  "rules": [
+    {
+      "rule_id": "SK-AT-MLI-GATE-INTEREST-A7",
+      "income_type": "interest",
+      "source_country": "SK",
+      "recipient_country": "AT",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "7",
+      "paragraph": null,
+      "rate": null,
+      "priority": 57,
+      "conditions": [
+        {
+          "fact": "treaty_ppt_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2019-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-AT: notice 410/2018; result-changing articles ['10', '13', '7']; WHT effective date(s) ['2019-01-01']. Gate: MLI Article 7 principal purpose test.",
+      "source_id": "SK-MLI-410-2018",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2018/410/vyhlasene_znenie.html",
+      "source_excerpt_hash": "82175c3a43b6f3f9dd956d8be03aea358f60a90149d1e992c51dc85649bf085a",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "evidence_source_ids": [
+        "SK-MLI-410-2018"
+      ]
+    },
+    {
+      "rule_id": "SK-AT-MLI-GATE-INTEREST-A10",
+      "income_type": "interest",
+      "source_country": "SK",
+      "recipient_country": "AT",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "10",
+      "paragraph": null,
+      "rate": null,
+      "priority": 60,
+      "conditions": [
+        {
+          "fact": "mli_article_10_third_jurisdiction_pe_test_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2019-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-AT: notice 410/2018; result-changing articles ['10', '13', '7']; WHT effective date(s) ['2019-01-01']. Gate: MLI Article 10 third-jurisdiction PE anti-abuse test.",
+      "source_id": "SK-MLI-410-2018",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2018/410/vyhlasene_znenie.html",
+      "source_excerpt_hash": "8bd7892d86587c3537fb27e795257332938584835026f7df407f8f7457ddfafc",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "evidence_source_ids": [
+        "SK-MLI-410-2018"
+      ]
+    },
+    {
+      "rule_id": "SK-AT-MLI-GATE-INTEREST-A13",
+      "income_type": "interest",
+      "source_country": "SK",
+      "recipient_country": "AT",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "13",
+      "paragraph": null,
+      "rate": null,
+      "priority": 63,
+      "conditions": [
+        {
+          "fact": "mli_article_13_specific_activity_pe_status_resolved",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2019-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-AT: notice 410/2018; result-changing articles ['10', '13', '7']; WHT effective date(s) ['2019-01-01']. Gate: MLI Article 13 specific-activity PE modification.",
+      "source_id": "SK-MLI-410-2018",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2018/410/vyhlasene_znenie.html",
+      "source_excerpt_hash": "de8a63a79dc0fffc8025589c7e3d1f6548c6853b4c37a599e48fc036f7002672",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "evidence_source_ids": [
+        "SK-MLI-410-2018"
+      ]
+    },
+    {
+      "rule_id": "SK-AT-INTEREST-TREATY-SIMPLE-1",
+      "income_type": "interest",
+      "source_country": "SK",
+      "recipient_country": "AT",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "11",
+      "paragraph": null,
+      "rate": 0.0,
+      "priority": 600,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "effect": "rate",
+      "tax_treatment": "exclusive_foreign_taxation",
+      "effective_from": "1979-02-12",
+      "verification_status": "needs_review",
+      "source_text": "Článok 11 Úroky (1) Úroky majúce zdroj v jednom zmluvnom štáte a vyplácané osobe majúcej bydlisko alebo sídlo v druhom zmluvnom štáte sa môžu zdaniť iba v tomto druhom štáte. (2) Výraz „úroky“ použitý v tomto článku označuje príjmy z pohľadávok akéhokoľvek druhu, aj keď sú pohľadávky zabezpečené záložnými právami na nehnuteľnostiach alebo opatrené účasťou na zisku dlžníka, a najmä príjmy z verejných pôžičiek a z obligácií včítane s nimi spojených prémií a ziskov zo zlosovateľných pôžičiek. Penále za oneskorené platenie sa nepovažuje za úroky v zmysle tohto článku. (3) Ustanovenie odseku 1 sa nepoužije, ak príjemca úrokov, ktorý má bydlisko alebo sídlo v jednom zmluvnom štáte, vykonáva v druhom zmluvnom štáte, v ktorom majú úroky zdroj, priemyselnú alebo obchodnú činnosť prostredníctvom stálej prevádzkárne, ktorá je tam umiestnená, alebo nezávislé povolanie prostredníctvom trvalého zariadenia tam umiestneného a ak pohľadávka, z ktorej sa úroky platia, skutočne patrí k tejto stálej prevádzkárni alebo k tomuto trvalému zariadeniu. V takom prípade sa použijú ustanovenia článku 7 , prípadne článku 14 . (4) Ak úroky - posudzované so zreteľom na pohľadávku, z ktorej sa platia, presahujú v dôsledku osobitných vzťahov existujúcich medzi dlžníkom a príjemcom úrokov alebo medzi oboma a treťou osobou sumu, ktorú by bol dlžník dojednal s príjemcom; keby nebolo takých vzťahov, použijú sa ustanovenia tohto článku len na túto naposledy spomenutú sumu. Suma, ktorá ju presahuje, sa môže v tomto prípade zdaniť podľa práva každého zmluvného štátu a s prihliadnutím na iné ustanovenia tejto Zmluvy.",
+      "source_id": "SK-SLOVLEX-BD6505AD6261D4B9",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/1979/48/vyhlasene_znenie.html",
+      "source_excerpt_hash": "24158555e7eeeba05b5e6dec29468ba28f4ef3539ba8e1e3905ba517d2adf826",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-08-31",
+      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-BD6505AD6261D4B9"
+      ]
+    }
+  ]
+}
