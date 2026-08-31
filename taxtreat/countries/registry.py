@@ -45,6 +45,7 @@ class CountryConfig:
     report_calculation_strategy: str = "czk"
     html_localization_strategy: str = "identity"
     legacy_canonical_fallback_allowed: bool = False
+    rule_directory: Path | None = None
 
 
 _COUNTRIES: dict[str, CountryConfig] = {
@@ -89,6 +90,7 @@ _COUNTRIES: dict[str, CountryConfig] = {
         release_gate_strategy="source_country_manifest",
         report_calculation_strategy="payment_currency_eur",
         html_localization_strategy="sk",
+        rule_directory=ROOT / "data" / "legal_rules_sk",
     ),
 }
 
