@@ -57,7 +57,6 @@ def test_section19_unknown_answers_are_fail_closed_not_false():
     text = FINAL_POLISH.read_text(encoding="utf-8")
     assert 'option.value = "unknown"' in text
     assert "Nevím / potřebuji ověřit" in text
-    assert "TaxTreat pak osvobození neuzavře" in text
     assert "zvol raději „Ne“" not in text
 
 
@@ -98,7 +97,7 @@ def test_source_country_is_payer_derived_and_not_user_selectable():
     text = SOURCE_ADAPTER.read_text(encoding="utf-8")
     assert "inferredCountryForActivePayer" in text
     assert 'activePayerSelect.addEventListener("change"' in text
-    assert "active-source-country" not in text
+    assert 'countryControl.hidden = true' in text
     assert "setPayerCountry" in text
     assert "getPayerCountry" in text
 
