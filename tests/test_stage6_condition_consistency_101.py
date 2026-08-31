@@ -168,20 +168,8 @@ def test_every_stage6_condition_fact_has_explicit_semantic_classification():
     } == {}
 
 
-KNOWN_STAGE6_PROJECTION_DEFECTS = {
-    (
-        "PH",
-        "royalty",
-        (
-            "CZ-PH-ROYALTY-CURRENT-1",
-            "CZ-PH-ROYALTY-CURRENT-2",
-        ),
-    ): (
-        "Article 12 distinguishes 10% ordinary copyright/IP/equipment/know-how "
-        "from 15% film/TV/radio royalties, but both structured rules currently "
-        "contain only beneficial_owner == true."
-    ),
-}
+KNOWN_STAGE6_PROJECTION_DEFECTS = {}
+
 
 
 def test_no_unregistered_identical_applicability_conflicts_in_stage6():
