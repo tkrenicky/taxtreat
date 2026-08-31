@@ -10,6 +10,8 @@ on:
       - "data/legal_reviews/sk_outbound/treaty_article_machine_extraction.json"
       - "data/legal_reviews/sk_outbound/human_review_coverage.json"
       - "data/legal_reviews/sk_outbound/treaty_instrument_inventory.json"
+      - "taxtreat/tools/apply_sk_mli_gates_to_structured_rules.py"
+      - "data/legal_reviews/sk_outbound/mli_bilateral_adjudication_2026.json"
   workflow_dispatch:
 
 permissions:
@@ -29,6 +31,8 @@ jobs:
           python-version: "3.12"
       - name: Build structured SK treaty rules
         run: python taxtreat/tools/build_sk_structured_treaty_rules.py
+      - name: Apply pair-specific SK MLI gates
+        run: python taxtreat/tools/apply_sk_mli_gates_to_structured_rules.py
       - name: Commit generated SK rule artifacts
         run: |
           if [ -z "$(git status --porcelain -- data/legal_rules_sk data/legal_reviews/sk_outbound/structured_treaty_rule_materialization_summary.json)" ]; then
