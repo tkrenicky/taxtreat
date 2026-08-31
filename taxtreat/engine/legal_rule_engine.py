@@ -232,10 +232,10 @@ def _royalty_category_groups(value: Any) -> set[str]:
         "all_royalties_excluding_industrial_commercial_scientific_equipment",
     }:
         return {
+            "copyright_nonfilm",
+            "film_broadcast",
             "software",
             "industrial_ip",
-            "equipment_financial",
-            "equipment_operating",
             "other",
         }
 
