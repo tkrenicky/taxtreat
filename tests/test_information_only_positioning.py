@@ -44,7 +44,7 @@ def test_public_ui_uses_information_only_positioning():
 def test_report_is_presented_as_information_not_individual_tax_advice():
     payload = {
         "source_country": "CZ",
-        "recipient_country": "AD",
+        "recipient_country": "AT",
         "income_type": "dividend",
         "transaction_date": "2026-08-16",
         "facts": {
