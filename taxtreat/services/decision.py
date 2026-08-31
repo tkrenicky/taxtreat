@@ -231,7 +231,15 @@ def analyze_transaction(
             ],
         )
 
-    catalog = load_rule_catalog(rule_dir)
+    effective_rule_dir = rule_dir
+    if (
+        country_config is not None
+        and Path(rule_dir).resolve() == DEFAULT_RULE_DIR.resolve()
+        and country_config.rule_directory is not None
+    ):
+        effective_rule_dir = country_config.rule_directory
+
+    catalog = load_rule_catalog(effective_rule_dir)
     scoped_rules = [
         rule
         for rule in catalog
