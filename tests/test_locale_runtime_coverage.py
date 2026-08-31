@@ -7,6 +7,7 @@ import pytest
 
 from taxtreat.services import report_locales
 from taxtreat.services.reporting import english_release_localization
+from taxtreat.services.reporting import html_localization
 from taxtreat.services import web_locale_engine
 
 
@@ -210,3 +211,57 @@ def test_localize_intake_response_and_nested_values(tmp_path):
     assert localized is not payload
     assert localized["intake"]["question"] == "English text"
     assert localized["analysis"] == payload["analysis"]
+
+
+def test_html_localization_cz_and_sk_paths(monkeypatch):
+    assert html_localization.source_country({}) == "CZ"
+    assert html_localization.source_country(
+        {"scope": {"source_country": "sk"}}
+    ) == "SK"
+    assert html_localization._report_language({"language": "EN"}) == "en"
+    assert html_localization._report_language({"language": "cs"}) == "cs"
+
+    cz_html = (
+        '<html lang="cs">Informace k české srážkové dani '
+        'Smlouva mezi Českou republikou a Rakouskem o zamezení dvojího zdanění '
+        'smlouvy mezi Českou republikou a Rakouskem o zamezení dvojího zdanění</html>'
+    )
+    cz_report = {
+        "language": "en",
+        "scope": {"source_country": "CZ", "recipient_country": "AT"},
+    }
+    localized = html_localization.localize_report_html(cz_html, cz_report)
+    assert 'lang="en"' in localized
+    assert "Double Tax Treaty between the Czech Republic and AT" in localized
+    assert "the Double Tax Treaty between the Czech Republic and AT" in localized
+
+    cz_report["language"] = "cs"
+    assert html_localization.localize_report_html(cz_html, cz_report) == cz_html
+
+    sk_html = (
+        '<html lang="cs">Informace k české srážkové dani '
+        'Sazba české srážkové daně Česká srážková daň '
+        'Souhrn transakce Vnitrostátní sazba Smluvní sazba</html>'
+    )
+    sk_report = {"scope": {"source_country": "SK"}}
+    sk = html_localization.localize_report_html(sk_html, sk_report)
+    assert "Informácie k slovenskej zrážkovej dani" in sk
+    assert "Sadzba slovenskej zrážkovej dane" in sk
+    assert "Súhrn transakcie" in sk
+
+    with pytest.raises(ValueError, match="Czech-source-country legal leakage"):
+        html_localization._assert_no_czech_legal_leakage(
+            "Česká vnitrostátní úprava"
+        )
+    html_localization._assert_no_czech_legal_leakage("Slovenská úprava")
+
+    class DummyConfig:
+        html_localization_strategy = "identity"
+
+    monkeypatch.setattr(html_localization, "report_country_copy", lambda code: None)
+    monkeypatch.setattr(html_localization, "get_country_config", lambda code: DummyConfig())
+    assert html_localization.localize_report_html("unchanged", {"scope": {"source_country": "XT"}}) == "unchanged"
+
+    DummyConfig.html_localization_strategy = "unsupported"
+    with pytest.raises(KeyError, match="No HTML report localization strategy"):
+        html_localization.localize_report_html("x", {"scope": {"source_country": "XT"}})
