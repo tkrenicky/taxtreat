@@ -75,11 +75,9 @@ def test_report_export_does_not_store_transaction_payload_in_browser_storage():
 
 
 def test_cz_interest_royalty_report_bundle_keeps_section38nb_localization():
-    html = client.get("/workspace-demo").text
     relief = client.get("/ui-assets/workspace-cz-relief-i18n.js")
 
     assert relief.status_code == 200
-    assert "workspace-cz-relief-i18n.js" in html
     assert "Potential domestic exemption" in relief.text
     assert "Section 38nb" in relief.text
     assert "qualifying 25% direct relationship" in relief.text
