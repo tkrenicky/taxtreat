@@ -263,6 +263,10 @@
     const map = new Map([
       ["Informace k české srážkové dani", "Czech withholding tax information"], ["Informační výstup", "Information output"], ["Výpočet daně", "Tax calculation"], ["Použité právní pravidlo", "Applied legal rule"], ["Zadané podmínky a související podklady", "Entered conditions and supporting documentation"], ["Otevřené skutkové údaje", "Open factual items"], ["Související podklady", "Supporting documentation"], ["Daňový kalendář", "Tax calendar"], ["Právní základ", "Legal basis"], ["Právní stav", "Legal status"], ["Pravidlo přiřazené k zadaným údajům", "Rule assigned to the entered facts"], ["Zdroj", "Source"], ["Příjemce", "Recipient"], ["Příjem", "Income"], ["Datum", "Date"], ["Částka", "Amount"], ["Hrubá částka", "Gross amount"], ["Daňový základ", "Tax base"], ["Srážková daň", "Withholding tax"], ["Česká daň k odvodu", "Czech tax payable"], ["Kurz ČNB", "CNB exchange rate"], ["Oficiální zdroj ↗", "Official source ↗"], ["Žádné otevřené skutkové údaje.", "No open factual items."], ["Neuplatňuje se", "Not applicable"], ["Neuvedena", "Not provided"],
       ["Smluvní dokumentace a doklad o platbě nebo zaúčtování závazku", "Contract documentation and evidence of payment or recognition of the liability"], ["Potvrzení daňové rezidence a podklady ke skutečnému vlastnictví", "Tax residence certificate and beneficial ownership documentation"], ["Podklady ke každému skutkovému údaji použitému ve výpočtu", "Documentation supporting each factual item used in the calculation"], ["Doklady vyžadované pro případné vnitrostátní osvobození", "Documentation required for any domestic exemption"],
+      ["Možné vnitrostátní osvobození", "Potential domestic exemption"],
+      ["Úroky nebo licenční poplatky mohou být při splnění zákonných podmínek § 19 ZDP osvobozeny od české srážkové daně. Pro neuplatnění srážkové daně je nutné účinné rozhodnutí správce daně podle § 38nb ZDP.", "Interest or royalties may be exempt from Czech withholding tax if the statutory conditions of Section 19 are met. Non-application of withholding tax requires an effective Czech tax authority decision under Section 38nb."],
+      ["Základní podmínky:", "Key conditions:"],
+
     ]);
     const walker = doc.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT);
     const nodes = [];
@@ -284,6 +288,7 @@
         .replace("Pro tento informační výstup nebyl přiřazen konkrétní právní zdroj.", "No specific legal source was assigned to this information output.")
         .replace(/^Smlouva o zamezení dvojího zdanění · článek /, "Double Tax Treaty · Article ")
         .replace(/^Zákon č\. 586\/1992 Sb\., o daních z příjmů · § /, "Act No. 586/1992 Coll., on Income Taxes · Section ")
+        .replace("kvalifikovaná společnost a jurisdikce; kvalifikované přímé 25% propojení; doba držby 24 měsíců; skutečné vlastnictví; příslušné daňové a právní postavení; žádná diskvalifikující vazba ke stálé provozovně; a účinné rozhodnutí podle § 38nb ZDP.", "qualifying company and jurisdiction; qualifying 25% direct relationship; 24-month holding period; beneficial ownership; relevant tax and legal status; no disqualifying PE attribution; and an effective Section 38nb decision.")
         .replace(/^Dividendy$/, "Dividends").replace(/^Úroky$/, "Interest").replace(/^Licenční poplatky$/, "Royalties");
       if (translated !== trimmed) node.nodeValue = original.replace(trimmed, translated);
     });
