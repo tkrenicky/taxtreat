@@ -105,6 +105,10 @@ def _percentage_is_ownership_threshold(text: str, match: re.Match[str]) -> bool:
         "přímo vlastní",
         "drží najmenej",
         "drží alespoň",
+        "má najmenej",
+        "ma najmenej",
+        "má aspoň",
+        "has at least",
         "owns at least",
         "holds at least",
         "directly owns",
@@ -162,6 +166,10 @@ def _percentage_is_ownership_threshold(text: str, match: re.Match[str]) -> bool:
         "capital",
         "voting",
         "shares",
+        "priamy podiel",
+        "přímý podíl",
+        "direct interest",
+        "direct holding",
     )
     return any(token in before for token in condition_before) and any(
         token in after.lower() for token in condition_after
