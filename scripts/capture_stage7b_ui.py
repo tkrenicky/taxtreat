@@ -149,7 +149,7 @@ def capture(output_dir: Path) -> dict[str, object]:
             treaty_resident_no = workspace_form.locator('input[name="treaty_resident"][value="false"]')
             if treaty_resident_yes.is_checked() or treaty_resident_no.is_checked():
                 raise AssertionError("Treaty residence must require an explicit user answer.")
-            treaty_resident_yes.check()
+            treaty_resident_yes.check(force=True)
 
             if not workspace_form.locator('input[name="pe_connection"][value="false"]').is_checked():
                 raise AssertionError("PE-connection assumption is not available/defaulted.")
