@@ -221,6 +221,8 @@ def test_v2_gate_can_represent_explicit_fully_released_state(
         if item["independent_qa_status"] == "not_required"
     )
 
+    row["human_review_status"] = "human_review_complete"
+    row["production_approval_eligible"] = True
     row["production_approval_status"] = "production_approved"
     row["rule_promotion_status"] = "promoted"
     row["release_status"] = "released"
