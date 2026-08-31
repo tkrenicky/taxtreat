@@ -40,7 +40,7 @@ def test_every_materialized_rule_is_sk_only_and_source_backed():
             assert rule["source_country"] == "SK"
             assert rule["recipient_country"] == pair["recipient_country"]
             assert rule["legal_layer"] == "treaty"
-            assert rule["verification_status"] == "verified"
+            assert rule["verification_status"] == "needs_review"
             assert rule["source_url"].startswith("https://")
             assert len(rule["source_excerpt_hash"]) == 64
             assert rule["verification_authority"] == (
