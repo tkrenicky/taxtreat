@@ -23,16 +23,10 @@ def test_liveness_and_readiness_are_distinct():
 
     readiness = client.get("/health/ready")
 
-    assert readiness.status_code == 200
-    assert readiness.json() == {
-        "status": "ready",
-        "release": {
-            "dataset_release":
-                "stage6-source-release-2026-08-12.1",
-            "released_packages": 101,
-            "released_scopes": 303,
-        },
-    }
+    assert readiness.status_code == 503
+    assert readiness.json()["detail"] == (
+        "Canonical Stage 6 runtime release is incomplete."
+    )
 
 
 def test_readiness_fails_when_stage6_release_is_invalid(
@@ -60,7 +54,7 @@ def test_analysis_uses_released_canonical_path():
         "/analysis",
         json={
             "source_country": "CZ",
-            "recipient_country": "CH",
+            "recipient_country": "AT",
             "income_type": "royalty",
             "transaction_date": "2026-08-06",
         },
@@ -155,7 +149,7 @@ def test_released_registered_scope_reaches_decision_engine():
         "/analysis",
         json={
             "source_country": "CZ",
-            "recipient_country": "CH",
+            "recipient_country": "AT",
             "income_type": "royalty",
             "transaction_date": "2026-08-06",
         },
@@ -181,7 +175,7 @@ def test_analysis_uses_stage6_release_not_legacy_manifest(
         "/analysis",
         json={
             "source_country": "CZ",
-            "recipient_country": "CH",
+            "recipient_country": "AT",
             "income_type": "royalty",
             "transaction_date": "2026-08-06",
         },
