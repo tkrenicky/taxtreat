@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from taxtreat.tools.extract_sk_treaty_articles import (
     _article_blocks,
+    _article_text_is_substantive,
     _resolve_article,
     _static_source_url,
     _title_matches,
@@ -88,12 +89,14 @@ def test_parse_treaty_preserves_full_article_text_and_hash():
     html = """
     <html><body>
       <h2>Článok 10</h2><h3>Dividendy</h3>
-      <p>(1) Dividendy sa môžu zdaniť v druhom štáte.</p>
-      <p>(2) Daň však nepresiahne 10 % hrubej sumy.</p>
+      <p>(1) Dividendy sa môžu zdaniť v druhom štáte. Toto ustanovenie upravuje zdanenie dividend vyplácaných spoločnosťou rezidentovi druhého zmluvného štátu a zachováva podmienku skutočného vlastníctva príjmu.</p>
+      <p>(2) Daň však nepresiahne 10 % hrubej sumy. Ustanovenie ďalej opisuje podmienky zdrojového zdanenia, spôsob uplatnenia obmedzenia, väzbu na rezidenciu príjemcu a výnimku pri spojení účasti so stálou prevádzkarňou.</p>
       <h2>Článok 11</h2><h3>Úroky</h3>
-      <p>(1) Úroky sa môžu zdaniť iba v druhom štáte.</p>
+      <p>(1) Úroky sa môžu zdaniť iba v druhom štáte, ak ich poberá oprávnený rezident. Článok ďalej definuje úroky, upravuje zdroj príjmu, osobitné vzťahy medzi platiteľom a príjemcom a výnimku pri skutočnom spojení pohľadávky so stálou prevádzkarňou v štáte zdroja.</p>
+      <p>(2) Ak existujú osobitné vzťahy, ustanovenie sa uplatní len na sumu zodpovedajúcu podmienkam medzi nezávislými osobami a zvyšná časť sa posudzuje podľa ostatných ustanovení zmluvy.</p>
       <h2>Článok 12</h2><h3>Licenčné poplatky</h3>
-      <p>(1) Licenčné poplatky sa môžu zdaniť v druhom štáte.</p>
+      <p>(1) Licenčné poplatky sa môžu zdaniť v druhom štáte. Článok vymedzuje licenčné poplatky za autorské práva, patenty, ochranné známky, zariadenia a know-how, upravuje zdroj príjmu a zachováva výnimku pri skutočnom spojení práva alebo majetku so stálou prevádzkarňou.</p>
+      <p>(2) Pri osobitných vzťahoch sa zmluvné obmedzenie uplatní iba na sumu, ktorú by si dohodli nezávislé osoby, pričom nadmerná časť môže byť zdanená podľa vnútroštátneho práva s prihliadnutím na ostatné ustanovenia zmluvy.</p>
       <h2>Článok 13</h2><h3>Zisky zo scudzenia majetku</h3>
     </body></html>
     """
@@ -127,9 +130,9 @@ def test_shifted_articles_are_extracted_only_when_income_title_matches():
     html = """
     <html><body>
       <h2>Článok 10</h2><h3>Prepojené podniky</h3><p>text</p>
-      <h2>Článok 11</h2><h3>Dividendy</h3><p>podliehajú zdaneniu len v druhom štáte</p>
-      <h2>Článok 12</h2><h3>Úroky</h3><p>daň nepresiahne 10 %</p>
-      <h2>Článok 13</h2><h3>Licenčné poplatky</h3><p>daň nepresiahne 10 %</p>
+      <h2>Článok 11</h2><h3>Dividendy</h3><p>Dividendy podliehajú zdaneniu len v druhom štáte za podmienok uvedených v tomto článku. Ustanovenie opisuje rezidenciu príjemcu, zdanenie v štáte zdroja, skutočné vlastníctvo, limity zdrojovej dane a výnimku pri spojení účasti so stálou prevádzkarňou. Súčasne vymedzuje pojem dividendy a zachováva zdanenie ziskov spoločnosti vyplácajúcej dividendy.</p>
+      <h2>Článok 12</h2><h3>Úroky</h3><p>Úroky podliehajú pravidlám tohto článku a daň nepresiahne 10 % tam, kde je zdrojové zdanenie dovolené. Ustanovenie upravuje rezidenciu, skutočné vlastníctvo, zdroj príjmu, osobitné vzťahy a výnimku pri spojení pohľadávky so stálou prevádzkarňou alebo stálou základňou v štáte zdroja.</p>
+      <h2>Článok 13</h2><h3>Licenčné poplatky</h3><p>Licenčné poplatky podliehajú pravidlám tohto článku a daň nepresiahne 10 % tam, kde zmluva povoľuje zdrojové zdanenie. Ustanovenie vymedzuje autorské práva, patenty, ochranné známky, zariadenia a know-how, upravuje zdroj príjmu a výnimku pri spojení práva so stálou prevádzkarňou.</p>
       <h2>Článok 14</h2><h3>Zisky zo scudzenia</h3>
     </body></html>
     """
@@ -164,3 +167,33 @@ def test_missing_expected_article_is_not_silently_accepted():
     royalty = next(row for row in result["scopes"] if row["income_type"] == "royalty")
     assert royalty["machine_extraction_status"] == "validated_article_not_resolved"
     assert royalty["review_ready"] is False
+
+
+def test_non_substantive_heading_only_article_is_rejected():
+    assert _article_text_is_substantive(
+        "Článok 10 Dividendy 1. 2. a) b) 3. 4. 5."
+    ) is False
+
+    html = """
+    <html><body>
+      <h2>Článok 10</h2><h3>Dividendy</h3><p>1. 2. a) b) 3. 4. 5.</p>
+      <h2>Článok 11</h2><h3>Úroky</h3><p>1. 2. 3. 4. 5.</p>
+      <h2>Článok 12</h2><h3>Licenčné poplatky</h3><p>1. 2. 3. a) b) 4. 5.</p>
+      <h2>Článok 13</h2><h3>Zisky zo scudzenia</h3>
+    </body></html>
+    """
+    result = parse_treaty(
+        source_relationship=_relationship(),
+        source_scopes=_scopes(),
+        html=html,
+    )
+    assert all(
+        row["machine_extraction_status"]
+        == "article_extracted_non_substantive_requires_recovery"
+        for row in result["scopes"]
+    )
+    assert all(
+        row["title_validation_status"]
+        == "expected_income_title_matched_but_content_missing"
+        for row in result["scopes"]
+    )
