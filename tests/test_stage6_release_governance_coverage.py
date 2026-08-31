@@ -65,7 +65,11 @@ def _queue_record() -> tuple[dict, dict]:
         for package in queue["packages"]
     }
     for package in record["packages"]:
-        package["package_sha256"] = hashes[package["treaty_pair_id"]]
+        current_hash = hashes[package["treaty_pair_id"]]
+        package["package_sha256"] = current_hash
+        correction = package.get("post_review_correction")
+        if isinstance(correction, dict):
+            correction["corrected_package_sha256"] = current_hash
     return queue, record
 
 
