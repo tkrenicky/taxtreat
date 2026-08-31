@@ -72,6 +72,61 @@ OWNERSHIP_TOKENS = (
 )
 
 
+# Percentages expressing an ownership / voting threshold are treaty conditions,
+# not withholding-tax rates. They frequently occur in the same sentence as the
+# reduced dividend rate (e.g. "5 % ... if ... owns at least 10 % of capital").
+# The generic percentage extractor must therefore classify the matched
+# percentage itself, rather than treating every percentage in Article 10/11/12
+# as a candidate tax rate.
+OWNERSHIP_PERCENT_AFTER_PATTERNS = (
+    re.compile(r"^\s*(?:z|of)\s+(?:majetku|kapitálu|kapitalu|hlasovac\w*|podiel\w*|podíl\w*|share\w*|capital|voting\w*)", re.IGNORECASE),
+    re.compile(r"^\s*(?:majetku|kapitálu|kapitalu|hlasovac\w*|podiel\w*|podíl\w*|share\w*|capital|voting\w*)", re.IGNORECASE),
+)
+
+RATE_PERCENT_AFTER_PATTERNS = (
+    re.compile(r"^\s*(?:z|of)\s+(?:hrubej|hrubé|gross)\s+(?:sumy|amount)", re.IGNORECASE),
+    re.compile(r"^\s*(?:hrubej|hrubé|gross)\s+(?:sumy|amount)", re.IGNORECASE),
+)
+
+
+def _percentage_is_ownership_threshold(text: str, match: re.Match[str]) -> bool:
+    after = text[match.end():match.end() + 120]
+    if any(pattern.search(after) for pattern in RATE_PERCENT_AFTER_PATTERNS):
+        return False
+    if any(pattern.search(after) for pattern in OWNERSHIP_PERCENT_AFTER_PATTERNS):
+        return True
+
+    before = text[max(0, match.start() - 120):match.start()].lower()
+    ownership_leads = (
+        "vlastní najmenej",
+        "vlastní alespoň",
+        "vlastní aspoň",
+        "priamo vlastní",
+        "přímo vlastní",
+        "drží najmenej",
+        "drží alespoň",
+        "owns at least",
+        "holds at least",
+        "directly owns",
+        "directly holds",
+        "at least",
+    )
+    ownership_nouns = (
+        "majetku",
+        "kapitálu",
+        "kapitalu",
+        "hlasovac",
+        "podiel",
+        "podíl",
+        "share",
+        "capital",
+        "voting",
+    )
+    return any(lead in before for lead in ownership_leads) and any(
+        noun in after.lower() for noun in ownership_nouns
+    )
+
+
 def _load(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
@@ -89,6 +144,8 @@ def _context(text: str, start: int, end: int, radius: int = 240) -> str:
 def _rate_candidates(text: str) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     for match in PERCENT_RE.finditer(text):
+        if _percentage_is_ownership_threshold(text, match):
+            continue
         raw = match.group(1).replace(",", ".")
         value = float(raw)
         context = _context(text, match.start(), match.end())
