@@ -193,6 +193,7 @@ def test_legal_normalizers_cover_legacy_boundary_values():
     assert legal_engine._royalty_category_groups(
         "all_other_article_12_royalties"
     ) == {
+        "film_broadcast",
         "software",
         "industrial_ip",
         "equipment_financial",
