@@ -1,0 +1,39 @@
+name: Regenerate CZ semantic QA
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/regenerate-cz-semantic-qa.yml"
+      - "data/legal_consolidation/semantic_remediation_condition_candidates_20260829.json"
+      - "scripts/build_cz_country_qa_queue.py"
+
+permissions:
+  contents: write
+
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Regenerate country QA artifacts
+        run: python scripts/build_cz_country_qa_queue.py
+      - name: Commit regenerated artifacts
+        run: |
+          if git diff --quiet; then
+            echo "No generated changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            data/legal_reviews/global_cz_outbound/cz_country_qa_queue.json \
+            data/legal_reviews/global_cz_outbound/cz_wht_mli_product_scope.json \
+            data/legal_reviews/global_cz_outbound/cz_scalable_release_governance.json \
+            data/legal_reviews/global_cz_outbound/cz_country_qa_review_batches
+          git commit -m "Regenerate CZ semantic QA queue"
+          git push
