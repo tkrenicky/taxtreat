@@ -5,6 +5,7 @@ from taxtreat.engine.legal_rule_engine import (
     LegalCondition,
     LegalRule,
     TaxTreatment,
+    _royalty_category_groups,
     evaluate_legal_rules,
 )
 
@@ -513,3 +514,80 @@ def test_ui_royalty_category_matches_treaty_specific_taxonomy():
     assert equipment_result.status == DecisionStatus.FINAL
     assert equipment_result.rate == 5.0
     assert equipment_result.selected_rule_id == "CZ-CH-ROY-INDUSTRIAL-LONG"
+
+
+def test_royalty_mapper_covers_literal_other_and_generic_all_other():
+    assert _royalty_category_groups("other") == {"other"}
+    assert _royalty_category_groups("all_other_custom_royalties") == {
+        "copyright_nonfilm",
+        "film_broadcast",
+        "software",
+        "industrial_ip",
+        "other",
+    }
+
+
+def test_royalty_without_structured_category_branch_can_still_resolve():
+    rules = [
+        rule(
+            "CZ-CH-ROY-GENERAL",
+            income_type="royalty",
+            rate=7.0,
+            priority=10,
+            conditions=[LegalCondition("beneficial_owner", "==", True)],
+        )
+    ]
+
+    result = evaluate_legal_rules(
+        rules,
+        {
+            "income_type": "royalty",
+            "source_country": "CZ",
+            "recipient_country": "CH",
+            "royalty_category": "other",
+            "beneficial_owner": True,
+        },
+        as_of=date(2026, 8, 31),
+    )
+
+    assert result.status == DecisionStatus.FINAL
+    assert result.rate == 7.0
+    assert result.selected_rule_id == "CZ-CH-ROY-GENERAL"
+
+
+def test_equally_ranked_distinct_applicable_outcomes_fail_closed():
+    rules = [
+        rule(
+            "CZ-CH-INT-A",
+            income_type="interest",
+            rate=5.0,
+            priority=10,
+            conditions=[LegalCondition("beneficial_owner", "==", True)],
+        ),
+        rule(
+            "CZ-CH-INT-B",
+            income_type="interest",
+            rate=10.0,
+            priority=10,
+            conditions=[
+                LegalCondition("permanent_establishment_connection", "==", False)
+            ],
+        ),
+    ]
+
+    result = evaluate_legal_rules(
+        rules,
+        {
+            "income_type": "interest",
+            "source_country": "CZ",
+            "recipient_country": "CH",
+            "beneficial_owner": True,
+            "permanent_establishment_connection": False,
+        },
+        as_of=date(2026, 8, 31),
+    )
+
+    assert result.status == DecisionStatus.REVIEW_REQUIRED
+    assert result.requires_review is True
+    assert result.rate is None
+    assert "Multiple equally ranked rules produce different outcomes." in result.explanation
