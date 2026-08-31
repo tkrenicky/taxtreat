@@ -37,14 +37,16 @@ def _flip_sk_runtime_flag(monkeypatch):
     )
 
 
-def test_sk_is_released_at_source_country_release_layer_before_analysis():
-    decision = require_source_country_analysis_release("sk")
+def test_sk_is_fail_closed_at_source_country_layer_until_rules_are_materialized():
+    with pytest.raises(SourceCountryNotReleasedError) as exc_info:
+        require_source_country_analysis_release("sk")
 
+    decision = exc_info.value.decision
     assert decision.source_country == "SK"
-    assert decision.allowed is True
-    assert decision.code == "SOURCE_COUNTRY_RELEASED"
-    assert decision.release_status == "released"
-    assert decision.blockers == ()
+    assert decision.allowed is False
+    assert decision.code == "SOURCE_COUNTRY_RELEASE_EVIDENCE_INCOMPLETE"
+    assert decision.release_status == "pre_release"
+    assert "structured_sk_treaty_rules_not_materialized" in decision.blockers
 
 
 def test_runtime_flag_alone_cannot_release_sk(tmp_path, monkeypatch):
