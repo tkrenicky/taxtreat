@@ -26,7 +26,7 @@ jobs:
         run: python taxtreat/tools/build_sk_structured_treaty_rules.py
       - name: Commit generated SK rule artifacts
         run: |
-          if git diff --quiet; then
+          if [ -z "$(git status --porcelain -- data/legal_rules_sk data/legal_reviews/sk_outbound/structured_treaty_rule_materialization_summary.json)" ]; then
             echo "No generated changes."
             exit 0
           fi
