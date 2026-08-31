@@ -1,6 +1,7 @@
 from fastapi.testclient import TestClient
 
 from app.main import app
+import app.main as main
 from taxtreat.services.legal_sources import load_verified_provisions
 from taxtreat.services.reporting.client_report import _cz_ir_domestic_exemption_html
 
@@ -29,7 +30,8 @@ def _ad_dividend_payload():
     }
 
 
-def test_analysis_report_uses_canonical_treaty_text_not_stage6_excerpt():
+def test_analysis_report_uses_canonical_treaty_text_not_stage6_excerpt(monkeypatch):
+    monkeypatch.setattr(main, "require_analysis_source_release", lambda *_args, **_kwargs: None)
     client = TestClient(app)
     response = client.post("/analysis/report", json=_ad_dividend_payload())
 
@@ -59,7 +61,8 @@ def test_analysis_report_uses_canonical_treaty_text_not_stage6_excerpt():
     assert "vyplacejici" not in html
 
 
-def test_analysis_and_report_share_identical_canonical_treaty_excerpt():
+def test_analysis_and_report_share_identical_canonical_treaty_excerpt(monkeypatch):
+    monkeypatch.setattr(main, "require_analysis_source_release", lambda *_args, **_kwargs: None)
     client = TestClient(app)
     payload = _ad_dividend_payload()
     analysis = client.post("/analysis", json=payload).json()
