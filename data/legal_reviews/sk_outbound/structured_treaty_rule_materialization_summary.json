@@ -1451,6 +1451,7 @@
   ],
   "policy": {
     "only_unambiguous_single_rate_scopes_materialized": true,
+    "stage1_rules_remain_needs_review_until_protocol_mli_gates_are_materialized": true,
     "special_interest_exemptions_not_inferred": true,
     "ownership_linked_dividend_branches_not_inferred": true,
     "multi_rate_royalties_not_inferred": true,
