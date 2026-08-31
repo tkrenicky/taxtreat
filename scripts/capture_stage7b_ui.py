@@ -224,6 +224,11 @@ def capture(output_dir: Path) -> dict[str, object]:
             page.get_by_role("button", name="Pokračovat k příjemci →").click()
             page.get_by_role("button", name="Pokračovat k platbě →").click()
             workspace_form = page.locator("#workspace-payment")
+            treaty_resident_yes = workspace_form.locator('input[name="treaty_resident"][value="true"]')
+            if not treaty_resident_yes.is_checked():
+                treaty_resident_yes.evaluate(
+                    "el => { el.checked = true; el.dispatchEvent(new Event('input', { bubbles: true })); el.dispatchEvent(new Event('change', { bubbles: true })); }"
+                )
             workspace_form.locator('select[name="income_type"]').select_option("dividend")
             workspace_form.locator('input[name="transaction_date"]').fill("2026-08-11")
             workspace_form.locator('input[name="amount"]').fill("100000")
