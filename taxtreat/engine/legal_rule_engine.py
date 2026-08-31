@@ -258,9 +258,6 @@ def _royalty_category_groups(value: Any) -> set[str]:
             "other",
         }
 
-    if normalized == "other":
-        return {"other"}
-
     groups: set[str] = set()
 
     excludes_software = any(
