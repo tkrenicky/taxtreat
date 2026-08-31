@@ -265,7 +265,9 @@ def analyze_transaction(
             request.recipient_country,
             normalized_income,
         )
-        if scope_key in supported_scope_keys():
+        if scope_key in supported_scope_keys(
+            source_country=request.source_country
+        ):
             return LegalDecisionResult(
                 status=DecisionStatus.REVIEW_REQUIRED,
                 requires_review=True,
