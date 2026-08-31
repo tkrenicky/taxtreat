@@ -54,14 +54,14 @@ def test_sk_prerelease_api_normalizes_scope_and_never_claims_production(monkeypa
     assert response["production_endpoint"] is False
 
 
-def test_sk_release_gate_reports_production_release():
+def test_sk_release_gate_reports_structured_rule_materialization_blocker():
     response = sk_prerelease_release_gate()
 
     assert response["source_country"] == "SK"
-    assert response["allowed"] is True
-    assert response["code"] == "SOURCE_COUNTRY_RELEASED"
-    assert response["release_status"] == "released"
-    assert response["blockers"] == []
+    assert response["allowed"] is False
+    assert response["code"] == "SOURCE_COUNTRY_RELEASE_EVIDENCE_INCOMPLETE"
+    assert response["release_status"] == "pre_release"
+    assert "structured_sk_treaty_rules_not_materialized" in response["blockers"]
 
 
 def test_preview_app_exposes_only_explicit_prerelease_paths():
