@@ -23,30 +23,59 @@ RECORD = json.loads(
 )
 
 
-def test_completed_primary_review_covers_exact_101_303_universe():
-    validate_human_review_completion(QUEUE, RECORD)
+REMEDIATION = json.loads(
+    (
+        ROOT
+        / "data/legal_consolidation/semantic_remediation_condition_candidates_20260829.json"
+    ).read_text(encoding="utf-8")
+)
+REMEDIATION_PAIRS = {
+    f"CZ-{row['country']}"
+    for row in REMEDIATION["corrections"]
+}
 
-    assert RECORD["summary"][
-        "primary_human_review_complete_packages"
-    ] == 101
 
-    assert RECORD["summary"][
-        "primary_human_review_complete_scopes"
-    ] == 303
-
-
-def test_completion_record_is_bound_to_exact_current_package_hashes():
+def _hash_aligned_record():
+    record = copy.deepcopy(RECORD)
     queue_hashes = {
         row["treaty_pair_id"]: row["package_sha256"]
         for row in QUEUE["packages"]
     }
+    for row in record["packages"]:
+        current = queue_hashes[row["treaty_pair_id"]]
+        row["package_sha256"] = current
+        correction = row.get("post_review_correction")
+        if isinstance(correction, dict):
+            correction["corrected_package_sha256"] = current
+    return record
 
+
+def test_historical_primary_review_covers_exact_101_303_universe_but_is_stale_after_semantic_rehash():
+    assert len(QUEUE["packages"]) == 101
+    assert RECORD["summary"]["primary_human_review_complete_packages"] == 101
+    assert RECORD["summary"]["primary_human_review_complete_scopes"] == 303
+
+    with pytest.raises(ValueError, match="stale package hash"):
+        validate_human_review_completion(QUEUE, RECORD)
+
+
+def test_semantic_rehash_invalidates_exactly_the_40_remediation_packages():
+    queue_hashes = {
+        row["treaty_pair_id"]: row["package_sha256"]
+        for row in QUEUE["packages"]
+    }
     record_hashes = {
         row["treaty_pair_id"]: row["package_sha256"]
         for row in RECORD["packages"]
     }
+    mismatched = {
+        pair_id
+        for pair_id in queue_hashes
+        if queue_hashes[pair_id] != record_hashes[pair_id]
+    }
 
-    assert record_hashes == queue_hashes
+    assert len(mismatched) == 40
+    assert mismatched == REMEDIATION_PAIRS
 
 
 def test_independent_qa_remains_real_and_pending():
@@ -83,7 +112,7 @@ def test_stale_hash_is_rejected():
 
 
 def test_fake_independent_completion_is_rejected():
-    changed = copy.deepcopy(RECORD)
+    changed = _hash_aligned_record()
     changed["summary"]["independent_qa_complete_packages"] = 7
 
     with pytest.raises(ValueError, match="fail closed"):
@@ -91,7 +120,7 @@ def test_fake_independent_completion_is_rejected():
 
 
 def test_fake_production_release_is_rejected():
-    changed = copy.deepcopy(RECORD)
+    changed = _hash_aligned_record()
     changed["summary"]["production_released_scopes"] = 303
 
     with pytest.raises(ValueError, match="fail closed"):
@@ -127,15 +156,11 @@ def test_post_review_corrections_preserve_historical_review_hashes():
             == reviewed_hash
         )
 
-        assert (
-            node["package_sha256"]
-            == queue_by_pair[pair_id]["package_sha256"]
-        )
-
-        assert (
-            node["package_sha256"]
-            != node["reviewed_package_sha256"]
-        )
+        # This committed lineage is historical. Semantic remediation
+        # created a newer current package hash which deliberately cannot
+        # inherit the prior review.
+        assert node["package_sha256"] != queue_by_pair[pair_id]["package_sha256"]
+        assert node["package_sha256"] != node["reviewed_package_sha256"]
 
         correction = node["post_review_correction"]
 
@@ -182,7 +207,7 @@ def test_post_review_correction_lineage_remains_fail_closed():
 
 
 def test_fake_post_review_correction_release_is_rejected():
-    changed = copy.deepcopy(RECORD)
+    changed = _hash_aligned_record()
 
     node = next(
         row
