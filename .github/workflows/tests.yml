@@ -122,6 +122,10 @@ jobs:
             tests/test_decision_source_country_coverage.py \
             tests/test_layered_decision.py \
             tests/test_legal_sources.py \
+            tests/test_semantic_compatibility_gate_20260828.py \
+            tests/test_royalty_system_audit_20260824.py \
+            tests/test_stage6_condition_consistency_101.py \
+            tests/test_tax_treatment_semantics.py \
             --cov=taxtreat.engine.legal_rule_engine \
             --cov=taxtreat.engine.legal_rule_loader \
             --cov=taxtreat.engine.legal_rule_validator \
