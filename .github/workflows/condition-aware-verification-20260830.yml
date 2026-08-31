@@ -29,6 +29,7 @@ on:
       - 'scripts/verify_dividend_rule_normalization_20260830.py'
       - 'scripts/verify_en_fallback_report_locale_20260828.py'
       - 'scripts/verify_web_report_condition_aware_integration_20260830.py'
+      - 'scripts/audit_treaty_excerpt_locale_coverage.py'
   workflow_dispatch:
 
 jobs:
