@@ -1,0 +1,106 @@
+{
+  "country_pair": {
+    "source_country": "SK",
+    "recipient_country": "BG"
+  },
+  "rules": [
+    {
+      "rule_id": "SK-BG-DIVIDEND-TREATY-SIMPLE-1",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "BG",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "10",
+      "paragraph": null,
+      "rate": 10.0,
+      "priority": 600,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "effect": "rate",
+      "verification_status": "verified",
+      "source_text": "Článok 10 Dividendy 1. Dividendy vyplácané spoločnosťou, ktorá je rezidentom jedného zmluvného štátu, rezidentovi druhého zmluvného štátu možno zdaniť v tomto druhom štáte. 2. Tieto dividendy však možno zdaniť aj v tom zmluvnom štáte, ktorého spoločnosť vyplácajúca dividendy je rezidentom, a to podľa právnych predpisov tohto štátu, ak je však skutočný vlastník dividend rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne 10 % hrubej sumy dividend. Ustanovenia tohto odseku neovplyvňujú zdanenie ziskov spoločnosti, z ktorých dividendy vyplácajú. 3. Výraz „dividendy“ použitý v tomto článku označuje príjmy z akcií alebo z iných práv podieľať sa na ziskoch s výnimkou pohľadávok, ako aj príjmy z iných práv spoločnosti, ktoré sa zdaňujú rovnakým spôsobom ako príjmy z akcií podľa právnych predpisov toho štátu, ktorého je spoločnosť rozdeľujúca zisk rezidentom. 4. Ustanovenia odsekov 1 a 2 sa nepoužijú, ak skutočný vlastník dividend, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, ktorého rezidentom je spoločnosť vyplácajúca dividendy, podnikateľskú činnosť prostredníctvom stálej prevádzkarne, ktorá sa tam nachádza, alebo v tomto druhom štáte vykonáva nezávislé osobné služby zo stálej základne, ktorá sa tam nachádza, a ak účasť, pre ktorú sa dividendy vyplácajú, sa skutočne viaže na túto stálu prevádzkareň alebo na túto stálu základňu. V takom prípade sa podľa okolností použijú ustanovenia článku 7 alebo článku 14 . 5. Ak spoločnosť, ktorá je rezidentom jedného zmluvného štátu, dosahuje zisky alebo príjmy z druhého zmluvného štátu, tento druhý štát nemôže zdaniť dividendy vyplácané spoločnosťou s výnimkou prípadov, ak sa tieto dividendy vyplácajú rezidentovi tohto druhého štátu alebo ak sa podiel v súvislosti s ktorým sa dividendy vyplácajú, skutočne viaže na stálu prevádzkareň alebo na stálu základňu, nachádzajúcu sa v tomto druhom štáte, a ani nemôže podrobiť nerozdelené zisky spoločnosti dani z nerozdelených ziskov, aj keď vyplácané dividendy alebo nerozdelené zisky pozostávajú úplne alebo čiastočne zo ziskov alebo z príjmov dosiahnutých v tomto druhom štáte.",
+      "source_id": "SK-SLOVLEX-C6C197F6E7FF5F65",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2001/287/vyhlasene_znenie.html",
+      "source_excerpt_hash": "c191079aaa3509ef3544b7ab517bbca2e5e29a034f97ec80a9a952819b8371c4",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "structured_materialization_policy",
+      "approved_at": "2026-08-31",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-08-31",
+      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-C6C197F6E7FF5F65"
+      ]
+    },
+    {
+      "rule_id": "SK-BG-ROYALTY-TREATY-SIMPLE-1",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "BG",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "12",
+      "paragraph": null,
+      "rate": 10.0,
+      "priority": 600,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "effect": "rate",
+      "verification_status": "verified",
+      "source_text": "Článok 12 Licenčné poplatky a poplatky za služby 1. Licenčné poplatky a poplatky za služby, ktoré majú zdroj v jednom zmluvnom štáte a skutočne ich poberá rezident druhého zmluvného štátu, možno zdaniť v tomto druhom štáte. 2. Tieto licenčné poplatky a poplatky za služby však možno zdaniť aj v tom zmluvnom štáte, v ktorom majú zdroj, a to podľa právnych predpisov tohto štátu, ak je však skutočný vlastník licenčných poplatkov a poplatkov za služby rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne 10 % hrubej sumy licenčných poplatkov alebo poplatkov za služby. 3. Výraz „licenčné poplatky“ použitý v tomto článku označuje všetky platby prijaté ako odplata za použitie alebo za právo na použitie akéhokoľvek autorského práva k literárnemu, umeleckému alebo vedeckému dielu vrátane kinematografických filmov, filmov alebo pások používaných na rozhlasové alebo televízne vysielanie a iných prostriedkov obrazovej alebo zvukovej reprodukcie, akéhokoľvek patentu, ochrannej známky, návrhu alebo modelu, plánu, tajného vzorca alebo výrobného postupu, alebo za použitie, alebo právo na použitie priemyselného, obchodného alebo vedeckého vybavenia, alebo za informácie, ktoré sa vzťahujú na skúsenosti nadobudnuté v priemyselnej, obchodnej alebo vedeckej oblasti. 4. Výraz „poplatky za služby“ použitý v tomto článku označuje platby akéhokoľvek druhu každej inej osobe ako zamestnancovi osoby vykonávajúcej platby za služby technickej, manažérskej alebo poradenskej povahy poskytované v zmluvnom štáte, ktorého je platiteľ rezidentom. Zavedenie investície sa za službu nepovažuje. 5. Ustanovenia odsekov 1 a 2 sa nepoužijú, ak skutočný vlastník licenčných poplatkov a poplatkov za služby, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, v ktorom majú licenčné poplatky a poplatky za služby zdroj, podnikateľskú činnosť prostredníctvom stálej prevádzkarne, ktorá sa tam nachádza, alebo vykonáva v tomto druhom štáte nezávislé osobné služby zo stálej základne, ktorá sa tam nachádza, a ak právo alebo majetok, za ktorý sa platia licenčné poplatky a poplatky za služby, sa skutočne viažu na túto stálu prevádzkareň alebo na stálu základňu. V takom prípade sa podľa okolností použijú ustanovenia článku 7 alebo článku 14 . 6. Predpokladá sa, že licenčné poplatky a poplatky za služby majú zdroj v zmluvnom štáte, ak platiteľ je rezidentom tohto štátu. Ak však osoba platiaca licenčné poplatky a poplatky za služby bez ohľadu na to, či je rezidentom niektorého zmluvného štátu, má v zmluvnom štáte stálu prevádzkareň alebo stálu základňu, v súvislosti s ktorou vznikla povinnosť platiť licenčné poplatky a poplatky za služby, ktoré idú na ťarchu stálej prevádzkarne alebo stálej základne, potom sa predpokladá, že licenčné poplatky a poplatky za služby majú zdroj v tom štáte, v ktorom sa stála prevádzkareň alebo stála základňa nachádza. 7. Ak v dôsledku osobitných vzťahov, ktoré existujú medzi platiteľom a skutočným vlastníkom licenčných poplatkov alebo medzi nimi a treťou osobou, suma licenčných poplatkov a poplatkov za služby vzťahujúcich sa na použitie, právo, informácie alebo služby, z ktorých sa platia, presahuje sumu, ktorú by bol dohodol platiteľ so skutočným vlastníkom, keby takéto vzťahy neexistovali, použijú sa ustanovenia tohto článku len na túto naposledy uvedenú sumu. Časť platieb, ktorá presahuje túto sumu, sa v tomto prípade zdaní podľa právnych predpisov každého zmluvného štátu s prihliadnutím na ostatné ustanovenia tejto zmluvy.",
+      "source_id": "SK-SLOVLEX-C6C197F6E7FF5F65",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2001/287/vyhlasene_znenie.html",
+      "source_excerpt_hash": "68e402e523ce20c890619660ae23ac57d1a297e17487760fc13f58715342bec1",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "structured_materialization_policy",
+      "approved_at": "2026-08-31",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-08-31",
+      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-C6C197F6E7FF5F65"
+      ]
+    }
+  ]
+}

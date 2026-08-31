@@ -1,0 +1,57 @@
+{
+  "country_pair": {
+    "source_country": "SK",
+    "recipient_country": "ZA"
+  },
+  "rules": [
+    {
+      "rule_id": "SK-ZA-ROYALTY-TREATY-SIMPLE-1",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "ZA",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "12",
+      "paragraph": null,
+      "rate": 10.0,
+      "priority": 600,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "effect": "rate",
+      "verification_status": "verified",
+      "source_text": "Článok 12 Licenčné poplatky 1. Licenčné poplatky majúce zdroj v jednom zmluvnom štáte a vyplácané rezidentovi druhého zmluvného štátu možno zdaniť v tomto druhom štáte. 2. Takéto licenčné poplatky však možno zdaniť aj v zmluvnom štáte, v ktorom majú zdroj, a to podľa právnych predpisov tohto štátu, ak je však príjemca skutočným vlastníkom licenčných poplatkov, daň takto stanovená nepresiahne 10 % hrubej sumy licenčných poplatkov. Príslušné úrady zmluvných štátov upravia vzájomnou dohodou spôsob uplatnenia tohto obmedzenia. 3. Výraz „licenčné poplatky“ použitý v tomto článku označuje platby akéhokoľvek druhu platené ako náhrada za použitie alebo za právo na použitie akéhokoľvek autorského práva k literárnemu, umeleckému alebo vedeckému dielu vrátane kinematografických filmov a filmov, pások alebo diskov pre televízne alebo rozhlasové vysielanie, akéhokoľvek patentu, ochrannej známky, návrhu alebo modelu, plánu, tajného vzorca alebo výrobného postupu alebo za použitie alebo za právo na použitie priemyselného, obchodného alebo vedeckého zariadenia, alebo za informácie, ktoré sa vzťahujú na priemyselné, obchodné alebo na vedecké skúsenosti. 4. Ustanovenia odsekov 1 a 2 sa nepoužijú, ak skutočný vlastník licenčných poplatkov, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, v ktorom majú licenčné poplatky zdroj, podnikateľskú činnosť prostredníctvom stálej prevádzkarne, ktorá je tam umiestnená, alebo vykonáva v tomto druhom štáte nezávislé povolanie zo stálej základne tam umiestnenej a ak právo alebo majetok, v súvislosti s ktorým sa platia licenčné poplatky, skutočne sa viažu na túto stálu prevádzkareň alebo na stálu základňu. V takom prípade sa použijú ustanovenia článku 7 alebo článku 13 podľa toho, o aký prípad ide. 5. Predpokladá sa, že licenčné poplatky majú zdroj v zmluvnom štáte, ak platiteľom je tento štát sám, jeho nižší správny útvar, miestny orgán alebo rezident tohto štátu. Ak však platiteľ licenčných poplatkov, či už je, alebo nie je rezidentom zmluvného štátu, má v zmluvnom štáte stálu prevádzkareň alebo stálu základňu, v spojení s ktorou vznikla povinnosť platiť licenčné poplatky, ktoré idú na ťarchu tejto stálej prevádzkarne alebo stálej základne, predpokladá sa, že tieto licenčné poplatky majú zdroj v tom zmluvnom štáte, v ktorom je stála prevádzkareň alebo stála základňa umiestnená. 6. Ak suma licenčných poplatkov vzťahujúcich sa na použitie, právo alebo informáciu, za ktoré sa platia, presahuje v dôsledku osobitných vzťahov, ktoré existujú medzi platiteľom a skutočným vlastníkom alebo ktoré jeden aj druhý udržiavajú s treťou osobou, sumu, ktorú by bol dohodol platiteľ so skutočným vlastníkom, keby takéto vzťahy neexistovali, použijú sa ustanovenia tohto článku len na túto naposledy uvedenú sumu. Suma platieb, ktorá ju presahuje, bude v tomto prípade zdanená podľa právnych predpisov každého zmluvného štátu s prihliadnutím na ostatné ustanovenia tejto zmluvy.",
+      "source_id": "SK-SLOVLEX-1CAD1732F51F8306",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2001/39/vyhlasene_znenie.html",
+      "source_excerpt_hash": "d5175b0b97302e480133731fc08082f591860d43de9a7e02bb282b1ef5676a67",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "structured_materialization_policy",
+      "approved_at": "2026-08-31",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-08-31",
+      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-1CAD1732F51F8306"
+      ]
+    }
+  ]
+}

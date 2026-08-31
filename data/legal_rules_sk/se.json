@@ -1,0 +1,45 @@
+{
+  "country_pair": {
+    "source_country": "SK",
+    "recipient_country": "SE"
+  },
+  "rules": [
+    {
+      "rule_id": "SK-SE-ROYALTY-TREATY-SIMPLE-1",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "SE",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "12",
+      "paragraph": null,
+      "rate": 5.0,
+      "priority": 600,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "rate",
+      "verification_status": "verified",
+      "source_text": "Článok 12 Licenčné poplatky 1. Licenčné poplatky majúce zdroj v jednom zmluvnom štáte a platené osobe, ktorá má bydlisko alebo sídlo v druhom zmluvnom štáte, môžu sa zdaniť v tomto druhom štáte. 2. Také licenčné poplatky sa však môžu zdaniť v zmluvnom štáte, v ktorom je ich zdroj, a to podľa právnych predpisov tohto štátu. Takto uložená daň však nepresiahne 5 % hrubej sumy licenčných poplatkov. 3. Licenčné poplatky plynúce z autorských práv k literárnym, umeleckým alebo vedeckým dielam podliehajú bez ohľadu na ustanovenia odsekov 1 a 2 zdaneniu len v tom zmluvnom štáte, v ktorom má príjemca takých licenčných poplatkov bydlisko alebo sídlo. 4. Výraz „licenčné poplatky“ použitý v tomto článku označuje platby akéhokoľvek druhu prijaté náhradou za použitie alebo právo na použitie akéhokoľvek patentu, ochrannej známky, návrhu alebo modelu, plánu, tajného vzorca alebo postupu alebo priemyselného, obchodného alebo vedeckého zariadenia alebo za informácie, ktoré sa vzťahujú na skúsenosti z priemyselnej, obchodnej alebo vedeckej oblasti, a akéhokoľvek autorského práva k literárnemu, umeleckému alebo vedeckému dielu včítane kinematografických filmov a filmov alebo pások na televízne a rozhlasové vysielania. 5. Ustanovenia odsekov 1, 2 a 3 sa nepoužijú, ak príjemca licenčných poplatkov majúci bydlisko alebo sídlo v jednom zmluvnom štáte vykonáva v druhom zmluvnom štáte, v ktorom majú licenčné poplatky zdroj, priemyselnú alebo obchodnú činnosť prostredníctvom stálej prevádzkárne, ktorá je tam umiestnená, alebo vykonáva v tomto druhom štáte slobodné povolanie pomocou stálej základne tam umiestnenej a ak právo alebo majetok, v súvislosti s ktorými sa licenčné poplatky platia, sú skutočne spojené s takou stálou prevádzkárňou alebo stálou základňou. V takom prípade sa použijú ustanovenia článku 7 alebo článku 14 podľa toho, o aký prípad ide. 6. Predpokladá sa, že licenčné poplatky majú zdroj v jednom zmluvnom štáte, ak platiteľom je tento zmluvný štát sám, nižší správny útvar alebo miestny úrad tohto zmluvného štátu alebo osoba majúca bydlisko alebo sídlo v tomto zmluvnom štáte. Ak však osoba, ktorá platí licenčné poplatky, či už má alebo nemá bydlisko alebo sídlo v niektorom zmluvnom štáte, má v jednom zmluvnom štáte stálu prevádzkáreň, v spojení s ktorou vznikol záväzok platiť licenčné poplatky, a táto stála prevádzkáreň znáša na svoju ťarchu tieto licenčné poplatky, predpokladá sa, že tieto licenčné poplatky majú zdroj v tom zmluvnom štáte, v ktorom je stála prevádzkáreň umiestnená. 7. Ak suma platených licenčných poplatkov, posudzované so zreteľom na používanie, právo alebo informáciu, za ktoré sa platia, presahuje v dôsledku osobitných vzťahov existujúcich medzi platiteľom a príjemcom alebo medzi oboma a treťou osobou sumu, ktorú by bol dojednal platiteľ s príjemcom, keby nebolo takých vzťahov, použijú sa ustanovenia tohto článku len na túto poslednú sumu. Časť platieb, ktorá ju presahuje, bude v tomto prípade podrobená zdaneniu podľa právnych predpisov každého zmluvného štátu s prihliadnutím na ostatné ustanovenia tejto Zmluvy.",
+      "source_id": "SK-SLOVLEX-5566B71D08A4217B",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/1981/9/vyhlasene_znenie.html",
+      "source_excerpt_hash": "b8b13f8e3d8e647801b2f3b456eeafe9d014a6f2bd461edd782f98f83f3e173d",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "structured_materialization_policy",
+      "approved_at": "2026-08-31",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-08-31",
+      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-5566B71D08A4217B"
+      ]
+    }
+  ]
+}

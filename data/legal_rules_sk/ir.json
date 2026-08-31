@@ -1,0 +1,57 @@
+{
+  "country_pair": {
+    "source_country": "SK",
+    "recipient_country": "IR"
+  },
+  "rules": [
+    {
+      "rule_id": "SK-IR-ROYALTY-TREATY-SIMPLE-1",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "IR",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "12",
+      "paragraph": null,
+      "rate": 7.5,
+      "priority": 600,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "effect": "rate",
+      "verification_status": "verified",
+      "source_text": "Článok 12 Licenčné poplatky (1) Licenčné poplatky majúce zdroj v jednom zmluvnom štáte a vyplácané rezidentovi druhého zmluvného štátu sa môžu zdaniť v tomto druhom zmluvnom štáte. (2) Tieto licenčné poplatky sa však môžu zdaniť aj v zmluvnom štáte, v ktorom majú zdroj, a to podľa právnych predpisov tohto zmluvného štátu, ak je však skutočný vlastník licenčných poplatkov rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne 7,5 % hrubej sumy licenčných poplatkov. (3) Pojem „licenčné poplatky“ použitý v tomto článku označuje platby akéhokoľvek druhu získané ako odplata za použitie alebo za právo na použitie akéhokoľvek autorského práva k literárnemu, umeleckému alebo vedeckému dielu vrátane kinematografických filmov a filmov alebo nahrávok pre televízne alebo rozhlasové vysielanie, akéhokoľvek patentu, ochrannej známky, návrhu alebo modelu, plánu, tajného vzorca alebo postupu, softvéru alebo za použitie alebo za právo na použitie priemyselného, obchodného alebo vedeckého zariadenia, alebo za informácie, ktoré sa vzťahujú na priemyselné, obchodné alebo vedecké skúsenosti. (4) Ustanovenia odsekov 1 a 2 tohto článku sa neuplatnia, ak skutočný vlastník licenčných poplatkov, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, v ktorom majú licenčné poplatky zdroj, podnikanie prostredníctvom stálej prevádzkarne, ktorá sa tam nachádza, a ak sa právo alebo majetok, za ktorý sa licenčné poplatky platia, skutočne viažu na túto stálu prevádzkareň. V takom prípade sa uplatnia ustanovenia článku 7. (5) Predpokladá sa, že licenčné poplatky majú zdroj v zmluvnom štáte, ak je platiteľ rezidentom tohto zmluvného štátu. Ak však osoba platiaca licenčné poplatky bez ohľadu na to, či je alebo nie je rezidentom zmluvného štátu, má v zmluvnom štáte stálu prevádzkareň, v súvislosti s ktorou vznikla povinnosť platiť licenčné poplatky a tieto licenčné poplatky idú na ťarchu tejto stálej prevádzkarne, potom sa predpokladá, že tieto licenčné poplatky majú zdroj v tom zmluvnom štáte, v ktorom sa nachádza táto stála prevádzkareň. (6) Ak v dôsledku osobitných vzťahov existujúcich medzi platiteľom a skutočným vlastníkom licenčných poplatkov alebo medzi nimi a treťou osobou suma licenčných poplatkov vzťahujúca sa na použitie, na právo alebo na informácie, za ktoré sa licenčné poplatky platia, presahuje sumu, ktorú by bol dohodol platiteľ so skutočným vlastníkom, keby takéto vzťahy neexistovali, uplatnia sa ustanovenia tohto článku len na túto naposledy uvedenú sumu. V tom prípade časť platieb presahujúca túto sumu sa zdaní podľa právnych predpisov oboch zmluvných štátov s prihliadnutím na ostatné ustanovenia tejto zmluvy.",
+      "source_id": "SK-SLOVLEX-06840D2C86C3D3F9",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2018/122/vyhlasene_znenie.html",
+      "source_excerpt_hash": "7b68247345d4ad1c99ff5711f4b3acaa6dc746c113bac6720ead988af0543134",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "structured_materialization_policy",
+      "approved_at": "2026-08-31",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-08-31",
+      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-06840D2C86C3D3F9"
+      ]
+    }
+  ]
+}

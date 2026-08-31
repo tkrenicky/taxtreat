@@ -1,0 +1,88 @@
+{
+  "country_pair": {
+    "source_country": "SK",
+    "recipient_country": "CY"
+  },
+  "rules": [
+    {
+      "rule_id": "SK-CY-INTEREST-TREATY-SIMPLE-1",
+      "income_type": "interest",
+      "source_country": "SK",
+      "recipient_country": "CY",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "11",
+      "paragraph": null,
+      "rate": 10.0,
+      "priority": 600,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "rate",
+      "verification_status": "verified",
+      "source_text": "Článok 11 Úroky 1. Úroky majúce zdroj v jednom zmluvnom štáte a platené osobe majúcej bydlisko alebo sídlo v druhom zmluvnom štáte sa môžu zdaniť v tomto druhom štáte. 2. Úroky poberané z jedného zmluvného štátu osobou majúcou bydlisko alebo sídlo v druhom zmluvnom štáte, ktorá je ich skutočným vlastníkom, sa môžu tiež zdaniť v prvom zmluvnom štáte sadzbou nepresahujúcou 10 % hrubej sumy úrokov. 3. Úroky z úverov alebo pôžičiek poskytnutých vládou niektorého zmluvného štátu alebo niektorou bankou alebo inou inštitúciou v mene alebo na účet tejto vlády podliehajú zdaneniu iba v tomto štáte. 4. Výraz „úroky“ použitý v tomto článku označuje príjmy z pohľadávok akéhokoľvek druhu, zabezpečených i nezabezpečených záložným právom na nehnuteľnosti, poskytujúcich i neposkytujúcich právo na účasť na zisku dlžníka a najmä príjmy z verejných dlhopisov a obligácií včítane prémií a výher spojených s týmito obligáciami. 5. Predpokladá sa, že úroky majú zdroj v jednom zmluvnom štáte, ak platiteľom je tento štát sám, jeho nižší správny útvar alebo miestny úrad alebo osoba majúca bydlisko alebo sídlo v tomto štáte. Ak však osoba, ktorá platí úroky, bez ohľadu na to, či má alebo nemá bydlisko alebo sídlo v niektorom zmluvnom štáte, má v jednom zmluvnom štáte stálu prevádzkáreň, v spojení s ktorou vznikol záväzok, z ktorého sa úroky platia, a ak táto stála prevádzkáreň vynáša tieto úroky, predpokladá sa, že tieto úroky majú zdroj v zmluvnom štáte, v ktorom je stála prevádzkáreň umiestnená. 6. Ustanovenie odseku 1 sa nepoužije, ak príjemca úrokov, ktorý má bydlisko alebo sídlo v jednom zmluvnom štáte, vykonáva v druhom zmluvnom štáte, v ktorom majú úroky zdroj, priemyselnú alebo obchodnú činnosť prostredníctvom stálej prevádzkárne, ktorá je tam umiestnená, alebo vykonáva v tomto druhom štáte slobodné povolanie pomocou stálej základne tam umiestnenej a ak pohľadávka, z ktorej sa úroky platia, je skutočne spojená s takou stálou prevádzkárňou alebo stálou základňou. V takom prípade sa použijú ustanovenia článku 7 alebo článku 14 podľa toho, o aký prípad ide. 7. Ak suma platených úrokov, posudzované so zreteľom na pohľadávku, z ktorej sa platia, presahuje v dôsledku osobitných vzťahov existujúcich medzi platiteľom a príjemcom alebo medzi oboma a treťou osobou sumu, ktorú by bol dojednal platiteľ s príjemcom, keby také vzťahy neboli, použijú sa ustanovenia tohto článku len na túto poslednú sumu. Časť platby, ktorá ju presahuje, zostane v tomto prípade podrobená zdaneniu podľa práva každého zmluvného štátu a s prihliadnutím na iné ustanovenia tejto Zmluvy.",
+      "source_id": "SK-SLOVLEX-28C35E6F037CE388",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/1981/30/vyhlasene_znenie.html",
+      "source_excerpt_hash": "b6cc00c59012307fd4dc5a8bfca2955304b062bbe5c093f164f122547e7e88f8",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "structured_materialization_policy",
+      "approved_at": "2026-08-31",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-08-31",
+      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-28C35E6F037CE388"
+      ]
+    },
+    {
+      "rule_id": "SK-CY-ROYALTY-TREATY-SIMPLE-1",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "CY",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "12",
+      "paragraph": null,
+      "rate": 5.0,
+      "priority": 600,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "rate",
+      "verification_status": "verified",
+      "source_text": "Článok 12 Licenčné poplatky 1. Licenčné poplatky majúce zdroj v jednom zmluvnom štáte a platené osobe, ktorá má bydlisko alebo sídlo v druhom zmluvnom štáte, sa môžu zdaniť v tomto druhom štáte. 2. Licenčné poplatky uvedené v odseku 3 písm. a) sa však môžu zdaniť v zmluvnom štáte, v ktorom je ich zdroj, a to podľa práva tohto štátu. Daň takto uložená však nesmie presiahnuť 5 % hrubej sumy licenčných poplatkov. Príslušné úrady zmluvných štátov dohodou upravia spôsob aplikácie tohto obmedzenia. 3. Výraz „licenčné poplatky“ použitý v tomto článku označuje platby akéhokoľvek druhu platené za použitie alebo za právo na použitie a) akéhokoľvek patentu, ochrannej známky, vzoru alebo modelu, plánu, tajného vzorca alebo postupu alebo priemyselného, obchodného alebo vedeckého zariadenia a za informácie, ktoré sa vzťahujú na skúsenosti získané v priemyselnej, obchodnej alebo vedeckej oblasti; b) akéhokoľvek autorského práva k literárnemu, umeleckému alebo vedeckému dielu včítane kinematografických filmov a filmov alebo pások pre televízne alebo rozhlasové vysielania. 4. Ustanovenia odsekov 1 a 2 sa nepoužijú, ak príjemca licenčných poplatkov majúci bydlisko alebo sídlo v jednom zmluvnom štáte vykonáva v druhom zmluvnom štáte, v ktorom majú licenčné poplatky zdroj, priemyselnú alebo obchodnú činnosť prostredníctvom stálej prevádzkárne, ktorá je tam umiestnená, alebo vykonáva v tomto druhom štáte slobodné povolanie pomocou stálej základne tam umiestnenej a ak právo alebo majetok, pre ktoré sa licenčné poplatky platia, sú skutočne spojené s takou stálou prevádzkárňou alebo stálou základňou. V takom prípade sa použijú ustanovenia článku 7 alebo článku 14 podľa toho, o aký prípad ide. 5. Predpokladá sa, že licenčné poplatky majú zdroj v jednom zmluvnom štáte, ak platiteľom je tento zmluvný štát sám, nižší správny útvar alebo miestny úrad tohto zmluvného štátu alebo osoba majúca bydlisko alebo sídlo v tomto zmluvnom štáte. Ak však osoba, ktorá platí licenčné poplatky, či už má alebo nemá bydlisko alebo sídlo v niektorom zmluvnom štáte, má v jednom zmluvnom štáte stálu prevádzkáreň, v spojení s ktorou vznikol záväzok platiť licenčné poplatky, a táto stála prevádzkáreň znáša na svoju ťarchu tieto licenčné poplatky, predpokladá sa, že tieto licenčné poplatky majú zdroj v tom zmluvnom štáte, v ktorom je stála prevádzkáreň umiestnená. 6. Ak suma platených licenčných poplatkov, posudzované so zreteľom na používanie, právo alebo informáciu, za ktoré sa platia, presahuje v dôsledku osobitných vzťahov existujúcich medzi platiteľom a príjemcom alebo medzi oboma a treťou osobou sumu, ktorú by bol dojednal platiteľ s príjemcom, keby nebolo takých vzťahov, použijú sa ustanovenia tohto článku len na túto poslednú sumu. Časť platby, ktorá ju presahuje, zostane v tomto prípade podrobená zdaneniu podľa práva každého zmluvného štátu a s prihliadnutím na iné ustanovenia tejto Zmluvy.",
+      "source_id": "SK-SLOVLEX-28C35E6F037CE388",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/1981/30/vyhlasene_znenie.html",
+      "source_excerpt_hash": "bc4c42d3532d44eeb993c01b2b8e5a21be6e9275ea3a1257acf0e3a38b4b39b8",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "structured_materialization_policy",
+      "approved_at": "2026-08-31",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-08-31",
+      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-28C35E6F037CE388"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "country_pair": {
+    "source_country": "SK",
+    "recipient_country": "TW"
+  },
+  "rules": [
+    {
+      "rule_id": "SK-TW-DIVIDEND-TREATY-SIMPLE-1",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "TW",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "10",
+      "paragraph": null,
+      "rate": 10.0,
+      "priority": 600,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "effect": "rate",
+      "verification_status": "verified",
+      "source_text": "Článok 10 Dividendy (1) Dividendy vyplácané spoločnosťou, ktorá je rezidentom jedného územia, rezidentovi druhého územia sa môžu zdaniť na tom druhom území. (2) Tieto dividendy sa však môžu zdaniť aj na území, ktorého rezidentom je spoločnosť vyplácajú- ca dividendy a podľa právnych predpisov toho územia, ale ak skutočným vlastník dividend je reziden- tom druhého územia daň takto uložená nesmie prekročiť 10 % hrubej sumy dividend. Tento odsek sa nedotýka zdaňovania spoločnosti zo ziskov, z ktorých sa vyplácajú dividendy. (3) Pojem „dividendy“ použitý v tomto článku označuje príjmy z akcií, užívateľských („jouissance“) akcií, alebo („jouissance“) užívateľských práv, ťažobných akcií, zakladateľských akcií alebo iných práv, ktoré nie sú pohľadávkami, z podielov na zisku, ako aj iných príjmov, ktoré sa zdaňujú rovnakým spôsobom ako príjmy z akcií podľa právnych predpisov toho územia, ktorého rezidentom je vyplácajúca spoločnosť. 178 9/2011 FINANČNÝ SPRAVODAJCA (4) Ustanovenia odsekov 1a2s a neuplatnia, ak skutočný vlastník dividend, ktorý je rezidentom jedného územia, vykonáva na druhom území, ktorého je spoločnosť vyplácajúca dividendy reziden- tom, podnikateľskú činnosť prostredníctvom stálej prevádzkarne, ktorá sa tam nachádza, alebo vyko- náva na tomto druhom území slobodné povolanie zo stálej základne, ktorá sa tam nachádza a vlast- níctvo, v súvislosti s ktorým sa dividendy vyplácajú, sa skutočne viaže na túto stálu prevádzkareň alebo stálu základňu. V tom prípade sa podľa okolností uplatnia ustanovenia",
+      "source_id": "SK-SLOVLEX-D2AC339715434237",
+      "source_url": "https://www.mfsr.sk/files/archiv/financny-spravodajca/3497/63/FS_09_2011.pdf",
+      "source_excerpt_hash": "3bbf9893e104c5e15b907ac9728ae097e90a8ec5f41598bb94e820fdbcce2075",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "structured_materialization_policy",
+      "approved_at": "2026-08-31",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-08-31",
+      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-D2AC339715434237"
+      ]
+    },
+    {
+      "rule_id": "SK-TW-INTEREST-TREATY-SIMPLE-1",
+      "income_type": "interest",
+      "source_country": "SK",
+      "recipient_country": "TW",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "11",
+      "paragraph": null,
+      "rate": 10.0,
+      "priority": 600,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "rate",
+      "verification_status": "verified",
+      "source_text": "Článok 11 Úroky (1) Úroky majúce zdroj na jednom území a vyplácané rezidentovi druhého územia sa môžu zdaniť na druhom území. (2) Tieto úroky sa však môžu zdaniť aj na území, v ktorom majú zdroj, a to podľa právnych predpi- sov tohto územia, ale ak je skutočný vlastník úrokov rezidentom druhého územia, daň takto stanovená nepresiahne 10 % hrubej sumy úrokov. (3) Bez ohľadu na ustanovenia odsekov 1 a 2, úroky sa oslobodia od dane na tom území a) ak plynú orgánu, ktorý spravuje druhé územie, nižšiemu správnemu útvaru alebo miestnemu orgá- nu alebo jeho centrálnej banke územia v súvislosti s nimi poskytnutou pôžičkou, s pohľadávkou či úverom, b) v súvislosti s pôžičkou alebo úverom, ktoré poskytuje, garantuje či poisťuje oprávnený orgán dru - hého územia s cieľom podpory exportu. (4) Pojem „úroky“ použitý v tomto článku označuje príjmy z pohľadávok akéhokoľvek druhu za - bezpečených či nezabezpečených záložným právom bez ohľadu na to, či majú alebo nemajú právo účasti na ziskoch dlžníka a najmä príjmy z vládnych cenných papierov a príjmy z obligácií alebo z dl- hopisov vrátane prémií a výhier spojených s týmito cennými papiermi, obligáciami alebo dlhopismi. Na účely tohto článku pojem „úroky“ nezahŕňa príjmy podľa",
+      "source_id": "SK-SLOVLEX-D2AC339715434237",
+      "source_url": "https://www.mfsr.sk/files/archiv/financny-spravodajca/3497/63/FS_09_2011.pdf",
+      "source_excerpt_hash": "5e8c1fd5ade89412776d500695e73727d3b9959893996b42e9a377080c58cace",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "structured_materialization_policy",
+      "approved_at": "2026-08-31",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-08-31",
+      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-D2AC339715434237"
+      ]
+    }
+  ]
+}

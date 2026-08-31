@@ -1,0 +1,106 @@
+{
+  "country_pair": {
+    "source_country": "SK",
+    "recipient_country": "MK"
+  },
+  "rules": [
+    {
+      "rule_id": "SK-MK-INTEREST-TREATY-SIMPLE-1",
+      "income_type": "interest",
+      "source_country": "SK",
+      "recipient_country": "MK",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "11",
+      "paragraph": null,
+      "rate": 10.0,
+      "priority": 600,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "effect": "rate",
+      "verification_status": "verified",
+      "source_text": "Článok 11 Úroky (1) Úroky majúce zdroj v jednom zmluvnom štáte a ktorých skutočným vlastníkom je rezident druhého zmluvného štátu, môžu sa zdaniť v tom druhom štáte. (2) Tieto úroky sa však môžu zdaniť aj v tom zmluvnom štáte, v ktorom majú zdroj, a to podľa právnych predpisov toho štátu; ak je však skutočný vlastník úrokov rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne 10 % hrubej sumy úrokov. (3) Pojem „úroky“ použitý v tomto článku označuje príjmy z pohľadávok akéhokoľvek druhu, zabezpečených alebo nezabezpečených záložným právom na nehnuteľnosť, bez ohľadu na to, či majú právo účasti na ziskoch dlžníka a najmä príjmy z vládnych cenných papierov a príjmy z obligácií alebo z dlhopisov vrátane prémií a výhier spojených s týmito cennými papiermi, obligáciami alebo dlhopismi. Penále ukladané za oneskorenú platbu sa nepovažuje za úroky na účely tohto článku. Pojem „úroky“ nezahŕňa žiadne príjmy, ktoré sa považujú za dividendy podľa ustanovení odseku 3 článku 10 . (4) Ustanovenia odsekov 1 a 2 sa neuplatnia, ak skutočný vlastník úrokov, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, v ktorom majú úroky zdroj, podnikateľskú činnosť prostredníctvom stálej prevádzkarne, ktorá sa tam nachádza, a ak pohľadávka, za ktorú sa úroky platia, sa skutočne viaže na túto stálu prevádzkareň. V takom prípade sa uplatnia ustanovenia článku 7 . (5) Predpokladá sa, že úroky majú zdroj v zmluvnom štáte, ak platiteľ je rezidentom toho štátu. Ak však osoba platiaca úroky bez ohľadu na to, či je rezidentom niektorého zmluvného štátu, má v zmluvnom štáte stálu prevádzkareň, v súvislosti s ktorou vznikol dlh, za ktorý sa úroky platia a tieto úroky idú na ťarchu tejto stálej prevádzkarne, potom sa predpokladá, že úroky majú zdroj v tom štáte, v ktorom sa nachádza stála prevádzkareň. (6) Ak v dôsledku osobitných vzťahov existujúcich medzi platiteľom a skutočným vlastníkom úrokov alebo medzi nimi a treťou osobou suma úrokov vzťahujúca sa na pohľadávku, za ktorú sa úroky platia, presahuje sumu, ktorú by bol dohodol platiteľ so skutočným vlastníkom, keby takéto vzťahy neexistovali, uplatnia sa ustanovenia tohto článku len na túto naposledy uvedenú sumu. Časť platieb presahujúca túto sumu sa v tom prípade zdaní podľa právnych predpisov každého zmluvného štátu s prihliadnutím na ostatné ustanovenia tejto zmluvy.",
+      "source_id": "SK-SLOVLEX-7CD14408FEEE4E5F",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2010/153/vyhlasene_znenie.html",
+      "source_excerpt_hash": "20d91394cf2f4e5f1b1ea7cbe626531c272bd8ee98bcbfca2e467d6d6141c631",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "structured_materialization_policy",
+      "approved_at": "2026-08-31",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-08-31",
+      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-7CD14408FEEE4E5F"
+      ]
+    },
+    {
+      "rule_id": "SK-MK-ROYALTY-TREATY-SIMPLE-1",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "MK",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "12",
+      "paragraph": null,
+      "rate": 10.0,
+      "priority": 600,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "effect": "rate",
+      "verification_status": "verified",
+      "source_text": "Článok 12 Licenčné poplatky (1) Licenčné poplatky majúce zdroj v jednom zmluvnom štáte a ktorých skutočným vlastníkom je rezident druhého zmluvného štátu, môžu sa zdaniť v tom druhom štáte. (2) Tieto licenčné poplatky sa však môžu zdaniť aj v tom zmluvnom štáte, v ktorom majú zdroj, a to podľa právnych predpisov toho štátu; ak je však skutočný vlastník licenčných poplatkov rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne 10 % hrubej sumy licenčných poplatkov. (3) Pojem „licenčné poplatky“ použitý v tomto článku označuje platby akéhokoľvek druhu získané ako odplata za použitie alebo za právo na použitie akéhokoľvek autorského práva k literárnemu, umeleckému alebo vedeckému dielu vrátane kinematografických filmov a filmov alebo nahrávok pre rozhlasové alebo televízne vysielanie a iné prostriedky na reprodukciu obrazu alebo zvuku, akéhokoľvek patentu, ochrannej známky, návrhu alebo modelu, plánu, tajného vzorca alebo postupu, softvéru, alebo za použitie alebo za právo na použitie priemyselného, obchodného alebo vedeckého zariadenia, alebo za informácie, ktoré sa vzťahujú na priemyselné, obchodné alebo vedecké skúsenosti. (4) Ustanovenia odsekov 1 a 2 sa neuplatnia, ak skutočný vlastník licenčných poplatkov, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, v ktorom majú licenčné poplatky zdroj, podnikateľskú činnosť prostredníctvom stálej prevádzkarne, ktorá sa tam nachádza, a ak právo alebo majetok, za ktorý sa platia licenčné poplatky, sa skutočne viažu na túto stálu prevádzkareň. V takom prípade sa uplatnia ustanovenia článku 7 . (5) Predpokladá sa, že licenčné poplatky majú zdroj v zmluvnom štáte, ak platiteľ je rezidentom toho štátu. Ak však osoba platiaca licenčné poplatky bez ohľadu na to, či je rezidentom niektorého zmluvného štátu, má v zmluvnom štáte stálu prevádzkareň, v súvislosti s ktorou vznikla povinnosť platiť licenčné poplatky, a tieto licenčné poplatky idú na ťarchu tej stálej prevádzkarne, potom sa predpokladá, že licenčné poplatky majú zdroj v tom štáte, v ktorom sa nachádza jej stála prevádzkareň. (6) Ak v dôsledku osobitných vzťahov existujúcich medzi platiteľom a skutočným vlastníkom licenčných poplatkov alebo medzi nimi a treťou osobou suma licenčných poplatkov vzťahujúca sa na použitie, na právo alebo na informácie, za ktoré sa platia licenčné poplatky, presahuje sumu, ktorú by bol dohodol platiteľ so skutočným vlastníkom, keby také vzťahy neexistovali, uplatnia sa ustanovenia tohto článku len na túto naposledy uvedenú sumu. Časť platieb presahujúca túto sumu sa v tom prípade zdaní podľa právnych predpisov každého zmluvného štátu s prihliadnutím na ostatné ustanovenia tejto zmluvy.",
+      "source_id": "SK-SLOVLEX-7CD14408FEEE4E5F",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2010/153/vyhlasene_znenie.html",
+      "source_excerpt_hash": "0fdcd44c858855312922154d10e9c1d892dd5c923caa0f61752338705eb98c6d",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "structured_materialization_policy",
+      "approved_at": "2026-08-31",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-08-31",
+      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-7CD14408FEEE4E5F"
+      ]
+    }
+  ]
+}

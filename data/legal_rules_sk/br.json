@@ -1,0 +1,51 @@
+{
+  "country_pair": {
+    "source_country": "SK",
+    "recipient_country": "BR"
+  },
+  "rules": [
+    {
+      "rule_id": "SK-BR-DIVIDEND-TREATY-SIMPLE-1",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "BR",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "10",
+      "paragraph": null,
+      "rate": 15.0,
+      "priority": 600,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "rate",
+      "verification_status": "verified",
+      "source_text": "Článok 10 Dividendy 1. Dividendy vyplácané spoločnosťou, ktorá je rezidentom v jednom zmluvnom štáte, osobe, ktorá je rezidentom v druhom zmluvnom štáte, môžu byť zdanené v tomto druhom štáte. 2. Tieto dividendy však môžu byť zdanené v zmluvnom štáte, v ktorom má sídlo spoločnosť, ktorá ich vypláca, a to podľa právnych predpisov tohto štátu, ale ak príjemca je skutočným vlastníkom dividend, daň takto určená nemôže presiahnuť 15 % hrubej sumy dividend. Tento odsek sa nedotýka zdanenia ziskov spoločnosti, ktoré slúžia na výplatu dividend. 3. Ustanovenia odsekov 1 a 2 sa nepoužijú, ak vlastník dividend, ktorý je rezidentom v jednom zmluvnom štáte, vykonáva v druhom zmluvnom štáte, v ktorom je rezidentom spoločnosť vyplácajúca dividendy, priemyselnú alebo obchodnú činnosť prostredníctvom stálej prevádzkárne, ktorá je tam umiestnená, alebo slobodné povolanie prostredníctvom stálej základne tam umiestnenej, a ak účasť, na ktorej základe sa dividendy vyplácajú, skutočne patrí k tejto stálej prevádzkárni, alebo k tejto stálej základni. V takom prípade sa použijú ustanovenia článku 7 alebo článku 14 . 4. Výraz „dividendy“ použitý v tomto článku označuje príjmy z akcií, požitkových akcií alebo požitkových listov, kuksov, zakladateľských podielov alebo iných práv s výnimkou pohľadávok, podielov na zisku a príjmy z iných podielov na spoločnosti, ktoré sú podľa daňového práva štátu, v ktorom je spoločnosť, ktorá dividendy vypláca, rezidentom, postavené na roveň príjmom z akcií. 5. Pokiaľ má rezident Československa stálu prevádzkáreň v Brazílii, môže byť táto stála prevádzkáreň podrobená zrážkovej dani pri zdroji v súlade s brazílskymi zákonmi. Táto daň však nemôže presiahnuť 15 % hrubej sumy ziskov tejto stálej prevádzkárne po zaplatení dane z príjmu spoločnosti, ktorá sa viaže k týmto ziskom. 6. Ak spoločnosť, ktorá je rezidentom v jednom zmluvnom štáte, dosahuje zisky alebo príjmy z druhého zmluvného štátu, nemôže tento druhý štát zdaniť dividendy vyplácané spoločnosťou, ibaže tieto dividendy sa vyplácajú osobe, ktorá je rezidentom v tomto druhom štáte, alebo že účasť, pre ktorú sa dividendy vyplácajú, skutočne patrí k stálej prevádzkárni alebo k stálej základni, ktoré sú umiestnené v tomto druhom štáte, ani podrobiť nerozdelené zisky spoločnosti dani z nerozdelených ziskov, aj keď vyplácané dividendy alebo nerozdelené zisky pozostávajú úplne alebo sčasti zo ziskov alebo z príjmov docielených v tomto druhom štáte. 7. Obmedzenie daňovej sadzby vyplývajúce z odsekov 2 a 5 sa nebude aplikovať na dividendy alebo zisky vyplácané alebo poukazované pred uplynutím tretieho kalendárneho roka po roku, v ktorom zmluva nadobudne platnosť.",
+      "source_id": "SK-SLOVLEX-D547E22F82772B17",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/1991/200/vyhlasene_znenie.html",
+      "source_excerpt_hash": "dc2ad28fce93477108ae912c7607738ae6db4f1212c698c6b4e4826ff6522106",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "structured_materialization_policy",
+      "approved_at": "2026-08-31",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-08-31",
+      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-D547E22F82772B17"
+      ]
+    }
+  ]
+}

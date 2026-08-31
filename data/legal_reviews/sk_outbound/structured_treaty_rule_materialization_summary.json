@@ -1,0 +1,1460 @@
+{
+  "schema_version": 1,
+  "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+  "source_country": "SK",
+  "total_scopes": 225,
+  "materialized_scopes": 90,
+  "unresolved_scopes": 135,
+  "materialized_country_packages": 64,
+  "materialized_scope_keys": [
+    "SK-AE-royalty",
+    "SK-AL-royalty",
+    "SK-AM-royalty",
+    "SK-AT-royalty",
+    "SK-BA-royalty",
+    "SK-BE-royalty",
+    "SK-BG-dividend",
+    "SK-BG-royalty",
+    "SK-BR-dividend",
+    "SK-CH-royalty",
+    "SK-CN-royalty",
+    "SK-CY-interest",
+    "SK-CY-royalty",
+    "SK-CZ-royalty",
+    "SK-DE-royalty",
+    "SK-DK-dividend",
+    "SK-DK-royalty",
+    "SK-EE-dividend",
+    "SK-EE-royalty",
+    "SK-ES-royalty",
+    "SK-FR-dividend",
+    "SK-FR-royalty",
+    "SK-GB-royalty",
+    "SK-GR-interest",
+    "SK-GR-royalty",
+    "SK-HR-interest",
+    "SK-HR-royalty",
+    "SK-HU-royalty",
+    "SK-ID-dividend",
+    "SK-IE-royalty",
+    "SK-IL-royalty",
+    "SK-IN-royalty",
+    "SK-IR-royalty",
+    "SK-IS-royalty",
+    "SK-IT-dividend",
+    "SK-IT-royalty",
+    "SK-JP-royalty",
+    "SK-KG-royalty",
+    "SK-KR-royalty",
+    "SK-KW-royalty",
+    "SK-KZ-royalty",
+    "SK-LK-interest",
+    "SK-LK-royalty",
+    "SK-LT-dividend",
+    "SK-LT-royalty",
+    "SK-LU-royalty",
+    "SK-LV-dividend",
+    "SK-LV-royalty",
+    "SK-LY-royalty",
+    "SK-MD-interest",
+    "SK-MD-royalty",
+    "SK-ME-interest",
+    "SK-ME-royalty",
+    "SK-MK-interest",
+    "SK-MK-royalty",
+    "SK-MT-dividend",
+    "SK-MT-royalty",
+    "SK-MX-royalty",
+    "SK-NG-royalty",
+    "SK-NL-dividend",
+    "SK-NL-royalty",
+    "SK-NO-royalty",
+    "SK-NZ-royalty",
+    "SK-OM-royalty",
+    "SK-PL-royalty",
+    "SK-PT-interest",
+    "SK-PT-royalty",
+    "SK-RS-interest",
+    "SK-RS-royalty",
+    "SK-RU-dividend",
+    "SK-RU-royalty",
+    "SK-SE-royalty",
+    "SK-SG-royalty",
+    "SK-SI-interest",
+    "SK-SI-royalty",
+    "SK-SY-dividend",
+    "SK-SY-royalty",
+    "SK-TM-dividend",
+    "SK-TM-royalty",
+    "SK-TN-interest",
+    "SK-TR-royalty",
+    "SK-TW-dividend",
+    "SK-TW-interest",
+    "SK-UA-interest",
+    "SK-UA-royalty",
+    "SK-US-royalty",
+    "SK-UZ-dividend",
+    "SK-UZ-interest",
+    "SK-UZ-royalty",
+    "SK-ZA-royalty"
+  ],
+  "unresolved": [
+    {
+      "recipient_country": "AL",
+      "income_type": "dividend",
+      "rate_candidates": [
+        5.0,
+        8.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 1,
+      "holding_period_candidates": [
+        {
+          "context": "ho štátu, daň takto stanovená nepresiahne: a) 5 % hrubej sumy dividend, ak skutočným vlastníkom je spoločnosť (iná ako osobná obchodná spoločnosť), ktorá priamo vlastní najmenej 10 % majetku spoločnosti vyplácajúcej dividendy počas obdobia 365 dní, ktoré zahŕňa deň výplaty dividend (na účely výpočtu tohto obdobia sa neprihliada na zmeny vlastníctva, ktoré by priamo vyplývali z reorganizácie podniku, ako napríklad zlúčenie alebo rozdelenie spoločnosti, ktorý má v držbe akcie alebo kt",
+          "context_sha256": "de0f4ad859430f1b48b8fbc6b117510657097d49f9a1f9a60f40579b3c9d2e10",
+          "unit": "dní",
+          "value": 365
+        }
+      ]
+    },
+    {
+      "recipient_country": "AL",
+      "income_type": "interest",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "AM",
+      "income_type": "dividend",
+      "rate_candidates": [
+        5.0,
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 1,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "AM",
+      "income_type": "interest",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "AU",
+      "income_type": "dividend",
+      "rate_candidates": [
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "AU",
+      "income_type": "interest",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "AU",
+      "income_type": "royalty",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "AZ",
+      "income_type": "dividend",
+      "rate_candidates": [
+        8.0,
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 1,
+      "holding_period_candidates": [
+        {
+          "context": "k dividend rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne: a) 8 % hrubej sumy dividend, ak skutočným vlastníkom je spoločnosť, ktorá priamo vlastní najmenej 25 % majetku spoločnosti vyplácajúcej dividendy počas obdobia 365 dní, ktoré zahŕňa deň výplaty dividend (na účely výpočtu tohto obdobia sa neprihliada na zmeny vlastníctva, ktoré by priamo vyplývali z reorganizácie podniku, ako napríklad zlúčenie alebo rozdelenie spoločnosti, ktorý má v držbe akcie alebo kt",
+          "context_sha256": "d29406af8c6f7c6d5d3ac073afa0d2ae1f020f2352b0009529ef457b5679ea82",
+          "unit": "dní",
+          "value": 365
+        }
+      ]
+    },
+    {
+      "recipient_country": "AZ",
+      "income_type": "interest",
+      "rate_candidates": [
+        8.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "AZ",
+      "income_type": "royalty",
+      "rate_candidates": [
+        5.0,
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "BE",
+      "income_type": "dividend",
+      "rate_candidates": [
+        5.0,
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "BE",
+      "income_type": "interest",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "BY",
+      "income_type": "dividend",
+      "rate_candidates": [
+        10.0,
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "BY",
+      "income_type": "interest",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "BY",
+      "income_type": "royalty",
+      "rate_candidates": [
+        5.0,
+        10.0,
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "BA",
+      "income_type": "dividend",
+      "rate_candidates": [
+        5.0,
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 2,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "BA",
+      "income_type": "interest",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": true,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "BR",
+      "income_type": "interest",
+      "rate_candidates": [
+        10.0,
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "BR",
+      "income_type": "royalty",
+      "rate_candidates": [
+        25.0,
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "BG",
+      "income_type": "interest",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "CY",
+      "income_type": "dividend",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "CZ",
+      "income_type": "dividend",
+      "rate_candidates": [
+        5.0,
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "CZ",
+      "income_type": "interest",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": true,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "ME",
+      "income_type": "dividend",
+      "rate_candidates": [
+        5.0,
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "CN",
+      "income_type": "dividend",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 1,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "CN",
+      "income_type": "interest",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "DK",
+      "income_type": "interest",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "EE",
+      "income_type": "interest",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "ET",
+      "income_type": "dividend",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "ET",
+      "income_type": "interest",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "ET",
+      "income_type": "royalty",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "FI",
+      "income_type": "dividend",
+      "rate_candidates": [
+        5.0,
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "FI",
+      "income_type": "interest",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "FI",
+      "income_type": "royalty",
+      "rate_candidates": [
+        1.0,
+        5.0,
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "FR",
+      "income_type": "interest",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": true,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "GR",
+      "income_type": "dividend",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "GE",
+      "income_type": "dividend",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "GE",
+      "income_type": "interest",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "GE",
+      "income_type": "royalty",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "NL",
+      "income_type": "interest",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "HR",
+      "income_type": "dividend",
+      "rate_candidates": [
+        5.0,
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "IN",
+      "income_type": "dividend",
+      "rate_candidates": [
+        15.0,
+        25.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 2,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "IN",
+      "income_type": "interest",
+      "rate_candidates": [
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "ID",
+      "income_type": "interest",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "ID",
+      "income_type": "royalty",
+      "rate_candidates": [
+        15.0,
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "IR",
+      "income_type": "dividend",
+      "rate_candidates": [
+        5.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 1,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "IR",
+      "income_type": "interest",
+      "rate_candidates": [
+        5.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "IS",
+      "income_type": "dividend",
+      "rate_candidates": [
+        5.0,
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "IS",
+      "income_type": "interest",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": true,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "IL",
+      "income_type": "dividend",
+      "rate_candidates": [
+        5.0,
+        10.0,
+        15.0,
+        10.0,
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 1,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "IL",
+      "income_type": "interest",
+      "rate_candidates": [
+        2.0,
+        5.0,
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "IE",
+      "income_type": "dividend",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "IE",
+      "income_type": "interest",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "JP",
+      "income_type": "dividend",
+      "rate_candidates": [
+        10.0,
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 2,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "JP",
+      "income_type": "interest",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "ZA",
+      "income_type": "dividend",
+      "rate_candidates": [
+        5.0,
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "ZA",
+      "income_type": "interest",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "CA",
+      "income_type": "dividend",
+      "rate_candidates": [
+        5.0,
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 2,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "CA",
+      "income_type": "interest",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": true,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "CA",
+      "income_type": "royalty",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": true,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "KZ",
+      "income_type": "dividend",
+      "rate_candidates": [
+        10.0,
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "KZ",
+      "income_type": "interest",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "KG",
+      "income_type": "dividend",
+      "rate_candidates": [
+        5.0,
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 1,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "KG",
+      "income_type": "interest",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "KR",
+      "income_type": "dividend",
+      "rate_candidates": [
+        5.0,
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 1,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "KR",
+      "income_type": "interest",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "KW",
+      "income_type": "dividend",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "KW",
+      "income_type": "interest",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "LT",
+      "income_type": "interest",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "LY",
+      "income_type": "dividend",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "LY",
+      "income_type": "interest",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "LV",
+      "income_type": "interest",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "LU",
+      "income_type": "dividend",
+      "rate_candidates": [
+        5.0,
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 2,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "LU",
+      "income_type": "interest",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "HU",
+      "income_type": "dividend",
+      "rate_candidates": [
+        5.0,
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "HU",
+      "income_type": "interest",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "MY",
+      "income_type": "dividend",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "MY",
+      "income_type": "interest",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "MY",
+      "income_type": "royalty",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "MT",
+      "income_type": "interest",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "MX",
+      "income_type": "dividend",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "MX",
+      "income_type": "interest",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "MD",
+      "income_type": "dividend",
+      "rate_candidates": [
+        5.0,
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "DE",
+      "income_type": "dividend",
+      "rate_candidates": [
+        5.0,
+        15.0,
+        25.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "DE",
+      "income_type": "interest",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": true,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "NG",
+      "income_type": "dividend",
+      "rate_candidates": [
+        12.5,
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 2,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "NG",
+      "income_type": "interest",
+      "rate_candidates": [
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "NZ",
+      "income_type": "dividend",
+      "rate_candidates": [
+        5.0,
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 2,
+      "holding_period_candidates": [
+        {
+          "context": "m druhého zmluvného štátu, daň takto stanovená nepresiahne: (a) 5 % hrubej sumy dividend, ak skutočným vlastníkom je spoločnosť, ktorá má najmenej 10 % priamy podiel na hlasovacích právach v spoločnosti vyplácajúcej dividendy počas obdobia 365 dní, ktoré zahŕňa deň výplaty dividend (na účely výpočtu tohto obdobia sa neprihliada na zmeny vlastníctva, ktoré by priamo vyplývali z podnikovej reorganizácie, ako napríklad zlúčenie alebo rozdelenie, spoločnosti, ktorá má v držbe akcie aleb",
+          "context_sha256": "b46088ed9167ad5dbc7f3a735c4033af2b1789f6d7803454fcca636b87df2287",
+          "unit": "dní",
+          "value": 365
+        }
+      ]
+    },
+    {
+      "recipient_country": "NZ",
+      "income_type": "interest",
+      "rate_candidates": [
+        10.0,
+        10.0,
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 2,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "NO",
+      "income_type": "dividend",
+      "rate_candidates": [
+        5.0,
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "NO",
+      "income_type": "interest",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": true,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "OM",
+      "income_type": "dividend",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "OM",
+      "income_type": "interest",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "PL",
+      "income_type": "dividend",
+      "rate_candidates": [
+        5.0,
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "PL",
+      "income_type": "interest",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "PT",
+      "income_type": "dividend",
+      "rate_candidates": [
+        15.0,
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 1,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "AT",
+      "income_type": "dividend",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 1,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "AT",
+      "income_type": "interest",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": true,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "RO",
+      "income_type": "dividend",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 1,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "RO",
+      "income_type": "interest",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "RO",
+      "income_type": "royalty",
+      "rate_candidates": [
+        10.0,
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "RU",
+      "income_type": "interest",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "SA",
+      "income_type": "dividend",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "SA",
+      "income_type": "interest",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "SA",
+      "income_type": "royalty",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "MK",
+      "income_type": "dividend",
+      "rate_candidates": [
+        5.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 1,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "SG",
+      "income_type": "dividend",
+      "rate_candidates": [
+        5.0,
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "SG",
+      "income_type": "interest",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": true,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "SI",
+      "income_type": "dividend",
+      "rate_candidates": [
+        5.0,
+        5.0,
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "AE",
+      "income_type": "dividend",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": true,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "AE",
+      "income_type": "interest",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "GB",
+      "income_type": "dividend",
+      "rate_candidates": [
+        5.0,
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 2,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "GB",
+      "income_type": "interest",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "RS",
+      "income_type": "dividend",
+      "rate_candidates": [
+        5.0,
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "LK",
+      "income_type": "dividend",
+      "rate_candidates": [
+        15.0,
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "SY",
+      "income_type": "interest",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "ES",
+      "income_type": "dividend",
+      "rate_candidates": [
+        5.0,
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 2,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "ES",
+      "income_type": "interest",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "CH",
+      "income_type": "dividend",
+      "rate_candidates": [
+        5.0,
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "CH",
+      "income_type": "interest",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": true,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "SE",
+      "income_type": "dividend",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "SE",
+      "income_type": "interest",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "TW",
+      "income_type": "royalty",
+      "rate_candidates": [
+        5.0,
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "IT",
+      "income_type": "interest",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": true,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "TN",
+      "income_type": "dividend",
+      "rate_candidates": [
+        10.0,
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 2,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "TN",
+      "income_type": "royalty",
+      "rate_candidates": [
+        5.0,
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "TR",
+      "income_type": "dividend",
+      "rate_candidates": [
+        5.0,
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 1,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "TR",
+      "income_type": "interest",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "TM",
+      "income_type": "interest",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "UA",
+      "income_type": "dividend",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 1,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "US",
+      "income_type": "dividend",
+      "rate_candidates": [
+        5.0,
+        15.0,
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 2,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "US",
+      "income_type": "interest",
+      "rate_candidates": [],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "VN",
+      "income_type": "dividend",
+      "rate_candidates": [
+        5.0,
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 2,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "VN",
+      "income_type": "interest",
+      "rate_candidates": [
+        10.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    },
+    {
+      "recipient_country": "VN",
+      "income_type": "royalty",
+      "rate_candidates": [
+        5.0,
+        10.0,
+        15.0
+      ],
+      "exclusive_residence_taxation_candidate": false,
+      "ownership_linked_rate_candidate_count": 0,
+      "holding_period_candidates": []
+    }
+  ],
+  "policy": {
+    "only_unambiguous_single_rate_scopes_materialized": true,
+    "special_interest_exemptions_not_inferred": true,
+    "ownership_linked_dividend_branches_not_inferred": true,
+    "multi_rate_royalties_not_inferred": true,
+    "czech_rule_reuse_forbidden": true,
+    "release_remains_closed_until_all_225_scopes_are_structured_and_regression_tested": true
+  }
+}
