@@ -42,7 +42,7 @@ def test_stage7a_fixture_has_exact_pilot_matrix():
     assert {
         case["request"]["recipient_country"]
         for case in discovery
-    } == {"AT", "CH", "DE", "SG", "TW"}
+    } == {"AT", "CA", "DE", "JP", "SG"}
     assert {
         case["request"]["income_type"]
         for case in discovery
@@ -57,7 +57,7 @@ def test_stage7a_acceptance_matrix_passes_end_to_end():
     summary = run_acceptance_suite(fixture, execute)
 
     assert summary["case_count"] == 17
-    assert summary["passed"] == 17
+    assert summary["passed"] == 17, json.dumps(summary["results"], indent=2, sort_keys=True)
     assert summary["failed"] == 0
     assert len(summary["acceptance_sha256"]) == 64
 
