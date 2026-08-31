@@ -46,9 +46,14 @@ def test_every_materialized_rule_is_sk_only_and_source_backed():
                 assert rule["verification_status"] == "verified"
             assert rule["source_url"].startswith("https://")
             assert len(rule["source_excerpt_hash"]) == 64
-            assert rule["verification_authority"] == (
-                "sk_legal_review_coverage_pattern_reconciliation"
-            )
+            if rule["legal_layer"] == "treaty":
+                assert rule["verification_authority"] == (
+                    "sk_legal_review_coverage_pattern_reconciliation"
+                )
+            else:
+                assert rule["verification_authority"] == (
+                    "sk_mli_bilateral_adjudication_and_reconfirmation"
+                )
             assert not rule["rule_id"].startswith("CZ-")
 
     assert rule_count >= 89  # includes MLI eligibility gates in addition to 89 treaty-rate rules
