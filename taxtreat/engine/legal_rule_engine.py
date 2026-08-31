@@ -128,6 +128,7 @@ _PENDING_SEMANTIC_REMEDIATION_SCOPES = {
     ("BD", "dividend"),
     ("BE", "dividend"),
     ("CN", "dividend"),
+    ("CH", "dividend"),
     ("CY", "dividend"),
     ("EE", "dividend"),
     ("EG", "dividend"),
