@@ -3,6 +3,7 @@ name: WEB browser acceptance
 on:
   push:
     branches:
+      - main
       - feat/web-bulk-en-treaty-acquisition-20260825
       - feat/cz-ui-batch1-20260821
     paths:
