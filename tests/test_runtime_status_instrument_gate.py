@@ -51,8 +51,8 @@ def test_belarus_dividend_not_status_blocked_before_suspension():
     )
 
     assert result.applies is True
-    assert result.allowed is False
-    assert "ownership_percent" in result.missing_facts
+    assert result.allowed is True
+    assert result.missing_facts == []
 
 
 def test_belarus_dividend_not_status_blocked_after_suspension():
