@@ -121,6 +121,10 @@ def _percentage_is_ownership_threshold(text: str, match: re.Match[str]) -> bool:
         "share",
         "capital",
         "voting",
+        "priamy podiel",
+        "přímý podíl",
+        "direct interest",
+        "direct holding",
         "imania",
         "základného imania",
         "zakladneho imania",
@@ -178,10 +182,40 @@ def _context(text: str, start: int, end: int, radius: int = 240) -> str:
     return _compact(text[left:right])
 
 
-def _rate_candidates(text: str) -> list[dict[str, Any]]:
+def _percentage_is_other_tax_in_article(
+    text: str,
+    match: re.Match[str],
+    income_type: str | None,
+) -> bool:
+    if income_type != "dividend":
+        return False
+
+    close = _compact(text[max(0, match.start() - 150):match.end() + 150]).lower()
+    dividend_near = any(token in close for token in ("dividend", "dividendy", "dividendov"))
+
+    other_tax_markers = (
+        "stála prevádzkáreň",
+        "stalej prevádzkarne",
+        "stálá provozovna",
+        "permanent establishment",
+        "ziskov tejto stálej",
+        "sumy týchto ziskov",
+        "branch profits",
+        "dodatočná daň",
+        "dodatkovej dane",
+        "additional tax",
+        "nehnuteľného majetku",
+        "immovable property",
+    )
+    return (not dividend_near) and any(marker in close for marker in other_tax_markers)
+
+
+def _rate_candidates(text: str, *, income_type: str | None = None) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     for match in PERCENT_RE.finditer(text):
         if _percentage_is_ownership_threshold(text, match):
+            continue
+        if _percentage_is_other_tax_in_article(text, match, income_type):
             continue
         raw = match.group(1).replace(",", ".")
         value = float(raw)
@@ -212,10 +246,14 @@ def _holding_candidates(text: str) -> list[dict[str, Any]]:
     return rows
 
 
-def build_semantic_candidate(article_text: str) -> dict[str, Any]:
+def build_semantic_candidate(
+    article_text: str,
+    *,
+    income_type: str | None = None,
+) -> dict[str, Any]:
     text = _compact(article_text)
     lowered = text.lower()
-    rates = _rate_candidates(text)
+    rates = _rate_candidates(text, income_type=income_type)
     holdings = _holding_candidates(text)
 
     return {
@@ -326,7 +364,10 @@ def build_candidates() -> dict[str, Any]:
             })
             continue
 
-        candidate = build_semantic_candidate(article_text)
+        candidate = build_semantic_candidate(
+            article_text,
+            income_type=scope["income_type"],
+        )
         candidate.update({
             "packet_id": scope["packet_id"],
             "source_country": "SK",
