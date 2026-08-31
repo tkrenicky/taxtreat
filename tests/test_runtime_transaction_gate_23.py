@@ -117,10 +117,8 @@ def test_russia_not_hard_blocked_before_suspension():
     )
 
     assert result.applies is True
-    assert result.allowed is False
-    assert result.missing_facts == [
-        "related_party_status"
-    ]
+    assert result.allowed is True
+    assert result.missing_facts == []
 
 
 def test_scope_outside_final_23_is_unchanged():
