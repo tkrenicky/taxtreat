@@ -250,6 +250,8 @@ def capture(output_dir: Path) -> dict[str, object]:
             workspace_form.locator('select[name="direct_ownership"]').select_option("true")
             workspace_form.locator('select[name="holding_period_mode"]').select_option("known_date")
             workspace_form.locator('input[name="acquisition_date"]').fill("2024-01-01")
+            workspace_form.locator('select[name="section19_company_form"]').select_option("true")
+            workspace_form.locator('select[name="section19_taxable_company"]').select_option("false")
 
             for _ in range(6):
                 workspace_form.locator("#workspace-submit").click()
