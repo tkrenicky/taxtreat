@@ -52,6 +52,10 @@ def main() -> int:
             form.locator('select[name="direct_ownership"]').select_option("true")
             form.locator('select[name="holding_period_mode"]').select_option("known_date")
             form.locator('input[name="acquisition_date"]').fill("2024-01-01")
+            treaty_resident_yes = form.locator('input[name="treaty_resident"][value="true"]')
+            treaty_resident_yes.evaluate(
+                "el => { el.checked = true; el.dispatchEvent(new Event('input', { bubbles: true })); el.dispatchEvent(new Event('change', { bubbles: true })); }"
+            )
 
             company_form = form.locator('select[name="section19_company_form"]')
             taxable_company = form.locator('select[name="section19_taxable_company"]')
