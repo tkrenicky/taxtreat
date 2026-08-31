@@ -11,6 +11,7 @@ BASE = ROOT / "data/legal_reviews/sk_outbound"
 SEMANTIC = BASE / "treaty_semantic_candidates.json"
 ARTICLES = BASE / "treaty_article_machine_extraction.json"
 COVERAGE = BASE / "human_review_coverage.json"
+INVENTORY = BASE / "treaty_instrument_inventory.json"
 OUTPUT = ROOT / "data/legal_rules_sk"
 SUMMARY = BASE / "structured_treaty_rule_materialization_summary.json"
 
@@ -81,6 +82,11 @@ def main() -> int:
     semantic = load(SEMANTIC)
     articles = load(ARTICLES)
     coverage = load(COVERAGE)
+    inventory = load(INVENTORY)
+    treaty_valid_from = {
+        row["recipient_country"]: row["treaty_valid_from"]
+        for row in inventory["relationships"]
+    }
 
     assert coverage["coverage"]["legal_review_covered_scopes"] == 225
     assert coverage["coverage"]["uncovered_scopes"] == 0
@@ -133,7 +139,8 @@ def main() -> int:
             "priority": 600,
             "conditions": conditions(scope),
             "effect": "rate",
-            "verification_status": "verified",
+            "effective_from": treaty_valid_from[country],
+            "verification_status": "needs_review",
             "source_text": article_text,
             "source_id": f"SK-SLOVLEX-{source_hash[:16].upper()}",
             "source_url": scope["source_url"],
@@ -141,8 +148,6 @@ def main() -> int:
             "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
             "reviewer_id": "sk_legal_review_coverage",
             "reviewed_at": "2026-08-21",
-            "approved_by": "structured_materialization_policy",
-            "approved_at": "2026-08-31",
             "approval_dataset_release": coverage["dataset_release"],
             "approval_created_at": "2026-08-31",
             "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
@@ -180,6 +185,7 @@ def main() -> int:
         "unresolved": unresolved,
         "policy": {
             "only_unambiguous_single_rate_scopes_materialized": True,
+            "stage1_rules_remain_needs_review_until_protocol_mli_gates_are_materialized": True,
             "special_interest_exemptions_not_inferred": True,
             "ownership_linked_dividend_branches_not_inferred": True,
             "multi_rate_royalties_not_inferred": True,
