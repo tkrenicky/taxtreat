@@ -796,7 +796,16 @@ def test_pending_semantic_remediation_registry_matches_engine_quarantine():
     }
 
     assert len(candidate_scopes) == 36
-    assert candidate_scopes == _PENDING_SEMANTIC_REMEDIATION_SCOPES
+    # The engine quarantine may be a strict superset when a later audit
+    # discovers an additional unsafe scope before a source-backed correction
+    # record is prepared. Quarantine must never be narrower than the registry.
+    assert candidate_scopes.issubset(_PENDING_SEMANTIC_REMEDIATION_SCOPES)
+    assert _PENDING_SEMANTIC_REMEDIATION_SCOPES - candidate_scopes == {
+        ("CH", "dividend"),
+        ("SI", "dividend"),
+        ("UA", "dividend"),
+        ("VE", "dividend"),
+    }
 
 
 def test_all_detectable_reduced_dividend_projection_gaps_are_quarantined():
