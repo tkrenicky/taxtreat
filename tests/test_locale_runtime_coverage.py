@@ -6,6 +6,7 @@ from pathlib import Path
 import pytest
 
 from taxtreat.services import report_locales
+from taxtreat.services import legal_sources as service_legal_sources
 from taxtreat.services.reporting import english_release_localization
 from taxtreat.services.reporting import html_localization
 from taxtreat.services import web_locale_engine
@@ -326,3 +327,44 @@ def test_locale_branch_completeness(tmp_path, monkeypatch):
     assert "" not in mapping
     assert "neutral" not in mapping
     assert mapping["KROK TEST"] == "STEP TEST"
+
+
+def test_legal_source_relief_path_branches(monkeypatch):
+    monkeypatch.setattr(service_legal_sources, "load_verified_provisions", lambda: {})
+
+    dividend = service_legal_sources.build_legal_path(
+        [{
+            "rule_id": "RELIEF",
+            "legal_layer": "eu_relief",
+            "article": "19",
+            "source_url": "https://example.test/eu",
+        }],
+        source_country="CZ",
+        recipient_country="AT",
+        selected_rule_id="RELIEF",
+        income_type="dividend",
+    )
+    assert not any(item["legal_layer"] == "eu_relief" for item in dividend)
+    basis = next(item for item in dividend if item.get("path_role") == "domestic_exemption_basis")
+    assert basis["rule_id"] == "RELIEF"
+    assert basis["article"] == "19"
+
+    interest = service_legal_sources.build_legal_path(
+        [{
+            "rule_id": "EU-I",
+            "legal_layer": "eu_relief",
+            "article": "19",
+            "source_url": "https://example.test/eu-interest",
+        }],
+        source_country="CZ",
+        recipient_country="AT",
+        selected_rule_id="OTHER",
+        income_type="interest",
+    )
+    assert any(item["legal_layer"] == "eu_relief" for item in interest)
+    assert any(item.get("path_role") == "domestic_exemption_basis" for item in interest)
+
+    assert service_legal_sources._domestic_relief_basis("other") is None
+    assert service_legal_sources._format_domestic_paragraph("1(a)(1)") == "odst. 1 písm. a) bod 1"
+    assert service_legal_sources._format_domestic_paragraph("3") == "odst. 3"
+    assert service_legal_sources._format_domestic_paragraph("") == ""
