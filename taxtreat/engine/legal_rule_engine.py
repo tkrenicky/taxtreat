@@ -120,6 +120,45 @@ def _boolean_like(value: Any) -> bool | None:
     return None
 
 
+_PENDING_SEMANTIC_REMEDIATION_SCOPES = {
+    ("AD", "dividend"),
+    ("AL", "dividend"),
+    ("BB", "dividend"),
+    ("BD", "dividend"),
+    ("BE", "dividend"),
+    ("CN", "dividend"),
+    ("CY", "dividend"),
+    ("EE", "dividend"),
+    ("EG", "dividend"),
+    ("ES", "dividend"),
+    ("FR", "dividend"),
+    ("GB", "dividend"),
+    ("GE", "dividend"),
+    ("HU", "dividend"),
+    ("IE", "dividend"),
+    ("IL", "dividend"),
+    ("IS", "dividend"),
+    ("KG", "dividend"),
+    ("KW", "dividend"),
+    ("LI", "dividend"),
+    ("LK", "dividend"),
+    ("LT", "dividend"),
+    ("LU", "dividend"),
+    ("LV", "dividend"),
+    ("MD", "dividend"),
+    ("MK", "dividend"),
+    ("NG", "dividend"),
+    ("PH", "royalty"),
+    ("PK", "dividend"),
+    ("QA", "dividend"),
+    ("SK", "dividend"),
+    ("TN", "dividend"),
+    ("TW", "royalty"),
+    ("US", "dividend"),
+    ("XK", "dividend"),
+    ("ZA", "dividend"),
+}
+
 _UI_ROYALTY_CATEGORY_GROUPS = {
     # Current fail-closed UI taxonomy. Each value is intentionally atomic
     # enough to distinguish treaty branches that carry different rates.
@@ -187,8 +226,26 @@ def _royalty_category_groups(value: Any) -> set[str]:
             "other",
         }
 
-    if normalized == "all_other_article_12_royalties":
+    if normalized in {
+        "all_royalties_except_industrial_commercial_scientific_equipment",
+        "all_royalties_excluding_industrial_commercial_scientific_equipment",
+    }:
         return {
+            "software",
+            "industrial_ip",
+            "equipment_financial",
+            "equipment_operating",
+            "other",
+        }
+
+    if normalized == "all_other_article_12_royalties":
+        # "All other" is a complement branch. It must not re-include the
+        # ordinary copyright class where another rule already carves that
+        # class out explicitly. It does include equipment where Article 12
+        # otherwise covers use/right to use industrial, commercial or
+        # scientific equipment.
+        return {
+            "film_broadcast",
             "software",
             "industrial_ip",
             "equipment_financial",
@@ -446,6 +503,39 @@ def _evaluate_condition(
     condition_value = condition.value
 
     if (
+        condition.fact == "beneficial_owner"
+        and condition.operator in {"==", "!="}
+        and isinstance(condition_value, str)
+        and _boolean_like(condition_value) is None
+    ):
+        # Legacy Stage 6 projection defect: some public-body/entity
+        # classifications were encoded under beneficial_owner. A boolean
+        # browser value must not silently disprove such a narrower legal
+        # classification and release a general fallback as FINAL.
+        return None, condition.fact
+
+    if (
+        condition.fact == "recipient_entity_type"
+        and condition.operator in {"==", "!="}
+        and isinstance(fact_value, str)
+        and isinstance(condition_value, str)
+    ):
+        # Browser/profile entity types are intentionally coarse. A generic
+        # value such as "company" cannot safely disprove a treaty branch that
+        # requires a narrower legal status (for example
+        # "company_other_than_partnership", a bank, central bank, government
+        # body, or a wholly government-owned financial institution). Treat
+        # that comparison as unresolved so a general fallback cannot become
+        # FINAL merely because the UI taxonomy is less granular than the
+        # treaty taxonomy.
+        coarse_entity_types = {"company", "individual", "fund", "other"}
+        if (
+            fact_value in coarse_entity_types
+            and condition_value not in coarse_entity_types
+        ):
+            return None, condition.fact
+
+    if (
         condition.fact == "royalty_category"
         and condition.operator in {"==", "!="}
     ):
@@ -546,6 +636,19 @@ def evaluate_legal_rules(
         result.explanation.append("The transaction scope is incomplete.")
         return result
 
+    semantic_scope = (
+        str(facts.get("recipient_country", "")).upper(),
+        str(facts.get("income_type", "")),
+    )
+    if semantic_scope in _PENDING_SEMANTIC_REMEDIATION_SCOPES:
+        result.status = DecisionStatus.REVIEW_REQUIRED
+        result.requires_review = True
+        result.explanation.append(
+            "This treaty scope is quarantined pending a source-backed "
+            "semantic reprojection and new hash-bound legal approval."
+        )
+        return result
+
     relevant_rules = [
         rule
         for rule in rules
@@ -607,7 +710,71 @@ def evaluate_legal_rules(
     ]
     matching_rules.sort(key=lambda rule: (rule.priority, rule.rule_id))
 
+    if facts.get("income_type") == "royalty" and facts.get("royalty_category"):
+        category_rules = [
+            rule
+            for rule in relevant_rules
+            if rule.legal_layer in {"treaty", "protocol", "mli"}
+            and any(
+                condition.fact == "royalty_category"
+                and condition.operator == "=="
+                for condition in rule.conditions
+            )
+        ]
+        if category_rules:
+            category_covered = any(
+                _royalty_categories_match(
+                    facts.get("royalty_category"),
+                    condition.value,
+                )
+                for rule in category_rules
+                for condition in rule.conditions
+                if condition.fact == "royalty_category"
+                and condition.operator == "=="
+            )
+            if not category_covered:
+                result.requires_review = True
+                result.missing_facts = ["royalty_category"]
+                result.explanation.append(
+                    "The selected royalty category is not covered by any "
+                    "structured treaty royalty branch for this jurisdiction. "
+                    "Treaty classification requires review."
+                )
+                return result
+
     if matching_rules:
+        # A legacy/broad royalty UI value may semantically match more than one
+        # treaty category. Priority is not a legal tie-breaker in that case:
+        # if those matched treaty branches produce different outcomes, the
+        # transaction classification is insufficient and must fail closed.
+        if facts.get("income_type") == "royalty":
+            royalty_matches = []
+            for rule in matching_rules:
+                if rule.legal_layer not in {"treaty", "protocol", "mli"}:
+                    continue
+                category_conditions = [
+                    condition
+                    for condition in rule.conditions
+                    if condition.fact == "royalty_category"
+                    and condition.operator == "=="
+                ]
+                if category_conditions:
+                    royalty_matches.append(rule)
+
+            royalty_outcomes = {
+                (rule.rate, resolve_tax_treatment(rule))
+                for rule in royalty_matches
+            }
+            if len(royalty_matches) > 1 and len(royalty_outcomes) > 1:
+                result.requires_review = True
+                result.missing_facts = ["royalty_category"]
+                result.explanation.append(
+                    "The supplied royalty classification matches multiple "
+                    "treaty branches with different outcomes. A more precise "
+                    "royalty category is required."
+                )
+                return result
+
         conflicts = _matching_rule_conflicts(matching_rules)
         if conflicts:
             result.requires_review = True

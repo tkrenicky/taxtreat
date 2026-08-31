@@ -15,8 +15,12 @@
     const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
     const nodes = [];
     while (walker.nextNode()) nodes.push(walker.currentNode);
+    const expected = String(from).trim().toLocaleLowerCase("cs-CZ");
     nodes.forEach((node) => {
-      if (node.nodeValue.trim() === from) node.nodeValue = node.nodeValue.replace(from, to);
+      const raw = String(node.nodeValue || "");
+      const trimmed = raw.trim();
+      if (trimmed.toLocaleLowerCase("cs-CZ") !== expected) return;
+      node.nodeValue = raw.replace(trimmed, to);
     });
   }
 
@@ -72,6 +76,11 @@
       ["Související právní pravidlo", "Related legal rule"],
       ["Otevřít zdroj ↗", "Open source ↗"],
       ["Znění použitého ustanovení", "Text of the applied provision"],
+      ["Vnitrostátní osvobození", "Domestic exemption"],
+      ["Vnitrostátní osvobození podle § 19 ZDP", "Domestic exemption under Section 19"],
+      ["§ 19 ZDP se použije", "Section 19 applies"],
+      ["§ 19 ZDP se neuplatní", "Section 19 does not apply"],
+      ["§ 19 ZDP zatím nelze uzavřít", "Section 19 unresolved"],
     ];
     pairs.forEach(([cs, en]) => exact(root, cs, en));
 
