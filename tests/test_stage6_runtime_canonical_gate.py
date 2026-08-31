@@ -73,35 +73,37 @@ def test_canonical_gate_is_full_101_country_universe():
     assert "CZ-TW" in pair_ids
 
 
-def test_canonical_gate_has_final_stage6_release():
+def test_canonical_gate_has_partial_hash_valid_stage6_release():
     raw = json.loads(
         CANONICAL_GATE.read_text(encoding="utf-8")
     )
 
-    assert raw["counts"]["production_approved_packages"] == 101
-    assert raw["counts"]["rule_promoted_packages"] == 101
-    assert raw["counts"]["released_packages"] == 101
-    assert raw["counts"]["released_scopes"] == 303
+    assert raw["counts"]["production_approved_packages"] == 61
+    assert raw["counts"]["rule_promoted_packages"] == 61
+    assert raw["counts"]["released_packages"] == 61
+    assert raw["counts"]["released_scopes"] == 183
+    assert raw["counts"]["semantic_remediation_pending_packages"] == 40
 
 
-def test_all_canonical_packages_are_runtime_released():
-    raw = json.loads(
-        CANONICAL_GATE.read_text(encoding="utf-8")
-    )
+def test_runtime_gate_blocks_only_semantically_rehashed_packages():
+    raw = json.loads(CANONICAL_GATE.read_text(encoding="utf-8"))
+    blocked = [row for row in raw["treaty_partners"] if row["release_status"] != "released"]
+    released = [row for row in raw["treaty_partners"] if row["release_status"] == "released"]
 
-    for row in raw["treaty_partners"]:
-        assert row["production_approval_status"] == "production_approved"
-        assert row["rule_promotion_status"] == "promoted"
-        assert row["release_status"] == "released"
-        assert row["active_rule_allowed"] is True
-        assert row["production_ready"] is True
-        assert row["fail_closed"] is False
-        assert row["release_blockers"] == []
+    assert len(blocked) == 40
+    assert len(released) == 61
+    for row in blocked:
+        assert row["production_approval_status"] == "not_approved"
+        assert row["rule_promotion_status"] == "not_promoted"
+        assert row["active_rule_allowed"] is False
+        assert row["production_ready"] is False
+        assert row["fail_closed"] is True
+        assert row["release_blockers"] == ["semantic_remediation_requires_hash_bound_human_review"]
 
 
 @pytest.mark.parametrize(
     "pair_id",
-    ["CZ-AT", "CZ-CH", "CZ-SG", "CZ-TW"],
+    ["CZ-AT", "CZ-CA", "CZ-SG", "CZ-JP"],
 )
 def test_runtime_gate_releases_known_pairs(pair_id: str):
     release = get_canonical_source_release(pair_id)
@@ -201,3 +203,11 @@ def test_runtime_gate_rejects_blocked_rows(
             "CZ-AT",
             gate_path=gate_path,
         )
+
+
+@pytest.mark.parametrize("pair_id", ["CZ-CH", "CZ-TW"])
+def test_runtime_gate_blocks_known_semantic_rehash_pairs(pair_id: str):
+    release = get_canonical_source_release(pair_id)
+    assert release.is_released is False
+    with pytest.raises(CanonicalSourceNotReleasedError):
+        require_canonical_released_source(pair_id)
