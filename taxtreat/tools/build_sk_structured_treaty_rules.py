@@ -6,7 +6,7 @@ import re
 from collections import defaultdict
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 BASE = ROOT / "data/legal_reviews/sk_outbound"
 SEMANTIC = BASE / "treaty_semantic_candidates.json"
 ARTICLES = BASE / "treaty_article_machine_extraction.json"
