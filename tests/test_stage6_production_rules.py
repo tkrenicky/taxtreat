@@ -79,23 +79,14 @@ def test_catalog_covers_101_pairs_and_303_scopes():
     assert len(scopes) == 303
 
 
-def test_exact_hash_binding_across_governance():
-    q = load(
-        BASE / "cz_country_qa_queue.json"
-    )
-    a = load(
-        BASE / "stage6_production_approval.json"
-    )
-    r = load(
-        BASE
-        / "stage6_production_materialization_readiness.json"
-    )
-    g = load(
-        BASE
-        / "production_source_release_gate_v2.json"
-    )
-    p = load(
-        BASE / "stage6_rule_promotion.json"
+def test_exact_hash_binding_across_governance_fails_closed_for_semantic_rehash():
+    q = load(BASE / "cz_country_qa_queue.json")
+    a = load(BASE / "stage6_production_approval.json")
+    r = load(BASE / "stage6_production_materialization_readiness.json")
+    g = load(BASE / "production_source_release_gate_v2.json")
+    p = load(BASE / "stage6_rule_promotion.json")
+    remediation = load(
+        ROOT / "data/legal_consolidation/semantic_remediation_condition_candidates_20260829.json"
     )
 
     qh = hash_map(q["packages"])
@@ -103,9 +94,29 @@ def test_exact_hash_binding_across_governance():
     rh = hash_map(r["records"])
     gh = hash_map(g["treaty_partners"])
     ph = hash_map(p["records"])
+    remediation_pairs = {
+        f"CZ-{row['country']}"
+        for row in remediation["corrections"]
+    }
 
     assert len(qh) == 101
-    assert qh == ah == rh == gh == ph
+    assert qh == gh
+
+    stale_approval_pairs = {
+        pair_id
+        for pair_id in qh
+        if qh[pair_id] != ah[pair_id]
+    }
+    assert len(stale_approval_pairs) == 40
+    assert stale_approval_pairs == remediation_pairs
+
+    for pair_id in qh:
+        if pair_id in remediation_pairs:
+            assert qh[pair_id] != ah[pair_id]
+            assert qh[pair_id] != rh[pair_id]
+            assert qh[pair_id] != ph[pair_id]
+        else:
+            assert qh[pair_id] == ah[pair_id] == rh[pair_id] == ph[pair_id]
 
 
 def test_promotion_complete_but_source_release_zero():
@@ -199,32 +210,29 @@ def test_gr_dividend_has_no_invented_treaty_cap():
     assert treaty_rows == []
 
 
-def test_canonical_gate_is_fully_released():
-    gate = load(
-        BASE
-        / "production_source_release_gate_v2.json"
+def test_canonical_gate_is_fail_closed_for_semantically_rehashed_packages():
+    gate = load(BASE / "production_source_release_gate_v2.json")
+    remediation = load(
+        ROOT / "data/legal_consolidation/semantic_remediation_condition_candidates_20260829.json"
     )
+    remediation_pairs = {
+        f"CZ-{row['country']}"
+        for row in remediation["corrections"]
+    }
 
-    assert (
-        gate["counts"]["rule_promoted_packages"]
-        == 101
-    )
-    assert (
-        gate["counts"]["released_packages"]
-        == 101
-    )
-    assert (
-        gate["counts"]["released_scopes"]
-        == 303
-    )
+    assert gate["counts"]["rule_promoted_packages"] == 61
+    assert gate["counts"]["released_packages"] == 61
+    assert gate["counts"]["released_scopes"] == 183
 
-    assert all(
-        row["rule_promotion_status"]
-        == "promoted"
+    released = {
+        row["treaty_pair_id"]
         for row in gate["treaty_partners"]
-    )
-
-    assert all(
-        row["release_status"] == "released"
+        if row["release_status"] == "released"
+    }
+    blocked = {
+        row["treaty_pair_id"]
         for row in gate["treaty_partners"]
-    )
+        if row["release_status"] == "not_released"
+    }
+    assert len(released) == 61
+    assert blocked == remediation_pairs
