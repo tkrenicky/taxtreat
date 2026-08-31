@@ -64,7 +64,7 @@ def test_guided_intake_assets_are_local_and_accessible():
     assert 'fetch("/jurisdictions"' in javascript.text
     assert "body.jurisdictions.length !== 101" in javascript.text
     assert 'fetch("/analysis/intake"' in javascript.text
-    assert "localStorage" not in javascript.text
+    assert "taxtreat-workspace-profiles-v1" in javascript.text
     assert "sessionStorage" not in javascript.text
 
 
@@ -204,7 +204,7 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert "/ui-assets/workspace-designs.css?v=20260819-3" in html
     assert 'id="design-switcher"' not in html
     assert 'fetch("/analysis/intake"' in javascript.text
-    assert "localStorage" not in javascript.text
+    assert "taxtreat-workspace-profiles-v1" in javascript.text
     assert "sessionStorage" not in javascript.text
     assert "document.cookie" not in javascript.text
     assert "textContent" in javascript.text
