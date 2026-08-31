@@ -74,15 +74,15 @@ def test_packet_records_explicit_reviewer_reconfirmation():
     )
 
 
-def test_release_is_open_after_reconfirmation():
+def test_reconfirmation_is_complete_but_release_waits_for_rule_materialization():
     packet = load(PACKET)
     manifest = load(MANIFEST)
 
     assert packet["reviewer_confirmation"]["confirmed"] is True
 
-    assert manifest["release_eligible"] is True
-    assert manifest["release_status"] == "released"
-    assert manifest["blockers"] == []
+    assert manifest["release_eligible"] is False
+    assert manifest["release_status"] == "pre_release"
+    assert manifest["blockers"] == ["structured_sk_treaty_rules_not_materialized"]
 
     assert (
         manifest["mli_final_reviewer_reconfirmation_required"]
