@@ -2,33 +2,38 @@
   "counts": {
     "human_resolution_complete_packages": 5,
     "human_resolution_pending_packages": 0,
-    "human_review_complete_packages": 101,
-    "production_approval_eligible_packages": 101,
-    "production_approved_packages": 101,
-    "released_packages": 101,
-    "released_scopes": 303,
-    "rule_promoted_packages": 101,
-    "rule_promoted_scopes": 303,
+    "human_review_complete_packages": 61,
+    "production_approval_eligible_packages": 61,
+    "production_approved_packages": 61,
+    "released_packages": 61,
+    "released_scopes": 183,
+    "rule_promoted_packages": 61,
+    "rule_promoted_scopes": 183,
     "scope_count": 303,
     "secondary_ai_crosscheck_complete_packages": 7,
     "secondary_ai_crosscheck_pending_packages": 0,
     "secondary_ai_crosscheck_required_packages": 7,
-    "treaty_partner_count": 101
+    "treaty_partner_count": 101,
+    "semantic_remediation_pending_packages": 40,
+    "semantic_remediation_pending_scopes": 40
   },
-  "dataset_release": "stage6-canonical-production-release-2026-08-12.1",
+  "dataset_release": "production-source-release-gate-v2-2026-08-31.2",
   "fail_closed": true,
   "gate_semantics": {
     "automatic_needs_review_to_verified_forbidden": true,
     "global_fail_closed": true,
     "missing_release_event_blocks_runtime": true,
-    "primary_human_review_complete": true,
+    "primary_human_review_complete": false,
     "production_approval_is_additional_human_review": false,
     "production_approval_is_deterministic_governance_result": true,
     "production_approval_is_explicit_event": true,
     "production_approval_is_not_rule_promotion": true,
     "rule_promotion_is_not_source_release": true,
     "secondary_ai_crosscheck_sample_complete": true,
-    "secondary_ai_is_not_human_review": true
+    "secondary_ai_is_not_human_review": true,
+    "historical_primary_human_review_complete": true,
+    "semantic_rehash_requires_fresh_human_review": true,
+    "semantic_rehash_cannot_inherit_prior_approval": true
   },
   "schema_version": 2,
   "semantics": {
@@ -46,18 +51,20 @@
   "treaty_partner_count": 101,
   "treaty_partners": [
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "8e5f5ec44384877de647407effe5391311110662fb3b82117fb23a643d9b16dd",
+      "package_sha256": "6a2fecb997238bfcd6eb6eeee0e03d6add49c15b4485740cec50868de61aef1a",
       "partner_country": "AD",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "8e5f5ec44384877de647407effe5391311110662fb3b82117fb23a643d9b16dd",
+        "current_package_sha256": "6a2fecb997238bfcd6eb6eeee0e03d6add49c15b4485740cec50868de61aef1a",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -113,13 +120,20 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "8e5f5ec44384877de647407effe5391311110662fb3b82117fb23a643d9b16dd",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "6a2fecb997238bfcd6eb6eeee0e03d6add49c15b4485740cec50868de61aef1a",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "8e5f5ec44384877de647407effe5391311110662fb3b82117fb23a643d9b16dd",
+          "current_package_sha256": "6a2fecb997238bfcd6eb6eeee0e03d6add49c15b4485740cec50868de61aef1a",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-AD"
     },
@@ -202,18 +216,20 @@
       "treaty_pair_id": "CZ-AE"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "0cf3f81f175d833056c9d292bcadf35e191d5611986f75175b9e119703d12f9c",
+      "package_sha256": "9cb2be4e34f7f234d71391df5dd2923201dc4a079ff12c19b86e0806b510b3f7",
       "partner_country": "AL",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "0cf3f81f175d833056c9d292bcadf35e191d5611986f75175b9e119703d12f9c",
+        "current_package_sha256": "9cb2be4e34f7f234d71391df5dd2923201dc4a079ff12c19b86e0806b510b3f7",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -269,13 +285,20 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "0cf3f81f175d833056c9d292bcadf35e191d5611986f75175b9e119703d12f9c",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "9cb2be4e34f7f234d71391df5dd2923201dc4a079ff12c19b86e0806b510b3f7",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "0cf3f81f175d833056c9d292bcadf35e191d5611986f75175b9e119703d12f9c",
+          "current_package_sha256": "9cb2be4e34f7f234d71391df5dd2923201dc4a079ff12c19b86e0806b510b3f7",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-AL"
     },
@@ -670,18 +693,20 @@
       "treaty_pair_id": "CZ-BA"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "2a8c6b2b3f014bfefa8f7886c58376c6a97a5b233e68dc401f11f165b5f3ebbf",
+      "package_sha256": "f5c917ef2a18235d13d99b7ca469a12460a1f85093390f1e978a83bf68b3493b",
       "partner_country": "BB",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "2a8c6b2b3f014bfefa8f7886c58376c6a97a5b233e68dc401f11f165b5f3ebbf",
+        "current_package_sha256": "f5c917ef2a18235d13d99b7ca469a12460a1f85093390f1e978a83bf68b3493b",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -737,29 +762,38 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "2a8c6b2b3f014bfefa8f7886c58376c6a97a5b233e68dc401f11f165b5f3ebbf",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "f5c917ef2a18235d13d99b7ca469a12460a1f85093390f1e978a83bf68b3493b",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "2a8c6b2b3f014bfefa8f7886c58376c6a97a5b233e68dc401f11f165b5f3ebbf",
+          "current_package_sha256": "f5c917ef2a18235d13d99b7ca469a12460a1f85093390f1e978a83bf68b3493b",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-BB"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "0c873e0915a646dd8d546a8f3994b95c68c306c1f7056b38b1c09773f7c4f4d7",
+      "package_sha256": "342275c1e824d07e57af9b4f0e9d86a9e7ae20cc19fe7008da795a21dbd3f394",
       "partner_country": "BD",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "0c873e0915a646dd8d546a8f3994b95c68c306c1f7056b38b1c09773f7c4f4d7",
+        "current_package_sha256": "342275c1e824d07e57af9b4f0e9d86a9e7ae20cc19fe7008da795a21dbd3f394",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -815,29 +849,38 @@
         "stage6_qa_evidence": {
           "ai_outcome": "discrepancy",
           "crosscheck_status": "ai_crosscheck_discrepancy",
-          "current_package_sha256": "0c873e0915a646dd8d546a8f3994b95c68c306c1f7056b38b1c09773f7c4f4d7",
-          "human_resolution_status": "tax_treat_corrected",
+          "current_package_sha256": "342275c1e824d07e57af9b4f0e9d86a9e7ae20cc19fe7008da795a21dbd3f394",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": "94ebe6924727e60eca34ee2ca176b3d4698ef378320ec73afcc23314359ea383"
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "0c873e0915a646dd8d546a8f3994b95c68c306c1f7056b38b1c09773f7c4f4d7",
+          "current_package_sha256": "342275c1e824d07e57af9b4f0e9d86a9e7ae20cc19fe7008da795a21dbd3f394",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "secondary_ai_crosscheck_complete",
       "treaty_pair_id": "CZ-BD"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "66fbc33c8b946d920ec7e491572fae858a368d6405daa3f49d8a14e02a3a997d",
+      "package_sha256": "c8e49524ffd637ad72745f2c7785231542196d428fba39a8a48bb36e4acebcaa",
       "partner_country": "BE",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "66fbc33c8b946d920ec7e491572fae858a368d6405daa3f49d8a14e02a3a997d",
+        "current_package_sha256": "c8e49524ffd637ad72745f2c7785231542196d428fba39a8a48bb36e4acebcaa",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -893,13 +936,20 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "66fbc33c8b946d920ec7e491572fae858a368d6405daa3f49d8a14e02a3a997d",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "c8e49524ffd637ad72745f2c7785231542196d428fba39a8a48bb36e4acebcaa",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "66fbc33c8b946d920ec7e491572fae858a368d6405daa3f49d8a14e02a3a997d",
+          "current_package_sha256": "c8e49524ffd637ad72745f2c7785231542196d428fba39a8a48bb36e4acebcaa",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-BE"
     },
@@ -1357,18 +1407,20 @@
       "treaty_pair_id": "CZ-CA"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "f4f3a756b17d4894a50f631954a031789745b77e67f8521ed045d74d15c3ed96",
+      "package_sha256": "74d74f237a9fec8c47271c51279263d11075474d51b274f0b72514c3dfcbadbb",
       "partner_country": "CH",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "f4f3a756b17d4894a50f631954a031789745b77e67f8521ed045d74d15c3ed96",
+        "current_package_sha256": "74d74f237a9fec8c47271c51279263d11075474d51b274f0b72514c3dfcbadbb",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -1424,13 +1476,20 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "f4f3a756b17d4894a50f631954a031789745b77e67f8521ed045d74d15c3ed96",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "74d74f237a9fec8c47271c51279263d11075474d51b274f0b72514c3dfcbadbb",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "f4f3a756b17d4894a50f631954a031789745b77e67f8521ed045d74d15c3ed96",
+          "current_package_sha256": "74d74f237a9fec8c47271c51279263d11075474d51b274f0b72514c3dfcbadbb",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-CH"
     },
@@ -1591,18 +1650,20 @@
       "treaty_pair_id": "CZ-CM"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "437bcfcf1001a769d82b0aa1ef376ffc1754f13e185242167e708b6223099233",
+      "package_sha256": "83353aceeb9ca0b59090381dd022da94121451b9bf0e7b1fc4722bbed21f54d1",
       "partner_country": "CN",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "437bcfcf1001a769d82b0aa1ef376ffc1754f13e185242167e708b6223099233",
+        "current_package_sha256": "83353aceeb9ca0b59090381dd022da94121451b9bf0e7b1fc4722bbed21f54d1",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -1658,13 +1719,20 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "437bcfcf1001a769d82b0aa1ef376ffc1754f13e185242167e708b6223099233",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "83353aceeb9ca0b59090381dd022da94121451b9bf0e7b1fc4722bbed21f54d1",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "437bcfcf1001a769d82b0aa1ef376ffc1754f13e185242167e708b6223099233",
+          "current_package_sha256": "83353aceeb9ca0b59090381dd022da94121451b9bf0e7b1fc4722bbed21f54d1",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-CN"
     },
@@ -1747,18 +1815,20 @@
       "treaty_pair_id": "CZ-CO"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "c2118b3652fe7859034720b27a135c8423bbd3cd6d0de044e49a9d9b7605f43e",
+      "package_sha256": "4901480bbb5d16cae1e9588b43ab34511d25d817bea266154d0def92d8e9d7ad",
       "partner_country": "CY",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "c2118b3652fe7859034720b27a135c8423bbd3cd6d0de044e49a9d9b7605f43e",
+        "current_package_sha256": "4901480bbb5d16cae1e9588b43ab34511d25d817bea266154d0def92d8e9d7ad",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -1814,13 +1884,20 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "c2118b3652fe7859034720b27a135c8423bbd3cd6d0de044e49a9d9b7605f43e",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "4901480bbb5d16cae1e9588b43ab34511d25d817bea266154d0def92d8e9d7ad",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "c2118b3652fe7859034720b27a135c8423bbd3cd6d0de044e49a9d9b7605f43e",
+          "current_package_sha256": "4901480bbb5d16cae1e9588b43ab34511d25d817bea266154d0def92d8e9d7ad",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-CY"
     },
@@ -1981,18 +2058,20 @@
       "treaty_pair_id": "CZ-DK"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "5746ec0d86893aec98592c53d2ce67f066a57016d0068f6c41a5a0e3ac3a7a79",
+      "package_sha256": "0b589c53fa07118255ccda2fa4c76f7d2db14a370afda2631d6d0f38bcaf03b9",
       "partner_country": "EE",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "5746ec0d86893aec98592c53d2ce67f066a57016d0068f6c41a5a0e3ac3a7a79",
+        "current_package_sha256": "0b589c53fa07118255ccda2fa4c76f7d2db14a370afda2631d6d0f38bcaf03b9",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -2048,29 +2127,38 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "5746ec0d86893aec98592c53d2ce67f066a57016d0068f6c41a5a0e3ac3a7a79",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "0b589c53fa07118255ccda2fa4c76f7d2db14a370afda2631d6d0f38bcaf03b9",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "5746ec0d86893aec98592c53d2ce67f066a57016d0068f6c41a5a0e3ac3a7a79",
+          "current_package_sha256": "0b589c53fa07118255ccda2fa4c76f7d2db14a370afda2631d6d0f38bcaf03b9",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-EE"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "7d3c2404ea4281b314371174d797a94f0983ccd7122bfb9c78b3de1347de936c",
+      "package_sha256": "24bd316a9a3ea306aa75512b5ed6e24bfe33069bed202576469c8436bdf9b2fb",
       "partner_country": "EG",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "7d3c2404ea4281b314371174d797a94f0983ccd7122bfb9c78b3de1347de936c",
+        "current_package_sha256": "24bd316a9a3ea306aa75512b5ed6e24bfe33069bed202576469c8436bdf9b2fb",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -2126,29 +2214,38 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "7d3c2404ea4281b314371174d797a94f0983ccd7122bfb9c78b3de1347de936c",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "24bd316a9a3ea306aa75512b5ed6e24bfe33069bed202576469c8436bdf9b2fb",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "7d3c2404ea4281b314371174d797a94f0983ccd7122bfb9c78b3de1347de936c",
+          "current_package_sha256": "24bd316a9a3ea306aa75512b5ed6e24bfe33069bed202576469c8436bdf9b2fb",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-EG"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "a5ea7cc3820d950e73245324b214bb497e1f205dafcb76ea55e1dfb65b1efc9d",
+      "package_sha256": "d10b5b7486d6e882a62275534ab46aa8ba56aaf51673301559aab16911fe052c",
       "partner_country": "ES",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "a5ea7cc3820d950e73245324b214bb497e1f205dafcb76ea55e1dfb65b1efc9d",
+        "current_package_sha256": "d10b5b7486d6e882a62275534ab46aa8ba56aaf51673301559aab16911fe052c",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -2204,13 +2301,20 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "a5ea7cc3820d950e73245324b214bb497e1f205dafcb76ea55e1dfb65b1efc9d",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "d10b5b7486d6e882a62275534ab46aa8ba56aaf51673301559aab16911fe052c",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "a5ea7cc3820d950e73245324b214bb497e1f205dafcb76ea55e1dfb65b1efc9d",
+          "current_package_sha256": "d10b5b7486d6e882a62275534ab46aa8ba56aaf51673301559aab16911fe052c",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-ES"
     },
@@ -2371,18 +2475,20 @@
       "treaty_pair_id": "CZ-FI"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "40967f1d059a1ccc8280508cd41386b0813d6b59f32e014297ad6c3e5c7431b0",
+      "package_sha256": "844708cccc4d51d154767c32e27574a10684b6c7450f9de0ff761737634f1bd9",
       "partner_country": "FR",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "40967f1d059a1ccc8280508cd41386b0813d6b59f32e014297ad6c3e5c7431b0",
+        "current_package_sha256": "844708cccc4d51d154767c32e27574a10684b6c7450f9de0ff761737634f1bd9",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -2438,29 +2544,38 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "40967f1d059a1ccc8280508cd41386b0813d6b59f32e014297ad6c3e5c7431b0",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "844708cccc4d51d154767c32e27574a10684b6c7450f9de0ff761737634f1bd9",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "40967f1d059a1ccc8280508cd41386b0813d6b59f32e014297ad6c3e5c7431b0",
+          "current_package_sha256": "844708cccc4d51d154767c32e27574a10684b6c7450f9de0ff761737634f1bd9",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-FR"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "74b3f36a0dee0d938aafcb7b2e7dcdfc8cab5674577cd9480c6a881e824bbce9",
+      "package_sha256": "3d0fafa71a4e8299cf1c18d62c0e152e5de7a0b216c3dbbc1cd93dd2ff510f8c",
       "partner_country": "GB",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "74b3f36a0dee0d938aafcb7b2e7dcdfc8cab5674577cd9480c6a881e824bbce9",
+        "current_package_sha256": "3d0fafa71a4e8299cf1c18d62c0e152e5de7a0b216c3dbbc1cd93dd2ff510f8c",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -2516,29 +2631,38 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "74b3f36a0dee0d938aafcb7b2e7dcdfc8cab5674577cd9480c6a881e824bbce9",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "3d0fafa71a4e8299cf1c18d62c0e152e5de7a0b216c3dbbc1cd93dd2ff510f8c",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "74b3f36a0dee0d938aafcb7b2e7dcdfc8cab5674577cd9480c6a881e824bbce9",
+          "current_package_sha256": "3d0fafa71a4e8299cf1c18d62c0e152e5de7a0b216c3dbbc1cd93dd2ff510f8c",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-GB"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "55714a2a87b25ff586e2f050a54f296e78d67ad6b0bc9160f1f969c439a82afe",
+      "package_sha256": "e7cc8f3e3f728af10162cac79a3c734097f29dc907b3951efc4786fadf75699d",
       "partner_country": "GE",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "55714a2a87b25ff586e2f050a54f296e78d67ad6b0bc9160f1f969c439a82afe",
+        "current_package_sha256": "e7cc8f3e3f728af10162cac79a3c734097f29dc907b3951efc4786fadf75699d",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -2594,13 +2718,20 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "55714a2a87b25ff586e2f050a54f296e78d67ad6b0bc9160f1f969c439a82afe",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "e7cc8f3e3f728af10162cac79a3c734097f29dc907b3951efc4786fadf75699d",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "55714a2a87b25ff586e2f050a54f296e78d67ad6b0bc9160f1f969c439a82afe",
+          "current_package_sha256": "e7cc8f3e3f728af10162cac79a3c734097f29dc907b3951efc4786fadf75699d",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-GE"
     },
@@ -2917,18 +3048,20 @@
       "treaty_pair_id": "CZ-HR"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "25b262ffb683a1cfd72c29a694129caec946c419708999e4a457e43cf9d752a7",
+      "package_sha256": "337ec1fcd922a997bde36b07107349193f17e378137e7386d5b51fb6ffd329b2",
       "partner_country": "HU",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "25b262ffb683a1cfd72c29a694129caec946c419708999e4a457e43cf9d752a7",
+        "current_package_sha256": "337ec1fcd922a997bde36b07107349193f17e378137e7386d5b51fb6ffd329b2",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -2984,13 +3117,20 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "25b262ffb683a1cfd72c29a694129caec946c419708999e4a457e43cf9d752a7",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "337ec1fcd922a997bde36b07107349193f17e378137e7386d5b51fb6ffd329b2",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "25b262ffb683a1cfd72c29a694129caec946c419708999e4a457e43cf9d752a7",
+          "current_package_sha256": "337ec1fcd922a997bde36b07107349193f17e378137e7386d5b51fb6ffd329b2",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-HU"
     },
@@ -3073,18 +3213,20 @@
       "treaty_pair_id": "CZ-ID"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "c9f1a856a55d2c4aeafcaa4088cc0cda8ca2883350177ed3198e4b06f196e62b",
+      "package_sha256": "e8f00a9678ea77d9739fe137fb44f56fdaf735045ccc5b45079b2a53fec30531",
       "partner_country": "IE",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "c9f1a856a55d2c4aeafcaa4088cc0cda8ca2883350177ed3198e4b06f196e62b",
+        "current_package_sha256": "e8f00a9678ea77d9739fe137fb44f56fdaf735045ccc5b45079b2a53fec30531",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -3140,29 +3282,38 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "c9f1a856a55d2c4aeafcaa4088cc0cda8ca2883350177ed3198e4b06f196e62b",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "e8f00a9678ea77d9739fe137fb44f56fdaf735045ccc5b45079b2a53fec30531",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "c9f1a856a55d2c4aeafcaa4088cc0cda8ca2883350177ed3198e4b06f196e62b",
+          "current_package_sha256": "e8f00a9678ea77d9739fe137fb44f56fdaf735045ccc5b45079b2a53fec30531",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-IE"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "4aaf11061fc20f6c0c33dcf11d76acfdc60b1d5b854822f40b31a6e87614298b",
+      "package_sha256": "f783ee888e85dabbbebd0bfde0db1cff5b094565771e82e6c1f9e7f241845bed",
       "partner_country": "IL",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "4aaf11061fc20f6c0c33dcf11d76acfdc60b1d5b854822f40b31a6e87614298b",
+        "current_package_sha256": "f783ee888e85dabbbebd0bfde0db1cff5b094565771e82e6c1f9e7f241845bed",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -3218,13 +3369,20 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "4aaf11061fc20f6c0c33dcf11d76acfdc60b1d5b854822f40b31a6e87614298b",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "f783ee888e85dabbbebd0bfde0db1cff5b094565771e82e6c1f9e7f241845bed",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "4aaf11061fc20f6c0c33dcf11d76acfdc60b1d5b854822f40b31a6e87614298b",
+          "current_package_sha256": "f783ee888e85dabbbebd0bfde0db1cff5b094565771e82e6c1f9e7f241845bed",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-IL"
     },
@@ -3385,18 +3543,20 @@
       "treaty_pair_id": "CZ-IR"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "3b4efb9b7fdf305768681b49d4b8b7c5152b079beeb73eaf656af8d6f8ef15ba",
+      "package_sha256": "b472d5b2fa9074ff72ddf05a16622a9574718426e31c01b8a363dbcfaabdc2bc",
       "partner_country": "IS",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "3b4efb9b7fdf305768681b49d4b8b7c5152b079beeb73eaf656af8d6f8ef15ba",
+        "current_package_sha256": "b472d5b2fa9074ff72ddf05a16622a9574718426e31c01b8a363dbcfaabdc2bc",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -3452,13 +3612,20 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "3b4efb9b7fdf305768681b49d4b8b7c5152b079beeb73eaf656af8d6f8ef15ba",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "b472d5b2fa9074ff72ddf05a16622a9574718426e31c01b8a363dbcfaabdc2bc",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "3b4efb9b7fdf305768681b49d4b8b7c5152b079beeb73eaf656af8d6f8ef15ba",
+          "current_package_sha256": "b472d5b2fa9074ff72ddf05a16622a9574718426e31c01b8a363dbcfaabdc2bc",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-IS"
     },
@@ -3697,18 +3864,20 @@
       "treaty_pair_id": "CZ-JP"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "8eba5f186f8ce316d6bb4b0366670148eb534d9f6dd1885d0e6affc2419f181e",
+      "package_sha256": "5246eb74133ad8d20f0e73e0bb6a0b4799c2a72b32e00cb846750c5e1e4d425e",
       "partner_country": "KG",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "8eba5f186f8ce316d6bb4b0366670148eb534d9f6dd1885d0e6affc2419f181e",
+        "current_package_sha256": "5246eb74133ad8d20f0e73e0bb6a0b4799c2a72b32e00cb846750c5e1e4d425e",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -3764,13 +3933,20 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "8eba5f186f8ce316d6bb4b0366670148eb534d9f6dd1885d0e6affc2419f181e",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "5246eb74133ad8d20f0e73e0bb6a0b4799c2a72b32e00cb846750c5e1e4d425e",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "8eba5f186f8ce316d6bb4b0366670148eb534d9f6dd1885d0e6affc2419f181e",
+          "current_package_sha256": "5246eb74133ad8d20f0e73e0bb6a0b4799c2a72b32e00cb846750c5e1e4d425e",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-KG"
     },
@@ -3931,18 +4107,20 @@
       "treaty_pair_id": "CZ-KR"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "0217889ac26222f95bbc4605d534e4800d64b64f8d190dc8f806c0d6ca6ce16d",
+      "package_sha256": "2b7db34d51dcad636e321ba9be68e9deed76be2dc9fc579c096c0f8c981053ea",
       "partner_country": "KW",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "0217889ac26222f95bbc4605d534e4800d64b64f8d190dc8f806c0d6ca6ce16d",
+        "current_package_sha256": "2b7db34d51dcad636e321ba9be68e9deed76be2dc9fc579c096c0f8c981053ea",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -3998,13 +4176,20 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "0217889ac26222f95bbc4605d534e4800d64b64f8d190dc8f806c0d6ca6ce16d",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "2b7db34d51dcad636e321ba9be68e9deed76be2dc9fc579c096c0f8c981053ea",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "0217889ac26222f95bbc4605d534e4800d64b64f8d190dc8f806c0d6ca6ce16d",
+          "current_package_sha256": "2b7db34d51dcad636e321ba9be68e9deed76be2dc9fc579c096c0f8c981053ea",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-KW"
     },
@@ -4165,18 +4350,20 @@
       "treaty_pair_id": "CZ-LB"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "83813ba0a0decca78edc8645ce89cbf961283ebe2592089c5091f8eee1f79365",
+      "package_sha256": "7a550be8eef533e068c757dcea702b151730661d8a393045c91e9687e6db8131",
       "partner_country": "LI",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "83813ba0a0decca78edc8645ce89cbf961283ebe2592089c5091f8eee1f79365",
+        "current_package_sha256": "7a550be8eef533e068c757dcea702b151730661d8a393045c91e9687e6db8131",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -4232,29 +4419,38 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "83813ba0a0decca78edc8645ce89cbf961283ebe2592089c5091f8eee1f79365",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "7a550be8eef533e068c757dcea702b151730661d8a393045c91e9687e6db8131",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "83813ba0a0decca78edc8645ce89cbf961283ebe2592089c5091f8eee1f79365",
+          "current_package_sha256": "7a550be8eef533e068c757dcea702b151730661d8a393045c91e9687e6db8131",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-LI"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "fc31429e773f245ebd078e7decfc2a72dbcc2c0743b95d86f55ea5ae229c73e1",
+      "package_sha256": "e22f5111feb594f8b61234a4693eaf3b15fe535509b226cc9c6c88857dd460e3",
       "partner_country": "LK",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "fc31429e773f245ebd078e7decfc2a72dbcc2c0743b95d86f55ea5ae229c73e1",
+        "current_package_sha256": "e22f5111feb594f8b61234a4693eaf3b15fe535509b226cc9c6c88857dd460e3",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -4310,29 +4506,38 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "fc31429e773f245ebd078e7decfc2a72dbcc2c0743b95d86f55ea5ae229c73e1",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "e22f5111feb594f8b61234a4693eaf3b15fe535509b226cc9c6c88857dd460e3",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "fc31429e773f245ebd078e7decfc2a72dbcc2c0743b95d86f55ea5ae229c73e1",
+          "current_package_sha256": "e22f5111feb594f8b61234a4693eaf3b15fe535509b226cc9c6c88857dd460e3",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-LK"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "119659b434152f592c60ce46979f825c8fcd1ed090dca383db0084fdd386aeb4",
+      "package_sha256": "8cd398338cc259e5619b0c947a98342c39b928f246fc642902b78fd2c413af8e",
       "partner_country": "LT",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "119659b434152f592c60ce46979f825c8fcd1ed090dca383db0084fdd386aeb4",
+        "current_package_sha256": "8cd398338cc259e5619b0c947a98342c39b928f246fc642902b78fd2c413af8e",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -4388,29 +4593,38 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "119659b434152f592c60ce46979f825c8fcd1ed090dca383db0084fdd386aeb4",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "8cd398338cc259e5619b0c947a98342c39b928f246fc642902b78fd2c413af8e",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "119659b434152f592c60ce46979f825c8fcd1ed090dca383db0084fdd386aeb4",
+          "current_package_sha256": "8cd398338cc259e5619b0c947a98342c39b928f246fc642902b78fd2c413af8e",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-LT"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "359b4be6dcb8f02d5f07f251739a196ce24e7c75b12017aeecb888f6d3ca0c28",
+      "package_sha256": "6c0d95901a0895f16f9ffe0e3dce6462265381d8c0e68916351ed1bff4a76b9d",
       "partner_country": "LU",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "359b4be6dcb8f02d5f07f251739a196ce24e7c75b12017aeecb888f6d3ca0c28",
+        "current_package_sha256": "6c0d95901a0895f16f9ffe0e3dce6462265381d8c0e68916351ed1bff4a76b9d",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -4466,29 +4680,38 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "359b4be6dcb8f02d5f07f251739a196ce24e7c75b12017aeecb888f6d3ca0c28",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "6c0d95901a0895f16f9ffe0e3dce6462265381d8c0e68916351ed1bff4a76b9d",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "359b4be6dcb8f02d5f07f251739a196ce24e7c75b12017aeecb888f6d3ca0c28",
+          "current_package_sha256": "6c0d95901a0895f16f9ffe0e3dce6462265381d8c0e68916351ed1bff4a76b9d",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-LU"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "c299cb76ce390371a410a90b3f22af037821e5428c5d2b4a7c1ea46dce038e09",
+      "package_sha256": "5cf281835c6a79b1f7dc60d56b05ec61e384b07c82c5540428fee35081d9fda5",
       "partner_country": "LV",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "c299cb76ce390371a410a90b3f22af037821e5428c5d2b4a7c1ea46dce038e09",
+        "current_package_sha256": "5cf281835c6a79b1f7dc60d56b05ec61e384b07c82c5540428fee35081d9fda5",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -4544,13 +4767,20 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "c299cb76ce390371a410a90b3f22af037821e5428c5d2b4a7c1ea46dce038e09",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "5cf281835c6a79b1f7dc60d56b05ec61e384b07c82c5540428fee35081d9fda5",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "c299cb76ce390371a410a90b3f22af037821e5428c5d2b4a7c1ea46dce038e09",
+          "current_package_sha256": "5cf281835c6a79b1f7dc60d56b05ec61e384b07c82c5540428fee35081d9fda5",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-LV"
     },
@@ -4633,18 +4863,20 @@
       "treaty_pair_id": "CZ-MA"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "51ae29c72e808ea2a3bef2e8e4f6fee2aeed2a15dca39aad122551bf330072ec",
+      "package_sha256": "63fca3454896b071cc4fc8daed271968a94f4a23ae2524f9a50f2422acbe56b3",
       "partner_country": "MD",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "51ae29c72e808ea2a3bef2e8e4f6fee2aeed2a15dca39aad122551bf330072ec",
+        "current_package_sha256": "63fca3454896b071cc4fc8daed271968a94f4a23ae2524f9a50f2422acbe56b3",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -4700,13 +4932,20 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "51ae29c72e808ea2a3bef2e8e4f6fee2aeed2a15dca39aad122551bf330072ec",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "63fca3454896b071cc4fc8daed271968a94f4a23ae2524f9a50f2422acbe56b3",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "51ae29c72e808ea2a3bef2e8e4f6fee2aeed2a15dca39aad122551bf330072ec",
+          "current_package_sha256": "63fca3454896b071cc4fc8daed271968a94f4a23ae2524f9a50f2422acbe56b3",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-MD"
     },
@@ -4789,18 +5028,20 @@
       "treaty_pair_id": "CZ-ME"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "8c6b3bb13022e78db4d4bb9370824285ef9749d420654efa040dfa8bb26ad8ae",
+      "package_sha256": "d9f7c8990284589ee45057a114543f510a9b4439159c1d5ea624f1657a828f63",
       "partner_country": "MK",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "8c6b3bb13022e78db4d4bb9370824285ef9749d420654efa040dfa8bb26ad8ae",
+        "current_package_sha256": "d9f7c8990284589ee45057a114543f510a9b4439159c1d5ea624f1657a828f63",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -4856,13 +5097,20 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "8c6b3bb13022e78db4d4bb9370824285ef9749d420654efa040dfa8bb26ad8ae",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "d9f7c8990284589ee45057a114543f510a9b4439159c1d5ea624f1657a828f63",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "8c6b3bb13022e78db4d4bb9370824285ef9749d420654efa040dfa8bb26ad8ae",
+          "current_package_sha256": "d9f7c8990284589ee45057a114543f510a9b4439159c1d5ea624f1657a828f63",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-MK"
     },
@@ -5179,18 +5427,20 @@
       "treaty_pair_id": "CZ-MY"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "e436c926221b605720e9dbc1359a8b67b21f75caf76513349f05dcd64a48dad2",
+      "package_sha256": "4397f5f61309eb03927b08be9211cb2b3d8d1da0512ec6c230351e96949ce8a7",
       "partner_country": "NG",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "e436c926221b605720e9dbc1359a8b67b21f75caf76513349f05dcd64a48dad2",
+        "current_package_sha256": "4397f5f61309eb03927b08be9211cb2b3d8d1da0512ec6c230351e96949ce8a7",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -5246,13 +5496,20 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "e436c926221b605720e9dbc1359a8b67b21f75caf76513349f05dcd64a48dad2",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "4397f5f61309eb03927b08be9211cb2b3d8d1da0512ec6c230351e96949ce8a7",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "e436c926221b605720e9dbc1359a8b67b21f75caf76513349f05dcd64a48dad2",
+          "current_package_sha256": "4397f5f61309eb03927b08be9211cb2b3d8d1da0512ec6c230351e96949ce8a7",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-NG"
     },
@@ -5569,18 +5826,20 @@
       "treaty_pair_id": "CZ-PA"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "1a385625bd2000bef394e680dedbc90075d133fcbd66b7c3541821df267ad3ce",
+      "package_sha256": "20ec1d873ac0f7affdd153e94eea2a1c8abe667b512cc08e06f4937098b38ca6",
       "partner_country": "PH",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "1a385625bd2000bef394e680dedbc90075d133fcbd66b7c3541821df267ad3ce",
+        "current_package_sha256": "20ec1d873ac0f7affdd153e94eea2a1c8abe667b512cc08e06f4937098b38ca6",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -5636,29 +5895,38 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "1a385625bd2000bef394e680dedbc90075d133fcbd66b7c3541821df267ad3ce",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "20ec1d873ac0f7affdd153e94eea2a1c8abe667b512cc08e06f4937098b38ca6",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "1a385625bd2000bef394e680dedbc90075d133fcbd66b7c3541821df267ad3ce",
+          "current_package_sha256": "20ec1d873ac0f7affdd153e94eea2a1c8abe667b512cc08e06f4937098b38ca6",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-PH"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "5d361dc54d8dcfae38b172b20aa54b7ff311df243a06831b1f213070cea6a481",
+      "package_sha256": "eae2d0e1da58b9b818526cf4acd37edcaa52fce9c988d58e675473dd6decd4bb",
       "partner_country": "PK",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "5d361dc54d8dcfae38b172b20aa54b7ff311df243a06831b1f213070cea6a481",
+        "current_package_sha256": "eae2d0e1da58b9b818526cf4acd37edcaa52fce9c988d58e675473dd6decd4bb",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -5714,13 +5982,20 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "5d361dc54d8dcfae38b172b20aa54b7ff311df243a06831b1f213070cea6a481",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "eae2d0e1da58b9b818526cf4acd37edcaa52fce9c988d58e675473dd6decd4bb",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "5d361dc54d8dcfae38b172b20aa54b7ff311df243a06831b1f213070cea6a481",
+          "current_package_sha256": "eae2d0e1da58b9b818526cf4acd37edcaa52fce9c988d58e675473dd6decd4bb",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-PK"
     },
@@ -5881,18 +6156,20 @@
       "treaty_pair_id": "CZ-PT"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "955712e070ef76d5a0d6c1c9ff9e3349d11e2892412ff7d6aa23d6a3186cb424",
+      "package_sha256": "af30b5fb0bd123035f4b92393bb41536be47b3b53ba74eaabbfef459beda2f2b",
       "partner_country": "QA",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "955712e070ef76d5a0d6c1c9ff9e3349d11e2892412ff7d6aa23d6a3186cb424",
+        "current_package_sha256": "af30b5fb0bd123035f4b92393bb41536be47b3b53ba74eaabbfef459beda2f2b",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -5948,13 +6225,20 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "955712e070ef76d5a0d6c1c9ff9e3349d11e2892412ff7d6aa23d6a3186cb424",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "af30b5fb0bd123035f4b92393bb41536be47b3b53ba74eaabbfef459beda2f2b",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "955712e070ef76d5a0d6c1c9ff9e3349d11e2892412ff7d6aa23d6a3186cb424",
+          "current_package_sha256": "af30b5fb0bd123035f4b92393bb41536be47b3b53ba74eaabbfef459beda2f2b",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-QA"
     },
@@ -6490,18 +6774,20 @@
       "treaty_pair_id": "CZ-SG"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "a76346131028b9a02d7b0247a8baad8676b5e8c6a05ccf71fa39a8dbfc32fcc6",
+      "package_sha256": "d6b8bdafe2d488cb1cee130899a18f4be985217aff0781f0bb04d9486c530e7b",
       "partner_country": "SI",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "a76346131028b9a02d7b0247a8baad8676b5e8c6a05ccf71fa39a8dbfc32fcc6",
+        "current_package_sha256": "d6b8bdafe2d488cb1cee130899a18f4be985217aff0781f0bb04d9486c530e7b",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -6557,29 +6843,38 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "a76346131028b9a02d7b0247a8baad8676b5e8c6a05ccf71fa39a8dbfc32fcc6",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "d6b8bdafe2d488cb1cee130899a18f4be985217aff0781f0bb04d9486c530e7b",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "a76346131028b9a02d7b0247a8baad8676b5e8c6a05ccf71fa39a8dbfc32fcc6",
+          "current_package_sha256": "d6b8bdafe2d488cb1cee130899a18f4be985217aff0781f0bb04d9486c530e7b",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-SI"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "1b44c6e4106ee249566e7802031932cbf8b81172c6da42809ad8605df3a4d2d8",
+      "package_sha256": "2bdeed729e54f481485d652616a919bb86fd99e154f90286df5b415576505ca8",
       "partner_country": "SK",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "1b44c6e4106ee249566e7802031932cbf8b81172c6da42809ad8605df3a4d2d8",
+        "current_package_sha256": "2bdeed729e54f481485d652616a919bb86fd99e154f90286df5b415576505ca8",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -6635,13 +6930,20 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "1b44c6e4106ee249566e7802031932cbf8b81172c6da42809ad8605df3a4d2d8",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "2bdeed729e54f481485d652616a919bb86fd99e154f90286df5b415576505ca8",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "1b44c6e4106ee249566e7802031932cbf8b81172c6da42809ad8605df3a4d2d8",
+          "current_package_sha256": "2bdeed729e54f481485d652616a919bb86fd99e154f90286df5b415576505ca8",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-SK"
     },
@@ -7114,18 +7416,20 @@
       "treaty_pair_id": "CZ-TM"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "14e9381645206c2c7d1aecf451bc42f0a430ad1ba0082aca147bf29480bb50a5",
+      "package_sha256": "ed02ce38018aa56eb6d66bc3eff09b7e6c21596e1cf5dcb0616bd65666cfdf4c",
       "partner_country": "TN",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "14e9381645206c2c7d1aecf451bc42f0a430ad1ba0082aca147bf29480bb50a5",
+        "current_package_sha256": "ed02ce38018aa56eb6d66bc3eff09b7e6c21596e1cf5dcb0616bd65666cfdf4c",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -7181,13 +7485,20 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "14e9381645206c2c7d1aecf451bc42f0a430ad1ba0082aca147bf29480bb50a5",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "ed02ce38018aa56eb6d66bc3eff09b7e6c21596e1cf5dcb0616bd65666cfdf4c",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "14e9381645206c2c7d1aecf451bc42f0a430ad1ba0082aca147bf29480bb50a5",
+          "current_package_sha256": "ed02ce38018aa56eb6d66bc3eff09b7e6c21596e1cf5dcb0616bd65666cfdf4c",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-TN"
     },
@@ -7270,18 +7581,20 @@
       "treaty_pair_id": "CZ-TR"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "e769983fbe69a71759dc6056705e1773a5d54ad4298a7799e7691f32ce3fb778",
+      "package_sha256": "f6a46af0b1a2e50c87a5282e829f8c7b8d7e4139669cf5ed66a289bb3755c732",
       "partner_country": "TW",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "e769983fbe69a71759dc6056705e1773a5d54ad4298a7799e7691f32ce3fb778",
+        "current_package_sha256": "f6a46af0b1a2e50c87a5282e829f8c7b8d7e4139669cf5ed66a289bb3755c732",
         "legacy_release_evidence": {},
         "production_approval_event": {
           "additional_human_review_claimed": false,
@@ -7322,29 +7635,38 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "e769983fbe69a71759dc6056705e1773a5d54ad4298a7799e7691f32ce3fb778",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "f6a46af0b1a2e50c87a5282e829f8c7b8d7e4139669cf5ed66a289bb3755c732",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "e769983fbe69a71759dc6056705e1773a5d54ad4298a7799e7691f32ce3fb778",
+          "current_package_sha256": "f6a46af0b1a2e50c87a5282e829f8c7b8d7e4139669cf5ed66a289bb3755c732",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-TW"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "571232f8866532f41ee1c700a998a0b3a5c3545e022b557efbfd189b4b3858f4",
+      "package_sha256": "8c9b136ad97f6e5c1ce0e682ecda23447f1110902984078e865b8b776539efbf",
       "partner_country": "UA",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "571232f8866532f41ee1c700a998a0b3a5c3545e022b557efbfd189b4b3858f4",
+        "current_package_sha256": "8c9b136ad97f6e5c1ce0e682ecda23447f1110902984078e865b8b776539efbf",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -7400,29 +7722,38 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "571232f8866532f41ee1c700a998a0b3a5c3545e022b557efbfd189b4b3858f4",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "8c9b136ad97f6e5c1ce0e682ecda23447f1110902984078e865b8b776539efbf",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "571232f8866532f41ee1c700a998a0b3a5c3545e022b557efbfd189b4b3858f4",
+          "current_package_sha256": "8c9b136ad97f6e5c1ce0e682ecda23447f1110902984078e865b8b776539efbf",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-UA"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "d23c40dff9d1e0ac564b51af46b46296f22857fb9049271123c5d2e5bd1430dc",
+      "package_sha256": "1ffe2f04d423842866e6b1d7dd55abc6378cea3bd6ac9260187028120d8273ab",
       "partner_country": "US",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "d23c40dff9d1e0ac564b51af46b46296f22857fb9049271123c5d2e5bd1430dc",
+        "current_package_sha256": "1ffe2f04d423842866e6b1d7dd55abc6378cea3bd6ac9260187028120d8273ab",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -7478,13 +7809,20 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "d23c40dff9d1e0ac564b51af46b46296f22857fb9049271123c5d2e5bd1430dc",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "1ffe2f04d423842866e6b1d7dd55abc6378cea3bd6ac9260187028120d8273ab",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "d23c40dff9d1e0ac564b51af46b46296f22857fb9049271123c5d2e5bd1430dc",
+          "current_package_sha256": "1ffe2f04d423842866e6b1d7dd55abc6378cea3bd6ac9260187028120d8273ab",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-US"
     },
@@ -7567,18 +7905,20 @@
       "treaty_pair_id": "CZ-UZ"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "783d1f2aecf4362640d821698c6e5e31bfde20b25b73b2fc344aacad1cc4ac41",
+      "package_sha256": "1e9632f4da08c520fdf84c74c575da304cccfdc1c08c0b3d0440e8360533830c",
       "partner_country": "VE",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "783d1f2aecf4362640d821698c6e5e31bfde20b25b73b2fc344aacad1cc4ac41",
+        "current_package_sha256": "1e9632f4da08c520fdf84c74c575da304cccfdc1c08c0b3d0440e8360533830c",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -7634,13 +7974,20 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "783d1f2aecf4362640d821698c6e5e31bfde20b25b73b2fc344aacad1cc4ac41",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "1e9632f4da08c520fdf84c74c575da304cccfdc1c08c0b3d0440e8360533830c",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "783d1f2aecf4362640d821698c6e5e31bfde20b25b73b2fc344aacad1cc4ac41",
+          "current_package_sha256": "1e9632f4da08c520fdf84c74c575da304cccfdc1c08c0b3d0440e8360533830c",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-VE"
     },
@@ -7723,18 +8070,20 @@
       "treaty_pair_id": "CZ-VN"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "d283770fea3173eb68ed60141575ef06dd2dea373c5ba5b9b3f323f59b35660f",
+      "package_sha256": "30f46340f162b14733cb43f2cab30469161bd75f0d41bcef915d6f5a260a3a1e",
       "partner_country": "XK",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "d283770fea3173eb68ed60141575ef06dd2dea373c5ba5b9b3f323f59b35660f",
+        "current_package_sha256": "30f46340f162b14733cb43f2cab30469161bd75f0d41bcef915d6f5a260a3a1e",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -7790,29 +8139,38 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "d283770fea3173eb68ed60141575ef06dd2dea373c5ba5b9b3f323f59b35660f",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "30f46340f162b14733cb43f2cab30469161bd75f0d41bcef915d6f5a260a3a1e",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "d283770fea3173eb68ed60141575ef06dd2dea373c5ba5b9b3f323f59b35660f",
+          "current_package_sha256": "30f46340f162b14733cb43f2cab30469161bd75f0d41bcef915d6f5a260a3a1e",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-XK"
     },
     {
-      "active_rule_allowed": true,
-      "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "active_rule_allowed": false,
+      "fail_closed": true,
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "2be35ab79e1249794eb76194c08aba6afb6f7606ca201aed75d8693505ced1f5",
+      "package_sha256": "41b5a939344e028d9fe3538dc7fe82943ebc55ff5c3fdddd2c0a3702dafcf58d",
       "partner_country": "ZA",
-      "production_approval_eligible": true,
-      "production_approval_status": "production_approved",
-      "production_ready": true,
-      "release_blockers": [],
+      "production_approval_eligible": false,
+      "production_approval_status": "not_approved",
+      "production_ready": false,
+      "release_blockers": [
+        "semantic_remediation_requires_hash_bound_human_review"
+      ],
       "release_evidence": {
-        "current_package_sha256": "2be35ab79e1249794eb76194c08aba6afb6f7606ca201aed75d8693505ced1f5",
+        "current_package_sha256": "41b5a939344e028d9fe3538dc7fe82943ebc55ff5c3fdddd2c0a3702dafcf58d",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -7868,13 +8226,20 @@
         "stage6_qa_evidence": {
           "ai_outcome": null,
           "crosscheck_status": "not_selected",
-          "current_package_sha256": "2be35ab79e1249794eb76194c08aba6afb6f7606ca201aed75d8693505ced1f5",
-          "human_resolution_status": "not_required",
+          "current_package_sha256": "41b5a939344e028d9fe3538dc7fe82943ebc55ff5c3fdddd2c0a3702dafcf58d",
+          "human_resolution_status": "semantic_remediation_pending_human_review",
           "reviewed_package_sha256": null
+        },
+        "semantic_remediation": {
+          "status": "pending_hash_bound_human_review",
+          "prior_released_package_sha256": "2be35ab79e1249794eb76194c08aba6afb6f7606ca201aed75d8693505ced1f5",
+          "current_package_sha256": "41b5a939344e028d9fe3538dc7fe82943ebc55ff5c3fdddd2c0a3702dafcf58d",
+          "production_approval_allowed": false,
+          "automatic_approval_forbidden": true
         }
       },
-      "release_status": "released",
-      "rule_promotion_status": "promoted",
+      "release_status": "not_released",
+      "rule_promotion_status": "not_promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-ZA"
     }
