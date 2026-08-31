@@ -19,6 +19,13 @@ def main() -> int:
             "equipment_operating",
             "other",
         },
+        "all_royalties_except_industrial_commercial_scientific_equipment": {
+            "copyright_nonfilm",
+            "film_broadcast",
+            "software",
+            "industrial_ip",
+            "other",
+        },
         # This legacy browser value is deliberately fail-closed to non-film
         # copyright only. Film/broadcast has its own atomic UI category.
         "copyright_literary_artistic_or_scientific": {"copyright_nonfilm"},
