@@ -51,7 +51,33 @@ def _gate_copy() -> dict:
 
 
 def _queue_record() -> tuple[dict, dict]:
-    return _load(QUEUE_PATH), _load(RECORD_PATH)
+    """Return a hash-aligned fixture for defensive branch tests.
+
+    The committed completion record intentionally remains bound to the
+    pre-remediation package hashes. These tests mutate individual fields and
+    therefore rebind only their in-memory copy so the intended validation
+    branch is reached.
+    """
+    queue = _load(QUEUE_PATH)
+    record = _load(RECORD_PATH)
+    hashes = {
+        package["treaty_pair_id"]: package["package_sha256"]
+        for package in queue["packages"]
+    }
+    for package in record["packages"]:
+        package["package_sha256"] = hashes[package["treaty_pair_id"]]
+    return queue, record
+
+
+def test_committed_completion_record_fails_closed_after_semantic_rehash():
+    queue = _load(QUEUE_PATH)
+    record = _load(RECORD_PATH)
+
+    with pytest.raises(
+        ValueError,
+        match="stale package hash",
+    ):
+        validate_human_review_completion(queue, record)
 
 
 # ---------------------------------------------------------------------------
