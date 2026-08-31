@@ -799,6 +799,22 @@ def build_review_reasons(
 
     blockers.update(analysis.get("missing_facts", []))
     blockers.update(analysis.get("failed_conditions", []))
+
+    # A confirmed Czech PE connection is dispositive for treaty Article
+    # 10/11/12 routing. Do not distract the client with lower-priority
+    # ownership/rate threshold failures once that blocker is established.
+    request_facts = request.get("facts", {}) or {}
+    pe_failed_anywhere = any(
+        "permanent_establishment_connection"
+        in set(result.get("failed_conditions", []))
+        for result in layer_results
+    )
+    if (
+        request_facts.get("permanent_establishment_connection") is True
+        and pe_failed_anywhere
+    ):
+        blockers = {"permanent_establishment_connection"}
+
     reasons = [
         _review_reason_for_fact(str(fact).split(":", 1)[-1], request)
         for fact in sorted(blockers)
