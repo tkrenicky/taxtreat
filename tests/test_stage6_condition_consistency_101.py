@@ -103,3 +103,145 @@ def test_direct_ownership_is_never_silently_treated_as_numeric_boolean():
     # Legacy model migrated:
     # directness is boolean, threshold uses ownership_percent.
     assert findings == []
+
+
+def test_generic_entity_type_cannot_disprove_narrower_treaty_status():
+    from taxtreat.engine.legal_rule_engine import LegalCondition, _evaluate_condition
+
+    satisfied, missing = _evaluate_condition(
+        LegalCondition(
+            fact="recipient_entity_type",
+            operator="==",
+            value="company_other_than_partnership",
+        ),
+        {"recipient_entity_type": "company"},
+        {},
+    )
+
+    assert satisfied is None
+    assert missing == "recipient_entity_type"
+
+
+def test_atomic_royalty_categories_are_exposed_by_workspace():
+    html = Path("app/web/workspace.html").read_text(encoding="utf-8")
+
+    for value in (
+        "copyright_literary_artistic_scientific_nonfilm_nonsoftware",
+        "cinematographic_films_or_broadcast_media",
+        "computer_software",
+        "patent_trademark_design_model_plan_secret_formula_process_or_knowhow",
+        "financial_lease_of_equipment",
+        "operating_lease_or_other_use_of_equipment",
+        "other",
+    ):
+        assert f'value="{value}"' in html
+
+    assert (
+        'value="software_patent_trademark_design_model_plan_secret_formula_process_or_knowhow"'
+        not in html
+    )
+    assert 'value="industrial_commercial_or_scientific_equipment"' not in html
+
+
+def test_every_stage6_condition_fact_has_explicit_semantic_classification():
+    import json
+    from pathlib import Path
+
+    from scripts.audit_stage6_semantic_compatibility_20260828 import _fact_mode
+
+    unclassified = {}
+
+    for path in sorted(Path("data/legal_rules_stage6").glob("*.json")):
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        rules = payload.get("rules", payload if isinstance(payload, list) else [])
+        for rule in rules:
+            for condition in rule.get("conditions", []):
+                fact = condition.get("fact")
+                if not fact:
+                    continue
+                if _fact_mode(str(fact)) == "unsupported_or_unclassified":
+                    unclassified.setdefault(str(fact), set()).add(path.stem.upper())
+
+    assert {
+        fact: sorted(countries)
+        for fact, countries in sorted(unclassified.items())
+    } == {}
+
+
+KNOWN_STAGE6_PROJECTION_DEFECTS = {
+    (
+        "PH",
+        "royalty",
+        (
+            "CZ-PH-ROYALTY-CURRENT-1",
+            "CZ-PH-ROYALTY-CURRENT-2",
+        ),
+    ): (
+        "Article 12 distinguishes 10% ordinary copyright/IP/equipment/know-how "
+        "from 15% film/TV/radio royalties, but both structured rules currently "
+        "contain only beneficial_owner == true."
+    ),
+}
+
+
+def test_no_unregistered_identical_applicability_conflicts_in_stage6():
+    import json
+    from collections import defaultdict
+    from pathlib import Path
+
+    conflicts = {}
+
+    for path in sorted(Path("data/legal_rules_stage6").glob("*.json")):
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        rules = payload.get("rules", payload if isinstance(payload, list) else [])
+        grouped = defaultdict(list)
+
+        for rule in rules:
+            if rule.get("legal_layer") not in {"treaty", "protocol", "mli"}:
+                continue
+            signature = (
+                rule.get("income_type"),
+                tuple(
+                    sorted(
+                        (
+                            condition.get("fact"),
+                            condition.get("operator"),
+                            repr(condition.get("value")),
+                        )
+                        for condition in rule.get("conditions", [])
+                    )
+                ),
+            )
+            grouped[signature].append(rule)
+
+        for (income_type, _signature), grouped_rules in grouped.items():
+            outcomes = {
+                (
+                    rule.get("effect"),
+                    rule.get("rate"),
+                    rule.get("tax_treatment"),
+                )
+                for rule in grouped_rules
+            }
+            if len(grouped_rules) < 2 or len(outcomes) < 2:
+                continue
+
+            rule_ids = tuple(sorted(rule.get("rule_id") for rule in grouped_rules))
+            key = (path.stem.upper(), income_type, rule_ids)
+            conflicts[key] = outcomes
+
+    unregistered = {
+        key: value
+        for key, value in conflicts.items()
+        if key not in KNOWN_STAGE6_PROJECTION_DEFECTS
+    }
+    missing_known = {
+        key: reason
+        for key, reason in KNOWN_STAGE6_PROJECTION_DEFECTS.items()
+        if key not in conflicts
+    }
+
+    assert unregistered == {}
+    # Once a known defect is actually remediated, this assertion forces the
+    # allowlist entry to be removed instead of silently becoming stale.
+    assert missing_known == {}

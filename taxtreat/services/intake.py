@@ -132,9 +132,27 @@ FACT_GUIDANCE: dict[str, dict[str, Any]] = {
         "why": "Sazba může záviset na předmětu licence.",
         "response_type": "choice",
         "options": [
-            ["copyright_literary_artistic_or_scientific", "Autorské dílo"],
-            ["software_patent_trademark_design_model_plan_secret_formula_process_knowhow", "Software, patent, ochranná známka nebo know-how"],
-            ["industrial_commercial_or_scientific_equipment", "Průmyslové, obchodní nebo vědecké zařízení"],
+            [
+                "copyright_literary_artistic_scientific_nonfilm_nonsoftware",
+                "Autorské dílo (mimo software, film, TV a rozhlas)",
+            ],
+            [
+                "cinematographic_films_or_broadcast_media",
+                "Film, televizní nebo rozhlasové vysílání",
+            ],
+            ["computer_software", "Počítačový software"],
+            [
+                "patent_trademark_design_model_plan_secret_formula_process_or_knowhow",
+                "Patent, ochranná známka, průmyslový vzor, postup nebo know-how",
+            ],
+            [
+                "financial_lease_of_equipment",
+                "Finanční leasing průmyslového, obchodního nebo vědeckého zařízení",
+            ],
+            [
+                "operating_lease_or_other_use_of_equipment",
+                "Operativní leasing nebo jiné užívání průmyslového, obchodního nebo vědeckého zařízení",
+            ],
             ["other", "Jiný předmět licence"],
         ],
         "documents": ["Licenční smlouva", "Popis licencovaných práv"],
@@ -375,6 +393,15 @@ FACT_GUIDANCE.update({
 # an ordinary True/False value. The UI asks a human Yes/No question,
 # while intake translates Yes to the exact value required by the
 # selected country's Stage 6 rule.
+CLIENT_SAFE_RULE_VALUE_ENUMS = {
+    # Objective fact that the user can answer without interpreting a compound
+    # treaty exemption. Composite public-body / guaranteed-financing / credit-
+    # sale enums remain professional review even when only one encoded value
+    # occurs in a country package.
+    "bank",
+}
+
+
 RULE_VALUE_BOOLEAN_GUIDANCE: dict[str, dict[str, str]] = {
     "article_11_3_exemption": {
         "prompt": (
@@ -560,6 +587,54 @@ PROFESSIONAL_FACT_GROUPS = {
 }
 
 PROFESSIONAL_FACT_GROUPS.update({
+    "ird_association_payer_directly_holds_25_percent_recipient": {
+        "topic": "domestic_exemption_association",
+        "prompt": "Ověřte kvalifikovaný vztah mezi plátcem a příjemcem pro případné osvobození.",
+        "why": "Podmínka 25% kvalifikovaného vztahu je součástí odborného posouzení vnitrostátního osvobození.",
+    },
+    "ird_association_recipient_directly_holds_25_percent_payer": {
+        "topic": "domestic_exemption_association",
+        "prompt": "Ověřte kvalifikovaný vztah mezi příjemcem a plátcem pro případné osvobození.",
+        "why": "Podmínka 25% kvalifikovaného vztahu je součástí odborného posouzení vnitrostátního osvobození.",
+    },
+    "ird_association_common_person_directly_holds_25_percent_both": {
+        "topic": "domestic_exemption_association",
+        "prompt": "Ověřte kvalifikovaný vztah přes společnou osobu pro případné osvobození.",
+        "why": "Tato alternativní 25% vazba vyžaduje posouzení vlastnické struktury a nelze ji bezpečně odvozovat z jednoho klientského údaje.",
+    },
+    "holding_period_includes_payment_date": {
+        "topic": "dividend_holding_period_special_condition",
+        "prompt": "Ověřte zvláštní pravidlo započtení dne výplaty do doby držby.",
+        "why": "Jde o smluvní technickou podmínku výpočtu doby držby, nikoli o samostatný klientský fakt.",
+    },
+    "holding_period_reorganisation_continuity": {
+        "topic": "dividend_holding_period_special_condition",
+        "prompt": "Ověřte kontinuitu doby držby při reorganizaci.",
+        "why": "Započtení předchozí doby držby při reorganizaci vyžaduje posouzení konkrétní transakční historie.",
+    },
+    "detailed_eligibility_review_required": {
+        "topic": "interest_treaty_special_condition",
+        "prompt": (
+            "Ověřte detailní podmínky zvláštní úrokové sazby podle "
+            "příslušné smlouvy."
+        ),
+        "why": (
+            "Tato větev smlouvy vyžaduje detailní právní posouzení "
+            "kategorie financování a nelze ji bezpečně potvrdit "
+            "pouze ze základních klientských údajů."
+        ),
+    },
+    "distributed_vs_undistributed_corporate_tax_rate_difference": {
+        "topic": "historical_dividend_treaty_condition",
+        "prompt": (
+            "Ověřte zvláštní historickou podmínku rozdílu zdanění "
+            "distribuovaného a nerozděleného zisku."
+        ),
+        "why": (
+            "Jde o odbornou historickou smluvní podmínku, kterou "
+            "nelze odvozovat z běžných údajů o příjemci nebo podílu."
+        ),
+    },
     "recipient_country_imposes_royalty_wht_on_nonresidents": {
         "topic": "royalty_treaty_legal_condition",
         "prompt": (
@@ -856,6 +931,36 @@ def _rule_value_boolean_question(
     if guidance is None:
         return None
 
+    # An explicit advisor-only classification in FACT_GUIDANCE is a hard
+    # safety boundary. Dynamic enum-to-boolean translation must never turn
+    # that legal judgement into a client Yes/No question merely because the
+    # selected treaty happens to contain a single encoded value.
+    explicit_guidance = FACT_GUIDANCE.get(name, {})
+    if explicit_guidance.get("client_answerable") is False:
+        return {
+            "question_id": missing,
+            "input_path": None,
+            "category": "professional_review",
+            "client_answerable": False,
+            "response_type": "professional_review",
+            "prompt": explicit_guidance.get(
+                "prompt",
+                guidance["prompt"],
+            ),
+            "why": explicit_guidance.get(
+                "why",
+                guidance["why"],
+            ),
+            "required_documents": explicit_guidance.get(
+                "documents",
+                ["Úvěrová nebo zápůjční smlouva"],
+            ),
+            "advisor_topic": explicit_guidance.get(
+                "advisor_topic",
+                "interest_treaty_special_condition",
+            ),
+        }
+
     values = _stage6_condition_values(
         request,
         name,
@@ -872,6 +977,31 @@ def _rule_value_boolean_question(
             "why": (
                 "Pro zvolenou smlouvu existuje více možných právních "
                 "variant této podmínky; je nutné odborné posouzení."
+            ),
+            "required_documents": [
+                "Úvěrová nebo zápůjční smlouva"
+            ],
+            "advisor_topic": (
+                "interest_treaty_special_condition"
+            ),
+        }
+
+    # A single encoded Stage 6 value is not automatically a simple client
+    # fact. Long composite values often encode the legal conclusion of an
+    # entire treaty exemption (public bodies, guarantees, credit sales, etc.).
+    # Only explicitly allowlisted objective enums may be reduced to Yes/No.
+    if values[0] not in CLIENT_SAFE_RULE_VALUE_ENUMS:
+        return {
+            "question_id": missing,
+            "input_path": None,
+            "category": "professional_review",
+            "client_answerable": False,
+            "response_type": "professional_review",
+            "prompt": guidance["prompt"],
+            "why": (
+                "Podmínka představuje složenou smluvní klasifikaci a "
+                "nelze ji bezpečně převést na jednoduchou klientskou "
+                "odpověď Ano/Ne."
             ),
             "required_documents": [
                 "Úvěrová nebo zápůjční smlouva"

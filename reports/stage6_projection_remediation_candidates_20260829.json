@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-08-29",
+  "purpose": "Source-backed Stage 6 projection remediation candidates. These are not active production rules and do not alter approved Stage 6 packages until the normal review/hash/approval workflow is rerun.",
+  "candidates": [
+    {
+      "country": "PH",
+      "income_type": "royalty",
+      "source_id": "SRC-1E2D0264FEB4040D",
+      "source_url": "https://e-sbirka.gov.cz/sm/2003/132/0000-00-00",
+      "defect": "Both current Stage 6 treaty rules have identical applicability conditions (beneficial_owner == true) despite Article 12(2) assigning different rates by royalty category.",
+      "recommended_projection": [
+        {
+          "rule_id": "CZ-PH-ROYALTY-CURRENT-1",
+          "rate": 10,
+          "royalty_category_semantics": [
+            "copyright_literary_artistic_scientific_excluding_film_and_broadcast",
+            "patent_trademark_design_model_plan_secret_formula_process",
+            "industrial_commercial_scientific_equipment",
+            "industrial_commercial_scientific_knowhow"
+          ],
+          "source_basis": "Article 12(2)(a): 10% for ordinary copyright other than the film/broadcast category in subparagraph (b), patents, trademarks, designs/models/plans, secret formula/process, equipment and industrial/commercial/scientific experience."
+        },
+        {
+          "rule_id": "CZ-PH-ROYALTY-CURRENT-2",
+          "rate": 15,
+          "royalty_category_semantics": [
+            "cinematographic_films_or_television_radio_films_or_recordings"
+          ],
+          "source_basis": "Article 12(2)(b): 15% for copyright in cinematographic films and films or recordings for television or radio broadcasting."
+        }
+      ],
+      "release_requirement": "Regenerate structured rules, review package hash and Stage 6 approval metadata; then replace the known-defect allowlist entry with real-rule regression tests."
+    },
+    {
+      "country": "TW",
+      "income_type": "royalty",
+      "source_id": "CZ-TW-LAW-45-2020",
+      "source_url": "https://e-sbirka.gov.cz/sb/2020/45",
+      "defect": "The 10% catch-all branch is encoded as literal royalty_category == other, but the approved source representation says 10% applies in all cases other than industrial/commercial/scientific equipment.",
+      "recommended_projection": [
+        {
+          "rule_id": "CZ-TW-ROYALTY-CURRENT-1",
+          "rate": 5,
+          "royalty_category_semantics": [
+            "industrial_commercial_scientific_equipment"
+          ]
+        },
+        {
+          "rule_id": "CZ-TW-ROYALTY-CURRENT-2",
+          "rate": 10,
+          "royalty_category_semantics": [
+            "all_royalties_except_industrial_commercial_scientific_equipment"
+          ]
+        }
+      ],
+      "release_requirement": "Replace the overloaded literal other enum with an explicit complement category, regenerate review package hash and Stage 6 approval metadata, and add real-rule atomic-category tests."
+    }
+  ]
+}

@@ -145,8 +145,15 @@ def capture(output_dir: Path) -> dict[str, object]:
             if not workspace_form.locator('input[name="beneficial_owner"][value="true"]').is_checked():
                 raise AssertionError("Beneficial-owner assumption is not available/defaulted.")
 
-            if not workspace_form.locator('input[name="treaty_resident"][value="true"]').is_checked():
-                raise AssertionError("Treaty-residence assumption is not available/defaulted.")
+            treaty_resident_yes = workspace_form.locator('input[name="treaty_resident"][value="true"]')
+            treaty_resident_no = workspace_form.locator('input[name="treaty_resident"][value="false"]')
+            if treaty_resident_yes.is_checked() or treaty_resident_no.is_checked():
+                raise AssertionError("Treaty residence must require an explicit user answer.")
+            treaty_resident_yes.evaluate(
+                "el => { el.checked = true; el.dispatchEvent(new Event('input', { bubbles: true })); el.dispatchEvent(new Event('change', { bubbles: true })); }"
+            )
+            if not treaty_resident_yes.is_checked():
+                raise AssertionError("Explicit treaty-residence answer could not be set in browser capture.")
 
             if not workspace_form.locator('input[name="pe_connection"][value="false"]').is_checked():
                 raise AssertionError("PE-connection assumption is not available/defaulted.")
@@ -185,6 +192,18 @@ def capture(output_dir: Path) -> dict[str, object]:
                 for item in workspace_questions.locator('input[type="date"]').all():
                     if not item.input_value():
                         item.fill("2024-01-01")
+
+                radio_names = workspace_questions.locator('input[type="radio"]').evaluate_all(
+                    "els => [...new Set(els.map(el => el.name).filter(Boolean))]"
+                )
+                for name in radio_names:
+                    radios = workspace_questions.locator(f'input[type="radio"][name="{name}"]')
+                    if radios.count() and not any(radio.is_checked() for radio in radios.all()):
+                        preferred_true = radios.locator('[value="true"]')
+                        target = preferred_true.first if preferred_true.count() else radios.first
+                        target.evaluate(
+                            "el => { el.checked = true; el.dispatchEvent(new Event('input', { bubbles: true })); el.dispatchEvent(new Event('change', { bubbles: true })); }"
+                        )
             else:
                 raise AssertionError("Primary workspace client questions did not converge.")
 
@@ -217,6 +236,11 @@ def capture(output_dir: Path) -> dict[str, object]:
             page.get_by_role("button", name="Pokračovat k příjemci →").click()
             page.get_by_role("button", name="Pokračovat k platbě →").click()
             workspace_form = page.locator("#workspace-payment")
+            treaty_resident_yes = workspace_form.locator('input[name="treaty_resident"][value="true"]')
+            if not treaty_resident_yes.is_checked():
+                treaty_resident_yes.evaluate(
+                    "el => { el.checked = true; el.dispatchEvent(new Event('input', { bubbles: true })); el.dispatchEvent(new Event('change', { bubbles: true })); }"
+                )
             workspace_form.locator('select[name="income_type"]').select_option("dividend")
             workspace_form.locator('input[name="transaction_date"]').fill("2026-08-11")
             workspace_form.locator('input[name="amount"]').fill("100000")
@@ -238,6 +262,17 @@ def capture(output_dir: Path) -> dict[str, object]:
                     item.fill("25")
                 for item in workspace_questions.locator('input[type="date"]').all():
                     item.fill("2024-01-01")
+                radio_names = workspace_questions.locator('input[type="radio"]').evaluate_all(
+                    "els => [...new Set(els.map(el => el.name).filter(Boolean))]"
+                )
+                for name in radio_names:
+                    radios = workspace_questions.locator(f'input[type="radio"][name="{name}"]')
+                    if radios.count() and not any(radio.is_checked() for radio in radios.all()):
+                        preferred_true = radios.locator('[value="true"]')
+                        target = preferred_true.first if preferred_true.count() else radios.first
+                        target.evaluate(
+                            "el => { el.checked = true; el.dispatchEvent(new Event('input', { bubbles: true })); el.dispatchEvent(new Event('change', { bubbles: true })); }"
+                        )
             else:
                 raise AssertionError("Workspace client questions did not converge.")
 

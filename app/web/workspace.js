@@ -107,7 +107,7 @@
     country: "AT",
     type: "Společnost",
     beneficialOwner: true,
-    treatyResident: true,
+    treatyResident: "",
     relationships: {
       "demo-cz": { peConnection: false, ownershipPercent: "", directOwnership: "", acquisitionDate: "", votingOwnershipPercent: "" },
       "alfa-cz": { peConnection: false, ownershipPercent: "25", directOwnership: "true", acquisitionDate: "2024-06-01", votingOwnershipPercent: "25" }
@@ -167,6 +167,44 @@
   let pendingQuestions = [];
   const clientAnswers = { facts: {}, acquisitionDate: null, exchangeRate: null };
 
+  function resetClientAnswers() {
+    clientAnswers.facts = {};
+    clientAnswers.acquisitionDate = null;
+    clientAnswers.exchangeRate = null;
+    pendingQuestions = [];
+    questionsRoot.replaceChildren();
+    followUp.hidden = true;
+  }
+
+  function resetTransactionLegalFacts() {
+    for (const name of [
+      "beneficial_owner",
+      "treaty_resident",
+      "pe_connection",
+      "direct_ownership"
+    ]) {
+      form.querySelectorAll(`[name="${name}"]`).forEach((field) => {
+        field.checked = false;
+        if (field.tagName === "SELECT") field.value = "";
+      });
+    }
+    for (const name of [
+      "ownership_percent",
+      "voting_ownership_percent",
+      "acquisition_date",
+      "arm_length_amount",
+      "royalty_category",
+      "holding_period_mode"
+    ]) {
+      const field = form.elements[name];
+      if (field) field.value = "";
+    }
+    form.elements.beneficial_owner.value = "true";
+    form.elements.pe_connection.value = "false";
+    form.elements.treaty_resident.value = "";
+    votingWasEdited = false;
+  }
+
   function showView(name) {
     views.forEach((view) => view.classList.toggle("active", view.dataset.view === name));
     navButtons.forEach((button) => button.classList.toggle("active", button.dataset.nav === name));
@@ -191,7 +229,11 @@
   }
 
   navButtons.forEach((button) => button.addEventListener("click", () => showView(button.dataset.nav)));
-  document.querySelectorAll("[data-start-flow]").forEach((button) => button.addEventListener("click", () => showStep(1)));
+  document.querySelectorAll("[data-start-flow]").forEach((button) => button.addEventListener("click", () => {
+    resetClientAnswers();
+    resetTransactionLegalFacts();
+    showStep(1);
+  }));
   document.querySelectorAll("[data-open-recipient]").forEach((button) => button.addEventListener("click", () => showView("recipient-detail")));
   document.querySelectorAll("[data-next-step]").forEach((button) => button.addEventListener("click", () => showStep(Number(button.dataset.nextStep))));
   progressButtons.forEach((button) => button.addEventListener("click", () => {
@@ -384,17 +426,33 @@
     recipientEditForm.elements.ownership_percent.value = relationship.ownershipPercent;
     recipientEditForm.elements.acquisition_date.value = relationship.acquisitionDate;
     recipientEditForm.elements.direct_ownership.value = relationship.directOwnership;
-    recipientEditForm.elements.beneficial_owner.value = String(recipient.beneficialOwner);
-    recipientEditForm.elements.treaty_resident.value = String(recipient.treatyResident);
-    recipientEditForm.elements.pe_connection.value = String(relationship.peConnection);
+    recipientEditForm.elements.beneficial_owner.value = recipient.beneficialOwner === "" ? "" : String(recipient.beneficialOwner);
+    recipientEditForm.elements.treaty_resident.value = recipient.treatyResident === "" ? "" : String(recipient.treatyResident);
+    recipientEditForm.elements.pe_connection.value = relationship.peConnection === "" ? "" : String(relationship.peConnection);
     recipientDialog.showModal();
   }));
   document.querySelectorAll("[data-close-recipient]").forEach((button) => button.addEventListener("click", () => recipientDialog.close()));
   recipientEditForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const data = new FormData(recipientEditForm);
-    recipient = { ...recipient, name: String(data.get("recipient_name")).trim(), country: String(data.get("recipient_country")), type: String(data.get("recipient_type")), beneficialOwner: String(data.get("beneficial_owner")) === "true", treatyResident: String(data.get("treaty_resident")) === "true" };
-    Object.assign(currentRelationship(), { ownershipPercent: String(data.get("ownership_percent")), acquisitionDate: String(data.get("acquisition_date")), directOwnership: String(data.get("direct_ownership")), peConnection: String(data.get("pe_connection")) === "true" });
+    const beneficialOwner = String(data.get("beneficial_owner") || "");
+    const treatyResident = String(data.get("treaty_resident") || "");
+    const peConnection = String(data.get("pe_connection") || "");
+    recipient = {
+      ...recipient,
+      name: String(data.get("recipient_name")).trim(),
+      country: String(data.get("recipient_country")),
+      type: String(data.get("recipient_type")),
+      beneficialOwner: beneficialOwner === "" ? "" : beneficialOwner === "true",
+      treatyResident: treatyResident === "" ? "" : treatyResident === "true"
+    };
+    Object.assign(currentRelationship(), {
+      ownershipPercent: String(data.get("ownership_percent")),
+      acquisitionDate: String(data.get("acquisition_date")),
+      directOwnership: String(data.get("direct_ownership")),
+      peConnection: peConnection === "" ? "" : peConnection === "true"
+    });
+    resetClientAnswers();
     saveWorkspaceProfiles();
     renderRecipient();
     recipientDialog.close();
@@ -423,18 +481,22 @@
     document.querySelectorAll("[data-recipient-country]").forEach((node) => { node.textContent = countryGenitive(recipient.country); });
     document.querySelectorAll("[data-recipient-country-name]").forEach((node) => { node.textContent = country; });
     document.querySelectorAll("[data-recipient-type]").forEach((node) => { node.textContent = recipient.type.toLowerCase(); });
-    document.querySelectorAll("[data-profile-beneficial]").forEach((node) => { node.textContent = recipient.beneficialOwner ? "Ano" : "Ne"; });
-    document.querySelectorAll("[data-profile-pe]").forEach((node) => { node.textContent = relationship.peConnection ? "Ano" : "Ne"; });
+    document.querySelectorAll("[data-profile-beneficial]").forEach((node) => {
+      node.textContent = recipient.beneficialOwner === "" ? "Nevyplněno" : recipient.beneficialOwner ? "Ano" : "Ne";
+    });
+    document.querySelectorAll("[data-profile-pe]").forEach((node) => {
+      node.textContent = relationship.peConnection === "" ? "Nevyplněno" : relationship.peConnection ? "Ano" : "Ne";
+    });
     document.querySelectorAll("[data-profile-ownership]").forEach((node) => { node.textContent = relationship.ownershipPercent ? `${relationship.ownershipPercent} %` : "Nevyplněno"; });
     document.querySelectorAll("[data-profile-acquisition]").forEach((node) => { node.textContent = relationship.acquisitionDate || "Nevyplněno"; });
-    form.elements.beneficial_owner.value = String(recipient.beneficialOwner);
-    form.elements.treaty_resident.value = String(recipient.treatyResident);
-    form.elements.pe_connection.value = String(relationship.peConnection);
+    form.elements.beneficial_owner.value = recipient.beneficialOwner === "" ? "true" : String(recipient.beneficialOwner);
+    form.elements.treaty_resident.value = "";
+    form.elements.pe_connection.value = relationship.peConnection === "" ? "false" : String(relationship.peConnection);
     form.elements.ownership_percent.value = relationship.ownershipPercent;
     form.elements.direct_ownership.value = relationship.directOwnership;
     form.elements.acquisition_date.value = relationship.acquisitionDate;
     form.elements.holding_period_mode.value = relationship.acquisitionDate ? "known_date" : "";
-    form.elements.voting_ownership_percent.value = relationship.votingOwnershipPercent || relationship.ownershipPercent;
+    form.elements.voting_ownership_percent.value = relationship.votingOwnershipPercent || "";
     votingWasEdited = Boolean(relationship.votingOwnershipPercent);
     updateDividendProgress();
   }
@@ -448,6 +510,7 @@
       country: String(data.get("recipient_country")),
       type: String(data.get("recipient_type"))
     };
+    resetClientAnswers();
     saveWorkspaceProfiles();
     renderRecipient();
     recipientForm.hidden = true;
@@ -695,7 +758,6 @@
   }
 
   form.elements.ownership_percent.addEventListener("input", () => {
-    if (!votingWasEdited) form.elements.voting_ownership_percent.value = form.elements.ownership_percent.value;
     updateDividendProgress();
   });
   form.elements.direct_ownership.addEventListener("change", updateDividendProgress);
@@ -704,6 +766,7 @@
   form.elements.voting_ownership_percent.addEventListener("input", () => { votingWasEdited = true; });
 
   function renderTransactionFacts() {
+    resetClientAnswers();
     const incomeType = form.elements.income_type.value;
     transactionFacts.hidden = !incomeType;
     dividendFacts.hidden = incomeType !== "dividend";
@@ -1121,7 +1184,11 @@
     card.append(role, title, link, detail);
 
     const hasDomesticDisclosure = pathRole === "domestic_exemption_basis" || pathRole === "domestic_starting_point";
-    if ((citation.official_text || citation.excerpt || hasDomesticDisclosure) && (layer !== "domestic" || hasDomesticDisclosure)) {
+    const canShowRawExcerpt = ["treaty", "protocol", "mli"].includes(layer);
+    const canShowLegalDisclosure = Boolean(citation.official_text)
+      || hasDomesticDisclosure
+      || (canShowRawExcerpt && Boolean(citation.excerpt));
+    if (canShowLegalDisclosure) {
       const disclosure = document.createElement("details"); disclosure.className = "citation-excerpt"; disclosure.open = true;
       const summary = document.createElement("summary");
       summary.textContent = hasDomesticDisclosure
@@ -1364,13 +1431,24 @@
     const error = document.querySelector("#workspace-error"); error.hidden = true;
     const transactionDate = String(data.get("transaction_date"));
     const facts = {
-      beneficial_owner: String(data.get("beneficial_owner")) === "true",
-      recipient_is_treaty_resident: String(data.get("treaty_resident")) === "true",
-      permanent_establishment_connection: String(data.get("pe_connection")) === "true",
-      right_or_property_not_effectively_connected_to_czech_pe_or_fixed_base: String(data.get("pe_connection")) !== "true",
-      claim_not_effectively_connected_to_czech_pe: String(data.get("pe_connection")) !== "true",
       recipient_entity_type: recipient.type === "Fyzická osoba" ? "individual" : recipient.type === "Fond" ? "fund" : recipient.type === "Společnost" ? "company" : "other"
     };
+    const beneficialOwner = data.get("beneficial_owner");
+    const treatyResident = data.get("treaty_resident");
+    const peConnection = data.get("pe_connection");
+
+    if (beneficialOwner !== null) {
+      facts.beneficial_owner = String(beneficialOwner) === "true";
+    }
+    if (treatyResident !== null) {
+      facts.recipient_is_treaty_resident = String(treatyResident) === "true";
+    }
+    if (peConnection !== null) {
+      const connected = String(peConnection) === "true";
+      facts.permanent_establishment_connection = connected;
+      facts.right_or_property_not_effectively_connected_to_czech_pe_or_fixed_base = !connected;
+      facts.claim_not_effectively_connected_to_czech_pe = !connected;
+    }
     const incomeType = String(data.get("income_type"));
     const ownershipPercent = String(data.get("ownership_percent"));
     const directOwnership = String(data.get("direct_ownership"));
@@ -1380,7 +1458,7 @@
     const armLengthAmount = String(data.get("arm_length_amount"));
     const royaltyCategory = String(data.get("royalty_category"));
     Object.assign(currentRelationship(), {
-      peConnection: String(data.get("pe_connection")) === "true",
+      peConnection: peConnection === null ? "" : String(peConnection) === "true",
       ownershipPercent,
       directOwnership,
       acquisitionDate,
@@ -1412,8 +1490,6 @@
           transactionDate,
         );
       }
-      if (holdingPeriodMode === "at_least_12_months") facts.holding_period_months = 12;
-      if (holdingPeriodMode === "less_than_12_months") facts.holding_period_months = 0;
     }
     if (incomeType === "interest" && armLengthAmount) facts.arm_length_amount = armLengthAmount === "true";
     if (incomeType === "royalty" && royaltyCategory) facts.royalty_category = royaltyCategory;

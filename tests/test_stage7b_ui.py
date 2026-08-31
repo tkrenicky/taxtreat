@@ -39,8 +39,9 @@ def test_guided_intake_ui_is_served_without_changing_api_root():
     assert 'name="pe_connection"' in html
     assert 'name="holding_period_mode"' in html
     assert 'value="known_date"' in html
-    assert 'value="at_least_12_months"' in html
-    assert 'value="less_than_12_months"' in html
+    assert 'value="unknown_date"' in html
+    assert 'value="at_least_12_months"' not in html
+    assert 'value="less_than_12_months"' not in html
 
     assert "Informační nástroj:" in html
     assert "neposkytuje individuální právní ani daňové poradenství" in html.lower()
@@ -139,7 +140,8 @@ def test_workspace_demo_exposes_recipient_payment_result_workflow():
     assert 'name="direct_ownership"' in html
     assert 'name="acquisition_date"' in html
     assert 'name="holding_period_mode"' in html
-    assert 'value="at_least_12_months"' in html
+    assert 'value="unknown_date"' in html
+    assert 'value="at_least_12_months"' not in html
     assert 'data-dividend-step="4"' in html
     assert 'id="interest-facts"' in html
     assert 'name="prior_same_type_monthly_amount_czk"' in html
@@ -411,3 +413,38 @@ def test_ui_exposes_accessible_status_and_error_regions():
     assert 'role="alert"' in html
     assert 'aria-label="Hlavní navigace"' in html
     assert 'aria-label="Průběh kontroly"' in html
+
+
+def test_ui_does_not_render_raw_eu_relief_structured_excerpt():
+    javascript = client.get("/ui-assets/workspace.js?v=20260819-3").text
+
+    assert 'const canShowRawExcerpt = ["treaty", "protocol", "mli"].includes(layer);' in javascript
+    assert '|| (canShowRawExcerpt && Boolean(citation.excerpt));' in javascript
+    assert '(layer !== "domestic" || hasDomesticDisclosure)' not in javascript
+
+
+def test_step4_english_exact_translation_is_case_insensitive_for_section19():
+    javascript = client.get("/ui-assets/workspace-step4-en-complete-20260821.js").text
+
+    assert 'toLocaleLowerCase("cs-CZ")' in javascript
+    assert '["Vnitrostátní osvobození podle § 19 ZDP", "Domestic exemption under Section 19"]' in javascript
+    assert '["§ 19 ZDP se použije", "Section 19 applies"]' in javascript
+
+
+def test_english_treaty_locale_provenance_statuses_are_public_and_badged():
+    javascript = client.get("/ui-assets/workspace-treaty-excerpt-locales-20260824.js").text
+
+    for status in (
+        "official_translation_non_authentic",
+        "official_synthesised_text",
+        "official_synthesised_excerpt",
+        "machine_translation_from_official_text",
+        "current_application_suspended",
+    ):
+        assert f'"{status}"' in javascript
+
+    assert "Official English translation — non-authentic" in javascript
+    assert "Official-source synthesised English text" in javascript
+    assert "Machine translation of official text" in javascript
+    assert "Application currently suspended" in javascript
+    assert "renderStatusNotice(card, locale);" in javascript

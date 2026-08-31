@@ -1,0 +1,1940 @@
+{
+  "schema_version": 1,
+  "dataset_release": "semantic-remediation-condition-candidates-2026-08-29.1",
+  "purpose": "Machine-prepared, source-backed semantic corrections discovered after Stage 6 release audit. These corrections modify only the pending country-QA candidate package. They do not constitute human review, verification, production approval, rule promotion, or source release.",
+  "verification_status": "needs_review",
+  "automatic_production_approval_forbidden": true,
+  "corrections": [
+    {
+      "country": "AD",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-3F28A5AADC1AA47E",
+      "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 10%. The current Stage 6 projection omitted one or more of these material conditions.",
+      "rate_candidates": [
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_other_than_partnership"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "10"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "AL",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-A6BB2481A9331E5D",
+      "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+      "rate_candidates": [
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_other_than_partnership"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "25"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "BB",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-ED86E5FFEF1EF27E",
+      "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+      "rate_candidates": [
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_other_than_partnership"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "25"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "BD",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-ACCA576658417128",
+      "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner, direct ownership of at least 25%, held continuously for 365 days including the payment date subject to the reorganisation continuity rule. The current Stage 6 projection omitted one or more of these material conditions.",
+      "rate_candidates": [
+        {
+          "rate": 10,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "25"
+            },
+            {
+              "condition_type": "continuous_holding_period_days",
+              "operator": ">=",
+              "unit": "days",
+              "value": 365
+            },
+            {
+              "condition_type": "holding_period_includes_payment_date",
+              "operator": "==",
+              "unit": null,
+              "value": true
+            },
+            {
+              "condition_type": "holding_period_reorganisation_continuity",
+              "operator": "==",
+              "unit": null,
+              "value": "ownership_changes_directly_resulting_from_corporate_reorganisation_ignored"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "BE",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-E16828A7660D9797",
+      "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+      "rate_candidates": [
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "25"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "CN",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-79E98C3789D34107",
+      "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+      "rate_candidates": [
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_other_than_partnership"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "25"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "CY",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-64413DE58345F47A",
+      "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 10%, held continuously for at least one year. The current Stage 6 projection omitted one or more of these material conditions.",
+      "rate_candidates": [
+        {
+          "rate": 0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_other_than_partnership"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "10"
+            },
+            {
+              "condition_type": "holding_period_months",
+              "operator": ">=",
+              "unit": "months",
+              "value": 12
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "EE",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-BD487F336BE33A13",
+      "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+      "rate_candidates": [
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_other_than_partnership"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "25"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "EG",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-5993FE6CA3699B65",
+      "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+      "rate_candidates": [
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_other_than_partnership"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "25"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "ES",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-62E09455EFDD89A1",
+      "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+      "rate_candidates": [
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_other_than_partnership"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "25"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "FR",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-903074BA6B9910C5",
+      "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+      "rate_candidates": [
+        {
+          "rate": 0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "25"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "GB",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-4253A70D066D161D",
+      "evidence_note": "Article 10(2)(a) applies 5% where the beneficial owner is a company controlling at least 25% of the voting interest/shares of the paying company. The current Stage 6 projection uses general ownership_percent and omits the company condition.",
+      "rate_candidates": [
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company"
+            },
+            {
+              "condition_type": "voting_ownership",
+              "operator": ">=",
+              "unit": "%",
+              "value": "25"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "GE",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-424DC2CFCDF8B32E",
+      "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+      "rate_candidates": [
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_other_than_partnership"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "25"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "HU",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-21BEA9C0DA4A502D",
+      "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+      "rate_candidates": [
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "25"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "IE",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-DC652FA09D142B61",
+      "evidence_note": "Article 10(2)(a) applies 5% where the beneficial owner is a company directly owning at least 25% of the voting interest in the paying company. The current Stage 6 projection uses general ownership_percent and omits both company and direct-voting conditions.",
+      "rate_candidates": [
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "voting_ownership",
+              "operator": ">=",
+              "unit": "%",
+              "value": "25"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "IL",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-A1472F5C17983662",
+      "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 15%. The current Stage 6 projection omitted one or more of these material conditions.",
+      "rate_candidates": [
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_other_than_partnership"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "15"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "IS",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-5514D99802C37D57",
+      "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+      "rate_candidates": [
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_other_than_partnership"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "25"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "KG",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-D48D1809A1873C7F",
+      "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 15%. The current Stage 6 projection omitted one or more of these material conditions.",
+      "rate_candidates": [
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_other_than_partnership"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "15"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "KW",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-BF7674A114B0103D",
+      "evidence_note": "Article 10(3) gives a 0% source-state result only for specified government/public bodies or a resident company controlled by, or at least 25% directly or indirectly owned by, such public bodies. The current Stage 6 projection incorrectly stores that classification as a non-boolean beneficial_owner value.",
+      "rate_candidates": [
+        {
+          "rate": 0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "government_or_government_institution_or_article_4_2_public_organization_or_company_controlled_by_or_at_least_25_percent_directly_or_indirectly_owned_by_such_public_body"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "LI",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-2FCAE2F83ACB4BD7",
+      "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 10%, held continuously for at least one year. The current Stage 6 projection omitted one or more of these material conditions.",
+      "rate_candidates": [
+        {
+          "rate": 0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_other_than_partnership"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "10"
+            },
+            {
+              "condition_type": "holding_period_months",
+              "operator": ">=",
+              "unit": "months",
+              "value": 12
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "LK",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-60A3FA4FDCD1D9A1",
+      "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner, direct ownership of at least 10%. The current Stage 6 projection omitted one or more of these material conditions.",
+      "rate_candidates": [
+        {
+          "rate": 7.5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "10"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "LT",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-9315CFFD2F0A40D8",
+      "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+      "rate_candidates": [
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_other_than_partnership"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "25"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "LU",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-D1DA8B0150E7B80D",
+      "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 10%, held continuously for at least one year. The current Stage 6 projection omitted one or more of these material conditions.",
+      "rate_candidates": [
+        {
+          "rate": 0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_other_than_partnership"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "10"
+            },
+            {
+              "condition_type": "holding_period_months",
+              "operator": ">=",
+              "unit": "months",
+              "value": 12
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "LV",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-76B8D6E6D6D03B69",
+      "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+      "rate_candidates": [
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_other_than_partnership"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "25"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "MD",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-57AEF14CD7032586",
+      "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+      "rate_candidates": [
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_other_than_partnership"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "25"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "MK",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-5FEB810C6D8B741C",
+      "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+      "rate_candidates": [
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_other_than_partnership"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "25"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "NG",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-3606886A4EB55B88",
+      "evidence_note": "Article 10(2)(a) applies 12.5% where the beneficial owner is a company owning directly or indirectly at least 10% of the voting interest in the paying company; the current Stage 6 projection uses general ownership_percent and omits the company condition.",
+      "rate_candidates": [
+        {
+          "rate": 12.5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company"
+            },
+            {
+              "condition_type": "direct_or_indirect_voting_ownership",
+              "operator": ">=",
+              "unit": "%",
+              "value": "10"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "PH",
+      "income_type": "royalty",
+      "evidence_source_id": "SRC-1E2D0264FEB4040D",
+      "evidence_note": "Article 12(2)(a) limits ordinary copyright other than film/broadcast, patents/trademarks/designs/processes, equipment and industrial/commercial/scientific experience to 10%; Article 12(2)(b) limits cinematographic films and films/recordings for television or radio to 15%.",
+      "rate_candidates": [
+        {
+          "rate": 10,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "copyright_literary_artistic_scientific_excluding_cinematographic_films_and_broadcast_media_or_patent_trademark_design_model_plan_secret_formula_process_equipment_or_industrial_commercial_scientific_knowhow"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "cinematographic_films_or_television_radio_films_or_recordings"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "PK",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-017BDD519C89EE7E",
+      "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+      "rate_candidates": [
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_other_than_partnership"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "25"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "QA",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-A4B3C2125350DA5C",
+      "evidence_note": "Article 10(3) gives a 0% source-state result for specified government/public bodies and wholly owned public entities. The current Stage 6 projection incorrectly stores that classification as a non-boolean beneficial_owner value. Article 10(2)(a) separately provides 5% for a company directly holding at least 10% of capital; 10% applies otherwise.",
+      "rate_candidates": [
+        {
+          "rate": 0,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "other_state_government_subnational_local_authority_central_bank_other_public_law_body_or_entity_directly_or_indirectly_wholly_owned_by_such_public_body"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "10"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "SK",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-4CBD2AF601C94743",
+      "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 10%. The current Stage 6 projection omitted one or more of these material conditions.",
+      "rate_candidates": [
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_other_than_partnership"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "10"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "TN",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-7CA3D6D0E3382934",
+      "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+      "rate_candidates": [
+        {
+          "rate": 10,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "25"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "TW",
+      "income_type": "royalty",
+      "evidence_source_id": "CZ-TW-LAW-45-2020",
+      "evidence_note": "Article 12(2) applies 5% to industrial, commercial or scientific equipment and 10% in all other cases.",
+      "rate_candidates": [
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "industrial_commercial_scientific_equipment"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 10,
+          "conditions": [
+            {
+              "condition_type": "royalty_category",
+              "operator": "==",
+              "unit": null,
+              "value": "all_royalties_except_industrial_commercial_scientific_equipment"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "US",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-EADD5B70920D588C",
+      "evidence_note": "Article 10(2)(a) applies 5% where the beneficial owner is a company owning at least 10% of the voting stock of the paying company. The US RIC/REIT carve-outs in Article 10(3) concern dividends paid by US RICs/REITs and therefore do not alter the CZ-source direction represented here.",
+      "rate_candidates": [
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company"
+            },
+            {
+              "condition_type": "voting_ownership",
+              "operator": ">=",
+              "unit": "%",
+              "value": "10"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "XK",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-CD01C24D2AD80F3A",
+      "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+      "rate_candidates": [
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_other_than_partnership"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "25"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country": "ZA",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-2F5F97D1F7BF9415",
+      "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+      "rate_candidates": [
+        {
+          "rate": 5,
+          "conditions": [
+            {
+              "condition_type": "recipient_entity_type",
+              "operator": "==",
+              "unit": null,
+              "value": "company_other_than_partnership"
+            },
+            {
+              "condition_type": "direct_ownership",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            },
+            {
+              "condition_type": "ownership_percent",
+              "operator": ">=",
+              "unit": "%",
+              "value": "25"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "rate": 15,
+          "conditions": [
+            {
+              "condition_type": "fallback_case",
+              "operator": "==",
+              "unit": null,
+              "value": "all_other_cases"
+            },
+            {
+              "condition_type": "beneficial_owner",
+              "operator": "==",
+              "unit": null,
+              "value": "true"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
