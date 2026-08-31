@@ -36,6 +36,25 @@ def test_ownership_percentages_are_not_rate_candidates():
     assert [row["rate_percent"] for row in result["rate_candidates"]] == [5.0, 8.0]
 
 
+def test_basic_capital_threshold_is_not_rate_candidate():
+    article = (
+        "Ak skutočným vlastníkom je spoločnosť, ktorá vlastní priamo aspoň "
+        "25 % základného imania spoločnosti vyplácajúcej dividendy, daň "
+        "nepresiahne 10 % hrubej sumy dividend."
+    )
+    result = build_semantic_candidate(article)
+    assert [row["rate_percent"] for row in result["rate_candidates"]] == [10.0]
+
+
+def test_tax_rate_differential_threshold_is_not_withholding_rate():
+    article = (
+        "Ak rozdiel je 20 % alebo viac, môže daň z dividend byť 25 % "
+        "hrubej sumy dividend."
+    )
+    result = build_semantic_candidate(article)
+    assert [row["rate_percent"] for row in result["rate_candidates"]] == [25.0]
+
+
 def test_english_voting_threshold_is_not_rate_candidate():
     article = (
         "The tax shall not exceed 5 percent of the gross amount of dividends "
