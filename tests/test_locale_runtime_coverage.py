@@ -296,3 +296,33 @@ def test_additional_locale_runtime_edges(tmp_path):
     out = english_release_localization.finalize_english_report_html(html, report)
     assert 'lang="en"' in out
     assert "Primary legal basis" not in out
+
+
+def test_locale_branch_completeness(tmp_path, monkeypatch):
+    monkeypatch.setattr(report_locales, "_LOCALE_ROOT", tmp_path)
+
+    variants = [
+        {"rules": [], "articles": {}},
+        {"rules": {"R": "bad"}, "articles": {"10": "bad"}},
+        {"rules": {}, "articles": []},
+        {"rules": {"R": {"en": {}}}, "articles": {}},
+        {"rules": {"R": {"en": {"text": "x", "status": ""}}}, "articles": {}},
+    ]
+    for index, payload in enumerate(variants):
+        (tmp_path / f"X{index}.json").write_text(json.dumps(payload), encoding="utf-8")
+        assert report_locales.english_excerpt_for_citation(
+            {"rule_id": "R", "article": 10}, f"X{index}"
+        ) is None
+
+    web_locale_engine.translation_map.cache_clear()
+    pair = tmp_path / web_locale_engine.PAIR_FILES[0]
+    pair.write_text(
+        'const p = [["same", "same"], ["", "x"], ["neutral", "target"], '
+        '["KROK TEST", "STEP TEST"]];',
+        encoding="utf-8",
+    )
+    mapping = web_locale_engine.translation_map(str(tmp_path))
+    assert "same" not in mapping
+    assert "" not in mapping
+    assert "neutral" not in mapping
+    assert mapping["KROK TEST"] == "STEP TEST"
