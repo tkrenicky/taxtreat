@@ -9,7 +9,13 @@ from taxtreat.engine.legal_rule_engine import (
     TaxTreatment,
 )
 from taxtreat.engine.legal_rule_loader import load_legal_rules
-from taxtreat.engine.layered_decision import evaluate_layered_rules
+from taxtreat.engine.layered_decision import (
+    _is_residual_royalty_rule,
+    _royalty_category_value,
+    _same_royalty_branch,
+    _suppress_residual_royalty_candidates,
+    evaluate_layered_rules,
+)
 
 
 def _interest_facts(recipient: str) -> dict:
@@ -211,3 +217,83 @@ def test_verified_gate_and_missing_better_rule_are_fail_closed():
     assert review.status == DecisionStatus.REVIEW_REQUIRED
     assert review.candidate_rate == 15.0
     assert review.missing_facts == ["relief_eligible"]
+
+
+def test_residual_royalty_helpers_identify_and_suppress_fallback_branch():
+    specific = _verified_rule(
+        "ROY-SPECIFIC",
+        income_type="royalty",
+        legal_instrument="treaty",
+        legal_layer="treaty",
+        article=12,
+        rate=5.0,
+        conditions=[
+            LegalCondition(
+                "royalty_category",
+                "==",
+                "computer_software",
+            )
+        ],
+    )
+    residual = _verified_rule(
+        "ROY-RESIDUAL",
+        income_type="royalty",
+        legal_instrument="treaty",
+        legal_layer="treaty",
+        article=12,
+        rate=10.0,
+        conditions=[
+            LegalCondition(
+                "royalty_category",
+                "==",
+                "all_other_article_12_royalties",
+            )
+        ],
+    )
+    unrelated = _verified_rule(
+        "ROY-UNRELATED",
+        income_type="royalty",
+        recipient_country="CH",
+        legal_instrument="treaty",
+        legal_layer="treaty",
+        article=12,
+        rate=10.0,
+        conditions=[
+            LegalCondition(
+                "royalty_category",
+                "==",
+                "all_other_article_12_royalties",
+            )
+        ],
+    )
+
+    assert _royalty_category_value(specific) == "computer_software"
+    assert _royalty_category_value(_verified_rule("NO-CATEGORY")) is None
+    assert _is_residual_royalty_rule(residual) is True
+    assert _is_residual_royalty_rule(specific) is False
+    assert _same_royalty_branch(specific, residual) is True
+    assert _same_royalty_branch(specific, unrelated) is False
+    assert _suppress_residual_royalty_candidates([specific, residual]) == [specific]
+    assert _suppress_residual_royalty_candidates([residual]) == [residual]
+
+
+def test_layered_identical_applicability_conflict_fails_closed():
+    rules = [
+        _verified_rule("CONFLICT-A", rate=5.0),
+        _verified_rule("CONFLICT-B", rate=10.0),
+    ]
+
+    result = evaluate_layered_rules(
+        rules,
+        _interest_facts("AT"),
+        as_of=date(2026, 8, 31),
+    )
+
+    assert result.status == DecisionStatus.REVIEW_REQUIRED
+    assert result.requires_review is True
+    assert result.candidate_rate is None
+    assert len(result.citations) == 2
+    assert any(
+        "Conflicting verified legal-rule projections" in line
+        for line in result.explanation
+    )
