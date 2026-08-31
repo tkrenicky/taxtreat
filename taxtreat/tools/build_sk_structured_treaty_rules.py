@@ -86,7 +86,7 @@ def conditions(scope: dict) -> list[dict]:
         "operator": "==",
         "value": True,
     }]
-    rate = scope["rate_candidates"][0]
+    rate = (scope.get("rate_candidates") or [{}])[0]
     if scope.get("beneficial_owner_wording_present") or rate.get("beneficial_owner_context"):
         result.append({
             "fact": "beneficial_owner",
