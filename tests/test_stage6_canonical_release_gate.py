@@ -33,6 +33,22 @@ REVIEW_PATH = (
 )
 
 
+REMEDIATION_PATH = (
+    ROOT
+    / "data"
+    / "legal_consolidation"
+    / "semantic_remediation_condition_candidates_20260829.json"
+)
+
+
+def _remediation_pairs():
+    payload = json.loads(REMEDIATION_PATH.read_text(encoding="utf-8"))
+    return {
+        f"CZ-{row['country']}"
+        for row in payload["corrections"]
+    }
+
+
 def test_canonical_gate_matches_101_303_reviewed_universe():
     gate = load_canonical_source_release_gate(
         GATE_PATH
@@ -50,48 +66,66 @@ def test_canonical_gate_matches_101_303_reviewed_universe():
     }
 
 
-def test_taiwan_is_inside_released_canonical_gate():
+def test_unaffected_pair_remains_inside_released_canonical_gate():
+    release = get_canonical_source_release(
+        "CZ-AT",
+        gate_path=GATE_PATH,
+    )
+
+    assert release.partner_country == "AT"
+    assert release.human_review_status == "human_review_complete"
+    assert release.is_released is True
+
+
+def test_semantic_remediation_pair_is_fail_closed():
     release = get_canonical_source_release(
         "CZ-TW",
         gate_path=GATE_PATH,
     )
 
-    assert release.partner_country == "TW"
-    assert release.human_review_status == (
-        "human_review_complete"
-    )
-    assert release.is_released is True
+    assert release.human_review_status == "needs_review"
+    assert release.production_approval_status == "not_approved"
+    assert release.rule_promotion_status == "not_promoted"
+    assert release.release_status == "not_released"
+    assert release.active_rule_allowed is False
+    assert release.production_ready is False
+    assert release.fail_closed is True
+    assert "semantic_remediation_requires_hash_bound_human_review" in release.release_blockers
+    assert release.is_released is False
 
 
-def test_all_canonical_packages_are_released():
-    gate = load_canonical_source_release_gate(
-        GATE_PATH
-    )
+def test_canonical_gate_releases_61_unchanged_packages_and_blocks_40_remediated_packages():
+    gate = load_canonical_source_release_gate(GATE_PATH)
+    remediation = _remediation_pairs()
 
-    assert all(
-        release.release_status == "released"
-        for release in gate.values()
-    )
-    assert all(
-        release.active_rule_allowed is True
-        for release in gate.values()
-    )
-    assert all(
-        release.production_ready is True
-        for release in gate.values()
-    )
-    assert all(
-        release.fail_closed is False
-        for release in gate.values()
-    )
-    assert all(
-        release.release_blockers == ()
-        for release in gate.values()
-    )
-    assert all(
-        release.is_released is True
-        for release in gate.values()
-    )
+    released = {
+        pair_id
+        for pair_id, release in gate.items()
+        if release.is_released
+    }
+    blocked = set(gate) - released
+
+    assert len(released) == 61
+    assert len(blocked) == 40
+    assert blocked == remediation
+
+    for pair_id in released:
+        release = gate[pair_id]
+        assert release.release_status == "released"
+        assert release.active_rule_allowed is True
+        assert release.production_ready is True
+        assert release.fail_closed is False
+        assert release.release_blockers == ()
+
+    for pair_id in blocked:
+        release = gate[pair_id]
+        assert release.release_status == "not_released"
+        assert release.active_rule_allowed is False
+        assert release.production_ready is False
+        assert release.fail_closed is True
+        assert release.release_blockers == (
+            "semantic_remediation_requires_hash_bound_human_review",
+        )
 
 
 def test_seven_secondary_ai_qa_packages_are_complete():
@@ -144,21 +178,17 @@ def test_non_sample_packages_do_not_fake_secondary_qa():
     )
 
 
-def test_production_approval_and_promotion_are_complete():
-    gate = load_canonical_source_release_gate(
-        GATE_PATH
-    )
+def test_production_approval_and_promotion_match_current_hash_state():
+    gate = load_canonical_source_release_gate(GATE_PATH)
+    remediation = _remediation_pairs()
 
-    assert all(
-        release.production_approval_status
-        == "production_approved"
-        for release in gate.values()
-    )
-    assert all(
-        release.rule_promotion_status
-        == "promoted"
-        for release in gate.values()
-    )
+    for pair_id, release in gate.items():
+        if pair_id in remediation:
+            assert release.production_approval_status == "not_approved"
+            assert release.rule_promotion_status == "not_promoted"
+        else:
+            assert release.production_approval_status == "production_approved"
+            assert release.rule_promotion_status == "promoted"
 
 
 def test_require_release_accepts_released_pair():
@@ -181,29 +211,22 @@ def test_unknown_pair_fails_closed():
         )
 
 
-def test_all_101_packages_are_production_approval_eligible_and_approved():
-    raw = json.loads(
-        GATE_PATH.read_text(encoding="utf-8")
-    )
+def test_only_unchanged_packages_remain_production_approval_eligible_and_approved():
+    raw = json.loads(GATE_PATH.read_text(encoding="utf-8"))
+    remediation = _remediation_pairs()
 
-    assert raw["counts"][
-        "production_approval_eligible_packages"
-    ] == 101
+    assert raw["counts"]["production_approval_eligible_packages"] == 61
+    assert raw["counts"]["production_approved_packages"] == 61
+    assert raw["counts"]["semantic_remediation_pending_packages"] == 40
 
-    assert raw["counts"][
-        "production_approved_packages"
-    ] == 101
-
-    assert all(
-        row["production_approval_eligible"] is True
-        for row in raw["treaty_partners"]
-    )
-
-    assert all(
-        row["production_approval_status"]
-        == "production_approved"
-        for row in raw["treaty_partners"]
-    )
+    for row in raw["treaty_partners"]:
+        pair_id = row["treaty_pair_id"]
+        if pair_id in remediation:
+            assert row["production_approval_eligible"] is False
+            assert row["production_approval_status"] == "not_approved"
+        else:
+            assert row["production_approval_eligible"] is True
+            assert row["production_approval_status"] == "production_approved"
 
 
 def test_stage6b_qa_is_reflected_without_claiming_second_human_review():
@@ -262,43 +285,38 @@ def test_current_package_hashes_are_used_after_stage6b_corrections():
     assert gate_hashes == queue_hashes
 
 
-def test_final_gate_releases_complete_universe():
-    raw = json.loads(
-        GATE_PATH.read_text(encoding="utf-8")
-    )
+def test_final_gate_releases_only_hash_valid_universe():
+    raw = json.loads(GATE_PATH.read_text(encoding="utf-8"))
+    remediation = _remediation_pairs()
 
-    assert raw["counts"][
-        "rule_promoted_packages"
-    ] == 101
-    assert raw["counts"][
-        "released_packages"
-    ] == 101
-    assert raw["counts"][
-        "released_scopes"
-    ] == 303
+    assert raw["counts"]["rule_promoted_packages"] == 61
+    assert raw["counts"]["released_packages"] == 61
+    assert raw["counts"]["released_scopes"] == 183
 
     for row in raw["treaty_partners"]:
-        assert row["release_blockers"] == []
+        if row["treaty_pair_id"] in remediation:
+            assert row["release_blockers"] == [
+                "semantic_remediation_requires_hash_bound_human_review"
+            ]
+        else:
+            assert row["release_blockers"] == []
 
 
-def test_stage6c_all_101_packages_are_production_approved():
-    raw = json.loads(
-        GATE_PATH.read_text(encoding="utf-8")
-    )
+def test_stage6c_prior_approval_is_invalidated_for_semantically_rehashed_packages():
+    raw = json.loads(GATE_PATH.read_text(encoding="utf-8"))
+    remediation = _remediation_pairs()
 
-    assert raw["counts"][
-        "production_approval_eligible_packages"
-    ] == 101
-
-    assert raw["counts"][
-        "production_approved_packages"
-    ] == 101
-
-    assert all(
-        row["production_approval_status"]
-        == "production_approved"
+    assert raw["counts"]["production_approval_eligible_packages"] == 61
+    assert raw["counts"]["production_approved_packages"] == 61
+    assert sum(
+        row["production_approval_status"] == "not_approved"
         for row in raw["treaty_partners"]
-    )
+    ) == 40
+    assert {
+        row["treaty_pair_id"]
+        for row in raw["treaty_partners"]
+        if row["production_approval_status"] == "not_approved"
+    } == remediation
 
 
 def test_stage6c_approval_is_not_additional_human_review():
@@ -314,41 +332,41 @@ def test_stage6c_approval_is_not_additional_human_review():
         "production_approval_is_additional_human_review"
     ] is False
 
+    remediation = _remediation_pairs()
     for row in raw["treaty_partners"]:
-        event = row["release_evidence"][
-            "production_approval_event"
-        ]
-
+        event = row["release_evidence"]["production_approval_event"]
         assert event is not None
         assert event["additional_human_review_claimed"] is False
-        assert (
-            event["package_sha256"]
-            == row["package_sha256"]
-        )
+        if row["treaty_pair_id"] in remediation:
+            assert event["package_sha256"] != row["package_sha256"]
+            semantic = row["release_evidence"]["semantic_remediation"]
+            assert semantic["production_approval_allowed"] is False
+            assert semantic["automatic_approval_forbidden"] is True
+        else:
+            assert event["package_sha256"] == row["package_sha256"]
 
 
-def test_stage6_final_runtime_state_is_released():
-    raw = json.loads(
-        GATE_PATH.read_text(encoding="utf-8")
-    )
+def test_stage6_runtime_state_is_released_only_for_hash_valid_packages():
+    raw = json.loads(GATE_PATH.read_text(encoding="utf-8"))
+    remediation = _remediation_pairs()
 
-    assert raw["counts"][
-        "rule_promoted_packages"
-    ] == 101
-    assert raw["counts"][
-        "released_packages"
-    ] == 101
-    assert raw["counts"][
-        "released_scopes"
-    ] == 303
+    assert raw["counts"]["rule_promoted_packages"] == 61
+    assert raw["counts"]["released_packages"] == 61
+    assert raw["counts"]["released_scopes"] == 183
 
     for row in raw["treaty_partners"]:
-        assert row["rule_promotion_status"] == "promoted"
-        assert row["release_status"] == "released"
-        assert row["active_rule_allowed"] is True
-        assert row["production_ready"] is True
-        assert row["fail_closed"] is False
-        assert row["release_blockers"] == []
+        if row["treaty_pair_id"] in remediation:
+            assert row["rule_promotion_status"] == "not_promoted"
+            assert row["release_status"] == "not_released"
+            assert row["active_rule_allowed"] is False
+            assert row["production_ready"] is False
+            assert row["fail_closed"] is True
+        else:
+            assert row["rule_promotion_status"] == "promoted"
+            assert row["release_status"] == "released"
+            assert row["active_rule_allowed"] is True
+            assert row["production_ready"] is True
+            assert row["fail_closed"] is False
 
 
 def test_secondary_ai_crosscheck_is_never_recorded_as_independent_human_qa():
@@ -398,6 +416,7 @@ def test_final_release_events_are_hash_bound():
 
     assert raw["fail_closed"] is True
 
+    remediation = _remediation_pairs()
     for row in raw["treaty_partners"]:
         evidence = row["release_evidence"]
         promotion = evidence["rule_promotion_event"]
@@ -405,19 +424,17 @@ def test_final_release_events_are_hash_bound():
 
         assert promotion is not None
         assert release is not None
+        assert promotion["rule_file_sha256"] == release["rule_file_sha256"]
 
-        assert (
-            promotion["package_sha256"]
-            == row["package_sha256"]
-        )
-        assert (
-            release["package_sha256"]
-            == row["package_sha256"]
-        )
-        assert (
-            promotion["rule_file_sha256"]
-            == release["rule_file_sha256"]
-        )
-
-        assert row["fail_closed"] is False
-        assert row["release_blockers"] == []
+        if row["treaty_pair_id"] in remediation:
+            # Prior release evidence is retained only as historical lineage;
+            # it must not bind to or release the newly rehashed package.
+            assert promotion["package_sha256"] != row["package_sha256"]
+            assert release["package_sha256"] != row["package_sha256"]
+            assert row["fail_closed"] is True
+            assert row["release_blockers"]
+        else:
+            assert promotion["package_sha256"] == row["package_sha256"]
+            assert release["package_sha256"] == row["package_sha256"]
+            assert row["fail_closed"] is False
+            assert row["release_blockers"] == []
