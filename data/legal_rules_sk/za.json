@@ -5,6 +5,221 @@
   },
   "rules": [
     {
+      "rule_id": "SK-ZA-MLI-GATE-ROYALTY-A3",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "ZA",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "3",
+      "paragraph": null,
+      "rate": null,
+      "priority": 53,
+      "conditions": [
+        {
+          "fact": "mli_article_3_transparent_entity_entitlement_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2023-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-ZA: notice 513/2022; result-changing articles ['13', '15', '3', '4', '7', '8']; WHT effective date(s) ['2023-01-01']. Gate: MLI Article 3 transparent-entity entitlement.",
+      "source_id": "SK-MLI-513-2022",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2022/513/vyhlasene_znenie.html",
+      "source_excerpt_hash": "ea9719d16faac08b0b68d2bb63626342f343cb42370870f219ac46363151d2c7",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "evidence_source_ids": [
+        "SK-MLI-513-2022"
+      ]
+    },
+    {
+      "rule_id": "SK-ZA-MLI-GATE-ROYALTY-A4",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "ZA",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "4",
+      "paragraph": null,
+      "rate": null,
+      "priority": 54,
+      "conditions": [
+        {
+          "fact": "mli_article_4_dual_resident_entitlement_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2023-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-ZA: notice 513/2022; result-changing articles ['13', '15', '3', '4', '7', '8']; WHT effective date(s) ['2023-01-01']. Gate: MLI Article 4 dual-resident entity entitlement.",
+      "source_id": "SK-MLI-513-2022",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2022/513/vyhlasene_znenie.html",
+      "source_excerpt_hash": "49506e293b19e530e767970221dbff46ac9bb3f8d6c3175152b598f9fe56f2c6",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "evidence_source_ids": [
+        "SK-MLI-513-2022"
+      ]
+    },
+    {
+      "rule_id": "SK-ZA-MLI-GATE-ROYALTY-A7",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "ZA",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "7",
+      "paragraph": null,
+      "rate": null,
+      "priority": 57,
+      "conditions": [
+        {
+          "fact": "treaty_ppt_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2023-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-ZA: notice 513/2022; result-changing articles ['13', '15', '3', '4', '7', '8']; WHT effective date(s) ['2023-01-01']. Gate: MLI Article 7 principal purpose test.",
+      "source_id": "SK-MLI-513-2022",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2022/513/vyhlasene_znenie.html",
+      "source_excerpt_hash": "536fc6092252d6e502383f3932019c5c27f37ea2e0a616f4917299e150ebecf4",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "evidence_source_ids": [
+        "SK-MLI-513-2022"
+      ]
+    },
+    {
+      "rule_id": "SK-ZA-MLI-GATE-ROYALTY-A13",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "ZA",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "13",
+      "paragraph": null,
+      "rate": null,
+      "priority": 63,
+      "conditions": [
+        {
+          "fact": "mli_article_13_specific_activity_pe_status_resolved",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2023-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-ZA: notice 513/2022; result-changing articles ['13', '15', '3', '4', '7', '8']; WHT effective date(s) ['2023-01-01']. Gate: MLI Article 13 specific-activity PE modification.",
+      "source_id": "SK-MLI-513-2022",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2022/513/vyhlasene_znenie.html",
+      "source_excerpt_hash": "addf612ba81f128fdeaa7144477cc6ba1341a2348c25640444556fa5888ca1c5",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "evidence_source_ids": [
+        "SK-MLI-513-2022"
+      ]
+    },
+    {
+      "rule_id": "SK-ZA-MLI-GATE-ROYALTY-A15",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "ZA",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "15",
+      "paragraph": null,
+      "rate": null,
+      "priority": 65,
+      "conditions": [
+        {
+          "fact": "mli_article_15_closely_related_enterprise_status_resolved",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2023-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-ZA: notice 513/2022; result-changing articles ['13', '15', '3', '4', '7', '8']; WHT effective date(s) ['2023-01-01']. Gate: MLI Article 15 closely-related-enterprise definition.",
+      "source_id": "SK-MLI-513-2022",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2022/513/vyhlasene_znenie.html",
+      "source_excerpt_hash": "aa6a2e13e9af3dc8d61dc3f57bdc8851810b83c1a45b275a42f8af16913d72b9",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "evidence_source_ids": [
+        "SK-MLI-513-2022"
+      ]
+    },
+    {
       "rule_id": "SK-ZA-ROYALTY-TREATY-SIMPLE-1",
       "income_type": "royalty",
       "source_country": "SK",

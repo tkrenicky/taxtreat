@@ -5,6 +5,350 @@
   },
   "rules": [
     {
+      "rule_id": "SK-IL-MLI-GATE-ROYALTY-A3",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "IL",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "3",
+      "paragraph": null,
+      "rate": null,
+      "priority": 53,
+      "conditions": [
+        {
+          "fact": "mli_article_3_transparent_entity_entitlement_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2019-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-IL: notice 414/2018; result-changing articles ['10', '12', '13', '14', '15', '3', '4', '7', '8']; WHT effective date(s) ['2019-01-01']. Gate: MLI Article 3 transparent-entity entitlement.",
+      "source_id": "SK-MLI-414-2018",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2018/414/vyhlasene_znenie.html",
+      "source_excerpt_hash": "ac4fde8d83e7d7c0abbba805c2bf4dce7b88adc11bfc8c07ecda643506e03b6e",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "evidence_source_ids": [
+        "SK-MLI-414-2018"
+      ]
+    },
+    {
+      "rule_id": "SK-IL-MLI-GATE-ROYALTY-A4",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "IL",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "4",
+      "paragraph": null,
+      "rate": null,
+      "priority": 54,
+      "conditions": [
+        {
+          "fact": "mli_article_4_dual_resident_entitlement_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2019-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-IL: notice 414/2018; result-changing articles ['10', '12', '13', '14', '15', '3', '4', '7', '8']; WHT effective date(s) ['2019-01-01']. Gate: MLI Article 4 dual-resident entity entitlement.",
+      "source_id": "SK-MLI-414-2018",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2018/414/vyhlasene_znenie.html",
+      "source_excerpt_hash": "d91ae2931df566ffdb54225b74c00d86bf2080be945a9b2560309068f2f9635e",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "evidence_source_ids": [
+        "SK-MLI-414-2018"
+      ]
+    },
+    {
+      "rule_id": "SK-IL-MLI-GATE-ROYALTY-A7",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "IL",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "7",
+      "paragraph": null,
+      "rate": null,
+      "priority": 57,
+      "conditions": [
+        {
+          "fact": "treaty_ppt_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2019-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-IL: notice 414/2018; result-changing articles ['10', '12', '13', '14', '15', '3', '4', '7', '8']; WHT effective date(s) ['2019-01-01']. Gate: MLI Article 7 principal purpose test.",
+      "source_id": "SK-MLI-414-2018",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2018/414/vyhlasene_znenie.html",
+      "source_excerpt_hash": "c0890f465dbd6cdda862b99605b0161069f9d1c9ff9059f837644ceb52d1076a",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "evidence_source_ids": [
+        "SK-MLI-414-2018"
+      ]
+    },
+    {
+      "rule_id": "SK-IL-MLI-GATE-ROYALTY-A10",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "IL",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "10",
+      "paragraph": null,
+      "rate": null,
+      "priority": 60,
+      "conditions": [
+        {
+          "fact": "mli_article_10_third_jurisdiction_pe_test_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2019-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-IL: notice 414/2018; result-changing articles ['10', '12', '13', '14', '15', '3', '4', '7', '8']; WHT effective date(s) ['2019-01-01']. Gate: MLI Article 10 third-jurisdiction PE anti-abuse test.",
+      "source_id": "SK-MLI-414-2018",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2018/414/vyhlasene_znenie.html",
+      "source_excerpt_hash": "4003c07af08d59c8d37d9e334c493985c00940bfebaeb539a072e1c5e4218b81",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "evidence_source_ids": [
+        "SK-MLI-414-2018"
+      ]
+    },
+    {
+      "rule_id": "SK-IL-MLI-GATE-ROYALTY-A12",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "IL",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "12",
+      "paragraph": null,
+      "rate": null,
+      "priority": 62,
+      "conditions": [
+        {
+          "fact": "mli_article_12_dependent_agent_pe_status_resolved",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2019-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-IL: notice 414/2018; result-changing articles ['10', '12', '13', '14', '15', '3', '4', '7', '8']; WHT effective date(s) ['2019-01-01']. Gate: MLI Article 12 dependent-agent PE modification.",
+      "source_id": "SK-MLI-414-2018",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2018/414/vyhlasene_znenie.html",
+      "source_excerpt_hash": "d4a31996e231382c7a7c300d58de73ce16e8eccdbbe3d37451e4b928864f5d87",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "evidence_source_ids": [
+        "SK-MLI-414-2018"
+      ]
+    },
+    {
+      "rule_id": "SK-IL-MLI-GATE-ROYALTY-A13",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "IL",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "13",
+      "paragraph": null,
+      "rate": null,
+      "priority": 63,
+      "conditions": [
+        {
+          "fact": "mli_article_13_specific_activity_pe_status_resolved",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2019-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-IL: notice 414/2018; result-changing articles ['10', '12', '13', '14', '15', '3', '4', '7', '8']; WHT effective date(s) ['2019-01-01']. Gate: MLI Article 13 specific-activity PE modification.",
+      "source_id": "SK-MLI-414-2018",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2018/414/vyhlasene_znenie.html",
+      "source_excerpt_hash": "a983eacbd5272c7d7150fdffe49d91385a687df95edb53195a8350aefad97989",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "evidence_source_ids": [
+        "SK-MLI-414-2018"
+      ]
+    },
+    {
+      "rule_id": "SK-IL-MLI-GATE-ROYALTY-A14",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "IL",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "14",
+      "paragraph": null,
+      "rate": null,
+      "priority": 64,
+      "conditions": [
+        {
+          "fact": "mli_article_14_contract_splitting_pe_status_resolved",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2019-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-IL: notice 414/2018; result-changing articles ['10', '12', '13', '14', '15', '3', '4', '7', '8']; WHT effective date(s) ['2019-01-01']. Gate: MLI Article 14 contract-splitting PE modification.",
+      "source_id": "SK-MLI-414-2018",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2018/414/vyhlasene_znenie.html",
+      "source_excerpt_hash": "9024968ee5a1369184ca49a1231c381ba9d214568e8ef7d3b05b92edd7c4bd84",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "evidence_source_ids": [
+        "SK-MLI-414-2018"
+      ]
+    },
+    {
+      "rule_id": "SK-IL-MLI-GATE-ROYALTY-A15",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "IL",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "15",
+      "paragraph": null,
+      "rate": null,
+      "priority": 65,
+      "conditions": [
+        {
+          "fact": "mli_article_15_closely_related_enterprise_status_resolved",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2019-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-IL: notice 414/2018; result-changing articles ['10', '12', '13', '14', '15', '3', '4', '7', '8']; WHT effective date(s) ['2019-01-01']. Gate: MLI Article 15 closely-related-enterprise definition.",
+      "source_id": "SK-MLI-414-2018",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2018/414/vyhlasene_znenie.html",
+      "source_excerpt_hash": "22159621cb80203a7e0e220e3321a65dbd862ddc4ea10759303a57939e86b20e",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "evidence_source_ids": [
+        "SK-MLI-414-2018"
+      ]
+    },
+    {
       "rule_id": "SK-IL-ROYALTY-TREATY-SIMPLE-1",
       "income_type": "royalty",
       "source_country": "SK",
