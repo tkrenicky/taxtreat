@@ -117,7 +117,7 @@ def test_runtime_prefers_resolved_rule_locale_then_article_fallback_and_is_fail_
     assert "specificity: \"article\"" in script
     assert "COUNTRY_REGISTRY_ROOT" in script
     assert "loadCountryRegistry(country)" in script
-    assert "Official English treaty wording is not yet registered" in script
+    assert "Official English treaty text is not yet registered" in script
     assert "cs-fallback" in script
     assert "MutationObserver" not in script
 
