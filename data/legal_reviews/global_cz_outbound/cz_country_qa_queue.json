@@ -109,12 +109,18 @@
           "article_text_sha256": "66deef841500a35561922c4562f0725c321ac8d9019c4fe7dbbeded24f6dc080",
           "candidate_excerpt": "1. Dividendy vyplácené společností, která je rezidentem jednoho smluvního státu, rezidentu\ndruhého smluvního státu, mohou být zdaněny v tomto druhém státě.\n2. Dividendy vyplácené společností, která je rezidentem jednoho smluvního státu, však mohou\nbýt rovněž zdaněny v tomto státě, a to podle právních předpisů tohoto státu, avšak jestliže\nskutečný vlastník dividend je rezidentem druhého smluvního státu, daň takto uložená\nnepřesáhne:\na) 5 procent hrubé částky dividend, jestliže skutečným vlastníkem je společnost (jiná než\nosobní společnost), která přímo drží alespoň 10 procent kapitálu společnosti vyplácející\ndividendy;\nb) 10 procent hrubé částky dividend ve všech ostatních případech.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.\n3. Výraz „dividendy“ použitý v tomto článku označuje příjmy z akcií, požitkových akcií nebo\npožitkových práv, kuksů, zakladatelských podílů nebo jiných práv, s výjimkou pohledávek,\ns podílem na zisku, jakož i jiné příjmy, včetně příjmů z jiných práv na společnosti, které jsou\npodrobeny stejnému daňovému režimu jako příjmy z akcií podle právních předpisů státu,\njehož je společnost, která rozdili zisk nebo provádí platbu, rezidentem.\n4. Ustanovení odstavců 1 a 2 se nepoužijí, jestliže skutečný vlastník dividend, který je\nrezidentem jednoho smluvního státu, vykonává v druhém smluvním státě, jehož je rezidentem\nspolečnost vyplacejici dividendy, svoji činnost prostřednictvím stálé provozovny, která je tam\numístěna, ",
           "candidate_rates": [
-            5.0,
-            10.0
+            5,
+            10
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 10%. The current Stage 6 projection omitted one or more of these material conditions.",
+              "evidence_source_id": "SRC-3F28A5AADC1AA47E",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -123,7 +129,19 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company_other_than_partnership"
+                },
+                {
+                  "condition_type": "direct_ownership",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
+                  "condition_type": "ownership_percent",
                   "operator": ">=",
                   "unit": "%",
                   "value": "10"
@@ -135,10 +153,16 @@
                   "value": "true"
                 }
               ],
-              "rate": 5.0
+              "rate": 5
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -146,7 +170,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 10.0
+              "rate": 10
             }
           ]
         },
@@ -267,7 +291,7 @@
           "title": "46/2023 Sb.m.s."
         }
       ],
-      "package_sha256": "8e5f5ec44384877de647407effe5391311110662fb3b82117fb23a643d9b16dd",
+      "package_sha256": "6a2fecb997238bfcd6eb6eeee0e03d6add49c15b4485740cec50868de61aef1a",
       "partner_country": "AD",
       "partner_country_name": "Andorra",
       "ppt_treatment": {
@@ -754,12 +778,18 @@
           "article_text_sha256": "74034f14aa068c842b92b92a65f80cbb45c2f82811694d92a428abc154bbc478",
           "candidate_excerpt": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezi-\ndentem jednoho smluvnõho státu, rezidentu druhého\nsmluvnõho státu mohou být zdaneny v tomto druhém\nstáte.\n2. Tyto dividendy vsak mohou být rovnez zda-\nneny ve smluvnõm státe, v nemz je spolecnost, která\ntyto dividendy vyplácõ, rezidentem, a to podle práv-\nnõch predpisu tohoto státu, avsak jestlize prõjemce je\nskutecným vlastnõkem dividend, dan takto ulozená\nnepresáhne:\na) 5 procent hrubé cástky dividend, jestlize skutec-\nným vlastnõkem je spolecnost (jiná nez osobnõ\nspolecnost), která prõmo vlastnõ nejméne 25 pro-\ncent majetku spolecnosti vyplácejõcõ dividendy;\nb) 15 procent hrubé cástky dividend ve vsech ostat-\nnõch prõpadech.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou do-\nhodou zpu sob aplikace techto omezenõ.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti,\nze kterých jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku\noznacuje prõjmy z akciõ nebo jiných práv, s výjimkou\npohledávek, s podõlem na zisku, jakoz i prõjmy z jiných\npráv na spolecnosti, které jsou podle právnõch predpisu\nstátu, v nemz je spolecnost, která rozdõlõ zisk, reziden-\ntem, podrobeny stejnému zdanenõ jako prõjmy z akciõ.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk dividend, který je rezidentem v jed-\nnom smluvnõm státe, vykonává v druhém smluvnõm\nstáte, v nemz je rezidentem spolecnost vyplácejõcõ di-\nvidendy, pru myslovou nebo obchodnõ cinnost pro-\nstrednictvõm stálé provozovny tam umõstené",
           "candidate_rates": [
-            5.0,
-            15.0
+            5,
+            15
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+              "evidence_source_id": "SRC-A6BB2481A9331E5D",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -768,7 +798,19 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company_other_than_partnership"
+                },
+                {
+                  "condition_type": "direct_ownership",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
+                  "condition_type": "ownership_percent",
                   "operator": ">=",
                   "unit": "%",
                   "value": "25"
@@ -780,10 +822,16 @@
                   "value": "true"
                 }
               ],
-              "rate": 5.0
+              "rate": 5
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -791,7 +839,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 15.0
+              "rate": 15
             }
           ]
         },
@@ -896,7 +944,7 @@
           "title": "270/1996 Sb."
         }
       ],
-      "package_sha256": "0cf3f81f175d833056c9d292bcadf35e191d5611986f75175b9e119703d12f9c",
+      "package_sha256": "9cb2be4e34f7f234d71391df5dd2923201dc4a079ff12c19b86e0806b510b3f7",
       "partner_country": "AL",
       "partner_country_name": "Albánie",
       "ppt_treatment": {
@@ -2954,12 +3002,18 @@
           "article_text_sha256": "bed44e06e8f8f76dc30c0f73f90b93258dfc0e07bfef019d8ddedea8b20c1c7e",
           "candidate_excerpt": "DIVIDENDY\n1. Dividendy vyplácené společností, která je rezidentem jednoho smluvního státu, rezidentu druhého smluvního\nstátu mohou být zdaněny v tomto druhém státě.\n2. Tyto dividendy však mohou být rovněž zdaněny ve smluvním státě, jehož je společnost, která je vyplácí,\nrezidentem, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník dividend je rezidentem\ndruhého smluvního státu, daň takto uložená nepřesáhne:\na) 5 procent hrubé částky dividend, jestliže skutečným vlastníkem je společnost (jiná nežosobní společnost), která\npřímo drží alespoň 25 procent kapitálu společnosti, která dividendy vyplácí;\nb) 15 procent hrubé částky dividend ve všech ostatních případech.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace těchto omezení.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.\n3. Výraz „dividendy“ použitý v tomto článku označuje příjmy z akcií nebo jiných práv, s výjimkou pohledávek,\ns podílem na zisku, jakož i jiné příjmy, které jsou podrobeny stejnému daňovému režimu jako příjmy z akcií\npodle právních předpisů státu, jehož je společnost, která provádí platbu, rezidentem.\n4. Ustanovení odstavců 1 a 2 se nepoužijí, jestliže skutečný vlastník dividend, který je rezidentem jednoho\nsmluvního státu, vykonává v druhém smluvním státě, jehož je rezidentem společnost vyplácející dividendy, svoji\nčinnost prostřednictvím stálé provozovny, která je tam umístěna, nebo vykonává v tomto druhém státě nezávis",
           "candidate_rates": [
-            5.0,
-            15.0
+            5,
+            15
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+              "evidence_source_id": "SRC-ED86E5FFEF1EF27E",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -2968,10 +3022,22 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
-                  "operator": ">=",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
                   "unit": null,
-                  "value": "25%"
+                  "value": "company_other_than_partnership"
+                },
+                {
+                  "condition_type": "direct_ownership",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
+                  "condition_type": "ownership_percent",
+                  "operator": ">=",
+                  "unit": "%",
+                  "value": "25"
                 },
                 {
                   "condition_type": "beneficial_owner",
@@ -2980,7 +3046,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 5.0
+              "rate": 5
             },
             {
               "conditions": [
@@ -2997,7 +3063,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 15.0
+              "rate": 15
             }
           ]
         },
@@ -3135,7 +3201,7 @@
           "title": "69/2012 Sb.m.s."
         }
       ],
-      "package_sha256": "2a8c6b2b3f014bfefa8f7886c58376c6a97a5b233e68dc401f11f165b5f3ebbf",
+      "package_sha256": "f5c917ef2a18235d13d99b7ca469a12460a1f85093390f1e978a83bf68b3493b",
       "partner_country": "BB",
       "partner_country_name": "Barbados",
       "ppt_treatment": {
@@ -3288,12 +3354,18 @@
           "article_text_sha256": "8c2c27960628e920e060d46f097930aabedb67dec2d36078daf6e78ba8544006",
           "candidate_excerpt": "DIVIDENDY\n1.\nDividendy vyplácené společností, která je rezidentem jednoho smluvního státu, rezidentu druhého smluvního státu, mohou být zdaněny v tomto druhém státě.\n2.\nTyto dividendy však mohou být rovněž zdaněny ve smluvním státě, jehož je společnost, která je vyplácí, rezidentem, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník dividend je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne:\na)\n10 procent hrubé částky dividend, jestliže skutečným vlastníkem je společnost, která přímo drží alespoň 25 procent kapitálu společnosti vyplácející dividendy, a to nepřetržitě po dobu 365 dní, která zahrnuje den výplaty dividend (pro účely počítání této doby se nepřihlíží ke změnám vlastnictví, které by přímo vyplynuly z firemní reorganizace, jako je fúze nebo rozdělení, společnosti, která drží podíly nebo která vyplácí dividendy);\nb)\n15 procent hrubé částky dividend ve všech ostatních případech.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.\n3.\nVýraz „dividendy“ použitý v tomto článku označuje příjmy z akcií, požitkových akcií nebo požitkových práv, kuksů, zakladatelských podílů nebo jiných práv, s výjimkou pohledávek, s podílem na zisku, jakož i jiné příjmy, které jsou podrobeny stejnému daňovému režimu jako příjmy z akcií podle právních předpisů státu, jehož je společnost, která rozdílí zisk nebo provádí platbu, rezidentem.\n4.\nUstanovení odstavců 1 a 2 se nepoužijí, jestliže skutečný vlastník dividen",
           "candidate_rates": [
-            10.0,
-            15.0
+            10,
+            15
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner, direct ownership of at least 25%, held continuously for 365 days including the payment date subject to the reorganisation continuity rule. The current Stage 6 projection omitted one or more of these material conditions.",
+              "evidence_source_id": "SRC-ACCA576658417128",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -3302,16 +3374,22 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
-                  "operator": ">=",
-                  "unit": "%",
-                  "value": "25"
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company"
                 },
                 {
-                  "condition_type": "beneficial_owner",
+                  "condition_type": "direct_ownership",
                   "operator": "==",
                   "unit": null,
                   "value": "true"
+                },
+                {
+                  "condition_type": "ownership_percent",
+                  "operator": ">=",
+                  "unit": "%",
+                  "value": "25"
                 },
                 {
                   "condition_type": "continuous_holding_period_days",
@@ -3330,12 +3408,7 @@
                   "operator": "==",
                   "unit": null,
                   "value": "ownership_changes_directly_resulting_from_corporate_reorganisation_ignored"
-                }
-              ],
-              "rate": 10.0
-            },
-            {
-              "conditions": [
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -3343,7 +3416,24 @@
                   "value": "true"
                 }
               ],
-              "rate": 15.0
+              "rate": 10
+            },
+            {
+              "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
+                {
+                  "condition_type": "beneficial_owner",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                }
+              ],
+              "rate": 15
             }
           ]
         },
@@ -3456,7 +3546,7 @@
           "title": "8/2021 Sb.m.s."
         }
       ],
-      "package_sha256": "0c873e0915a646dd8d546a8f3994b95c68c306c1f7056b38b1c09773f7c4f4d7",
+      "package_sha256": "342275c1e824d07e57af9b4f0e9d86a9e7ae20cc19fe7008da795a21dbd3f394",
       "partner_country": "BD",
       "partner_country_name": "Bangladéš",
       "ppt_treatment": {
@@ -3854,12 +3944,18 @@
           "article_text_sha256": "cc78445cbac3c292ed8f4bbc453f6edeb9468d0c7767a33a70f69ef3ae221496",
           "candidate_excerpt": "DIVIDENDY\n1. Dividendy vyplácené spolecnostõ, která je rezidentem jednoho smluvnõho státu, rezidentu druhého\nsmluvnõho státu mohou být zdaneny v tomo druhém státe.\n2. Tyto dividendy vsak mohou být rovnez zdaneny ve smluvnõm státe, jehoz je spolecnost, která je vyplácõ,\nrezidentem, a to podle právnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk dividend je rezidentem\ndruhého smluvnõho státu, dan takto ulozená nepresáhne:\na) 5 procent hrubé cástky dividend, jestlize skutecným vlastnõkem je spolecnost, vcetne osobnõ spolecnosti,\nkterá prõmo nebo neprõmo vlastnõ nejméne 25 procent jmenõ spolecnosti vyplácejõcõ dividendy;\nb) 15 procent hrubé cástky dividend ve vsech ostatnõch prõpadech.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti, z nichz jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku oznacuje prõjmy z akciõ, pozitkových akciõ nebo pozitkových\npráv, kuksu, zakladatelských podõlu nebo jiných práv, s výjimkou pohledávek, s podõlem na zisku, jakoz i prõjmy\n± vyplácené i formou úroku ± které jsou povazovány za prõjmy z akciõ podle vnitrostátnõch danových predpisu\nstátu, jehoz je vyplácejõcõ spolecnost rezidentem.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize skutecný vlastnõk dividend, který je rezidentem jednoho\nsmluvnõho státu, vykonává v druhém smluvnõm státe, jehoz je rezidentem spolecnost vyplácejõcõ dividendy,\nprumyslovou nebo obchodnõ cinnost prostrednictvõm stálé provozovny, která je tam umõstena, nebo vykonává\nv tomto druhém s",
           "candidate_rates": [
-            5.0,
-            15.0
+            5,
+            15
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+              "evidence_source_id": "SRC-E16828A7660D9797",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -3868,7 +3964,13 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company"
+                },
+                {
+                  "condition_type": "ownership_percent",
                   "operator": ">=",
                   "unit": "%",
                   "value": "25"
@@ -3880,10 +3982,16 @@
                   "value": "true"
                 }
               ],
-              "rate": 5.0
+              "rate": 5
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -3891,7 +3999,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 15.0
+              "rate": 15
             }
           ]
         },
@@ -4035,7 +4143,7 @@
           "title": null
         }
       ],
-      "package_sha256": "66fbc33c8b946d920ec7e491572fae858a368d6405daa3f49d8a14e02a3a997d",
+      "package_sha256": "c8e49524ffd637ad72745f2c7785231542196d428fba39a8a48bb36e4acebcaa",
       "partner_country": "BE",
       "partner_country_name": "Belgie",
       "ppt_treatment": {
@@ -6562,12 +6670,18 @@
           "article_text_sha256": "0afbc80194bd521d254dd1f6c948546ac734d738acf8ad629fe391b14d9be5e8",
           "candidate_excerpt": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezi-\ndentem jednoho smluvnõho státu, rezidentu druhého\nsmluvnõho státu, mohou být zdaneny v tomto druhém\nstáte.\n2. Tyto dividendy vsak mohou být rovnez zda-\nneny ve smluvnõm státe, v nemz je spolecnost, která\ndividendy vyplácõ, rezidentem, a to podle právnõch\npredpisu tohoto státu, avsak jestlize skutecný vlastnõk\ndividend je rezidentem druhého smluvnõho státu, dan\ntakto stanovená nepresáhne:\na) 5 procent hrubé cástky dividend, jestlize skutec-\nným vlastnõkem je spolecnost (jiná nez osobnõ\nspolecnost), která prõmo vlastnõ nejméne 25 pro-\ncent majetku spolecnosti vyplácejõcõ dividendy;\nb) 15 procent hrubé cástky dividend ve vsech ostat-\nnõch prõpadech.\nTento odstavec se nedotkne zdanenõ zisku spolecnosti,\nze kterých jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku\noznacuje prõjmy z akciõ nebo jiných práv s podõlem\nna zisku, s výjimkou pohledávek, jakoz i prõjmy\nz práv na spolecnosti, které jsou podrobeny stejnému\nzdanenõ jako prõjmy z akciõ podle právnõch predpisu\ntoho státu, v nemz je spolecnost, která rozdõlõ zisk,\nrezidentem.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk dividend, který je rezidentem v jed-\nnom smluvnõm státe, vykonává v druhém smluvnõm\nstáte, v nemz je rezidentem spolecnost vyplácejõcõ di-\nvidendy, pru myslovou nebo obchodnõ cinnost pro-\nstrednictvõm stálé provozovny, která je tam umõstena,\nnebo vykonává v tomto druhém státe nezávislé povo-\nlánõ prostrednic",
           "candidate_rates": [
-            0.0,
-            15.0
+            5,
+            15
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10 reduced dividend branch requires the beneficial owner to be a company other than a partnership with direct ownership of at least 25%. Current Stage 6 branch omits the company/direct-ownership conditions and therefore remains unsafe.",
+              "evidence_source_id": "SRC-773D5F8BD93AE73A",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -6576,112 +6690,48 @@
             {
               "conditions": [
                 {
-                  "fact": "recipient_is_treaty_resident",
+                  "condition_type": "recipient_entity_type",
                   "operator": "==",
-                  "value": true
+                  "unit": null,
+                  "value": "company_other_than_partnership"
                 },
                 {
-                  "fact": "beneficial_owner",
+                  "condition_type": "direct_ownership",
                   "operator": "==",
-                  "value": true
+                  "unit": null,
+                  "value": "true"
                 },
                 {
-                  "fact": "permanent_establishment_connection",
-                  "operator": "==",
-                  "value": false
-                }
-              ],
-              "rate": 15.0
-            },
-            {
-              "conditions": [
-                {
-                  "fact": "recipient_is_treaty_resident",
-                  "operator": "==",
-                  "value": true
-                },
-                {
-                  "fact": "beneficial_owner",
-                  "operator": "==",
-                  "value": true
-                },
-                {
-                  "fact": "recipient_entity_type",
-                  "operator": "==",
-                  "value": "company"
-                },
-                {
-                  "fact": "recipient_is_partnership",
-                  "operator": "==",
-                  "value": false
-                },
-                {
-                  "fact": "ownership_percent",
+                  "condition_type": "ownership_percent",
                   "operator": ">=",
-                  "value": 10
+                  "unit": "%",
+                  "value": "25"
                 },
                 {
-                  "fact": "holding_period_months",
-                  "operator": ">=",
-                  "value": 12
-                },
-                {
-                  "fact": "permanent_establishment_connection",
+                  "condition_type": "beneficial_owner",
                   "operator": "==",
-                  "value": false
+                  "unit": null,
+                  "value": "true"
                 }
               ],
-              "rate": 0.0
+              "rate": 5
             },
             {
               "conditions": [
                 {
-                  "fact": "recipient_is_treaty_resident",
+                  "condition_type": "fallback_case",
                   "operator": "==",
-                  "value": true
+                  "unit": null,
+                  "value": "all_other_cases"
                 },
                 {
-                  "fact": "beneficial_owner",
+                  "condition_type": "beneficial_owner",
                   "operator": "==",
-                  "value": true
-                },
-                {
-                  "fact": "recipient_entity_type",
-                  "operator": "==",
-                  "value": "qualifying_pension_fund"
-                },
-                {
-                  "fact": "permanent_establishment_connection",
-                  "operator": "==",
-                  "value": false
+                  "unit": null,
+                  "value": "true"
                 }
               ],
-              "rate": 0.0
-            },
-            {
-              "conditions": [
-                {
-                  "fact": "recipient_is_treaty_resident",
-                  "operator": "==",
-                  "value": true
-                },
-                {
-                  "fact": "beneficial_owner",
-                  "operator": "==",
-                  "value": true
-                },
-                {
-                  "fact": "recipient_entity_type",
-                  "operator": "==",
-                  "value": "central_bank"
-                },
-                {
-                  "fact": "permanent_establishment_connection",
-                  "operator": "==",
-                  "value": false
-                }
-              ],
-              "rate": 0.0
+              "rate": 15
             }
           ]
         },
@@ -6859,7 +6909,7 @@
           "title": null
         }
       ],
-      "package_sha256": "f4f3a756b17d4894a50f631954a031789745b77e67f8521ed045d74d15c3ed96",
+      "package_sha256": "74d74f237a9fec8c47271c51279263d11075474d51b274f0b72514c3dfcbadbb",
       "partner_country": "CH",
       "partner_country_name": "Švýcarsko",
       "ppt_treatment": {
@@ -7672,12 +7722,18 @@
           "article_text_sha256": "b60182433000a8f9409a37b6ff29c0984c2b269964a0b4161512fb8dcd9ec5c3",
           "candidate_excerpt": "DIVIDENDY\n1. Dividendy vyplácené společností, která je rezidentem jednoho smluvního státu,\nrezidentu druhého smluvního státu, mohou být zdaněny v tomto druhém státě.\n2. Tyto dividendy však mohou být rovněž zdaněny ve smluvním státě, jehož je\nspolečnost, která je vyplácí, rezidentem, a to podle právních předpisů tohoto\nstátu, avšak jestliže skutečný vlastník dividend je rezidentem druhého smluvního\nstátu, daň takto uložená nepřesáhne:\na) 5 procent hrubé částky dividend, jestliže skutečným vlastníkem je společnost\n(jiná než osobní společnost), která přímo drží alespoň 25 procent kapitálu\nspolečnosti, která vyplácí dividendy;\nb) 10 procent hrubé částky dividend ve všech ostatních případech.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace\ntěchto omezení.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy\nvypláceny.\n3. Výraz \"dividendy\" použitý v tomto článku označuje příjmy z akcií nebo jiných\npráv, s výjimkou pohledávek, s podílem na zisku, jakož i jiné příjmy, které jsou\npodrobeny stejnému daňovému režimu jako příjmy z akcií podle právních\npředpisů státu, jehož je společnost, která rozdílí zisk, rezidentem.\n4. Ustanovení odstavců 1 a 2 se nepoužijí, jestliže skutečný vlastník dividend,\nkterý je rezidentem jednoho smluvního státu, vykonává v druhém smluvním\nstátě, jehož je rezidentem společnost vyplácející dividendy, svoji činnost\nprostřednictvím stálé provozovny, která je tam umístěna, a jestliže účast, pro\nkterou se dividendy ",
           "candidate_rates": [
-            5.0,
-            10.0
+            5,
+            10
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+              "evidence_source_id": "SRC-79E98C3789D34107",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -7686,7 +7742,19 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company_other_than_partnership"
+                },
+                {
+                  "condition_type": "direct_ownership",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
+                  "condition_type": "ownership_percent",
                   "operator": ">=",
                   "unit": "%",
                   "value": "25"
@@ -7698,10 +7766,16 @@
                   "value": "true"
                 }
               ],
-              "rate": 5.0
+              "rate": 5
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -7709,7 +7783,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 10.0
+              "rate": 10
             }
           ]
         },
@@ -7824,7 +7898,7 @@
           "title": "65/2011 Sb.m.s."
         }
       ],
-      "package_sha256": "437bcfcf1001a769d82b0aa1ef376ffc1754f13e185242167e708b6223099233",
+      "package_sha256": "83353aceeb9ca0b59090381dd022da94121451b9bf0e7b1fc4722bbed21f54d1",
       "partner_country": "CN",
       "partner_country_name": "Čína",
       "ppt_treatment": {
@@ -8538,12 +8612,18 @@
           "article_text_sha256": "1da760593beaee3f8f0b2b61e90e299c06641f5e2e74f58368c94b3c5f2008eb",
           "candidate_excerpt": "DIVIDENDY\n1. Dividendy vyplácené společností, která je rezidentem jednoho smluvního státu, rezidentu druhého smluvního\nstátu, mohou být zdaněny v tomto druhém státě.\n2. Tyto dividendy však mohou být rovněž zdaněny ve smluvním státě, jehož je společnost, která je vyplácí,\nrezidentem, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník dividend je rezidentem\ndruhého smluvního státu, daň takto uložená nepřesáhne:\na) 0 procent hrubé částky dividend, jestliže skutečným vlastníkem je společnost (jiná nežosobní společnost), která\npřímo drží alespoň 10 procent kapitálu společnosti, která vyplácí dividendy, pokud je taková účast vlastněna\nnepřetržitěpo období alespoň jednoho roku;\nb) 5 procent hrubé částky dividend ve všech ostatních případech.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace těchto omezení.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.\n3. Výraz „dividendy“ použitý v tomto článku označuje příjmy z akcií nebo jiných práv, s výjimkou pohledávek,\ns podílem na zisku, jakož i jiné příjmy, které jsou podrobeny stejnému daňovému režimu jako příjmy z akcií\npodle právních předpisů státu, jehož je společnost, která provádí dividendovou platbu, rezidentem.\n4. Ustanovení odstavců 1 a 2 se nepoužijí, jestliže skutečný vlastník dividend, který je rezidentem jednoho\nsmluvního státu, vykonává v druhém smluvním státě, jehož je rezidentem společnost vyplácející dividendy, svoji\nčinnost prostřednic",
           "candidate_rates": [
-            0.0,
-            5.0
+            0,
+            5
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 10%, held continuously for at least one year. The current Stage 6 projection omitted one or more of these material conditions.",
+              "evidence_source_id": "SRC-64413DE58345F47A",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -8552,10 +8632,28 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company_other_than_partnership"
+                },
+                {
+                  "condition_type": "direct_ownership",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
+                  "condition_type": "ownership_percent",
                   "operator": ">=",
                   "unit": "%",
                   "value": "10"
+                },
+                {
+                  "condition_type": "holding_period_months",
+                  "operator": ">=",
+                  "unit": "months",
+                  "value": 12
                 },
                 {
                   "condition_type": "beneficial_owner",
@@ -8564,10 +8662,16 @@
                   "value": "true"
                 }
               ],
-              "rate": 0.0
+              "rate": 0
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -8575,7 +8679,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 5.0
+              "rate": 5
             }
           ]
         },
@@ -8670,7 +8774,7 @@
           "title": "120/2009 Sb.m.s."
         }
       ],
-      "package_sha256": "c2118b3652fe7859034720b27a135c8423bbd3cd6d0de044e49a9d9b7605f43e",
+      "package_sha256": "4901480bbb5d16cae1e9588b43ab34511d25d817bea266154d0def92d8e9d7ad",
       "partner_country": "CY",
       "partner_country_name": "Kypr",
       "ppt_treatment": {
@@ -10153,12 +10257,18 @@
           "article_text_sha256": "fd8ae0c6b39bd61e8cfd115324efaeb29dfed5e5fe6e63239566b52d4077d4e1",
           "candidate_excerpt": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezi-\ndentem v jednom smluvnõm státe, rezidentovi druhého\nsmluvnõho státu mohou být zdaneny v tomto druhém\nstáte.\n2. Tyto dividendy vsak mohou být rovnez zda-\nneny ve smluvnõm státe, v nemz je spolecnost, která\nje vyplácõ, rezidentem, a to podle právnõch predpisu\ntohoto státu, avsak jestlize prõjemce je skutecným\nvlastnõkem dividend, dan takto stanovená nepresáhne:\na) 5 % hrubé cástky dividend, jestlize skutecným\nvlastnõkem je spolecnost (jiná nez osobnõ spolec-\nnost), která prõmo vlastnõ nejméne 25 % majetku\nspolecnosti vyplácejõcõ dividendy;\nb) 15 % hrubé cástky dividend ve vsech ostatnõch\nprõpadech.\nPřõslusné úrady smluvnõch státu mohou upravit\nvzájemnou dohodou zpu sob aplikace techto omezenõ.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti,\nze kterých jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku\noznacuje prõjmy z akciõ nebo jiných práv, s výjimkou\npohledávek, s podõlem na zisku, jakoz i prõjmy z práv\nna spolecnosti, které jsou podle dan ových predpisu\nstátu, v nemz je spolecnost, která rozdõlõ zisk, reziden-\ntem, postaveny na roven prõjmu z akciõ.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk dividend, který je rezidentem v jed-\nnom smluvnõm státe, vykonává v druhém smluvnõm\nstáte, v nemz je rezidentem spolecnost vyplácejõcõ di-\nvidendy, pru myslovou nebo obchodnõ cinnost pro-\nstrednictvõm stálé provozovny, která je tam umõstena,\nnebo vykonává v tomto druhém státe",
           "candidate_rates": [
-            5.0,
-            15.0
+            5,
+            15
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+              "evidence_source_id": "SRC-BD487F336BE33A13",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -10167,7 +10277,19 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company_other_than_partnership"
+                },
+                {
+                  "condition_type": "direct_ownership",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
+                  "condition_type": "ownership_percent",
                   "operator": ">=",
                   "unit": "%",
                   "value": "25"
@@ -10179,10 +10301,16 @@
                   "value": "true"
                 }
               ],
-              "rate": 5.0
+              "rate": 5
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -10190,7 +10318,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 15.0
+              "rate": 15
             }
           ]
         },
@@ -10344,7 +10472,7 @@
           "title": null
         }
       ],
-      "package_sha256": "5746ec0d86893aec98592c53d2ce67f066a57016d0068f6c41a5a0e3ac3a7a79",
+      "package_sha256": "0b589c53fa07118255ccda2fa4c76f7d2db14a370afda2631d6d0f38bcaf03b9",
       "partner_country": "EE",
       "partner_country_name": "Estonsko",
       "ppt_treatment": {
@@ -10512,12 +10640,18 @@
           "article_text_sha256": "ea6db3239f34e54c7a9ffd9573b8f27075b812e73b7eca3c0c896b8cf83cf220",
           "candidate_excerpt": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezi-\ndentem v jednom smluvnõm státe, osobe, která je rezi-\ndentem v druhém smluvnõm státe, mohou být zdaneny\nv tomto druhém státe.\n2. Tyto dividendy vsak mohou být rovnez zda-\nneny ve smluvnõm státe, v nemz je spolecnost, která\nje vyplácõ, rezidentem, a to podle právnõch predpisu\ntohoto státu, avsak jestlize prõjemce je skutecným vlast-\nnõkem dividend, dan takto stanovená nepresáhne:\na) 5 % hrubé cástky dividend, jestlize skutecným\nvlastnõkem je spolecnost (jiná nez osobnõ spolec-\nnost), která prõmo vlastnõ nejméne 25 % majetku\nspolecnosti vyplácejõcõ dividendy;\nb) 15 % hrubé cástky dividend ve vsech ostatnõch\nprõpadech.\n3. Výraz 1dividendya, pouzitý v tomto clánku,\noznacuje prõjmy z akciõ, pozitkových akciõ nebo pozit-\nkových práv, kuksu , zakladatelských podõlu nebo ji-\nných práv s podõlem na zisku, s výjimkou pohledá-\nvek, jakoz i prõjmy z práv na spolecnosti, které jsou\npodle dan ových predpisu státu, v nemz je spolecnost,\nkterá rozdõlõ zisk, rezidentem, postaveny na roven prõ-\njmu z akciõ.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk dividend, který je rezidentem v jed-\nnom smluvnõm státe, vykonává v druhém smluvnõm\nstáte, v nemz je rezidentem spolecnost vyplácejõcõ divi-\ndendy, pru myslovou nebo obchodnõ cinnost prostred-\nnictvõm stálé provozovny, která je tam umõstena, nebo\nvykonává v tomto druhém státe nezávislé povolánõ pro-\nstrednictvõm stálé základny tam umõstené, a jestlize\núcast, pro",
           "candidate_rates": [
-            5.0,
-            15.0
+            5,
+            15
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+              "evidence_source_id": "SRC-5993FE6CA3699B65",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -10526,7 +10660,19 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company_other_than_partnership"
+                },
+                {
+                  "condition_type": "direct_ownership",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
+                  "condition_type": "ownership_percent",
                   "operator": ">=",
                   "unit": "%",
                   "value": "25"
@@ -10538,10 +10684,16 @@
                   "value": "true"
                 }
               ],
-              "rate": 5.0
+              "rate": 5
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -10549,7 +10701,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 15.0
+              "rate": 15
             }
           ]
         },
@@ -10660,7 +10812,7 @@
           "title": "283/1995 Sb."
         }
       ],
-      "package_sha256": "7d3c2404ea4281b314371174d797a94f0983ccd7122bfb9c78b3de1347de936c",
+      "package_sha256": "24bd316a9a3ea306aa75512b5ed6e24bfe33069bed202576469c8436bdf9b2fb",
       "partner_country": "EG",
       "partner_country_name": "Egypt",
       "ppt_treatment": {
@@ -11035,12 +11187,18 @@
           "article_text_sha256": "6465c3e38a46179f5df9bc5dd8f441a5be09ea468448aae9874b4eb46f7010d2",
           "candidate_excerpt": "Dividendy\n1. Dividendy vyplácené společností, která má\nsídlo v jednom smluvním státě, osobě mající byd-\nliště či sídlo v druhém smluvním státě mohou být\nzdaněny v tomto druhém státě.\n2. Tyto dividendy však mohou být také zda-\nnény ve smluvním slátě, v němž má sídlo společ-\nnost, která je vyplácí, a to podle práva tohoto státu.\nJestliže však příjemce je skutečným vlastníkem\ndividend, daň takto uložená nepřesáhne:\na) 5 % hrubé částky dividend, jestliže skutečným\nvlastníkem je společnost (nikoli však osobní\nspolečnost, která nemá právní subjektivitu),\nkterá vlastní přímo nejméně 25 % kapitálu\nspolečnosti vyplácející dividendy;\nb) 15 % hrubé částky dividend ve všech jiných\npřípadech.\n3: Příslušné úřady smluvních států upraví vzá-\njemnou dobodou způsob aplikace odstavce 2.\n4. Ustanovení odstavce 2 se nedotknou zdanění\nzisků společnosti, ze kterých jsou dividendy vyplá-\nceny.\n5. Výraz „dividendy“, použitý v tomto článku,\noznačuje příjmy z akcií, požitkových akcií nebo\npožitkových práv, kuksů nebo jiných práv, s vyjim-\nkou pohledávek, s účastí na zisku, právě tak jako\npříjmy z jiných společenských práv, které jsou po-\ndrobeny stejnému zdanění jako příjmy z akcií po-\ndle daňového »ráva státu,,v němž má sídlo společ-\nnost vyplácející dividendy.\n6. Ustanovení odstavců 1 a 2 se nepoužijí, jest-\nliže příjemce dividend, mající bydliště čí sídlo v jed-\nnom smluvním státě, vykonává v druhém smluvním\nstátě, v němž má sídlo společnost vyplácející divi-\ndendy, průmyslovou nebo obchodní činnost",
           "candidate_rates": [
-            5.0,
-            15.0
+            5,
+            15
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+              "evidence_source_id": "SRC-62E09455EFDD89A1",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -11049,7 +11207,19 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company_other_than_partnership"
+                },
+                {
+                  "condition_type": "direct_ownership",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
+                  "condition_type": "ownership_percent",
                   "operator": ">=",
                   "unit": "%",
                   "value": "25"
@@ -11061,10 +11231,16 @@
                   "value": "true"
                 }
               ],
-              "rate": 5.0
+              "rate": 5
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -11072,7 +11248,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 15.0
+              "rate": 15
             }
           ]
         },
@@ -11204,7 +11380,7 @@
           "title": "23/1982 Sb."
         }
       ],
-      "package_sha256": "a5ea7cc3820d950e73245324b214bb497e1f205dafcb76ea55e1dfb65b1efc9d",
+      "package_sha256": "d10b5b7486d6e882a62275534ab46aa8ba56aaf51673301559aab16911fe052c",
       "partner_country": "ES",
       "partner_country_name": "Španělsko",
       "ppt_treatment": {
@@ -12441,12 +12617,18 @@
           "article_text_sha256": "56493c605ddfcfb178f9973c0f5cda7724c8a073eeb7b4be6d19f9fabd5f8784",
           "candidate_excerpt": "DIVIDENDY\n1. Dividendy vyplácené spolecnostõ, která je rezidentem jednoho smluvnõho státu, rezidentu druhého\nsmluvnõho státu mohou být zdaneny v tomto druhém státe.\n2. Tyto dividendy vsak mohou být rovnez zdaneny ve smluvnõm státe, jehoz je spolecnost, která je vyplácõ,\nrezidentem, a to podle právnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk dividend je rezidentem\ndruhého smluvnõho státu, dan takto ulozená nepresáhne:\na) 0 procent hrubé cástky dividend, jestlize skutecným vlastnõkem je spolecnost, která prõmo drzõ nejméne\n25 procent kapitálu spolecnosti vyplácejõcõ dividendy;\nb) 10 procent hrubé cástky dividend ve vsech ostatnõch prõpadech.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti, z nichz jsou dividendy vypláceny.\n3. Rezident České republiky, který dostává dividendy vyplácené spolecnostõ, která je rezidentem Francie,\nmuze zõskat refundaci zálohy do té mõry, ze tato záloha byla fakticky zaplacena spolecnostõ, pokud jde o tyto\ndividendy. Předpokládá se, ze hrubá cástka refundované zálohy je pro úcely Smlouvy dividendou. Refundace\nzálohy podléhá zdanenõ ve Francii v souladu s ustanovenõmi odstavce 2.\n4. Výraz 1dividendya oznacuje prõjmy z akciõ nebo jiných práv, s výjimkou pohledávek, s podõlem na zisku,\njakoz i prõjmy, se kterými se zacházõ jako s dividendami podle danových zákonu státu, jehoz je spolecnost, která\nrozdõlõ zisk, rezidentem. Rozumõ se, ze výraz 1dividendya nezahrnuje prõjmy uvedené v clánku 16.\n5. Ustanovenõ odstavcu 1, 2 a 3 se nepouz",
           "candidate_rates": [
-            0.0,
-            10.0
+            0,
+            10
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+              "evidence_source_id": "SRC-903074BA6B9910C5",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -12455,7 +12637,19 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company"
+                },
+                {
+                  "condition_type": "direct_ownership",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
+                  "condition_type": "ownership_percent",
                   "operator": ">=",
                   "unit": "%",
                   "value": "25"
@@ -12467,10 +12661,16 @@
                   "value": "true"
                 }
               ],
-              "rate": 0.0
+              "rate": 0
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -12478,7 +12678,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 10.0
+              "rate": 10
             }
           ]
         },
@@ -12613,7 +12813,7 @@
           "title": "79/2005 Sb.m.s."
         }
       ],
-      "package_sha256": "40967f1d059a1ccc8280508cd41386b0813d6b59f32e014297ad6c3e5c7431b0",
+      "package_sha256": "844708cccc4d51d154767c32e27574a10684b6c7450f9de0ff761737634f1bd9",
       "partner_country": "FR",
       "partner_country_name": "Francie",
       "ppt_treatment": {
@@ -12795,12 +12995,18 @@
           "article_text_sha256": "1ed11c4c0726435c5db978945bfa554fda00aa23403db02bc074c45df5cdda47",
           "candidate_excerpt": "Dividendy\n1.\nDividendy vyplácené společností, která je rezidentem v jednom smluvním státě, osobě, která je rezidentem v druhém smluvním státě, mohou být zdaněny v tomto druhém smluvním státě.\n2.\nTyto dividendy však mohou být rovněž zdaněny ve smluvním státě, v němž je společnost, která je vyplácí, rezidentem, a to podle právních předpisů tohoto státu, avšak jestliže příjemce je skutečným vlastníkem dividend, daň takto stanovená nepřesáhne:\n(a)\n5 % hrubé částky dividend, jestliže příjemce je společnost, která spravuje nejméně 25 % podílů s hlasovacím právem na společnosti vyplácející dividendy;\n(b)\n15 % hrubé částky dividend ve všech ostatních případech.\n3.\nVýraz „dividendy“, použitý v tomto článku, označuje příjmy z akcií nebo jiných práv - s výjimkou pohledávek - s podílem na zisku, jakož i příjmy z práv na společnosti, které jsou podle daňových předpisů státu, v němž je společnost, která rozdílí zisk, rezidentem postaveny na roveň příjmů z akcií a rovněž zahrnuje veškeré jiné příjmy, které podle právních předpisů smluvního státu, jehož je rezidentem společnost, která provádí výplaty, jsou považovány za dividendy nebo rozdělený zisk společnosti.\n4.\nUstanovení odstavců 1 a 2 tohoto článku se nepoužije, jestliže skutečný vlastník dividend, který je rezidentem v jednom smluvním státě, vykonává v druhém smluvním státě, v němž je rezidentem společnost vyplácející dividendy, průmyslovou nebo obchodní činnost prostřednictvím stálé provozovny, která je tam umístěna, nebo nezávislé p",
           "candidate_rates": [
-            5.0,
-            15.0
+            5,
+            15
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10(2)(a) applies 5% where the beneficial owner is a company controlling at least 25% of the voting interest/shares of the paying company. The current Stage 6 projection uses general ownership_percent and omits the company condition.",
+              "evidence_source_id": "SRC-4253A70D066D161D",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -12809,7 +13015,13 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company"
+                },
+                {
+                  "condition_type": "voting_ownership",
                   "operator": ">=",
                   "unit": "%",
                   "value": "25"
@@ -12821,10 +13033,16 @@
                   "value": "true"
                 }
               ],
-              "rate": 5.0
+              "rate": 5
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -12832,7 +13050,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 15.0
+              "rate": 15
             }
           ]
         },
@@ -12952,7 +13170,7 @@
           "title": "89/1992 Sb."
         }
       ],
-      "package_sha256": "74b3f36a0dee0d938aafcb7b2e7dcdfc8cab5674577cd9480c6a881e824bbce9",
+      "package_sha256": "3d0fafa71a4e8299cf1c18d62c0e152e5de7a0b216c3dbbc1cd93dd2ff510f8c",
       "partner_country": "GB",
       "partner_country_name": "Velká Británie (Spojené království Velké Británie a Severního Irska)",
       "ppt_treatment": {
@@ -13122,12 +13340,18 @@
           "article_text_sha256": "277875b90d6ebdad7a8a63ac78066680443933938df7ce2d467775bf9809cd10",
           "candidate_excerpt": "DIVIDENDY\n1. Dividendy vyplácené spolecnostõ, která je rezidentem jednoho smluvnõho státu, rezidentu druhého\nsmluvnõho státu, mohou být zdaneny v tomto druhém státe.\n2. Tyto dividendy vsak mohou být rovnez zdaneny ve smluvnõm státe, jehoz je spolecnost, která je vyplácõ,\nrezidentem, a to podle právnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk dividend je rezidentem\ndruhého smluvnõho státu, dan takto ulozená nepresáhne:\na) 5 procent hrubé cástky dividend, jestlize skutecným vlastnõkem je spolecnost (jiná nez osobnõ spolecnost),\nkterá prõmo vlastnõ nejméne 25 procent kapitálu spolecnosti vyplácejõcõ dividendy;\nb) 10 procent hrubé cástky dividend ve vsech ostatnõch prõpadech.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou dohodou zpusob aplikace techto omezenõ.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti, z nichz jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku oznacuje prõjmy z akciõ nebo jiných práv, s výjimkou pohle-\ndávek, s podõlem na zisku, jakoz i jiné prõjmy, které jsou podrobeny stejnému danovému rezimu jako prõjmy\nz akciõ podle právnõch predpisu státu, jehoz je spolecnost, která provádõ platbu, rezidentem.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize skutecný vlastnõk dividend, který je rezidentem jednoho\nsmluvnõho státu, vykonává v druhém smluvnõm státe, jehoz je rezidentem spolecnost vyplácejõcõ dividendy, svoji\ncinnost prostrednictvõm stálé provozovny, která je tam umõstena, a jestlize úcast, pro kterou se divide",
           "candidate_rates": [
-            5.0,
-            10.0
+            5,
+            10
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+              "evidence_source_id": "SRC-424DC2CFCDF8B32E",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -13136,7 +13360,19 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company_other_than_partnership"
+                },
+                {
+                  "condition_type": "direct_ownership",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
+                  "condition_type": "ownership_percent",
                   "operator": ">=",
                   "unit": "%",
                   "value": "25"
@@ -13148,10 +13384,16 @@
                   "value": "true"
                 }
               ],
-              "rate": 5.0
+              "rate": 5
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -13159,7 +13401,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 10.0
+              "rate": 10
             }
           ]
         },
@@ -13312,7 +13554,7 @@
           "title": "40/2007 Sb.m.s."
         }
       ],
-      "package_sha256": "55714a2a87b25ff586e2f050a54f296e78d67ad6b0bc9160f1f969c439a82afe",
+      "package_sha256": "e7cc8f3e3f728af10162cac79a3c734097f29dc907b3951efc4786fadf75699d",
       "partner_country": "GE",
       "partner_country_name": "Gruzie",
       "ppt_treatment": {
@@ -15282,12 +15524,18 @@
           "article_text_sha256": "202fe7cc04d3d5467ab05944fc8cf0068553341ebe4eb615ac431f486cda1974",
           "candidate_excerpt": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezi-\ndentem v jednom smluvnõm státe, osobe, která je rezi-\ndentem v druhém smluvnõm státe, mohou být zdaneny\nv tomto druhém smluvnõm státe.\n2. Tyto dividendy vsak mohou být rovnez zda-\nneny ve smluvnõm státe, v nemz je spolecnost, která\nje vyplácõ, rezidentem, a to podle právnõch predpisu\ntohoto státu, avsak jestlize prõjemce je skutecným\nvlastnõkem dividend, dan takto stanovená nepresáhne:\na) 5 % hrubé cástky dividend, jestlize prõjemce je\nspolecnost, která prõmo vlastnõ nejméne 25 %\nmajetku spolecnosti vyplácejõcõ dividendy;\nb) 15 % hrubé cástky dividend ve vsech ostatnõch\nprõpadech.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou do-\nhodou zpu sob aplikace techto omezenõ.\nTento odstavec se nedotýká zdanenõ zisku spolec-\nnosti, ze kterých jsou dividendy vypláceny.\n3. Výraz 1dividendya, pouzitý v tomto clánku,\noznacuje prõjmy z akciõ nebo jiných práv, s výjimkou\npohledávek, s podõlem na zisku, jakoz i prõjmy z práv\nna spolecnosti, které jsou podle dan ových predpisu\nstátu, v nemz je spolecnost, která rozdõlõ zisk, reziden-\ntem, postaveny na roven prõjmu z akciõ.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk dividend, který je rezidentem v jed-\nnom smluvnõm státe, vykonává v druhém smluvnõm\nstáte, v nemz je rezidentem spolecnost vyplácejõcõ di-\nvidendy, pru myslovou nebo obchodnõ cinnost pro-\nstrednictvõm stálé provozovny, která je tam umõstena,\nnebo vykonává v tomto druhém státe nezávislé povo-\n",
           "candidate_rates": [
-            5.0,
-            15.0
+            5,
+            15
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+              "evidence_source_id": "SRC-21BEA9C0DA4A502D",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -15296,7 +15544,19 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company"
+                },
+                {
+                  "condition_type": "direct_ownership",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
+                  "condition_type": "ownership_percent",
                   "operator": ">=",
                   "unit": "%",
                   "value": "25"
@@ -15308,10 +15568,16 @@
                   "value": "true"
                 }
               ],
-              "rate": 5.0
+              "rate": 5
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -15319,7 +15585,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 15.0
+              "rate": 15
             }
           ]
         },
@@ -15414,7 +15680,7 @@
           "title": "22/1995 Sb."
         }
       ],
-      "package_sha256": "25b262ffb683a1cfd72c29a694129caec946c419708999e4a457e43cf9d752a7",
+      "package_sha256": "337ec1fcd922a997bde36b07107349193f17e378137e7386d5b51fb6ffd329b2",
       "partner_country": "HU",
       "partner_country_name": "Maďarsko",
       "ppt_treatment": {
@@ -16130,12 +16396,18 @@
           "article_text_sha256": "45e3e863bb8b4ad6e45b1482459a36a0d5f2e638aa93a8bc0fff048c1e128f6f",
           "candidate_excerpt": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezi-\ndentem v jednom smluvnõm státe, osobe, která je rezi-\ndentem v druhém smluvnõm státe, mohou být zdaneny\nv tomto druhém státe.\n2. Tyto dividendy vsak mohou být rovnez zda-\nneny ve smluvnõm státe, v nemz je spolecnost, která je\nvyplácõ, rezidentem, a to podle právnõch predpisu\ntohoto státu, avsak jestlize prõjemce je skutecným\nvlastnõkem dividend, dan takto stanovená nepresáhne:\na) 5 % hrubé cástky dividend, jestlize prõjemce je\nspolecnost, která prõmo vlastnõ nejméne 25 %\npodõlu s hlasovacõm právem spolecnosti vypláce-\njõcõ dividendy;\nb) 15 % hrubé cástky dividend ve vsech ostatnõch\nprõpadech.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou do-\nhodou zpu sob aplikace techto omezenõ.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti,\nze kterých jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku\noznacuje prõjmy z akciõ nebo jiných práv, s výjimkou\npohledávek, a zahrnuje jakýkoli prõjem nebo rozdelenõ\nzisku, které jsou podle dan ových predpisu toho smluv-\nnõho státu, v nemz je spolecnost, která vyplácõ divi-\ndendy nebo rozdõlõ zisk, rezidentem, postaveny na\nroven prõjmu z akciõ.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk dividend, který je rezidentem v jed-\nnom smluvnõm státe, vykonává v druhém smluvnõm\nstáte, v nemz je rezidentem spolecnost vyplácejõcõ di-\nvidendy, podnikatelskou cinnost prostrednictvõm stálé\nprovozovny, která je tam umõstena, nebo vykonává\nv tomto druh",
           "candidate_rates": [
-            5.0,
-            15.0
+            5,
+            15
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10(2)(a) applies 5% where the beneficial owner is a company directly owning at least 25% of the voting interest in the paying company. The current Stage 6 projection uses general ownership_percent and omits both company and direct-voting conditions.",
+              "evidence_source_id": "SRC-DC652FA09D142B61",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -16144,7 +16416,19 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company"
+                },
+                {
+                  "condition_type": "direct_ownership",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
+                  "condition_type": "voting_ownership",
                   "operator": ">=",
                   "unit": "%",
                   "value": "25"
@@ -16156,10 +16440,16 @@
                   "value": "true"
                 }
               ],
-              "rate": 5.0
+              "rate": 5
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -16167,7 +16457,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 15.0
+              "rate": 15
             }
           ]
         },
@@ -16260,7 +16550,7 @@
           "title": "163/1996 Sb."
         }
       ],
-      "package_sha256": "c9f1a856a55d2c4aeafcaa4088cc0cda8ca2883350177ed3198e4b06f196e62b",
+      "package_sha256": "e8f00a9678ea77d9739fe137fb44f56fdaf735045ccc5b45079b2a53fec30531",
       "partner_country": "IE",
       "partner_country_name": "Irsko",
       "ppt_treatment": {
@@ -16428,12 +16718,18 @@
           "article_text_sha256": "933e60627be4b5c9ea9f2d605d3aca81dcb1ec5919cf65a13762ce7248612c98",
           "candidate_excerpt": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezi-\ndentem v jednom smluvnõm státe, osobe, která je rezi-\ndentem v druhém smluvnõm státe, mohou být zdaneny\nv tomto druhém státe.\n2. Tyto dividendy vsak mohou být rovnez zda-\nneny ve smluvnõm státe, v nemz je spolecnost, která\nje vyplácõ, rezidentem, a to podle právnõch predpisu\ntohoto státu, avsak jestlize prõjemce je skutecným\nvlastnõkem dividend, dan takto stanovená nepresáhne:\na) 5 % hrubé cástky dividend, jestlize prõjemce je\nspolecnost (jiná nez osobnõ spolecnost), která\nprõmo vlastnõ nejméne 15 % majetku spolecnosti\nvyplácejõcõ dividendy;\nb) 15 % hrubé cástky dividend ve vsech ostatnõch\nprõpadech.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti,\nze kterých jsou dividendy vypláceny.\n3. Výraz 1dividendya, pouzitý v tomto clánku,\noznacuje prõjmy z akciõ, pozitkových akciõ nebo pozit-\nkových práv, kuksu , zakladatelských podõlu nebo ji-\nných práv s podõlem na zisku, s výjimkou pohledá-\nvek, jakoz i prõjmy z práv na spolecnosti, které jsou\npodle dan ových predpisu státu, v nemz je spolecnost,\nkterá rozdõlõ zisk, rezidentem, postaveny na roven prõ-\njmu z akciõ.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk dividend, který je rezidentem v jed-\nnom smluvnõm státe, vykonává v druhém smluvnõm\nstáte, v nemz je rezidentem spolecnost vyplácejõcõ di-\nvidendy, pru myslovou nebo obchodnõ cinnost pro-\nstrednictvõm stálé provozovny, která je tam umõstena,\nnebo vykonává v tomto druhém státe nezávislé po",
           "candidate_rates": [
-            5.0,
-            15.0
+            5,
+            15
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 15%. The current Stage 6 projection omitted one or more of these material conditions.",
+              "evidence_source_id": "SRC-A1472F5C17983662",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -16442,7 +16738,19 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company_other_than_partnership"
+                },
+                {
+                  "condition_type": "direct_ownership",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
+                  "condition_type": "ownership_percent",
                   "operator": ">=",
                   "unit": "%",
                   "value": "15"
@@ -16454,10 +16762,16 @@
                   "value": "true"
                 }
               ],
-              "rate": 5.0
+              "rate": 5
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -16465,7 +16779,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 15.0
+              "rate": 15
             }
           ]
         },
@@ -16576,7 +16890,7 @@
           "title": "21/1995 Sb."
         }
       ],
-      "package_sha256": "4aaf11061fc20f6c0c33dcf11d76acfdc60b1d5b854822f40b31a6e87614298b",
+      "package_sha256": "f783ee888e85dabbbebd0bfde0db1cff5b094565771e82e6c1f9e7f241845bed",
       "partner_country": "IL",
       "partner_country_name": "Izrael",
       "ppt_treatment": {
@@ -17542,12 +17856,18 @@
           "article_text_sha256": "d8605ee4d714b7fc49c5b16cd28afef53eecf103a00d088c4ea08f609b13e322",
           "candidate_excerpt": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezidentem jednoho smluvnõho státu, rezidentu druhého\nsmluvnõho státu mohou být zdaneny v tomto druhém státe.\n2. Tyto dividendy vsak mohou být rovnez zdaneny ve smluvnõm státe, jehoz je spolecnost, která je vyplácõ,\nrezidentem, a to podle právnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk dividend je rezidentem\ndruhého smluvnõho státu, dan takto ulozená nepresáhne:\na) 5 procent hrubé cástky dividend, jestlize skutecným vlastnõkem je spolecnost (jiná nez osobnõ spolecnost),\nkterá prõmo vlastnõ nejméne 25 procent jmenõ spolecnosti vyplácejõcõ dividendy;\nb) 15 procent hrubé cástky dividend ve vsech ostatnõch prõpadech.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou dohodou zpusob aplikace techto omezenõ.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti, z nichz jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku oznacuje prõjmy z akciõ nebo jiných práv, s výjimkou pohle-\ndávek, s podõlem na zisku, jakoz i jiné prõjmy, které jsou podrobeny stejnému danovému rezimu jako prõjmy\nz akciõ podle právnõch predpisu státu, jehoz je spolecnost, která rozdõlõ zisk, rezidentem.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize skutecný vlastnõk dividend, který je rezidentem jednoho\nsmluvnõho státu, vykonává v druhém smluvnõm státe, jehoz je rezidentem spolecnost vyplácejõcõ dividendy,\nprumyslovou nebo obchodnõ cinnost prostrednictvõm stálé provozovny, která je tam umõstena, nebo vykonává\nv tomto dr",
           "candidate_rates": [
-            5.0,
-            15.0
+            5,
+            15
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+              "evidence_source_id": "SRC-5514D99802C37D57",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -17556,7 +17876,19 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company_other_than_partnership"
+                },
+                {
+                  "condition_type": "direct_ownership",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
+                  "condition_type": "ownership_percent",
                   "operator": ">=",
                   "unit": "%",
                   "value": "25"
@@ -17568,10 +17900,16 @@
                   "value": "true"
                 }
               ],
-              "rate": 5.0
+              "rate": 5
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -17579,7 +17917,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 15.0
+              "rate": 15
             }
           ]
         },
@@ -17672,7 +18010,7 @@
           "title": "11/2001 Sb.m.s."
         }
       ],
-      "package_sha256": "3b4efb9b7fdf305768681b49d4b8b7c5152b079beeb73eaf656af8d6f8ef15ba",
+      "package_sha256": "b472d5b2fa9074ff72ddf05a16622a9574718426e31c01b8a363dbcfaabdc2bc",
       "partner_country": "IS",
       "partner_country_name": "Island",
       "ppt_treatment": {
@@ -19000,12 +19338,18 @@
           "article_text_sha256": "bf6a4532f0eaf240b327d0c89691645c1d1c00af81124b3a82b51da4ebc38b6a",
           "candidate_excerpt": "DIVIDENDY\n1.\nDividendy vyplácené společností, která je rezidentem jednoho smluvního státu, rezidentu druhého smluvního státu, mohou být zdaněny v tomto druhém státě.\n2.\nTyto dividendy však mohou být rovněž zdaněny ve smluvním státě, jehož je společnost, která je vyplácí, rezidentem, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník dividend je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne:\na)\n5 procent hrubé částky dividend, jestliže skutečným vlastníkem je společnost (jiná než osobní společnost), která přímo drží alespoň 15 procent kapitálu společnosti vyplácející dividendy;\nb)\n10 procent hrubé částky dividend ve všech ostatních případech.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.\n3.\nVýraz „dividendy“ použitý v tomto článku označuje příjmy z akcií, požitkových akcií nebo požitkových práv, kuksů, zakladatelských podílů nebo jiných práv, s výjimkou pohledávek, s podílem na zisku, jakož i příjmy z jiných práv na společnosti a jiné příjmy, které jsou podrobeny stejnému daňovému režimu jako příjmy z akcií podle právních předpisů státu, jehož je společnost, která rozdílí zisk nebo provádí platbu, rezidentem.\n4.\nUstanovení odstavců 1 a 2 se nepoužijí, jestliže skutečný vlastník dividend, který je rezidentem jednoho smluvního státu, vykonává v druhém smluvním státě, jehož je rezidentem společnost vyplácející dividendy, svoji činnost prostřednictvím stálé provozovny, která je tam umístěna, a je",
           "candidate_rates": [
-            5.0,
-            10.0
+            5,
+            10
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 15%. The current Stage 6 projection omitted one or more of these material conditions.",
+              "evidence_source_id": "SRC-D48D1809A1873C7F",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -19014,7 +19358,19 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company_other_than_partnership"
+                },
+                {
+                  "condition_type": "direct_ownership",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
+                  "condition_type": "ownership_percent",
                   "operator": ">=",
                   "unit": "%",
                   "value": "15"
@@ -19026,10 +19382,16 @@
                   "value": "true"
                 }
               ],
-              "rate": 5.0
+              "rate": 5
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -19037,7 +19399,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 10.0
+              "rate": 10
             }
           ]
         },
@@ -19153,7 +19515,7 @@
           "title": "50/2020 Sb.m.s."
         }
       ],
-      "package_sha256": "8eba5f186f8ce316d6bb4b0366670148eb534d9f6dd1885d0e6affc2419f181e",
+      "package_sha256": "5246eb74133ad8d20f0e73e0bb6a0b4799c2a72b32e00cb846750c5e1e4d425e",
       "partner_country": "KG",
       "partner_country_name": "Kyrgyzstán",
       "ppt_treatment": {
@@ -19918,12 +20280,18 @@
           "article_text_sha256": "1b4c29b81023342afd05d81396fc1bbf2fd57e9bf977292f22f46e17cbc37080",
           "candidate_excerpt": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezidentem jednoho smluvnõho státu, rezidentu druhého\nsmluvnõho státu, mohou být zdaneny v tomto druhém smluvnõm státe.\n2. Tyto dividendy vsak mohou být rovnez zdaneny ve smluvnõm státe, jehoz je spolecnost, která je vyplácõ,\nrezidentem, a to podle právnõch predpisu tohoto smluvnõho státu, avsak jestlize skutecný vlastnõk dividend je\nrezidentem druhého smluvnõho státu dan takto ulozená nepresáhne 5 % hrubé cástky dividend. Ustanovenõ\ntohoto odstavce se nedotýkajõ zdanovánõ zisku spolecnosti, z nichz jsou dividendy vypláceny.\n3. Bez ohledu na ustanovenõ odstavcu 1 a 2 nebudou dividendy vyplácené spolecnostõ, která je rezidentem\njednoho smluvnõho státu, podléhat zdanenõ v tomto smluvnõm státe, jestlize skutecným vlastnõkem dividend je:\na) vláda druhého smluvnõho státu nebo jakákoliv vládnõ instituce nebo jiná organizace tohoto smluvnõho státu\ndefinovaná v clánku 4 odst. 2; nebo\nb) spolecnost, která je rezidentem druhého smluvnõho státu a která je ovládána, nebo nejméne 25 %\njejõho kapitálu je vlastneno, prõmo nebo neprõmo vládou nebo jakoukoliv vládnõ institucõ nebo jinou organizacõ\ntohoto smluvnõho státu definovanou v clánku 4 odst. 2.\n4. Výraz 1dividendya pouzitý v tomto clánku oznacuje prõjmy z akciõ, pozitkových akciõ nebo pozitkových\npráv, kuksu, zakladatelských podõlu nebo jiných práv, s výjimkou pohledávek, s podõlem na zisku, jakoz i jiné\nprõjmy, které jsou podrobeny stejnému danovému rezimu jako prõjmy z akciõ podl",
           "candidate_rates": [
-            0.0,
-            5.0
+            0,
+            5
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10(3) gives a 0% source-state result only for specified government/public bodies or a resident company controlled by, or at least 25% directly or indirectly owned by, such public bodies. The current Stage 6 projection incorrectly stores that classification as a non-boolean beneficial_owner value.",
+              "evidence_source_id": "SRC-BF7674A114B0103D",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -19932,13 +20300,19 @@
             {
               "conditions": [
                 {
-                  "condition_type": "beneficial_owner",
+                  "condition_type": "recipient_entity_type",
                   "operator": "==",
                   "unit": null,
                   "value": "government_or_government_institution_or_article_4_2_public_organization_or_company_controlled_by_or_at_least_25_percent_directly_or_indirectly_owned_by_such_public_body"
+                },
+                {
+                  "condition_type": "beneficial_owner",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
                 }
               ],
-              "rate": 0.0
+              "rate": 0
             },
             {
               "conditions": [
@@ -19955,7 +20329,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 5.0
+              "rate": 5
             }
           ]
         },
@@ -20062,7 +20436,7 @@
           "title": null
         }
       ],
-      "package_sha256": "0217889ac26222f95bbc4605d534e4800d64b64f8d190dc8f806c0d6ca6ce16d",
+      "package_sha256": "2b7db34d51dcad636e321ba9be68e9deed76be2dc9fc579c096c0f8c981053ea",
       "partner_country": "KW",
       "partner_country_name": "Kuvajt",
       "ppt_treatment": {
@@ -21054,12 +21428,18 @@
           "article_text_sha256": "def17440849e779ac0d1f4fd79d7e63b5a6e13923e8549d848bd9737c090c9d9",
           "candidate_excerpt": "DIVIDENDY\n1.\nDividendy vyplácené společností, která je rezidentem jednoho smluvního státu, rezidentu druhého smluvního státu, mohou být zdaněny v tomto druhém státě.\n2.\nTyto dividendy však mohou být rovněž zdaněny ve smluvním státě, jehož je společnost, která je vyplácí, rezidentem, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník dividend je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne:\na)\n0 procent hrubé částky dividend, jestliže skutečným vlastníkem je společnost (jiná než osobní společnost), která nepřetržitě přímo drží po období alespoň jednoho roku alespoň 10 procent kapitálu společnosti, která vyplácí dividendy;\nb)\n15 procent hrubé částky dividend ve všech ostatních případech.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.\n3.\nVýraz „dividendy“ použitý v tomto článku označuje příjmy z akcií, požitkových akcií nebo požitkových práv, kuksů, zakladatelských podílů nebo jiných práv, s výjimkou pohledávek, s podílem na zisku, jakož i jiné příjmy, které jsou podrobeny stejnému daňovému režimu jako příjmy z akcií podle právních předpisů státu, jehož je společnost, která provádí platbu, rezidentem.\n4.\nUstanovení odstavců 1 a 2 se nepoužijí, jestliže skutečný vlastník dividend, který je rezidentem jednoho smluvního státu, vykonává v druhém smluvním státě, jehož je rezidentem společnost vyplácející dividendy, svoji činnost prostřednictvím stálé provozovny, která je tam umístěna, a jestliže úča",
           "candidate_rates": [
-            0.0,
-            15.0
+            0,
+            15
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 10%, held continuously for at least one year. The current Stage 6 projection omitted one or more of these material conditions.",
+              "evidence_source_id": "SRC-2FCAE2F83ACB4BD7",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -21068,10 +21448,28 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company_other_than_partnership"
+                },
+                {
+                  "condition_type": "direct_ownership",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
+                  "condition_type": "ownership_percent",
                   "operator": ">=",
                   "unit": "%",
                   "value": "10"
+                },
+                {
+                  "condition_type": "holding_period_months",
+                  "operator": ">=",
+                  "unit": "months",
+                  "value": 12
                 },
                 {
                   "condition_type": "beneficial_owner",
@@ -21080,10 +21478,16 @@
                   "value": "true"
                 }
               ],
-              "rate": 0.0
+              "rate": 0
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -21091,7 +21495,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 15.0
+              "rate": 15
             }
           ]
         },
@@ -21210,7 +21614,7 @@
           "title": "8/2016 Sb.m.s."
         }
       ],
-      "package_sha256": "83813ba0a0decca78edc8645ce89cbf961283ebe2592089c5091f8eee1f79365",
+      "package_sha256": "7a550be8eef533e068c757dcea702b151730661d8a393045c91e9687e6db8131",
       "partner_country": "LI",
       "partner_country_name": "Lichtenštejnsko",
       "ppt_treatment": {
@@ -21372,11 +21776,17 @@
           "candidate_excerpt": "DIVIDENDY\n1.\nDividendy vyplácené společností, která je rezidentem jednoho smluvního státu, rezidentu druhého smluvního státu, mohou být zdaněny v tomto druhém státě.\n2.\nTyto dividendy však mohou být rovněž zdaněny ve smluvním státě, jehož je společnost, která je vyplácí, rezidentem, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník dividend je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne:\na)\n7,5 procent hrubé částky dividend, jestliže skutečným vlastníkem je společnost, která přímo drží alespoň 10 procent kapitálu společnosti vyplácející dividendy;\nb)\n10 procent hrubé částky dividend ve všech ostatních případech.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.\n3.\nVýraz „dividendy“ použitý v tomto článku označuje příjmy z akcií nebo jiných práv, s výjimkou pohledávek, s podílem na zisku, jakož i:\na)\npříjmy z jiných práv na společnosti; a\nb)\njiné příjmy,\npokud jsou takové příjmy podrobeny stejnému daňovému režimu jako příjmy z akcií podle právních předpisů státu, jehož je společnost, která rozdílí zisk nebo provádí platbu, rezidentem.\n4.\nUstanovení odstavců 1 a 2 se nepoužijí, jestliže skutečný vlastník dividend, který je rezidentem jednoho smluvního státu, vykonává v druhém smluvním státě, jehož je rezidentem společnost vyplácející dividendy, svoji činnost prostřednictvím stálé provozovny, která je tam umístěna, nebo vykonává v tomto druhém státě nezávislé povolání ze stálé základny tam umíst",
           "candidate_rates": [
             7.5,
-            10.0
+            10
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner, direct ownership of at least 10%. The current Stage 6 projection omitted one or more of these material conditions.",
+              "evidence_source_id": "SRC-60A3FA4FDCD1D9A1",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -21385,7 +21795,19 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company"
+                },
+                {
+                  "condition_type": "direct_ownership",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
+                  "condition_type": "ownership_percent",
                   "operator": ">=",
                   "unit": "%",
                   "value": "10"
@@ -21402,13 +21824,19 @@
             {
               "conditions": [
                 {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
+                {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
                   "unit": null,
                   "value": "true"
                 }
               ],
-              "rate": 10.0
+              "rate": 10
             }
           ]
         },
@@ -21519,7 +21947,7 @@
           "title": "483/2024 Sb."
         }
       ],
-      "package_sha256": "fc31429e773f245ebd078e7decfc2a72dbcc2c0743b95d86f55ea5ae229c73e1",
+      "package_sha256": "e22f5111feb594f8b61234a4693eaf3b15fe535509b226cc9c6c88857dd460e3",
       "partner_country": "LK",
       "partner_country_name": "Srí Lanka",
       "ppt_treatment": {
@@ -21894,12 +22322,18 @@
           "article_text_sha256": "1725372fa8f307424cfa96e07a719aa6ce8244cf75783bf291b3bbe94bc6b0f0",
           "candidate_excerpt": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezi-\ndentem v jednom smluvnõm státe, rezidentovi druhého\nsmluvnõho státu mohou být zdaneny v tomto druhém\nstáte.\n2. Tyto dividendy vsak mohou být rovnez zda-\nneny ve smluvnõm státe, v nemz je spolecnost, která\nje vyplácõ, rezidentem, a to podle právnõch predpisu\ntohoto státu, avsak jestlize prõjemce je skutecným vlast-\nnõkem dividend, dan takto stanovená nepresáhne:\na) 5 % hrubé cástky dividend, jestlize skutecným\nvlastnõkem je spolecnost (jiná nez osobnõ spolec-\nnost), která prõmo vlastnõ nejméne 25 % majetku\nspolecnosti vyplácejõcõ dividendy;\nb) 15 % hrubé cástky dividend ve vsech ostatnõch\nprõpadech.\nPřõslusné úrady smluvnõch státu mohou upravit\nvzájemnou dohodou zpu sob aplikace techto omezenõ.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti,\nze kterých jsou dividendy vypláceny.\n3. Výraz 1dividendya, pouzitý v tomto clánku,\noznacuje prõjmy z akciõ nebo jiných práv, s výjimkou\npohledávek, s podõlem na zisku, jakoz i prõjmy z práv\nna spolecnosti, které jsou podle dan ových predpisu\nstátu, v nemz je spolecnost, která rozdõlõ zisk, reziden-\ntem, postaveny na roven prõjmu z akciõ.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk dividend, který je rezidentem v jed-\nnom smluvnõm státe, vykonává v druhém smluvnõm\nstáte, v nemz je rezidentem spolecnost vyplácejõcõ di-\nvidendy, pru myslovou nebo obchodnõ cinnost pro-\nstrednictvõm stálé provozovny, která je tam umõstena,\nnebo vykonává v tomto druhém s",
           "candidate_rates": [
-            5.0,
-            15.0
+            5,
+            15
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+              "evidence_source_id": "SRC-9315CFFD2F0A40D8",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -21908,7 +22342,19 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company_other_than_partnership"
+                },
+                {
+                  "condition_type": "direct_ownership",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
+                  "condition_type": "ownership_percent",
                   "operator": ">=",
                   "unit": "%",
                   "value": "25"
@@ -21920,10 +22366,16 @@
                   "value": "true"
                 }
               ],
-              "rate": 5.0
+              "rate": 5
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -21931,7 +22383,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 15.0
+              "rate": 15
             }
           ]
         },
@@ -22048,7 +22500,7 @@
           "title": "230/1995 Sb."
         }
       ],
-      "package_sha256": "119659b434152f592c60ce46979f825c8fcd1ed090dca383db0084fdd386aeb4",
+      "package_sha256": "8cd398338cc259e5619b0c947a98342c39b928f246fc642902b78fd2c413af8e",
       "partner_country": "LT",
       "partner_country_name": "Litva",
       "ppt_treatment": {
@@ -22423,12 +22875,18 @@
           "article_text_sha256": "1d71f0c86db1e3bb24280045553070cd8b28a383d707d108f2060f8359b573c5",
           "candidate_excerpt": "DIVIDENDY\n1.\nDividendy vyplácené společností, která je rezidentem jednoho smluvního státu, rezidentu druhého smluvního státu, mohou být zdaněny v tomto druhém státě.\n2.\nTyto dividendy však mohou být rovněž zdaněny ve smluvním státě, jehož je společnost, která je vyplácí, rezidentem, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník dividend je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne:\na)\n0 procent hrubé částky dividend, jestliže skutečným vlastníkem je společnost (jiná než osobní společnost), která nepřetržitě přímo drží po období alespoň jednoho roku alespoň 10 procent kapitálu společnosti, která vyplácí dividendy;\nb)\n10 procent hrubé částky dividend ve všech ostatních případech.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.\n3.\nVýraz „dividendy“ použitý v tomto článku označuje příjmy z akcií, požitkových akcií nebo požitkových práv, kuksů, zakladatelských podílů nebo jiných práv, s výjimkou pohledávek, s podílem na zisku, jakož i jiné příjmy, které jsou podrobeny stejnému daňovému režimu jako příjmy z akcií podle právních předpisů státu, jehož je společnost, která rozdílí zisk nebo provádí platbu, rezidentem.\n4.\nUstanovení odstavců 1 a 2 se nepoužijí, jestliže skutečný vlastník dividend, který je rezidentem jednoho smluvního státu, vykonává v druhém smluvním státě, jehož je rezidentem společnost vyplácející dividendy, svoji činnost prostřednictvím stálé provozovny, která je tam umístě",
           "candidate_rates": [
-            0.0,
-            10.0
+            0,
+            10
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 10%, held continuously for at least one year. The current Stage 6 projection omitted one or more of these material conditions.",
+              "evidence_source_id": "SRC-D1DA8B0150E7B80D",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -22437,10 +22895,28 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company_other_than_partnership"
+                },
+                {
+                  "condition_type": "direct_ownership",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
+                  "condition_type": "ownership_percent",
                   "operator": ">=",
                   "unit": "%",
                   "value": "10"
+                },
+                {
+                  "condition_type": "holding_period_months",
+                  "operator": ">=",
+                  "unit": "months",
+                  "value": 12
                 },
                 {
                   "condition_type": "beneficial_owner",
@@ -22449,10 +22925,16 @@
                   "value": "true"
                 }
               ],
-              "rate": 0.0
+              "rate": 0
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -22460,7 +22942,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 10.0
+              "rate": 10
             }
           ]
         },
@@ -22579,7 +23061,7 @@
           "title": "51/2014 Sb.m.s."
         }
       ],
-      "package_sha256": "359b4be6dcb8f02d5f07f251739a196ce24e7c75b12017aeecb888f6d3ca0c28",
+      "package_sha256": "6c0d95901a0895f16f9ffe0e3dce6462265381d8c0e68916351ed1bff4a76b9d",
       "partner_country": "LU",
       "partner_country_name": "Lucembursko",
       "ppt_treatment": {
@@ -22954,12 +23436,18 @@
           "article_text_sha256": "20823430fee4cfd6e2884d639d360c71c074da223be7953f3d0f45d1a313897f",
           "candidate_excerpt": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezi-\ndentem v jednom smluvnõm státe, rezidentovi druhého\nsmluvnõho státu, mohou být zdaneny v tomto druhém\nstáte.\n2. Tyto dividendy vsak mohou být rovnez zda-\nneny ve smluvnõm státe, v nemz je spolecnost, která\nje vyplácõ, rezidentem, a to podle právnõch predpisu\ntohoto státu, avsak jestlize prõjemce je skutecným\nvlastnõkem dividend, dan takto stanovená nepresáhne:\na) 5 % hrubé cástky dividend, jestlize skutecným\nvlastnõkem je spolecnost (jiná nez osobnõ spolec-\nnost), která prõmo vlastnõ nejméne 25 % majetku\nspolecnosti vyplácejõcõ dividendy;\nb) 15 % hrubé cástky dividend ve vsech ostatnõch\nprõpadech.\nPřõslusné úrady smluvnõch státu mohou upravit\nvzájemnou dohodou zpu sob aplikace techto omezenõ.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti,\nze kterých jsou dividendy vypláceny.\n3. Výraz 1dividendya, pouzitý v tomto clánku,\noznacuje prõjmy z akciõ nebo jiných práv, s výjimkou\npohledávek, s podõlem na zisku, jakoz i prõjmy z práv\nna spolecnosti, které jsou podle dan ových predpisu\nstátu, v nemz je spolecnost, která rozdõlõ zisk, reziden-\ntem, postaveny na roven prõjmu z akciõ.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk dividend, který je rezidentem v jed-\nnom smluvnõm státe, vykonává v druhém smluvnõm\nstáte, v nemz je rezidentem spolecnost vyplácejõcõ di-\nvidendy, pru myslovou nebo obchodnõ cinnost pro-\nstrednictvõm stálé provozovny, která je tam umõstena,\nnebo vykonává v tomto druhém st",
           "candidate_rates": [
-            5.0,
-            15.0
+            5,
+            15
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+              "evidence_source_id": "SRC-76B8D6E6D6D03B69",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -22968,7 +23456,19 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company_other_than_partnership"
+                },
+                {
+                  "condition_type": "direct_ownership",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
+                  "condition_type": "ownership_percent",
                   "operator": ">=",
                   "unit": "%",
                   "value": "25"
@@ -22980,10 +23480,16 @@
                   "value": "true"
                 }
               ],
-              "rate": 5.0
+              "rate": 5
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -22991,7 +23497,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 15.0
+              "rate": 15
             }
           ]
         },
@@ -23108,7 +23614,7 @@
           "title": "170/1995 Sb."
         }
       ],
-      "package_sha256": "c299cb76ce390371a410a90b3f22af037821e5428c5d2b4a7c1ea46dce038e09",
+      "package_sha256": "5cf281835c6a79b1f7dc60d56b05ec61e384b07c82c5540428fee35081d9fda5",
       "partner_country": "LV",
       "partner_country_name": "Lotyšsko",
       "ppt_treatment": {
@@ -23583,12 +24089,18 @@
           "article_text_sha256": "d6535f794c5e43147cf516144d1260a131ebb00cb2a5bff1173320d910280466",
           "candidate_excerpt": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezidentem jednoho smluvnõho státu, rezidentu druhého\nsmluvnõho státu, mohou být zdaneny v tomto druhém státe.\n2. Tyto dividendy vsak mohou být rovnez zdaneny ve smluvnõm státe, jehoz je spolecnost, která je vyplácõ,\nrezidentem, a to podle právnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk dividend je rezidentem\ndruhého smluvnõho státu, dan takto ulozená nepresáhne:\na) 5 procent hrubé cástky dividend, jestlize skutecným vlastnõkem je spolecnost (jiná nez osobnõ spolecnost),\nkterá prõmo vlastnõ nejméne 25 procent jmenõ spolecnosti vyplácejõcõ dividendy;\nb) 15 procent hrubé cástky dividend ve vsech ostatnõch prõpadech.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou dohodou zpusob aplikace techto omezenõ.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti, z nichz jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku oznacuje prõjmy z akciõ nebo jiných práv, s výjimkou pohle-\ndávek, s podõlem na zisku, jakoz i prõjmy z jiných práv, které jsou podrobeny stejnému danovému rezimu jako\nprõjmy z akciõ podle danových zákonu státu, jehoz je spolecnost, která rozdõlõ zisk, rezidentem.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize skutecný vlastnõk dividend, který je rezidentem jednoho\nsmluvnõho státu, vykonává v druhém smluvnõm státe, jehoz je rezidentem spolecnost vyplácejõcõ dividendy,\nprumyslovou nebo obchodnõ cinnost prostrednictvõm stálé provozovny, která je tam umõstena, nebo vykonává\nv ",
           "candidate_rates": [
-            5.0,
-            15.0
+            5,
+            15
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+              "evidence_source_id": "SRC-57AEF14CD7032586",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -23597,7 +24109,19 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company_other_than_partnership"
+                },
+                {
+                  "condition_type": "direct_ownership",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
+                  "condition_type": "ownership_percent",
                   "operator": ">=",
                   "unit": "%",
                   "value": "25"
@@ -23609,10 +24133,16 @@
                   "value": "true"
                 }
               ],
-              "rate": 5.0
+              "rate": 5
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -23620,7 +24150,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 15.0
+              "rate": 15
             }
           ]
         },
@@ -23724,7 +24254,7 @@
           "title": null
         }
       ],
-      "package_sha256": "51ae29c72e808ea2a3bef2e8e4f6fee2aeed2a15dca39aad122551bf330072ec",
+      "package_sha256": "63fca3454896b071cc4fc8daed271968a94f4a23ae2524f9a50f2422acbe56b3",
       "partner_country": "MD",
       "partner_country_name": "Moldávie",
       "ppt_treatment": {
@@ -24207,12 +24737,18 @@
           "article_text_sha256": "abfde1e6dc4946a574acaf82b72abffbf74637872ce2ef678b23f9ab8cda08a5",
           "candidate_excerpt": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezidentem jednoho smluvnõho státu, rezidentu druhého\nsmluvnõho státu mohou být zdaneny v tomto druhém státe.\n2. Tyto dividendy vsak mohou být rovnez zdaneny ve smluvnõm státe, jehoz je spolecnost, která je vyplácõ,\nrezidentem, a to podle právnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk dividend je rezidentem\ndruhého smluvnõho státu, dan takto ulozená nepresáhne:\na) 5 procent hrubé cástky dividend, jestlize skutecným vlastnõkem je spolecnost (jiná nez osobnõ spolecnost),\nkterá prõmo vlastnõ nejméne 25 procent kapitálu spolecnosti vyplácejõcõ dividendy;\nb) 15 procent hrubé cástky dividend ve vsech ostatnõch prõpadech.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou dohodou zpusob aplikace techto omezenõ.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti, z nichz jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku oznacuje prõjmy z akciõ nebo jiných práv, s výjimkou pohle-\ndávek, s podõlem na zisku, jakoz i jiné prõjmy, které jsou podrobeny stejnému danovému rezimu jako prõjmy\nz akciõ podle právnõch predpisu státu, jehoz je spolecnost, která provádõ platbu, rezidentem.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize skutecný vlastnõk dividend, který je rezidentem jednoho\nsmluvnõho státu, vykonává v druhém smluvnõm státe, jehoz je rezidentem spolecnost vyplácejõcõ dividendy, svoji\ncinnost prostrednictvõm stálé provozovny, která je tam umõstena, a jestlize úcast, pro kterou se dividen",
           "candidate_rates": [
-            5.0,
-            15.0
+            5,
+            15
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+              "evidence_source_id": "SRC-5FEB810C6D8B741C",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -24221,7 +24757,19 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company_other_than_partnership"
+                },
+                {
+                  "condition_type": "direct_ownership",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
+                  "condition_type": "ownership_percent",
                   "operator": ">=",
                   "unit": "%",
                   "value": "25"
@@ -24233,10 +24781,16 @@
                   "value": "true"
                 }
               ],
-              "rate": 5.0
+              "rate": 5
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -24244,7 +24798,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 15.0
+              "rate": 15
             }
           ]
         },
@@ -24351,7 +24905,7 @@
           "title": null
         }
       ],
-      "package_sha256": "8c6b3bb13022e78db4d4bb9370824285ef9749d420654efa040dfa8bb26ad8ae",
+      "package_sha256": "d9f7c8990284589ee45057a114543f510a9b4439159c1d5ea624f1657a828f63",
       "partner_country": "MK",
       "partner_country_name": "Makedonie",
       "ppt_treatment": {
@@ -25919,11 +26473,17 @@
           "candidate_excerpt": "Dividendy\n1. Dividendy plynoucõ od spolecnosti, která je re-\nzidentem v jednom smluvnõm státe, osobe, která je re-\nzidentem ve druhém smluvnõm státe, mohou být zda-\nneny v tomto druhém státe.\n2. Tyto dividendy vsak mohou být zdaneny také\nve smluvnõm státe, v nemz je spolecnost, která je vyplá-\ncõ, rezidentem, a to podle právnõch predpisu tohoto\nstátu, avsak jestlize prõjemce je skutecným vlastnõkem\ndividend, dan takto stanovená nepresáhne:\na) 12,5 % hrubé cástky dividend, jestlize prõjemce\nje spolecnost, která vlastnõ prõmo ci ne-\nprõmo nejméne 10 % podõlu s hlasovacõm\nprávem na spolecnosti vyplácejõcõ divi-\ndendy;\nb) 15 % hrubé cástky dividend ve vsech jiných\nprõpadech.\nTento odstavec se nedotkne zdanenõ zisku spolec-\nnosti, ze kterých jsou dividendy vypláceny.\n3. Ustanovenõ odstavcu 1 a 2 tohoto clánku se ne-\npouzijõ, jestlize skutecný vlastnõk dividend, který je re-\nzidentem v jednom smluvnõm státe, má ve druhém\nsmluvnõm státe, kde je spolecnost vyplácejõcõ dividendy\nrezidentem, stálou provozovnu nebo stálou základnu\ntam umõstenou, a jestlize vlastnictvõ akciõ, na jehoz zá-\nklade se dividendy vyplácejõ, je skutecne spojeno s ob-\nchody uskutecn ovanými touto stálou provozovnou ne-\nbo stálou základnou. V takovém prõpade se pouzijõ\nustanovenõ clánku 7 nebo clánku 13 podle toho, o jaký\nprõpad jde.\n4. Jestlize spolecnost, která je rezidentem v jed-\nnom smluvnõm státe, dosahuje zisky nebo prõjmy\nz druhého smluvnõho státu, nemu ze tento druhý stát\nzdanit dividendy vyplácené spole",
           "candidate_rates": [
             12.5,
-            15.0
+            15
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10(2)(a) applies 12.5% where the beneficial owner is a company owning directly or indirectly at least 10% of the voting interest in the paying company; the current Stage 6 projection uses general ownership_percent and omits the company condition.",
+              "evidence_source_id": "SRC-3606886A4EB55B88",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -25932,7 +26492,13 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company"
+                },
+                {
+                  "condition_type": "direct_or_indirect_voting_ownership",
                   "operator": ">=",
                   "unit": "%",
                   "value": "10"
@@ -25949,13 +26515,19 @@
             {
               "conditions": [
                 {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
+                {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
                   "unit": null,
                   "value": "true"
                 }
               ],
-              "rate": 15.0
+              "rate": 15
             }
           ]
         },
@@ -26082,7 +26654,7 @@
           "title": null
         }
       ],
-      "package_sha256": "e436c926221b605720e9dbc1359a8b67b21f75caf76513349f05dcd64a48dad2",
+      "package_sha256": "4397f5f61309eb03927b08be9211cb2b3d8d1da0512ec6c230351e96949ce8a7",
       "partner_country": "NG",
       "partner_country_name": "Nigérie",
       "ppt_treatment": {
@@ -28114,12 +28686,18 @@
           "article_text_sha256": "f245b263f0329956ddb3575521aeda4b81babe5b9211f9037cbd559617fad999",
           "candidate_excerpt": "LICENČNI POPLATKY\n1. Licencnõ poplatky majõcõ zdroj v jednom smluvnõm státe a vyplácené rezidentu druhého smluvnõho státu\nmohou být zdaneny v tomto druhém státe.\n2. Tyto licencnõ poplatky vsak mohou být rovnez zdaneny ve smluvnõm státe, v nemz majõ zdroj, a to podle\nprávnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk licencnõch poplatku je rezidentem druhého\nsmluvnõho státu, dan takto ulozená nepresáhne:\na) 10 procent hrubé cástky licencnõch poplatku plynoucõch z uzitõ nebo z práva na uzitõ jakéhokoliv autorského\npráva k dõlu literárnõmu, umeleckému nebo vedeckému, jiného nez, které je uvedeno v põsmenu b), jaké-\nhokoliv patentu, ochranné známky, návrhu nebo modelu, plánu, tajného vzorce nebo výrobnõho postupu\nnebo z uzitõ nebo z práva na uzitõ prumyslového, obchodnõho nebo vedeckého zarõzenõ nebo za informace,\nkteré se vztahujõ na zkusenosti nabyté v oblasti prumyslové, obchodnõ nebo vedecké;\nb) 15 procent hrubé cástky licencnõch poplatku plynoucõch z uzitõ nebo z práva na uzitõ jakéhokoliv autorského\npráva ke kinematografickým filmum a filmum nebo nahrávkám pro televiznõ nebo rozhlasové vysõlánõ.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou dohodou zpusob aplikace techto omezenõ.\n3. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize skutecný vlastnõk licencnõch poplatku, který je rezidentem\njednoho smluvnõho státu, vykonává v druhém smluvnõm státe, ve kterém majõ licencnõ poplatky zdroj, svoji\ncinnost prostrednictvõm stálé provozovny, která je tam umõstena, n",
           "candidate_rates": [
-            10.0,
-            15.0
+            10,
+            15
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 12(2)(a) limits ordinary copyright other than film/broadcast, patents/trademarks/designs/processes, equipment and industrial/commercial/scientific experience to 10%; Article 12(2)(b) limits cinematographic films and films/recordings for television or radio to 15%.",
+              "evidence_source_id": "SRC-1E2D0264FEB4040D",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -28128,16 +28706,11 @@
             {
               "conditions": [
                 {
-                  "condition_type": "beneficial_owner",
+                  "condition_type": "royalty_category",
                   "operator": "==",
                   "unit": null,
-                  "value": "true"
-                }
-              ],
-              "rate": 10.0
-            },
-            {
-              "conditions": [
+                  "value": "copyright_literary_artistic_scientific_excluding_cinematographic_films_and_broadcast_media_or_patent_trademark_design_model_plan_secret_formula_process_equipment_or_industrial_commercial_scientific_knowhow"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -28145,7 +28718,24 @@
                   "value": "true"
                 }
               ],
-              "rate": 15.0
+              "rate": 10
+            },
+            {
+              "conditions": [
+                {
+                  "condition_type": "royalty_category",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "cinematographic_films_or_television_radio_films_or_recordings"
+                },
+                {
+                  "condition_type": "beneficial_owner",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                }
+              ],
+              "rate": 15
             }
           ]
         }
@@ -28180,7 +28770,7 @@
           "title": "132/2003 Sb.m.s."
         }
       ],
-      "package_sha256": "1a385625bd2000bef394e680dedbc90075d133fcbd66b7c3541821df267ad3ce",
+      "package_sha256": "20ec1d873ac0f7affdd153e94eea2a1c8abe667b512cc08e06f4937098b38ca6",
       "partner_country": "PH",
       "partner_country_name": "Filipíny",
       "ppt_treatment": {
@@ -28348,12 +28938,18 @@
           "article_text_sha256": "a7daadd8cb809794af20f7243f879540883071d2acc60f7ab796313f739d6e5b",
           "candidate_excerpt": "DIVIDENDY\n1.\nDividendy vyplácené společností, která je rezidentem jednoho smluvního státu, rezidentu druhého smluvního státu, mohou být zdaněny v tomto druhém státě.\n2.\nTyto dividendy však mohou být rovněž zdaněny ve smluvním státě, jehož je společnost, která je vyplácí, rezidentem, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník dividend je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne:\na)\n5 procent hrubé částky dividend, jestliže skutečným vlastníkem je společnost (jiná než osobní společnost), která přímo drží alespoň 25 procent kapitálu společnosti, která dividendy vyplácí;\nb)\n15 procent hrubé částky dividend ve všech ostatních případech.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.\n3.\nVýraz „dividendy“ použitý v tomto článku označuje příjmy z akcií, požitkových akcií nebo požitkových práv, kuksů, zakladatelských podílů nebo jiných práv, s výjimkou pohledávek, s podílem na zisku, jakož i jiné příjmy, které jsou podrobeny stejnému daňovému režimu jako příjmy z akcií podle právních předpisů státu, jehož je společnost, která rozdílí zisk nebo provádí platbu, rezidentem.\n4.\nUstanovení odstavců 1 a 2 se nepoužijí, jestliže skutečný vlastník dividend, který je rezidentem jednoho smluvního státu, vykonává v druhém smluvním státě, jehož je rezidentem společnost vyplácející dividendy, svoji činnost prostřednictvím stálé provozovny, která je tam umístěna, nebo vykonává v tomto druhém státě nezá",
           "candidate_rates": [
-            5.0,
-            15.0
+            5,
+            15
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+              "evidence_source_id": "SRC-017BDD519C89EE7E",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -28362,7 +28958,19 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company_other_than_partnership"
+                },
+                {
+                  "condition_type": "direct_ownership",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
+                  "condition_type": "ownership_percent",
                   "operator": ">=",
                   "unit": "%",
                   "value": "25"
@@ -28374,10 +28982,16 @@
                   "value": "true"
                 }
               ],
-              "rate": 5.0
+              "rate": 5
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -28385,7 +28999,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 15.0
+              "rate": 15
             }
           ]
         },
@@ -28498,7 +29112,7 @@
           "title": "58/2015 Sb.m.s."
         }
       ],
-      "package_sha256": "5d361dc54d8dcfae38b172b20aa54b7ff311df243a06831b1f213070cea6a481",
+      "package_sha256": "eae2d0e1da58b9b818526cf4acd37edcaa52fce9c988d58e675473dd6decd4bb",
       "partner_country": "PK",
       "partner_country_name": "Pákistán",
       "ppt_treatment": {
@@ -29701,13 +30315,19 @@
           "article_text_sha256": "d3111206cd5a213db9d670bd4c38532ca8370a32fa9a89ac2e0f3f0b29cad5a8",
           "candidate_excerpt": "1. Dividendy vyplácené společností, která je rezidentem jednoho smluvního státu, rezidentu\ndruhého smluvního státu, mohou být zdaněny v tomto druhém státě.\n2. Tyto dividendy však mohou být rovněž zdaněny ve smluvním státě, jehož je společnost,\nkterá je vyplácí, rezidentem, a to podle právních předpisů tohoto státu, avšak jestliže skutečný\nvlastník dividend je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne:\na) 5 procent hrubé částky dividend, jestliže skutečným vlastníkem je společnost, která přímo\ndrží alespoň 10 procent kapitálu společnosti, která dividendy vyplácí;\nb) 10 procent hrubé částky dividend ve všech ostatních případech.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace těchto omezení.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.\n3. Dividendy vyplácené společností, která je rezidentem jednoho smluvního státu, se bez\nohledu na ustanovení odstavce 2 osvobozují od zdanění v tomto státě, pokud jsou dividendy\nskutečně vlastněny:\na) druhým smluvním státem nebo jeho vládou nebo jakýmkoliv nižším správním útvarem\nnebo místním úřadem tohoto státu; nebo\nb) centrální bankou tohoto druhého státu nebo jakoukoliv jeho jinou na základě veřejného\npráva založenou právnickou osobou; nebo\nc) jakoukoliv entitou přímo nebo nepřímo zcela vlastněnou jednou z entit uvedených\nv písmenech a) a b) tohoto odstavce nebo vícerými z nich.\n4. Výraz „dividendy“ použitý v tomto článku označuje příjmy z akcií, požitk",
           "candidate_rates": [
-            0.0,
-            5.0,
-            10.0
+            0,
+            5,
+            10
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10(3) gives a 0% source-state result for specified government/public bodies and wholly owned public entities. The current Stage 6 projection incorrectly stores that classification as a non-boolean beneficial_owner value. Article 10(2)(a) separately provides 5% for a company directly holding at least 10% of capital; 10% applies otherwise.",
+              "evidence_source_id": "SRC-A4B3C2125350DA5C",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -29716,13 +30336,19 @@
             {
               "conditions": [
                 {
-                  "condition_type": "beneficial_owner",
+                  "condition_type": "recipient_entity_type",
                   "operator": "==",
                   "unit": null,
                   "value": "other_state_government_subnational_local_authority_central_bank_other_public_law_body_or_entity_directly_or_indirectly_wholly_owned_by_such_public_body"
+                },
+                {
+                  "condition_type": "beneficial_owner",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
                 }
               ],
-              "rate": 0.0
+              "rate": 0
             },
             {
               "conditions": [
@@ -29734,9 +30360,15 @@
                 },
                 {
                   "condition_type": "direct_ownership",
-                  "operator": ">=",
+                  "operator": "==",
                   "unit": null,
-                  "value": "10%"
+                  "value": "true"
+                },
+                {
+                  "condition_type": "ownership_percent",
+                  "operator": ">=",
+                  "unit": "%",
+                  "value": "10"
                 },
                 {
                   "condition_type": "beneficial_owner",
@@ -29745,7 +30377,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 5.0
+              "rate": 5
             },
             {
               "conditions": [
@@ -29762,7 +30394,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 10.0
+              "rate": 10
             }
           ]
         },
@@ -29871,7 +30503,7 @@
           "title": "45/2022 Sb.m.s."
         }
       ],
-      "package_sha256": "955712e070ef76d5a0d6c1c9ff9e3349d11e2892412ff7d6aa23d6a3186cb424",
+      "package_sha256": "af30b5fb0bd123035f4b92393bb41536be47b3b53ba74eaabbfef459beda2f2b",
       "partner_country": "QA",
       "partner_country_name": "Katar",
       "ppt_treatment": {
@@ -32931,12 +33563,18 @@
           "article_text_sha256": "0fb0d72b139adf96820ac3746854bb106ed3647e654a57ddb845951a38d8e5f8",
           "candidate_excerpt": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezi-\ndentem jednoho smluvnõho státu, rezidentu druhého\nsmluvnõho státu mohou být zdaneny v tomto druhém\nstáte.\n2. Tyto dividendy vsak mohou být rovnez zda-\nneny ve smluvnõm státe, jehoz je spolecnost, která je\nvyplácõ, rezidentem, a to podle právnõch predpisu to-\nhoto státu, avsak jestlize skutecný vlastnõk dividend je\nrezidentem druhého smluvnõho státu, dan takto ulo-\nzená nepresáhne:\na) 5 procent hrubé cástky dividend, jestlize skutec-\nným vlastnõkem je spolecnost, která prõmo vlastnõ\nnejméne 25 procent majetku spolecnosti vypláce-\njõcõ dividendy;\nb) 15 procent hrubé cástky dividend ve vsech ostat-\nnõch prõpadech.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou do-\nhodou zpu sob aplikace techto omezenõ.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti,\nz nichz jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku\noznacuje prõjmy z akciõ nebo jiných práv, s výjimkou\npohledávek, s podõlem na zisku, jakoz i prõjmy z jiných\npráv na spolecnosti, které jsou podrobeny stejnému\ndan ovému rezimu jako prõjmy z akciõ podle dan ových\nzákonu státu, jehoz je spolecnost, která rozdõlõ zisk,\nrezidentem.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk dividend, který je rezidentem jed-\nnoho smluvnõho státu, vykonává v druhém smluvnõm\nstáte, jehoz je rezidentem spolecnost vyplácejõcõ divi-\ndendy, pru myslovou nebo obchodnõ cinnost prostred-\nnictvõm stálé provozovny, která je tam umõstena, nebo\n",
           "candidate_rates": [
-            5.0,
-            15.0
+            5,
+            15
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10 reduced dividend branch requires a corporate beneficial owner with direct ownership of at least 25%. Current Stage 6 branch omits the company/direct-ownership conditions.",
+              "evidence_source_id": "SRC-F28CC9AC4CDF9D59",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -32945,7 +33583,19 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company"
+                },
+                {
+                  "condition_type": "direct_ownership",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
+                  "condition_type": "ownership_percent",
                   "operator": ">=",
                   "unit": "%",
                   "value": "25"
@@ -32957,10 +33607,16 @@
                   "value": "true"
                 }
               ],
-              "rate": 5.0
+              "rate": 5
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -32968,7 +33624,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 15.0
+              "rate": 15
             }
           ]
         },
@@ -33079,7 +33735,7 @@
           "title": "214/1998 Sb."
         }
       ],
-      "package_sha256": "a76346131028b9a02d7b0247a8baad8676b5e8c6a05ccf71fa39a8dbfc32fcc6",
+      "package_sha256": "d6b8bdafe2d488cb1cee130899a18f4be985217aff0781f0bb04d9486c530e7b",
       "partner_country": "SI",
       "partner_country_name": "Slovinsko",
       "ppt_treatment": {
@@ -33454,12 +34110,18 @@
           "article_text_sha256": "73931df929825d23f787a819b0653f956615df275cc2d01ba22ed5ee4f5c2460",
           "candidate_excerpt": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezidentem jednoho smluvnõho státu, rezidentu druhého\nsmluvnõho státu mohou být zdaneny v tomto druhém státe.\n2. Tyto dividendy vsak mohou být rovnez zdaneny ve smluvnõm státe, jehoz je spolecnost, která je vyplácõ,\nrezidentem, a to podle právnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk dividend je rezidentem\ndruhého smluvnõho státu, dan takto ulozená nepresáhne:\na) 5 procent hrubé cástky dividend, jestlize skutecným vlastnõkem je spolecnost (jiná nez osobnõ obchodnõ\nspolecnost), která prõmo vlastnõ nejméne 10 procent kapitálu spolecnosti vyplácejõcõ dividendy;\nb) 15 procent hrubé cástky dividend ve vsech ostatnõch prõpadech.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou dohodou zpusob aplikace techto omezenõ.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti, z nichz jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku oznacuje prõjmy z akciõ nebo jiných práv, s výjimkou pohle-\ndávek, s podõlem na zisku, jakoz i jiné prõjmy, které jsou podrobeny stejnému danovému rezimu jako prõjmy\nz akciõ podle právnõch predpisu státu, jehoz je spolecnost, která rozdeluje zisk nebo vyplácõ takovýto prõjem,\nrezidentem.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize skutecný vlastnõk dividend, který je rezidentem jednoho\nsmluvnõho státu, vykonává v druhém smluvnõm státe, jehoz je rezidentem spolecnost vyplácejõcõ dividendy, svoji\ncinnost prostrednictvõm stálé provozovny, která je tam umõstena, a",
           "candidate_rates": [
-            5.0,
-            15.0
+            5,
+            15
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 10%. The current Stage 6 projection omitted one or more of these material conditions.",
+              "evidence_source_id": "SRC-4CBD2AF601C94743",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -33468,7 +34130,19 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company_other_than_partnership"
+                },
+                {
+                  "condition_type": "direct_ownership",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
+                  "condition_type": "ownership_percent",
                   "operator": ">=",
                   "unit": "%",
                   "value": "10"
@@ -33480,10 +34154,16 @@
                   "value": "true"
                 }
               ],
-              "rate": 5.0
+              "rate": 5
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -33491,7 +34171,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 15.0
+              "rate": 15
             }
           ]
         },
@@ -33608,7 +34288,7 @@
           "title": "100/2003 Sb.m.s."
         }
       ],
-      "package_sha256": "1b44c6e4106ee249566e7802031932cbf8b81172c6da42809ad8605df3a4d2d8",
+      "package_sha256": "2bdeed729e54f481485d652616a919bb86fd99e154f90286df5b415576505ca8",
       "partner_country": "SK",
       "partner_country_name": "Slovensko",
       "ppt_treatment": {
@@ -35596,12 +36276,18 @@
           "article_text_sha256": "7d00f941f79619a041fb4aee97ede8ac7e94f3d1a5e924da5e37ffcbda9b3b42",
           "candidate_excerpt": "DIVIDENDY\n1. Dividendy vyplácené spolecnostõ, která je rezi-\ndentem v jednom smluvnõm státe, osobe, která je rezi-\ndentem v druhém smluvnõm státe, mohou být zdaneny\nv tomto druhém státe.\n2. Takové dividendy vsak mohou být zdaneny ta-\nké ve smluvnõm státe, v nemz je spolecnost, která je vy-\nplácõ, rezidentem, a to podle právnõch predpisu tohoto\nstátu, avsak dan takto ukládaná nepresáhne:\na) 10 % hrubé cástky dividend, jestlize skutecný\nvlastnõk dividend je spolecnost, která vlastnõ nej-\nméne 25 % podõlu na spolecnosti vyplácejõcõ divi-\ndendy;\nb) 15 % hrubé cástky dividend ve vsech jiných prõpa-\ndech.\nTento odstavec se nedotkne zdanenõ zisku spolec-\nnosti, ze kterých jsou dividendy vypláceny.\n3. Výraz 1dividendya, pouzitý v tomto clánku,\noznacuje prõjmy z akciõ, pozitkových akciõ nebo pozit-\nkových listu , kuksu , zakladatelských podõlu nebo ji-\nných práv ± s výjimkou pohledávek ± s podõlem na zis-\nku a prõjmy z jiných podõlu na spolecnosti, které jsou\npodle právnõch predpisu státu, v nemz je spolecnost,\nkterá dividendy vyplácõ, rezidentem, postaveny na ro-\nven prõjmu m z akciõ.\n4. Ustanovenõ odstavce 1 a 2 tohoto clánku se ne-\npouzijõ, jestlize skutecný prõjemce dividend, který je\nrezidentem v jednom smluvnõm státe, vykonává v dru-\nhém smluvnõm státe, v nemz je rezidentem spolecnost\nvyplácejõcõ dividendy, pru myslovou nebo obchodnõ\ncinnost prostrednictvõm stálé provozovny, která je tam\numõstena, nebo nezávislé povolánõ prostrednictvõm stá-\nlé základny tam umõstené a jestlize ú",
           "candidate_rates": [
-            10.0,
-            15.0
+            10,
+            15
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+              "evidence_source_id": "SRC-7CA3D6D0E3382934",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -35610,7 +36296,13 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company"
+                },
+                {
+                  "condition_type": "ownership_percent",
                   "operator": ">=",
                   "unit": "%",
                   "value": "25"
@@ -35622,10 +36314,16 @@
                   "value": "true"
                 }
               ],
-              "rate": 10.0
+              "rate": 10
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -35633,7 +36331,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 15.0
+              "rate": 15
             }
           ]
         },
@@ -35750,7 +36448,7 @@
           "title": "419/1992 Sb."
         }
       ],
-      "package_sha256": "14e9381645206c2c7d1aecf451bc42f0a430ad1ba0082aca147bf29480bb50a5",
+      "package_sha256": "ed02ce38018aa56eb6d66bc3eff09b7e6c21596e1cf5dcb0616bd65666cfdf4c",
       "partner_country": "TN",
       "partner_country_name": "Tunisko",
       "ppt_treatment": {
@@ -36285,12 +36983,18 @@
           "article_text_sha256": "78fcfdf4f7e6d143ecd810e73f6a8b761c4128f94dba3b02682d2d3a29857bbd",
           "candidate_excerpt": "Article 12(2): 5% for industrial, commercial or scientific equipment; 10% in all other cases, subject to beneficial ownership.",
           "candidate_rates": [
-            5.0,
-            10.0
+            5,
+            10
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 12(2) applies 5% to industrial, commercial or scientific equipment and 10% in all other cases.",
+              "evidence_source_id": "CZ-TW-LAW-45-2020",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -36311,7 +37015,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 5.0
+              "rate": 5
             },
             {
               "conditions": [
@@ -36319,7 +37023,7 @@
                   "condition_type": "royalty_category",
                   "operator": "==",
                   "unit": null,
-                  "value": "other"
+                  "value": "all_royalties_except_industrial_commercial_scientific_equipment"
                 },
                 {
                   "condition_type": "beneficial_owner",
@@ -36328,7 +37032,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 10.0
+              "rate": 10
             }
           ]
         }
@@ -36367,7 +37071,7 @@
           "title": "Sdělení MF č. 309/2020 Sb."
         }
       ],
-      "package_sha256": "e769983fbe69a71759dc6056705e1773a5d54ad4298a7799e7691f32ce3fb778",
+      "package_sha256": "f6a46af0b1a2e50c87a5282e829f8c7b8d7e4139669cf5ed66a289bb3755c732",
       "partner_country": "TW",
       "partner_country_name": "Tchaj-wan",
       "ppt_treatment": {
@@ -36554,12 +37258,18 @@
           "article_text_sha256": "02697459a6baa80d42f8d7d9a53c45ed161e09cb6473d88186c6390606ceb516",
           "candidate_excerpt": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezi-\ndentem jednoho smluvnõho státu, rezidentu druhého\nsmluvnõho státu mohou být zdaneny v tomto druhém\nstáte.\n2. Tyto dividendy vsak mohou být rovnez zda-\nneny ve smluvnõm státe, jehoz je spolecnost, která je\nvyplácõ, rezidentem, a to podle právnõch predpisu to-\nhoto státu, avsak jestlize skutecný vlastnõk dividend je\nrezidentem druhého smluvnõho státu, dan takto ulo-\nzená nepresáhne:\na) 5 procent hrubé cástky dividend, jestlize skutec-\nným vlastnõkem je spolecnost (jiná nez osobnõ\nspolecnost), která prõmo vlastnõ nejméne 25 pro-\ncent majetku spolecnosti vyplácejõcõ dividendy;\nb) 15 procent hrubé cástky dividend ve vsech ostat-\nnõch prõpadech.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou do-\nhodou zpu sob aplikace techto omezenõ.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti,\nz nichz jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku\noznacuje prõjmy z akciõ nebo jiných práv, s výjimkou\npohledávek, s podõlem na zisku, jakoz i prõjmy z jiných\npráv na spolecnosti, které jsou podrobeny stejnému\ndan ovému rezimu jako prõjmy z akciõ podle právnõch\npredpisu státu, jehoz je spolecnost, která rozdõlõ zisk,\nrezidentem.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk dividend, který je rezidentem jed-\nnoho smluvnõho státu, vykonává v druhém smluvnõm\nstáte, jehoz je rezidentem spolecnost vyplácejõcõ divi-\ndendy, pru myslovou nebo obchodnõ cinnost prostred-\nnictvõm stálé provozovny",
           "candidate_rates": [
-            5.0,
-            15.0
+            5,
+            15
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10 reduced dividend branch requires the beneficial owner to be a company other than a partnership with direct ownership of at least 25%. Current Stage 6 branch omits the company/direct-ownership conditions.",
+              "evidence_source_id": "SRC-1D74C3BA794BFE66",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -36568,7 +37278,19 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company_other_than_partnership"
+                },
+                {
+                  "condition_type": "direct_ownership",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
+                  "condition_type": "ownership_percent",
                   "operator": ">=",
                   "unit": "%",
                   "value": "25"
@@ -36580,10 +37302,16 @@
                   "value": "true"
                 }
               ],
-              "rate": 5.0
+              "rate": 5
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -36591,7 +37319,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 15.0
+              "rate": 15
             }
           ]
         },
@@ -36715,7 +37443,7 @@
           "title": null
         }
       ],
-      "package_sha256": "571232f8866532f41ee1c700a998a0b3a5c3545e022b557efbfd189b4b3858f4",
+      "package_sha256": "8c9b136ad97f6e5c1ce0e682ecda23447f1110902984078e865b8b776539efbf",
       "partner_country": "UA",
       "partner_country_name": "Ukrajina",
       "ppt_treatment": {
@@ -36878,12 +37606,18 @@
           "article_text_sha256": "a39cfc188e56851acbaa4cd7850e18910511500d4b593d585a7a8355697b6da4",
           "candidate_excerpt": "DIVIDENDY\n1. Dividendy vyplácené spolecnostõ, která je rezi-\ndentem v jednom smluvnõm státe, osobe, která je rezi-\ndentem v druhém smluvnõm státe, mohou být zdaneny\nv tomto druhém státe.\n2. Tyto dividendy vsak mohou být rovnez zda-\nneny ve smluvnõm státe, v nemz je spolecnost, která\nje vyplácõ, rezidentem, a to podle právnõch predpisu\ntohoto státu, avsak jestlize prõjemce, který je skutec-\nným vlastnõkem dividend, je rezidentem druhého\nsmluvnõho státu, dan takto stanovená nepresáhne:\na) 5 % hrubé cástky dividend, jestlize skutecným\nvlastnõkem je spolecnost, která vlastnõ nejméne\n10 % podõlu s hlasovacõm právem na spolecnosti\nvyplácejõcõ dividendy;\nb) 15 % hrubé cástky dividend ve vsech ostatnõch\nprõpadech.\nTento odstavec se nedotkne zdanenõ zisku spolecnosti,\nze kterých jsou dividendy vypláceny.\n3. Pododstavec a) odstavce 2 se nepouzije v prõ-\npade dividend, které vyplácõ United State Regulated\nInvestment Company nebo Real Estate Investment\nTrust. Pododstavec b) odstavce 2 se pouzije v prõpade\ndividend vyplácených spolecnostõ Regulated Invest-\nment Company. V prõpade dividend vyplácených spo-\nlecnostõ Real Estate Investment Trust se pododstavec\nb) odstavce 2 pouzije, jestlize skutecný vlastnõk divi-\ndend je fyzická osoba vlastnõcõ méne nez 10 % úcasti\nna spolecnosti Real Estate Investment Trust; jinak se\nuplatnõ sazba srázkové dane podle vnitrostátnõch práv-\nnõch predpisu .\n4. Výraz 1dividendya, pouzitý v tomto clánku,\noznacuje prõjmy z akciõ nebo jiných práv, s výjimkou\npohl",
           "candidate_rates": [
-            5.0,
-            15.0
+            5,
+            15
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10(2)(a) applies 5% where the beneficial owner is a company owning at least 10% of the voting stock of the paying company. The US RIC/REIT carve-outs in Article 10(3) concern dividends paid by US RICs/REITs and therefore do not alter the CZ-source direction represented here.",
+              "evidence_source_id": "SRC-EADD5B70920D588C",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -36892,7 +37626,13 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company"
+                },
+                {
+                  "condition_type": "voting_ownership",
                   "operator": ">=",
                   "unit": "%",
                   "value": "10"
@@ -36904,10 +37644,16 @@
                   "value": "true"
                 }
               ],
-              "rate": 5.0
+              "rate": 5
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -36915,7 +37661,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 15.0
+              "rate": 15
             }
           ]
         },
@@ -37032,7 +37778,7 @@
           "title": "32/1994 Sb."
         }
       ],
-      "package_sha256": "d23c40dff9d1e0ac564b51af46b46296f22857fb9049271123c5d2e5bd1430dc",
+      "package_sha256": "1ffe2f04d423842866e6b1d7dd55abc6378cea3bd6ac9260187028120d8273ab",
       "partner_country": "US",
       "partner_country_name": "USA (Spojené státy americké)",
       "ppt_treatment": {
@@ -37524,12 +38270,18 @@
           "article_text_sha256": "9e80b7494d66dea8bf9c55481c3d46e9efa7b2b6f40e414e25fe7e92fbe9a707",
           "candidate_excerpt": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezi-\ndentem jednoho smluvnõho státu, rezidentu druhého\nsmluvnõho státu mohou být zdaneny v tomto druhém\nstáte.\n2. Tyto dividendy vsak mohou být rovnez zda-\nneny ve smluvnõm státe, jehoz je spolecnost, která je\nvyplácõ, rezidentem, a to podle právnõch predpisu to-\nhoto státu, avsak jestlize skutecný vlastnõk dividend je\nrezidentem druhého smluvnõho státu, dan takto stano-\nvená nepresáhne:\na) 5 procent hrubé cástky dividend, jestlize skutecný\nvlastnõk je spolecnost (jiná nez osobnõ spolecnost),\nkterá prõmo vlastnõ nejméne 15 procent majetku\nspolecnosti vyplácejõcõ dividendy;\nb) 10 procent hrubé cástky dividend ve vsech ostat-\nnõch prõpadech.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou do-\nhodou zpu sob aplikace techto omezenõ.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti,\nze kterých jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku\noznacuje prõjmy z akciõ nebo jiných práv, s výjimkou\npohledávek, s podõlem na zisku, jakoz i prõjmy z jiných\npráv na spolecnosti, které jsou podrobeny stejnému\nzdanenõ jako prõjmy z akciõ podle dan ových predpisu\nstátu, jehoz je spolecnost, která rozdõlõ zisk, reziden-\ntem.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk dividend, který je rezidentem jed-\nnoho smluvnõho státu, vykonává v druhém smluvnõm\nstáte, jehoz je rezidentem spolecnost vyplácejõcõ divi-\ndendy, pru myslovou nebo obchodnõ cinnost prostred-\nnictvõm stálé provozovny, která ",
           "candidate_rates": [
-            5.0,
-            10.0
+            5,
+            10
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10 reduced dividend branch requires the beneficial owner to be a company other than a partnership with direct ownership of at least 15%. Current Stage 6 branch omits the company/direct-ownership conditions.",
+              "evidence_source_id": "SRC-5C857626A8532345",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -37538,7 +38290,19 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company_other_than_partnership"
+                },
+                {
+                  "condition_type": "direct_ownership",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
+                  "condition_type": "ownership_percent",
                   "operator": ">=",
                   "unit": "%",
                   "value": "15"
@@ -37550,10 +38314,16 @@
                   "value": "true"
                 }
               ],
-              "rate": 5.0
+              "rate": 5
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -37561,7 +38331,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 10.0
+              "rate": 10
             }
           ]
         },
@@ -37672,7 +38442,7 @@
           "title": "6/1998 Sb."
         }
       ],
-      "package_sha256": "783d1f2aecf4362640d821698c6e5e31bfde20b25b73b2fc344aacad1cc4ac41",
+      "package_sha256": "1e9632f4da08c520fdf84c74c575da304cccfdc1c08c0b3d0440e8360533830c",
       "partner_country": "VE",
       "partner_country_name": "Venezuela",
       "ppt_treatment": {
@@ -38130,12 +38900,18 @@
           "article_text_sha256": "17b31bbe635499355013673ee13ffc0f191c498a6f0d7b630ad66aac37273f11",
           "candidate_excerpt": "DIVIDENDY\n1.\nDividendy vyplácené společností, která je rezidentem jednoho smluvního státu, rezidentu druhého smluvního státu, mohou být zdaněny v tomto druhém státě.\n2.\nTyto dividendy však mohou být rovněž zdaněny ve smluvním státě, jehož je společnost, která je vyplácí, rezidentem, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník dividend je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne:\na)\n5 procent hrubé částky dividend, jestliže skutečným vlastníkem je společnost (jiná než osobní společnost), která přímo drží alespoň 25 procent kapitálu společnosti, která dividendy vyplácí;\nb)\n15 procent hrubé částky dividend ve všech ostatních případech.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace těchto omezení.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.\n3.\nVýraz „dividendy“ použitý v tomto článku označuje příjmy z akcií nebo jiných práv, s výjimkou pohledávek, s podílem na zisku, jakož i jiné příjmy, které jsou podrobeny stejnému daňovému režimu jako příjmy z akcií podle právních předpisů státu, jehož je společnost, která provádí platbu, rezidentem.\n4.\nUstanovení odstavců 1 a 2 se nepoužijí, jestliže skutečný vlastník dividend, který je rezidentem jednoho smluvního státu, vykonává v druhém smluvním státě, jehož je rezidentem společnost vyplácející dividendy, svoji činnost prostřednictvím stálé provozovny, která je tam umístěna, a jestliže účast, pro kterou se dividend",
           "candidate_rates": [
-            5.0,
-            15.0
+            5,
+            15
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+              "evidence_source_id": "SRC-CD01C24D2AD80F3A",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -38144,7 +38920,19 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company_other_than_partnership"
+                },
+                {
+                  "condition_type": "direct_ownership",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
+                  "condition_type": "ownership_percent",
                   "operator": ">=",
                   "unit": "%",
                   "value": "25"
@@ -38156,10 +38944,16 @@
                   "value": "true"
                 }
               ],
-              "rate": 5.0
+              "rate": 5
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -38167,7 +38961,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 15.0
+              "rate": 15
             }
           ]
         },
@@ -38262,7 +39056,7 @@
           "title": "38/2023 Sb.m.s."
         }
       ],
-      "package_sha256": "d283770fea3173eb68ed60141575ef06dd2dea373c5ba5b9b3f323f59b35660f",
+      "package_sha256": "30f46340f162b14733cb43f2cab30469161bd75f0d41bcef915d6f5a260a3a1e",
       "partner_country": "XK",
       "partner_country_name": "Kosovo",
       "ppt_treatment": {
@@ -38430,12 +39224,18 @@
           "article_text_sha256": "b010728cb721983b2ce8e6049a829b4d339ac138d22f6a2c0dc1e02e89d70a29",
           "candidate_excerpt": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezi-\ndentem v jednom smluvnõm státe, rezidentovi druhého\nsmluvnõho státu, mohou být zdaneny v tomto druhém\nsmluvnõm státe.\n2. Tyto dividendy vsak mohou být rovnez zda-\nneny ve smluvnõm státe, v nemz je spolecnost, která\nje vyplácõ, rezidentem, a to podle právnõch predpisu\ntohoto státu, avsak jestlize prõjemce je skutecným\nvlastnõkem dividend, dan takto stanovená nepresáhne:\na) 5 procent hrubé cástky dividend, jestlize skutec-\nným vlastnõkem je spolecnost (jiná nez osobnõ\nspolecnost), která prõmo vlastnõ nejméne 25 pro-\ncent majetku spolecnosti vyplácejõcõ dividendy;\nb) 15 procent hrubé cástky dividend ve vsech ostat-\nnõch prõpadech.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou do-\nhodou zpu sob aplikace techto omezenõ.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti,\nze kterých jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku\noznacuje prõjmy z akciõ nebo jiných práv (s výjimkou\npohledávek) s podõlem na zisku, jakoz i prõjmy z jiných\npráv na spolecnosti, které jsou podrobeny stejnému\nzdanenõ jako prõjmy z akciõ podle právnõch predpisu\nstátu, v nemz je spolecnost, která rozdõlõ zisk, reziden-\ntem.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk dividend, který je rezidentem v jed-\nnom smluvnõm státe, vykonává v druhém smluvnõm\nstáte, v nemz je rezidentem spolecnost vyplácejõcõ di-\nvidendy, pru myslovou nebo obchodnõ cinnost pro-\nstrednictvõm stálé provozovny, která je tam",
           "candidate_rates": [
-            5.0,
-            15.0
+            5,
+            15
           ],
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10 reduced dividend rate requires a corporate beneficial owner other than a partnership, direct ownership of at least 25%. The current Stage 6 projection omitted one or more of these material conditions.",
+              "evidence_source_id": "SRC-2F5F97D1F7BF9415",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -38444,7 +39244,19 @@
             {
               "conditions": [
                 {
-                  "condition_type": "minimum_ownership",
+                  "condition_type": "recipient_entity_type",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "company_other_than_partnership"
+                },
+                {
+                  "condition_type": "direct_ownership",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "true"
+                },
+                {
+                  "condition_type": "ownership_percent",
                   "operator": ">=",
                   "unit": "%",
                   "value": "25"
@@ -38456,10 +39268,16 @@
                   "value": "true"
                 }
               ],
-              "rate": 5.0
+              "rate": 5
             },
             {
               "conditions": [
+                {
+                  "condition_type": "fallback_case",
+                  "operator": "==",
+                  "unit": null,
+                  "value": "all_other_cases"
+                },
                 {
                   "condition_type": "beneficial_owner",
                   "operator": "==",
@@ -38467,7 +39285,7 @@
                   "value": "true"
                 }
               ],
-              "rate": 15.0
+              "rate": 15
             }
           ]
         },
@@ -38560,7 +39378,7 @@
           "title": "7/1998 Sb."
         }
       ],
-      "package_sha256": "2be35ab79e1249794eb76194c08aba6afb6f7606ca201aed75d8693505ced1f5",
+      "package_sha256": "41b5a939344e028d9fe3538dc7fe82943ebc55ff5c3fdddd2c0a3702dafcf58d",
       "partner_country": "ZA",
       "partner_country_name": "JAR (Jihoafrická republika)",
       "ppt_treatment": {
