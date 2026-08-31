@@ -2,6 +2,7 @@ from fastapi.testclient import TestClient
 
 from app.main import app
 from taxtreat.services.legal_sources import load_verified_provisions
+from taxtreat.services.reporting.client_report import _cz_ir_domestic_exemption_html
 
 
 def _ad_dividend_payload():
@@ -78,3 +79,24 @@ def test_analysis_and_report_share_identical_canonical_treaty_excerpt():
     assert analysis_treaty["excerpt"] == report_treaty["excerpt"]
     assert analysis_treaty["excerpt_sha256"] == report_treaty["excerpt_sha256"]
     assert analysis_treaty["official_text"] == report_treaty["excerpt"]
+
+
+def test_cz_interest_and_royalty_reports_include_section38nb_eligibility_snapshot():
+    for income in ("interest", "royalty"):
+        html = _cz_ir_domestic_exemption_html(
+            {"scope": {"source_country": "CZ", "income_type": income}}
+        )
+        assert "Možné vnitrostátní osvobození" in html
+        assert "§ 19 ZDP" in html
+        assert "§ 38nb ZDP" in html
+        assert "25% propojení" in html
+        assert "24 měsíců" in html
+        assert "skutečné vlastnictví" in html
+        assert "stálé provozovně" in html
+
+    assert _cz_ir_domestic_exemption_html(
+        {"scope": {"source_country": "CZ", "income_type": "dividend"}}
+    ) == ""
+    assert _cz_ir_domestic_exemption_html(
+        {"scope": {"source_country": "SK", "income_type": "interest"}}
+    ) == ""
