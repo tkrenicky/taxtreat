@@ -60,6 +60,21 @@ EXPECTED = {
 # or, in Taiwan's case, in the official Ministry of Finance Financial Bulletin.
 # These remain primary official sources and encode no legal conclusion.
 OFFICIAL_PDF_OVERRIDES = {
+    # Slov-Lex's HTML rendering for these publications exposes only article
+    # headings/list markers. The authoritative Zbierka zákonov PDFs contain
+    # the full promulgated treaty text.
+    "AU": "https://static.slov-lex.sk/pdf/SK/ZZ/2000/157/ZZ_2000_157.pdf",
+    "HR": "https://static.slov-lex.sk/pdf/SK/ZZ/1997/220/ZZ_1997_220.pdf",
+    "ID": "https://static.slov-lex.sk/pdf/SK/ZZ/2002/12/ZZ_2002_12.pdf",
+    "IL": "https://static.slov-lex.sk/pdf/SK/ZZ/2000/327/ZZ_2000_327.pdf",
+    "KZ": "https://static.slov-lex.sk/pdf/SK/ZZ/2008/257/ZZ_2008_257.pdf",
+    "LV": "https://static.slov-lex.sk/pdf/SK/ZZ/2000/317/ZZ_2000_317.pdf",
+    "LU": "https://static.slov-lex.sk/pdf/SK/ZZ/1993/227/ZZ_1993_227.pdf",
+    "MT": "https://static.slov-lex.sk/pdf/SK/ZZ/2000/318/ZZ_2000_318.pdf",
+    "TR": "https://static.slov-lex.sk/pdf/SK/ZZ/2000/90/ZZ_2000_90.pdf",
+    "TM": "https://static.slov-lex.sk/pdf/SK/ZZ/1999/100/ZZ_1999_100.pdf",
+    "UA": "https://static.slov-lex.sk/pdf/SK/ZZ/1997/173/ZZ_1997_173.pdf",
+    "US": "https://static.slov-lex.sk/pdf/SK/ZZ/1994/74/ZZ_1994_74.pdf",
     "OM": (
         "https://static.slov-lex.sk/pdf/prilohy/SK/ZZ/2021/548/"
         "vyhlasene_znenie_5381567-2.pdf"
