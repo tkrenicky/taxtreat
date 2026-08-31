@@ -156,10 +156,12 @@ def test_post_review_corrections_preserve_historical_review_hashes():
             == reviewed_hash
         )
 
-        # This committed lineage is historical. Semantic remediation
-        # created a newer current package hash which deliberately cannot
-        # inherit the prior review.
-        assert node["package_sha256"] != queue_by_pair[pair_id]["package_sha256"]
+        if pair_id in REMEDIATION_PAIRS:
+            # Semantic remediation created a newer current package hash which
+            # deliberately cannot inherit the prior review.
+            assert node["package_sha256"] != queue_by_pair[pair_id]["package_sha256"]
+        else:
+            assert node["package_sha256"] == queue_by_pair[pair_id]["package_sha256"]
         assert node["package_sha256"] != node["reviewed_package_sha256"]
 
         correction = node["post_review_correction"]
