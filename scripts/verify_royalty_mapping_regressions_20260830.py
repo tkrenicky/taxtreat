@@ -13,6 +13,7 @@ def main() -> int:
 
     expected = {
         "all_other_article_12_royalties": {
+            "film_broadcast",
             "software",
             "industrial_ip",
             "equipment_financial",
@@ -43,8 +44,8 @@ def main() -> int:
     tw = json.loads((ROOT / "data" / "legal_rules_stage6" / "tw.json").read_text(encoding="utf-8"))
     tw_rule = next(r for r in tw["rules"] if r["rule_id"] == "CZ-TW-ROYALTY-CURRENT-2")
     tw_category = next(c["value"] for c in tw_rule["conditions"] if c["fact"] == "royalty_category")
-    if tw_category != "all_other_article_12_royalties":
-        failures.append("TW 10% royalty branch must use all_other_article_12_royalties")
+    if tw_category != "all_royalties_except_industrial_commercial_scientific_equipment":
+        failures.append("TW 10% royalty branch must explicitly exclude equipment")
 
     if failures:
         raise AssertionError("Royalty mapping regression failures:\n" + "\n".join(failures))
