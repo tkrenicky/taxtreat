@@ -62,22 +62,18 @@ def test_underlying_sk_legal_result_is_complete_non_rate_result():
     )
 
 
-def test_current_released_manifest_allows_final_production_result():
+def test_current_manifest_fails_closed_until_structured_rules_are_materialized():
     result = analyze_transaction(request())
 
-    assert result.status == DecisionStatus.FINAL
-    assert result.requires_review is False
-    assert result.eligible is True
-
+    assert result.status == DecisionStatus.REVIEW_REQUIRED
+    assert result.requires_review is True
+    assert result.eligible is False
     assert result.rate is None
-    assert (
-        result.tax_treatment
-        == TaxTreatment.OUTSIDE_SUBJECT_OF_TAX
-    )
-    assert (
-        result.selected_rule_id
-        == "SK-DIV-DOMESTIC-SECTION-12-7-C"
-    )
+    assert result.tax_treatment is None
+    assert result.selected_rule_id is None
+    assert result.candidate_rule_id == "SK-DIV-DOMESTIC-SECTION-12-7-C"
+    assert result.candidate_tax_treatment == TaxTreatment.OUTSIDE_SUBJECT_OF_TAX
+    assert "source_country_release_manifest" in result.missing_legal_layers
 
 
 def test_open_manifest_allows_same_calculated_result_to_be_final(
