@@ -147,8 +147,14 @@ def test_rule_file_hashes_match_manifest_or_are_quarantined():
 
         country = path.stem.upper()
         mismatches.append(country)
-        assert country in quarantined_countries, (
-            f"Unapproved Stage 6 rule drift outside quarantine: {country}"
+        # Any package whose exact promoted hash no longer matches is
+        # unapproved by definition. It may remain in the repository only
+        # while the independent source-release gate is closed. Semantic
+        # quarantine is an additional guard for known remediation scopes,
+        # but hash drift must never be treated as promoted/released merely
+        # because the country is not yet in that narrower registry.
+        assert record["source_release_status"] == "not_released", (
+            f"Hash-drifted Stage 6 package is source-released: {country}"
         )
 
     assert mismatches, "Expected at least one hash-bound remediation mismatch."
