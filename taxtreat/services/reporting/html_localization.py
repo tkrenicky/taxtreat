@@ -301,11 +301,11 @@ def _report_language(report: dict[str, Any]) -> str:
 
 def _localize_cz_to_en(html: str, report: dict[str, Any]) -> str:
     localized = html
-    for old, new in _EN_REPLACEMENTS:
-        localized = localized.replace(old, new)
-
     recipient = str((report.get("scope") or {}).get("recipient_country") or "").upper()
     if recipient:
+        # Resolve the complete treaty phrase before generic fragment
+        # replacements can consume its Czech prefix and leave mixed-language
+        # residue in an otherwise English report.
         localized = re.sub(
             r"Smlouva mezi Českou republikou a .*? o zamezení dvojího zdanění",
             f"Double Tax Treaty between the Czech Republic and {recipient}",
@@ -316,6 +316,9 @@ def _localize_cz_to_en(html: str, report: dict[str, Any]) -> str:
             f"the Double Tax Treaty between the Czech Republic and {recipient}",
             localized,
         )
+
+    for old, new in _EN_REPLACEMENTS:
+        localized = localized.replace(old, new)
 
     localized = localized.replace('lang="cs"', 'lang="en"')
     return localized
