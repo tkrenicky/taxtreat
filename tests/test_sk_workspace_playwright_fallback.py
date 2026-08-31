@@ -6,18 +6,19 @@ PLAYWRIGHT = ROOT / "scripts" / "verify_sk_workspace_playwright.py"
 AUTO = ROOT / "scripts" / "verify_sk_workspace_browser_auto.sh"
 
 
-def test_playwright_fallback_covers_country_round_trip_contract():
+def test_playwright_fallback_covers_public_release_gate_contract():
     text = PLAYWRIGHT.read_text(encoding="utf-8")
 
     assert 'dataset.sourceCountry === "CZ"' in text
-    assert 'dataset.sourceCountry === "SK"' in text
-    assert 'value === "EUR"' in text
     assert 'value === "CZK"' in text
-    assert 'runtimeReleased === false' in text
-    assert 'OZN4311v26' in text
-    assert '75" && a[1] === "225' in text
-    assert '101" && a[1] === "303' in text
-    assert 'BROWSER_SMOKE_OK' in text
+    assert "public source-country selector is hidden" in text
+    assert "SK is not publicly selectable" in text
+    assert "public source-country context exposes CZ only" in text
+    assert "unsupported SK public context fails closed" in text
+    assert "Unsupported public source country: SK" in text
+    assert "public source country remains CZ" in text
+    assert "public currency remains CZK" in text
+    assert "BROWSER_SMOKE_OK" in text
 
 
 def test_playwright_fallback_uses_bounded_dom_readiness_not_networkidle():

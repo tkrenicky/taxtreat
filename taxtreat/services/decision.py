@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import json
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from datetime import date
 from pathlib import Path
 from typing import Any
@@ -239,6 +239,18 @@ def analyze_transaction(
         and rule.recipient_country == request.recipient_country
         and rule.income_type == normalized_income
     ]
+    try:
+        config = get_country_config(request.source_country)
+    except KeyError:
+        config = None
+
+    if config is not None and config.rule_overlay_handler is not None:
+        scoped_rules = config.rule_overlay_handler(
+            scoped_rules=scoped_rules,
+            income_type=normalized_income,
+            transaction_date=request.transaction_date,
+        )
+
     if not scoped_rules:
         scope_key = (
             request.source_country,

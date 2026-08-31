@@ -16,7 +16,7 @@ def test_report_strategies_are_country_configured():
     assert cz.report_calculation_strategy == "czk"
     assert sk.report_calculation_strategy == "payment_currency_eur"
 
-    assert cz.html_localization_strategy == "identity"
+    assert cz.html_localization_strategy == "cz"
     assert sk.html_localization_strategy == "sk"
 
 

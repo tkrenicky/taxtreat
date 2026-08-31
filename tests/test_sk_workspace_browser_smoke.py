@@ -9,11 +9,12 @@ def test_browser_smoke_covers_cz_sk_cz_round_trip_and_release_gate():
     text = SMOKE.read_text(encoding="utf-8")
 
     assert 'document.body.dataset.sourceCountry === "CZ"' in text
-    assert 's.value="SK"' in text
+    assert 'document.querySelector("#active-source-country") === null' in text
+    assert 'setActiveCode("SK")' in text
     assert 'document.body.dataset.sourceCountry === "SK"' in text
     assert 'runtimeReleased === false' in text
     assert 'aria-disabled' in text
-    assert 's.value="CZ"' in text
+    assert 'setActiveCode("CZ")' in text
     assert 'return to CZ source country' in text
 
 

@@ -132,9 +132,27 @@ FACT_GUIDANCE: dict[str, dict[str, Any]] = {
         "why": "Sazba může záviset na předmětu licence.",
         "response_type": "choice",
         "options": [
-            ["copyright_literary_artistic_or_scientific", "Autorské dílo"],
-            ["software_patent_trademark_design_model_plan_secret_formula_process_knowhow", "Software, patent, ochranná známka nebo know-how"],
-            ["industrial_commercial_or_scientific_equipment", "Průmyslové, obchodní nebo vědecké zařízení"],
+            [
+                "copyright_literary_artistic_scientific_nonfilm_nonsoftware",
+                "Autorské dílo (mimo software, film, TV a rozhlas)",
+            ],
+            [
+                "cinematographic_films_or_broadcast_media",
+                "Film, televizní nebo rozhlasové vysílání",
+            ],
+            ["computer_software", "Počítačový software"],
+            [
+                "patent_trademark_design_model_plan_secret_formula_process_or_knowhow",
+                "Patent, ochranná známka, průmyslový vzor, postup nebo know-how",
+            ],
+            [
+                "financial_lease_of_equipment",
+                "Finanční leasing průmyslového, obchodního nebo vědeckého zařízení",
+            ],
+            [
+                "operating_lease_or_other_use_of_equipment",
+                "Operativní leasing nebo jiné užívání průmyslového, obchodního nebo vědeckého zařízení",
+            ],
             ["other", "Jiný předmět licence"],
         ],
         "documents": ["Licenční smlouva", "Popis licencovaných práv"],
@@ -150,6 +168,122 @@ FACT_GUIDANCE: dict[str, dict[str, Any]] = {
 # Treaty-specific facts that can be answered by the user. They are
 # presented only when the selected treaty actually needs them.
 FACT_GUIDANCE.update({
+    "article_10_public_body_exemption": {
+        "prompt": (
+            "Spadá příjemce do zvláštní veřejné kategorie pro dividendovou "
+            "výjimku podle čl. 10 příslušné smlouvy?"
+        ),
+        "why": (
+            "Některé smlouvy mají samostatnou 0% větev pro vládu, centrální "
+            "banku nebo jiný výslovně kvalifikovaný veřejný subjekt."
+        ),
+        "response_type": "boolean",
+        "documents": [
+            "Doklady k právnímu postavení příjemce",
+            "Doklady k případnému veřejnému vlastnictví nebo kontrole",
+        ],
+    },
+    "article_11_public_body_exemption": {
+        "prompt": (
+            "Spadá tento úrok do zvláštní veřejné nebo státem podporované "
+            "výjimky podle čl. 11 příslušné smlouvy?"
+        ),
+        "why": (
+            "Výjimka se použije pouze při přesném splnění podmínek dané smlouvy, "
+            "například u vlády, centrální banky, vybrané veřejné finanční instituce "
+            "nebo kvalifikovaného státem zajištěného financování."
+        ),
+        "response_type": "boolean",
+        "documents": [
+            "Úvěrová nebo zápůjční smlouva",
+            "Doklady k postavení příjemce nebo státnímu zajištění financování",
+        ],
+    },
+    "recipient_is_bank": {
+        "prompt": "Je příjemce úroku bankou pro účely příslušné smlouvy?",
+        "why": (
+            "U některých smluv je snížená sazba úroku dostupná pouze bankám."
+        ),
+        "response_type": "boolean",
+        "documents": ["Doklady k regulatornímu postavení příjemce"],
+    },
+    "recipient_is_financial_institution_or_insurer": {
+        "prompt": (
+            "Je příjemce finanční institucí, včetně pojišťovny, "
+            "ve smyslu příslušné smlouvy?"
+        ),
+        "why": (
+            "U některých smluv je zvláštní úroková sazba dostupná pouze "
+            "kvalifikované finanční instituci."
+        ),
+        "response_type": "boolean",
+        "documents": ["Doklady k regulatornímu postavení příjemce"],
+    },
+    "recipient_has_share_capital": {
+        "prompt": (
+            "Je jmění příjemce zcela nebo zčásti rozděleno na akcie "
+            "ve smyslu příslušné smlouvy?"
+        ),
+        "why": (
+            "U některých starších smluv je osvobození dividend vázáno "
+            "na společnost s jměním rozděleným na akcie."
+        ),
+        "response_type": "boolean",
+        "documents": ["Zakladatelské dokumenty příjemce"],
+    },
+    "article_11_3_public_financing_exemption": {
+        "prompt": (
+            "Spadá tento úrok do veřejné nebo státem zajištěné "
+            "finanční výjimky podle čl. 11 odst. 3 příslušné smlouvy?"
+        ),
+        "why": (
+            "Japonská smlouva osvobozuje vybrané úroky placené vládě, "
+            "místním orgánům, centrální bance, plně státní finanční instituci "
+            "nebo z kvalifikovaně zajištěných či financovaných pohledávek."
+        ),
+        "response_type": "boolean",
+        "documents": [
+            "Úvěrová nebo zápůjční smlouva",
+            "Doklady k veřejnému nebo státnímu financování",
+        ],
+    },
+    "recipient_is_qualifying_pension_fund": {
+        "prompt": (
+            "Je příjemce kvalifikovaným penzijním fondem pro účely "
+            "příslušné smlouvy?"
+        ),
+        "why": (
+            "U smlouvy se Švýcarskem může kvalifikovaný penzijní fond "
+            "splňovat samostatnou 0% dividendovou větev."
+        ),
+        "response_type": "boolean",
+        "documents": ["Doklady k právnímu a daňovému postavení příjemce"],
+    },
+    "recipient_is_central_bank": {
+        "prompt": "Je příjemcem centrální banka ve smyslu příslušné smlouvy?",
+        "why": (
+            "U smlouvy se Švýcarskem má centrální banka samostatnou "
+            "dividendovou větev."
+        ),
+        "response_type": "boolean",
+        "documents": ["Doklady k právnímu postavení příjemce"],
+    },
+    "article_10_3_public_body_exemption": {
+        "prompt": (
+            "Spadá příjemce do zvláštní veřejné kategorie pro osvobození "
+            "dividend podle čl. 10 odst. 3 příslušné smlouvy?"
+        ),
+        "why": (
+            "U smlouvy s Kuvajtem může být 0% sazba dostupná vládě, "
+            "vládní instituci, vymezené veřejné organizaci nebo kvalifikované "
+            "společnosti ovládané či alespoň z 25 % vlastněné takovým subjektem."
+        ),
+        "response_type": "boolean",
+        "documents": [
+            "Doklady k právnímu postavení příjemce",
+            "Schéma vlastnické struktury",
+        ],
+    },
     "continuous_holding_period_days": {
         "prompt": "Od jakého data příjemce nepřetržitě drží podíl na českém plátci?",
         "why": (
@@ -259,6 +393,15 @@ FACT_GUIDANCE.update({
 # an ordinary True/False value. The UI asks a human Yes/No question,
 # while intake translates Yes to the exact value required by the
 # selected country's Stage 6 rule.
+CLIENT_SAFE_RULE_VALUE_ENUMS = {
+    # Objective fact that the user can answer without interpreting a compound
+    # treaty exemption. Composite public-body / guaranteed-financing / credit-
+    # sale enums remain professional review even when only one encoded value
+    # occurs in a country package.
+    "bank",
+}
+
+
 RULE_VALUE_BOOLEAN_GUIDANCE: dict[str, dict[str, str]] = {
     "article_11_3_exemption": {
         "prompt": (
@@ -444,6 +587,54 @@ PROFESSIONAL_FACT_GROUPS = {
 }
 
 PROFESSIONAL_FACT_GROUPS.update({
+    "ird_association_payer_directly_holds_25_percent_recipient": {
+        "topic": "domestic_exemption_association",
+        "prompt": "Ověřte kvalifikovaný vztah mezi plátcem a příjemcem pro případné osvobození.",
+        "why": "Podmínka 25% kvalifikovaného vztahu je součástí odborného posouzení vnitrostátního osvobození.",
+    },
+    "ird_association_recipient_directly_holds_25_percent_payer": {
+        "topic": "domestic_exemption_association",
+        "prompt": "Ověřte kvalifikovaný vztah mezi příjemcem a plátcem pro případné osvobození.",
+        "why": "Podmínka 25% kvalifikovaného vztahu je součástí odborného posouzení vnitrostátního osvobození.",
+    },
+    "ird_association_common_person_directly_holds_25_percent_both": {
+        "topic": "domestic_exemption_association",
+        "prompt": "Ověřte kvalifikovaný vztah přes společnou osobu pro případné osvobození.",
+        "why": "Tato alternativní 25% vazba vyžaduje posouzení vlastnické struktury a nelze ji bezpečně odvozovat z jednoho klientského údaje.",
+    },
+    "holding_period_includes_payment_date": {
+        "topic": "dividend_holding_period_special_condition",
+        "prompt": "Ověřte zvláštní pravidlo započtení dne výplaty do doby držby.",
+        "why": "Jde o smluvní technickou podmínku výpočtu doby držby, nikoli o samostatný klientský fakt.",
+    },
+    "holding_period_reorganisation_continuity": {
+        "topic": "dividend_holding_period_special_condition",
+        "prompt": "Ověřte kontinuitu doby držby při reorganizaci.",
+        "why": "Započtení předchozí doby držby při reorganizaci vyžaduje posouzení konkrétní transakční historie.",
+    },
+    "detailed_eligibility_review_required": {
+        "topic": "interest_treaty_special_condition",
+        "prompt": (
+            "Ověřte detailní podmínky zvláštní úrokové sazby podle "
+            "příslušné smlouvy."
+        ),
+        "why": (
+            "Tato větev smlouvy vyžaduje detailní právní posouzení "
+            "kategorie financování a nelze ji bezpečně potvrdit "
+            "pouze ze základních klientských údajů."
+        ),
+    },
+    "distributed_vs_undistributed_corporate_tax_rate_difference": {
+        "topic": "historical_dividend_treaty_condition",
+        "prompt": (
+            "Ověřte zvláštní historickou podmínku rozdílu zdanění "
+            "distribuovaného a nerozděleného zisku."
+        ),
+        "why": (
+            "Jde o odbornou historickou smluvní podmínku, kterou "
+            "nelze odvozovat z běžných údajů o příjemci nebo podílu."
+        ),
+    },
     "recipient_country_imposes_royalty_wht_on_nonresidents": {
         "topic": "royalty_treaty_legal_condition",
         "prompt": (
@@ -513,6 +704,34 @@ REVIEW_REASON_GUIDANCE = {
         "Zvolený předmět licence neodpovídá podmínkám nejbližšího "
         "posuzovaného pravidla.",
     ),
+    "recipient_is_qualifying_company_form": (
+        "Právní forma příjemce pro osvobození",
+        "Chybí potvrzení, zda příjemce splňuje podmínku kvalifikované právní formy pro vnitrostátní osvobození dividend.",
+    ),
+    "recipient_is_tax_resident_in_eligible_jurisdiction": (
+        "Jurisdikce příjemce pro osvobození",
+        "Je nutné potvrdit, že příjemce je rezidentem jurisdikce způsobilé pro vnitrostátní osvobození dividend.",
+    ),
+    "recipient_subject_to_qualifying_corporate_tax": (
+        "Zdanění příjemce pro osvobození",
+        "Chybí potvrzení, že příjemce podléhá kvalifikované dani z příjmů právnických osob ve státě své rezidence.",
+    ),
+    "recipient_has_no_tax_exemption_or_zero_rate_option": (
+        "Daňové osvobození nebo nulová sazba příjemce",
+        "Chybí potvrzení, že příjemce není od kvalifikované daně osvobozen ani nepodléhá režimu s nulovou sazbou.",
+    ),
+    "recipient_is_parent_company": (
+        "Postavení mateřské společnosti",
+        "Zadané údaje nepotvrzují, že jsou pro osvobození splněny podmínky kvalifikované mateřské společnosti.",
+    ),
+    "holding_period_will_reach_months": (
+        "Budoucí splnění doby držby",
+        "Pro tuto větev osvobození chybí potvrzení, že bude dosažena požadovaná minimální doba držby.",
+    ),
+    "statutory_clawback_acknowledged": (
+        "Postup při dodatečném splnění doby držby",
+        "Chybí údaj potřebný pro posouzení režimu při dodatečném splnění minimální doby držby.",
+    ),
 }
 
 
@@ -580,11 +799,41 @@ def build_review_reasons(
 
     blockers.update(analysis.get("missing_facts", []))
     blockers.update(analysis.get("failed_conditions", []))
+
+    # A confirmed Czech PE connection is dispositive for treaty Article
+    # 10/11/12 routing. Do not distract the client with lower-priority
+    # ownership/rate threshold failures once that blocker is established.
+    request_facts = request.get("facts", {}) or {}
+    pe_failed_anywhere = any(
+        "permanent_establishment_connection"
+        in set(result.get("failed_conditions", []))
+        for result in layer_results
+    )
+    if (
+        request_facts.get("permanent_establishment_connection") is True
+        and pe_failed_anywhere
+    ):
+        blockers = {"permanent_establishment_connection"}
+
     reasons = [
         _review_reason_for_fact(str(fact).split(":", 1)[-1], request)
         for fact in sorted(blockers)
     ]
     for layer in analysis.get("missing_legal_layers", []):
+        if layer == "historical_domestic_dividend_exemption":
+            reasons.append(
+                {
+                    "code": f"missing_legal_layer:{layer}",
+                    "title": "Historické vnitrostátní osvobození není pro zadané datum uvolněno",
+                    "detail": (
+                        "Skutkové údaje mohou být kompletní, ale TaxTreat pro zadané "
+                        "historické datum nemá uvolněnou ověřenou vrstvu vnitrostátního "
+                        "osvobození dividend. Smluvní výsledek proto nelze prezentovat "
+                        "jako konečný právní titul."
+                    ),
+                }
+            )
+            continue
         reasons.append(
             {
                 "code": f"missing_legal_layer:{layer}",
@@ -698,6 +947,36 @@ def _rule_value_boolean_question(
     if guidance is None:
         return None
 
+    # An explicit advisor-only classification in FACT_GUIDANCE is a hard
+    # safety boundary. Dynamic enum-to-boolean translation must never turn
+    # that legal judgement into a client Yes/No question merely because the
+    # selected treaty happens to contain a single encoded value.
+    explicit_guidance = FACT_GUIDANCE.get(name, {})
+    if explicit_guidance.get("client_answerable") is False:
+        return {
+            "question_id": missing,
+            "input_path": None,
+            "category": "professional_review",
+            "client_answerable": False,
+            "response_type": "professional_review",
+            "prompt": explicit_guidance.get(
+                "prompt",
+                guidance["prompt"],
+            ),
+            "why": explicit_guidance.get(
+                "why",
+                guidance["why"],
+            ),
+            "required_documents": explicit_guidance.get(
+                "documents",
+                ["Úvěrová nebo zápůjční smlouva"],
+            ),
+            "advisor_topic": explicit_guidance.get(
+                "advisor_topic",
+                "interest_treaty_special_condition",
+            ),
+        }
+
     values = _stage6_condition_values(
         request,
         name,
@@ -714,6 +993,31 @@ def _rule_value_boolean_question(
             "why": (
                 "Pro zvolenou smlouvu existuje více možných právních "
                 "variant této podmínky; je nutné odborné posouzení."
+            ),
+            "required_documents": [
+                "Úvěrová nebo zápůjční smlouva"
+            ],
+            "advisor_topic": (
+                "interest_treaty_special_condition"
+            ),
+        }
+
+    # A single encoded Stage 6 value is not automatically a simple client
+    # fact. Long composite values often encode the legal conclusion of an
+    # entire treaty exemption (public bodies, guarantees, credit sales, etc.).
+    # Only explicitly allowlisted objective enums may be reduced to Yes/No.
+    if values[0] not in CLIENT_SAFE_RULE_VALUE_ENUMS:
+        return {
+            "question_id": missing,
+            "input_path": None,
+            "category": "professional_review",
+            "client_answerable": False,
+            "response_type": "professional_review",
+            "prompt": guidance["prompt"],
+            "why": (
+                "Podmínka představuje složenou smluvní klasifikaci a "
+                "nelze ji bezpečně převést na jednoduchou klientskou "
+                "odpověď Ano/Ne."
             ),
             "required_documents": [
                 "Úvěrová nebo zápůjční smlouva"

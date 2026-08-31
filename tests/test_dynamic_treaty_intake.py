@@ -30,7 +30,7 @@ def first_question(result):
     return result["questions"][0]
 
 
-def test_al_interest_article_11_3_is_dynamic_yes_no():
+def test_al_interest_article_11_3_requires_professional_review():
     question = first_question(
         plan(
             "AL",
@@ -39,21 +39,10 @@ def test_al_interest_article_11_3_is_dynamic_yes_no():
         )
     )
 
-    assert question["client_answerable"] is True
-    assert question["response_type"] == "boolean_rule_value"
-    assert (
-        question["input_path"]
-        == "facts.article_11_3_exemption"
-    )
-
-    # Must resolve to exact AL treaty enum, not generic True.
-    assert isinstance(question["true_value"], str)
-    assert question["true_value"] != "true"
-
-    assert (
-        question["false_value"]
-        == "__not_applicable__"
-    )
+    assert question["client_answerable"] is False
+    assert question["response_type"] == "professional_review"
+    assert question["input_path"] is None
+    assert question["advisor_topic"] == "interest_treaty_special_condition"
 
 
 def test_br_interest_minimum_term_is_numeric():

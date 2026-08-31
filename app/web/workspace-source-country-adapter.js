@@ -19,6 +19,21 @@
     return api.get(currentCode);
   }
 
+  function getPayerCountry(key) {
+    return payerCountries.get(String(key || "")) || "CZ";
+  }
+
+  function inferredCountryForActivePayer() {
+    return getPayerCountry(activePayerKey());
+  }
+
+  function setPayerCountry(key, code) {
+    const normalizedKey = String(key || "");
+    const normalizedCode = String(code || "CZ").toUpperCase();
+    payerCountries.set(normalizedKey, normalizedCode);
+    if (normalizedKey === activePayerKey()) applyContext(normalizedCode);
+  }
+
   const countryControl = document.createElement("label");
   countryControl.className = "payer-context source-country-context";
   countryControl.hidden = true;
@@ -152,7 +167,7 @@
 
   countrySelect.addEventListener("change", () => applyContext(countrySelect.value));
   activePayerSelect.addEventListener("change", () => {
-    applyContext(payerCountries.get(activePayerKey()) || "CZ");
+    applyContext(inferredCountryForActivePayer());
   });
 
   function blockProhibitedFxListener(event) {
@@ -205,6 +220,8 @@
     getActiveCode: () => currentCode,
     getActiveContext: () => context(),
     setActiveCode: (code) => applyContext(code),
+    getPayerCountry,
+    setPayerCountry,
   });
 
   applyContext("CZ");

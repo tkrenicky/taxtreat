@@ -192,9 +192,16 @@ def test_legal_normalizers_cover_legacy_boundary_values():
     assert legal_engine._royalty_category_groups(None) == set()
     assert legal_engine._royalty_category_groups(
         "all_other_article_12_royalties"
-    ) == {"other"}
+    ) == {
+        "film_broadcast",
+        "software",
+        "industrial_ip",
+        "equipment_financial",
+        "equipment_operating",
+        "other",
+    }
     assert legal_engine._royalty_category_groups("financial_lease") == {
-        "equipment"
+        "equipment_financial"
     }
     assert legal_engine._royalty_category_groups("other") == {"other"}
     assert legal_engine._royalty_category_groups("technical_assistance") == {
@@ -213,7 +220,7 @@ def test_royalty_category_matching_covers_residual_and_empty_groups():
     assert legal_engine._royalty_categories_match(
         "copyright_literary_artistic_or_scientific",
         "all_other_article_12_royalties",
-    ) is True
+    ) is False
     assert legal_engine._royalty_categories_match(
         "industrial_commercial_or_scientific_equipment",
         "other",

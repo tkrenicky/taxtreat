@@ -121,22 +121,94 @@ def _boolean_like(value: Any) -> bool | None:
     return None
 
 
+_PENDING_SEMANTIC_REMEDIATION_SCOPES = {
+    ("AD", "dividend"),
+    ("AL", "dividend"),
+    ("BB", "dividend"),
+    ("BD", "dividend"),
+    ("BE", "dividend"),
+    ("CN", "dividend"),
+    ("CH", "dividend"),
+    ("CY", "dividend"),
+    ("EE", "dividend"),
+    ("EG", "dividend"),
+    ("ES", "dividend"),
+    ("FR", "dividend"),
+    ("GB", "dividend"),
+    ("GE", "dividend"),
+    ("HU", "dividend"),
+    ("IE", "dividend"),
+    ("IL", "dividend"),
+    ("IS", "dividend"),
+    ("KG", "dividend"),
+    ("KW", "dividend"),
+    ("LI", "dividend"),
+    ("LK", "dividend"),
+    ("LT", "dividend"),
+    ("LU", "dividend"),
+    ("LV", "dividend"),
+    ("MD", "dividend"),
+    ("MK", "dividend"),
+    ("NG", "dividend"),
+    ("PH", "royalty"),
+    ("PK", "dividend"),
+    ("QA", "dividend"),
+    ("SK", "dividend"),
+    ("VE", "dividend"),
+    ("UA", "dividend"),
+    ("SI", "dividend"),
+    ("TN", "dividend"),
+    ("TW", "royalty"),
+    ("US", "dividend"),
+    ("XK", "dividend"),
+    ("ZA", "dividend"),
+}
+
 _UI_ROYALTY_CATEGORY_GROUPS = {
-    "copyright_literary_artistic_or_scientific": {"copyright"},
-    "software_patent_trademark_design_model_plan_secret_formula_process_knowhow": {
+    # Current fail-closed UI taxonomy. Each value is intentionally atomic
+    # enough to distinguish treaty branches that carry different rates.
+    "copyright_literary_artistic_scientific_nonfilm_nonsoftware": {
+        "copyright_nonfilm"
+    },
+    "cinematographic_films_or_broadcast_media": {"film_broadcast"},
+    "computer_software": {"software"},
+    "patent_trademark_design_model_plan_secret_formula_process_or_knowhow": {
         "industrial_ip"
     },
-    # Backward compatibility with the original Stage 7B frontend value.
-    "software_patent_trademark_design_model_plan_secret_formula_process_knowhow_or_industrial_commercial_scientific_equipment": {
-        "industrial_ip"
-    },
-    "industrial_commercial_or_scientific_equipment": {"equipment"},
+    "financial_lease_of_equipment": {"equipment_financial"},
+    "operating_lease_or_other_use_of_equipment": {"equipment_operating"},
     "other": {"other"},
+    # Backward compatibility with older browser payloads. These broad values
+    # can legitimately touch more than one treaty branch; the decision engine
+    # therefore also contains a duplicate-outcome fail-closed guard below.
+    "copyright_literary_artistic_or_scientific": {"copyright_nonfilm"},
+    "software_patent_trademark_design_model_plan_secret_formula_process_knowhow": {
+        "software",
+        "industrial_ip",
+    },
+    "software_patent_trademark_design_model_plan_secret_formula_process_knowhow_or_industrial_commercial_scientific_equipment": {
+        "software",
+        "industrial_ip",
+        "equipment_financial",
+        "equipment_operating",
+    },
+    "industrial_commercial_or_scientific_equipment": {
+        "equipment_financial",
+        "equipment_operating",
+    },
 }
 
 
 def _royalty_category_groups(value: Any) -> set[str]:
-    """Map UI royalty classes and treaty-specific taxonomy to common groups."""
+    """Map UI and treaty royalty taxonomies to precise atomic groups.
+
+    Stage 6 treaty projections encode treaty-specific distinctions in the
+    category string, including phrases such as ``excluding_computer_software``
+    or separate financial/operating lease branches. Token-only fuzzy matching
+    used to ignore those exclusions and could make two different treaty rates
+    applicable to the same UI selection. This parser keeps the relevant
+    distinctions and treats generic equipment as covering both lease forms.
+    """
 
     if value is None:
         return set()
@@ -146,21 +218,96 @@ def _royalty_category_groups(value: Any) -> set[str]:
     if normalized in _UI_ROYALTY_CATEGORY_GROUPS:
         return set(_UI_ROYALTY_CATEGORY_GROUPS[normalized])
 
-    groups: set[str] = set()
+    if normalized in {
+        "all_royalties_except_cinematographic_and_broadcast_media",
+        "all_royalties_excluding_cinematographic_and_broadcast_media",
+    }:
+        return {
+            "copyright_nonfilm",
+            "software",
+            "industrial_ip",
+            "equipment_financial",
+            "equipment_operating",
+            "other",
+        }
+
+    if normalized in {
+        "all_royalties_except_industrial_commercial_scientific_equipment",
+        "all_royalties_excluding_industrial_commercial_scientific_equipment",
+    }:
+        return {
+            "copyright_nonfilm",
+            "film_broadcast",
+            "software",
+            "industrial_ip",
+            "other",
+        }
 
     if normalized == "all_other_article_12_royalties":
-        groups.add("other")
+        # Generic Article 12 complement used where a non-film copyright
+        # branch is carved out separately (e.g. Spain). Film/broadcast and
+        # equipment therefore remain in the complement. Treaties whose
+        # complement excludes equipment must use the explicit equipment-
+        # exclusion category instead of this generic value.
+        return {
+            "film_broadcast",
+            "software",
+            "industrial_ip",
+            "equipment_financial",
+            "equipment_operating",
+            "other",
+        }
 
-    copyright_tokens = (
-        "copyright",
+    groups: set[str] = set()
+
+    excludes_software = any(
+        marker in normalized
+        for marker in (
+            "excluding_computer_program",
+            "excluding_computer_software",
+            "excluding_software",
+        )
+    )
+    excludes_film = any(
+        marker in normalized
+        for marker in (
+            "excluding_cinematographic",
+            "excluding_film",
+            "excluding_films",
+            "excluding_broadcast",
+        )
+    )
+
+    copyright_nonfilm_tokens = (
         "literary",
         "artistic",
         "dramatic",
         "musical",
         "cultural",
     )
-    if any(token in normalized for token in copyright_tokens):
-        groups.add("copyright")
+    if any(token in normalized for token in copyright_nonfilm_tokens):
+        groups.add("copyright_nonfilm")
+    elif normalized in {"copyright", "copyright_royalties"}:
+        groups.update({"copyright_nonfilm", "film_broadcast"})
+
+    film_tokens = (
+        "cinematographic",
+        "film",
+        "broadcast_media",
+        "broadcast_recording",
+        "television",
+        "radio",
+    )
+    if not excludes_film and any(token in normalized for token in film_tokens):
+        groups.add("film_broadcast")
+
+    software_tokens = (
+        "software",
+        "computer_program",
+        "computer_software",
+    )
+    if not excludes_software and any(token in normalized for token in software_tokens):
+        groups.add("software")
 
     industrial_ip_tokens = (
         "patent",
@@ -171,9 +318,6 @@ def _royalty_category_groups(value: Any) -> set[str]:
         "process",
         "knowhow",
         "know-how",
-        "software",
-        "computer_program",
-        "computer_software",
         "similar_right",
         "technical_assistance",
         "technical_or_economic_studies",
@@ -181,13 +325,27 @@ def _royalty_category_groups(value: Any) -> set[str]:
     if any(token in normalized for token in industrial_ip_tokens):
         groups.add("industrial_ip")
 
-    equipment_tokens = (
-        "equipment",
-        "financial_lease",
-        "operating_lease",
-    )
-    if any(token in normalized for token in equipment_tokens):
-        groups.add("equipment")
+    if "financial_lease" in normalized:
+        groups.add("equipment_financial")
+    if "operating_lease" in normalized:
+        groups.add("equipment_operating")
+    if (
+        "equipment" in normalized
+        and "financial_lease" not in normalized
+        and "operating_lease" not in normalized
+    ):
+        groups.update({"equipment_financial", "equipment_operating"})
+
+    if normalized.startswith("all_other_"):
+        groups.update(
+            {
+                "copyright_nonfilm",
+                "film_broadcast",
+                "software",
+                "industrial_ip",
+                "other",
+            }
+        )
 
     return groups
 
@@ -216,36 +374,12 @@ def _numeric_like(value: Any) -> float | None:
 
 
 def _royalty_categories_match(left: Any, right: Any) -> bool:
-    """Match UI royalty category to the taxonomy used by the treaty rule.
-
-    ``right`` is the catalog / Stage 6 condition value.  Some treaty
-    packages use ``other`` (or an equivalent all-other label) as the
-    residual Article 12 bucket covering copyright, industrial-property
-    rights and other royalties, while equipment remains a separate
-    category.
-    """
+    """Match one UI royalty class to a treaty-specific category safely."""
 
     if left == right:
         return True
 
     left_groups = _royalty_category_groups(left)
-
-    catalog_value = str(right or "").strip().lower()
-
-    if (
-        catalog_value == "other"
-        or catalog_value.startswith("all_other_")
-    ):
-        return bool(
-            left_groups.intersection(
-                {
-                    "copyright",
-                    "industrial_ip",
-                    "other",
-                }
-            )
-        )
-
     right_groups = _royalty_category_groups(right)
 
     return bool(
@@ -253,6 +387,59 @@ def _royalty_categories_match(left: Any, right: Any) -> bool:
         and right_groups
         and left_groups.intersection(right_groups)
     )
+
+
+def _rule_condition_signature(rule: LegalRule) -> tuple[Any, ...]:
+    """Return the exact projected applicability signature for one rule."""
+
+    return tuple(
+        sorted(
+            (
+                condition.fact,
+                condition.fact_source,
+                condition.operator,
+                repr(condition.value),
+            )
+            for condition in rule.conditions
+        )
+    )
+
+
+def _matching_rule_conflicts(rules: list[LegalRule]) -> list[list[LegalRule]]:
+    """Find identical legal branches that project different outcomes.
+
+    Priority is not a safe tie-breaker when two verified rules have the same
+    scope, legal layer, effective period and exact conditions but different
+    rates/treatments. Such a package is internally ambiguous and must fail
+    closed instead of silently selecting the numerically or ordinally preferred
+    rule.
+    """
+
+    grouped: dict[tuple[Any, ...], list[LegalRule]] = {}
+    for rule in rules:
+        if rule.effect != "rate":
+            continue
+        key = (
+            rule.source_country,
+            rule.recipient_country,
+            rule.income_type,
+            rule.legal_layer,
+            str(rule.article),
+            rule.effective_from,
+            rule.effective_to,
+            _rule_condition_signature(rule),
+        )
+        grouped.setdefault(key, []).append(rule)
+
+    conflicts: list[list[LegalRule]] = []
+    for candidates in grouped.values():
+        outcomes = {
+            (rule.rate, resolve_tax_treatment(rule))
+            for rule in candidates
+        }
+        if len(outcomes) > 1:
+            conflicts.append(sorted(candidates, key=lambda item: item.rule_id))
+    return conflicts
 
 
 def resolve_tax_treatment(rule: LegalRule) -> TaxTreatment | None:
@@ -316,6 +503,39 @@ def _evaluate_condition(
 
     fact_value = fact_store[condition.fact]
     condition_value = condition.value
+
+    if (
+        condition.fact == "beneficial_owner"
+        and condition.operator in {"==", "!="}
+        and isinstance(condition_value, str)
+        and _boolean_like(condition_value) is None
+    ):
+        # Legacy Stage 6 projection defect: some public-body/entity
+        # classifications were encoded under beneficial_owner. A boolean
+        # browser value must not silently disprove such a narrower legal
+        # classification and release a general fallback as FINAL.
+        return None, condition.fact
+
+    if (
+        condition.fact == "recipient_entity_type"
+        and condition.operator in {"==", "!="}
+        and isinstance(fact_value, str)
+        and isinstance(condition_value, str)
+    ):
+        # Browser/profile entity types are intentionally coarse. A generic
+        # value such as "company" cannot safely disprove a treaty branch that
+        # requires a narrower legal status (for example
+        # "company_other_than_partnership", a bank, central bank, government
+        # body, or a wholly government-owned financial institution). Treat
+        # that comparison as unresolved so a general fallback cannot become
+        # FINAL merely because the UI taxonomy is less granular than the
+        # treaty taxonomy.
+        coarse_entity_types = {"company", "individual", "fund", "other"}
+        if (
+            fact_value in coarse_entity_types
+            and condition_value not in coarse_entity_types
+        ):
+            return None, condition.fact
 
     if (
         condition.fact == "royalty_category"
@@ -418,6 +638,19 @@ def evaluate_legal_rules(
         result.explanation.append("The transaction scope is incomplete.")
         return result
 
+    semantic_scope = (
+        str(facts.get("recipient_country", "")).upper(),
+        str(facts.get("income_type", "")),
+    )
+    if semantic_scope in _PENDING_SEMANTIC_REMEDIATION_SCOPES:
+        result.status = DecisionStatus.REVIEW_REQUIRED
+        result.requires_review = True
+        result.explanation.append(
+            "This treaty scope is quarantined pending a source-backed "
+            "semantic reprojection and new hash-bound legal approval."
+        )
+        return result
+
     relevant_rules = [
         rule
         for rule in rules
@@ -479,7 +712,85 @@ def evaluate_legal_rules(
     ]
     matching_rules.sort(key=lambda rule: (rule.priority, rule.rule_id))
 
+    if facts.get("income_type") == "royalty" and facts.get("royalty_category"):
+        category_rules = [
+            rule
+            for rule in relevant_rules
+            if rule.legal_layer in {"treaty", "protocol", "mli"}
+            and any(
+                condition.fact == "royalty_category"
+                and condition.operator == "=="
+                for condition in rule.conditions
+            )
+        ]
+        if category_rules:
+            category_covered = any(
+                _royalty_categories_match(
+                    facts.get("royalty_category"),
+                    condition.value,
+                )
+                for rule in category_rules
+                for condition in rule.conditions
+                if condition.fact == "royalty_category"
+                and condition.operator == "=="
+            )
+            if not category_covered:
+                result.requires_review = True
+                result.missing_facts = ["royalty_category"]
+                result.explanation.append(
+                    "The selected royalty category is not covered by any "
+                    "structured treaty royalty branch for this jurisdiction. "
+                    "Treaty classification requires review."
+                )
+                return result
+
     if matching_rules:
+        # A legacy/broad royalty UI value may semantically match more than one
+        # treaty category. Priority is not a legal tie-breaker in that case:
+        # if those matched treaty branches produce different outcomes, the
+        # transaction classification is insufficient and must fail closed.
+        if facts.get("income_type") == "royalty":
+            royalty_matches = []
+            for rule in matching_rules:
+                if rule.legal_layer not in {"treaty", "protocol", "mli"}:
+                    continue
+                category_conditions = [
+                    condition
+                    for condition in rule.conditions
+                    if condition.fact == "royalty_category"
+                    and condition.operator == "=="
+                ]
+                if category_conditions:
+                    royalty_matches.append(rule)
+
+            royalty_outcomes = {
+                (rule.rate, resolve_tax_treatment(rule))
+                for rule in royalty_matches
+            }
+            if len(royalty_matches) > 1 and len(royalty_outcomes) > 1:
+                result.requires_review = True
+                result.missing_facts = ["royalty_category"]
+                result.explanation.append(
+                    "The supplied royalty classification matches multiple "
+                    "treaty branches with different outcomes. A more precise "
+                    "royalty category is required."
+                )
+                return result
+
+        conflicts = _matching_rule_conflicts(matching_rules)
+        if conflicts:
+            result.requires_review = True
+            result.explanation.append(
+                "Conflicting verified legal-rule projections have identical "
+                "applicability conditions but different outcomes: "
+                + "; ".join(
+                    ", ".join(rule.rule_id for rule in conflict)
+                    for conflict in conflicts
+                )
+                + "."
+            )
+            return result
+
         leading_priority = matching_rules[0].priority
 
         unresolved_higher_or_equal_rules = [

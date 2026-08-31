@@ -1,0 +1,207 @@
+name: Claude web review package
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feat/web-bulk-en-treaty-acquisition-20260825
+    paths:
+      - '.github/workflows/claude-web-review-package-20260826.yml'
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/web-bulk-en-treaty-acquisition-20260825
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install app and browser dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+          pip install --no-deps -e .
+          python -m playwright install --with-deps chromium
+      - name: Capture current web screenshots
+        run: |
+          cat > /tmp/capture_review.py <<'PY'
+          from pathlib import Path
+          import subprocess, sys, time
+          from urllib.request import urlopen
+          from playwright.sync_api import sync_playwright
+
+          ROOT = Path.cwd()
+          OUT = ROOT / 'claude_web_review' / 'SCREENSHOTS'
+          OUT.mkdir(parents=True, exist_ok=True)
+          HOST='127.0.0.1'; PORT=8777; BASE=f'http://{HOST}:{PORT}'
+
+          p = subprocess.Popen([sys.executable,'-m','uvicorn','app.main:app','--host',HOST,'--port',str(PORT)], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+          try:
+              deadline=time.time()+30
+              while time.time()<deadline:
+                  try:
+                      with urlopen(BASE+'/health/live', timeout=1) as r:
+                          if r.status==200: break
+                  except Exception: time.sleep(.2)
+              else: raise RuntimeError('server not ready')
+
+              with sync_playwright() as pw:
+                  browser=pw.chromium.launch(headless=True)
+                  page=browser.new_page(viewport={'width':1440,'height':1100})
+                  page.goto(BASE+'/ui', wait_until='networkidle')
+                  page.screenshot(path=OUT/'01-overview-cs.png', full_page=True)
+
+                  lang=page.locator('#taxtreat-ui-language')
+                  lang.select_option('en'); page.wait_for_timeout(1000)
+                  page.screenshot(path=OUT/'02-overview-en.png', full_page=True)
+
+                  # Start flow and reach payment step.
+                  page.locator('[data-start-flow]').first.click()
+                  page.locator('[data-next-step="2"]').last.click()
+                  page.locator('[data-next-step="3"]').last.click()
+                  page.wait_for_timeout(400)
+                  form=page.locator('#workspace-payment')
+
+                  def fill_common(income):
+                      form.locator('select[name="income_type"]').select_option(income)
+                      form.locator('input[name="transaction_date"]').fill('2026-08-11')
+                      form.locator('input[name="amount"]').fill('2000000')
+
+                  def answer_until_result():
+                      for _ in range(10):
+                          form.locator('#workspace-submit').click(); page.wait_for_timeout(450)
+                          if page.locator('.flow-step[data-step="4"].active').is_visible(): return
+                          q=form.locator('#workspace-questions')
+                          for item in q.locator('select').all():
+                              try:
+                                  if item.locator('option').count()>1 and not item.input_value(): item.select_option(index=1)
+                              except Exception: pass
+                          for item in q.locator('input[type="number"]').all():
+                              if not item.input_value(): item.fill('25')
+                          for item in q.locator('input[type="date"]').all():
+                              if not item.input_value(): item.fill('2024-01-01')
+                      raise AssertionError('result did not converge')
+
+                  # Dividend / Section 19 scenario.
+                  fill_common('dividend')
+                  for name, value in [('ownership_percent','25'),('voting_ownership_percent','25')]:
+                      loc=form.locator(f'input[name="{name}"]')
+                      if loc.count(): loc.fill(value)
+                  loc=form.locator('select[name="direct_ownership"]')
+                  if loc.count(): loc.select_option('true')
+                  loc=form.locator('select[name="holding_period_mode"]')
+                  if loc.count(): loc.select_option('at_least_12_months')
+                  for name in ('section19_company_form','section19_taxable_company'):
+                      loc=form.locator(f'select[name="{name}"]')
+                      if loc.count(): loc.select_option('true')
+                  answer_until_result(); page.wait_for_timeout(1200)
+                  page.screenshot(path=OUT/'03-dividend-section19-result-en.png', full_page=True)
+
+                  # Return to payment and capture an interest treaty result.
+                  edit=page.get_by_text('← Edit payment', exact=False)
+                  if edit.count(): edit.first.click()
+                  else:
+                      btn=page.locator('[data-flow-step="3"]')
+                      if btn.count(): btn.first.click()
+                  page.wait_for_timeout(500)
+                  fill_common('interest')
+                  answer_until_result(); page.wait_for_timeout(1200)
+                  page.screenshot(path=OUT/'04-interest-article11-result-en.png', full_page=True)
+
+                  # Mobile overview in English.
+                  page.goto(BASE+'/ui', wait_until='networkidle')
+                  page.locator('#taxtreat-ui-language').select_option('en'); page.wait_for_timeout(700)
+                  page.set_viewport_size({'width':390,'height':844})
+                  page.screenshot(path=OUT/'05-overview-en-mobile.png', full_page=True)
+                  browser.close()
+          finally:
+              p.terminate()
+              try: p.wait(timeout=10)
+              except Exception: p.kill()
+          PY
+          python /tmp/capture_review.py
+      - name: Assemble Claude review package
+        run: |
+          mkdir -p claude_web_review/SOURCE
+          cat > claude_web_review/PROMPT_CLAUDE_WEB_REVIEW.md <<'EOF'
+          # Independent review request — TaxTreat web application
+
+          Please perform a critical, independent review of the TaxTreat web application contained in this package. Do not assume prior AI conclusions are correct.
+
+          ## Scope
+          Review the current website/web-app implementation only. The generated PDF/report output will be reviewed separately after the web review comments are resolved.
+
+          Assess:
+          1. Functional correctness and obvious runtime/UI defects.
+          2. Czech/English language parity and any residual mixed-language or race-condition behavior.
+          3. Result-page legal hierarchy and consistency, especially CZ dividends where domestic exemption under Section 19 must be evaluated before treaty relief. If Section 19 applies, it must be the primary legal basis and treaty treatment only secondary protection.
+          4. CZ interest/royalties presentation: the main treaty engine remains primary, while the UI may separately flag potential domestic exemption subject to statutory conditions and the Section 38nb ruling requirement.
+          5. Treaty-source presentation and provenance/status handling. Do not infer that every English excerpt is authentic treaty wording: the implementation distinguishes authentic/official text, official non-authentic translations, synthesized text, and verified Stage-6 rule summaries.
+          6. Fail-closed behavior: identify any place where missing/ambiguous data could incorrectly produce an overconfident final answer.
+          7. UX, information architecture, visual consistency, accessibility, responsiveness and confusing copy.
+          8. Security/privacy issues visible from the supplied code, including unsafe client-side behavior, injection risks, leakage of internal/debug information, or problematic persistence.
+          9. Maintainability risks in the web layer, especially overlapping JS/i18n patches, duplicated state, event handlers, MutationObservers and ordering/race dependencies.
+          10. Tests: gaps in automated coverage that could allow the manually observed regressions to return.
+
+          ## Important product constraints
+          - Public scope currently uses Czech Republic as source country.
+          - Official/legal sources are required; the product must not fabricate legal authority or approvals.
+          - The website is informational and should not present itself as individualized tax/legal advice.
+          - English coverage is intended for all supported jurisdictions, but English source status must remain accurately labelled; do not treat a verified English rule summary as authentic treaty wording.
+          - Review screenshots as evidence of the current UI, but use source code as the primary basis for technical conclusions.
+
+          ## Requested output
+          Return findings in severity order: BLOCKER, HIGH, MEDIUM, LOW. For each finding provide: exact file/function or UI area; what is wrong; why it matters; and a concrete recommended fix. Separate confirmed defects from design recommendations. End with (a) merge recommendation for PR #169, (b) the smallest must-fix list before merge, and (c) suggested regression tests.
+          EOF
+
+          cat > claude_web_review/REVIEW_CONTEXT.md <<EOF
+          # Review context
+          Repository: tkrenicky/taxtreat
+          Branch: feat/web-bulk-en-treaty-acquisition-20260825
+          Commit: $(git rev-parse HEAD)
+          PR: #169 — Batch official EN treaty locale acquisition for Step 4
+          Base branch: feat/cz-ui-batch1-20260821
+          Generated UTC: $(date -u +%Y-%m-%dT%H:%M:%SZ)
+
+          The screenshots were generated from this exact checkout by starting app.main:app locally in GitHub Actions and driving /ui with Chromium/Playwright.
+          EOF
+
+          git diff --binary 2d4226955a3681063b898c48995bb7fa8c8b1fc5...HEAD > claude_web_review/PR169_FULL.patch
+          git log --oneline --decorate -50 > claude_web_review/RECENT_COMMITS.txt
+          git status --short > claude_web_review/GIT_STATUS.txt
+
+          # Full reviewable repository snapshot, excluding VCS/cache/generated noise.
+          rsync -a ./ claude_web_review/SOURCE/ \
+            --exclude='.git/' \
+            --exclude='claude_web_review/' \
+            --exclude='.venv/' \
+            --exclude='node_modules/' \
+            --exclude='__pycache__/' \
+            --exclude='.pytest_cache/' \
+            --exclude='.mypy_cache/' \
+            --exclude='artifacts/'
+
+          cat > claude_web_review/README_FIRST.md <<'EOF'
+          # Start here
+          1. Read `PROMPT_CLAUDE_WEB_REVIEW.md` and use it as the review instruction.
+          2. Review `SCREENSHOTS/` for the current rendered UI.
+          3. Review `SOURCE/` for the full source snapshot used to generate the screenshots.
+          4. `PR169_FULL.patch` contains the complete diff against the PR base.
+          5. Do not review the generated report/PDF yet; that is intentionally a separate next phase.
+          EOF
+
+          zip -qr TaxTreat_Claude_Web_Review_20260826.zip claude_web_review
+          sha256sum TaxTreat_Claude_Web_Review_20260826.zip > TaxTreat_Claude_Web_Review_20260826.zip.sha256
+      - name: Upload Claude review package
+        uses: actions/upload-artifact@v4
+        with:
+          name: TaxTreat-Claude-Web-Review-20260826
+          path: |
+            TaxTreat_Claude_Web_Review_20260826.zip
+            TaxTreat_Claude_Web_Review_20260826.zip.sha256
+          if-no-files-found: error
+          retention-days: 30

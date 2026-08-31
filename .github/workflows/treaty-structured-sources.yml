@@ -3,6 +3,7 @@ name: Treaty structured sources
 on:
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
     paths:
       - "scripts/fetch_esbirka_structured_sources.py"
       - "scripts/build_canonical_treaty_texts.py"
@@ -30,15 +31,21 @@ jobs:
           python-version: "3.12"
 
       - name: Install dependencies
-        run: python -m pip install requests==2.32.3 pypdf==5.9.0
+        run: python -m pip install requests==2.32.3 pypdf==5.9.0 pytest==9.0.2
 
       - name: Build treaty provision registry
         run: python scripts/build_treaty_verbatim_registry.py
 
+      - name: Validate checked-in structured-source contract
+        run: |
+          python -m pytest             tests/test_treaty_verbatim_registry.py             tests/test_treaty_source_manifest.py             tests/test_treaty_excerpt_locales_20260824.py
+
       - name: Resolve official instruments
+        if: github.event_name == 'workflow_dispatch'
         run: python scripts/build_treaty_pdf_manifest.py --timeout 90
 
       - name: Recover 101 authoritative PDFs
+        if: github.event_name == 'workflow_dispatch'
         run: |
           python scripts/recover_esbirka_legal_pdfs.py \
             --manifest reports/treaty_verified_pdf_manifest.json \
@@ -47,6 +54,7 @@ jobs:
             --workers 12
 
       - name: Fetch official structured JSON
+        if: github.event_name == 'workflow_dispatch'
         run: |
           python scripts/fetch_esbirka_structured_sources.py \
             --manifest reports/treaty_verified_pdf_manifest.json \
@@ -56,6 +64,7 @@ jobs:
             --workers 12
 
       - name: Build 302 canonical treaty text candidates
+        if: github.event_name == 'workflow_dispatch'
         run: |
           python scripts/build_canonical_treaty_texts.py \
             --registry reports/treaty_verbatim_registry.json \
@@ -65,6 +74,7 @@ jobs:
             --report reports/canonical_treaty_texts_candidate_report.json
 
       - name: Compare canonical texts with authoritative PDF text layers
+        if: github.event_name == 'workflow_dispatch'
         run: |
           python scripts/compare_canonical_text_to_pdf_layer.py \
             --corpus reports/canonical_treaty_texts_candidate.json \
@@ -73,7 +83,7 @@ jobs:
             --upgrade-output reports/canonical_treaty_texts_pdf_checked.json
 
       - name: Materialize canonical corpus on the PR branch
-        if: github.event.pull_request.head.repo.full_name == github.repository
+        if: github.event_name == 'workflow_dispatch' && github.event.pull_request.head.repo.full_name == github.repository
         run: |
           cp reports/canonical_treaty_texts_pdf_checked.json data/legal_texts/canonical_provisions.json
           git config user.name "github-actions[bot]"

@@ -107,7 +107,7 @@
     country: "AT",
     type: "Společnost",
     beneficialOwner: true,
-    treatyResident: true,
+    treatyResident: "",
     relationships: {
       "demo-cz": { peConnection: false, ownershipPercent: "", directOwnership: "", acquisitionDate: "", votingOwnershipPercent: "" },
       "alfa-cz": { peConnection: false, ownershipPercent: "25", directOwnership: "true", acquisitionDate: "2024-06-01", votingOwnershipPercent: "25" }
@@ -118,10 +118,92 @@
     { key: "alfa-cz", name: "Alfa Services CZ a.s.", id: "87654321", vatId: "CZ87654321", address: "", legalForm: "", dataBox: "", establishedAt: "" }
   ];
   let activePayerKey = "demo-cz";
+  const PROFILE_STORAGE_KEY = "taxtreat-workspace-profiles-v1";
+
+  function saveWorkspaceProfiles() {
+    try {
+      localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify({
+        payers,
+        activePayerKey,
+        recipient
+      }));
+    } catch (_problem) {
+      // Profile persistence is a convenience layer; calculation must keep working.
+    }
+  }
+
+  function restoreWorkspaceProfiles() {
+    try {
+      const raw = localStorage.getItem(PROFILE_STORAGE_KEY);
+      if (!raw) return;
+      const stored = JSON.parse(raw);
+      if (Array.isArray(stored?.payers) && stored.payers.length) {
+        payers = stored.payers.filter((item) => item && item.key && item.name);
+      }
+      if (stored?.recipient && typeof stored.recipient === "object") {
+        recipient = {
+          ...recipient,
+          ...stored.recipient,
+          relationships: {
+            ...(recipient.relationships || {}),
+            ...(stored.recipient.relationships || {})
+          }
+        };
+      }
+      if (stored?.activePayerKey && payers.some((item) => item.key === stored.activePayerKey)) {
+        activePayerKey = stored.activePayerKey;
+      } else if (!payers.some((item) => item.key === activePayerKey)) {
+        activePayerKey = payers[0]?.key || "demo-cz";
+      }
+    } catch (_problem) {
+      // Ignore malformed/stale browser storage and retain safe demo defaults.
+    }
+  }
+
+  restoreWorkspaceProfiles();
+
   let editingPayerKey = null;
   let lastPayload = null;
   let pendingQuestions = [];
   const clientAnswers = { facts: {}, acquisitionDate: null, exchangeRate: null };
+
+  function resetClientAnswers() {
+    clientAnswers.facts = {};
+    clientAnswers.acquisitionDate = null;
+    clientAnswers.exchangeRate = null;
+    pendingQuestions = [];
+    questionsRoot.replaceChildren();
+    followUp.hidden = true;
+  }
+
+  function resetTransactionLegalFacts() {
+    for (const name of [
+      "beneficial_owner",
+      "treaty_resident",
+      "pe_connection",
+      "direct_ownership"
+    ]) {
+      form.querySelectorAll(`[name="${name}"]`).forEach((field) => {
+        field.checked = false;
+        if (field.tagName === "SELECT") field.value = "";
+      });
+    }
+    for (const name of [
+      "ownership_percent",
+      "voting_ownership_percent",
+      "acquisition_date",
+      "arm_length_amount",
+      "royalty_category",
+      "holding_period_mode"
+    ]) {
+      const field = form.elements[name];
+      if (field) field.value = "";
+    }
+    form.elements.beneficial_owner.value = "true";
+    form.elements.pe_connection.value = "false";
+    form.elements.treaty_resident.value = "";
+    votingWasEdited = false;
+  }
 
   function showView(name) {
     views.forEach((view) => view.classList.toggle("active", view.dataset.view === name));
@@ -147,7 +229,11 @@
   }
 
   navButtons.forEach((button) => button.addEventListener("click", () => showView(button.dataset.nav)));
-  document.querySelectorAll("[data-start-flow]").forEach((button) => button.addEventListener("click", () => showStep(1)));
+  document.querySelectorAll("[data-start-flow]").forEach((button) => button.addEventListener("click", () => {
+    resetClientAnswers();
+    resetTransactionLegalFacts();
+    showStep(1);
+  }));
   document.querySelectorAll("[data-open-recipient]").forEach((button) => button.addEventListener("click", () => showView("recipient-detail")));
   document.querySelectorAll("[data-next-step]").forEach((button) => button.addEventListener("click", () => showStep(Number(button.dataset.nextStep))));
   progressButtons.forEach((button) => button.addEventListener("click", () => {
@@ -188,7 +274,7 @@
     payerForm.elements.payer_data_box.value = selected?.dataBox || "";
     payerForm.elements.payer_established_at.value = selected?.establishedAt || "";
     document.querySelector("#ares-lookup-status").className = "lookup-status";
-    document.querySelector("#ares-lookup-status").textContent = "Po zadání 8 číslic TaxTreat načte identifikační údaje z ARES.";
+    document.querySelector("#ares-lookup-status").textContent = "Po zadání IČO můžeš identifikační údaje načíst z ARES.";
     payerDialog.showModal();
   }
   document.querySelectorAll("[data-create-payer]").forEach((button) => button.addEventListener("click", () => openPayerDialog()));
@@ -224,14 +310,12 @@
     }
   }
   document.querySelector("[data-ares-lookup]").addEventListener("click", lookupPayerFromAres);
-  payerForm.elements.payer_id.addEventListener("input", () => {
-    window.clearTimeout(aresLookupTimer);
-    const ico = String(payerForm.elements.payer_id.value || "").replace(/\D/g, "");
-    if (ico.length === 8) aresLookupTimer = window.setTimeout(lookupPayerFromAres, 450);
-  });
+  // ARES lookup is explicit. Saving a payer must never depend on an
+  // in-flight external registry request or network availability.
 
-  payerForm.addEventListener("submit", (event) => {
-    event.preventDefault();
+  function savePayerProfile() {
+    window.clearTimeout(aresLookupTimer);
+    if (!payerForm.reportValidity()) return false;
     const data = new FormData(payerForm);
     const values = {
       name: String(data.get("payer_name")).trim(),
@@ -243,22 +327,48 @@
       establishedAt: String(data.get("payer_established_at")).trim()
     };
     if (editingPayerKey) {
-      Object.assign(payers.find((item) => item.key === editingPayerKey), values);
+      const existing = payers.find((item) => item.key === editingPayerKey);
+      if (existing) Object.assign(existing, values);
     } else {
       const key = `payer-${Date.now()}`;
       payers.push({ key, ...values });
       activePayerKey = key;
     }
+    saveWorkspaceProfiles();
     renderPayers();
     renderRecipient();
-    payerDialog.close();
+    if (payerDialog.open) payerDialog.close();
+    return true;
+  }
+
+  payerForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    window.setTimeout(savePayerProfile, 0);
+  });
+  document.querySelector("[data-save-payer]").addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    window.setTimeout(savePayerProfile, 0);
   });
 
-  activePayerSelect.addEventListener("change", () => {
-    activePayerKey = activePayerSelect.value;
+  function switchActivePayer(key) {
+    if (!payers.some((item) => item.key === key)) return;
+    activePayerKey = key;
+    saveWorkspaceProfiles();
     renderPayers();
     renderRecipient();
+  }
+
+  activePayerSelect.addEventListener("change", () => {
+    switchActivePayer(activePayerSelect.value);
   });
+
+  document.addEventListener("change", (event) => {
+    if (event.target?.id === "active-payer-select") {
+      switchActivePayer(event.target.value);
+    }
+  }, true);
 
   function payerCard(item, compact = false) {
     const article = document.createElement("article");
@@ -272,10 +382,10 @@
     if (compact) {
       const label = document.createElement("label");
       const radio = document.createElement("input"); radio.type = "radio"; radio.name = "flow-payer"; radio.value = item.key; radio.checked = item.key === activePayerKey;
-      radio.addEventListener("change", () => { activePayerKey = item.key; renderPayers(); renderRecipient(); });
+      radio.addEventListener("change", () => switchActivePayer(item.key));
       const state = document.createElement("em"); state.textContent = radio.checked ? "Vybráno" : "Vybrat";
       const edit = document.createElement("button"); edit.className = "secondary compact payer-choice-edit"; edit.type = "button"; edit.textContent = "Upravit plátce";
-      edit.addEventListener("click", (event) => { event.preventDefault(); event.stopPropagation(); activePayerKey = item.key; renderPayers(); renderRecipient(); openPayerDialog(item.key); });
+      edit.addEventListener("click", (event) => { event.preventDefault(); event.stopPropagation(); switchActivePayer(item.key); openPayerDialog(item.key); });
       label.append(radio, avatar, copy, state); article.append(label, edit);
       return article;
     }
@@ -287,7 +397,7 @@
     const actions = document.createElement("div"); actions.className = "payer-actions";
     const activate = document.createElement("button"); activate.className = "secondary compact"; activate.type = "button";
     activate.textContent = item.key === activePayerKey ? "Aktivní plátce" : "Nastavit jako aktivního"; activate.disabled = item.key === activePayerKey;
-    activate.addEventListener("click", () => { activePayerKey = item.key; renderPayers(); renderRecipient(); });
+    activate.addEventListener("click", () => switchActivePayer(item.key));
     const edit = document.createElement("button"); edit.className = "secondary compact"; edit.type = "button"; edit.textContent = "Upravit";
     edit.addEventListener("click", () => openPayerDialog(item.key)); actions.append(activate, edit);
     article.append(avatar, copy, details, actions);
@@ -316,17 +426,34 @@
     recipientEditForm.elements.ownership_percent.value = relationship.ownershipPercent;
     recipientEditForm.elements.acquisition_date.value = relationship.acquisitionDate;
     recipientEditForm.elements.direct_ownership.value = relationship.directOwnership;
-    recipientEditForm.elements.beneficial_owner.value = String(recipient.beneficialOwner);
-    recipientEditForm.elements.treaty_resident.value = String(recipient.treatyResident);
-    recipientEditForm.elements.pe_connection.value = String(relationship.peConnection);
+    recipientEditForm.elements.beneficial_owner.value = recipient.beneficialOwner === "" ? "" : String(recipient.beneficialOwner);
+    recipientEditForm.elements.treaty_resident.value = recipient.treatyResident === "" ? "" : String(recipient.treatyResident);
+    recipientEditForm.elements.pe_connection.value = relationship.peConnection === "" ? "" : String(relationship.peConnection);
     recipientDialog.showModal();
   }));
   document.querySelectorAll("[data-close-recipient]").forEach((button) => button.addEventListener("click", () => recipientDialog.close()));
   recipientEditForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const data = new FormData(recipientEditForm);
-    recipient = { ...recipient, name: String(data.get("recipient_name")).trim(), country: String(data.get("recipient_country")), type: String(data.get("recipient_type")), beneficialOwner: String(data.get("beneficial_owner")) === "true", treatyResident: String(data.get("treaty_resident")) === "true" };
-    Object.assign(currentRelationship(), { ownershipPercent: String(data.get("ownership_percent")), acquisitionDate: String(data.get("acquisition_date")), directOwnership: String(data.get("direct_ownership")), peConnection: String(data.get("pe_connection")) === "true" });
+    const beneficialOwner = String(data.get("beneficial_owner") || "");
+    const treatyResident = String(data.get("treaty_resident") || "");
+    const peConnection = String(data.get("pe_connection") || "");
+    recipient = {
+      ...recipient,
+      name: String(data.get("recipient_name")).trim(),
+      country: String(data.get("recipient_country")),
+      type: String(data.get("recipient_type")),
+      beneficialOwner: beneficialOwner === "" ? "" : beneficialOwner === "true",
+      treatyResident: treatyResident === "" ? "" : treatyResident === "true"
+    };
+    Object.assign(currentRelationship(), {
+      ownershipPercent: String(data.get("ownership_percent")),
+      acquisitionDate: String(data.get("acquisition_date")),
+      directOwnership: String(data.get("direct_ownership")),
+      peConnection: peConnection === "" ? "" : peConnection === "true"
+    });
+    resetClientAnswers();
+    saveWorkspaceProfiles();
     renderRecipient();
     recipientDialog.close();
   });
@@ -354,18 +481,22 @@
     document.querySelectorAll("[data-recipient-country]").forEach((node) => { node.textContent = countryGenitive(recipient.country); });
     document.querySelectorAll("[data-recipient-country-name]").forEach((node) => { node.textContent = country; });
     document.querySelectorAll("[data-recipient-type]").forEach((node) => { node.textContent = recipient.type.toLowerCase(); });
-    document.querySelectorAll("[data-profile-beneficial]").forEach((node) => { node.textContent = recipient.beneficialOwner ? "Ano" : "Ne"; });
-    document.querySelectorAll("[data-profile-pe]").forEach((node) => { node.textContent = relationship.peConnection ? "Ano" : "Ne"; });
+    document.querySelectorAll("[data-profile-beneficial]").forEach((node) => {
+      node.textContent = recipient.beneficialOwner === "" ? "Nevyplněno" : recipient.beneficialOwner ? "Ano" : "Ne";
+    });
+    document.querySelectorAll("[data-profile-pe]").forEach((node) => {
+      node.textContent = relationship.peConnection === "" ? "Nevyplněno" : relationship.peConnection ? "Ano" : "Ne";
+    });
     document.querySelectorAll("[data-profile-ownership]").forEach((node) => { node.textContent = relationship.ownershipPercent ? `${relationship.ownershipPercent} %` : "Nevyplněno"; });
     document.querySelectorAll("[data-profile-acquisition]").forEach((node) => { node.textContent = relationship.acquisitionDate || "Nevyplněno"; });
-    form.elements.beneficial_owner.value = String(recipient.beneficialOwner);
-    form.elements.treaty_resident.value = String(recipient.treatyResident);
-    form.elements.pe_connection.value = String(relationship.peConnection);
+    form.elements.beneficial_owner.value = recipient.beneficialOwner === "" ? "true" : String(recipient.beneficialOwner);
+    form.elements.treaty_resident.value = "";
+    form.elements.pe_connection.value = relationship.peConnection === "" ? "false" : String(relationship.peConnection);
     form.elements.ownership_percent.value = relationship.ownershipPercent;
     form.elements.direct_ownership.value = relationship.directOwnership;
     form.elements.acquisition_date.value = relationship.acquisitionDate;
     form.elements.holding_period_mode.value = relationship.acquisitionDate ? "known_date" : "";
-    form.elements.voting_ownership_percent.value = relationship.votingOwnershipPercent || relationship.ownershipPercent;
+    form.elements.voting_ownership_percent.value = relationship.votingOwnershipPercent || "";
     votingWasEdited = Boolean(relationship.votingOwnershipPercent);
     updateDividendProgress();
   }
@@ -379,6 +510,8 @@
       country: String(data.get("recipient_country")),
       type: String(data.get("recipient_type"))
     };
+    resetClientAnswers();
+    saveWorkspaceProfiles();
     renderRecipient();
     recipientForm.hidden = true;
   });
@@ -487,7 +620,81 @@
     return calculation[canonicalName] ?? calculation[legacyName] ?? null;
   }
 
-  function setText(selector, value) { document.querySelector(selector).textContent = value; }
+  function setText(selector, value) {
+    const element = document.querySelector(selector);
+    if (!element) {
+      const seen = window.__taxtreatMissingRuntimeIds || (window.__taxtreatMissingRuntimeIds = []);
+      if (!seen.includes(selector)) {
+        seen.push(selector);
+        console.warn(`[TaxTreat] Missing runtime element ${selector}; the Step 4 result card was likely rewritten by a UI overlay.`);
+      }
+      return;
+    }
+    element.textContent = value;
+  }
+
+  function ensureRuntimeResultAnchors() {
+    const step4 = document.querySelector('.flow-step[data-step="4"]');
+    if (!step4) return;
+
+    const ensure = (id, tag, parent) => {
+      let element = document.getElementById(id);
+      if (!element) {
+        element = document.createElement(tag);
+        element.id = id;
+        parent.append(element);
+      }
+      return element;
+    };
+
+    const hero = step4.querySelector(".result-hero");
+    if (hero) {
+      ensure("workspace-result-status", "span", hero);
+      ensure("workspace-tax-label", "p", hero);
+      ensure("workspace-tax", "strong", hero);
+      ensure("workspace-rate", "small", hero);
+    }
+
+    const reason = step4.querySelector(".reason");
+    if (reason) ensure("workspace-reason", "p", reason);
+
+    const summary = step4.querySelector(".summary") || step4.querySelector("article.summary") || step4.querySelector(".card.summary");
+    if (summary) {
+      const list = summary.querySelector("dl") || summary;
+      if (!summary.querySelector("#workspace-gross")) ensure("workspace-gross", "dd", list);
+      if (!summary.querySelector("#workspace-tax-row-label")) ensure("workspace-tax-row-label", "dt", list);
+      if (!summary.querySelector("#workspace-tax-row")) ensure("workspace-tax-row", "dd", list);
+      if (!summary.querySelector("#workspace-net")) ensure("workspace-net", "dd", list);
+    }
+
+    const actionsBlock = step4.querySelector("#workspace-actions") || step4.querySelector(".action-list");
+    if (actionsBlock) {
+      actionsBlock.id = actionsBlock.id || "workspace-actions";
+      if (!actionsBlock.querySelector("#workspace-action-count")) {
+        const count = document.createElement("span");
+        count.id = "workspace-action-count";
+        count.hidden = true;
+        actionsBlock.parentElement?.querySelector(".card-head")?.append(count);
+      }
+    } else {
+      const card = step4.querySelector(".card") || step4;
+      if (!document.getElementById("workspace-actions")) {
+        const actions = document.createElement("div");
+        actions.id = "workspace-actions";
+        card.append(actions);
+      }
+    }
+
+    const sources = step4.querySelector(".result-sources") || step4.querySelector(".card.result-sources");
+    if (sources) {
+      if (!document.getElementById("workspace-citations")) {
+        const citations = document.createElement("div");
+        citations.id = "workspace-citations";
+        citations.className = "citation-list";
+        sources.append(citations);
+      }
+    }
+  }
 
   function completeMonths(acquisitionDate, transactionDate) {
     const start = new Date(`${acquisitionDate}T00:00:00Z`);
@@ -525,8 +732,10 @@
     facts.holding_period_months =
       completeMonths(acquisitionDate, transactionDate);
 
+    // Treaty tests expressed as a continuous N-day period that includes
+    // the payment date are inclusive of both endpoints.
     facts.continuous_holding_period_days =
-      completeDays(acquisitionDate, transactionDate);
+      completeDays(acquisitionDate, transactionDate) + 1;
 
     facts.holding_period_years =
       completeYears(acquisitionDate, transactionDate);
@@ -549,7 +758,6 @@
   }
 
   form.elements.ownership_percent.addEventListener("input", () => {
-    if (!votingWasEdited) form.elements.voting_ownership_percent.value = form.elements.ownership_percent.value;
     updateDividendProgress();
   });
   form.elements.direct_ownership.addEventListener("change", updateDividendProgress);
@@ -558,6 +766,7 @@
   form.elements.voting_ownership_percent.addEventListener("input", () => { votingWasEdited = true; });
 
   function renderTransactionFacts() {
+    resetClientAnswers();
     const incomeType = form.elements.income_type.value;
     transactionFacts.hidden = !incomeType;
     dividendFacts.hidden = incomeType !== "dividend";
@@ -903,39 +1112,100 @@
     return "";
   }
 
-  function citationRole(citation, selected, position) {
+  function citationRole(citation, selected, position, analysis) {
     const layer = String(citation.legal_layer || "");
-    if (layer === "domestic") return `${position}. Výchozí vnitrostátní pravidlo`;
+    const en = document.documentElement.lang === "en";
+    const role = String(citation.path_role || "");
+    const domesticExemptionSelected = (analysis?.tax_treatment || analysis?.candidate_tax_treatment) === "domestic_exemption";
+    if (role === "domestic_exemption_basis") {
+      return `${position}. ${en ? "APPLIED DOMESTIC EXEMPTION" : "POUŽITÉ VNITROSTÁTNÍ OSVOBOZENÍ"}`;
+    }
+    if (role === "domestic_starting_point") {
+      return `${position}. ${en ? "GENERAL DOMESTIC RATE WITHOUT EXEMPTION" : "OBECNÁ VNITROSTÁTNÍ SAZBA BEZ OSVOBOZENÍ"}`;
+    }
+    if (layer === "domestic") return `${position}. ${en ? "DOMESTIC RULE" : "VNITROSTÁTNÍ PRAVIDLO"}`;
     if (["treaty", "protocol", "mli"].includes(layer)) {
-      return `${position}. ${selected ? "Použité smluvní pravidlo" : "Smluvní pravidlo"}`;
+      if (domesticExemptionSelected && !selected) {
+        return `${position}. ${en ? "SECONDARY TREATY PROTECTION" : "SEKUNDÁRNÍ SMLUVNÍ OCHRANA"}`;
+      }
+      return `${position}. ${en ? (selected ? "APPLIED TREATY RULE" : "TREATY RULE") : (selected ? "POUŽITÉ SMLUVNÍ PRAVIDLO" : "SMLUVNÍ PRAVIDLO")}`;
     }
     if (layer === "eu_relief") {
-      return `${position}. ${selected ? "Použité osvobození" : "Pravidlo osvobození"}`;
+      return `${position}. ${en ? (selected ? "APPLIED EXEMPTION" : "EXEMPTION RULE") : (selected ? "POUŽITÉ OSVOBOZENÍ" : "PRAVIDLO OSVOBOZENÍ")}`;
     }
-    return `${position}. ${selected ? "Použité pravidlo" : "Související právní pravidlo"}`;
+    return `${position}. ${en ? (selected ? "APPLIED RULE" : "RELATED LEGAL RULE") : (selected ? "POUŽITÉ PRAVIDLO" : "SOUVISEJÍCÍ PRÁVNÍ PRAVIDLO")}`;
+  }
+
+  function citationParagraphLabel(value) {
+    const raw = String(value || "").trim();
+    if (!raw) return "";
+    if (document.documentElement.lang === "en") {
+      return raw
+        .replace(/paragraph\s+(\d+)\s+písm\.\s*([a-z])\)\s+bod\s+(\d+)/gi, "paragraph $1($2)($3)")
+        .replace(/paragraph\s+(\d+)\s+písm\.\s*([a-z])\)/gi, "paragraph $1($2)")
+        .replace(/\bodst\.\s*/gi, "paragraph ")
+        .replace(/\bpísm\.\s*/gi, "point ")
+        .replace(/\bbod\s+/gi, "item ");
+    }
+    return raw;
   }
 
   function citationCard(citation, analysis, position) {
     const card = document.createElement("article"); card.className = "citation-card";
+    card.dataset.ruleId = String(citation.rule_id || "");
+    card.dataset.legalLayer = String(citation.legal_layer || "");
     const selected = String(citation.rule_id || "") === selectedRuleId(analysis);
     const title = document.createElement("strong");
     const layer = String(citation.legal_layer || "");
     if (!selected) card.classList.add("context");
     const role = document.createElement("span"); role.className = "citation-role";
-    role.textContent = citationRole(citation, selected, position);
-    const paragraph = citation.paragraph ? ` · ${citation.paragraph}` : "";
-    title.textContent = ["treaty", "protocol", "mli"].includes(layer) ? `Smlouva o zamezení dvojího zdanění · článek ${citation.article || "—"}${paragraph}` : `Zákon č. 586/1992 Sb., o daních z příjmů · § ${citation.article || "—"}${paragraph}`;
-    const link = document.createElement("a"); link.href = citation.source_url; link.target = "_blank"; link.rel = "noreferrer noopener"; link.textContent = "Otevřít zdroj ↗";
+    role.textContent = citationRole(citation, selected, position, analysis);
+    const pathRole = String(citation.path_role || "");
+    const paragraph = citation.paragraph && pathRole !== "domestic_exemption_basis"
+      ? ` · ${citationParagraphLabel(citation.paragraph)}`
+      : "";
+    const en = document.documentElement.lang === "en";
+    title.textContent = ["treaty", "protocol", "mli"].includes(layer)
+      ? `${en ? "Double Tax Treaty" : "Smlouva o zamezení dvojího zdanění"} · ${en ? "Article" : "článek"} ${citation.article || "—"}${paragraph}`
+      : `${en ? "Czech Income Taxes Act (Act No. 586/1992 Coll.)" : "Zákon č. 586/1992 Sb., o daních z příjmů"} · § ${citation.article || "—"}${paragraph}`;
+    const link = document.createElement("a"); link.href = citation.source_url; link.target = "_blank"; link.rel = "noreferrer noopener"; link.textContent = en ? "Open source ↗" : "Otevřít zdroj ↗";
     const detail = document.createElement("p");
-    detail.textContent = !selected && layer === "domestic"
-      ? `Výchozí vnitrostátní sazba činí ${citation.rate} %. V následujícím kroku je zohledněno pravidlo, které tuto sazbu omezuje nebo nahrazuje.`
-      : citationDetail(citation);
+    if (pathRole === "domestic_exemption_basis") {
+      detail.textContent = en
+        ? "The domestic exemption is the primary legal basis for this result."
+        : "Vnitrostátní osvobození je primárním právním titulem tohoto výsledku.";
+    } else if (pathRole === "domestic_starting_point") {
+      detail.textContent = en
+        ? "Without an applicable exemption or treaty limitation, the Czech domestic withholding tax rate is 15%."
+        : "Pokud se neuplatní osvobození ani smluvní omezení, česká vnitrostátní sazba srážkové daně činí 15 %.";
+    } else {
+      detail.textContent = citationDetail(citation);
+    }
     card.append(role, title, link, detail);
-    if ((citation.official_text || citation.excerpt) && layer !== "domestic") {
+
+    const hasDomesticDisclosure = pathRole === "domestic_exemption_basis" || pathRole === "domestic_starting_point";
+    const canShowRawExcerpt = ["treaty", "protocol", "mli"].includes(layer);
+    const canShowLegalDisclosure = Boolean(citation.official_text)
+      || hasDomesticDisclosure
+      || (canShowRawExcerpt && Boolean(citation.excerpt));
+    if (canShowLegalDisclosure) {
       const disclosure = document.createElement("details"); disclosure.className = "citation-excerpt"; disclosure.open = true;
-      const summary = document.createElement("summary"); summary.textContent = citation.official_text ? "Znění použitého ustanovení" : "Evidované znění použitého ustanovení";
+      const summary = document.createElement("summary");
+      summary.textContent = hasDomesticDisclosure
+        ? (en ? "Relevant provisions" : "Relevantní ustanovení")
+        : citation.official_text
+          ? (en ? "Text of the applied provision" : "Znění použitého ustanovení")
+          : (en ? "Recorded text of the applied provision" : "Evidované znění použitého ustanovení");
       const excerpt = document.createElement("blockquote");
-      const fullText = displayLegalExcerpt(citation);
+      const fullText = pathRole === "domestic_exemption_basis"
+        ? (en
+            ? "Section 19(1)(ze), Section 19(3), Section 19(4), Section 19(6), Section 19(8) and Section 19(11) of the Czech Income Taxes Act."
+            : "§ 19 odst. 1 písm. ze), § 19 odst. 3, § 19 odst. 4, § 19 odst. 6, § 19 odst. 8 a § 19 odst. 11 zákona o daních z příjmů.")
+        : pathRole === "domestic_starting_point"
+          ? (en
+              ? "Section 36(1) of the Czech Income Taxes Act provides the general domestic withholding-tax rate applicable where no exemption or treaty limitation replaces it."
+              : "§ 36 odst. 1 zákona o daních z příjmů stanoví obecnou vnitrostátní sazbu srážkové daně pro případy, kdy ji nenahrazuje osvobození ani smluvní omezení.")
+          : displayLegalExcerpt(citation);
       const decisiveText = selected
         ? decisiveLegalParagraph(fullText, citation)
         : "";
@@ -974,16 +1244,27 @@
   function renderComplianceSchedule(analysis) {
     const schedule = analysis.withholding_compliance_schedule;
     if (!schedule) return;
+    const en = document.documentElement.lang === "en";
     setText("#workspace-reference-date", formatCzechDate(schedule.reference_date));
     const nonTaxing = ["exclusive_foreign_taxation", "domestic_exemption"].includes(analysis.tax_treatment);
-    setText("#workspace-remittance-deadline", schedule.tax_remittance_deadline ? formatCzechDate(schedule.tax_remittance_deadline) : analysis.status === "FINAL" && nonTaxing ? "Daň se neodvádí" : "Po doplnění údajů");
-    setText("#workspace-notification-deadline", schedule.notification_deadline ? formatCzechDate(schedule.notification_deadline) : schedule.notification_required === false ? "Oznámení se nepodává" : "Po doplnění údajů");
+    setText("#workspace-remittance-deadline", schedule.tax_remittance_deadline ? formatCzechDate(schedule.tax_remittance_deadline) : analysis.status === "FINAL" && nonTaxing ? (en ? "No tax remittance required" : "Daň se neodvádí") : (en ? "After completing the facts" : "Po doplnění údajů"));
+    setText("#workspace-notification-deadline", schedule.notification_deadline ? formatCzechDate(schedule.notification_deadline) : schedule.notification_required === false ? (en ? "No notification required" : "Oznámení se nepodává") : (en ? "After completing the facts" : "Po doplnění údajů"));
     const note = document.querySelector("#workspace-deadline-note");
-    if (schedule.status !== "READY") note.textContent = "Lhůty nelze uzavřít, dokud zadané údaje neumožní přiřadit příslušné pravidlo nebo měsíční úhrn rozhodný pro oznamovací povinnost.";
-    else if (schedule.notification_regime === "exempt_or_treaty_non_taxable_annual") note.textContent = "Česká daň se při tomto daňovém zacházení neodvádí. Oznámení podle § 38da zákona č. 586/1992 Sb., o daních z příjmů se u dividend a licenčních poplatků podává do 31. ledna následujícího roku.";
-    else if (schedule.notification_regime === "non_taxing_interest_above_monthly_threshold_annual") note.textContent = `Česká daň se neodvádí. Měsíční úhrn úroků stejného druhu činí ${money(schedule.monthly_same_type_income_czk)} a přesáhl 300 000 Kč; oznámení podle § 38da zákona č. 586/1992 Sb., o daních z příjmů se podává do uvedeného data.`;
-    else if (schedule.notification_regime === "non_taxing_interest_monthly_threshold_not_exceeded") note.textContent = `Česká daň se neodvádí. Měsíční úhrn úroků stejného druhu činí ${money(schedule.monthly_same_type_income_czk)} a nepřesáhl 300 000 Kč; oznamovací povinnost podle § 38da zákona č. 586/1992 Sb., o daních z příjmů proto nevzniká.`;
-    else note.textContent = "Odvod sražené daně a oznámení o příjmu plynoucím do zahraničí mají shodnou lhůtu: konec následujícího kalendářního měsíce.";
+    if (schedule.status !== "READY") note.textContent = en
+      ? "The deadlines cannot be finalized until the applicable rule or the monthly aggregate relevant for the notification obligation can be determined."
+      : "Lhůty nelze uzavřít, dokud zadané údaje neumožní přiřadit příslušné pravidlo nebo měsíční úhrn rozhodný pro oznamovací povinnost.";
+    else if (schedule.notification_regime === "exempt_or_treaty_non_taxable_annual") note.textContent = en
+      ? "No Czech tax is remitted under this treatment. For dividends and royalties, the outbound-income notification under Section 38da of the Czech Income Taxes Act is due by 31 January of the following year."
+      : "Česká daň se při tomto daňovém zacházení neodvádí. Oznámení podle § 38da zákona č. 586/1992 Sb., o daních z příjmů se u dividend a licenčních poplatků podává do 31. ledna následujícího roku.";
+    else if (schedule.notification_regime === "non_taxing_interest_above_monthly_threshold_annual") note.textContent = en
+      ? `No Czech tax is remitted. The monthly aggregate of interest of the same type is ${money(schedule.monthly_same_type_income_czk)} and exceeds CZK 300,000; the notification under Section 38da of the Czech Income Taxes Act is due by the date shown.`
+      : `Česká daň se neodvádí. Měsíční úhrn úroků stejného druhu činí ${money(schedule.monthly_same_type_income_czk)} a přesáhl 300 000 Kč; oznámení podle § 38da zákona č. 586/1992 Sb., o daních z příjmů se podává do uvedeného data.`;
+    else if (schedule.notification_regime === "non_taxing_interest_monthly_threshold_not_exceeded") note.textContent = en
+      ? `No Czech tax is remitted. The monthly aggregate of interest of the same type is ${money(schedule.monthly_same_type_income_czk)} and does not exceed CZK 300,000; no notification obligation arises under Section 38da of the Czech Income Taxes Act.`
+      : `Česká daň se neodvádí. Měsíční úhrn úroků stejného druhu činí ${money(schedule.monthly_same_type_income_czk)} a nepřesáhl 300 000 Kč; oznamovací povinnost podle § 38da zákona č. 586/1992 Sb., o daních z příjmů proto nevzniká.`;
+    else note.textContent = en
+      ? "The withholding tax remittance and outbound-income notification have the same deadline: the end of the following calendar month."
+      : "Odvod sražené daně a oznámení o příjmu plynoucím do zahraničí mají shodnou lhůtu: konec následujícího kalendářního měsíce.";
     const caution = document.querySelector("#workspace-dividend-deadline-caution");
     caution.hidden = !schedule.dividend_timing_review_required;
   }
@@ -1007,30 +1288,47 @@
 
   function informationalRuleStatement(analysis) {
     const selected = selectedRuleId(analysis);
+    const en = document.documentElement.lang === "en";
     const citation = [...(analysis.legal_path || analysis.citations || [])]
       .find((item) => String(item.rule_id || "") === selected);
-    let reference = "použitého právního pravidla";
+    let reference = en ? "the applied legal rule" : "použitého právního pravidla";
     if (citation) {
       const paragraph = citation.paragraph ? `, ${citation.paragraph}` : "";
-      reference = ["treaty", "protocol", "mli"].includes(String(citation.legal_layer || ""))
-        ? `článku ${citation.article || "—"}${paragraph} smlouvy o zamezení dvojího zdanění`
-        : `§ ${citation.article || "—"}${paragraph} zákona č. 586/1992 Sb., o daních z příjmů`;
+      const layer = String(citation.legal_layer || "");
+      reference = ["treaty", "protocol", "mli"].includes(layer)
+        ? (en
+            ? `Article ${citation.article || "—"}${paragraph} of the Double Tax Treaty`
+            : `článku ${citation.article || "—"}${paragraph} smlouvy o zamezení dvojího zdanění`)
+        : layer === "eu_relief" || String(citation.path_role || "") === "domestic_exemption_basis"
+          ? (en ? "Section 19 of the Czech Income Taxes Act" : "§ 19 zákona č. 586/1992 Sb., o daních z příjmů")
+          : (en
+              ? `Section ${citation.article || "—"}${paragraph} of the Czech Income Taxes Act`
+              : `§ ${citation.article || "—"}${paragraph} zákona č. 586/1992 Sb., o daních z příjmů`);
     }
     const treatment = analysis.tax_treatment || analysis.candidate_tax_treatment;
     if (treatment === "exclusive_foreign_taxation") {
-      return `Podle ${reference} se při zadaných údajích příjem v České republice nezdaňuje.`;
+      return en
+        ? `Under ${reference}, the income is not taxable in the Czech Republic based on the entered facts.`
+        : `Podle ${reference} se při zadaných údajích příjem v České republice nezdaňuje.`;
     }
     if (treatment === "domestic_exemption") {
-      return `Podle ${reference} je při zadaných údajích příjem v České republice osvobozen od srážkové daně.`;
+      return en
+        ? `Under ${reference}, the income is exempt from Czech withholding tax based on the entered facts.`
+        : `Podle ${reference} je při zadaných údajích příjem v České republice osvobozen od srážkové daně.`;
     }
     const rate = analysis.rate ?? analysis.candidate_rate;
     if (rate !== null && rate !== undefined) {
-      return `Podle ${reference} činí při zadaných údajích sazba srážkové daně ${new Intl.NumberFormat("cs-CZ", { maximumFractionDigits: 2 }).format(Number(rate))} %.`;
+      return en
+        ? `Under ${reference}, the Czech withholding tax rate is ${new Intl.NumberFormat("en-GB", { maximumFractionDigits: 2 }).format(Number(rate))}% based on the entered facts.`
+        : `Podle ${reference} činí při zadaných údajích sazba srážkové daně ${new Intl.NumberFormat("cs-CZ", { maximumFractionDigits: 2 }).format(Number(rate))} %.`;
     }
-    return `Zadané údaje zatím neumožňují v TaxTreat přiřadit konkrétní právní pravidlo a sazbu.`;
+    return en
+      ? "The entered facts do not yet allow TaxTreat to assign a specific legal rule and rate."
+      : "Zadané údaje zatím neumožňují v TaxTreat přiřadit konkrétní právní pravidlo a sazbu.";
   }
 
   function renderResult(payload, response) {
+    ensureRuntimeResultAnchors();
     const analysis = response.analysis;
     const calculation = analysis.withholding_tax_calculation;
     const professional = (response.intake?.questions || []).filter((question) => !question.client_answerable);
@@ -1043,15 +1341,71 @@
     const taxCzk = calculationValue(calculation, "withholding_tax_czk", "withholding_tax_czk");
     const netCzk = calculationValue(calculation, "net_amount_czk", "net_amount_czk");
     const treatment = analysis.tax_treatment || analysis.candidate_tax_treatment;
+    const candidateTreatment = analysis.candidate_tax_treatment || null;
+    const candidateCitation = selectedCitation(analysis);
+    const unresolvedDomesticExemption = analysis.status !== "FINAL" && (analysis.layer_results || []).some(
+      (item) => item.layer === "eu_relief" && item.outcome === "unresolved"
+    );
+    const treatyFallback = unresolvedDomesticExemption
+      && ["treaty", "protocol", "mli"].includes(String(candidateCitation?.legal_layer || ""))
+      && (
+        candidateTreatment === "exclusive_foreign_taxation"
+        || (analysis.candidate_rate !== null && analysis.candidate_rate !== undefined)
+      );
+    if (treatyFallback) {
+      status.textContent = document.documentElement.lang === "en"
+        ? "DOMESTIC EXEMPTION FACTS INCOMPLETE"
+        : "NEÚPLNÉ ÚDAJE PRO VNITROSTÁTNÍ OSVOBOZENÍ";
+    }
+    const reasonCard = document.querySelector('.flow-step[data-step="4"] > article.reason');
+    if (reasonCard) reasonCard.hidden = analysis.status !== "FINAL" && !treatyFallback;
     const nonTaxing = ["exclusive_foreign_taxation", "domestic_exemption"].includes(treatment);
-    setText("#workspace-tax-label", nonTaxing ? "Česká daň k odvodu" : "Srážková daň v CZK");
-    setText("#workspace-tax-row-label", nonTaxing ? "Česká daň k odvodu" : "Srážková daň");
-    setText("#workspace-tax", calculation ? money(taxCzk) : "—");
-    setText("#workspace-rate", treatment === "exclusive_foreign_taxation" ? `Zdanění pouze ve státě rezidence příjemce (${countryName(recipient.country)})` : treatment === "domestic_exemption" ? "Příjem je v České republice osvobozen" : analysis.rate === null ? analysis.candidate_rate === null ? "Sazbu nelze určit bez doplnění potřebných podmínek" : `Sazba přiřazená podle dostupných údajů: ${analysis.candidate_rate} %` : `${analysis.rate} % z daňového základu`);
+    const en = document.documentElement.lang === "en";
+    setText("#workspace-tax-label", treatyFallback
+      ? (en ? "Treaty fallback withholding tax" : "Srážková daň podle smluvního fallbacku")
+      : nonTaxing ? "Česká daň k odvodu" : "Srážková daň v CZK");
+    setText("#workspace-tax-row-label", treatyFallback
+      ? (en ? "Treaty fallback withholding tax" : "Srážková daň podle smluvního fallbacku")
+      : nonTaxing ? "Česká daň k odvodu" : "Srážková daň");
+    const fallbackGross = grossCzk !== null
+      ? Number(grossCzk)
+      : payload.transaction_amount.currency === "CZK"
+        ? Number(payload.transaction_amount.amount)
+        : null;
+    const fallbackTax = treatyFallback && Number.isFinite(fallbackGross)
+      ? candidateTreatment === "exclusive_foreign_taxation"
+        ? 0
+        : fallbackGross * Number(analysis.candidate_rate) / 100
+      : null;
+    setText("#workspace-tax", calculation ? money(taxCzk) : fallbackTax !== null ? money(fallbackTax) : "—");
+    const incomeTypeLabels = { dividend: "Dividendy", interest: "Úroky", royalty: "Licenční poplatky" };
+    const resultStep = document.querySelector('.flow-step[data-step="4"]');
+    if (resultStep) resultStep.dataset.incomeType = payload.income_type || "";
+    setText("#workspace-income-type", `${document.documentElement.lang === "en" ? "Transaction" : "Transakce"}: ${incomeTypeLabels[payload.income_type] || payload.income_type || "—"}`);
+    setText("#workspace-rate", treatyFallback
+      ? candidateTreatment === "exclusive_foreign_taxation"
+        ? (en
+            ? "Treaty fallback: no Czech withholding tax under the applicable treaty rule. The domestic exemption still remains to be concluded as the primary domestic-law basis."
+            : "Smluvní fallback: podle použitelného smluvního pravidla se česká srážková daň neodvádí. Vnitrostátní osvobození je však stále nutné uzavřít jako primární titul podle českého práva.")
+        : (en
+            ? `Treaty fallback: ${analysis.candidate_rate}% of the transaction value. The final Czech tax may be lower or zero if the domestic exemption applies.`
+            : `Smluvní fallback: ${analysis.candidate_rate} % z hodnoty transakce. Konečná česká daň může být nižší nebo nulová, pokud se uplatní vnitrostátní osvobození.`)
+      : treatment === "exclusive_foreign_taxation" ? `Zdanění pouze ve státě rezidence příjemce (${countryName(recipient.country)})`
+      : treatment === "domestic_exemption" ? "Příjem je v České republice osvobozen"
+      : analysis.rate === null ? analysis.candidate_rate === null ? "Sazbu nelze určit bez doplnění potřebných podmínek" : `Sazba přiřazená podle dostupných údajů: ${analysis.candidate_rate} %`
+      : `${analysis.rate} % z hodnoty transakce`);
     setText("#workspace-gross", grossCzk !== null ? money(grossCzk) : payload.transaction_amount.currency === "CZK" ? money(payload.transaction_amount.amount) : `${payload.transaction_amount.amount} ${payload.transaction_amount.currency}`);
-    setText("#workspace-tax-row", calculation ? money(taxCzk) : "—");
-    setText("#workspace-net", calculation ? money(netCzk) : "—");
-    setText("#workspace-reason", informationalRuleStatement(analysis));
+    setText("#workspace-tax-row", calculation ? money(taxCzk) : fallbackTax !== null ? money(fallbackTax) : "—");
+    setText("#workspace-net", calculation ? money(netCzk) : fallbackTax !== null && fallbackGross !== null ? money(fallbackGross - fallbackTax) : "—");
+    setText("#workspace-reason", treatyFallback
+      ? candidateTreatment === "exclusive_foreign_taxation"
+        ? (en
+            ? `The domestic exemption cannot yet be concluded. If it is not available, the fallback treaty rule is ${candidateCitation?.article ? `Article ${candidateCitation.article}` : "the applicable treaty provision"}, under which no Czech withholding tax is due based on the entered treaty facts.`
+            : `Vnitrostátní osvobození zatím nelze uzavřít. Pokud se neuplatní, smluvním fallbackem je ${candidateCitation?.article ? `článek ${candidateCitation.article}` : "příslušné smluvní ustanovení"}, podle kterého se při zadaných smluvních skutečnostech česká srážková daň neodvádí.`)
+        : (en
+            ? `The domestic exemption cannot yet be concluded. If it is not available, the fallback treaty rule is ${candidateCitation?.article ? `Article ${candidateCitation.article}` : "the applicable treaty provision"} at ${analysis.candidate_rate}%.`
+            : `Vnitrostátní osvobození zatím nelze uzavřít. Pokud se neuplatní, smluvním fallbackem je ${candidateCitation?.article ? `článek ${candidateCitation.article}` : "příslušné smluvní ustanovení"} se sazbou ${analysis.candidate_rate} %.`)
+      : informationalRuleStatement(analysis));
     const actions = document.querySelector("#workspace-actions"); actions.replaceChildren();
     reviewItems.forEach((item) => actions.append(item));
     const actionCount = document.querySelector("#workspace-action-count");
@@ -1059,12 +1413,11 @@
       actionCount.textContent = String(reviewItems.length);
       actionCount.hidden = reviewItems.length === 0;
     }
-    if (!reviewItems.length) {
-      const item = document.createElement("div"); item.className = "action-item complete";
-      const strong = document.createElement("strong"); strong.textContent = "Všechny údaje potřebné pro výpočet jsou zadány";
-      const small = document.createElement("small"); small.textContent = "Výsledek vychází z uvedených údajů a zobrazeného právního základu.";
-      item.append(strong, small); actions.append(item);
-    }
+    const conditionsCard = actions.closest("article.card");
+    const resultGrid = conditionsCard?.closest(".dashboard-grid");
+    const unresolved = analysis.status !== "FINAL";
+    if (conditionsCard) conditionsCard.hidden = reviewItems.length === 0 || unresolved;
+    if (resultGrid) resultGrid.classList.toggle("single-column", !conditionsCard || conditionsCard.hidden);
     const citations = document.querySelector("#workspace-citations"); citations.replaceChildren();
     decisiveCitations(analysis).forEach((citation, index) => citations.append(citationCard(citation, analysis, index + 1)));
     if (!citations.children.length) { const p = document.createElement("p"); p.textContent = "Pro tento informační výstup nebyl vrácen konkrétní odkaz na právní zdroj."; citations.append(p); }
@@ -1078,13 +1431,24 @@
     const error = document.querySelector("#workspace-error"); error.hidden = true;
     const transactionDate = String(data.get("transaction_date"));
     const facts = {
-      beneficial_owner: String(data.get("beneficial_owner")) === "true",
-      recipient_is_treaty_resident: String(data.get("treaty_resident")) === "true",
-      permanent_establishment_connection: String(data.get("pe_connection")) === "true",
-      right_or_property_not_effectively_connected_to_czech_pe_or_fixed_base: String(data.get("pe_connection")) !== "true",
-      claim_not_effectively_connected_to_czech_pe: String(data.get("pe_connection")) !== "true",
       recipient_entity_type: recipient.type === "Fyzická osoba" ? "individual" : recipient.type === "Fond" ? "fund" : recipient.type === "Společnost" ? "company" : "other"
     };
+    const beneficialOwner = data.get("beneficial_owner");
+    const treatyResident = data.get("treaty_resident");
+    const peConnection = data.get("pe_connection");
+
+    if (beneficialOwner !== null) {
+      facts.beneficial_owner = String(beneficialOwner) === "true";
+    }
+    if (treatyResident !== null) {
+      facts.recipient_is_treaty_resident = String(treatyResident) === "true";
+    }
+    if (peConnection !== null) {
+      const connected = String(peConnection) === "true";
+      facts.permanent_establishment_connection = connected;
+      facts.right_or_property_not_effectively_connected_to_czech_pe_or_fixed_base = !connected;
+      facts.claim_not_effectively_connected_to_czech_pe = !connected;
+    }
     const incomeType = String(data.get("income_type"));
     const ownershipPercent = String(data.get("ownership_percent"));
     const directOwnership = String(data.get("direct_ownership"));
@@ -1094,7 +1458,7 @@
     const armLengthAmount = String(data.get("arm_length_amount"));
     const royaltyCategory = String(data.get("royalty_category"));
     Object.assign(currentRelationship(), {
-      peConnection: String(data.get("pe_connection")) === "true",
+      peConnection: peConnection === null ? "" : String(peConnection) === "true",
       ownershipPercent,
       directOwnership,
       acquisitionDate,
@@ -1126,8 +1490,6 @@
           transactionDate,
         );
       }
-      if (holdingPeriodMode === "at_least_12_months") facts.holding_period_months = 12;
-      if (holdingPeriodMode === "less_than_12_months") facts.holding_period_months = 0;
     }
     if (incomeType === "interest" && armLengthAmount) facts.arm_length_amount = armLengthAmount === "true";
     if (incomeType === "royalty" && royaltyCategory) facts.royalty_category = royaltyCategory;

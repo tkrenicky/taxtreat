@@ -10,9 +10,9 @@ ADAPTER = WEB / "workspace-source-country-adapter.js"
 def test_workspace_bootstrap_loads_country_context_and_adapter_before_existing_export_core():
     bootstrap = (WEB / "workspace-report-export.js").read_text(encoding="utf-8")
 
-    country = '/ui-assets/source-country-context.js?v=20260819-sk1'
-    adapter = '/ui-assets/workspace-source-country-adapter.js?v=20260819-sk1'
-    core = '/ui-assets/workspace-report-export-core.js?v=20260819-3'
+    country = "/ui-assets/source-country-context.js"
+    adapter = "/ui-assets/workspace-source-country-adapter.js"
+    core = "/ui-assets/workspace-report-export-core.js"
 
     assert country in bootstrap
     assert adapter in bootstrap

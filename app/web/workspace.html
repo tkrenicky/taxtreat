@@ -132,7 +132,7 @@
             <label class="form-field"><span>Stát daňové rezidence *</span><select name="recipient_country" required><option value="">Vyber stát</option><option value="AT">Rakousko</option><option value="CH">Švýcarsko</option><option value="DE">Německo</option><option value="SG">Singapur</option><option value="TW">Tchaj-wan</option></select></label>
             <label class="form-field"><span>Typ příjemce *</span><select name="recipient_type"><option>Společnost</option><option>Fyzická osoba</option><option>Fond</option><option>Jiný subjekt</option></select></label>
           </div>
-          <p>Další údaje a podklady doplníš v profilu příjemce. V tomto demu se nový profil po obnovení stránky odstraní.</p>
+          <p>Další údaje a podklady doplníš v profilu příjemce. Profil zůstává uložený v tomto prohlížeči i po obnovení stránky.</p>
           <button class="primary" type="submit">Použít příjemce v této kontrole →</button>
         </form>
         <div class="flow-actions"><button class="secondary" data-next-step="1">← Zpět k plátci</button><button class="primary" data-next-step="3">Pokračovat k platbě →</button></div>
@@ -157,9 +157,9 @@
           <fieldset class="assumptions">
             <legend>Výpočet vychází z níže uvedených předpokladů</legend>
             <p>Předvyplněné odpovědi zkontroluj a změň, pokud pro danou platbu neplatí.</p>
-            <div class="assumption-row"><span>Příjemce je skutečným vlastníkem příjmu.</span><div class="segmented"><label><input name="beneficial_owner" type="radio" value="true" checked><span>Ano</span></label><label><input name="beneficial_owner" type="radio" value="false"><span>Ne</span></label></div></div>
-            <div class="assumption-row"><span>Příjemce je daňovým rezidentem státu <b data-recipient-country-name>Rakousko</b> pro účely příslušné smlouvy.</span><div class="segmented"><label><input name="treaty_resident" type="radio" value="true" checked><span>Ano</span></label><label><input name="treaty_resident" type="radio" value="false"><span>Ne</span></label></div></div>
-            <div class="assumption-row"><span>Konkrétní podíl, pohledávka nebo právo, ze kterého plyne tato platba, je součástí činnosti stálé provozovny příjemce v České republice. <button class="info-button" type="button" data-tooltip="pe-help" aria-label="Vysvětlení vazby ke stálé provozovně">i</button></span><div class="segmented"><label><input name="pe_connection" type="radio" value="true"><span>Ano</span></label><label><input name="pe_connection" type="radio" value="false" checked><span>Ne</span></label></div></div>
+            <div class="assumption-row"><span>Příjemce je skutečným vlastníkem příjmu.</span><div class="segmented"><label><input name="beneficial_owner" type="radio" value="true" checked required><span>Ano</span></label><label><input name="beneficial_owner" type="radio" value="false" required><span>Ne</span></label></div></div>
+            <div class="assumption-row"><span>Příjemce je daňovým rezidentem státu <b data-recipient-country-name>Rakousko</b> pro účely příslušné smlouvy.</span><div class="segmented"><label><input name="treaty_resident" type="radio" value="true" required><span>Ano</span></label><label><input name="treaty_resident" type="radio" value="false" required><span>Ne</span></label></div></div>
+            <div class="assumption-row"><span>Konkrétní podíl, pohledávka nebo právo, ze kterého plyne tato platba, je součástí činnosti stálé provozovny příjemce v České republice. <button class="info-button" type="button" data-tooltip="pe-help" aria-label="Vysvětlení vazby ke stálé provozovně">i</button></span><div class="segmented"><label><input name="pe_connection" type="radio" value="true" required><span>Ano</span></label><label><input name="pe_connection" type="radio" value="false" checked required><span>Ne</span></label></div></div>
             <div id="pe-help" class="tooltip-panel" hidden>Zvol „Ano“ pouze tehdy, pokud zahraniční příjemce podniká v České republice prostřednictvím stálé provozovny a právě tento podíl, pohledávku nebo licenční právo používá v její činnosti. Pokud příjemce v ČR stálou provozovnu nemá nebo s ní tato platba nesouvisí, ponech „Ne“. Samotná pobočka, kancelář nebo zaměstnanec v ČR tuto vazbu automaticky neznamená.</div>
           </fieldset>
           <section id="transaction-facts" class="transaction-facts" hidden>
@@ -168,7 +168,7 @@
             <div id="dividend-facts" class="progressive-facts" hidden>
               <label class="fact-question" data-dividend-step="1"><span><b>1</b> Jaký podíl na základním kapitálu českého plátce příjemce drží?</span><div class="input-suffix"><input name="ownership_percent" type="number" min="0" max="100" step="0.01" placeholder="např. 25"><em>%</em></div></label>
               <label class="fact-question" data-dividend-step="2" hidden><span><b>2</b> Drží příjemce tento podíl přímo? <button class="info-button" type="button" data-tooltip="direct-help" aria-label="Vysvětlení přímého a nepřímého držení">i</button></span><select name="direct_ownership"><option value="">Vyber odpověď</option><option value="true">Ano, přímo</option><option value="false">Ne, nepřímo</option></select><small id="direct-help" class="tooltip-panel" hidden>Při nepřímém držení je podíl vlastněn prostřednictvím jiné společnosti. TaxTreat dále posoudí pravidla, která nepřímou účast připouštějí; pravidlo vyžadující přímé držení nebude bez dalšího použito.</small></label>
-              <div class="fact-question" data-dividend-step="3" hidden><span><b>3</b> Jak dlouho příjemce podíl drží?</span><select name="holding_period_mode"><option value="">Vyber odpověď</option><option value="known_date">Znám datum nabytí podílu</option><option value="at_least_12_months">K datu transakce alespoň 12 měsíců</option><option value="less_than_12_months">K datu transakce méně než 12 měsíců</option></select><label class="nested-date" data-acquisition-date hidden><span>Datum nabytí podílu</span><input name="acquisition_date" type="date"><small>Doba držby se vypočte automaticky k datu transakce.</small></label></div>
+              <div class="fact-question" data-dividend-step="3" hidden><span><b>3</b> Jak dlouho příjemce podíl drží?</span><select name="holding_period_mode"><option value="">Vyber odpověď</option><option value="known_date">Znám datum nabytí podílu</option><option value="unknown_date">Datum nabytí neznám</option></select><label class="nested-date" data-acquisition-date hidden><span>Datum nabytí podílu</span><input name="acquisition_date" type="date"><small>Doba držby se vypočte automaticky k datu transakce. Pokud datum neznáte, TaxTreat nebude dobu držby odhadovat.</small></label></div>
               <label class="fact-question" data-dividend-step="4" hidden><span><b>4</b> Jaký podíl na hlasovacích právech českého plátce příjemce drží?</span><div class="input-suffix"><input name="voting_ownership_percent" type="number" min="0" max="100" step="0.01"><em>%</em></div><small>Předvyplněno podle podílu na základním kapitálu. Uprav, pokud se podíl na hlasovacích právech liší.</small></label>
             </div>
             <div id="interest-facts" class="fact-grid" hidden>
@@ -176,7 +176,7 @@
               <label><span>Ostatní úroky stejného druhu připadající tomuto příjemci ve stejném kalendářním měsíci (Kč)</span><input name="prior_same_type_monthly_amount_czk" type="number" min="0" step="1" value="0"><small>Uveď souhrn bez právě zadávané platby. Aktuální platba se po přepočtu kurzem ČNB přičte automaticky pro posouzení limitu podle § 38da zákona č. 586/1992 Sb., o daních z příjmů.</small></label>
             </div>
             <div id="royalty-facts" class="fact-grid" hidden>
-              <label><span>Předmět licenční platby</span><select name="royalty_category"><option value="">Vyber možnost</option><option value="copyright_literary_artistic_or_scientific">Autorské dílo</option><option value="software_patent_trademark_design_model_plan_secret_formula_process_or_knowhow">Software, patent, ochranná známka nebo know-how</option><option value="industrial_commercial_or_scientific_equipment">Průmyslové, obchodní nebo vědecké zařízení</option><option value="other">Jiný předmět licence</option></select></label>
+              <label><span>Předmět licenční platby</span><select name="royalty_category"><option value="">Vyber možnost</option><option value="copyright_literary_artistic_scientific_nonfilm_nonsoftware">Autorské dílo (mimo software, film, TV a rozhlas)</option><option value="cinematographic_films_or_broadcast_media">Film, televizní nebo rozhlasové vysílání</option><option value="computer_software">Počítačový software</option><option value="patent_trademark_design_model_plan_secret_formula_process_or_knowhow">Patent, ochranná známka, průmyslový vzor, postup nebo know-how</option><option value="financial_lease_of_equipment">Finanční leasing průmyslového, obchodního nebo vědeckého zařízení</option><option value="operating_lease_or_other_use_of_equipment">Operativní leasing nebo jiné užívání průmyslového, obchodního nebo vědeckého zařízení</option><option value="other">Jiný předmět licence</option></select></label>
             </div>
           </section>
           <section id="workspace-follow-up" class="follow-up" hidden aria-live="polite"><div class="section-heading"><div><p>DOPLŇUJÍCÍ SKUTKOVÉ ÚDAJE</p><h2>Údaje potřebné pro dokončení výpočtu</h2></div><span id="workspace-question-count"></span></div><p>Otázky jsou odvozeny od zvoleného druhu příjmu a smlouvy s konkrétním státem.</p><div id="workspace-questions" class="question-list"></div></section>
@@ -188,6 +188,7 @@
       <section class="flow-step" data-step="4">
         <div class="page-title"><div><p>KROK 4 ZE 4</p><h1>Výsledek</h1><span><b data-payer-name>Demo CZ s.r.o.</b> → <b data-recipient-name>Demo GmbH</b></span></div></div>
         <article class="card result-hero">
+          <div id="workspace-income-type" class="result-income-type">—</div>
           <span id="workspace-result-status" class="badge warning">ČEKÁ NA VÝPOČET</span>
           <p id="workspace-tax-label">Srážková daň v CZK</p><strong id="workspace-tax">—</strong><small id="workspace-rate">—</small>
         </article>
@@ -209,23 +210,23 @@
   </main>
 
   <dialog id="recipient-dialog" class="modal">
-    <form method="dialog" id="recipient-edit-form"><div class="modal-head"><div><p>PŘÍJEMCE</p><h2>Upravit příjemce</h2></div><button type="button" data-close-recipient aria-label="Zavřít">×</button></div>
+    <form id="recipient-edit-form"><div class="modal-head"><div><p>PŘÍJEMCE</p><h2>Upravit příjemce</h2></div><button type="button" data-close-recipient aria-label="Zavřít">×</button></div>
       <label><span>Název nebo jméno *</span><input name="recipient_name" required></label>
       <label><span>Stát daňové rezidence *</span><select name="recipient_country" required><option value="AT">Rakousko</option><option value="CH">Švýcarsko</option><option value="DE">Německo</option><option value="SG">Singapur</option><option value="TW">Tchaj-wan</option></select></label>
       <label><span>Typ příjemce *</span><select name="recipient_type"><option>Společnost</option><option>Fyzická osoba</option><option>Fond</option><option>Jiný subjekt</option></select></label>
       <label><span>Podíl na základním kapitálu českého plátce (%)</span><input name="ownership_percent" type="number" min="0" max="100" step="0.01"></label>
       <label><span>Datum nabytí podílu</span><input name="acquisition_date" type="date"></label>
       <label><span>Přímé držení podílu</span><select name="direct_ownership"><option value="">Nevyplněno</option><option value="true">Ano</option><option value="false">Ne</option></select></label>
-      <label><span>Skutečný vlastník příjmu</span><select name="beneficial_owner"><option value="true">Ano</option><option value="false">Ne</option></select></label>
-      <label><span>Daňový rezident vybraného státu pro účely smlouvy</span><select name="treaty_resident"><option value="true">Ano</option><option value="false">Ne</option></select></label>
-      <label><span>Vazba účasti, pohledávky nebo práva ke stálé provozovně v ČR</span><select name="pe_connection"><option value="false">Ne</option><option value="true">Ano</option></select></label>
+      <label><span>Skutečný vlastník příjmu</span><select name="beneficial_owner"><option value="">Nevyplněno</option><option value="true">Ano</option><option value="false">Ne</option></select></label>
+      <label><span>Daňový rezident vybraného státu pro účely smlouvy</span><select name="treaty_resident"><option value="">Nevyplněno</option><option value="true">Ano</option><option value="false">Ne</option></select></label>
+      <label><span>Vazba účasti, pohledávky nebo práva ke stálé provozovně v ČR</span><select name="pe_connection"><option value="">Nevyplněno</option><option value="false">Ne</option><option value="true">Ano</option></select></label>
       <div class="flow-actions"><button class="secondary" type="button" data-close-recipient>Zrušit</button><button class="primary" type="submit">Uložit změny</button></div>
     </form>
   </dialog>
 
   <dialog id="payer-dialog" class="modal">
-    <form method="dialog" id="payer-form"><div class="modal-head"><div><p>PLÁTCE</p><h2 id="payer-dialog-title">Upravit plátce</h2></div><button type="button" data-close-payer aria-label="Zavřít">×</button></div>
-      <label><span>IČO *</span><div class="ico-lookup"><input name="payer_id" inputmode="numeric" maxlength="8" pattern="[0-9]{8}" placeholder="např. 27082440" required><button class="secondary compact" type="button" data-ares-lookup>Načíst z ARES</button></div><small id="ares-lookup-status" class="lookup-status" aria-live="polite">Po zadání 8 číslic TaxTreat načte identifikační údaje z ARES.</small></label>
+    <form id="payer-form"><div class="modal-head"><div><p>PLÁTCE</p><h2 id="payer-dialog-title">Upravit plátce</h2></div><button type="button" data-close-payer aria-label="Zavřít">×</button></div>
+      <label><span>IČO *</span><div class="ico-lookup"><input name="payer_id" inputmode="numeric" maxlength="8" pattern="[0-9]{8}" placeholder="např. 27082440" required><button class="secondary compact" type="button" data-ares-lookup>Načíst z ARES</button></div><small id="ares-lookup-status" class="lookup-status" aria-live="polite">Po zadání IČO můžeš identifikační údaje načíst z ARES.</small></label>
       <label><span>Název *</span><input name="payer_name" value="Demo CZ s.r.o." required></label>
       <label><span>DIČ</span><input name="payer_vat_id" placeholder="např. CZ12345678"></label>
       <label><span>Sídlo</span><input name="payer_address" placeholder="Načte se z ARES"></label>
@@ -233,7 +234,7 @@
       <label><span>Datová schránka</span><input name="payer_data_box" placeholder="Načte se z ARES"></label>
       <label><span>Datum vzniku</span><input name="payer_established_at" type="date"></label>
       <label><span>Stát</span><input value="Česká republika" disabled></label>
-      <div class="flow-actions"><button class="secondary" type="button" data-close-payer>Zrušit</button><button class="primary" type="submit">Uložit změny</button></div>
+      <div class="flow-actions"><button class="secondary" type="button" data-close-payer>Zrušit</button><button class="primary" type="button" data-save-payer>Uložit změny</button></div>
     </form>
   </dialog>
 

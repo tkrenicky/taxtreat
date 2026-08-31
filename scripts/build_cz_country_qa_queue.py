@@ -23,6 +23,7 @@ MLI_EFFECTS = ROOT / "data/legal_consolidation/mli_wht_effects.json"
 BLOCKER_RESOLUTIONS = ROOT / "data/legal_consolidation/blocker_resolutions.json"
 HUMAN_CONDITION_CORRECTIONS = ROOT / "data/legal_consolidation/human_condition_corrections.json"
 STAGE6_AI_PACKAGE_CORRECTIONS = ROOT / "data/legal_consolidation/stage6_ai_package_corrections.json"
+SEMANTIC_REMEDIATION_CONDITION_CANDIDATES = ROOT / "data/legal_consolidation/semantic_remediation_condition_candidates_20260829.json"
 TAIWAN_SPECIAL = ROOT / "data/legal_special_jurisdictions/taiwan_45_2020.json"
 AT_CH_RULES = {
     "AT": ROOT / "data/legal_rules/rakousko.json",
@@ -127,6 +128,71 @@ def rate_candidates() -> dict[tuple[str, str], list[dict[str, Any]]]:
     if len(result) != 300:
         raise RuntimeError(f"Expected 300 rate-candidate scopes, found {len(result)}.")
     return result
+
+
+def semantic_remediation_corrections() -> dict[tuple[str, str], dict[str, Any]]:
+    if not SEMANTIC_REMEDIATION_CONDITION_CANDIDATES.exists():
+        return {}
+
+    payload = load(SEMANTIC_REMEDIATION_CONDITION_CANDIDATES)
+
+    if payload.get("verification_status") != "needs_review":
+        raise RuntimeError(
+            "Semantic remediation candidates must remain needs_review "
+            "until a separate human review event is recorded."
+        )
+
+    if payload.get("automatic_production_approval_forbidden") is not True:
+        raise RuntimeError(
+            "Semantic remediation candidates must explicitly forbid "
+            "automatic production approval."
+        )
+
+    result: dict[tuple[str, str], dict[str, Any]] = {}
+
+    for correction in payload.get("corrections", []):
+        key = (
+            str(correction["country"]).upper(),
+            str(correction["income_type"]),
+        )
+        if key in result:
+            raise RuntimeError(
+                f"Duplicate semantic remediation correction: {key}"
+            )
+        result[key] = correction
+
+    return result
+
+
+def apply_semantic_rate_candidate_correction(
+    country: str,
+    income_type: str,
+    candidate_rates: list[dict[str, Any]],
+    corrections: dict[tuple[str, str], dict[str, Any]],
+) -> tuple[list[dict[str, Any]], dict[str, Any] | None]:
+    correction = corrections.get((country, income_type))
+
+    if correction is None:
+        return candidate_rates, None
+
+    corrected = [
+        {
+            "rate": row["rate"],
+            "conditions": row["conditions"],
+            "candidate_rule_id": (
+                f"SEMANTIC-REMEDIATION-{country}-{income_type}-"
+                f"{str(row['rate']).replace('.', '_')}"
+            ),
+        }
+        for row in correction["rate_candidates"]
+    ]
+
+    return corrected, {
+        "status": "needs_human_review",
+        "evidence_source_id": correction.get("evidence_source_id"),
+        "evidence_note": correction.get("evidence_note"),
+        "automatic_production_approval_forbidden": True,
+    }
 
 
 def language_summary(layer: dict[str, Any]) -> dict[str, Any]:
@@ -438,6 +504,26 @@ def build_taiwan_package(sampled_pairs: set[str]) -> dict[str, Any]:
                 {"rate": row["rate"], "conditions": row["conditions"]}
                 for row in correction["rate_candidates"]
             ]
+
+        semantic_correction = semantic_remediation_corrections().get(
+            ("TW", income)
+        )
+        semantic_remediation = None
+        if semantic_correction is not None:
+            candidate_rates = [
+                row["rate"]
+                for row in semantic_correction["rate_candidates"]
+            ]
+            conditions = [
+                {"rate": row["rate"], "conditions": row["conditions"]}
+                for row in semantic_correction["rate_candidates"]
+            ]
+            semantic_remediation = {
+                "status": "needs_human_review",
+                "evidence_source_id": semantic_correction.get("evidence_source_id"),
+                "evidence_note": semantic_correction.get("evidence_note"),
+                "automatic_production_approval_forbidden": True,
+            }
         excerpt = excerpts[income]
         scopes.append({
             "income_type": income,
@@ -447,7 +533,13 @@ def build_taiwan_package(sampled_pairs: set[str]) -> dict[str, Any]:
             "material_conditions": conditions,
             "candidate_excerpt": excerpt,
             "article_text_sha256": hashlib.sha256(excerpt.encode()).hexdigest(),
-            "candidate_status": {"verification_status":"needs_review","stage5_terminal_status":"pending","fail_closed":True,"production_releasable":False},
+            "candidate_status": {
+                "verification_status":"needs_review",
+                "stage5_terminal_status":"pending",
+                "fail_closed":True,
+                "production_releasable":False,
+                **({"semantic_remediation": semantic_remediation} if semantic_remediation else {}),
+            },
         })
     package = {
         "treaty_pair_id": "CZ-TW",
@@ -491,6 +583,7 @@ def build_taiwan_package(sampled_pairs: set[str]) -> dict[str, Any]:
 def build_queue() -> dict[str, Any]:
     rows = stage5_scopes()
     rates = rate_candidates()
+    semantic_corrections = semantic_remediation_corrections()
     manifest = {row["source_id"]: row for row in load(MANIFEST)["sources"]}
     grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for row in rows:
@@ -515,6 +608,23 @@ def build_queue() -> dict[str, Any]:
         income_summaries = []
         for row in country_rows:
             candidate_rates = rates[(country, row["income_type"])]
+            candidate_rates, semantic_remediation = (
+                apply_semantic_rate_candidate_correction(
+                    country,
+                    row["income_type"],
+                    candidate_rates,
+                    semantic_corrections,
+                )
+            )
+            candidate_status = dict(row["candidate_status"])
+            if semantic_remediation is not None:
+                candidate_status.update({
+                    "verification_status": "needs_review",
+                    "stage5_terminal_status": "pending",
+                    "fail_closed": True,
+                    "production_releasable": False,
+                    "semantic_remediation": semantic_remediation,
+                })
             income_summaries.append({
                 "income_type": row["income_type"],
                 "article_number": row["treaty_article"]["article_number"],
@@ -526,7 +636,7 @@ def build_queue() -> dict[str, Any]:
                 ],
                 "candidate_excerpt": row["treaty_article"]["exact_candidate_excerpt"],
                 "article_text_sha256": row["treaty_article"]["article_text_sha256"],
-                "candidate_status": row["candidate_status"],
+                "candidate_status": candidate_status,
             })
         package = {
             "treaty_pair_id": f"CZ-{country}",

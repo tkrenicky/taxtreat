@@ -10,7 +10,7 @@ from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, HTMLResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field, field_validator
 
@@ -50,6 +50,11 @@ from taxtreat.services.exchange_rates import (
 from taxtreat.services.reporting import (
     build_professional_report,
     render_report_html,
+)
+from taxtreat.services.web_locale_engine import (
+    localize_intake_response,
+    render_workspace_asset,
+    render_workspace_document,
 )
 from taxtreat.services.source_country_release_gate import (
     SourceCountryNotReleasedError,
@@ -186,9 +191,30 @@ def read_root():
 
 
 @app.get("/ui", include_in_schema=False)
-def guided_intake_ui():
-    return FileResponse(
-        WEB_ROOT / "workspace.html",
+def guided_intake_ui(lang: Literal["cs", "en"] = "cs"):
+    return HTMLResponse(
+        render_workspace_document(WEB_ROOT, lang),
+        headers={"Cache-Control": "no-store, no-cache, must-revalidate"},
+    )
+
+
+@app.get("/ui/{lang}", include_in_schema=False)
+def guided_intake_ui_locale(lang: Literal["cs", "en"]):
+    return HTMLResponse(
+        render_workspace_document(WEB_ROOT, lang),
+        headers={"Cache-Control": "no-store, no-cache, must-revalidate"},
+    )
+
+
+@app.get("/ui-engine/{lang}/{asset_path:path}", include_in_schema=False)
+def guided_intake_ui_engine(lang: Literal["cs", "en"], asset_path: str):
+    try:
+        content = render_workspace_asset(WEB_ROOT, asset_path, lang)
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail="Unknown UI engine asset") from exc
+    return Response(
+        content=content,
+        media_type="application/javascript",
         headers={"Cache-Control": "no-store, no-cache, must-revalidate"},
     )
 
@@ -685,22 +711,28 @@ def analyze(payload: AnalysisPayload):
 
 
 @app.post("/analysis/intake")
-def analysis_intake(payload: AnalysisPayload):
+def analysis_intake(payload: AnalysisPayload, lang: Literal["cs", "en"] = "cs"):
     analysis = analyze(payload)
     request = payload.model_dump(mode="json")
-    return {
+    response = {
         "analysis": analysis,
         "intake": build_intake_plan(request, analysis),
     }
+    return localize_intake_response(response, WEB_ROOT, lang)
 
 
 @app.post("/analysis/report")
 def analysis_report(payload: AnalysisPayload):
     analysis = analyze(payload)
     request = payload.model_dump(mode="json")
+    facts = request.get("facts")
+    report_language = "cs"
+    if isinstance(facts, dict):
+        report_language = "en" if str(facts.pop("__report_language", "cs")).lower() == "en" else "cs"
     report = build_professional_report(
         request,
         analysis,
+        language=report_language,
     )
     return {
         "report": report,

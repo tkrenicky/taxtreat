@@ -29,14 +29,6 @@ _DISPLAYABLE_TREATY_TEXT_STATUSES = {
 
 
 def _domestic_starting_point(income_type: str) -> dict[str, Any]:
-    """Return the mandatory Czech domestic starting point for the legal path.
-
-    The date of a consolidated source package must not decide whether the
-    domestic starting step is displayed. Rule selection remains owned by the
-    legal engine; this item makes the audit path complete when an applicable
-    treaty rule is returned without its preceding domestic citation.
-    """
-
     return {
         "rule_id": f"CZ-{income_type.upper()}-DOMESTIC-STARTING-15",
         "legal_instrument": "domestic_law",
@@ -56,9 +48,30 @@ def _domestic_starting_point(income_type: str) -> dict[str, Any]:
     }
 
 
-def _format_domestic_paragraph(value: Any) -> Any:
-    """Render internal domestic locators in conventional Czech legal style."""
+def _domestic_relief_basis(income_type: str) -> dict[str, Any] | None:
+    references = {
+        "dividend": "odst. 1 písm. ze), odst. 3, 4, 6, 8 a 11",
+        "interest": "odst. 1 písm. zk), odst. 3, 5, 6 a 8; navazující § 38nb",
+        "royalty": "odst. 1 písm. zj), odst. 3 a 5 až 8; navazující § 38nb",
+    }
+    paragraph = references.get(income_type)
+    if paragraph is None:
+        return None
+    return {
+        "rule_id": f"CZ-{income_type.upper()}-DOMESTIC-RELIEF-BASIS",
+        "legal_instrument": "domestic_law",
+        "legal_layer": "domestic",
+        "article": "19",
+        "paragraph": paragraph,
+        "rate": 0.0,
+        "tax_treatment": "domestic_exemption",
+        "source_id": "CZ-ZDP-CANONICAL",
+        "source_url": _CZ_DOMESTIC_SOURCE_URL,
+        "path_role": "domestic_exemption_basis",
+    }
 
+
+def _format_domestic_paragraph(value: Any) -> Any:
     if value in (None, ""):
         return value
     text = str(value).strip()
@@ -73,13 +86,6 @@ def _format_domestic_paragraph(value: Any) -> Any:
 
 @lru_cache(maxsize=1)
 def load_verified_provisions() -> dict[str, dict[str, Any]]:
-    """Load canonical display text while retaining the historic public helper.
-
-    Treaty display text is sourced from the official structured e-Sbírka text
-    and is bound to the SHA-256 of the corresponding authoritative PDF. The
-    legacy single-provision file remains a fallback for older checkouts only.
-    """
-
     path = (
         CANONICAL_PROVISIONS
         if CANONICAL_PROVISIONS.is_file()
@@ -98,12 +104,10 @@ def _attach_canonical_text(
     text = str(provision.get("text") or "").strip()
     if not text:
         return
-
     text_source_status = str(provision.get("text_source_status") or "")
     legacy = not CANONICAL_PROVISIONS.is_file()
     if not legacy and text_source_status not in _DISPLAYABLE_TREATY_TEXT_STATUSES:
         return
-
     text_hash = provision.get("verified_text_sha256")
     item["official_text"] = text
     item["official_title"] = provision.get("title")
@@ -127,8 +131,6 @@ def _enrich_citations_in_place(
     recipient_country: str,
     provisions: dict[str, dict[str, Any]],
 ) -> None:
-    """Make canonical treaty text available to consumers sharing citations."""
-
     for citation in citations:
         layer = str(citation.get("legal_layer") or "")
         article = str(citation.get("article") or "")
@@ -147,13 +149,6 @@ def build_legal_path(
     selected_rule_id: str | None,
     income_type: str | None = None,
 ) -> list[dict[str, Any]]:
-    """Return the deduplicated legal path without changing citation semantics.
-
-    Canonical treaty text is enriched onto the original citations for legacy
-    consumers, while the returned path is independently deduplicated and
-    cleaned for user-facing display and reporting.
-    """
-
     selected = selected_rule_id or ""
     provisions = load_verified_provisions()
     _enrich_citations_in_place(
@@ -174,6 +169,36 @@ def build_legal_path(
         and not has_domestic_start
     ):
         supplied.append(_domestic_starting_point(normalized_income_type))
+
+    has_relief_layer = any(
+        str(citation.get("legal_layer") or "") == "eu_relief"
+        for citation in supplied
+    )
+    if source_country.upper() == "CZ" and has_relief_layer:
+        relief_basis = _domestic_relief_basis(normalized_income_type)
+        if relief_basis is not None:
+            if normalized_income_type == "dividend":
+                selected_relief = next(
+                    (
+                        citation
+                        for citation in supplied
+                        if str(citation.get("rule_id") or "") == selected
+                        and str(citation.get("legal_layer") or "") == "eu_relief"
+                    ),
+                    None,
+                )
+                if selected_relief is not None:
+                    relief_basis["rule_id"] = selected
+                # For dividends the public legal path should identify the
+                # domestic statutory basis once. The raw EU/directive
+                # projection is engine provenance, not a fourth user-facing
+                # legal source duplicating Section 19.
+                supplied = [
+                    citation
+                    for citation in supplied
+                    if str(citation.get("legal_layer") or "") != "eu_relief"
+                ]
+            supplied.append(relief_basis)
 
     ordered = sorted(
         supplied,
@@ -200,10 +225,10 @@ def build_legal_path(
             _attach_canonical_text(item, provision)
         if layer == "domestic":
             item["paragraph"] = _format_domestic_paragraph(item.get("paragraph"))
-            if item.get("path_role") != "domestic_starting_point":
-                # Stage 6 domestic excerpts are internal summaries, not
-                # verbatim statutory text. Keep source/rule metadata, but do
-                # not expose the internal summary as legal wording.
+            if item.get("path_role") not in {
+                "domestic_starting_point",
+                "domestic_exemption_basis",
+            }:
                 item.pop("excerpt", None)
                 item.pop("excerpt_sha256", None)
                 item.pop("official_text", None)

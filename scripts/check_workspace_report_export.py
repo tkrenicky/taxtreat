@@ -70,6 +70,9 @@ def verify_recipient_catalog_and_entry(page) -> None:
 
 
 def finish_workspace_calculation(page) -> None:
+    # Isolate this acceptance scenario from the profile-persistence checks
+    # performed earlier in the same browser context.
+    page.evaluate("localStorage.removeItem('taxtreat-workspace-profiles-v1')")
     page.goto(f"{BASE_URL}/workspace-demo", wait_until="networkidle")
     if page.locator("#flow-recipient-name").inner_text() != "Demo GmbH":
         raise AssertionError("Fresh workspace did not reset the demo recipient.")
@@ -93,6 +96,13 @@ def finish_workspace_calculation(page) -> None:
         "known_date"
     )
     form.locator('input[name="acquisition_date"]').fill("2024-01-01")
+    form.locator('select[name="section19_company_form"]').select_option("true")
+    form.locator('select[name="section19_taxable_company"]').select_option("false")
+    treaty_resident_yes = form.locator('input[name="treaty_resident"][value="true"]')
+    if not treaty_resident_yes.is_checked():
+        treaty_resident_yes.evaluate(
+            "el => { el.checked = true; el.dispatchEvent(new Event('input', { bubbles: true })); el.dispatchEvent(new Event('change', { bubbles: true })); }"
+        )
 
     for _ in range(6):
         form.locator("#workspace-submit").click()
@@ -223,6 +233,7 @@ def main() -> int:
             payer_form = page.locator("#payer-form")
             payer_form.locator('input[name="payer_id"]').fill("27082440")
             payer_form.locator('input[name="payer_name"]').wait_for()
+            page.locator("[data-ares-lookup]").click()
             page.wait_for_function(
                 "() => document.querySelector('#payer-form input[name=payer_name]').value.includes('Google Czech')",
                 timeout=5000,

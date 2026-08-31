@@ -1,0 +1,44 @@
+name: Apply report provenance simple
+on:
+  push:
+    branches: [feat/web-bulk-en-treaty-acquisition-20260825]
+    paths: ['.github/workflows/report-provenance-apply-simple-20260826.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/web-bulk-en-treaty-acquisition-20260825
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Apply patch
+        run: python scripts/apply_report_provenance_patch_20260826.py
+      - name: Validate
+        run: |
+          pip install -r requirements-dev.txt
+          pip install --no-deps -e .
+          python - <<'PY'
+          from taxtreat.services.report_locales import english_excerpt_for_citation
+          item = english_excerpt_for_citation({'article':'11'}, 'AT')
+          assert item
+          assert item['excerpt_status'] == 'official_translation_non_authentic'
+          from pathlib import Path
+          t = Path('taxtreat/services/reporting.py').read_text(encoding='utf-8')
+          assert 'source-provenance' in t
+          assert 'english_excerpt_unavailable' in t
+          print('report provenance validation: PASS')
+          PY
+      - name: Commit and push
+        run: |
+          git config user.name "TaxTreat automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add taxtreat/services/reporting.py
+          git diff --cached --check
+          git commit -m "Use verified EN treaty excerpts in reports"
+          git push origin HEAD:feat/web-bulk-en-treaty-acquisition-20260825

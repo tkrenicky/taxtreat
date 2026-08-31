@@ -10,6 +10,7 @@ from taxtreat.engine.legal_rule_engine import (
     TaxTreatment,
     _evaluate_rule,
     _is_effective,
+    _matching_rule_conflicts,
     _matches_scope,
     resolve_tax_treatment,
 )
@@ -22,6 +23,91 @@ _LAYER_ORDER = {
     "mli": 3,
     "eu_relief": 4,
 }
+
+_TREATMENT_ORDER = {
+    TaxTreatment.DOMESTIC_EXEMPTION: 0,
+    TaxTreatment.EXCLUSIVE_FOREIGN_TAXATION: 1,
+    TaxTreatment.TAXABLE_AT_RATE: 2,
+    None: 9,
+}
+
+
+def _candidate_sort_key(rule: LegalRule) -> tuple[Any, ...]:
+    """Prefer decisive domestic treatment, then the most favourable valid path."""
+    treatment = resolve_tax_treatment(rule)
+
+    # A matched domestic non-rate treatment can be legally decisive even when
+    # rate=None; do not push it behind ordinary treaty-rate candidates.
+    domestic_non_rate_treatment = (
+        rule.legal_layer == "domestic"
+        and treatment is not None
+        and treatment != TaxTreatment.TAXABLE_AT_RATE
+    )
+
+    return (
+        0 if domestic_non_rate_treatment else 1,
+        float(rule.rate) if rule.rate is not None else float("inf"),
+        _TREATMENT_ORDER.get(treatment, 9),
+        -_LAYER_ORDER.get(rule.legal_layer, 99),
+        rule.priority,
+        rule.rule_id,
+    )
+
+def _royalty_category_value(rule: LegalRule) -> str | None:
+    for condition in rule.conditions:
+        if condition.fact == "royalty_category" and condition.operator == "==":
+            return str(condition.value or "").strip().lower()
+    return None
+
+
+def _is_residual_royalty_rule(rule: LegalRule) -> bool:
+    value = _royalty_category_value(rule)
+    return bool(value and (value == "other" or value.startswith("all_other_")))
+
+
+def _same_royalty_branch(left: LegalRule, right: LegalRule) -> bool:
+    return (
+        left.income_type == right.income_type == "royalty"
+        and left.source_country == right.source_country
+        and left.recipient_country == right.recipient_country
+        and left.legal_layer == right.legal_layer
+        and str(left.article) == str(right.article)
+        and left.effective_from == right.effective_from
+        and left.effective_to == right.effective_to
+    )
+
+
+def _suppress_residual_royalty_candidates(
+    candidates: list[LegalRule],
+) -> list[LegalRule]:
+    """Treat all-other Article 12 rules as true residual branches.
+
+    Some Stage 6 treaty projections intentionally contain a specific royalty
+    category plus an ``all_other_article_12_royalties`` fallback. Both can
+    match the same normalized UI category. The residual branch must never
+    compete numerically with a matching specific branch; otherwise the layered
+    evaluator's favourable-rate ordering could select the fallback instead of
+    the treaty-specific category.
+    """
+
+    specific = [
+        rule
+        for rule in candidates
+        if rule.income_type == "royalty"
+        and _royalty_category_value(rule) is not None
+        and not _is_residual_royalty_rule(rule)
+    ]
+    if not specific:
+        return candidates
+
+    return [
+        rule
+        for rule in candidates
+        if not (
+            _is_residual_royalty_rule(rule)
+            and any(_same_royalty_branch(rule, item) for item in specific)
+        )
+    ]
 
 
 def _normalize_missing(rule: LegalRule, missing: list[str]) -> list[str]:
@@ -203,34 +289,32 @@ def evaluate_layered_rules(
     candidates = [
         rule for rule, matches, _, _ in evaluated_rates if matches
     ]
-    def _candidate_sort_key(rule: LegalRule) -> tuple:
-        treatment = resolve_tax_treatment(rule)
-
-        # A matched domestic rule that removes the payment from the tax base /
-        # subject of tax (or otherwise gives a non-rate domestic treatment)
-        # must be resolved before treaty/protocol rate comparison.
-        #
-        # ``rate=None`` is therefore NOT equivalent to "no usable candidate".
-        # It can represent the legally decisive domestic result.
-        domestic_non_rate_treatment = (
-            rule.legal_layer == "domestic"
-            and treatment is not None
-            and treatment != TaxTreatment.TAXABLE_AT_RATE
-        )
-
-        return (
-            0 if domestic_non_rate_treatment else 1,
-            float(rule.rate) if rule.rate is not None else float("inf"),
-            -_LAYER_ORDER.get(rule.legal_layer, 99),
-            rule.priority,
-            rule.rule_id,
-        )
-
+    candidates = _suppress_residual_royalty_candidates(candidates)
     candidates.sort(key=_candidate_sort_key)
     if not candidates:
         result.missing_facts = sorted(missing_material)
         result.explanation.append(
             "No complete rate path remains after the mandatory legal gates."
+        )
+        return result
+
+    conflicts = _matching_rule_conflicts(candidates)
+    if conflicts:
+        result.status = DecisionStatus.REVIEW_REQUIRED
+        result.requires_review = True
+        result.citations = [
+            _citation(rule)
+            for conflict in conflicts
+            for rule in conflict
+        ]
+        result.explanation.append(
+            "Conflicting verified legal-rule projections have identical "
+            "applicability conditions but different outcomes: "
+            + "; ".join(
+                ", ".join(rule.rule_id for rule in conflict)
+                for conflict in conflicts
+            )
+            + "."
         )
         return result
 
@@ -259,6 +343,14 @@ def evaluate_layered_rules(
         and rule.rate is not None
         and selected.rate is not None
         and float(rule.rate) < float(selected.rate)
+        # A not-yet-proven Czech domestic exemption must not prevent release
+        # of an otherwise complete treaty outcome. The exemption remains
+        # visible in layer_results for UI/context, but the treaty rate is a
+        # legally usable fallback if all treaty conditions are satisfied.
+        and not (
+            selected.legal_layer in {"treaty", "protocol", "mli"}
+            and rule.legal_layer == "eu_relief"
+        )
     ]
     for _, missing in unresolved_better:
         missing_material.update(missing)

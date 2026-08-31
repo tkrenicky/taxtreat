@@ -85,16 +85,14 @@ def main() -> int:
     browser = None
     try:
         wait_for_server(server)
+
         with sync_playwright() as pw:
-            try:
-                browser = pw.chromium.launch(headless=True)
-            except Exception as exc:
-                print(f"BROWSER_SMOKE_UNAVAILABLE: Chromium is not installed for Playwright: {exc}")
-                return 2
+            browser = pw.chromium.launch(headless=True)
 
             page = browser.new_page()
             page.set_default_timeout(ACTION_TIMEOUT_MS)
             page.set_default_navigation_timeout(NAVIGATION_TIMEOUT_MS)
+
             page.goto(
                 f"{BASE_URL}/ui",
                 wait_until="domcontentloaded",
@@ -102,62 +100,83 @@ def main() -> int:
             )
             wait_for_workspace_ready(page)
 
-            check(page, "initial CZ source country", '() => document.body.dataset.sourceCountry === "CZ"')
-            check(page, "initial CZ currency", '() => document.querySelector("#workspace-payment [name=currency]").value === "CZK"')
-            check(page, "initial CZ runtime released", '() => window.TaxTreatWorkspaceSourceCountry.getActiveContext().runtimeReleased === true')
+            check(
+                page,
+                "initial CZ source country",
+                '() => document.body.dataset.sourceCountry === "CZ"',
+            )
 
-            page.evaluate('''() => { const s=document.querySelector("#active-source-country"); s.value="SK"; s.dispatchEvent(new Event("change", {bubbles:true})); }''')
-            page.wait_for_function('() => document.body.dataset.sourceCountry === "SK"', timeout=ACTION_TIMEOUT_MS)
+            check(
+                page,
+                "initial CZ currency",
+                '() => document.querySelector("#workspace-payment [name=currency]").value === "CZK"',
+            )
 
-            check(page, "SK source country", '() => document.body.dataset.sourceCountry === "SK"')
-            check(page, "SK EUR currency", '() => document.querySelector("#workspace-payment [name=currency]").value === "EUR"')
-            check(page, "SK runtime remains prerelease", '() => window.TaxTreatWorkspaceSourceCountry.getActiveContext().runtimeReleased === false')
-            check(page, "SK submit is disabled semantically", '() => document.querySelector("#workspace-submit").getAttribute("aria-disabled") === "true"')
-            check(page, "SK submit copy", '() => document.querySelector("#workspace-submit").textContent.includes("Slovenský výpočet zatím není vydán")')
-            check(page, "SK FX field hidden", '() => document.querySelector("#workspace-exchange-rate-field").hidden === true')
-            check(page, "SK compliance form", '() => window.TaxTreatWorkspaceSourceCountry.getActiveContext().complianceFormCode === "OZN4311v26"')
-            check(page, "SK 15-day compliance deadline", '() => window.TaxTreatWorkspaceSourceCountry.getActiveContext().notificationDeadlineRule === "15th_day_of_following_calendar_month" && window.TaxTreatWorkspaceSourceCountry.getActiveContext().remittanceDeadlineRule === "15th_day_of_following_calendar_month"')
-            check(page, "SK ordinary annual WHT return not configured", '() => window.TaxTreatWorkspaceSourceCountry.getActiveContext().ordinaryAnnualWhtReturnConfigured === false')
+            check(
+                page,
+                "initial CZ runtime released",
+                '() => window.TaxTreatWorkspaceSourceCountry.getActiveContext().runtimeReleased === true',
+            )
 
-            page.evaluate('() => document.querySelector("[data-nav=payers]").click()')
-            page.wait_for_function('() => !document.querySelector("[data-view=payers]").hidden', timeout=ACTION_TIMEOUT_MS)
-            check(page, "SK payer page copy", '() => document.querySelector("[data-view=payers] .page-title span").textContent.includes("Slovenské subjekty")')
+            check(
+                page,
+                "public source-country selector is hidden",
+                '() => document.querySelector("#active-source-country").closest("label").hidden === true',
+            )
 
-            page.evaluate('() => document.querySelector("[data-nav=recipients]").click()')
-            page.wait_for_function('() => !document.querySelector("[data-view=recipients]").hidden', timeout=ACTION_TIMEOUT_MS)
-            page.evaluate('() => document.querySelector("[data-view=recipients] [data-open-recipient]").click()')
-            page.wait_for_function('() => !document.querySelector("[data-view=recipient-detail]").hidden', timeout=ACTION_TIMEOUT_MS)
-            check(page, "SK PE label", '() => [...document.querySelectorAll("[data-view=recipient-detail] dt")].some(n => n.textContent.includes("Väzba príjmu na stálu prevádzkareň v SR"))')
+            check(
+                page,
+                "SK is not publicly selectable",
+                '() => ![...document.querySelectorAll("#active-source-country option")].some(o => o.value === "SK")',
+            )
 
-            page.evaluate('() => document.querySelector("[data-nav=sources]").click()')
-            page.wait_for_function('() => !document.querySelector("[data-view=sources]").hidden', timeout=ACTION_TIMEOUT_MS)
-            check(page, "SK source metrics 75 / 225", '() => { const a=[...document.querySelectorAll("[data-view=sources] .source-metrics strong")].map(n=>n.textContent.trim()); return a[0] === "75" && a[1] === "225"; }')
+            check(
+                page,
+                "public source-country context exposes CZ only",
+                '() => Object.keys(window.TaxTreatSourceCountries.countries).length === 1 && Object.keys(window.TaxTreatSourceCountries.countries)[0] === "CZ"',
+            )
 
-            page.evaluate('''() => { const s=document.querySelector("#active-source-country"); s.value="CZ"; s.dispatchEvent(new Event("change", {bubbles:true})); }''')
-            page.wait_for_function('() => document.body.dataset.sourceCountry === "CZ"', timeout=ACTION_TIMEOUT_MS)
-            check(page, "return to CZ source country", '() => document.body.dataset.sourceCountry === "CZ"')
-            check(page, "return to CZ currency", '() => document.querySelector("#workspace-payment [name=currency]").value === "CZK"')
-            check(page, "return to CZ source metrics 101 / 303", '() => { const a=[...document.querySelectorAll("[data-view=sources] .source-metrics strong")].map(n=>n.textContent.trim()); return a[0] === "101" && a[1] === "303"; }')
+            check(
+                page,
+                "unsupported SK public context fails closed",
+                '''() => {
+                    try {
+                        window.TaxTreatSourceCountries.get("SK");
+                        return false;
+                    } catch (error) {
+                        return String(error).includes("Unsupported public source country: SK");
+                    }
+                }''',
+            )
 
-            page.evaluate('() => document.querySelector("[data-nav=recipients]").click()')
-            page.wait_for_function('() => !document.querySelector("[data-view=recipients]").hidden', timeout=ACTION_TIMEOUT_MS)
-            page.evaluate('() => document.querySelector("[data-view=recipients] [data-open-recipient]").click()')
-            page.wait_for_function('() => !document.querySelector("[data-view=recipient-detail]").hidden', timeout=ACTION_TIMEOUT_MS)
-            check(page, "return to CZ PE label", '() => [...document.querySelectorAll("[data-view=recipient-detail] dt")].some(n => n.textContent.includes("Vazba ke stálé provozovně v ČR"))')
+            check(
+                page,
+                "public source country remains CZ",
+                '() => document.body.dataset.sourceCountry === "CZ"',
+            )
+
+            check(
+                page,
+                "public currency remains CZK",
+                '() => document.querySelector("#workspace-payment [name=currency]").value === "CZK"',
+            )
 
         print("BROWSER_SMOKE_OK")
         return 0
+
     except Exception as exc:
         print(f"BROWSER_SMOKE_FAILED: {exc}")
         if server_log.exists():
             print(server_log.read_text(encoding="utf-8", errors="replace"))
         return 1
+
     finally:
         if browser is not None:
             try:
                 browser.close()
             except Exception:
                 pass
+
         server.terminate()
         try:
             server.wait(timeout=5)

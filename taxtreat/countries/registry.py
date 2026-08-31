@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any
 
 from taxtreat.engine.legal_rule_engine import LegalDecisionResult
+from taxtreat.countries.cz import apply_rule_overlays as apply_cz_rule_overlays
 from taxtreat.countries.sk import evaluate_domestic_precedence as evaluate_sk_domestic_precedence
 
 
@@ -17,6 +18,8 @@ DomesticPrecedenceHandler = Callable[
     ...,
     LegalDecisionResult | None,
 ]
+
+RuleOverlayHandler = Callable[..., list[Any]]
 
 
 @dataclass(frozen=True)
@@ -33,6 +36,7 @@ class CountryConfig:
     compliance_legal_reference: str | None = None
     compliance_periodicity: str | None = None
     domestic_precedence_handler: DomesticPrecedenceHandler | None = None
+    rule_overlay_handler: RuleOverlayHandler | None = None
     release_manifest_path: Path | None = None
     calculation_strategy: str = "czk_domestic"
     compliance_strategy: str = "cz"
@@ -53,6 +57,8 @@ _COUNTRIES: dict[str, CountryConfig] = {
         fx_provider="CNB",
         domestic_legal_source_url="https://e-sbirka.gov.cz/sb/1992/586",
         domestic_law_label="ZDP",
+        rule_overlay_handler=apply_cz_rule_overlays,
+        html_localization_strategy="cz",
         legacy_canonical_fallback_allowed=True,
     ),
     "SK": CountryConfig(

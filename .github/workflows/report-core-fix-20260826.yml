@@ -1,0 +1,113 @@
+name: Apply core report fixes
+
+on:
+  push:
+    branches:
+      - feat/web-bulk-en-treaty-acquisition-20260825
+    paths:
+      - '.github/workflows/report-core-fix-20260826.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/web-bulk-en-treaty-acquisition-20260825
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Apply report fixes
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          main = Path('app/main.py')
+          text = main.read_text(encoding='utf-8')
+          old = '''@app.post("/analysis/report")
+          def analysis_report(payload: AnalysisPayload):
+              analysis = analyze(payload)
+              request = payload.model_dump(mode="json")
+              report = build_professional_report(
+                  request,
+                  analysis,
+              )
+              return {
+                  "report": report,
+                  "html": render_report_html(report),
+              }
+          '''
+          new = '''@app.post("/analysis/report")
+          def analysis_report(payload: AnalysisPayload):
+              analysis = analyze(payload)
+              request = payload.model_dump(mode="json")
+              facts = request.get("facts")
+              report_language = "cs"
+              if isinstance(facts, dict):
+                  report_language = "en" if str(facts.pop("__report_language", "cs")).lower() == "en" else "cs"
+              report = build_professional_report(
+                  request,
+                  analysis,
+                  language=report_language,
+              )
+              return {
+                  "report": report,
+                  "html": render_report_html(report),
+              }
+          '''
+          # tolerate actual file indentation at module scope
+          old = old.replace('          ', '')
+          new = new.replace('          ', '')
+          if old not in text:
+              raise SystemExit('analysis_report block not found')
+          main.write_text(text.replace(old, new, 1), encoding='utf-8')
+
+          ui = Path('app/web/workspace-ui-report-batch-20260821.js')
+          text = ui.read_text(encoding='utf-8')
+          old_semantic = '''    replaceExactText(doc, "Neuplatňuje se", "0 %");
+              replaceExactText(doc, "Not applicable", "0%");
+          '''.replace('      ', '')
+          if old_semantic not in text:
+              raise SystemExit('rate rewrite block not found')
+          text = text.replace(old_semantic, '', 1)
+          old_inject = '    addSection19ToReport(doc);\n'
+          if old_inject not in text:
+              raise SystemExit('Section 19 report injection call not found')
+          text = text.replace(old_inject, '', 1)
+          ui.write_text(text, encoding='utf-8')
+          PY
+      - name: Install and run targeted report tests
+        run: |
+          pip install -r requirements-dev.txt
+          pip install --no-deps -e .
+          python - <<'PY'
+          from fastapi.testclient import TestClient
+          from app.main import app
+          from pathlib import Path
+
+          js = Path('app/web/workspace-ui-report-batch-20260821.js').read_text(encoding='utf-8')
+          assert 'replaceExactText(doc, "Not applicable", "0%")' not in js
+          assert 'replaceExactText(doc, "Neuplatňuje se", "0 %")' not in js
+          # The helper may remain for now, but it must no longer be invoked by report transformation.
+          fix_body = js.split('function fixReportLayout(doc) {', 1)[1].split('function transformReportHtml', 1)[0]
+          assert 'addSection19ToReport(doc)' not in fix_body
+
+          # Static route-level contract: selected report language is consumed server-side and stripped from displayed facts.
+          main = Path('app/main.py').read_text(encoding='utf-8')
+          assert 'facts.pop("__report_language"' in main
+          assert 'language=report_language' in main
+          print('targeted report core checks: PASS')
+          PY
+      - name: Commit fixes
+        run: |
+          git config user.name "TaxTreat automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add app/main.py app/web/workspace-ui-report-batch-20260821.js
+          git diff --cached --check
+          git commit -m "Fix report language and legal semantics"
+          git push origin HEAD:feat/web-bulk-en-treaty-acquisition-20260825

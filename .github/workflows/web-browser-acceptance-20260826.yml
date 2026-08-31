@@ -1,0 +1,123 @@
+name: WEB browser acceptance
+
+on:
+  push:
+    branches:
+      - feat/web-bulk-en-treaty-acquisition-20260825
+      - feat/cz-ui-batch1-20260821
+    paths:
+      - '.github/workflows/web-browser-acceptance-20260826.yml'
+      - 'scripts/capture_stage7b_ui.py'
+      - 'scripts/verify_manual_qa_i18n_20260826.py'
+      - 'scripts/verify_web_integrity_guards_20260827.py'
+      - 'scripts/verify_dividend_treaty_fallback_all_partners_20260828.py'
+      - 'scripts/verify_en_treaty_locale_all_rules_20260828.py'
+      - 'scripts/verify_condition_sensitive_intake_coverage_20260830.py'
+      - 'scripts/verify_special_interest_priority_20260830.py'
+      - 'scripts/verify_specific_branch_priority_20260830.py'
+      - 'scripts/verify_royalty_taxonomy_coverage_20260830.py'
+      - 'scripts/verify_royalty_mapping_regressions_20260830.py'
+      - 'scripts/verify_holding_period_regressions_20260830.py'
+      - 'scripts/verify_dividend_condition_semantics_20260830.py'
+      - 'scripts/verify_dividend_rule_normalization_20260830.py'
+      - 'scripts/verify_workspace_profile_and_fallback_20260828.py'
+      - 'scripts/verify_section19_completeness_browser_20260830.py'
+      - 'scripts/verify_section19_primary_report_browser_20260830.py'
+      - 'scripts/verify_en_fallback_report_locale_20260828.py'
+      - 'scripts/verify_web_report_condition_aware_integration_20260830.py'
+      - 'app/web/**'
+      - 'app/main.py'
+      - 'taxtreat/services/**'
+      - 'taxtreat/engine/**'
+  workflow_dispatch:
+
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Align legacy browser harness with current navigation and required dividend facts
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('scripts/capture_stage7b_ui.py')
+          text = path.read_text(encoding='utf-8')
+          text = text.replace(
+              '("Přehled", "Plátci", "Příjemci", "Výpočty", "Výstupy", "Zdroje")',
+              '("Přehled", "Plátci", "Příjemci", "Výsledky", "Zdroje")',
+          )
+          needle = '            workspace_form.locator(\'input[name="acquisition_date"]\').fill("2024-01-01")'
+          addition = (
+              '\n            workspace_form.locator(\'select[name="section19_company_form"]\').select_option("true")'
+              '\n            workspace_form.locator(\'select[name="section19_taxable_company"]\').select_option("true")'
+          )
+          if needle not in text:
+              raise SystemExit('Section 19 capture anchor not found')
+          text = text.replace(needle, needle + addition)
+          path.write_text(text, encoding='utf-8')
+          PY
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+          pip install --no-deps -e .
+          python -m playwright install --with-deps chromium
+      - name: Verify bootstrap assets and treaty provenance mapping
+        run: python scripts/verify_web_integrity_guards_20260827.py
+      - name: Verify dividend treaty fallback across all partner packages
+        run: python scripts/verify_dividend_treaty_fallback_all_partners_20260828.py
+      - name: Verify English treaty locale coverage across all treaty rules
+        run: python scripts/verify_en_treaty_locale_all_rules_20260828.py
+      - name: Upload EN treaty locale diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: en-treaty-locale-coverage
+          path: artifacts/en-treaty-locale-coverage.txt
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Verify condition-sensitive intake coverage
+        run: python scripts/verify_condition_sensitive_intake_coverage_20260830.py
+      - name: Verify special interest priority ordering
+        run: python scripts/verify_special_interest_priority_20260830.py
+      - name: Verify specific branch priority ordering
+        run: python scripts/verify_specific_branch_priority_20260830.py
+      - name: Verify royalty taxonomy coverage
+        run: python scripts/verify_royalty_taxonomy_coverage_20260830.py
+      - name: Verify royalty mapping regressions
+        run: python scripts/verify_royalty_mapping_regressions_20260830.py
+      - name: Verify holding-period regressions
+        run: python scripts/verify_holding_period_regressions_20260830.py
+      - name: Verify dividend condition semantics
+        run: python scripts/verify_dividend_condition_semantics_20260830.py
+      - name: Verify dividend rule normalization
+        run: python scripts/verify_dividend_rule_normalization_20260830.py
+      - name: Verify EN fallback report locale
+        run: python scripts/verify_en_fallback_report_locale_20260828.py
+      - name: Verify web/report condition-aware integration
+        run: python scripts/verify_web_report_condition_aware_integration_20260830.py
+      - name: Run browser E2E and capture evidence
+        run: python scripts/capture_stage7b_ui.py artifacts/web-final-browser
+      - name: Run bilingual manual-QA acceptance
+        run: python scripts/verify_manual_qa_i18n_20260826.py
+      - name: Run profile controls and dividend fallback acceptance
+        timeout-minutes: 3
+        run: python scripts/verify_workspace_profile_and_fallback_20260828.py
+      - name: Run Section 19 completeness browser acceptance
+        timeout-minutes: 3
+        run: python scripts/verify_section19_completeness_browser_20260830.py
+      - name: Run Section 19 primary result/report browser acceptance
+        timeout-minutes: 3
+        run: python scripts/verify_section19_primary_report_browser_20260830.py
+      - name: Upload browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-final-browser
+          path: artifacts/web-final-browser
+          if-no-files-found: warn
+          retention-days: 30

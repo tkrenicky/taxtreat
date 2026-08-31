@@ -1814,6 +1814,177 @@
       "values": [
         "'10%'"
       ]
+    },
+    "article_10_public_body_exemption": {
+      "classification": "treaty_specific_structured",
+      "income_types": [
+        "dividend"
+      ],
+      "country_count": 3,
+      "countries": [
+        "AE",
+        "NO",
+        "QA"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 3,
+      "values": [
+        "treaty-specific public-body Article 10 exemption"
+      ]
+    },
+    "article_11_public_body_exemption": {
+      "classification": "treaty_specific_structured",
+      "income_types": [
+        "interest"
+      ],
+      "country_count": 15,
+      "countries": [
+        "BY",
+        "CN",
+        "EG",
+        "ID",
+        "JO",
+        "KZ",
+        "MA",
+        "ME",
+        "MY",
+        "NG",
+        "PH",
+        "RS",
+        "SI",
+        "TH",
+        "TR"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 15,
+      "values": [
+        "treaty-specific public-body Article 11 exemption"
+      ]
+    },
+    "recipient_is_qualifying_pension_fund": {
+      "classification": "treaty_specific_structured",
+      "income_types": [
+        "dividend"
+      ],
+      "country_count": 2,
+      "countries": [
+        "CH",
+        "DK"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 2,
+      "values": [
+        "True"
+      ]
+    },
+    "recipient_is_central_bank": {
+      "classification": "treaty_specific_structured",
+      "income_types": [
+        "dividend"
+      ],
+      "country_count": 1,
+      "countries": [
+        "CH"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 1,
+      "values": [
+        "True"
+      ]
+    },
+    "article_11_3_public_financing_exemption": {
+      "classification": "treaty_specific_structured",
+      "income_types": [
+        "interest"
+      ],
+      "country_count": 1,
+      "countries": [
+        "JP"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 1,
+      "values": [
+        "treaty-specific public-financing Article 11(3) exemption"
+      ]
+    },
+    "article_10_3_public_body_exemption": {
+      "classification": "treaty_specific_structured",
+      "income_types": [
+        "dividend"
+      ],
+      "country_count": 1,
+      "countries": [
+        "KW"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 1,
+      "values": [
+        "treaty-specific public-body Article 10(3) exemption"
+      ]
+    },
+    "recipient_has_share_capital": {
+      "classification": "treaty_specific_structured",
+      "income_types": [
+        "dividend"
+      ],
+      "country_count": 2,
+      "countries": [
+        "NL",
+        "SE"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 2,
+      "values": [
+        "True"
+      ]
+    },
+    "recipient_is_bank": {
+      "classification": "treaty_specific_structured",
+      "income_types": [
+        "interest"
+      ],
+      "country_count": 1,
+      "countries": [
+        "PA"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 1,
+      "values": [
+        "True"
+      ]
+    },
+    "recipient_is_financial_institution_or_insurer": {
+      "classification": "treaty_specific_structured",
+      "income_types": [
+        "interest"
+      ],
+      "country_count": 1,
+      "countries": [
+        "TH"
+      ],
+      "operators": [
+        "=="
+      ],
+      "condition_count": 1,
+      "values": [
+        "True"
+      ]
     }
   }
 }
