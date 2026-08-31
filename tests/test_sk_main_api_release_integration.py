@@ -22,14 +22,13 @@ def _production_payload():
     }
 
 
-def test_production_analysis_accepts_released_slovak_source_country_gate():
+def test_production_analysis_blocks_sk_until_structured_treaty_rules_exist():
     response = client.post("/analysis", json=_production_payload())
 
-    assert response.status_code != 409
-
-    payload = response.json()
-    if isinstance(payload, dict) and isinstance(payload.get("detail"), dict):
-        assert payload["detail"].get("code") != "SOURCE_COUNTRY_NOT_RELEASED"
+    assert response.status_code == 409
+    detail = response.json()["detail"]
+    assert detail["code"] == "SOURCE_COUNTRY_RELEASE_EVIDENCE_INCOMPLETE"
+    assert "structured_sk_treaty_rules_not_materialized" in detail["release_blockers"]
 
 
 def test_released_non_cz_source_country_returns_release_decision_without_fallthrough(monkeypatch):
@@ -77,12 +76,12 @@ def test_slovak_prerelease_api_is_explicitly_candidate_only():
     assert payload["production_endpoint"] is False
 
 
-def test_slovak_release_gate_status_endpoint_reports_released():
+def test_slovak_release_gate_status_endpoint_reports_materialization_blocker():
     response = client.get("/analysis/pre-release/sk/release-gate")
 
     assert response.status_code == 200
     payload = response.json()
-    assert payload["allowed"] is True
-    assert payload["code"] == "SOURCE_COUNTRY_RELEASED"
-    assert payload["release_status"] == "released"
-    assert payload["blockers"] == []
+    assert payload["allowed"] is False
+    assert payload["code"] == "SOURCE_COUNTRY_RELEASE_EVIDENCE_INCOMPLETE"
+    assert payload["release_status"] == "pre_release"
+    assert "structured_sk_treaty_rules_not_materialized" in payload["blockers"]
