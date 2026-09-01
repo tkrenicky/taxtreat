@@ -24,6 +24,16 @@ RISKY_INTEREST = (
     "nepresiahne:",
 )
 
+ROYALTY_UI_CATEGORIES = {
+    "copyright": "copyright_literary_artistic_scientific_nonfilm_nonsoftware",
+    "film": "cinematographic_films_or_broadcast_media",
+    "software": "computer_software",
+    "industrial_ip": "patent_trademark_design_model_plan_secret_formula_process_or_knowhow",
+    "equipment_financial": "financial_lease_of_equipment",
+    "equipment_operating": "operating_lease_or_other_use_of_equipment",
+    "other": "other",
+}
+
 
 def load(path: Path):
     return json.loads(path.read_text(encoding="utf-8"))
@@ -178,18 +188,8 @@ def dividend_branches(scope: dict, article: dict) -> list[dict] | None:
         })
     else:
         qualifying_conditions.extend([
-            {
-                "fact": "direct_ownership",
-                "fact_source": "transaction",
-                "operator": "==",
-                "value": True,
-            },
-            {
-                "fact": "ownership_percent",
-                "fact_source": "transaction",
-                "operator": ">=",
-                "value": threshold,
-            },
+            {"fact": "direct_ownership", "fact_source": "transaction", "operator": "==", "value": True},
+            {"fact": "ownership_percent", "fact_source": "transaction", "operator": ">=", "value": threshold},
         ])
 
     holding = re.search(r"(?:počas\s+obdobia\s+)?(365)\s+dní", qualifying_context)
@@ -208,17 +208,9 @@ def dividend_branches(scope: dict, article: dict) -> list[dict] | None:
 
 
 def interest_branches(scope: dict, article: dict) -> list[dict] | None:
-    """Materialize only explicit Article 11 structures without guessing beneficiaries.
-
-    A general source-state ceiling plus a special exemption is represented by
-    an explicit transaction fact. Missing that fact therefore keeps the engine
-    from selecting either branch. This is safer than silently applying the
-    general rate when an exemption could apply.
-    """
     if scope.get("income_type") != "interest" or not scope.get("source_sha256"):
         return None
     text = str(article.get("article_text") or "").lower()
-    para = _article_paragraph_two(text)
     common = conditions(scope)
 
     residence_only = bool(scope.get("exclusive_residence_taxation_candidate")) or bool(
@@ -278,13 +270,121 @@ def interest_branches(scope: dict, article: dict) -> list[dict] | None:
             "tax_treatment": "treaty_special_interest_exemption",
             "suffix": "INTEREST-SPECIAL-EXEMPTION",
         },
-        {
-            "rate": general_rate,
-            "priority": 600,
-            "conditions": ordinary,
-            "suffix": "INTEREST-GENERAL",
-        },
+        {"rate": general_rate, "priority": 600, "conditions": ordinary, "suffix": "INTEREST-GENERAL"},
     ]
+
+
+def _royalty_categories_from_text(text: str) -> list[str]:
+    lowered = text.lower()
+    categories: list[str] = []
+    if any(token in lowered for token in ("autorsk", "literár", "umeleck", "vedeck")):
+        categories.append(ROYALTY_UI_CATEGORIES["copyright"])
+    if any(token in lowered for token in ("kinematograf", "film", "televíz", "rozhlas", "rádio")):
+        categories.append(ROYALTY_UI_CATEGORIES["film"])
+    if any(token in lowered for token in ("počítač", "software", "programové vybaven")):
+        categories.append(ROYALTY_UI_CATEGORIES["software"])
+    if any(token in lowered for token in (
+        "patent", "ochrann", "známk", "návrh", "model", "plán", "tajného vzorca",
+        "tajnej receptúry", "výrobného postupu", "proces", "know-how", "skúsenost",
+    )):
+        categories.append(ROYALTY_UI_CATEGORIES["industrial_ip"])
+    if "zariaden" in lowered:
+        categories.extend([
+            ROYALTY_UI_CATEGORIES["equipment_financial"],
+            ROYALTY_UI_CATEGORIES["equipment_operating"],
+        ])
+    if "všetkých ostatných" in lowered or "všetky ostatné" in lowered:
+        categories.append(ROYALTY_UI_CATEGORIES["other"])
+    return list(dict.fromkeys(categories))
+
+
+def _definition_letter(text: str, letter: str) -> str | None:
+    lowered = text.lower()
+    # Search only after a definition paragraph marker where possible.
+    definition = re.search(r"(?:\(3\)|\b3\.\s)[\s\S]{0,3000}", lowered)
+    haystack = definition.group(0) if definition else lowered
+    match = re.search(
+        rf"(?:^|[;:.]\s*){letter}\)\s*([\s\S]*?)(?=(?:[;:.]\s*)[a-d]\)\s|(?:\(4\)|\b4\.\s)|$)",
+        haystack,
+    )
+    return match.group(1) if match else None
+
+
+def royalty_branches(scope: dict, article: dict) -> list[dict] | None:
+    """Materialize source-explicit royalty categories, never percentage lists alone."""
+    if scope.get("income_type") != "royalty" or not scope.get("source_sha256"):
+        return None
+    text = str(article.get("article_text") or "").lower()
+    common = conditions(scope)
+
+    # Entire Article 12 is residence-state-only and has no source-state
+    # exception paragraph with a percentage.
+    residence_only = bool(re.search(
+        r"licenčné\s+poplatky[^.]{0,240}(?:môžu\s+sa\s+zdaniť|sa\s+zdania)\s+(?:len|iba|výlučne)\s+v\s+tomto\s+druhom\s+štáte",
+        text,
+    ))
+    percentages = {_percent(value) for value in re.findall(r"([0-9]+(?:[,.][0-9]+)?)\s*%", _article_paragraph_two(text))}
+    if residence_only and not percentages:
+        return [{
+            "rate": 0.0,
+            "priority": 650,
+            "conditions": common,
+            "tax_treatment": "exclusive_foreign_taxation",
+            "suffix": "ROYALTY-RESIDENCE-ONLY",
+        }]
+
+    # Common older structure: paragraph 1 is residence-only, while paragraph
+    # 2 explicitly carves out royalties defined under paragraph 3(b) (or 3(a))
+    # for source-state taxation at one stated ceiling. The complementary
+    # definition letter therefore remains residence-only.
+    ref = re.search(
+        r"(?:odseku|odsek)\s*3\s*(?:písm(?:ena|eno)?\.?\s*)?([ab])\)?[^%]{0,240}"
+        r"([0-9]+(?:[,.][0-9]+)?)\s*%",
+        text,
+        flags=re.S,
+    )
+    if not ref:
+        ref = re.search(
+            r"licenčné\s+poplatky[^.]{0,240}(?:3\s*([ab])\))[^%]{0,240}"
+            r"([0-9]+(?:[,.][0-9]+)?)\s*%",
+            text,
+            flags=re.S,
+        )
+    if residence_only and ref:
+        taxed_letter = ref.group(1)
+        taxed_rate = _percent(ref.group(2))
+        other_letter = "a" if taxed_letter == "b" else "b"
+        taxed_text = _definition_letter(text, taxed_letter)
+        other_text = _definition_letter(text, other_letter)
+        if taxed_text and other_text:
+            taxed_categories = _royalty_categories_from_text(taxed_text)
+            exempt_categories = _royalty_categories_from_text(other_text)
+            if taxed_categories and exempt_categories:
+                branches: list[dict] = []
+                for index, category in enumerate(exempt_categories, start=1):
+                    branches.append({
+                        "rate": 0.0,
+                        "priority": 680,
+                        "conditions": [
+                            *common,
+                            {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": category},
+                        ],
+                        "tax_treatment": "exclusive_foreign_taxation",
+                        "suffix": f"ROYALTY-RESIDENCE-{other_letter.upper()}-{index}",
+                    })
+                for index, category in enumerate(taxed_categories, start=1):
+                    branches.append({
+                        "rate": taxed_rate,
+                        "priority": 680,
+                        "conditions": [
+                            *common,
+                            {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": category},
+                        ],
+                        "suffix": f"ROYALTY-SOURCE-{taxed_letter.upper()}-{index}",
+                    })
+                return branches
+
+    return None
 
 
 def _make_rule(
@@ -327,7 +427,7 @@ def _make_rule(
         "reviewed_at": "2026-08-21",
         "approval_dataset_release": coverage["dataset_release"],
         "approval_created_at": "2026-09-01",
-        "dataset_release": "sk-structured-treaty-rules-2026-09-01.3",
+        "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
         "evidence_source_ids": [f"SK-SLOVLEX-{source_hash[:16].upper()}"],
         "decision_status": "REVIEW_REQUIRED",
         "final_rate_allowed": False,
@@ -404,27 +504,42 @@ def main() -> int:
                     tax_treatment=branch.get("tax_treatment"),
                 ))
             materialized.append(f"SK-{country}-{income}")
-            mode = (
-                "source_text_interest_special_exemption"
-                if len(branches) > 1
+            materialization_modes[
+                "source_text_interest_special_exemption" if len(branches) > 1
                 else "source_text_interest_residence_only"
-            )
-            materialization_modes[mode] += 1
+            ] += 1
+            continue
+
+        branches = royalty_branches(scope, article)
+        if branches:
+            for branch in branches:
+                grouped[country].append(_make_rule(
+                    scope=scope,
+                    article=article,
+                    country=country,
+                    income=income,
+                    rate=float(branch["rate"]),
+                    priority=int(branch["priority"]),
+                    rule_conditions=branch["conditions"],
+                    rule_suffix=str(branch.get("suffix") or "ROYALTY-BRANCH"),
+                    treaty_valid_from=treaty_valid_from,
+                    coverage=coverage,
+                    tax_treatment=branch.get("tax_treatment"),
+                ))
+            materialized.append(f"SK-{country}-{income}")
+            materialization_modes[
+                "source_text_royalty_category_branches" if len(branches) > 1
+                else "source_text_royalty_residence_only"
+            ] += 1
             continue
 
         if not is_safe_simple(scope, article):
             unresolved.append({
                 "recipient_country": country,
                 "income_type": income,
-                "rate_candidates": [
-                    row.get("rate_percent") for row in scope.get("rate_candidates", [])
-                ],
-                "exclusive_residence_taxation_candidate": bool(
-                    scope.get("exclusive_residence_taxation_candidate")
-                ),
-                "ownership_linked_rate_candidate_count": int(
-                    scope.get("ownership_linked_rate_candidate_count") or 0
-                ),
+                "rate_candidates": [row.get("rate_percent") for row in scope.get("rate_candidates", [])],
+                "exclusive_residence_taxation_candidate": bool(scope.get("exclusive_residence_taxation_candidate")),
+                "ownership_linked_rate_candidate_count": int(scope.get("ownership_linked_rate_candidate_count") or 0),
                 "holding_period_candidates": scope.get("holding_period_candidates", []),
             })
             continue
@@ -464,8 +579,8 @@ def main() -> int:
         )
 
     summary = {
-        "schema_version": 3,
-        "dataset_release": "sk-structured-treaty-rules-2026-09-01.3",
+        "schema_version": 4,
+        "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
         "source_country": "SK",
         "total_scopes": 225,
         "materialized_scopes": len(materialized),
@@ -480,9 +595,10 @@ def main() -> int:
             "source_text_fallback_phrase_required_for_dividend_branch_pair": True,
             "source_text_explicit_interest_exemption_branches_materialized": True,
             "ordinary_interest_rate_requires_special_exemption_false_when_exemption_exists": True,
+            "source_text_explicit_royalty_definition_letter_branches_materialized": True,
+            "royalty_category_materialization_uses_atomic_ui_taxonomy": True,
+            "unmapped_royalty_categories_remain_fail_closed": True,
             "stage_rules_remain_needs_review_until_all_protocol_mli_and_release_gates_are_satisfied": True,
-            "explicit_exclusive_residence_interest_scopes_materialized_as_structural_zero": True,
-            "multi_rate_royalties_not_inferred": True,
             "czech_rule_reuse_forbidden": True,
             "release_remains_closed_until_all_225_scopes_are_structured_and_regression_tested": True,
             "automatic_production_approval_forbidden": True,
