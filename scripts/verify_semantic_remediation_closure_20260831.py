@@ -1,11 +1,16 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
-from taxtreat.engine.legal_rule_engine import _PENDING_SEMANTIC_REMEDIATION_SCOPES
-
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+from taxtreat.engine.legal_rule_engine import (  # noqa: E402
+    _PENDING_SEMANTIC_REMEDIATION_SCOPES,
+)
+
 BASE = ROOT / "data/legal_reviews/global_cz_outbound"
 REGISTRY = ROOT / "data/legal_consolidation/semantic_remediation_condition_candidates_20260829.json"
 QUEUE = BASE / "cz_country_qa_queue.json"
