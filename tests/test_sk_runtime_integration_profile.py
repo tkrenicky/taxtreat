@@ -14,8 +14,9 @@ def test_sk_runtime_contract_is_country_specific_and_fail_closed():
     payload = _load()
 
     assert payload["source_country"] == "SK"
-    assert payload["runtime_release"] is False
+    assert payload["runtime_release"] is True
     assert payload["production_released_scopes"] == 0
+    assert payload["status"] == "source_country_released_rule_level_fail_closed"
     assert payload["currency"] == "EUR"
     assert payload["fx"]["provider"] is None
     assert payload["fx"]["cnb_must_not_be_used"] is True
@@ -37,7 +38,7 @@ def test_sk_runtime_contract_preserves_slovak_domestic_precedence():
     assert payload["mli"]["ppt_only_assumption_prohibited"] is True
 
 
-def test_sk_runtime_contract_uses_slovak_compliance_and_requires_full_review():
+def test_sk_runtime_contract_uses_slovak_compliance_and_rule_level_fail_closed_release():
     payload = _load()
     compliance = payload["compliance"]
     gates = payload["release_gates"]
@@ -49,7 +50,13 @@ def test_sk_runtime_contract_uses_slovak_compliance_and_requires_full_review():
     assert compliance["ordinary_annual_wht_return_configured"] is False
     assert gates["all_225_scopes_machine_evidence_required"] is True
     assert gates["official_2026_cooperating_state_list_required"] is True
-    assert gates["full_human_legal_review_required"] is True
+    assert gates["full_human_legal_review_required"] is False
+    assert gates["full_legal_review_coverage_required"] is True
+    assert gates["rule_level_hash_or_review_gate_required"] is True
     assert gates["report_and_web_parity_tests_required"] is True
-    assert payload["human_review_status"] == "not_started"
-    assert payload["approval_eligible"] is False
+    assert payload["human_review_status"] == "completed_with_pattern_reconciliation_and_mli_reconfirmation"
+    assert payload["approval_eligible"] is True
+    assert payload["approval_scope"] == "source_country_gate_only"
+    assert payload["treaty_rule_release"]["final_rate_allowed_scopes"] == 0
+    assert payload["treaty_rule_release"]["fail_closed_scopes"] == 225
+    assert payload["treaty_rule_release"]["automatic_production_approval_forbidden"] is True
