@@ -2,16 +2,13 @@ from pathlib import Path
 import pytest
 import sqlite3
 
-
 import app.main as main
 pytest.importorskip("fastapi")
 pytest.importorskip("httpx")
 
 from fastapi.testclient import TestClient
-
 from app.main import app
 import app.main as api
-
 
 client = TestClient(app)
 
@@ -22,29 +19,24 @@ def test_liveness_and_readiness_are_distinct():
     assert client.get("/health").json() == {"status": "ok"}
 
     readiness = client.get("/health/ready")
-
     assert readiness.status_code == 200
-    assert readiness.json() == {"status": "ready"}
+    payload = readiness.json()
+    assert payload["status"] == "ready"
+    assert payload["release"]["dataset_release"] == (
+        "stage6-semantic-remediation-source-release-2026-09-01.1"
+    )
+    assert payload["release"]["released_packages"] == 101
+    assert payload["release"]["released_scopes"] == 303
 
 
-def test_readiness_fails_when_stage6_release_is_invalid(
-    monkeypatch,
-):
+def test_readiness_fails_when_stage6_release_is_invalid(monkeypatch):
     def invalid_release():
         raise RuntimeError("Stage 6 release invalid.")
 
-    monkeypatch.setattr(
-        api,
-        "validate_stage6_runtime_release",
-        invalid_release,
-    )
-
+    monkeypatch.setattr(api, "validate_stage6_runtime_release", invalid_release)
     response = client.get("/health/ready")
-
     assert response.status_code == 503
-    assert response.json()["detail"] == (
-        "Stage 6 release invalid."
-    )
+    assert response.json()["detail"] == "Stage 6 release invalid."
 
 
 def test_analysis_uses_released_canonical_path():
@@ -57,7 +49,6 @@ def test_analysis_uses_released_canonical_path():
             "transaction_date": "2026-08-06",
         },
     )
-
     assert response.status_code == 200
     payload = response.json()
     assert "status" in payload
@@ -85,61 +76,25 @@ def test_all_registered_jurisdictions_are_exposed():
     assert len(by_code) == 101
     assert "KR" in by_code
     assert "TW" in by_code
-    assert by_code["AT"]["review_ready_income_types"] == [
-        "dividend",
-        "interest",
-        "royalty",
-    ]
+    assert by_code["AT"]["review_ready_income_types"] == ["dividend", "interest", "royalty"]
     assert by_code["AT"]["base_candidate_income_types"] == []
     assert by_code["DE"]["review_ready_income_types"] == []
-    assert by_code["DE"]["base_candidate_income_types"] == [
-        "dividend",
-        "interest",
-        "royalty",
-    ]
-    assert by_code["DE"]["domestic_candidate_income_types"] == [
-        "dividend",
-        "interest",
-        "royalty",
-    ]
-    assert by_code["DE"]["eu_relief_candidate_income_types"] == [
-        "dividend",
-        "interest",
-        "royalty",
-    ]
+    assert by_code["DE"]["base_candidate_income_types"] == ["dividend", "interest", "royalty"]
+    assert by_code["DE"]["domestic_candidate_income_types"] == ["dividend", "interest", "royalty"]
+    assert by_code["DE"]["eu_relief_candidate_income_types"] == ["dividend", "interest", "royalty"]
     assert by_code["GB"]["eu_relief_candidate_income_types"] == []
-    assert by_code["BY"]["protocol_candidate_income_types"] == [
-        "dividend",
-        "interest",
-        "royalty",
-    ]
+    assert by_code["BY"]["protocol_candidate_income_types"] == ["dividend", "interest", "royalty"]
     assert by_code["DE"]["protocol_candidate_income_types"] == []
-    assert by_code["DE"]["candidate_chain_assembled_income_types"] == [
-        "dividend",
-        "interest",
-        "royalty",
-    ]
+    assert by_code["DE"]["candidate_chain_assembled_income_types"] == ["dividend", "interest", "royalty"]
     assert by_code["DE"]["candidate_chain_blocked_income_types"] == []
-    assert by_code["DE"]["candidate_review_queued_income_types"] == [
-        "dividend",
-        "interest",
-        "royalty",
-    ]
+    assert by_code["DE"]["candidate_review_queued_income_types"] == ["dividend", "interest", "royalty"]
     assert by_code["DE"]["candidate_review_approved_income_types"] == []
     assert by_code["AT"]["candidate_review_queued_income_types"] == []
     assert by_code["GR"]["manual_rate_extraction_income_types"] == []
     assert by_code["GR"]["candidate_chain_blocked_income_types"] == []
-    assert by_code["GR"]["candidate_chain_assembled_income_types"] == [
-        "dividend",
-        "interest",
-        "royalty",
-    ]
+    assert by_code["GR"]["candidate_chain_assembled_income_types"] == ["dividend", "interest", "royalty"]
     assert by_code["CO"]["candidate_chain_blocked_income_types"] == []
-    assert by_code["CO"]["candidate_chain_assembled_income_types"] == [
-        "dividend",
-        "interest",
-        "royalty",
-    ]
+    assert by_code["CO"]["candidate_chain_assembled_income_types"] == ["dividend", "interest", "royalty"]
 
 
 def test_released_registered_scope_reaches_decision_engine():
@@ -152,7 +107,6 @@ def test_released_registered_scope_reaches_decision_engine():
             "transaction_date": "2026-08-06",
         },
     )
-
     assert response.status_code == 200
     payload = response.json()
     assert payload["status"] == "REVIEW_REQUIRED"
@@ -160,15 +114,8 @@ def test_released_registered_scope_reaches_decision_engine():
     assert payload["requires_review"] is True
 
 
-def test_analysis_uses_stage6_release_not_legacy_manifest(
-    monkeypatch,
-):
-    monkeypatch.setattr(
-        main,
-        "RELEASE_MANIFEST",
-        Path("/nonexistent/release_manifest.json"),
-    )
-
+def test_analysis_uses_stage6_release_not_legacy_manifest(monkeypatch):
+    monkeypatch.setattr(main, "RELEASE_MANIFEST", Path("/nonexistent/release_manifest.json"))
     response = client.post(
         "/analysis",
         json={
@@ -178,7 +125,6 @@ def test_analysis_uses_stage6_release_not_legacy_manifest(
             "transaction_date": "2026-08-06",
         },
     )
-
     assert response.status_code == 200
     assert response.json()["dataset_version"] == (
         "stage6-semantic-remediation-source-release-2026-09-01.1"
@@ -233,4 +179,3 @@ def test_get_db_connection_checks_file(monkeypatch, tmp_path):
     connection = api.get_db_connection()
     assert connection.row_factory is sqlite3.Row
     connection.close()
-
