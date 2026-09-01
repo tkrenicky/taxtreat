@@ -36,7 +36,7 @@ def test_stable_report_id_ignores_generation_time():
         "missing_facts": ["beneficial_owner"],
         "citations": [{"excerpt_sha256": "a" * 64}],
         "legal_dataset_release": "stage6-production-rules-2026-08-12.1",
-        "dataset_version": "stage6-source-release-2026-08-12.1",
+        "dataset_version": "stage6-semantic-remediation-source-release-2026-09-01.1",
     }
 
     first = build_professional_report(
@@ -71,7 +71,7 @@ def test_professional_report_preserves_review_required_semantics():
         "stage6-production-rules-2026-08-12.1"
     )
     assert report["source_release"] == (
-        "stage6-source-release-2026-08-12.1"
+        "stage6-semantic-remediation-source-release-2026-09-01.1"
     )
     assert report["disclaimer"] == DISCLAIMER
     assert "neposkytuje doporučení ani právní či daňové poradenství" in report["disclaimer"]
