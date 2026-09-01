@@ -1,0 +1,314 @@
+{
+  "country_pair": {
+    "recipient_country": "TW",
+    "source_country": "CZ"
+  },
+  "rules": [
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": 36,
+      "conditions": [],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA"
+      ],
+      "income_type": "dividend",
+      "legal_instrument": "domestic_law",
+      "legal_layer": "domestic",
+      "paragraph": "1(b)(1)",
+      "priority": 900,
+      "rate": 15,
+      "recipient_country": "TW",
+      "review_package_sha256": "e769983fbe69a71759dc6056705e1773a5d54ad4298a7799e7691f32ce3fb778",
+      "rule_id": "CZ-TW-DIVIDEND-DOMESTIC",
+      "source_country": "CZ",
+      "source_excerpt_hash": "aa1100129d4ba33a4efeeb3258bfc621281f11b160890ba7a898e71318bd643d",
+      "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+      "source_representation": "approved_structured_projection",
+      "source_text": "Current Czech domestic withholding tax standard rate represented in the approved Stage 6 package: 15.0%.",
+      "source_url": "https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/1992/586/2026-04-01",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "7e76e749685614748a096ed913e5aa9754587f9f4b8496ca6f6e8ea330574e96",
+      "article": 10,
+      "conditions": [
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2021-01-01",
+      "evidence_source_ids": [
+        "CZ-TW-LAW-45-2020"
+      ],
+      "income_type": "dividend",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 691,
+      "rate": 10,
+      "recipient_country": "TW",
+      "review_package_sha256": "e769983fbe69a71759dc6056705e1773a5d54ad4298a7799e7691f32ce3fb778",
+      "rule_id": "CZ-TW-DIVIDEND-CURRENT-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "7e76e749685614748a096ed913e5aa9754587f9f4b8496ca6f6e8ea330574e96",
+      "source_id": "CZ-TW-LAW-45-2020",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "Article 10(2): source-territory tax does not exceed 10% of the gross dividend where the beneficial owner is resident in the other territory.",
+      "source_url": "https://e-sbirka.gov.cz/sb/2020/45",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": 36,
+      "conditions": [],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "domestic_law",
+      "legal_layer": "domestic",
+      "paragraph": "1(a)(1)",
+      "priority": 900,
+      "rate": 15,
+      "recipient_country": "TW",
+      "review_package_sha256": "e769983fbe69a71759dc6056705e1773a5d54ad4298a7799e7691f32ce3fb778",
+      "rule_id": "CZ-TW-INTEREST-DOMESTIC",
+      "source_country": "CZ",
+      "source_excerpt_hash": "aa1100129d4ba33a4efeeb3258bfc621281f11b160890ba7a898e71318bd643d",
+      "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+      "source_representation": "approved_structured_projection",
+      "source_text": "Current Czech domestic withholding tax standard rate represented in the approved Stage 6 package: 15.0%.",
+      "source_url": "https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/1992/586/2026-04-01",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "96a4a28538b12fa95aa9701562d80e967dc8346b9aefb0704a0ce36c4451ee72",
+      "article": 11,
+      "conditions": [
+        {
+          "fact": "special_article_11_3_exemption",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "credit_sale_of_goods_or_equipment_or_government_subnational_local_authority_central_bank_or_government_controlled_or_wholly_owned_financial_institution_or_loan_or_credit_guaranteed_or_insured_by_such_public_body"
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2021-01-01",
+      "evidence_source_ids": [
+        "CZ-TW-LAW-45-2020"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 681,
+      "rate": 0,
+      "recipient_country": "TW",
+      "review_package_sha256": "e769983fbe69a71759dc6056705e1773a5d54ad4298a7799e7691f32ce3fb778",
+      "rule_id": "CZ-TW-INTEREST-CURRENT-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "96a4a28538b12fa95aa9701562d80e967dc8346b9aefb0704a0ce36c4451ee72",
+      "source_id": "CZ-TW-LAW-45-2020",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "Article 11(2): 10% general ceiling for beneficial-owner interest; Article 11(3) provides source exemption for specified qualifying cases.",
+      "source_url": "https://e-sbirka.gov.cz/sb/2020/45",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "96a4a28538b12fa95aa9701562d80e967dc8346b9aefb0704a0ce36c4451ee72",
+      "article": 11,
+      "conditions": [
+        {
+          "fact": "fallback_case",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "all_other_cases"
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2021-01-01",
+      "evidence_source_ids": [
+        "CZ-TW-LAW-45-2020"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 682,
+      "rate": 10,
+      "recipient_country": "TW",
+      "review_package_sha256": "e769983fbe69a71759dc6056705e1773a5d54ad4298a7799e7691f32ce3fb778",
+      "rule_id": "CZ-TW-INTEREST-CURRENT-2",
+      "source_country": "CZ",
+      "source_excerpt_hash": "96a4a28538b12fa95aa9701562d80e967dc8346b9aefb0704a0ce36c4451ee72",
+      "source_id": "CZ-TW-LAW-45-2020",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "Article 11(2): 10% general ceiling for beneficial-owner interest; Article 11(3) provides source exemption for specified qualifying cases.",
+      "source_url": "https://e-sbirka.gov.cz/sb/2020/45",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": 36,
+      "conditions": [],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "domestic_law",
+      "legal_layer": "domestic",
+      "paragraph": "1(a)(1)",
+      "priority": 900,
+      "rate": 15,
+      "recipient_country": "TW",
+      "review_package_sha256": "e769983fbe69a71759dc6056705e1773a5d54ad4298a7799e7691f32ce3fb778",
+      "rule_id": "CZ-TW-ROYALTY-DOMESTIC",
+      "source_country": "CZ",
+      "source_excerpt_hash": "aa1100129d4ba33a4efeeb3258bfc621281f11b160890ba7a898e71318bd643d",
+      "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+      "source_representation": "approved_structured_projection",
+      "source_text": "Current Czech domestic withholding tax standard rate represented in the approved Stage 6 package: 15.0%.",
+      "source_url": "https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/1992/586/2026-04-01",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": null,
+      "approval_dataset_release": null,
+      "approved_article_text_sha256": "78fcfdf4f7e6d143ecd810e73f6a8b761c4128f94dba3b02682d2d3a29857bbd",
+      "article": 12,
+      "conditions": [
+        {
+          "fact": "royalty_category",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "industrial_commercial_scientific_equipment"
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-semantic-remediation-candidate-2026-09-01.1",
+      "effect": "rate",
+      "effective_from": "2021-01-01",
+      "evidence_source_ids": [
+        "CZ-TW-LAW-45-2020"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 681,
+      "rate": 5,
+      "recipient_country": "TW",
+      "review_package_sha256": "f6a46af0b1a2e50c87a5282e829f8c7b8d7e4139669cf5ed66a289bb3755c732",
+      "rule_id": "CZ-TW-ROYALTY-CURRENT-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "78fcfdf4f7e6d143ecd810e73f6a8b761c4128f94dba3b02682d2d3a29857bbd",
+      "source_id": "CZ-TW-LAW-45-2020",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "Article 12(2): 5% for industrial, commercial or scientific equipment; 10% in all other cases, subject to beneficial ownership.",
+      "source_url": "https://e-sbirka.gov.cz/sb/2020/45",
+      "verification_authority": "semantic_remediation_machine_projection",
+      "verification_status": "needs_review"
+    },
+    {
+      "approval_created_at": null,
+      "approval_dataset_release": null,
+      "approved_article_text_sha256": "78fcfdf4f7e6d143ecd810e73f6a8b761c4128f94dba3b02682d2d3a29857bbd",
+      "article": 12,
+      "conditions": [
+        {
+          "fact": "royalty_category",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "all_royalties_except_industrial_commercial_scientific_equipment"
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-semantic-remediation-candidate-2026-09-01.1",
+      "effect": "rate",
+      "effective_from": "2021-01-01",
+      "evidence_source_ids": [
+        "CZ-TW-LAW-45-2020"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 682,
+      "rate": 10,
+      "recipient_country": "TW",
+      "review_package_sha256": "f6a46af0b1a2e50c87a5282e829f8c7b8d7e4139669cf5ed66a289bb3755c732",
+      "rule_id": "CZ-TW-ROYALTY-CURRENT-2",
+      "source_country": "CZ",
+      "source_excerpt_hash": "78fcfdf4f7e6d143ecd810e73f6a8b761c4128f94dba3b02682d2d3a29857bbd",
+      "source_id": "CZ-TW-LAW-45-2020",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "Article 12(2): 5% for industrial, commercial or scientific equipment; 10% in all other cases, subject to beneficial ownership.",
+      "source_url": "https://e-sbirka.gov.cz/sb/2020/45",
+      "verification_authority": "semantic_remediation_machine_projection",
+      "verification_status": "needs_review"
+    }
+  ],
+  "schema_version": 3,
+  "stage6_production": {
+    "additional_human_review_claimed": false,
+    "package_sha256": "f6a46af0b1a2e50c87a5282e829f8c7b8d7e4139669cf5ed66a289bb3755c732",
+    "production_approval": "not_approved",
+    "rule_promotion": "not_promoted",
+    "source_release": "not_released",
+    "treaty_pair_id": "CZ-TW",
+    "verification_authority": "semantic_remediation_machine_projection"
+  }
+}
