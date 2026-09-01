@@ -70,10 +70,14 @@ def main() -> int:
         payload = load(path)
         country = payload["country_pair"]["recipient_country"]
         relationship = rel_by_country.get(country)
-        base_rules = [
+        treaty_rules = [
             row for row in payload["rules"]
-            if row.get("legal_layer") == "treaty" and row.get("effect") == "rate"
+            if row.get("legal_layer") == "treaty"
+            and row.get("effect") in {"rate", "review_gate"}
         ]
+        treaty_rule_by_income = {}
+        for row in treaty_rules:
+            treaty_rule_by_income.setdefault(row["income_type"], row)
 
         # Rebuild gates deterministically.
         payload["rules"] = [
@@ -104,8 +108,7 @@ def main() -> int:
         )
         source_hash = hashlib.sha256(source_text.encode("utf-8")).hexdigest()
 
-        for treaty_rule in base_rules:
-            income = treaty_rule["income_type"]
+        for income, treaty_rule in sorted(treaty_rule_by_income.items()):
             for article in sorted(result_articles, key=lambda x: int(x)):
                 if article == "8":
                     # Article 8 modifies qualifying dividend ownership branches.
