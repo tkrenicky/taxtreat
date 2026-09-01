@@ -20,7 +20,7 @@
       "legal_layer": "domestic",
       "paragraph": "1(b)(1)",
       "priority": 900,
-      "rate": 15.0,
+      "rate": 15,
       "recipient_country": "US",
       "review_package_sha256": "d23c40dff9d1e0ac564b51af46b46296f22857fb9049271123c5d2e5bd1430dc",
       "rule_id": "CZ-US-DIVIDEND-DOMESTIC",
@@ -34,13 +34,19 @@
       "verification_status": "verified"
     },
     {
-      "approval_created_at": "2026-08-11",
-      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approval_created_at": "2026-09-01",
+      "approval_dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
       "approved_article_text_sha256": "a39cfc188e56851acbaa4cd7850e18910511500d4b593d585a7a8355697b6da4",
       "article": 10,
       "conditions": [
         {
-          "fact": "ownership_percent",
+          "fact": "recipient_entity_type",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "company"
+        },
+        {
+          "fact": "voting_ownership",
           "fact_source": "transaction",
           "operator": ">=",
           "value": "10"
@@ -52,7 +58,7 @@
           "value": "true"
         }
       ],
-      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "dataset_release": "stage6-semantic-remediation-production-2026-09-01.1",
       "effect": "rate",
       "effective_from": "1993-12-23",
       "evidence_source_ids": [
@@ -63,9 +69,9 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 681,
-      "rate": 5.0,
+      "rate": 5,
       "recipient_country": "US",
-      "review_package_sha256": "d23c40dff9d1e0ac564b51af46b46296f22857fb9049271123c5d2e5bd1430dc",
+      "review_package_sha256": "1ffe2f04d423842866e6b1d7dd55abc6378cea3bd6ac9260187028120d8273ab",
       "rule_id": "CZ-US-DIVIDEND-CURRENT-1",
       "source_country": "CZ",
       "source_excerpt_hash": "39bfbfe8fb7bf5957f86a7c90a9e493f5a12b061cb97337b1e57972496b3c921",
@@ -73,15 +79,21 @@
       "source_representation": "approved_treaty_excerpt",
       "source_text": "DIVIDENDY\n1. Dividendy vyplácené spolecnostõ, která je rezi-\ndentem v jednom smluvnõm státe, osobe, která je rezi-\ndentem v druhém smluvnõm státe, mohou být zdaneny\nv tomto druhém státe.\n2. Tyto dividendy vsak mohou být rovnez zda-\nneny ve smluvnõm státe, v nemz je spolecnost, která\nje vyplácõ, rezidentem, a to podle právnõch predpisu\ntohoto státu, avsak jestlize prõjemce, který je skutec-\nným vlastnõkem dividend, je rezidentem druhého\nsmluvnõho státu, dan takto stanovená nepresáhne:\na) 5 % hrubé cástky dividend, jestlize skutecným\nvlastnõkem je spolecnost, která vlastnõ nejméne\n10 % podõlu s hlasovacõm právem na spolecnosti\nvyplácejõcõ dividendy;\nb) 15 % hrubé cástky dividend ve vsech ostatnõch\nprõpadech.\nTento odstavec se nedotkne zdanenõ zisku spolecnosti,\nze kterých jsou dividendy vypláceny.\n3. Pododstavec a) odstavce 2 se nepouzije v prõ-\npade dividend, které vyplácõ United State Regulated\nInvestment Company nebo Real Estate Investment\nTrust. Pododstavec b) odstavce 2 se pouzije v prõpade\ndividend vyplácených spolecnostõ Regulated Invest-\nment Company. V prõpade dividend vyplácených spo-\nlecnostõ Real Estate Investment Trust se pododstavec\nb) odstavce 2 pouzije, jestlize skutecný vlastnõk divi-\ndend je fyzická osoba vlastnõcõ méne nez 10 % úcasti\nna spolecnosti Real Estate Investment Trust; jinak se\nuplatnõ sazba srázkové dane podle vnitrostátnõch práv-\nnõch predpisu .\n4. Výraz 1dividendya, pouzitý v tomto clánku,\noznacuje prõjmy z akciõ nebo jiných práv, s výjimkou\npohl",
       "source_url": "https://e-sbirka.gov.cz/sb/1994/32/0000-00-00",
-      "verification_authority": "stage6_governance_policy",
+      "verification_authority": "semantic_remediation_machine_validation",
       "verification_status": "verified"
     },
     {
-      "approval_created_at": "2026-08-11",
-      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approval_created_at": "2026-09-01",
+      "approval_dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
       "approved_article_text_sha256": "a39cfc188e56851acbaa4cd7850e18910511500d4b593d585a7a8355697b6da4",
       "article": 10,
       "conditions": [
+        {
+          "fact": "fallback_case",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "all_other_cases"
+        },
         {
           "fact": "beneficial_owner",
           "fact_source": "transaction",
@@ -89,7 +101,7 @@
           "value": "true"
         }
       ],
-      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "dataset_release": "stage6-semantic-remediation-production-2026-09-01.1",
       "effect": "rate",
       "effective_from": "1993-12-23",
       "evidence_source_ids": [
@@ -100,9 +112,9 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 692,
-      "rate": 15.0,
+      "rate": 15,
       "recipient_country": "US",
-      "review_package_sha256": "d23c40dff9d1e0ac564b51af46b46296f22857fb9049271123c5d2e5bd1430dc",
+      "review_package_sha256": "1ffe2f04d423842866e6b1d7dd55abc6378cea3bd6ac9260187028120d8273ab",
       "rule_id": "CZ-US-DIVIDEND-CURRENT-2",
       "source_country": "CZ",
       "source_excerpt_hash": "39bfbfe8fb7bf5957f86a7c90a9e493f5a12b061cb97337b1e57972496b3c921",
@@ -110,7 +122,7 @@
       "source_representation": "approved_treaty_excerpt",
       "source_text": "DIVIDENDY\n1. Dividendy vyplácené spolecnostõ, která je rezi-\ndentem v jednom smluvnõm státe, osobe, která je rezi-\ndentem v druhém smluvnõm státe, mohou být zdaneny\nv tomto druhém státe.\n2. Tyto dividendy vsak mohou být rovnez zda-\nneny ve smluvnõm státe, v nemz je spolecnost, která\nje vyplácõ, rezidentem, a to podle právnõch predpisu\ntohoto státu, avsak jestlize prõjemce, který je skutec-\nným vlastnõkem dividend, je rezidentem druhého\nsmluvnõho státu, dan takto stanovená nepresáhne:\na) 5 % hrubé cástky dividend, jestlize skutecným\nvlastnõkem je spolecnost, která vlastnõ nejméne\n10 % podõlu s hlasovacõm právem na spolecnosti\nvyplácejõcõ dividendy;\nb) 15 % hrubé cástky dividend ve vsech ostatnõch\nprõpadech.\nTento odstavec se nedotkne zdanenõ zisku spolecnosti,\nze kterých jsou dividendy vypláceny.\n3. Pododstavec a) odstavce 2 se nepouzije v prõ-\npade dividend, které vyplácõ United State Regulated\nInvestment Company nebo Real Estate Investment\nTrust. Pododstavec b) odstavce 2 se pouzije v prõpade\ndividend vyplácených spolecnostõ Regulated Invest-\nment Company. V prõpade dividend vyplácených spo-\nlecnostõ Real Estate Investment Trust se pododstavec\nb) odstavce 2 pouzije, jestlize skutecný vlastnõk divi-\ndend je fyzická osoba vlastnõcõ méne nez 10 % úcasti\nna spolecnosti Real Estate Investment Trust; jinak se\nuplatnõ sazba srázkové dane podle vnitrostátnõch práv-\nnõch predpisu .\n4. Výraz 1dividendya, pouzitý v tomto clánku,\noznacuje prõjmy z akciõ nebo jiných práv, s výjimkou\npohl",
       "source_url": "https://e-sbirka.gov.cz/sb/1994/32/0000-00-00",
-      "verification_authority": "stage6_governance_policy",
+      "verification_authority": "semantic_remediation_machine_validation",
       "verification_status": "verified"
     },
     {
@@ -129,7 +141,7 @@
       "legal_layer": "domestic",
       "paragraph": "1(a)(1)",
       "priority": 900,
-      "rate": 15.0,
+      "rate": 15,
       "recipient_country": "US",
       "review_package_sha256": "d23c40dff9d1e0ac564b51af46b46296f22857fb9049271123c5d2e5bd1430dc",
       "rule_id": "CZ-US-INTEREST-DOMESTIC",
@@ -166,7 +178,7 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 691,
-      "rate": 0.0,
+      "rate": 0,
       "recipient_country": "US",
       "review_package_sha256": "d23c40dff9d1e0ac564b51af46b46296f22857fb9049271123c5d2e5bd1430dc",
       "rule_id": "CZ-US-INTEREST-CURRENT-1",
@@ -195,7 +207,7 @@
       "legal_layer": "domestic",
       "paragraph": "1(a)(1)",
       "priority": 900,
-      "rate": 15.0,
+      "rate": 15,
       "recipient_country": "US",
       "review_package_sha256": "d23c40dff9d1e0ac564b51af46b46296f22857fb9049271123c5d2e5bd1430dc",
       "rule_id": "CZ-US-ROYALTY-DOMESTIC",
@@ -238,7 +250,7 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 681,
-      "rate": 0.0,
+      "rate": 0,
       "recipient_country": "US",
       "review_package_sha256": "d23c40dff9d1e0ac564b51af46b46296f22857fb9049271123c5d2e5bd1430dc",
       "rule_id": "CZ-US-ROYALTY-CURRENT-1",
@@ -281,7 +293,7 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 682,
-      "rate": 10.0,
+      "rate": 10,
       "recipient_country": "US",
       "review_package_sha256": "d23c40dff9d1e0ac564b51af46b46296f22857fb9049271123c5d2e5bd1430dc",
       "rule_id": "CZ-US-ROYALTY-CURRENT-2",
@@ -295,14 +307,5 @@
       "verification_status": "verified"
     }
   ],
-  "schema_version": 3,
-  "stage6_production": {
-    "additional_human_review_claimed": false,
-    "package_sha256": "d23c40dff9d1e0ac564b51af46b46296f22857fb9049271123c5d2e5bd1430dc",
-    "production_approval": "production_approved",
-    "rule_promotion": "promoted",
-    "source_release": "not_released",
-    "treaty_pair_id": "CZ-US",
-    "verification_authority": "stage6_governance_policy"
-  }
+  "schema_version": 3
 }
