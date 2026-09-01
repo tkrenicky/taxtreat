@@ -107,6 +107,13 @@ def stable_report_id(request: Mapping[str, Any], analysis: Mapping[str, Any]) ->
     return f"TAXTREAT-{digest[:20].upper()}"
 
 
+def _source_country_english_name(source_country: str) -> str:
+    return {
+        "CZ": "Czech",
+        "SK": "Slovak",
+    }.get(str(source_country or "").upper(), str(source_country or "").upper())
+
+
 def build_professional_report(
     request: Mapping[str, Any],
     analysis: Mapping[str, Any],
@@ -118,12 +125,14 @@ def build_professional_report(
     generated_at = generated_at or datetime.now(timezone.utc)
     status = str(analysis.get("status"))
     treatment = analysis.get("tax_treatment")
+    source_country = str(request.get("source_country") or "CZ").upper()
+    source_adjective = _source_country_english_name(source_country)
 
     if language == "en":
         if status == "FINAL" and treatment == "exclusive_foreign_taxation":
             risk = "Under the applied treaty rule, the income is taxable only in the recipient's state of tax residence."
         elif status == "FINAL" and treatment == "domestic_exemption":
-            risk = "The income is exempt under the applied Czech domestic rule."
+            risk = f"The income is exempt under the applied {source_adjective} domestic rule."
         elif status == "FINAL":
             risk = "TaxTreat matched a legal rule to the facts entered by the user."
         elif status == "OUT_OF_SCOPE":
@@ -228,13 +237,26 @@ def build_professional_report(
     return report
 
 
-def _source_title(source: Mapping[str, Any], language: str) -> str:
+def _source_title(
+    source: Mapping[str, Any],
+    language: str,
+    source_country: str = "CZ",
+) -> str:
     article = escape(str(source.get("article") or "—"))
     paragraph = source.get("paragraph")
     suffix = f", {escape(str(paragraph))}" if paragraph else ""
     if source.get("legal_layer") in {"treaty", "protocol", "mli"}:
         return f"Double Tax Treaty · Article {article}{suffix}" if language == "en" else f"Smlouva o zamezení dvojího zdanění · článek {article}{suffix}"
-    return f"Czech Income Taxes Act · Section {article}{suffix}" if language == "en" else f"Zákon č. 586/1992 Sb., o daních z příjmů · § {article}{suffix}"
+    if language == "en":
+        act = {
+            "CZ": "Czech Income Taxes Act",
+            "SK": "Slovak Income Tax Act",
+        }.get(
+            str(source_country or "").upper(),
+            f"{str(source_country or '').upper()} domestic tax law",
+        )
+        return f"{act} · Section {article}{suffix}"
+    return f"Zákon č. 586/1992 Sb., o daních z příjmů · § {article}{suffix}"
 
 
 def _report_date(value: Any, language: str) -> str:
@@ -275,12 +297,18 @@ def _format_rate(value: Any) -> str:
     return f"{_format_number(value)} %"
 
 
-def _result_copy(result: Mapping[str, Any], source_title: str | None, language: str) -> tuple[str, str]:
+def _result_copy(
+    result: Mapping[str, Any],
+    source_title: str | None,
+    language: str,
+    source_country: str = "CZ",
+) -> tuple[str, str]:
     if language == "en":
         reference = source_title or "the applied legal rule"
         treatment = result.get("tax_treatment")
         if treatment == "exclusive_foreign_taxation":
-            return (f"Under {reference}, the entered facts result in no Czech taxation", "TaxTreat automatically matched a legal rule to the facts entered by the user; this is not an individual tax assessment.")
+            source_adjective = _source_country_english_name(source_country)
+            return (f"Under {reference}, the entered facts result in no {source_adjective} taxation", "TaxTreat automatically matched a legal rule to the facts entered by the user; this is not an individual tax assessment.")
         if treatment == "domestic_exemption":
             return (f"Under {reference}, the entered facts qualify for a domestic exemption", "TaxTreat automatically matched a legal rule to the facts entered by the user; this is not an individual tax assessment.")
         if result.get("status") == "FINAL" and result.get("rate") is not None:
@@ -347,13 +375,15 @@ def render_report_html(report: Mapping[str, Any]) -> str:
     calculation = result.get("withholding_tax_calculation")
     schedule = result.get("withholding_compliance_schedule") or {}
     treatment = result.get("tax_treatment")
+    source_country = str(scope.get("source_country") or "CZ").upper()
+    source_adjective = _source_country_english_name(source_country)
     non_taxing = treatment in {"exclusive_foreign_taxation", "domestic_exemption"}
 
     amount = scope.get("transaction_amount") or {}
     amount_copy = f"{_format_number(amount.get('amount'))} {escape(str(amount.get('currency') or ''))}".strip() if amount else ("Not provided" if en else "Neuvedena")
 
     if calculation and calculation.get("status") == "CALCULATED":
-        tax_label = ("Czech tax payable" if en else "Česká daň k odvodu") if non_taxing else ("Withholding tax" if en else "Srážková daň")
+        tax_label = (f"{source_adjective} tax payable" if en else "Česká daň k odvodu") if non_taxing else ("Withholding tax" if en else "Srážková daň")
         rate_value = ("Not applicable" if en else "Neuplatňuje se") if non_taxing else _format_rate(result.get("rate"))
         exchange = calculation.get("exchange_rate")
         exchange_row = ""
@@ -375,10 +405,14 @@ def render_report_html(report: Mapping[str, Any]) -> str:
     selected_source = next((s for s in sources if s.get("rule_id") == selected_rule_id), None)
     if treatment == "domestic_exemption":
         selected_source = next((s for s in sources if s.get("path_role") == "domestic_exemption_basis"), selected_source)
-    selected_source_title = _source_title(selected_source, language) if selected_source else None
-    conclusion, conclusion_detail = _result_copy(result, selected_source_title, language)
+    selected_source_title = _source_title(
+        selected_source, language, source_country
+    ) if selected_source else None
+    conclusion, conclusion_detail = _result_copy(
+        result, selected_source_title, language, source_country
+    )
     if selected_source:
-        why_result = (f"Under {_source_title(selected_source, language)}, TaxTreat matched the rule used in the calculation to the entered facts." if en else f"Podle {_source_title(selected_source, language)} je v TaxTreat při zadaných údajích přiřazeno pravidlo použité ve výpočtu.")
+        why_result = (f"Under {_source_title(selected_source, language, source_country)}, TaxTreat matched the rule used in the calculation to the entered facts." if en else f"Podle {_source_title(selected_source, language, source_country)} je v TaxTreat při zadaných údajích přiřazeno pravidlo použité ve výpočtu.")
     else:
         why_result = "TaxTreat displays the rules matched to the entered facts and the legal sources shown in this output." if en else "TaxTreat zobrazuje pravidla přiřazená k zadaným údajům a právní zdroje uvedené v tomto výstupu."
 
@@ -395,7 +429,7 @@ def render_report_html(report: Mapping[str, Any]) -> str:
             provenance = f'<p class="source-provenance"><strong>English text status:</strong> {status_label}{detail}</p>'
         link_label = "Source for displayed text" if en else "Oficiální zdroj"
         source_items.append(
-            f'<article class="legal-source"><div class="source-head"><h3>{_source_title(source, language)}</h3>'
+            f'<article class="legal-source"><div class="source-head"><h3>{_source_title(source, language, source_country)}</h3>'
             f'<a href="{url}">{link_label} ↗</a></div>{provenance}{excerpt_html}</article>'
         )
     if not source_items:
