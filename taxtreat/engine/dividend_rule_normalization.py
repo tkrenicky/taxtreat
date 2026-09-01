@@ -155,7 +155,8 @@ def normalize_raw_legal_rule(raw_rule: dict) -> dict:
 
     narrow_zero_rate_qualification = (
         raw_rule.get("income_type") == "dividend"
-        and float(raw_rule.get("rate") or -1) == 0.0
+        and raw_rule.get("rate") is not None
+        and float(raw_rule.get("rate")) == 0.0
         and any(
             condition.get("fact") == "recipient_entity_type"
             and str(condition.get("value") or "")
