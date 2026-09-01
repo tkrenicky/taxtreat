@@ -34,7 +34,8 @@ def test_cz_semantic_quarantine_does_not_leak_into_sk_source_country():
     assert any("not verified" in line for line in result.explanation)
 
 
-def test_cz_semantic_quarantine_still_blocks_cz_scope():
+
+def test_released_cz_scope_uses_normal_verification_gate_not_quarantine():
     result = evaluate_legal_rules(
         [_rule("CZ", "CH", "dividend")],
         {
@@ -45,5 +46,7 @@ def test_cz_semantic_quarantine_still_blocks_cz_scope():
         as_of=date(2026, 9, 1),
     )
 
-    assert any("quarantined pending" in line for line in result.explanation)
-    assert result.candidate_rule_id is None
+    assert not any("quarantined pending" in line for line in result.explanation)
+    assert result.requires_review is True
+    assert any("not verified" in line for line in result.explanation)
+
