@@ -119,6 +119,12 @@
           "value": false
         },
         {
+          "fact": "direct_ownership",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
           "fact": "ownership_percent",
           "fact_source": "transaction",
           "operator": ">=",
@@ -139,7 +145,7 @@
       ],
       "dataset_release": "stage6-semantic-remediation-production-2026-09-01.1",
       "effect": "rate",
-      "effective_from": "1996-10-23",
+      "effective_from": "2014-01-01",
       "evidence_source_ids": [
         "SRC-773D5F8BD93AE73A"
       ],
@@ -194,7 +200,7 @@
       ],
       "dataset_release": "stage6-semantic-remediation-production-2026-09-01.1",
       "effect": "rate",
-      "effective_from": "1996-10-23",
+      "effective_from": "2014-01-01",
       "evidence_source_ids": [
         "SRC-773D5F8BD93AE73A"
       ],
@@ -249,7 +255,7 @@
       ],
       "dataset_release": "stage6-semantic-remediation-production-2026-09-01.1",
       "effect": "rate",
-      "effective_from": "1996-10-23",
+      "effective_from": "2014-01-01",
       "evidence_source_ids": [
         "SRC-773D5F8BD93AE73A"
       ],
@@ -1840,6 +1846,7 @@
       "dataset_release": "stage6-semantic-remediation-production-2026-09-01.1",
       "effect": "rate",
       "effective_from": "1996-10-23",
+      "effective_to": "2013-12-31",
       "evidence_source_ids": [
         "SRC-773D5F8BD93AE73A"
       ],
