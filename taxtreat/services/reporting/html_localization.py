@@ -256,6 +256,36 @@ _SK_REPLACEMENTS = (
 )
 
 
+_SK_EN_REPLACEMENTS = (
+    ("Czech withholding tax information", "Slovak withholding tax information"),
+    ("CZECH WITHHOLDING TAX RATE", "SLOVAK WITHHOLDING TAX RATE"),
+    ("Czech withholding tax rate", "Slovak withholding tax rate"),
+    ("Czech withholding tax", "Slovak withholding tax"),
+    ("Czech tax payable", "Slovak tax payable"),
+    ("Czech permanent establishment", "Slovak permanent establishment"),
+    ("From the Czech domestic rule", "From the Slovak domestic rule"),
+    ("starting Czech domestic treatment", "starting Slovak domestic treatment"),
+    ("Czech domestic law establishes the starting treatment.", "Slovak domestic law establishes the starting treatment."),
+    ("it may limit the Czech taxing right.", "it may limit the Slovak taxing right."),
+    ("Filed by the payer with the Czech tax authority;", "Filed by the payer with the Slovak tax authority;"),
+    (
+        "Outbound income notification (Section 38da of the Czech Income Taxes Act)",
+        "Withholding tax notification (Section 43(11) of the Slovak Income Tax Act)",
+    ),
+    (
+        "of the Czech Income Taxes Act (Act No. 586/1992 Coll.)",
+        "of the Slovak Income Tax Act (Act No. 595/2003 Z. z.)",
+    ),
+    (
+        "the Czech Income Taxes Act (Act No. 586/1992 Coll.)",
+        "the Slovak Income Tax Act (Act No. 595/2003 Z. z.)",
+    ),
+    ("§ 38da ZDP", "Section 43(11) of Act No. 595/2003 Z. z."),
+    ("§ 38d ZDP", "Section 43(11) of Act No. 595/2003 Z. z."),
+    ("586/1992 Sb.", "595/2003 Z. z."),
+    ("Czech Republic", "Slovak Republic"),
+)
+
 # These markers identify Czech-source-country legal or role semantics. They are
 # checked after localization so future changes to the shared Czech template fail
 # closed for SK instead of silently reaching the client report.
@@ -324,6 +354,29 @@ def _localize_cz_to_en(html: str, report: dict[str, Any]) -> str:
     return localized
 
 
+def _localize_sk_to_en(html: str, report: dict[str, Any]) -> str:
+    localized = _localize_cz_to_en(html, report)
+    for old, new in _SK_EN_REPLACEMENTS:
+        localized = localized.replace(old, new)
+
+    recipient = str((report.get("scope") or {}).get("recipient_country") or "").upper()
+    if recipient:
+        localized = re.sub(
+            r"Double Tax Treaty between the Slovak Republic and .*?(?=<|$|[.·])",
+            f"Double Tax Treaty between the Slovak Republic and {recipient}",
+            localized,
+        )
+        localized = re.sub(
+            r"the Double Tax Treaty between the Slovak Republic and .*?(?=<|$|[.·])",
+            f"the Double Tax Treaty between the Slovak Republic and {recipient}",
+            localized,
+        )
+
+    localized = localized.replace('lang="sk"', 'lang="en"')
+    _assert_no_czech_legal_leakage(localized)
+    return localized
+
+
 def localize_report_html(html: str, report: dict[str, Any]) -> str:
     code = source_country(report)
     report_country_copy(code)
@@ -339,6 +392,8 @@ def localize_report_html(html: str, report: dict[str, Any]) -> str:
         return html
 
     if strategy == "sk":
+        if _report_language(report) == "en":
+            return _localize_sk_to_en(html, report)
         localized = html
         for old, new in _SK_REPLACEMENTS:
             localized = localized.replace(old, new)

@@ -31,7 +31,9 @@ def _read_locale(recipient_country: str) -> Mapping[str, Any] | None:
 
 
 def english_excerpt_for_citation(
-    citation: Mapping[str, Any], recipient_country: str
+    citation: Mapping[str, Any],
+    recipient_country: str,
+    source_country: str = "CZ",
 ) -> dict[str, Any] | None:
     """Return verified EN locale metadata for a treaty/protocol/MLI citation.
 
@@ -39,6 +41,11 @@ def english_excerpt_for_citation(
     malformed locale data fails closed by returning None; the caller must not
     relabel the canonical excerpt as English in that case.
     """
+    # The checked-in locale corpus currently contains CZ-source treaties only.
+    # Never reuse a same-recipient CZ treaty excerpt for another source country.
+    if str(source_country or "").strip().upper() != "CZ":
+        return None
+
     locale = _read_locale(recipient_country)
     if not locale:
         return None
