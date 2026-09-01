@@ -493,7 +493,7 @@ def _make_rule(
     article: dict,
     country: str,
     income: str,
-    rate: float,
+    rate: float | None,
     priority: int,
     rule_conditions: list[dict],
     rule_suffix: str,
@@ -642,6 +642,22 @@ def main() -> int:
                 "ownership_linked_rate_candidate_count": int(scope.get("ownership_linked_rate_candidate_count") or 0),
                 "holding_period_candidates": scope.get("holding_period_candidates", []),
             })
+            # Preserve complete 75 x 3 runtime scope coverage without inventing
+            # a treaty rate. The unresolved source-backed rule is deliberately
+            # unverified and has no structured rate, so the legal engine stays
+            # REVIEW_REQUIRED even when its common entitlement conditions match.
+            grouped[country].append(_make_rule(
+                scope=scope,
+                article=article,
+                country=country,
+                income=income,
+                rate=None,
+                priority=900,
+                rule_conditions=conditions(scope),
+                rule_suffix="UNRESOLVED-FAIL-CLOSED",
+                treaty_valid_from=treaty_valid_from,
+                coverage=coverage,
+            ))
             continue
 
         exclusive_residence = bool(scope.get("exclusive_residence_taxation_candidate"))
