@@ -10,6 +10,7 @@ BASE = ROOT / "data/legal_reviews/global_cz_outbound"
 REGISTRY = ROOT / "data/legal_consolidation/semantic_remediation_condition_candidates_20260829.json"
 QUEUE = BASE / "cz_country_qa_queue.json"
 RELEASE = BASE / "semantic_remediation_machine_release_20260901.json"
+GATE = BASE / "production_source_release_gate_v2.json"
 CANDIDATES = ROOT / "data/legal_rule_candidates/semantic_remediation_20260901"
 RUNTIME = ROOT / "data/legal_rules_stage6"
 
@@ -40,6 +41,7 @@ def main() -> int:
     registry = load(REGISTRY)
     queue = load(QUEUE)
     release = load(RELEASE)
+    gate = load(GATE)
 
     expected = {
         (str(row["country"]).upper(), str(row["income_type"]))
@@ -61,11 +63,34 @@ def main() -> int:
     assert release["counts"]["released_scopes"] == 40
     assert release["counts"]["released_packages"] == 40
 
+    gate_by_pair = {
+        str(row["treaty_pair_id"]): row
+        for row in gate["treaty_partners"]
+    }
+    assert gate["counts"]["released_packages"] == 101
+    assert gate["counts"]["released_scopes"] == 303
+    assert gate["counts"]["semantic_remediation_pending_packages"] == 0
+    assert gate["counts"]["semantic_remediation_pending_scopes"] == 0
+
     for country, income in sorted(expected):
         release_row = release_by_scope[(country, income)]
         current_hash = queue_hash[country]
         assert release_row["package_sha256"] == current_hash
         assert release_row["release_status"] == "released_after_machine_validation"
+
+        gate_row = gate_by_pair[f"CZ-{country}"]
+        assert gate_row["package_sha256"] == current_hash
+        assert gate_row["production_approval_status"] == "production_approved"
+        assert gate_row["rule_promotion_status"] == "promoted"
+        assert gate_row["release_status"] == "released"
+        assert gate_row["active_rule_allowed"] is True
+        assert gate_row["production_ready"] is True
+        assert gate_row["fail_closed"] is False
+        assert gate_row["release_blockers"] == []
+        machine_event = gate_row["release_evidence"]["semantic_remediation_machine_release"]
+        assert machine_event["package_sha256"] == current_hash
+        assert machine_event["additional_human_review_claimed"] is False
+        assert machine_event["release_status"] == "released_after_machine_validation"
 
         candidate = load(CANDIDATES / f"{country.lower()}.json")
         runtime = load(RUNTIME / f"{country.lower()}.json")
