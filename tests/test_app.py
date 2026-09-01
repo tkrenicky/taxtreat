@@ -23,10 +23,8 @@ def test_liveness_and_readiness_are_distinct():
 
     readiness = client.get("/health/ready")
 
-    assert readiness.status_code == 503
-    assert readiness.json()["detail"] == (
-        "Canonical Stage 6 runtime release is incomplete."
-    )
+    assert readiness.status_code == 200
+    assert readiness.json() == {"status": "ready"}
 
 
 def test_readiness_fails_when_stage6_release_is_invalid(
@@ -183,7 +181,7 @@ def test_analysis_uses_stage6_release_not_legacy_manifest(
 
     assert response.status_code == 200
     assert response.json()["dataset_version"] == (
-        "stage6-source-release-2026-08-12.1"
+        "stage6-semantic-remediation-source-release-2026-09-01.1"
     )
 
 
