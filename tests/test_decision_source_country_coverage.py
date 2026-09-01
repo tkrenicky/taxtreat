@@ -1,6 +1,7 @@
 from dataclasses import replace
 from datetime import date
 import json
+from types import SimpleNamespace
 
 import taxtreat.services.decision as decision_service
 from taxtreat.countries.registry import get_country_config
@@ -190,3 +191,51 @@ def test_analyze_transaction_fails_closed_for_registered_unreleased_source(monke
         "treaty_or_protocol",
     ]
     assert "has not been released" in result.explanation[0]
+
+
+def test_analyze_transaction_uses_registered_source_rule_directory(monkeypatch, tmp_path):
+    config = replace(
+        get_country_config("CZ"),
+        domestic_precedence_handler=None,
+        rule_directory=tmp_path,
+    )
+    seen = {}
+
+    monkeypatch.setattr(
+        decision_service,
+        "get_country_config",
+        lambda code: config,
+    )
+    monkeypatch.setattr(
+        decision_service,
+        "evaluate_runtime_gate",
+        lambda **kwargs: SimpleNamespace(
+            applies=False,
+            allowed=True,
+            missing_facts=[],
+            explanation=None,
+        ),
+    )
+    monkeypatch.setattr(
+        decision_service,
+        "load_rule_catalog",
+        lambda path: seen.setdefault("rule_dir", path) and [],
+    )
+    monkeypatch.setattr(
+        decision_service,
+        "supported_scope_keys",
+        lambda **kwargs: set(),
+    )
+
+    result = analyze_transaction(
+        CanonicalAnalysisRequest(
+            source_country="CZ",
+            recipient_country="CH",
+            income_type="dividend",
+            transaction_date=date(2026, 8, 23),
+            facts={},
+        )
+    )
+
+    assert seen["rule_dir"] == tmp_path
+    assert result.status == DecisionStatus.OUT_OF_SCOPE
