@@ -41,7 +41,6 @@ class CanonicalSourceRelease:
     rule_promotion_status: str
 
     release_status: str
-    semantic_remediation_machine_validated: bool
     active_rule_allowed: bool
     production_ready: bool
     fail_closed: bool
@@ -51,10 +50,20 @@ class CanonicalSourceRelease:
 
     @property
     def is_released(self) -> bool:
+        machine_release = self.release_evidence.get(
+            "semantic_remediation_machine_release"
+        )
+        machine_validated = (
+            isinstance(machine_release, Mapping)
+            and machine_release.get("release_status")
+            == "released_after_machine_validation"
+            and machine_release.get("additional_human_review_claimed") is False
+            and machine_release.get("package_sha256") == self.package_sha256
+        )
         return (
             (
                 self.human_review_status == "human_review_complete"
-                or self.semantic_remediation_machine_validated is True
+                or machine_validated
             )
             and self.independent_qa_status
             in {"complete", "not_required"}
@@ -158,9 +167,6 @@ def load_canonical_source_release_gate(
                 row["rule_promotion_status"],
 
             release_status=row["release_status"],
-            semantic_remediation_machine_validated=bool(
-                row.get("semantic_remediation_machine_validated", False)
-            ),
             active_rule_allowed=
                 row["active_rule_allowed"],
             production_ready=
