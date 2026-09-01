@@ -15,6 +15,7 @@ def _ad_dividend_payload():
         "facts": {
             "recipient_tax_residence": "confirmed",
             "recipient_legal_form": "company",
+            "recipient_entity_type": "company_other_than_partnership",
             "beneficial_owner": True,
             "beneficial_owner_confirmed": True,
             "anti_abuse_review_passed": True,
