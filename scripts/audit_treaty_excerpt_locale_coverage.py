@@ -234,6 +234,13 @@ def main() -> int:
         print("\nInvalid rule-specific locale entries:")
         for rule_id in sorted(invalid_rule_locale_entries):
             print(f"  {rule_id}")
+
+    if (
+        missing
+        or decisive_outcome_missing
+        or rule_specific_missing
+        or invalid_rule_locale_entries
+    ):
         return 1
 
     return 0

@@ -181,6 +181,8 @@ def test_audit_measures_decisive_outcome_evidence_not_blanket_multi_rate_snippet
     assert "_article_supports_outcome" in script
     assert "_condition_signature" in script
     assert "Rules in materially multi-outcome articles" not in script
+    assert "or decisive_outcome_missing" in script
+    assert "or rule_specific_missing" in script
 
 
 def test_runtime_is_loaded_after_i18n_and_before_report_core():

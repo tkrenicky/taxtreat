@@ -33,6 +33,16 @@ def _company_direct(
 
 
 DIVIDEND_CONDITION_PATCHES: dict[str, list[dict]] = {
+    "CZ-CH-DIVIDEND-CURRENT-2": [
+        _c("recipient_is_treaty_resident", "==", True),
+        _c("beneficial_owner", "==", True),
+        _c("recipient_entity_type", "==", "company"),
+        _c("recipient_is_partnership", "==", False),
+        _c("direct_ownership", "==", True),
+        _c("ownership_percent", ">=", 10),
+        _c("holding_period_months", ">=", 12),
+        _c("permanent_establishment_connection", "==", False),
+    ],
     "CZ-CH-DIVIDEND-SEMANTIC-REMEDIATION-5": [
         _c("recipient_is_treaty_resident", "==", True),
         _c("permanent_establishment_connection", "==", False),
@@ -105,6 +115,15 @@ DIVIDEND_CONDITION_PATCHES: dict[str, list[dict]] = {
 
 
 RULE_FIELD_PATCHES: dict[str, dict] = {
+    # The 2012 Czech-Swiss Protocol entered into force on 2013-10-11 and
+    # applies from 2014-01-01.  The original 5% participation branch must not
+    # overlap with the replacement 0% branches in the effective runtime.
+    "CZ-CH-DIVIDEND-CURRENT-2": {"effective_from": "2014-01-01"},
+    "CZ-CH-DIVIDEND-CURRENT-3": {"effective_from": "2014-01-01"},
+    "CZ-CH-DIVIDEND-CURRENT-4": {"effective_from": "2014-01-01"},
+    "CZ-CH-DIVIDEND-SEMANTIC-REMEDIATION-5": {
+        "effective_to": "2013-12-31"
+    },
     "CZ-EG-INTEREST-CURRENT-1": {"priority": 671},
     "CZ-AL-INTEREST-CURRENT-2": {"priority": 671},
     "CZ-BR-INTEREST-CURRENT-1": {"priority": 671},
@@ -114,6 +133,54 @@ RULE_FIELD_PATCHES: dict[str, dict] = {
 
 
 DIVIDEND_SOURCE_PATCHES: dict[str, dict] = {
+    "CZ-CH-DIVIDEND-CURRENT-2": {
+        "legal_instrument": "protocol",
+        "legal_layer": "protocol",
+        "effective_from": "2014-01-01",
+        "source_id": "CH-FEDLEX-PROTOCOL-2012",
+        "source_url": "https://www.fedlex.admin.ch/eli/oc/2013/678/de",
+        "source_text": (
+            "The 2012 Protocol replaces Article 10. From 1 January 2014, the "
+            "source State shall exempt dividends where the beneficial owner is "
+            "a company other than a partnership that directly holds at least "
+            "10 per cent of the payer's capital for an uninterrupted period of "
+            "at least one year."
+        ),
+        "source_excerpt_hash": "a0df03de3a55fda2dc3a041b7998ed8d3a5fb712a88fb1574c2284eb68d7b78e",
+        "evidence_source_ids": ["CH-FEDLEX-PROTOCOL-2012"],
+        "source_representation": "runtime_protocol_remediation_summary",
+    },
+    "CZ-CH-DIVIDEND-CURRENT-3": {
+        "legal_instrument": "protocol",
+        "legal_layer": "protocol",
+        "effective_from": "2014-01-01",
+        "source_id": "CH-FEDLEX-PROTOCOL-2012",
+        "source_url": "https://www.fedlex.admin.ch/eli/oc/2013/678/de",
+        "source_text": (
+            "The 2012 Protocol replaces Article 10. From 1 January 2014, the "
+            "source State shall exempt dividends where the beneficial owner is "
+            "a qualifying pension fund or similar institution resident in the "
+            "other Contracting State."
+        ),
+        "source_excerpt_hash": "28e39f5ef855d7852a32941ca75f81c3713ab3826906a77b761f1a02af5bf869",
+        "evidence_source_ids": ["CH-FEDLEX-PROTOCOL-2012"],
+        "source_representation": "runtime_protocol_remediation_summary",
+    },
+    "CZ-CH-DIVIDEND-CURRENT-4": {
+        "legal_instrument": "protocol",
+        "legal_layer": "protocol",
+        "effective_from": "2014-01-01",
+        "source_id": "CH-FEDLEX-PROTOCOL-2012",
+        "source_url": "https://www.fedlex.admin.ch/eli/oc/2013/678/de",
+        "source_text": (
+            "The 2012 Protocol replaces Article 10. From 1 January 2014, the "
+            "source State shall exempt dividends where the beneficial owner is "
+            "the central bank of the other Contracting State."
+        ),
+        "source_excerpt_hash": "a3f34909f7bc12bd6d24a43c85a7c0e932395ae2df0743a6f663e360c43c2a9d",
+        "evidence_source_ids": ["CH-FEDLEX-PROTOCOL-2012"],
+        "source_representation": "runtime_protocol_remediation_summary",
+    },
     "CZ-UZ-DIVIDEND-CURRENT-1": {
         "legal_instrument": "protocol",
         "legal_layer": "protocol",
