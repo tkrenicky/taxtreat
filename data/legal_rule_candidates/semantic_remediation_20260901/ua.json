@@ -1,0 +1,326 @@
+{
+  "country_pair": {
+    "recipient_country": "UA",
+    "source_country": "CZ"
+  },
+  "rules": [
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": 36,
+      "conditions": [],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA"
+      ],
+      "income_type": "dividend",
+      "legal_instrument": "domestic_law",
+      "legal_layer": "domestic",
+      "paragraph": "1(b)(1)",
+      "priority": 900,
+      "rate": 15,
+      "recipient_country": "UA",
+      "review_package_sha256": "571232f8866532f41ee1c700a998a0b3a5c3545e022b557efbfd189b4b3858f4",
+      "rule_id": "CZ-UA-DIVIDEND-DOMESTIC",
+      "source_country": "CZ",
+      "source_excerpt_hash": "aa1100129d4ba33a4efeeb3258bfc621281f11b160890ba7a898e71318bd643d",
+      "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+      "source_representation": "approved_structured_projection",
+      "source_text": "Current Czech domestic withholding tax standard rate represented in the approved Stage 6 package: 15.0%.",
+      "source_url": "https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/1992/586/2026-04-01",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": null,
+      "approval_dataset_release": null,
+      "approved_article_text_sha256": "02697459a6baa80d42f8d7d9a53c45ed161e09cb6473d88186c6390606ceb516",
+      "article": 10,
+      "conditions": [
+        {
+          "fact": "recipient_entity_type",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "company_other_than_partnership"
+        },
+        {
+          "fact": "direct_ownership",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        },
+        {
+          "fact": "ownership_percent",
+          "fact_source": "transaction",
+          "operator": ">=",
+          "value": "25"
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-semantic-remediation-candidate-2026-09-01.1",
+      "effect": "rate",
+      "effective_from": "1999-04-20",
+      "evidence_source_ids": [
+        "SRC-1D74C3BA794BFE66"
+      ],
+      "income_type": "dividend",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 681,
+      "rate": 5,
+      "recipient_country": "UA",
+      "review_package_sha256": "8c9b136ad97f6e5c1ce0e682ecda23447f1110902984078e865b8b776539efbf",
+      "rule_id": "CZ-UA-DIVIDEND-CURRENT-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "8aaac57dc5353c5d356a31e3aca10ed5e0981893537ffa5e5b30fdb3d580d20e",
+      "source_id": "SRC-1D74C3BA794BFE66",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezi-\ndentem jednoho smluvnõho státu, rezidentu druhého\nsmluvnõho státu mohou být zdaneny v tomto druhém\nstáte.\n2. Tyto dividendy vsak mohou být rovnez zda-\nneny ve smluvnõm státe, jehoz je spolecnost, která je\nvyplácõ, rezidentem, a to podle právnõch predpisu to-\nhoto státu, avsak jestlize skutecný vlastnõk dividend je\nrezidentem druhého smluvnõho státu, dan takto ulo-\nzená nepresáhne:\na) 5 procent hrubé cástky dividend, jestlize skutec-\nným vlastnõkem je spolecnost (jiná nez osobnõ\nspolecnost), která prõmo vlastnõ nejméne 25 pro-\ncent majetku spolecnosti vyplácejõcõ dividendy;\nb) 15 procent hrubé cástky dividend ve vsech ostat-\nnõch prõpadech.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou do-\nhodou zpu sob aplikace techto omezenõ.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti,\nz nichz jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku\noznacuje prõjmy z akciõ nebo jiných práv, s výjimkou\npohledávek, s podõlem na zisku, jakoz i prõjmy z jiných\npráv na spolecnosti, které jsou podrobeny stejnému\ndan ovému rezimu jako prõjmy z akciõ podle právnõch\npredpisu státu, jehoz je spolecnost, která rozdõlõ zisk,\nrezidentem.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk dividend, který je rezidentem jed-\nnoho smluvnõho státu, vykonává v druhém smluvnõm\nstáte, jehoz je rezidentem spolecnost vyplácejõcõ divi-\ndendy, pru myslovou nebo obchodnõ cinnost prostred-\nnictvõm stálé provozovny",
+      "source_url": "https://e-sbirka.gov.cz/sb/1999/103/0000-00-00",
+      "verification_authority": "semantic_remediation_machine_projection",
+      "verification_status": "needs_review"
+    },
+    {
+      "approval_created_at": null,
+      "approval_dataset_release": null,
+      "approved_article_text_sha256": "02697459a6baa80d42f8d7d9a53c45ed161e09cb6473d88186c6390606ceb516",
+      "article": 10,
+      "conditions": [
+        {
+          "fact": "fallback_case",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "all_other_cases"
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-semantic-remediation-candidate-2026-09-01.1",
+      "effect": "rate",
+      "effective_from": "1999-04-20",
+      "evidence_source_ids": [
+        "SRC-1D74C3BA794BFE66"
+      ],
+      "income_type": "dividend",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 692,
+      "rate": 15,
+      "recipient_country": "UA",
+      "review_package_sha256": "8c9b136ad97f6e5c1ce0e682ecda23447f1110902984078e865b8b776539efbf",
+      "rule_id": "CZ-UA-DIVIDEND-CURRENT-2",
+      "source_country": "CZ",
+      "source_excerpt_hash": "8aaac57dc5353c5d356a31e3aca10ed5e0981893537ffa5e5b30fdb3d580d20e",
+      "source_id": "SRC-1D74C3BA794BFE66",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezi-\ndentem jednoho smluvnõho státu, rezidentu druhého\nsmluvnõho státu mohou být zdaneny v tomto druhém\nstáte.\n2. Tyto dividendy vsak mohou být rovnez zda-\nneny ve smluvnõm státe, jehoz je spolecnost, která je\nvyplácõ, rezidentem, a to podle právnõch predpisu to-\nhoto státu, avsak jestlize skutecný vlastnõk dividend je\nrezidentem druhého smluvnõho státu, dan takto ulo-\nzená nepresáhne:\na) 5 procent hrubé cástky dividend, jestlize skutec-\nným vlastnõkem je spolecnost (jiná nez osobnõ\nspolecnost), která prõmo vlastnõ nejméne 25 pro-\ncent majetku spolecnosti vyplácejõcõ dividendy;\nb) 15 procent hrubé cástky dividend ve vsech ostat-\nnõch prõpadech.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou do-\nhodou zpu sob aplikace techto omezenõ.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti,\nz nichz jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku\noznacuje prõjmy z akciõ nebo jiných práv, s výjimkou\npohledávek, s podõlem na zisku, jakoz i prõjmy z jiných\npráv na spolecnosti, které jsou podrobeny stejnému\ndan ovému rezimu jako prõjmy z akciõ podle právnõch\npredpisu státu, jehoz je spolecnost, která rozdõlõ zisk,\nrezidentem.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk dividend, který je rezidentem jed-\nnoho smluvnõho státu, vykonává v druhém smluvnõm\nstáte, jehoz je rezidentem spolecnost vyplácejõcõ divi-\ndendy, pru myslovou nebo obchodnõ cinnost prostred-\nnictvõm stálé provozovny",
+      "source_url": "https://e-sbirka.gov.cz/sb/1999/103/0000-00-00",
+      "verification_authority": "semantic_remediation_machine_projection",
+      "verification_status": "needs_review"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": 36,
+      "conditions": [],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "domestic_law",
+      "legal_layer": "domestic",
+      "paragraph": "1(a)(1)",
+      "priority": 900,
+      "rate": 15,
+      "recipient_country": "UA",
+      "review_package_sha256": "571232f8866532f41ee1c700a998a0b3a5c3545e022b557efbfd189b4b3858f4",
+      "rule_id": "CZ-UA-INTEREST-DOMESTIC",
+      "source_country": "CZ",
+      "source_excerpt_hash": "aa1100129d4ba33a4efeeb3258bfc621281f11b160890ba7a898e71318bd643d",
+      "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+      "source_representation": "approved_structured_projection",
+      "source_text": "Current Czech domestic withholding tax standard rate represented in the approved Stage 6 package: 15.0%.",
+      "source_url": "https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/1992/586/2026-04-01",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "6661b1ad7d387f6866b95bd6c6b10738940a754aa8c361e62c7946ce6df8dd21",
+      "article": 11,
+      "conditions": [
+        {
+          "fact": "recipient_or_financing",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "government_subnational_local_authority_central_bank_wholly_government_owned_financial_institution_or_government_guaranteed_loan"
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "1999-04-20",
+      "evidence_source_ids": [
+        "SRC-1D74C3BA794BFE66"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 681,
+      "rate": 0,
+      "recipient_country": "UA",
+      "review_package_sha256": "571232f8866532f41ee1c700a998a0b3a5c3545e022b557efbfd189b4b3858f4",
+      "rule_id": "CZ-UA-INTEREST-CURRENT-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "2618440665fd67c8c0a65025670de5c985c762845fe0b2e83da4e0f554951c57",
+      "source_id": "SRC-1D74C3BA794BFE66",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "U roky\n1. U roky majõcõ zdroj v jednom smluvnõm státe\na vyplácené rezidentu druhého smluvnõho státu mohou\nbýt zdaneny v tomto druhém státe.\n2. Tyto úroky vsak mohou být rovnez zdaneny ve\nsmluvnõm státe, v nemz majõ zdroj, a to podle právnõch\npredpisu tohoto státu, avsak jestlize skutecný vlastnõk\núroku je rezidentem druhého smluvnõho státu, dan\ntakto ulozená nepresáhne 5 procent hrubé cástky\núroku .\nPřõslusné úrady smluvnõch státu upravõ vzájemnou do-\nhodou zpu sob aplikace tohoto omezenõ.\n3. Bez ohledu na ustanovenõ odstavce 2 budou\núroky majõcõ zdroj v jednom smluvnõm státe a pobõrané\na skutecne vlastnené vládou druhého smluvnõho státu,\nvcetne nizsõch správnõch útvaru a mõstnõch úradu to-\nhoto státu, centrálnõ bankou nebo jakoukoli financnõ\ninstitucõ zcela vlastnenou touto vládou nebo úroky po-\nbõrané z pu jcek garantovaných touto vládou osvobo-\nzeny od zdanenõ v prvne zmõneném smluvnõm státe.\n4. Výraz 1úrokya pouzitý v tomto clánku ozna-\ncuje prõjmy z pohledávek jakéhokoliv druhu, at' zajis-\ntených ci nezajistených zástavnõm právem na nemovi-\ntosti nebo majõcõch ci nemajõcõch právo úcasti na zisku\ndluznõka, a zvláste prõjmy z vládnõch cenných papõru\na prõjmy z obligacõ nebo dluhopisu , vcetne prémiõ a vý-\nher, které se vázou k temto cenným papõru m, obliga-\ncõm nebo dluhopisu m.\n5. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk úroku , který je rezidentem jednoho\nsmluvnõho státu, vykonává v druhém smluvnõm státe,\nve kterém majõ úroky zdroj, pru myslovou",
+      "source_url": "https://e-sbirka.gov.cz/sb/1999/103/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "6661b1ad7d387f6866b95bd6c6b10738940a754aa8c361e62c7946ce6df8dd21",
+      "article": 11,
+      "conditions": [
+        {
+          "fact": "fallback_case",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "all_other_cases"
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "1999-04-20",
+      "evidence_source_ids": [
+        "SRC-1D74C3BA794BFE66"
+      ],
+      "income_type": "interest",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 682,
+      "rate": 5,
+      "recipient_country": "UA",
+      "review_package_sha256": "571232f8866532f41ee1c700a998a0b3a5c3545e022b557efbfd189b4b3858f4",
+      "rule_id": "CZ-UA-INTEREST-CURRENT-2",
+      "source_country": "CZ",
+      "source_excerpt_hash": "2618440665fd67c8c0a65025670de5c985c762845fe0b2e83da4e0f554951c57",
+      "source_id": "SRC-1D74C3BA794BFE66",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "U roky\n1. U roky majõcõ zdroj v jednom smluvnõm státe\na vyplácené rezidentu druhého smluvnõho státu mohou\nbýt zdaneny v tomto druhém státe.\n2. Tyto úroky vsak mohou být rovnez zdaneny ve\nsmluvnõm státe, v nemz majõ zdroj, a to podle právnõch\npredpisu tohoto státu, avsak jestlize skutecný vlastnõk\núroku je rezidentem druhého smluvnõho státu, dan\ntakto ulozená nepresáhne 5 procent hrubé cástky\núroku .\nPřõslusné úrady smluvnõch státu upravõ vzájemnou do-\nhodou zpu sob aplikace tohoto omezenõ.\n3. Bez ohledu na ustanovenõ odstavce 2 budou\núroky majõcõ zdroj v jednom smluvnõm státe a pobõrané\na skutecne vlastnené vládou druhého smluvnõho státu,\nvcetne nizsõch správnõch útvaru a mõstnõch úradu to-\nhoto státu, centrálnõ bankou nebo jakoukoli financnõ\ninstitucõ zcela vlastnenou touto vládou nebo úroky po-\nbõrané z pu jcek garantovaných touto vládou osvobo-\nzeny od zdanenõ v prvne zmõneném smluvnõm státe.\n4. Výraz 1úrokya pouzitý v tomto clánku ozna-\ncuje prõjmy z pohledávek jakéhokoliv druhu, at' zajis-\ntených ci nezajistených zástavnõm právem na nemovi-\ntosti nebo majõcõch ci nemajõcõch právo úcasti na zisku\ndluznõka, a zvláste prõjmy z vládnõch cenných papõru\na prõjmy z obligacõ nebo dluhopisu , vcetne prémiõ a vý-\nher, které se vázou k temto cenným papõru m, obliga-\ncõm nebo dluhopisu m.\n5. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk úroku , který je rezidentem jednoho\nsmluvnõho státu, vykonává v druhém smluvnõm státe,\nve kterém majõ úroky zdroj, pru myslovou",
+      "source_url": "https://e-sbirka.gov.cz/sb/1999/103/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "article": 36,
+      "conditions": [],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "2026-04-01",
+      "evidence_source_ids": [
+        "CZ-ZDP-2026-04-01-OPEN-DATA"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "domestic_law",
+      "legal_layer": "domestic",
+      "paragraph": "1(a)(1)",
+      "priority": 900,
+      "rate": 15,
+      "recipient_country": "UA",
+      "review_package_sha256": "571232f8866532f41ee1c700a998a0b3a5c3545e022b557efbfd189b4b3858f4",
+      "rule_id": "CZ-UA-ROYALTY-DOMESTIC",
+      "source_country": "CZ",
+      "source_excerpt_hash": "aa1100129d4ba33a4efeeb3258bfc621281f11b160890ba7a898e71318bd643d",
+      "source_id": "CZ-ZDP-2026-04-01-OPEN-DATA",
+      "source_representation": "approved_structured_projection",
+      "source_text": "Current Czech domestic withholding tax standard rate represented in the approved Stage 6 package: 15.0%.",
+      "source_url": "https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/1992/586/2026-04-01",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-08-11",
+      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approved_article_text_sha256": "4360d513437145630e3c1ddb2d63eeaadbf2bd2c6a1af76d9929028d6b7b12ed",
+      "article": 12,
+      "conditions": [
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "effect": "rate",
+      "effective_from": "1999-04-20",
+      "evidence_source_ids": [
+        "SRC-1D74C3BA794BFE66"
+      ],
+      "income_type": "royalty",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 691,
+      "rate": 10,
+      "recipient_country": "UA",
+      "review_package_sha256": "571232f8866532f41ee1c700a998a0b3a5c3545e022b557efbfd189b4b3858f4",
+      "rule_id": "CZ-UA-ROYALTY-CURRENT-1",
+      "source_country": "CZ",
+      "source_excerpt_hash": "d9c07a85aaea928b4a736a5d9cc577dc7ae4d38b9df1e4ae481bacf869fe3a14",
+      "source_id": "SRC-1D74C3BA794BFE66",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "Licencnõ poplatky\n1. Licencnõ poplatky majõcõ zdroj v jednom\nsmluvnõm státe a vyplácené rezidentu druhého smluv-\nnõho státu mohou být zdaneny v tomto druhém státe.\n2. Tyto licencnõ poplatky vsak mohou být rovnez\nzdaneny ve smluvnõm státe, v nemz majõ zdroj, a to\npodle právnõch predpisu tohoto státu, avsak jestlize\nskutecný vlastnõk licencnõch poplatku je rezidentem\ndruhého smluvnõho státu, dan takto ulozená nepre-\nsáhne 10 procent hrubé cástky licencnõch poplatku .\nPřõslusné úrady smluvnõch státu upravõ vzájemnou do-\nhodou zpu sob aplikace tohoto omezenõ.\n3. Výraz 1licencnõ poplatkya pouzitý v tomto\nclánku oznacuje platby jakéhokoliv druhu obdrzené\njako náhrada za uzitõ nebo za právo na uzitõ jakéhoko-\nliv autorského práva k dõlu literárnõmu, umeleckému\nnebo vedeckému (vcetne kinematografických filmu\na filmu nebo nahrávek pro rozhlasové nebo televiznõ\nvysõlánõ), jakéhokoliv patentu, ochranné známky, ná-\nvrhu nebo modelu, plánu, tajného vzorce nebo výrob-\nnõho postupu nebo jakéhokoliv pru myslového, ob-\nchodnõho nebo vedeckého zarõzenõ nebo za informace\n(know-how), které se vztahujõ na zkusenosti nabyté\nv oblasti pru myslové, obchodnõ nebo vedecké.\n4. Ustanovenõ odstavcu 1 a 2 tohoto clánku se\nnepouzijõ, jestlize skutecný vlastnõk licencnõch po-\nplatku , který je rezidentem jednoho smluvnõho státu,\nvykonává v druhém smluvnõm státe, ve kterém majõ\nlicencnõ poplatky zdroj, pru myslovou nebo obchodnõ\ncinnost prostrednictvõm stálé provozovny, která je tam\numõstena, nebo vykonává v",
+      "source_url": "https://e-sbirka.gov.cz/sb/1999/103/0000-00-00",
+      "verification_authority": "stage6_governance_policy",
+      "verification_status": "verified"
+    }
+  ],
+  "schema_version": 3,
+  "stage6_production": {
+    "additional_human_review_claimed": false,
+    "package_sha256": "8c9b136ad97f6e5c1ce0e682ecda23447f1110902984078e865b8b776539efbf",
+    "production_approval": "not_approved",
+    "rule_promotion": "not_promoted",
+    "source_release": "not_released",
+    "treaty_pair_id": "CZ-UA",
+    "verification_authority": "semantic_remediation_machine_projection"
+  }
+}
