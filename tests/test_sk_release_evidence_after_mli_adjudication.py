@@ -59,7 +59,7 @@ def test_corrected_mli_population_is_locked():
     )
 
 
-def test_mli_reconfirmation_does_not_bypass_structured_rule_gate():
+def test_mli_reconfirmation_and_full_structured_coverage_allow_source_country_release():
     manifest = load(MANIFEST)
     coverage = load(COVERAGE)
 
@@ -72,9 +72,11 @@ def test_mli_reconfirmation_does_not_bypass_structured_rule_gate():
         == "mli_final_reconfirmation_packet_2026.json"
     )
 
-    assert manifest["release_eligible"] is False
-    assert manifest["release_status"] == "pre_release"
-    assert manifest["blockers"] == ["structured_sk_treaty_rules_not_materialized"]
+    assert manifest["release_eligible"] is True
+    assert manifest["release_status"] == "released"
+    assert manifest["blockers"] == []
+    assert manifest["structured_treaty_rule_materialization"]["structured_scope_coverage"] == 225
+    assert manifest["structured_treaty_rule_materialization"]["rule_level_fail_closed"] is True
 
     assert (
         manifest["mli_final_reviewer_reconfirmation_required"]
