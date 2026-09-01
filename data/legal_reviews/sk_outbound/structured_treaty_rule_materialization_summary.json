@@ -3,8 +3,8 @@
   "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
   "source_country": "SK",
   "total_scopes": 225,
-  "materialized_scopes": 139,
-  "unresolved_scopes": 86,
+  "materialized_scopes": 141,
+  "unresolved_scopes": 84,
   "materialized_country_packages": 68,
   "materialized_scope_keys": [
     "SK-AE-interest",
@@ -59,6 +59,7 @@
     "SK-ID-interest",
     "SK-IL-dividend",
     "SK-IL-royalty",
+    "SK-IN-dividend",
     "SK-IN-royalty",
     "SK-IR-interest",
     "SK-IR-royalty",
@@ -133,6 +134,7 @@
     "SK-TM-dividend",
     "SK-TM-interest",
     "SK-TM-royalty",
+    "SK-TN-dividend",
     "SK-TN-interest",
     "SK-TR-interest",
     "SK-TR-royalty",
@@ -149,13 +151,13 @@
   ],
   "materialization_modes": {
     "simple_single_rate": 80,
-    "source_text_dividend_branch_pair": 17,
+    "source_text_dividend_branch_pair": 19,
     "source_text_interest_residence_only": 11,
     "source_text_interest_special_exemption": 29,
     "source_text_royalty_category_branches": 2
   },
   "unresolved_by_income": {
-    "dividend": 42,
+    "dividend": 40,
     "interest": 21,
     "royalty": 23
   },
@@ -415,17 +417,6 @@
       ],
       "exclusive_residence_taxation_candidate": false,
       "ownership_linked_rate_candidate_count": 0,
-      "holding_period_candidates": []
-    },
-    {
-      "recipient_country": "IN",
-      "income_type": "dividend",
-      "rate_candidates": [
-        15.0,
-        25.0
-      ],
-      "exclusive_residence_taxation_candidate": false,
-      "ownership_linked_rate_candidate_count": 2,
       "holding_period_candidates": []
     },
     {
@@ -905,17 +896,6 @@
       ],
       "exclusive_residence_taxation_candidate": false,
       "ownership_linked_rate_candidate_count": 0,
-      "holding_period_candidates": []
-    },
-    {
-      "recipient_country": "TN",
-      "income_type": "dividend",
-      "rate_candidates": [
-        10.0,
-        15.0
-      ],
-      "exclusive_residence_taxation_candidate": false,
-      "ownership_linked_rate_candidate_count": 2,
       "holding_period_candidates": []
     },
     {
