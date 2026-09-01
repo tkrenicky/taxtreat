@@ -3,8 +3,8 @@
   "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
   "source_country": "SK",
   "total_scopes": 225,
-  "materialized_scopes": 138,
-  "unresolved_scopes": 87,
+  "materialized_scopes": 139,
+  "unresolved_scopes": 86,
   "materialized_country_packages": 68,
   "materialized_scope_keys": [
     "SK-AE-interest",
@@ -27,6 +27,7 @@
     "SK-BG-interest",
     "SK-BG-royalty",
     "SK-BR-dividend",
+    "SK-BR-royalty",
     "SK-BY-interest",
     "SK-CA-dividend",
     "SK-CA-interest",
@@ -151,7 +152,12 @@
     "source_text_dividend_branch_pair": 17,
     "source_text_interest_residence_only": 11,
     "source_text_interest_special_exemption": 29,
-    "source_text_royalty_category_branches": 1
+    "source_text_royalty_category_branches": 2
+  },
+  "unresolved_by_income": {
+    "dividend": 42,
+    "interest": 21,
+    "royalty": 23
   },
   "unresolved": [
     {
@@ -230,17 +236,6 @@
       "income_type": "interest",
       "rate_candidates": [
         10.0,
-        15.0
-      ],
-      "exclusive_residence_taxation_candidate": false,
-      "ownership_linked_rate_candidate_count": 0,
-      "holding_period_candidates": []
-    },
-    {
-      "recipient_country": "BR",
-      "income_type": "royalty",
-      "rate_candidates": [
-        25.0,
         15.0
       ],
       "exclusive_residence_taxation_candidate": false,
