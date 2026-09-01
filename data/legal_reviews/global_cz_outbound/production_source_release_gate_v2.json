@@ -51,18 +51,16 @@
   "treaty_partner_count": 101,
   "treaty_partners": [
     {
-      "active_rule_allowed": false,
-      "fail_closed": true,
-      "human_review_status": "needs_review",
+      "active_rule_allowed": true,
+      "fail_closed": false,
+      "human_review_status": "historical_review_complete_machine_revalidated",
       "independent_qa_status": "not_required",
       "package_sha256": "6a2fecb997238bfcd6eb6eeee0e03d6add49c15b4485740cec50868de61aef1a",
       "partner_country": "AD",
-      "production_approval_eligible": false,
-      "production_approval_status": "not_approved",
-      "production_ready": false,
-      "release_blockers": [
-        "semantic_remediation_requires_hash_bound_human_review"
-      ],
+      "production_approval_eligible": true,
+      "production_approval_status": "production_approved",
+      "production_ready": true,
+      "release_blockers": [],
       "release_evidence": {
         "current_package_sha256": "6a2fecb997238bfcd6eb6eeee0e03d6add49c15b4485740cec50868de61aef1a",
         "legacy_release_evidence": {
@@ -82,36 +80,35 @@
           "withholding_effective_date": null
         },
         "production_approval_event": {
-          "additional_human_review_claimed": false,
+          "event_type": "semantic_remediation_machine_validation",
+          "dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
           "approval_authority": "stage6_governance_policy",
-          "created_at": "2026-08-11T21:15:31Z",
-          "dataset_release": "stage6-production-approval-2026-08-11.1",
-          "event_type": "governance_production_approval",
-          "package_sha256": "8e5f5ec44384877de647407effe5391311110662fb3b82117fb23a643d9b16dd"
+          "additional_human_review_claimed": false,
+          "package_sha256": "6a2fecb997238bfcd6eb6eeee0e03d6add49c15b4485740cec50868de61aef1a"
         },
         "rule_promotion_event": {
-          "dataset_release": "stage6-rule-promotion-2026-08-12.1",
-          "event_type": "deterministic_production_rule_promotion",
-          "package_sha256": "8e5f5ec44384877de647407effe5391311110662fb3b82117fb23a643d9b16dd",
-          "partner_country": "AD",
+          "event_type": "deterministic_semantic_remediation_rule_promotion",
+          "dataset_release": "stage6-semantic-remediation-rule-promotion-2026-09-01.1",
           "promotion_authority": "stage6_governance_policy",
+          "package_sha256": "6a2fecb997238bfcd6eb6eeee0e03d6add49c15b4485740cec50868de61aef1a",
+          "partner_country": "AD",
           "rule_count": 8,
           "rule_file": "data/legal_rules_stage6/ad.json",
-          "rule_file_sha256": "cbcdcf8ea926f0b11d260bbcde617dd756bcde21a17e50a34f4b078205234c1b",
+          "rule_file_sha256": "3b52e488e2eb4b495640764437713e2aa350d315d5ef042c1b1e4f2b1257d609",
           "rule_promotion_status": "promoted",
           "scope_count": 3,
           "source_release_status": "not_released",
           "treaty_pair_id": "CZ-AD"
         },
         "source_release_event": {
-          "dataset_release": "stage6-source-release-2026-08-12.1",
-          "event_type": "explicit_stage6_source_release",
-          "package_sha256": "8e5f5ec44384877de647407effe5391311110662fb3b82117fb23a643d9b16dd",
-          "production_approval_status": "production_approved",
+          "event_type": "explicit_semantic_remediation_source_release",
+          "dataset_release": "stage6-semantic-remediation-source-release-2026-09-01.1",
           "release_authority": "stage6_governance_policy",
+          "package_sha256": "6a2fecb997238bfcd6eb6eeee0e03d6add49c15b4485740cec50868de61aef1a",
+          "production_approval_status": "production_approved",
           "released_scopes": 3,
           "rule_file": "data/legal_rules_stage6/ad.json",
-          "rule_file_sha256": "cbcdcf8ea926f0b11d260bbcde617dd756bcde21a17e50a34f4b078205234c1b",
+          "rule_file_sha256": "3b52e488e2eb4b495640764437713e2aa350d315d5ef042c1b1e4f2b1257d609",
           "rule_promotion_status": "promoted",
           "source_release_status": "released",
           "treaty_pair_id": "CZ-AD"
@@ -125,15 +122,15 @@
           "reviewed_package_sha256": null
         },
         "semantic_remediation": {
-          "status": "pending_hash_bound_human_review",
-          "prior_released_package_sha256": "8e5f5ec44384877de647407effe5391311110662fb3b82117fb23a643d9b16dd",
+          "status": "machine_validated_and_released",
           "current_package_sha256": "6a2fecb997238bfcd6eb6eeee0e03d6add49c15b4485740cec50868de61aef1a",
-          "production_approval_allowed": false,
-          "automatic_approval_forbidden": true
+          "production_approval_allowed": true,
+          "automatic_approval_forbidden": false,
+          "additional_human_review_claimed": false
         }
       },
-      "release_status": "not_released",
-      "rule_promotion_status": "not_promoted",
+      "release_status": "released",
+      "rule_promotion_status": "promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-AD"
     },
@@ -216,18 +213,16 @@
       "treaty_pair_id": "CZ-AE"
     },
     {
-      "active_rule_allowed": false,
-      "fail_closed": true,
-      "human_review_status": "needs_review",
+      "active_rule_allowed": true,
+      "fail_closed": false,
+      "human_review_status": "historical_review_complete_machine_revalidated",
       "independent_qa_status": "not_required",
       "package_sha256": "9cb2be4e34f7f234d71391df5dd2923201dc4a079ff12c19b86e0806b510b3f7",
       "partner_country": "AL",
-      "production_approval_eligible": false,
-      "production_approval_status": "not_approved",
-      "production_ready": false,
-      "release_blockers": [
-        "semantic_remediation_requires_hash_bound_human_review"
-      ],
+      "production_approval_eligible": true,
+      "production_approval_status": "production_approved",
+      "production_ready": true,
+      "release_blockers": [],
       "release_evidence": {
         "current_package_sha256": "9cb2be4e34f7f234d71391df5dd2923201dc4a079ff12c19b86e0806b510b3f7",
         "legacy_release_evidence": {
@@ -247,36 +242,35 @@
           "withholding_effective_date": null
         },
         "production_approval_event": {
-          "additional_human_review_claimed": false,
+          "event_type": "semantic_remediation_machine_validation",
+          "dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
           "approval_authority": "stage6_governance_policy",
-          "created_at": "2026-08-11T21:15:31Z",
-          "dataset_release": "stage6-production-approval-2026-08-11.1",
-          "event_type": "governance_production_approval",
-          "package_sha256": "0cf3f81f175d833056c9d292bcadf35e191d5611986f75175b9e119703d12f9c"
+          "additional_human_review_claimed": false,
+          "package_sha256": "9cb2be4e34f7f234d71391df5dd2923201dc4a079ff12c19b86e0806b510b3f7"
         },
         "rule_promotion_event": {
-          "dataset_release": "stage6-rule-promotion-2026-08-12.1",
-          "event_type": "deterministic_production_rule_promotion",
-          "package_sha256": "0cf3f81f175d833056c9d292bcadf35e191d5611986f75175b9e119703d12f9c",
-          "partner_country": "AL",
+          "event_type": "deterministic_semantic_remediation_rule_promotion",
+          "dataset_release": "stage6-semantic-remediation-rule-promotion-2026-09-01.1",
           "promotion_authority": "stage6_governance_policy",
+          "package_sha256": "9cb2be4e34f7f234d71391df5dd2923201dc4a079ff12c19b86e0806b510b3f7",
+          "partner_country": "AL",
           "rule_count": 8,
           "rule_file": "data/legal_rules_stage6/al.json",
-          "rule_file_sha256": "14d87f991b4db5a6b4dcd5835aeb24ad96eef6beb20efde9848d49ae6b08f35c",
+          "rule_file_sha256": "a6aa117a230add5d1bc0c5eb3f69539aadcca97b903d522b57d4a61c9106ae28",
           "rule_promotion_status": "promoted",
           "scope_count": 3,
           "source_release_status": "not_released",
           "treaty_pair_id": "CZ-AL"
         },
         "source_release_event": {
-          "dataset_release": "stage6-source-release-2026-08-12.1",
-          "event_type": "explicit_stage6_source_release",
-          "package_sha256": "0cf3f81f175d833056c9d292bcadf35e191d5611986f75175b9e119703d12f9c",
-          "production_approval_status": "production_approved",
+          "event_type": "explicit_semantic_remediation_source_release",
+          "dataset_release": "stage6-semantic-remediation-source-release-2026-09-01.1",
           "release_authority": "stage6_governance_policy",
+          "package_sha256": "9cb2be4e34f7f234d71391df5dd2923201dc4a079ff12c19b86e0806b510b3f7",
+          "production_approval_status": "production_approved",
           "released_scopes": 3,
           "rule_file": "data/legal_rules_stage6/al.json",
-          "rule_file_sha256": "14d87f991b4db5a6b4dcd5835aeb24ad96eef6beb20efde9848d49ae6b08f35c",
+          "rule_file_sha256": "a6aa117a230add5d1bc0c5eb3f69539aadcca97b903d522b57d4a61c9106ae28",
           "rule_promotion_status": "promoted",
           "source_release_status": "released",
           "treaty_pair_id": "CZ-AL"
@@ -290,15 +284,15 @@
           "reviewed_package_sha256": null
         },
         "semantic_remediation": {
-          "status": "pending_hash_bound_human_review",
-          "prior_released_package_sha256": "0cf3f81f175d833056c9d292bcadf35e191d5611986f75175b9e119703d12f9c",
+          "status": "machine_validated_and_released",
           "current_package_sha256": "9cb2be4e34f7f234d71391df5dd2923201dc4a079ff12c19b86e0806b510b3f7",
-          "production_approval_allowed": false,
-          "automatic_approval_forbidden": true
+          "production_approval_allowed": true,
+          "automatic_approval_forbidden": false,
+          "additional_human_review_claimed": false
         }
       },
-      "release_status": "not_released",
-      "rule_promotion_status": "not_promoted",
+      "release_status": "released",
+      "rule_promotion_status": "promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-AL"
     },
@@ -693,18 +687,16 @@
       "treaty_pair_id": "CZ-BA"
     },
     {
-      "active_rule_allowed": false,
-      "fail_closed": true,
-      "human_review_status": "needs_review",
+      "active_rule_allowed": true,
+      "fail_closed": false,
+      "human_review_status": "historical_review_complete_machine_revalidated",
       "independent_qa_status": "not_required",
       "package_sha256": "f5c917ef2a18235d13d99b7ca469a12460a1f85093390f1e978a83bf68b3493b",
       "partner_country": "BB",
-      "production_approval_eligible": false,
-      "production_approval_status": "not_approved",
-      "production_ready": false,
-      "release_blockers": [
-        "semantic_remediation_requires_hash_bound_human_review"
-      ],
+      "production_approval_eligible": true,
+      "production_approval_status": "production_approved",
+      "production_ready": true,
+      "release_blockers": [],
       "release_evidence": {
         "current_package_sha256": "f5c917ef2a18235d13d99b7ca469a12460a1f85093390f1e978a83bf68b3493b",
         "legacy_release_evidence": {
@@ -724,36 +716,35 @@
           "withholding_effective_date": null
         },
         "production_approval_event": {
-          "additional_human_review_claimed": false,
+          "event_type": "semantic_remediation_machine_validation",
+          "dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
           "approval_authority": "stage6_governance_policy",
-          "created_at": "2026-08-11T21:15:31Z",
-          "dataset_release": "stage6-production-approval-2026-08-11.1",
-          "event_type": "governance_production_approval",
-          "package_sha256": "2a8c6b2b3f014bfefa8f7886c58376c6a97a5b233e68dc401f11f165b5f3ebbf"
+          "additional_human_review_claimed": false,
+          "package_sha256": "f5c917ef2a18235d13d99b7ca469a12460a1f85093390f1e978a83bf68b3493b"
         },
         "rule_promotion_event": {
-          "dataset_release": "stage6-rule-promotion-2026-08-12.1",
-          "event_type": "deterministic_production_rule_promotion",
-          "package_sha256": "2a8c6b2b3f014bfefa8f7886c58376c6a97a5b233e68dc401f11f165b5f3ebbf",
-          "partner_country": "BB",
+          "event_type": "deterministic_semantic_remediation_rule_promotion",
+          "dataset_release": "stage6-semantic-remediation-rule-promotion-2026-09-01.1",
           "promotion_authority": "stage6_governance_policy",
+          "package_sha256": "f5c917ef2a18235d13d99b7ca469a12460a1f85093390f1e978a83bf68b3493b",
+          "partner_country": "BB",
           "rule_count": 9,
           "rule_file": "data/legal_rules_stage6/bb.json",
-          "rule_file_sha256": "4bec6aa8b746f12745f1cafabf955e1212c90a8b140533a5f9f4315eec72f92b",
+          "rule_file_sha256": "3ef1e93e84b6c3faadc87c14616b52d1b78bb0c2761fc17b93cad317b4830ef9",
           "rule_promotion_status": "promoted",
           "scope_count": 3,
           "source_release_status": "not_released",
           "treaty_pair_id": "CZ-BB"
         },
         "source_release_event": {
-          "dataset_release": "stage6-source-release-2026-08-12.1",
-          "event_type": "explicit_stage6_source_release",
-          "package_sha256": "2a8c6b2b3f014bfefa8f7886c58376c6a97a5b233e68dc401f11f165b5f3ebbf",
-          "production_approval_status": "production_approved",
+          "event_type": "explicit_semantic_remediation_source_release",
+          "dataset_release": "stage6-semantic-remediation-source-release-2026-09-01.1",
           "release_authority": "stage6_governance_policy",
+          "package_sha256": "f5c917ef2a18235d13d99b7ca469a12460a1f85093390f1e978a83bf68b3493b",
+          "production_approval_status": "production_approved",
           "released_scopes": 3,
           "rule_file": "data/legal_rules_stage6/bb.json",
-          "rule_file_sha256": "4bec6aa8b746f12745f1cafabf955e1212c90a8b140533a5f9f4315eec72f92b",
+          "rule_file_sha256": "3ef1e93e84b6c3faadc87c14616b52d1b78bb0c2761fc17b93cad317b4830ef9",
           "rule_promotion_status": "promoted",
           "source_release_status": "released",
           "treaty_pair_id": "CZ-BB"
@@ -767,31 +758,29 @@
           "reviewed_package_sha256": null
         },
         "semantic_remediation": {
-          "status": "pending_hash_bound_human_review",
-          "prior_released_package_sha256": "2a8c6b2b3f014bfefa8f7886c58376c6a97a5b233e68dc401f11f165b5f3ebbf",
+          "status": "machine_validated_and_released",
           "current_package_sha256": "f5c917ef2a18235d13d99b7ca469a12460a1f85093390f1e978a83bf68b3493b",
-          "production_approval_allowed": false,
-          "automatic_approval_forbidden": true
+          "production_approval_allowed": true,
+          "automatic_approval_forbidden": false,
+          "additional_human_review_claimed": false
         }
       },
-      "release_status": "not_released",
-      "rule_promotion_status": "not_promoted",
+      "release_status": "released",
+      "rule_promotion_status": "promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-BB"
     },
     {
-      "active_rule_allowed": false,
-      "fail_closed": true,
-      "human_review_status": "needs_review",
+      "active_rule_allowed": true,
+      "fail_closed": false,
+      "human_review_status": "historical_review_complete_machine_revalidated",
       "independent_qa_status": "not_required",
       "package_sha256": "342275c1e824d07e57af9b4f0e9d86a9e7ae20cc19fe7008da795a21dbd3f394",
       "partner_country": "BD",
-      "production_approval_eligible": false,
-      "production_approval_status": "not_approved",
-      "production_ready": false,
-      "release_blockers": [
-        "semantic_remediation_requires_hash_bound_human_review"
-      ],
+      "production_approval_eligible": true,
+      "production_approval_status": "production_approved",
+      "production_ready": true,
+      "release_blockers": [],
       "release_evidence": {
         "current_package_sha256": "342275c1e824d07e57af9b4f0e9d86a9e7ae20cc19fe7008da795a21dbd3f394",
         "legacy_release_evidence": {
@@ -811,36 +800,35 @@
           "withholding_effective_date": null
         },
         "production_approval_event": {
-          "additional_human_review_claimed": false,
+          "event_type": "semantic_remediation_machine_validation",
+          "dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
           "approval_authority": "stage6_governance_policy",
-          "created_at": "2026-08-11T21:15:31Z",
-          "dataset_release": "stage6-production-approval-2026-08-11.1",
-          "event_type": "governance_production_approval",
-          "package_sha256": "0c873e0915a646dd8d546a8f3994b95c68c306c1f7056b38b1c09773f7c4f4d7"
+          "additional_human_review_claimed": false,
+          "package_sha256": "342275c1e824d07e57af9b4f0e9d86a9e7ae20cc19fe7008da795a21dbd3f394"
         },
         "rule_promotion_event": {
-          "dataset_release": "stage6-rule-promotion-2026-08-12.1",
-          "event_type": "deterministic_production_rule_promotion",
-          "package_sha256": "0c873e0915a646dd8d546a8f3994b95c68c306c1f7056b38b1c09773f7c4f4d7",
-          "partner_country": "BD",
+          "event_type": "deterministic_semantic_remediation_rule_promotion",
+          "dataset_release": "stage6-semantic-remediation-rule-promotion-2026-09-01.1",
           "promotion_authority": "stage6_governance_policy",
+          "package_sha256": "342275c1e824d07e57af9b4f0e9d86a9e7ae20cc19fe7008da795a21dbd3f394",
+          "partner_country": "BD",
           "rule_count": 8,
           "rule_file": "data/legal_rules_stage6/bd.json",
-          "rule_file_sha256": "6a583640c79f278b4c1d9221b4cb6964909867d942a80c2cd45cb6b33caff140",
+          "rule_file_sha256": "03417ded2d9fa2e736500bf924d0044b7d353f88aca50a5e29dcf142a60c9ec0",
           "rule_promotion_status": "promoted",
           "scope_count": 3,
           "source_release_status": "not_released",
           "treaty_pair_id": "CZ-BD"
         },
         "source_release_event": {
-          "dataset_release": "stage6-source-release-2026-08-12.1",
-          "event_type": "explicit_stage6_source_release",
-          "package_sha256": "0c873e0915a646dd8d546a8f3994b95c68c306c1f7056b38b1c09773f7c4f4d7",
-          "production_approval_status": "production_approved",
+          "event_type": "explicit_semantic_remediation_source_release",
+          "dataset_release": "stage6-semantic-remediation-source-release-2026-09-01.1",
           "release_authority": "stage6_governance_policy",
+          "package_sha256": "342275c1e824d07e57af9b4f0e9d86a9e7ae20cc19fe7008da795a21dbd3f394",
+          "production_approval_status": "production_approved",
           "released_scopes": 3,
           "rule_file": "data/legal_rules_stage6/bd.json",
-          "rule_file_sha256": "6a583640c79f278b4c1d9221b4cb6964909867d942a80c2cd45cb6b33caff140",
+          "rule_file_sha256": "03417ded2d9fa2e736500bf924d0044b7d353f88aca50a5e29dcf142a60c9ec0",
           "rule_promotion_status": "promoted",
           "source_release_status": "released",
           "treaty_pair_id": "CZ-BD"
@@ -854,31 +842,29 @@
           "reviewed_package_sha256": "94ebe6924727e60eca34ee2ca176b3d4698ef378320ec73afcc23314359ea383"
         },
         "semantic_remediation": {
-          "status": "pending_hash_bound_human_review",
-          "prior_released_package_sha256": "0c873e0915a646dd8d546a8f3994b95c68c306c1f7056b38b1c09773f7c4f4d7",
+          "status": "machine_validated_and_released",
           "current_package_sha256": "342275c1e824d07e57af9b4f0e9d86a9e7ae20cc19fe7008da795a21dbd3f394",
-          "production_approval_allowed": false,
-          "automatic_approval_forbidden": true
+          "production_approval_allowed": true,
+          "automatic_approval_forbidden": false,
+          "additional_human_review_claimed": false
         }
       },
-      "release_status": "not_released",
-      "rule_promotion_status": "not_promoted",
+      "release_status": "released",
+      "rule_promotion_status": "promoted",
       "secondary_ai_qa_status": "secondary_ai_crosscheck_complete",
       "treaty_pair_id": "CZ-BD"
     },
     {
-      "active_rule_allowed": false,
-      "fail_closed": true,
-      "human_review_status": "needs_review",
+      "active_rule_allowed": true,
+      "fail_closed": false,
+      "human_review_status": "historical_review_complete_machine_revalidated",
       "independent_qa_status": "not_required",
       "package_sha256": "c8e49524ffd637ad72745f2c7785231542196d428fba39a8a48bb36e4acebcaa",
       "partner_country": "BE",
-      "production_approval_eligible": false,
-      "production_approval_status": "not_approved",
-      "production_ready": false,
-      "release_blockers": [
-        "semantic_remediation_requires_hash_bound_human_review"
-      ],
+      "production_approval_eligible": true,
+      "production_approval_status": "production_approved",
+      "production_ready": true,
+      "release_blockers": [],
       "release_evidence": {
         "current_package_sha256": "c8e49524ffd637ad72745f2c7785231542196d428fba39a8a48bb36e4acebcaa",
         "legacy_release_evidence": {
@@ -898,36 +884,35 @@
           "withholding_effective_date": null
         },
         "production_approval_event": {
-          "additional_human_review_claimed": false,
+          "event_type": "semantic_remediation_machine_validation",
+          "dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
           "approval_authority": "stage6_governance_policy",
-          "created_at": "2026-08-11T21:15:31Z",
-          "dataset_release": "stage6-production-approval-2026-08-11.1",
-          "event_type": "governance_production_approval",
-          "package_sha256": "66fbc33c8b946d920ec7e491572fae858a368d6405daa3f49d8a14e02a3a997d"
+          "additional_human_review_claimed": false,
+          "package_sha256": "c8e49524ffd637ad72745f2c7785231542196d428fba39a8a48bb36e4acebcaa"
         },
         "rule_promotion_event": {
-          "dataset_release": "stage6-rule-promotion-2026-08-12.1",
-          "event_type": "deterministic_production_rule_promotion",
-          "package_sha256": "66fbc33c8b946d920ec7e491572fae858a368d6405daa3f49d8a14e02a3a997d",
-          "partner_country": "BE",
+          "event_type": "deterministic_semantic_remediation_rule_promotion",
+          "dataset_release": "stage6-semantic-remediation-rule-promotion-2026-09-01.1",
           "promotion_authority": "stage6_governance_policy",
+          "package_sha256": "c8e49524ffd637ad72745f2c7785231542196d428fba39a8a48bb36e4acebcaa",
+          "partner_country": "BE",
           "rule_count": 23,
           "rule_file": "data/legal_rules_stage6/be.json",
-          "rule_file_sha256": "16a7912e96f3d56debcafd86aebf482f3bd384197d2c2a9feedff9bfce06100f",
+          "rule_file_sha256": "e9c0d7622cb4efcbb71f1a76fc58b2bfe111c7d1c76a04f34ea774acc1aca42f",
           "rule_promotion_status": "promoted",
           "scope_count": 3,
           "source_release_status": "not_released",
           "treaty_pair_id": "CZ-BE"
         },
         "source_release_event": {
-          "dataset_release": "stage6-source-release-2026-08-12.1",
-          "event_type": "explicit_stage6_source_release",
-          "package_sha256": "66fbc33c8b946d920ec7e491572fae858a368d6405daa3f49d8a14e02a3a997d",
-          "production_approval_status": "production_approved",
+          "event_type": "explicit_semantic_remediation_source_release",
+          "dataset_release": "stage6-semantic-remediation-source-release-2026-09-01.1",
           "release_authority": "stage6_governance_policy",
+          "package_sha256": "c8e49524ffd637ad72745f2c7785231542196d428fba39a8a48bb36e4acebcaa",
+          "production_approval_status": "production_approved",
           "released_scopes": 3,
           "rule_file": "data/legal_rules_stage6/be.json",
-          "rule_file_sha256": "16a7912e96f3d56debcafd86aebf482f3bd384197d2c2a9feedff9bfce06100f",
+          "rule_file_sha256": "e9c0d7622cb4efcbb71f1a76fc58b2bfe111c7d1c76a04f34ea774acc1aca42f",
           "rule_promotion_status": "promoted",
           "source_release_status": "released",
           "treaty_pair_id": "CZ-BE"
@@ -941,15 +926,15 @@
           "reviewed_package_sha256": null
         },
         "semantic_remediation": {
-          "status": "pending_hash_bound_human_review",
-          "prior_released_package_sha256": "66fbc33c8b946d920ec7e491572fae858a368d6405daa3f49d8a14e02a3a997d",
+          "status": "machine_validated_and_released",
           "current_package_sha256": "c8e49524ffd637ad72745f2c7785231542196d428fba39a8a48bb36e4acebcaa",
-          "production_approval_allowed": false,
-          "automatic_approval_forbidden": true
+          "production_approval_allowed": true,
+          "automatic_approval_forbidden": false,
+          "additional_human_review_claimed": false
         }
       },
-      "release_status": "not_released",
-      "rule_promotion_status": "not_promoted",
+      "release_status": "released",
+      "rule_promotion_status": "promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-BE"
     },
@@ -1407,18 +1392,16 @@
       "treaty_pair_id": "CZ-CA"
     },
     {
-      "active_rule_allowed": false,
-      "fail_closed": true,
-      "human_review_status": "needs_review",
+      "active_rule_allowed": true,
+      "fail_closed": false,
+      "human_review_status": "historical_review_complete_machine_revalidated",
       "independent_qa_status": "not_required",
       "package_sha256": "74d74f237a9fec8c47271c51279263d11075474d51b274f0b72514c3dfcbadbb",
       "partner_country": "CH",
-      "production_approval_eligible": false,
-      "production_approval_status": "not_approved",
-      "production_ready": false,
-      "release_blockers": [
-        "semantic_remediation_requires_hash_bound_human_review"
-      ],
+      "production_approval_eligible": true,
+      "production_approval_status": "production_approved",
+      "production_ready": true,
+      "release_blockers": [],
       "release_evidence": {
         "current_package_sha256": "74d74f237a9fec8c47271c51279263d11075474d51b274f0b72514c3dfcbadbb",
         "legacy_release_evidence": {
@@ -1438,36 +1421,35 @@
           "withholding_effective_date": null
         },
         "production_approval_event": {
-          "additional_human_review_claimed": false,
+          "event_type": "semantic_remediation_machine_validation",
+          "dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
           "approval_authority": "stage6_governance_policy",
-          "created_at": "2026-08-11T21:15:31Z",
-          "dataset_release": "stage6-production-approval-2026-08-11.1",
-          "event_type": "governance_production_approval",
-          "package_sha256": "f4f3a756b17d4894a50f631954a031789745b77e67f8521ed045d74d15c3ed96"
+          "additional_human_review_claimed": false,
+          "package_sha256": "74d74f237a9fec8c47271c51279263d11075474d51b274f0b72514c3dfcbadbb"
         },
         "rule_promotion_event": {
-          "dataset_release": "stage6-rule-promotion-2026-08-12.1",
-          "event_type": "deterministic_production_rule_promotion",
-          "package_sha256": "f4f3a756b17d4894a50f631954a031789745b77e67f8521ed045d74d15c3ed96",
-          "partner_country": "CH",
+          "event_type": "deterministic_semantic_remediation_rule_promotion",
+          "dataset_release": "stage6-semantic-remediation-rule-promotion-2026-09-01.1",
           "promotion_authority": "stage6_governance_policy",
-          "rule_count": 24,
+          "package_sha256": "74d74f237a9fec8c47271c51279263d11075474d51b274f0b72514c3dfcbadbb",
+          "partner_country": "CH",
+          "rule_count": 25,
           "rule_file": "data/legal_rules_stage6/ch.json",
-          "rule_file_sha256": "cac844e777f5e44e5e541474b272fda65de149259e1d096c9a3938339f38d8ff",
+          "rule_file_sha256": "4b0d07e484b4cb8558d97d8219f34945bfab3e3f3e34c3f9cbf9576101ce0824",
           "rule_promotion_status": "promoted",
           "scope_count": 3,
           "source_release_status": "not_released",
           "treaty_pair_id": "CZ-CH"
         },
         "source_release_event": {
-          "dataset_release": "stage6-source-release-2026-08-12.1",
-          "event_type": "explicit_stage6_source_release",
-          "package_sha256": "f4f3a756b17d4894a50f631954a031789745b77e67f8521ed045d74d15c3ed96",
-          "production_approval_status": "production_approved",
+          "event_type": "explicit_semantic_remediation_source_release",
+          "dataset_release": "stage6-semantic-remediation-source-release-2026-09-01.1",
           "release_authority": "stage6_governance_policy",
+          "package_sha256": "74d74f237a9fec8c47271c51279263d11075474d51b274f0b72514c3dfcbadbb",
+          "production_approval_status": "production_approved",
           "released_scopes": 3,
           "rule_file": "data/legal_rules_stage6/ch.json",
-          "rule_file_sha256": "cac844e777f5e44e5e541474b272fda65de149259e1d096c9a3938339f38d8ff",
+          "rule_file_sha256": "4b0d07e484b4cb8558d97d8219f34945bfab3e3f3e34c3f9cbf9576101ce0824",
           "rule_promotion_status": "promoted",
           "source_release_status": "released",
           "treaty_pair_id": "CZ-CH"
@@ -1481,15 +1463,15 @@
           "reviewed_package_sha256": null
         },
         "semantic_remediation": {
-          "status": "pending_hash_bound_human_review",
-          "prior_released_package_sha256": "f4f3a756b17d4894a50f631954a031789745b77e67f8521ed045d74d15c3ed96",
+          "status": "machine_validated_and_released",
           "current_package_sha256": "74d74f237a9fec8c47271c51279263d11075474d51b274f0b72514c3dfcbadbb",
-          "production_approval_allowed": false,
-          "automatic_approval_forbidden": true
+          "production_approval_allowed": true,
+          "automatic_approval_forbidden": false,
+          "additional_human_review_claimed": false
         }
       },
-      "release_status": "not_released",
-      "rule_promotion_status": "not_promoted",
+      "release_status": "released",
+      "rule_promotion_status": "promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-CH"
     },
@@ -1650,18 +1632,16 @@
       "treaty_pair_id": "CZ-CM"
     },
     {
-      "active_rule_allowed": false,
-      "fail_closed": true,
-      "human_review_status": "needs_review",
+      "active_rule_allowed": true,
+      "fail_closed": false,
+      "human_review_status": "historical_review_complete_machine_revalidated",
       "independent_qa_status": "not_required",
       "package_sha256": "83353aceeb9ca0b59090381dd022da94121451b9bf0e7b1fc4722bbed21f54d1",
       "partner_country": "CN",
-      "production_approval_eligible": false,
-      "production_approval_status": "not_approved",
-      "production_ready": false,
-      "release_blockers": [
-        "semantic_remediation_requires_hash_bound_human_review"
-      ],
+      "production_approval_eligible": true,
+      "production_approval_status": "production_approved",
+      "production_ready": true,
+      "release_blockers": [],
       "release_evidence": {
         "current_package_sha256": "83353aceeb9ca0b59090381dd022da94121451b9bf0e7b1fc4722bbed21f54d1",
         "legacy_release_evidence": {
@@ -1681,36 +1661,35 @@
           "withholding_effective_date": null
         },
         "production_approval_event": {
-          "additional_human_review_claimed": false,
+          "event_type": "semantic_remediation_machine_validation",
+          "dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
           "approval_authority": "stage6_governance_policy",
-          "created_at": "2026-08-11T21:15:31Z",
-          "dataset_release": "stage6-production-approval-2026-08-11.1",
-          "event_type": "governance_production_approval",
-          "package_sha256": "437bcfcf1001a769d82b0aa1ef376ffc1754f13e185242167e708b6223099233"
+          "additional_human_review_claimed": false,
+          "package_sha256": "83353aceeb9ca0b59090381dd022da94121451b9bf0e7b1fc4722bbed21f54d1"
         },
         "rule_promotion_event": {
-          "dataset_release": "stage6-rule-promotion-2026-08-12.1",
-          "event_type": "deterministic_production_rule_promotion",
-          "package_sha256": "437bcfcf1001a769d82b0aa1ef376ffc1754f13e185242167e708b6223099233",
-          "partner_country": "CN",
+          "event_type": "deterministic_semantic_remediation_rule_promotion",
+          "dataset_release": "stage6-semantic-remediation-rule-promotion-2026-09-01.1",
           "promotion_authority": "stage6_governance_policy",
+          "package_sha256": "83353aceeb9ca0b59090381dd022da94121451b9bf0e7b1fc4722bbed21f54d1",
+          "partner_country": "CN",
           "rule_count": 8,
           "rule_file": "data/legal_rules_stage6/cn.json",
-          "rule_file_sha256": "79f53fe35e826bcc54a13c4f3dacf4242d6d2a3cc60ae033500c00c51b7b6d3f",
+          "rule_file_sha256": "7002f31495f885be38f0b318036622fc363470ee109f8879bd65112b94d0f441",
           "rule_promotion_status": "promoted",
           "scope_count": 3,
           "source_release_status": "not_released",
           "treaty_pair_id": "CZ-CN"
         },
         "source_release_event": {
-          "dataset_release": "stage6-source-release-2026-08-12.1",
-          "event_type": "explicit_stage6_source_release",
-          "package_sha256": "437bcfcf1001a769d82b0aa1ef376ffc1754f13e185242167e708b6223099233",
-          "production_approval_status": "production_approved",
+          "event_type": "explicit_semantic_remediation_source_release",
+          "dataset_release": "stage6-semantic-remediation-source-release-2026-09-01.1",
           "release_authority": "stage6_governance_policy",
+          "package_sha256": "83353aceeb9ca0b59090381dd022da94121451b9bf0e7b1fc4722bbed21f54d1",
+          "production_approval_status": "production_approved",
           "released_scopes": 3,
           "rule_file": "data/legal_rules_stage6/cn.json",
-          "rule_file_sha256": "79f53fe35e826bcc54a13c4f3dacf4242d6d2a3cc60ae033500c00c51b7b6d3f",
+          "rule_file_sha256": "7002f31495f885be38f0b318036622fc363470ee109f8879bd65112b94d0f441",
           "rule_promotion_status": "promoted",
           "source_release_status": "released",
           "treaty_pair_id": "CZ-CN"
@@ -1724,15 +1703,15 @@
           "reviewed_package_sha256": null
         },
         "semantic_remediation": {
-          "status": "pending_hash_bound_human_review",
-          "prior_released_package_sha256": "437bcfcf1001a769d82b0aa1ef376ffc1754f13e185242167e708b6223099233",
+          "status": "machine_validated_and_released",
           "current_package_sha256": "83353aceeb9ca0b59090381dd022da94121451b9bf0e7b1fc4722bbed21f54d1",
-          "production_approval_allowed": false,
-          "automatic_approval_forbidden": true
+          "production_approval_allowed": true,
+          "automatic_approval_forbidden": false,
+          "additional_human_review_claimed": false
         }
       },
-      "release_status": "not_released",
-      "rule_promotion_status": "not_promoted",
+      "release_status": "released",
+      "rule_promotion_status": "promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-CN"
     },
@@ -1815,18 +1794,16 @@
       "treaty_pair_id": "CZ-CO"
     },
     {
-      "active_rule_allowed": false,
-      "fail_closed": true,
-      "human_review_status": "needs_review",
+      "active_rule_allowed": true,
+      "fail_closed": false,
+      "human_review_status": "historical_review_complete_machine_revalidated",
       "independent_qa_status": "not_required",
       "package_sha256": "4901480bbb5d16cae1e9588b43ab34511d25d817bea266154d0def92d8e9d7ad",
       "partner_country": "CY",
-      "production_approval_eligible": false,
-      "production_approval_status": "not_approved",
-      "production_ready": false,
-      "release_blockers": [
-        "semantic_remediation_requires_hash_bound_human_review"
-      ],
+      "production_approval_eligible": true,
+      "production_approval_status": "production_approved",
+      "production_ready": true,
+      "release_blockers": [],
       "release_evidence": {
         "current_package_sha256": "4901480bbb5d16cae1e9588b43ab34511d25d817bea266154d0def92d8e9d7ad",
         "legacy_release_evidence": {
@@ -1846,36 +1823,35 @@
           "withholding_effective_date": null
         },
         "production_approval_event": {
-          "additional_human_review_claimed": false,
+          "event_type": "semantic_remediation_machine_validation",
+          "dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
           "approval_authority": "stage6_governance_policy",
-          "created_at": "2026-08-11T21:15:31Z",
-          "dataset_release": "stage6-production-approval-2026-08-11.1",
-          "event_type": "governance_production_approval",
-          "package_sha256": "c2118b3652fe7859034720b27a135c8423bbd3cd6d0de044e49a9d9b7605f43e"
+          "additional_human_review_claimed": false,
+          "package_sha256": "4901480bbb5d16cae1e9588b43ab34511d25d817bea266154d0def92d8e9d7ad"
         },
         "rule_promotion_event": {
-          "dataset_release": "stage6-rule-promotion-2026-08-12.1",
-          "event_type": "deterministic_production_rule_promotion",
-          "package_sha256": "c2118b3652fe7859034720b27a135c8423bbd3cd6d0de044e49a9d9b7605f43e",
-          "partner_country": "CY",
+          "event_type": "deterministic_semantic_remediation_rule_promotion",
+          "dataset_release": "stage6-semantic-remediation-rule-promotion-2026-09-01.1",
           "promotion_authority": "stage6_governance_policy",
+          "package_sha256": "4901480bbb5d16cae1e9588b43ab34511d25d817bea266154d0def92d8e9d7ad",
+          "partner_country": "CY",
           "rule_count": 21,
           "rule_file": "data/legal_rules_stage6/cy.json",
-          "rule_file_sha256": "8e4632bf68e0f072db87132c704b4258a772b5d12274c0428cb449e474004b64",
+          "rule_file_sha256": "6d51c510f8bea2508f048b4f8f5a95a3c09650423169e5306e4bb654bf1e8eb5",
           "rule_promotion_status": "promoted",
           "scope_count": 3,
           "source_release_status": "not_released",
           "treaty_pair_id": "CZ-CY"
         },
         "source_release_event": {
-          "dataset_release": "stage6-source-release-2026-08-12.1",
-          "event_type": "explicit_stage6_source_release",
-          "package_sha256": "c2118b3652fe7859034720b27a135c8423bbd3cd6d0de044e49a9d9b7605f43e",
-          "production_approval_status": "production_approved",
+          "event_type": "explicit_semantic_remediation_source_release",
+          "dataset_release": "stage6-semantic-remediation-source-release-2026-09-01.1",
           "release_authority": "stage6_governance_policy",
+          "package_sha256": "4901480bbb5d16cae1e9588b43ab34511d25d817bea266154d0def92d8e9d7ad",
+          "production_approval_status": "production_approved",
           "released_scopes": 3,
           "rule_file": "data/legal_rules_stage6/cy.json",
-          "rule_file_sha256": "8e4632bf68e0f072db87132c704b4258a772b5d12274c0428cb449e474004b64",
+          "rule_file_sha256": "6d51c510f8bea2508f048b4f8f5a95a3c09650423169e5306e4bb654bf1e8eb5",
           "rule_promotion_status": "promoted",
           "source_release_status": "released",
           "treaty_pair_id": "CZ-CY"
@@ -1889,15 +1865,15 @@
           "reviewed_package_sha256": null
         },
         "semantic_remediation": {
-          "status": "pending_hash_bound_human_review",
-          "prior_released_package_sha256": "c2118b3652fe7859034720b27a135c8423bbd3cd6d0de044e49a9d9b7605f43e",
+          "status": "machine_validated_and_released",
           "current_package_sha256": "4901480bbb5d16cae1e9588b43ab34511d25d817bea266154d0def92d8e9d7ad",
-          "production_approval_allowed": false,
-          "automatic_approval_forbidden": true
+          "production_approval_allowed": true,
+          "automatic_approval_forbidden": false,
+          "additional_human_review_claimed": false
         }
       },
-      "release_status": "not_released",
-      "rule_promotion_status": "not_promoted",
+      "release_status": "released",
+      "rule_promotion_status": "promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-CY"
     },
@@ -2058,18 +2034,16 @@
       "treaty_pair_id": "CZ-DK"
     },
     {
-      "active_rule_allowed": false,
-      "fail_closed": true,
-      "human_review_status": "needs_review",
+      "active_rule_allowed": true,
+      "fail_closed": false,
+      "human_review_status": "historical_review_complete_machine_revalidated",
       "independent_qa_status": "not_required",
       "package_sha256": "0b589c53fa07118255ccda2fa4c76f7d2db14a370afda2631d6d0f38bcaf03b9",
       "partner_country": "EE",
-      "production_approval_eligible": false,
-      "production_approval_status": "not_approved",
-      "production_ready": false,
-      "release_blockers": [
-        "semantic_remediation_requires_hash_bound_human_review"
-      ],
+      "production_approval_eligible": true,
+      "production_approval_status": "production_approved",
+      "production_ready": true,
+      "release_blockers": [],
       "release_evidence": {
         "current_package_sha256": "0b589c53fa07118255ccda2fa4c76f7d2db14a370afda2631d6d0f38bcaf03b9",
         "legacy_release_evidence": {
@@ -2089,36 +2063,35 @@
           "withholding_effective_date": null
         },
         "production_approval_event": {
-          "additional_human_review_claimed": false,
+          "event_type": "semantic_remediation_machine_validation",
+          "dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
           "approval_authority": "stage6_governance_policy",
-          "created_at": "2026-08-11T21:15:31Z",
-          "dataset_release": "stage6-production-approval-2026-08-11.1",
-          "event_type": "governance_production_approval",
-          "package_sha256": "5746ec0d86893aec98592c53d2ce67f066a57016d0068f6c41a5a0e3ac3a7a79"
+          "additional_human_review_claimed": false,
+          "package_sha256": "0b589c53fa07118255ccda2fa4c76f7d2db14a370afda2631d6d0f38bcaf03b9"
         },
         "rule_promotion_event": {
-          "dataset_release": "stage6-rule-promotion-2026-08-12.1",
-          "event_type": "deterministic_production_rule_promotion",
-          "package_sha256": "5746ec0d86893aec98592c53d2ce67f066a57016d0068f6c41a5a0e3ac3a7a79",
-          "partner_country": "EE",
+          "event_type": "deterministic_semantic_remediation_rule_promotion",
+          "dataset_release": "stage6-semantic-remediation-rule-promotion-2026-09-01.1",
           "promotion_authority": "stage6_governance_policy",
+          "package_sha256": "0b589c53fa07118255ccda2fa4c76f7d2db14a370afda2631d6d0f38bcaf03b9",
+          "partner_country": "EE",
           "rule_count": 22,
           "rule_file": "data/legal_rules_stage6/ee.json",
-          "rule_file_sha256": "41d2844df7da1c6bdb3b840f3e943b454757c8743ef54f225b697843f4482344",
+          "rule_file_sha256": "43b82007d5113bbf36a216f3529c76fe4d98f024fcb55463ed4b8826a07f5809",
           "rule_promotion_status": "promoted",
           "scope_count": 3,
           "source_release_status": "not_released",
           "treaty_pair_id": "CZ-EE"
         },
         "source_release_event": {
-          "dataset_release": "stage6-source-release-2026-08-12.1",
-          "event_type": "explicit_stage6_source_release",
-          "package_sha256": "5746ec0d86893aec98592c53d2ce67f066a57016d0068f6c41a5a0e3ac3a7a79",
-          "production_approval_status": "production_approved",
+          "event_type": "explicit_semantic_remediation_source_release",
+          "dataset_release": "stage6-semantic-remediation-source-release-2026-09-01.1",
           "release_authority": "stage6_governance_policy",
+          "package_sha256": "0b589c53fa07118255ccda2fa4c76f7d2db14a370afda2631d6d0f38bcaf03b9",
+          "production_approval_status": "production_approved",
           "released_scopes": 3,
           "rule_file": "data/legal_rules_stage6/ee.json",
-          "rule_file_sha256": "41d2844df7da1c6bdb3b840f3e943b454757c8743ef54f225b697843f4482344",
+          "rule_file_sha256": "43b82007d5113bbf36a216f3529c76fe4d98f024fcb55463ed4b8826a07f5809",
           "rule_promotion_status": "promoted",
           "source_release_status": "released",
           "treaty_pair_id": "CZ-EE"
@@ -2132,31 +2105,29 @@
           "reviewed_package_sha256": null
         },
         "semantic_remediation": {
-          "status": "pending_hash_bound_human_review",
-          "prior_released_package_sha256": "5746ec0d86893aec98592c53d2ce67f066a57016d0068f6c41a5a0e3ac3a7a79",
+          "status": "machine_validated_and_released",
           "current_package_sha256": "0b589c53fa07118255ccda2fa4c76f7d2db14a370afda2631d6d0f38bcaf03b9",
-          "production_approval_allowed": false,
-          "automatic_approval_forbidden": true
+          "production_approval_allowed": true,
+          "automatic_approval_forbidden": false,
+          "additional_human_review_claimed": false
         }
       },
-      "release_status": "not_released",
-      "rule_promotion_status": "not_promoted",
+      "release_status": "released",
+      "rule_promotion_status": "promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-EE"
     },
     {
-      "active_rule_allowed": false,
-      "fail_closed": true,
-      "human_review_status": "needs_review",
+      "active_rule_allowed": true,
+      "fail_closed": false,
+      "human_review_status": "historical_review_complete_machine_revalidated",
       "independent_qa_status": "not_required",
       "package_sha256": "24bd316a9a3ea306aa75512b5ed6e24bfe33069bed202576469c8436bdf9b2fb",
       "partner_country": "EG",
-      "production_approval_eligible": false,
-      "production_approval_status": "not_approved",
-      "production_ready": false,
-      "release_blockers": [
-        "semantic_remediation_requires_hash_bound_human_review"
-      ],
+      "production_approval_eligible": true,
+      "production_approval_status": "production_approved",
+      "production_ready": true,
+      "release_blockers": [],
       "release_evidence": {
         "current_package_sha256": "24bd316a9a3ea306aa75512b5ed6e24bfe33069bed202576469c8436bdf9b2fb",
         "legacy_release_evidence": {
@@ -2176,36 +2147,35 @@
           "withholding_effective_date": null
         },
         "production_approval_event": {
-          "additional_human_review_claimed": false,
+          "event_type": "semantic_remediation_machine_validation",
+          "dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
           "approval_authority": "stage6_governance_policy",
-          "created_at": "2026-08-11T21:15:31Z",
-          "dataset_release": "stage6-production-approval-2026-08-11.1",
-          "event_type": "governance_production_approval",
-          "package_sha256": "7d3c2404ea4281b314371174d797a94f0983ccd7122bfb9c78b3de1347de936c"
+          "additional_human_review_claimed": false,
+          "package_sha256": "24bd316a9a3ea306aa75512b5ed6e24bfe33069bed202576469c8436bdf9b2fb"
         },
         "rule_promotion_event": {
-          "dataset_release": "stage6-rule-promotion-2026-08-12.1",
-          "event_type": "deterministic_production_rule_promotion",
-          "package_sha256": "7d3c2404ea4281b314371174d797a94f0983ccd7122bfb9c78b3de1347de936c",
-          "partner_country": "EG",
+          "event_type": "deterministic_semantic_remediation_rule_promotion",
+          "dataset_release": "stage6-semantic-remediation-rule-promotion-2026-09-01.1",
           "promotion_authority": "stage6_governance_policy",
+          "package_sha256": "24bd316a9a3ea306aa75512b5ed6e24bfe33069bed202576469c8436bdf9b2fb",
+          "partner_country": "EG",
           "rule_count": 8,
           "rule_file": "data/legal_rules_stage6/eg.json",
-          "rule_file_sha256": "26ac8b2ad3d71eb4ad3506ef601f13f05966033e0a53ce9ad295bdf7b5b5a25b",
+          "rule_file_sha256": "eb1148b9f8fa5207f2fa101894165712832aad45ba9c8b8d6bdc8867e20a49c6",
           "rule_promotion_status": "promoted",
           "scope_count": 3,
           "source_release_status": "not_released",
           "treaty_pair_id": "CZ-EG"
         },
         "source_release_event": {
-          "dataset_release": "stage6-source-release-2026-08-12.1",
-          "event_type": "explicit_stage6_source_release",
-          "package_sha256": "7d3c2404ea4281b314371174d797a94f0983ccd7122bfb9c78b3de1347de936c",
-          "production_approval_status": "production_approved",
+          "event_type": "explicit_semantic_remediation_source_release",
+          "dataset_release": "stage6-semantic-remediation-source-release-2026-09-01.1",
           "release_authority": "stage6_governance_policy",
+          "package_sha256": "24bd316a9a3ea306aa75512b5ed6e24bfe33069bed202576469c8436bdf9b2fb",
+          "production_approval_status": "production_approved",
           "released_scopes": 3,
           "rule_file": "data/legal_rules_stage6/eg.json",
-          "rule_file_sha256": "26ac8b2ad3d71eb4ad3506ef601f13f05966033e0a53ce9ad295bdf7b5b5a25b",
+          "rule_file_sha256": "eb1148b9f8fa5207f2fa101894165712832aad45ba9c8b8d6bdc8867e20a49c6",
           "rule_promotion_status": "promoted",
           "source_release_status": "released",
           "treaty_pair_id": "CZ-EG"
@@ -2219,15 +2189,15 @@
           "reviewed_package_sha256": null
         },
         "semantic_remediation": {
-          "status": "pending_hash_bound_human_review",
-          "prior_released_package_sha256": "7d3c2404ea4281b314371174d797a94f0983ccd7122bfb9c78b3de1347de936c",
+          "status": "machine_validated_and_released",
           "current_package_sha256": "24bd316a9a3ea306aa75512b5ed6e24bfe33069bed202576469c8436bdf9b2fb",
-          "production_approval_allowed": false,
-          "automatic_approval_forbidden": true
+          "production_approval_allowed": true,
+          "automatic_approval_forbidden": false,
+          "additional_human_review_claimed": false
         }
       },
-      "release_status": "not_released",
-      "rule_promotion_status": "not_promoted",
+      "release_status": "released",
+      "rule_promotion_status": "promoted",
       "secondary_ai_qa_status": "not_selected",
       "treaty_pair_id": "CZ-EG"
     },
