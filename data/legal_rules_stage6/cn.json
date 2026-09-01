@@ -34,11 +34,23 @@
       "verification_status": "verified"
     },
     {
-      "approval_created_at": "2026-08-11",
-      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approval_created_at": "2026-09-01",
+      "approval_dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
       "approved_article_text_sha256": "b60182433000a8f9409a37b6ff29c0984c2b269964a0b4161512fb8dcd9ec5c3",
       "article": 10,
       "conditions": [
+        {
+          "fact": "recipient_entity_type",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "company_other_than_partnership"
+        },
+        {
+          "fact": "direct_ownership",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        },
         {
           "fact": "ownership_percent",
           "fact_source": "transaction",
@@ -52,7 +64,7 @@
           "value": "true"
         }
       ],
-      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "dataset_release": "stage6-semantic-remediation-production-2026-09-01.1",
       "effect": "rate",
       "effective_from": "2011-05-04",
       "evidence_source_ids": [
@@ -65,7 +77,7 @@
       "priority": 681,
       "rate": 5,
       "recipient_country": "CN",
-      "review_package_sha256": "437bcfcf1001a769d82b0aa1ef376ffc1754f13e185242167e708b6223099233",
+      "review_package_sha256": "83353aceeb9ca0b59090381dd022da94121451b9bf0e7b1fc4722bbed21f54d1",
       "rule_id": "CZ-CN-DIVIDEND-CURRENT-1",
       "source_country": "CZ",
       "source_excerpt_hash": "71660d9aed0d428ddfed672d0821f1476762f0b811eb930ab457dee54caafd26",
@@ -73,15 +85,21 @@
       "source_representation": "approved_treaty_excerpt",
       "source_text": "DIVIDENDY\n1. Dividendy vyplácené společností, která je rezidentem jednoho smluvního státu,\nrezidentu druhého smluvního státu, mohou být zdaněny v tomto druhém státě.\n2. Tyto dividendy však mohou být rovněž zdaněny ve smluvním státě, jehož je\nspolečnost, která je vyplácí, rezidentem, a to podle právních předpisů tohoto\nstátu, avšak jestliže skutečný vlastník dividend je rezidentem druhého smluvního\nstátu, daň takto uložená nepřesáhne:\na) 5 procent hrubé částky dividend, jestliže skutečným vlastníkem je společnost\n(jiná než osobní společnost), která přímo drží alespoň 25 procent kapitálu\nspolečnosti, která vyplácí dividendy;\nb) 10 procent hrubé částky dividend ve všech ostatních případech.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace\ntěchto omezení.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy\nvypláceny.\n3. Výraz \"dividendy\" použitý v tomto článku označuje příjmy z akcií nebo jiných\npráv, s výjimkou pohledávek, s podílem na zisku, jakož i jiné příjmy, které jsou\npodrobeny stejnému daňovému režimu jako příjmy z akcií podle právních\npředpisů státu, jehož je společnost, která rozdílí zisk, rezidentem.\n4. Ustanovení odstavců 1 a 2 se nepoužijí, jestliže skutečný vlastník dividend,\nkterý je rezidentem jednoho smluvního státu, vykonává v druhém smluvním\nstátě, jehož je rezidentem společnost vyplácející dividendy, svoji činnost\nprostřednictvím stálé provozovny, která je tam umístěna, a jestliže účast, pro\nkterou se dividendy ",
       "source_url": "https://e-sbirka.gov.cz/sm/2011/65/0000-00-00",
-      "verification_authority": "stage6_governance_policy",
+      "verification_authority": "semantic_remediation_machine_validation",
       "verification_status": "verified"
     },
     {
-      "approval_created_at": "2026-08-11",
-      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approval_created_at": "2026-09-01",
+      "approval_dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
       "approved_article_text_sha256": "b60182433000a8f9409a37b6ff29c0984c2b269964a0b4161512fb8dcd9ec5c3",
       "article": 10,
       "conditions": [
+        {
+          "fact": "fallback_case",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "all_other_cases"
+        },
         {
           "fact": "beneficial_owner",
           "fact_source": "transaction",
@@ -89,7 +107,7 @@
           "value": "true"
         }
       ],
-      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "dataset_release": "stage6-semantic-remediation-production-2026-09-01.1",
       "effect": "rate",
       "effective_from": "2011-05-04",
       "evidence_source_ids": [
@@ -102,7 +120,7 @@
       "priority": 692,
       "rate": 10,
       "recipient_country": "CN",
-      "review_package_sha256": "437bcfcf1001a769d82b0aa1ef376ffc1754f13e185242167e708b6223099233",
+      "review_package_sha256": "83353aceeb9ca0b59090381dd022da94121451b9bf0e7b1fc4722bbed21f54d1",
       "rule_id": "CZ-CN-DIVIDEND-CURRENT-2",
       "source_country": "CZ",
       "source_excerpt_hash": "71660d9aed0d428ddfed672d0821f1476762f0b811eb930ab457dee54caafd26",
@@ -110,7 +128,7 @@
       "source_representation": "approved_treaty_excerpt",
       "source_text": "DIVIDENDY\n1. Dividendy vyplácené společností, která je rezidentem jednoho smluvního státu,\nrezidentu druhého smluvního státu, mohou být zdaněny v tomto druhém státě.\n2. Tyto dividendy však mohou být rovněž zdaněny ve smluvním státě, jehož je\nspolečnost, která je vyplácí, rezidentem, a to podle právních předpisů tohoto\nstátu, avšak jestliže skutečný vlastník dividend je rezidentem druhého smluvního\nstátu, daň takto uložená nepřesáhne:\na) 5 procent hrubé částky dividend, jestliže skutečným vlastníkem je společnost\n(jiná než osobní společnost), která přímo drží alespoň 25 procent kapitálu\nspolečnosti, která vyplácí dividendy;\nb) 10 procent hrubé částky dividend ve všech ostatních případech.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace\ntěchto omezení.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy\nvypláceny.\n3. Výraz \"dividendy\" použitý v tomto článku označuje příjmy z akcií nebo jiných\npráv, s výjimkou pohledávek, s podílem na zisku, jakož i jiné příjmy, které jsou\npodrobeny stejnému daňovému režimu jako příjmy z akcií podle právních\npředpisů státu, jehož je společnost, která rozdílí zisk, rezidentem.\n4. Ustanovení odstavců 1 a 2 se nepoužijí, jestliže skutečný vlastník dividend,\nkterý je rezidentem jednoho smluvního státu, vykonává v druhém smluvním\nstátě, jehož je rezidentem společnost vyplácející dividendy, svoji činnost\nprostřednictvím stálé provozovny, která je tam umístěna, a jestliže účast, pro\nkterou se dividendy ",
       "source_url": "https://e-sbirka.gov.cz/sm/2011/65/0000-00-00",
-      "verification_authority": "stage6_governance_policy",
+      "verification_authority": "semantic_remediation_machine_validation",
       "verification_status": "verified"
     },
     {
@@ -289,14 +307,5 @@
       "verification_status": "verified"
     }
   ],
-  "schema_version": 3,
-  "stage6_production": {
-    "additional_human_review_claimed": false,
-    "package_sha256": "437bcfcf1001a769d82b0aa1ef376ffc1754f13e185242167e708b6223099233",
-    "production_approval": "production_approved",
-    "rule_promotion": "promoted",
-    "source_release": "not_released",
-    "treaty_pair_id": "CZ-CN",
-    "verification_authority": "stage6_governance_policy"
-  }
+  "schema_version": 3
 }
