@@ -61,11 +61,6 @@ def rule_condition(row: dict[str, Any]) -> tuple[str, str, str]:
     return (str(row.get("fact")), str(row.get("operator")), scalar(row.get("value")))
 
 
-def branch_signature(rate: Any, conditions: list[dict[str, Any]], *, registry: bool) -> tuple[float, tuple[tuple[str, str, str], ...]]:
-    normalizer = registry_condition if registry else rule_condition
-    return (float(rate), tuple(sorted(normalizer(row) for row in conditions)))
-
-
 def main() -> int:
     registry = load(REGISTRY)
     queue = load(QUEUE)
@@ -125,10 +120,6 @@ def main() -> int:
         for correction in country_corrections:
             income = str(correction["income_type"])
             source_id = str(correction["evidence_source_id"])
-            expected = sorted(
-                branch_signature(branch["rate"], branch.get("conditions", []), registry=True)
-                for branch in correction["rate_candidates"]
-            )
             actual_rules = [
                 rule for rule in candidate.get("rules", [])
                 if str(rule.get("income_type")) == income
@@ -136,12 +127,27 @@ def main() -> int:
                 and str(rule.get("verification_authority")) == "semantic_remediation_machine_projection"
                 and str(rule.get("review_package_sha256")) == package_hash
             ]
-            actual = sorted(
-                branch_signature(rule["rate"], rule.get("conditions", []), registry=False)
-                for rule in actual_rules
-            )
-            if actual != expected:
-                raise RuntimeError(f"{country}:{income}: candidate branches do not match source-backed remediation registry")
+            expected_rates = {float(branch["rate"]) for branch in correction["rate_candidates"]}
+            actual_rates = {float(rule["rate"]) for rule in actual_rules}
+            if actual_rates != expected_rates:
+                raise RuntimeError(f"{country}:{income}: candidate rate branches do not match remediation registry")
+
+            for branch in correction["rate_candidates"]:
+                rate = float(branch["rate"])
+                matching = [rule for rule in actual_rules if float(rule["rate"]) == rate]
+                if len(matching) != 1:
+                    raise RuntimeError(f"{country}:{income}:{rate:g}: expected exactly one candidate branch")
+                expected_conditions = {
+                    registry_condition(row) for row in branch.get("conditions", [])
+                }
+                actual_conditions = {
+                    rule_condition(row) for row in matching[0].get("conditions", [])
+                }
+                if not expected_conditions.issubset(actual_conditions):
+                    missing = sorted(expected_conditions - actual_conditions)
+                    raise RuntimeError(
+                        f"{country}:{income}:{rate:g}: candidate is missing source-backed remediation conditions: {missing}"
+                    )
 
         production = dict(candidate)
         production.pop("stage6_production", None)
