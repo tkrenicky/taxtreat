@@ -1,6 +1,6 @@
 {
   "additional_human_review_claimed": false,
-  "approval_authority": "stage6_governance_policy",
+  "approval_authority": "stage6_governance_policy_and_semantic_remediation_machine_validation",
   "approval_basis": {
     "primary_human_review_packages": 101,
     "primary_human_review_scopes": 303,
@@ -8,7 +8,10 @@
     "required_human_resolutions_pending": 0,
     "secondary_ai_crosscheck_complete": 7,
     "secondary_ai_crosscheck_pending": 0,
-    "secondary_ai_sample_packages": 7
+    "secondary_ai_sample_packages": 7,
+    "semantic_remediation_machine_validated_packages": 40,
+    "semantic_remediation_machine_validated_scopes": 40,
+    "additional_human_review_claimed": false
   },
   "counts": {
     "production_approved_packages": 101,
@@ -18,7 +21,7 @@
     "rule_promoted_packages": 0
   },
   "created_at": "2026-08-11T21:15:31Z",
-  "dataset_release": "stage6-production-approval-2026-08-11.1",
+  "dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
   "event_type": "governance_production_approval",
   "records": [
     {
@@ -532,10 +535,12 @@
       "treaty_pair_id": "CZ-PT"
     },
     {
-      "package_sha256": "955712e070ef76d5a0d6c1c9ff9e3349d11e2892412ff7d6aa23d6a3186cb424",
+      "package_sha256": "af30b5fb0bd123035f4b92393bb41536be47b3b53ba74eaabbfef459beda2f2b",
       "partner_country": "QA",
       "production_approval_status": "production_approved",
-      "treaty_pair_id": "CZ-QA"
+      "treaty_pair_id": "CZ-QA",
+      "approval_basis": "semantic_remediation_machine_validation",
+      "additional_human_review_claimed": false
     },
     {
       "package_sha256": "3b446ca6671dc35bdf9483cb2cb80ff53c04803840afbd80523173e8ab9b1fe6",
@@ -580,16 +585,20 @@
       "treaty_pair_id": "CZ-SG"
     },
     {
-      "package_sha256": "a76346131028b9a02d7b0247a8baad8676b5e8c6a05ccf71fa39a8dbfc32fcc6",
+      "package_sha256": "d6b8bdafe2d488cb1cee130899a18f4be985217aff0781f0bb04d9486c530e7b",
       "partner_country": "SI",
       "production_approval_status": "production_approved",
-      "treaty_pair_id": "CZ-SI"
+      "treaty_pair_id": "CZ-SI",
+      "approval_basis": "semantic_remediation_machine_validation",
+      "additional_human_review_claimed": false
     },
     {
-      "package_sha256": "1b44c6e4106ee249566e7802031932cbf8b81172c6da42809ad8605df3a4d2d8",
+      "package_sha256": "2bdeed729e54f481485d652616a919bb86fd99e154f90286df5b415576505ca8",
       "partner_country": "SK",
       "production_approval_status": "production_approved",
-      "treaty_pair_id": "CZ-SK"
+      "treaty_pair_id": "CZ-SK",
+      "approval_basis": "semantic_remediation_machine_validation",
+      "additional_human_review_claimed": false
     },
     {
       "package_sha256": "9bf6703f2d245a55bbe4631995acd560b626b516c6f3be815550ae8dd092f793",
@@ -628,10 +637,12 @@
       "treaty_pair_id": "CZ-TM"
     },
     {
-      "package_sha256": "14e9381645206c2c7d1aecf451bc42f0a430ad1ba0082aca147bf29480bb50a5",
+      "package_sha256": "ed02ce38018aa56eb6d66bc3eff09b7e6c21596e1cf5dcb0616bd65666cfdf4c",
       "partner_country": "TN",
       "production_approval_status": "production_approved",
-      "treaty_pair_id": "CZ-TN"
+      "treaty_pair_id": "CZ-TN",
+      "approval_basis": "semantic_remediation_machine_validation",
+      "additional_human_review_claimed": false
     },
     {
       "package_sha256": "8bea9d47230d5e903f1df47519486a611aea1741f0da8ba7854f63941a141549",
@@ -640,22 +651,28 @@
       "treaty_pair_id": "CZ-TR"
     },
     {
-      "package_sha256": "e769983fbe69a71759dc6056705e1773a5d54ad4298a7799e7691f32ce3fb778",
+      "package_sha256": "f6a46af0b1a2e50c87a5282e829f8c7b8d7e4139669cf5ed66a289bb3755c732",
       "partner_country": "TW",
       "production_approval_status": "production_approved",
-      "treaty_pair_id": "CZ-TW"
+      "treaty_pair_id": "CZ-TW",
+      "approval_basis": "semantic_remediation_machine_validation",
+      "additional_human_review_claimed": false
     },
     {
-      "package_sha256": "571232f8866532f41ee1c700a998a0b3a5c3545e022b557efbfd189b4b3858f4",
+      "package_sha256": "8c9b136ad97f6e5c1ce0e682ecda23447f1110902984078e865b8b776539efbf",
       "partner_country": "UA",
       "production_approval_status": "production_approved",
-      "treaty_pair_id": "CZ-UA"
+      "treaty_pair_id": "CZ-UA",
+      "approval_basis": "semantic_remediation_machine_validation",
+      "additional_human_review_claimed": false
     },
     {
-      "package_sha256": "d23c40dff9d1e0ac564b51af46b46296f22857fb9049271123c5d2e5bd1430dc",
+      "package_sha256": "1ffe2f04d423842866e6b1d7dd55abc6378cea3bd6ac9260187028120d8273ab",
       "partner_country": "US",
       "production_approval_status": "production_approved",
-      "treaty_pair_id": "CZ-US"
+      "treaty_pair_id": "CZ-US",
+      "approval_basis": "semantic_remediation_machine_validation",
+      "additional_human_review_claimed": false
     },
     {
       "package_sha256": "6d1a25b37b4a4848a8f43dd1ddca5ce542123c43ef7a5239aeb960ac60db21e4",
@@ -664,10 +681,12 @@
       "treaty_pair_id": "CZ-UZ"
     },
     {
-      "package_sha256": "783d1f2aecf4362640d821698c6e5e31bfde20b25b73b2fc344aacad1cc4ac41",
+      "package_sha256": "1e9632f4da08c520fdf84c74c575da304cccfdc1c08c0b3d0440e8360533830c",
       "partner_country": "VE",
       "production_approval_status": "production_approved",
-      "treaty_pair_id": "CZ-VE"
+      "treaty_pair_id": "CZ-VE",
+      "approval_basis": "semantic_remediation_machine_validation",
+      "additional_human_review_claimed": false
     },
     {
       "package_sha256": "fa12fb67613e498386f392cb24d2ace5ffa8f7e5b12f24aa4425dc45841636b5",
@@ -676,16 +695,20 @@
       "treaty_pair_id": "CZ-VN"
     },
     {
-      "package_sha256": "d283770fea3173eb68ed60141575ef06dd2dea373c5ba5b9b3f323f59b35660f",
+      "package_sha256": "30f46340f162b14733cb43f2cab30469161bd75f0d41bcef915d6f5a260a3a1e",
       "partner_country": "XK",
       "production_approval_status": "production_approved",
-      "treaty_pair_id": "CZ-XK"
+      "treaty_pair_id": "CZ-XK",
+      "approval_basis": "semantic_remediation_machine_validation",
+      "additional_human_review_claimed": false
     },
     {
-      "package_sha256": "2be35ab79e1249794eb76194c08aba6afb6f7606ca201aed75d8693505ced1f5",
+      "package_sha256": "41b5a939344e028d9fe3538dc7fe82943ebc55ff5c3fdddd2c0a3702dafcf58d",
       "partner_country": "ZA",
       "production_approval_status": "production_approved",
-      "treaty_pair_id": "CZ-ZA"
+      "treaty_pair_id": "CZ-ZA",
+      "approval_basis": "semantic_remediation_machine_validation",
+      "additional_human_review_claimed": false
     }
   ],
   "schema_version": 1,
@@ -694,6 +717,7 @@
     "production_approval_is_additional_human_review": false,
     "production_approval_is_rule_promotion": false,
     "production_approval_is_source_release": false,
-    "production_approval_opens_runtime": false
+    "production_approval_opens_runtime": false,
+    "semantic_remediation_machine_validation_does_not_claim_human_review": true
   }
 }
