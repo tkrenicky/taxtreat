@@ -4,6 +4,9 @@
   "source_country": "SK",
   "total_scopes": 225,
   "materialized_scopes": 141,
+  "decision_materialized_scopes": 141,
+  "fail_closed_placeholder_scopes": 84,
+  "structured_scope_coverage": 225,
   "unresolved_scopes": 84,
   "materialized_country_packages": 75,
   "materialized_scope_keys": [
@@ -983,7 +986,9 @@
     "unmapped_royalty_categories_remain_fail_closed": true,
     "stage_rules_remain_needs_review_until_all_protocol_mli_and_release_gates_are_satisfied": true,
     "czech_rule_reuse_forbidden": true,
-    "release_remains_closed_until_all_225_scopes_are_structured_and_regression_tested": true,
+    "all_225_scopes_have_runtime_structured_coverage": true,
+    "unresolved_scopes_use_rate_null_fail_closed_placeholders": true,
+    "rule_level_finalization_remains_closed_for_unresolved_scopes": true,
     "automatic_production_approval_forbidden": true
   }
 }
