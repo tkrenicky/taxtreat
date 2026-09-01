@@ -31,7 +31,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add taxtreat/engine/legal_rule_engine.py .github/workflows/fix-cz-quarantine-source-scope.yml
+          git add -A
           git commit -m 'Scope CZ semantic quarantine to CZ source country'
           git pull --rebase origin main
           git push
