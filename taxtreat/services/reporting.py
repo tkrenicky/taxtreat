@@ -165,7 +165,11 @@ def build_professional_report(
         for citation in citations:
             if citation.get("legal_layer") not in {"treaty", "protocol", "mli"}:
                 continue
-            locale = english_excerpt_for_citation(citation, recipient_country)
+            locale = english_excerpt_for_citation(
+                citation,
+                recipient_country,
+                str(request.get("source_country") or "CZ"),
+            )
             citation["canonical_source_url"] = citation.get("source_url")
             if locale:
                 citation.update(locale)
