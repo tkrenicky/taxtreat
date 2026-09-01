@@ -22,7 +22,7 @@ VALIDATION_RELEASE = "stage6-semantic-remediation-machine-validation-2026-09-01.
 PRODUCTION_RELEASE = "stage6-semantic-remediation-production-2026-09-01.1"
 APPROVAL_RELEASE = "stage6-production-approval-2026-09-01.2"
 PROMOTION_RELEASE = "stage6-rule-promotion-2026-09-01.2"
-SOURCE_RELEASE = "stage6-source-release-2026-09-01.2"
+SOURCE_RELEASE = "stage6-semantic-remediation-source-release-2026-09-01.1"
 GATE_RELEASE = "stage6-canonical-production-release-2026-09-01.2"
 CREATED_DATE = "2026-09-01"
 CREATED_AT = "2026-09-01T14:30:00+02:00"
@@ -74,21 +74,11 @@ def main() -> int:
     if len(countries) != 40:
         raise RuntimeError(f"Expected 40 semantic-remediation countries, found {len(countries)}")
 
-    queue_by_country = {
-        str(row["partner_country"]).upper(): row for row in queue["packages"]
-    }
-    approval_by_country = {
-        str(row["partner_country"]).upper(): row for row in approval["records"]
-    }
-    promotion_by_country = {
-        str(row["partner_country"]).upper(): row for row in promotion["records"]
-    }
-    release_by_pair = {
-        str(row["treaty_pair_id"]): row for row in release["records"]
-    }
-    gate_by_country = {
-        str(row["partner_country"]).upper(): row for row in gate["treaty_partners"]
-    }
+    queue_by_country = {str(row["partner_country"]).upper(): row for row in queue["packages"]}
+    approval_by_country = {str(row["partner_country"]).upper(): row for row in approval["records"]}
+    promotion_by_country = {str(row["partner_country"]).upper(): row for row in promotion["records"]}
+    release_by_pair = {str(row["treaty_pair_id"]): row for row in release["records"]}
+    gate_by_country = {str(row["partner_country"]).upper(): row for row in gate["treaty_partners"]}
 
     if not all(len(mapping) == 101 for mapping in (queue_by_country, approval_by_country, promotion_by_country, gate_by_country)):
         raise RuntimeError("Stage 6 governance universe must contain exactly 101 packages")
@@ -101,7 +91,6 @@ def main() -> int:
             raise RuntimeError(f"{country}: remediation candidate missing")
         candidate = load(candidate_path)
         candidate_gate = candidate.get("stage6_production") or {}
-
         expected_candidate_gate = {
             "package_sha256": package_hash,
             "production_approval": "not_approved",
@@ -114,10 +103,7 @@ def main() -> int:
             if candidate_gate.get(key) != expected:
                 raise RuntimeError(f"{country}: candidate gate mismatch for {key}")
 
-        country_corrections = [
-            row for row in corrections if str(row["country"]).upper() == country
-        ]
-        for correction in country_corrections:
+        for correction in [row for row in corrections if str(row["country"]).upper() == country]:
             income = str(correction["income_type"])
             source_id = str(correction["evidence_source_id"])
             actual_rules = [
@@ -131,23 +117,16 @@ def main() -> int:
             actual_rates = {float(rule["rate"]) for rule in actual_rules}
             if actual_rates != expected_rates:
                 raise RuntimeError(f"{country}:{income}: candidate rate branches do not match remediation registry")
-
             for branch in correction["rate_candidates"]:
                 rate = float(branch["rate"])
                 matching = [rule for rule in actual_rules if float(rule["rate"]) == rate]
                 if len(matching) != 1:
                     raise RuntimeError(f"{country}:{income}:{rate:g}: expected exactly one candidate branch")
-                expected_conditions = {
-                    registry_condition(row) for row in branch.get("conditions", [])
-                }
-                actual_conditions = {
-                    rule_condition(row) for row in matching[0].get("conditions", [])
-                }
+                expected_conditions = {registry_condition(row) for row in branch.get("conditions", [])}
+                actual_conditions = {rule_condition(row) for row in matching[0].get("conditions", [])}
                 if not expected_conditions.issubset(actual_conditions):
                     missing = sorted(expected_conditions - actual_conditions)
-                    raise RuntimeError(
-                        f"{country}:{income}:{rate:g}: candidate is missing source-backed remediation conditions: {missing}"
-                    )
+                    raise RuntimeError(f"{country}:{income}:{rate:g}: candidate is missing source-backed remediation conditions: {missing}")
 
         production = dict(candidate)
         production.pop("stage6_production", None)
@@ -175,43 +154,47 @@ def main() -> int:
         approval_row["production_approval_status"] = "production_approved"
 
         promotion_row = promotion_by_country[country]
-        promotion_row["package_sha256"] = package_hash
-        promotion_row["rule_file"] = str(rule_path.relative_to(ROOT))
-        promotion_row["rule_file_sha256"] = rule_sha
-        promotion_row["rule_count"] = len(production.get("rules", []))
-        promotion_row["scope_count"] = 3
-        promotion_row["rule_promotion_status"] = "promoted"
-        promotion_row["source_release_status"] = "not_released"
+        promotion_row.update({
+            "package_sha256": package_hash,
+            "rule_file": str(rule_path.relative_to(ROOT)),
+            "rule_file_sha256": rule_sha,
+            "rule_count": len(production.get("rules", [])),
+            "scope_count": 3,
+            "rule_promotion_status": "promoted",
+            "source_release_status": "not_released",
+        })
 
         release_row = release_by_pair.get(pair_id)
         if release_row is None:
             release_row = {"treaty_pair_id": pair_id}
             release["records"].append(release_row)
             release_by_pair[pair_id] = release_row
-        release_row.update(
-            {
-                "treaty_pair_id": pair_id,
-                "package_sha256": package_hash,
-                "rule_file": str(rule_path.relative_to(ROOT)),
-                "rule_file_sha256": rule_sha,
-                "production_approval_status": "production_approved",
-                "rule_promotion_status": "promoted",
-                "source_release_status": "released",
-                "released_scopes": 3,
-            }
-        )
+        release_row.update({
+            "treaty_pair_id": pair_id,
+            "package_sha256": package_hash,
+            "rule_file": str(rule_path.relative_to(ROOT)),
+            "rule_file_sha256": rule_sha,
+            "production_approval_status": "production_approved",
+            "rule_promotion_status": "promoted",
+            "source_release_status": "released",
+            "released_scopes": 3,
+        })
 
         gate_row = gate_by_country[country]
-        gate_row["package_sha256"] = package_hash
-        gate_row["human_review_status"] = "not_required"
-        gate_row["production_approval_eligible"] = True
-        gate_row["production_approval_status"] = "production_approved"
-        gate_row["rule_promotion_status"] = "promoted"
-        gate_row["release_status"] = "released"
-        gate_row["active_rule_allowed"] = True
-        gate_row["production_ready"] = True
-        gate_row["fail_closed"] = False
-        gate_row["release_blockers"] = []
+        # Machine validation releases the scope without pretending that the
+        # previously pending human review ever happened.
+        gate_row["human_review_status"] = "needs_review"
+        gate_row.update({
+            "package_sha256": package_hash,
+            "production_approval_eligible": True,
+            "production_approval_status": "production_approved",
+            "rule_promotion_status": "promoted",
+            "release_status": "released",
+            "active_rule_allowed": True,
+            "production_ready": True,
+            "fail_closed": False,
+            "release_blockers": [],
+        })
         evidence = gate_row.setdefault("release_evidence", {})
         evidence["current_package_sha256"] = package_hash
         evidence["semantic_remediation"] = {
@@ -245,73 +228,53 @@ def main() -> int:
     approval["dataset_release"] = APPROVAL_RELEASE
     approval["created_at"] = CREATED_AT
     approval["additional_human_review_claimed"] = False
-    approval.setdefault("semantics", {}).update(
-        {
-            "semantic_remediation_release_basis": "hash_bound_source_backed_machine_validation",
-            "additional_human_review_claimed": False,
-            "automatic_needs_review_to_verified_forbidden": True,
-        }
-    )
-    approval["counts"].update(
-        {
-            "production_approved_packages": 101,
-            "production_approved_scopes": 303,
-        }
-    )
+    approval.setdefault("semantics", {}).update({
+        "semantic_remediation_release_basis": "hash_bound_source_backed_machine_validation",
+        "additional_human_review_claimed": False,
+        "automatic_needs_review_to_verified_forbidden": True,
+    })
+    approval["counts"].update({"production_approved_packages": 101, "production_approved_scopes": 303})
 
     promotion["dataset_release"] = PROMOTION_RELEASE
     promotion["created_from_approval_dataset_release"] = APPROVAL_RELEASE
     promotion["additional_human_review_claimed"] = False
-    promotion["counts"].update(
-        {
-            "rule_promoted_packages": 101,
-            "rule_promoted_scopes": 303,
-            "runtime_rule_files": 101,
-        }
-    )
+    promotion["counts"].update({"rule_promoted_packages": 101, "rule_promoted_scopes": 303, "runtime_rule_files": 101})
 
     release["dataset_release"] = SOURCE_RELEASE
     release["additional_human_review_claimed"] = False
     release["counts"] = {"released_packages": 101, "released_scopes": 303}
 
-    counts = gate["counts"]
-    counts.update(
-        {
-            "production_approval_eligible_packages": 101,
-            "production_approved_packages": 101,
-            "rule_promoted_packages": 101,
-            "rule_promoted_scopes": 303,
-            "released_packages": 101,
-            "released_scopes": 303,
-            "semantic_remediation_pending_packages": 0,
-            "semantic_remediation_pending_scopes": 0,
-        }
-    )
+    gate["counts"].update({
+        "production_approval_eligible_packages": 101,
+        "production_approved_packages": 101,
+        "rule_promoted_packages": 101,
+        "rule_promoted_scopes": 303,
+        "released_packages": 101,
+        "released_scopes": 303,
+        "semantic_remediation_pending_packages": 0,
+        "semantic_remediation_pending_scopes": 0,
+    })
     gate["dataset_release"] = GATE_RELEASE
     gate["fail_closed"] = True
-    gate.setdefault("gate_semantics", {}).update(
-        {
-            "semantic_rehash_requires_fresh_human_review": False,
-            "semantic_rehash_cannot_inherit_prior_approval": True,
-            "semantic_rehash_requires_hash_bound_machine_validation": True,
-            "automatic_needs_review_to_verified_forbidden": True,
-            "additional_human_review_claimed": False,
-        }
-    )
-    gate.setdefault("semantics", {}).update(
-        {
-            "production_source_release_complete": True,
-            "released_packages": 101,
-            "released_scopes": 303,
-            "semantic_remediation_machine_validation_complete": True,
-            "semantic_remediation_validation_dataset": VALIDATION_RELEASE,
-            "additional_human_review_claimed": False,
-            "unknown_pairs_remain_fail_closed": True,
-            "missing_transaction_facts_remain_fail_closed": True,
-            "release_manifest_dataset": SOURCE_RELEASE,
-            "promotion_manifest_dataset": PROMOTION_RELEASE,
-        }
-    )
+    gate.setdefault("gate_semantics", {}).update({
+        "semantic_rehash_requires_fresh_human_review": False,
+        "semantic_rehash_cannot_inherit_prior_approval": True,
+        "semantic_rehash_requires_hash_bound_machine_validation": True,
+        "automatic_needs_review_to_verified_forbidden": True,
+        "additional_human_review_claimed": False,
+    })
+    gate.setdefault("semantics", {}).update({
+        "production_source_release_complete": True,
+        "released_packages": 101,
+        "released_scopes": 303,
+        "semantic_remediation_machine_validation_complete": True,
+        "semantic_remediation_validation_dataset": VALIDATION_RELEASE,
+        "additional_human_review_claimed": False,
+        "unknown_pairs_remain_fail_closed": True,
+        "missing_transaction_facts_remain_fail_closed": True,
+        "release_manifest_dataset": SOURCE_RELEASE,
+        "promotion_manifest_dataset": PROMOTION_RELEASE,
+    })
 
     dump(APPROVAL, approval)
     dump(PROMOTION, promotion)
@@ -321,12 +284,8 @@ def main() -> int:
     engine = ENGINE.read_text(encoding="utf-8")
     empty_quarantine = "_PENDING_SEMANTIC_REMEDIATION_SCOPES: set[tuple[str, str]] = set()"
     if empty_quarantine not in engine:
-        pattern = re.compile(
-            r"_PENDING_SEMANTIC_REMEDIATION_SCOPES(?:\s*:\s*set\[tuple\[str,\s*str\]\])?\s*=\s*\{.*?\n\}\n\n_UI_ROYALTY_CATEGORY_GROUPS",
-            re.DOTALL,
-        )
-        replacement = empty_quarantine + "\n\n_UI_ROYALTY_CATEGORY_GROUPS"
-        engine, replacements = pattern.subn(replacement, engine, count=1)
+        pattern = re.compile(r"_PENDING_SEMANTIC_REMEDIATION_SCOPES(?:\s*:\s*set\[tuple\[str,\s*str\]\])?\s*=\s*\{.*?\n\}\n\n_UI_ROYALTY_CATEGORY_GROUPS", re.DOTALL)
+        engine, replacements = pattern.subn(empty_quarantine + "\n\n_UI_ROYALTY_CATEGORY_GROUPS", engine, count=1)
         if replacements != 1:
             raise RuntimeError("Could not replace semantic remediation quarantine set")
         ENGINE.write_text(engine, encoding="utf-8")
