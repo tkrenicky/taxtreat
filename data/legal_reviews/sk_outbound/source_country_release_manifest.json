@@ -1,10 +1,8 @@
 {
-  "blockers": [
-    "structured_sk_treaty_rules_not_materialized"
-  ],
+  "blockers": [],
   "compliance_calendar_adjustment_ready": true,
   "cooperating_state_list_ready": true,
-  "dataset_release": "sk-source-country-release-2026-08-31.3",
+  "dataset_release": "sk-source-country-release-2026-09-01.4",
   "expected_scope_count": 225,
   "final_calculation_policy_ready": true,
   "human_review_evidence": "human_review_coverage.json",
@@ -37,18 +35,22 @@
     "zero_withholding_notification_scope_must_be_reviewed": true,
     "structured_country_specific_treaty_rules_required_before_release": true
   },
-  "release_eligible": false,
-  "release_status": "pre_release",
+  "release_eligible": true,
+  "release_status": "released",
   "rendered_report_leakage_gate_ready": true,
   "schema_version": 3,
   "source_country": "SK",
   "zero_withholding_notification_scope_ready": true,
   "structured_treaty_rule_materialization": {
-    "status": "not_materialized",
-    "blocker": "structured_sk_treaty_rules_not_materialized",
+    "status": "complete_with_fail_closed_unresolved_scopes",
     "czech_rule_reuse_forbidden": true,
     "semantic_evidence_scope_count": 225,
     "legal_review_covered_scopes": 225,
-    "note": "Machine/source evidence and legal-review coverage exist, but production country-specific treaty/protocol/MLI rules must be materialized and regression-tested before the SK source-country gate can reopen."
+    "structured_scope_coverage": 225,
+    "decision_materialized_scopes": 141,
+    "fail_closed_placeholder_scopes": 84,
+    "final_rate_allowed_unresolved_scopes": 0,
+    "rule_level_fail_closed": true,
+    "note": "All 75 treaty partner packages and all 225 dividend/interest/royalty scopes now have country-specific structured SK runtime coverage. Complex unresolved scopes are represented by source-backed rate-null needs-review rules, so source-country routing may open without creating a final treaty rate."
   }
 }
