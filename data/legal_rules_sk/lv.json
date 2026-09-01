@@ -142,49 +142,6 @@
       ]
     },
     {
-      "rule_id": "SK-LV-MLI-GATE-INTEREST-A7",
-      "income_type": "interest",
-      "source_country": "SK",
-      "recipient_country": "LV",
-      "legal_instrument": "mli",
-      "legal_layer": "mli",
-      "article": "7",
-      "paragraph": null,
-      "rate": null,
-      "priority": 57,
-      "conditions": [
-        {
-          "fact": "treaty_ppt_passed",
-          "fact_source": "determination",
-          "operator": "==",
-          "value": true
-        }
-      ],
-      "effect": "eligibility_gate",
-      "applies_to_layers": [
-        "treaty",
-        "protocol",
-        "mli"
-      ],
-      "effective_from": "2021-01-01",
-      "verification_status": "verified",
-      "source_text": "Slovak bilateral MLI adjudication for SK-LV: notice 489/2019; result-changing articles ['7']; WHT effective date(s) ['2021-01-01']. Gate: MLI Article 7 principal purpose test.",
-      "source_id": "SK-MLI-489-2019",
-      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2019/489/vyhlasene_znenie.html",
-      "source_excerpt_hash": "411ee07537f1e3761246b88984a88d684501588ee77aa0f39f1ab341634fc917",
-      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
-      "reviewer_id": "sk_mli_final_reconfirmation",
-      "reviewed_at": "2026-08-21",
-      "approved_by": "mli_bilateral_adjudication_2026",
-      "approved_at": "2026-08-21",
-      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
-      "approval_created_at": "2026-08-21",
-      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
-      "evidence_source_ids": [
-        "SK-MLI-489-2019"
-      ]
-    },
-    {
       "rule_id": "SK-LV-INTEREST-TREATY-INTEREST-GENERAL",
       "income_type": "interest",
       "source_country": "SK",

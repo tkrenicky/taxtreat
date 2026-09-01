@@ -5,6 +5,135 @@
   },
   "rules": [
     {
+      "rule_id": "SK-PT-MLI-GATE-DIVIDEND-A7",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "PT",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "7",
+      "paragraph": null,
+      "rate": null,
+      "priority": 57,
+      "conditions": [
+        {
+          "fact": "treaty_ppt_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2021-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-PT: notice 98/2020; result-changing articles ['13', '15', '7']; WHT effective date(s) ['2021-01-01']. Gate: MLI Article 7 principal purpose test.",
+      "source_id": "SK-MLI-98-2020",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2020/98/vyhlasene_znenie.html",
+      "source_excerpt_hash": "9ff813fd881d25ee2dea6557be5ecde5e2cefab1ba26127876faa3dfa2236a73",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-MLI-98-2020"
+      ]
+    },
+    {
+      "rule_id": "SK-PT-MLI-GATE-DIVIDEND-A13",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "PT",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "13",
+      "paragraph": null,
+      "rate": null,
+      "priority": 63,
+      "conditions": [
+        {
+          "fact": "mli_article_13_specific_activity_pe_status_resolved",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2021-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-PT: notice 98/2020; result-changing articles ['13', '15', '7']; WHT effective date(s) ['2021-01-01']. Gate: MLI Article 13 specific-activity PE modification.",
+      "source_id": "SK-MLI-98-2020",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2020/98/vyhlasene_znenie.html",
+      "source_excerpt_hash": "83588a5f53f9210767ae8a77d95d3c60d155c745888b9b653129554aaccdc626",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-MLI-98-2020"
+      ]
+    },
+    {
+      "rule_id": "SK-PT-MLI-GATE-DIVIDEND-A15",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "PT",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "15",
+      "paragraph": null,
+      "rate": null,
+      "priority": 65,
+      "conditions": [
+        {
+          "fact": "mli_article_15_closely_related_enterprise_status_resolved",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2021-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-PT: notice 98/2020; result-changing articles ['13', '15', '7']; WHT effective date(s) ['2021-01-01']. Gate: MLI Article 15 closely-related-enterprise definition.",
+      "source_id": "SK-MLI-98-2020",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2020/98/vyhlasene_znenie.html",
+      "source_excerpt_hash": "547bbe04ef3952e8bd016fb42f70c5e9dbae16d780b4584e01fbad954286b3fb",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-MLI-98-2020"
+      ]
+    },
+    {
       "rule_id": "SK-PT-DIVIDEND-TREATY-UNRESOLVED-FAIL-CLOSED",
       "income_type": "dividend",
       "source_country": "SK",

@@ -5,6 +5,135 @@
   },
   "rules": [
     {
+      "rule_id": "SK-RO-MLI-GATE-DIVIDEND-A3",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "RO",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "3",
+      "paragraph": null,
+      "rate": null,
+      "priority": 53,
+      "conditions": [
+        {
+          "fact": "mli_article_3_transparent_entity_entitlement_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2024-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-RO: notice 104/2023; result-changing articles ['3', '4', '7']; WHT effective date(s) ['2024-01-01']. Gate: MLI Article 3 transparent-entity entitlement.",
+      "source_id": "SK-MLI-104-2023",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2023/104/vyhlasene_znenie.html",
+      "source_excerpt_hash": "0b8caca66eaddaf881be43af279086221a41cbed8e81f91e6eeac31df2c6fcd4",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-MLI-104-2023"
+      ]
+    },
+    {
+      "rule_id": "SK-RO-MLI-GATE-DIVIDEND-A4",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "RO",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "4",
+      "paragraph": null,
+      "rate": null,
+      "priority": 54,
+      "conditions": [
+        {
+          "fact": "mli_article_4_dual_resident_entitlement_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2024-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-RO: notice 104/2023; result-changing articles ['3', '4', '7']; WHT effective date(s) ['2024-01-01']. Gate: MLI Article 4 dual-resident entity entitlement.",
+      "source_id": "SK-MLI-104-2023",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2023/104/vyhlasene_znenie.html",
+      "source_excerpt_hash": "6268d89a5468f6025982408f4fd939548ddd9f233ff475f572eaa2733d1a6b65",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-MLI-104-2023"
+      ]
+    },
+    {
+      "rule_id": "SK-RO-MLI-GATE-DIVIDEND-A7",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "RO",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "7",
+      "paragraph": null,
+      "rate": null,
+      "priority": 57,
+      "conditions": [
+        {
+          "fact": "treaty_ppt_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2024-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-RO: notice 104/2023; result-changing articles ['3', '4', '7']; WHT effective date(s) ['2024-01-01']. Gate: MLI Article 7 principal purpose test.",
+      "source_id": "SK-MLI-104-2023",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2023/104/vyhlasene_znenie.html",
+      "source_excerpt_hash": "c094812189e36e1018da1fbd20970070c2f0f495ba142418f28e7113f6e7125c",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-MLI-104-2023"
+      ]
+    },
+    {
       "rule_id": "SK-RO-DIVIDEND-TREATY-UNRESOLVED-FAIL-CLOSED",
       "income_type": "dividend",
       "source_country": "SK",
@@ -99,49 +228,6 @@
       ]
     },
     {
-      "rule_id": "SK-RO-MLI-GATE-INTEREST-A3",
-      "income_type": "interest",
-      "source_country": "SK",
-      "recipient_country": "RO",
-      "legal_instrument": "mli",
-      "legal_layer": "mli",
-      "article": "3",
-      "paragraph": null,
-      "rate": null,
-      "priority": 53,
-      "conditions": [
-        {
-          "fact": "mli_article_3_transparent_entity_entitlement_passed",
-          "fact_source": "determination",
-          "operator": "==",
-          "value": true
-        }
-      ],
-      "effect": "eligibility_gate",
-      "applies_to_layers": [
-        "treaty",
-        "protocol",
-        "mli"
-      ],
-      "effective_from": "2024-01-01",
-      "verification_status": "verified",
-      "source_text": "Slovak bilateral MLI adjudication for SK-RO: notice 104/2023; result-changing articles ['3', '4', '7']; WHT effective date(s) ['2024-01-01']. Gate: MLI Article 3 transparent-entity entitlement.",
-      "source_id": "SK-MLI-104-2023",
-      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2023/104/vyhlasene_znenie.html",
-      "source_excerpt_hash": "0b8caca66eaddaf881be43af279086221a41cbed8e81f91e6eeac31df2c6fcd4",
-      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
-      "reviewer_id": "sk_mli_final_reconfirmation",
-      "reviewed_at": "2026-08-21",
-      "approved_by": "mli_bilateral_adjudication_2026",
-      "approved_at": "2026-08-21",
-      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
-      "approval_created_at": "2026-08-21",
-      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
-      "evidence_source_ids": [
-        "SK-MLI-104-2023"
-      ]
-    },
-    {
       "rule_id": "SK-RO-MLI-GATE-INTEREST-A4",
       "income_type": "interest",
       "source_country": "SK",
@@ -172,92 +258,6 @@
       "source_id": "SK-MLI-104-2023",
       "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2023/104/vyhlasene_znenie.html",
       "source_excerpt_hash": "6268d89a5468f6025982408f4fd939548ddd9f233ff475f572eaa2733d1a6b65",
-      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
-      "reviewer_id": "sk_mli_final_reconfirmation",
-      "reviewed_at": "2026-08-21",
-      "approved_by": "mli_bilateral_adjudication_2026",
-      "approved_at": "2026-08-21",
-      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
-      "approval_created_at": "2026-08-21",
-      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
-      "evidence_source_ids": [
-        "SK-MLI-104-2023"
-      ]
-    },
-    {
-      "rule_id": "SK-RO-MLI-GATE-INTEREST-A4",
-      "income_type": "interest",
-      "source_country": "SK",
-      "recipient_country": "RO",
-      "legal_instrument": "mli",
-      "legal_layer": "mli",
-      "article": "4",
-      "paragraph": null,
-      "rate": null,
-      "priority": 54,
-      "conditions": [
-        {
-          "fact": "mli_article_4_dual_resident_entitlement_passed",
-          "fact_source": "determination",
-          "operator": "==",
-          "value": true
-        }
-      ],
-      "effect": "eligibility_gate",
-      "applies_to_layers": [
-        "treaty",
-        "protocol",
-        "mli"
-      ],
-      "effective_from": "2024-01-01",
-      "verification_status": "verified",
-      "source_text": "Slovak bilateral MLI adjudication for SK-RO: notice 104/2023; result-changing articles ['3', '4', '7']; WHT effective date(s) ['2024-01-01']. Gate: MLI Article 4 dual-resident entity entitlement.",
-      "source_id": "SK-MLI-104-2023",
-      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2023/104/vyhlasene_znenie.html",
-      "source_excerpt_hash": "6268d89a5468f6025982408f4fd939548ddd9f233ff475f572eaa2733d1a6b65",
-      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
-      "reviewer_id": "sk_mli_final_reconfirmation",
-      "reviewed_at": "2026-08-21",
-      "approved_by": "mli_bilateral_adjudication_2026",
-      "approved_at": "2026-08-21",
-      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
-      "approval_created_at": "2026-08-21",
-      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
-      "evidence_source_ids": [
-        "SK-MLI-104-2023"
-      ]
-    },
-    {
-      "rule_id": "SK-RO-MLI-GATE-INTEREST-A7",
-      "income_type": "interest",
-      "source_country": "SK",
-      "recipient_country": "RO",
-      "legal_instrument": "mli",
-      "legal_layer": "mli",
-      "article": "7",
-      "paragraph": null,
-      "rate": null,
-      "priority": 57,
-      "conditions": [
-        {
-          "fact": "treaty_ppt_passed",
-          "fact_source": "determination",
-          "operator": "==",
-          "value": true
-        }
-      ],
-      "effect": "eligibility_gate",
-      "applies_to_layers": [
-        "treaty",
-        "protocol",
-        "mli"
-      ],
-      "effective_from": "2024-01-01",
-      "verification_status": "verified",
-      "source_text": "Slovak bilateral MLI adjudication for SK-RO: notice 104/2023; result-changing articles ['3', '4', '7']; WHT effective date(s) ['2024-01-01']. Gate: MLI Article 7 principal purpose test.",
-      "source_id": "SK-MLI-104-2023",
-      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2023/104/vyhlasene_znenie.html",
-      "source_excerpt_hash": "c094812189e36e1018da1fbd20970070c2f0f495ba142418f28e7113f6e7125c",
       "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
       "reviewer_id": "sk_mli_final_reconfirmation",
       "reviewed_at": "2026-08-21",
@@ -427,6 +427,135 @@
       "final_rate_allowed": false,
       "automatic_production_approval_forbidden": true,
       "tax_treatment": "exclusive_foreign_taxation"
+    },
+    {
+      "rule_id": "SK-RO-MLI-GATE-ROYALTY-A3",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "RO",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "3",
+      "paragraph": null,
+      "rate": null,
+      "priority": 53,
+      "conditions": [
+        {
+          "fact": "mli_article_3_transparent_entity_entitlement_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2024-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-RO: notice 104/2023; result-changing articles ['3', '4', '7']; WHT effective date(s) ['2024-01-01']. Gate: MLI Article 3 transparent-entity entitlement.",
+      "source_id": "SK-MLI-104-2023",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2023/104/vyhlasene_znenie.html",
+      "source_excerpt_hash": "0b8caca66eaddaf881be43af279086221a41cbed8e81f91e6eeac31df2c6fcd4",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-MLI-104-2023"
+      ]
+    },
+    {
+      "rule_id": "SK-RO-MLI-GATE-ROYALTY-A4",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "RO",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "4",
+      "paragraph": null,
+      "rate": null,
+      "priority": 54,
+      "conditions": [
+        {
+          "fact": "mli_article_4_dual_resident_entitlement_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2024-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-RO: notice 104/2023; result-changing articles ['3', '4', '7']; WHT effective date(s) ['2024-01-01']. Gate: MLI Article 4 dual-resident entity entitlement.",
+      "source_id": "SK-MLI-104-2023",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2023/104/vyhlasene_znenie.html",
+      "source_excerpt_hash": "6268d89a5468f6025982408f4fd939548ddd9f233ff475f572eaa2733d1a6b65",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-MLI-104-2023"
+      ]
+    },
+    {
+      "rule_id": "SK-RO-MLI-GATE-ROYALTY-A7",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "RO",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "7",
+      "paragraph": null,
+      "rate": null,
+      "priority": 57,
+      "conditions": [
+        {
+          "fact": "treaty_ppt_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2024-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-RO: notice 104/2023; result-changing articles ['3', '4', '7']; WHT effective date(s) ['2024-01-01']. Gate: MLI Article 7 principal purpose test.",
+      "source_id": "SK-MLI-104-2023",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2023/104/vyhlasene_znenie.html",
+      "source_excerpt_hash": "c094812189e36e1018da1fbd20970070c2f0f495ba142418f28e7113f6e7125c",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-MLI-104-2023"
+      ]
     },
     {
       "rule_id": "SK-RO-ROYALTY-TREATY-UNRESOLVED-FAIL-CLOSED",

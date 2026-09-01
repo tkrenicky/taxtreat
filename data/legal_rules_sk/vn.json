@@ -5,6 +5,178 @@
   },
   "rules": [
     {
+      "rule_id": "SK-VN-MLI-GATE-DIVIDEND-A7",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "VN",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "7",
+      "paragraph": null,
+      "rate": null,
+      "priority": 57,
+      "conditions": [
+        {
+          "fact": "treaty_ppt_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2024-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-VN: notice 510/2023; result-changing articles ['12', '13', '15', '7']; WHT effective date(s) ['2024-01-01']. Gate: MLI Article 7 principal purpose test.",
+      "source_id": "SK-MLI-510-2023",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2023/510/vyhlasene_znenie.html",
+      "source_excerpt_hash": "6a374f8db9cc8bcdba6ae7c891179d93379d4413088ecb71ed15c38b3cd85383",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-MLI-510-2023"
+      ]
+    },
+    {
+      "rule_id": "SK-VN-MLI-GATE-DIVIDEND-A12",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "VN",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "12",
+      "paragraph": null,
+      "rate": null,
+      "priority": 62,
+      "conditions": [
+        {
+          "fact": "mli_article_12_dependent_agent_pe_status_resolved",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2024-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-VN: notice 510/2023; result-changing articles ['12', '13', '15', '7']; WHT effective date(s) ['2024-01-01']. Gate: MLI Article 12 dependent-agent PE modification.",
+      "source_id": "SK-MLI-510-2023",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2023/510/vyhlasene_znenie.html",
+      "source_excerpt_hash": "438adb1c908f9fc42471c8be60ce948196cd633c5eaa5852784b74d98866ba25",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-MLI-510-2023"
+      ]
+    },
+    {
+      "rule_id": "SK-VN-MLI-GATE-DIVIDEND-A13",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "VN",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "13",
+      "paragraph": null,
+      "rate": null,
+      "priority": 63,
+      "conditions": [
+        {
+          "fact": "mli_article_13_specific_activity_pe_status_resolved",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2024-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-VN: notice 510/2023; result-changing articles ['12', '13', '15', '7']; WHT effective date(s) ['2024-01-01']. Gate: MLI Article 13 specific-activity PE modification.",
+      "source_id": "SK-MLI-510-2023",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2023/510/vyhlasene_znenie.html",
+      "source_excerpt_hash": "155444746c2efebb5305dd157ab6264c23729b05a410e47fb0c0e81b175581ed",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-MLI-510-2023"
+      ]
+    },
+    {
+      "rule_id": "SK-VN-MLI-GATE-DIVIDEND-A15",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "VN",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "15",
+      "paragraph": null,
+      "rate": null,
+      "priority": 65,
+      "conditions": [
+        {
+          "fact": "mli_article_15_closely_related_enterprise_status_resolved",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2024-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-VN: notice 510/2023; result-changing articles ['12', '13', '15', '7']; WHT effective date(s) ['2024-01-01']. Gate: MLI Article 15 closely-related-enterprise definition.",
+      "source_id": "SK-MLI-510-2023",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2023/510/vyhlasene_znenie.html",
+      "source_excerpt_hash": "ff6465d48bb27469839fbfa8ad919c2f1b805b214ffb8728ee53ce63d1863f94",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-MLI-510-2023"
+      ]
+    },
+    {
       "rule_id": "SK-VN-DIVIDEND-TREATY-UNRESOLVED-FAIL-CLOSED",
       "income_type": "dividend",
       "source_country": "SK",
@@ -99,92 +271,6 @@
       ]
     },
     {
-      "rule_id": "SK-VN-MLI-GATE-INTEREST-A7",
-      "income_type": "interest",
-      "source_country": "SK",
-      "recipient_country": "VN",
-      "legal_instrument": "mli",
-      "legal_layer": "mli",
-      "article": "7",
-      "paragraph": null,
-      "rate": null,
-      "priority": 57,
-      "conditions": [
-        {
-          "fact": "treaty_ppt_passed",
-          "fact_source": "determination",
-          "operator": "==",
-          "value": true
-        }
-      ],
-      "effect": "eligibility_gate",
-      "applies_to_layers": [
-        "treaty",
-        "protocol",
-        "mli"
-      ],
-      "effective_from": "2024-01-01",
-      "verification_status": "verified",
-      "source_text": "Slovak bilateral MLI adjudication for SK-VN: notice 510/2023; result-changing articles ['12', '13', '15', '7']; WHT effective date(s) ['2024-01-01']. Gate: MLI Article 7 principal purpose test.",
-      "source_id": "SK-MLI-510-2023",
-      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2023/510/vyhlasene_znenie.html",
-      "source_excerpt_hash": "6a374f8db9cc8bcdba6ae7c891179d93379d4413088ecb71ed15c38b3cd85383",
-      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
-      "reviewer_id": "sk_mli_final_reconfirmation",
-      "reviewed_at": "2026-08-21",
-      "approved_by": "mli_bilateral_adjudication_2026",
-      "approved_at": "2026-08-21",
-      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
-      "approval_created_at": "2026-08-21",
-      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
-      "evidence_source_ids": [
-        "SK-MLI-510-2023"
-      ]
-    },
-    {
-      "rule_id": "SK-VN-MLI-GATE-INTEREST-A12",
-      "income_type": "interest",
-      "source_country": "SK",
-      "recipient_country": "VN",
-      "legal_instrument": "mli",
-      "legal_layer": "mli",
-      "article": "12",
-      "paragraph": null,
-      "rate": null,
-      "priority": 62,
-      "conditions": [
-        {
-          "fact": "mli_article_12_dependent_agent_pe_status_resolved",
-          "fact_source": "determination",
-          "operator": "==",
-          "value": true
-        }
-      ],
-      "effect": "eligibility_gate",
-      "applies_to_layers": [
-        "treaty",
-        "protocol",
-        "mli"
-      ],
-      "effective_from": "2024-01-01",
-      "verification_status": "verified",
-      "source_text": "Slovak bilateral MLI adjudication for SK-VN: notice 510/2023; result-changing articles ['12', '13', '15', '7']; WHT effective date(s) ['2024-01-01']. Gate: MLI Article 12 dependent-agent PE modification.",
-      "source_id": "SK-MLI-510-2023",
-      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2023/510/vyhlasene_znenie.html",
-      "source_excerpt_hash": "438adb1c908f9fc42471c8be60ce948196cd633c5eaa5852784b74d98866ba25",
-      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
-      "reviewer_id": "sk_mli_final_reconfirmation",
-      "reviewed_at": "2026-08-21",
-      "approved_by": "mli_bilateral_adjudication_2026",
-      "approved_at": "2026-08-21",
-      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
-      "approval_created_at": "2026-08-21",
-      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
-      "evidence_source_ids": [
-        "SK-MLI-510-2023"
-      ]
-    },
-    {
       "rule_id": "SK-VN-MLI-GATE-INTEREST-A12",
       "income_type": "interest",
       "source_country": "SK",
@@ -258,92 +344,6 @@
       "source_id": "SK-MLI-510-2023",
       "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2023/510/vyhlasene_znenie.html",
       "source_excerpt_hash": "155444746c2efebb5305dd157ab6264c23729b05a410e47fb0c0e81b175581ed",
-      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
-      "reviewer_id": "sk_mli_final_reconfirmation",
-      "reviewed_at": "2026-08-21",
-      "approved_by": "mli_bilateral_adjudication_2026",
-      "approved_at": "2026-08-21",
-      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
-      "approval_created_at": "2026-08-21",
-      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
-      "evidence_source_ids": [
-        "SK-MLI-510-2023"
-      ]
-    },
-    {
-      "rule_id": "SK-VN-MLI-GATE-INTEREST-A13",
-      "income_type": "interest",
-      "source_country": "SK",
-      "recipient_country": "VN",
-      "legal_instrument": "mli",
-      "legal_layer": "mli",
-      "article": "13",
-      "paragraph": null,
-      "rate": null,
-      "priority": 63,
-      "conditions": [
-        {
-          "fact": "mli_article_13_specific_activity_pe_status_resolved",
-          "fact_source": "determination",
-          "operator": "==",
-          "value": true
-        }
-      ],
-      "effect": "eligibility_gate",
-      "applies_to_layers": [
-        "treaty",
-        "protocol",
-        "mli"
-      ],
-      "effective_from": "2024-01-01",
-      "verification_status": "verified",
-      "source_text": "Slovak bilateral MLI adjudication for SK-VN: notice 510/2023; result-changing articles ['12', '13', '15', '7']; WHT effective date(s) ['2024-01-01']. Gate: MLI Article 13 specific-activity PE modification.",
-      "source_id": "SK-MLI-510-2023",
-      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2023/510/vyhlasene_znenie.html",
-      "source_excerpt_hash": "155444746c2efebb5305dd157ab6264c23729b05a410e47fb0c0e81b175581ed",
-      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
-      "reviewer_id": "sk_mli_final_reconfirmation",
-      "reviewed_at": "2026-08-21",
-      "approved_by": "mli_bilateral_adjudication_2026",
-      "approved_at": "2026-08-21",
-      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
-      "approval_created_at": "2026-08-21",
-      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
-      "evidence_source_ids": [
-        "SK-MLI-510-2023"
-      ]
-    },
-    {
-      "rule_id": "SK-VN-MLI-GATE-INTEREST-A15",
-      "income_type": "interest",
-      "source_country": "SK",
-      "recipient_country": "VN",
-      "legal_instrument": "mli",
-      "legal_layer": "mli",
-      "article": "15",
-      "paragraph": null,
-      "rate": null,
-      "priority": 65,
-      "conditions": [
-        {
-          "fact": "mli_article_15_closely_related_enterprise_status_resolved",
-          "fact_source": "determination",
-          "operator": "==",
-          "value": true
-        }
-      ],
-      "effect": "eligibility_gate",
-      "applies_to_layers": [
-        "treaty",
-        "protocol",
-        "mli"
-      ],
-      "effective_from": "2024-01-01",
-      "verification_status": "verified",
-      "source_text": "Slovak bilateral MLI adjudication for SK-VN: notice 510/2023; result-changing articles ['12', '13', '15', '7']; WHT effective date(s) ['2024-01-01']. Gate: MLI Article 15 closely-related-enterprise definition.",
-      "source_id": "SK-MLI-510-2023",
-      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2023/510/vyhlasene_znenie.html",
-      "source_excerpt_hash": "ff6465d48bb27469839fbfa8ad919c2f1b805b214ffb8728ee53ce63d1863f94",
       "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
       "reviewer_id": "sk_mli_final_reconfirmation",
       "reviewed_at": "2026-08-21",
@@ -513,6 +513,178 @@
       "final_rate_allowed": false,
       "automatic_production_approval_forbidden": true,
       "tax_treatment": "exclusive_foreign_taxation"
+    },
+    {
+      "rule_id": "SK-VN-MLI-GATE-ROYALTY-A7",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "VN",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "7",
+      "paragraph": null,
+      "rate": null,
+      "priority": 57,
+      "conditions": [
+        {
+          "fact": "treaty_ppt_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2024-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-VN: notice 510/2023; result-changing articles ['12', '13', '15', '7']; WHT effective date(s) ['2024-01-01']. Gate: MLI Article 7 principal purpose test.",
+      "source_id": "SK-MLI-510-2023",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2023/510/vyhlasene_znenie.html",
+      "source_excerpt_hash": "6a374f8db9cc8bcdba6ae7c891179d93379d4413088ecb71ed15c38b3cd85383",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-MLI-510-2023"
+      ]
+    },
+    {
+      "rule_id": "SK-VN-MLI-GATE-ROYALTY-A12",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "VN",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "12",
+      "paragraph": null,
+      "rate": null,
+      "priority": 62,
+      "conditions": [
+        {
+          "fact": "mli_article_12_dependent_agent_pe_status_resolved",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2024-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-VN: notice 510/2023; result-changing articles ['12', '13', '15', '7']; WHT effective date(s) ['2024-01-01']. Gate: MLI Article 12 dependent-agent PE modification.",
+      "source_id": "SK-MLI-510-2023",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2023/510/vyhlasene_znenie.html",
+      "source_excerpt_hash": "438adb1c908f9fc42471c8be60ce948196cd633c5eaa5852784b74d98866ba25",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-MLI-510-2023"
+      ]
+    },
+    {
+      "rule_id": "SK-VN-MLI-GATE-ROYALTY-A13",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "VN",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "13",
+      "paragraph": null,
+      "rate": null,
+      "priority": 63,
+      "conditions": [
+        {
+          "fact": "mli_article_13_specific_activity_pe_status_resolved",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2024-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-VN: notice 510/2023; result-changing articles ['12', '13', '15', '7']; WHT effective date(s) ['2024-01-01']. Gate: MLI Article 13 specific-activity PE modification.",
+      "source_id": "SK-MLI-510-2023",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2023/510/vyhlasene_znenie.html",
+      "source_excerpt_hash": "155444746c2efebb5305dd157ab6264c23729b05a410e47fb0c0e81b175581ed",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-MLI-510-2023"
+      ]
+    },
+    {
+      "rule_id": "SK-VN-MLI-GATE-ROYALTY-A15",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "VN",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "15",
+      "paragraph": null,
+      "rate": null,
+      "priority": 65,
+      "conditions": [
+        {
+          "fact": "mli_article_15_closely_related_enterprise_status_resolved",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2024-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-VN: notice 510/2023; result-changing articles ['12', '13', '15', '7']; WHT effective date(s) ['2024-01-01']. Gate: MLI Article 15 closely-related-enterprise definition.",
+      "source_id": "SK-MLI-510-2023",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2023/510/vyhlasene_znenie.html",
+      "source_excerpt_hash": "ff6465d48bb27469839fbfa8ad919c2f1b805b214ffb8728ee53ce63d1863f94",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-MLI-510-2023"
+      ]
     },
     {
       "rule_id": "SK-VN-ROYALTY-TREATY-UNRESOLVED-FAIL-CLOSED",
