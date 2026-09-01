@@ -282,7 +282,7 @@ def interest_branches(scope: dict, article: dict) -> list[dict] | None:
             "rate": 0.0,
             "priority": 700,
             "conditions": special,
-            "tax_treatment": "treaty_special_interest_exemption",
+            "tax_treatment": "exclusive_foreign_taxation",
             "suffix": "INTEREST-SPECIAL-EXEMPTION",
         },
         {"rate": general_rate, "priority": 600, "conditions": ordinary, "suffix": "INTEREST-GENERAL"},
