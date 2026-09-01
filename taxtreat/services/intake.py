@@ -107,6 +107,23 @@ FACT_GUIDANCE: dict[str, dict[str, Any]] = {
             "Zakladatelské dokumenty",
         ],
     },
+    "treaty_specific_recipient_qualification": {
+        "prompt": (
+            "Ověřte, zda příjemce splňuje zvláštní status vyžadovaný "
+            "konkrétní smluvní větví."
+        ),
+        "why": (
+            "Jde o užší právní kvalifikaci, kterou nelze bezpečně odvodit "
+            "jen z obecného typu příjemce."
+        ),
+        "client_answerable": False,
+        "advisor_topic": "recipient_eligibility",
+        "documents": [
+            "Doklady k právnímu postavení příjemce",
+            "Zakladatelské dokumenty",
+            "Případně doklady k vlastnictví nebo kontrole",
+        ],
+    },
     "recipient_is_qualifying_company_form": {
         "prompt": "Ověřte, zda právní forma příjemce splňuje podmínky příslušného režimu.",
         "why": "Jde o odborné vyhodnocení právní formy, nikoli o údaj, který má klient právně kvalifikovat.",
