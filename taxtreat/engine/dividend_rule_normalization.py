@@ -152,11 +152,37 @@ def normalize_raw_legal_rule(raw_rule: dict) -> dict:
     conditions = DIVIDEND_CONDITION_PATCHES.get(rule_id)
     source_patch = DIVIDEND_SOURCE_PATCHES.get(rule_id)
     field_patch = RULE_FIELD_PATCHES.get(rule_id)
-    if conditions is None and source_patch is None and field_patch is None:
+
+    narrow_zero_rate_qualification = (
+        raw_rule.get("income_type") == "dividend"
+        and float(raw_rule.get("rate") or -1) == 0.0
+        and any(
+            condition.get("fact") == "recipient_entity_type"
+            and str(condition.get("value") or "")
+            not in {"company", "individual", "fund", "other"}
+            for condition in raw_rule.get("conditions", [])
+        )
+    )
+
+    if (
+        conditions is None
+        and source_patch is None
+        and field_patch is None
+        and not narrow_zero_rate_qualification
+    ):
         return raw_rule
     normalized = deepcopy(raw_rule)
     if conditions is not None:
         normalized["conditions"] = deepcopy(conditions)
+    elif narrow_zero_rate_qualification:
+        normalized["conditions"] = [
+            (
+                _c("treaty_specific_recipient_qualification", "==", True)
+                if condition.get("fact") == "recipient_entity_type"
+                else deepcopy(condition)
+            )
+            for condition in raw_rule.get("conditions", [])
+        ]
     if source_patch is not None:
         normalized.update(deepcopy(source_patch))
     if field_patch is not None:
