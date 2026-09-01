@@ -17,18 +17,21 @@ def test_sk_stage1_materializes_only_safe_scopes():
 
     assert payload["source_country"] == "SK"
     assert payload["total_scopes"] == 225
-    assert payload["materialized_scopes"] == 89
-    assert payload["unresolved_scopes"] == 136
-    assert payload["materialized_country_packages"] == 60
-    assert payload["policy"]["only_unambiguous_single_rate_scopes_materialized"] is True
-    assert payload["policy"]["special_interest_exemptions_not_inferred"] is True
-    assert payload["policy"]["multi_rate_royalties_not_inferred"] is True
+    assert payload["materialized_scopes"] == 141
+    assert payload["decision_materialized_scopes"] == 141
+    assert payload["fail_closed_placeholder_scopes"] == 84
+    assert payload["structured_scope_coverage"] == 225
+    assert payload["unresolved_scopes"] == 84
+    assert payload["materialized_country_packages"] == 75
+    assert payload["policy"]["machine_rate_list_alone_is_never_sufficient_for_complex_branch_materialization"] is True
+    assert payload["policy"]["unresolved_scopes_use_rate_null_fail_closed_placeholders"] is True
+    assert payload["policy"]["rule_level_finalization_remains_closed_for_unresolved_scopes"] is True
     assert payload["policy"]["czech_rule_reuse_forbidden"] is True
 
 
 def test_every_materialized_rule_is_sk_only_and_source_backed():
     files = sorted(RULE_DIR.glob("*.json"))
-    assert len(files) == 60
+    assert len(files) == 75
 
     rule_count = 0
     for path in files:
@@ -56,7 +59,7 @@ def test_every_materialized_rule_is_sk_only_and_source_backed():
                 )
             assert not rule["rule_id"].startswith("CZ-")
 
-    assert rule_count >= 89  # includes MLI eligibility gates in addition to 89 treaty-rate rules
+    assert rule_count >= 225  # 225 scope-covering treaty rules plus MLI gates/branch expansions
 
 
 def test_materialized_sk_scope_reaches_candidate_but_release_manifest_keeps_it_closed():
