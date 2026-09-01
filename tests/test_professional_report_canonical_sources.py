@@ -25,7 +25,9 @@ def _ad_dividend_payload():
             "ownership_percent": 100,
             "direct_ownership": True,
             "holding_period_months": 24,
-            "recipient_is_qualifying_company": True,
+            # This fixture tests canonical treaty citation attachment, not
+            # the Czech domestic Section 19 exemption priority path.
+            "recipient_is_qualifying_company": False,
         },
         "determinations": {},
     }
@@ -54,8 +56,6 @@ def test_analysis_report_uses_canonical_treaty_text_not_stage6_excerpt(monkeypat
     assert source["source_url"] == canonical["source_url"]
     assert canonical["text"] in html
 
-    # Known damaged Stage 6 spellings must never leak into the report once the
-    # canonical e-Sbírka text has been attached.
     assert "rozdili zisk" not in source["excerpt"]
     assert "vyplacejici" not in source["excerpt"]
     assert "rozdili zisk" not in html
