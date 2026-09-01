@@ -44,16 +44,13 @@ def _condition_target(condition, facts, legal, determinations):
     )
 
 
-def complete_treaty_facts(country, treaty_rules, relief_rules):
-    """Populate all treaty facts while explicitly making EU relief inapplicable.
+def complete_treaty_facts(country, treaty_rules):
+    """Populate every fact used by treaty-rate branches.
 
-    This mirrors a fully completed UI transaction. Treaty branches must be
-    either satisfied or explicitly failed, never left unresolved. For EU
-    countries, treaty ownership facts can also make the domestic/EU relief
-    layer potentially applicable; leaving its remaining facts blank would
-    correctly trigger fail-closed REVIEW_REQUIRED and would no longer isolate
-    the treaty fallback. Therefore every relief fact is completed and boolean
-    eligibility conditions are explicitly failed.
+    This verifier intentionally isolates the treaty fallback path. EU/domestic
+    exemption eligibility is covered by dedicated tests and is excluded from
+    the evaluated rule set below, so incomplete exemption facts cannot mask a
+    treaty fallback regression with a fail-closed REVIEW_REQUIRED result.
     """
     facts = {
         "income_type": "dividend",
@@ -78,19 +75,6 @@ def complete_treaty_facts(country, treaty_rules, relief_rules):
                     condition.operator,
                     condition.value,
                 )
-
-    for rule in relief_rules:
-        for condition in rule.conditions:
-            if condition.fact in RULE_CONTROL_FACTS:
-                continue
-            target = _condition_target(condition, facts, legal, determinations)
-            if condition.fact not in target:
-                target[condition.fact] = satisfying_value(
-                    condition.operator,
-                    condition.value,
-                )
-            if condition.operator == "==" and isinstance(condition.value, bool):
-                target[condition.fact] = not condition.value
 
     return facts, legal, determinations
 
@@ -123,10 +107,14 @@ def main() -> int:
             continue
 
         country = treaty[0].recipient_country
-        facts, legal, determinations = complete_treaty_facts(country, treaty, relief)
+        facts, legal, determinations = complete_treaty_facts(country, treaty)
+        treaty_path_rules = [
+            rule for rule in dividend
+            if rule.legal_layer != "eu_relief"
+        ]
 
         result = evaluate_layered_rules(
-            dividend,
+            treaty_path_rules,
             facts,
             as_of=AS_OF,
             legal_facts=legal,
@@ -137,7 +125,7 @@ def main() -> int:
         selected_layer = next(
             (
                 rule.legal_layer
-                for rule in dividend
+                for rule in treaty_path_rules
                 if rule.rule_id == result.selected_rule_id
             ),
             None,
