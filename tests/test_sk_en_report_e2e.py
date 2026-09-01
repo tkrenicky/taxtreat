@@ -10,15 +10,19 @@ def _sk_english_report_payload():
     return {
         "source_country": "SK",
         "recipient_country": "AT",
-        "income_type": "dividend",
+        "income_type": "interest",
         "transaction_date": "2026-08-19",
         "facts": {
             "__report_language": "en",
-            "recipient_entity_type": "corporate",
-            "distribution_category_is_section_3_1_f": False,
-            "distribution_is_tax_deductible_for_payer": False,
+            "recipient_is_treaty_resident": True,
+            "permanent_establishment_connection": False,
+            "beneficial_owner": True,
         },
-        "determinations": {},
+        "determinations": {
+            "treaty_ppt_passed": True,
+            "mli_article_10_third_jurisdiction_pe_test_passed": True,
+            "mli_article_13_specific_activity_pe_status_resolved": True,
+        },
     }
 
 
@@ -59,6 +63,7 @@ def test_released_sk_runtime_generates_source_specific_english_report_end_to_end
     assert "Czech withholding tax information" not in html
     assert "Czech withholding tax" not in html
     assert "Czech Income Taxes Act" not in html
+    assert "Czech permanent establishment" not in html
     assert "586/1992" not in html
     assert "§ 38da" not in html
     assert "Informace k české srážkové dani" not in html
