@@ -3,6 +3,9 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from taxtreat.engine.dividend_rule_normalization import normalize_raw_legal_rule
+
+
 ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -19,20 +22,29 @@ def main() -> int:
             "workspace.js must calculate continuous_holding_period_days inclusively"
         )
 
-    bd = json.loads(
-        (ROOT / "data" / "legal_rules_stage6" / "bd.json").read_text(encoding="utf-8")
+    payload = json.loads(
+        (ROOT / "data" / "legal_rules_stage6" / "bd.json").read_text(
+            encoding="utf-8"
+        )
     )
-    rule = next(r for r in bd["rules"] if r["rule_id"] == "CZ-BD-DIVIDEND-CURRENT-1")
-    facts = {c["fact"] for c in rule.get("conditions", [])}
-    forbidden = {
-        "holding_period_includes_payment_date",
-        "holding_period_reorganisation_continuity",
+    raw_rule = next(
+        row
+        for row in payload["rules"]
+        if row["rule_id"] == "CZ-BD-DIVIDEND-CURRENT-1"
+    )
+    rule = normalize_raw_legal_rule(raw_rule)
+    facts = {str(row.get("fact")) for row in rule.get("conditions", [])}
+    expected_facts = {
+        "recipient_entity_type",
+        "direct_ownership",
+        "ownership_percent",
+        "beneficial_owner",
+        "continuous_holding_period_days",
     }
-    leaked = facts & forbidden
-    if leaked:
+    if facts != expected_facts:
         failures.append(
-            "BD dividend rule contains holding-period counting pseudo-facts: "
-            + ", ".join(sorted(leaked))
+            "BD effective runtime holding-period facts differ from the "
+            "condition-aware normalization contract"
         )
 
     if failures:
