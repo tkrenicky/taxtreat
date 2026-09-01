@@ -1,0 +1,242 @@
+name: One-shot extend SK royalty parser
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/extend-sk-royalty-parser.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extend royalty category parser
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('taxtreat/tools/build_sk_structured_treaty_rules.py')
+          text = path.read_text(encoding='utf-8')
+          start = text.index('def _royalty_categories_from_text')
+          end = text.index('\ndef _make_rule', start)
+          block = r'''def _royalty_categories_from_text(text: str) -> list[str]:
+              lowered = text.lower()
+              categories: list[str] = []
+              if any(token in lowered for token in ("autorsk", "literár", "umeleck", "vedeck")):
+                  categories.append(ROYALTY_UI_CATEGORIES["copyright"])
+              if any(token in lowered for token in ("kinematograf", "film", "televíz", "rozhlas", "rádio")):
+                  categories.append(ROYALTY_UI_CATEGORIES["film"])
+              if any(token in lowered for token in ("počítač", "software", "programové vybaven")):
+                  categories.append(ROYALTY_UI_CATEGORIES["software"])
+              if any(token in lowered for token in (
+                  "patent", "ochrann", "známk", "návrh", "model", "plán", "tajného vzorca",
+                  "tajnej receptúry", "výrobného postupu", "proces", "know-how", "skúsenost",
+              )):
+                  categories.append(ROYALTY_UI_CATEGORIES["industrial_ip"])
+              financial_lease = any(token in lowered for token in (
+                  "finančný prenájom", "finančného prenájmu", "finančnom prenájme", "financial lease",
+              ))
+              operating_lease = any(token in lowered for token in (
+                  "operatívny prenájom", "operatívneho prenájmu", "prevádzkový prenájom",
+                  "prevádzkového prenájmu", "operating lease",
+              ))
+              if financial_lease:
+                  categories.append(ROYALTY_UI_CATEGORIES["equipment_financial"])
+              if operating_lease:
+                  categories.append(ROYALTY_UI_CATEGORIES["equipment_operating"])
+              if "zariaden" in lowered and not financial_lease and not operating_lease:
+                  categories.extend([
+                      ROYALTY_UI_CATEGORIES["equipment_financial"],
+                      ROYALTY_UI_CATEGORIES["equipment_operating"],
+                  ])
+              if "všetkých ostatných" in lowered or "všetky ostatné" in lowered:
+                  categories.append(ROYALTY_UI_CATEGORIES["other"])
+              return list(dict.fromkeys(categories))
+
+
+          def _all_royalty_categories() -> list[str]:
+              return list(dict.fromkeys(ROYALTY_UI_CATEGORIES.values()))
+
+
+          def _definition_letter(text: str, letter: str) -> str | None:
+              lowered = text.lower()
+              definition = re.search(r"(?:\(3\)|\b3\.\s)[\s\S]{0,4200}", lowered)
+              haystack = definition.group(0) if definition else lowered
+              match = re.search(
+                  rf"(?:^|[;:.]\s*){letter}\)\s*([\s\S]*?)(?=(?:[;:.]\s*)[a-d]\)\s|(?:\(4\)|\b4\.\s)|$)",
+                  haystack,
+              )
+              return match.group(1) if match else None
+
+
+          def _categories_for_rate_clause(article_text: str, clause: str) -> list[str]:
+              categories = _royalty_categories_from_text(clause)
+              ref = re.search(
+                  r"(?:odseku|odsek)\s*3\s*(?:písm(?:ena|eno)?\.?\s*)?([a-d])\)?",
+                  clause,
+              )
+              if ref:
+                  definition = _definition_letter(article_text, ref.group(1))
+                  if definition:
+                      categories = _royalty_categories_from_text(definition)
+              return categories
+
+
+          def _lettered_royalty_rate_branches(scope: dict, article_text: str) -> list[dict] | None:
+              para = _article_paragraph_two(article_text)
+              matches = list(re.finditer(
+                  r"(?:^|[;:.]\s*)([a-d])\)\s*([0-9]+(?:[,.][0-9]+)?)\s*%\s*([\s\S]*?)"
+                  r"(?=(?:[;:.]\s*)[a-d]\)\s*[0-9]|(?:\(3\)|\b3\.\s)|$)",
+                  para,
+              ))
+              if len(matches) < 2:
+                  return None
+
+              parsed = []
+              assigned: set[str] = set()
+              fallback_rows = []
+              for match in matches:
+                  clause = match.group(3).strip()
+                  rate = _percent(match.group(2))
+                  is_fallback = bool(re.search(r"(?:všetkých|všetky)\s+(?:ostatných|ostatné)", clause))
+                  categories = _categories_for_rate_clause(article_text, clause)
+                  row = (rate, clause, categories)
+                  if is_fallback:
+                      fallback_rows.append(row)
+                  else:
+                      if not categories:
+                          return None
+                      assigned.update(categories)
+                      parsed.append(row)
+
+              if len(fallback_rows) > 1:
+                  return None
+              if fallback_rows:
+                  rate, clause, _ = fallback_rows[0]
+                  complement = [cat for cat in _all_royalty_categories() if cat not in assigned]
+                  if not complement:
+                      return None
+                  parsed.append((rate, clause, complement))
+
+              candidate_rates = {
+                  float(row["rate_percent"])
+                  for row in scope.get("rate_candidates", [])
+                  if row.get("rate_percent") is not None
+              }
+              if not candidate_rates:
+                  return None
+              if any(rate not in candidate_rates for rate, _, _ in parsed):
+                  return None
+
+              common = conditions(scope)
+              branches: list[dict] = []
+              for branch_index, (rate, _, categories) in enumerate(parsed, start=1):
+                  for category_index, category in enumerate(categories, start=1):
+                      branches.append({
+                          "rate": rate,
+                          "priority": 690,
+                          "conditions": [
+                              *common,
+                              {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": category},
+                          ],
+                          "suffix": f"ROYALTY-LETTER-{branch_index}-{category_index}",
+                      })
+              return branches or None
+
+
+          def royalty_branches(scope: dict, article: dict) -> list[dict] | None:
+              """Materialize source-explicit royalty categories, never percentage lists alone."""
+              if scope.get("income_type") != "royalty" or not scope.get("source_sha256"):
+                  return None
+              text = str(article.get("article_text") or "").lower()
+              common = conditions(scope)
+
+              residence_only = bool(re.search(
+                  r"licenčné\s+poplatky[^.]{0,240}(?:môžu\s+sa\s+zdaniť|sa\s+zdania)\s+(?:len|iba|výlučne)\s+v\s+tomto\s+druhom\s+štáte",
+                  text,
+              ))
+              percentages = {_percent(value) for value in re.findall(r"([0-9]+(?:[,.][0-9]+)?)\s*%", _article_paragraph_two(text))}
+              if residence_only and not percentages:
+                  return [{
+                      "rate": 0.0,
+                      "priority": 650,
+                      "conditions": common,
+                      "tax_treatment": "exclusive_foreign_taxation",
+                      "suffix": "ROYALTY-RESIDENCE-ONLY",
+                  }]
+
+              ref = re.search(
+                  r"(?:odseku|odsek)\s*3\s*(?:písm(?:ena|eno)?\.?\s*)?([ab])\)?[^%]{0,240}"
+                  r"([0-9]+(?:[,.][0-9]+)?)\s*%",
+                  text,
+                  flags=re.S,
+              )
+              if not ref:
+                  ref = re.search(
+                      r"licenčné\s+poplatky[^.]{0,240}(?:3\s*([ab])\))[^%]{0,240}"
+                      r"([0-9]+(?:[,.][0-9]+)?)\s*%",
+                      text,
+                      flags=re.S,
+                  )
+              if residence_only and ref:
+                  taxed_letter = ref.group(1)
+                  taxed_rate = _percent(ref.group(2))
+                  other_letter = "a" if taxed_letter == "b" else "b"
+                  taxed_text = _definition_letter(text, taxed_letter)
+                  other_text = _definition_letter(text, other_letter)
+                  if taxed_text and other_text:
+                      taxed_categories = _royalty_categories_from_text(taxed_text)
+                      exempt_categories = _royalty_categories_from_text(other_text)
+                      if taxed_categories and exempt_categories:
+                          branches: list[dict] = []
+                          for index, category in enumerate(exempt_categories, start=1):
+                              branches.append({
+                                  "rate": 0.0,
+                                  "priority": 680,
+                                  "conditions": [
+                                      *common,
+                                      {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": category},
+                                  ],
+                                  "tax_treatment": "exclusive_foreign_taxation",
+                                  "suffix": f"ROYALTY-RESIDENCE-{other_letter.upper()}-{index}",
+                              })
+                          for index, category in enumerate(taxed_categories, start=1):
+                              branches.append({
+                                  "rate": taxed_rate,
+                                  "priority": 680,
+                                  "conditions": [
+                                      *common,
+                                      {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": category},
+                                  ],
+                                  "suffix": f"ROYALTY-SOURCE-{taxed_letter.upper()}-{index}",
+                              })
+                          return branches
+
+              lettered = _lettered_royalty_rate_branches(scope, text)
+              if lettered:
+                  return lettered
+              return None
+          '''
+          # Dedent the embedded source block by its workflow indentation.
+          import textwrap
+          block = textwrap.dedent(block)
+          text = text[:start] + block + text[end:]
+          text = text.replace(
+              '        "unresolved": unresolved,\n',
+              '        "unresolved_by_income": {income: sum(1 for row in unresolved if row["income_type"] == income) for income in ("dividend", "interest", "royalty")},\n        "unresolved": unresolved,\n',
+              1,
+          )
+          path.write_text(text, encoding='utf-8')
+          PY
+          git rm .github/workflows/extend-sk-royalty-parser.yml
+      - name: Commit parser extension
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Extend SK royalty category branch parsing'
+          git pull --rebase origin main
+          git push
