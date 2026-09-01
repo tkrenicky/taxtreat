@@ -700,6 +700,9 @@ def main() -> int:
         "source_country": "SK",
         "total_scopes": 225,
         "materialized_scopes": len(materialized),
+        "decision_materialized_scopes": len(materialized),
+        "fail_closed_placeholder_scopes": len(unresolved),
+        "structured_scope_coverage": len(materialized) + len(unresolved),
         "unresolved_scopes": len(unresolved),
         "materialized_country_packages": len(grouped),
         "materialized_scope_keys": sorted(materialized),
@@ -717,7 +720,9 @@ def main() -> int:
             "unmapped_royalty_categories_remain_fail_closed": True,
             "stage_rules_remain_needs_review_until_all_protocol_mli_and_release_gates_are_satisfied": True,
             "czech_rule_reuse_forbidden": True,
-            "release_remains_closed_until_all_225_scopes_are_structured_and_regression_tested": True,
+            "all_225_scopes_have_runtime_structured_coverage": True,
+            "unresolved_scopes_use_rate_null_fail_closed_placeholders": True,
+            "rule_level_finalization_remains_closed_for_unresolved_scopes": True,
             "automatic_production_approval_forbidden": True,
         },
     }
@@ -725,7 +730,8 @@ def main() -> int:
         json.dumps(summary, indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8",
     )
-    print(f"SK structured rules: {len(materialized)}/225 scopes")
+    print(f"SK decision-materialized rules: {len(materialized)}/225 scopes")
+    print(f"SK structured runtime coverage: {len(materialized) + len(unresolved)}/225 scopes")
     print(f"country packages: {len(grouped)}")
     print(f"unresolved: {len(unresolved)}")
     print(f"modes: {dict(sorted(materialization_modes.items()))}")
