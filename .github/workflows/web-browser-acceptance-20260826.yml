@@ -30,6 +30,7 @@ on:
       - 'app/main.py'
       - 'taxtreat/services/**'
       - 'taxtreat/engine/**'
+      - 'data/legal_rules_stage6/**'
   workflow_dispatch:
 
 jobs:
