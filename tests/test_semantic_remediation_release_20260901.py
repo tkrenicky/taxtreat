@@ -18,8 +18,11 @@ def _load(path: Path):
 
 def _norm_value(value):
     if isinstance(value, bool):
-        return str(value)
-    return str(value)
+        return "true" if value else "false"
+    text = str(value)
+    if text.lower() in {"true", "false"}:
+        return text.lower()
+    return text
 
 
 def _norm_registry_condition(row):
