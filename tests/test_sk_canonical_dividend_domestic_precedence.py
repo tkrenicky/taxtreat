@@ -50,18 +50,18 @@ def test_sk_domestic_legal_result_is_outside_subject_non_rate():
     ]
 
 
-def test_canonical_sk_result_is_fail_closed_until_structured_treaty_materialization():
+def test_canonical_sk_result_preserves_terminal_domestic_precedence_after_source_release():
     result = analyze_transaction(_request())
 
-    assert result.status == DecisionStatus.REVIEW_REQUIRED
-    assert result.requires_review is True
-    assert result.eligible is False
+    assert result.status == DecisionStatus.FINAL
+    assert result.requires_review is False
+    assert result.eligible is True
     assert result.rate is None
-    assert result.tax_treatment is None
-    assert result.selected_rule_id is None
+    assert result.tax_treatment == TaxTreatment.OUTSIDE_SUBJECT_OF_TAX
+    assert result.selected_rule_id == "SK-DIV-DOMESTIC-SECTION-12-7-C"
     assert result.candidate_rule_id == "SK-DIV-DOMESTIC-SECTION-12-7-C"
     assert result.candidate_tax_treatment == TaxTreatment.OUTSIDE_SUBJECT_OF_TAX
-    assert "source_country_release_manifest" in result.missing_legal_layers
+    assert "source_country_release_manifest" not in result.missing_legal_layers
 
 def test_domestic_outside_subject_still_bypasses_treaty_runtime_gate(
     monkeypatch,
@@ -80,12 +80,12 @@ def test_domestic_outside_subject_still_bypasses_treaty_runtime_gate(
 
     result = analyze_transaction(_request())
 
-    assert result.status == DecisionStatus.REVIEW_REQUIRED
-    assert result.requires_review is True
-    assert result.eligible is False
+    assert result.status == DecisionStatus.FINAL
+    assert result.requires_review is False
+    assert result.eligible is True
     assert result.rate is None
-    assert result.tax_treatment is None
-    assert result.selected_rule_id is None
+    assert result.tax_treatment == TaxTreatment.OUTSIDE_SUBJECT_OF_TAX
+    assert result.selected_rule_id == "SK-DIV-DOMESTIC-SECTION-12-7-C"
     assert result.candidate_rule_id == "SK-DIV-DOMESTIC-SECTION-12-7-C"
     assert result.candidate_tax_treatment == TaxTreatment.OUTSIDE_SUBJECT_OF_TAX
 
