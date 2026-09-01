@@ -24,9 +24,11 @@ def test_unregistered_source_direction_keeps_legacy_canonical_dataset_identity()
     assert value == "cz-stage6-test"
 
 
-def test_current_sk_manifest_is_not_a_production_dataset_until_rules_are_materialized():
-    with pytest.raises(ValueError, match="not released for SK"):
+def test_current_sk_runtime_dataset_identity_comes_from_released_sk_manifest():
+    assert (
         source_country_runtime_dataset_version("SK")
+        == "sk-source-country-release-2026-09-01.4"
+    )
 
 
 def test_released_non_cz_dataset_identity_comes_from_own_manifest(tmp_path, monkeypatch):
