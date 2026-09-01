@@ -288,7 +288,18 @@ def _royalty_categories_from_text(text: str) -> list[str]:
         "tajnej receptúry", "výrobného postupu", "proces", "know-how", "skúsenost",
     )):
         categories.append(ROYALTY_UI_CATEGORIES["industrial_ip"])
-    if "zariaden" in lowered:
+    financial_lease = any(token in lowered for token in (
+        "finančný prenájom", "finančného prenájmu", "finančnom prenájme", "financial lease",
+    ))
+    operating_lease = any(token in lowered for token in (
+        "operatívny prenájom", "operatívneho prenájmu", "prevádzkový prenájom",
+        "prevádzkového prenájmu", "operating lease",
+    ))
+    if financial_lease:
+        categories.append(ROYALTY_UI_CATEGORIES["equipment_financial"])
+    if operating_lease:
+        categories.append(ROYALTY_UI_CATEGORIES["equipment_operating"])
+    if "zariaden" in lowered and not financial_lease and not operating_lease:
         categories.extend([
             ROYALTY_UI_CATEGORIES["equipment_financial"],
             ROYALTY_UI_CATEGORIES["equipment_operating"],
@@ -298,16 +309,94 @@ def _royalty_categories_from_text(text: str) -> list[str]:
     return list(dict.fromkeys(categories))
 
 
+def _all_royalty_categories() -> list[str]:
+    return list(dict.fromkeys(ROYALTY_UI_CATEGORIES.values()))
+
+
 def _definition_letter(text: str, letter: str) -> str | None:
     lowered = text.lower()
-    # Search only after a definition paragraph marker where possible.
-    definition = re.search(r"(?:\(3\)|\b3\.\s)[\s\S]{0,3000}", lowered)
+    definition = re.search(r"(?:\(3\)|\b3\.\s)[\s\S]{0,4200}", lowered)
     haystack = definition.group(0) if definition else lowered
     match = re.search(
         rf"(?:^|[;:.]\s*){letter}\)\s*([\s\S]*?)(?=(?:[;:.]\s*)[a-d]\)\s|(?:\(4\)|\b4\.\s)|$)",
         haystack,
     )
     return match.group(1) if match else None
+
+
+def _categories_for_rate_clause(article_text: str, clause: str) -> list[str]:
+    categories = _royalty_categories_from_text(clause)
+    ref = re.search(
+        r"(?:odseku|odsek)\s*3\s*(?:písm(?:ena|eno)?\.?\s*)?([a-d])\)?",
+        clause,
+    )
+    if ref:
+        definition = _definition_letter(article_text, ref.group(1))
+        if definition:
+            categories = _royalty_categories_from_text(definition)
+    return categories
+
+
+def _lettered_royalty_rate_branches(scope: dict, article_text: str) -> list[dict] | None:
+    para = _article_paragraph_two(article_text)
+    matches = list(re.finditer(
+        r"(?:^|[;:.]\s*)([a-d])\)\s*([0-9]+(?:[,.][0-9]+)?)\s*%\s*([\s\S]*?)"
+        r"(?=(?:[;:.]\s*)[a-d]\)\s*[0-9]|(?:\(3\)|\b3\.\s)|$)",
+        para,
+    ))
+    if len(matches) < 2:
+        return None
+
+    parsed = []
+    assigned: set[str] = set()
+    fallback_rows = []
+    for match in matches:
+        clause = match.group(3).strip()
+        rate = _percent(match.group(2))
+        is_fallback = bool(re.search(r"(?:všetkých|všetky)\s+(?:ostatných|ostatné)", clause))
+        categories = _categories_for_rate_clause(article_text, clause)
+        row = (rate, clause, categories)
+        if is_fallback:
+            fallback_rows.append(row)
+        else:
+            if not categories:
+                return None
+            assigned.update(categories)
+            parsed.append(row)
+
+    if len(fallback_rows) > 1:
+        return None
+    if fallback_rows:
+        rate, clause, _ = fallback_rows[0]
+        complement = [cat for cat in _all_royalty_categories() if cat not in assigned]
+        if not complement:
+            return None
+        parsed.append((rate, clause, complement))
+
+    candidate_rates = {
+        float(row["rate_percent"])
+        for row in scope.get("rate_candidates", [])
+        if row.get("rate_percent") is not None
+    }
+    if not candidate_rates:
+        return None
+    if any(rate not in candidate_rates for rate, _, _ in parsed):
+        return None
+
+    common = conditions(scope)
+    branches: list[dict] = []
+    for branch_index, (rate, _, categories) in enumerate(parsed, start=1):
+        for category_index, category in enumerate(categories, start=1):
+            branches.append({
+                "rate": rate,
+                "priority": 690,
+                "conditions": [
+                    *common,
+                    {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": category},
+                ],
+                "suffix": f"ROYALTY-LETTER-{branch_index}-{category_index}",
+            })
+    return branches or None
 
 
 def royalty_branches(scope: dict, article: dict) -> list[dict] | None:
@@ -317,8 +406,6 @@ def royalty_branches(scope: dict, article: dict) -> list[dict] | None:
     text = str(article.get("article_text") or "").lower()
     common = conditions(scope)
 
-    # Entire Article 12 is residence-state-only and has no source-state
-    # exception paragraph with a percentage.
     residence_only = bool(re.search(
         r"licenčné\s+poplatky[^.]{0,240}(?:môžu\s+sa\s+zdaniť|sa\s+zdania)\s+(?:len|iba|výlučne)\s+v\s+tomto\s+druhom\s+štáte",
         text,
@@ -333,10 +420,6 @@ def royalty_branches(scope: dict, article: dict) -> list[dict] | None:
             "suffix": "ROYALTY-RESIDENCE-ONLY",
         }]
 
-    # Common older structure: paragraph 1 is residence-only, while paragraph
-    # 2 explicitly carves out royalties defined under paragraph 3(b) (or 3(a))
-    # for source-state taxation at one stated ceiling. The complementary
-    # definition letter therefore remains residence-only.
     ref = re.search(
         r"(?:odseku|odsek)\s*3\s*(?:písm(?:ena|eno)?\.?\s*)?([ab])\)?[^%]{0,240}"
         r"([0-9]+(?:[,.][0-9]+)?)\s*%",
@@ -384,8 +467,10 @@ def royalty_branches(scope: dict, article: dict) -> list[dict] | None:
                     })
                 return branches
 
+    lettered = _lettered_royalty_rate_branches(scope, text)
+    if lettered:
+        return lettered
     return None
-
 
 def _make_rule(
     *,
@@ -588,6 +673,7 @@ def main() -> int:
         "materialized_country_packages": len(grouped),
         "materialized_scope_keys": sorted(materialized),
         "materialization_modes": dict(sorted(materialization_modes.items())),
+        "unresolved_by_income": {income: sum(1 for row in unresolved if row["income_type"] == income) for income in ("dividend", "interest", "royalty")},
         "unresolved": unresolved,
         "policy": {
             "machine_rate_list_alone_is_never_sufficient_for_complex_branch_materialization": True,
