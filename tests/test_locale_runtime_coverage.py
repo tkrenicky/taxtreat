@@ -61,6 +61,11 @@ def test_report_locale_reader_and_resolution(tmp_path, monkeypatch):
     assert fallback["excerpt_authority"] is None
     assert fallback["excerpt_source_url"] is None
 
+    # Same-recipient locale data must never cross source-country boundaries.
+    assert report_locales.english_excerpt_for_citation(
+        {"rule_id": "RULE-1", "article": 10}, "AT", "SK"
+    ) is None
+
     assert report_locales.english_excerpt_for_citation(
         {"rule_id": "MISSING", "article": 99}, "AT"
     ) is None
