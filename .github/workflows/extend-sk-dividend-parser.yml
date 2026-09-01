@@ -1,0 +1,43 @@
+name: One-shot extend SK dividend parser
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/extend-sk-dividend-parser.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extend dividend ownership parser
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('taxtreat/tools/build_sk_structured_treaty_rules.py')
+          text = path.read_text(encoding='utf-8')
+          anchor = '''    if not ownership_match:\n        ownership_match = re.search(\n            r"([0-9]+(?:[,.][0-9]+)?)\\s*%[^.;]{0,650}?najmenej\\s+"\n            r"([0-9]+(?:[,.][0-9]+)?)\\s*%[^.;]{0,260}?"\n            r"(?:priamo|hlasovac)",\n            text,\n            flags=re.S,\n        )\n    if not ownership_match:\n        return None\n'''
+          replacement = '''    if not ownership_match:\n        ownership_match = re.search(\n            r"([0-9]+(?:[,.][0-9]+)?)\\s*%[^.;]{0,650}?najmenej\\s+"\n            r"([0-9]+(?:[,.][0-9]+)?)\\s*%[^.;]{0,260}?"\n            r"(?:priamo|hlasovac)",\n            text,\n            flags=re.S,\n        )\n    if not ownership_match:\n        # Older treaties often require a corporate ownership threshold but do\n        # not use the word 'directly'. The threshold itself is still explicit\n        # in Article 10 and can be represented without inventing directness.\n        ownership_match = re.search(\n            r"([0-9]+(?:[,.][0-9]+)?)\\s*%[^.;]{0,700}?"\n            r"(?:spoločnosť|spoločnosťou)[^.;]{0,320}?"\n            r"(?:vlastní|má|drží)[^.;]{0,120}?najmenej\\s+"\n            r"([0-9]+(?:[,.][0-9]+)?)\\s*%",\n            text,\n            flags=re.S,\n        )\n    if not ownership_match:\n        return None\n'''
+          if anchor not in text:
+              raise SystemExit('dividend ownership anchor not found')
+          text = text.replace(anchor, replacement, 1)
+          old = '''    else:\n        qualifying_conditions.extend([\n            {"fact": "direct_ownership", "fact_source": "transaction", "operator": "==", "value": True},\n            {"fact": "ownership_percent", "fact_source": "transaction", "operator": ">=", "value": threshold},\n        ])\n'''
+          new = '''    else:\n        if "priamo" in qualifying_context:\n            qualifying_conditions.append(\n                {"fact": "direct_ownership", "fact_source": "transaction", "operator": "==", "value": True}\n            )\n        qualifying_conditions.append(\n            {"fact": "ownership_percent", "fact_source": "transaction", "operator": ">=", "value": threshold}\n        )\n'''
+          if old not in text:
+              raise SystemExit('dividend conditions anchor not found')
+          text = text.replace(old, new, 1)
+          path.write_text(text, encoding='utf-8')
+          PY
+          git rm .github/workflows/extend-sk-dividend-parser.yml
+      - name: Commit parser extension
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Extend SK dividend ownership branch parsing'
+          git pull --rebase origin main
+          git push
