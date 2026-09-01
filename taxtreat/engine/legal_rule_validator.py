@@ -11,7 +11,7 @@ from taxtreat.engine.legal_rule_engine import (
 )
 
 
-_ALLOWED_EFFECTS = {"rate", "exclude", "eligibility_gate"}
+_ALLOWED_EFFECTS = {"rate", "exclude", "eligibility_gate", "review_gate"}
 _ALLOWED_INCOME_TYPES = {"dividend", "interest", "royalty"}
 _ALLOWED_INSTRUMENTS = {
     "treaty",
@@ -180,6 +180,9 @@ def validate_legal_rules(rules: list[LegalRule]) -> list[str]:
 
         if rule.effect == "exclude" and rule.rate is not None:
             issues.append(f"{prefix} exclusion rule must not contain a rate.")
+
+        if rule.effect == "review_gate" and rule.rate is not None:
+            issues.append(f"{prefix} review gate must not contain a rate.")
 
         if rule.effect == "eligibility_gate":
             if rule.rate is not None:
