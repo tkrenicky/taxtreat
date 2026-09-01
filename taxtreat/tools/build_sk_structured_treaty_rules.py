@@ -156,6 +156,18 @@ def dividend_branches(scope: dict, article: dict) -> list[dict] | None:
             flags=re.S,
         )
     if not ownership_match:
+        # Older treaties often require a corporate ownership threshold but do
+        # not use the word 'directly'. The threshold itself is still explicit
+        # in Article 10 and can be represented without inventing directness.
+        ownership_match = re.search(
+            r"([0-9]+(?:[,.][0-9]+)?)\s*%[^.;]{0,700}?"
+            r"(?:spoločnosť|spoločnosťou)[^.;]{0,320}?"
+            r"(?:vlastní|má|drží)[^.;]{0,120}?najmenej\s+"
+            r"([0-9]+(?:[,.][0-9]+)?)\s*%",
+            text,
+            flags=re.S,
+        )
+    if not ownership_match:
         return None
 
     qualifying_rate = _percent(ownership_match.group(1))
@@ -187,10 +199,13 @@ def dividend_branches(scope: dict, article: dict) -> list[dict] | None:
             "value": threshold,
         })
     else:
-        qualifying_conditions.extend([
-            {"fact": "direct_ownership", "fact_source": "transaction", "operator": "==", "value": True},
-            {"fact": "ownership_percent", "fact_source": "transaction", "operator": ">=", "value": threshold},
-        ])
+        if "priamo" in qualifying_context:
+            qualifying_conditions.append(
+                {"fact": "direct_ownership", "fact_source": "transaction", "operator": "==", "value": True}
+            )
+        qualifying_conditions.append(
+            {"fact": "ownership_percent", "fact_source": "transaction", "operator": ">=", "value": threshold}
+        )
 
     holding = re.search(r"(?:počas\s+obdobia\s+)?(365)\s+dní", qualifying_context)
     if holding:
