@@ -39,6 +39,67 @@ def _rate_key(value: Any) -> float:
     return float(value)
 
 
+def _condition_key(row: dict[str, Any]) -> tuple[str, str, str, str]:
+    return (
+        str(row.get("fact") or ""),
+        str(row.get("fact_source") or "transaction"),
+        str(row.get("operator") or ""),
+        repr(row.get("value")),
+    )
+
+
+def _common_conditions(rules: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    if not rules:
+        return []
+    common = {
+        _condition_key(row): dict(row)
+        for row in (rules[0].get("conditions") or [])
+        if isinstance(row, dict)
+    }
+    for rule in rules[1:]:
+        keys = {
+            _condition_key(row)
+            for row in (rule.get("conditions") or [])
+            if isinstance(row, dict)
+        }
+        common = {key: row for key, row in common.items() if key in keys}
+    return list(common.values())
+
+
+def _merge_conditions(
+    common: list[dict[str, Any]],
+    remediation: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    remediation_facts = {str(row.get("fact") or "") for row in remediation}
+    merged = [
+        dict(row)
+        for row in common
+        if str(row.get("fact") or "") not in remediation_facts
+    ]
+    merged.extend(remediation)
+    return merged
+
+
+def _new_branch_priority(
+    scope_rules: list[dict[str, Any]],
+    fallback_rule: dict[str, Any],
+) -> int:
+    fallback_priority = int(fallback_rule["priority"])
+    used = {
+        int(rule["priority"])
+        for rule in scope_rules
+        if isinstance(rule.get("priority"), int)
+    }
+    specific_priorities = [value for value in used if value < fallback_priority]
+    floor = max(specific_priorities) if specific_priorities else -1
+    for priority in range(fallback_priority - 1, floor, -1):
+        if priority not in used:
+            return priority
+    raise ValueError(
+        "No safe priority slot exists immediately before the fallback rule"
+    )
+
+
 def project_country(country: str, *, write: bool = True) -> dict[str, Any]:
     code = str(country).upper()
     registry = load(REGISTRY)
@@ -74,24 +135,52 @@ def project_country(country: str, *, write: bool = True) -> dict[str, Any]:
             and str(rule.get("effect") or "rate") == "rate"
             and rule.get("rate") is not None
         ]
+        if not candidates:
+            raise ValueError(f"{code}:{income}: no source-backed Stage 6 rules found")
 
+        common_conditions = _common_conditions(candidates)
         by_rate: dict[float, list[dict[str, Any]]] = {}
         for rule in candidates:
             by_rate.setdefault(_rate_key(rule["rate"]), []).append(rule)
 
+        # The most general existing rule is the safest metadata template for a
+        # newly materialised reduced-rate branch. It remains lower precedence
+        # than all specific branches after _new_branch_priority.
+        fallback_template = max(candidates, key=lambda row: int(row["priority"]))
+
         for branch in correction["rate_candidates"]:
             rate = _rate_key(branch["rate"])
             matches = by_rate.get(rate, [])
-            if len(matches) != 1:
+            if len(matches) > 1:
                 raise ValueError(
-                    f"{code}:{income}:{rate:g}% expected exactly one projected rule, "
+                    f"{code}:{income}:{rate:g}% expected at most one projected rule, "
                     f"found {len(matches)}"
                 )
-            rule = matches[0]
-            rule["conditions"] = [
+
+            remediation_conditions = [
                 _runtime_condition(condition)
                 for condition in branch.get("conditions", [])
             ]
+            projected_conditions = _merge_conditions(
+                common_conditions,
+                remediation_conditions,
+            )
+
+            if matches:
+                rule = matches[0]
+            else:
+                rule = dict(fallback_template)
+                rule["rule_id"] = (
+                    f"CZ-{code}-{income.upper()}-SEMANTIC-REMEDIATION-"
+                    f"{str(branch['rate']).replace('.', '_')}"
+                )
+                rule["rate"] = branch["rate"]
+                rule["priority"] = _new_branch_priority(candidates, fallback_template)
+                payload["rules"].append(rule)
+                candidates.append(rule)
+                by_rate.setdefault(rate, []).append(rule)
+
+            rule["conditions"] = projected_conditions
             rule["review_package_sha256"] = package_hash
             rule["verification_status"] = "needs_review"
             rule["verification_authority"] = "semantic_remediation_machine_projection"
