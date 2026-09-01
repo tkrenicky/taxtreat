@@ -1,6 +1,6 @@
 {
-  "schema_version": 3,
-  "dataset_release": "sk-structured-treaty-rules-2026-09-01.3",
+  "schema_version": 4,
+  "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
   "source_country": "SK",
   "total_scopes": 225,
   "materialized_scopes": 138,
@@ -147,10 +147,11 @@
     "SK-ZA-royalty"
   ],
   "materialization_modes": {
-    "simple_single_rate": 81,
+    "simple_single_rate": 80,
     "source_text_dividend_branch_pair": 17,
     "source_text_interest_residence_only": 11,
-    "source_text_interest_special_exemption": 29
+    "source_text_interest_special_exemption": 29,
+    "source_text_royalty_category_branches": 1
   },
   "unresolved": [
     {
@@ -1002,9 +1003,10 @@
     "source_text_fallback_phrase_required_for_dividend_branch_pair": true,
     "source_text_explicit_interest_exemption_branches_materialized": true,
     "ordinary_interest_rate_requires_special_exemption_false_when_exemption_exists": true,
+    "source_text_explicit_royalty_definition_letter_branches_materialized": true,
+    "royalty_category_materialization_uses_atomic_ui_taxonomy": true,
+    "unmapped_royalty_categories_remain_fail_closed": true,
     "stage_rules_remain_needs_review_until_all_protocol_mli_and_release_gates_are_satisfied": true,
-    "explicit_exclusive_residence_interest_scopes_materialized_as_structural_zero": true,
-    "multi_rate_royalties_not_inferred": true,
     "czech_rule_reuse_forbidden": true,
     "release_remains_closed_until_all_225_scopes_are_structured_and_regression_tested": true,
     "automatic_production_approval_forbidden": true
