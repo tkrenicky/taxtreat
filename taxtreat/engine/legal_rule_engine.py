@@ -121,48 +121,8 @@ def _boolean_like(value: Any) -> bool | None:
     return None
 
 
-_PENDING_SEMANTIC_REMEDIATION_SCOPES = {
-    ("AD", "dividend"),
-    ("AL", "dividend"),
-    ("BB", "dividend"),
-    ("BD", "dividend"),
-    ("BE", "dividend"),
-    ("CN", "dividend"),
-    ("CH", "dividend"),
-    ("CY", "dividend"),
-    ("EE", "dividend"),
-    ("EG", "dividend"),
-    ("ES", "dividend"),
-    ("FR", "dividend"),
-    ("GB", "dividend"),
-    ("GE", "dividend"),
-    ("HU", "dividend"),
-    ("IE", "dividend"),
-    ("IL", "dividend"),
-    ("IS", "dividend"),
-    ("KG", "dividend"),
-    ("KW", "dividend"),
-    ("LI", "dividend"),
-    ("LK", "dividend"),
-    ("LT", "dividend"),
-    ("LU", "dividend"),
-    ("LV", "dividend"),
-    ("MD", "dividend"),
-    ("MK", "dividend"),
-    ("NG", "dividend"),
-    ("PH", "royalty"),
-    ("PK", "dividend"),
-    ("QA", "dividend"),
-    ("SK", "dividend"),
-    ("VE", "dividend"),
-    ("UA", "dividend"),
-    ("SI", "dividend"),
-    ("TN", "dividend"),
-    ("TW", "royalty"),
-    ("US", "dividend"),
-    ("XK", "dividend"),
-    ("ZA", "dividend"),
-}
+_PENDING_SEMANTIC_REMEDIATION_SCOPES: set[tuple[str, str]] = set()
+
 
 _UI_ROYALTY_CATEGORY_GROUPS = {
     # Current fail-closed UI taxonomy. Each value is intentionally atomic
