@@ -319,21 +319,17 @@ def main() -> int:
     dump(GATE, gate)
 
     engine = ENGINE.read_text(encoding="utf-8")
-    pattern = re.compile(
-        r"_PENDING_SEMANTIC_REMEDIATION_SCOPES\s*=\s*\{.*?\n\}\n\n_UI_ROYALTY_CATEGORY_GROUPS",
-        re.DOTALL,
-    )
-    replacement = (
-        "_PENDING_SEMANTIC_REMEDIATION_SCOPES: set[tuple[str, str]] = set()\n"
-        "# The 40 source-backed remediation scopes were deterministically validated,\n"
-        "# promoted and explicitly released on 2026-09-01. Unknown/malformed scopes\n"
-        "# continue to fail closed through the normal engine and release gates.\n\n"
-        "_UI_ROYALTY_CATEGORY_GROUPS"
-    )
-    updated, replacements = pattern.subn(replacement, engine, count=1)
-    if replacements != 1:
-        raise RuntimeError("Could not replace semantic remediation quarantine set")
-    ENGINE.write_text(updated, encoding="utf-8")
+    empty_quarantine = "_PENDING_SEMANTIC_REMEDIATION_SCOPES: set[tuple[str, str]] = set()"
+    if empty_quarantine not in engine:
+        pattern = re.compile(
+            r"_PENDING_SEMANTIC_REMEDIATION_SCOPES(?:\s*:\s*set\[tuple\[str,\s*str\]\])?\s*=\s*\{.*?\n\}\n\n_UI_ROYALTY_CATEGORY_GROUPS",
+            re.DOTALL,
+        )
+        replacement = empty_quarantine + "\n\n_UI_ROYALTY_CATEGORY_GROUPS"
+        engine, replacements = pattern.subn(replacement, engine, count=1)
+        if replacements != 1:
+            raise RuntimeError("Could not replace semantic remediation quarantine set")
+        ENGINE.write_text(engine, encoding="utf-8")
 
     print("CZ semantic remediation deterministic release: PASS")
     print("source_backed_candidates=40/40")
