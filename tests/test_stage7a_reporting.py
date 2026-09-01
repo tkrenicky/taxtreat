@@ -294,3 +294,70 @@ def test_report_distinguishes_foreign_taxation_from_zero_rate():
     assert "Sazba Neuplatňuje se" in html
     assert "Sazba české srážkové daně: 0" not in html
     assert "ZERO-treaty" not in html
+
+
+def test_slovak_english_report_structured_copy_is_source_country_aware():
+    request = {
+        "source_country": "SK",
+        "recipient_country": "AT",
+        "income_type": "interest",
+        "transaction_date": "2026-08-19",
+        "facts": {},
+        "determinations": {},
+    }
+    report = build_professional_report(
+        request,
+        {
+            "status": "FINAL",
+            "rate": None,
+            "tax_treatment": "domestic_exemption",
+            "citations": [
+                {
+                    "rule_id": "SK-DOMESTIC",
+                    "legal_layer": "domestic",
+                    "article": "13",
+                    "source_url": "https://static.slov-lex.sk/example",
+                }
+            ],
+            "dataset_version": "sk-release",
+        },
+        language="en",
+    )
+
+    assert "Slovak domestic rule" in report["risk_assessment"]
+    assert "Czech domestic rule" not in report["risk_assessment"]
+
+
+def test_slovak_english_report_does_not_reuse_cz_treaty_excerpt():
+    request = {
+        "source_country": "SK",
+        "recipient_country": "AT",
+        "income_type": "interest",
+        "transaction_date": "2026-08-19",
+        "facts": {},
+        "determinations": {},
+    }
+    report = build_professional_report(
+        request,
+        {
+            "status": "REVIEW_REQUIRED",
+            "rate": None,
+            "citations": [
+                {
+                    "rule_id": "SK-AT-INTEREST",
+                    "legal_layer": "treaty",
+                    "article": "11",
+                    "source_url": "https://static.slov-lex.sk/sk-at",
+                    "excerpt": "Slovak canonical treaty text",
+                }
+            ],
+            "dataset_version": "sk-release",
+        },
+        language="en",
+    )
+
+    source = report["official_sources"][0]
+    assert source["canonical_source_url"] == "https://static.slov-lex.sk/sk-at"
+    assert source["excerpt"] is None
+    assert source["excerpt_status"] == "english_excerpt_unavailable"
+    assert source["excerpt_status_label"] == "English excerpt unavailable"
