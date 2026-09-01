@@ -1464,14 +1464,14 @@
       "fail_closed": false,
       "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
-      "package_sha256": "74d74f237a9fec8c47271c51279263d11075474d51b274f0b72514c3dfcbadbb",
+      "package_sha256": "994f5361e80a834607fddf0ff0a5c8ee390671c2341c9cd0529addbd1e9e9d1b",
       "partner_country": "CH",
       "production_approval_eligible": true,
       "production_approval_status": "production_approved",
       "production_ready": true,
       "release_blockers": [],
       "release_evidence": {
-        "current_package_sha256": "74d74f237a9fec8c47271c51279263d11075474d51b274f0b72514c3dfcbadbb",
+        "current_package_sha256": "994f5361e80a834607fddf0ff0a5c8ee390671c2341c9cd0529addbd1e9e9d1b",
         "legacy_release_evidence": {
           "article_10_sha256": null,
           "article_11_sha256": null,
@@ -1494,17 +1494,17 @@
           "created_at": "2026-09-01T14:30:00+02:00",
           "dataset_release": "stage6-production-approval-2026-09-01.2",
           "event_type": "deterministic_semantic_remediation_production_approval",
-          "package_sha256": "74d74f237a9fec8c47271c51279263d11075474d51b274f0b72514c3dfcbadbb"
+          "package_sha256": "994f5361e80a834607fddf0ff0a5c8ee390671c2341c9cd0529addbd1e9e9d1b"
         },
         "rule_promotion_event": {
           "dataset_release": "stage6-rule-promotion-2026-09-01.2",
           "event_type": "deterministic_production_rule_promotion",
-          "package_sha256": "74d74f237a9fec8c47271c51279263d11075474d51b274f0b72514c3dfcbadbb",
+          "package_sha256": "994f5361e80a834607fddf0ff0a5c8ee390671c2341c9cd0529addbd1e9e9d1b",
           "partner_country": "CH",
           "promotion_authority": "stage6_governance_policy",
           "rule_count": 25,
           "rule_file": "data/legal_rules_stage6/ch.json",
-          "rule_file_sha256": "dc87a0373bfe3526d03d70d96fb74ae009ccd9d8bf1e3d67f3bc5cf430c71b63",
+          "rule_file_sha256": "215651a5e219b988711c3b253eb4ffea3ca11ef8b1cdb15b964b6a131160b64c",
           "rule_promotion_status": "promoted",
           "scope_count": 3,
           "source_release_status": "not_released",
@@ -1512,7 +1512,7 @@
         },
         "semantic_remediation": {
           "additional_human_review_claimed": false,
-          "current_package_sha256": "74d74f237a9fec8c47271c51279263d11075474d51b274f0b72514c3dfcbadbb",
+          "current_package_sha256": "994f5361e80a834607fddf0ff0a5c8ee390671c2341c9cd0529addbd1e9e9d1b",
           "source_backed_registry_match_required": true,
           "status": "hash_bound_machine_validation_complete",
           "validation_dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1"
@@ -1523,19 +1523,19 @@
           "event_type": "post_release_semantic_remediation_machine_validation",
           "evidence_source_id": "SRC-773D5F8BD93AE73A",
           "income_type": "dividend",
-          "package_sha256": "74d74f237a9fec8c47271c51279263d11075474d51b274f0b72514c3dfcbadbb",
+          "package_sha256": "994f5361e80a834607fddf0ff0a5c8ee390671c2341c9cd0529addbd1e9e9d1b",
           "release_status": "released_after_machine_validation",
           "validation_authority": "semantic_remediation_machine_validation"
         },
         "source_release_event": {
           "dataset_release": "stage6-semantic-remediation-source-release-2026-09-01.1",
           "event_type": "explicit_stage6_source_release",
-          "package_sha256": "74d74f237a9fec8c47271c51279263d11075474d51b274f0b72514c3dfcbadbb",
+          "package_sha256": "994f5361e80a834607fddf0ff0a5c8ee390671c2341c9cd0529addbd1e9e9d1b",
           "production_approval_status": "production_approved",
           "release_authority": "stage6_governance_policy",
           "released_scopes": 3,
           "rule_file": "data/legal_rules_stage6/ch.json",
-          "rule_file_sha256": "dc87a0373bfe3526d03d70d96fb74ae009ccd9d8bf1e3d67f3bc5cf430c71b63",
+          "rule_file_sha256": "215651a5e219b988711c3b253eb4ffea3ca11ef8b1cdb15b964b6a131160b64c",
           "rule_promotion_status": "promoted",
           "source_release_status": "released",
           "treaty_pair_id": "CZ-CH"

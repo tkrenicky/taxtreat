@@ -8,6 +8,9 @@ on:
       - ".github/workflows/regenerate-cz-semantic-qa.yml"
       - "data/legal_consolidation/semantic_remediation_condition_candidates_20260829.json"
       - "scripts/build_cz_country_qa_queue.py"
+      - "scripts/rebind_semantic_remediation_package_hashes_20260901.py"
+      - "scripts/release_stage6_semantic_remediation_20260901.py"
+      - "scripts/verify_semantic_remediation_closure_20260831.py"
 
 permissions:
   contents: write
@@ -22,6 +25,11 @@ jobs:
           python-version: "3.12"
       - name: Regenerate country QA artifacts
         run: python scripts/build_cz_country_qa_queue.py
+      - name: Rebind semantic remediation release
+        run: |
+          python scripts/rebind_semantic_remediation_package_hashes_20260901.py
+          python scripts/release_stage6_semantic_remediation_20260901.py
+          python scripts/verify_semantic_remediation_closure_20260831.py
       - name: Commit regenerated artifacts
         run: |
           if git diff --quiet; then
@@ -34,6 +42,13 @@ jobs:
             data/legal_reviews/global_cz_outbound/cz_country_qa_queue.json \
             data/legal_reviews/global_cz_outbound/cz_wht_mli_product_scope.json \
             data/legal_reviews/global_cz_outbound/cz_scalable_release_governance.json \
-            data/legal_reviews/global_cz_outbound/cz_country_qa_review_batches
+            data/legal_reviews/global_cz_outbound/cz_country_qa_review_batches \
+            data/legal_reviews/global_cz_outbound/semantic_remediation_machine_release_20260901.json \
+            data/legal_reviews/global_cz_outbound/stage6_production_approval.json \
+            data/legal_reviews/global_cz_outbound/stage6_rule_promotion.json \
+            data/legal_reviews/global_cz_outbound/stage6_source_release.json \
+            data/legal_reviews/global_cz_outbound/production_source_release_gate_v2.json \
+            data/legal_rule_candidates/semantic_remediation_20260901 \
+            data/legal_rules_stage6
           git commit -m "Regenerate CZ semantic QA queue"
           git push
