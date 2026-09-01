@@ -1,0 +1,33 @@
+name: SK runtime closure
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/sk-runtime-closure-20260901.yml'
+      - 'data/legal_rules_sk/**'
+      - 'data/legal_reviews/sk_outbound/**'
+      - 'taxtreat/countries/sk.py'
+      - 'taxtreat/countries/registry.py'
+      - 'taxtreat/services/source_country_release_gate.py'
+      - 'taxtreat/services/sk_prerelease_decision.py'
+      - 'scripts/verify_sk_runtime_closure_20260901.py'
+      - 'tests/test_sk_*.py'
+  workflow_dispatch:
+
+jobs:
+  verify-sk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install project
+        run: python -m pip install --no-deps -e .
+      - name: Verify SK runtime closure
+        run: python scripts/verify_sk_runtime_closure_20260901.py
+      - name: Run SK test suite
+        run: pytest -q tests/test_sk_*.py tests/test_apply_sk_*.py tests/test_extract_sk_*.py tests/test_reconcile_sk_*.py tests/test_run_sk_*.py
