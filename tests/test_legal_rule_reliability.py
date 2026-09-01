@@ -171,6 +171,7 @@ def test_validator_enforces_complete_schema_and_approval():
             tax_treatment="domestic_exemption",
         ),
         legal_rule("EXCLUDE", effect="exclude", rate=1),
+        legal_rule("REVIEW-GATE-RATE", effect="review_gate", rate=1),
         legal_rule(
             "GATE-RATE",
             effect="eligibility_gate",
@@ -196,6 +197,7 @@ def test_validator_enforces_complete_schema_and_approval():
     assert "rate must be between" in extra_issues
     assert "non-taxing treatment must use structural rate 0" in extra_issues
     assert "exclusion rule must not contain a rate" in extra_issues
+    assert "review gate must not contain a rate" in extra_issues
     assert "eligibility gate must not contain a rate" in extra_issues
     assert "eligibility gate must identify affected layers" in extra_issues
     assert "eligibility gate has unsupported target layers" in extra_issues
