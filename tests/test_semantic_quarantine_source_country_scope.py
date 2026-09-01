@@ -30,7 +30,8 @@ def test_cz_semantic_quarantine_does_not_leak_into_sk_source_country():
     )
 
     assert not any("quarantined pending" in line for line in result.explanation)
-    assert result.candidate_rule_id == "SK-CH-dividend-TEST"
+    assert result.requires_review is True
+    assert any("not verified" in line for line in result.explanation)
 
 
 def test_cz_semantic_quarantine_still_blocks_cz_scope():
