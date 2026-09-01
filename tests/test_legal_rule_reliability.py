@@ -350,3 +350,41 @@ def test_stage6_governance_rejects_malformed_package_hash():
         "review_package_sha256 must be full SHA-256"
         in issues
     )
+
+
+def test_machine_validation_requires_semantic_remediation_approval_dataset():
+    rule = legal_rule(
+        "MACHINE-BAD-DATASET",
+        reviewer_id=None,
+        reviewed_at=None,
+        approved_by=None,
+        approved_at=None,
+        verification_authority="semantic_remediation_machine_validation",
+        review_package_sha256="a" * 64,
+        approval_dataset_release="wrong-release",
+        approval_created_at=date(2026, 9, 1),
+    )
+
+    issues = "\n".join(validate_legal_rules([rule]))
+
+    assert "machine-validation approval dataset" in issues
+
+
+def test_machine_validation_rejects_fabricated_human_provenance():
+    rule = legal_rule(
+        "MACHINE-HUMAN-PROVENANCE",
+        reviewer_id="invented-reviewer",
+        reviewed_at=date(2026, 9, 1),
+        approved_by=None,
+        approved_at=None,
+        verification_authority="semantic_remediation_machine_validation",
+        review_package_sha256="b" * 64,
+        approval_dataset_release=(
+            "stage6-semantic-remediation-machine-validation-2026-09-01.1"
+        ),
+        approval_created_at=date(2026, 9, 1),
+    )
+
+    issues = "\n".join(validate_legal_rules([rule]))
+
+    assert "must not fabricate human reviewer/approver provenance" in issues
