@@ -107,6 +107,13 @@ def stable_report_id(request: Mapping[str, Any], analysis: Mapping[str, Any]) ->
     return f"TAXTREAT-{digest[:20].upper()}"
 
 
+def _source_country_english_name(source_country: str) -> str:
+    return {
+        "CZ": "Czech",
+        "SK": "Slovak",
+    }.get(str(source_country or "").upper(), str(source_country or "").upper())
+
+
 def build_professional_report(
     request: Mapping[str, Any],
     analysis: Mapping[str, Any],
@@ -118,12 +125,14 @@ def build_professional_report(
     generated_at = generated_at or datetime.now(timezone.utc)
     status = str(analysis.get("status"))
     treatment = analysis.get("tax_treatment")
+    source_country = str(request.get("source_country") or "CZ").upper()
+    source_adjective = _source_country_english_name(source_country)
 
     if language == "en":
         if status == "FINAL" and treatment == "exclusive_foreign_taxation":
             risk = "Under the applied treaty rule, the income is taxable only in the recipient's state of tax residence."
         elif status == "FINAL" and treatment == "domestic_exemption":
-            risk = "The income is exempt under the applied Czech domestic rule."
+            risk = f"The income is exempt under the applied {source_adjective} domestic rule."
         elif status == "FINAL":
             risk = "TaxTreat matched a legal rule to the facts entered by the user."
         elif status == "OUT_OF_SCOPE":
@@ -228,13 +237,26 @@ def build_professional_report(
     return report
 
 
-def _source_title(source: Mapping[str, Any], language: str) -> str:
+def _source_title(
+    source: Mapping[str, Any],
+    language: str,
+    source_country: str = "CZ",
+) -> str:
     article = escape(str(source.get("article") or "—"))
     paragraph = source.get("paragraph")
     suffix = f", {escape(str(paragraph))}" if paragraph else ""
     if source.get("legal_layer") in {"treaty", "protocol", "mli"}:
         return f"Double Tax Treaty · Article {article}{suffix}" if language == "en" else f"Smlouva o zamezení dvojího zdanění · článek {article}{suffix}"
-    return f"Czech Income Taxes Act · Section {article}{suffix}" if language == "en" else f"Zákon č. 586/1992 Sb., o daních z příjmů · § {article}{suffix}"
+    if language == "en":
+        act = {
+            "CZ": "Czech Income Taxes Act",
+            "SK": "Slovak Income Tax Act",
+        }.get(
+            str(source_country or "").upper(),
+            f"{str(source_country or '').upper()} domestic tax law",
+        )
+        return f"{act} · Section {article}{suffix}"
+    return f"Zákon č. 586/1992 Sb., o daních z příjmů · § {article}{suffix}"
 
 
 def _report_date(value: Any, language: str) -> str:
@@ -275,12 +297,18 @@ def _format_rate(value: Any) -> str:
     return f"{_format_number(value)} %"
 
 
-def _result_copy(result: Mapping[str, Any], source_title: str | None, language: str) -> tuple[str, str]:
+def _result_copy(
+    result: Mapping[str, Any],
+    source_title: str | None,
+    language: str,
+    source_country: str = "CZ",
+) -> tuple[str, str]:
     if language == "en":
         reference = source_title or "the applied legal rule"
         treatment = result.get("tax_treatment")
         if treatment == "exclusive_foreign_taxation":
-            return (f"Under {reference}, the entered facts result in no Czech taxation", "TaxTreat automatically matched a legal rule to the facts entered by the user; this is not an individual tax assessment.")
+            source_adjective = _source_country_english_name(source_country)
+            return (f"Under {reference}, the entered facts result in no {source_adjective} taxation", "TaxTreat automatically matched a legal rule to the facts entered by the user; this is not an individual tax assessment.")
         if treatment == "domestic_exemption":
             return (f"Under {reference}, the entered facts qualify for a domestic exemption", "TaxTreat automatically matched a legal rule to the facts entered by the user; this is not an individual tax assessment.")
         if result.get("status") == "FINAL" and result.get("rate") is not None:
