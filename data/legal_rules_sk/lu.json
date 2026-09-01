@@ -289,92 +289,6 @@
       "automatic_production_approval_forbidden": true
     },
     {
-      "rule_id": "SK-LU-MLI-GATE-INTEREST-A3",
-      "income_type": "interest",
-      "source_country": "SK",
-      "recipient_country": "LU",
-      "legal_instrument": "mli",
-      "legal_layer": "mli",
-      "article": "3",
-      "paragraph": null,
-      "rate": null,
-      "priority": 53,
-      "conditions": [
-        {
-          "fact": "mli_article_3_transparent_entity_entitlement_passed",
-          "fact_source": "determination",
-          "operator": "==",
-          "value": true
-        }
-      ],
-      "effect": "eligibility_gate",
-      "applies_to_layers": [
-        "treaty",
-        "protocol",
-        "mli"
-      ],
-      "effective_from": "2020-01-01",
-      "verification_status": "verified",
-      "source_text": "Slovak bilateral MLI adjudication for SK-LU: notice 485/2019; result-changing articles ['3', '7']; WHT effective date(s) ['2020-01-01']. Gate: MLI Article 3 transparent-entity entitlement.",
-      "source_id": "SK-MLI-485-2019",
-      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2019/485/vyhlasene_znenie.html",
-      "source_excerpt_hash": "1e75cfa8d15cb847cf5d844875fd68bda9f95ca80b06fe5eca2e4d1f6276ec1d",
-      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
-      "reviewer_id": "sk_mli_final_reconfirmation",
-      "reviewed_at": "2026-08-21",
-      "approved_by": "mli_bilateral_adjudication_2026",
-      "approved_at": "2026-08-21",
-      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
-      "approval_created_at": "2026-08-21",
-      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
-      "evidence_source_ids": [
-        "SK-MLI-485-2019"
-      ]
-    },
-    {
-      "rule_id": "SK-LU-MLI-GATE-INTEREST-A7",
-      "income_type": "interest",
-      "source_country": "SK",
-      "recipient_country": "LU",
-      "legal_instrument": "mli",
-      "legal_layer": "mli",
-      "article": "7",
-      "paragraph": null,
-      "rate": null,
-      "priority": 57,
-      "conditions": [
-        {
-          "fact": "treaty_ppt_passed",
-          "fact_source": "determination",
-          "operator": "==",
-          "value": true
-        }
-      ],
-      "effect": "eligibility_gate",
-      "applies_to_layers": [
-        "treaty",
-        "protocol",
-        "mli"
-      ],
-      "effective_from": "2020-01-01",
-      "verification_status": "verified",
-      "source_text": "Slovak bilateral MLI adjudication for SK-LU: notice 485/2019; result-changing articles ['3', '7']; WHT effective date(s) ['2020-01-01']. Gate: MLI Article 7 principal purpose test.",
-      "source_id": "SK-MLI-485-2019",
-      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2019/485/vyhlasene_znenie.html",
-      "source_excerpt_hash": "c438a9dc04d113d55e13e9cb76af9758e8ec6d36445114a0aa20ff98289902c8",
-      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
-      "reviewer_id": "sk_mli_final_reconfirmation",
-      "reviewed_at": "2026-08-21",
-      "approved_by": "mli_bilateral_adjudication_2026",
-      "approved_at": "2026-08-21",
-      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
-      "approval_created_at": "2026-08-21",
-      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
-      "evidence_source_ids": [
-        "SK-MLI-485-2019"
-      ]
-    },
-    {
       "rule_id": "SK-LU-INTEREST-TREATY-UNRESOLVED-FAIL-CLOSED",
       "income_type": "interest",
       "source_country": "SK",
@@ -405,7 +319,7 @@
           "value": false
         }
       ],
-      "effect": "rate",
+      "effect": "review_gate",
       "effective_from": "1992-12-30",
       "verification_status": "needs_review",
       "source_text": "Čl. 11 Úroky 1. Úroky majúce zdroj v jednom zmluvnom štáte a vyplácané osobe, ktorá je rezidentom v druhom zmluvnom štáte, budú zdanené iba v tomto druhom štáte. 2. Výraz „úroky“ použitý v tomto článku označuje príjmy z pohľadávok akéhokoľvek druhu, zabezpečených i nezabezpečených záložným právom alebo doložkou o účasti na zisku dlžníka, a obzvlášť príjmy z vládnych cenných papierov a príjem z obligácií a dlhopisov vrátane prémií a výher spojených s obligáciami alebo dlhopismi. 3. Ustanovenie odseku 1 sa nepoužije, ak skutočný vlastník úrokov, ktorý je rezidentom v jednom zmluvnom štáte, vykonáva v druhom zmluvnom štáte, v ktorom majú úroky zdroj, priemyselnú alebo obchodnú činnosť prostredníctvom stálej prevádzkarne, ktorá je tam umiestnená alebo vykonáva v tomto druhom štáte nezávislé povolanie prostredníctvom stálej základne tam umiestnenej, a ak pohľadávka, z ktorej sa úroky platia, sa skutočne viaže k tejto stálej prevádzkarni alebo k tejto stálej základni. V takom prípade sa použijú ustanoveniačlánku 7 alebo článku 14 podľa prípadu. 4. Ak suma úrokov posudzovaných so zreteľom na pohľadávku, z ktorej sa platia, presahuje v dôsledku osobitných vzťahov existujúcich medzi platiteľom a skutočným vlastníkom úrokov, alebo ktoré udržiavajú jeden aj druhý s treťou osobou, sumu, ktorú by bol dohodol platiteľ so skutočným vlastníkom, keby nebolo takých vzťahov, používajú sa ustanovenia tohto článku len na túto naposledy spomenutú sumu. Suma platieb, ktorá ju presahuje, sa môže v tomto prípade zdaniť podľa práva každého zmluvného štátu a s prihliadnutím na ostatné ustanovenia tejto Dohody.",

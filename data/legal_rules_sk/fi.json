@@ -5,49 +5,6 @@
   },
   "rules": [
     {
-      "rule_id": "SK-FI-MLI-GATE-DIVIDEND-A7",
-      "income_type": "dividend",
-      "source_country": "SK",
-      "recipient_country": "FI",
-      "legal_instrument": "mli",
-      "legal_layer": "mli",
-      "article": "7",
-      "paragraph": null,
-      "rate": null,
-      "priority": 57,
-      "conditions": [
-        {
-          "fact": "treaty_ppt_passed",
-          "fact_source": "determination",
-          "operator": "==",
-          "value": true
-        }
-      ],
-      "effect": "eligibility_gate",
-      "applies_to_layers": [
-        "treaty",
-        "protocol",
-        "mli"
-      ],
-      "effective_from": "2020-01-01",
-      "verification_status": "verified",
-      "source_text": "Slovak bilateral MLI adjudication for SK-FI: notice 321/2023; result-changing articles ['7']; WHT effective date(s) ['2020-01-01', '2024-01-01']. Gate: MLI Article 7 principal purpose test.",
-      "source_id": "SK-MLI-321-2023",
-      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2023/321/vyhlasene_znenie.html",
-      "source_excerpt_hash": "19ff9096815719d6eedadf1e31132eb8470fe3abcd91325e311e2760865b7ce7",
-      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
-      "reviewer_id": "sk_mli_final_reconfirmation",
-      "reviewed_at": "2026-08-21",
-      "approved_by": "mli_bilateral_adjudication_2026",
-      "approved_at": "2026-08-21",
-      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
-      "approval_created_at": "2026-08-21",
-      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
-      "evidence_source_ids": [
-        "SK-MLI-321-2023"
-      ]
-    },
-    {
       "rule_id": "SK-FI-DIVIDEND-TREATY-UNRESOLVED-FAIL-CLOSED",
       "income_type": "dividend",
       "source_country": "SK",
@@ -78,7 +35,7 @@
           "value": false
         }
       ],
-      "effect": "rate",
+      "effect": "review_gate",
       "effective_from": "2000-05-06",
       "verification_status": "needs_review",
       "source_text": "Článok 10 Dividendy 1. Dividendy vyplácané spoločnosťou, ktorá je rezidentom jedného zmluvného štátu, rezidentovi druhého zmluvného štátu možno zdaniť v tomto druhom štáte. Tieto dividendy však možno zdaniť aj v zmluvnom štáte, ktorého je spoločnosť vyplácajúca dividendy rezidentom, a to podľa právnych predpisov tohto štátu, ak však skutočným vlastníkom dividend je rezident druhého zmluvného štátu, takto stanovená daň nepresiahne a) 5 % hrubej sumy dividend, ak skutočným vlastníkom je spoločnosť (iná ako osobná obchodná spoločnosť), ktorá priamo vlastní najmenej 25 % majetku spoločnosti vyplácajúcej dividendy, b) 15 % hrubej sumy dividend vo všetkých ostatných prípadoch. 2. Bez ohľadu na ustanovenia odseku 1, ak má fyzická osoba, ktorá je rezidentom Fínska, podľa fínskych daňových zákonov nárok na zápočet dane z dividend vyplácaných spoločnosťou, ktorá je rezidentom Fínska, dividendy vyplácané spoločnosťou, ktorá je rezidentom Fínska, rezidentovi Slovenska sa budú zdaňovať len na Slovensku, ak skutočným vlastníkom dividend je rezident Slovenska. 3. Ustanovenia odsekov 1 a 2 neovplyvnia zdaňovanie spoločnosti vo vzťahu k ziskom, z ktorých sa dividendy vyplácajú. 4. Výraz „dividendy“ použitý v tomto článku označuje príjmy z akcií alebo z iných práv podieľať sa na ziskoch s výnimkou pohľadávok, ako aj príjmy z iných práv k spoločnosti, ktoré sa zdaňujú rovnakým spôsobom ako príjmy z akcií podľa právnych predpisov toho štátu, ktorého je spoločnosť rozdeľujúca zisk rezidentom. 5. Ustanovenia odsekov 1 a 2 sa nepoužijú, ak skutočný vlastník dividend, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, ktorého spoločnosť vyplácajúca dividendy je rezidentom, podnikateľskú činnosť prostredníctvom stálej prevádzkarne, ktorá je tam umiestnená, alebo ak v tomto druhom štáte vykonáva nezávislé povolanie prostredníctvom tam umiestnenej stálej základne a ak účasť, pre ktorú sa dividendy vyplácajú, sa skutočne viaže na túto stálu prevádzkareň alebo na túto stálu základňu. V takom prípade sa použijú ustanovenia článku 7 alebo článku 14 podľa toho, o aký prípad ide. 6. Ak spoločnosť, ktorá je rezidentom jedného zmluvného štátu, dosahuje zisky alebo príjmy z druhého zmluvného štátu, tento druhý štát nemôže zdaniť dividendy vyplácané spoločnosťou s výnimkou prípadov, ak sa tieto dividendy vyplácajú rezidentovi tohto druhého štátu alebo ak sa účasť, pre ktorú sa dividendy vyplácajú, skutočne viaže na stálu prevádzkareň alebo na stálu základňu, ktorá je umiestnená v tomto druhom štáte, a ani podrobiť nerozdelené zisky spoločnosti dani z nerozdelených ziskov, aj keď vyplácané dividendy alebo nerozdelené zisky pozostávajú úplne alebo sčasti zo ziskov alebo z príjmov dosiahnutých v tomto druhom štáte.",
@@ -97,49 +54,6 @@
       "decision_status": "REVIEW_REQUIRED",
       "final_rate_allowed": false,
       "automatic_production_approval_forbidden": true
-    },
-    {
-      "rule_id": "SK-FI-MLI-GATE-INTEREST-A7",
-      "income_type": "interest",
-      "source_country": "SK",
-      "recipient_country": "FI",
-      "legal_instrument": "mli",
-      "legal_layer": "mli",
-      "article": "7",
-      "paragraph": null,
-      "rate": null,
-      "priority": 57,
-      "conditions": [
-        {
-          "fact": "treaty_ppt_passed",
-          "fact_source": "determination",
-          "operator": "==",
-          "value": true
-        }
-      ],
-      "effect": "eligibility_gate",
-      "applies_to_layers": [
-        "treaty",
-        "protocol",
-        "mli"
-      ],
-      "effective_from": "2020-01-01",
-      "verification_status": "verified",
-      "source_text": "Slovak bilateral MLI adjudication for SK-FI: notice 321/2023; result-changing articles ['7']; WHT effective date(s) ['2020-01-01', '2024-01-01']. Gate: MLI Article 7 principal purpose test.",
-      "source_id": "SK-MLI-321-2023",
-      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2023/321/vyhlasene_znenie.html",
-      "source_excerpt_hash": "19ff9096815719d6eedadf1e31132eb8470fe3abcd91325e311e2760865b7ce7",
-      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
-      "reviewer_id": "sk_mli_final_reconfirmation",
-      "reviewed_at": "2026-08-21",
-      "approved_by": "mli_bilateral_adjudication_2026",
-      "approved_at": "2026-08-21",
-      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
-      "approval_created_at": "2026-08-21",
-      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
-      "evidence_source_ids": [
-        "SK-MLI-321-2023"
-      ]
     },
     {
       "rule_id": "SK-FI-INTEREST-TREATY-UNRESOLVED-FAIL-CLOSED",
@@ -172,7 +86,7 @@
           "value": false
         }
       ],
-      "effect": "rate",
+      "effect": "review_gate",
       "effective_from": "2000-05-06",
       "verification_status": "needs_review",
       "source_text": "Článok 11 Úroky 1. Úroky, ktoré majú zdroj v jednom zmluvnom štáte a vyplácajú sa rezidentovi druhého zmluvného štátu, podliehajú zdaneniu iba v tomto druhom štáte, ak takýto rezident je skutočným vlastníkom úroku. 2. Výraz „úroky“ použitý v tomto článku označuje príjmy z pohľadávok akéhokoľvek druhu zabezpečených alebo nezabezpečených záložným právom na nehnuteľnosť bez ohľadu na to, či majú alebo nemajú právo účasti na zisku dlžníka, a najmä príjmy z vládnych cenných papierov a príjmy z obligácií alebo z dlhopisov vrátane prémií a výhier spojených s týmito cennými papiermi, obligáciami alebo s dlhopismi. Penále za oneskorenú platbu sa nepovažuje za úroky na účely tohto článku. 3. Ustanovenie odseku 1 sa nepoužije, ak skutočný vlastník úrokov, ktorý je rezidentom jedného zmluvného štátu, vykonáva podnikateľskú činnosť v druhom zmluvnom štáte, v ktorom majú úroky zdroj, prostredníctvom stálej prevádzkarne, ktorá je tam umiestnená, alebo ak v tomto druhom štáte vykonáva nezávislé povolanie prostredníctvom tam umiestnenej stálej základne a ak pohľadávka, z ktorej sa úroky vyplácajú, sa skutočne viaže na túto stálu prevádzkareň alebo na túto stálu základňu. V takom prípade sa použijú ustanovenia článku 7 alebo článku 14 podľa toho, o aký prípad ide. 4. Predpokladá sa, že úroky majú zdroj v zmluvnom štáte, ak platiteľ je rezidentom tohto štátu. Ak však osoba platiaca úroky, či je rezidentom zmluvného štátu alebo nie, má v zmluvnom štáte stálu prevádzkareň alebo stálu základňu, v súvislosti s ktorou vznikol dlh, z ktorého sa platia úroky, a tieto úroky idú na ťarchu tejto stálej prevádzkarne alebo stálej základne, potom za zdroj takýchto úrokov sa bude považovať štát, v ktorom je stála prevádzkareň alebo stála základňa umiestnená. 5. Ak v dôsledku osobitných vzťahov existujúcich medzi platiteľom a skutočným vlastníkom úrokov alebo medzi nimi a treťou osobou suma úrokov vzťahujúca sa na pohľadávku, z ktorej sa úroky platia, presahuje sumu, ktorú by dohodol platiteľ so skutočným vlastníkom, keby takéto vzťahy neexistovali, použijú sa ustanovenia tohto článku len na túto naposledy uvedenú sumu. Časť platieb, ktorá presahuje túto sumu, sa v takom prípade zdaní podľa právnych predpisov každého zmluvného štátu s prihliadnutím na ostatné ustanovenia tejto zmluvy.",
@@ -191,49 +105,6 @@
       "decision_status": "REVIEW_REQUIRED",
       "final_rate_allowed": false,
       "automatic_production_approval_forbidden": true
-    },
-    {
-      "rule_id": "SK-FI-MLI-GATE-ROYALTY-A7",
-      "income_type": "royalty",
-      "source_country": "SK",
-      "recipient_country": "FI",
-      "legal_instrument": "mli",
-      "legal_layer": "mli",
-      "article": "7",
-      "paragraph": null,
-      "rate": null,
-      "priority": 57,
-      "conditions": [
-        {
-          "fact": "treaty_ppt_passed",
-          "fact_source": "determination",
-          "operator": "==",
-          "value": true
-        }
-      ],
-      "effect": "eligibility_gate",
-      "applies_to_layers": [
-        "treaty",
-        "protocol",
-        "mli"
-      ],
-      "effective_from": "2020-01-01",
-      "verification_status": "verified",
-      "source_text": "Slovak bilateral MLI adjudication for SK-FI: notice 321/2023; result-changing articles ['7']; WHT effective date(s) ['2020-01-01', '2024-01-01']. Gate: MLI Article 7 principal purpose test.",
-      "source_id": "SK-MLI-321-2023",
-      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2023/321/vyhlasene_znenie.html",
-      "source_excerpt_hash": "19ff9096815719d6eedadf1e31132eb8470fe3abcd91325e311e2760865b7ce7",
-      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
-      "reviewer_id": "sk_mli_final_reconfirmation",
-      "reviewed_at": "2026-08-21",
-      "approved_by": "mli_bilateral_adjudication_2026",
-      "approved_at": "2026-08-21",
-      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
-      "approval_created_at": "2026-08-21",
-      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
-      "evidence_source_ids": [
-        "SK-MLI-321-2023"
-      ]
     },
     {
       "rule_id": "SK-FI-ROYALTY-TREATY-UNRESOLVED-FAIL-CLOSED",
@@ -266,7 +137,7 @@
           "value": false
         }
       ],
-      "effect": "rate",
+      "effect": "review_gate",
       "effective_from": "2000-05-06",
       "verification_status": "needs_review",
       "source_text": "Článok 12 Licenčné poplatky 1. Licenčné poplatky, ktoré majú zdroj v jednom zmluvnom štáte a vyplácajú sa rezidentovi druhého zmluvného štátu, môžu sa zdaniť v tomto druhom štáte. 2. Tieto licenčné poplatky sa však okrem druhov platieb uvedených v odseku 3 písm. a) môžu zdaniť aj v tom zmluvnom štáte, v ktorom je ich zdroj, a to podľa právnych predpisov tohto štátu, ale ak skutočný vlastník licenčných poplatkov je rezidentom druhého zmluvného štátu, takto stanovená daň nepresiahne a) v prípade platieb uvedených v odseku 3 písm. b) 1 % hrubej sumy licenčných poplatkov, b) v prípade platieb uvedených v odseku 3 písm. c) 5 % hrubej sumy licenčných poplatkov, c) v prípade platieb uvedených v odseku 3 písm. d) a e) 10 % hrubej sumy licenčných poplatkov. 3. Výraz „licenčné poplatky“ použitý v tomto článku označuje platby akéhokoľvek druhu prijaté ako odplata za a) použitie alebo za právo na použitie akéhokoľvek autorského práva k literárnemu, umeleckému alebo k vedeckému dielu, b) finančný prenájom zariadenia, c) operatívny prenájom zariadenia alebo za použitie, alebo za právo na použitie kinematografických filmov a filmov alebo pások na televízne alebo rozhlasové vysielanie, alebo akéhokoľvek počítačového softvéru, d) použitie alebo za právo na použitie patentu, ochrannej známky, návrhu alebo modelu, plánu, tajného vzorca alebo výrobného postupu, e) informácie, ktoré sa vzťahujú na priemyselné, obchodné alebo vedecké skúsenosti. 4. Ustanovenia odsekov 1 a 2 sa nepoužijú, ak skutočný vlastník licenčných poplatkov, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, v ktorom majú licenčné poplatky zdroj, podnikateľskú činnosť prostredníctvom stálej prevádzkarne, ktorá je tam umiestnená, alebo vykonáva v tomto druhom štáte nezávislé povolanie prostredníctvom tam umiestnenej stálej základne a ak právo alebo majetok, v súvislosti s ktorým vznikajú licenčné poplatky, sa skutočne viažu na túto stálu prevádzkareň alebo na stálu základňu. V takom prípade sa použijú ustanovenia článku 7 alebo článku 14 podľa toho, o aký prípad ide. 5. Predpokladá sa, že licenčné poplatky majú zdroj v zmluvnom štáte, ak platiteľ je rezidentom tohto štátu. Ak však osoba platiaca licenčné poplatky, či je alebo nie je rezidentom niektorého zmluvného štátu, má v zmluvnom štáte stálu prevádzkareň alebo stálu základňu, v súvislosti s ktorou vznikla povinnosť platiť licenčné poplatky, ktoré idú na ťarchu stálej prevádzkarne alebo stálej základne, predpokladá sa, že tieto licenčné poplatky majú zdroj v tom štáte, v ktorom je stála prevádzkareň alebo stála základňa umiestnená. 6. Ak v dôsledku osobitných vzťahov, ktoré existujú medzi platiteľom a skutočným vlastníkom licenčných poplatkov alebo medzi nimi a treťou osobou suma licenčných poplatkov, ktoré sa vzťahujú na použitie, právo alebo informáciu, za ktoré sa platia, presahuje sumu, ktorú by dohodol platiteľ so skutočným vlastníkom, keby takéto vzťahy neexistovali, použijú sa ustanovenia tohto článku len na túto naposledy uvedenú sumu. Časť platieb, ktorá presahuje túto sumu, sa v tomto prípade zdaní podľa právnych predpisov každého zmluvného štátu s prihliadnutím na ostatné ustanovenia tejto zmluvy.",
