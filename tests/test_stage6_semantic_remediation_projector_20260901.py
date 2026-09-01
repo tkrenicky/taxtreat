@@ -63,3 +63,49 @@ def test_ad_semantic_remediation_projection(tmp_path, monkeypatch):
         assert rule["verification_authority"] == "semantic_remediation_machine_projection"
         assert rule["approval_dataset_release"] is None
         assert rule["approval_created_at"] is None
+
+
+def test_all_semantic_remediation_packages_project_without_rate_ambiguity(
+    tmp_path, monkeypatch
+):
+    import scripts.project_stage6_semantic_remediation_20260901 as projector
+
+    registry = json.loads(projector.REGISTRY.read_text(encoding="utf-8"))
+    countries = sorted({str(row["country"]).upper() for row in registry["corrections"]})
+    assert len(countries) == 40
+
+    target = tmp_path / "legal_rules_stage6"
+    target.mkdir()
+    for country in countries:
+        source = ROOT / "data/legal_rules_stage6" / f"{country.lower()}.json"
+        (target / f"{country.lower()}.json").write_text(
+            source.read_text(encoding="utf-8"),
+            encoding="utf-8",
+        )
+
+    monkeypatch.setattr(projector, "RULES_DIR", target)
+
+    results = [project_country(country) for country in countries]
+    assert len(results) == 40
+    assert sum(item["correction_count"] for item in results) == 40
+    assert all(item["changed_rule_ids"] for item in results)
+
+    for result in results:
+        payload = json.loads(
+            (target / f"{result['country'].lower()}.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        changed = {
+            row["rule_id"]: row
+            for row in payload["rules"]
+            if row.get("rule_id") in set(result["changed_rule_ids"])
+        }
+        assert len(changed) == len(result["changed_rule_ids"])
+        for rule in changed.values():
+            assert rule["review_package_sha256"] == result["package_sha256"]
+            assert rule["verification_status"] == "needs_review"
+            assert (
+                rule["verification_authority"]
+                == "semantic_remediation_machine_projection"
+            )
