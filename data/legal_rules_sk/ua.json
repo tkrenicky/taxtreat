@@ -5,6 +5,315 @@
   },
   "rules": [
     {
+      "rule_id": "SK-UA-MLI-GATE-DIVIDEND-A7",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "UA",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "7",
+      "paragraph": null,
+      "rate": null,
+      "priority": 57,
+      "conditions": [
+        {
+          "fact": "treaty_ppt_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2020-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-UA: notice 488/2019; result-changing articles ['10', '12', '13', '14', '15', '7']; WHT effective date(s) ['2020-01-01']. Gate: MLI Article 7 principal purpose test.",
+      "source_id": "SK-MLI-488-2019",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2019/488/vyhlasene_znenie.html",
+      "source_excerpt_hash": "ee401ca5a43a21b5943043c74264c180b13d2bb687ab9f0714536fdd408e2753",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-MLI-488-2019"
+      ]
+    },
+    {
+      "rule_id": "SK-UA-MLI-GATE-DIVIDEND-A10",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "UA",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "10",
+      "paragraph": null,
+      "rate": null,
+      "priority": 60,
+      "conditions": [
+        {
+          "fact": "mli_article_10_third_jurisdiction_pe_test_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2020-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-UA: notice 488/2019; result-changing articles ['10', '12', '13', '14', '15', '7']; WHT effective date(s) ['2020-01-01']. Gate: MLI Article 10 third-jurisdiction PE anti-abuse test.",
+      "source_id": "SK-MLI-488-2019",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2019/488/vyhlasene_znenie.html",
+      "source_excerpt_hash": "b88a85e031b47ba61de95a9953e8568167aceeb4295050b8a7e4747214a9c616",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-MLI-488-2019"
+      ]
+    },
+    {
+      "rule_id": "SK-UA-MLI-GATE-DIVIDEND-A12",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "UA",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "12",
+      "paragraph": null,
+      "rate": null,
+      "priority": 62,
+      "conditions": [
+        {
+          "fact": "mli_article_12_dependent_agent_pe_status_resolved",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2020-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-UA: notice 488/2019; result-changing articles ['10', '12', '13', '14', '15', '7']; WHT effective date(s) ['2020-01-01']. Gate: MLI Article 12 dependent-agent PE modification.",
+      "source_id": "SK-MLI-488-2019",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2019/488/vyhlasene_znenie.html",
+      "source_excerpt_hash": "4e50d1cee7a32b5f2e64afd614b615f246eb0bce34049c3fc204af411d50dce9",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-MLI-488-2019"
+      ]
+    },
+    {
+      "rule_id": "SK-UA-MLI-GATE-DIVIDEND-A13",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "UA",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "13",
+      "paragraph": null,
+      "rate": null,
+      "priority": 63,
+      "conditions": [
+        {
+          "fact": "mli_article_13_specific_activity_pe_status_resolved",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2020-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-UA: notice 488/2019; result-changing articles ['10', '12', '13', '14', '15', '7']; WHT effective date(s) ['2020-01-01']. Gate: MLI Article 13 specific-activity PE modification.",
+      "source_id": "SK-MLI-488-2019",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2019/488/vyhlasene_znenie.html",
+      "source_excerpt_hash": "9d8a1de170aef6b3adeb15c45566902d9c02368fbaf806bfe0b4e32fa7ba5938",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-MLI-488-2019"
+      ]
+    },
+    {
+      "rule_id": "SK-UA-MLI-GATE-DIVIDEND-A14",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "UA",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "14",
+      "paragraph": null,
+      "rate": null,
+      "priority": 64,
+      "conditions": [
+        {
+          "fact": "mli_article_14_contract_splitting_pe_status_resolved",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2020-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-UA: notice 488/2019; result-changing articles ['10', '12', '13', '14', '15', '7']; WHT effective date(s) ['2020-01-01']. Gate: MLI Article 14 contract-splitting PE modification.",
+      "source_id": "SK-MLI-488-2019",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2019/488/vyhlasene_znenie.html",
+      "source_excerpt_hash": "6c5521394e3010cc4381b3376812eaa2730e948b1517b571fbe1555f181c9d2a",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-MLI-488-2019"
+      ]
+    },
+    {
+      "rule_id": "SK-UA-MLI-GATE-DIVIDEND-A15",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "UA",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "15",
+      "paragraph": null,
+      "rate": null,
+      "priority": 65,
+      "conditions": [
+        {
+          "fact": "mli_article_15_closely_related_enterprise_status_resolved",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2020-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-UA: notice 488/2019; result-changing articles ['10', '12', '13', '14', '15', '7']; WHT effective date(s) ['2020-01-01']. Gate: MLI Article 15 closely-related-enterprise definition.",
+      "source_id": "SK-MLI-488-2019",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2019/488/vyhlasene_znenie.html",
+      "source_excerpt_hash": "f83a5de89d7dc4e09e9d7fb0660471d73cd6c7728b7184af9536bc2592040635",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-MLI-488-2019"
+      ]
+    },
+    {
+      "rule_id": "SK-UA-DIVIDEND-TREATY-UNRESOLVED-FAIL-CLOSED",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "UA",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "10",
+      "paragraph": null,
+      "rate": null,
+      "priority": 900,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "effect": "rate",
+      "effective_from": "1996-11-22",
+      "verification_status": "needs_review",
+      "source_text": "Článok 10 Dividendy 1. Dividendy vyplácané spoločnosťou, ktorá je rezidentom v jednom zmluvnom štáte, rezidentovi druhého zmluvného štátu, sa môžu zdaniť v tomto druhom štáte. 2. Tieto dividendy však možno zdaniť aj v zmluvnom štáte, v ktorom je spoločnosť, ktorá ich vypláca, rezidentom, a to podľa právnych predpisov tohto štátu, ak je však príjemca skutočným vlastníkom dividend, takto uložená daň nepresiahne 10 % hrubej sumy dividend. Tento odsek sa nedotýka zdanenia ziskov spoločnosti, z ktorých sa dividendy vyplácajú. 3. Výraz „dividendy“ použitý v tomto článku označuje príjmy z akcií alebo z iných práv s výnimkou pohľadávok, z podielov na zisku, ako aj príjmy z iných práv na spoločnosti, ktoré sa zdaňujú rovnakým spôsobom ako príjmy z akcií podľa daňových predpisov štátu, v ktorom je spoločnosť, ktorá rozdeľuje zisk, rezidentom. 4. Ustanovenia odsekov 1 a 2 tohto článku sa nepoužijú, ak skutočný vlastník dividend, ktorý je rezidentom v jednom zmluvnom štáte, vykonáva v druhom zmluvnom štáte, v ktorom je rezidentom spoločnosť vyplácajúca dividendy, podnikateľskú činnosť prostredníctvom stálej prevádzkarne, ktorá je tam umiestnená, alebo ak vykonáva v tomto druhom štáte nezávislé povolanie zo stálej základne tam umiestnenej a ak účasť, pre ktorú sa dividendy vyplácajú, sa skutočne viaže na túto stálu prevádzkareň alebo na túto stálu základňu. V takomto prípade sa použijú ustanoveniačlánku 7 alebo14 podľa toho, o aký prípad ide. 5. Ak spoločnosť, ktorá je rezidentom v jednom zmluvnom štáte, dosahuje zisky alebo príjmy z druhého zmluvného štátu, môže tento druhý štát oslobodiť dividendy vyplácané spoločnosťou od dane s výnimkou prípadov, ak sa tieto dividendy vyplácajú rezidentovi tohto druhého štátu alebo ak sa účasť, pre ktorú sa dividendy vyplácajú, skutočne viaže na stálu prevádzkareň alebo stálu základňu, ktorá je umiestnená v tomto druhom štáte, a nemôže ani podrobiť zisky spoločnosti dani z nerozdelených ziskov, aj keď vyplácané dividendy alebo nerozdelené zisky úplne alebo sčasti pozostávajú zo ziskov alebo z príjmov dosiahnutých v tomto štáte. 173/1997 Z. z. Zbierka zákonov Slovenskej republiky Strana 7",
+      "source_id": "SK-SLOVLEX-3123E75F999E40CD",
+      "source_url": "https://static.slov-lex.sk/pdf/SK/ZZ/1997/173/ZZ_1997_173.pdf",
+      "source_excerpt_hash": "4f96f549402242c9784b72be1f5515d1b269c165881dca3c7511f0ddf7cdd144",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-3123E75F999E40CD"
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true
+    },
+    {
       "rule_id": "SK-UA-MLI-GATE-INTEREST-A7",
       "income_type": "interest",
       "source_country": "SK",

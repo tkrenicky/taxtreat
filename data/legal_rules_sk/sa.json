@@ -1,0 +1,161 @@
+{
+  "country_pair": {
+    "source_country": "SK",
+    "recipient_country": "SA"
+  },
+  "rules": [
+    {
+      "rule_id": "SK-SA-DIVIDEND-TREATY-UNRESOLVED-FAIL-CLOSED",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "SA",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "10",
+      "paragraph": null,
+      "rate": null,
+      "priority": 900,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "effect": "rate",
+      "effective_from": "2024-08-01",
+      "verification_status": "needs_review",
+      "source_text": "Článok 10 Dividendy (1) Dividendy vyplácané spoločnosťou, ktorá je rezidentom jedného zmluvného štátu, rezidentovi druhého zmluvného štátu sa môžu zdaniť v tomto druhom zmluvnom štáte. (2) Tieto dividendy sa však môžu zdaniť aj v zmluvnom štáte, ktorého rezidentom je spoločnosť vyplácajúca dividendy, a to podľa právnych predpisov toho zmluvného štátu, ale ak je skutočný vlastník dividend rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne päť percent hrubej sumy dividend. Tento odsek sa netýka zdanenia spoločností, pokiaľ ide o zisky, z ktorých sa vyplácajú dividendy. (3) Pojem „dividendy“ použitý v tomto článku označuje príjmy z akcií, užívateľských („jouissance“) akcií alebo („jouissance“) užívateľských práv, ťažobných akcií, zakladateľských akcií alebo iných práv, ktoré nie sú pohľadávkami, z podielov na zisku, ako aj príjmov z iných práv, ktoré sa zdaňujú rovnakým spôsobom ako príjmy z akcií podľa právnych predpisov toho zmluvného štátu, ktorého je vyplácajúca spoločnosť rezidentom. (4) Ustanovenia odsekov 1 a 2 tohto článku sa neuplatnia, ak skutočný vlastník dividend, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, ktorého rezidentom je spoločnosť vyplácajúca dividendy, podnikanie prostredníctvom stálej prevádzkarne, ktorá sa tam nachádza alebo vykonáva v tom druhom zmluvnom štáte slobodné povolanie prostredníctvom stálej základne, ktorá sa tam nachádza a ak vlastníctvo, v súvislosti s ktorým sa dividendy vyplácajú, sa skutočne viaže na túto stálu prevádzkareň alebo túto stálu základňu. V takom prípade sa podľa okolností uplatnia ustanovenia článku 7 alebo článku 14 tejto zmluvy. (5) Ak spoločnosť, ktorá je rezidentom jedného zmluvného štátu, dosahuje zisky alebo príjmy z druhého zmluvného štátu, ten druhý zmluvný štát nemôže zdaniť dividendy vyplácané spoločnosťou s výnimkou prípadov, ak sa tieto dividendy vyplácajú rezidentovi toho druhého zmluvného štátu alebo ak vlastníctvo, v súvislosti s ktorým sa dividendy vyplácajú, sa skutočne viaže na stálu prevádzkareň alebo stálu základňu nachádzajúcu sa v druhom zmluvnom štáte a nemôže ani zdaniť nerozdelené zisky spoločnosti daňou z nerozdelených ziskov spoločnosti, aj keď vyplácané dividendy alebo nerozdelené zisky pozostávajú úplne alebo čiastočne zo ziskov alebo z príjmov plynúcich zo zdroja v tom druhom zmluvnom štáte.",
+      "source_id": "SK-SLOVLEX-5D72EEF164AE052A",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2024/139/vyhlasene_znenie.html",
+      "source_excerpt_hash": "b9c7e104b4b56aa9a977c5e586344509b6a0a247b9cff3545e51048bf34882de",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-5D72EEF164AE052A"
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true
+    },
+    {
+      "rule_id": "SK-SA-INTEREST-TREATY-UNRESOLVED-FAIL-CLOSED",
+      "income_type": "interest",
+      "source_country": "SK",
+      "recipient_country": "SA",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "11",
+      "paragraph": null,
+      "rate": null,
+      "priority": 900,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "effect": "rate",
+      "effective_from": "2024-08-01",
+      "verification_status": "needs_review",
+      "source_text": "Článok 11 Príjmy z dlhových pohľadávok (1) Príjmy z dlhových pohľadávok majúce zdroj v jednom zmluvnom štáte a vyplácané rezidentovi druhého zmluvného štátu sa môžu zdaniť v tomto druhom zmluvnom štáte. (2) Tieto príjmy z dlhových pohľadávok majúce zdroj v zmluvnom štáte sa môžu zdaniť aj v tomto zmluvnom štáte, a to podľa právnych predpisov tohto zmluvného štátu, ale ak je skutočný vlastník týchto príjmov rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne desať percent hrubej sumy týchto príjmov. (3) Bez ohľadu na ustanovenia odseku 2 tohto článku, príjmy z dlhových pohľadávok majúce zdroj v jednom zmluvnom štáte sú oslobodené od dane v tomto zmluvnom štáte za predpokladu, že ich príjemcom a skutočným vlastníkom je: a) v prípade Slovenskej republiky: (i) vláda Slovenskej republiky, (ii) miestne orgány, (iii) Národná banka Slovenska, (iv) Eximbanka SR (Exportno-importná banka Slovenskej republiky), (v) Slovenská záručná a rozvojová banka, a. s., (vi) Agentúra pre riadenie dlhu a likvidity, (vii) iná podobná inštitúcia, ktorej majetok je v úplnom vlastníctve vlády Slovenskej republiky alebo miestnych orgánov, pokiaľ sa tak dohodnú príslušné orgány zmluvných štátov prostredníctvom výmeny diplomatických nót; b) v prípade Saudskoarabského kráľovstva: i) vláda Saudskoarabského kráľovstva, ii) Saudskoarabská menová agentúra /The Saudi Arabia Monetary Agency (SAMA)/, iii) Saudský rozvojový fond /The Saudi Fund for Development/, iv) Verejný investičný fond /The Public Investment Fund/, v) Verejná dôchodková agentúra /The Public Pension Agency/, vi) Všeobecná organizácia pre sociálne poistenie /The General Organization for Social Insurance/, vii) iná podobná inštitúcia, ktorej majetok je v úplnom vlastníctve vlády Saudskoarabského kráľovstva alebo miestnych orgánov, pokiaľ sa tak dohodnú príslušné orgány zmluvných štátov prostredníctvom výmeny diplomatických nót. (4) Pojem „príjmy z dlhových pohľadávok“ použitý v tomto článku označuje príjmy z pohľadávok akéhokoľvek druhu, zabezpečených alebo nezabezpečených záložným právom na nehnuteľnosť bez ohľadu na to, či poskytujú právo účasti na ziskoch dlžníka a najmä príjmy z vládnych cenných papierov a príjmy z obligácií alebo z dlhopisov vrátane prémií a výhier spojených s týmito cennými papiermi, obligáciami alebo dlhopismi. Úroky z omeškania ukladané za oneskorenú platbu sa nepovažujú za príjmy z dlhových pohľadávok na účely tohto článku. (5) Ustanovenia odsekov 1, 2 a 3 tohto článku sa neuplatnia, ak skutočný vlastník príjmov z dlhových pohľadávok, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, v ktorom majú príjmy z dlhových pohľadávok zdroj, podnikanie prostredníctvom stálej prevádzkarne, ktorá sa tam nachádza alebo vykonáva v tom druhom zmluvnom štáte slobodné povolanie prostredníctvom stálej základne, ktorá sa tam nachádza a ak pohľadávka, z ktorej sa tieto príjmy platia, sa skutočne viaže na túto stálu prevádzkareň alebo túto stálu základňu. V takom prípade sa podľa okolností uplatnia ustanovenia článku 7 alebo článku 14 tejto zmluvy. (6) Predpokladá sa, že príjmy z dlhových pohľadávok majú zdroj v zmluvnom štáte, ak je platiteľ rezidentom toho zmluvného štátu. Ak však osoba platiaca príjmy z dlhových pohľadávok bez ohľadu na to, či je alebo nie je rezidentom zmluvného štátu, má v zmluvnom štáte stálu prevádzkareň alebo stálu základňu, v súvislosti s ktorou vznikol dlh, za ktorý sa príjmy platia a tieto príjmy idú na ťarchu tejto stálej prevádzkarne alebo tejto stálej základne, potom sa predpokladá, že tieto príjmy majú zdroj v tom zmluvnom štáte, v ktorom sa nachádza táto stála prevádzkareň alebo táto stála základňa. (7) Ak v dôsledku osobitných vzťahov existujúcich medzi platiteľom a skutočným vlastníkom príjmov alebo medzi nimi a treťou osobou suma príjmov z dlhových pohľadávok vzťahujúca sa k pohľadávke, z ktorej sa tieto príjmy platia, presahuje sumu, ktorú by bol dohodol platiteľ so skutočným vlastníkom, keby takéto vzťahy neexistovali, uplatnia sa ustanovenia tohto článku len na túto naposledy uvedenú sumu. V tomto prípade časť platieb presahujúca túto sumu sa zdaní podľa právnych predpisov oboch zmluvných štátov s prihliadnutím na ostatné ustanovenia tejto zmluvy.",
+      "source_id": "SK-SLOVLEX-5D72EEF164AE052A",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2024/139/vyhlasene_znenie.html",
+      "source_excerpt_hash": "2bdd476bb6a1587df5196fd4d273ed5b367ddf1e4de77cee03820fc8211b9e76",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-5D72EEF164AE052A"
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true
+    },
+    {
+      "rule_id": "SK-SA-ROYALTY-TREATY-UNRESOLVED-FAIL-CLOSED",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "SA",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "12",
+      "paragraph": null,
+      "rate": null,
+      "priority": 900,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "effect": "rate",
+      "effective_from": "2024-08-01",
+      "verification_status": "needs_review",
+      "source_text": "Článok 12 Licenčné poplatky (1) Licenčné poplatky majúce zdroj v jednom zmluvnom štáte a vyplácané rezidentovi druhého zmluvného štátu sa môžu zdaniť v tom druhom zmluvnom štáte. (2) Tieto licenčné poplatky sa však môžu zdaniť aj v zmluvnom štáte, v ktorom majú zdroj, a to podľa právnych predpisov toho zmluvného štátu, ale ak je skutočný vlastník licenčných poplatkov rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne desať percent hrubej sumy licenčných poplatkov. (3) Pojem „licenčné poplatky“ použitý v tomto článku označuje platby akéhokoľvek druhu prijaté ako odplata za použitie alebo za právo na použitie akéhokoľvek autorského práva k literárnemu, umeleckému alebo vedeckému dielu vrátane kinematografických filmov alebo filmov alebo nahrávok používaných pre rozhlasové alebo televízne vysielanie, akéhokoľvek patentu, ochrannej známky, dizajnu alebo modelu, plánu, tajného vzorca alebo postupu, alebo za použitie alebo za právo na použitie priemyselného, obchodného alebo vedeckého zariadenia, alebo za informácie (know-how), ktoré sa vzťahujú na priemyselné, obchodné alebo vedecké skúsenosti. (4) Ustanovenia odsekov 1 a 2 tohto článku sa neuplatnia, ak skutočný vlastník licenčných poplatkov, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, v ktorom majú licenčné poplatky zdroj, podnikanie prostredníctvom stálej prevádzkarne, ktorá sa tam nachádza alebo vykonáva v tom druhom zmluvnom štáte slobodné povolanie prostredníctvom stálej základne, ktorá sa tam nachádza a ak právo alebo majetok, za ktorý sa platia licenčné poplatky, sa skutočne viažu na túto stálu prevádzkareň alebo túto stálu základňu. V takom prípade sa podľa okolností uplatnia ustanovenia článku 7 alebo článku 14 tejto zmluvy. (5) Predpokladá sa, že licenčné poplatky majú zdroj v zmluvnom štáte, ak je platiteľ rezidentom toho zmluvného štátu. Ak však osoba platiaca licenčné poplatky bez ohľadu na to, či je alebo nie je rezidentom zmluvného štátu, má v zmluvnom štáte stálu prevádzkareň alebo stálu základňu, v súvislosti s ktorou vznikla povinnosť platiť licenčné poplatky, a tieto licenčné poplatky idú na ťarchu tejto stálej prevádzkarne alebo tejto stálej základne, potom sa predpokladá, že tieto licenčné poplatky majú zdroj v tom zmluvnom štáte, v ktorom sa nachádza táto stála prevádzkareň alebo táto stála základňa. (6) Ak v dôsledku osobitných vzťahov existujúcich medzi platiteľom a skutočným vlastníkom licenčných poplatkov alebo medzi nimi a treťou osobou suma licenčných poplatkov vzťahujúca sa na použitie, na právo alebo na informácie, za ktoré sa licenčné poplatky platia, presahuje sumu, ktorú by bol dohodol platiteľ so skutočným vlastníkom, keby také vzťahy neexistovali, uplatnia sa ustanovenia tohto článku len na túto naposledy uvedenú sumu. V tomto prípade časť platieb presahujúca túto sumu sa zdaní podľa právnych predpisov oboch zmluvných štátov s prihliadnutím na ostatné ustanovenia tejto zmluvy.",
+      "source_id": "SK-SLOVLEX-5D72EEF164AE052A",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2024/139/vyhlasene_znenie.html",
+      "source_excerpt_hash": "a71a331cea2543377d10dafa46625f160fd6b55e5e93bbcbeaee1f0a7b9a49b8",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-5D72EEF164AE052A"
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true
+    }
+  ]
+}

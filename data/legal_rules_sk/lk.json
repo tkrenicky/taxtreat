@@ -5,6 +5,45 @@
   },
   "rules": [
     {
+      "rule_id": "SK-LK-DIVIDEND-TREATY-UNRESOLVED-FAIL-CLOSED",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "LK",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "8",
+      "paragraph": null,
+      "rate": null,
+      "priority": 900,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "rate",
+      "effective_from": "1979-06-19",
+      "verification_status": "needs_review",
+      "source_text": "Článok 8 Dividendy 1. Sadzba československej dane z dividend vyplácaných spoločnosťou majúcou sídlo v Československu spoločnosti majúcej sídlo v Srí Lanke neprekročí 15 %. 2. Dividendy vyplácané spoločnosťou, ktorá má sídlo v Srí Lanke, spoločnosti, ktorá má sídlo v Československu, budú oslobodené od všetkých daní Srí Lanky okrem dane Srí Lanky vyberanej z príjmu spoločnosti, ktorá vypláca dividendy, a okrem dodatkovej dane vyberanej podľa odseku 4 článku 26 finančného zákona Srí Lanky, ktorá sa ukladá spoločnostiam, ktorých účastiny nie sú hnuteľným majetkom umiestneným v Srí Lanke na účely právnych predpisov Srí Lanky upravujúcich dedičské poplatky; sadzba tejto naposledy spomenutej dodatkovej dane však neprekročí, pokiaľ ide o spoločnosti, ktorých sídlo je v Československu, 6 %. Ak spoločnosť, ktorej sídlo je v Československu, po nadobudnutí platnosti tejto Zmluvy novo splatila účastinný kapitál spoločnosti, ktorej sídlo je v Srí Lanke, neprekročí sadzba dane vyberanej od zdroja z dividend vyplácaných spoločnosťou v Srí Lanke a vzťahujúcich sa na takto splatený účastinný kapitál 15 %.",
+      "source_id": "SK-SLOVLEX-122800EA7E9E968E",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/1979/132/vyhlasene_znenie.html",
+      "source_excerpt_hash": "c169d2ea925d786c21920d1d526fb54a21af4ec7a595d0cfae3275716b05d88b",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-122800EA7E9E968E"
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true
+    },
+    {
       "rule_id": "SK-LK-INTEREST-TREATY-SIMPLE-1",
       "income_type": "interest",
       "source_country": "SK",

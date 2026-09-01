@@ -5,6 +5,57 @@
   },
   "rules": [
     {
+      "rule_id": "SK-KW-DIVIDEND-TREATY-UNRESOLVED-FAIL-CLOSED",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "KW",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "10",
+      "paragraph": null,
+      "rate": null,
+      "priority": 900,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "effect": "rate",
+      "effective_from": "2014-04-15",
+      "verification_status": "needs_review",
+      "source_text": "Článok 10 Dividendy (1) Dividendy vyplácané spoločnosťou, ktorá je rezidentom jedného zmluvného štátu, rezidentovi druhého zmluvného štátu, ktorý je skutočným vlastníkom dividend, sa zdaňujú len v tom druhom zmluvnom štáte. Tento odsek sa nedotýka zdanenia ziskov spoločnosti, z ktorých sa dividendy vyplácajú. (2) Pojem „dividendy“ použitý v tomto článku označuje príjmy z akcií, užívateľských („jouissance“) akcií, alebo („jouissance“) užívateľských práv, ťažobných akcií, zakladateľských akcií alebo iných práv, ktoré nie sú pohľadávkami, z podielov na zisku, ako aj iných príjmov, ktoré sa zdaňujú rovnakým spôsobom ako príjmy z akcií podľa právnych predpisov toho zmluvného štátu, ktorého je vyplácajúca spoločnosť rezidentom. (3) Ustanovenia odseku 1 sa neuplatnia, ak skutočný vlastník dividend, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, ktorého je rezidentom spoločnosť vyplácajúca dividendy, podnikateľskú činnosť prostredníctvom stálej prevádzkarne, ktorá sa tam nachádza a vlastníctvo, s ohľadom na ktoré sa dividendy vyplácajú, sa skutočne viaže na túto stálu prevádzkareň. V tom prípade sa uplatnia ustanovenia článku 7 .",
+      "source_id": "SK-SLOVLEX-7152751F68567F04",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2014/93/vyhlasene_znenie.html",
+      "source_excerpt_hash": "23bcdd69b3f3011d8b60793f69037505f24abc57c6f590893c1d06a6fc28b6c5",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-7152751F68567F04"
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true
+    },
+    {
       "rule_id": "SK-KW-INTEREST-TREATY-INTEREST-SPECIAL-EXEMPTION",
       "income_type": "interest",
       "source_country": "SK",

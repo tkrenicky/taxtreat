@@ -5,6 +5,137 @@
   },
   "rules": [
     {
+      "rule_id": "SK-CN-MLI-GATE-DIVIDEND-A4",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "CN",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "4",
+      "paragraph": null,
+      "rate": null,
+      "priority": 54,
+      "conditions": [
+        {
+          "fact": "mli_article_4_dual_resident_entitlement_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2023-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-CN: notice 373/2022; result-changing articles ['4', '7']; WHT effective date(s) ['2023-01-01']. Gate: MLI Article 4 dual-resident entity entitlement.",
+      "source_id": "SK-MLI-373-2022",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2022/373/vyhlasene_znenie.html",
+      "source_excerpt_hash": "00872cd2a2deb937bef6b7d50d7743d2190fc2cb45bcccf44db23296ddc3c3fc",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-MLI-373-2022"
+      ]
+    },
+    {
+      "rule_id": "SK-CN-MLI-GATE-DIVIDEND-A7",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "CN",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "7",
+      "paragraph": null,
+      "rate": null,
+      "priority": 57,
+      "conditions": [
+        {
+          "fact": "treaty_ppt_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2023-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-CN: notice 373/2022; result-changing articles ['4', '7']; WHT effective date(s) ['2023-01-01']. Gate: MLI Article 7 principal purpose test.",
+      "source_id": "SK-MLI-373-2022",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2022/373/vyhlasene_znenie.html",
+      "source_excerpt_hash": "04b694bb7e9cb9d07e06fa61ecebfae8f5c89247f7cddce1cd87c784e449f893",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-MLI-373-2022"
+      ]
+    },
+    {
+      "rule_id": "SK-CN-DIVIDEND-TREATY-UNRESOLVED-FAIL-CLOSED",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "CN",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "10",
+      "paragraph": null,
+      "rate": null,
+      "priority": 900,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "rate",
+      "effective_from": "1987-12-23",
+      "verification_status": "needs_review",
+      "source_text": "Článok 10 Dividendy 1. Dividendy vyplácané spoločnosťou, ktorá je rezidentom v jednom zmluvnom štáte, osobe, ktorá je rezidentom v druhom zmluvnom štáte, môžu sa zdaniť v tomto druhom zmluvnom štáte. 2. Tieto dividendy sa však môžu takisto zdaniť v zmluvnom štáte, v ktorom je spoločnosť, ktorá ich vypláca, rezidentom, a to podľa právnych predpisov tohto štátu, ale ak príjemca je skutočným vlastníkom dividend, daň takto určená nemôže presiahnuť 10 % hrubej sumy dividend. Ustanovenie tohto odseku sa nedotýka zdanenia ziskov spoločnosti, ktoré slúžia na výplatu dividend. 3. Výraz “dividendy„ použitý v tomto článku označuje príjmy z akcií alebo iných práv, s výnimkou pohľadávok, s podielom na zisku a príjmy z iných podielov na spoločnosti, ktoré sú podľa právnych predpisov štátu, v ktorom je spoločnosť, ktorá dividendy vypláca, rezidentom, postavené na úroveň príjmov z akcií. 4. Ustanovenia odsekov 1 a 2 sa nepoužijú, ak skutočný vlastník dividend, ktorý je rezidentom v jednom zmluvnom štáte, vykonáva v druhom zmluvnom štáte, v ktorom je rezidentom spoločnosť vyplácajúca dividendy, priemyselnú alebo obchodnú činnosť prostredníctvom stálej prevádzkárne, ktorá je tam umiestnená, alebo nezávislé povolanie prostredníctvom stálej základne tam umiestnenej a ak sa účasť, pre ktorú sa dividendy vyplácajú, skutočne viaže na túto stálu prevádzkáreň alebo na túto stálu základňu. V takom prípade sa použijú ustanovenia článku 7 alebo článku 14 podľa prípadu. 5. Ak spoločnosť, ktorá je rezidentom v jednom zmluvnom štáte, dosahuje zisky alebo príjmy z druhého zmluvného štátu, nemôže tento druhý štát zdaniť dividendy vyplácané spoločnosťou, ledaže sa tieto dividendy vyplácajú osobe, ktorá je rezidentom v tomto druhom štáte, alebo že účasť, pre ktorú sa dividendy vyplácajú, skutočne patrí k stálej prevádzkárni alebo k stálej základni, ktoré sú umiestnené v tomto druhom zmluvnom štáte, ani podrobiť nerozdelené zisky spoločnosti dani z nerozdelených ziskov, aj keď vyplácané dividendy alebo nerozdelené zisky pozostávajú úplne alebo čiastočne zo ziskov alebo z príjmov docielených v tomto druhom štáte.",
+      "source_id": "SK-SLOVLEX-64AE9CC007C325B5",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/1988/41/vyhlasene_znenie.html",
+      "source_excerpt_hash": "77b7186504a1ca23346f1099294da3858968e02ebccdf8c62c8957f4c822293e",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-64AE9CC007C325B5"
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true
+    },
+    {
       "rule_id": "SK-CN-MLI-GATE-INTEREST-A4",
       "income_type": "interest",
       "source_country": "SK",

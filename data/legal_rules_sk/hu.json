@@ -5,6 +5,108 @@
   },
   "rules": [
     {
+      "rule_id": "SK-HU-DIVIDEND-TREATY-UNRESOLVED-FAIL-CLOSED",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "HU",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "10",
+      "paragraph": null,
+      "rate": null,
+      "priority": 900,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "effect": "rate",
+      "effective_from": "1995-12-21",
+      "verification_status": "needs_review",
+      "source_text": "Článok 10 Dividendy 1. Dividendy vyplácané spoločnosťou, ktorá je rezidentom jedného zmluvného štátu, osobe, ktorá je rezidentom druhého zmluvného štátu, možno zdaniť v tomto druhom štáte. 2. Tieto dividendy však možno zdaniť aj v zmluvnom štáte, ktorého je spoločnosť vyplácajúca dividendy rezidentom, a to podľa právnych predpisov tohto štátu; ak však príjemca je skutočným vlastníkom dividend, takto stanovená daň nepresiahne a) 5 % hrubej sumy dividend, ak skutočným vlastníkom je spoločnosť, ktorá priamo vlastní najmenej 25 % majetku spoločnosti vyplácajúcej dividendy, b) 15 % hrubej sumy dividend vo všetkých ostatných prípadoch. Príslušné úrady zmluvných štátov upravia vzájomnou dohodou spôsob aplikácie týchto obmedzení. Tento odsek sa nedotýka zdanenia ziskov spoločnosti, z ktorých sa dividendy vyplácajú. 3. Výraz „dividendy“ použitý v tomto článku označuje príjmy z akcií alebo z iných práv s výnimkou pohľadávok, z podielov na zisku, ako aj príjmy z práv na spoločnosti, ktoré sú podľa daňových predpisov štátu, v ktorom je spoločnosť rozdeľujúca zisk rezidentom, postavené na roveň príjmov z akcií. 4. Ustanovenia odsekov 1 a 2 sa nepoužijú, ak skutočný vlastník dividend, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, ktorého rezidentom je spoločnosť vyplácajúca dividendy, priemyselnú alebo obchodnú činnosť prostredníctvom stálej prevádzkarne, ktorá je tam umiestnená, alebo ak vykonáva v tomto druhom štáte nezávislé povolanie prostredníctvom stálej základne tam umiestnenej a ak sa účasť, pre ktorú sa dividendy vyplácajú, skutočne viaže na túto stálu prevádzkareň alebo na túto stálu základňu. V takomto prípade sa použijú ustanovenia článku 7 alebo článku 14 podľa toho, o aký prípad ide. 5. Ak spoločnosť, ktorá je rezidentom jedného zmluvného štátu, dosahuje zisky alebo príjmy z druhého zmluvného štátu, tento druhý štát nemôže zdaniť dividendy vyplácané spoločnosťou s výnimkou prípadov, ak sa tieto dividendy vyplácajú rezidentovi tohto druhého štátu alebo ak sa účasť, pre ktorú sa dividendy vyplácajú, skutočne viaže na stálu prevádzkareň alebo na stálu základňu, ktorá je umiestnená v tomto druhom štáte, ani podrobiť nerozdelené zisky spoločnosti dani z nerozdelených ziskov, aj keď vyplácané dividendy alebo nerozdelené zisky úplne alebo sčasti pozostávajú zo ziskov alebo z príjmov dosiahnutých v tomto druhom štáte.",
+      "source_id": "SK-SLOVLEX-5D006DE683F63A7D",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/1996/80/vyhlasene_znenie.html",
+      "source_excerpt_hash": "dc4ecde4e7ca700a468772d7dcbe4fadd90762ec44b30d094571c7ce3fa6a3bd",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-5D006DE683F63A7D"
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true
+    },
+    {
+      "rule_id": "SK-HU-INTEREST-TREATY-UNRESOLVED-FAIL-CLOSED",
+      "income_type": "interest",
+      "source_country": "SK",
+      "recipient_country": "HU",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "11",
+      "paragraph": null,
+      "rate": null,
+      "priority": 900,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "effect": "rate",
+      "effective_from": "1995-12-21",
+      "verification_status": "needs_review",
+      "source_text": "Článok 11 Úroky 1. Úroky, ktoré majú zdroj v jednom zmluvnom štáte a poberá ich rezident druhého zmluvného štátu, možno zdaniť iba v tomto druhom štáte, ak tento rezident je skutočným vlastníkom úroku. 2. Výraz „úroky“ použitý v tomto článku označuje príjmy z pohľadávok akéhokoľvek druhu zabezpečených i nezabezpečených záložným právom k nehnuteľnosti alebo či majú alebo nemajú právo účasti na zisku dlžníka, a najmä príjmy z vládnych cenných papierov a príjmy z obligácií alebo z dlhopisov vrátane prémií a výhier spojených s týmito cennými papiermi, obligáciami alebo s dlhopismi. 3. Ustanovenie odseku 1 sa nepoužije, ak skutočný vlastník úrokov, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, v ktorom majú úroky zdroj, priemyselnú alebo obchodnú činnosť prostredníctvom stálej prevádzkarne, ktorá je tam umiestnená, alebo nezávislé povolanie prostredníctvom stálej základne tam umiestnenej a ak sa pohľadávka, z ktorej sa úroky vyplácajú, skutočne viaže na túto stálu prevádzkareň alebo na túto stálu základňu. V takomto prípade sa použijú ustanovenia článku 7 alebo článku 14 podľa toho, o aký prípad ide. 4. Ak suma úrokov vzťahujúcich sa na pohľadávku, z ktorej sa úroky vyplácajú, presahuje v dôsledku osobitných vzťahov, ktoré existujú medzi platiteľom a skutočným vlastníkom úrokov alebo ktoré jeden aj druhý udržiavajú s treťou osobou, sumu, ktorú by bol dohodol platiteľ so skutočným vlastníkom, keby neboli takéto vzťahy, použijú sa ustanovenia tohto článku len na túto naposledy uvedenú sumu. Suma platieb, ktorá ju presahuje, sa v tomto prípade môže zdaniť podľa právnych predpisov každého zmluvného štátu s prihliadnutím na ostatné ustanovenia tejto zmluvy.",
+      "source_id": "SK-SLOVLEX-5D006DE683F63A7D",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/1996/80/vyhlasene_znenie.html",
+      "source_excerpt_hash": "9b2541a85ed9e2b8ab9f58e82da9199e860673ce15abbdb5e7cb325a07c9d677",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-5D006DE683F63A7D"
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true
+    },
+    {
       "rule_id": "SK-HU-ROYALTY-TREATY-SIMPLE-1",
       "income_type": "royalty",
       "source_country": "SK",

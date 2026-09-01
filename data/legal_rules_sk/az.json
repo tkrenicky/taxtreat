@@ -242,6 +242,57 @@
       "decision_status": "REVIEW_REQUIRED",
       "final_rate_allowed": false,
       "automatic_production_approval_forbidden": true
+    },
+    {
+      "rule_id": "SK-AZ-ROYALTY-TREATY-UNRESOLVED-FAIL-CLOSED",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "AZ",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "12",
+      "paragraph": null,
+      "rate": null,
+      "priority": 900,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "effect": "rate",
+      "effective_from": "2024-04-01",
+      "verification_status": "needs_review",
+      "source_text": "Článok 12 Licenčné poplatky 1. Licenčné poplatky majúce zdroj v jednom zmluvnom štáte a vyplácané rezidentovi druhého zmluvného štátu sa môžu zdaniť v tomto druhom zmluvnom štáte. 2. Tieto licenčné poplatky sa však môžu zdaniť aj v zmluvnom štáte, v ktorom majú zdroj a podľa právnych predpisov tohto zmluvného štátu, ak je však skutočný vlastník licenčných poplatkov rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne: a) 5% hrubej sumy licenčných poplatkov v prípade platieb uvedených v odseku 3 písm. a), b) 10% hrubej sumy licenčných poplatkov v prípade platieb uvedených v odseku 3 písm. b). 3. Pojem „licenčné poplatky\" použitý v tomto článku označuje platby akéhokoľvek druhu získané ako odplata: a) za použitie alebo za právo na použitie akéhokoľvek patentu, ochrannej známky, dizajnu alebo vzoru, plánu, tajného vzorca alebo postupu, softvéru, priemyselného, obchodného alebo vedeckého zariadenia, alebo za informácie, ktoré sa vzťahujú na priemyselné, obchodné alebo vedecké skúsenosti; b) za použitie alebo za právo na použitie akéhokoľvek autorského práva k literárnemu, umeleckému alebo vedeckému dielu vrátane kinematografických filmov a filmov alebo nahrávok pre televízne alebo rozhlasové vysielanie a iných prostriedkov obrazovej alebo zvukovej reprodukcie. 4. Ustanovenia odsekov 1 a 2 tohto článku sa neuplatnia, ak skutočný vlastník licenčných poplatkov, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, v ktorom majú licenčné poplatky zdroj, podnikanie prostredníctvom stálej prevádzkarne, ktorá sa tam nachádza alebo vykonáva v tomto druhom zmluvnom štáte nezávislú osobnú činnosť zo stálej základne, ktorá sa tam nachádza a ak sa právo alebo majetok, za ktorý sa licenčné poplatky platia, skutočne viažu na túto stálu prevádzkareň alebo túto stálu základňu. V takomto prípade sa uplatnia ustanovenia článku 7 alebo článku 14. 5. Predpokladá sa, že licenčné poplatky majú zdroj v zmluvnom štáte, ak je platiteľ rezidentom tohto zmluvného štátu. Ak však osoba platiaca licenčné poplatky bez ohľadu na to, či je alebo nie je rezidentom zmluvného štátu, má v zmluvnom štáte stálu prevádzkareň alebo stálu základňu, v súvislosti s ktorou vznikla povinnosť platiť licenčné poplatky a tieto licenčné poplatky idú na ťarchu tejto stálej prevádzkarne alebo stálej základne, potom sa predpokladá, že tieto licenčné poplatky majú zdroj v tom zmluvnom štáte, v ktorom sa nachádza táto stála prevádzkareň alebo stála základňa. 6. Ak v dôsledku osobitných vzťahov existujúcich medzi platiteľom a skutočným vlastníkom licenčných poplatkov alebo medzi nimi a treťou osobou suma licenčných poplatkov vzťahujúca sa na použitie, na právo alebo na informácie, za ktoré sa licenčné poplatky platia, presahuje sumu, ktorú by bol dohodol platiteľ so skutočným vlastníkom, keby takéto vzťahy neexistovali, uplatnia sa ustanovenia tohto článku len na túto naposledy uvedenú sumu. V tomto prípade časť platieb presahujúca túto sumu sa zdaní podľa právnych predpisov oboch zmluvných štátov s prihliadnutím na ostatné ustanovenia tejto zmluvy.",
+      "source_id": "SK-SLOVLEX-5A15C3370E97C48A",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2024/24/vyhlasene_znenie.html",
+      "source_excerpt_hash": "cacae276df8b965f5252279d891a085a4a7ceb3b6ece5b9b1444cf263c3163e7",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-5A15C3370E97C48A"
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true
     }
   ]
 }

@@ -5,6 +5,57 @@
   },
   "rules": [
     {
+      "rule_id": "SK-MD-DIVIDEND-TREATY-UNRESOLVED-FAIL-CLOSED",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "MD",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "10",
+      "paragraph": null,
+      "rate": null,
+      "priority": 900,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "effect": "rate",
+      "effective_from": "2006-09-17",
+      "verification_status": "needs_review",
+      "source_text": "Článok 10 Dividendy 1. Dividendy vyplácané spoločnosťou, ktorá je rezidentom jedného zmluvného štátu, rezidentovi druhého zmluvného štátu sa môžu zdaniť v tomto druhom štáte. 2. Tieto dividendy sa však môžu zdaniť aj v zmluvnom štáte, ktorého spoločnosť vyplácajúca dividendy je rezidentom, a to podľa právnych predpisov tohto štátu, ak je však skutočný vlastník dividend rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne a) 5 % hrubej sumy dividend, ak skutočným vlastníkom je spoločnosť (iná ako osobná obchodná spoločnosť), ktorá priamo vlastní najmenej 25 % majetku spoločnosti vyplácajúcej dividendy, b) 15 % hrubej sumy dividend vo všetkých ostatných prípadoch. Príslušné úrady zmluvných štátov upravia vzájomnou dohodou spôsob aplikácie týchto obmedzení. Tento odsek sa nedotýka zdanenia ziskov spoločnosti, z ktorých sú dividendy vyplácané. 3. Pojem „dividendy“ použitý v tomto článku označuje príjmy zo všetkých druhov akcií alebo z iných práv podieľať sa na ziskoch s výnimkou pohľadávok, ako aj príjmy z iných práv spoločností, ktoré sú zdaňované rovnakým spôsobom ako príjmy z akcií podľa právnych predpisov toho štátu, ktorého je spoločnosť rozdeľujúca zisk rezidentom. 4. Ustanovenia odsekov 1 a 2 sa nepoužijú, ak skutočný vlastník dividend, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, ktorého je spoločnosť vyplácajúca dividendy rezidentom, podnikateľskú činnosť prostredníctvom stálej prevádzkarne, ktorá sa tam nachádza, alebo vykonáva v tomto druhom štáte nezávislé osobné činnosti zo stálej základne, ktorá sa tam nachádza, a účasť, v súvislosti s ktorou sa dividendy vyplácajú, sa skutočne viaže na túto stálu prevádzkareň alebo na túto stálu základňu. V takom prípade sa podľa okolností použijú ustanovenia článku 7 alebo článku 14 . 5. Ak spoločnosť, ktorá je rezidentom jedného zmluvného štátu, dosahuje zisky alebo príjmy z druhého zmluvného štátu, nemôže tento druhý štát zdaniť dividendy vyplácané spoločnosťou s výnimkou prípadov, ak sú tieto dividendy vyplácané rezidentovi tohto druhého štátu alebo ak sa účasť, v súvislosti s ktorou sa dividendy vyplácajú, skutočne viaže na stálu prevádzkareň alebo na stálu základňu nachádzajúcu sa v tomto druhom štáte, a ani nemôže zdaniť nerozdelené zisky spoločnosti daňou z nerozdelených ziskov, aj keď vyplácané dividendy alebo nerozdelené zisky pozostávajú úplne alebo čiastočne zo ziskov alebo z príjmov dosiahnutých v tomto druhom štáte.",
+      "source_id": "SK-SLOVLEX-A11BDC56D04EB927",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2006/514/vyhlasene_znenie.html",
+      "source_excerpt_hash": "d10ca13322da5d9dc5871cd21b489fea65ef6b8d8f59e9c75a3444563a37ee69",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-A11BDC56D04EB927"
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true
+    },
+    {
       "rule_id": "SK-MD-INTEREST-TREATY-SIMPLE-1",
       "income_type": "interest",
       "source_country": "SK",

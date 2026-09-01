@@ -5,6 +5,88 @@
   },
   "rules": [
     {
+      "rule_id": "SK-CY-MLI-GATE-DIVIDEND-A7",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "CY",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "7",
+      "paragraph": null,
+      "rate": null,
+      "priority": 57,
+      "conditions": [
+        {
+          "fact": "treaty_ppt_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2021-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-CY: notice 81/2020; result-changing articles ['7']; WHT effective date(s) ['2021-01-01']. Gate: MLI Article 7 principal purpose test.",
+      "source_id": "SK-MLI-81-2020",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2020/81/vyhlasene_znenie.html",
+      "source_excerpt_hash": "a1b49c6dfabd862dc6b7c30481aa20f7d44044da00987ef049a04d661cf0f0c4",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-MLI-81-2020"
+      ]
+    },
+    {
+      "rule_id": "SK-CY-DIVIDEND-TREATY-UNRESOLVED-FAIL-CLOSED",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "CY",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "10",
+      "paragraph": null,
+      "rate": null,
+      "priority": 900,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "rate",
+      "effective_from": "1980-12-30",
+      "verification_status": "needs_review",
+      "source_text": "Článok 10 Dividendy 1. Dividendy vyplácané spoločnosťou, ktorá má sídlo v jednom zmluvnom štáte, osobe majúcej bydlisko alebo sídlo v druhom zmluvnom štáte, sa môžu zdaniť v tomto druhom štáte. 2. Tieto dividendy sa však môžu zdaniť v zmluvnom štáte, v ktorom má sídlo spoločnosť, ktorá ich vypláca, a to podľa práva tohto štátu. Takto uložená daň však nepresiahne 10 % hrubej sumy dividend. 3. Pokiaľ Cyprus nebude ukladať daň z dividend popri dani vyberanej zo ziskov alebo z príjmu spoločnosti, budú dividendy vyplácané spoločnosťou, ktorá má sídlo na Cypre, osobe majúcej bydlisko alebo sídlo v Československu oslobodené od akejkoľvek dane na Cypre, ktorá sa môže vyberať z dividend popri dani vyberanej zo ziskov alebo z príjmu spoločnosti. 4. Príslušné úrady zmluvných štátov upravia vzájomnou dohodou spôsob aplikácie odsekov 2 a 3. 5. Ustanovenia odsekov 2 a 3 sa nedotknú zdanenia ziskov spoločnosti, z ktorých sa dividendy vyplácajú. 6. Výraz „dividendy“ použitý v tomto článku označuje príjmy z účastín alebo iných práv, s výnimkou pohľadávok, s účasťou na zisku, práve tak ako príjmy z iných spoločenských práv, ktoré sú podľa daňových predpisov štátu, v ktorom má sídlo spoločnosť vyplácajúca dividendy, podrobené rovnakému zdaneniu ako príjmy z účastín. 7. Ustanovenia odsekov 1, 2 a 3 sa nepoužijú, ak príjemca dividend majúci bydlisko alebo sídlo v jednom zmluvnom štáte vykonáva v druhom zmluvnom štáte, v ktorom má sídlo spoločnosť vyplácajúca dividendy, priemyselnú alebo obchodnú činnosť prostredníctvom stálej prevádzkárne, ktorá je tam umiestnená, alebo vykonáva v tomto druhom štáte slobodné povolanie pomocou stálej základne tam umiestnenej a ak účasť, na základe ktorej sa dividendy vyplácajú, je skutočne spojená s takou stálou prevádzkárňou alebo stálou základňou. V takom prípade sa použijú ustanovenia článku 7 alebo článku 14 podľa toho, o aký prípad ide. 8. Ak spoločnosť majúca sídlo v jednom zmluvnom štáte dosahuje zisky alebo príjmy z druhého zmluvného štátu, nemôže tento druhý štát zdaniť dividendy vyplácané touto spoločnosťou osobám majúcim bydlisko alebo sídlo v prvom štáte, ani podrobiť nerozdelené zisky spoločnosti dani z nerozdelených ziskov, aj keď vyplácané dividendy alebo nerozdelené zisky úplne alebo čiastočne pozostávajú zo ziskov alebo z príjmov docielených v tomto druhom štáte.",
+      "source_id": "SK-SLOVLEX-28C35E6F037CE388",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/1981/30/vyhlasene_znenie.html",
+      "source_excerpt_hash": "d1c295d3e4192d22dd47913dfb3ee9cc9f777a64cc57f8329357bbbf73cf2b3f",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-28C35E6F037CE388"
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true
+    },
+    {
       "rule_id": "SK-CY-MLI-GATE-INTEREST-A7",
       "income_type": "interest",
       "source_country": "SK",
@@ -79,6 +161,88 @@
       "source_id": "SK-SLOVLEX-28C35E6F037CE388",
       "source_url": "https://static.slov-lex.sk/static/SK/ZZ/1981/30/vyhlasene_znenie.html",
       "source_excerpt_hash": "b6cc00c59012307fd4dc5a8bfca2955304b062bbe5c093f164f122547e7e88f8",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-28C35E6F037CE388"
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true
+    },
+    {
+      "rule_id": "SK-CY-MLI-GATE-ROYALTY-A7",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "CY",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "7",
+      "paragraph": null,
+      "rate": null,
+      "priority": 57,
+      "conditions": [
+        {
+          "fact": "treaty_ppt_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2021-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-CY: notice 81/2020; result-changing articles ['7']; WHT effective date(s) ['2021-01-01']. Gate: MLI Article 7 principal purpose test.",
+      "source_id": "SK-MLI-81-2020",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2020/81/vyhlasene_znenie.html",
+      "source_excerpt_hash": "a1b49c6dfabd862dc6b7c30481aa20f7d44044da00987ef049a04d661cf0f0c4",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-MLI-81-2020"
+      ]
+    },
+    {
+      "rule_id": "SK-CY-ROYALTY-TREATY-UNRESOLVED-FAIL-CLOSED",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "CY",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "12",
+      "paragraph": null,
+      "rate": null,
+      "priority": 900,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "rate",
+      "effective_from": "1980-12-30",
+      "verification_status": "needs_review",
+      "source_text": "Článok 12 Licenčné poplatky 1. Licenčné poplatky majúce zdroj v jednom zmluvnom štáte a platené osobe, ktorá má bydlisko alebo sídlo v druhom zmluvnom štáte, sa môžu zdaniť v tomto druhom štáte. 2. Licenčné poplatky uvedené v odseku 3 písm. a) sa však môžu zdaniť v zmluvnom štáte, v ktorom je ich zdroj, a to podľa práva tohto štátu. Daň takto uložená však nesmie presiahnuť 5 % hrubej sumy licenčných poplatkov. Príslušné úrady zmluvných štátov dohodou upravia spôsob aplikácie tohto obmedzenia. 3. Výraz „licenčné poplatky“ použitý v tomto článku označuje platby akéhokoľvek druhu platené za použitie alebo za právo na použitie a) akéhokoľvek patentu, ochrannej známky, vzoru alebo modelu, plánu, tajného vzorca alebo postupu alebo priemyselného, obchodného alebo vedeckého zariadenia a za informácie, ktoré sa vzťahujú na skúsenosti získané v priemyselnej, obchodnej alebo vedeckej oblasti; b) akéhokoľvek autorského práva k literárnemu, umeleckému alebo vedeckému dielu včítane kinematografických filmov a filmov alebo pások pre televízne alebo rozhlasové vysielania. 4. Ustanovenia odsekov 1 a 2 sa nepoužijú, ak príjemca licenčných poplatkov majúci bydlisko alebo sídlo v jednom zmluvnom štáte vykonáva v druhom zmluvnom štáte, v ktorom majú licenčné poplatky zdroj, priemyselnú alebo obchodnú činnosť prostredníctvom stálej prevádzkárne, ktorá je tam umiestnená, alebo vykonáva v tomto druhom štáte slobodné povolanie pomocou stálej základne tam umiestnenej a ak právo alebo majetok, pre ktoré sa licenčné poplatky platia, sú skutočne spojené s takou stálou prevádzkárňou alebo stálou základňou. V takom prípade sa použijú ustanovenia článku 7 alebo článku 14 podľa toho, o aký prípad ide. 5. Predpokladá sa, že licenčné poplatky majú zdroj v jednom zmluvnom štáte, ak platiteľom je tento zmluvný štát sám, nižší správny útvar alebo miestny úrad tohto zmluvného štátu alebo osoba majúca bydlisko alebo sídlo v tomto zmluvnom štáte. Ak však osoba, ktorá platí licenčné poplatky, či už má alebo nemá bydlisko alebo sídlo v niektorom zmluvnom štáte, má v jednom zmluvnom štáte stálu prevádzkáreň, v spojení s ktorou vznikol záväzok platiť licenčné poplatky, a táto stála prevádzkáreň znáša na svoju ťarchu tieto licenčné poplatky, predpokladá sa, že tieto licenčné poplatky majú zdroj v tom zmluvnom štáte, v ktorom je stála prevádzkáreň umiestnená. 6. Ak suma platených licenčných poplatkov, posudzované so zreteľom na používanie, právo alebo informáciu, za ktoré sa platia, presahuje v dôsledku osobitných vzťahov existujúcich medzi platiteľom a príjemcom alebo medzi oboma a treťou osobou sumu, ktorú by bol dojednal platiteľ s príjemcom, keby nebolo takých vzťahov, použijú sa ustanovenia tohto článku len na túto poslednú sumu. Časť platby, ktorá ju presahuje, zostane v tomto prípade podrobená zdaneniu podľa práva každého zmluvného štátu a s prihliadnutím na iné ustanovenia tejto Zmluvy.",
+      "source_id": "SK-SLOVLEX-28C35E6F037CE388",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/1981/30/vyhlasene_znenie.html",
+      "source_excerpt_hash": "bc4c42d3532d44eeb993c01b2b8e5a21be6e9275ea3a1257acf0e3a38b4b39b8",
       "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
       "reviewer_id": "sk_legal_review_coverage",
       "reviewed_at": "2026-08-21",

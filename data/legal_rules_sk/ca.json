@@ -431,6 +431,143 @@
       "final_rate_allowed": false,
       "automatic_production_approval_forbidden": true,
       "tax_treatment": "exclusive_foreign_taxation"
+    },
+    {
+      "rule_id": "SK-CA-MLI-GATE-ROYALTY-A4",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "CA",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "4",
+      "paragraph": null,
+      "rate": null,
+      "priority": 54,
+      "conditions": [
+        {
+          "fact": "mli_article_4_dual_resident_entitlement_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2020-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-CA: notice 482/2019; result-changing articles ['4', '7', '8']; WHT effective date(s) ['2020-01-01']. Gate: MLI Article 4 dual-resident entity entitlement.",
+      "source_id": "SK-MLI-482-2019",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2019/482/vyhlasene_znenie.html",
+      "source_excerpt_hash": "f03009be640202e7299b46a5a0b490cbf595ecfb71582f9c1b9997e3e889c875",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-MLI-482-2019"
+      ]
+    },
+    {
+      "rule_id": "SK-CA-MLI-GATE-ROYALTY-A7",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "CA",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "7",
+      "paragraph": null,
+      "rate": null,
+      "priority": 57,
+      "conditions": [
+        {
+          "fact": "treaty_ppt_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2020-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-CA: notice 482/2019; result-changing articles ['4', '7', '8']; WHT effective date(s) ['2020-01-01']. Gate: MLI Article 7 principal purpose test.",
+      "source_id": "SK-MLI-482-2019",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2019/482/vyhlasene_znenie.html",
+      "source_excerpt_hash": "d0dc0884683187fcfc90ddbcb6a4176350eef898a027c2ca56371c7129367a6a",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-MLI-482-2019"
+      ]
+    },
+    {
+      "rule_id": "SK-CA-ROYALTY-TREATY-UNRESOLVED-FAIL-CLOSED",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "CA",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "12",
+      "paragraph": null,
+      "rate": null,
+      "priority": 900,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "effect": "rate",
+      "effective_from": "2001-12-18",
+      "verification_status": "needs_review",
+      "source_text": "Článok 12 Licenčné poplatky 1. Licenčné poplatky majúce zdroj v jednom zmluvnom štáte a vyplácané rezidentovi druhého zmluvného štátu sa môžu zdaniť v tomto druhom štáte. 2. Tieto licenčné poplatky sa však môžu zdaniť aj v zmluvnom štáte, v ktorom majú zdroj, a to podľa právnych predpisov tohto štátu, ak je však skutočný vlastník licenčných poplatkov rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne 10 % z hrubej sumy licenčných poplatkov. 3. Bez ohľadu na ustanovenia odseku 2 licenčné poplatky za autorské práva a iné podobné platby súvisiace s uvedením alebo znovuuvedením akéhokoľvek literárneho, dramatického, hudobného alebo iného umeleckého diela (ale nezahŕňajúce licenčné poplatky súvisiace s hranými filmami ani licenčné poplatky súvisiace s prácou na filme alebo videopáske alebo iných prostriedkoch reprodukcie pre použitie v súvislosti s televíznym vysielaním), majúce zdroj v jednom zmluvnom štáte a vyplácané rezidentovi druhého zmluvného štátu, ktorý je skutočným vlastníkom licenčných poplatkov, podliehajú zdaneniu len v tomto druhom štáte. 4. Pojem „licenčné poplatky“ použitý v tomto článku označuje platby akéhokoľvek druhu prijaté ako odplata za použitie alebo za právo na použitie akéhokoľvek autorského práva, patentu, ochrannej známky, návrhu alebo modelu, plánu, tajného vzorca alebo výrobného postupu alebo iného nehmotného majetku alebo za použitie alebo za právo na použitie priemyselného, obchodného alebo vedeckého zariadenia alebo za informácie, ktoré sa vzťahujú na priemyselné, obchodné alebo vedecké skúsenosti, a zahŕňa platby akéhokoľvek druhu súvisiace s hranými filmami a s prácou na filme, videopáske alebo iných prostriedkoch reprodukcie používaných v súvislosti s televíziou. 5. Ustanovenia odsekov 1, 2 a 3 sa neuplatnia, ak skutočný vlastník licenčných poplatkov, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, v ktorom majú licenčné poplatky zdroj, podnikateľskú činnosť prostredníctvom stálej prevádzkarne, ktorá sa tam nachádza, alebo vykonáva v tomto druhom štáte nezávislé osobné činnosti zo stálej základne, ktorá sa tam nachádza, a ak právo alebo majetok, za ktorý sa platia licenčné poplatky, sa skutočne viažu na túto stálu prevádzkareň alebo na stálu základňu. V takom prípade sa uplatnia ustanovenia článku 7 alebo článku 14 podľa toho, o aký prípad ide. 6. Predpokladá sa, že licenčné poplatky majú zdroj v zmluvnom štáte, ak je platiteľ rezidentom tohto štátu. Ak však osoba platiaca licenčné poplatky bez ohľadu na to, či je alebo nie je rezidentom niektorého zmluvného štátu má v niektorom zmluvnom štáte stálu prevádzkareň alebo stálu základňu, v súvislosti s ktorou vznikla povinnosť platiť licenčné poplatky, ktoré idú na ťarchu tejto stálej prevádzkarne alebo stálej základne, potom sa predpokladá, že tieto licenčné poplatky majú zdroj v tom štáte, v ktorom sa stála prevádzkareň alebo stála základňa nachádza. 7. Ak v dôsledku osobitných vzťahov existujúcich medzi platiteľom a skutočným vlastníkom licenčných poplatkov alebo medzi nimi a treťou osobou suma licenčných poplatkov vzťahujúca sa na použitie, na právo alebo na informácie, za ktoré sa platia, presahuje sumu, ktorú by bol dohodol platiteľ so skutočným vlastníkom, keby takéto vzťahy neexistovali, uplatnia sa ustanovenia tohto článku len na túto naposledy uvedenú sumu. Časť platieb presahujúca túto sumu sa v tomto prípade zdaní podľa právnych predpisov každého zmluvného štátu s prihliadnutím na ostatné ustanovenia tejto dohody.",
+      "source_id": "SK-SLOVLEX-E6979FD8ADEC78D8",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2007/96/vyhlasene_znenie.html",
+      "source_excerpt_hash": "d88e970f59fe9675c9fcf363175ad99ecc03ff1dfd11f8f81bd3cf3ea08636bb",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-E6979FD8ADEC78D8"
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true
     }
   ]
 }
