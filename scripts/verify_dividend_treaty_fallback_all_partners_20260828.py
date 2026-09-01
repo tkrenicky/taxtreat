@@ -34,13 +34,26 @@ def satisfying_value(operator, value):
     raise AssertionError(f"unsupported operator {operator!r}")
 
 
-def complete_treaty_facts(country, treaty_rules):
-    """Populate every fact used by any treaty-rate branch.
+def _condition_target(condition, facts, legal, determinations):
+    return (
+        legal
+        if condition.fact_source == "legal"
+        else determinations
+        if condition.fact_source == "determination"
+        else facts
+    )
 
-    This mirrors a fully completed UI transaction: lower treaty branches must
-    be either satisfied or explicitly failed, never left unresolved. Domestic
-    exemption-only facts are deliberately omitted so the test isolates the
-    treaty fallback rule.
+
+def complete_treaty_facts(country, treaty_rules, relief_rules):
+    """Populate all treaty facts while explicitly making EU relief inapplicable.
+
+    This mirrors a fully completed UI transaction. Treaty branches must be
+    either satisfied or explicitly failed, never left unresolved. For EU
+    countries, treaty ownership facts can also make the domestic/EU relief
+    layer potentially applicable; leaving its remaining facts blank would
+    correctly trigger fail-closed REVIEW_REQUIRED and would no longer isolate
+    the treaty fallback. Therefore every relief fact is completed and boolean
+    eligibility conditions are explicitly failed.
     """
     facts = {
         "income_type": "dividend",
@@ -54,22 +67,31 @@ def complete_treaty_facts(country, treaty_rules):
     }
     legal = {}
     determinations = {}
+
     for rule in treaty_rules:
         for condition in rule.conditions:
             if condition.fact in RULE_CONTROL_FACTS:
                 continue
-            target = (
-                legal
-                if condition.fact_source == "legal"
-                else determinations
-                if condition.fact_source == "determination"
-                else facts
-            )
+            target = _condition_target(condition, facts, legal, determinations)
             if condition.fact not in target:
                 target[condition.fact] = satisfying_value(
                     condition.operator,
                     condition.value,
                 )
+
+    for rule in relief_rules:
+        for condition in rule.conditions:
+            if condition.fact in RULE_CONTROL_FACTS:
+                continue
+            target = _condition_target(condition, facts, legal, determinations)
+            if condition.fact not in target:
+                target[condition.fact] = satisfying_value(
+                    condition.operator,
+                    condition.value,
+                )
+            if condition.operator == "==" and isinstance(condition.value, bool):
+                target[condition.fact] = not condition.value
+
     return facts, legal, determinations
 
 
@@ -101,7 +123,7 @@ def main() -> int:
             continue
 
         country = treaty[0].recipient_country
-        facts, legal, determinations = complete_treaty_facts(country, treaty)
+        facts, legal, determinations = complete_treaty_facts(country, treaty, relief)
 
         result = evaluate_layered_rules(
             dividend,
