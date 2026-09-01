@@ -5,6 +5,364 @@
   },
   "rules": [
     {
+      "rule_id": "SK-BA-MLI-GATE-DIVIDEND-A7",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "BA",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "7",
+      "paragraph": null,
+      "rate": null,
+      "priority": 57,
+      "conditions": [
+        {
+          "fact": "treaty_ppt_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2021-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-BA: notice 327/2020; result-changing articles ['12', '15', '7']; WHT effective date(s) ['2021-01-01']. Gate: MLI Article 7 principal purpose test.",
+      "source_id": "SK-MLI-327-2020",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2020/327/vyhlasene_znenie.html",
+      "source_excerpt_hash": "ed23f6d93a80b0b5c51403bfc9c21dc01e277e299d3421db97b172514dd4a579",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "evidence_source_ids": [
+        "SK-MLI-327-2020"
+      ]
+    },
+    {
+      "rule_id": "SK-BA-MLI-GATE-DIVIDEND-A7",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "BA",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "7",
+      "paragraph": null,
+      "rate": null,
+      "priority": 57,
+      "conditions": [
+        {
+          "fact": "treaty_ppt_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2021-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-BA: notice 327/2020; result-changing articles ['12', '15', '7']; WHT effective date(s) ['2021-01-01']. Gate: MLI Article 7 principal purpose test.",
+      "source_id": "SK-MLI-327-2020",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2020/327/vyhlasene_znenie.html",
+      "source_excerpt_hash": "ed23f6d93a80b0b5c51403bfc9c21dc01e277e299d3421db97b172514dd4a579",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "evidence_source_ids": [
+        "SK-MLI-327-2020"
+      ]
+    },
+    {
+      "rule_id": "SK-BA-MLI-GATE-DIVIDEND-A12",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "BA",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "12",
+      "paragraph": null,
+      "rate": null,
+      "priority": 62,
+      "conditions": [
+        {
+          "fact": "mli_article_12_dependent_agent_pe_status_resolved",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2021-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-BA: notice 327/2020; result-changing articles ['12', '15', '7']; WHT effective date(s) ['2021-01-01']. Gate: MLI Article 12 dependent-agent PE modification.",
+      "source_id": "SK-MLI-327-2020",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2020/327/vyhlasene_znenie.html",
+      "source_excerpt_hash": "51d2f17b1b018c22f7a9f8d18120c2ae6aab0e2ddfa237943f3efec19215a3a5",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "evidence_source_ids": [
+        "SK-MLI-327-2020"
+      ]
+    },
+    {
+      "rule_id": "SK-BA-MLI-GATE-DIVIDEND-A12",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "BA",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "12",
+      "paragraph": null,
+      "rate": null,
+      "priority": 62,
+      "conditions": [
+        {
+          "fact": "mli_article_12_dependent_agent_pe_status_resolved",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2021-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-BA: notice 327/2020; result-changing articles ['12', '15', '7']; WHT effective date(s) ['2021-01-01']. Gate: MLI Article 12 dependent-agent PE modification.",
+      "source_id": "SK-MLI-327-2020",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2020/327/vyhlasene_znenie.html",
+      "source_excerpt_hash": "51d2f17b1b018c22f7a9f8d18120c2ae6aab0e2ddfa237943f3efec19215a3a5",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "evidence_source_ids": [
+        "SK-MLI-327-2020"
+      ]
+    },
+    {
+      "rule_id": "SK-BA-MLI-GATE-DIVIDEND-A15",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "BA",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "15",
+      "paragraph": null,
+      "rate": null,
+      "priority": 65,
+      "conditions": [
+        {
+          "fact": "mli_article_15_closely_related_enterprise_status_resolved",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2021-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-BA: notice 327/2020; result-changing articles ['12', '15', '7']; WHT effective date(s) ['2021-01-01']. Gate: MLI Article 15 closely-related-enterprise definition.",
+      "source_id": "SK-MLI-327-2020",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2020/327/vyhlasene_znenie.html",
+      "source_excerpt_hash": "be5b033ef8b5bb6b66cf4d144cbd58467afeab240420c0fc1e97639b2647095f",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "evidence_source_ids": [
+        "SK-MLI-327-2020"
+      ]
+    },
+    {
+      "rule_id": "SK-BA-MLI-GATE-DIVIDEND-A15",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "BA",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "15",
+      "paragraph": null,
+      "rate": null,
+      "priority": 65,
+      "conditions": [
+        {
+          "fact": "mli_article_15_closely_related_enterprise_status_resolved",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2021-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-BA: notice 327/2020; result-changing articles ['12', '15', '7']; WHT effective date(s) ['2021-01-01']. Gate: MLI Article 15 closely-related-enterprise definition.",
+      "source_id": "SK-MLI-327-2020",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2020/327/vyhlasene_znenie.html",
+      "source_excerpt_hash": "be5b033ef8b5bb6b66cf4d144cbd58467afeab240420c0fc1e97639b2647095f",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "evidence_source_ids": [
+        "SK-MLI-327-2020"
+      ]
+    },
+    {
+      "rule_id": "SK-BA-DIVIDEND-TREATY-DIVIDEND-BRANCH-2",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "BA",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "10",
+      "paragraph": null,
+      "rate": 15.0,
+      "priority": 600,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "rate",
+      "effective_from": "1983-04-17",
+      "verification_status": "needs_review",
+      "source_text": "Článok 10 Dividendy 1. Dividendy vyplácané spoločnosťou, ktorá má sídlo v jednom zmluvnom štáte, osobe majúcej bydlisko alebo sídlo v druhom zmluvnom štáte, môžu sa zdaniť v tomto druhom štáte. 2. Tieto dividendy sa však môžu tiež zdaniť v zmluvnom štáte, v ktorom má sídlo spoločnosť, ktorá ich vypláca, a to podľa práva tohto štátu. Takto uložená daň však nepresiahne: a) 5 % hrubej sumy dividend, ak príjemcom je spoločnosť (iná než osobná spoločnosť), ktorá vlastní priamo najmenej 25 % kapitálu spoločnosti vyplácajúcej dividendy; b) 15 % hrubej sumy dividend vo všetkých iných prípadoch. Ustanovenia tohto odseku sa nedotknú zdanenia ziskov spoločnosti, z ktorých sa dividendy vyplácajú. 3. Výraz „dividendy\" použitý v tomto článku označuje príjmy z účastín alebo iných práv, s výnimkou pohľadávok s účasťou na zisku, práve tak ako príjmy z iných spoločenských práv, ktoré sú podrobené rovnakému zdaneniu ako príjmy z účastín podľa daňového práva štátu, v ktorom má sídlo spoločnosť vyplácajúca dividendy. 4. Ustanovenia odsekov 1 a 2 tohto článku sa nepoužijú, ak príjemca dividend majúci bydlisko alebo sídlo v jednom zmluvnom štáte vykonáva v druhom zmluvnom štáte, v ktorom má sídlo spoločnosť vyplácajúca dividendy, priemyselnú alebo obchodnú činnosť prostredníctvom stálej prevádzkárne, ktorá je tam umiestnená, alebo poskytuje v tomto druhom štáte osobné služby ako nezávislé povolanie pomocou stálej základne tam umiestnenej a ak účasť, na základe ktorej sa dividendy vyplácajú, je skutočne spojená s takou stálou prevádzkárňou alebo stálou základňou. V takom prípade sa použijú ustanovenia článku 7 alebo článku 14 tejto Zmluvy podľa toho, o aký prípad ide. 5. Ak spoločnosť majúca sídlo v jednom zmluvnom štáte dosahuje zisky alebo príjmy z druhého zmluvného štátu, nemôže tento druhý štát zdaniť dividendy vyplácané touto spoločnosťou s výnimkou prípadov, keď sa také dividendy vyplácajú osobe majúcej bydlisko alebo sídlo v tomto druhom štáte alebo keď účasť, na základe ktorej sa dividendy vyplácajú, je skutočne spojená so stálou prevádzkárňou alebo so stálou základňou umiestnenou v tomto druhom štáte, ani podrobiť nerozdelené zisky spoločnosti dani z nerozdelených ziskov, aj keď vyplatené dividendy alebo nerozdelené zisky pozostávajú úplne alebo čiastočne zo ziskov alebo z príjmov vzniknutých v tomto druhom štáte.",
+      "source_id": "SK-SLOVLEX-F3A233AB78071897",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/1983/99/vyhlasene_znenie.html",
+      "source_excerpt_hash": "97a2889d3a973d671daa9feef3b31b3f976b73502968549a2192a3e909968562",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-F3A233AB78071897"
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true
+    },
+    {
+      "rule_id": "SK-BA-DIVIDEND-TREATY-DIVIDEND-BRANCH-1",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "BA",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "10",
+      "paragraph": null,
+      "rate": 5.0,
+      "priority": 650,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_entity_type",
+          "fact_source": "transaction",
+          "operator": "in",
+          "value": [
+            "company",
+            "corporate",
+            "company_other_than_partnership"
+          ]
+        },
+        {
+          "fact": "direct_ownership",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "ownership_percent",
+          "fact_source": "transaction",
+          "operator": ">=",
+          "value": 25.0
+        }
+      ],
+      "effect": "rate",
+      "effective_from": "1983-04-17",
+      "verification_status": "needs_review",
+      "source_text": "Článok 10 Dividendy 1. Dividendy vyplácané spoločnosťou, ktorá má sídlo v jednom zmluvnom štáte, osobe majúcej bydlisko alebo sídlo v druhom zmluvnom štáte, môžu sa zdaniť v tomto druhom štáte. 2. Tieto dividendy sa však môžu tiež zdaniť v zmluvnom štáte, v ktorom má sídlo spoločnosť, ktorá ich vypláca, a to podľa práva tohto štátu. Takto uložená daň však nepresiahne: a) 5 % hrubej sumy dividend, ak príjemcom je spoločnosť (iná než osobná spoločnosť), ktorá vlastní priamo najmenej 25 % kapitálu spoločnosti vyplácajúcej dividendy; b) 15 % hrubej sumy dividend vo všetkých iných prípadoch. Ustanovenia tohto odseku sa nedotknú zdanenia ziskov spoločnosti, z ktorých sa dividendy vyplácajú. 3. Výraz „dividendy\" použitý v tomto článku označuje príjmy z účastín alebo iných práv, s výnimkou pohľadávok s účasťou na zisku, práve tak ako príjmy z iných spoločenských práv, ktoré sú podrobené rovnakému zdaneniu ako príjmy z účastín podľa daňového práva štátu, v ktorom má sídlo spoločnosť vyplácajúca dividendy. 4. Ustanovenia odsekov 1 a 2 tohto článku sa nepoužijú, ak príjemca dividend majúci bydlisko alebo sídlo v jednom zmluvnom štáte vykonáva v druhom zmluvnom štáte, v ktorom má sídlo spoločnosť vyplácajúca dividendy, priemyselnú alebo obchodnú činnosť prostredníctvom stálej prevádzkárne, ktorá je tam umiestnená, alebo poskytuje v tomto druhom štáte osobné služby ako nezávislé povolanie pomocou stálej základne tam umiestnenej a ak účasť, na základe ktorej sa dividendy vyplácajú, je skutočne spojená s takou stálou prevádzkárňou alebo stálou základňou. V takom prípade sa použijú ustanovenia článku 7 alebo článku 14 tejto Zmluvy podľa toho, o aký prípad ide. 5. Ak spoločnosť majúca sídlo v jednom zmluvnom štáte dosahuje zisky alebo príjmy z druhého zmluvného štátu, nemôže tento druhý štát zdaniť dividendy vyplácané touto spoločnosťou s výnimkou prípadov, keď sa také dividendy vyplácajú osobe majúcej bydlisko alebo sídlo v tomto druhom štáte alebo keď účasť, na základe ktorej sa dividendy vyplácajú, je skutočne spojená so stálou prevádzkárňou alebo so stálou základňou umiestnenou v tomto druhom štáte, ani podrobiť nerozdelené zisky spoločnosti dani z nerozdelených ziskov, aj keď vyplatené dividendy alebo nerozdelené zisky pozostávajú úplne alebo čiastočne zo ziskov alebo z príjmov vzniknutých v tomto druhom štáte.",
+      "source_id": "SK-SLOVLEX-F3A233AB78071897",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/1983/99/vyhlasene_znenie.html",
+      "source_excerpt_hash": "97a2889d3a973d671daa9feef3b31b3f976b73502968549a2192a3e909968562",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-F3A233AB78071897"
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true
+    },
+    {
       "rule_id": "SK-BA-MLI-GATE-INTEREST-A7",
       "income_type": "interest",
       "source_country": "SK",
@@ -42,7 +400,7 @@
       "approved_at": "2026-08-21",
       "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
       "approval_created_at": "2026-08-21",
-      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
       "evidence_source_ids": [
         "SK-MLI-327-2020"
       ]
@@ -85,7 +443,7 @@
       "approved_at": "2026-08-21",
       "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
       "approval_created_at": "2026-08-21",
-      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
       "evidence_source_ids": [
         "SK-MLI-327-2020"
       ]
@@ -128,7 +486,7 @@
       "approved_at": "2026-08-21",
       "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
       "approval_created_at": "2026-08-21",
-      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
       "evidence_source_ids": [
         "SK-MLI-327-2020"
       ]
@@ -153,7 +511,6 @@
         }
       ],
       "effect": "rate",
-      "tax_treatment": "exclusive_foreign_taxation",
       "effective_from": "1983-04-17",
       "verification_status": "needs_review",
       "source_text": "Článok 11 Úroky 1. Úroky majúce zdroj v jednom zmluvnom štáte a platené osobe majúcej bydlisko alebo sídlo v druhom zmluvnom štáte môžu sa zdaniť iba v tomto druhom štáte. 2. Výraz „úroky\" použitý v tomto článku označuje príjmy z verejných dlhopisov a obligácií zabezpečených aj nezabezpečených záložným právom na nehnuteľnosti, poskytujúcich aj neposkytujúcich právo na účasť na zisku, z pohľadávok akéhokoľvek druhu a všetky iné príjmy postavené na roveň príjmom z pôžičiek daňovým právom štátu, v ktorom majú tieto príjmy zdroj. 3. Ustanovenie odseku 1 tohto článku sa nepoužije, ak príjemca úrokov, ktorý má bydlisko alebo sídlo v jednom zmluvnom štáte, vykonáva v druhom zmluvnom štáte, v ktorom majú úroky zdroj, priemyselnú alebo obchodnú činnosť prostredníctvom stálej prevádzkárne, ktorá je tam umiestnená, alebo poskytuje v tomto druhom štáte osobné služby ako nezávislé povolanie pomocou stálej základne tam umiestnenej a ak pohľadávka, z ktorej sa úroky platia, je skutočne spojená s takou stálou prevádzkárňou alebo stálou základňou. V takom prípade sa použijú ustanovenia článku 7 alebo článku 14 podľa toho, o aký prípad ide. 4. Predpokladá sa, že úroky majú zdroj v jednom zmluvnom štáte, ak platiteľom je tento štát sám, nižší správny útvar alebo miestny úrad tohto štátu alebo osoba majúca v tomto štáte bydlisko alebo sídlo. 5. Bez ohľadu na ustanovenie odseku 3 tohto článku sa predpokladá, že úroky majú zdroj v zmluvnom štáte, v ktorom má platiteľ úrokov stálu prevádzkáreň alebo stálu základňu, s ktorou je skutočne spojená pôžička, z ktorej sa úroky platia a ktorá znáša úroky na svoju ťarchu, či už platiteľ úrokov má, alebo nemá bydlisko alebo sídlo v tomto zmluvnom štáte. 6. Ak suma platených úrokov, posudzované so zreteľom na pohľadávku, z ktorej sa platia, presahuje v dôsledku osobitných vzťahov existujúcich medzi platiteľom a príjemcom alebo medzi oboma a treťou osobou sumu, ktorú by bol dojednal platiteľ s príjemcom, keby také vzťahy neboli, použijú sa ustanovenia tohto článku len na túto poslednú sumu. Časť platby, ktorá ju presahuje zostane v tomto prípade podrobená zdaneniu podľa práva každého zmluvného štátu a s prihliadnutím na iné ustanovenia tejto Zmluvy.",
@@ -164,11 +521,15 @@
       "reviewer_id": "sk_legal_review_coverage",
       "reviewed_at": "2026-08-21",
       "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
-      "approval_created_at": "2026-08-31",
-      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
       "evidence_source_ids": [
         "SK-SLOVLEX-F3A233AB78071897"
-      ]
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true,
+      "tax_treatment": "exclusive_foreign_taxation"
     },
     {
       "rule_id": "SK-BA-MLI-GATE-ROYALTY-A7",
@@ -208,7 +569,7 @@
       "approved_at": "2026-08-21",
       "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
       "approval_created_at": "2026-08-21",
-      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
       "evidence_source_ids": [
         "SK-MLI-327-2020"
       ]
@@ -251,7 +612,7 @@
       "approved_at": "2026-08-21",
       "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
       "approval_created_at": "2026-08-21",
-      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
       "evidence_source_ids": [
         "SK-MLI-327-2020"
       ]
@@ -294,7 +655,7 @@
       "approved_at": "2026-08-21",
       "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
       "approval_created_at": "2026-08-21",
-      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
       "evidence_source_ids": [
         "SK-MLI-327-2020"
       ]
@@ -329,11 +690,14 @@
       "reviewer_id": "sk_legal_review_coverage",
       "reviewed_at": "2026-08-21",
       "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
-      "approval_created_at": "2026-08-31",
-      "dataset_release": "sk-structured-treaty-rules-2026-08-31.1",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
       "evidence_source_ids": [
         "SK-SLOVLEX-F3A233AB78071897"
-      ]
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true
     }
   ]
 }

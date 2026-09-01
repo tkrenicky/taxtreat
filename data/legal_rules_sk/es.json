@@ -1,0 +1,933 @@
+{
+  "country_pair": {
+    "source_country": "SK",
+    "recipient_country": "ES"
+  },
+  "rules": [
+    {
+      "rule_id": "SK-ES-MLI-GATE-DIVIDEND-A3",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "ES",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "3",
+      "paragraph": null,
+      "rate": null,
+      "priority": 53,
+      "conditions": [
+        {
+          "fact": "mli_article_3_transparent_entity_entitlement_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2023-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-ES: notice 238/2022; result-changing articles ['10', '12', '13', '15', '3', '7', '8']; WHT effective date(s) ['2023-01-01']. Gate: MLI Article 3 transparent-entity entitlement.",
+      "source_id": "SK-MLI-238-2022",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2022/238/vyhlasene_znenie.html",
+      "source_excerpt_hash": "ff9af96f931535dd6d1ec39ee7768fc8d9f4233b69d6730f6fc08054b7a1ff2c",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "evidence_source_ids": [
+        "SK-MLI-238-2022"
+      ]
+    },
+    {
+      "rule_id": "SK-ES-MLI-GATE-DIVIDEND-A3",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "ES",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "3",
+      "paragraph": null,
+      "rate": null,
+      "priority": 53,
+      "conditions": [
+        {
+          "fact": "mli_article_3_transparent_entity_entitlement_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2023-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-ES: notice 238/2022; result-changing articles ['10', '12', '13', '15', '3', '7', '8']; WHT effective date(s) ['2023-01-01']. Gate: MLI Article 3 transparent-entity entitlement.",
+      "source_id": "SK-MLI-238-2022",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2022/238/vyhlasene_znenie.html",
+      "source_excerpt_hash": "ff9af96f931535dd6d1ec39ee7768fc8d9f4233b69d6730f6fc08054b7a1ff2c",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "evidence_source_ids": [
+        "SK-MLI-238-2022"
+      ]
+    },
+    {
+      "rule_id": "SK-ES-MLI-GATE-DIVIDEND-A7",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "ES",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "7",
+      "paragraph": null,
+      "rate": null,
+      "priority": 57,
+      "conditions": [
+        {
+          "fact": "treaty_ppt_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2023-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-ES: notice 238/2022; result-changing articles ['10', '12', '13', '15', '3', '7', '8']; WHT effective date(s) ['2023-01-01']. Gate: MLI Article 7 principal purpose test.",
+      "source_id": "SK-MLI-238-2022",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2022/238/vyhlasene_znenie.html",
+      "source_excerpt_hash": "5e5bb9997b0106190c1ad3ee10a3b9900a7df901601a79294a8a7a857f478049",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "evidence_source_ids": [
+        "SK-MLI-238-2022"
+      ]
+    },
+    {
+      "rule_id": "SK-ES-MLI-GATE-DIVIDEND-A7",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "ES",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "7",
+      "paragraph": null,
+      "rate": null,
+      "priority": 57,
+      "conditions": [
+        {
+          "fact": "treaty_ppt_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2023-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-ES: notice 238/2022; result-changing articles ['10', '12', '13', '15', '3', '7', '8']; WHT effective date(s) ['2023-01-01']. Gate: MLI Article 7 principal purpose test.",
+      "source_id": "SK-MLI-238-2022",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2022/238/vyhlasene_znenie.html",
+      "source_excerpt_hash": "5e5bb9997b0106190c1ad3ee10a3b9900a7df901601a79294a8a7a857f478049",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "evidence_source_ids": [
+        "SK-MLI-238-2022"
+      ]
+    },
+    {
+      "rule_id": "SK-ES-MLI-GATE-DIVIDEND-A10",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "ES",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "10",
+      "paragraph": null,
+      "rate": null,
+      "priority": 60,
+      "conditions": [
+        {
+          "fact": "mli_article_10_third_jurisdiction_pe_test_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2023-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-ES: notice 238/2022; result-changing articles ['10', '12', '13', '15', '3', '7', '8']; WHT effective date(s) ['2023-01-01']. Gate: MLI Article 10 third-jurisdiction PE anti-abuse test.",
+      "source_id": "SK-MLI-238-2022",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2022/238/vyhlasene_znenie.html",
+      "source_excerpt_hash": "4bd842424a775d04a7bdecd3c1a35286fcfe8871c49a037186b253a71a4546f5",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "evidence_source_ids": [
+        "SK-MLI-238-2022"
+      ]
+    },
+    {
+      "rule_id": "SK-ES-MLI-GATE-DIVIDEND-A10",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "ES",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "10",
+      "paragraph": null,
+      "rate": null,
+      "priority": 60,
+      "conditions": [
+        {
+          "fact": "mli_article_10_third_jurisdiction_pe_test_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2023-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-ES: notice 238/2022; result-changing articles ['10', '12', '13', '15', '3', '7', '8']; WHT effective date(s) ['2023-01-01']. Gate: MLI Article 10 third-jurisdiction PE anti-abuse test.",
+      "source_id": "SK-MLI-238-2022",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2022/238/vyhlasene_znenie.html",
+      "source_excerpt_hash": "4bd842424a775d04a7bdecd3c1a35286fcfe8871c49a037186b253a71a4546f5",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "evidence_source_ids": [
+        "SK-MLI-238-2022"
+      ]
+    },
+    {
+      "rule_id": "SK-ES-MLI-GATE-DIVIDEND-A12",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "ES",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "12",
+      "paragraph": null,
+      "rate": null,
+      "priority": 62,
+      "conditions": [
+        {
+          "fact": "mli_article_12_dependent_agent_pe_status_resolved",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2023-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-ES: notice 238/2022; result-changing articles ['10', '12', '13', '15', '3', '7', '8']; WHT effective date(s) ['2023-01-01']. Gate: MLI Article 12 dependent-agent PE modification.",
+      "source_id": "SK-MLI-238-2022",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2022/238/vyhlasene_znenie.html",
+      "source_excerpt_hash": "d8186afc0130a3265112d5bf87574342cdf3d5b6d27812dbcfac9cb47e141e26",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "evidence_source_ids": [
+        "SK-MLI-238-2022"
+      ]
+    },
+    {
+      "rule_id": "SK-ES-MLI-GATE-DIVIDEND-A12",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "ES",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "12",
+      "paragraph": null,
+      "rate": null,
+      "priority": 62,
+      "conditions": [
+        {
+          "fact": "mli_article_12_dependent_agent_pe_status_resolved",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2023-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-ES: notice 238/2022; result-changing articles ['10', '12', '13', '15', '3', '7', '8']; WHT effective date(s) ['2023-01-01']. Gate: MLI Article 12 dependent-agent PE modification.",
+      "source_id": "SK-MLI-238-2022",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2022/238/vyhlasene_znenie.html",
+      "source_excerpt_hash": "d8186afc0130a3265112d5bf87574342cdf3d5b6d27812dbcfac9cb47e141e26",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "evidence_source_ids": [
+        "SK-MLI-238-2022"
+      ]
+    },
+    {
+      "rule_id": "SK-ES-MLI-GATE-DIVIDEND-A13",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "ES",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "13",
+      "paragraph": null,
+      "rate": null,
+      "priority": 63,
+      "conditions": [
+        {
+          "fact": "mli_article_13_specific_activity_pe_status_resolved",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2023-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-ES: notice 238/2022; result-changing articles ['10', '12', '13', '15', '3', '7', '8']; WHT effective date(s) ['2023-01-01']. Gate: MLI Article 13 specific-activity PE modification.",
+      "source_id": "SK-MLI-238-2022",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2022/238/vyhlasene_znenie.html",
+      "source_excerpt_hash": "07c3cbf62ee765209b27d71133d08933b448efcd18b50a1599d3a6071c241ecc",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "evidence_source_ids": [
+        "SK-MLI-238-2022"
+      ]
+    },
+    {
+      "rule_id": "SK-ES-MLI-GATE-DIVIDEND-A13",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "ES",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "13",
+      "paragraph": null,
+      "rate": null,
+      "priority": 63,
+      "conditions": [
+        {
+          "fact": "mli_article_13_specific_activity_pe_status_resolved",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2023-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-ES: notice 238/2022; result-changing articles ['10', '12', '13', '15', '3', '7', '8']; WHT effective date(s) ['2023-01-01']. Gate: MLI Article 13 specific-activity PE modification.",
+      "source_id": "SK-MLI-238-2022",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2022/238/vyhlasene_znenie.html",
+      "source_excerpt_hash": "07c3cbf62ee765209b27d71133d08933b448efcd18b50a1599d3a6071c241ecc",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "evidence_source_ids": [
+        "SK-MLI-238-2022"
+      ]
+    },
+    {
+      "rule_id": "SK-ES-MLI-GATE-DIVIDEND-A15",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "ES",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "15",
+      "paragraph": null,
+      "rate": null,
+      "priority": 65,
+      "conditions": [
+        {
+          "fact": "mli_article_15_closely_related_enterprise_status_resolved",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2023-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-ES: notice 238/2022; result-changing articles ['10', '12', '13', '15', '3', '7', '8']; WHT effective date(s) ['2023-01-01']. Gate: MLI Article 15 closely-related-enterprise definition.",
+      "source_id": "SK-MLI-238-2022",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2022/238/vyhlasene_znenie.html",
+      "source_excerpt_hash": "e1801800d064bd6b01a507d6d1f8074d833b3db072b6a091d5e75b55f387d270",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "evidence_source_ids": [
+        "SK-MLI-238-2022"
+      ]
+    },
+    {
+      "rule_id": "SK-ES-MLI-GATE-DIVIDEND-A15",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "ES",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "15",
+      "paragraph": null,
+      "rate": null,
+      "priority": 65,
+      "conditions": [
+        {
+          "fact": "mli_article_15_closely_related_enterprise_status_resolved",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2023-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-ES: notice 238/2022; result-changing articles ['10', '12', '13', '15', '3', '7', '8']; WHT effective date(s) ['2023-01-01']. Gate: MLI Article 15 closely-related-enterprise definition.",
+      "source_id": "SK-MLI-238-2022",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2022/238/vyhlasene_znenie.html",
+      "source_excerpt_hash": "e1801800d064bd6b01a507d6d1f8074d833b3db072b6a091d5e75b55f387d270",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "evidence_source_ids": [
+        "SK-MLI-238-2022"
+      ]
+    },
+    {
+      "rule_id": "SK-ES-DIVIDEND-TREATY-DIVIDEND-BRANCH-2",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "ES",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "10",
+      "paragraph": null,
+      "rate": 15.0,
+      "priority": 600,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "rate",
+      "effective_from": "1981-06-05",
+      "verification_status": "needs_review",
+      "source_text": "Článok 10 Dividendy 1. Dividendy vyplácané spoločnosťou, ktorá má sídlo v jednom zmluvnom štáte, osobe majúcej bydlisko alebo sídlo v druhom zmluvnom štáte sa môžu zdaniť v tomto druhom štáte. 2. Tieto dividendy sa však môžu zdaniť aj v zmluvnom štáte, v ktorom má sídlo spoločnosť, ktorá ich vypláca, a to podľa práva tohto štátu. Ak však príjemca je skutočným vlastníkom dividend, daň takto uložená nepresiahne: a) 5 % hrubej sumy dividend, ak skutočným vlastníkom je spoločnosť (nie však osobná spoločnosť, ktorá nemá právnu subjektivitu), ktorá priamo vlastní najmenej 25 % kapitálu spoločnosti vyplácajúcej dividendy; b) 15 % hrubej sumy dividend vo všetkých iných prípadoch. 3. Príslušné úrady zmluvných štátov upravia vzájomnou dohodou spôsob aplikácie odseku 2. 4. Ustanovenia odseku 2 sa nedotknú zdanenia ziskov spoločnosti, z ktorých sa dividendy vyplácajú. 5. Výraz „dividendy“ použitý v tomto článku označuje príjmy z akcií, požitkových akcií alebo požitkových práv, kuksov alebo iných práv, s výnimkou pohľadávok, s účasťou na zisku práve tak, ako príjmy z iných spoločenských práv, ktoré sú podrobené rovnakému zdaneniu ako príjmy z akcií podľa daňového práva štátu, v ktorom má sídlo spoločnosť vyplácajúca dividendy. 6. Ustanovenia odsekov 1 a 2 sa nepoužijú, ak príjemca dividend majúci bydlisko alebo sídlo v jednom zmluvnom štáte vykonáva v druhom zmluvnom štáte, v ktorom má sídlo spoločnosť vyplácajúca dividendy, priemyselnú alebo obchodnú činnosť prostredníctvom stálej prevádzkárne, ktorá je tam umiestnená, alebo vykonáva v tomto druhom štáte slobodné povolanie pomocou stálej základne tam umiestnenej a ak účasť, na základe ktorej sa dividendy vyplácajú, je skutočne spojená s takou stálou prevádzkárňou alebo stálou základňou. V takom prípade sa použijú ustanovenia článku 7 alebo článku 14 podľa toho, o aký prípad ide. 7. Ak spoločnosť majúca sídlo v jednom zmluvnom štáte dosahuje zisky alebo príjmy z druhého zmluvného štátu, nemôže tento druhý štát zdaniť dividendy vyplácané touto spoločnosťou osobám majúcim bydlisko alebo sídlo v prvom štáte, ani podrobiť nerozdelené zisky spoločnosti dani z nerozdelených ziskov, aj keď vyplácané dividendy alebo nerozdelený zisk celkom alebo sčasti pozostávajú zo ziskov alebo z príjmov dosiahnutých v tomto druhom štáte.",
+      "source_id": "SK-SLOVLEX-52212658FFB4F4A5",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/1982/23/vyhlasene_znenie.html",
+      "source_excerpt_hash": "a7e14e9a3e6beba7da1e62048dea2e52e4b9dcba9bcdfdc187173951da366a01",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-52212658FFB4F4A5"
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true
+    },
+    {
+      "rule_id": "SK-ES-DIVIDEND-TREATY-DIVIDEND-BRANCH-1",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "ES",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "10",
+      "paragraph": null,
+      "rate": 5.0,
+      "priority": 650,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "recipient_entity_type",
+          "fact_source": "transaction",
+          "operator": "in",
+          "value": [
+            "company",
+            "corporate",
+            "company_other_than_partnership"
+          ]
+        },
+        {
+          "fact": "direct_ownership",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "ownership_percent",
+          "fact_source": "transaction",
+          "operator": ">=",
+          "value": 25.0
+        }
+      ],
+      "effect": "rate",
+      "effective_from": "1981-06-05",
+      "verification_status": "needs_review",
+      "source_text": "Článok 10 Dividendy 1. Dividendy vyplácané spoločnosťou, ktorá má sídlo v jednom zmluvnom štáte, osobe majúcej bydlisko alebo sídlo v druhom zmluvnom štáte sa môžu zdaniť v tomto druhom štáte. 2. Tieto dividendy sa však môžu zdaniť aj v zmluvnom štáte, v ktorom má sídlo spoločnosť, ktorá ich vypláca, a to podľa práva tohto štátu. Ak však príjemca je skutočným vlastníkom dividend, daň takto uložená nepresiahne: a) 5 % hrubej sumy dividend, ak skutočným vlastníkom je spoločnosť (nie však osobná spoločnosť, ktorá nemá právnu subjektivitu), ktorá priamo vlastní najmenej 25 % kapitálu spoločnosti vyplácajúcej dividendy; b) 15 % hrubej sumy dividend vo všetkých iných prípadoch. 3. Príslušné úrady zmluvných štátov upravia vzájomnou dohodou spôsob aplikácie odseku 2. 4. Ustanovenia odseku 2 sa nedotknú zdanenia ziskov spoločnosti, z ktorých sa dividendy vyplácajú. 5. Výraz „dividendy“ použitý v tomto článku označuje príjmy z akcií, požitkových akcií alebo požitkových práv, kuksov alebo iných práv, s výnimkou pohľadávok, s účasťou na zisku práve tak, ako príjmy z iných spoločenských práv, ktoré sú podrobené rovnakému zdaneniu ako príjmy z akcií podľa daňového práva štátu, v ktorom má sídlo spoločnosť vyplácajúca dividendy. 6. Ustanovenia odsekov 1 a 2 sa nepoužijú, ak príjemca dividend majúci bydlisko alebo sídlo v jednom zmluvnom štáte vykonáva v druhom zmluvnom štáte, v ktorom má sídlo spoločnosť vyplácajúca dividendy, priemyselnú alebo obchodnú činnosť prostredníctvom stálej prevádzkárne, ktorá je tam umiestnená, alebo vykonáva v tomto druhom štáte slobodné povolanie pomocou stálej základne tam umiestnenej a ak účasť, na základe ktorej sa dividendy vyplácajú, je skutočne spojená s takou stálou prevádzkárňou alebo stálou základňou. V takom prípade sa použijú ustanovenia článku 7 alebo článku 14 podľa toho, o aký prípad ide. 7. Ak spoločnosť majúca sídlo v jednom zmluvnom štáte dosahuje zisky alebo príjmy z druhého zmluvného štátu, nemôže tento druhý štát zdaniť dividendy vyplácané touto spoločnosťou osobám majúcim bydlisko alebo sídlo v prvom štáte, ani podrobiť nerozdelené zisky spoločnosti dani z nerozdelených ziskov, aj keď vyplácané dividendy alebo nerozdelený zisk celkom alebo sčasti pozostávajú zo ziskov alebo z príjmov dosiahnutých v tomto druhom štáte.",
+      "source_id": "SK-SLOVLEX-52212658FFB4F4A5",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/1982/23/vyhlasene_znenie.html",
+      "source_excerpt_hash": "a7e14e9a3e6beba7da1e62048dea2e52e4b9dcba9bcdfdc187173951da366a01",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-52212658FFB4F4A5"
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true
+    },
+    {
+      "rule_id": "SK-ES-MLI-GATE-ROYALTY-A3",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "ES",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "3",
+      "paragraph": null,
+      "rate": null,
+      "priority": 53,
+      "conditions": [
+        {
+          "fact": "mli_article_3_transparent_entity_entitlement_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2023-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-ES: notice 238/2022; result-changing articles ['10', '12', '13', '15', '3', '7', '8']; WHT effective date(s) ['2023-01-01']. Gate: MLI Article 3 transparent-entity entitlement.",
+      "source_id": "SK-MLI-238-2022",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2022/238/vyhlasene_znenie.html",
+      "source_excerpt_hash": "ff9af96f931535dd6d1ec39ee7768fc8d9f4233b69d6730f6fc08054b7a1ff2c",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "evidence_source_ids": [
+        "SK-MLI-238-2022"
+      ]
+    },
+    {
+      "rule_id": "SK-ES-MLI-GATE-ROYALTY-A7",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "ES",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "7",
+      "paragraph": null,
+      "rate": null,
+      "priority": 57,
+      "conditions": [
+        {
+          "fact": "treaty_ppt_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2023-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-ES: notice 238/2022; result-changing articles ['10', '12', '13', '15', '3', '7', '8']; WHT effective date(s) ['2023-01-01']. Gate: MLI Article 7 principal purpose test.",
+      "source_id": "SK-MLI-238-2022",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2022/238/vyhlasene_znenie.html",
+      "source_excerpt_hash": "5e5bb9997b0106190c1ad3ee10a3b9900a7df901601a79294a8a7a857f478049",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "evidence_source_ids": [
+        "SK-MLI-238-2022"
+      ]
+    },
+    {
+      "rule_id": "SK-ES-MLI-GATE-ROYALTY-A10",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "ES",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "10",
+      "paragraph": null,
+      "rate": null,
+      "priority": 60,
+      "conditions": [
+        {
+          "fact": "mli_article_10_third_jurisdiction_pe_test_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2023-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-ES: notice 238/2022; result-changing articles ['10', '12', '13', '15', '3', '7', '8']; WHT effective date(s) ['2023-01-01']. Gate: MLI Article 10 third-jurisdiction PE anti-abuse test.",
+      "source_id": "SK-MLI-238-2022",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2022/238/vyhlasene_znenie.html",
+      "source_excerpt_hash": "4bd842424a775d04a7bdecd3c1a35286fcfe8871c49a037186b253a71a4546f5",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "evidence_source_ids": [
+        "SK-MLI-238-2022"
+      ]
+    },
+    {
+      "rule_id": "SK-ES-MLI-GATE-ROYALTY-A12",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "ES",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "12",
+      "paragraph": null,
+      "rate": null,
+      "priority": 62,
+      "conditions": [
+        {
+          "fact": "mli_article_12_dependent_agent_pe_status_resolved",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2023-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-ES: notice 238/2022; result-changing articles ['10', '12', '13', '15', '3', '7', '8']; WHT effective date(s) ['2023-01-01']. Gate: MLI Article 12 dependent-agent PE modification.",
+      "source_id": "SK-MLI-238-2022",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2022/238/vyhlasene_znenie.html",
+      "source_excerpt_hash": "d8186afc0130a3265112d5bf87574342cdf3d5b6d27812dbcfac9cb47e141e26",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "evidence_source_ids": [
+        "SK-MLI-238-2022"
+      ]
+    },
+    {
+      "rule_id": "SK-ES-MLI-GATE-ROYALTY-A13",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "ES",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "13",
+      "paragraph": null,
+      "rate": null,
+      "priority": 63,
+      "conditions": [
+        {
+          "fact": "mli_article_13_specific_activity_pe_status_resolved",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2023-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-ES: notice 238/2022; result-changing articles ['10', '12', '13', '15', '3', '7', '8']; WHT effective date(s) ['2023-01-01']. Gate: MLI Article 13 specific-activity PE modification.",
+      "source_id": "SK-MLI-238-2022",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2022/238/vyhlasene_znenie.html",
+      "source_excerpt_hash": "07c3cbf62ee765209b27d71133d08933b448efcd18b50a1599d3a6071c241ecc",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "evidence_source_ids": [
+        "SK-MLI-238-2022"
+      ]
+    },
+    {
+      "rule_id": "SK-ES-MLI-GATE-ROYALTY-A15",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "ES",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "15",
+      "paragraph": null,
+      "rate": null,
+      "priority": 65,
+      "conditions": [
+        {
+          "fact": "mli_article_15_closely_related_enterprise_status_resolved",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2023-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-ES: notice 238/2022; result-changing articles ['10', '12', '13', '15', '3', '7', '8']; WHT effective date(s) ['2023-01-01']. Gate: MLI Article 15 closely-related-enterprise definition.",
+      "source_id": "SK-MLI-238-2022",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2022/238/vyhlasene_znenie.html",
+      "source_excerpt_hash": "e1801800d064bd6b01a507d6d1f8074d833b3db072b6a091d5e75b55f387d270",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "evidence_source_ids": [
+        "SK-MLI-238-2022"
+      ]
+    },
+    {
+      "rule_id": "SK-ES-ROYALTY-TREATY-SIMPLE-1",
+      "income_type": "royalty",
+      "source_country": "SK",
+      "recipient_country": "ES",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "12",
+      "paragraph": null,
+      "rate": 5.0,
+      "priority": 600,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "rate",
+      "effective_from": "1981-06-05",
+      "verification_status": "needs_review",
+      "source_text": "Článok 12 Licenčné poplatky 1. Licenčné poplatky majúce zdroj v jednom zmluvnom štáte a platené osobe, ktorá má bydlisko alebo sídlo v druhom zmluvnom štáte, sa môžu zdaniť v tomto druhom štáte. 2. Také licenčné poplatky sa však môžu zdaniť v zmluvnom štáte, v ktorom je ich zdroj, a to podľa práva tohto štátu. Takto uložená daň však neprekročí 5 % hrubej sumy licenčných poplatkov za predpokladu, že licenčné poplatky podliehajú zdaneniu v druhom zmluvnom štáte. 3. Autorské licenčné poplatky a iné podobné platby za vykonanie alebo reprodukciu literárneho, dramatického, hudobného alebo umeleckého diela (ale s výnimkou licenčných poplatkov platených za kinematografické filmy a diela nahrané na filmové alebo televízne pásky pre televízne vysielanie) majúce zdroj v jednom zmluvnom štáte a platené osobe majúcej bydlisko alebo sídlo v druhom zmluvnom štáte, ktorá je podrobená zdaneniu z týchto licenčných poplatkov, podliehajú zdaneniu iba v tomto druhom štáte. 4. Výraz „licenčné poplatky“ použitý v tomto článku označuje platby akéhokoľvek druhu platené za použitie, prípadne za právo na použitie autorského práva k literárnemu, umeleckému alebo vedeckému dielu včítane kinematografických filmov, patentu, ochrannej známky, vzoru alebo modelu, plánu, tajného vzorca alebo postupu alebo za použitie, prípadne za právo na použitie priemyselného, obchodného alebo vedeckého zariadenia alebo za informáciu vzťahujúcu sa na skúsenosti z priemyselnej, obchodnej alebo vedeckej oblasti. 5. Ustanovenia odsekov 1, 2 a 3 sa nepoužijú, ak príjemca licenčných poplatkov majúci bydlisko alebo sídlo v jednom zmluvnom štáte vykonáva v druhom zmluvnom štáte, v ktorom majú licenčné poplatky zdroj, priemyselnú alebo obchodnú činnosť prostredníctvom stálej prevádzkárne, ktorá je tam umiestnená, alebo vykonáva v tomto druhom štáte slobodné povolanie pomocou stálej základne tam umiestnenej a ak právo alebo majetok, pre ktoré sa licenčné poplatky platia, sú skutočne spojené s takou stálou prevádzkárňou alebo stálou základňou. V takom prípade sa použijú ustanovenia článku 7 alebo článku 14 podľa toho, o aký prípad ide. 6. Predpokladá sa, že licenčné poplatky majú zdroj v jednom zmluvnom štáte, ak platiteľom je tento zmluvný štát sám, nižší správny útvar alebo miestny úrad tohto zmluvného štátu alebo osoba majúca bydlisko alebo sídlo v tomto zmluvnom štáte. Ak ale osoba, ktorá platí licenčné poplatky, či už má, alebo nemá bydlisko alebo sídlo v niektorom zmluvnom štáte, má v jednom zmluvnom štáte stálu prevádzkáreň, v spojení s ktorou vznikol záväzok platiť licenčné poplatky, a táto stála prevádzkáreň znáša na svoju ťarchu tieto licenčné poplatky, predpokladá sa, že tieto licenčné poplatky majú zdroj v tom zmluvnom štáte, v ktorom je stála prevádzkáreň umiestnená. 7. Ak suma platených licenčných poplatkov, posudzované so zreteľom na používanie, právo alebo informáciu, za ktoré sa platia, presahuje v dôsledku osobitných vzťahov existujúcich medzi platiteľom a príjemcom alebo medzi oboma a treťou osobou sumu, ktorú by bol dojednal platiteľ s príjemcom, keby nebolo takých vzťahov, použijú sa ustanovenia tohto článku len na túto poslednú sumu. Časť platieb, ktorá ju presahuje, zostane v tomto prípade podrobená zdaneniu podľa práva každého zmluvného štátu a s prihliadnutím na iné ustanovenia tejto Zmluvy.",
+      "source_id": "SK-SLOVLEX-52212658FFB4F4A5",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/1982/23/vyhlasene_znenie.html",
+      "source_excerpt_hash": "d1aecac2d2aeb0885d941a090e14b7dcb27a0d5a975415f52d41c87bac270ccc",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-52212658FFB4F4A5"
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true
+    }
+  ]
+}
