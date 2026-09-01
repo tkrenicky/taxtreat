@@ -215,8 +215,8 @@
       "verification_status": "verified"
     },
     {
-      "approval_created_at": "2026-08-11",
-      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approval_created_at": "2026-09-01",
+      "approval_dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
       "approved_article_text_sha256": "78fcfdf4f7e6d143ecd810e73f6a8b761c4128f94dba3b02682d2d3a29857bbd",
       "article": 12,
       "conditions": [
@@ -233,7 +233,7 @@
           "value": "true"
         }
       ],
-      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "dataset_release": "stage6-semantic-remediation-production-2026-09-01.1",
       "effect": "rate",
       "effective_from": "2021-01-01",
       "evidence_source_ids": [
@@ -246,7 +246,7 @@
       "priority": 681,
       "rate": 5,
       "recipient_country": "TW",
-      "review_package_sha256": "e769983fbe69a71759dc6056705e1773a5d54ad4298a7799e7691f32ce3fb778",
+      "review_package_sha256": "f6a46af0b1a2e50c87a5282e829f8c7b8d7e4139669cf5ed66a289bb3755c732",
       "rule_id": "CZ-TW-ROYALTY-CURRENT-1",
       "source_country": "CZ",
       "source_excerpt_hash": "78fcfdf4f7e6d143ecd810e73f6a8b761c4128f94dba3b02682d2d3a29857bbd",
@@ -254,12 +254,12 @@
       "source_representation": "approved_treaty_excerpt",
       "source_text": "Article 12(2): 5% for industrial, commercial or scientific equipment; 10% in all other cases, subject to beneficial ownership.",
       "source_url": "https://e-sbirka.gov.cz/sb/2020/45",
-      "verification_authority": "stage6_governance_policy",
+      "verification_authority": "semantic_remediation_machine_validation",
       "verification_status": "verified"
     },
     {
-      "approval_created_at": "2026-08-11",
-      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approval_created_at": "2026-09-01",
+      "approval_dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
       "approved_article_text_sha256": "78fcfdf4f7e6d143ecd810e73f6a8b761c4128f94dba3b02682d2d3a29857bbd",
       "article": 12,
       "conditions": [
@@ -276,7 +276,7 @@
           "value": "true"
         }
       ],
-      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "dataset_release": "stage6-semantic-remediation-production-2026-09-01.1",
       "effect": "rate",
       "effective_from": "2021-01-01",
       "evidence_source_ids": [
@@ -289,7 +289,7 @@
       "priority": 682,
       "rate": 10,
       "recipient_country": "TW",
-      "review_package_sha256": "e769983fbe69a71759dc6056705e1773a5d54ad4298a7799e7691f32ce3fb778",
+      "review_package_sha256": "f6a46af0b1a2e50c87a5282e829f8c7b8d7e4139669cf5ed66a289bb3755c732",
       "rule_id": "CZ-TW-ROYALTY-CURRENT-2",
       "source_country": "CZ",
       "source_excerpt_hash": "78fcfdf4f7e6d143ecd810e73f6a8b761c4128f94dba3b02682d2d3a29857bbd",
@@ -297,18 +297,9 @@
       "source_representation": "approved_treaty_excerpt",
       "source_text": "Article 12(2): 5% for industrial, commercial or scientific equipment; 10% in all other cases, subject to beneficial ownership.",
       "source_url": "https://e-sbirka.gov.cz/sb/2020/45",
-      "verification_authority": "stage6_governance_policy",
+      "verification_authority": "semantic_remediation_machine_validation",
       "verification_status": "verified"
     }
   ],
-  "schema_version": 3,
-  "stage6_production": {
-    "additional_human_review_claimed": false,
-    "package_sha256": "e769983fbe69a71759dc6056705e1773a5d54ad4298a7799e7691f32ce3fb778",
-    "production_approval": "production_approved",
-    "rule_promotion": "promoted",
-    "source_release": "not_released",
-    "treaty_pair_id": "CZ-TW",
-    "verification_authority": "stage6_governance_policy"
-  }
+  "schema_version": 3
 }

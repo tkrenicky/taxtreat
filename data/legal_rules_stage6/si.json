@@ -34,11 +34,23 @@
       "verification_status": "verified"
     },
     {
-      "approval_created_at": "2026-08-11",
-      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approval_created_at": "2026-09-01",
+      "approval_dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
       "approved_article_text_sha256": "0fb0d72b139adf96820ac3746854bb106ed3647e654a57ddb845951a38d8e5f8",
       "article": 10,
       "conditions": [
+        {
+          "fact": "recipient_entity_type",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "company"
+        },
+        {
+          "fact": "direct_ownership",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        },
         {
           "fact": "ownership_percent",
           "fact_source": "transaction",
@@ -52,7 +64,7 @@
           "value": "true"
         }
       ],
-      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "dataset_release": "stage6-semantic-remediation-production-2026-09-01.1",
       "effect": "rate",
       "effective_from": "1998-04-28",
       "evidence_source_ids": [
@@ -65,7 +77,7 @@
       "priority": 681,
       "rate": 5,
       "recipient_country": "SI",
-      "review_package_sha256": "a76346131028b9a02d7b0247a8baad8676b5e8c6a05ccf71fa39a8dbfc32fcc6",
+      "review_package_sha256": "d6b8bdafe2d488cb1cee130899a18f4be985217aff0781f0bb04d9486c530e7b",
       "rule_id": "CZ-SI-DIVIDEND-CURRENT-1",
       "source_country": "CZ",
       "source_excerpt_hash": "f2d9e9b0d31293c45903fd0eb688320248a4a3b99e0459907f598d1c7aefb06a",
@@ -73,15 +85,21 @@
       "source_representation": "approved_treaty_excerpt",
       "source_text": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezi-\ndentem jednoho smluvnõho státu, rezidentu druhého\nsmluvnõho státu mohou být zdaneny v tomto druhém\nstáte.\n2. Tyto dividendy vsak mohou být rovnez zda-\nneny ve smluvnõm státe, jehoz je spolecnost, která je\nvyplácõ, rezidentem, a to podle právnõch predpisu to-\nhoto státu, avsak jestlize skutecný vlastnõk dividend je\nrezidentem druhého smluvnõho státu, dan takto ulo-\nzená nepresáhne:\na) 5 procent hrubé cástky dividend, jestlize skutec-\nným vlastnõkem je spolecnost, která prõmo vlastnõ\nnejméne 25 procent majetku spolecnosti vypláce-\njõcõ dividendy;\nb) 15 procent hrubé cástky dividend ve vsech ostat-\nnõch prõpadech.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou do-\nhodou zpu sob aplikace techto omezenõ.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti,\nz nichz jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku\noznacuje prõjmy z akciõ nebo jiných práv, s výjimkou\npohledávek, s podõlem na zisku, jakoz i prõjmy z jiných\npráv na spolecnosti, které jsou podrobeny stejnému\ndan ovému rezimu jako prõjmy z akciõ podle dan ových\nzákonu státu, jehoz je spolecnost, která rozdõlõ zisk,\nrezidentem.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk dividend, který je rezidentem jed-\nnoho smluvnõho státu, vykonává v druhém smluvnõm\nstáte, jehoz je rezidentem spolecnost vyplácejõcõ divi-\ndendy, pru myslovou nebo obchodnõ cinnost prostred-\nnictvõm stálé provozovny, která je tam umõstena, nebo\n",
       "source_url": "https://e-sbirka.gov.cz/sb/1998/214/0000-00-00",
-      "verification_authority": "stage6_governance_policy",
+      "verification_authority": "semantic_remediation_machine_validation",
       "verification_status": "verified"
     },
     {
-      "approval_created_at": "2026-08-11",
-      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approval_created_at": "2026-09-01",
+      "approval_dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
       "approved_article_text_sha256": "0fb0d72b139adf96820ac3746854bb106ed3647e654a57ddb845951a38d8e5f8",
       "article": 10,
       "conditions": [
+        {
+          "fact": "fallback_case",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "all_other_cases"
+        },
         {
           "fact": "beneficial_owner",
           "fact_source": "transaction",
@@ -89,7 +107,7 @@
           "value": "true"
         }
       ],
-      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "dataset_release": "stage6-semantic-remediation-production-2026-09-01.1",
       "effect": "rate",
       "effective_from": "1998-04-28",
       "evidence_source_ids": [
@@ -102,7 +120,7 @@
       "priority": 692,
       "rate": 15,
       "recipient_country": "SI",
-      "review_package_sha256": "a76346131028b9a02d7b0247a8baad8676b5e8c6a05ccf71fa39a8dbfc32fcc6",
+      "review_package_sha256": "d6b8bdafe2d488cb1cee130899a18f4be985217aff0781f0bb04d9486c530e7b",
       "rule_id": "CZ-SI-DIVIDEND-CURRENT-2",
       "source_country": "CZ",
       "source_excerpt_hash": "f2d9e9b0d31293c45903fd0eb688320248a4a3b99e0459907f598d1c7aefb06a",
@@ -110,7 +128,7 @@
       "source_representation": "approved_treaty_excerpt",
       "source_text": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezi-\ndentem jednoho smluvnõho státu, rezidentu druhého\nsmluvnõho státu mohou být zdaneny v tomto druhém\nstáte.\n2. Tyto dividendy vsak mohou být rovnez zda-\nneny ve smluvnõm státe, jehoz je spolecnost, která je\nvyplácõ, rezidentem, a to podle právnõch predpisu to-\nhoto státu, avsak jestlize skutecný vlastnõk dividend je\nrezidentem druhého smluvnõho státu, dan takto ulo-\nzená nepresáhne:\na) 5 procent hrubé cástky dividend, jestlize skutec-\nným vlastnõkem je spolecnost, která prõmo vlastnõ\nnejméne 25 procent majetku spolecnosti vypláce-\njõcõ dividendy;\nb) 15 procent hrubé cástky dividend ve vsech ostat-\nnõch prõpadech.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou do-\nhodou zpu sob aplikace techto omezenõ.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti,\nz nichz jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku\noznacuje prõjmy z akciõ nebo jiných práv, s výjimkou\npohledávek, s podõlem na zisku, jakoz i prõjmy z jiných\npráv na spolecnosti, které jsou podrobeny stejnému\ndan ovému rezimu jako prõjmy z akciõ podle dan ových\nzákonu státu, jehoz je spolecnost, která rozdõlõ zisk,\nrezidentem.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk dividend, který je rezidentem jed-\nnoho smluvnõho státu, vykonává v druhém smluvnõm\nstáte, jehoz je rezidentem spolecnost vyplácejõcõ divi-\ndendy, pru myslovou nebo obchodnõ cinnost prostred-\nnictvõm stálé provozovny, která je tam umõstena, nebo\n",
       "source_url": "https://e-sbirka.gov.cz/sb/1998/214/0000-00-00",
-      "verification_authority": "stage6_governance_policy",
+      "verification_authority": "semantic_remediation_machine_validation",
       "verification_status": "verified"
     },
     {
@@ -1583,14 +1601,5 @@
       "verification_status": "verified"
     }
   ],
-  "schema_version": 3,
-  "stage6_production": {
-    "additional_human_review_claimed": false,
-    "package_sha256": "a76346131028b9a02d7b0247a8baad8676b5e8c6a05ccf71fa39a8dbfc32fcc6",
-    "production_approval": "production_approved",
-    "rule_promotion": "promoted",
-    "source_release": "not_released",
-    "treaty_pair_id": "CZ-SI",
-    "verification_authority": "stage6_governance_policy"
-  }
+  "schema_version": 3
 }

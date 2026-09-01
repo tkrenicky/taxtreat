@@ -34,16 +34,16 @@
       "verification_status": "verified"
     },
     {
-      "approval_created_at": "2026-08-11",
-      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approval_created_at": "2026-09-01",
+      "approval_dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
       "approved_article_text_sha256": "d3111206cd5a213db9d670bd4c38532ca8370a32fa9a89ac2e0f3f0b29cad5a8",
       "article": 10,
       "conditions": [
         {
-          "fact": "article_10_public_body_exemption",
+          "fact": "recipient_entity_type",
           "fact_source": "transaction",
           "operator": "==",
-          "value": true
+          "value": "other_state_government_subnational_local_authority_central_bank_other_public_law_body_or_entity_directly_or_indirectly_wholly_owned_by_such_public_body"
         },
         {
           "fact": "beneficial_owner",
@@ -52,7 +52,7 @@
           "value": "true"
         }
       ],
-      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "dataset_release": "stage6-semantic-remediation-production-2026-09-01.1",
       "effect": "rate",
       "effective_from": "2022-10-25",
       "evidence_source_ids": [
@@ -65,7 +65,7 @@
       "priority": 651,
       "rate": 0,
       "recipient_country": "QA",
-      "review_package_sha256": "955712e070ef76d5a0d6c1c9ff9e3349d11e2892412ff7d6aa23d6a3186cb424",
+      "review_package_sha256": "af30b5fb0bd123035f4b92393bb41536be47b3b53ba74eaabbfef459beda2f2b",
       "rule_id": "CZ-QA-DIVIDEND-CURRENT-1",
       "source_country": "CZ",
       "source_excerpt_hash": "32d717048ce6d1721412ef5f1b90ee056133c5cb495f0f20285cf20b675cb905",
@@ -73,12 +73,12 @@
       "source_representation": "approved_treaty_excerpt",
       "source_text": "1. Dividendy vyplácené společností, která je rezidentem jednoho smluvního státu, rezidentu\ndruhého smluvního státu, mohou být zdaněny v tomto druhém státě.\n2. Tyto dividendy však mohou být rovněž zdaněny ve smluvním státě, jehož je společnost,\nkterá je vyplácí, rezidentem, a to podle právních předpisů tohoto státu, avšak jestliže skutečný\nvlastník dividend je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne:\na) 5 procent hrubé částky dividend, jestliže skutečným vlastníkem je společnost, která přímo\ndrží alespoň 10 procent kapitálu společnosti, která dividendy vyplácí;\nb) 10 procent hrubé částky dividend ve všech ostatních případech.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace těchto omezení.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.\n3. Dividendy vyplácené společností, která je rezidentem jednoho smluvního státu, se bez\nohledu na ustanovení odstavce 2 osvobozují od zdanění v tomto státě, pokud jsou dividendy\nskutečně vlastněny:\na) druhým smluvním státem nebo jeho vládou nebo jakýmkoliv nižším správním útvarem\nnebo místním úřadem tohoto státu; nebo\nb) centrální bankou tohoto druhého státu nebo jakoukoliv jeho jinou na základě veřejného\npráva založenou právnickou osobou; nebo\nc) jakoukoliv entitou přímo nebo nepřímo zcela vlastněnou jednou z entit uvedených\nv písmenech a) a b) tohoto odstavce nebo vícerými z nich.\n4. Výraz „dividendy“ použitý v tomto článku označuje příjmy z akcií, požitk",
       "source_url": "https://e-sbirka.gov.cz/sm/2022/45/0000-00-00",
-      "verification_authority": "stage6_governance_policy",
+      "verification_authority": "semantic_remediation_machine_validation",
       "verification_status": "verified"
     },
     {
-      "approval_created_at": "2026-08-11",
-      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approval_created_at": "2026-09-01",
+      "approval_dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
       "approved_article_text_sha256": "d3111206cd5a213db9d670bd4c38532ca8370a32fa9a89ac2e0f3f0b29cad5a8",
       "article": 10,
       "conditions": [
@@ -90,14 +90,15 @@
         },
         {
           "fact": "direct_ownership",
+          "fact_source": "transaction",
           "operator": "==",
-          "value": true
+          "value": "true"
         },
         {
           "fact": "ownership_percent",
           "fact_source": "transaction",
           "operator": ">=",
-          "value": "10%"
+          "value": "10"
         },
         {
           "fact": "beneficial_owner",
@@ -106,7 +107,7 @@
           "value": "true"
         }
       ],
-      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "dataset_release": "stage6-semantic-remediation-production-2026-09-01.1",
       "effect": "rate",
       "effective_from": "2022-10-25",
       "evidence_source_ids": [
@@ -119,7 +120,7 @@
       "priority": 672,
       "rate": 5,
       "recipient_country": "QA",
-      "review_package_sha256": "955712e070ef76d5a0d6c1c9ff9e3349d11e2892412ff7d6aa23d6a3186cb424",
+      "review_package_sha256": "af30b5fb0bd123035f4b92393bb41536be47b3b53ba74eaabbfef459beda2f2b",
       "rule_id": "CZ-QA-DIVIDEND-CURRENT-2",
       "source_country": "CZ",
       "source_excerpt_hash": "32d717048ce6d1721412ef5f1b90ee056133c5cb495f0f20285cf20b675cb905",
@@ -127,12 +128,12 @@
       "source_representation": "approved_treaty_excerpt",
       "source_text": "1. Dividendy vyplácené společností, která je rezidentem jednoho smluvního státu, rezidentu\ndruhého smluvního státu, mohou být zdaněny v tomto druhém státě.\n2. Tyto dividendy však mohou být rovněž zdaněny ve smluvním státě, jehož je společnost,\nkterá je vyplácí, rezidentem, a to podle právních předpisů tohoto státu, avšak jestliže skutečný\nvlastník dividend je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne:\na) 5 procent hrubé částky dividend, jestliže skutečným vlastníkem je společnost, která přímo\ndrží alespoň 10 procent kapitálu společnosti, která dividendy vyplácí;\nb) 10 procent hrubé částky dividend ve všech ostatních případech.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace těchto omezení.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.\n3. Dividendy vyplácené společností, která je rezidentem jednoho smluvního státu, se bez\nohledu na ustanovení odstavce 2 osvobozují od zdanění v tomto státě, pokud jsou dividendy\nskutečně vlastněny:\na) druhým smluvním státem nebo jeho vládou nebo jakýmkoliv nižším správním útvarem\nnebo místním úřadem tohoto státu; nebo\nb) centrální bankou tohoto druhého státu nebo jakoukoliv jeho jinou na základě veřejného\npráva založenou právnickou osobou; nebo\nc) jakoukoliv entitou přímo nebo nepřímo zcela vlastněnou jednou z entit uvedených\nv písmenech a) a b) tohoto odstavce nebo vícerými z nich.\n4. Výraz „dividendy“ použitý v tomto článku označuje příjmy z akcií, požitk",
       "source_url": "https://e-sbirka.gov.cz/sm/2022/45/0000-00-00",
-      "verification_authority": "stage6_governance_policy",
+      "verification_authority": "semantic_remediation_machine_validation",
       "verification_status": "verified"
     },
     {
-      "approval_created_at": "2026-08-11",
-      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approval_created_at": "2026-09-01",
+      "approval_dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
       "approved_article_text_sha256": "d3111206cd5a213db9d670bd4c38532ca8370a32fa9a89ac2e0f3f0b29cad5a8",
       "article": 10,
       "conditions": [
@@ -149,7 +150,7 @@
           "value": "true"
         }
       ],
-      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "dataset_release": "stage6-semantic-remediation-production-2026-09-01.1",
       "effect": "rate",
       "effective_from": "2022-10-25",
       "evidence_source_ids": [
@@ -162,7 +163,7 @@
       "priority": 683,
       "rate": 10,
       "recipient_country": "QA",
-      "review_package_sha256": "955712e070ef76d5a0d6c1c9ff9e3349d11e2892412ff7d6aa23d6a3186cb424",
+      "review_package_sha256": "af30b5fb0bd123035f4b92393bb41536be47b3b53ba74eaabbfef459beda2f2b",
       "rule_id": "CZ-QA-DIVIDEND-CURRENT-3",
       "source_country": "CZ",
       "source_excerpt_hash": "32d717048ce6d1721412ef5f1b90ee056133c5cb495f0f20285cf20b675cb905",
@@ -170,7 +171,7 @@
       "source_representation": "approved_treaty_excerpt",
       "source_text": "1. Dividendy vyplácené společností, která je rezidentem jednoho smluvního státu, rezidentu\ndruhého smluvního státu, mohou být zdaněny v tomto druhém státě.\n2. Tyto dividendy však mohou být rovněž zdaněny ve smluvním státě, jehož je společnost,\nkterá je vyplácí, rezidentem, a to podle právních předpisů tohoto státu, avšak jestliže skutečný\nvlastník dividend je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne:\na) 5 procent hrubé částky dividend, jestliže skutečným vlastníkem je společnost, která přímo\ndrží alespoň 10 procent kapitálu společnosti, která dividendy vyplácí;\nb) 10 procent hrubé částky dividend ve všech ostatních případech.\nPříslušné úřady smluvních států upraví vzájemnou dohodou způsob aplikace těchto omezení.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.\n3. Dividendy vyplácené společností, která je rezidentem jednoho smluvního státu, se bez\nohledu na ustanovení odstavce 2 osvobozují od zdanění v tomto státě, pokud jsou dividendy\nskutečně vlastněny:\na) druhým smluvním státem nebo jeho vládou nebo jakýmkoliv nižším správním útvarem\nnebo místním úřadem tohoto státu; nebo\nb) centrální bankou tohoto druhého státu nebo jakoukoliv jeho jinou na základě veřejného\npráva založenou právnickou osobou; nebo\nc) jakoukoliv entitou přímo nebo nepřímo zcela vlastněnou jednou z entit uvedených\nv písmenech a) a b) tohoto odstavce nebo vícerými z nich.\n4. Výraz „dividendy“ použitý v tomto článku označuje příjmy z akcií, požitk",
       "source_url": "https://e-sbirka.gov.cz/sm/2022/45/0000-00-00",
-      "verification_authority": "stage6_governance_policy",
+      "verification_authority": "semantic_remediation_machine_validation",
       "verification_status": "verified"
     },
     {
@@ -318,14 +319,5 @@
       "verification_status": "verified"
     }
   ],
-  "schema_version": 3,
-  "stage6_production": {
-    "additional_human_review_claimed": false,
-    "package_sha256": "955712e070ef76d5a0d6c1c9ff9e3349d11e2892412ff7d6aa23d6a3186cb424",
-    "production_approval": "production_approved",
-    "rule_promotion": "promoted",
-    "source_release": "not_released",
-    "treaty_pair_id": "CZ-QA",
-    "verification_authority": "stage6_governance_policy"
-  }
+  "schema_version": 3
 }

@@ -34,13 +34,19 @@
       "verification_status": "verified"
     },
     {
-      "approval_created_at": "2026-08-11",
-      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approval_created_at": "2026-09-01",
+      "approval_dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
       "approved_article_text_sha256": "2e30e5119a7437571d0ac64e2cae97e2d3a65e0207ed45d939772ee76ece85a9",
       "article": 9,
       "conditions": [
         {
-          "fact": "ownership_percent",
+          "fact": "recipient_entity_type",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "company"
+        },
+        {
+          "fact": "direct_or_indirect_voting_ownership",
           "fact_source": "transaction",
           "operator": ">=",
           "value": "10"
@@ -52,7 +58,7 @@
           "value": "true"
         }
       ],
-      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "dataset_release": "stage6-semantic-remediation-production-2026-09-01.1",
       "effect": "rate",
       "effective_from": "1990-12-02",
       "evidence_source_ids": [
@@ -65,7 +71,7 @@
       "priority": 681,
       "rate": 12.5,
       "recipient_country": "NG",
-      "review_package_sha256": "e436c926221b605720e9dbc1359a8b67b21f75caf76513349f05dcd64a48dad2",
+      "review_package_sha256": "4397f5f61309eb03927b08be9211cb2b3d8d1da0512ec6c230351e96949ce8a7",
       "rule_id": "CZ-NG-DIVIDEND-CURRENT-1",
       "source_country": "CZ",
       "source_excerpt_hash": "5d38965e05c5d92bcae93601633219b1e44e1b26181277b4bd3340cdacf47144",
@@ -73,15 +79,21 @@
       "source_representation": "approved_treaty_excerpt",
       "source_text": "Dividendy\n1. Dividendy plynoucõ od spolecnosti, která je re-\nzidentem v jednom smluvnõm státe, osobe, která je re-\nzidentem ve druhém smluvnõm státe, mohou být zda-\nneny v tomto druhém státe.\n2. Tyto dividendy vsak mohou být zdaneny také\nve smluvnõm státe, v nemz je spolecnost, která je vyplá-\ncõ, rezidentem, a to podle právnõch predpisu tohoto\nstátu, avsak jestlize prõjemce je skutecným vlastnõkem\ndividend, dan takto stanovená nepresáhne:\na) 12,5 % hrubé cástky dividend, jestlize prõjemce\nje spolecnost, která vlastnõ prõmo ci ne-\nprõmo nejméne 10 % podõlu s hlasovacõm\nprávem na spolecnosti vyplácejõcõ divi-\ndendy;\nb) 15 % hrubé cástky dividend ve vsech jiných\nprõpadech.\nTento odstavec se nedotkne zdanenõ zisku spolec-\nnosti, ze kterých jsou dividendy vypláceny.\n3. Ustanovenõ odstavcu 1 a 2 tohoto clánku se ne-\npouzijõ, jestlize skutecný vlastnõk dividend, který je re-\nzidentem v jednom smluvnõm státe, má ve druhém\nsmluvnõm státe, kde je spolecnost vyplácejõcõ dividendy\nrezidentem, stálou provozovnu nebo stálou základnu\ntam umõstenou, a jestlize vlastnictvõ akciõ, na jehoz zá-\nklade se dividendy vyplácejõ, je skutecne spojeno s ob-\nchody uskutecn ovanými touto stálou provozovnou ne-\nbo stálou základnou. V takovém prõpade se pouzijõ\nustanovenõ clánku 7 nebo clánku 13 podle toho, o jaký\nprõpad jde.\n4. Jestlize spolecnost, která je rezidentem v jed-\nnom smluvnõm státe, dosahuje zisky nebo prõjmy\nz druhého smluvnõho státu, nemu ze tento druhý stát\nzdanit dividendy vyplácené spole",
       "source_url": "https://e-sbirka.gov.cz/sb/1991/339/0000-00-00",
-      "verification_authority": "stage6_governance_policy",
+      "verification_authority": "semantic_remediation_machine_validation",
       "verification_status": "verified"
     },
     {
-      "approval_created_at": "2026-08-11",
-      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approval_created_at": "2026-09-01",
+      "approval_dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
       "approved_article_text_sha256": "2e30e5119a7437571d0ac64e2cae97e2d3a65e0207ed45d939772ee76ece85a9",
       "article": 9,
       "conditions": [
+        {
+          "fact": "fallback_case",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "all_other_cases"
+        },
         {
           "fact": "beneficial_owner",
           "fact_source": "transaction",
@@ -89,7 +101,7 @@
           "value": "true"
         }
       ],
-      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "dataset_release": "stage6-semantic-remediation-production-2026-09-01.1",
       "effect": "rate",
       "effective_from": "1990-12-02",
       "evidence_source_ids": [
@@ -102,7 +114,7 @@
       "priority": 692,
       "rate": 15,
       "recipient_country": "NG",
-      "review_package_sha256": "e436c926221b605720e9dbc1359a8b67b21f75caf76513349f05dcd64a48dad2",
+      "review_package_sha256": "4397f5f61309eb03927b08be9211cb2b3d8d1da0512ec6c230351e96949ce8a7",
       "rule_id": "CZ-NG-DIVIDEND-CURRENT-2",
       "source_country": "CZ",
       "source_excerpt_hash": "5d38965e05c5d92bcae93601633219b1e44e1b26181277b4bd3340cdacf47144",
@@ -110,7 +122,7 @@
       "source_representation": "approved_treaty_excerpt",
       "source_text": "Dividendy\n1. Dividendy plynoucõ od spolecnosti, která je re-\nzidentem v jednom smluvnõm státe, osobe, která je re-\nzidentem ve druhém smluvnõm státe, mohou být zda-\nneny v tomto druhém státe.\n2. Tyto dividendy vsak mohou být zdaneny také\nve smluvnõm státe, v nemz je spolecnost, která je vyplá-\ncõ, rezidentem, a to podle právnõch predpisu tohoto\nstátu, avsak jestlize prõjemce je skutecným vlastnõkem\ndividend, dan takto stanovená nepresáhne:\na) 12,5 % hrubé cástky dividend, jestlize prõjemce\nje spolecnost, která vlastnõ prõmo ci ne-\nprõmo nejméne 10 % podõlu s hlasovacõm\nprávem na spolecnosti vyplácejõcõ divi-\ndendy;\nb) 15 % hrubé cástky dividend ve vsech jiných\nprõpadech.\nTento odstavec se nedotkne zdanenõ zisku spolec-\nnosti, ze kterých jsou dividendy vypláceny.\n3. Ustanovenõ odstavcu 1 a 2 tohoto clánku se ne-\npouzijõ, jestlize skutecný vlastnõk dividend, který je re-\nzidentem v jednom smluvnõm státe, má ve druhém\nsmluvnõm státe, kde je spolecnost vyplácejõcõ dividendy\nrezidentem, stálou provozovnu nebo stálou základnu\ntam umõstenou, a jestlize vlastnictvõ akciõ, na jehoz zá-\nklade se dividendy vyplácejõ, je skutecne spojeno s ob-\nchody uskutecn ovanými touto stálou provozovnou ne-\nbo stálou základnou. V takovém prõpade se pouzijõ\nustanovenõ clánku 7 nebo clánku 13 podle toho, o jaký\nprõpad jde.\n4. Jestlize spolecnost, která je rezidentem v jed-\nnom smluvnõm státe, dosahuje zisky nebo prõjmy\nz druhého smluvnõho státu, nemu ze tento druhý stát\nzdanit dividendy vyplácené spole",
       "source_url": "https://e-sbirka.gov.cz/sb/1991/339/0000-00-00",
-      "verification_authority": "stage6_governance_policy",
+      "verification_authority": "semantic_remediation_machine_validation",
       "verification_status": "verified"
     },
     {
@@ -289,14 +301,5 @@
       "verification_status": "verified"
     }
   ],
-  "schema_version": 3,
-  "stage6_production": {
-    "additional_human_review_claimed": false,
-    "package_sha256": "e436c926221b605720e9dbc1359a8b67b21f75caf76513349f05dcd64a48dad2",
-    "production_approval": "production_approved",
-    "rule_promotion": "promoted",
-    "source_release": "not_released",
-    "treaty_pair_id": "CZ-NG",
-    "verification_authority": "stage6_governance_policy"
-  }
+  "schema_version": 3
 }

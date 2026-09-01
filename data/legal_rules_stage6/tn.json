@@ -20,7 +20,7 @@
       "legal_layer": "domestic",
       "paragraph": "1(b)(1)",
       "priority": 900,
-      "rate": 15.0,
+      "rate": 15,
       "recipient_country": "TN",
       "review_package_sha256": "14e9381645206c2c7d1aecf451bc42f0a430ad1ba0082aca147bf29480bb50a5",
       "rule_id": "CZ-TN-DIVIDEND-DOMESTIC",
@@ -34,11 +34,17 @@
       "verification_status": "verified"
     },
     {
-      "approval_created_at": "2026-08-11",
-      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approval_created_at": "2026-09-01",
+      "approval_dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
       "approved_article_text_sha256": "7d00f941f79619a041fb4aee97ede8ac7e94f3d1a5e924da5e37ffcbda9b3b42",
       "article": 10,
       "conditions": [
+        {
+          "fact": "recipient_entity_type",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "company"
+        },
         {
           "fact": "ownership_percent",
           "fact_source": "transaction",
@@ -52,7 +58,7 @@
           "value": "true"
         }
       ],
-      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "dataset_release": "stage6-semantic-remediation-production-2026-09-01.1",
       "effect": "rate",
       "effective_from": "1991-10-25",
       "evidence_source_ids": [
@@ -63,9 +69,9 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 681,
-      "rate": 10.0,
+      "rate": 10,
       "recipient_country": "TN",
-      "review_package_sha256": "14e9381645206c2c7d1aecf451bc42f0a430ad1ba0082aca147bf29480bb50a5",
+      "review_package_sha256": "ed02ce38018aa56eb6d66bc3eff09b7e6c21596e1cf5dcb0616bd65666cfdf4c",
       "rule_id": "CZ-TN-DIVIDEND-CURRENT-1",
       "source_country": "CZ",
       "source_excerpt_hash": "03ed57e2f1760b78a4c646b4260a3a195c5ceced98c31b960564e0957678b3fb",
@@ -73,15 +79,21 @@
       "source_representation": "approved_treaty_excerpt",
       "source_text": "DIVIDENDY\n1. Dividendy vyplácené spolecnostõ, která je rezi-\ndentem v jednom smluvnõm státe, osobe, která je rezi-\ndentem v druhém smluvnõm státe, mohou být zdaneny\nv tomto druhém státe.\n2. Takové dividendy vsak mohou být zdaneny ta-\nké ve smluvnõm státe, v nemz je spolecnost, která je vy-\nplácõ, rezidentem, a to podle právnõch predpisu tohoto\nstátu, avsak dan takto ukládaná nepresáhne:\na) 10 % hrubé cástky dividend, jestlize skutecný\nvlastnõk dividend je spolecnost, která vlastnõ nej-\nméne 25 % podõlu na spolecnosti vyplácejõcõ divi-\ndendy;\nb) 15 % hrubé cástky dividend ve vsech jiných prõpa-\ndech.\nTento odstavec se nedotkne zdanenõ zisku spolec-\nnosti, ze kterých jsou dividendy vypláceny.\n3. Výraz 1dividendya, pouzitý v tomto clánku,\noznacuje prõjmy z akciõ, pozitkových akciõ nebo pozit-\nkových listu , kuksu , zakladatelských podõlu nebo ji-\nných práv ± s výjimkou pohledávek ± s podõlem na zis-\nku a prõjmy z jiných podõlu na spolecnosti, které jsou\npodle právnõch predpisu státu, v nemz je spolecnost,\nkterá dividendy vyplácõ, rezidentem, postaveny na ro-\nven prõjmu m z akciõ.\n4. Ustanovenõ odstavce 1 a 2 tohoto clánku se ne-\npouzijõ, jestlize skutecný prõjemce dividend, který je\nrezidentem v jednom smluvnõm státe, vykonává v dru-\nhém smluvnõm státe, v nemz je rezidentem spolecnost\nvyplácejõcõ dividendy, pru myslovou nebo obchodnõ\ncinnost prostrednictvõm stálé provozovny, která je tam\numõstena, nebo nezávislé povolánõ prostrednictvõm stá-\nlé základny tam umõstené a jestlize ú",
       "source_url": "https://e-sbirka.gov.cz/sb/1992/419/0000-00-00",
-      "verification_authority": "stage6_governance_policy",
+      "verification_authority": "semantic_remediation_machine_validation",
       "verification_status": "verified"
     },
     {
-      "approval_created_at": "2026-08-11",
-      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approval_created_at": "2026-09-01",
+      "approval_dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
       "approved_article_text_sha256": "7d00f941f79619a041fb4aee97ede8ac7e94f3d1a5e924da5e37ffcbda9b3b42",
       "article": 10,
       "conditions": [
+        {
+          "fact": "fallback_case",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "all_other_cases"
+        },
         {
           "fact": "beneficial_owner",
           "fact_source": "transaction",
@@ -89,7 +101,7 @@
           "value": "true"
         }
       ],
-      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "dataset_release": "stage6-semantic-remediation-production-2026-09-01.1",
       "effect": "rate",
       "effective_from": "1991-10-25",
       "evidence_source_ids": [
@@ -100,9 +112,9 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 692,
-      "rate": 15.0,
+      "rate": 15,
       "recipient_country": "TN",
-      "review_package_sha256": "14e9381645206c2c7d1aecf451bc42f0a430ad1ba0082aca147bf29480bb50a5",
+      "review_package_sha256": "ed02ce38018aa56eb6d66bc3eff09b7e6c21596e1cf5dcb0616bd65666cfdf4c",
       "rule_id": "CZ-TN-DIVIDEND-CURRENT-2",
       "source_country": "CZ",
       "source_excerpt_hash": "03ed57e2f1760b78a4c646b4260a3a195c5ceced98c31b960564e0957678b3fb",
@@ -110,7 +122,7 @@
       "source_representation": "approved_treaty_excerpt",
       "source_text": "DIVIDENDY\n1. Dividendy vyplácené spolecnostõ, která je rezi-\ndentem v jednom smluvnõm státe, osobe, která je rezi-\ndentem v druhém smluvnõm státe, mohou být zdaneny\nv tomto druhém státe.\n2. Takové dividendy vsak mohou být zdaneny ta-\nké ve smluvnõm státe, v nemz je spolecnost, která je vy-\nplácõ, rezidentem, a to podle právnõch predpisu tohoto\nstátu, avsak dan takto ukládaná nepresáhne:\na) 10 % hrubé cástky dividend, jestlize skutecný\nvlastnõk dividend je spolecnost, která vlastnõ nej-\nméne 25 % podõlu na spolecnosti vyplácejõcõ divi-\ndendy;\nb) 15 % hrubé cástky dividend ve vsech jiných prõpa-\ndech.\nTento odstavec se nedotkne zdanenõ zisku spolec-\nnosti, ze kterých jsou dividendy vypláceny.\n3. Výraz 1dividendya, pouzitý v tomto clánku,\noznacuje prõjmy z akciõ, pozitkových akciõ nebo pozit-\nkových listu , kuksu , zakladatelských podõlu nebo ji-\nných práv ± s výjimkou pohledávek ± s podõlem na zis-\nku a prõjmy z jiných podõlu na spolecnosti, které jsou\npodle právnõch predpisu státu, v nemz je spolecnost,\nkterá dividendy vyplácõ, rezidentem, postaveny na ro-\nven prõjmu m z akciõ.\n4. Ustanovenõ odstavce 1 a 2 tohoto clánku se ne-\npouzijõ, jestlize skutecný prõjemce dividend, který je\nrezidentem v jednom smluvnõm státe, vykonává v dru-\nhém smluvnõm státe, v nemz je rezidentem spolecnost\nvyplácejõcõ dividendy, pru myslovou nebo obchodnõ\ncinnost prostrednictvõm stálé provozovny, která je tam\numõstena, nebo nezávislé povolánõ prostrednictvõm stá-\nlé základny tam umõstené a jestlize ú",
       "source_url": "https://e-sbirka.gov.cz/sb/1992/419/0000-00-00",
-      "verification_authority": "stage6_governance_policy",
+      "verification_authority": "semantic_remediation_machine_validation",
       "verification_status": "verified"
     },
     {
@@ -129,7 +141,7 @@
       "legal_layer": "domestic",
       "paragraph": "1(a)(1)",
       "priority": 900,
-      "rate": 15.0,
+      "rate": 15,
       "recipient_country": "TN",
       "review_package_sha256": "14e9381645206c2c7d1aecf451bc42f0a430ad1ba0082aca147bf29480bb50a5",
       "rule_id": "CZ-TN-INTEREST-DOMESTIC",
@@ -166,7 +178,7 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 691,
-      "rate": 0.0,
+      "rate": 0,
       "recipient_country": "TN",
       "review_package_sha256": "14e9381645206c2c7d1aecf451bc42f0a430ad1ba0082aca147bf29480bb50a5",
       "rule_id": "CZ-TN-INTEREST-CURRENT-1",
@@ -203,7 +215,7 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 692,
-      "rate": 12.0,
+      "rate": 12,
       "recipient_country": "TN",
       "review_package_sha256": "14e9381645206c2c7d1aecf451bc42f0a430ad1ba0082aca147bf29480bb50a5",
       "rule_id": "CZ-TN-INTEREST-CURRENT-2",
@@ -232,7 +244,7 @@
       "legal_layer": "domestic",
       "paragraph": "1(a)(1)",
       "priority": 900,
-      "rate": 15.0,
+      "rate": 15,
       "recipient_country": "TN",
       "review_package_sha256": "14e9381645206c2c7d1aecf451bc42f0a430ad1ba0082aca147bf29480bb50a5",
       "rule_id": "CZ-TN-ROYALTY-DOMESTIC",
@@ -269,7 +281,7 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 691,
-      "rate": 5.0,
+      "rate": 5,
       "recipient_country": "TN",
       "review_package_sha256": "14e9381645206c2c7d1aecf451bc42f0a430ad1ba0082aca147bf29480bb50a5",
       "rule_id": "CZ-TN-ROYALTY-CURRENT-1",
@@ -306,7 +318,7 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 692,
-      "rate": 15.0,
+      "rate": 15,
       "recipient_country": "TN",
       "review_package_sha256": "14e9381645206c2c7d1aecf451bc42f0a430ad1ba0082aca147bf29480bb50a5",
       "rule_id": "CZ-TN-ROYALTY-CURRENT-2",
@@ -320,14 +332,5 @@
       "verification_status": "verified"
     }
   ],
-  "schema_version": 3,
-  "stage6_production": {
-    "additional_human_review_claimed": false,
-    "package_sha256": "14e9381645206c2c7d1aecf451bc42f0a430ad1ba0082aca147bf29480bb50a5",
-    "production_approval": "production_approved",
-    "rule_promotion": "promoted",
-    "source_release": "not_released",
-    "treaty_pair_id": "CZ-TN",
-    "verification_authority": "stage6_governance_policy"
-  }
+  "schema_version": 3
 }

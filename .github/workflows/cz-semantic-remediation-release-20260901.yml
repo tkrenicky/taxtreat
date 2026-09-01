@@ -1,0 +1,43 @@
+name: CZ semantic remediation deterministic release
+
+on:
+  push:
+    branches:
+      - feat/cz-semantic-remediation-release-20260901
+    paths:
+      - ".github/workflows/cz-semantic-remediation-release-20260901.yml"
+      - "scripts/release_stage6_semantic_remediation_20260901.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/cz-semantic-remediation-release-20260901
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build deterministic semantic remediation release
+        run: python scripts/release_stage6_semantic_remediation_20260901.py
+      - name: Commit generated release artifacts
+        run: |
+          if git diff --quiet; then
+            echo "No generated changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            data/legal_rules_stage6 \
+            data/legal_reviews/global_cz_outbound/stage6_production_approval.json \
+            data/legal_reviews/global_cz_outbound/stage6_rule_promotion.json \
+            data/legal_reviews/global_cz_outbound/stage6_source_release.json \
+            data/legal_reviews/global_cz_outbound/production_source_release_gate_v2.json \
+            taxtreat/engine/legal_rule_engine.py
+          git commit -m "Release CZ semantic remediation rules"
+          git push origin HEAD:feat/cz-semantic-remediation-release-20260901

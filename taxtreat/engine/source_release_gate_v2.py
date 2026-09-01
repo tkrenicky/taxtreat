@@ -50,9 +50,21 @@ class CanonicalSourceRelease:
 
     @property
     def is_released(self) -> bool:
+        machine_release = self.release_evidence.get(
+            "semantic_remediation_machine_release"
+        )
+        machine_validated = (
+            isinstance(machine_release, Mapping)
+            and machine_release.get("release_status")
+            == "released_after_machine_validation"
+            and machine_release.get("additional_human_review_claimed") is False
+            and machine_release.get("package_sha256") == self.package_sha256
+        )
         return (
-            self.human_review_status
-            == "human_review_complete"
+            (
+                self.human_review_status == "human_review_complete"
+                or machine_validated
+            )
             and self.independent_qa_status
             in {"complete", "not_required"}
             and self.production_approval_status

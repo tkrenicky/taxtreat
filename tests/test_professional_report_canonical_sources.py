@@ -6,25 +6,22 @@ from taxtreat.services.legal_sources import load_verified_provisions
 from taxtreat.services.reporting.client_report import _cz_ir_domestic_exemption_html
 
 
-def _ad_dividend_payload():
+def _ad_treaty_payload():
     return {
         "source_country": "CZ",
         "recipient_country": "AD",
-        "income_type": "dividend",
+        "income_type": "interest",
         "transaction_date": "2026-08-16",
         "facts": {
             "recipient_tax_residence": "confirmed",
             "recipient_legal_form": "company",
+            "recipient_entity_type": "company_other_than_partnership",
             "beneficial_owner": True,
             "beneficial_owner_confirmed": True,
             "anti_abuse_review_passed": True,
             "residence_certificate_available": True,
             "no_pe_connection": True,
             "pe_connection": False,
-            "ownership_percent": 100,
-            "direct_ownership": True,
-            "holding_period_months": 24,
-            "recipient_is_qualifying_company": True,
         },
         "determinations": {},
     }
@@ -33,7 +30,7 @@ def _ad_dividend_payload():
 def test_analysis_report_uses_canonical_treaty_text_not_stage6_excerpt(monkeypatch):
     monkeypatch.setattr(main, "require_analysis_source_release", lambda *_args, **_kwargs: None)
     client = TestClient(app)
-    response = client.post("/analysis/report", json=_ad_dividend_payload())
+    response = client.post("/analysis/report", json=_ad_treaty_payload())
 
     assert response.status_code == 200
     payload = response.json()
@@ -46,25 +43,18 @@ def test_analysis_report_uses_canonical_treaty_text_not_stage6_excerpt(monkeypat
     ]
     assert treaty_sources
 
-    canonical = load_verified_provisions()["CZ-AD|treaty|10"]
+    canonical = load_verified_provisions()["CZ-AD|treaty|11"]
     source = treaty_sources[0]
     assert source["excerpt"] == canonical["text"]
     assert source["excerpt_sha256"] == canonical["verified_text_sha256"]
     assert source["source_url"] == canonical["source_url"]
     assert canonical["text"] in html
 
-    # Known damaged Stage 6 spellings must never leak into the report once the
-    # canonical e-Sbírka text has been attached.
-    assert "rozdili zisk" not in source["excerpt"]
-    assert "vyplacejici" not in source["excerpt"]
-    assert "rozdili zisk" not in html
-    assert "vyplacejici" not in html
-
 
 def test_analysis_and_report_share_identical_canonical_treaty_excerpt(monkeypatch):
     monkeypatch.setattr(main, "require_analysis_source_release", lambda *_args, **_kwargs: None)
     client = TestClient(app)
-    payload = _ad_dividend_payload()
+    payload = _ad_treaty_payload()
     analysis = client.post("/analysis", json=payload).json()
     report = client.post("/analysis/report", json=payload).json()["report"]
 

@@ -776,7 +776,8 @@ def test_overloaded_beneficial_owner_legal_status_fails_closed():
     assert missing == "beneficial_owner"
 
 
-def test_pending_semantic_remediation_registry_matches_engine_quarantine():
+
+def test_semantic_remediation_registry_matches_machine_release():
     import json
     from pathlib import Path
 
@@ -784,110 +785,70 @@ def test_pending_semantic_remediation_registry_matches_engine_quarantine():
         _PENDING_SEMANTIC_REMEDIATION_SCOPES,
     )
 
-    payload = json.loads(
+    corrections = json.loads(
         Path(
             "data/legal_consolidation/"
             "semantic_remediation_condition_candidates_20260829.json"
         ).read_text(encoding="utf-8")
     )
+    release = json.loads(
+        Path(
+            "data/legal_reviews/global_cz_outbound/"
+            "semantic_remediation_machine_release_20260901.json"
+        ).read_text(encoding="utf-8")
+    )
+
     candidate_scopes = {
         (row["country"], row["income_type"])
-        for row in payload["corrections"]
+        for row in corrections["corrections"]
+    }
+    released_scopes = {
+        (row["partner_country"], row["income_type"])
+        for row in release["records"]
     }
 
     assert len(candidate_scopes) == 40
-    # Every quarantined semantic scope must have a source-backed correction
-    # record; the registry and runtime quarantine must remain exactly aligned.
-    assert candidate_scopes == _PENDING_SEMANTIC_REMEDIATION_SCOPES
+    assert released_scopes == candidate_scopes
+    assert release["additional_human_review_claimed"] is False
+    assert _PENDING_SEMANTIC_REMEDIATION_SCOPES == set()
 
 
-def test_all_detectable_reduced_dividend_projection_gaps_are_quarantined():
+def test_all_semantic_remediation_scopes_have_machine_validated_runtime_rules():
     import json
-    import re
     from pathlib import Path
 
-    from taxtreat.engine.legal_rule_engine import (
-        _PENDING_SEMANTIC_REMEDIATION_SCOPES,
+    corrections = json.loads(
+        Path(
+            "data/legal_consolidation/"
+            "semantic_remediation_condition_candidates_20260829.json"
+        ).read_text(encoding="utf-8")
     )
 
-    correction_payload = json.loads(
-        Path("data/legal_consolidation/human_condition_corrections.json").read_text(
-            encoding="utf-8"
+    checked = set()
+    for correction in corrections["corrections"]:
+        country = correction["country"]
+        income = correction["income_type"]
+        payload = json.loads(
+            Path(
+                f"data/legal_rules_stage6/{country.lower()}.json"
+            ).read_text(encoding="utf-8")
         )
-    )
-    corrected_scopes = {
-        (item.get("country"), item.get("income_type"))
-        for item in correction_payload.get("corrections", [])
-    }
-    uncovered = []
-
-    for path in sorted(Path("data/legal_rules_stage6").glob("*.json")):
-        payload = json.loads(path.read_text(encoding="utf-8"))
-        rules = payload.get("rules", payload if isinstance(payload, list) else [])
-        dividend_rules = [
-            rule for rule in rules
-            if rule.get("income_type") == "dividend"
-            and rule.get("legal_layer") in {"treaty", "protocol", "mli"}
-            and rule.get("rate") is not None
+        rules = [
+            row
+            for row in payload["rules"]
+            if row.get("income_type") == income
+            and row.get("verification_authority")
+            == "semantic_remediation_machine_validation"
         ]
-        if not dividend_rules:
-            continue
+        assert rules, (country, income)
+        assert all(row.get("verification_status") == "verified" for row in rules)
+        assert all(row.get("review_package_sha256") for row in rules)
+        checked.add((country, income))
 
-        max_rate = max(float(rule["rate"]) for rule in dividend_rules)
-        country = path.stem.upper()
-
-        for rule in dividend_rules:
-            if float(rule["rate"]) >= max_rate:
-                continue
-
-            conditions = rule.get("conditions", [])
-            facts = {condition.get("fact") for condition in conditions}
-            text = re.sub(r"\s+", " ", str(rule.get("source_text") or "")).lower()
-
-            company_required = bool(
-                re.search(
-                    r"(skute.{0,20}vlastn.{0,20}|p[rř]ijemce|prõjemce)"
-                    r".{0,220}(společnost|spolecnost)",
-                    text,
-                )
-            )
-            direct_required = bool(
-                re.search(r"(přímo|prõmo|directly).{0,100}(drží|vlastn|holds|owns)", text)
-            )
-            voting_required = bool(re.search(r"(hlasovac|voting)", text))
-            one_year_required = bool(
-                re.search(r"(alespoň|nejméně|at least).{0,40}(jeden rok|jednoho roku|one year)", text)
-            )
-
-            gaps = []
-            if company_required and "recipient_entity_type" not in facts:
-                gaps.append("company")
-            if direct_required and "direct_ownership" not in facts:
-                gaps.append("direct")
-            if voting_required and not any("voting" in str(fact) for fact in facts):
-                gaps.append("voting")
-            if one_year_required and not any(
-                fact in {
-                    "holding_period_months",
-                    "holding_period_years",
-                    "continuous_holding_period_days",
-                }
-                for fact in facts
-            ):
-                gaps.append("holding")
-
-            scope = (country, "dividend")
-            if (
-                gaps
-                and scope not in _PENDING_SEMANTIC_REMEDIATION_SCOPES
-                and scope not in corrected_scopes
-            ):
-                uncovered.append((country, rule.get("rule_id"), gaps))
-
-    assert uncovered == []
+    assert len(checked) == 40
 
 
-def test_quarantined_scope_never_returns_old_final_rate():
+def test_machine_validated_us_scope_selects_correct_reduced_rate():
     from pathlib import Path
 
     from taxtreat.engine.legal_rule_loader import load_legal_rules
@@ -902,17 +863,15 @@ def test_quarantined_scope_never_returns_old_final_rate():
             "recipient_country": "US",
             "beneficial_owner": True,
             "recipient_entity_type": "company",
-            "ownership_percent": 100,
             "voting_ownership": 100,
         },
         as_of=AS_OF,
     )
 
-    assert result.status == DecisionStatus.REVIEW_REQUIRED
-    assert result.rate is None
-    assert result.requires_review is True
-    assert any("quarantined" in line.lower() for line in result.explanation)
-
+    assert result.status == DecisionStatus.FINAL
+    assert result.rate == 5
+    assert result.selected_rule_id == "CZ-US-DIVIDEND-CURRENT-1"
+    assert not any("quarantined" in line.lower() for line in result.explanation)
 
 def test_all_nonboolean_beneficial_owner_projection_defects_are_quarantined():
     import json

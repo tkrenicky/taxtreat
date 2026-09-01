@@ -34,8 +34,8 @@
       "verification_status": "verified"
     },
     {
-      "approval_created_at": "2026-08-11",
-      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approval_created_at": "2026-09-01",
+      "approval_dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
       "approved_article_text_sha256": "0afbc80194bd521d254dd1f6c948546ac734d738acf8ad629fe391b14d9be5e8",
       "article": 10,
       "conditions": [
@@ -46,19 +46,25 @@
           "value": true
         },
         {
-          "fact": "beneficial_owner",
-          "fact_source": "transaction",
-          "operator": "==",
-          "value": true
-        },
-        {
           "fact": "permanent_establishment_connection",
           "fact_source": "transaction",
           "operator": "==",
           "value": false
+        },
+        {
+          "fact": "fallback_case",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "all_other_cases"
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
         }
       ],
-      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "dataset_release": "stage6-semantic-remediation-production-2026-09-01.1",
       "effect": "rate",
       "effective_from": "1996-10-23",
       "evidence_source_ids": [
@@ -71,7 +77,7 @@
       "priority": 671,
       "rate": 15,
       "recipient_country": "CH",
-      "review_package_sha256": "f4f3a756b17d4894a50f631954a031789745b77e67f8521ed045d74d15c3ed96",
+      "review_package_sha256": "74d74f237a9fec8c47271c51279263d11075474d51b274f0b72514c3dfcbadbb",
       "rule_id": "CZ-CH-DIVIDEND-CURRENT-1",
       "source_country": "CZ",
       "source_excerpt_hash": "0afbc80194bd521d254dd1f6c948546ac734d738acf8ad629fe391b14d9be5e8",
@@ -79,7 +85,7 @@
       "source_representation": "approved_treaty_excerpt",
       "source_text": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezi-\ndentem jednoho smluvnõho státu, rezidentu druhého\nsmluvnõho státu, mohou být zdaneny v tomto druhém\nstáte.\n2. Tyto dividendy vsak mohou být rovnez zda-\nneny ve smluvnõm státe, v nemz je spolecnost, která\ndividendy vyplácõ, rezidentem, a to podle právnõch\npredpisu tohoto státu, avsak jestlize skutecný vlastnõk\ndividend je rezidentem druhého smluvnõho státu, dan\ntakto stanovená nepresáhne:\na) 5 procent hrubé cástky dividend, jestlize skutec-\nným vlastnõkem je spolecnost (jiná nez osobnõ\nspolecnost), která prõmo vlastnõ nejméne 25 pro-\ncent majetku spolecnosti vyplácejõcõ dividendy;\nb) 15 procent hrubé cástky dividend ve vsech ostat-\nnõch prõpadech.\nTento odstavec se nedotkne zdanenõ zisku spolecnosti,\nze kterých jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku\noznacuje prõjmy z akciõ nebo jiných práv s podõlem\nna zisku, s výjimkou pohledávek, jakoz i prõjmy\nz práv na spolecnosti, které jsou podrobeny stejnému\nzdanenõ jako prõjmy z akciõ podle právnõch predpisu\ntoho státu, v nemz je spolecnost, která rozdõlõ zisk,\nrezidentem.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk dividend, který je rezidentem v jed-\nnom smluvnõm státe, vykonává v druhém smluvnõm\nstáte, v nemz je rezidentem spolecnost vyplácejõcõ di-\nvidendy, pru myslovou nebo obchodnõ cinnost pro-\nstrednictvõm stálé provozovny, která je tam umõstena,\nnebo vykonává v tomto druhém státe nezávislé povo-\nlánõ prostrednic",
       "source_url": "https://e-sbirka.gov.cz/sb/1996/281/0000-00-00",
-      "verification_authority": "stage6_governance_policy",
+      "verification_authority": "semantic_remediation_machine_validation",
       "verification_status": "verified"
     },
     {
@@ -1787,16 +1793,74 @@
       "source_url": "https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/1992/586/2026-04-01",
       "verification_authority": "stage6_governance_policy",
       "verification_status": "verified"
+    },
+    {
+      "approval_created_at": "2026-09-01",
+      "approval_dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
+      "approved_article_text_sha256": "0afbc80194bd521d254dd1f6c948546ac734d738acf8ad629fe391b14d9be5e8",
+      "article": 10,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        },
+        {
+          "fact": "recipient_entity_type",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "company_other_than_partnership"
+        },
+        {
+          "fact": "direct_ownership",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        },
+        {
+          "fact": "ownership_percent",
+          "fact_source": "transaction",
+          "operator": ">=",
+          "value": "25"
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        }
+      ],
+      "dataset_release": "stage6-semantic-remediation-production-2026-09-01.1",
+      "effect": "rate",
+      "effective_from": "1996-10-23",
+      "evidence_source_ids": [
+        "SRC-773D5F8BD93AE73A"
+      ],
+      "income_type": "dividend",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "paragraph": null,
+      "priority": 670,
+      "rate": 5,
+      "recipient_country": "CH",
+      "review_package_sha256": "74d74f237a9fec8c47271c51279263d11075474d51b274f0b72514c3dfcbadbb",
+      "rule_id": "CZ-CH-DIVIDEND-SEMANTIC-REMEDIATION-5",
+      "source_country": "CZ",
+      "source_excerpt_hash": "0afbc80194bd521d254dd1f6c948546ac734d738acf8ad629fe391b14d9be5e8",
+      "source_id": "SRC-773D5F8BD93AE73A",
+      "source_representation": "approved_treaty_excerpt",
+      "source_text": "Dividendy\n1. Dividendy vyplácené spolecnostõ, která je rezi-\ndentem jednoho smluvnõho státu, rezidentu druhého\nsmluvnõho státu, mohou být zdaneny v tomto druhém\nstáte.\n2. Tyto dividendy vsak mohou být rovnez zda-\nneny ve smluvnõm státe, v nemz je spolecnost, která\ndividendy vyplácõ, rezidentem, a to podle právnõch\npredpisu tohoto státu, avsak jestlize skutecný vlastnõk\ndividend je rezidentem druhého smluvnõho státu, dan\ntakto stanovená nepresáhne:\na) 5 procent hrubé cástky dividend, jestlize skutec-\nným vlastnõkem je spolecnost (jiná nez osobnõ\nspolecnost), která prõmo vlastnõ nejméne 25 pro-\ncent majetku spolecnosti vyplácejõcõ dividendy;\nb) 15 procent hrubé cástky dividend ve vsech ostat-\nnõch prõpadech.\nTento odstavec se nedotkne zdanenõ zisku spolecnosti,\nze kterých jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku\noznacuje prõjmy z akciõ nebo jiných práv s podõlem\nna zisku, s výjimkou pohledávek, jakoz i prõjmy\nz práv na spolecnosti, které jsou podrobeny stejnému\nzdanenõ jako prõjmy z akciõ podle právnõch predpisu\ntoho státu, v nemz je spolecnost, která rozdõlõ zisk,\nrezidentem.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize\nskutecný vlastnõk dividend, který je rezidentem v jed-\nnom smluvnõm státe, vykonává v druhém smluvnõm\nstáte, v nemz je rezidentem spolecnost vyplácejõcõ di-\nvidendy, pru myslovou nebo obchodnõ cinnost pro-\nstrednictvõm stálé provozovny, která je tam umõstena,\nnebo vykonává v tomto druhém státe nezávislé povo-\nlánõ prostrednic",
+      "source_url": "https://e-sbirka.gov.cz/sb/1996/281/0000-00-00",
+      "verification_authority": "semantic_remediation_machine_validation",
+      "verification_status": "verified"
     }
   ],
-  "schema_version": 3,
-  "stage6_production": {
-    "additional_human_review_claimed": false,
-    "package_sha256": "f4f3a756b17d4894a50f631954a031789745b77e67f8521ed045d74d15c3ed96",
-    "production_approval": "production_approved",
-    "rule_promotion": "promoted",
-    "source_release": "not_released",
-    "treaty_pair_id": "CZ-CH",
-    "verification_authority": "stage6_governance_policy"
-  }
+  "schema_version": 3
 }

@@ -20,7 +20,7 @@
       "legal_layer": "domestic",
       "paragraph": "1(b)(1)",
       "priority": 900,
-      "rate": 15.0,
+      "rate": 15,
       "recipient_country": "PK",
       "review_package_sha256": "5d361dc54d8dcfae38b172b20aa54b7ff311df243a06831b1f213070cea6a481",
       "rule_id": "CZ-PK-DIVIDEND-DOMESTIC",
@@ -34,11 +34,23 @@
       "verification_status": "verified"
     },
     {
-      "approval_created_at": "2026-08-11",
-      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approval_created_at": "2026-09-01",
+      "approval_dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
       "approved_article_text_sha256": "a7daadd8cb809794af20f7243f879540883071d2acc60f7ab796313f739d6e5b",
       "article": 10,
       "conditions": [
+        {
+          "fact": "recipient_entity_type",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "company_other_than_partnership"
+        },
+        {
+          "fact": "direct_ownership",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        },
         {
           "fact": "ownership_percent",
           "fact_source": "transaction",
@@ -52,7 +64,7 @@
           "value": "true"
         }
       ],
-      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "dataset_release": "stage6-semantic-remediation-production-2026-09-01.1",
       "effect": "rate",
       "effective_from": "2015-10-30",
       "evidence_source_ids": [
@@ -63,9 +75,9 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 681,
-      "rate": 5.0,
+      "rate": 5,
       "recipient_country": "PK",
-      "review_package_sha256": "5d361dc54d8dcfae38b172b20aa54b7ff311df243a06831b1f213070cea6a481",
+      "review_package_sha256": "eae2d0e1da58b9b818526cf4acd37edcaa52fce9c988d58e675473dd6decd4bb",
       "rule_id": "CZ-PK-DIVIDEND-CURRENT-1",
       "source_country": "CZ",
       "source_excerpt_hash": "fc3e50f9105f36b8e79150195136540e4b1f8f1601244e18d5a9c6953169d1ae",
@@ -73,15 +85,21 @@
       "source_representation": "approved_treaty_excerpt",
       "source_text": "DIVIDENDY\n1.\nDividendy vyplácené společností, která je rezidentem jednoho smluvního státu, rezidentu druhého smluvního státu, mohou být zdaněny v tomto druhém státě.\n2.\nTyto dividendy však mohou být rovněž zdaněny ve smluvním státě, jehož je společnost, která je vyplácí, rezidentem, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník dividend je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne:\na)\n5 procent hrubé částky dividend, jestliže skutečným vlastníkem je společnost (jiná než osobní společnost), která přímo drží alespoň 25 procent kapitálu společnosti, která dividendy vyplácí;\nb)\n15 procent hrubé částky dividend ve všech ostatních případech.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.\n3.\nVýraz „dividendy“ použitý v tomto článku označuje příjmy z akcií, požitkových akcií nebo požitkových práv, kuksů, zakladatelských podílů nebo jiných práv, s výjimkou pohledávek, s podílem na zisku, jakož i jiné příjmy, které jsou podrobeny stejnému daňovému režimu jako příjmy z akcií podle právních předpisů státu, jehož je společnost, která rozdílí zisk nebo provádí platbu, rezidentem.\n4.\nUstanovení odstavců 1 a 2 se nepoužijí, jestliže skutečný vlastník dividend, který je rezidentem jednoho smluvního státu, vykonává v druhém smluvním státě, jehož je rezidentem společnost vyplácející dividendy, svoji činnost prostřednictvím stálé provozovny, která je tam umístěna, nebo vykonává v tomto druhém státě nezá",
       "source_url": "https://e-sbirka.gov.cz/sm/2015/58/0000-00-00",
-      "verification_authority": "stage6_governance_policy",
+      "verification_authority": "semantic_remediation_machine_validation",
       "verification_status": "verified"
     },
     {
-      "approval_created_at": "2026-08-11",
-      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approval_created_at": "2026-09-01",
+      "approval_dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
       "approved_article_text_sha256": "a7daadd8cb809794af20f7243f879540883071d2acc60f7ab796313f739d6e5b",
       "article": 10,
       "conditions": [
+        {
+          "fact": "fallback_case",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "all_other_cases"
+        },
         {
           "fact": "beneficial_owner",
           "fact_source": "transaction",
@@ -89,7 +107,7 @@
           "value": "true"
         }
       ],
-      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "dataset_release": "stage6-semantic-remediation-production-2026-09-01.1",
       "effect": "rate",
       "effective_from": "2015-10-30",
       "evidence_source_ids": [
@@ -100,9 +118,9 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 692,
-      "rate": 15.0,
+      "rate": 15,
       "recipient_country": "PK",
-      "review_package_sha256": "5d361dc54d8dcfae38b172b20aa54b7ff311df243a06831b1f213070cea6a481",
+      "review_package_sha256": "eae2d0e1da58b9b818526cf4acd37edcaa52fce9c988d58e675473dd6decd4bb",
       "rule_id": "CZ-PK-DIVIDEND-CURRENT-2",
       "source_country": "CZ",
       "source_excerpt_hash": "fc3e50f9105f36b8e79150195136540e4b1f8f1601244e18d5a9c6953169d1ae",
@@ -110,7 +128,7 @@
       "source_representation": "approved_treaty_excerpt",
       "source_text": "DIVIDENDY\n1.\nDividendy vyplácené společností, která je rezidentem jednoho smluvního státu, rezidentu druhého smluvního státu, mohou být zdaněny v tomto druhém státě.\n2.\nTyto dividendy však mohou být rovněž zdaněny ve smluvním státě, jehož je společnost, která je vyplácí, rezidentem, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník dividend je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne:\na)\n5 procent hrubé částky dividend, jestliže skutečným vlastníkem je společnost (jiná než osobní společnost), která přímo drží alespoň 25 procent kapitálu společnosti, která dividendy vyplácí;\nb)\n15 procent hrubé částky dividend ve všech ostatních případech.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.\n3.\nVýraz „dividendy“ použitý v tomto článku označuje příjmy z akcií, požitkových akcií nebo požitkových práv, kuksů, zakladatelských podílů nebo jiných práv, s výjimkou pohledávek, s podílem na zisku, jakož i jiné příjmy, které jsou podrobeny stejnému daňovému režimu jako příjmy z akcií podle právních předpisů státu, jehož je společnost, která rozdílí zisk nebo provádí platbu, rezidentem.\n4.\nUstanovení odstavců 1 a 2 se nepoužijí, jestliže skutečný vlastník dividend, který je rezidentem jednoho smluvního státu, vykonává v druhém smluvním státě, jehož je rezidentem společnost vyplácející dividendy, svoji činnost prostřednictvím stálé provozovny, která je tam umístěna, nebo vykonává v tomto druhém státě nezá",
       "source_url": "https://e-sbirka.gov.cz/sm/2015/58/0000-00-00",
-      "verification_authority": "stage6_governance_policy",
+      "verification_authority": "semantic_remediation_machine_validation",
       "verification_status": "verified"
     },
     {
@@ -129,7 +147,7 @@
       "legal_layer": "domestic",
       "paragraph": "1(a)(1)",
       "priority": 900,
-      "rate": 15.0,
+      "rate": 15,
       "recipient_country": "PK",
       "review_package_sha256": "5d361dc54d8dcfae38b172b20aa54b7ff311df243a06831b1f213070cea6a481",
       "rule_id": "CZ-PK-INTEREST-DOMESTIC",
@@ -166,7 +184,7 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 691,
-      "rate": 10.0,
+      "rate": 10,
       "recipient_country": "PK",
       "review_package_sha256": "5d361dc54d8dcfae38b172b20aa54b7ff311df243a06831b1f213070cea6a481",
       "rule_id": "CZ-PK-INTEREST-CURRENT-1",
@@ -209,7 +227,7 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 682,
-      "rate": 0.0,
+      "rate": 0,
       "recipient_country": "PK",
       "review_package_sha256": "5d361dc54d8dcfae38b172b20aa54b7ff311df243a06831b1f213070cea6a481",
       "rule_id": "CZ-PK-INTEREST-CURRENT-2",
@@ -238,7 +256,7 @@
       "legal_layer": "domestic",
       "paragraph": "1(a)(1)",
       "priority": 900,
-      "rate": 15.0,
+      "rate": 15,
       "recipient_country": "PK",
       "review_package_sha256": "5d361dc54d8dcfae38b172b20aa54b7ff311df243a06831b1f213070cea6a481",
       "rule_id": "CZ-PK-ROYALTY-DOMESTIC",
@@ -275,7 +293,7 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 691,
-      "rate": 10.0,
+      "rate": 10,
       "recipient_country": "PK",
       "review_package_sha256": "5d361dc54d8dcfae38b172b20aa54b7ff311df243a06831b1f213070cea6a481",
       "rule_id": "CZ-PK-ROYALTY-CURRENT-1",
@@ -289,14 +307,5 @@
       "verification_status": "verified"
     }
   ],
-  "schema_version": 3,
-  "stage6_production": {
-    "additional_human_review_claimed": false,
-    "package_sha256": "5d361dc54d8dcfae38b172b20aa54b7ff311df243a06831b1f213070cea6a481",
-    "production_approval": "production_approved",
-    "rule_promotion": "promoted",
-    "source_release": "not_released",
-    "treaty_pair_id": "CZ-PK",
-    "verification_authority": "stage6_governance_policy"
-  }
+  "schema_version": 3
 }

@@ -20,7 +20,7 @@
       "legal_layer": "domestic",
       "paragraph": "1(b)(1)",
       "priority": 900,
-      "rate": 15.0,
+      "rate": 15,
       "recipient_country": "GE",
       "review_package_sha256": "55714a2a87b25ff586e2f050a54f296e78d67ad6b0bc9160f1f969c439a82afe",
       "rule_id": "CZ-GE-DIVIDEND-DOMESTIC",
@@ -34,11 +34,23 @@
       "verification_status": "verified"
     },
     {
-      "approval_created_at": "2026-08-11",
-      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approval_created_at": "2026-09-01",
+      "approval_dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
       "approved_article_text_sha256": "277875b90d6ebdad7a8a63ac78066680443933938df7ce2d467775bf9809cd10",
       "article": 10,
       "conditions": [
+        {
+          "fact": "recipient_entity_type",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "company_other_than_partnership"
+        },
+        {
+          "fact": "direct_ownership",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        },
         {
           "fact": "ownership_percent",
           "fact_source": "transaction",
@@ -52,7 +64,7 @@
           "value": "true"
         }
       ],
-      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "dataset_release": "stage6-semantic-remediation-production-2026-09-01.1",
       "effect": "rate",
       "effective_from": "2007-05-04",
       "evidence_source_ids": [
@@ -63,9 +75,9 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 681,
-      "rate": 5.0,
+      "rate": 5,
       "recipient_country": "GE",
-      "review_package_sha256": "55714a2a87b25ff586e2f050a54f296e78d67ad6b0bc9160f1f969c439a82afe",
+      "review_package_sha256": "e7cc8f3e3f728af10162cac79a3c734097f29dc907b3951efc4786fadf75699d",
       "rule_id": "CZ-GE-DIVIDEND-CURRENT-1",
       "source_country": "CZ",
       "source_excerpt_hash": "83dcf8444442691704e740845f27c7c0c18fd0bdb33e43e7d8c0d50801cd2668",
@@ -73,15 +85,21 @@
       "source_representation": "approved_treaty_excerpt",
       "source_text": "DIVIDENDY\n1. Dividendy vyplácené spolecnostõ, která je rezidentem jednoho smluvnõho státu, rezidentu druhého\nsmluvnõho státu, mohou být zdaneny v tomto druhém státe.\n2. Tyto dividendy vsak mohou být rovnez zdaneny ve smluvnõm státe, jehoz je spolecnost, která je vyplácõ,\nrezidentem, a to podle právnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk dividend je rezidentem\ndruhého smluvnõho státu, dan takto ulozená nepresáhne:\na) 5 procent hrubé cástky dividend, jestlize skutecným vlastnõkem je spolecnost (jiná nez osobnõ spolecnost),\nkterá prõmo vlastnõ nejméne 25 procent kapitálu spolecnosti vyplácejõcõ dividendy;\nb) 10 procent hrubé cástky dividend ve vsech ostatnõch prõpadech.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou dohodou zpusob aplikace techto omezenõ.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti, z nichz jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku oznacuje prõjmy z akciõ nebo jiných práv, s výjimkou pohle-\ndávek, s podõlem na zisku, jakoz i jiné prõjmy, které jsou podrobeny stejnému danovému rezimu jako prõjmy\nz akciõ podle právnõch predpisu státu, jehoz je spolecnost, která provádõ platbu, rezidentem.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize skutecný vlastnõk dividend, který je rezidentem jednoho\nsmluvnõho státu, vykonává v druhém smluvnõm státe, jehoz je rezidentem spolecnost vyplácejõcõ dividendy, svoji\ncinnost prostrednictvõm stálé provozovny, která je tam umõstena, a jestlize úcast, pro kterou se divide",
       "source_url": "https://e-sbirka.gov.cz/sm/2007/40/0000-00-00",
-      "verification_authority": "stage6_governance_policy",
+      "verification_authority": "semantic_remediation_machine_validation",
       "verification_status": "verified"
     },
     {
-      "approval_created_at": "2026-08-11",
-      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approval_created_at": "2026-09-01",
+      "approval_dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
       "approved_article_text_sha256": "277875b90d6ebdad7a8a63ac78066680443933938df7ce2d467775bf9809cd10",
       "article": 10,
       "conditions": [
+        {
+          "fact": "fallback_case",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "all_other_cases"
+        },
         {
           "fact": "beneficial_owner",
           "fact_source": "transaction",
@@ -89,7 +107,7 @@
           "value": "true"
         }
       ],
-      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "dataset_release": "stage6-semantic-remediation-production-2026-09-01.1",
       "effect": "rate",
       "effective_from": "2007-05-04",
       "evidence_source_ids": [
@@ -100,9 +118,9 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 692,
-      "rate": 10.0,
+      "rate": 10,
       "recipient_country": "GE",
-      "review_package_sha256": "55714a2a87b25ff586e2f050a54f296e78d67ad6b0bc9160f1f969c439a82afe",
+      "review_package_sha256": "e7cc8f3e3f728af10162cac79a3c734097f29dc907b3951efc4786fadf75699d",
       "rule_id": "CZ-GE-DIVIDEND-CURRENT-2",
       "source_country": "CZ",
       "source_excerpt_hash": "83dcf8444442691704e740845f27c7c0c18fd0bdb33e43e7d8c0d50801cd2668",
@@ -110,7 +128,7 @@
       "source_representation": "approved_treaty_excerpt",
       "source_text": "DIVIDENDY\n1. Dividendy vyplácené spolecnostõ, která je rezidentem jednoho smluvnõho státu, rezidentu druhého\nsmluvnõho státu, mohou být zdaneny v tomto druhém státe.\n2. Tyto dividendy vsak mohou být rovnez zdaneny ve smluvnõm státe, jehoz je spolecnost, která je vyplácõ,\nrezidentem, a to podle právnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk dividend je rezidentem\ndruhého smluvnõho státu, dan takto ulozená nepresáhne:\na) 5 procent hrubé cástky dividend, jestlize skutecným vlastnõkem je spolecnost (jiná nez osobnõ spolecnost),\nkterá prõmo vlastnõ nejméne 25 procent kapitálu spolecnosti vyplácejõcõ dividendy;\nb) 10 procent hrubé cástky dividend ve vsech ostatnõch prõpadech.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou dohodou zpusob aplikace techto omezenõ.\nTento odstavec se nedotýká zdanenõ zisku spolecnosti, z nichz jsou dividendy vypláceny.\n3. Výraz 1dividendya pouzitý v tomto clánku oznacuje prõjmy z akciõ nebo jiných práv, s výjimkou pohle-\ndávek, s podõlem na zisku, jakoz i jiné prõjmy, které jsou podrobeny stejnému danovému rezimu jako prõjmy\nz akciõ podle právnõch predpisu státu, jehoz je spolecnost, která provádõ platbu, rezidentem.\n4. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize skutecný vlastnõk dividend, který je rezidentem jednoho\nsmluvnõho státu, vykonává v druhém smluvnõm státe, jehoz je rezidentem spolecnost vyplácejõcõ dividendy, svoji\ncinnost prostrednictvõm stálé provozovny, která je tam umõstena, a jestlize úcast, pro kterou se divide",
       "source_url": "https://e-sbirka.gov.cz/sm/2007/40/0000-00-00",
-      "verification_authority": "stage6_governance_policy",
+      "verification_authority": "semantic_remediation_machine_validation",
       "verification_status": "verified"
     },
     {
@@ -129,7 +147,7 @@
       "legal_layer": "domestic",
       "paragraph": "1(a)(1)",
       "priority": 900,
-      "rate": 15.0,
+      "rate": 15,
       "recipient_country": "GE",
       "review_package_sha256": "55714a2a87b25ff586e2f050a54f296e78d67ad6b0bc9160f1f969c439a82afe",
       "rule_id": "CZ-GE-INTEREST-DOMESTIC",
@@ -166,7 +184,7 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 691,
-      "rate": 8.0,
+      "rate": 8,
       "recipient_country": "GE",
       "review_package_sha256": "55714a2a87b25ff586e2f050a54f296e78d67ad6b0bc9160f1f969c439a82afe",
       "rule_id": "CZ-GE-INTEREST-CURRENT-1",
@@ -209,7 +227,7 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 682,
-      "rate": 0.0,
+      "rate": 0,
       "recipient_country": "GE",
       "review_package_sha256": "55714a2a87b25ff586e2f050a54f296e78d67ad6b0bc9160f1f969c439a82afe",
       "rule_id": "CZ-GE-INTEREST-CURRENT-2",
@@ -238,7 +256,7 @@
       "legal_layer": "domestic",
       "paragraph": "1(a)(1)",
       "priority": 900,
-      "rate": 15.0,
+      "rate": 15,
       "recipient_country": "GE",
       "review_package_sha256": "55714a2a87b25ff586e2f050a54f296e78d67ad6b0bc9160f1f969c439a82afe",
       "rule_id": "CZ-GE-ROYALTY-DOMESTIC",
@@ -281,7 +299,7 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 681,
-      "rate": 0.0,
+      "rate": 0,
       "recipient_country": "GE",
       "review_package_sha256": "55714a2a87b25ff586e2f050a54f296e78d67ad6b0bc9160f1f969c439a82afe",
       "rule_id": "CZ-GE-ROYALTY-CURRENT-1",
@@ -324,7 +342,7 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 682,
-      "rate": 5.0,
+      "rate": 5,
       "recipient_country": "GE",
       "review_package_sha256": "55714a2a87b25ff586e2f050a54f296e78d67ad6b0bc9160f1f969c439a82afe",
       "rule_id": "CZ-GE-ROYALTY-CURRENT-2",
@@ -367,7 +385,7 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 683,
-      "rate": 10.0,
+      "rate": 10,
       "recipient_country": "GE",
       "review_package_sha256": "55714a2a87b25ff586e2f050a54f296e78d67ad6b0bc9160f1f969c439a82afe",
       "rule_id": "CZ-GE-ROYALTY-CURRENT-3",
@@ -381,14 +399,5 @@
       "verification_status": "verified"
     }
   ],
-  "schema_version": 3,
-  "stage6_production": {
-    "additional_human_review_claimed": false,
-    "package_sha256": "55714a2a87b25ff586e2f050a54f296e78d67ad6b0bc9160f1f969c439a82afe",
-    "production_approval": "production_approved",
-    "rule_promotion": "promoted",
-    "source_release": "not_released",
-    "treaty_pair_id": "CZ-GE",
-    "verification_authority": "stage6_governance_policy"
-  }
+  "schema_version": 3
 }

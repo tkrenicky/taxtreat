@@ -34,11 +34,23 @@
       "verification_status": "verified"
     },
     {
-      "approval_created_at": "2026-08-11",
-      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approval_created_at": "2026-09-01",
+      "approval_dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
       "approved_article_text_sha256": "8c2c27960628e920e060d46f097930aabedb67dec2d36078daf6e78ba8544006",
       "article": 10,
       "conditions": [
+        {
+          "fact": "recipient_entity_type",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "company"
+        },
+        {
+          "fact": "direct_ownership",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        },
         {
           "fact": "ownership_percent",
           "fact_source": "transaction",
@@ -46,19 +58,31 @@
           "value": "25"
         },
         {
-          "fact": "beneficial_owner",
+          "fact": "continuous_holding_period_days",
+          "fact_source": "transaction",
+          "operator": ">=",
+          "value": "365"
+        },
+        {
+          "fact": "holding_period_includes_payment_date",
           "fact_source": "transaction",
           "operator": "==",
           "value": "true"
         },
         {
-          "fact": "continuous_holding_period_days",
+          "fact": "holding_period_reorganisation_continuity",
           "fact_source": "transaction",
-          "operator": ">=",
-          "value": 365
+          "operator": "==",
+          "value": "ownership_changes_directly_resulting_from_corporate_reorganisation_ignored"
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
         }
       ],
-      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "dataset_release": "stage6-semantic-remediation-production-2026-09-01.1",
       "effect": "rate",
       "effective_from": "2021-01-15",
       "evidence_source_ids": [
@@ -71,7 +95,7 @@
       "priority": 651,
       "rate": 10,
       "recipient_country": "BD",
-      "review_package_sha256": "0c873e0915a646dd8d546a8f3994b95c68c306c1f7056b38b1c09773f7c4f4d7",
+      "review_package_sha256": "342275c1e824d07e57af9b4f0e9d86a9e7ae20cc19fe7008da795a21dbd3f394",
       "rule_id": "CZ-BD-DIVIDEND-CURRENT-1",
       "source_country": "CZ",
       "source_excerpt_hash": "e97af678bcba7c03d7de2b508f0e50b0f27699f212e62670b8e0b16bb0b1b1a6",
@@ -79,15 +103,21 @@
       "source_representation": "approved_treaty_excerpt",
       "source_text": "DIVIDENDY\n1.\nDividendy vyplácené společností, která je rezidentem jednoho smluvního státu, rezidentu druhého smluvního státu, mohou být zdaněny v tomto druhém státě.\n2.\nTyto dividendy však mohou být rovněž zdaněny ve smluvním státě, jehož je společnost, která je vyplácí, rezidentem, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník dividend je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne:\na)\n10 procent hrubé částky dividend, jestliže skutečným vlastníkem je společnost, která přímo drží alespoň 25 procent kapitálu společnosti vyplácející dividendy, a to nepřetržitě po dobu 365 dní, která zahrnuje den výplaty dividend (pro účely počítání této doby se nepřihlíží ke změnám vlastnictví, které by přímo vyplynuly z firemní reorganizace, jako je fúze nebo rozdělení, společnosti, která drží podíly nebo která vyplácí dividendy);\nb)\n15 procent hrubé částky dividend ve všech ostatních případech.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.\n3.\nVýraz „dividendy“ použitý v tomto článku označuje příjmy z akcií, požitkových akcií nebo požitkových práv, kuksů, zakladatelských podílů nebo jiných práv, s výjimkou pohledávek, s podílem na zisku, jakož i jiné příjmy, které jsou podrobeny stejnému daňovému režimu jako příjmy z akcií podle právních předpisů státu, jehož je společnost, která rozdílí zisk nebo provádí platbu, rezidentem.\n4.\nUstanovení odstavců 1 a 2 se nepoužijí, jestliže skutečný vlastník dividen",
       "source_url": "https://e-sbirka.gov.cz/sm/2021/8/0000-00-00",
-      "verification_authority": "stage6_governance_policy",
+      "verification_authority": "semantic_remediation_machine_validation",
       "verification_status": "verified"
     },
     {
-      "approval_created_at": "2026-08-11",
-      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approval_created_at": "2026-09-01",
+      "approval_dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
       "approved_article_text_sha256": "8c2c27960628e920e060d46f097930aabedb67dec2d36078daf6e78ba8544006",
       "article": 10,
       "conditions": [
+        {
+          "fact": "fallback_case",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "all_other_cases"
+        },
         {
           "fact": "beneficial_owner",
           "fact_source": "transaction",
@@ -95,7 +125,7 @@
           "value": "true"
         }
       ],
-      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "dataset_release": "stage6-semantic-remediation-production-2026-09-01.1",
       "effect": "rate",
       "effective_from": "2021-01-15",
       "evidence_source_ids": [
@@ -108,7 +138,7 @@
       "priority": 692,
       "rate": 15,
       "recipient_country": "BD",
-      "review_package_sha256": "0c873e0915a646dd8d546a8f3994b95c68c306c1f7056b38b1c09773f7c4f4d7",
+      "review_package_sha256": "342275c1e824d07e57af9b4f0e9d86a9e7ae20cc19fe7008da795a21dbd3f394",
       "rule_id": "CZ-BD-DIVIDEND-CURRENT-2",
       "source_country": "CZ",
       "source_excerpt_hash": "e97af678bcba7c03d7de2b508f0e50b0f27699f212e62670b8e0b16bb0b1b1a6",
@@ -116,7 +146,7 @@
       "source_representation": "approved_treaty_excerpt",
       "source_text": "DIVIDENDY\n1.\nDividendy vyplácené společností, která je rezidentem jednoho smluvního státu, rezidentu druhého smluvního státu, mohou být zdaněny v tomto druhém státě.\n2.\nTyto dividendy však mohou být rovněž zdaněny ve smluvním státě, jehož je společnost, která je vyplácí, rezidentem, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník dividend je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne:\na)\n10 procent hrubé částky dividend, jestliže skutečným vlastníkem je společnost, která přímo drží alespoň 25 procent kapitálu společnosti vyplácející dividendy, a to nepřetržitě po dobu 365 dní, která zahrnuje den výplaty dividend (pro účely počítání této doby se nepřihlíží ke změnám vlastnictví, které by přímo vyplynuly z firemní reorganizace, jako je fúze nebo rozdělení, společnosti, která drží podíly nebo která vyplácí dividendy);\nb)\n15 procent hrubé částky dividend ve všech ostatních případech.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.\n3.\nVýraz „dividendy“ použitý v tomto článku označuje příjmy z akcií, požitkových akcií nebo požitkových práv, kuksů, zakladatelských podílů nebo jiných práv, s výjimkou pohledávek, s podílem na zisku, jakož i jiné příjmy, které jsou podrobeny stejnému daňovému režimu jako příjmy z akcií podle právních předpisů státu, jehož je společnost, která rozdílí zisk nebo provádí platbu, rezidentem.\n4.\nUstanovení odstavců 1 a 2 se nepoužijí, jestliže skutečný vlastník dividen",
       "source_url": "https://e-sbirka.gov.cz/sm/2021/8/0000-00-00",
-      "verification_authority": "stage6_governance_policy",
+      "verification_authority": "semantic_remediation_machine_validation",
       "verification_status": "verified"
     },
     {
@@ -296,13 +326,11 @@
     }
   ],
   "schema_version": 3,
-  "stage6_production": {
-    "additional_human_review_claimed": false,
-    "package_sha256": "0c873e0915a646dd8d546a8f3994b95c68c306c1f7056b38b1c09773f7c4f4d7",
-    "production_approval": "production_approved",
-    "rule_promotion": "promoted",
-    "source_release": "not_released",
-    "treaty_pair_id": "CZ-BD",
-    "verification_authority": "stage6_governance_policy"
+  "semantic_remediation_candidate": {
+    "automatic_production_approval_forbidden": true,
+    "dataset_release": "stage6-semantic-remediation-candidate-2026-09-01.1",
+    "fail_closed": true,
+    "package_sha256": "342275c1e824d07e57af9b4f0e9d86a9e7ae20cc19fe7008da795a21dbd3f394",
+    "status": "needs_review"
   }
 }

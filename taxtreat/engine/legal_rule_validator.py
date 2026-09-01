@@ -40,6 +40,7 @@ _VERIFICATION_FIELDS = (
     "approved_at",
     "dataset_release",
 )
+_MACHINE_VALIDATION_AUTHORITY = "semantic_remediation_machine_validation"
 
 
 def validate_legal_rules(rules: list[LegalRule]) -> list[str]:
@@ -73,8 +74,12 @@ def validate_legal_rules(rules: list[LegalRule]) -> list[str]:
                 rule.verification_authority
                 == "stage6_governance_policy"
             )
+            machine_validation = (
+                rule.verification_authority
+                == _MACHINE_VALIDATION_AUTHORITY
+            )
 
-            if stage6_governance:
+            if stage6_governance or machine_validation:
                 stage6_required = (
                     "effective_from",
                     "source_id",
@@ -93,8 +98,13 @@ def validate_legal_rules(rules: list[LegalRule]) -> list[str]:
                 ]
 
                 if missing_stage6:
+                    authority_label = (
+                        "machine-validation"
+                        if machine_validation
+                        else "Stage 6"
+                    )
                     issues.append(
-                        f"{prefix} Stage 6 verified rule lacks "
+                        f"{prefix} {authority_label} verified rule lacks "
                         "governance provenance: "
                         + ", ".join(missing_stage6)
                         + "."
@@ -112,11 +122,32 @@ def validate_legal_rules(rules: list[LegalRule]) -> list[str]:
                         "full SHA-256."
                     )
 
-                # Stage 6 production approval is deterministic
-                # governance over an already completed primary
-                # human review. It is explicitly not a second
-                # human review and therefore must not fabricate
-                # per-rule reviewer / approver identities.
+                if machine_validation:
+                    if not str(rule.approval_dataset_release or "").startswith(
+                        "stage6-semantic-remediation-machine-validation-"
+                    ):
+                        issues.append(
+                            f"{prefix} machine-validation approval dataset "
+                            "is not an approved semantic-remediation release."
+                        )
+                    if any(
+                        getattr(rule, field_name) not in (None, "")
+                        for field_name in (
+                            "reviewer_id",
+                            "reviewed_at",
+                            "approved_by",
+                            "approved_at",
+                        )
+                    ):
+                        issues.append(
+                            f"{prefix} machine validation must not fabricate "
+                            "human reviewer/approver provenance."
+                        )
+
+                # Stage 6 production approval and semantic-remediation machine
+                # validation are deterministic governance events. Neither is
+                # a second human review, so per-rule human identities must not
+                # be invented for those authorities.
             else:
                 missing_verification = [
                     field_name

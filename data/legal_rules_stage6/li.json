@@ -20,7 +20,7 @@
       "legal_layer": "domestic",
       "paragraph": "1(b)(1)",
       "priority": 900,
-      "rate": 15.0,
+      "rate": 15,
       "recipient_country": "LI",
       "review_package_sha256": "83813ba0a0decca78edc8645ce89cbf961283ebe2592089c5091f8eee1f79365",
       "rule_id": "CZ-LI-DIVIDEND-DOMESTIC",
@@ -34,16 +34,34 @@
       "verification_status": "verified"
     },
     {
-      "approval_created_at": "2026-08-11",
-      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approval_created_at": "2026-09-01",
+      "approval_dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
       "approved_article_text_sha256": "def17440849e779ac0d1f4fd79d7e63b5a6e13923e8549d848bd9737c090c9d9",
       "article": 10,
       "conditions": [
+        {
+          "fact": "recipient_entity_type",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "company_other_than_partnership"
+        },
+        {
+          "fact": "direct_ownership",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "true"
+        },
         {
           "fact": "ownership_percent",
           "fact_source": "transaction",
           "operator": ">=",
           "value": "10"
+        },
+        {
+          "fact": "holding_period_months",
+          "fact_source": "transaction",
+          "operator": ">=",
+          "value": "12"
         },
         {
           "fact": "beneficial_owner",
@@ -52,7 +70,7 @@
           "value": "true"
         }
       ],
-      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "dataset_release": "stage6-semantic-remediation-production-2026-09-01.1",
       "effect": "rate",
       "effective_from": "2015-12-22",
       "evidence_source_ids": [
@@ -63,9 +81,9 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 681,
-      "rate": 0.0,
+      "rate": 0,
       "recipient_country": "LI",
-      "review_package_sha256": "83813ba0a0decca78edc8645ce89cbf961283ebe2592089c5091f8eee1f79365",
+      "review_package_sha256": "7a550be8eef533e068c757dcea702b151730661d8a393045c91e9687e6db8131",
       "rule_id": "CZ-LI-DIVIDEND-CURRENT-1",
       "source_country": "CZ",
       "source_excerpt_hash": "37e044e6ee9a71791b012a4c7876ad46146bea22399cfcff7ea3afb805bbca83",
@@ -73,15 +91,21 @@
       "source_representation": "approved_treaty_excerpt",
       "source_text": "DIVIDENDY\n1.\nDividendy vyplácené společností, která je rezidentem jednoho smluvního státu, rezidentu druhého smluvního státu, mohou být zdaněny v tomto druhém státě.\n2.\nTyto dividendy však mohou být rovněž zdaněny ve smluvním státě, jehož je společnost, která je vyplácí, rezidentem, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník dividend je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne:\na)\n0 procent hrubé částky dividend, jestliže skutečným vlastníkem je společnost (jiná než osobní společnost), která nepřetržitě přímo drží po období alespoň jednoho roku alespoň 10 procent kapitálu společnosti, která vyplácí dividendy;\nb)\n15 procent hrubé částky dividend ve všech ostatních případech.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.\n3.\nVýraz „dividendy“ použitý v tomto článku označuje příjmy z akcií, požitkových akcií nebo požitkových práv, kuksů, zakladatelských podílů nebo jiných práv, s výjimkou pohledávek, s podílem na zisku, jakož i jiné příjmy, které jsou podrobeny stejnému daňovému režimu jako příjmy z akcií podle právních předpisů státu, jehož je společnost, která provádí platbu, rezidentem.\n4.\nUstanovení odstavců 1 a 2 se nepoužijí, jestliže skutečný vlastník dividend, který je rezidentem jednoho smluvního státu, vykonává v druhém smluvním státě, jehož je rezidentem společnost vyplácející dividendy, svoji činnost prostřednictvím stálé provozovny, která je tam umístěna, a jestliže úča",
       "source_url": "https://e-sbirka.gov.cz/sm/2016/8/0000-00-00",
-      "verification_authority": "stage6_governance_policy",
+      "verification_authority": "semantic_remediation_machine_validation",
       "verification_status": "verified"
     },
     {
-      "approval_created_at": "2026-08-11",
-      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approval_created_at": "2026-09-01",
+      "approval_dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
       "approved_article_text_sha256": "def17440849e779ac0d1f4fd79d7e63b5a6e13923e8549d848bd9737c090c9d9",
       "article": 10,
       "conditions": [
+        {
+          "fact": "fallback_case",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": "all_other_cases"
+        },
         {
           "fact": "beneficial_owner",
           "fact_source": "transaction",
@@ -89,7 +113,7 @@
           "value": "true"
         }
       ],
-      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "dataset_release": "stage6-semantic-remediation-production-2026-09-01.1",
       "effect": "rate",
       "effective_from": "2015-12-22",
       "evidence_source_ids": [
@@ -100,9 +124,9 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 692,
-      "rate": 15.0,
+      "rate": 15,
       "recipient_country": "LI",
-      "review_package_sha256": "83813ba0a0decca78edc8645ce89cbf961283ebe2592089c5091f8eee1f79365",
+      "review_package_sha256": "7a550be8eef533e068c757dcea702b151730661d8a393045c91e9687e6db8131",
       "rule_id": "CZ-LI-DIVIDEND-CURRENT-2",
       "source_country": "CZ",
       "source_excerpt_hash": "37e044e6ee9a71791b012a4c7876ad46146bea22399cfcff7ea3afb805bbca83",
@@ -110,7 +134,7 @@
       "source_representation": "approved_treaty_excerpt",
       "source_text": "DIVIDENDY\n1.\nDividendy vyplácené společností, která je rezidentem jednoho smluvního státu, rezidentu druhého smluvního státu, mohou být zdaněny v tomto druhém státě.\n2.\nTyto dividendy však mohou být rovněž zdaněny ve smluvním státě, jehož je společnost, která je vyplácí, rezidentem, a to podle právních předpisů tohoto státu, avšak jestliže skutečný vlastník dividend je rezidentem druhého smluvního státu, daň takto uložená nepřesáhne:\na)\n0 procent hrubé částky dividend, jestliže skutečným vlastníkem je společnost (jiná než osobní společnost), která nepřetržitě přímo drží po období alespoň jednoho roku alespoň 10 procent kapitálu společnosti, která vyplácí dividendy;\nb)\n15 procent hrubé částky dividend ve všech ostatních případech.\nTento odstavec se nedotýká zdanění zisků společnosti, z nichž jsou dividendy vypláceny.\n3.\nVýraz „dividendy“ použitý v tomto článku označuje příjmy z akcií, požitkových akcií nebo požitkových práv, kuksů, zakladatelských podílů nebo jiných práv, s výjimkou pohledávek, s podílem na zisku, jakož i jiné příjmy, které jsou podrobeny stejnému daňovému režimu jako příjmy z akcií podle právních předpisů státu, jehož je společnost, která provádí platbu, rezidentem.\n4.\nUstanovení odstavců 1 a 2 se nepoužijí, jestliže skutečný vlastník dividend, který je rezidentem jednoho smluvního státu, vykonává v druhém smluvním státě, jehož je rezidentem společnost vyplácející dividendy, svoji činnost prostřednictvím stálé provozovny, která je tam umístěna, a jestliže úča",
       "source_url": "https://e-sbirka.gov.cz/sm/2016/8/0000-00-00",
-      "verification_authority": "stage6_governance_policy",
+      "verification_authority": "semantic_remediation_machine_validation",
       "verification_status": "verified"
     },
     {
@@ -173,7 +197,7 @@
       "legal_layer": "eu_relief",
       "paragraph": null,
       "priority": 131,
-      "rate": 0.0,
+      "rate": 0,
       "recipient_country": "LI",
       "review_package_sha256": "83813ba0a0decca78edc8645ce89cbf961283ebe2592089c5091f8eee1f79365",
       "rule_id": "CZ-LI-DIVIDEND-EU-RELIEF-1",
@@ -253,7 +277,7 @@
       "legal_layer": "eu_relief",
       "paragraph": null,
       "priority": 122,
-      "rate": 0.0,
+      "rate": 0,
       "recipient_country": "LI",
       "review_package_sha256": "83813ba0a0decca78edc8645ce89cbf961283ebe2592089c5091f8eee1f79365",
       "rule_id": "CZ-LI-DIVIDEND-EU-RELIEF-2",
@@ -283,7 +307,7 @@
       "legal_layer": "domestic",
       "paragraph": "1(a)(1)",
       "priority": 900,
-      "rate": 15.0,
+      "rate": 15,
       "recipient_country": "LI",
       "review_package_sha256": "83813ba0a0decca78edc8645ce89cbf961283ebe2592089c5091f8eee1f79365",
       "rule_id": "CZ-LI-INTEREST-DOMESTIC",
@@ -320,7 +344,7 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 691,
-      "rate": 0.0,
+      "rate": 0,
       "recipient_country": "LI",
       "review_package_sha256": "83813ba0a0decca78edc8645ce89cbf961283ebe2592089c5091f8eee1f79365",
       "rule_id": "CZ-LI-INTEREST-CURRENT-1",
@@ -411,7 +435,7 @@
       "legal_layer": "eu_relief",
       "paragraph": null,
       "priority": 101,
-      "rate": 0.0,
+      "rate": 0,
       "recipient_country": "LI",
       "review_package_sha256": "83813ba0a0decca78edc8645ce89cbf961283ebe2592089c5091f8eee1f79365",
       "rule_id": "CZ-LI-INTEREST-EU-RELIEF-1",
@@ -509,7 +533,7 @@
       "legal_layer": "eu_relief",
       "paragraph": null,
       "priority": 92,
-      "rate": 0.0,
+      "rate": 0,
       "recipient_country": "LI",
       "review_package_sha256": "83813ba0a0decca78edc8645ce89cbf961283ebe2592089c5091f8eee1f79365",
       "rule_id": "CZ-LI-INTEREST-EU-RELIEF-2",
@@ -601,7 +625,7 @@
       "legal_layer": "eu_relief",
       "paragraph": null,
       "priority": 103,
-      "rate": 0.0,
+      "rate": 0,
       "recipient_country": "LI",
       "review_package_sha256": "83813ba0a0decca78edc8645ce89cbf961283ebe2592089c5091f8eee1f79365",
       "rule_id": "CZ-LI-INTEREST-EU-RELIEF-3",
@@ -699,7 +723,7 @@
       "legal_layer": "eu_relief",
       "paragraph": null,
       "priority": 94,
-      "rate": 0.0,
+      "rate": 0,
       "recipient_country": "LI",
       "review_package_sha256": "83813ba0a0decca78edc8645ce89cbf961283ebe2592089c5091f8eee1f79365",
       "rule_id": "CZ-LI-INTEREST-EU-RELIEF-4",
@@ -791,7 +815,7 @@
       "legal_layer": "eu_relief",
       "paragraph": null,
       "priority": 105,
-      "rate": 0.0,
+      "rate": 0,
       "recipient_country": "LI",
       "review_package_sha256": "83813ba0a0decca78edc8645ce89cbf961283ebe2592089c5091f8eee1f79365",
       "rule_id": "CZ-LI-INTEREST-EU-RELIEF-5",
@@ -889,7 +913,7 @@
       "legal_layer": "eu_relief",
       "paragraph": null,
       "priority": 96,
-      "rate": 0.0,
+      "rate": 0,
       "recipient_country": "LI",
       "review_package_sha256": "83813ba0a0decca78edc8645ce89cbf961283ebe2592089c5091f8eee1f79365",
       "rule_id": "CZ-LI-INTEREST-EU-RELIEF-6",
@@ -919,7 +943,7 @@
       "legal_layer": "domestic",
       "paragraph": "1(a)(1)",
       "priority": 900,
-      "rate": 15.0,
+      "rate": 15,
       "recipient_country": "LI",
       "review_package_sha256": "83813ba0a0decca78edc8645ce89cbf961283ebe2592089c5091f8eee1f79365",
       "rule_id": "CZ-LI-ROYALTY-DOMESTIC",
@@ -962,7 +986,7 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 681,
-      "rate": 0.0,
+      "rate": 0,
       "recipient_country": "LI",
       "review_package_sha256": "83813ba0a0decca78edc8645ce89cbf961283ebe2592089c5091f8eee1f79365",
       "rule_id": "CZ-LI-ROYALTY-CURRENT-1",
@@ -1005,7 +1029,7 @@
       "legal_layer": "treaty",
       "paragraph": null,
       "priority": 682,
-      "rate": 10.0,
+      "rate": 10,
       "recipient_country": "LI",
       "review_package_sha256": "83813ba0a0decca78edc8645ce89cbf961283ebe2592089c5091f8eee1f79365",
       "rule_id": "CZ-LI-ROYALTY-CURRENT-2",
@@ -1096,7 +1120,7 @@
       "legal_layer": "eu_relief",
       "paragraph": null,
       "priority": 101,
-      "rate": 0.0,
+      "rate": 0,
       "recipient_country": "LI",
       "review_package_sha256": "83813ba0a0decca78edc8645ce89cbf961283ebe2592089c5091f8eee1f79365",
       "rule_id": "CZ-LI-ROYALTY-EU-RELIEF-1",
@@ -1194,7 +1218,7 @@
       "legal_layer": "eu_relief",
       "paragraph": null,
       "priority": 92,
-      "rate": 0.0,
+      "rate": 0,
       "recipient_country": "LI",
       "review_package_sha256": "83813ba0a0decca78edc8645ce89cbf961283ebe2592089c5091f8eee1f79365",
       "rule_id": "CZ-LI-ROYALTY-EU-RELIEF-2",
@@ -1286,7 +1310,7 @@
       "legal_layer": "eu_relief",
       "paragraph": null,
       "priority": 103,
-      "rate": 0.0,
+      "rate": 0,
       "recipient_country": "LI",
       "review_package_sha256": "83813ba0a0decca78edc8645ce89cbf961283ebe2592089c5091f8eee1f79365",
       "rule_id": "CZ-LI-ROYALTY-EU-RELIEF-3",
@@ -1384,7 +1408,7 @@
       "legal_layer": "eu_relief",
       "paragraph": null,
       "priority": 94,
-      "rate": 0.0,
+      "rate": 0,
       "recipient_country": "LI",
       "review_package_sha256": "83813ba0a0decca78edc8645ce89cbf961283ebe2592089c5091f8eee1f79365",
       "rule_id": "CZ-LI-ROYALTY-EU-RELIEF-4",
@@ -1476,7 +1500,7 @@
       "legal_layer": "eu_relief",
       "paragraph": null,
       "priority": 105,
-      "rate": 0.0,
+      "rate": 0,
       "recipient_country": "LI",
       "review_package_sha256": "83813ba0a0decca78edc8645ce89cbf961283ebe2592089c5091f8eee1f79365",
       "rule_id": "CZ-LI-ROYALTY-EU-RELIEF-5",
@@ -1574,7 +1598,7 @@
       "legal_layer": "eu_relief",
       "paragraph": null,
       "priority": 96,
-      "rate": 0.0,
+      "rate": 0,
       "recipient_country": "LI",
       "review_package_sha256": "83813ba0a0decca78edc8645ce89cbf961283ebe2592089c5091f8eee1f79365",
       "rule_id": "CZ-LI-ROYALTY-EU-RELIEF-6",
@@ -1589,14 +1613,5 @@
       "verification_status": "verified"
     }
   ],
-  "schema_version": 3,
-  "stage6_production": {
-    "additional_human_review_claimed": false,
-    "package_sha256": "83813ba0a0decca78edc8645ce89cbf961283ebe2592089c5091f8eee1f79365",
-    "production_approval": "production_approved",
-    "rule_promotion": "promoted",
-    "source_release": "not_released",
-    "treaty_pair_id": "CZ-LI",
-    "verification_authority": "stage6_governance_policy"
-  }
+  "schema_version": 3
 }
