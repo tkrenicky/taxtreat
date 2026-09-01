@@ -33,6 +33,18 @@ def _company_direct(
 
 
 DIVIDEND_CONDITION_PATCHES: dict[str, list[dict]] = {
+    "CZ-CH-DIVIDEND-SEMANTIC-REMEDIATION-5": [
+        _c("recipient_is_treaty_resident", "==", True),
+        _c("permanent_establishment_connection", "==", False),
+        _c("recipient_entity_type", "==", "company"),
+        _c("recipient_is_partnership", "==", False),
+        _c("direct_ownership", "==", True),
+        _c("ownership_percent", ">=", "25"),
+        _c("beneficial_owner", "==", "true"),
+    ],
+    "CZ-EE-DIVIDEND-CURRENT-1": _company_direct("25", non_partnership=True),
+    "CZ-LV-DIVIDEND-CURRENT-1": _company_direct("25", non_partnership=True),
+    "CZ-VE-DIVIDEND-CURRENT-1": _company_direct("15", non_partnership=True),
     "CZ-GB-DIVIDEND-CURRENT-1": [
         _c("recipient_entity_type", "==", "company"),
         _c("voting_ownership", ">=", "25"),
