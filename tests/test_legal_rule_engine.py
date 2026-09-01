@@ -518,6 +518,16 @@ def test_ui_royalty_category_matches_treaty_specific_taxonomy():
 
 def test_royalty_mapper_covers_literal_other_and_generic_all_other():
     assert _royalty_category_groups("other") == {"other"}
+    assert _royalty_category_groups(
+        "all_royalties_except_cinematographic_and_broadcast_media"
+    ) == {
+        "copyright_nonfilm",
+        "software",
+        "industrial_ip",
+        "equipment_financial",
+        "equipment_operating",
+        "other",
+    }
     assert _royalty_category_groups("all_other_custom_royalties") == {
         "copyright_nonfilm",
         "film_broadcast",
