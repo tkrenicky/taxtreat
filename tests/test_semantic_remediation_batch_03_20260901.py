@@ -4,7 +4,7 @@ from pathlib import Path
 BATCH = ("ES", "FR", "GB", "GE", "HU")
 
 ROOT = Path(__file__).resolve().parents[1]
-QUEUE_PATH = ROOT / "data" / "legal_consolidation" / "cz_country_qa_queue.json"
+QUEUE_PATH = ROOT / "data" / "legal_reviews" / "global_cz_outbound" / "cz_country_qa_queue.json"
 CANDIDATE_DIR = (
     ROOT / "data" / "legal_rule_candidates" / "semantic_remediation_20260901"
 )
