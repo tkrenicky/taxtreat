@@ -1,9 +1,9 @@
 {
-  "schema_version": 1,
-  "dataset_release": "sk-runtime-integration-profile-2026-08-19.1",
+  "schema_version": 2,
+  "dataset_release": "sk-runtime-integration-profile-2026-09-01.2",
   "source_country": "SK",
-  "status": "pre_release_runtime_contract",
-  "runtime_release": false,
+  "status": "source_country_released_rule_level_fail_closed",
+  "runtime_release": true,
   "production_released_scopes": 0,
   "locale": "sk-SK",
   "currency": "EUR",
@@ -64,10 +64,28 @@
     "all_225_scopes_machine_evidence_required": true,
     "all_46_mli_relationships_machine_evidence_required": true,
     "official_2026_cooperating_state_list_required": true,
-    "full_human_legal_review_required": true,
+    "full_human_legal_review_required": false,
     "report_and_web_parity_tests_required": true,
-    "czech_runtime_fallback_prohibited": true
+    "czech_runtime_fallback_prohibited": true,
+    "full_legal_review_coverage_required": true,
+    "rule_level_hash_or_review_gate_required": true
   },
-  "human_review_status": "not_started",
-  "approval_eligible": false
+  "human_review_status": "completed_with_pattern_reconciliation_and_mli_reconfirmation",
+  "approval_eligible": true,
+  "source_country_release": {
+    "status": "released",
+    "evidence": "source_country_release_manifest.json",
+    "legal_review_covered_scopes": 225,
+    "individually_reviewed_scopes": 24,
+    "pattern_reconciled_scopes": 201
+  },
+  "treaty_rule_release": {
+    "structured_rule_directory": "data/legal_rules_sk",
+    "expected_partner_packages": 75,
+    "expected_scopes": 225,
+    "final_rate_allowed_scopes": 0,
+    "fail_closed_scopes": 225,
+    "automatic_production_approval_forbidden": true
+  },
+  "approval_scope": "source_country_gate_only"
 }
