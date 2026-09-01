@@ -642,7 +642,10 @@ def evaluate_legal_rules(
         str(facts.get("recipient_country", "")).upper(),
         str(facts.get("income_type", "")),
     )
-    if semantic_scope in _PENDING_SEMANTIC_REMEDIATION_SCOPES:
+    if (
+        str(facts.get("source_country", "")).upper() == "CZ"
+        and semantic_scope in _PENDING_SEMANTIC_REMEDIATION_SCOPES
+    ):
         result.status = DecisionStatus.REVIEW_REQUIRED
         result.requires_review = True
         result.explanation.append(
