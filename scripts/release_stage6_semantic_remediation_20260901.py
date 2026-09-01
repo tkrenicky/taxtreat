@@ -133,6 +133,12 @@ def main() -> int:
         production.pop("stage6_production", None)
         changed = 0
         for rule in production.get("rules", []):
+            # A runtime country file is one coherent production package. Once
+            # a package is re-released after semantic remediation, every rule
+            # in that file must carry the same production dataset release;
+            # otherwise the layered evaluator correctly fails closed on mixed
+            # release provenance even when only one treaty scope was changed.
+            rule["dataset_release"] = PRODUCTION_RELEASE
             if str(rule.get("verification_authority")) == "semantic_remediation_machine_projection":
                 if str(rule.get("review_package_sha256")) != package_hash:
                     raise RuntimeError(f"{country}:{rule.get('rule_id')}: remediation rule hash mismatch")
@@ -140,16 +146,21 @@ def main() -> int:
                 rule["verification_authority"] = "semantic_remediation_machine_validation"
                 rule["approval_dataset_release"] = VALIDATION_RELEASE
                 rule["approval_created_at"] = CREATED_DATE
-                rule["dataset_release"] = PRODUCTION_RELEASE
                 changed += 1
         if changed == 0:
             raise RuntimeError(f"{country}: no remediation rules promoted")
 
+        releases = {
+            str(rule.get("dataset_release"))
+            for rule in production.get("rules", [])
+            if rule.get("dataset_release")
+        }
+        if releases != {PRODUCTION_RELEASE}:
+            raise RuntimeError(f"{country}: incoherent runtime dataset releases: {sorted(releases)}")
+
         dump(RULES / f"{country.lower()}.json", production)
 
         gate_row = gate_by_country[country]
-        # Machine validation releases the package without pretending that the
-        # previously pending human review ever happened.
         gate_row["human_review_status"] = "needs_review"
         gate_row.update({
             "package_sha256": package_hash,
@@ -180,9 +191,6 @@ def main() -> int:
             "created_at": CREATED_AT,
         }
 
-    # Rebind governance to the exact current runtime file for ALL 101 packages,
-    # not only the 40 remediated ones. This prevents unrelated historical rule-
-    # file drift from being silently carried into a new all-country release.
     for country, package in sorted(queue_by_country.items()):
         pair_id = str(package["treaty_pair_id"])
         package_hash = str(package["package_sha256"])
@@ -282,7 +290,6 @@ def main() -> int:
         "semantic_remediation_pending_scopes": 0,
     })
     gate["dataset_release"] = GATE_RELEASE
-    # Top-level fail_closed remains true for unknown pairs / malformed state.
     gate["fail_closed"] = True
     gate.setdefault("gate_semantics", {}).update({
         "semantic_rehash_requires_fresh_human_review": False,

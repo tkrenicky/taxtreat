@@ -3,7 +3,7 @@ name: CZ semantic remediation deterministic release
 on:
   push:
     branches:
-      - feat/cz-semantic-remediation-release-20260901
+      - fix/semantic-remediation-package-release-coherence-20260901
     paths:
       - ".github/workflows/cz-semantic-remediation-release-20260901.yml"
       - "scripts/release_stage6_semantic_remediation_20260901.py"
@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: feat/cz-semantic-remediation-release-20260901
+          ref: fix/semantic-remediation-package-release-coherence-20260901
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -39,5 +39,5 @@ jobs:
             data/legal_reviews/global_cz_outbound/stage6_source_release.json \
             data/legal_reviews/global_cz_outbound/production_source_release_gate_v2.json \
             taxtreat/engine/legal_rule_engine.py
-          git commit -m "Release CZ semantic remediation rules"
-          git push origin HEAD:feat/cz-semantic-remediation-release-20260901
+          git commit -m "Release coherent CZ semantic remediation packages"
+          git push origin HEAD:fix/semantic-remediation-package-release-coherence-20260901
