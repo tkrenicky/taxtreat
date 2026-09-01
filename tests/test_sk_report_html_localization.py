@@ -40,3 +40,33 @@ def test_slovak_report_html_does_not_claim_cnb_or_czk_by_copy_localization():
     assert "CNB" not in localized
     assert "ČNB" not in localized
     assert "CZK" not in localized
+
+
+def test_slovak_report_html_supports_english_without_czech_source_semantics():
+    html = (
+        '<html lang="cs">Informace k české srážkové dani · '
+        'Sazba české srážkové daně · Česká srážková daň · '
+        'Vazba příjmu ke stálé provozovně v ČR · '
+        'Smlouva mezi Českou republikou a Rakouskem o zamezení dvojího zdanění · '
+        'zákona č. 586/1992 Sb., o daních z příjmů · '
+        'Oznámení o příjmech plynoucích do zahraničí (§ 38da ZDP)'
+    )
+    report = {
+        "language": "en",
+        "scope": {"source_country": "SK", "recipient_country": "AT"},
+    }
+
+    localized = localize_report_html(html, report)
+
+    assert '<html lang="en">' in localized
+    assert "Slovak withholding tax information" in localized
+    assert "Slovak withholding tax rate" in localized
+    assert "Slovak withholding tax" in localized
+    assert "Slovak permanent establishment" in localized
+    assert "Double Tax Treaty between the Slovak Republic and AT" in localized
+    assert "Slovak Income Tax Act (Act No. 595/2003 Z. z.)" in localized
+    assert "Withholding tax notification (Section 43(11) of the Slovak Income Tax Act)" in localized
+    assert "Czech withholding tax" not in localized
+    assert "Czech Republic" not in localized
+    assert "586/1992" not in localized
+    assert "§ 38da" not in localized
