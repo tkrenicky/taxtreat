@@ -500,6 +500,7 @@ def _make_rule(
     treaty_valid_from: dict[str, str],
     coverage: dict,
     tax_treatment: str | None = None,
+    effect: str = "rate",
 ) -> dict:
     article_text = str(article["article_text"])
     source_hash = str(scope["source_sha256"])
@@ -515,7 +516,7 @@ def _make_rule(
         "rate": rate,
         "priority": priority,
         "conditions": rule_conditions,
-        "effect": "rate",
+        "effect": effect,
         "effective_from": treaty_valid_from[country],
         "verification_status": "needs_review",
         "source_text": article_text,
@@ -657,6 +658,7 @@ def main() -> int:
                 rule_suffix="UNRESOLVED-FAIL-CLOSED",
                 treaty_valid_from=treaty_valid_from,
                 coverage=coverage,
+                effect="review_gate",
             ))
             continue
 
