@@ -269,8 +269,8 @@
       "verification_status": "verified"
     },
     {
-      "approval_created_at": "2026-08-11",
-      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approval_created_at": "2026-09-01",
+      "approval_dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
       "approved_article_text_sha256": "f245b263f0329956ddb3575521aeda4b81babe5b9211f9037cbd559617fad999",
       "article": 12,
       "conditions": [
@@ -278,7 +278,7 @@
           "fact": "royalty_category",
           "fact_source": "transaction",
           "operator": "==",
-          "value": "all_royalties_except_cinematographic_and_broadcast_media"
+          "value": "copyright_literary_artistic_scientific_excluding_cinematographic_films_and_broadcast_media_or_patent_trademark_design_model_plan_secret_formula_process_equipment_or_industrial_commercial_scientific_knowhow"
         },
         {
           "fact": "beneficial_owner",
@@ -287,7 +287,7 @@
           "value": "true"
         }
       ],
-      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "dataset_release": "stage6-semantic-remediation-production-2026-09-01.1",
       "effect": "rate",
       "effective_from": "2003-09-23",
       "evidence_source_ids": [
@@ -300,7 +300,7 @@
       "priority": 691,
       "rate": 10,
       "recipient_country": "PH",
-      "review_package_sha256": "1a385625bd2000bef394e680dedbc90075d133fcbd66b7c3541821df267ad3ce",
+      "review_package_sha256": "20ec1d873ac0f7affdd153e94eea2a1c8abe667b512cc08e06f4937098b38ca6",
       "rule_id": "CZ-PH-ROYALTY-CURRENT-1",
       "source_country": "CZ",
       "source_excerpt_hash": "16640dda0ba2b41e166fdea927efee2cee5bfec9f1cccb4f46871f178441a908",
@@ -308,12 +308,12 @@
       "source_representation": "approved_treaty_excerpt",
       "source_text": "LICENČNI POPLATKY\n1. Licencnõ poplatky majõcõ zdroj v jednom smluvnõm státe a vyplácené rezidentu druhého smluvnõho státu\nmohou být zdaneny v tomto druhém státe.\n2. Tyto licencnõ poplatky vsak mohou být rovnez zdaneny ve smluvnõm státe, v nemz majõ zdroj, a to podle\nprávnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk licencnõch poplatku je rezidentem druhého\nsmluvnõho státu, dan takto ulozená nepresáhne:\na) 10 procent hrubé cástky licencnõch poplatku plynoucõch z uzitõ nebo z práva na uzitõ jakéhokoliv autorského\npráva k dõlu literárnõmu, umeleckému nebo vedeckému, jiného nez, které je uvedeno v põsmenu b), jaké-\nhokoliv patentu, ochranné známky, návrhu nebo modelu, plánu, tajného vzorce nebo výrobnõho postupu\nnebo z uzitõ nebo z práva na uzitõ prumyslového, obchodnõho nebo vedeckého zarõzenõ nebo za informace,\nkteré se vztahujõ na zkusenosti nabyté v oblasti prumyslové, obchodnõ nebo vedecké;\nb) 15 procent hrubé cástky licencnõch poplatku plynoucõch z uzitõ nebo z práva na uzitõ jakéhokoliv autorského\npráva ke kinematografickým filmum a filmum nebo nahrávkám pro televiznõ nebo rozhlasové vysõlánõ.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou dohodou zpusob aplikace techto omezenõ.\n3. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize skutecný vlastnõk licencnõch poplatku, který je rezidentem\njednoho smluvnõho státu, vykonává v druhém smluvnõm státe, ve kterém majõ licencnõ poplatky zdroj, svoji\ncinnost prostrednictvõm stálé provozovny, která je tam umõstena, n",
       "source_url": "https://e-sbirka.gov.cz/sm/2003/132/0000-00-00",
-      "verification_authority": "stage6_governance_policy",
+      "verification_authority": "semantic_remediation_machine_validation",
       "verification_status": "verified"
     },
     {
-      "approval_created_at": "2026-08-11",
-      "approval_dataset_release": "stage6-production-approval-2026-08-11.1",
+      "approval_created_at": "2026-09-01",
+      "approval_dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1",
       "approved_article_text_sha256": "f245b263f0329956ddb3575521aeda4b81babe5b9211f9037cbd559617fad999",
       "article": 12,
       "conditions": [
@@ -321,7 +321,7 @@
           "fact": "royalty_category",
           "fact_source": "transaction",
           "operator": "==",
-          "value": "cinematographic_films_or_broadcast_media"
+          "value": "cinematographic_films_or_television_radio_films_or_recordings"
         },
         {
           "fact": "beneficial_owner",
@@ -330,7 +330,7 @@
           "value": "true"
         }
       ],
-      "dataset_release": "stage6-production-rules-2026-08-12.1",
+      "dataset_release": "stage6-semantic-remediation-production-2026-09-01.1",
       "effect": "rate",
       "effective_from": "2003-09-23",
       "evidence_source_ids": [
@@ -343,7 +343,7 @@
       "priority": 692,
       "rate": 15,
       "recipient_country": "PH",
-      "review_package_sha256": "1a385625bd2000bef394e680dedbc90075d133fcbd66b7c3541821df267ad3ce",
+      "review_package_sha256": "20ec1d873ac0f7affdd153e94eea2a1c8abe667b512cc08e06f4937098b38ca6",
       "rule_id": "CZ-PH-ROYALTY-CURRENT-2",
       "source_country": "CZ",
       "source_excerpt_hash": "16640dda0ba2b41e166fdea927efee2cee5bfec9f1cccb4f46871f178441a908",
@@ -351,18 +351,9 @@
       "source_representation": "approved_treaty_excerpt",
       "source_text": "LICENČNI POPLATKY\n1. Licencnõ poplatky majõcõ zdroj v jednom smluvnõm státe a vyplácené rezidentu druhého smluvnõho státu\nmohou být zdaneny v tomto druhém státe.\n2. Tyto licencnõ poplatky vsak mohou být rovnez zdaneny ve smluvnõm státe, v nemz majõ zdroj, a to podle\nprávnõch predpisu tohoto státu, avsak jestlize skutecný vlastnõk licencnõch poplatku je rezidentem druhého\nsmluvnõho státu, dan takto ulozená nepresáhne:\na) 10 procent hrubé cástky licencnõch poplatku plynoucõch z uzitõ nebo z práva na uzitõ jakéhokoliv autorského\npráva k dõlu literárnõmu, umeleckému nebo vedeckému, jiného nez, které je uvedeno v põsmenu b), jaké-\nhokoliv patentu, ochranné známky, návrhu nebo modelu, plánu, tajného vzorce nebo výrobnõho postupu\nnebo z uzitõ nebo z práva na uzitõ prumyslového, obchodnõho nebo vedeckého zarõzenõ nebo za informace,\nkteré se vztahujõ na zkusenosti nabyté v oblasti prumyslové, obchodnõ nebo vedecké;\nb) 15 procent hrubé cástky licencnõch poplatku plynoucõch z uzitõ nebo z práva na uzitõ jakéhokoliv autorského\npráva ke kinematografickým filmum a filmum nebo nahrávkám pro televiznõ nebo rozhlasové vysõlánõ.\nPřõslusné úrady smluvnõch státu upravõ vzájemnou dohodou zpusob aplikace techto omezenõ.\n3. Ustanovenõ odstavcu 1 a 2 se nepouzijõ, jestlize skutecný vlastnõk licencnõch poplatku, který je rezidentem\njednoho smluvnõho státu, vykonává v druhém smluvnõm státe, ve kterém majõ licencnõ poplatky zdroj, svoji\ncinnost prostrednictvõm stálé provozovny, která je tam umõstena, n",
       "source_url": "https://e-sbirka.gov.cz/sm/2003/132/0000-00-00",
-      "verification_authority": "stage6_governance_policy",
+      "verification_authority": "semantic_remediation_machine_validation",
       "verification_status": "verified"
     }
   ],
-  "schema_version": 3,
-  "stage6_production": {
-    "additional_human_review_claimed": false,
-    "package_sha256": "1a385625bd2000bef394e680dedbc90075d133fcbd66b7c3541821df267ad3ce",
-    "production_approval": "production_approved",
-    "rule_promotion": "promoted",
-    "source_release": "not_released",
-    "treaty_pair_id": "CZ-PH",
-    "verification_authority": "stage6_governance_policy"
-  }
+  "schema_version": 3
 }
