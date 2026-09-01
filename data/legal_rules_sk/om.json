@@ -5,6 +5,121 @@
   },
   "rules": [
     {
+      "rule_id": "SK-OM-INTEREST-TREATY-INTEREST-SPECIAL-EXEMPTION",
+      "income_type": "interest",
+      "source_country": "SK",
+      "recipient_country": "OM",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "11",
+      "paragraph": null,
+      "rate": 0.0,
+      "priority": 700,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        },
+        {
+          "fact": "article_11_special_exemption",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "rate",
+      "effective_from": "2021-11-15",
+      "verification_status": "needs_review",
+      "source_text": "Článok 11 Úroky (1) Úroky majúce zdroj v jednom zmluvnom štáte a vyplácané rezidentovi druhého zmluvného štátu sa môžu zdaniť v tom druhom zmluvnom štáte. (2) Tieto úroky sa však môžu zdaniť aj v tom zmluvnom štáte, v ktorom majú zdroj, a to podľa právnych predpisov tohto zmluvného štátu, ale ak je skutočný vlastník úrokov rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne 10 % hrubej sumy úrokov. Príslušné orgány zmluvných štátov sa vzájomne dohodnú na spôsobe uplatnenia tohto obmedzenia. (3) Bez ohľadu na ustanovenia odseku 2 tohto článku úroky sa oslobodia od dane v tom zmluvnom štáte, v ktorom majú zdroj, ak plynú a ich skutočným vlastníkom je, alebo ak plynú v súvislosti s pôžičkou alebo úverom , ktoré poskytnutuje, garantuje alebo poisťuje a) vláda, nižší správny útvar, miestny orgán alebo centrálna (národná) banka druhého zmluvného štátu b) v prípade Slovenskej republiky (i) Eximbanka SR (ii) Slovenská záručná a rozvojová banka, a. s., c) v prípade Ománskeho sultanátu (i) Štátny všeobecný rezervný fond (the State General Reserve Fund) (ii) Ománsky investičný fond (the Omani Investment Fund) a d) iný štatutárny orgán alebo inštitúcia v úplnom vlastníctve vlády druhého zmluvného štátu, na ktorých sa môžu príslušné úrady zmluvných štátov z času na čas dohodnúť. (4) Pojem „úroky“ použitý v tomto článku označuje príjmy z pohľadávok akéhokoľvek druhu zabezpečených či nezabezpečených záložným právom bez ohľadu na to, či majú alebo nemajú právo účasti na ziskoch dlžníka a najmä príjmy z vládnych cenných papierov a príjmy z obligácií alebo z dlhopisov vrátane prémií a výhier spojených s týmito cennými papiermi, obligáciami alebo dlhopismi. Penále ukladané za oneskorenú platbu sa nepovažuje za úroky na účely tohto článku. (5) Ustanovenia odsekov 1 a 2 sa neuplatňujú ak skutočný vlastník úrokov, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, v ktorom majú úroky zdroj, podnikateľskú činnosť prostredníctvom stálej prevádzkarne, ktorá sa tam nachádza, alebo v tom druhom zmluvnom štáte vykonáva slobodné povolanie zo stálej základne, ktorá sa tam nachádza, a ak pohľadávka, za ktorú sa úroky platia, sa skutočne viaže na a) túto stálu prevádzkareň alebo na túto stálu základňu alebo b) podnkateľskú činnosť uvedenú v",
+      "source_id": "SK-SLOVLEX-E341A27A29CED8E1",
+      "source_url": "https://static.slov-lex.sk/pdf/prilohy/SK/ZZ/2021/548/vyhlasene_znenie_5381567-2.pdf",
+      "source_excerpt_hash": "984d81fc9dc9c6fc241a1a7032ed39038ea1669dafd6ff9f90b14488aeac7ea2",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.3",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-E341A27A29CED8E1"
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true,
+      "tax_treatment": "treaty_special_interest_exemption"
+    },
+    {
+      "rule_id": "SK-OM-INTEREST-TREATY-INTEREST-GENERAL",
+      "income_type": "interest",
+      "source_country": "SK",
+      "recipient_country": "OM",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "11",
+      "paragraph": null,
+      "rate": 10.0,
+      "priority": 600,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        },
+        {
+          "fact": "article_11_special_exemption",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "effect": "rate",
+      "effective_from": "2021-11-15",
+      "verification_status": "needs_review",
+      "source_text": "Článok 11 Úroky (1) Úroky majúce zdroj v jednom zmluvnom štáte a vyplácané rezidentovi druhého zmluvného štátu sa môžu zdaniť v tom druhom zmluvnom štáte. (2) Tieto úroky sa však môžu zdaniť aj v tom zmluvnom štáte, v ktorom majú zdroj, a to podľa právnych predpisov tohto zmluvného štátu, ale ak je skutočný vlastník úrokov rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne 10 % hrubej sumy úrokov. Príslušné orgány zmluvných štátov sa vzájomne dohodnú na spôsobe uplatnenia tohto obmedzenia. (3) Bez ohľadu na ustanovenia odseku 2 tohto článku úroky sa oslobodia od dane v tom zmluvnom štáte, v ktorom majú zdroj, ak plynú a ich skutočným vlastníkom je, alebo ak plynú v súvislosti s pôžičkou alebo úverom , ktoré poskytnutuje, garantuje alebo poisťuje a) vláda, nižší správny útvar, miestny orgán alebo centrálna (národná) banka druhého zmluvného štátu b) v prípade Slovenskej republiky (i) Eximbanka SR (ii) Slovenská záručná a rozvojová banka, a. s., c) v prípade Ománskeho sultanátu (i) Štátny všeobecný rezervný fond (the State General Reserve Fund) (ii) Ománsky investičný fond (the Omani Investment Fund) a d) iný štatutárny orgán alebo inštitúcia v úplnom vlastníctve vlády druhého zmluvného štátu, na ktorých sa môžu príslušné úrady zmluvných štátov z času na čas dohodnúť. (4) Pojem „úroky“ použitý v tomto článku označuje príjmy z pohľadávok akéhokoľvek druhu zabezpečených či nezabezpečených záložným právom bez ohľadu na to, či majú alebo nemajú právo účasti na ziskoch dlžníka a najmä príjmy z vládnych cenných papierov a príjmy z obligácií alebo z dlhopisov vrátane prémií a výhier spojených s týmito cennými papiermi, obligáciami alebo dlhopismi. Penále ukladané za oneskorenú platbu sa nepovažuje za úroky na účely tohto článku. (5) Ustanovenia odsekov 1 a 2 sa neuplatňujú ak skutočný vlastník úrokov, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, v ktorom majú úroky zdroj, podnikateľskú činnosť prostredníctvom stálej prevádzkarne, ktorá sa tam nachádza, alebo v tom druhom zmluvnom štáte vykonáva slobodné povolanie zo stálej základne, ktorá sa tam nachádza, a ak pohľadávka, za ktorú sa úroky platia, sa skutočne viaže na a) túto stálu prevádzkareň alebo na túto stálu základňu alebo b) podnkateľskú činnosť uvedenú v",
+      "source_id": "SK-SLOVLEX-E341A27A29CED8E1",
+      "source_url": "https://static.slov-lex.sk/pdf/prilohy/SK/ZZ/2021/548/vyhlasene_znenie_5381567-2.pdf",
+      "source_excerpt_hash": "984d81fc9dc9c6fc241a1a7032ed39038ea1669dafd6ff9f90b14488aeac7ea2",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.3",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-E341A27A29CED8E1"
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true
+    },
+    {
       "rule_id": "SK-OM-ROYALTY-TREATY-SIMPLE-1",
       "income_type": "royalty",
       "source_country": "SK",
@@ -47,7 +162,7 @@
       "reviewed_at": "2026-08-21",
       "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
       "approval_created_at": "2026-09-01",
-      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.3",
       "evidence_source_ids": [
         "SK-SLOVLEX-E341A27A29CED8E1"
       ],

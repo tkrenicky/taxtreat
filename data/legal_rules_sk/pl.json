@@ -5,6 +5,379 @@
   },
   "rules": [
     {
+      "rule_id": "SK-PL-MLI-GATE-INTEREST-A3",
+      "income_type": "interest",
+      "source_country": "SK",
+      "recipient_country": "PL",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "3",
+      "paragraph": null,
+      "rate": null,
+      "priority": 53,
+      "conditions": [
+        {
+          "fact": "mli_article_3_transparent_entity_entitlement_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2019-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-PL: notice 409/2018; result-changing articles ['3', '4', '7']; WHT effective date(s) ['2019-01-01']. Gate: MLI Article 3 transparent-entity entitlement.",
+      "source_id": "SK-MLI-409-2018",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2018/409/vyhlasene_znenie.html",
+      "source_excerpt_hash": "baf80d2097f8d71cf07ba5a45e0153d27233b79a34218c8e19e369e48c36c4fc",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.3",
+      "evidence_source_ids": [
+        "SK-MLI-409-2018"
+      ]
+    },
+    {
+      "rule_id": "SK-PL-MLI-GATE-INTEREST-A3",
+      "income_type": "interest",
+      "source_country": "SK",
+      "recipient_country": "PL",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "3",
+      "paragraph": null,
+      "rate": null,
+      "priority": 53,
+      "conditions": [
+        {
+          "fact": "mli_article_3_transparent_entity_entitlement_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2019-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-PL: notice 409/2018; result-changing articles ['3', '4', '7']; WHT effective date(s) ['2019-01-01']. Gate: MLI Article 3 transparent-entity entitlement.",
+      "source_id": "SK-MLI-409-2018",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2018/409/vyhlasene_znenie.html",
+      "source_excerpt_hash": "baf80d2097f8d71cf07ba5a45e0153d27233b79a34218c8e19e369e48c36c4fc",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.3",
+      "evidence_source_ids": [
+        "SK-MLI-409-2018"
+      ]
+    },
+    {
+      "rule_id": "SK-PL-MLI-GATE-INTEREST-A4",
+      "income_type": "interest",
+      "source_country": "SK",
+      "recipient_country": "PL",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "4",
+      "paragraph": null,
+      "rate": null,
+      "priority": 54,
+      "conditions": [
+        {
+          "fact": "mli_article_4_dual_resident_entitlement_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2019-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-PL: notice 409/2018; result-changing articles ['3', '4', '7']; WHT effective date(s) ['2019-01-01']. Gate: MLI Article 4 dual-resident entity entitlement.",
+      "source_id": "SK-MLI-409-2018",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2018/409/vyhlasene_znenie.html",
+      "source_excerpt_hash": "b2fcde7fb83941e6b81a9f1c18ee75e82ffefbe52dc4b636ae884c5bc483c604",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.3",
+      "evidence_source_ids": [
+        "SK-MLI-409-2018"
+      ]
+    },
+    {
+      "rule_id": "SK-PL-MLI-GATE-INTEREST-A4",
+      "income_type": "interest",
+      "source_country": "SK",
+      "recipient_country": "PL",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "4",
+      "paragraph": null,
+      "rate": null,
+      "priority": 54,
+      "conditions": [
+        {
+          "fact": "mli_article_4_dual_resident_entitlement_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2019-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-PL: notice 409/2018; result-changing articles ['3', '4', '7']; WHT effective date(s) ['2019-01-01']. Gate: MLI Article 4 dual-resident entity entitlement.",
+      "source_id": "SK-MLI-409-2018",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2018/409/vyhlasene_znenie.html",
+      "source_excerpt_hash": "b2fcde7fb83941e6b81a9f1c18ee75e82ffefbe52dc4b636ae884c5bc483c604",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.3",
+      "evidence_source_ids": [
+        "SK-MLI-409-2018"
+      ]
+    },
+    {
+      "rule_id": "SK-PL-MLI-GATE-INTEREST-A7",
+      "income_type": "interest",
+      "source_country": "SK",
+      "recipient_country": "PL",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "7",
+      "paragraph": null,
+      "rate": null,
+      "priority": 57,
+      "conditions": [
+        {
+          "fact": "treaty_ppt_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2019-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-PL: notice 409/2018; result-changing articles ['3', '4', '7']; WHT effective date(s) ['2019-01-01']. Gate: MLI Article 7 principal purpose test.",
+      "source_id": "SK-MLI-409-2018",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2018/409/vyhlasene_znenie.html",
+      "source_excerpt_hash": "d0004718f3d345205043a601c0a65fbec88e3a15a8d93c5d53282efe27fed0ba",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.3",
+      "evidence_source_ids": [
+        "SK-MLI-409-2018"
+      ]
+    },
+    {
+      "rule_id": "SK-PL-MLI-GATE-INTEREST-A7",
+      "income_type": "interest",
+      "source_country": "SK",
+      "recipient_country": "PL",
+      "legal_instrument": "mli",
+      "legal_layer": "mli",
+      "article": "7",
+      "paragraph": null,
+      "rate": null,
+      "priority": 57,
+      "conditions": [
+        {
+          "fact": "treaty_ppt_passed",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "eligibility_gate",
+      "applies_to_layers": [
+        "treaty",
+        "protocol",
+        "mli"
+      ],
+      "effective_from": "2019-01-01",
+      "verification_status": "verified",
+      "source_text": "Slovak bilateral MLI adjudication for SK-PL: notice 409/2018; result-changing articles ['3', '4', '7']; WHT effective date(s) ['2019-01-01']. Gate: MLI Article 7 principal purpose test.",
+      "source_id": "SK-MLI-409-2018",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2018/409/vyhlasene_znenie.html",
+      "source_excerpt_hash": "d0004718f3d345205043a601c0a65fbec88e3a15a8d93c5d53282efe27fed0ba",
+      "verification_authority": "sk_mli_bilateral_adjudication_and_reconfirmation",
+      "reviewer_id": "sk_mli_final_reconfirmation",
+      "reviewed_at": "2026-08-21",
+      "approved_by": "mli_bilateral_adjudication_2026",
+      "approved_at": "2026-08-21",
+      "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
+      "approval_created_at": "2026-08-21",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.3",
+      "evidence_source_ids": [
+        "SK-MLI-409-2018"
+      ]
+    },
+    {
+      "rule_id": "SK-PL-INTEREST-TREATY-INTEREST-GENERAL",
+      "income_type": "interest",
+      "source_country": "SK",
+      "recipient_country": "PL",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "11",
+      "paragraph": null,
+      "rate": 10.0,
+      "priority": 600,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        },
+        {
+          "fact": "article_11_special_exemption",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "effect": "rate",
+      "effective_from": "1995-12-21",
+      "verification_status": "needs_review",
+      "source_text": "Článok 11 Úroky 1. Úroky majúce zdroj v jednom zmluvnom štáte, ktoré poberá rezident druhého zmluvného štátu, môžu sa zdaniť v tomto druhom štáte. 2. Úroky uvedené v odseku 1 však možno zdaniť aj v zmluvnom štáte, v ktorom majú zdroj, podľa predpisov tohto štátu, ale ak príjemca je skutočným vlastníkom úrokov, daň takto uložená nepresiahne 10 % hrubej sumy úrokov. 3. Bez ohľadu na ustanovenia odseku 2 úroky, ktorých zdroj je v jednom zmluvnom štáte a ktoré poberá vláda druhého zmluvného štátu vrátane jeho miestnych orgánov, centrálnej banky alebo akejkoľvek finančnej inštitúcie kontrolovanej touto vládou, alebo úroky, ktoré plynú z pôžičiek garantovaných touto vládou, budú oslobodené od dane v skôr uvedenom zmluvnom štáte. 4. Výraz „úroky“ použitý v tomto článku označuje príjmy z pohľadávok akéhokoľvek druhu zabezpečených i nezabezpečených záložným právom k nehnuteľnosti alebo majúce alebo nemajúce právo účasti na zisku dlžníka, a najmä príjmy z vládnych cenných papierov a príjmy z obligácií alebo z dlhopisov vrátane prémií a výhier spojených s týmito cennými papiermi, obligáciami alebo s dlhopismi. Penále za oneskorenú platbu sa nepovažuje za úroky na účely tohto článku. 5. Ustanovenia odsekov 1 a 2 sa nepoužijú, ak skutočný vlastník úrokov, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, v ktorom majú úroky zdroj, priemyselnú alebo obchodnú činnosť prostredníctvom stálej prevádzkarne, ktorá je tam umiestnená, alebo nezávislé povolanie prostredníctvom stálej základne tam umiestnenej a ak pohľadávka, z ktorej sú úroky platené, sa skutočne viaže na túto stálu prevádzkareň alebo na túto stálu základňu. V takomto prípade sa použijú ustanovenia článku 7 alebo článku 14 podľa toho, o aký prípad ide. 6. Predpokladá sa, že úroky majú zdroj v zmluvnom štáte, ak platiteľom je sám štát, jeho nižší správny útvar, miestny orgán alebo rezident tohto štátu. Ak však osoba platiaca úroky, či už je rezidentom zmluvného štátu, alebo nie, má v zmluvnom štáte stálu prevádzkareň alebo stálu základňu, v súvislosti s ktorou vzniklo zadlženie, z ktorého sú platené úroky, ktoré idú na ťarchu tejto stálej prevádzkarne alebo stálej základne, potom za zdroj takýchto úrokov sa považuje štát, v ktorom je stála prevádzkareň alebo stála základňa umiestnená. 7. Ak suma úrokov vzťahujúcich sa na pohľadávku, z ktorej sa platia, presahuje v dôsledku osobitných vzťahov, ktoré existujú medzi platiteľom a skutočným vlastníkom úrokov alebo ktoré jeden aj druhý udržiavajú s treťou osobou, sumu, ktorú by platiteľ dohodol so skutočným vlastníkom, keby neboli takéto vzťahy, použijú sa ustanovenia tohto článku len na naposledy uvedenú sumu. Suma platieb, ktorá ju presahuje, sa v takomto prípade zdaní podľa právnych predpisov každého zmluvného štátu s prihliadnutím na ostatné ustanovenia tejto zmluvy.",
+      "source_id": "SK-SLOVLEX-F7498FD10F6FA36E",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/1996/95/vyhlasene_znenie.html",
+      "source_excerpt_hash": "f41500657d3a4901bc4babdfe956588dd1c512546fae9cdf250c42aad315d042",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.3",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-F7498FD10F6FA36E"
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true
+    },
+    {
+      "rule_id": "SK-PL-INTEREST-TREATY-INTEREST-SPECIAL-EXEMPTION",
+      "income_type": "interest",
+      "source_country": "SK",
+      "recipient_country": "PL",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "11",
+      "paragraph": null,
+      "rate": 0.0,
+      "priority": 700,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        },
+        {
+          "fact": "article_11_special_exemption",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "rate",
+      "effective_from": "1995-12-21",
+      "verification_status": "needs_review",
+      "source_text": "Článok 11 Úroky 1. Úroky majúce zdroj v jednom zmluvnom štáte, ktoré poberá rezident druhého zmluvného štátu, môžu sa zdaniť v tomto druhom štáte. 2. Úroky uvedené v odseku 1 však možno zdaniť aj v zmluvnom štáte, v ktorom majú zdroj, podľa predpisov tohto štátu, ale ak príjemca je skutočným vlastníkom úrokov, daň takto uložená nepresiahne 10 % hrubej sumy úrokov. 3. Bez ohľadu na ustanovenia odseku 2 úroky, ktorých zdroj je v jednom zmluvnom štáte a ktoré poberá vláda druhého zmluvného štátu vrátane jeho miestnych orgánov, centrálnej banky alebo akejkoľvek finančnej inštitúcie kontrolovanej touto vládou, alebo úroky, ktoré plynú z pôžičiek garantovaných touto vládou, budú oslobodené od dane v skôr uvedenom zmluvnom štáte. 4. Výraz „úroky“ použitý v tomto článku označuje príjmy z pohľadávok akéhokoľvek druhu zabezpečených i nezabezpečených záložným právom k nehnuteľnosti alebo majúce alebo nemajúce právo účasti na zisku dlžníka, a najmä príjmy z vládnych cenných papierov a príjmy z obligácií alebo z dlhopisov vrátane prémií a výhier spojených s týmito cennými papiermi, obligáciami alebo s dlhopismi. Penále za oneskorenú platbu sa nepovažuje za úroky na účely tohto článku. 5. Ustanovenia odsekov 1 a 2 sa nepoužijú, ak skutočný vlastník úrokov, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, v ktorom majú úroky zdroj, priemyselnú alebo obchodnú činnosť prostredníctvom stálej prevádzkarne, ktorá je tam umiestnená, alebo nezávislé povolanie prostredníctvom stálej základne tam umiestnenej a ak pohľadávka, z ktorej sú úroky platené, sa skutočne viaže na túto stálu prevádzkareň alebo na túto stálu základňu. V takomto prípade sa použijú ustanovenia článku 7 alebo článku 14 podľa toho, o aký prípad ide. 6. Predpokladá sa, že úroky majú zdroj v zmluvnom štáte, ak platiteľom je sám štát, jeho nižší správny útvar, miestny orgán alebo rezident tohto štátu. Ak však osoba platiaca úroky, či už je rezidentom zmluvného štátu, alebo nie, má v zmluvnom štáte stálu prevádzkareň alebo stálu základňu, v súvislosti s ktorou vzniklo zadlženie, z ktorého sú platené úroky, ktoré idú na ťarchu tejto stálej prevádzkarne alebo stálej základne, potom za zdroj takýchto úrokov sa považuje štát, v ktorom je stála prevádzkareň alebo stála základňa umiestnená. 7. Ak suma úrokov vzťahujúcich sa na pohľadávku, z ktorej sa platia, presahuje v dôsledku osobitných vzťahov, ktoré existujú medzi platiteľom a skutočným vlastníkom úrokov alebo ktoré jeden aj druhý udržiavajú s treťou osobou, sumu, ktorú by platiteľ dohodol so skutočným vlastníkom, keby neboli takéto vzťahy, použijú sa ustanovenia tohto článku len na naposledy uvedenú sumu. Suma platieb, ktorá ju presahuje, sa v takomto prípade zdaní podľa právnych predpisov každého zmluvného štátu s prihliadnutím na ostatné ustanovenia tejto zmluvy.",
+      "source_id": "SK-SLOVLEX-F7498FD10F6FA36E",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/1996/95/vyhlasene_znenie.html",
+      "source_excerpt_hash": "f41500657d3a4901bc4babdfe956588dd1c512546fae9cdf250c42aad315d042",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.3",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-F7498FD10F6FA36E"
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true,
+      "tax_treatment": "treaty_special_interest_exemption"
+    },
+    {
       "rule_id": "SK-PL-MLI-GATE-ROYALTY-A3",
       "income_type": "royalty",
       "source_country": "SK",
@@ -42,7 +415,7 @@
       "approved_at": "2026-08-21",
       "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
       "approval_created_at": "2026-08-21",
-      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.3",
       "evidence_source_ids": [
         "SK-MLI-409-2018"
       ]
@@ -85,7 +458,7 @@
       "approved_at": "2026-08-21",
       "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
       "approval_created_at": "2026-08-21",
-      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.3",
       "evidence_source_ids": [
         "SK-MLI-409-2018"
       ]
@@ -128,7 +501,7 @@
       "approved_at": "2026-08-21",
       "approval_dataset_release": "sk-mli-bilateral-adjudication-2026-08-21.1",
       "approval_created_at": "2026-08-21",
-      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.3",
       "evidence_source_ids": [
         "SK-MLI-409-2018"
       ]
@@ -176,7 +549,7 @@
       "reviewed_at": "2026-08-21",
       "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
       "approval_created_at": "2026-09-01",
-      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.3",
       "evidence_source_ids": [
         "SK-SLOVLEX-F7498FD10F6FA36E"
       ],

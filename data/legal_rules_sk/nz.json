@@ -63,7 +63,7 @@
       "reviewed_at": "2026-08-21",
       "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
       "approval_created_at": "2026-09-01",
-      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.3",
       "evidence_source_ids": [
         "SK-SLOVLEX-F692253F7917DA61"
       ],
@@ -114,7 +114,122 @@
       "reviewed_at": "2026-08-21",
       "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
       "approval_created_at": "2026-09-01",
-      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.3",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-F692253F7917DA61"
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true
+    },
+    {
+      "rule_id": "SK-NZ-INTEREST-TREATY-INTEREST-SPECIAL-EXEMPTION",
+      "income_type": "interest",
+      "source_country": "SK",
+      "recipient_country": "NZ",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "11",
+      "paragraph": null,
+      "rate": 0.0,
+      "priority": 700,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        },
+        {
+          "fact": "article_11_special_exemption",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "rate",
+      "effective_from": "2024-11-01",
+      "verification_status": "needs_review",
+      "source_text": "Článok 11 Úroky 1. Úroky majúce zdroj v jednom zmluvnom štáte a vyplácané rezidentovi druhého zmluvného štátu sa môžu zdaniť v tomto druhom zmluvnom štáte. 2. Úroky majúce zdroj v jednom zmluvnom štáte sa môžu zdaniť aj v tomto zmluvnom štáte podľa právnych predpisov tohto zmluvného štátu, ak je však skutočný vlastník úrokov rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne 10 % hrubej sumy úrokov. 3. Bez ohľadu na ustanovenia odseku 2 tohto článku úroky majúce zdroj v jednom zmluvnom štáte, ktoré plynú a sú skutočné vlastnené rezidentom druhého zmluvného štátu sú oslobodené od dane v prvom zmluvnom štáte za predpokladu, že skutočný vlastník úroku koná úplne nezávisle od platiteľa a je: (a) v prípade Slovenskej republiky: (i) vláda Slovenskej republiky, (ii) orgány územnej samosprávy, (iii) Národná banka Slovenska, (iv) Eximbanka SR (Exportno-importná banka Slovenskej republiky), (v) Slovenská záručná a rozvojová banka, a. s., (vi) Agentúra pre riadenie dlhu a likvidity; b) v prípade Nového Zélandu: (i) vláda Nového Zélandu, (ii) orgány územnej samosprávy, (iii) Rezervná banka Nového Zélandu (the Reserve Bank of New Zealand), (iv) Novozélandská exportno-úverová kancelária (the New Zealand Export Credit Office). 4. Bez ohľadu na ustanovenia odseku 3 tohto článku sa úroky uvedené v tom odseku môžu zdaniť v zmluvnom štáte, v ktorom majú zdroj, so sadzbou nepresahujúcou 10 percent hrubej sumy úrokov, ak skutočný vlastník úroku má spolu s akýmikoľvek úzko prepojenými podnikmi viac ako 10% priamy alebo nepriamy podiel na hlasovacích právach v platiteľovi týchto úrokov. 5. Pojem „úroky“ použitý v tomto článku označuje príjmy z pohľadávok akéhokoľvek druhu zabezpečených alebo nezabezpečených záložným právom na nehnuteľnosť bez ohľadu na to, či poskytujú právo účasti na ziskoch dlžníka a najmä príjmy z vládnych cenných papierov a príjmy zo zabezpečených dlhopisov alebo nezabezpečených dlhopisov vrátane prémií a výhier spojených s týmito cennými papiermi, zabezpečenými dlhopismi alebo nezabezpečenými dlhopismi, ako aj všetky ostatné príjmy, ktoré sa zdaňujú rovnakým spôsobom ako príjmy plynúce z peňazí požičaných podľa daňových právnych predpisov zmluvného štátu, v ktorom majú tieto príjmy zdroj, ale nezahŕňa akékoľvek príjmy, ktoré sa považujú za dividendy podľa článku 10 tejto zmluvy. 6. Ustanovenia odsekov 1, 2, 3 a 4 tohto článku sa neuplatnia, ak skutočný vlastník úrokov, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, v ktorom majú úroky zdroj, činnosť prostredníctvom stálej prevádzkarne, ktorá sa tam nachádza, a ak pohľadávka, z ktorej sa úroky platia, sa skutočne viaže na túto stálu prevádzkareň. V takomto prípade sa uplatnia ustanovenia článku 7. 7. Predpokladá sa, že úroky majú zdroj v zmluvnom štáte, ak je platiteľ rezidentom tohto zmluvného štátu. Ak však osoba platiaca úroky bez ohľadu na to, či je alebo nie je rezidentom zmluvného štátu, má v zmluvnom štáte stálu prevádzkareň, v súvislosti s ktorou vznikol dlh, za ktorý sa úroky platia a tieto úroky sú odpočítateľné pri určovaní ziskov prisúditeľných tejto stálej prevádzkarni, potom sa predpokladá, že tieto úroky majú zdroj v tom zmluvnom štáte, v ktorom sa nachádza táto stála prevádzkareň. 8. Ak v dôsledku osobitných vzťahov existujúcich medzi platiteľom a skutočným vlastníkom úrokov alebo medzi nimi a treťou osobou suma úrokov vzťahujúca sa k pohľadávke, z ktorej sa úroky platia, presahuje sumu, ktorú by bol dohodol platiteľ so skutočným vlastníkom, keby takéto vzťahy neexistovali, uplatnia sa ustanovenia tohto článku len na túto naposledy uvedenú sumu. V tomto prípade časť platieb presahujúca túto sumu sa zdaní podľa právnych predpisov oboch zmluvných štátov s prihliadnutím na ostatné ustanovenia tejto zmluvy.",
+      "source_id": "SK-SLOVLEX-F692253F7917DA61",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2024/243/vyhlasene_znenie.html",
+      "source_excerpt_hash": "238b76fe3619e5cfccd700f3fd91202837f08db6c573ee9609bb73e700ad6145",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.3",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-F692253F7917DA61"
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true,
+      "tax_treatment": "treaty_special_interest_exemption"
+    },
+    {
+      "rule_id": "SK-NZ-INTEREST-TREATY-INTEREST-GENERAL",
+      "income_type": "interest",
+      "source_country": "SK",
+      "recipient_country": "NZ",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "11",
+      "paragraph": null,
+      "rate": 10.0,
+      "priority": 600,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        },
+        {
+          "fact": "article_11_special_exemption",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "effect": "rate",
+      "effective_from": "2024-11-01",
+      "verification_status": "needs_review",
+      "source_text": "Článok 11 Úroky 1. Úroky majúce zdroj v jednom zmluvnom štáte a vyplácané rezidentovi druhého zmluvného štátu sa môžu zdaniť v tomto druhom zmluvnom štáte. 2. Úroky majúce zdroj v jednom zmluvnom štáte sa môžu zdaniť aj v tomto zmluvnom štáte podľa právnych predpisov tohto zmluvného štátu, ak je však skutočný vlastník úrokov rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne 10 % hrubej sumy úrokov. 3. Bez ohľadu na ustanovenia odseku 2 tohto článku úroky majúce zdroj v jednom zmluvnom štáte, ktoré plynú a sú skutočné vlastnené rezidentom druhého zmluvného štátu sú oslobodené od dane v prvom zmluvnom štáte za predpokladu, že skutočný vlastník úroku koná úplne nezávisle od platiteľa a je: (a) v prípade Slovenskej republiky: (i) vláda Slovenskej republiky, (ii) orgány územnej samosprávy, (iii) Národná banka Slovenska, (iv) Eximbanka SR (Exportno-importná banka Slovenskej republiky), (v) Slovenská záručná a rozvojová banka, a. s., (vi) Agentúra pre riadenie dlhu a likvidity; b) v prípade Nového Zélandu: (i) vláda Nového Zélandu, (ii) orgány územnej samosprávy, (iii) Rezervná banka Nového Zélandu (the Reserve Bank of New Zealand), (iv) Novozélandská exportno-úverová kancelária (the New Zealand Export Credit Office). 4. Bez ohľadu na ustanovenia odseku 3 tohto článku sa úroky uvedené v tom odseku môžu zdaniť v zmluvnom štáte, v ktorom majú zdroj, so sadzbou nepresahujúcou 10 percent hrubej sumy úrokov, ak skutočný vlastník úroku má spolu s akýmikoľvek úzko prepojenými podnikmi viac ako 10% priamy alebo nepriamy podiel na hlasovacích právach v platiteľovi týchto úrokov. 5. Pojem „úroky“ použitý v tomto článku označuje príjmy z pohľadávok akéhokoľvek druhu zabezpečených alebo nezabezpečených záložným právom na nehnuteľnosť bez ohľadu na to, či poskytujú právo účasti na ziskoch dlžníka a najmä príjmy z vládnych cenných papierov a príjmy zo zabezpečených dlhopisov alebo nezabezpečených dlhopisov vrátane prémií a výhier spojených s týmito cennými papiermi, zabezpečenými dlhopismi alebo nezabezpečenými dlhopismi, ako aj všetky ostatné príjmy, ktoré sa zdaňujú rovnakým spôsobom ako príjmy plynúce z peňazí požičaných podľa daňových právnych predpisov zmluvného štátu, v ktorom majú tieto príjmy zdroj, ale nezahŕňa akékoľvek príjmy, ktoré sa považujú za dividendy podľa článku 10 tejto zmluvy. 6. Ustanovenia odsekov 1, 2, 3 a 4 tohto článku sa neuplatnia, ak skutočný vlastník úrokov, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, v ktorom majú úroky zdroj, činnosť prostredníctvom stálej prevádzkarne, ktorá sa tam nachádza, a ak pohľadávka, z ktorej sa úroky platia, sa skutočne viaže na túto stálu prevádzkareň. V takomto prípade sa uplatnia ustanovenia článku 7. 7. Predpokladá sa, že úroky majú zdroj v zmluvnom štáte, ak je platiteľ rezidentom tohto zmluvného štátu. Ak však osoba platiaca úroky bez ohľadu na to, či je alebo nie je rezidentom zmluvného štátu, má v zmluvnom štáte stálu prevádzkareň, v súvislosti s ktorou vznikol dlh, za ktorý sa úroky platia a tieto úroky sú odpočítateľné pri určovaní ziskov prisúditeľných tejto stálej prevádzkarni, potom sa predpokladá, že tieto úroky majú zdroj v tom zmluvnom štáte, v ktorom sa nachádza táto stála prevádzkareň. 8. Ak v dôsledku osobitných vzťahov existujúcich medzi platiteľom a skutočným vlastníkom úrokov alebo medzi nimi a treťou osobou suma úrokov vzťahujúca sa k pohľadávke, z ktorej sa úroky platia, presahuje sumu, ktorú by bol dohodol platiteľ so skutočným vlastníkom, keby takéto vzťahy neexistovali, uplatnia sa ustanovenia tohto článku len na túto naposledy uvedenú sumu. V tomto prípade časť platieb presahujúca túto sumu sa zdaní podľa právnych predpisov oboch zmluvných štátov s prihliadnutím na ostatné ustanovenia tejto zmluvy.",
+      "source_id": "SK-SLOVLEX-F692253F7917DA61",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2024/243/vyhlasene_znenie.html",
+      "source_excerpt_hash": "238b76fe3619e5cfccd700f3fd91202837f08db6c573ee9609bb73e700ad6145",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.3",
       "evidence_source_ids": [
         "SK-SLOVLEX-F692253F7917DA61"
       ],
@@ -165,7 +280,7 @@
       "reviewed_at": "2026-08-21",
       "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
       "approval_created_at": "2026-09-01",
-      "dataset_release": "sk-structured-treaty-rules-2026-09-01.2",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.3",
       "evidence_source_ids": [
         "SK-SLOVLEX-F692253F7917DA61"
       ],
