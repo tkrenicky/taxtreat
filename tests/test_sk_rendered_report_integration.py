@@ -98,3 +98,39 @@ def test_sk_report_localization_fails_closed_on_new_czech_legal_marker():
             "Nová šablona: § 38da neočekávaný text.",
             {"scope": {"source_country": "SK"}},
         )
+
+
+def test_real_sk_english_report_has_no_czech_or_slovak_ui_residue():
+    report = _sk_report()
+    report["language"] = "en"
+    report["disclaimer"] = (
+        "TaxTreat is an information tool. It does not provide legal or tax advice."
+    )
+
+    html = render_report_html(report)
+
+    assert '<html lang="en">' in html
+    assert "Slovak withholding tax information" in html
+    assert "Slovak withholding tax rate" in html
+    assert "Slovak Income Tax Act" in html
+    assert "Slovak permanent establishment" in html
+
+    forbidden = (
+        "Informace k české",
+        "Česká srážková",
+        "české srážkové",
+        "586/1992",
+        "§ 38da",
+        "§ 38d ",
+        "Informácie k slovenskej",
+        "Slovenská zrážková",
+        "slovenskej zrážkovej",
+        "Vnútroštátna",
+        "Použitý právny",
+        "Zmluva medzi",
+        "zmluvy medzi",
+        ">Platiteľ<",
+        ">Príjemca<",
+    )
+    for marker in forbidden:
+        assert marker not in html, marker
