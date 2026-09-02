@@ -244,5 +244,5 @@
     setPayerCountry,
   });
 
-  applyContext("CZ");
+  applyContext(inferredCountryForActivePayer());
 })();

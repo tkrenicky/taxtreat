@@ -45,7 +45,7 @@ def test_workspace_analysis_requests_are_bound_to_active_payer_source_country():
 
     assert 'url.includes("/analysis")' in adapter
     assert 'payload.source_country = currentCode' in adapter
-    assert 'applyContext("CZ")' in adapter
+    assert "applyContext(inferredCountryForActivePayer())" in adapter
     assert 'body: JSON.stringify(payload)' in adapter
 
 

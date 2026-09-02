@@ -30,7 +30,7 @@ def test_public_workspace_derives_source_country_from_payer_without_mode_switch(
     assert '<option value="CZ">Česká republika</option>' in adapter
     assert '<option value="SK">Slovensko</option>' in adapter
     assert 'countryControl.hidden = true;' in adapter
-    assert 'applyContext("CZ")' in adapter
+    assert "applyContext(inferredCountryForActivePayer())" in adapter
 
 
 def test_public_workspace_rejects_nonpublic_source_country_context():
