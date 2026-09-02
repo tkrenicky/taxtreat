@@ -30,6 +30,19 @@ def wait_for_server(process: subprocess.Popen[str]) -> None:
     fail("local TaxTreat server did not become ready")
 
 
+def wait_for_source_country(page, code: str, expected_partner_options: int) -> None:
+    page.wait_for_function(
+        "(expected) => document.body.dataset.sourceCountry === expected",
+        code,
+    )
+    page.wait_for_function(
+        """(expected) => document.querySelectorAll(
+            '#new-recipient-form [name="recipient_country"] option'
+        ).length === expected""",
+        expected_partner_options,
+    )
+
+
 def fill_client_questions(page) -> None:
     for _ in range(8):
         questions = page.locator("#workspace-questions [data-input-path]")
@@ -165,6 +178,7 @@ def main() -> int:
 
             page.locator('#taxtreat-language-controls [data-lang="en"]').click()
             page.wait_for_function("() => document.documentElement.lang === 'en'")
+            wait_for_source_country(page, "SK", 76)
             assert "Slovak entities" in page.locator(
                 '[data-view="payers"] .page-title span'
             ).inner_text()
@@ -174,6 +188,7 @@ def main() -> int:
 
             page.locator('#taxtreat-language-controls [data-lang="cs"]').click()
             page.wait_for_function("() => document.documentElement.lang === 'cs'")
+            wait_for_source_country(page, "SK", 76)
             page.locator("[data-start-flow]").first.click()
             page.locator('[data-next-step="2"]:visible').click()
             page.locator('[data-next-step="3"]:visible').click()
@@ -220,6 +235,7 @@ def main() -> int:
 
             page.locator('#taxtreat-language-controls [data-lang="en"]').click()
             page.wait_for_function("() => document.documentElement.lang === 'en'")
+            wait_for_source_country(page, "SK", 76)
             assert "Slovak withholding tax" in page.locator(
                 "#workspace-tax-label"
             ).inner_text()
@@ -245,7 +261,9 @@ def main() -> int:
         print("SK_WORKSPACE_BROWSER_OK")
         return 0
     except Exception as exc:
-        print(f"SK_WORKSPACE_BROWSER_FAILED: {exc}")
+        import traceback
+        print(f"SK_WORKSPACE_BROWSER_FAILED: {exc!r}")
+        traceback.print_exc()
         if server_log.exists():
             print(server_log.read_text(encoding="utf-8", errors="replace"))
         return 1
