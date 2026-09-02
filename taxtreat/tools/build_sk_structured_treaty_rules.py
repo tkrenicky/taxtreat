@@ -314,9 +314,102 @@ def _dividend_word_rate_branches(scope: dict, article: dict) -> list[dict] | Non
     ]
 
 
+def _holding_period_dividend_branches(scope: dict, article: dict) -> list[dict] | None:
+    if scope.get("income_type") != "dividend" or not scope.get("source_sha256"):
+        return None
+    text = str(article.get("article_text") or "").lower()
+    common = conditions(scope)
+
+    # MY: 0% for a non-partnership company with direct >=10% ownership held
+    # continuously for at least 12 months; 5% in all other cases.
+    if (
+        "dvanástich mesiacov" in text
+        and "nula percent hrubej sumy dividend" in text
+        and "päť percent hrubej sumy dividend" in text
+        and "najmenej desať percent majetku" in text
+    ):
+        qualifying = [
+            *common,
+            {
+                "fact": "recipient_entity_type",
+                "fact_source": "transaction",
+                "operator": "in",
+                "value": ["company", "corporate", "company_other_than_partnership"],
+            },
+            {
+                "fact": "direct_ownership",
+                "fact_source": "transaction",
+                "operator": "==",
+                "value": True,
+            },
+            {
+                "fact": "ownership_percent",
+                "fact_source": "transaction",
+                "operator": ">=",
+                "value": 10.0,
+            },
+            {
+                "fact": "holding_period_months",
+                "fact_source": "transaction",
+                "operator": ">=",
+                "value": 12.0,
+            },
+        ]
+        return [
+            {"rate": 0.0, "priority": 700, "conditions": qualifying},
+            {"rate": 5.0, "priority": 600, "conditions": common},
+        ]
+
+    # PT: 10% for a company with direct >=25% capital held continuously for
+    # the two years preceding payment; otherwise the paragraph-2 ceiling is 15%.
+    if (
+        "neprerušovaného obdobia dvoch rokov" in text
+        and "aspoň 25 % základného imania" in text
+        and "nepresiahne 10 % hrubej sumy" in text
+        and "nepresiahne 15 % hrubej sumy dividend" in text
+    ):
+        qualifying = [
+            *common,
+            {
+                "fact": "recipient_entity_type",
+                "fact_source": "transaction",
+                "operator": "in",
+                "value": ["company", "corporate", "company_other_than_partnership"],
+            },
+            {
+                "fact": "direct_ownership",
+                "fact_source": "transaction",
+                "operator": "==",
+                "value": True,
+            },
+            {
+                "fact": "ownership_percent",
+                "fact_source": "transaction",
+                "operator": ">=",
+                "value": 25.0,
+            },
+            {
+                "fact": "holding_period_months",
+                "fact_source": "transaction",
+                "operator": ">=",
+                "value": 24.0,
+            },
+        ]
+        return [
+            {"rate": 10.0, "priority": 700, "conditions": qualifying},
+            {"rate": 15.0, "priority": 600, "conditions": common},
+        ]
+
+    return None
+
+
 def dividend_branches(scope: dict, article: dict) -> list[dict] | None:
     if scope.get("income_type") != "dividend":
         return None
+    holding_period = _holding_period_dividend_branches(scope, article)
+    if holding_period:
+        return holding_period
+
     article_text = str(article.get("article_text") or "")
     text = _article_paragraph_two(article_text)
     if not text or not scope.get("source_sha256"):
