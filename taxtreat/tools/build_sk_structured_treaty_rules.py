@@ -189,7 +189,7 @@ def _source_text_residence_only(article: dict) -> bool:
     return not source_state_reopened
 
 
-def _single_word_percent_rate(scope: dict, article: dict) -> float | None:
+def _single_word_percent_rate(scope: dict, article: dict, *, allow_interest_exemption: bool = False) -> float | None:
     """
     Recover one unambiguous source-state ceiling written as a Slovak number word.
 
@@ -220,7 +220,7 @@ def _single_word_percent_rate(scope: dict, article: dict) -> float | None:
         return None
 
     income = str(scope.get("income_type") or "")
-    if income == "interest" and re.search(
+    if income == "interest" and not allow_interest_exemption and re.search(
         r"osloboden|nepodliehajú\s+dani|sa\s+nezdaňujú|bez\s+ohľadu\s+na\s+ustanovenia",
         text,
     ):
@@ -377,7 +377,7 @@ def interest_branches(scope: dict, article: dict) -> list[dict] | None:
     ]
     unique_rates = sorted(set(rates))
     if not unique_rates:
-        word_rate = _single_word_percent_rate(scope, article)
+        word_rate = _single_word_percent_rate(scope, article, allow_interest_exemption=True)
         if word_rate is not None:
             unique_rates = [float(word_rate)]
     if len(unique_rates) != 1:
