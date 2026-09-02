@@ -7,6 +7,13 @@ on:
       - "scripts/verify_full_web_interaction_matrix_20260902.py"
       - ".github/workflows/full-web-interaction-matrix-20260902.yml"
 
+permissions:
+  contents: write
+
+concurrency:
+  group: full-web-interaction-matrix-audit
+  cancel-in-progress: true
+
 jobs:
   audit:
     runs-on: ubuntu-latest
