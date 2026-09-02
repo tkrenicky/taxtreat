@@ -71,8 +71,8 @@ def main() -> int:
 
     corrections = registry.get("corrections", [])
     countries = sorted({str(row["country"]).upper() for row in corrections})
-    if len(countries) != 40:
-        raise RuntimeError(f"Expected 40 semantic-remediation countries, found {len(countries)}")
+    if len(countries) != 41:
+        raise RuntimeError(f"Expected 41 semantic-remediation countries, found {len(countries)}")
 
     queue_by_country = {str(row["partner_country"]).upper(): row for row in queue["packages"]}
     approval_by_country = {str(row["partner_country"]).upper(): row for row in approval["records"]}
