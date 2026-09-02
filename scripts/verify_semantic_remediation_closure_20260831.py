@@ -38,6 +38,7 @@ def norm_rule(row):
         str(row.get("source_id")),
         str(row.get("income_type")),
         float(row["rate"]) if row.get("rate") is not None else None,
+        str(row.get("tax_treatment") or ""),
         tuple(sorted(norm_condition(c) for c in row.get("conditions", []))),
     )
 
@@ -52,7 +53,7 @@ def main() -> int:
         (str(row["country"]).upper(), str(row["income_type"]))
         for row in registry["corrections"]
     }
-    assert len(expected) == 40
+    assert len(expected) == 41
     assert _PENDING_SEMANTIC_REMEDIATION_SCOPES == set()
 
     queue_hash = {
@@ -65,8 +66,8 @@ def main() -> int:
     }
     assert set(release_by_scope) == expected
     assert release["additional_human_review_claimed"] is False
-    assert release["counts"]["released_scopes"] == 40
-    assert release["counts"]["released_packages"] == 40
+    assert release["counts"]["released_scopes"] == 41
+    assert release["counts"]["released_packages"] == 41
 
     gate_by_pair = {
         str(row["treaty_pair_id"]): row
@@ -126,8 +127,8 @@ def main() -> int:
         )
 
     print("CZ semantic remediation machine release verifier: PASS")
-    print("released_scopes=40")
-    print("released_packages=40")
+    print("released_scopes=41")
+    print("released_packages=41")
     print("additional_human_review_claimed=false")
     print("pending_quarantine_scopes=0")
     return 0
