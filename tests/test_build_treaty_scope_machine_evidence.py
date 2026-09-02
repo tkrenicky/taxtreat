@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -10,10 +11,32 @@ from taxtreat.tools import build_treaty_scope_machine_evidence as scope_module
 from taxtreat.tools.build_treaty_scope_machine_evidence import build_scope_machine_evidence
 
 
-def _candidate(path: Path, number: int, income: str | None, *, substantive: bool = True):
+def _candidate(
+    path: Path,
+    number: int,
+    income: str | None,
+    *,
+    substantive: bool = True,
+    text_sha256: str | None = None,
+):
+    if text_sha256 is None:
+        if path.is_file():
+            text = path.read_text(encoding="utf-8")
+            hashed_text = (
+                text[:-2]
+                if text.endswith("\r\n")
+                else text[:-1]
+                if text.endswith("\n")
+                else text
+            )
+            text_sha256 = hashlib.sha256(hashed_text.encode("utf-8")).hexdigest()
+        else:
+            # Keep the hash syntactically valid so missing-artifact tests reach
+            # the intended fail-closed path rather than failing hash-shape validation.
+            text_sha256 = "0" * 64
     return {
         "article_number": number,
-        "text_sha256": str(number) * 64,
+        "text_sha256": text_sha256,
         "artifact_path": str(path),
         "substantive_article_candidate": substantive,
         "semantic_income_detected": income,
