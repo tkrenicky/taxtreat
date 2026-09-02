@@ -299,10 +299,10 @@ def run_browser_audit(report: dict[str, Any]) -> None:
         page.on("console", lambda msg: console_errors.append(msg.text) if msg.type == "error" else None)
 
         page.goto(f"{BASE_URL}/workspace-demo", wait_until="domcontentloaded", timeout=15000)
-        page.wait_for_selector("#workspace-payment", timeout=10000)
+        page.wait_for_selector("#workspace-payment", state="attached", timeout=10000)
         page.evaluate("localStorage.clear()")
         page.reload(wait_until="domcontentloaded")
-        page.wait_for_selector("#workspace-payment", timeout=10000)
+        page.wait_for_selector("#workspace-payment", state="attached", timeout=10000)
 
         # Jurisdiction catalog must expand both recipient selects to all 101.
         page.wait_for_function(
