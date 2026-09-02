@@ -346,7 +346,7 @@
       "treaty_article": "10",
       "treaty_machine_evidence_status": "machine_candidate_not_legal_conclusion",
       "treaty_semantic_candidate": {
-        "beneficial_owner_wording_present": false,
+        "beneficial_owner_wording_present": true,
         "evidence_quality": "official_primary_source_byte_extracted",
         "exclusive_residence_taxation_candidate": false,
         "holding_period_candidates": [],
@@ -395,13 +395,21 @@
       "treaty_article": "11",
       "treaty_machine_evidence_status": "machine_candidate_not_legal_conclusion",
       "treaty_semantic_candidate": {
-        "beneficial_owner_wording_present": false,
+        "beneficial_owner_wording_present": true,
         "evidence_quality": "official_primary_source_byte_extracted",
         "exclusive_residence_taxation_candidate": false,
         "holding_period_candidates": [],
         "ownership_linked_rate_candidate_count": 0,
         "pe_or_fixed_base_carveout_wording_present": true,
-        "rate_candidates": []
+        "rate_candidates": [
+          {
+            "beneficial_owner_context": true,
+            "context": "dent druhého zmluvného štátu skutočne oprávnený, môžu byť zdanené v tomto druhom štáte. 2. Takéto úroky môžu byť zdanené v zmluvnom štáte, v ktorom majú zdroj, a to podľa právnych predpisov tohto štátu; daň takto stanovená však nepresiahne desať percent hrubej sumy úrokov. 3. Výraz „úroky“ v tomto článku zahŕňa úroky z vládnych cenných papierov alebo z obligácií alebo dlhopisov, či už zabezpečených, alebo nezabezpečených záložným právom, ktoré poskytujú alebo neposkytujú právo podieľať sa",
+            "context_sha256": "905b95a40186332bec5c3d490d21681eae3da9be613a397a5a5e1bf3b51839e3",
+            "ownership_context": false,
+            "rate_percent": 10.0
+          }
+        ]
       },
       "treaty_source_sha256": "ec566859639102faa52205d3e9e592692a0f74508069fec58b503c62a454054b",
       "treaty_source_url": "https://static.slov-lex.sk/pdf/SK/ZZ/2000/157/ZZ_2000_157.pdf"
@@ -436,13 +444,21 @@
       "treaty_article": "12",
       "treaty_machine_evidence_status": "machine_candidate_not_legal_conclusion",
       "treaty_semantic_candidate": {
-        "beneficial_owner_wording_present": false,
+        "beneficial_owner_wording_present": true,
         "evidence_quality": "official_primary_source_byte_extracted",
         "exclusive_residence_taxation_candidate": false,
         "holding_period_candidates": [],
         "ownership_linked_rate_candidate_count": 0,
         "pe_or_fixed_base_carveout_wording_present": true,
-        "rate_candidates": []
+        "rate_candidates": [
+          {
+            "beneficial_owner_context": true,
+            "context": "skutočne oprávnený, môžu byť zdanené v tomto druhom štáte. 2. Tieto autorské honoráre a licenčné poplatky môžu byť zdanené v zmluvnom štáte, v ktorom je ich zdroj, podľa právnych predpisov tohto štátu; daň takto stanovená však nepresiahne desať percent hrubej sumy licenčných poplatkov. 3. Výraz „autorské honoráre a licenčné poplatky“ v tomto článku označuje platby alebo pripísané sumy, či už pravidelné, alebo nepravidelné, vyčíslené alebo vypočítané v takom rozsahu, v akom sú platené ako",
+            "context_sha256": "3b2e4c6ea90138ee213be49714054def02f32ceea718e9921775bfcf485e5bf7",
+            "ownership_context": false,
+            "rate_percent": 10.0
+          }
+        ]
       },
       "treaty_source_sha256": "ec566859639102faa52205d3e9e592692a0f74508069fec58b503c62a454054b",
       "treaty_source_url": "https://static.slov-lex.sk/pdf/SK/ZZ/2000/157/ZZ_2000_157.pdf"
@@ -2281,7 +2297,22 @@
         "holding_period_candidates": [],
         "ownership_linked_rate_candidate_count": 0,
         "pe_or_fixed_base_carveout_wording_present": true,
-        "rate_candidates": []
+        "rate_candidates": [
+          {
+            "beneficial_owner_context": true,
+            "context": "mluvnom štáte. (2) Tieto dividendy sa však môžu zdaniť aj v zmluvnom štáte, ktorého rezidentom je spoločnosť vyplácajúca dividendy, ale ak je skutočný vlastník dividend rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne a) päť percent hrubej sumy dividend, ak skutočný vlastník vlastní najmenej desať percent majetku spoločnosti vyplácajúcej dividendy, b) desať percent hrubej sumy dividend vo všetkých ostatných prípadoch. Tento odsek sa netýka zdanenia spoločností, ak ide",
+            "context_sha256": "21549dd525efe0c963d899721aafdd2bdd8c475e10921af6cdafebe9d04ce9ab",
+            "ownership_context": false,
+            "rate_percent": 5.0
+          },
+          {
+            "beneficial_owner_context": true,
+            "context": "le ak je skutočný vlastník dividend rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne a) päť percent hrubej sumy dividend, ak skutočný vlastník vlastní najmenej desať percent majetku spoločnosti vyplácajúcej dividendy, b) desať percent hrubej sumy dividend vo všetkých ostatných prípadoch. Tento odsek sa netýka zdanenia spoločností, ak ide o zisky, z ktorých sa vyplácajú dividendy. (3) Pojem „dividendy“ použitý v tomto článku označuje príjmy z akcií alebo iných práv, ktor",
+            "context_sha256": "fef7a37c1040e531e1649c9f6721b15979ca7f63e36f1018fcbd76ec22e4b8d4",
+            "ownership_context": false,
+            "rate_percent": 10.0
+          }
+        ]
       },
       "treaty_source_sha256": "c41941f178b9d02f05b9e5b9898d91e55c5a8bb97285c0c41339e1b80d316a08",
       "treaty_source_url": "https://static.slov-lex.sk/static/SK/ZZ/2018/123/vyhlasene_znenie.html"
@@ -2320,7 +2351,15 @@
         "holding_period_candidates": [],
         "ownership_linked_rate_candidate_count": 0,
         "pe_or_fixed_base_carveout_wording_present": true,
-        "rate_candidates": []
+        "rate_candidates": [
+          {
+            "beneficial_owner_context": true,
+            "context": "štáte. (2) Tieto úroky sa však môžu zdaniť aj v zmluvnom štáte, v ktorom majú zdroj, a to podľa právnych predpisov toho zmluvného štátu, ale ak je skutočný vlastník úrokov rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne päť percent hrubej sumy úrokov. Príslušné orgány zmluvných štátov upravia vzájomnou dohodou spôsob uplatnenia tohto obmedzenia. (3) Bez ohľadu na ustanovenia odseku 2 úroky majúce zdroj v jednom zmluvnom štáte a vyplácané rezidentovi druhého zmluvného",
+            "context_sha256": "000052c4870bd90b7049b42e321c60c36e5f8b3a782cfc7aaad6b829dd15ef47",
+            "ownership_context": false,
+            "rate_percent": 5.0
+          }
+        ]
       },
       "treaty_source_sha256": "c41941f178b9d02f05b9e5b9898d91e55c5a8bb97285c0c41339e1b80d316a08",
       "treaty_source_url": "https://static.slov-lex.sk/static/SK/ZZ/2018/123/vyhlasene_znenie.html"
@@ -2359,7 +2398,15 @@
         "holding_period_candidates": [],
         "ownership_linked_rate_candidate_count": 0,
         "pe_or_fixed_base_carveout_wording_present": true,
-        "rate_candidates": []
+        "rate_candidates": [
+          {
+            "beneficial_owner_context": true,
+            "context": "poplatky sa však môžu zdaniť aj v zmluvnom štáte, v ktorom majú zdroj, a to podľa právnych predpisov toho zmluvného štátu, ale ak je skutočný vlastník licenčných poplatkov rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne päť percent hrubej sumy licenčných poplatkov. Príslušné úrady zmluvných štátov upravia vzájomnou dohodou spôsob uplatnenia tohto obmedzenia. (3) Pojem „licenčné poplatky“ použitý v tomto článku označuje platby akéhokoľvek druhu prijaté ako odplata za",
+            "context_sha256": "d6c5f70e520d11bc3e77c82bd4d361fa418047911ca8a63616f28e438362c22c",
+            "ownership_context": false,
+            "rate_percent": 5.0
+          }
+        ]
       },
       "treaty_source_sha256": "c41941f178b9d02f05b9e5b9898d91e55c5a8bb97285c0c41339e1b80d316a08",
       "treaty_source_url": "https://static.slov-lex.sk/static/SK/ZZ/2018/123/vyhlasene_znenie.html"
@@ -2882,7 +2929,15 @@
         "holding_period_candidates": [],
         "ownership_linked_rate_candidate_count": 0,
         "pe_or_fixed_base_carveout_wording_present": true,
-        "rate_candidates": []
+        "rate_candidates": [
+          {
+            "beneficial_owner_context": true,
+            "context": "v druhom štáte. (2) Tieto úroky sa však môžu zdaniť aj v zmluvnom štáte, v ktorom majú zdroj, a to podľa právnych predpisov tohto štátu, ale ak je skutočný vlastník úrokov rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne päť percent hrubej sumy úrokov. (3) Pojem „úroky“ použitý v tomto článku označuje príjmy z pohľadávok akéhokoľvek druhu zabezpečených či nezabezpečených záložným právom bez ohľadu na to, či majú, alebo nemajú právo účasti na ziskoch dlžníka a najmä pr",
+            "context_sha256": "7c967228b5235e13f79cdae831a1062a6bf8a21970dc7303cadf35c6f9892ea8",
+            "ownership_context": false,
+            "rate_percent": 5.0
+          }
+        ]
       },
       "treaty_source_sha256": "b37efac8d2da035de6660aab6147049e53ee0390497ce4122eb5e62faa08c84d",
       "treaty_source_url": "https://static.slov-lex.sk/static/SK/ZZ/2012/201/vyhlasene_znenie.html"
@@ -2923,7 +2978,15 @@
         "holding_period_candidates": [],
         "ownership_linked_rate_candidate_count": 0,
         "pe_or_fixed_base_carveout_wording_present": true,
-        "rate_candidates": []
+        "rate_candidates": [
+          {
+            "beneficial_owner_context": true,
+            "context": "nčné poplatky sa však môžu zdaniť aj v tom zmluvnom štáte, v ktorom majú zdroj, a to podľa právnych predpisov tohto štátu, ale ak je skutočný vlastník licenčných poplatkov rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne päť percent hrubej sumy licenčných poplatkov. (3) Pojem „licenčné poplatky“ použitý v tomto článku označuje platby akéhokoľvek druhu prijaté ako odplata za použitie alebo za právo na použitie akéhokoľvek autorského práva k literárnemu, umeleckému aleb",
+            "context_sha256": "55de2b0c10e5f183485c6452f829a521e35b7b0ffbaca6f06b17af51dc118617",
+            "ownership_context": false,
+            "rate_percent": 5.0
+          }
+        ]
       },
       "treaty_source_sha256": "b37efac8d2da035de6660aab6147049e53ee0390497ce4122eb5e62faa08c84d",
       "treaty_source_url": "https://static.slov-lex.sk/static/SK/ZZ/2012/201/vyhlasene_znenie.html"
@@ -5942,7 +6005,15 @@
         "holding_period_candidates": [],
         "ownership_linked_rate_candidate_count": 0,
         "pe_or_fixed_base_carveout_wording_present": true,
-        "rate_candidates": []
+        "rate_candidates": [
+          {
+            "beneficial_owner_context": true,
+            "context": "sumy dividend, ak skutočným vlastníkom je spoločnosť, iná ako osobná obchodná spoločnosť (partnership), ktorá nepretržite aspoň počas dvanástich mesiacov priamo vlastní najmenej desať percent majetku spoločnosti vyplácajúcej dividendy; b) päť percent hrubej sumy dividend vo všetkých ostatných prípadoch. Tento odsek sa netýka zdanenia spoločnosti, pokiaľ ide o zisky, z ktorých sa vyplácajú dividendy. (3) Pojem „dividendy“ použitý v tomto článku označuje príjmy z akcií alebo z iných práv",
+            "context_sha256": "d39ee1805b604ef327bfe5caf3bd8048a473784223310f06efa2227a425cd1f1",
+            "ownership_context": false,
+            "rate_percent": 5.0
+          }
+        ]
       },
       "treaty_source_sha256": "a548e1bbaacb38e83edc9baac07c2b56862934ffced9e44f7e469638143f2f1a",
       "treaty_source_url": "https://static.slov-lex.sk/static/SK/ZZ/2016/211/vyhlasene_znenie.html"
@@ -5983,7 +6054,15 @@
         "holding_period_candidates": [],
         "ownership_linked_rate_candidate_count": 0,
         "pe_or_fixed_base_carveout_wording_present": true,
-        "rate_candidates": []
+        "rate_candidates": [
+          {
+            "beneficial_owner_context": true,
+            "context": "štáte. (2) Tieto úroky sa však môžu zdaniť aj v zmluvnom štáte, v ktorom majú zdroj, a to podľa právnych predpisov toho zmluvného štátu, ale ak je skutočný vlastník úrokov rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne desať percent hrubej sumy úrokov. (3) Bez ohľadu na ustanovenia odseku 2 úroky majúce zdroj v zmluvnom štáte sú oslobodené od dane v tom zmluvnom štáte za predpokladu, že ich príjemcom a skutočným vlastníkom je a) v prípade Malajzie (i) federálna vláda",
+            "context_sha256": "b300bf1f75ee696b1ffcdcea2c29b59a2e7de1306c9f63b74f7839de9057a0f0",
+            "ownership_context": false,
+            "rate_percent": 10.0
+          }
+        ]
       },
       "treaty_source_sha256": "a548e1bbaacb38e83edc9baac07c2b56862934ffced9e44f7e469638143f2f1a",
       "treaty_source_url": "https://static.slov-lex.sk/static/SK/ZZ/2016/211/vyhlasene_znenie.html"
@@ -6024,7 +6103,15 @@
         "holding_period_candidates": [],
         "ownership_linked_rate_candidate_count": 0,
         "pe_or_fixed_base_carveout_wording_present": true,
-        "rate_candidates": []
+        "rate_candidates": [
+          {
+            "beneficial_owner_context": true,
+            "context": "poplatky sa však môžu zdaniť aj v zmluvnom štáte, v ktorom majú zdroj, a to podľa právnych predpisov toho zmluvného štátu, ale ak je skutočný vlastník licenčných poplatkov rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne desať percent hrubej sumy licenčných poplatkov. (3) Pojem „licenčné poplatky“ použitý v tomto článku označuje platby akéhokoľvek druhu prijaté ako odplata za použitie alebo za právo na použitie akéhokoľvek autorského práva k literárnemu, umeleckému aleb",
+            "context_sha256": "a022a4af16317b33bf7d372a2156bfb1845202ee3237db0117f837083aa840c3",
+            "ownership_context": false,
+            "rate_percent": 10.0
+          }
+        ]
       },
       "treaty_source_sha256": "a548e1bbaacb38e83edc9baac07c2b56862934ffced9e44f7e469638143f2f1a",
       "treaty_source_url": "https://static.slov-lex.sk/static/SK/ZZ/2016/211/vyhlasene_znenie.html"
@@ -7972,7 +8059,15 @@
         "holding_period_candidates": [],
         "ownership_linked_rate_candidate_count": 0,
         "pe_or_fixed_base_carveout_wording_present": true,
-        "rate_candidates": []
+        "rate_candidates": [
+          {
+            "beneficial_owner_context": true,
+            "context": "daniť aj v zmluvnom štáte, ktorého rezidentom je spoločnosť vyplácajúca dividendy, a to podľa právnych predpisov toho zmluvného štátu, ale ak je skutočný vlastník dividend rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne päť percent hrubej sumy dividend. Tento odsek sa netýka zdanenia spoločností, pokiaľ ide o zisky, z ktorých sa vyplácajú dividendy. (3) Pojem „dividendy“ použitý v tomto článku označuje príjmy z akcií, užívateľských („jouissance“) akcií alebo („jouiss",
+            "context_sha256": "e9d98a5228dae9e8ad33e36d9a2a6c3fb633af90f9c9b49e8e2a814a91d99419",
+            "ownership_context": false,
+            "rate_percent": 5.0
+          }
+        ]
       },
       "treaty_source_sha256": "5d72eef164ae052aeef8916f0fd1c8644e5deb21561d0f32f360a26321ed6ce6",
       "treaty_source_url": "https://static.slov-lex.sk/static/SK/ZZ/2024/139/vyhlasene_znenie.html"
@@ -8011,7 +8106,15 @@
         "holding_period_candidates": [],
         "ownership_linked_rate_candidate_count": 0,
         "pe_or_fixed_base_carveout_wording_present": true,
-        "rate_candidates": []
+        "rate_candidates": [
+          {
+            "beneficial_owner_context": true,
+            "context": "vok majúce zdroj v zmluvnom štáte sa môžu zdaniť aj v tomto zmluvnom štáte, a to podľa právnych predpisov tohto zmluvného štátu, ale ak je skutočný vlastník týchto príjmov rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne desať percent hrubej sumy týchto príjmov. (3) Bez ohľadu na ustanovenia odseku 2 tohto článku, príjmy z dlhových pohľadávok majúce zdroj v jednom zmluvnom štáte sú oslobodené od dane v tomto zmluvnom štáte za predpokladu, že ich príjemcom a skutočným vl",
+            "context_sha256": "cfd323cd9aa9b057b1cb4cdf3f61eb5e93be7d5f3a119e76ba66560b37bf5ae0",
+            "ownership_context": false,
+            "rate_percent": 10.0
+          }
+        ]
       },
       "treaty_source_sha256": "5d72eef164ae052aeef8916f0fd1c8644e5deb21561d0f32f360a26321ed6ce6",
       "treaty_source_url": "https://static.slov-lex.sk/static/SK/ZZ/2024/139/vyhlasene_znenie.html"
@@ -8050,7 +8153,15 @@
         "holding_period_candidates": [],
         "ownership_linked_rate_candidate_count": 0,
         "pe_or_fixed_base_carveout_wording_present": true,
-        "rate_candidates": []
+        "rate_candidates": [
+          {
+            "beneficial_owner_context": true,
+            "context": "poplatky sa však môžu zdaniť aj v zmluvnom štáte, v ktorom majú zdroj, a to podľa právnych predpisov toho zmluvného štátu, ale ak je skutočný vlastník licenčných poplatkov rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne desať percent hrubej sumy licenčných poplatkov. (3) Pojem „licenčné poplatky“ použitý v tomto článku označuje platby akéhokoľvek druhu prijaté ako odplata za použitie alebo za právo na použitie akéhokoľvek autorského práva k literárnemu, umeleckému aleb",
+            "context_sha256": "a022a4af16317b33bf7d372a2156bfb1845202ee3237db0117f837083aa840c3",
+            "ownership_context": false,
+            "rate_percent": 10.0
+          }
+        ]
       },
       "treaty_source_sha256": "5d72eef164ae052aeef8916f0fd1c8644e5deb21561d0f32f360a26321ed6ce6",
       "treaty_source_url": "https://static.slov-lex.sk/static/SK/ZZ/2024/139/vyhlasene_znenie.html"
