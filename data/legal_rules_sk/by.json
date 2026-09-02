@@ -655,7 +655,7 @@
       "automatic_production_approval_forbidden": true
     },
     {
-      "rule_id": "SK-BY-ROYALTY-TREATY-ROYALTY-BY-OTHER-10-4",
+      "rule_id": "SK-BY-ROYALTY-TREATY-ROYALTY-BY-TRANSPORT-VEHICLE-10",
       "income_type": "royalty",
       "source_country": "SK",
       "recipient_country": "BY",
@@ -664,7 +664,7 @@
       "article": "12",
       "paragraph": null,
       "rate": 10.0,
-      "priority": 680,
+      "priority": 700,
       "conditions": [
         {
           "fact": "recipient_is_treaty_resident",
@@ -689,6 +689,12 @@
           "fact_source": "transaction",
           "operator": "==",
           "value": "other"
+        },
+        {
+          "fact": "royalty_is_transport_vehicle",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
         }
       ],
       "effect": "rate",
