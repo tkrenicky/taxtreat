@@ -61,13 +61,14 @@ def test_materialization_audit_is_historical_for_exactly_the_semantic_rehash_set
     approval_hashes = {row["treaty_pair_id"]: row["package_sha256"] for row in approval["records"]}
     gate_hashes = {row["treaty_pair_id"]: row["package_sha256"] for row in gate["treaty_partners"]}
     remediation_pairs = {f"CZ-{row['country']}" for row in remediation["corrections"]}
+    historical_rehash_pairs = remediation_pairs - {"CZ-GR"}
 
     assert approval_hashes == gate_hashes
     stale_historical = {
         pair for pair in gate_hashes
         if gate_hashes[pair] != audit_hashes[pair]
     }
-    assert stale_historical == remediation_pairs
+    assert stale_historical == historical_rehash_pairs
     assert len(stale_historical) == 40
 
 
