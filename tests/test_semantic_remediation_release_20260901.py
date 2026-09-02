@@ -53,7 +53,7 @@ def test_all_semantic_remediation_scopes_are_machine_validated_and_unquarantined
         (str(row["country"]).upper(), str(row["income_type"])): row
         for row in registry["corrections"]
     }
-    assert len(corrections) == 40
+    assert len(corrections) == 41
     assert _PENDING_SEMANTIC_REMEDIATION_SCOPES == set()
 
     for (country, income_type), correction in sorted(corrections.items()):
@@ -68,13 +68,43 @@ def test_all_semantic_remediation_scopes_are_machine_validated_and_unquarantined
             and str(rule.get("source_id")) == source_id
             and str(rule.get("legal_layer")) in {"treaty", "protocol"}
             and str(rule.get("effect") or "rate") == "rate"
-            and rule.get("rate") is not None
         ]
         assert runtime_rules, (country, income_type)
 
+        structural = correction.get("structural_outcome")
+        if structural:
+            matches = [
+                rule for rule in runtime_rules
+                if rule.get("rate") is None
+                and str(rule.get("tax_treatment"))
+                == str(structural.get("tax_treatment"))
+            ]
+            assert len(matches) == 1, (country, income_type, "structural")
+            rule = matches[0]
+            assert rule["review_package_sha256"] == expected_hash
+            assert rule["verification_status"] == "verified"
+            assert rule["verification_authority"] == MACHINE_AUTHORITY
+            assert rule["approval_dataset_release"] == MACHINE_APPROVAL
+            assert rule["approval_created_at"] == "2026-09-01"
+            expected = {
+                _norm_registry_condition(row)
+                for row in structural.get("conditions", [])
+            }
+            actual = {
+                _norm_runtime_condition(row)
+                for row in rule.get("conditions", [])
+                if str(row.get("fact")) in {
+                    str(x["condition_type"])
+                    for x in structural.get("conditions", [])
+                }
+            }
+            assert actual == expected, (country, income_type, actual, expected)
+            continue
+
         by_rate = {}
         for rule in runtime_rules:
-            by_rate.setdefault(float(rule["rate"]), []).append(rule)
+            if rule.get("rate") is not None:
+                by_rate.setdefault(float(rule["rate"]), []).append(rule)
 
         for branch in correction["rate_candidates"]:
             rate = float(branch["rate"])
