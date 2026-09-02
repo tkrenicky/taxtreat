@@ -774,6 +774,24 @@
       ]
     },
     {
+      "country": "GR",
+      "income_type": "dividend",
+      "evidence_source_id": "SRC-C5ED2C206EB6D04B",
+      "evidence_note": "Article 10(1) taxes dividends in both Contracting States and contains no source-state percentage ceiling; Article 10(3) disapplies Article 10(1) where the holding is effectively connected with a permanent establishment or fixed base.",
+      "structural_outcome": {
+        "tax_treatment": "domestic_rate_applies",
+        "conditions": [
+          {
+            "condition_type": "permanent_establishment_connection",
+            "operator": "==",
+            "unit": null,
+            "value": "false"
+          }
+        ]
+      },
+      "rate_candidates": []
+    },
+    {
       "country": "HU",
       "income_type": "dividend",
       "evidence_source_id": "SRC-21BEA9C0DA4A502D",
