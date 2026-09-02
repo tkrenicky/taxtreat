@@ -253,8 +253,8 @@ def _dividend_word_rate_branches(scope: dict, article: dict) -> list[dict] | Non
     if re.search(r"(?:mesiac|rok|dní|dva\s+roky|dvanásť\s+mesiac)", text):
         return None
 
-    a = re.search(r"(?:^|[;:.]\s*)a\)\s*([\s\S]*?)(?=(?:[;:.]\s*)b\)\s|$)", text)
-    b = re.search(r"(?:^|[;:.]\s*)b\)\s*([\s\S]*?)(?=(?:[;:.]\s*)c\)\s|$)", text)
+    a = re.search(r"(?:^|[\s;:.])a\)\s*([\s\S]*?)(?=[\s;:.]+b\)\s|$)", text)
+    b = re.search(r"(?:^|[\s;:.])b\)\s*([\s\S]*?)(?=[\s;:.]+c\)\s|$)", text)
     if not a or not b:
         return None
 
