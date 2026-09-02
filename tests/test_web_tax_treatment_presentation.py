@@ -6,12 +6,13 @@ CONTEXT = ROOT / "app" / "web" / "source-country-context.js"
 CLIENT = ROOT / "app" / "web" / "client-polish.js"
 
 
-def test_generic_presentation_contract_has_three_distinct_non_rate_semantics():
+def test_generic_presentation_contract_has_four_distinct_non_rate_semantics():
     text = CONTEXT.read_text(encoding="utf-8")
 
     assert 'exclusive_foreign_taxation: Object.freeze({' in text
     assert 'domestic_exemption: Object.freeze({' in text
     assert 'outside_subject_of_tax: Object.freeze({' in text
+    assert 'domestic_rate_applies: Object.freeze({' in text
 
     assert 'resultLabel: "Není předmětem daně"' in text
     assert 'rateLabel: "N/A"' in text
@@ -19,6 +20,10 @@ def test_generic_presentation_contract_has_three_distinct_non_rate_semantics():
     # Genuine exemption remains a separate concept.
     assert 'resultLabel: "Osvobození"' in text
     assert 'rateLabel: "0 %"' in text
+
+    # Treaty permission to tax at source without a treaty ceiling is not a 0% rule.
+    assert 'resultLabel: "Smlouva sazbu neomezuje"' in text
+    assert 'rateLabel: "Dle vnitrostátního práva"' in text
 
 
 def test_client_uses_shared_tax_treatment_presentation_adapter():
