@@ -48,7 +48,7 @@
       ]
     },
     {
-      "rule_id": "SK-CY-DIVIDEND-TREATY-UNRESOLVED-FAIL-CLOSED",
+      "rule_id": "SK-CY-DIVIDEND-TREATY-SIMPLE-1",
       "income_type": "dividend",
       "source_country": "SK",
       "recipient_country": "CY",
@@ -56,8 +56,8 @@
       "legal_layer": "treaty",
       "article": "10",
       "paragraph": null,
-      "rate": null,
-      "priority": 900,
+      "rate": 10.0,
+      "priority": 600,
       "conditions": [
         {
           "fact": "recipient_is_treaty_resident",
@@ -66,7 +66,7 @@
           "value": true
         }
       ],
-      "effect": "review_gate",
+      "effect": "rate",
       "effective_from": "1980-12-30",
       "verification_status": "needs_review",
       "source_text": "Článok 10 Dividendy 1. Dividendy vyplácané spoločnosťou, ktorá má sídlo v jednom zmluvnom štáte, osobe majúcej bydlisko alebo sídlo v druhom zmluvnom štáte, sa môžu zdaniť v tomto druhom štáte. 2. Tieto dividendy sa však môžu zdaniť v zmluvnom štáte, v ktorom má sídlo spoločnosť, ktorá ich vypláca, a to podľa práva tohto štátu. Takto uložená daň však nepresiahne 10 % hrubej sumy dividend. 3. Pokiaľ Cyprus nebude ukladať daň z dividend popri dani vyberanej zo ziskov alebo z príjmu spoločnosti, budú dividendy vyplácané spoločnosťou, ktorá má sídlo na Cypre, osobe majúcej bydlisko alebo sídlo v Československu oslobodené od akejkoľvek dane na Cypre, ktorá sa môže vyberať z dividend popri dani vyberanej zo ziskov alebo z príjmu spoločnosti. 4. Príslušné úrady zmluvných štátov upravia vzájomnou dohodou spôsob aplikácie odsekov 2 a 3. 5. Ustanovenia odsekov 2 a 3 sa nedotknú zdanenia ziskov spoločnosti, z ktorých sa dividendy vyplácajú. 6. Výraz „dividendy“ použitý v tomto článku označuje príjmy z účastín alebo iných práv, s výnimkou pohľadávok, s účasťou na zisku, práve tak ako príjmy z iných spoločenských práv, ktoré sú podľa daňových predpisov štátu, v ktorom má sídlo spoločnosť vyplácajúca dividendy, podrobené rovnakému zdaneniu ako príjmy z účastín. 7. Ustanovenia odsekov 1, 2 a 3 sa nepoužijú, ak príjemca dividend majúci bydlisko alebo sídlo v jednom zmluvnom štáte vykonáva v druhom zmluvnom štáte, v ktorom má sídlo spoločnosť vyplácajúca dividendy, priemyselnú alebo obchodnú činnosť prostredníctvom stálej prevádzkárne, ktorá je tam umiestnená, alebo vykonáva v tomto druhom štáte slobodné povolanie pomocou stálej základne tam umiestnenej a ak účasť, na základe ktorej sa dividendy vyplácajú, je skutočne spojená s takou stálou prevádzkárňou alebo stálou základňou. V takom prípade sa použijú ustanovenia článku 7 alebo článku 14 podľa toho, o aký prípad ide. 8. Ak spoločnosť majúca sídlo v jednom zmluvnom štáte dosahuje zisky alebo príjmy z druhého zmluvného štátu, nemôže tento druhý štát zdaniť dividendy vyplácané touto spoločnosťou osobám majúcim bydlisko alebo sídlo v prvom štáte, ani podrobiť nerozdelené zisky spoločnosti dani z nerozdelených ziskov, aj keď vyplácané dividendy alebo nerozdelené zisky úplne alebo čiastočne pozostávajú zo ziskov alebo z príjmov docielených v tomto druhom štáte.",
