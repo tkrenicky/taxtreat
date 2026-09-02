@@ -588,8 +588,8 @@ def _categories_for_rate_clause(article_text: str, clause: str) -> list[str]:
 def _lettered_royalty_rate_branches(scope: dict, article_text: str) -> list[dict] | None:
     para = _article_paragraph_two(article_text)
     matches = list(re.finditer(
-        r"(?:^|[;:.]\s*)([a-d])\)\s*([0-9]+(?:[,.][0-9]+)?)\s*%\s*([\s\S]*?)"
-        r"(?=(?:[;:.]\s*)[a-d]\)\s*[0-9]|(?:\(3\)|\b3\.\s)|$)",
+        r"(?:^|[\s,;:.])([a-f])\)\s*([0-9]+(?:[,.][0-9]+)?)\s*(?:%|percent)\s*([\s\S]*?)"
+        r"(?=[\s,;:.]+[a-f]\)\s*[0-9]|(?:\(3\)|\b3\.\s)|$)",
         para,
     ))
     if len(matches) < 2:
