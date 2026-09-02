@@ -1002,6 +1002,99 @@ def _fi_style_royalty_branches(scope: dict, article_text: str) -> list[dict] | N
     return branches
 
 
+def _by_royalty_branches(scope: dict, article_text: str) -> list[dict] | None:
+    if scope.get("recipient_country") != "BY":
+        return None
+    rates = {
+        float(row["rate_percent"])
+        for row in scope.get("rate_candidates", [])
+        if row.get("rate_percent") is not None
+    }
+    text = article_text.lower()
+    if not {5.0, 10.0} <= rates:
+        return None
+    if not (
+        "5 % hrubej sumy licenčných poplatkov v prípade platieb uvedených v odseku 3 písm. a)" in text
+        and "10 % hrubej sumy licenčných poplatkov v prípade platieb uvedených v odseku 3 písm. b)" in text
+        and "10 % hrubej sumy licenčných poplatkov v prípade platieb uvedených v odseku 3 písm. c)" in text
+        and "dopravných vozidiel" in text
+    ):
+        return None
+
+    common = conditions(scope)
+    branches = []
+    for idx, category in enumerate(
+        [
+            ROYALTY_UI_CATEGORIES["copyright"],
+            ROYALTY_UI_CATEGORIES["film"],
+        ],
+        start=1,
+    ):
+        branches.append({
+            "rate": 5.0,
+            "priority": 690,
+            "conditions": [
+                *common,
+                {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": category},
+            ],
+            "suffix": f"ROYALTY-BY-COPYRIGHT-5-{idx}",
+        })
+
+    for idx, category in enumerate(
+        [
+            ROYALTY_UI_CATEGORIES["industrial_ip"],
+            ROYALTY_UI_CATEGORIES["equipment_financial"],
+            ROYALTY_UI_CATEGORIES["equipment_operating"],
+            ROYALTY_UI_CATEGORIES["other"],
+        ],
+        start=1,
+    ):
+        branches.append({
+            "rate": 10.0,
+            "priority": 680,
+            "conditions": [
+                *common,
+                {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": category},
+            ],
+            "suffix": f"ROYALTY-BY-OTHER-10-{idx}",
+        })
+
+    software = ROYALTY_UI_CATEGORIES["software"]
+    branches.extend([
+        {
+            "rate": 5.0,
+            "priority": 700,
+            "conditions": [
+                *common,
+                {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": software},
+                {
+                    "fact": "software_classified_as_article_12_3a_copyright",
+                    "fact_source": "transaction",
+                    "operator": "==",
+                    "value": True,
+                },
+            ],
+            "suffix": "ROYALTY-BY-SOFTWARE-COPYRIGHT-5",
+        },
+        {
+            "rate": 10.0,
+            "priority": 700,
+            "conditions": [
+                *common,
+                {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": software},
+                {
+                    "fact": "software_classified_as_article_12_3a_copyright",
+                    "fact_source": "transaction",
+                    "operator": "==",
+                    "value": False,
+                },
+            ],
+            "suffix": "ROYALTY-BY-SOFTWARE-OTHER-10",
+        },
+    ])
+    return branches
+
+
 def _id_royalty_branches(scope: dict, article_text: str) -> list[dict] | None:
     if scope.get("recipient_country") != "ID":
         return None
@@ -1279,6 +1372,10 @@ def royalty_branches(scope: dict, article: dict) -> list[dict] | None:
                         "suffix": f"ROYALTY-SOURCE-{taxed_letter.upper()}-{index}",
                     })
                 return branches
+
+    by_style = _by_royalty_branches(scope, text)
+    if by_style:
+        return by_style
 
     id_style = _id_royalty_branches(scope, text)
     if id_style:
