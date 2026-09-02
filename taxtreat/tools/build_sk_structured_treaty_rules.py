@@ -536,25 +536,31 @@ def _royalty_letter_split(scope: dict, article_text: str) -> list[dict] | None:
         return None
 
     other_letter = "b" if taxed_letter == "a" else "a"
-    taxed_text = _definition_letter(article_text, taxed_letter)
-    other_text = _definition_letter(article_text, other_letter)
-    if not taxed_text or not other_text:
-        definition = re.search(r"(?:\(3\)|\b3\.\s)([\s\S]*?)(?=(?:\(4\)|\b4\.\s)|$)", article_text)
-        definition_text = definition.group(1) if definition else ""
-        def extract_loose(letter: str) -> str | None:
-            match = re.search(
-                rf"(?:^|\s){letter}\)\s*([\s\S]*?)(?=\s+[ab]\)\s|$)",
-                definition_text,
-            )
-            return match.group(1) if match else None
-        taxed_text = taxed_text or extract_loose(taxed_letter)
-        other_text = other_text or extract_loose(other_letter)
+    definition = re.search(
+        r"(?:\(3\)|\b3\.\s)([\s\S]*?)(?=(?:\(4\)|\b4\.\s)|$)",
+        article_text,
+    )
+    definition_text = definition.group(1) if definition else ""
+
+    def extract_letter(letter: str) -> str | None:
+        match = re.search(
+            rf"(?:^|[\s,;:]){letter}\)\s*([\s\S]*?)(?=[\s,;:]+[ab]\)\s|$)",
+            definition_text,
+        )
+        return match.group(1) if match else None
+
+    # Prefer the paragraph-3 bounded extractor. The older helper can span
+    # across a comma-delimited next letter and therefore is unsafe here.
+    taxed_text = extract_letter(taxed_letter)
+    other_text = extract_letter(other_letter)
     if not taxed_text or not other_text:
         return None
 
     taxed_categories = _royalty_categories_from_text(taxed_text)
     exempt_categories = _royalty_categories_from_text(other_text)
     if not taxed_categories or not exempt_categories:
+        return None
+    if set(taxed_categories) & set(exempt_categories):
         return None
 
     explicit_residence_only = bool(re.search(
