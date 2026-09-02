@@ -529,7 +529,11 @@ def _royalty_categories_from_text(text: str) -> list[str]:
         categories.append(ROYALTY_UI_CATEGORIES["copyright"])
     if any(token in lowered for token in ("kinematograf", "film", "televíz", "rozhlas", "rádio")):
         categories.append(ROYALTY_UI_CATEGORIES["film"])
-    if any(token in lowered for token in ("počítač", "software", "programové vybaven")):
+    software_excluded = bool(re.search(
+        r"(?:s\s+výnimkou|okrem)[^.;]{0,80}(?:počítač|software|programové\s+vybaven)",
+        lowered,
+    ))
+    if not software_excluded and any(token in lowered for token in ("počítač", "software", "programové vybaven")):
         categories.append(ROYALTY_UI_CATEGORIES["software"])
     if any(token in lowered for token in (
         "patent", "ochrann", "známk", "návrh", "model", "plán", "tajného vzorca",
