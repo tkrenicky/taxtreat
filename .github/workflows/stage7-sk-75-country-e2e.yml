@@ -1,0 +1,43 @@
+name: Stage 7 SK 75-country end-to-end QA
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - "app/**"
+      - "taxtreat/**"
+      - "data/legal_rules_sk/**"
+      - "data/legal_reviews/sk_outbound/**"
+      - "scripts/run_75_country_sk_e2e_qa.py"
+      - "scripts/verify_sk_workspace_playwright.py"
+      - ".github/workflows/stage7-sk-75-country-e2e.yml"
+  workflow_dispatch:
+
+jobs:
+  sk-country-e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+          pip install --no-deps -e .
+      - name: Install Playwright Chromium
+        run: python -m playwright install --with-deps chromium
+      - name: Run all 75 SK partners and 225 scopes through runtime, intake and report
+        run: python scripts/run_75_country_sk_e2e_qa.py
+      - name: Run released SK workspace browser acceptance
+        run: python scripts/verify_sk_workspace_playwright.py
+      - name: Upload SK QA evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage7-sk-75-country-e2e-qa
+          path: reports/stage7_sk_75_country_e2e_qa.json
+          if-no-files-found: error
+          retention-days: 30

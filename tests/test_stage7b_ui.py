@@ -61,8 +61,8 @@ def test_guided_intake_assets_are_local_and_accessible():
     assert "/ui-assets/workspace.js?v=20260819-3" in html
     assert "/ui-assets/workspace-client-polish.css?v=20260819-3" in html
 
-    assert 'fetch("/jurisdictions"' in javascript.text
-    assert "body.jurisdictions.length !== 101" in javascript.text
+    assert 'fetch(`/jurisdictions?source_country=${normalizedSource}`' in javascript.text
+    assert 'normalizedSource === "SK" ? 75 : 101' in javascript.text
     assert 'fetch("/analysis/intake"' in javascript.text
     assert "taxtreat-workspace-profiles-v1" in javascript.text
     assert "sessionStorage" not in javascript.text

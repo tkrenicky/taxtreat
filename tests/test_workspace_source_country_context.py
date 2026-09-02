@@ -7,7 +7,7 @@ ADAPTER_JS = ROOT / "app" / "web" / "workspace-source-country-adapter.js"
 SK_BACKEND = ROOT / "taxtreat" / "countries" / "sk.py"
 
 
-def test_public_workspace_source_country_context_is_cz_only():
+def test_public_workspace_source_country_context_contains_released_cz_and_sk():
     text = CONTEXT_JS.read_text(encoding="utf-8")
 
     assert 'code: "CZ"' in text
@@ -15,18 +15,20 @@ def test_public_workspace_source_country_context_is_cz_only():
     assert 'fxProvider: "CNB"' in text
     assert 'runtimeReleased: true' in text
 
-    assert 'code: "SK"' not in text
-    assert 'SK: Object.freeze({' not in text
-    assert 'Slovensko' not in text
-    assert 'OZN4311v26' not in text
-    assert 'Slovenská zrážková daň' not in text
+    assert 'code: "SK"' in text
+    assert 'SK: Object.freeze({' in text
+    assert 'baseCurrency: "EUR"' in text
+    assert 'fxProvider: null' in text
+    assert 'Slovensko' in text
+    assert 'OZN4311v26' in text
+    assert 'Slovenská zrážková daň' in text
 
 
-def test_public_workspace_does_not_offer_source_country_switching():
+def test_public_workspace_derives_source_country_from_payer_without_mode_switch():
     adapter = ADAPTER_JS.read_text(encoding="utf-8")
 
     assert '<option value="CZ">Česká republika</option>' in adapter
-    assert '<option value="SK">' not in adapter
+    assert '<option value="SK">Slovensko</option>' in adapter
     assert 'countryControl.hidden = true;' in adapter
     assert 'applyContext("CZ")' in adapter
 

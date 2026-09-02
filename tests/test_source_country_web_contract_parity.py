@@ -24,15 +24,16 @@ def test_public_web_country_contract_matches_cz_backend_release_currency_and_fx(
     assert f'availability: "{backend["availability"]}"' in block
 
 
-def test_sk_backend_contract_exists_but_is_not_exposed_in_public_web_context():
+def test_public_web_country_contract_matches_sk_backend_release_currency_and_fx():
     text = CONTEXT_JS.read_text(encoding="utf-8")
     backend = source_country_capability("SK")
+    block = _country_block(text, "SK")
 
     assert backend["runtime_released"] is True
     assert backend["currency"] == "EUR"
     assert backend["compliance"]["form_code"] == "OZN4311v26"
-
-    assert 'SK: Object.freeze({' not in text
-    assert 'code: "SK"' not in text
-    assert 'OZN4311v26' not in text
-    assert 'Slovensko' not in text
+    assert f'baseCurrency: "{backend["currency"]}"' in block
+    assert "fxProvider: null" in block
+    assert f'runtimeReleased: {str(backend["runtime_released"]).lower()}' in block
+    assert f'availability: "{backend["availability"]}"' in block
+    assert f'complianceFormCode: "{backend["compliance"]["form_code"]}"' in block

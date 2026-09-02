@@ -29,18 +29,18 @@ def test_workspace_existing_report_export_logic_is_preserved_as_core():
     assert 'Tisk / PDF reportu' in core
 
 
-def test_workspace_public_source_country_registry_is_cz_only():
+def test_workspace_public_source_country_registry_contains_cz_and_sk():
     context = CONTEXT.read_text(encoding="utf-8")
     adapter = ADAPTER.read_text(encoding="utf-8")
 
     assert 'code: "CZ"' in context
-    assert 'code: "SK"' not in context
+    assert 'code: "SK"' in context
     assert '<option value="CZ">Česká republika</option>' in adapter
-    assert '<option value="SK">' not in adapter
+    assert '<option value="SK">Slovensko</option>' in adapter
     assert 'countryControl.hidden = true;' in adapter
 
 
-def test_workspace_analysis_requests_are_bound_to_cz_source_country():
+def test_workspace_analysis_requests_are_bound_to_active_payer_source_country():
     adapter = ADAPTER.read_text(encoding="utf-8")
 
     assert 'url.includes("/analysis")' in adapter
@@ -58,9 +58,11 @@ def test_workspace_keeps_czech_copy_and_metrics():
     assert 'scopeValue: "303"' in combined
 
 
-def test_workspace_browser_bundle_contains_no_slovak_public_copy():
+def test_workspace_browser_bundle_contains_released_slovak_copy():
     combined = ADAPTER.read_text(encoding="utf-8") + "\n" + CONTEXT.read_text(encoding="utf-8")
 
-    assert 'Slovensko' not in combined
-    assert 'Slovenská zrážková daň' not in combined
-    assert 'OZN4311v26' not in combined
+    assert 'Slovensko' in combined
+    assert 'Slovenská zrážková daň' in combined
+    assert 'OZN4311v26' in combined
+    assert 'jurisdictionValue: "75"' in combined
+    assert 'scopeValue: "225"' in combined
