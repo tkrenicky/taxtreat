@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SEMANTIC = ROOT / "data/legal_reviews/sk_outbound/treaty_semantic_candidates.json"
 ARTICLES = ROOT / "data/legal_reviews/sk_outbound/treaty_article_machine_extraction.json"
 INDUSTRIAL = "patent_trademark_design_model_plan_secret_formula_process_or_knowhow"
+EN_DYNAMIC_INTAKE = ROOT / "app/web/workspace-dynamic-intake-en-20260830.js"
 
 
 def _row(path: Path, country: str) -> dict:
@@ -176,3 +177,22 @@ def test_all_75_sk_royalty_builds_have_no_same_fact_signature_with_different_out
                 conflicts.append((country, json.loads(signature), sorted(map(str, outcomes))))
 
     assert conflicts == []
+
+
+def test_new_royalty_follow_up_questions_are_localized_in_english_ui():
+    text = EN_DYNAMIC_INTAKE.read_text(encoding="utf-8")
+    for fact in (
+        "royalty_industrial_ip_subcategory",
+        "royalty_is_transport_vehicle",
+        "royalty_is_technical_or_economic_study_or_technical_assistance",
+        "software_classified_as_article_12_3a_copyright",
+        "royalty_is_waiver",
+    ):
+        assert fact in text
+    for value in (
+        "patent_design_model_plan_secret_formula_or_process",
+        "trademark",
+        "industrial_or_scientific_knowhow",
+        "commercial_knowhow",
+    ):
+        assert value in text
