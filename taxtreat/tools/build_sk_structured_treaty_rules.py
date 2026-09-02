@@ -233,12 +233,87 @@ def _single_word_percent_rate(scope: dict, article: dict, *, allow_interest_exem
     return unique[0]
 
 
+def _word_percent_value(fragment: str) -> float | None:
+    lowered = fragment.lower()
+    numeric = re.search(r"([0-9]+(?:[,.][0-9]+)?)\s*(?:%|percent)", lowered)
+    if numeric:
+        return _percent(numeric.group(1))
+    for word, value in _WORD_PERCENT_RATES.items():
+        if re.search(rf"\b{re.escape(word)}\s+percent", lowered):
+            return float(value)
+    return None
+
+
+def _dividend_word_rate_branches(scope: dict, article: dict) -> list[dict] | None:
+    if scope.get("income_type") != "dividend" or not scope.get("source_sha256"):
+        return None
+    text = _article_paragraph_two(str(article.get("article_text") or "").lower())
+    if "vo všetkých ostatných prípadoch" not in text:
+        return None
+    if re.search(r"(?:mesiac|rok|dní|dva\s+roky|dvanásť\s+mesiac)", text):
+        return None
+
+    a = re.search(r"(?:^|[;:.]\s*)a\)\s*([\s\S]*?)(?=(?:[;:.]\s*)b\)\s|$)", text)
+    b = re.search(r"(?:^|[;:.]\s*)b\)\s*([\s\S]*?)(?=(?:[;:.]\s*)c\)\s|$)", text)
+    if not a or not b:
+        return None
+
+    qualifying_rate = _word_percent_value(a.group(1))
+    fallback_rate = _word_percent_value(b.group(1))
+    if qualifying_rate is None or fallback_rate is None or qualifying_rate == fallback_rate:
+        return None
+
+    threshold_match = re.search(
+        r"(?:najmenej|aspoň)\s+([a-záäčďéíĺľňóôŕšťúýž]+|[0-9]+(?:[,.][0-9]+)?)\s+percent",
+        a.group(1),
+    )
+    if not threshold_match:
+        return None
+    threshold_token = threshold_match.group(1)
+    if re.fullmatch(r"[0-9]+(?:[,.][0-9]+)?", threshold_token):
+        threshold = _percent(threshold_token)
+    else:
+        threshold = _WORD_PERCENT_RATES.get(threshold_token)
+    if threshold is None:
+        return None
+
+    qualifying_conditions = conditions(scope)
+    qualifying_conditions.append({
+        "fact": "recipient_entity_type",
+        "fact_source": "transaction",
+        "operator": "in",
+        "value": ["company", "corporate", "company_other_than_partnership"],
+    })
+    if "priamo" in a.group(1):
+        qualifying_conditions.append({
+            "fact": "direct_ownership",
+            "fact_source": "transaction",
+            "operator": "==",
+            "value": True,
+        })
+    qualifying_conditions.append({
+        "fact": "ownership_percent",
+        "fact_source": "transaction",
+        "operator": ">=",
+        "value": float(threshold),
+    })
+
+    return [
+        {"rate": float(qualifying_rate), "priority": 650, "conditions": qualifying_conditions},
+        {"rate": float(fallback_rate), "priority": 600, "conditions": conditions(scope)},
+    ]
+
+
 def dividend_branches(scope: dict, article: dict) -> list[dict] | None:
     if scope.get("income_type") != "dividend":
         return None
     text = _article_paragraph_two(str(article.get("article_text") or ""))
     if not text or not scope.get("source_sha256"):
         return None
+
+    word_branches = _dividend_word_rate_branches(scope, article)
+    if word_branches:
+        return word_branches
 
     fallback_phrase = re.search(
         r"(?:vo\s+všetkých\s+ostatných\s+prípadoch|"
