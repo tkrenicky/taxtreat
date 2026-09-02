@@ -297,3 +297,24 @@ def test_layered_identical_applicability_conflict_fails_closed():
         "Conflicting verified legal-rule projections" in line
         for line in result.explanation
     )
+
+
+def test_layered_engine_supports_treaty_without_source_rate_ceiling():
+    rule = _verified_rule(
+        "TREATY-DOMESTIC-RATE",
+        legal_instrument="treaty",
+        legal_layer="treaty",
+        rate=None,
+        tax_treatment=TaxTreatment.DOMESTIC_RATE_APPLIES,
+    )
+
+    result = evaluate_layered_rules(
+        [rule],
+        _interest_facts("AT"),
+        as_of=date(2026, 1, 1),
+    )
+
+    assert result.status == DecisionStatus.FINAL
+    assert result.rate is None
+    assert result.tax_treatment == TaxTreatment.DOMESTIC_RATE_APPLIES
+    assert result.selected_rule_id == "TREATY-DOMESTIC-RATE"
