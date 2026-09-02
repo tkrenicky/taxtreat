@@ -118,7 +118,19 @@ def test_gr_dividend_has_no_invented_treaty_cap():
         if row["income_type"] == "dividend"
         and row["legal_layer"] in {"treaty", "protocol"}
     ]
-    assert treaty_rows == []
+    assert len(treaty_rows) == 1
+    rule = treaty_rows[0]
+    assert rule["rule_id"] == "CZ-GR-DIVIDEND-CURRENT-1"
+    assert rule["rate"] is None
+    assert rule["tax_treatment"] == "domestic_rate_applies"
+    assert rule["verification_status"] == "verified"
+    assert rule["verification_authority"] == MACHINE_AUTHORITY
+    assert any(
+        condition["fact"] == "permanent_establishment_connection"
+        and condition["operator"] == "=="
+        and str(condition["value"]).lower() == "false"
+        for condition in rule["conditions"]
+    )
 
 
 def test_canonical_gate_releases_semantically_rehashed_packages_after_validation():
