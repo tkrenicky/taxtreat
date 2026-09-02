@@ -210,6 +210,13 @@ def test_validator_enforces_complete_schema_and_approval():
     assert "source_excerpt_hash does not match source_text" in extra_issues
     assert "effective_to precedes" in extra_issues
 
+    structural_domestic_rate = legal_rule(
+        "DOMESTIC-RATE-STRUCTURAL",
+        rate=None,
+        tax_treatment="domestic_rate_applies",
+    )
+    assert validate_legal_rules([structural_domestic_rate]) == []
+
 
 def test_validator_rejects_invalid_override_relationships():
     base = legal_rule("BASE", priority=10)
