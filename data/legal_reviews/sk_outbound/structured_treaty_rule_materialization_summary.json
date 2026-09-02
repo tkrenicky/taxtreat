@@ -3,11 +3,11 @@
   "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
   "source_country": "SK",
   "total_scopes": 225,
-  "materialized_scopes": 218,
-  "decision_materialized_scopes": 218,
-  "fail_closed_placeholder_scopes": 7,
+  "materialized_scopes": 219,
+  "decision_materialized_scopes": 219,
+  "fail_closed_placeholder_scopes": 6,
   "structured_scope_coverage": 225,
-  "unresolved_scopes": 7,
+  "unresolved_scopes": 6,
   "materialized_country_packages": 75,
   "materialized_scope_keys": [
     "SK-AE-dividend",
@@ -125,6 +125,7 @@
     "SK-KZ-dividend",
     "SK-KZ-interest",
     "SK-KZ-royalty",
+    "SK-LK-dividend",
     "SK-LK-interest",
     "SK-LK-royalty",
     "SK-LT-dividend",
@@ -231,7 +232,7 @@
   ],
   "materialization_modes": {
     "simple_single_rate": 88,
-    "source_text_dividend_branch_pair": 40,
+    "source_text_dividend_branch_pair": 41,
     "source_text_explicit_residence_only": 7,
     "source_text_interest_residence_only": 24,
     "source_text_interest_special_exemption": 32,
@@ -239,7 +240,7 @@
     "source_text_single_word_rate": 8
   },
   "unresolved_by_income": {
-    "dividend": 3,
+    "dividend": 2,
     "interest": 2,
     "royalty": 2
   },
@@ -302,17 +303,6 @@
       "recipient_country": "LY",
       "income_type": "dividend",
       "rate_candidates": [],
-      "exclusive_residence_taxation_candidate": false,
-      "ownership_linked_rate_candidate_count": 0,
-      "holding_period_candidates": []
-    },
-    {
-      "recipient_country": "LK",
-      "income_type": "dividend",
-      "rate_candidates": [
-        15.0,
-        15.0
-      ],
       "exclusive_residence_taxation_candidate": false,
       "ownership_linked_rate_candidate_count": 0,
       "holding_period_candidates": []

@@ -5,7 +5,7 @@
   },
   "rules": [
     {
-      "rule_id": "SK-LK-DIVIDEND-TREATY-UNRESOLVED-FAIL-CLOSED",
+      "rule_id": "SK-LK-DIVIDEND-TREATY-DIVIDEND-BRANCH-1",
       "income_type": "dividend",
       "source_country": "SK",
       "recipient_country": "LK",
@@ -13,17 +13,27 @@
       "legal_layer": "treaty",
       "article": "8",
       "paragraph": null,
-      "rate": null,
-      "priority": 900,
+      "rate": 15.0,
+      "priority": 650,
       "conditions": [
         {
           "fact": "recipient_is_treaty_resident",
           "fact_source": "transaction",
           "operator": "==",
           "value": true
+        },
+        {
+          "fact": "recipient_entity_type",
+          "fact_source": "transaction",
+          "operator": "in",
+          "value": [
+            "company",
+            "corporate",
+            "company_other_than_partnership"
+          ]
         }
       ],
-      "effect": "review_gate",
+      "effect": "rate",
       "effective_from": "1979-06-19",
       "verification_status": "needs_review",
       "source_text": "Článok 8 Dividendy 1. Sadzba československej dane z dividend vyplácaných spoločnosťou majúcou sídlo v Československu spoločnosti majúcej sídlo v Srí Lanke neprekročí 15 %. 2. Dividendy vyplácané spoločnosťou, ktorá má sídlo v Srí Lanke, spoločnosti, ktorá má sídlo v Československu, budú oslobodené od všetkých daní Srí Lanky okrem dane Srí Lanky vyberanej z príjmu spoločnosti, ktorá vypláca dividendy, a okrem dodatkovej dane vyberanej podľa odseku 4 článku 26 finančného zákona Srí Lanky, ktorá sa ukladá spoločnostiam, ktorých účastiny nie sú hnuteľným majetkom umiestneným v Srí Lanke na účely právnych predpisov Srí Lanky upravujúcich dedičské poplatky; sadzba tejto naposledy spomenutej dodatkovej dane však neprekročí, pokiaľ ide o spoločnosti, ktorých sídlo je v Československu, 6 %. Ak spoločnosť, ktorej sídlo je v Československu, po nadobudnutí platnosti tejto Zmluvy novo splatila účastinný kapitál spoločnosti, ktorej sídlo je v Srí Lanke, neprekročí sadzba dane vyberanej od zdroja z dividend vyplácaných spoločnosťou v Srí Lanke a vzťahujúcich sa na takto splatený účastinný kapitál 15 %.",
