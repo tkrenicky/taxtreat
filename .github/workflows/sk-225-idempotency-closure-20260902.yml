@@ -1,0 +1,50 @@
+name: One-shot SK 225 idempotency closure
+
+on:
+  push:
+    branches: [fix/sk-source-text-explicit-gaps-20260902]
+    paths:
+      - ".github/workflows/sk-225-idempotency-closure-20260902.yml"
+
+jobs:
+  idempotency:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Verify full SK cycle is byte-idempotent
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          import subprocess
+          from pathlib import Path
+
+          root=Path(".")
+          summary=root/"data/legal_reviews/sk_outbound/structured_treaty_rule_materialization_summary.json"
+          rules=root/"data/legal_rules_sk"
+
+          def cycle():
+              subprocess.run(["python","taxtreat/tools/build_sk_structured_treaty_rules.py"],check=True)
+              subprocess.run(["python","taxtreat/tools/apply_sk_mli_gates_to_structured_rules.py"],check=True)
+
+          def snapshot():
+              paths=sorted(rules.glob("*.json"))+[summary]
+              assert len(paths)==76
+              return {str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
+
+          cycle()
+          first=snapshot()
+          data=json.loads(summary.read_text(encoding="utf-8"))
+          assert data["materialized_scopes"]==225
+          assert data["unresolved_scopes"]==0
+          cycle()
+          second=snapshot()
+          assert first==second
+          data=json.loads(summary.read_text(encoding="utf-8"))
+          assert data["materialized_scopes"]==225
+          assert data["unresolved_scopes"]==0
+          print("225/225 SK full-cycle idempotency PASS")
+          PY
