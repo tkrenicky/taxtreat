@@ -14227,6 +14227,12 @@
           "candidate_status": {
             "fail_closed": true,
             "production_releasable": false,
+            "semantic_remediation": {
+              "automatic_production_approval_forbidden": true,
+              "evidence_note": "Article 10(1) taxes dividends in both Contracting States and contains no source-state percentage ceiling; Article 10(3) disapplies Article 10(1) where the holding is effectively connected with a permanent establishment or fixed base.",
+              "evidence_source_id": "SRC-C5ED2C206EB6D04B",
+              "status": "needs_human_review"
+            },
             "stage5_terminal_status": "pending",
             "verification_status": "needs_review"
           },
@@ -14354,7 +14360,7 @@
           "title": "98/1989 Sb."
         }
       ],
-      "package_sha256": "d4b9d9c753af30d34866903e0dae2d199872d540b02089e460410cf24ec50835",
+      "package_sha256": "8c479a06d46bb16470addfc0019418b59aa830b97d38ec9c6a8cdfe99e2454bc",
       "partner_country": "GR",
       "partner_country_name": "Řecko",
       "ppt_treatment": {
