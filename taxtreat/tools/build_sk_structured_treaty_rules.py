@@ -123,6 +123,16 @@ def conditions(scope: dict) -> list[dict]:
     return result
 
 
+def _article_paragraph_one(text: str) -> str:
+    lowered = text.lower()
+    start = re.search(r"(?:\(1\)|\b1\.\s)", lowered)
+    if not start:
+        return lowered[:2200]
+    tail = lowered[start.start():]
+    end = re.search(r"(?:\(2\)|\b2\.\s)", tail[3:])
+    return tail[: (3 + end.start()) if end else 2600]
+
+
 def _article_paragraph_two(text: str) -> str:
     lowered = text.lower()
     start = re.search(r"(?:\(2\)|\b2\.\s)", lowered)
@@ -307,9 +317,22 @@ def _dividend_word_rate_branches(scope: dict, article: dict) -> list[dict] | Non
 def dividend_branches(scope: dict, article: dict) -> list[dict] | None:
     if scope.get("income_type") != "dividend":
         return None
-    text = _article_paragraph_two(str(article.get("article_text") or ""))
+    article_text = str(article.get("article_text") or "")
+    text = _article_paragraph_two(article_text)
     if not text or not scope.get("source_sha256"):
         return None
+
+    # Some treaties (notably FI) place the ordinary outbound source-state
+    # dividend ceiling in paragraph 1 and reserve paragraph 2 for a
+    # reverse-direction special rule. Prefer paragraph 1 only when it contains
+    # an explicit fallback-rate structure and paragraph 2 does not.
+    paragraph_1 = _article_paragraph_one(article_text)
+    fallback_phrase_pattern = (
+        r"(?:vo\s+všetkých\s+ostatných\s+prípadoch|"
+        r"v\s+ostatných\s+prípadoch|vo\s+všetkých\s+iných\s+prípadoch)"
+    )
+    if re.search(fallback_phrase_pattern, paragraph_1) and not re.search(fallback_phrase_pattern, text):
+        text = paragraph_1
 
     word_branches = _dividend_word_rate_branches(scope, article)
     if word_branches:
