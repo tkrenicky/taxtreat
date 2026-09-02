@@ -1624,6 +1624,29 @@ def main() -> int:
         for row in articles["scopes"]
     }
 
+    # MLI rules are produced by the separate bilateral-adjudication pipeline.
+    # Rebuilding treaty rules must not erase those already verified layers.
+    preserved_mli: dict[str, list[dict]] = defaultdict(list)
+    existing_rule_order: dict[str, dict[str, int]] = {}
+    for path in OUTPUT.glob("*.json"):
+        existing = load(path)
+        pair = existing.get("country_pair") or {}
+        country = str(pair.get("recipient_country") or "").upper()
+        if str(pair.get("source_country") or "").upper() != "SK" or not country:
+            continue
+        existing_rule_order[country] = {
+            str(rule.get("rule_id") or ""): index
+            for index, rule in enumerate(existing.get("rules") or [])
+        }
+        preserved_mli[country].extend(
+            rule
+            for rule in (existing.get("rules") or [])
+            if str(rule.get("legal_layer") or "") == "mli"
+            and str(rule.get("source_country") or "").upper() == "SK"
+            and str(rule.get("recipient_country") or "").upper() == country
+            and str(rule.get("verification_status") or "") == "verified"
+        )
+
     grouped: dict[str, list[dict]] = defaultdict(list)
     unresolved = []
     materialized = []
@@ -1792,9 +1815,22 @@ def main() -> int:
         path.unlink()
 
     for country, rules in sorted(grouped.items()):
+        rules.extend(preserved_mli.get(country, []))
+        prior_order = existing_rule_order.get(country, {})
+
+        def rule_sort_key(row: dict) -> tuple:
+            rule_id = str(row.get("rule_id") or "")
+            priority = int(row.get("priority") or 0)
+            return (
+                str(row.get("income_type") or ""),
+                0 if rule_id in prior_order else 1,
+                prior_order.get(rule_id, -priority),
+                rule_id,
+            )
+
         payload = {
             "country_pair": {"source_country": "SK", "recipient_country": country},
-            "rules": sorted(rules, key=lambda row: (row["income_type"], -row["priority"], row["rule_id"])),
+            "rules": sorted(rules, key=rule_sort_key),
         }
         (OUTPUT / f"{country.lower()}.json").write_text(
             json.dumps(payload, indent=2, ensure_ascii=False) + "\n",
@@ -1812,6 +1848,9 @@ def main() -> int:
         "structured_scope_coverage": len(materialized) + len(unresolved),
         "unresolved_scopes": len(unresolved),
         "materialized_country_packages": len(grouped),
+        "preserved_verified_mli_rules": sum(
+            len(rules) for rules in preserved_mli.values()
+        ),
         "materialized_scope_keys": sorted(materialized),
         "materialization_modes": dict(sorted(materialization_modes.items())),
         "unresolved_by_income": {income: sum(1 for row in unresolved if row["income_type"] == income) for income in ("dividend", "interest", "royalty")},
@@ -1834,6 +1873,7 @@ def main() -> int:
             "unmapped_royalty_categories_remain_fail_closed": True,
             "stage_rules_remain_needs_review_until_all_protocol_mli_and_release_gates_are_satisfied": True,
             "czech_rule_reuse_forbidden": True,
+            "verified_mli_rules_preserved_on_treaty_rebuild": True,
             "all_225_scopes_have_runtime_structured_coverage": True,
             "unresolved_scopes_use_rate_null_fail_closed_placeholders": True,
             "rule_level_finalization_remains_closed_for_unresolved_scopes": True,
