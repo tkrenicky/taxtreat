@@ -509,6 +509,93 @@ def _lettered_royalty_rate_branches(scope: dict, article_text: str) -> list[dict
     return branches or None
 
 
+def _royalty_letter_split(scope: dict, article_text: str) -> list[dict] | None:
+    """
+    Materialize the common two-letter royalty split where one definition
+    category is source-taxable at a stated ceiling and the complementary
+    category is explicitly or structurally residence-only.
+    """
+    para = _article_paragraph_two(article_text)
+    rate_match = re.search(
+        r"(?:odseku|odsek)\s*3\s*(?:písm(?:ena|eno)?\.?\s*)?([ab])\)?"
+        r"[^%]{0,320}?([0-9]+(?:[,.][0-9]+)?)\s*(?:%|percent)",
+        para,
+        flags=re.S,
+    )
+    if not rate_match:
+        return None
+
+    taxed_letter = rate_match.group(1)
+    taxed_rate = _percent(rate_match.group(2))
+    candidate_rates = {
+        float(row["rate_percent"])
+        for row in scope.get("rate_candidates", [])
+        if row.get("rate_percent") is not None
+    }
+    if taxed_rate not in candidate_rates:
+        return None
+
+    other_letter = "b" if taxed_letter == "a" else "a"
+    taxed_text = _definition_letter(article_text, taxed_letter)
+    other_text = _definition_letter(article_text, other_letter)
+    if not taxed_text or not other_text:
+        return None
+
+    taxed_categories = _royalty_categories_from_text(taxed_text)
+    exempt_categories = _royalty_categories_from_text(other_text)
+    if not taxed_categories or not exempt_categories:
+        return None
+
+    explicit_residence_only = bool(re.search(
+        rf"(?:odseku|odsek)\s*3\s*(?:písm(?:ena|eno)?\.?\s*)?{other_letter}\)?"
+        r"[^.;]{0,260}(?:len|iba|výlučne)\s+v\s+(?:tomto\s+)?(?:štáte|druhom\s+štáte)",
+        para,
+        flags=re.S,
+    ))
+
+    # Older treaties state only that paragraph 3(a) royalties may be taxed at
+    # source. With paragraph 1 providing residence-state taxation and no other
+    # source-state grant for paragraph 3(b), the complementary category remains
+    # residence-only. Reject any paragraph that contains another source-taxable
+    # rate or an ambiguous multi-letter reference.
+    rate_mentions = re.findall(r"([0-9]+(?:[,.][0-9]+)?)\s*(?:%|percent)", para)
+    if len(rate_mentions) != 1 and not explicit_residence_only:
+        return None
+    if re.search(
+        rf"(?:odseku|odsek)\s*3\s*(?:písm(?:ena|eno)?\.?\s*)?{other_letter}\)?"
+        r"[^.;]{0,260}(?:môžu\s+sa|môžu\s+byť|možno|sa\s+môžu)\s+zdaniť"
+        r"[^.;]{0,180}(?:zdroj|zmluvnom\s+štáte)",
+        para,
+        flags=re.S,
+    ):
+        return None
+
+    common = conditions(scope)
+    branches: list[dict] = []
+    for index, category in enumerate(exempt_categories, start=1):
+        branches.append({
+            "rate": 0.0,
+            "priority": 680,
+            "conditions": [
+                *common,
+                {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": category},
+            ],
+            "tax_treatment": "exclusive_foreign_taxation",
+            "suffix": f"ROYALTY-RESIDENCE-{other_letter.upper()}-{index}",
+        })
+    for index, category in enumerate(taxed_categories, start=1):
+        branches.append({
+            "rate": taxed_rate,
+            "priority": 680,
+            "conditions": [
+                *common,
+                {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": category},
+            ],
+            "suffix": f"ROYALTY-SOURCE-{taxed_letter.upper()}-{index}",
+        })
+    return branches
+
+
 def royalty_branches(scope: dict, article: dict) -> list[dict] | None:
     """Materialize source-explicit royalty categories, never percentage lists alone."""
     if scope.get("income_type") != "royalty" or not scope.get("source_sha256"):
@@ -576,6 +663,10 @@ def royalty_branches(scope: dict, article: dict) -> list[dict] | None:
                         "suffix": f"ROYALTY-SOURCE-{taxed_letter.upper()}-{index}",
                     })
                 return branches
+
+    letter_split = _royalty_letter_split(scope, text)
+    if letter_split:
+        return letter_split
 
     lettered = _lettered_royalty_rate_branches(scope, text)
     if lettered:
@@ -854,6 +945,7 @@ def main() -> int:
             "source_text_word_rate_complex_exemptions_and_category_splits_remain_fail_closed": True,
             "ordinary_interest_rate_requires_special_exemption_false_when_exemption_exists": True,
             "source_text_explicit_royalty_definition_letter_branches_materialized": True,
+            "source_text_two_letter_royalty_source_vs_residence_split_materialized": True,
             "royalty_category_materialization_uses_atomic_ui_taxonomy": True,
             "unmapped_royalty_categories_remain_fail_closed": True,
             "stage_rules_remain_needs_review_until_all_protocol_mli_and_release_gates_are_satisfied": True,
