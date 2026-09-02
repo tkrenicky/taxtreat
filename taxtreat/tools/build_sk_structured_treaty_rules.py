@@ -171,9 +171,10 @@ def _source_text_residence_only(article: dict) -> bool:
     paragraph_1 = first_tail[: (3 + second.start()) if second else 900]
 
     patterns = (
-        r"(?:podliehajú|podlieha|budú\s+podliehať)\s+zdaneniu\s+(?:len|iba|výlučne)\s+v\s+(?:tomto\s+)?druhom",
-        r"(?:sa\s+)?(?:zdaňujú|zdania|zdaní|zdanené)\s+(?:len|iba|výlučne)\s+v\s+(?:tomto\s+)?druhom",
-        r"(?:budú\s+)?zdanené\s+(?:len|iba|výlučne)\s+v\s+(?:tomto\s+)?druhom",
+        r"(?:podliehajú|podlieha|budú\s+podliehať)\s+zdaneniu\s+(?:len|iba|výlučne)\s+v\s+(?:tomto\s+)?(?:druhom|tom\s+druhom)",
+        r"(?:sa\s+)?(?:zdaňujú|zdania|zdaní|zdanené)\s+(?:len|iba|výlučne)\s+v\s+(?:tomto\s+)?(?:druhom|tom\s+druhom)",
+        r"(?:budú\s+)?zdanené\s+(?:len|iba|výlučne)\s+v\s+(?:tomto\s+)?(?:druhom|tom\s+druhom)",
+        r"(?:sa\s+môžu|môžu\s+sa)\s+zdaniť\s+(?:len|iba|výlučne)\s+v\s+(?:tomto\s+)?(?:druhom|tom\s+druhom)",
     )
     if not any(re.search(pattern, paragraph_1, flags=re.S) for pattern in patterns):
         return False
