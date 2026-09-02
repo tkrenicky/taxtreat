@@ -87,17 +87,17 @@ def _model():
 
 def test_overlay_adds_separate_substantive_collection_and_refund_review_fields():
     result = add_domestic_relief_overlay(_pack(), _model())
-    assert result["schema_version"] == 3
-    assert result["status"] == "human_review_pack_with_domestic_relief_not_reviewed_not_released"
+    assert result["schema_version"] == 4
+    assert result["status"] == "human_review_pack_with_separate_domestic_review_not_reviewed_not_released"
     assert result["policy"]["substantive_treatment_is_separate_from_withholding_due_at_payment"] is True
     assert result["policy"]["refund_eligibility_is_separate_from_relief_at_source"] is True
     assert result["policy"]["treaty_rate_must_not_be_assumed_to_equal_payment_date_withholding"] is True
     dividend = result["rows"][0]
     assert dividend["domestic_baseline_rate_percent_candidate"] == 23
     assert "§ 94 Z 2 EStG" in dividend["domestic_relief_legal_basis"]
-    assert dividend["reviewer_substantive_treatment"] is None
-    assert dividend["reviewer_withholding_rate_now_percent"] is None
-    assert dividend["reviewer_refund_eligibility"] is None
+    assert dividend["domestic_reviewer_substantive_treatment"] is None
+    assert dividend["domestic_reviewer_withholding_rate_now_percent"] is None
+    assert dividend["domestic_reviewer_refund_eligibility"] is None
     assert dividend["promotable_to_canonical"] is False
 
 
@@ -119,9 +119,9 @@ def test_overlay_csv_surfaces_new_fields_for_excel_review(tmp_path: Path):
     assert path.read_bytes().startswith(b"\xef\xbb\xbf")
     rows = list(csv.DictReader(path.open(encoding="utf-8-sig", newline="")))
     assert len(rows) == 3
-    assert "reviewer_withholding_rate_now_percent" in rows[0]
-    assert "reviewer_relief_mechanism" in rows[0]
-    assert "reviewer_refund_eligibility" in rows[0]
+    assert "domestic_reviewer_withholding_rate_now_percent" in rows[0]
+    assert "domestic_reviewer_relief_mechanism" in rows[0]
+    assert "domestic_reviewer_refund_eligibility" in rows[0]
     assert json.loads(rows[0]["domestic_relief_paths_candidate"])[0]["path_id"] == "eu_parent_relief"
 
 
@@ -184,6 +184,6 @@ def test_overlay_cli_writes_json_and_csv(tmp_path: Path, monkeypatch, capsys):
     )
     overlay_module.main()
     payload = json.loads(output_json.read_text(encoding="utf-8"))
-    assert payload["status"] == "human_review_pack_with_domestic_relief_not_reviewed_not_released"
+    assert payload["status"] == "human_review_pack_with_separate_domestic_review_not_reviewed_not_released"
     assert output_csv.exists()
     assert "Domestic relief review overlay: AT 3 scopes" in capsys.readouterr().out
