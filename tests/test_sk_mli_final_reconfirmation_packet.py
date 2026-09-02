@@ -84,7 +84,7 @@ def test_reconfirmation_is_complete_and_source_country_gate_is_released():
     assert manifest["release_status"] == "released"
     assert manifest["blockers"] == []
     assert manifest["structured_treaty_rule_materialization"]["structured_scope_coverage"] == 225
-    assert manifest["structured_treaty_rule_materialization"]["fail_closed_placeholder_scopes"] == 84
+    assert manifest["structured_treaty_rule_materialization"]["fail_closed_placeholder_scopes"] == 0
 
     assert (
         manifest["mli_final_reviewer_reconfirmation_required"]
