@@ -35,6 +35,11 @@
     loan_is_noncommercial: ["Is the loan non-commercial within the meaning of the applicable treaty?", "The treaty distinguishes this category from ordinary commercial financing."],
     minimum_loan_term_years: ["Does the financing satisfy the minimum term required by the applicable treaty?", "The special treaty branch is available only if the financing term meets the stated threshold."],
     recipient_country_royalty_wht: ["Does the residence-state royalty-tax condition required by the treaty apply?", "The treaty branch depends on the specified residence-state royalty taxation condition."],
+    royalty_industrial_ip_subcategory: ["Which specific industrial right or know-how is covered by this royalty payment?", "This treaty applies different rates to items that are grouped into one broad industrial-rights and know-how category in the initial form."],
+    royalty_is_transport_vehicle: ["Does the royalty payment relate to the use of, or the right to use, a transport vehicle?", "The Belarus treaty lists transport vehicles as a separate item in the royalty definition."],
+    royalty_is_technical_or_economic_study_or_technical_assistance: ["Is the payment consideration for a technical or economic study or for technical assistance?", "The Tunisia treaty expressly includes these services in a royalty category with a specific rate."],
+    software_classified_as_article_12_3a_copyright: ["Is the software treated as copyright falling under Article 12(3)(a) for this treaty payment?", "The Belarus treaty can apply a different royalty rate depending on how the software is classified within Article 12."],
+    royalty_is_waiver: ["Is the payment consideration for waiving or refraining from exercising the relevant right?", "Some treaties apply a specific rate to payments for waiving or refraining from exercising a right."],
     detailed_eligibility_review_required: ["A detailed treaty eligibility review is required for this branch.", "This condition cannot be reduced to a single factual confirmation without reviewing the relevant legal and transaction documents."],
     distributed_vs_undistributed_corporate_tax_rate_difference: ["Does the relevant corporate-tax-rate difference meet the treaty threshold?", "The applicable dividend rule depends on the specified difference between the taxation of distributed and undistributed profits."],
   };
@@ -47,6 +52,11 @@
     payment_is_arm_length_amount: "arm's-length amount",
     recipient_entity_type: "recipient entity type",
     royalty_category: "royalty category",
+    royalty_industrial_ip_subcategory: "industrial-right or know-how subcategory",
+    royalty_is_transport_vehicle: "transport-vehicle royalty",
+    royalty_is_technical_or_economic_study_or_technical_assistance: "technical/economic study or technical-assistance royalty",
+    software_classified_as_article_12_3a_copyright: "software classification under Article 12(3)(a)",
+    royalty_is_waiver: "waiver or non-use royalty",
     general_article_11_2_rate: "general Article 11(2) rate",
     source_state_taxation: "source-state taxation condition",
   };
@@ -81,14 +91,33 @@
     ];
   }
 
+  const OPTION_COPY = {
+    royalty_industrial_ip_subcategory: {
+      patent_design_model_plan_secret_formula_or_process: "Patent, design/model, plan, secret formula or process",
+      trademark: "Trademark",
+      industrial_or_scientific_knowhow: "Industrial or scientific know-how / experience",
+      commercial_knowhow: "Commercial know-how / experience",
+    },
+  };
+
   function localizeIntake(body) {
     const questions = body?.intake?.questions;
     if (!Array.isArray(questions)) return body;
     questions.forEach((question) => {
+      const fact = factFromQuestion(question);
       const copy = copyFor(question);
-      if (!copy) return;
-      question.prompt = copy[0];
-      question.why = copy[1];
+      if (copy) {
+        question.prompt = copy[0];
+        question.why = copy[1];
+      }
+      const optionCopy = OPTION_COPY[fact];
+      if (optionCopy && Array.isArray(question.options)) {
+        question.options = question.options.map((option) => {
+          if (!Array.isArray(option) || option.length < 2) return option;
+          const value = String(option[0]);
+          return [option[0], optionCopy[value] || option[1]];
+        });
+      }
     });
     return body;
   }
