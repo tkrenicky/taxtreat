@@ -19,7 +19,7 @@ def main():
         result["details"]["http_status"]=response.status if response else None
         if not response or response.status!=200:
             result["blockers"].append(f"Production workspace HTTP status is {response.status if response else 'none'}")
-        page.wait_for_selector("#workspace-payment",timeout=12000)
+        page.wait_for_selector("#workspace-payment", state="attached", timeout=12000)
         try:
             page.wait_for_function("() => document.querySelector('#new-recipient-form select[name=recipient_country]')?.options.length >= 101",timeout=12000)
         except Exception:
