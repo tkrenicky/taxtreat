@@ -758,6 +758,51 @@ def _royalty_letter_split(scope: dict, article_text: str) -> list[dict] | None:
     return branches
 
 
+def _fi_style_royalty_branches(scope: dict, article_text: str) -> list[dict] | None:
+    text = article_text.lower()
+    if not all(token in text for token in (
+        "finančný prenájom zariadenia",
+        "operatívny prenájom zariadenia",
+        "počítačového softvéru",
+    )):
+        return None
+    if "okrem druhov platieb uvedených v odseku 3 písm. a)" not in text:
+        return None
+
+    para = _article_paragraph_two(text)
+    rates = {
+        float(row["rate_percent"])
+        for row in scope.get("rate_candidates", [])
+        if row.get("rate_percent") is not None
+    }
+    if not {1.0, 5.0, 10.0} <= rates:
+        return None
+    common = conditions(scope)
+    mapping = [
+        (0.0, ROYALTY_UI_CATEGORIES["copyright"], "exclusive_foreign_taxation", "FI-COPYRIGHT"),
+        (1.0, ROYALTY_UI_CATEGORIES["equipment_financial"], None, "FI-FINANCIAL-LEASE"),
+        (5.0, ROYALTY_UI_CATEGORIES["equipment_operating"], None, "FI-OPERATING-LEASE"),
+        (5.0, ROYALTY_UI_CATEGORIES["film"], None, "FI-FILM"),
+        (5.0, ROYALTY_UI_CATEGORIES["software"], None, "FI-SOFTWARE"),
+        (10.0, ROYALTY_UI_CATEGORIES["industrial_ip"], None, "FI-INDUSTRIAL-IP"),
+    ]
+    branches = []
+    for rate, category, tax_treatment, suffix in mapping:
+        row = {
+            "rate": rate,
+            "priority": 700 if rate == 0.0 else 690,
+            "conditions": [
+                *common,
+                {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": category},
+            ],
+            "suffix": f"ROYALTY-{suffix}",
+        }
+        if tax_treatment:
+            row["tax_treatment"] = tax_treatment
+        branches.append(row)
+    return branches
+
+
 def _special_royalty_branches(scope: dict, article_text: str) -> list[dict] | None:
     para = _article_paragraph_two(article_text)
     candidate_rates = {
@@ -953,6 +998,10 @@ def royalty_branches(scope: dict, article: dict) -> list[dict] | None:
                         "suffix": f"ROYALTY-SOURCE-{taxed_letter.upper()}-{index}",
                     })
                 return branches
+
+    fi_style = _fi_style_royalty_branches(scope, text)
+    if fi_style:
+        return fi_style
 
     special = _special_royalty_branches(scope, text)
     if special:
