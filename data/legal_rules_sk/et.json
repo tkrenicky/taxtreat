@@ -56,7 +56,7 @@
       "automatic_production_approval_forbidden": true
     },
     {
-      "rule_id": "SK-ET-INTEREST-TREATY-UNRESOLVED-FAIL-CLOSED",
+      "rule_id": "SK-ET-INTEREST-TREATY-INTEREST-SPECIAL-EXEMPTION",
       "income_type": "interest",
       "source_country": "SK",
       "recipient_country": "ET",
@@ -64,8 +64,8 @@
       "legal_layer": "treaty",
       "article": "11",
       "paragraph": null,
-      "rate": null,
-      "priority": 900,
+      "rate": 0.0,
+      "priority": 700,
       "conditions": [
         {
           "fact": "recipient_is_treaty_resident",
@@ -84,9 +84,73 @@
           "fact_source": "transaction",
           "operator": "==",
           "value": false
+        },
+        {
+          "fact": "article_11_special_exemption",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
         }
       ],
-      "effect": "review_gate",
+      "effect": "rate",
+      "effective_from": "2018-02-26",
+      "verification_status": "needs_review",
+      "source_text": "Článok 11 Úroky (1) Úroky majúce zdroj v jednom zmluvnom štáte a vyplácané rezidentovi druhého zmluvného štátu sa môžu zdaniť v tomto druhom zmluvnom štáte. (2) Tieto úroky sa však môžu zdaniť aj v zmluvnom štáte, v ktorom majú zdroj, a to podľa právnych predpisov toho zmluvného štátu, ale ak je skutočný vlastník úrokov rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne päť percent hrubej sumy úrokov. Príslušné orgány zmluvných štátov upravia vzájomnou dohodou spôsob uplatnenia tohto obmedzenia. (3) Bez ohľadu na ustanovenia odseku 2 úroky majúce zdroj v jednom zmluvnom štáte a vyplácané rezidentovi druhého zmluvného štátu, ktorý je ich skutočným vlastníkom, sú oslobodené od dane v zmluvnom štáte, v ktorom majú úroky zdroj, ak sa vyplácajú a) vláde druhého zmluvného štátu, jeho nižšiemu správnemu útvaru alebo miestnemu orgánu, alebo centrálnej banke druhého zmluvného štátu, alebo b) v súvislosti s pôžičkou alebo úverom, ktoré sú zabezpečené ručením alebo poistené vládou druhého zmluvného štátu, jeho nižším správnym útvarom, alebo miestnym orgánom, alebo centrálnou bankou druhého zmluvného štátu. (4) Pojem „úroky“ použitý v tomto článku označuje príjmy z pohľadávok akéhokoľvek druhu, zabezpečených alebo nezabezpečených záložným právom na nehnuteľnosť, bez ohľadu na to, či poskytujú právo účasti na ziskoch dlžníka a najmä príjmy z vládnych cenných papierov a príjmy z obligácií alebo z dlhopisov vrátane prémií a výhier spojených s týmito cennými papiermi, obligáciami alebo dlhopismi. Úroky z omeškania ukladané za oneskorenú platbu sa nepovažujú za úroky na účely tohto článku. Pojem „úroky“ nezahŕňa časť príjmu, ktorá sa považuje za dividendu podľa ustanovenia článku 10 ods. 3. (5) Ustanovenia odsekov 1, 2 a 3 sa neuplatnia, ak skutočný vlastník úrokov, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, v ktorom majú úroky zdroj, podnikanie prostredníctvom stálej prevádzkarne, ktorá sa tam nachádza, alebo vykonáva v tom druhom zmluvnom štáte slobodné povolanie prostredníctvom stálej základne, ktorá sa tam nachádza, a ak pohľadávka, z ktorej sa úroky platia, sa skutočne viaže na túto stálu prevádzkareň alebo túto stálu základňu. V takom prípade sa podľa okolností uplatnia ustanovenia článku 7 alebo článku 14. (6) Predpokladá sa, že úroky majú zdroj v zmluvnom štáte, ak je platiteľ rezidentom toho zmluvného štátu. Ak však osoba platiaca úroky bez ohľadu na to, či je alebo nie je rezidentom zmluvného štátu, má v zmluvnom štáte stálu prevádzkareň alebo stálu základňu, v súvislosti s ktorou vznikol dlh, za ktorý sa úroky platia a tieto úroky idú na ťarchu tejto stálej prevádzkarne alebo tejto stálej základne, potom sa predpokladá, že tieto úroky majú zdroj v tom zmluvnom štáte, v ktorom sa nachádza táto stála prevádzkareň alebo táto stála základňa. (7) Ak v dôsledku osobitných vzťahov existujúcich medzi platiteľom a skutočným vlastníkom úrokov alebo medzi nimi a treťou osobou suma úrokov vzťahujúca sa na pohľadávku, z ktorej sa úroky platia, presahuje sumu, ktorú by bol dohodol platiteľ so skutočným vlastníkom, keby takéto vzťahy neexistovali, uplatnia sa ustanovenia tohto článku len na túto naposledy uvedenú sumu. V tom prípade časť platieb presahujúca túto sumu sa zdaní podľa právnych predpisov oboch zmluvných štátov s prihliadnutím na ostatné ustanovenia tejto zmluvy.",
+      "source_id": "SK-SLOVLEX-C41941F178B9D02F",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2018/123/vyhlasene_znenie.html",
+      "source_excerpt_hash": "ba1e1957d35bc098451074b1eea663bf8ba17746b831cfe83a1d574567680bd2",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-C41941F178B9D02F"
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true,
+      "tax_treatment": "exclusive_foreign_taxation"
+    },
+    {
+      "rule_id": "SK-ET-INTEREST-TREATY-INTEREST-GENERAL",
+      "income_type": "interest",
+      "source_country": "SK",
+      "recipient_country": "ET",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "11",
+      "paragraph": null,
+      "rate": 5.0,
+      "priority": 600,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        },
+        {
+          "fact": "article_11_special_exemption",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "effect": "rate",
       "effective_from": "2018-02-26",
       "verification_status": "needs_review",
       "source_text": "Článok 11 Úroky (1) Úroky majúce zdroj v jednom zmluvnom štáte a vyplácané rezidentovi druhého zmluvného štátu sa môžu zdaniť v tomto druhom zmluvnom štáte. (2) Tieto úroky sa však môžu zdaniť aj v zmluvnom štáte, v ktorom majú zdroj, a to podľa právnych predpisov toho zmluvného štátu, ale ak je skutočný vlastník úrokov rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne päť percent hrubej sumy úrokov. Príslušné orgány zmluvných štátov upravia vzájomnou dohodou spôsob uplatnenia tohto obmedzenia. (3) Bez ohľadu na ustanovenia odseku 2 úroky majúce zdroj v jednom zmluvnom štáte a vyplácané rezidentovi druhého zmluvného štátu, ktorý je ich skutočným vlastníkom, sú oslobodené od dane v zmluvnom štáte, v ktorom majú úroky zdroj, ak sa vyplácajú a) vláde druhého zmluvného štátu, jeho nižšiemu správnemu útvaru alebo miestnemu orgánu, alebo centrálnej banke druhého zmluvného štátu, alebo b) v súvislosti s pôžičkou alebo úverom, ktoré sú zabezpečené ručením alebo poistené vládou druhého zmluvného štátu, jeho nižším správnym útvarom, alebo miestnym orgánom, alebo centrálnou bankou druhého zmluvného štátu. (4) Pojem „úroky“ použitý v tomto článku označuje príjmy z pohľadávok akéhokoľvek druhu, zabezpečených alebo nezabezpečených záložným právom na nehnuteľnosť, bez ohľadu na to, či poskytujú právo účasti na ziskoch dlžníka a najmä príjmy z vládnych cenných papierov a príjmy z obligácií alebo z dlhopisov vrátane prémií a výhier spojených s týmito cennými papiermi, obligáciami alebo dlhopismi. Úroky z omeškania ukladané za oneskorenú platbu sa nepovažujú za úroky na účely tohto článku. Pojem „úroky“ nezahŕňa časť príjmu, ktorá sa považuje za dividendu podľa ustanovenia článku 10 ods. 3. (5) Ustanovenia odsekov 1, 2 a 3 sa neuplatnia, ak skutočný vlastník úrokov, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, v ktorom majú úroky zdroj, podnikanie prostredníctvom stálej prevádzkarne, ktorá sa tam nachádza, alebo vykonáva v tom druhom zmluvnom štáte slobodné povolanie prostredníctvom stálej základne, ktorá sa tam nachádza, a ak pohľadávka, z ktorej sa úroky platia, sa skutočne viaže na túto stálu prevádzkareň alebo túto stálu základňu. V takom prípade sa podľa okolností uplatnia ustanovenia článku 7 alebo článku 14. (6) Predpokladá sa, že úroky majú zdroj v zmluvnom štáte, ak je platiteľ rezidentom toho zmluvného štátu. Ak však osoba platiaca úroky bez ohľadu na to, či je alebo nie je rezidentom zmluvného štátu, má v zmluvnom štáte stálu prevádzkareň alebo stálu základňu, v súvislosti s ktorou vznikol dlh, za ktorý sa úroky platia a tieto úroky idú na ťarchu tejto stálej prevádzkarne alebo tejto stálej základne, potom sa predpokladá, že tieto úroky majú zdroj v tom zmluvnom štáte, v ktorom sa nachádza táto stála prevádzkareň alebo táto stála základňa. (7) Ak v dôsledku osobitných vzťahov existujúcich medzi platiteľom a skutočným vlastníkom úrokov alebo medzi nimi a treťou osobou suma úrokov vzťahujúca sa na pohľadávku, z ktorej sa úroky platia, presahuje sumu, ktorú by bol dohodol platiteľ so skutočným vlastníkom, keby takéto vzťahy neexistovali, uplatnia sa ustanovenia tohto článku len na túto naposledy uvedenú sumu. V tom prípade časť platieb presahujúca túto sumu sa zdaní podľa právnych predpisov oboch zmluvných štátov s prihliadnutím na ostatné ustanovenia tejto zmluvy.",

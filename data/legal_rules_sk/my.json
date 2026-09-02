@@ -56,7 +56,7 @@
       "automatic_production_approval_forbidden": true
     },
     {
-      "rule_id": "SK-MY-INTEREST-TREATY-UNRESOLVED-FAIL-CLOSED",
+      "rule_id": "SK-MY-INTEREST-TREATY-INTEREST-GENERAL",
       "income_type": "interest",
       "source_country": "SK",
       "recipient_country": "MY",
@@ -64,8 +64,8 @@
       "legal_layer": "treaty",
       "article": "11",
       "paragraph": null,
-      "rate": null,
-      "priority": 900,
+      "rate": 10.0,
+      "priority": 600,
       "conditions": [
         {
           "fact": "recipient_is_treaty_resident",
@@ -84,9 +84,15 @@
           "fact_source": "transaction",
           "operator": "==",
           "value": false
+        },
+        {
+          "fact": "article_11_special_exemption",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
         }
       ],
-      "effect": "review_gate",
+      "effect": "rate",
       "effective_from": "2016-04-11",
       "verification_status": "needs_review",
       "source_text": "Článok 11 Úroky (1) Úroky majúce zdroj v jednom zmluvnom štáte a vyplácané rezidentovi druhého zmluvného štátu sa môžu zdaniť v tom druhom zmluvnom štáte. (2) Tieto úroky sa však môžu zdaniť aj v zmluvnom štáte, v ktorom majú zdroj, a to podľa právnych predpisov toho zmluvného štátu, ale ak je skutočný vlastník úrokov rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne desať percent hrubej sumy úrokov. (3) Bez ohľadu na ustanovenia odseku 2 úroky majúce zdroj v zmluvnom štáte sú oslobodené od dane v tom zmluvnom štáte za predpokladu, že ich príjemcom a skutočným vlastníkom je a) v prípade Malajzie (i) federálna vláda Malajzie, (ii) vlády jej štátov, (iii) miestne orgány, (iv) štatutárne orgány, (v) Bank Negara Malaysia (v preklade: Banka Negara Malajzia) a (vi) Export-Import Bank of Malaysia Berhad (EXIM Bank), v preklade: Exportno-importná banka Malajzie Berhad (EXIM banka), b) v prípade Slovenskej republiky (i) vláda Slovenskej republiky, (ii) miestne orgány, (iii) štatutárne orgány, (iv) Národná banka Slovenska, (v) EXIMBANKA SR (Exportno-importná banka Slovenskej republiky), (vi) Slovenská záručná a rozvojová banka, a. s. (4) Pojem „štatutárny orgán“ označuje akýkoľvek orgán vlády založený v súlade s legislatívou zmluvného štátu výlučne na účely plnenia vládnych funkcií, ktoré sa líšia od podnikateľskej činnosti a ktoré sú definované právnymi predpismi toho zmluvného štátu. (5) Pojem „úroky“ použitý v tomto článku označuje príjmy z pohľadávok akéhokoľvek druhu zabezpečených alebo nezabezpečených záložným právom na nehnuteľnosť bez ohľadu na to, či poskytujú právo účasti na ziskoch dlžníka a najmä príjmy z vládnych cenných papierov a príjmy z obligácií alebo z dlhopisov vrátane prémií a výhier spojených s týmito cennými papiermi, obligáciami alebo dlhopismi. Penále ukladané za oneskorenú platbu sa nepovažuje za úroky na účely tohto článku. (6) Ustanovenia odsekov 1 a 2 sa neuplatnia, ak skutočný vlastník úrokov, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, v ktorom majú úroky zdroj, podnikateľskú činnosť prostredníctvom stálej prevádzkarne, ktorá sa tam nachádza, alebo vykonáva v tom druhom zmluvnom štáte slobodné povolanie prostredníctvom stálej základne, ktorá sa tam nachádza a ak pohľadávka, z ktorej sa úroky platia, sa skutočne viaže na túto stálu prevádzkareň alebo túto stálu základňu. V takom prípade sa podľa okolností uplatnia ustanovenia článku 7 alebo článku 15. (7) Predpokladá sa, že úroky majú zdroj v zmluvnom štáte, ak je platiteľ rezidentom toho zmluvného štátu. Ak však osoba platiaca úroky bez ohľadu na to, či je alebo nie je rezidentom zmluvného štátu, má v zmluvnom štáte stálu prevádzkareň alebo stálu základňu, v súvislosti s ktorou vznikol dlh, za ktorý sa úroky platia a tieto úroky idú na ťarchu tejto stálej prevádzkarne alebo tejto stálej základne, potom sa predpokladá, že tieto úroky majú zdroj v tom zmluvnom štáte, v ktorom sa nachádza táto stála prevádzkareň alebo táto stála základňa. (8) Ak v dôsledku osobitných vzťahov existujúcich medzi platiteľom a skutočným vlastníkom úrokov alebo medzi nimi a treťou osobou suma úrokov vzťahujúca sa k pohľadávke, z ktorej sa úroky platia, presahuje sumu, ktorú by bol dohodol platiteľ so skutočným vlastníkom, keby takéto vzťahy neexistovali, uplatnia sa ustanovenia tohto článku len na túto naposledy uvedenú sumu. V tomto prípade časť platieb presahujúca túto sumu sa zdaní podľa právnych predpisov oboch zmluvných štátov s prihliadnutím na ostatné ustanovenia tejto zmluvy.",
@@ -105,6 +111,64 @@
       "decision_status": "REVIEW_REQUIRED",
       "final_rate_allowed": false,
       "automatic_production_approval_forbidden": true
+    },
+    {
+      "rule_id": "SK-MY-INTEREST-TREATY-INTEREST-SPECIAL-EXEMPTION",
+      "income_type": "interest",
+      "source_country": "SK",
+      "recipient_country": "MY",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "11",
+      "paragraph": null,
+      "rate": 0.0,
+      "priority": 700,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        },
+        {
+          "fact": "article_11_special_exemption",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "rate",
+      "effective_from": "2016-04-11",
+      "verification_status": "needs_review",
+      "source_text": "Článok 11 Úroky (1) Úroky majúce zdroj v jednom zmluvnom štáte a vyplácané rezidentovi druhého zmluvného štátu sa môžu zdaniť v tom druhom zmluvnom štáte. (2) Tieto úroky sa však môžu zdaniť aj v zmluvnom štáte, v ktorom majú zdroj, a to podľa právnych predpisov toho zmluvného štátu, ale ak je skutočný vlastník úrokov rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne desať percent hrubej sumy úrokov. (3) Bez ohľadu na ustanovenia odseku 2 úroky majúce zdroj v zmluvnom štáte sú oslobodené od dane v tom zmluvnom štáte za predpokladu, že ich príjemcom a skutočným vlastníkom je a) v prípade Malajzie (i) federálna vláda Malajzie, (ii) vlády jej štátov, (iii) miestne orgány, (iv) štatutárne orgány, (v) Bank Negara Malaysia (v preklade: Banka Negara Malajzia) a (vi) Export-Import Bank of Malaysia Berhad (EXIM Bank), v preklade: Exportno-importná banka Malajzie Berhad (EXIM banka), b) v prípade Slovenskej republiky (i) vláda Slovenskej republiky, (ii) miestne orgány, (iii) štatutárne orgány, (iv) Národná banka Slovenska, (v) EXIMBANKA SR (Exportno-importná banka Slovenskej republiky), (vi) Slovenská záručná a rozvojová banka, a. s. (4) Pojem „štatutárny orgán“ označuje akýkoľvek orgán vlády založený v súlade s legislatívou zmluvného štátu výlučne na účely plnenia vládnych funkcií, ktoré sa líšia od podnikateľskej činnosti a ktoré sú definované právnymi predpismi toho zmluvného štátu. (5) Pojem „úroky“ použitý v tomto článku označuje príjmy z pohľadávok akéhokoľvek druhu zabezpečených alebo nezabezpečených záložným právom na nehnuteľnosť bez ohľadu na to, či poskytujú právo účasti na ziskoch dlžníka a najmä príjmy z vládnych cenných papierov a príjmy z obligácií alebo z dlhopisov vrátane prémií a výhier spojených s týmito cennými papiermi, obligáciami alebo dlhopismi. Penále ukladané za oneskorenú platbu sa nepovažuje za úroky na účely tohto článku. (6) Ustanovenia odsekov 1 a 2 sa neuplatnia, ak skutočný vlastník úrokov, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, v ktorom majú úroky zdroj, podnikateľskú činnosť prostredníctvom stálej prevádzkarne, ktorá sa tam nachádza, alebo vykonáva v tom druhom zmluvnom štáte slobodné povolanie prostredníctvom stálej základne, ktorá sa tam nachádza a ak pohľadávka, z ktorej sa úroky platia, sa skutočne viaže na túto stálu prevádzkareň alebo túto stálu základňu. V takom prípade sa podľa okolností uplatnia ustanovenia článku 7 alebo článku 15. (7) Predpokladá sa, že úroky majú zdroj v zmluvnom štáte, ak je platiteľ rezidentom toho zmluvného štátu. Ak však osoba platiaca úroky bez ohľadu na to, či je alebo nie je rezidentom zmluvného štátu, má v zmluvnom štáte stálu prevádzkareň alebo stálu základňu, v súvislosti s ktorou vznikol dlh, za ktorý sa úroky platia a tieto úroky idú na ťarchu tejto stálej prevádzkarne alebo tejto stálej základne, potom sa predpokladá, že tieto úroky majú zdroj v tom zmluvnom štáte, v ktorom sa nachádza táto stála prevádzkareň alebo táto stála základňa. (8) Ak v dôsledku osobitných vzťahov existujúcich medzi platiteľom a skutočným vlastníkom úrokov alebo medzi nimi a treťou osobou suma úrokov vzťahujúca sa k pohľadávke, z ktorej sa úroky platia, presahuje sumu, ktorú by bol dohodol platiteľ so skutočným vlastníkom, keby takéto vzťahy neexistovali, uplatnia sa ustanovenia tohto článku len na túto naposledy uvedenú sumu. V tomto prípade časť platieb presahujúca túto sumu sa zdaní podľa právnych predpisov oboch zmluvných štátov s prihliadnutím na ostatné ustanovenia tejto zmluvy.",
+      "source_id": "SK-SLOVLEX-A548E1BBAACB38E8",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2016/211/vyhlasene_znenie.html",
+      "source_excerpt_hash": "fa027743d051c455ae89e05cde82b8387dabad564d24b29538deab28b55c34c4",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-A548E1BBAACB38E8"
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true,
+      "tax_treatment": "exclusive_foreign_taxation"
     },
     {
       "rule_id": "SK-MY-ROYALTY-TREATY-ROYALTY-SOURCE-TEXT-WORD-RATE",

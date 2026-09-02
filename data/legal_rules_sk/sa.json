@@ -56,7 +56,7 @@
       "automatic_production_approval_forbidden": true
     },
     {
-      "rule_id": "SK-SA-INTEREST-TREATY-UNRESOLVED-FAIL-CLOSED",
+      "rule_id": "SK-SA-INTEREST-TREATY-INTEREST-SPECIAL-EXEMPTION",
       "income_type": "interest",
       "source_country": "SK",
       "recipient_country": "SA",
@@ -64,8 +64,8 @@
       "legal_layer": "treaty",
       "article": "11",
       "paragraph": null,
-      "rate": null,
-      "priority": 900,
+      "rate": 0.0,
+      "priority": 700,
       "conditions": [
         {
           "fact": "recipient_is_treaty_resident",
@@ -84,9 +84,73 @@
           "fact_source": "transaction",
           "operator": "==",
           "value": false
+        },
+        {
+          "fact": "article_11_special_exemption",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
         }
       ],
-      "effect": "review_gate",
+      "effect": "rate",
+      "effective_from": "2024-08-01",
+      "verification_status": "needs_review",
+      "source_text": "Článok 11 Príjmy z dlhových pohľadávok (1) Príjmy z dlhových pohľadávok majúce zdroj v jednom zmluvnom štáte a vyplácané rezidentovi druhého zmluvného štátu sa môžu zdaniť v tomto druhom zmluvnom štáte. (2) Tieto príjmy z dlhových pohľadávok majúce zdroj v zmluvnom štáte sa môžu zdaniť aj v tomto zmluvnom štáte, a to podľa právnych predpisov tohto zmluvného štátu, ale ak je skutočný vlastník týchto príjmov rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne desať percent hrubej sumy týchto príjmov. (3) Bez ohľadu na ustanovenia odseku 2 tohto článku, príjmy z dlhových pohľadávok majúce zdroj v jednom zmluvnom štáte sú oslobodené od dane v tomto zmluvnom štáte za predpokladu, že ich príjemcom a skutočným vlastníkom je: a) v prípade Slovenskej republiky: (i) vláda Slovenskej republiky, (ii) miestne orgány, (iii) Národná banka Slovenska, (iv) Eximbanka SR (Exportno-importná banka Slovenskej republiky), (v) Slovenská záručná a rozvojová banka, a. s., (vi) Agentúra pre riadenie dlhu a likvidity, (vii) iná podobná inštitúcia, ktorej majetok je v úplnom vlastníctve vlády Slovenskej republiky alebo miestnych orgánov, pokiaľ sa tak dohodnú príslušné orgány zmluvných štátov prostredníctvom výmeny diplomatických nót; b) v prípade Saudskoarabského kráľovstva: i) vláda Saudskoarabského kráľovstva, ii) Saudskoarabská menová agentúra /The Saudi Arabia Monetary Agency (SAMA)/, iii) Saudský rozvojový fond /The Saudi Fund for Development/, iv) Verejný investičný fond /The Public Investment Fund/, v) Verejná dôchodková agentúra /The Public Pension Agency/, vi) Všeobecná organizácia pre sociálne poistenie /The General Organization for Social Insurance/, vii) iná podobná inštitúcia, ktorej majetok je v úplnom vlastníctve vlády Saudskoarabského kráľovstva alebo miestnych orgánov, pokiaľ sa tak dohodnú príslušné orgány zmluvných štátov prostredníctvom výmeny diplomatických nót. (4) Pojem „príjmy z dlhových pohľadávok“ použitý v tomto článku označuje príjmy z pohľadávok akéhokoľvek druhu, zabezpečených alebo nezabezpečených záložným právom na nehnuteľnosť bez ohľadu na to, či poskytujú právo účasti na ziskoch dlžníka a najmä príjmy z vládnych cenných papierov a príjmy z obligácií alebo z dlhopisov vrátane prémií a výhier spojených s týmito cennými papiermi, obligáciami alebo dlhopismi. Úroky z omeškania ukladané za oneskorenú platbu sa nepovažujú za príjmy z dlhových pohľadávok na účely tohto článku. (5) Ustanovenia odsekov 1, 2 a 3 tohto článku sa neuplatnia, ak skutočný vlastník príjmov z dlhových pohľadávok, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, v ktorom majú príjmy z dlhových pohľadávok zdroj, podnikanie prostredníctvom stálej prevádzkarne, ktorá sa tam nachádza alebo vykonáva v tom druhom zmluvnom štáte slobodné povolanie prostredníctvom stálej základne, ktorá sa tam nachádza a ak pohľadávka, z ktorej sa tieto príjmy platia, sa skutočne viaže na túto stálu prevádzkareň alebo túto stálu základňu. V takom prípade sa podľa okolností uplatnia ustanovenia článku 7 alebo článku 14 tejto zmluvy. (6) Predpokladá sa, že príjmy z dlhových pohľadávok majú zdroj v zmluvnom štáte, ak je platiteľ rezidentom toho zmluvného štátu. Ak však osoba platiaca príjmy z dlhových pohľadávok bez ohľadu na to, či je alebo nie je rezidentom zmluvného štátu, má v zmluvnom štáte stálu prevádzkareň alebo stálu základňu, v súvislosti s ktorou vznikol dlh, za ktorý sa príjmy platia a tieto príjmy idú na ťarchu tejto stálej prevádzkarne alebo tejto stálej základne, potom sa predpokladá, že tieto príjmy majú zdroj v tom zmluvnom štáte, v ktorom sa nachádza táto stála prevádzkareň alebo táto stála základňa. (7) Ak v dôsledku osobitných vzťahov existujúcich medzi platiteľom a skutočným vlastníkom príjmov alebo medzi nimi a treťou osobou suma príjmov z dlhových pohľadávok vzťahujúca sa k pohľadávke, z ktorej sa tieto príjmy platia, presahuje sumu, ktorú by bol dohodol platiteľ so skutočným vlastníkom, keby takéto vzťahy neexistovali, uplatnia sa ustanovenia tohto článku len na túto naposledy uvedenú sumu. V tomto prípade časť platieb presahujúca túto sumu sa zdaní podľa právnych predpisov oboch zmluvných štátov s prihliadnutím na ostatné ustanovenia tejto zmluvy.",
+      "source_id": "SK-SLOVLEX-5D72EEF164AE052A",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2024/139/vyhlasene_znenie.html",
+      "source_excerpt_hash": "2bdd476bb6a1587df5196fd4d273ed5b367ddf1e4de77cee03820fc8211b9e76",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-5D72EEF164AE052A"
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true,
+      "tax_treatment": "exclusive_foreign_taxation"
+    },
+    {
+      "rule_id": "SK-SA-INTEREST-TREATY-INTEREST-GENERAL",
+      "income_type": "interest",
+      "source_country": "SK",
+      "recipient_country": "SA",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "11",
+      "paragraph": null,
+      "rate": 10.0,
+      "priority": 600,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        },
+        {
+          "fact": "article_11_special_exemption",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        }
+      ],
+      "effect": "rate",
       "effective_from": "2024-08-01",
       "verification_status": "needs_review",
       "source_text": "Článok 11 Príjmy z dlhových pohľadávok (1) Príjmy z dlhových pohľadávok majúce zdroj v jednom zmluvnom štáte a vyplácané rezidentovi druhého zmluvného štátu sa môžu zdaniť v tomto druhom zmluvnom štáte. (2) Tieto príjmy z dlhových pohľadávok majúce zdroj v zmluvnom štáte sa môžu zdaniť aj v tomto zmluvnom štáte, a to podľa právnych predpisov tohto zmluvného štátu, ale ak je skutočný vlastník týchto príjmov rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne desať percent hrubej sumy týchto príjmov. (3) Bez ohľadu na ustanovenia odseku 2 tohto článku, príjmy z dlhových pohľadávok majúce zdroj v jednom zmluvnom štáte sú oslobodené od dane v tomto zmluvnom štáte za predpokladu, že ich príjemcom a skutočným vlastníkom je: a) v prípade Slovenskej republiky: (i) vláda Slovenskej republiky, (ii) miestne orgány, (iii) Národná banka Slovenska, (iv) Eximbanka SR (Exportno-importná banka Slovenskej republiky), (v) Slovenská záručná a rozvojová banka, a. s., (vi) Agentúra pre riadenie dlhu a likvidity, (vii) iná podobná inštitúcia, ktorej majetok je v úplnom vlastníctve vlády Slovenskej republiky alebo miestnych orgánov, pokiaľ sa tak dohodnú príslušné orgány zmluvných štátov prostredníctvom výmeny diplomatických nót; b) v prípade Saudskoarabského kráľovstva: i) vláda Saudskoarabského kráľovstva, ii) Saudskoarabská menová agentúra /The Saudi Arabia Monetary Agency (SAMA)/, iii) Saudský rozvojový fond /The Saudi Fund for Development/, iv) Verejný investičný fond /The Public Investment Fund/, v) Verejná dôchodková agentúra /The Public Pension Agency/, vi) Všeobecná organizácia pre sociálne poistenie /The General Organization for Social Insurance/, vii) iná podobná inštitúcia, ktorej majetok je v úplnom vlastníctve vlády Saudskoarabského kráľovstva alebo miestnych orgánov, pokiaľ sa tak dohodnú príslušné orgány zmluvných štátov prostredníctvom výmeny diplomatických nót. (4) Pojem „príjmy z dlhových pohľadávok“ použitý v tomto článku označuje príjmy z pohľadávok akéhokoľvek druhu, zabezpečených alebo nezabezpečených záložným právom na nehnuteľnosť bez ohľadu na to, či poskytujú právo účasti na ziskoch dlžníka a najmä príjmy z vládnych cenných papierov a príjmy z obligácií alebo z dlhopisov vrátane prémií a výhier spojených s týmito cennými papiermi, obligáciami alebo dlhopismi. Úroky z omeškania ukladané za oneskorenú platbu sa nepovažujú za príjmy z dlhových pohľadávok na účely tohto článku. (5) Ustanovenia odsekov 1, 2 a 3 tohto článku sa neuplatnia, ak skutočný vlastník príjmov z dlhových pohľadávok, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, v ktorom majú príjmy z dlhových pohľadávok zdroj, podnikanie prostredníctvom stálej prevádzkarne, ktorá sa tam nachádza alebo vykonáva v tom druhom zmluvnom štáte slobodné povolanie prostredníctvom stálej základne, ktorá sa tam nachádza a ak pohľadávka, z ktorej sa tieto príjmy platia, sa skutočne viaže na túto stálu prevádzkareň alebo túto stálu základňu. V takom prípade sa podľa okolností uplatnia ustanovenia článku 7 alebo článku 14 tejto zmluvy. (6) Predpokladá sa, že príjmy z dlhových pohľadávok majú zdroj v zmluvnom štáte, ak je platiteľ rezidentom toho zmluvného štátu. Ak však osoba platiaca príjmy z dlhových pohľadávok bez ohľadu na to, či je alebo nie je rezidentom zmluvného štátu, má v zmluvnom štáte stálu prevádzkareň alebo stálu základňu, v súvislosti s ktorou vznikol dlh, za ktorý sa príjmy platia a tieto príjmy idú na ťarchu tejto stálej prevádzkarne alebo tejto stálej základne, potom sa predpokladá, že tieto príjmy majú zdroj v tom zmluvnom štáte, v ktorom sa nachádza táto stála prevádzkareň alebo táto stála základňa. (7) Ak v dôsledku osobitných vzťahov existujúcich medzi platiteľom a skutočným vlastníkom príjmov alebo medzi nimi a treťou osobou suma príjmov z dlhových pohľadávok vzťahujúca sa k pohľadávke, z ktorej sa tieto príjmy platia, presahuje sumu, ktorú by bol dohodol platiteľ so skutočným vlastníkom, keby takéto vzťahy neexistovali, uplatnia sa ustanovenia tohto článku len na túto naposledy uvedenú sumu. V tomto prípade časť platieb presahujúca túto sumu sa zdaní podľa právnych predpisov oboch zmluvných štátov s prihliadnutím na ostatné ustanovenia tejto zmluvy.",

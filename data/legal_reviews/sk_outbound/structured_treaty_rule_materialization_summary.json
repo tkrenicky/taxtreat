@@ -3,11 +3,11 @@
   "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
   "source_country": "SK",
   "total_scopes": 225,
-  "materialized_scopes": 188,
-  "decision_materialized_scopes": 188,
-  "fail_closed_placeholder_scopes": 37,
+  "materialized_scopes": 191,
+  "decision_materialized_scopes": 191,
+  "fail_closed_placeholder_scopes": 34,
   "structured_scope_coverage": 225,
-  "unresolved_scopes": 37,
+  "unresolved_scopes": 34,
   "materialized_country_packages": 75,
   "materialized_scope_keys": [
     "SK-AE-dividend",
@@ -60,6 +60,7 @@
     "SK-ES-dividend",
     "SK-ES-interest",
     "SK-ES-royalty",
+    "SK-ET-interest",
     "SK-ET-royalty",
     "SK-FI-interest",
     "SK-FR-dividend",
@@ -135,6 +136,7 @@
     "SK-MT-royalty",
     "SK-MX-interest",
     "SK-MX-royalty",
+    "SK-MY-interest",
     "SK-MY-royalty",
     "SK-NG-dividend",
     "SK-NG-interest",
@@ -163,6 +165,7 @@
     "SK-RU-interest",
     "SK-RU-royalty",
     "SK-SA-dividend",
+    "SK-SA-interest",
     "SK-SA-royalty",
     "SK-SE-dividend",
     "SK-SE-interest",
@@ -204,13 +207,13 @@
     "source_text_dividend_branch_pair": 33,
     "source_text_explicit_residence_only": 3,
     "source_text_interest_residence_only": 24,
-    "source_text_interest_special_exemption": 29,
+    "source_text_interest_special_exemption": 32,
     "source_text_royalty_category_branches": 2,
     "source_text_single_word_rate": 8
   },
   "unresolved_by_income": {
     "dividend": 14,
-    "interest": 5,
+    "interest": 2,
     "royalty": 18
   },
   "unresolved": [
@@ -281,14 +284,6 @@
     {
       "recipient_country": "ET",
       "income_type": "dividend",
-      "rate_candidates": [],
-      "exclusive_residence_taxation_candidate": false,
-      "ownership_linked_rate_candidate_count": 0,
-      "holding_period_candidates": []
-    },
-    {
-      "recipient_country": "ET",
-      "income_type": "interest",
       "rate_candidates": [],
       "exclusive_residence_taxation_candidate": false,
       "ownership_linked_rate_candidate_count": 0,
@@ -422,14 +417,6 @@
       "holding_period_candidates": []
     },
     {
-      "recipient_country": "MY",
-      "income_type": "interest",
-      "rate_candidates": [],
-      "exclusive_residence_taxation_candidate": false,
-      "ownership_linked_rate_candidate_count": 0,
-      "holding_period_candidates": []
-    },
-    {
       "recipient_country": "MX",
       "income_type": "dividend",
       "rate_candidates": [],
@@ -483,14 +470,6 @@
         10.0,
         15.0
       ],
-      "exclusive_residence_taxation_candidate": false,
-      "ownership_linked_rate_candidate_count": 0,
-      "holding_period_candidates": []
-    },
-    {
-      "recipient_country": "SA",
-      "income_type": "interest",
-      "rate_candidates": [],
       "exclusive_residence_taxation_candidate": false,
       "ownership_linked_rate_candidate_count": 0,
       "holding_period_candidates": []
