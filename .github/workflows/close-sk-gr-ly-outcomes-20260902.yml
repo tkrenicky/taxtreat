@@ -1,0 +1,70 @@
+name: One-shot close SK GR LY semantic outcomes
+
+on:
+  push:
+    branches: [fix/sk-source-text-explicit-gaps-20260902]
+    paths:
+      - ".github/workflows/close-sk-gr-ly-outcomes-20260902.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Regenerate SK structured rules
+        run: |
+          python taxtreat/tools/build_sk_structured_treaty_rules.py
+          python taxtreat/tools/apply_sk_mli_gates_to_structured_rules.py
+      - name: Validate 225/225 semantic closure
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          summary=json.loads(Path("data/legal_reviews/sk_outbound/structured_treaty_rule_materialization_summary.json").read_text(encoding="utf-8"))
+          print("materialized",summary["materialized_scopes"])
+          print("unresolved",summary["unresolved_scopes"])
+          print("modes",summary["materialization_modes"])
+          assert summary["materialized_scopes"] == 225
+          assert summary["unresolved_scopes"] == 0
+          assert summary["structured_scope_coverage"] == 225
+          assert summary["materialized_country_packages"] == 75
+
+          gr=json.loads(Path("data/legal_rules_sk/gr.json").read_text(encoding="utf-8"))
+          gr_rules=[r for r in gr["rules"] if r["income_type"]=="dividend" and r["legal_layer"]=="treaty"]
+          assert any(r.get("tax_treatment")=="domestic_rate_applies" and r.get("rate") is None for r in gr_rules)
+
+          ly=json.loads(Path("data/legal_rules_sk/ly.json").read_text(encoding="utf-8"))
+          ly_rules=[r for r in ly["rules"] if r["income_type"]=="dividend" and r["legal_layer"]=="treaty"]
+          target=[r for r in ly_rules if r.get("tax_treatment")=="exclusive_foreign_taxation"]
+          assert target
+          assert any(
+              c.get("fact")=="ly_article_10_exclusive_residence_interpretation"
+              and c.get("fact_source")=="determination"
+              for r in target for c in r.get("conditions",[])
+          )
+          PY
+      - name: Load all SK rule packages
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from taxtreat.engine.legal_rule_loader import load_legal_rules
+          total=0
+          for p in sorted(Path("data/legal_rules_sk").glob("*.json")):
+              total += len(load_legal_rules(p))
+          print("loaded rules",total)
+          PY
+      - name: Remove one-shot workflow and commit artifacts
+        run: |
+          git rm .github/workflows/close-sk-gr-ly-outcomes-20260902.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/legal_rules_sk data/legal_reviews/sk_outbound/structured_treaty_rule_materialization_summary.json
+          git commit -m "Close all 225 SK treaty scopes semantically"
+          git pull --rebase origin fix/sk-source-text-explicit-gaps-20260902
+          git push
