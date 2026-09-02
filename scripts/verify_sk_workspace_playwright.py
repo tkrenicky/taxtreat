@@ -197,9 +197,19 @@ def main() -> int:
             form.locator('[name="income_type"]').select_option("interest")
             form.locator('[name="transaction_date"]').fill("2026-09-02")
             form.locator('[name="amount"]').fill("100000")
-            form.locator('[name="treaty_resident"][value="true"]').check()
-            form.locator('[name="beneficial_owner"][value="true"]').check()
-            form.locator('[name="pe_connection"][value="false"]').check()
+            treaty_resident_yes = form.locator(
+                'label:has([name="treaty_resident"][value="true"])'
+            )
+            treaty_resident_yes.click()
+            assert form.locator(
+                '[name="treaty_resident"][value="true"]'
+            ).is_checked()
+            assert form.locator(
+                '[name="beneficial_owner"][value="true"]'
+            ).is_checked()
+            assert form.locator(
+                '[name="pe_connection"][value="false"]'
+            ).is_checked()
             form.locator('[name="arm_length_amount"]').select_option("true")
             form.locator("#workspace-submit").click()
             page.wait_for_function(
