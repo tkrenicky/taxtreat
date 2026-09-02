@@ -32,7 +32,13 @@ def test_all_101_partner_catalogs_support_data_driven_legal_display():
                 assert rule["source_url"].startswith("https://")
                 assert rule["source_text"].strip()
                 assert rule["article"] is not None
-                assert rule["rate"] is not None
+                if rule["rate"] is None:
+                    assert rule.get("tax_treatment") in {
+                        "domestic_rate_applies",
+                        "exclusive_foreign_taxation",
+                    }
+                else:
+                    assert isinstance(rule["rate"], (int, float))
                 assert isinstance(rule["conditions"], list)
 
     assert treaty_rate_rules
