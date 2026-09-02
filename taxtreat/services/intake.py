@@ -174,6 +174,69 @@ FACT_GUIDANCE: dict[str, dict[str, Any]] = {
         ],
         "documents": ["Licenční smlouva", "Popis licencovaných práv"],
     },
+    "royalty_industrial_ip_subcategory": {
+        "prompt": "Které konkrétní právo nebo know-how je předmětem této licenční platby?",
+        "why": (
+            "Tato smlouva používá odlišnou sazbu pro některé položky, které jsou "
+            "v základním formuláři sloučené do jedné kategorie průmyslových práv a know-how."
+        ),
+        "response_type": "choice",
+        "options": [
+            [
+                "patent_design_model_plan_secret_formula_or_process",
+                "Patent, návrh/model, plán, tajný vzorec nebo postup",
+            ],
+            ["trademark", "Ochranná známka"],
+            [
+                "industrial_or_scientific_knowhow",
+                "Průmyslové nebo vědecké know-how / zkušenosti",
+            ],
+            ["commercial_knowhow", "Obchodní know-how / zkušenosti"],
+        ],
+        "documents": ["Licenční smlouva", "Popis licencovaných práv nebo know-how"],
+    },
+    "royalty_is_transport_vehicle": {
+        "prompt": "Týká se licenční platba použití nebo práva na použití dopravního prostředku?",
+        "why": (
+            "Běloruská smlouva uvádí dopravní prostředky jako samostatnou položku "
+            "v definici licenčních poplatků."
+        ),
+        "response_type": "boolean",
+        "documents": ["Licenční nebo nájemní smlouva", "Popis předmětu platby"],
+    },
+    "royalty_is_technical_or_economic_study_or_technical_assistance": {
+        "prompt": (
+            "Je platba náhradou za technickou nebo ekonomickou studii "
+            "nebo za technickou pomoc?"
+        ),
+        "why": (
+            "Tuniská smlouva tyto služby výslovně zahrnuje do jedné z kategorií "
+            "licenčních poplatků se zvláštní sazbou."
+        ),
+        "response_type": "boolean",
+        "documents": ["Smlouva", "Popis poskytovaných studií nebo technické pomoci"],
+    },
+    "software_classified_as_article_12_3a_copyright": {
+        "prompt": (
+            "Je software pro účely této licenční smlouvy poskytován jako autorské právo "
+            "spadající pod čl. 12 odst. 3 písm. a)?"
+        ),
+        "why": (
+            "Běloruská smlouva může u softwaru vést k rozdílné sazbě podle jeho "
+            "zařazení v definici licenčních poplatků."
+        ),
+        "response_type": "boolean",
+        "documents": ["Licenční smlouva", "Popis licencovaných práv k softwaru"],
+    },
+    "royalty_is_waiver": {
+        "prompt": "Je platba úplatou za vzdání se nebo nepoužití příslušného práva?",
+        "why": (
+            "U některých smluv se zvláštní sazba použije na platby za vzdání se "
+            "nebo nepoužití práva."
+        ),
+        "response_type": "boolean",
+        "documents": ["Licenční smlouva", "Dohoda o vzdání se nebo nepoužití práva"],
+    },
     "special_article_11_3_exemption": {
         "prompt": "Ověřte, zda se na úrok vztahuje zvláštní smluvní výjimka.",
         "why": "Použití zvláštní výjimky závisí na konkrétních stranách a dokumentaci financování.",
