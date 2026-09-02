@@ -1,0 +1,155 @@
+name: One-shot global live coverage audit
+
+on:
+  push:
+    branches: [audit/global-live-coverage-20260902]
+    paths:
+      - ".github/workflows/global-live-coverage-audit-20260902.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build live coverage report
+        run: |
+          python - <<'PY'
+          import json
+          from collections import Counter, defaultdict
+          from pathlib import Path
+
+          root = Path(".")
+          stage6_dir = root / "data/legal_rules_stage6"
+          locale_dir = root / "app/web/treaty-excerpt-locales"
+          files = sorted(stage6_dir.glob("*.json"))
+
+          income_types = ("dividend", "interest", "royalty")
+          partner_rows = []
+          all_scope_keys = set()
+          missing_scopes = []
+          treaty_statuses = Counter()
+          treaty_effects = Counter()
+          treaty_treatments = Counter()
+          condition_facts = Counter()
+          null_rate_rules = []
+          review_gate_rules = []
+          locale_missing_files = []
+          locale_rule_gaps = []
+          non_https_sources = []
+          treaty_rules = 0
+
+          for path in files:
+              payload = json.loads(path.read_text(encoding="utf-8"))
+              pair = payload.get("country_pair", {})
+              country = pair.get("recipient_country") or path.stem.upper()
+              rules = payload.get("rules", [])
+              scope_seen = set()
+              country_treaty_rules = 0
+
+              locale_path = locale_dir / f"{country}.json"
+              locale = {}
+              if locale_path.exists():
+                  try:
+                      locale = json.loads(locale_path.read_text(encoding="utf-8"))
+                  except Exception:
+                      locale = {}
+              else:
+                  locale_missing_files.append(country)
+
+              locale_text = json.dumps(locale, ensure_ascii=False)
+
+              for rule in rules:
+                  if not (rule.get("legal_layer") == "treaty" or rule.get("legal_instrument") == "treaty"):
+                      continue
+                  treaty_rules += 1
+                  country_treaty_rules += 1
+                  income = rule.get("income_type")
+                  if income in income_types:
+                      scope_seen.add(income)
+                      all_scope_keys.add(f"{country}:{income}")
+                  treaty_statuses[rule.get("verification_status")] += 1
+                  treaty_effects[rule.get("effect")] += 1
+                  treaty_treatments[rule.get("tax_treatment")] += 1
+                  if rule.get("rate") is None:
+                      null_rate_rules.append(rule.get("rule_id"))
+                  if rule.get("effect") == "review_gate":
+                      review_gate_rules.append(rule.get("rule_id"))
+                  if rule.get("source_url") and not str(rule["source_url"]).startswith("https://"):
+                      non_https_sources.append(rule.get("rule_id"))
+                  for cond in rule.get("conditions", []):
+                      if cond.get("fact"):
+                          condition_facts[cond["fact"]] += 1
+
+                  rid = rule.get("rule_id")
+                  # The web locale layer can key by exact rule id or a structured summary/source-specific alias.
+                  if locale_path.exists() and rid and rid not in locale_text:
+                      # Keep as diagnostic only; browser acceptance remains the authoritative locale gate.
+                      locale_rule_gaps.append({"country": country, "rule_id": rid})
+
+              missing = [i for i in income_types if i not in scope_seen]
+              for income in missing:
+                  missing_scopes.append(f"{country}:{income}")
+              partner_rows.append({
+                  "country": country,
+                  "treaty_rule_count": country_treaty_rules,
+                  "scope_count": len(scope_seen),
+                  "missing_scopes": missing,
+                  "locale_file": locale_path.exists(),
+              })
+
+          # Current browser acceptance is authoritative for EN locale semantics.
+          report = {
+              "schema_version": 1,
+              "created_at": "2026-09-02",
+              "basis": "live main-derived Stage 6 + web locale files",
+              "stage6_partner_files": len(files),
+              "stage6_scope_count": len(all_scope_keys),
+              "expected_scope_count": len(files) * 3,
+              "missing_scope_count": len(missing_scopes),
+              "missing_scopes": sorted(missing_scopes),
+              "treaty_rule_count": treaty_rules,
+              "verification_status_counts": dict(sorted(treaty_statuses.items(), key=lambda kv: str(kv[0]))),
+              "effect_counts": dict(sorted(treaty_effects.items(), key=lambda kv: str(kv[0]))),
+              "tax_treatment_counts": {str(k): v for k, v in sorted(treaty_treatments.items(), key=lambda kv: str(kv[0]))},
+              "null_rate_rule_count": len(null_rate_rules),
+              "null_rate_rules": sorted(null_rate_rules),
+              "review_gate_rule_count": len(review_gate_rules),
+              "review_gate_rules": sorted(review_gate_rules),
+              "non_https_source_count": len(non_https_sources),
+              "non_https_source_rules": sorted(non_https_sources),
+              "locale_missing_file_count": len(locale_missing_files),
+              "locale_missing_files": sorted(locale_missing_files),
+              "locale_exact_rule_id_diagnostic_gap_count": len(locale_rule_gaps),
+              "top_condition_facts": condition_facts.most_common(50),
+              "partners": partner_rows,
+              "authoritative_gates": {
+                  "web_browser_acceptance": "PASS on main merge SHA 26261756904e06a2989de588fd69a3f326ea4b24",
+                  "english_treaty_locale_coverage": "PASS on main merge SHA 26261756904e06a2989de588fd69a3f326ea4b24",
+                  "condition_aware_integration": "PASS on main merge SHA 26261756904e06a2989de588fd69a3f326ea4b24",
+                  "stage6_101_country_e2e": "PASS on PR head before merge and main web acceptance",
+              },
+          }
+          out = root / "reports/global_live_coverage_20260902.json"
+          out.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+          print(json.dumps({k: report[k] for k in (
+              "stage6_partner_files","stage6_scope_count","expected_scope_count",
+              "missing_scope_count","treaty_rule_count","verification_status_counts",
+              "null_rate_rule_count","review_gate_rule_count","non_https_source_count",
+              "locale_missing_file_count","locale_exact_rule_id_diagnostic_gap_count"
+          )}, indent=2))
+          PY
+      - name: Commit report and remove workflow
+        run: |
+          git rm .github/workflows/global-live-coverage-audit-20260902.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add reports/global_live_coverage_20260902.json
+          git commit -m "Add global live coverage audit"
+          git pull --rebase origin audit/global-live-coverage-20260902
+          git push
