@@ -253,28 +253,28 @@ def dividend_branches(scope: dict, article: dict) -> list[dict] | None:
     # incorrectly capture the qualifying rate when both percentages appeared
     # in the same sentence.
     before_fallback = text[max(0, fallback_phrase.start() - 220):fallback_phrase.start()]
-    fallback_rates = list(re.finditer(r"([0-9]+(?:[,.][0-9]+)?)\s*%", before_fallback))
+    fallback_rates = list(re.finditer(r"([0-9]+(?:[,.][0-9]+)?)\s*(?:%|percent)", before_fallback))
     if not fallback_rates:
         return None
     fallback_rate = _percent(fallback_rates[-1].group(1))
 
     # Three-or-more explicit lettered rate clauses need their own structured
     # branch model; do not collapse them into a two-branch rule.
-    lettered_rates = re.findall(r"(?:^|[;,.]\s*)([a-d])\)\s*([0-9]+(?:[,.][0-9]+)?)\s*%", text)
+    lettered_rates = re.findall(r"(?:^|[;,.]\s*)([a-d])\)\s*([0-9]+(?:[,.][0-9]+)?)\s*(?:%|percent)", text)
     if len(lettered_rates) > 2:
         return None
 
     ownership_match = re.search(
-        r"([0-9]+(?:[,.][0-9]+)?)\s*%[^.;]{0,650}?"
+        r"([0-9]+(?:[,.][0-9]+)?)\s*(?:%|percent)[^.;]{0,650}?"
         r"(?:priamo\s+(?:vlastní|má|drží)|hlasovac(?:ích|ie|ích\s+práv|ích\s+podielov)|"
-        r"vlastní\s+priamo)[^.;]{0,260}?najmenej\s+([0-9]+(?:[,.][0-9]+)?)\s*%",
+        r"vlastní\s+priamo)[^.;]{0,260}?najmenej\s+([0-9]+(?:[,.][0-9]+)?)\s*(?:%|percent)",
         text,
         flags=re.S,
     )
     if not ownership_match:
         ownership_match = re.search(
-            r"([0-9]+(?:[,.][0-9]+)?)\s*%[^.;]{0,650}?najmenej\s+"
-            r"([0-9]+(?:[,.][0-9]+)?)\s*%[^.;]{0,260}?"
+            r"([0-9]+(?:[,.][0-9]+)?)\s*(?:%|percent)[^.;]{0,650}?najmenej\s+"
+            r"([0-9]+(?:[,.][0-9]+)?)\s*(?:%|percent)[^.;]{0,260}?"
             r"(?:priamo|hlasovac)",
             text,
             flags=re.S,
@@ -284,10 +284,10 @@ def dividend_branches(scope: dict, article: dict) -> list[dict] | None:
         # not use the word 'directly'. The threshold itself is still explicit
         # in Article 10 and can be represented without inventing directness.
         ownership_match = re.search(
-            r"([0-9]+(?:[,.][0-9]+)?)\s*%[^.;]{0,700}?"
+            r"([0-9]+(?:[,.][0-9]+)?)\s*(?:%|percent)[^.;]{0,700}?"
             r"(?:spoločnosť|spoločnosťou)[^.;]{0,320}?"
             r"(?:vlastní|má|drží)[^.;]{0,120}?najmenej\s+"
-            r"([0-9]+(?:[,.][0-9]+)?)\s*%",
+            r"([0-9]+(?:[,.][0-9]+)?)\s*(?:%|percent)",
             text,
             flags=re.S,
         )
