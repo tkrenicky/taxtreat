@@ -1,0 +1,950 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-09-02",
+  "basis": "live main-derived Stage 6 + web locale files",
+  "stage6_partner_files": 101,
+  "stage6_scope_count": 302,
+  "expected_scope_count": 303,
+  "missing_scope_count": 1,
+  "missing_scopes": [
+    "GR:dividend"
+  ],
+  "treaty_rule_count": 472,
+  "verification_status_counts": {
+    "verified": 472
+  },
+  "effect_counts": {
+    "rate": 472
+  },
+  "tax_treatment_counts": {
+    "None": 472
+  },
+  "null_rate_rule_count": 0,
+  "null_rate_rules": [],
+  "review_gate_rule_count": 0,
+  "review_gate_rules": [],
+  "non_https_source_count": 0,
+  "non_https_source_rules": [],
+  "locale_missing_file_count": 0,
+  "locale_missing_files": [],
+  "locale_exact_rule_id_diagnostic_gap_count": 195,
+  "top_condition_facts": [
+    [
+      "beneficial_owner",
+      430
+    ],
+    [
+      "fallback_case",
+      76
+    ],
+    [
+      "royalty_category",
+      66
+    ],
+    [
+      "recipient_entity_type",
+      59
+    ],
+    [
+      "ownership_percent",
+      49
+    ],
+    [
+      "direct_ownership",
+      45
+    ],
+    [
+      "article_11_3_exemption",
+      32
+    ],
+    [
+      "recipient_is_treaty_resident",
+      22
+    ],
+    [
+      "permanent_establishment_connection",
+      17
+    ],
+    [
+      "article_11_public_body_exemption",
+      15
+    ],
+    [
+      "recipient_is_partnership",
+      7
+    ],
+    [
+      "recipient_or_financing",
+      7
+    ],
+    [
+      "holding_period_months",
+      5
+    ],
+    [
+      "source_state_taxation",
+      5
+    ],
+    [
+      "arm_length_amount",
+      4
+    ],
+    [
+      "voting_ownership",
+      4
+    ],
+    [
+      "loan_or_credit_provider",
+      3
+    ],
+    [
+      "article_11_3a_exemption",
+      3
+    ],
+    [
+      "article_10_public_body_exemption",
+      2
+    ],
+    [
+      "recipient_is_qualifying_pension_fund",
+      2
+    ],
+    [
+      "direct_or_indirect_voting_ownership",
+      2
+    ],
+    [
+      "recipient_taxed_on_royalty_in_residence_state",
+      2
+    ],
+    [
+      "recipient_has_share_capital",
+      2
+    ],
+    [
+      "right_or_property_not_effectively_connected_to_czech_pe_or_fixed_base",
+      2
+    ],
+    [
+      "general_article_11_2_rate",
+      1
+    ],
+    [
+      "official_foreign_exchange_reserve_investment",
+      1
+    ],
+    [
+      "recipient_has_immediate_entitlement",
+      1
+    ],
+    [
+      "continuous_holding_period_days",
+      1
+    ],
+    [
+      "holding_period_includes_payment_date",
+      1
+    ],
+    [
+      "holding_period_reorganisation_continuity",
+      1
+    ],
+    [
+      "minimum_term_years",
+      1
+    ],
+    [
+      "purpose",
+      1
+    ],
+    [
+      "voting_power_control",
+      1
+    ],
+    [
+      "canadian_non_resident_owned_investment_corporation_exception",
+      1
+    ],
+    [
+      "recipient_is_central_bank",
+      1
+    ],
+    [
+      "recipient_country_imposes_royalty_wht_on_nonresidents",
+      1
+    ],
+    [
+      "qualifying_article_11_2a_case",
+      1
+    ],
+    [
+      "detailed_eligibility_review_required",
+      1
+    ],
+    [
+      "distributed_vs_undistributed_corporate_tax_rate_difference",
+      1
+    ],
+    [
+      "recipient_or_loan_provider_or_guarantor",
+      1
+    ],
+    [
+      "article_11_3_public_financing_exemption",
+      1
+    ],
+    [
+      "lender_category",
+      1
+    ],
+    [
+      "borrower_category",
+      1
+    ],
+    [
+      "recipient_is_bank",
+      1
+    ],
+    [
+      "holding_period_years",
+      1
+    ],
+    [
+      "claim_not_effectively_connected_to_czech_pe",
+      1
+    ],
+    [
+      "loan_is_noncommercial",
+      1
+    ],
+    [
+      "recipient_is_financial_institution_or_insurer",
+      1
+    ],
+    [
+      "loan_provider",
+      1
+    ],
+    [
+      "special_article_11_3_exemption",
+      1
+    ]
+  ],
+  "partners": [
+    {
+      "country": "AD",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "AE",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "AL",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "AM",
+      "treaty_rule_count": 6,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "AT",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "AU",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "AZ",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "BA",
+      "treaty_rule_count": 3,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "BB",
+      "treaty_rule_count": 6,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "BD",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "BE",
+      "treaty_rule_count": 6,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "BG",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "BH",
+      "treaty_rule_count": 3,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "BR",
+      "treaty_rule_count": 6,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "BW",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "BY",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "CA",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "CH",
+      "treaty_rule_count": 8,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "CL",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "CM",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "CN",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "CO",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "CY",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "DE",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "DK",
+      "treaty_rule_count": 6,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "EE",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "EG",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "ES",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "ET",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "FI",
+      "treaty_rule_count": 7,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "FR",
+      "treaty_rule_count": 6,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "GB",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "GE",
+      "treaty_rule_count": 7,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "GH",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "GR",
+      "treaty_rule_count": 4,
+      "scope_count": 2,
+      "missing_scopes": [
+        "dividend"
+      ],
+      "locale_file": true
+    },
+    {
+      "country": "HK",
+      "treaty_rule_count": 3,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "HR",
+      "treaty_rule_count": 3,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "HU",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "ID",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "IE",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "IL",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "IN",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "IR",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "IS",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "IT",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "JO",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "JP",
+      "treaty_rule_count": 6,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "KG",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "KP",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "KR",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "KW",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "KZ",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "LB",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "LI",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "LK",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "LT",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "LU",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "LV",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "MA",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "MD",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "ME",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "MK",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "MN",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "MT",
+      "treaty_rule_count": 3,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "MX",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "MY",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "NG",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "NL",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "NO",
+      "treaty_rule_count": 7,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "NZ",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "PA",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "PH",
+      "treaty_rule_count": 6,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "PK",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "PL",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "PT",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "QA",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "RO",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "RS",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "RU",
+      "treaty_rule_count": 3,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "RW",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "SA",
+      "treaty_rule_count": 3,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "SE",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "SG",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "SI",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "SK",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "SM",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "SN",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "SY",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "TH",
+      "treaty_rule_count": 6,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "TJ",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "TM",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "TN",
+      "treaty_rule_count": 6,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "TR",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "TW",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "UA",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "US",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "UZ",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "VE",
+      "treaty_rule_count": 5,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "VN",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "XK",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    },
+    {
+      "country": "ZA",
+      "treaty_rule_count": 4,
+      "scope_count": 3,
+      "missing_scopes": [],
+      "locale_file": true
+    }
+  ],
+  "authoritative_gates": {
+    "web_browser_acceptance": "PASS on main merge SHA 26261756904e06a2989de588fd69a3f326ea4b24",
+    "english_treaty_locale_coverage": "PASS on main merge SHA 26261756904e06a2989de588fd69a3f326ea4b24",
+    "condition_aware_integration": "PASS on main merge SHA 26261756904e06a2989de588fd69a3f326ea4b24",
+    "stage6_101_country_e2e": "PASS on PR head before merge and main web acceptance"
+  }
+}
