@@ -16,6 +16,7 @@ APPROVAL = BASE / "stage6_production_approval.json"
 PROMOTION = BASE / "stage6_rule_promotion.json"
 RELEASE = BASE / "stage6_source_release.json"
 GATE = BASE / "production_source_release_gate_v2.json"
+MACHINE_RELEASE = BASE / "semantic_remediation_machine_release_20260901.json"
 ENGINE = ROOT / "taxtreat/engine/legal_rule_engine.py"
 
 VALIDATION_RELEASE = "stage6-semantic-remediation-machine-validation-2026-09-01.1"
@@ -68,6 +69,7 @@ def main() -> int:
     promotion = load(PROMOTION)
     release = load(RELEASE)
     gate = load(GATE)
+    machine_release = load(MACHINE_RELEASE)
 
     corrections = registry.get("corrections", [])
     countries = sorted({str(row["country"]).upper() for row in corrections})
@@ -79,11 +81,15 @@ def main() -> int:
     promotion_by_country = {str(row["partner_country"]).upper(): row for row in promotion["records"]}
     release_by_pair = {str(row["treaty_pair_id"]): row for row in release["records"]}
     gate_by_country = {str(row["partner_country"]).upper(): row for row in gate["treaty_partners"]}
+    machine_release_by_country = {
+        str(row["partner_country"]).upper(): row
+        for row in machine_release["records"]
+    }
 
     if not all(len(mapping) == 101 for mapping in (queue_by_country, approval_by_country, promotion_by_country, gate_by_country)):
         raise RuntimeError("Stage 6 governance universe must contain exactly 101 packages")
 
-    # Validate and materialize exactly the 40 source-backed remediation packages.
+    # Validate and materialize exactly the 41 source-backed remediation packages.
     for country in countries:
         package = queue_by_country[country]
         package_hash = str(package["package_sha256"])
@@ -196,6 +202,23 @@ def main() -> int:
             "validation_dataset_release": VALIDATION_RELEASE,
             "additional_human_review_claimed": False,
             "source_backed_registry_match_required": True,
+        }
+        machine_row = machine_release_by_country.get(country)
+        if machine_row is None:
+            raise RuntimeError(f"{country}: machine-release evidence missing")
+        if str(machine_row.get("package_sha256")) != package_hash:
+            raise RuntimeError(f"{country}: machine-release package hash mismatch")
+        evidence["semantic_remediation_machine_release"] = {
+            "event_type": str(machine_release["event_type"]),
+            "dataset_release": str(machine_release["dataset_release"]),
+            "validation_authority": str(machine_release["validation_authority"]),
+            "additional_human_review_claimed": bool(
+                machine_release["additional_human_review_claimed"]
+            ),
+            "package_sha256": package_hash,
+            "evidence_source_id": str(machine_row["evidence_source_id"]),
+            "income_type": str(machine_row["income_type"]),
+            "release_status": str(machine_row["release_status"]),
         }
         evidence["production_approval_event"] = {
             "event_type": "deterministic_semantic_remediation_production_approval",
