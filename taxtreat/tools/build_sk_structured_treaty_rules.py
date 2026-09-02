@@ -314,6 +314,38 @@ def _dividend_word_rate_branches(scope: dict, article: dict) -> list[dict] | Non
     ]
 
 
+def _directional_dividend_branches(scope: dict, article: dict) -> list[dict] | None:
+    if scope.get("income_type") != "dividend" or not scope.get("source_sha256"):
+        return None
+    text = str(article.get("article_text") or "").lower()
+    common = conditions(scope)
+
+    # Legacy Czechoslovakia-Sri Lanka wording is explicitly directional.
+    # For the SK outbound direction, paragraph 1 directly caps the source
+    # state's dividend tax at 15% where the recipient is a Sri Lankan company.
+    if (
+        scope.get("recipient_country") == "LK"
+        and "sadzba československej dane z dividend" in text
+        and "spoločnosti majúcej sídlo v srí lanke" in text
+        and re.search(r"neprekročí\s+15\s*%", text)
+    ):
+        return [{
+            "rate": 15.0,
+            "priority": 650,
+            "conditions": [
+                *common,
+                {
+                    "fact": "recipient_entity_type",
+                    "fact_source": "transaction",
+                    "operator": "in",
+                    "value": ["company", "corporate", "company_other_than_partnership"],
+                },
+            ],
+        }]
+
+    return None
+
+
 def _holding_period_dividend_branches(scope: dict, article: dict) -> list[dict] | None:
     if scope.get("income_type") != "dividend" or not scope.get("source_sha256"):
         return None
@@ -406,6 +438,10 @@ def _holding_period_dividend_branches(scope: dict, article: dict) -> list[dict] 
 def dividend_branches(scope: dict, article: dict) -> list[dict] | None:
     if scope.get("income_type") != "dividend":
         return None
+    directional = _directional_dividend_branches(scope, article)
+    if directional:
+        return directional
+
     holding_period = _holding_period_dividend_branches(scope, article)
     if holding_period:
         return holding_period
