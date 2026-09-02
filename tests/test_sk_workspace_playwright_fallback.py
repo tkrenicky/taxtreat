@@ -10,6 +10,7 @@ def test_playwright_fallback_covers_released_sk_public_contract():
     text = PLAYWRIGHT.read_text(encoding="utf-8")
 
     assert 'select_option("SK")' in text
+    assert 'page.locator("[data-create-payer]:visible").click()' in text
     assert "document.body.dataset.sourceCountry === 'SK'" in text
     assert 'context["runtimeReleased"] is True' in text
     assert 'context["baseCurrency"] == "EUR"' in text

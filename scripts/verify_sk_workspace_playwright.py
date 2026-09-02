@@ -119,7 +119,8 @@ def main() -> int:
                 '#new-recipient-form [name="recipient_country"] option'
             ).count() == 102
 
-            page.locator("[data-create-payer]").first.click()
+            page.locator('[data-nav="payers"]').click()
+            page.locator("[data-create-payer]:visible").click()
             payer = page.locator("#payer-form")
             payer.locator('[name="payer_id"]').fill("12345678")
             payer.locator('[name="payer_name"]').fill("Demo SK s.r.o.")
