@@ -3,11 +3,11 @@
   "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
   "source_country": "SK",
   "total_scopes": 225,
-  "materialized_scopes": 219,
-  "decision_materialized_scopes": 219,
-  "fail_closed_placeholder_scopes": 6,
+  "materialized_scopes": 221,
+  "decision_materialized_scopes": 221,
+  "fail_closed_placeholder_scopes": 4,
   "structured_scope_coverage": 225,
-  "unresolved_scopes": 6,
+  "unresolved_scopes": 4,
   "materialized_country_packages": 75,
   "materialized_scope_keys": [
     "SK-AE-dividend",
@@ -93,10 +93,12 @@
     "SK-HU-royalty",
     "SK-ID-dividend",
     "SK-ID-interest",
+    "SK-ID-royalty",
     "SK-IE-dividend",
     "SK-IE-interest",
     "SK-IE-royalty",
     "SK-IL-dividend",
+    "SK-IL-interest",
     "SK-IL-royalty",
     "SK-IN-dividend",
     "SK-IN-interest",
@@ -235,14 +237,14 @@
     "source_text_dividend_branch_pair": 41,
     "source_text_explicit_residence_only": 7,
     "source_text_interest_residence_only": 24,
-    "source_text_interest_special_exemption": 32,
-    "source_text_royalty_category_branches": 19,
+    "source_text_interest_special_exemption": 33,
+    "source_text_royalty_category_branches": 20,
     "source_text_single_word_rate": 8
   },
   "unresolved_by_income": {
     "dividend": 2,
-    "interest": 2,
-    "royalty": 2
+    "interest": 1,
+    "royalty": 1
   },
   "unresolved": [
     {
@@ -272,29 +274,6 @@
       "recipient_country": "GR",
       "income_type": "dividend",
       "rate_candidates": [],
-      "exclusive_residence_taxation_candidate": false,
-      "ownership_linked_rate_candidate_count": 0,
-      "holding_period_candidates": []
-    },
-    {
-      "recipient_country": "ID",
-      "income_type": "royalty",
-      "rate_candidates": [
-        15.0,
-        10.0
-      ],
-      "exclusive_residence_taxation_candidate": false,
-      "ownership_linked_rate_candidate_count": 0,
-      "holding_period_candidates": []
-    },
-    {
-      "recipient_country": "IL",
-      "income_type": "interest",
-      "rate_candidates": [
-        2.0,
-        5.0,
-        10.0
-      ],
       "exclusive_residence_taxation_candidate": false,
       "ownership_linked_rate_candidate_count": 0,
       "holding_period_candidates": []
