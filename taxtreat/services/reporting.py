@@ -133,6 +133,8 @@ def build_professional_report(
             risk = "Under the applied treaty rule, the income is taxable only in the recipient's state of tax residence."
         elif status == "FINAL" and treatment == "domestic_exemption":
             risk = f"The income is exempt under the applied {source_adjective} domestic rule."
+        elif status == "FINAL" and treatment == "domestic_rate_applies":
+            risk = "The treaty permits source-state taxation without imposing a treaty rate ceiling; the applicable rate is determined under domestic law."
         elif status == "FINAL":
             risk = "TaxTreat matched a legal rule to the facts entered by the user."
         elif status == "OUT_OF_SCOPE":
@@ -144,6 +146,8 @@ def build_professional_report(
             risk = "Podle použitého smluvního pravidla se příjem zdaňuje pouze ve státě daňové rezidence příjemce."
         elif status == "FINAL" and treatment == "domestic_exemption":
             risk = "Příjem je podle použitého vnitrostátního pravidla osvobozen."
+        elif status == "FINAL" and treatment == "domestic_rate_applies":
+            risk = "Smlouva umožňuje zdanění ve státě zdroje bez smluvního omezení sazby; použitelná sazba se určí podle vnitrostátního práva."
         elif status == "FINAL":
             risk = "TaxTreat přiřadil právní pravidlo k údajům zadaným uživatelem."
         elif status == "OUT_OF_SCOPE":
