@@ -189,14 +189,20 @@ def validate_legal_rules(rules: list[LegalRule]) -> list[str]:
             issues.append(f"{prefix} priority cannot be negative.")
 
         if rule.effect == "rate":
-            if (
+            treatment = resolve_tax_treatment(rule)
+            if treatment == TaxTreatment.DOMESTIC_RATE_APPLIES:
+                if rule.rate is not None:
+                    issues.append(
+                        f"{prefix} domestic-rate treatment must not encode "
+                        "a treaty percentage."
+                    )
+            elif (
                 not isinstance(rule.rate, (int, float))
                 or isinstance(rule.rate, bool)
             ):
                 issues.append(f"{prefix} rate must be numeric.")
             elif not 0 <= float(rule.rate) <= 100:
                 issues.append(f"{prefix} rate must be between 0 and 100.")
-            treatment = resolve_tax_treatment(rule)
             if (
                 treatment in {
                     TaxTreatment.EXCLUSIVE_FOREIGN_TAXATION,
