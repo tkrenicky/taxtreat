@@ -170,6 +170,11 @@ def test_validator_enforces_complete_schema_and_approval():
             rate=5,
             tax_treatment="domestic_exemption",
         ),
+        legal_rule(
+            "DOMESTIC-RATE-WITH-TREATY-PERCENT",
+            rate=5,
+            tax_treatment="domestic_rate_applies",
+        ),
         legal_rule("EXCLUDE", effect="exclude", rate=1),
         legal_rule("REVIEW-GATE-RATE", effect="review_gate", rate=1),
         legal_rule(
@@ -196,6 +201,7 @@ def test_validator_enforces_complete_schema_and_approval():
     assert "rate must be numeric" in extra_issues
     assert "rate must be between" in extra_issues
     assert "non-taxing treatment must use structural rate 0" in extra_issues
+    assert "domestic-rate treatment must not encode a treaty percentage" in extra_issues
     assert "exclusion rule must not contain a rate" in extra_issues
     assert "review gate must not contain a rate" in extra_issues
     assert "eligibility gate must not contain a rate" in extra_issues
