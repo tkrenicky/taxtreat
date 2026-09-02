@@ -807,7 +807,7 @@ def test_semantic_remediation_registry_matches_machine_release():
         for row in release["records"]
     }
 
-    assert len(candidate_scopes) == 40
+    assert len(candidate_scopes) == 41
     assert released_scopes == candidate_scopes
     assert release["additional_human_review_claimed"] is False
     assert _PENDING_SEMANTIC_REMEDIATION_SCOPES == set()
@@ -845,7 +845,7 @@ def test_all_semantic_remediation_scopes_have_machine_validated_runtime_rules():
         assert all(row.get("review_package_sha256") for row in rules)
         checked.add((country, income))
 
-    assert len(checked) == 40
+    assert len(checked) == 41
 
 
 def test_machine_validated_us_scope_selects_correct_reduced_rate():

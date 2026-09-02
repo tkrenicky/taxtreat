@@ -10,7 +10,7 @@ PRODUCTION_RELEASE = "stage6-semantic-remediation-production-2026-09-01.1"
 def test_remediated_runtime_packages_use_one_production_release():
     registry = json.loads(REGISTRY.read_text(encoding="utf-8"))
     countries = sorted({str(row["country"]).upper() for row in registry["corrections"]})
-    assert len(countries) == 40
+    assert len(countries) == 41
 
     for country in countries:
         payload = json.loads((RULES / f"{country.lower()}.json").read_text(encoding="utf-8"))

@@ -72,7 +72,7 @@ def test_all_semantic_remediation_packages_project_without_rate_ambiguity(
 
     registry = json.loads(projector.REGISTRY.read_text(encoding="utf-8"))
     countries = sorted({str(row["country"]).upper() for row in registry["corrections"]})
-    assert len(countries) == 40
+    assert len(countries) == 41
 
     target = tmp_path / "legal_rules_stage6"
     target.mkdir()
@@ -86,8 +86,8 @@ def test_all_semantic_remediation_packages_project_without_rate_ambiguity(
     monkeypatch.setattr(projector, "RULES_DIR", target)
 
     results = [project_country(country) for country in countries]
-    assert len(results) == 40
-    assert sum(item["correction_count"] for item in results) == 40
+    assert len(results) == 41
+    assert sum(item["correction_count"] for item in results) == 41
     assert all(item["changed_rule_ids"] for item in results)
 
     for result in results:

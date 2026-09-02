@@ -16,6 +16,7 @@ APPROVAL = BASE / "stage6_production_approval.json"
 PROMOTION = BASE / "stage6_rule_promotion.json"
 RELEASE = BASE / "stage6_source_release.json"
 GATE = BASE / "production_source_release_gate_v2.json"
+MACHINE_RELEASE = BASE / "semantic_remediation_machine_release_20260901.json"
 ENGINE = ROOT / "taxtreat/engine/legal_rule_engine.py"
 
 VALIDATION_RELEASE = "stage6-semantic-remediation-machine-validation-2026-09-01.1"
@@ -68,22 +69,27 @@ def main() -> int:
     promotion = load(PROMOTION)
     release = load(RELEASE)
     gate = load(GATE)
+    machine_release = load(MACHINE_RELEASE)
 
     corrections = registry.get("corrections", [])
     countries = sorted({str(row["country"]).upper() for row in corrections})
-    if len(countries) != 40:
-        raise RuntimeError(f"Expected 40 semantic-remediation countries, found {len(countries)}")
+    if len(countries) != 41:
+        raise RuntimeError(f"Expected 41 semantic-remediation countries, found {len(countries)}")
 
     queue_by_country = {str(row["partner_country"]).upper(): row for row in queue["packages"]}
     approval_by_country = {str(row["partner_country"]).upper(): row for row in approval["records"]}
     promotion_by_country = {str(row["partner_country"]).upper(): row for row in promotion["records"]}
     release_by_pair = {str(row["treaty_pair_id"]): row for row in release["records"]}
     gate_by_country = {str(row["partner_country"]).upper(): row for row in gate["treaty_partners"]}
+    machine_release_by_country = {
+        str(row["partner_country"]).upper(): row
+        for row in machine_release["records"]
+    }
 
     if not all(len(mapping) == 101 for mapping in (queue_by_country, approval_by_country, promotion_by_country, gate_by_country)):
         raise RuntimeError("Stage 6 governance universe must contain exactly 101 packages")
 
-    # Validate and materialize exactly the 40 source-backed remediation packages.
+    # Validate and materialize exactly the 41 source-backed remediation packages.
     for country in countries:
         package = queue_by_country[country]
         package_hash = str(package["package_sha256"])
@@ -114,20 +120,35 @@ def main() -> int:
                 and str(rule.get("verification_authority")) == "semantic_remediation_machine_projection"
                 and str(rule.get("review_package_sha256")) == package_hash
             ]
-            expected_rates = {float(branch["rate"]) for branch in correction["rate_candidates"]}
-            actual_rates = {float(rule["rate"]) for rule in actual_rules}
-            if actual_rates != expected_rates:
-                raise RuntimeError(f"{country}:{income}: candidate rate branches do not match remediation registry")
-            for branch in correction["rate_candidates"]:
-                rate = float(branch["rate"])
-                matching = [rule for rule in actual_rules if float(rule["rate"]) == rate]
-                if len(matching) != 1:
-                    raise RuntimeError(f"{country}:{income}:{rate:g}: expected exactly one candidate branch")
-                expected_conditions = {registry_condition(row) for row in branch.get("conditions", [])}
-                actual_conditions = {rule_condition(row) for row in matching[0].get("conditions", [])}
+            structural = correction.get("structural_outcome")
+            if structural:
+                if len(actual_rules) != 1:
+                    raise RuntimeError(f"{country}:{income}: expected exactly one structural candidate rule")
+                actual = actual_rules[0]
+                if actual.get("rate") is not None:
+                    raise RuntimeError(f"{country}:{income}: structural domestic-rate outcome must use rate=null")
+                if actual.get("tax_treatment") != structural.get("tax_treatment"):
+                    raise RuntimeError(f"{country}:{income}: structural tax treatment mismatch")
+                expected_conditions = {registry_condition(row) for row in structural.get("conditions", [])}
+                actual_conditions = {rule_condition(row) for row in actual.get("conditions", [])}
                 if not expected_conditions.issubset(actual_conditions):
                     missing = sorted(expected_conditions - actual_conditions)
-                    raise RuntimeError(f"{country}:{income}:{rate:g}: candidate is missing source-backed remediation conditions: {missing}")
+                    raise RuntimeError(f"{country}:{income}: structural candidate is missing source-backed conditions: {missing}")
+            else:
+                expected_rates = {float(branch["rate"]) for branch in correction["rate_candidates"]}
+                actual_rates = {float(rule["rate"]) for rule in actual_rules}
+                if actual_rates != expected_rates:
+                    raise RuntimeError(f"{country}:{income}: candidate rate branches do not match remediation registry")
+                for branch in correction["rate_candidates"]:
+                    rate = float(branch["rate"])
+                    matching = [rule for rule in actual_rules if float(rule["rate"]) == rate]
+                    if len(matching) != 1:
+                        raise RuntimeError(f"{country}:{income}:{rate:g}: expected exactly one candidate branch")
+                    expected_conditions = {registry_condition(row) for row in branch.get("conditions", [])}
+                    actual_conditions = {rule_condition(row) for row in matching[0].get("conditions", [])}
+                    if not expected_conditions.issubset(actual_conditions):
+                        missing = sorted(expected_conditions - actual_conditions)
+                        raise RuntimeError(f"{country}:{income}:{rate:g}: candidate is missing source-backed remediation conditions: {missing}")
 
         production = dict(candidate)
         production.pop("stage6_production", None)
@@ -181,6 +202,23 @@ def main() -> int:
             "validation_dataset_release": VALIDATION_RELEASE,
             "additional_human_review_claimed": False,
             "source_backed_registry_match_required": True,
+        }
+        machine_row = machine_release_by_country.get(country)
+        if machine_row is None:
+            raise RuntimeError(f"{country}: machine-release evidence missing")
+        if str(machine_row.get("package_sha256")) != package_hash:
+            raise RuntimeError(f"{country}: machine-release package hash mismatch")
+        evidence["semantic_remediation_machine_release"] = {
+            "event_type": str(machine_release["event_type"]),
+            "dataset_release": str(machine_release["dataset_release"]),
+            "validation_authority": str(machine_release["validation_authority"]),
+            "additional_human_review_claimed": bool(
+                machine_release["additional_human_review_claimed"]
+            ),
+            "package_sha256": package_hash,
+            "evidence_source_id": str(machine_row["evidence_source_id"]),
+            "income_type": str(machine_row["income_type"]),
+            "release_status": str(machine_row["release_status"]),
         }
         evidence["production_approval_event"] = {
             "event_type": "deterministic_semantic_remediation_production_approval",
@@ -333,7 +371,7 @@ def main() -> int:
         ENGINE.write_text(engine, encoding="utf-8")
 
     print("CZ semantic remediation deterministic release: PASS")
-    print("source_backed_candidates=40/40")
+    print("source_backed_candidates=41/41")
     print("production_approved_packages=101/101")
     print("rule_promoted_packages=101/101")
     print("released_packages=101/101")

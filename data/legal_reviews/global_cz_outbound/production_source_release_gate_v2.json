@@ -2950,7 +2950,7 @@
     {
       "active_rule_allowed": true,
       "fail_closed": false,
-      "human_review_status": "human_review_complete",
+      "human_review_status": "needs_review",
       "independent_qa_status": "not_required",
       "package_sha256": "d4b9d9c753af30d34866903e0dae2d199872d540b02089e460410cf24ec50835",
       "partner_country": "GR",
@@ -2979,9 +2979,9 @@
         "production_approval_event": {
           "additional_human_review_claimed": false,
           "approval_authority": "stage6_governance_policy",
-          "created_at": "2026-08-11T21:15:31Z",
-          "dataset_release": "stage6-production-approval-2026-08-11.1",
-          "event_type": "governance_production_approval",
+          "created_at": "2026-09-01T14:30:00+02:00",
+          "dataset_release": "stage6-production-approval-2026-09-01.2",
+          "event_type": "deterministic_semantic_remediation_production_approval",
           "package_sha256": "d4b9d9c753af30d34866903e0dae2d199872d540b02089e460410cf24ec50835"
         },
         "rule_promotion_event": {
@@ -2990,13 +2990,30 @@
           "package_sha256": "d4b9d9c753af30d34866903e0dae2d199872d540b02089e460410cf24ec50835",
           "partner_country": "GR",
           "promotion_authority": "stage6_governance_policy",
-          "rule_count": 21,
+          "rule_count": 22,
           "rule_file": "data/legal_rules_stage6/gr.json",
-          "rule_file_sha256": "6bebdca44d9b3c19dc5c59e4da1ef19b6becda2aa5213cdef2009062636caeef",
+          "rule_file_sha256": "c1a1a3f9416fccdfa2a9eaae3452af8f19ba93662bd87940b9f1d33f8baaf77c",
           "rule_promotion_status": "promoted",
           "scope_count": 3,
           "source_release_status": "not_released",
           "treaty_pair_id": "CZ-GR"
+        },
+        "semantic_remediation": {
+          "additional_human_review_claimed": false,
+          "current_package_sha256": "d4b9d9c753af30d34866903e0dae2d199872d540b02089e460410cf24ec50835",
+          "source_backed_registry_match_required": true,
+          "status": "hash_bound_machine_validation_complete",
+          "validation_dataset_release": "stage6-semantic-remediation-machine-validation-2026-09-01.1"
+        },
+        "semantic_remediation_machine_release": {
+          "additional_human_review_claimed": false,
+          "dataset_release": "semantic-remediation-machine-release-2026-09-01.1",
+          "event_type": "post_release_semantic_remediation_machine_validation",
+          "evidence_source_id": "SRC-C5ED2C206EB6D04B",
+          "income_type": "dividend",
+          "package_sha256": "d4b9d9c753af30d34866903e0dae2d199872d540b02089e460410cf24ec50835",
+          "release_status": "released_after_machine_validation",
+          "validation_authority": "semantic_remediation_machine_validation"
         },
         "source_release_event": {
           "dataset_release": "stage6-semantic-remediation-source-release-2026-09-01.1",
@@ -3006,7 +3023,7 @@
           "release_authority": "stage6_governance_policy",
           "released_scopes": 3,
           "rule_file": "data/legal_rules_stage6/gr.json",
-          "rule_file_sha256": "6bebdca44d9b3c19dc5c59e4da1ef19b6becda2aa5213cdef2009062636caeef",
+          "rule_file_sha256": "c1a1a3f9416fccdfa2a9eaae3452af8f19ba93662bd87940b9f1d33f8baaf77c",
           "rule_promotion_status": "promoted",
           "source_release_status": "released",
           "treaty_pair_id": "CZ-GR"

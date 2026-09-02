@@ -39,6 +39,13 @@ def _is_condition_sensitive(rule: dict, siblings: list[dict]) -> bool:
     return bool(non_generic or len(rates) > 1)
 
 
+def _outcome_signature(rule: dict) -> tuple[str, object]:
+    rate = rule.get("rate")
+    if rate is None:
+        return ("structural", str(rule.get("tax_treatment") or ""))
+    return ("rate", float(rate))
+
+
 def _condition_signature(rule: dict) -> tuple:
     items = []
     for condition in rule.get("conditions", []):
@@ -91,19 +98,19 @@ def main() -> int:
             grouped[(str(rule.get("income_type") or ""), str(rule.get("article") or ""))].append(rule)
 
         for (income_type, article), siblings in grouped.items():
-            by_signature: dict[tuple, set[float]] = defaultdict(set)
+            by_signature: dict[tuple, set[tuple[str, object]]] = defaultdict(set)
             for sibling in siblings:
-                by_signature[_condition_signature(sibling)].add(float(sibling.get("rate")))
-            for signature, rates in by_signature.items():
-                if len(rates) > 1:
+                by_signature[_condition_signature(sibling)].add(_outcome_signature(sibling))
+            for signature, outcomes in by_signature.items():
+                if len(outcomes) > 1:
                     ids = [
                         str(item.get("rule_id"))
                         for item in siblings
                         if _condition_signature(item) == signature
                     ]
                     failures.append(
-                        f"{country} {income_type} Article {article}: ambiguous multi-rate "
-                        f"branches {ids} share identical conditions but rates {sorted(rates)}"
+                        f"{country} {income_type} Article {article}: ambiguous outcomes "
+                        f"for branches {ids} sharing identical conditions: {sorted(outcomes)}"
                     )
 
         for rule in rules:

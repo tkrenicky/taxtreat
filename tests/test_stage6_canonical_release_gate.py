@@ -106,7 +106,7 @@ def test_canonical_gate_releases_full_universe_after_machine_remediation():
     released = {pair_id for pair_id, release in gate.items() if release.is_released}
     assert len(released) == 101
     assert released == set(gate)
-    assert len(remediation) == 40
+    assert len(remediation) == 41
 
     raw = json.loads(GATE_PATH.read_text(encoding="utf-8"))
     rows = {row["treaty_pair_id"]: row for row in raw["treaty_partners"]}
@@ -300,7 +300,7 @@ def test_semantic_rehashes_are_rebound_by_machine_validation():
     remediation = _remediation_pairs()
     rows = {row["treaty_pair_id"]: row for row in raw["treaty_partners"]}
 
-    assert len(remediation) == 40
+    assert len(remediation) == 41
     for pair_id in remediation:
         row = rows[pair_id]
         assert row["production_approval_status"] == "production_approved"
