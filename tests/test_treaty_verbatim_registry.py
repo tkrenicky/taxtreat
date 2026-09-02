@@ -19,7 +19,7 @@ def test_registry_covers_all_runtime_treaty_provisions():
     module = _load_module()
     result = module.build_registry()
 
-    assert result["counts"]["unique_used_treaty_provisions"] == 302
+    assert result["counts"]["unique_used_treaty_provisions"] == 303
     assert result["counts"]["unique_official_source_instruments"] == 101
     assert len(result["provisions"]) == 302
     assert len({item["key"] for item in result["provisions"]}) == 302
