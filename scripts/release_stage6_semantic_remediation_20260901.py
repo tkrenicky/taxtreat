@@ -114,20 +114,35 @@ def main() -> int:
                 and str(rule.get("verification_authority")) == "semantic_remediation_machine_projection"
                 and str(rule.get("review_package_sha256")) == package_hash
             ]
-            expected_rates = {float(branch["rate"]) for branch in correction["rate_candidates"]}
-            actual_rates = {float(rule["rate"]) for rule in actual_rules}
-            if actual_rates != expected_rates:
-                raise RuntimeError(f"{country}:{income}: candidate rate branches do not match remediation registry")
-            for branch in correction["rate_candidates"]:
-                rate = float(branch["rate"])
-                matching = [rule for rule in actual_rules if float(rule["rate"]) == rate]
-                if len(matching) != 1:
-                    raise RuntimeError(f"{country}:{income}:{rate:g}: expected exactly one candidate branch")
-                expected_conditions = {registry_condition(row) for row in branch.get("conditions", [])}
-                actual_conditions = {rule_condition(row) for row in matching[0].get("conditions", [])}
+            structural = correction.get("structural_outcome")
+            if structural:
+                if len(actual_rules) != 1:
+                    raise RuntimeError(f"{country}:{income}: expected exactly one structural candidate rule")
+                actual = actual_rules[0]
+                if actual.get("rate") is not None:
+                    raise RuntimeError(f"{country}:{income}: structural domestic-rate outcome must use rate=null")
+                if actual.get("tax_treatment") != structural.get("tax_treatment"):
+                    raise RuntimeError(f"{country}:{income}: structural tax treatment mismatch")
+                expected_conditions = {registry_condition(row) for row in structural.get("conditions", [])}
+                actual_conditions = {rule_condition(row) for row in actual.get("conditions", [])}
                 if not expected_conditions.issubset(actual_conditions):
                     missing = sorted(expected_conditions - actual_conditions)
-                    raise RuntimeError(f"{country}:{income}:{rate:g}: candidate is missing source-backed remediation conditions: {missing}")
+                    raise RuntimeError(f"{country}:{income}: structural candidate is missing source-backed conditions: {missing}")
+            else:
+                expected_rates = {float(branch["rate"]) for branch in correction["rate_candidates"]}
+                actual_rates = {float(rule["rate"]) for rule in actual_rules}
+                if actual_rates != expected_rates:
+                    raise RuntimeError(f"{country}:{income}: candidate rate branches do not match remediation registry")
+                for branch in correction["rate_candidates"]:
+                    rate = float(branch["rate"])
+                    matching = [rule for rule in actual_rules if float(rule["rate"]) == rate]
+                    if len(matching) != 1:
+                        raise RuntimeError(f"{country}:{income}:{rate:g}: expected exactly one candidate branch")
+                    expected_conditions = {registry_condition(row) for row in branch.get("conditions", [])}
+                    actual_conditions = {rule_condition(row) for row in matching[0].get("conditions", [])}
+                    if not expected_conditions.issubset(actual_conditions):
+                        missing = sorted(expected_conditions - actual_conditions)
+                        raise RuntimeError(f"{country}:{income}:{rate:g}: candidate is missing source-backed remediation conditions: {missing}")
 
         production = dict(candidate)
         production.pop("stage6_production", None)
@@ -333,7 +348,7 @@ def main() -> int:
         ENGINE.write_text(engine, encoding="utf-8")
 
     print("CZ semantic remediation deterministic release: PASS")
-    print("source_backed_candidates=40/40")
+    print("source_backed_candidates=41/41")
     print("production_approved_packages=101/101")
     print("rule_promoted_packages=101/101")
     print("released_packages=101/101")
