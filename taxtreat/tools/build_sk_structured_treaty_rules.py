@@ -65,8 +65,10 @@ def is_safe_simple(scope: dict, article: dict) -> bool:
     income = scope["income_type"]
     if income == "interest" and any(token in text for token in RISKY_INTEREST):
         return False
-    if income == "dividend" and ("osloboden" in text or "nepresiahne:" in text):
-        return False
+    if income == "dividend":
+        paragraph_2 = _article_paragraph_two(text)
+        if "osloboden" in paragraph_2 or "nepresiahne:" in paragraph_2:
+            return False
     if income == "royalty":
         start = re.search(r"(?:\(2\)|\b2\.\s)", text)
         paragraph_2 = text[:1200]
