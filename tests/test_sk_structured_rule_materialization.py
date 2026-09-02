@@ -17,11 +17,11 @@ def test_sk_stage1_materializes_only_safe_scopes():
 
     assert payload["source_country"] == "SK"
     assert payload["total_scopes"] == 225
-    assert payload["materialized_scopes"] == 160
-    assert payload["decision_materialized_scopes"] == 160
-    assert payload["fail_closed_placeholder_scopes"] == 65
+    assert payload["materialized_scopes"] == 174
+    assert payload["decision_materialized_scopes"] == 174
+    assert payload["fail_closed_placeholder_scopes"] == 51
     assert payload["structured_scope_coverage"] == 225
-    assert payload["unresolved_scopes"] == 65
+    assert payload["unresolved_scopes"] == 51
     assert payload["materialized_country_packages"] == 75
     assert payload["policy"]["machine_rate_list_alone_is_never_sufficient_for_complex_branch_materialization"] is True
     assert payload["policy"]["unresolved_scopes_use_rate_null_fail_closed_placeholders"] is True
@@ -67,6 +67,20 @@ def test_source_text_recovery_opens_only_explicit_cases_and_keeps_complex_exempt
     assert ("ET", "interest") in unresolved
     assert ("MY", "interest") in unresolved
     assert ("SA", "interest") in unresolved
+
+    expected_dividend_branches = {
+        "SK-BE-dividend",
+        "SK-BY-dividend",
+        "SK-CZ-dividend",
+        "SK-HR-dividend",
+        "SK-ZA-dividend",
+        "SK-KZ-dividend",
+        "SK-HU-dividend",
+        "SK-MD-dividend",
+        "SK-PL-dividend",
+    }
+    assert expected_dividend_branches <= materialized
+    assert ("SI", "dividend") in unresolved
 
 
 def test_every_materialized_rule_is_sk_only_and_source_backed():
