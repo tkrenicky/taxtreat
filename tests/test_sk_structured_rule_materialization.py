@@ -17,11 +17,11 @@ def test_sk_stage1_materializes_only_safe_scopes():
 
     assert payload["source_country"] == "SK"
     assert payload["total_scopes"] == 225
-    assert payload["materialized_scopes"] == 191
-    assert payload["decision_materialized_scopes"] == 191
-    assert payload["fail_closed_placeholder_scopes"] == 34
+    assert payload["materialized_scopes"] == 225
+    assert payload["decision_materialized_scopes"] == 225
+    assert payload["fail_closed_placeholder_scopes"] == 0
     assert payload["structured_scope_coverage"] == 225
-    assert payload["unresolved_scopes"] == 34
+    assert payload["unresolved_scopes"] == 0
     assert payload["materialized_country_packages"] == 75
     assert payload["policy"]["machine_rate_list_alone_is_never_sufficient_for_complex_branch_materialization"] is True
     assert payload["policy"]["unresolved_scopes_use_rate_null_fail_closed_placeholders"] is True
@@ -30,66 +30,40 @@ def test_sk_stage1_materializes_only_safe_scopes():
 
 
 
-def test_source_text_recovery_opens_only_explicit_cases_and_keeps_complex_exemptions_closed():
+def test_sk_source_text_recovery_closes_all_225_scopes_without_inventing_rates():
     payload = json.loads(SUMMARY.read_text(encoding="utf-8"))
     materialized = set(payload["materialized_scope_keys"])
-    unresolved = {
-        (row["recipient_country"], row["income_type"])
-        for row in payload["unresolved"]
-    }
 
-    expected_recovered = {
-        "SK-AE-dividend",
-        "SK-AU-interest",
-        "SK-AU-royalty",
-        "SK-DK-interest",
-        "SK-ES-interest",
-        "SK-ET-royalty",
-        "SK-FI-interest",
-        "SK-GB-interest",
-        "SK-GE-interest",
-        "SK-GE-royalty",
-        "SK-IE-interest",
-        "SK-LU-interest",
-        "SK-MT-interest",
-        "SK-MY-royalty",
-        "SK-NL-interest",
-        "SK-SA-dividend",
-        "SK-SA-royalty",
-        "SK-SE-interest",
-        "SK-US-interest",
-    }
-    assert expected_recovered <= materialized
+    assert payload["unresolved"] == []
+    assert len(materialized) == 225
+    assert "SK-GR-dividend" in materialized
+    assert "SK-LY-dividend" in materialized
 
-    # Word-rate treaties with explicit Article 11 exemption branches remain
-    # fail-closed until those exemptions are represented as structured facts.
-    assert ("CA", "royalty") in unresolved
-    assert ("ET", "interest") in unresolved
-    assert ("MY", "interest") in unresolved
+    gr = json.loads((RULE_DIR / "gr.json").read_text(encoding="utf-8"))
+    gr_dividend = [
+        rule for rule in gr["rules"]
+        if rule["income_type"] == "dividend" and rule["legal_layer"] == "treaty"
+    ]
+    assert any(
+        rule.get("rate") is None
+        and rule.get("tax_treatment") == "domestic_rate_applies"
+        for rule in gr_dividend
+    )
 
-    expected_dividend_branches = {
-        "SK-BE-dividend",
-        "SK-BY-dividend",
-        "SK-CZ-dividend",
-        "SK-HR-dividend",
-        "SK-ZA-dividend",
-        "SK-KZ-dividend",
-        "SK-HU-dividend",
-        "SK-MD-dividend",
-        "SK-PL-dividend",
-    }
-    assert expected_dividend_branches <= materialized
-    assert ("BR", "interest") in unresolved
-    assert ("IL", "interest") in unresolved
-    assert ("SI", "dividend") in unresolved
-
-    expected_simple_dividends = {
-        "SK-AU-dividend",
-        "SK-CY-dividend",
-        "SK-IE-dividend",
-        "SK-SE-dividend",
-    }
-    assert expected_simple_dividends <= materialized
+    ly = json.loads((RULE_DIR / "ly.json").read_text(encoding="utf-8"))
+    ly_dividend = [
+        rule for rule in ly["rules"]
+        if rule["income_type"] == "dividend" and rule["legal_layer"] == "treaty"
+    ]
+    ly_rule = next(
+        rule for rule in ly_dividend
+        if rule.get("tax_treatment") == "exclusive_foreign_taxation"
+    )
+    assert any(
+        condition.get("fact") == "ly_article_10_exclusive_residence_interpretation"
+        and condition.get("fact_source") == "determination"
+        for condition in ly_rule["conditions"]
+    )
 
 
 def test_every_materialized_rule_is_sk_only_and_source_backed():
