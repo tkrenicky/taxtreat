@@ -146,15 +146,33 @@ _WORD_PERCENT_RATES = {
 
 
 def _source_text_residence_only(article: dict) -> bool:
-    """Return True only for an explicit exclusive-residence rule in the operative opening text."""
+    """
+    Return True only when paragraph 1 grants exclusive residence-state taxation
+    and paragraph 2 does not re-open source-state taxation.
+    """
     text = str(article.get("article_text") or "").lower()
-    opening = text[:1600]
+    first_start = re.search(r"(?:\(1\)|\b1\.\s)", text)
+    first_tail = text[first_start.start():] if first_start else text
+    second = re.search(r"(?:\(2\)|\b2\.\s)", first_tail[3:])
+    paragraph_1 = first_tail[: (3 + second.start()) if second else 900]
+
     patterns = (
         r"(?:podliehajú|podlieha|budú\s+podliehať)\s+zdaneniu\s+(?:len|iba|výlučne)\s+v\s+(?:tomto\s+)?druhom",
         r"(?:sa\s+)?(?:zdaňujú|zdania|zdaní|zdanené)\s+(?:len|iba|výlučne)\s+v\s+(?:tomto\s+)?druhom",
         r"(?:budú\s+)?zdanené\s+(?:len|iba|výlučne)\s+v\s+(?:tomto\s+)?druhom",
     )
-    return any(re.search(pattern, opening, flags=re.S) for pattern in patterns)
+    if not any(re.search(pattern, paragraph_1, flags=re.S) for pattern in patterns):
+        return False
+
+    paragraph_2 = _article_paragraph_two(text)
+    source_state_reopened = bool(re.search(
+        r"(?:môžu\s+sa|možno|môžu\s+byť|sa\s+môžu)\s+zdaniť[^.;]{0,220}"
+        r"(?:v\s+zmluvnom\s+štáte[^.;]{0,120}(?:zdroj|ktorého\s+je)|"
+        r"v\s+tom\s+zmluvnom\s+štáte[^.;]{0,120}zdroj)",
+        paragraph_2,
+        flags=re.S,
+    ))
+    return not source_state_reopened
 
 
 def _single_word_percent_rate(scope: dict, article: dict) -> float | None:
@@ -711,7 +729,9 @@ def main() -> int:
             ] += 1
             continue
 
-        if _source_text_residence_only(article):
+        safe_simple = is_safe_simple(scope, article)
+
+        if not safe_simple and _source_text_residence_only(article):
             grouped[country].append(_make_rule(
                 scope=scope,
                 article=article,
@@ -747,7 +767,7 @@ def main() -> int:
             materialization_modes["source_text_single_word_rate"] += 1
             continue
 
-        if not is_safe_simple(scope, article):
+        if not safe_simple:
             unresolved.append({
                 "recipient_country": country,
                 "income_type": income,
