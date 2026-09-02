@@ -522,7 +522,10 @@ def interest_branches(scope: dict, article: dict) -> list[dict] | None:
 def _royalty_categories_from_text(text: str) -> list[str]:
     lowered = text.lower()
     categories: list[str] = []
-    if any(token in lowered for token in ("autorsk", "literár", "umeleck", "vedeck")):
+    if (
+        any(token in lowered for token in ("autorsk", "literár", "umeleck"))
+        or re.search(r"vedeck(?:ého|é|ej|ému|om)?\s+diel", lowered)
+    ):
         categories.append(ROYALTY_UI_CATEGORIES["copyright"])
     if any(token in lowered for token in ("kinematograf", "film", "televíz", "rozhlas", "rádio")):
         categories.append(ROYALTY_UI_CATEGORIES["film"])
