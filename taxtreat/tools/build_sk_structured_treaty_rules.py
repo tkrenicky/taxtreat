@@ -582,7 +582,7 @@ def _definition_letter(text: str, letter: str) -> str | None:
 def _categories_for_rate_clause(article_text: str, clause: str) -> list[str]:
     categories = _royalty_categories_from_text(clause)
     ref = re.search(
-        r"(?:odseku|odsek)\s*3\s*(?:písm(?:ena|eno)?\.?\s*)?([a-d])\)?",
+        r"(?:odseku|odsek)\s*3\s*(?:písm(?:ena|eno|ene)?\.?\s*)?([a-d])\)?",
         clause,
     )
     if ref:
@@ -662,7 +662,7 @@ def _royalty_letter_split(scope: dict, article_text: str) -> list[dict] | None:
     """
     para = _article_paragraph_two(article_text)
     rate_match = re.search(
-        r"(?:odseku|odsek)\s*3\s*(?:písm(?:ena|eno)?\.?\s*)?([ab])\)?"
+        r"(?:odseku|odsek)\s*3\s*(?:písm(?:ena|eno|ene)?\.?\s*)?([ab])\)?"
         r"[^%]{0,320}?([0-9]+(?:[,.][0-9]+)?)\s*(?:%|percent)",
         para,
         flags=re.S,
@@ -709,7 +709,7 @@ def _royalty_letter_split(scope: dict, article_text: str) -> list[dict] | None:
         return None
 
     explicit_residence_only = bool(re.search(
-        rf"(?:odseku|odsek)\s*3\s*(?:písm(?:ena|eno)?\.?\s*)?{other_letter}\)?"
+        rf"(?:odseku|odsek)\s*3\s*(?:písm(?:ena|eno|ene)?\.?\s*)?{other_letter}\)?"
         r"[^.;]{0,260}(?:len|iba|výlučne)\s+v\s+(?:tomto\s+)?(?:štáte|druhom\s+štáte)",
         para,
         flags=re.S,
@@ -724,7 +724,7 @@ def _royalty_letter_split(scope: dict, article_text: str) -> list[dict] | None:
     if len(rate_mentions) != 1 and not explicit_residence_only:
         return None
     if re.search(
-        rf"(?:odseku|odsek)\s*3\s*(?:písm(?:ena|eno)?\.?\s*)?{other_letter}\)?"
+        rf"(?:odseku|odsek)\s*3\s*(?:písm(?:ena|eno|ene)?\.?\s*)?{other_letter}\)?"
         r"[^.;]{0,260}(?:môžu\s+sa|môžu\s+byť|možno|sa\s+môžu)\s+zdaniť"
         r"[^.;]{0,180}(?:zdroj|zmluvnom\s+štáte)",
         para,
@@ -780,7 +780,7 @@ def royalty_branches(scope: dict, article: dict) -> list[dict] | None:
         }]
 
     ref = re.search(
-        r"(?:odseku|odsek)\s*3\s*(?:písm(?:ena|eno)?\.?\s*)?([ab])\)?[^%]{0,240}"
+        r"(?:odseku|odsek)\s*3\s*(?:písm(?:ena|eno|ene)?\.?\s*)?([ab])\)?[^%]{0,240}"
         r"([0-9]+(?:[,.][0-9]+)?)\s*%",
         text,
         flags=re.S,
