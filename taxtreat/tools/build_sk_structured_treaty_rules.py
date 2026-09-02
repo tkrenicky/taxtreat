@@ -353,8 +353,10 @@ def interest_branches(scope: dict, article: dict) -> list[dict] | None:
 
     residence_only = bool(scope.get("exclusive_residence_taxation_candidate")) or bool(
         re.search(
-            r"(?:zdaniť|zdanené|podliehajú\s+dani)[^.;]{0,120}(?:len|iba|výlučne)[^.;]{0,120}"
-            r"(?:druhom\s+zmluvnom\s+štáte|štáte,\s+ktorého\s+je\s+príjemca\s+rezidentom)",
+            r"(?:zdaniť|zdanené|podliehajú\s+dani|podliehajú\s+zdaneniu|možno\s+zdaniť)"
+            r"[^.;]{0,140}(?:len|iba|výlučne)[^.;]{0,140}"
+            r"(?:druhom\s+(?:zmluvnom\s+)?štáte|tomto\s+druhom\s+štáte|"
+            r"štáte,\s+ktorého\s+je\s+príjemca\s+rezidentom)",
             text,
             flags=re.S,
         )
@@ -374,13 +376,19 @@ def interest_branches(scope: dict, article: dict) -> list[dict] | None:
         if row.get("rate_percent") is not None
     ]
     unique_rates = sorted(set(rates))
+    if not unique_rates:
+        word_rate = _single_word_percent_rate(scope, article)
+        if word_rate is not None:
+            unique_rates = [float(word_rate)]
     if len(unique_rates) != 1:
         return None
     general_rate = unique_rates[0]
 
     has_explicit_exemption = bool(re.search(
-        r"(?:osloboden(?:é|ý|á|ia)|nepodliehajú\s+dani|sa\s+nezdaňujú|"
-        r"bez\s+ohľadu\s+na\s+ustanovenia\s+odseku\s+[12])",
+        r"(?:osloboden(?:é|ý|á|ia)|oslobodia\s+od\s+zdanenia|"
+        r"sú\s+oslobodené\s+od\s+dane|nepodliehajú\s+dani|sa\s+nezdaňujú|"
+        r"bez\s+ohľadu\s+na\s+ustanovenia\s+odseku\s+[12]|"
+        r"nehľadiac\s+na\s+ustanovenie\s+odseku\s+[12])",
         text,
     ))
     if not has_explicit_exemption:
@@ -986,6 +994,8 @@ def main() -> int:
             "source_text_fallback_phrase_required_for_dividend_branch_pair": True,
             "single_rate_dividend_false_ownership_context_requires_one_paragraph_two_rate_and_no_threshold": True,
             "source_text_explicit_interest_exemption_branches_materialized": True,
+            "interest_word_rate_recovery_allowed_only_with_single_unambiguous_general_ceiling": True,
+            "interest_residence_only_wording_variants_materialized": True,
             "source_text_explicit_residence_only_materialized": True,
             "source_text_single_word_rate_requires_one_unambiguous_paragraph_two_ceiling": True,
             "source_text_word_rate_complex_exemptions_and_category_splits_remain_fail_closed": True,
