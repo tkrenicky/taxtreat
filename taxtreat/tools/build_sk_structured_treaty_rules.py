@@ -560,13 +560,16 @@ def _all_royalty_categories() -> list[str]:
 
 def _definition_letter(text: str, letter: str) -> str | None:
     lowered = text.lower()
-    definition = re.search(r"(?:\(3\)|\b3\.\s)[\s\S]{0,4200}", lowered)
-    haystack = definition.group(0) if definition else lowered
+    definition = re.search(
+        r"(?:\(3\)|\b3\.\s)([\s\S]*?)(?=(?:\(4\)|\b4\.\s)|$)",
+        lowered,
+    )
+    haystack = definition.group(1) if definition else lowered
     match = re.search(
-        rf"(?:^|[;:.]\s*){letter}\)\s*([\s\S]*?)(?=(?:[;:.]\s*)[a-d]\)\s|(?:\(4\)|\b4\.\s)|$)",
+        rf"(?:^|[\s,;:.]){letter}\)\s*([\s\S]*?)(?=[\s,;:.]+[a-f]\)\s|$)",
         haystack,
     )
-    return match.group(1) if match else None
+    return match.group(1).strip() if match else None
 
 
 def _categories_for_rate_clause(article_text: str, clause: str) -> list[str]:
