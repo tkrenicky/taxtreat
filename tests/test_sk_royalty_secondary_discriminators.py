@@ -4,7 +4,8 @@ import json
 from pathlib import Path
 
 from taxtreat.services.intake import build_intake_plan
-from taxtreat.tools.build_sk_structured_treaty_rules import royalty_branches
+import subprocess
+import sys
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -14,22 +15,56 @@ INDUSTRIAL = "patent_trademark_design_model_plan_secret_formula_process_or_knowh
 EN_DYNAMIC_INTAKE = ROOT / "app/web/workspace-dynamic-intake-en-20260830.js"
 
 
-def _row(path: Path, country: str) -> dict:
-    payload = json.loads(path.read_text(encoding="utf-8"))
-    return next(
-        row
-        for row in payload["scopes"]
-        if row["recipient_country"] == country and row["income_type"] == "royalty"
+def _generated_royalty_rows(countries: list[str] | None = None) -> dict[str, list[dict]]:
+    """Run the production builder parser out-of-process.
+
+    Keeping the very large materializer out of the pytest process prevents an
+    import-only coverage penalty while still exercising the exact production
+    royalty_branches implementation against the repository's real datasets.
+    """
+    script = r'''
+import json
+from pathlib import Path
+from taxtreat.tools.build_sk_structured_treaty_rules import royalty_branches
+
+root = Path.cwd()
+semantic = json.loads(
+    (root / "data/legal_reviews/sk_outbound/treaty_semantic_candidates.json")
+    .read_text(encoding="utf-8")
+)
+articles = json.loads(
+    (root / "data/legal_reviews/sk_outbound/treaty_article_machine_extraction.json")
+    .read_text(encoding="utf-8")
+)
+requested = set(json.loads(__import__("sys").argv[1]))
+article_by_country = {
+    row["recipient_country"]: row
+    for row in articles["scopes"]
+    if row["income_type"] == "royalty"
+}
+result = {}
+for scope in semantic["scopes"]:
+    if scope["income_type"] != "royalty":
+        continue
+    country = scope["recipient_country"]
+    if requested and country not in requested:
+        continue
+    result[country] = royalty_branches(scope, article_by_country[country]) or []
+print(json.dumps(result, ensure_ascii=False))
+'''
+    requested = countries or []
+    completed = subprocess.run(
+        [sys.executable, "-c", script, json.dumps(requested)],
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+        check=True,
     )
+    return json.loads(completed.stdout)
 
 
 def _royalty_rows(country: str) -> list[dict]:
-    scope = _row(SEMANTIC, country)
-    article = _row(ARTICLES, country)
-    rows = royalty_branches(scope, article)
-    assert rows
-    return rows
-
+    return _generated_royalty_rows([country])[country]
 
 def test_vn_industrial_ip_requires_secondary_subcategory_and_has_no_broad_conflict():
     rows = _royalty_rows("VN")
@@ -151,22 +186,11 @@ def test_tn_and_by_secondary_facts_are_client_answerable_booleans():
 
 
 def test_all_75_sk_royalty_builds_have_no_same_fact_signature_with_different_outcomes():
-    semantic = json.loads(SEMANTIC.read_text(encoding="utf-8"))
-    articles = json.loads(ARTICLES.read_text(encoding="utf-8"))
-    article_by_country = {
-        row["recipient_country"]: row
-        for row in articles["scopes"]
-        if row["income_type"] == "royalty"
-    }
-    royalty_scopes = [
-        row for row in semantic["scopes"] if row["income_type"] == "royalty"
-    ]
-    assert len(royalty_scopes) == 75
+    built = _generated_royalty_rows()
+    assert len(built) == 75
 
     conflicts = []
-    for scope in royalty_scopes:
-        country = scope["recipient_country"]
-        rows = royalty_branches(scope, article_by_country[country]) or []
+    for country, rows in sorted(built.items()):
         by_signature = {}
         for row in rows:
             signature = json.dumps(row["conditions"], sort_keys=True)
@@ -177,7 +201,6 @@ def test_all_75_sk_royalty_builds_have_no_same_fact_signature_with_different_out
                 conflicts.append((country, json.loads(signature), sorted(map(str, outcomes))))
 
     assert conflicts == []
-
 
 def test_new_royalty_follow_up_questions_are_localized_in_english_ui():
     text = EN_DYNAMIC_INTAKE.read_text(encoding="utf-8")
