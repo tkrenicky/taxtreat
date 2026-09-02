@@ -9,6 +9,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = ROOT / "data/legal_consolidation/semantic_remediation_condition_candidates_20260829.json"
 QUEUE = ROOT / "data/legal_reviews/global_cz_outbound/cz_country_qa_queue.json"
+CANDIDATES_DIR = ROOT / "data/legal_rule_candidates/semantic_remediation_20260901"
 RULES_DIR = ROOT / "data/legal_rules_stage6"
 CANDIDATE_RELEASE = "stage6-semantic-remediation-candidate-2026-09-01.1"
 
@@ -125,6 +126,48 @@ def project_country(country: str, *, write: bool = True) -> dict[str, Any]:
     for correction in corrections:
         income = str(correction["income_type"])
         source_id = str(correction["evidence_source_id"])
+
+        structural = correction.get("structural_outcome")
+        if structural:
+            candidate_path = CANDIDATES_DIR / f"{code.lower()}.json"
+            if not candidate_path.exists():
+                raise ValueError(f"{code}:{income}: structural candidate package missing")
+            prebuilt = load(candidate_path)
+            structural_rules = [
+                dict(rule)
+                for rule in prebuilt.get("rules", [])
+                if isinstance(rule, dict)
+                and str(rule.get("income_type")) == income
+                and str(rule.get("source_id")) == source_id
+                and str(rule.get("verification_authority"))
+                == "semantic_remediation_machine_projection"
+                and rule.get("rate") is None
+                and str(rule.get("tax_treatment"))
+                == str(structural.get("tax_treatment"))
+            ]
+            if len(structural_rules) != 1:
+                raise ValueError(
+                    f"{code}:{income}: expected exactly one prebuilt structural rule"
+                )
+            payload["rules"] = [
+                rule for rule in payload.get("rules", [])
+                if not (
+                    isinstance(rule, dict)
+                    and str(rule.get("income_type")) == income
+                    and str(rule.get("legal_layer")) in {"treaty", "protocol"}
+                )
+            ]
+            structural_rule = structural_rules[0]
+            structural_rule["review_package_sha256"] = package_hash
+            structural_rule["verification_status"] = "needs_review"
+            structural_rule["verification_authority"] = "semantic_remediation_machine_projection"
+            structural_rule["approval_dataset_release"] = None
+            structural_rule["approval_created_at"] = None
+            structural_rule["dataset_release"] = CANDIDATE_RELEASE
+            payload["rules"].append(structural_rule)
+            changed_rule_ids.append(str(structural_rule["rule_id"]))
+            continue
+
         candidates = [
             rule
             for rule in payload.get("rules", [])
