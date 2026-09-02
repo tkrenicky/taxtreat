@@ -17,11 +17,11 @@ def test_sk_stage1_materializes_only_safe_scopes():
 
     assert payload["source_country"] == "SK"
     assert payload["total_scopes"] == 225
-    assert payload["materialized_scopes"] == 161
-    assert payload["decision_materialized_scopes"] == 161
-    assert payload["fail_closed_placeholder_scopes"] == 64
+    assert payload["materialized_scopes"] == 160
+    assert payload["decision_materialized_scopes"] == 160
+    assert payload["fail_closed_placeholder_scopes"] == 65
     assert payload["structured_scope_coverage"] == 225
-    assert payload["unresolved_scopes"] == 64
+    assert payload["unresolved_scopes"] == 65
     assert payload["materialized_country_packages"] == 75
     assert payload["policy"]["machine_rate_list_alone_is_never_sufficient_for_complex_branch_materialization"] is True
     assert payload["policy"]["unresolved_scopes_use_rate_null_fail_closed_placeholders"] is True
@@ -42,7 +42,6 @@ def test_source_text_recovery_opens_only_explicit_cases_and_keeps_complex_exempt
         "SK-AE-dividend",
         "SK-AU-interest",
         "SK-AU-royalty",
-        "SK-CA-royalty",
         "SK-DK-interest",
         "SK-ES-interest",
         "SK-ET-royalty",
@@ -64,6 +63,7 @@ def test_source_text_recovery_opens_only_explicit_cases_and_keeps_complex_exempt
 
     # Word-rate treaties with explicit Article 11 exemption branches remain
     # fail-closed until those exemptions are represented as structured facts.
+    assert ("CA", "royalty") in unresolved
     assert ("ET", "interest") in unresolved
     assert ("MY", "interest") in unresolved
     assert ("SA", "interest") in unresolved
