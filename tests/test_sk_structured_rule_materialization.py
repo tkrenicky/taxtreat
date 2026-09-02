@@ -17,16 +17,56 @@ def test_sk_stage1_materializes_only_safe_scopes():
 
     assert payload["source_country"] == "SK"
     assert payload["total_scopes"] == 225
-    assert payload["materialized_scopes"] == 141
-    assert payload["decision_materialized_scopes"] == 141
-    assert payload["fail_closed_placeholder_scopes"] == 84
+    assert payload["materialized_scopes"] == 161
+    assert payload["decision_materialized_scopes"] == 161
+    assert payload["fail_closed_placeholder_scopes"] == 64
     assert payload["structured_scope_coverage"] == 225
-    assert payload["unresolved_scopes"] == 84
+    assert payload["unresolved_scopes"] == 64
     assert payload["materialized_country_packages"] == 75
     assert payload["policy"]["machine_rate_list_alone_is_never_sufficient_for_complex_branch_materialization"] is True
     assert payload["policy"]["unresolved_scopes_use_rate_null_fail_closed_placeholders"] is True
     assert payload["policy"]["rule_level_finalization_remains_closed_for_unresolved_scopes"] is True
     assert payload["policy"]["czech_rule_reuse_forbidden"] is True
+
+
+
+def test_source_text_recovery_opens_only_explicit_cases_and_keeps_complex_exemptions_closed():
+    payload = json.loads(SUMMARY.read_text(encoding="utf-8"))
+    materialized = set(payload["materialized_scope_keys"])
+    unresolved = {
+        (row["recipient_country"], row["income_type"])
+        for row in payload["unresolved"]
+    }
+
+    expected_recovered = {
+        "SK-AE-dividend",
+        "SK-AU-interest",
+        "SK-AU-royalty",
+        "SK-CA-royalty",
+        "SK-DK-interest",
+        "SK-ES-interest",
+        "SK-ET-royalty",
+        "SK-FI-interest",
+        "SK-GB-interest",
+        "SK-GE-interest",
+        "SK-GE-royalty",
+        "SK-IE-interest",
+        "SK-LU-interest",
+        "SK-MT-interest",
+        "SK-MY-royalty",
+        "SK-NL-interest",
+        "SK-SA-dividend",
+        "SK-SA-royalty",
+        "SK-SE-interest",
+        "SK-US-interest",
+    }
+    assert expected_recovered <= materialized
+
+    # Word-rate treaties with explicit Article 11 exemption branches remain
+    # fail-closed until those exemptions are represented as structured facts.
+    assert ("ET", "interest") in unresolved
+    assert ("MY", "interest") in unresolved
+    assert ("SA", "interest") in unresolved
 
 
 def test_every_materialized_rule_is_sk_only_and_source_backed():
