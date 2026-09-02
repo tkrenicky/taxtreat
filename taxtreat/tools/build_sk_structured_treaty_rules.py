@@ -573,6 +573,100 @@ def dividend_branches(scope: dict, article: dict) -> list[dict] | None:
     ]
 
 
+def _br_interest_branches(scope: dict, article: dict) -> list[dict] | None:
+    if scope.get("income_type") != "interest" or scope.get("recipient_country") != "BR":
+        return None
+    if not scope.get("source_sha256"):
+        return None
+    text = str(article.get("article_text") or "").lower()
+    rates = {
+        float(row["rate_percent"])
+        for row in scope.get("rate_candidates", [])
+        if row.get("rate_percent") is not None
+    }
+    if not {10.0, 15.0} <= rates:
+        return None
+    if not (
+        "pôžičky a úvery poskytované bankou na obdobie najmenej 10 rokov" in text
+        and "15 % hrubej sumy úrokov vo všetkých ostatných prípadoch" in text
+        and "sú oslobodené od dane" in text
+        and "budú zdanené iba v tomto štáte" in text
+    ):
+        return None
+
+    common = conditions(scope)
+    source_security_false = {
+        "fact": "article_11_br_source_government_security",
+        "fact_source": "transaction",
+        "operator": "==",
+        "value": False,
+    }
+
+    exempt = [
+        *common,
+        source_security_false,
+        {
+            "fact": "article_11_br_government_recipient",
+            "fact_source": "transaction",
+            "operator": "==",
+            "value": True,
+        },
+    ]
+    bank_special = [
+        *common,
+        source_security_false,
+        {
+            "fact": "article_11_br_government_recipient",
+            "fact_source": "transaction",
+            "operator": "==",
+            "value": False,
+        },
+        {
+            "fact": "article_11_br_bank_long_term_industrial_financing",
+            "fact_source": "transaction",
+            "operator": "==",
+            "value": True,
+        },
+    ]
+    ordinary = [
+        *common,
+        source_security_false,
+        {
+            "fact": "article_11_br_government_recipient",
+            "fact_source": "transaction",
+            "operator": "==",
+            "value": False,
+        },
+        {
+            "fact": "article_11_br_bank_long_term_industrial_financing",
+            "fact_source": "transaction",
+            "operator": "==",
+            "value": False,
+        },
+    ]
+    return [
+        {
+            "rate": 0.0,
+            "priority": 740,
+            "conditions": exempt,
+            "tax_treatment": "exclusive_foreign_taxation",
+            "suffix": "INTEREST-BR-GOVERNMENT-EXEMPT",
+        },
+        {
+            "rate": 10.0,
+            "priority": 700,
+            "conditions": bank_special,
+            "suffix": "INTEREST-BR-BANK-10",
+        },
+        {
+            "rate": 15.0,
+            "priority": 600,
+            "conditions": ordinary,
+            "suffix": "INTEREST-BR-GENERAL-15",
+        },
+    ]
+
+
 def _il_interest_branches(scope: dict, article: dict) -> list[dict] | None:
     if scope.get("income_type") != "interest" or scope.get("recipient_country") != "IL":
         return None
@@ -642,6 +736,10 @@ def _il_interest_branches(scope: dict, article: dict) -> list[dict] | None:
 def interest_branches(scope: dict, article: dict) -> list[dict] | None:
     if scope.get("income_type") != "interest" or not scope.get("source_sha256"):
         return None
+    br_branches = _br_interest_branches(scope, article)
+    if br_branches:
+        return br_branches
+
     il_branches = _il_interest_branches(scope, article)
     if il_branches:
         return il_branches
