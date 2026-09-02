@@ -36,11 +36,11 @@
 
   const countryControl = document.createElement("label");
   countryControl.className = "payer-context source-country-context";
-  countryControl.hidden = true;
   countryControl.innerHTML = `
     <span>Stát plátce</span>
     <select id="active-source-country" aria-label="Stát aktivního plátce">
       <option value="CZ">Česká republika</option>
+      <option value="SK">Slovensko</option>
     </select>
   `;
   activePayerSelect.closest(".payer-context")?.after(countryControl);
@@ -121,8 +121,18 @@
       ctx.peLocationLabel
     );
     setMatchingText(
+      '[data-view="recipient-detail"] dt',
+      "Väzba príjmu na stálu prevádzkareň v SR",
+      ctx.peLocationLabel
+    );
+    setMatchingText(
       '[data-view="flow"] span, [data-view="recipient-detail"] dt, [data-view="recipient-detail"] p',
       "v České republice",
+      `v ${ctx.permanentEstablishmentLocation}`
+    );
+    setMatchingText(
+      '[data-view="flow"] span, [data-view="recipient-detail"] dt, [data-view="recipient-detail"] p',
+      "v Slovenskej republike",
       `v ${ctx.permanentEstablishmentLocation}`
     );
     setMatchingText(
@@ -131,8 +141,18 @@
       `v ${ctx.permanentEstablishmentShortLocation}`
     );
     setMatchingText(
+      '[data-view="flow"] span, [data-view="recipient-detail"] dt, [data-view="recipient-detail"] p',
+      "v SR",
+      `v ${ctx.permanentEstablishmentShortLocation}`
+    );
+    setMatchingText(
       '[data-view="flow"] span, [data-view="flow"] small, [data-view="flow"] legend',
       "českého plátce",
+      ctx.payerGenitiveLabel
+    );
+    setMatchingText(
+      '[data-view="flow"] span, [data-view="flow"] small, [data-view="flow"] legend',
+      "slovenského platiteľa",
       ctx.payerGenitiveLabel
     );
 
