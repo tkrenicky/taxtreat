@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import csv
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -17,12 +18,12 @@ def _fixture(tmp_path: Path) -> tuple[dict, dict]:
         article_paths = {}
         for income, article in (("dividend", 10), ("interest", 11), ("royalty", 12)):
             path = tmp_path / f"{index}-{income}.txt"
-            path.write_text(
+            text = (
                 f"Article {article} {income.title()}\n"
                 "(1) If the beneficial owner is resident in the other State, "
-                "the tax shall not exceed 10 percent of the gross amount.",
-                encoding="utf-8",
+                "the tax shall not exceed 10 percent of the gross amount."
             )
+            path.write_text(text, encoding="utf-8")
             article_paths[income] = path
             scopes.append({
                 "source_country": "XX",
@@ -40,7 +41,7 @@ def _fixture(tmp_path: Path) -> tuple[dict, dict]:
                 "article_candidates": [
                     {
                         "article_number": article,
-                        "text_sha256": f"{index}{article}" * 20,
+                        "text_sha256": hashlib.sha256(article_paths[income].read_bytes()).hexdigest(),
                         "artifact_path": str(article_paths[income]),
                         "substantive_article_candidate": True,
                         "semantic_income_detected": income,
