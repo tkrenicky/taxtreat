@@ -1,0 +1,45 @@
+name: One-shot rerun SK FI royalty taxonomy
+
+on:
+  push:
+    branches: [fix/sk-source-text-explicit-gaps-20260902]
+    paths:
+      - ".github/workflows/rerun-sk-fi-royalty-taxonomy-20260902.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Regenerate SK structured rules
+        run: |
+          python taxtreat/tools/build_sk_structured_treaty_rules.py
+          python taxtreat/tools/apply_sk_mli_gates_to_structured_rules.py
+      - name: Validate FI royalty recovery
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("data/legal_reviews/sk_outbound/structured_treaty_rule_materialization_summary.json")
+          j=json.loads(p.read_text(encoding="utf-8"))
+          print("materialized",j["materialized_scopes"])
+          print("unresolved",j["unresolved_scopes"])
+          unresolved={(r["recipient_country"],r["income_type"]) for r in j["unresolved"]}
+          assert ("FI","royalty") not in unresolved
+          assert j["structured_scope_coverage"]==225
+          PY
+      - name: Remove one-shot workflow and commit artifacts
+        run: |
+          git rm .github/workflows/rerun-sk-fi-royalty-taxonomy-20260902.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/legal_rules_sk data/legal_reviews/sk_outbound/structured_treaty_rule_materialization_summary.json
+          git commit -m "Regenerate SK FI royalty taxonomy"
+          git pull --rebase origin fix/sk-source-text-explicit-gaps-20260902
+          git push
