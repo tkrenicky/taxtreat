@@ -435,9 +435,66 @@ def _holding_period_dividend_branches(scope: dict, article: dict) -> list[dict] 
     return None
 
 
+def _exceptional_dividend_allocation_branches(scope: dict, article: dict) -> list[dict] | None:
+    if scope.get("income_type") != "dividend" or not scope.get("source_sha256"):
+        return None
+    country = scope.get("recipient_country")
+    text = str(article.get("article_text") or "").lower()
+    common = conditions(scope)
+
+    # Greece: Article 10 expressly permits taxation in both states and does
+    # not impose a treaty ceiling on source-state taxation. The treaty outcome
+    # is therefore not a percentage; the applicable source-state treatment is
+    # determined under Slovak domestic law.
+    if (
+        country == "GR"
+        and "podliehajú zdaneniu v oboch zmluvných štátoch" in text
+        and not re.search(r"nepresiahne\s+[0-9]+(?:[,.][0-9]+)?\s*(?:%|percent)", text)
+    ):
+        return [{
+            "rate": None,
+            "priority": 650,
+            "conditions": common,
+            "tax_treatment": "domestic_rate_applies",
+            "suffix": "DIVIDEND-GR-DOMESTIC-RATE",
+        }]
+
+    # Libya: Article 10 grants residence-state taxation but does not use an
+    # explicit "only" formulation and contains no source-state rate ceiling.
+    # Keep the treaty allocation behind an explicit legal determination rather
+    # than automatically inferring exclusive residence-state taxation.
+    if (
+        country == "LY"
+        and "môžu sa zdaniť v tom druhom zmluvnom štáte" in text
+        and not re.search(r"(?:zdaniť|zdanenie)[^.;]{0,160}(?:aj|tiež|takisto)[^.;]{0,160}zmluvnom štáte", text)
+        and not re.search(r"[0-9]+(?:[,.][0-9]+)?\s*(?:%|percent)", text)
+    ):
+        return [{
+            "rate": 0.0,
+            "priority": 650,
+            "conditions": [
+                *common,
+                {
+                    "fact": "ly_article_10_exclusive_residence_interpretation",
+                    "fact_source": "determination",
+                    "operator": "==",
+                    "value": True,
+                },
+            ],
+            "tax_treatment": "exclusive_foreign_taxation",
+            "suffix": "DIVIDEND-LY-RESIDENCE-DETERMINATION",
+        }]
+
+    return None
+
+
 def dividend_branches(scope: dict, article: dict) -> list[dict] | None:
     if scope.get("income_type") != "dividend":
         return None
+
+    exceptional = _exceptional_dividend_allocation_branches(scope, article)
+    if exceptional:
+        return exceptional
     directional = _directional_dividend_branches(scope, article)
     if directional:
         return directional
@@ -1586,12 +1643,13 @@ def main() -> int:
                     article=article,
                     country=country,
                     income=income,
-                    rate=float(branch["rate"]),
+                    rate=(None if branch["rate"] is None else float(branch["rate"])),
                     priority=int(branch["priority"]),
                     rule_conditions=branch["conditions"],
-                    rule_suffix=f"DIVIDEND-BRANCH-{index}",
+                    rule_suffix=str(branch.get("suffix") or f"DIVIDEND-BRANCH-{index}"),
                     treaty_valid_from=treaty_valid_from,
                     coverage=coverage,
+                    tax_treatment=branch.get("tax_treatment"),
                 ))
             materialized.append(f"SK-{country}-{income}")
             materialization_modes["source_text_dividend_branch_pair"] += 1
