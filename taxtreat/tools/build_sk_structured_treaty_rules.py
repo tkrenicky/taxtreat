@@ -573,9 +573,79 @@ def dividend_branches(scope: dict, article: dict) -> list[dict] | None:
     ]
 
 
+def _il_interest_branches(scope: dict, article: dict) -> list[dict] | None:
+    if scope.get("income_type") != "interest" or scope.get("recipient_country") != "IL":
+        return None
+    if not scope.get("source_sha256"):
+        return None
+    text = str(article.get("article_text") or "").lower()
+    rates = {
+        float(row["rate_percent"])
+        for row in scope.get("rate_candidates", [])
+        if row.get("rate_percent") is not None
+    }
+    if not {2.0, 5.0, 10.0} <= rates:
+        return None
+    if not (
+        "finančnou inštitúciou" in text
+        and "10 % hrubej sumy úrokov vo všetkých ostatných prípadoch" in text
+    ):
+        return None
+
+    common = conditions(scope)
+    special = [
+        *common,
+        {
+            "fact": "article_11_il_special_financing",
+            "fact_source": "transaction",
+            "operator": "==",
+            "value": True,
+        },
+    ]
+    financial = [
+        *common,
+        {
+            "fact": "article_11_il_special_financing",
+            "fact_source": "transaction",
+            "operator": "==",
+            "value": False,
+        },
+        {
+            "fact": "recipient_is_financial_institution",
+            "fact_source": "transaction",
+            "operator": "==",
+            "value": True,
+        },
+    ]
+    ordinary = [
+        *common,
+        {
+            "fact": "article_11_il_special_financing",
+            "fact_source": "transaction",
+            "operator": "==",
+            "value": False,
+        },
+        {
+            "fact": "recipient_is_financial_institution",
+            "fact_source": "transaction",
+            "operator": "==",
+            "value": False,
+        },
+    ]
+    return [
+        {"rate": 2.0, "priority": 720, "conditions": special, "suffix": "INTEREST-IL-SPECIAL-2"},
+        {"rate": 5.0, "priority": 700, "conditions": financial, "suffix": "INTEREST-IL-FINANCIAL-5"},
+        {"rate": 10.0, "priority": 600, "conditions": ordinary, "suffix": "INTEREST-IL-GENERAL-10"},
+    ]
+
+
 def interest_branches(scope: dict, article: dict) -> list[dict] | None:
     if scope.get("income_type") != "interest" or not scope.get("source_sha256"):
         return None
+    il_branches = _il_interest_branches(scope, article)
+    if il_branches:
+        return il_branches
+
     text = str(article.get("article_text") or "").lower()
     common = conditions(scope)
 
@@ -932,6 +1002,88 @@ def _fi_style_royalty_branches(scope: dict, article_text: str) -> list[dict] | N
     return branches
 
 
+def _id_royalty_branches(scope: dict, article_text: str) -> list[dict] | None:
+    if scope.get("recipient_country") != "ID":
+        return None
+    rates = {
+        float(row["rate_percent"])
+        for row in scope.get("rate_candidates", [])
+        if row.get("rate_percent") is not None
+    }
+    text = article_text.lower()
+    if not {10.0, 15.0} <= rates:
+        return None
+    if not (
+        "15 percent hrubej sumy licenčných poplatkov uvedených v odseku 3 písm. a) až d)" in text
+        and "10 percent hrubej sumy licenčných poplatkov uvedených v odseku 3 písm. e) a f)" in text
+    ):
+        return None
+
+    common = conditions(scope)
+    branches = [{
+        "rate": 10.0,
+        "priority": 720,
+        "conditions": [
+            *common,
+            {
+                "fact": "royalty_is_waiver",
+                "fact_source": "transaction",
+                "operator": "==",
+                "value": True,
+            },
+        ],
+        "suffix": "ROYALTY-ID-WAIVER-10",
+    }]
+
+    film_category = ROYALTY_UI_CATEGORIES["film"]
+    branches.append({
+        "rate": 10.0,
+        "priority": 700,
+        "conditions": [
+            *common,
+            {
+                "fact": "royalty_is_waiver",
+                "fact_source": "transaction",
+                "operator": "==",
+                "value": False,
+            },
+            {
+                "fact": "royalty_category",
+                "fact_source": "transaction",
+                "operator": "==",
+                "value": film_category,
+            },
+        ],
+        "suffix": "ROYALTY-ID-FILM-10",
+    })
+
+    for index, category in enumerate(
+        [cat for cat in _all_royalty_categories() if cat != film_category],
+        start=1,
+    ):
+        branches.append({
+            "rate": 15.0,
+            "priority": 680,
+            "conditions": [
+                *common,
+                {
+                    "fact": "royalty_is_waiver",
+                    "fact_source": "transaction",
+                    "operator": "==",
+                    "value": False,
+                },
+                {
+                    "fact": "royalty_category",
+                    "fact_source": "transaction",
+                    "operator": "==",
+                    "value": category,
+                },
+            ],
+            "suffix": f"ROYALTY-ID-GENERAL-15-{index}",
+        })
+    return branches
+
+
 def _special_royalty_branches(scope: dict, article_text: str) -> list[dict] | None:
     para = _article_paragraph_two(article_text)
     candidate_rates = {
@@ -1127,6 +1279,10 @@ def royalty_branches(scope: dict, article: dict) -> list[dict] | None:
                         "suffix": f"ROYALTY-SOURCE-{taxed_letter.upper()}-{index}",
                     })
                 return branches
+
+    id_style = _id_royalty_branches(scope, text)
+    if id_style:
+        return id_style
 
     fi_style = _fi_style_royalty_branches(scope, text)
     if fi_style:
