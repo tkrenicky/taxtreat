@@ -758,6 +758,134 @@ def _royalty_letter_split(scope: dict, article_text: str) -> list[dict] | None:
     return branches
 
 
+def _special_royalty_branches(scope: dict, article_text: str) -> list[dict] | None:
+    para = _article_paragraph_two(article_text)
+    candidate_rates = {
+        float(row["rate_percent"])
+        for row in scope.get("rate_candidates", [])
+        if row.get("rate_percent") is not None
+    }
+    common = conditions(scope)
+
+    # Equipment-specific rate with an explicit all-other fallback (e.g. TW).
+    equipment = re.search(
+        r"a\)\s*([0-9]+(?:[,.][0-9]+)?)\s*(?:%|percent)"
+        r"[^.;]{0,320}(?:priemysel|obchod|vedeck)[^.;]{0,120}zariaden"
+        r"[\s\S]{0,320}?b\)[^.;]{0,160}(?:všetkých\s+ostatných|všetky\s+ostatné)"
+        r"[^0-9]{0,80}([0-9]+(?:[,.][0-9]+)?)\s*(?:%|percent)",
+        para,
+        flags=re.S,
+    )
+    if equipment:
+        equipment_rate = _percent(equipment.group(1))
+        fallback_rate = _percent(equipment.group(2))
+        if {equipment_rate, fallback_rate} <= candidate_rates:
+            equipment_categories = {
+                ROYALTY_UI_CATEGORIES["equipment_financial"],
+                ROYALTY_UI_CATEGORIES["equipment_operating"],
+            }
+            branches = []
+            for idx, category in enumerate(sorted(equipment_categories), start=1):
+                branches.append({
+                    "rate": equipment_rate,
+                    "priority": 690,
+                    "conditions": [
+                        *common,
+                        {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": category},
+                    ],
+                    "suffix": f"ROYALTY-EQUIPMENT-{idx}",
+                })
+            complement = [cat for cat in _all_royalty_categories() if cat not in equipment_categories]
+            for idx, category in enumerate(complement, start=1):
+                branches.append({
+                    "rate": fallback_rate,
+                    "priority": 680,
+                    "conditions": [
+                        *common,
+                        {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": category},
+                    ],
+                    "suffix": f"ROYALTY-FALLBACK-{idx}",
+                })
+            return branches
+
+    # Bullet-style rates explicitly tied to paragraph 3(a)/(b) (e.g. TN).
+    refs = list(re.finditer(
+        r"([0-9]+(?:[,.][0-9]+)?)\s*(?:%|percent)"
+        r"[^.;]{0,180}(?:odseku\s*3\s*|3\s*)([ab])\)",
+        para,
+        flags=re.S,
+    ))
+    if len(refs) == 2:
+        parsed = []
+        seen_letters = set()
+        for match in refs:
+            rate = _percent(match.group(1))
+            letter = match.group(2)
+            if rate not in candidate_rates or letter in seen_letters:
+                return None
+            definition = _definition_letter(article_text, letter)
+            categories = _royalty_categories_from_text(definition or "")
+            if not categories:
+                return None
+            parsed.append((rate, letter, categories))
+            seen_letters.add(letter)
+        if seen_letters == {"a", "b"}:
+            branches = []
+            for branch_index, (rate, letter, categories) in enumerate(parsed, start=1):
+                for category_index, category in enumerate(categories, start=1):
+                    branches.append({
+                        "rate": rate,
+                        "priority": 690,
+                        "conditions": [
+                            *common,
+                            {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": category},
+                        ],
+                        "suffix": f"ROYALTY-REF-{letter.upper()}-{branch_index}-{category_index}",
+                    })
+            return branches
+
+    # General source-state ceiling with a narrower non-film copyright
+    # residence-only carve-out (e.g. CA).
+    full = article_text.lower()
+    general_rates = sorted(candidate_rates)
+    copyright_carveout = (
+        len(general_rates) == 1
+        and "bez ohľadu na ustanovenia odseku 2" in full
+        and "autorské práva" in full
+        and "nezahŕňajúce licenčné poplatky súvisiace s hranými filmami" in full
+        and re.search(r"podliehajú\s+zdaneniu\s+len\s+v\s+tomto\s+druhom\s+štáte", full)
+    )
+    if copyright_carveout:
+        general_rate = general_rates[0]
+        copyright_category = ROYALTY_UI_CATEGORIES["copyright"]
+        branches = [{
+            "rate": 0.0,
+            "priority": 700,
+            "conditions": [
+                *common,
+                {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": copyright_category},
+            ],
+            "tax_treatment": "exclusive_foreign_taxation",
+            "suffix": "ROYALTY-COPYRIGHT-NONFILM-RESIDENCE",
+        }]
+        for idx, category in enumerate(
+            [cat for cat in _all_royalty_categories() if cat != copyright_category],
+            start=1,
+        ):
+            branches.append({
+                "rate": general_rate,
+                "priority": 680,
+                "conditions": [
+                    *common,
+                    {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": category},
+                ],
+                "suffix": f"ROYALTY-GENERAL-{idx}",
+            })
+        return branches
+
+    return None
+
+
 def royalty_branches(scope: dict, article: dict) -> list[dict] | None:
     """Materialize source-explicit royalty categories, never percentage lists alone."""
     if scope.get("income_type") != "royalty" or not scope.get("source_sha256"):
@@ -825,6 +953,10 @@ def royalty_branches(scope: dict, article: dict) -> list[dict] | None:
                         "suffix": f"ROYALTY-SOURCE-{taxed_letter.upper()}-{index}",
                     })
                 return branches
+
+    special = _special_royalty_branches(scope, text)
+    if special:
+        return special
 
     letter_split = _royalty_letter_split(scope, text)
     if letter_split:
