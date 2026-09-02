@@ -26,6 +26,18 @@ def test_extracts_rate_candidates_without_releasing_rate():
     assert result["runtime_status"] == "not_released"
 
 
+def test_extracts_spelled_out_slovak_rate_and_older_beneficial_owner_wording():
+    article = (
+        "Úroky, na ktoré je rezident druhého zmluvného štátu skutočne oprávnený, "
+        "môžu byť zdanené v tomto druhom štáte. Daň takto stanovená však "
+        "nepresiahne desať percent hrubej sumy úrokov."
+    )
+    result = build_semantic_candidate(article, income_type="interest")
+
+    assert [row["rate_percent"] for row in result["rate_candidates"]] == [10.0]
+    assert result["beneficial_owner_wording_present"] is True
+
+
 def test_ownership_percentages_are_not_rate_candidates():
     article = (
         "Daň nepresiahne 5 % hrubej sumy dividend, ak skutočným vlastníkom "

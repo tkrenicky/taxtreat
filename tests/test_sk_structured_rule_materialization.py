@@ -23,10 +23,12 @@ def test_sk_stage1_materializes_only_safe_scopes():
     assert payload["structured_scope_coverage"] == 225
     assert payload["unresolved_scopes"] == 0
     assert payload["materialized_country_packages"] == 75
+    assert payload["preserved_verified_mli_rules"] == 510
     assert payload["policy"]["machine_rate_list_alone_is_never_sufficient_for_complex_branch_materialization"] is True
     assert payload["policy"]["unresolved_scopes_use_rate_null_fail_closed_placeholders"] is True
     assert payload["policy"]["rule_level_finalization_remains_closed_for_unresolved_scopes"] is True
     assert payload["policy"]["czech_rule_reuse_forbidden"] is True
+    assert payload["policy"]["verified_mli_rules_preserved_on_treaty_rebuild"] is True
 
 
 

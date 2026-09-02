@@ -18,6 +18,31 @@ PERCENT_RE = re.compile(
     r"(?<!\d)(\d{1,3}(?:[.,]\d+)?)\s*(?:%|percent|procent)",
     re.IGNORECASE,
 )
+WORD_PERCENT_RE = re.compile(
+    r"\b(jeden|jedno|dva|dve|tri|štyri|päť|šesť|sedem|osem|deväť|desať|"
+    r"jedenásť|dvanásť|trinásť|štrnásť|pätnásť|dvadsať)\s+percent\b",
+    re.IGNORECASE,
+)
+WORD_PERCENT_VALUES = {
+    "jeden": 1.0,
+    "jedno": 1.0,
+    "dva": 2.0,
+    "dve": 2.0,
+    "tri": 3.0,
+    "štyri": 4.0,
+    "päť": 5.0,
+    "šesť": 6.0,
+    "sedem": 7.0,
+    "osem": 8.0,
+    "deväť": 9.0,
+    "desať": 10.0,
+    "jedenásť": 11.0,
+    "dvanásť": 12.0,
+    "trinásť": 13.0,
+    "štrnásť": 14.0,
+    "pätnásť": 15.0,
+    "dvadsať": 20.0,
+}
 HOLDING_RE = re.compile(
     r"(?<!\d)(\d{1,4})\s*(dní|dni|dňov|mesiacov|měsíců|mesicu|months?)",
     re.IGNORECASE,
@@ -48,6 +73,7 @@ BENEFICIAL_OWNER_TOKENS = (
     "skutečný vlastník",
     "skutečným vlastníkem",
     "skutočne právo na",
+    "skutočne oprávnen",
     "beneficial owner",
 )
 
@@ -234,13 +260,19 @@ def _percentage_is_other_tax_in_article(
 
 def _rate_candidates(text: str, *, income_type: str | None = None) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
-    for match in PERCENT_RE.finditer(text):
+    matches = [
+        (match, float(match.group(1).replace(",", ".")))
+        for match in PERCENT_RE.finditer(text)
+    ]
+    matches.extend(
+        (match, WORD_PERCENT_VALUES[match.group(1).lower()])
+        for match in WORD_PERCENT_RE.finditer(text)
+    )
+    for match, value in sorted(matches, key=lambda item: item[0].start()):
         if _percentage_is_ownership_threshold(text, match):
             continue
         if _percentage_is_other_tax_in_article(text, match, income_type):
             continue
-        raw = match.group(1).replace(",", ".")
-        value = float(raw)
         context = _context(text, match.start(), match.end())
         lowered = context.lower()
         rows.append({
