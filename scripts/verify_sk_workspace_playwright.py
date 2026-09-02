@@ -33,13 +33,13 @@ def wait_for_server(process: subprocess.Popen[str]) -> None:
 def wait_for_source_country(page, code: str, expected_partner_options: int) -> None:
     page.wait_for_function(
         "(expected) => document.body.dataset.sourceCountry === expected",
-        code,
+        arg=code,
     )
     page.wait_for_function(
         """(expected) => document.querySelectorAll(
             '#new-recipient-form [name="recipient_country"] option'
         ).length === expected""",
-        expected_partner_options,
+        arg=expected_partner_options,
     )
 
 
