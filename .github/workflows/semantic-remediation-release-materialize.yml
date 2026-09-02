@@ -1,0 +1,58 @@
+name: Semantic remediation release materialize
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  materialize:
+    if: github.head_ref == 'feat/cz-semantic-remediation-release-20260901'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Materialize deterministic semantic remediation release
+        run: python scripts/release_stage6_semantic_remediation_20260901.py
+      - name: Verify generated release invariants
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root = Path('.')
+          base = root / 'data/legal_reviews/global_cz_outbound'
+          gate = json.loads((base / 'production_source_release_gate_v2.json').read_text())
+          approval = json.loads((base / 'stage6_production_approval.json').read_text())
+          promotion = json.loads((base / 'stage6_rule_promotion.json').read_text())
+          release = json.loads((base / 'stage6_source_release.json').read_text())
+          assert gate['counts']['released_packages'] == 101
+          assert gate['counts']['released_scopes'] == 303
+          assert gate['counts']['semantic_remediation_pending_packages'] == 0
+          assert approval['additional_human_review_claimed'] is False
+          assert promotion['additional_human_review_claimed'] is False
+          assert release['additional_human_review_claimed'] is False
+          assert len(approval['records']) == 101
+          assert len(promotion['records']) == 101
+          assert len(release['records']) == 101
+          print('release invariants: PASS')
+          PY
+      - name: Package generated release state
+        run: |
+          mkdir -p /tmp/semantic-release/data/legal_reviews/global_cz_outbound
+          mkdir -p /tmp/semantic-release/data/legal_rules_stage6
+          mkdir -p /tmp/semantic-release/taxtreat/engine
+          cp data/legal_reviews/global_cz_outbound/stage6_production_approval.json /tmp/semantic-release/data/legal_reviews/global_cz_outbound/
+          cp data/legal_reviews/global_cz_outbound/stage6_rule_promotion.json /tmp/semantic-release/data/legal_reviews/global_cz_outbound/
+          cp data/legal_reviews/global_cz_outbound/stage6_source_release.json /tmp/semantic-release/data/legal_reviews/global_cz_outbound/
+          cp data/legal_reviews/global_cz_outbound/production_source_release_gate_v2.json /tmp/semantic-release/data/legal_reviews/global_cz_outbound/
+          cp data/legal_rules_stage6/*.json /tmp/semantic-release/data/legal_rules_stage6/
+          cp taxtreat/engine/legal_rule_engine.py /tmp/semantic-release/taxtreat/engine/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: semantic-remediation-release-state
+          path: /tmp/semantic-release
+          if-no-files-found: error
