@@ -63,6 +63,11 @@
       resultLabel: "Není předmětem daně",
       rateLabel: "N/A",
     }),
+    domestic_rate_applies: Object.freeze({
+      kind: "non_rate",
+      resultLabel: "Smlouva sazbu neomezuje",
+      rateLabel: "Dle vnitrostátního práva",
+    }),
   });
 
   function taxTreatmentPresentation(treatment) {

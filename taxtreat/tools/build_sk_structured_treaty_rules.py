@@ -52,8 +52,20 @@ def is_safe_simple(scope: dict, article: dict) -> bool:
         )
     if len(rates) != 1:
         return False
-    if int(scope.get("ownership_linked_rate_candidate_count") or 0) != 0:
-        return False
+    ownership_linked = int(scope.get("ownership_linked_rate_candidate_count") or 0)
+    if ownership_linked != 0:
+        if scope.get("income_type") != "dividend":
+            return False
+        paragraph_2 = _article_paragraph_two(str(article.get("article_text") or "").lower())
+        paragraph_2_rates = re.findall(r"([0-9]+(?:[,.][0-9]+)?)\s*%", paragraph_2)
+        has_ownership_threshold = bool(re.search(
+            r"(?:najmenej|aspoň)\s+[0-9]+(?:[,.][0-9]+)?\s*%|"
+            r"(?:priamo|nepriamo)[^.;]{0,140}[0-9]+(?:[,.][0-9]+)?\s*%",
+            paragraph_2,
+            flags=re.S,
+        ))
+        if len(paragraph_2_rates) != 1 or has_ownership_threshold:
+            return False
     if scope.get("holding_period_candidates"):
         return False
     if not scope.get("source_sha256"):
@@ -65,8 +77,10 @@ def is_safe_simple(scope: dict, article: dict) -> bool:
     income = scope["income_type"]
     if income == "interest" and any(token in text for token in RISKY_INTEREST):
         return False
-    if income == "dividend" and ("osloboden" in text or "nepresiahne:" in text):
-        return False
+    if income == "dividend":
+        paragraph_2 = _article_paragraph_two(text)
+        if "osloboden" in paragraph_2 or "nepresiahne:" in paragraph_2:
+            return False
     if income == "royalty":
         start = re.search(r"(?:\(2\)|\b2\.\s)", text)
         paragraph_2 = text[:1200]
@@ -109,6 +123,16 @@ def conditions(scope: dict) -> list[dict]:
     return result
 
 
+def _article_paragraph_one(text: str) -> str:
+    lowered = text.lower()
+    start = re.search(r"(?:\(1\)|\b1\.\s)", lowered)
+    if not start:
+        return lowered[:2200]
+    tail = lowered[start.start():]
+    end = re.search(r"(?:\(2\)|\b2\.\s)", tail[3:])
+    return tail[: (3 + end.start()) if end else 2600]
+
+
 def _article_paragraph_two(text: str) -> str:
     lowered = text.lower()
     start = re.search(r"(?:\(2\)|\b2\.\s)", lowered)
@@ -123,34 +147,418 @@ def _percent(value: str) -> float:
     return float(value.replace(",", "."))
 
 
+_WORD_PERCENT_RATES = {
+    "jeden": 1.0,
+    "dva": 2.0,
+    "dve": 2.0,
+    "tri": 3.0,
+    "štyri": 4.0,
+    "päť": 5.0,
+    "šesť": 6.0,
+    "sedem": 7.0,
+    "osem": 8.0,
+    "deväť": 9.0,
+    "desať": 10.0,
+    "jedenásť": 11.0,
+    "dvanásť": 12.0,
+    "trinásť": 13.0,
+    "štrnásť": 14.0,
+    "pätnásť": 15.0,
+    "dvadsať": 20.0,
+    "dvadsaťpäť": 25.0,
+}
+
+
+def _source_text_residence_only(article: dict) -> bool:
+    """
+    Return True only when paragraph 1 grants exclusive residence-state taxation
+    and paragraph 2 does not re-open source-state taxation.
+    """
+    text = str(article.get("article_text") or "").lower()
+    first_start = re.search(r"(?:\(1\)|\b1\.\s)", text)
+    first_tail = text[first_start.start():] if first_start else text
+    second = re.search(r"(?:\(2\)|\b2\.\s)", first_tail[3:])
+    paragraph_1 = first_tail[: (3 + second.start()) if second else 900]
+
+    patterns = (
+        r"(?:podliehajú|podlieha|budú\s+podliehať)\s+zdaneniu\s+(?:len|iba|výlučne)\s+v\s+(?:tomto\s+)?(?:druhom|tom\s+druhom)",
+        r"(?:sa\s+)?(?:zdaňujú|zdania|zdaní|zdanené)\s+(?:len|iba|výlučne)\s+v\s+(?:tomto\s+)?(?:druhom|tom\s+druhom)",
+        r"(?:budú\s+)?zdanené\s+(?:len|iba|výlučne)\s+v\s+(?:tomto\s+)?(?:druhom|tom\s+druhom)",
+        r"(?:sa\s+môžu|môžu\s+sa)\s+zdaniť\s+(?:len|iba|výlučne)\s+v\s+(?:tomto\s+)?(?:druhom|tom\s+druhom)",
+    )
+    if not any(re.search(pattern, paragraph_1, flags=re.S) for pattern in patterns):
+        return False
+
+    paragraph_2 = _article_paragraph_two(text)
+    source_state_reopened = bool(re.search(
+        r"(?:môžu\s+sa|možno|môžu\s+byť|sa\s+môžu)\s+zdaniť[^.;]{0,220}"
+        r"(?:v\s+zmluvnom\s+štáte[^.;]{0,120}(?:zdroj|ktorého\s+je)|"
+        r"v\s+tom\s+zmluvnom\s+štáte[^.;]{0,120}zdroj)",
+        paragraph_2,
+        flags=re.S,
+    ))
+    return not source_state_reopened
+
+
+def _single_word_percent_rate(scope: dict, article: dict, *, allow_interest_exemption: bool = False) -> float | None:
+    """
+    Recover one unambiguous source-state ceiling written as a Slovak number word.
+
+    This is intentionally narrower than semantic extraction: it is used only
+    when no numeric rate candidate exists, paragraph 2 contains exactly one
+    word-percent rate, and no explicit exception/category branch makes that
+    rate conditional.
+    """
+    if scope.get("rate_candidates"):
+        return None
+    if not scope.get("source_sha256"):
+        return None
+    if scope.get("semantic_status") != "machine_candidate_not_legal_conclusion":
+        return None
+    if int(scope.get("ownership_linked_rate_candidate_count") or 0) != 0:
+        return None
+    if scope.get("holding_period_candidates"):
+        return None
+
+    text = str(article.get("article_text") or "").lower()
+    para = _article_paragraph_two(text)
+    matches: list[float] = []
+    for word, rate in _WORD_PERCENT_RATES.items():
+        if re.search(rf"\b{re.escape(word)}\s+percent", para):
+            matches.append(rate)
+    unique = sorted(set(matches))
+    if len(unique) != 1:
+        return None
+
+    income = str(scope.get("income_type") or "")
+    if income == "interest" and not allow_interest_exemption and re.search(
+        r"osloboden|nepodliehajú\s+dani|sa\s+nezdaňujú|bez\s+ohľadu\s+na\s+ustanovenia",
+        text,
+    ):
+        return None
+    if income == "dividend" and "osloboden" in text:
+        return None
+    if income == "royalty" and re.search(r"odseku\s*3\s*písm|podľa\s+písmena|písm\.", para):
+        return None
+    return unique[0]
+
+
+def _word_percent_value(fragment: str) -> float | None:
+    lowered = fragment.lower()
+    numeric = re.search(r"([0-9]+(?:[,.][0-9]+)?)\s*(?:%|percent)", lowered)
+    if numeric:
+        return _percent(numeric.group(1))
+    for word, value in _WORD_PERCENT_RATES.items():
+        if re.search(rf"\b{re.escape(word)}\s+percent", lowered):
+            return float(value)
+    return None
+
+
+def _dividend_word_rate_branches(scope: dict, article: dict) -> list[dict] | None:
+    if scope.get("income_type") != "dividend" or not scope.get("source_sha256"):
+        return None
+    text = _article_paragraph_two(str(article.get("article_text") or "").lower())
+    if "vo všetkých ostatných prípadoch" not in text:
+        return None
+    if re.search(r"(?:mesiac|rok|dní|dva\s+roky|dvanásť\s+mesiac)", text):
+        return None
+
+    a = re.search(r"(?:^|[\s;:.])a\)\s*([\s\S]*?)(?=[\s;:.]+b\)\s|$)", text)
+    b = re.search(r"(?:^|[\s;:.])b\)\s*([\s\S]*?)(?=[\s;:.]+c\)\s|$)", text)
+    if not a or not b:
+        return None
+
+    qualifying_rate = _word_percent_value(a.group(1))
+    fallback_rate = _word_percent_value(b.group(1))
+    if qualifying_rate is None or fallback_rate is None or qualifying_rate == fallback_rate:
+        return None
+
+    threshold_match = re.search(
+        r"(?:najmenej|aspoň)\s+([a-záäčďéíĺľňóôŕšťúýž]+|[0-9]+(?:[,.][0-9]+)?)\s+percent",
+        a.group(1),
+    )
+    if not threshold_match:
+        return None
+    threshold_token = threshold_match.group(1)
+    if re.fullmatch(r"[0-9]+(?:[,.][0-9]+)?", threshold_token):
+        threshold = _percent(threshold_token)
+    else:
+        threshold = _WORD_PERCENT_RATES.get(threshold_token)
+    if threshold is None:
+        return None
+
+    qualifying_conditions = conditions(scope)
+    qualifying_conditions.append({
+        "fact": "recipient_entity_type",
+        "fact_source": "transaction",
+        "operator": "in",
+        "value": ["company", "corporate", "company_other_than_partnership"],
+    })
+    if "priamo" in a.group(1):
+        qualifying_conditions.append({
+            "fact": "direct_ownership",
+            "fact_source": "transaction",
+            "operator": "==",
+            "value": True,
+        })
+    qualifying_conditions.append({
+        "fact": "ownership_percent",
+        "fact_source": "transaction",
+        "operator": ">=",
+        "value": float(threshold),
+    })
+
+    return [
+        {"rate": float(qualifying_rate), "priority": 650, "conditions": qualifying_conditions},
+        {"rate": float(fallback_rate), "priority": 600, "conditions": conditions(scope)},
+    ]
+
+
+def _directional_dividend_branches(scope: dict, article: dict) -> list[dict] | None:
+    if scope.get("income_type") != "dividend" or not scope.get("source_sha256"):
+        return None
+    text = str(article.get("article_text") or "").lower()
+    common = conditions(scope)
+
+    # Legacy Czechoslovakia-Sri Lanka wording is explicitly directional.
+    # For the SK outbound direction, paragraph 1 directly caps the source
+    # state's dividend tax at 15% where the recipient is a Sri Lankan company.
+    if (
+        scope.get("recipient_country") == "LK"
+        and "sadzba československej dane z dividend" in text
+        and "spoločnosti majúcej sídlo v srí lanke" in text
+        and re.search(r"neprekročí\s+15\s*%", text)
+    ):
+        return [{
+            "rate": 15.0,
+            "priority": 650,
+            "conditions": [
+                *common,
+                {
+                    "fact": "recipient_entity_type",
+                    "fact_source": "transaction",
+                    "operator": "in",
+                    "value": ["company", "corporate", "company_other_than_partnership"],
+                },
+            ],
+        }]
+
+    return None
+
+
+def _holding_period_dividend_branches(scope: dict, article: dict) -> list[dict] | None:
+    if scope.get("income_type") != "dividend" or not scope.get("source_sha256"):
+        return None
+    text = str(article.get("article_text") or "").lower()
+    common = conditions(scope)
+
+    # MY: 0% for a non-partnership company with direct >=10% ownership held
+    # continuously for at least 12 months; 5% in all other cases.
+    if (
+        "dvanástich mesiacov" in text
+        and "nula percent hrubej sumy dividend" in text
+        and "päť percent hrubej sumy dividend" in text
+        and "najmenej desať percent majetku" in text
+    ):
+        qualifying = [
+            *common,
+            {
+                "fact": "recipient_entity_type",
+                "fact_source": "transaction",
+                "operator": "in",
+                "value": ["company", "corporate", "company_other_than_partnership"],
+            },
+            {
+                "fact": "direct_ownership",
+                "fact_source": "transaction",
+                "operator": "==",
+                "value": True,
+            },
+            {
+                "fact": "ownership_percent",
+                "fact_source": "transaction",
+                "operator": ">=",
+                "value": 10.0,
+            },
+            {
+                "fact": "holding_period_months",
+                "fact_source": "transaction",
+                "operator": ">=",
+                "value": 12.0,
+            },
+        ]
+        return [
+            {"rate": 0.0, "priority": 700, "conditions": qualifying},
+            {"rate": 5.0, "priority": 600, "conditions": common},
+        ]
+
+    # PT: 10% for a company with direct >=25% capital held continuously for
+    # the two years preceding payment; otherwise the paragraph-2 ceiling is 15%.
+    if (
+        "neprerušovaného obdobia dvoch rokov" in text
+        and "aspoň 25 % základného imania" in text
+        and "nepresiahne 10 % hrubej sumy" in text
+        and "nepresiahne 15 % hrubej sumy dividend" in text
+    ):
+        qualifying = [
+            *common,
+            {
+                "fact": "recipient_entity_type",
+                "fact_source": "transaction",
+                "operator": "in",
+                "value": ["company", "corporate", "company_other_than_partnership"],
+            },
+            {
+                "fact": "direct_ownership",
+                "fact_source": "transaction",
+                "operator": "==",
+                "value": True,
+            },
+            {
+                "fact": "ownership_percent",
+                "fact_source": "transaction",
+                "operator": ">=",
+                "value": 25.0,
+            },
+            {
+                "fact": "holding_period_months",
+                "fact_source": "transaction",
+                "operator": ">=",
+                "value": 24.0,
+            },
+        ]
+        return [
+            {"rate": 10.0, "priority": 700, "conditions": qualifying},
+            {"rate": 15.0, "priority": 600, "conditions": common},
+        ]
+
+    return None
+
+
+def _exceptional_dividend_allocation_branches(scope: dict, article: dict) -> list[dict] | None:
+    if scope.get("income_type") != "dividend" or not scope.get("source_sha256"):
+        return None
+    country = scope.get("recipient_country")
+    text = str(article.get("article_text") or "").lower()
+    common = conditions(scope)
+
+    # Greece: Article 10 expressly permits taxation in both states and does
+    # not impose a treaty ceiling on source-state taxation. The treaty outcome
+    # is therefore not a percentage; the applicable source-state treatment is
+    # determined under Slovak domestic law.
+    if (
+        country == "GR"
+        and "podliehajú zdaneniu v oboch zmluvných štátoch" in text
+        and not re.search(r"nepresiahne\s+[0-9]+(?:[,.][0-9]+)?\s*(?:%|percent)", text)
+    ):
+        return [{
+            "rate": None,
+            "priority": 650,
+            "conditions": common,
+            "tax_treatment": "domestic_rate_applies",
+            "suffix": "DIVIDEND-GR-DOMESTIC-RATE",
+        }]
+
+    # Libya: Article 10 grants residence-state taxation but does not use an
+    # explicit "only" formulation and contains no source-state rate ceiling.
+    # Keep the treaty allocation behind an explicit legal determination rather
+    # than automatically inferring exclusive residence-state taxation.
+    if (
+        country == "LY"
+        and "môžu sa zdaniť v tom druhom zmluvnom štáte" in text
+        and not re.search(r"(?:zdaniť|zdanenie)[^.;]{0,160}(?:aj|tiež|takisto)[^.;]{0,160}zmluvnom štáte", text)
+        and not re.search(r"[0-9]+(?:[,.][0-9]+)?\s*(?:%|percent)", text)
+    ):
+        return [{
+            "rate": 0.0,
+            "priority": 650,
+            "conditions": [
+                *common,
+                {
+                    "fact": "ly_article_10_exclusive_residence_interpretation",
+                    "fact_source": "determination",
+                    "operator": "==",
+                    "value": True,
+                },
+            ],
+            "tax_treatment": "exclusive_foreign_taxation",
+            "suffix": "DIVIDEND-LY-RESIDENCE-DETERMINATION",
+        }]
+
+    return None
+
+
 def dividend_branches(scope: dict, article: dict) -> list[dict] | None:
     if scope.get("income_type") != "dividend":
         return None
-    text = _article_paragraph_two(str(article.get("article_text") or ""))
+
+    exceptional = _exceptional_dividend_allocation_branches(scope, article)
+    if exceptional:
+        return exceptional
+    directional = _directional_dividend_branches(scope, article)
+    if directional:
+        return directional
+
+    holding_period = _holding_period_dividend_branches(scope, article)
+    if holding_period:
+        return holding_period
+
+    article_text = str(article.get("article_text") or "")
+    text = _article_paragraph_two(article_text)
     if not text or not scope.get("source_sha256"):
         return None
 
-    fallback_match = re.search(
-        r"([0-9]+(?:[,.][0-9]+)?)\s*%[^.;]{0,180}(?:vo\s+všetkých\s+ostatných\s+prípadoch|"
+    # Some treaties (notably FI) place the ordinary outbound source-state
+    # dividend ceiling in paragraph 1 and reserve paragraph 2 for a
+    # reverse-direction special rule. Prefer paragraph 1 only when it contains
+    # an explicit fallback-rate structure and paragraph 2 does not.
+    paragraph_1 = _article_paragraph_one(article_text)
+    fallback_phrase_pattern = (
+        r"(?:vo\s+všetkých\s+ostatných\s+prípadoch|"
+        r"v\s+ostatných\s+prípadoch|vo\s+všetkých\s+iných\s+prípadoch)"
+    )
+    if re.search(fallback_phrase_pattern, paragraph_1) and not re.search(fallback_phrase_pattern, text):
+        text = paragraph_1
+
+    word_branches = _dividend_word_rate_branches(scope, article)
+    if word_branches:
+        return word_branches
+
+    fallback_phrase = re.search(
+        r"(?:vo\s+všetkých\s+ostatných\s+prípadoch|"
         r"v\s+ostatných\s+prípadoch|vo\s+všetkých\s+iných\s+prípadoch)",
         text,
         flags=re.S,
     )
-    if not fallback_match:
+    if not fallback_phrase:
         return None
-    fallback_rate = _percent(fallback_match.group(1))
+
+    # Use the rate closest to the fallback phrase. The previous regex could
+    # incorrectly capture the qualifying rate when both percentages appeared
+    # in the same sentence.
+    before_fallback = text[max(0, fallback_phrase.start() - 220):fallback_phrase.start()]
+    fallback_rates = list(re.finditer(r"([0-9]+(?:[,.][0-9]+)?)\s*(?:%|percent)", before_fallback))
+    if not fallback_rates:
+        return None
+    fallback_rate = _percent(fallback_rates[-1].group(1))
+
+    # Three-or-more explicit lettered rate clauses need their own structured
+    # branch model; do not collapse them into a two-branch rule.
+    lettered_rates = re.findall(r"(?:^|[;,.]\s*)([a-d])\)\s*([0-9]+(?:[,.][0-9]+)?)\s*(?:%|percent)", text)
+    if len(lettered_rates) > 2:
+        return None
 
     ownership_match = re.search(
-        r"([0-9]+(?:[,.][0-9]+)?)\s*%[^.;]{0,650}?"
+        r"([0-9]+(?:[,.][0-9]+)?)\s*(?:%|percent)[^.;]{0,650}?"
         r"(?:priamo\s+(?:vlastní|má|drží)|hlasovac(?:ích|ie|ích\s+práv|ích\s+podielov)|"
-        r"vlastní\s+priamo)[^.;]{0,260}?najmenej\s+([0-9]+(?:[,.][0-9]+)?)\s*%",
+        r"vlastní\s+priamo)[^.;]{0,260}?najmenej\s+([0-9]+(?:[,.][0-9]+)?)\s*(?:%|percent)",
         text,
         flags=re.S,
     )
     if not ownership_match:
         ownership_match = re.search(
-            r"([0-9]+(?:[,.][0-9]+)?)\s*%[^.;]{0,650}?najmenej\s+"
-            r"([0-9]+(?:[,.][0-9]+)?)\s*%[^.;]{0,260}?"
+            r"([0-9]+(?:[,.][0-9]+)?)\s*(?:%|percent)[^.;]{0,650}?najmenej\s+"
+            r"([0-9]+(?:[,.][0-9]+)?)\s*(?:%|percent)[^.;]{0,260}?"
             r"(?:priamo|hlasovac)",
             text,
             flags=re.S,
@@ -160,10 +568,10 @@ def dividend_branches(scope: dict, article: dict) -> list[dict] | None:
         # not use the word 'directly'. The threshold itself is still explicit
         # in Article 10 and can be represented without inventing directness.
         ownership_match = re.search(
-            r"([0-9]+(?:[,.][0-9]+)?)\s*%[^.;]{0,700}?"
+            r"([0-9]+(?:[,.][0-9]+)?)\s*(?:%|percent)[^.;]{0,700}?"
             r"(?:spoločnosť|spoločnosťou)[^.;]{0,320}?"
             r"(?:vlastní|má|drží)[^.;]{0,120}?najmenej\s+"
-            r"([0-9]+(?:[,.][0-9]+)?)\s*%",
+            r"([0-9]+(?:[,.][0-9]+)?)\s*(?:%|percent)",
             text,
             flags=re.S,
         )
@@ -222,16 +630,186 @@ def dividend_branches(scope: dict, article: dict) -> list[dict] | None:
     ]
 
 
+def _br_interest_branches(scope: dict, article: dict) -> list[dict] | None:
+    if scope.get("income_type") != "interest" or scope.get("recipient_country") != "BR":
+        return None
+    if not scope.get("source_sha256"):
+        return None
+    text = str(article.get("article_text") or "").lower()
+    rates = {
+        float(row["rate_percent"])
+        for row in scope.get("rate_candidates", [])
+        if row.get("rate_percent") is not None
+    }
+    if not {10.0, 15.0} <= rates:
+        return None
+    if not (
+        "pôžičky a úvery poskytované bankou na obdobie najmenej 10 rokov" in text
+        and "15 % hrubej sumy úrokov vo všetkých ostatných prípadoch" in text
+        and "sú oslobodené od dane" in text
+        and "budú zdanené iba v tomto štáte" in text
+    ):
+        return None
+
+    common = conditions(scope)
+    source_security_false = {
+        "fact": "article_11_br_source_government_security",
+        "fact_source": "transaction",
+        "operator": "==",
+        "value": False,
+    }
+
+    exempt = [
+        *common,
+        source_security_false,
+        {
+            "fact": "article_11_br_government_recipient",
+            "fact_source": "transaction",
+            "operator": "==",
+            "value": True,
+        },
+    ]
+    bank_special = [
+        *common,
+        source_security_false,
+        {
+            "fact": "article_11_br_government_recipient",
+            "fact_source": "transaction",
+            "operator": "==",
+            "value": False,
+        },
+        {
+            "fact": "article_11_br_bank_long_term_industrial_financing",
+            "fact_source": "transaction",
+            "operator": "==",
+            "value": True,
+        },
+    ]
+    ordinary = [
+        *common,
+        source_security_false,
+        {
+            "fact": "article_11_br_government_recipient",
+            "fact_source": "transaction",
+            "operator": "==",
+            "value": False,
+        },
+        {
+            "fact": "article_11_br_bank_long_term_industrial_financing",
+            "fact_source": "transaction",
+            "operator": "==",
+            "value": False,
+        },
+    ]
+    return [
+        {
+            "rate": 0.0,
+            "priority": 740,
+            "conditions": exempt,
+            "tax_treatment": "exclusive_foreign_taxation",
+            "suffix": "INTEREST-BR-GOVERNMENT-EXEMPT",
+        },
+        {
+            "rate": 10.0,
+            "priority": 700,
+            "conditions": bank_special,
+            "suffix": "INTEREST-BR-BANK-10",
+        },
+        {
+            "rate": 15.0,
+            "priority": 600,
+            "conditions": ordinary,
+            "suffix": "INTEREST-BR-GENERAL-15",
+        },
+    ]
+
+
+def _il_interest_branches(scope: dict, article: dict) -> list[dict] | None:
+    if scope.get("income_type") != "interest" or scope.get("recipient_country") != "IL":
+        return None
+    if not scope.get("source_sha256"):
+        return None
+    text = str(article.get("article_text") or "").lower()
+    rates = {
+        float(row["rate_percent"])
+        for row in scope.get("rate_candidates", [])
+        if row.get("rate_percent") is not None
+    }
+    if not {2.0, 5.0, 10.0} <= rates:
+        return None
+    if not (
+        "finančnou inštitúciou" in text
+        and "10 % hrubej sumy úrokov vo všetkých ostatných prípadoch" in text
+    ):
+        return None
+
+    common = conditions(scope)
+    special = [
+        *common,
+        {
+            "fact": "article_11_il_special_financing",
+            "fact_source": "transaction",
+            "operator": "==",
+            "value": True,
+        },
+    ]
+    financial = [
+        *common,
+        {
+            "fact": "article_11_il_special_financing",
+            "fact_source": "transaction",
+            "operator": "==",
+            "value": False,
+        },
+        {
+            "fact": "recipient_is_financial_institution",
+            "fact_source": "transaction",
+            "operator": "==",
+            "value": True,
+        },
+    ]
+    ordinary = [
+        *common,
+        {
+            "fact": "article_11_il_special_financing",
+            "fact_source": "transaction",
+            "operator": "==",
+            "value": False,
+        },
+        {
+            "fact": "recipient_is_financial_institution",
+            "fact_source": "transaction",
+            "operator": "==",
+            "value": False,
+        },
+    ]
+    return [
+        {"rate": 2.0, "priority": 720, "conditions": special, "suffix": "INTEREST-IL-SPECIAL-2"},
+        {"rate": 5.0, "priority": 700, "conditions": financial, "suffix": "INTEREST-IL-FINANCIAL-5"},
+        {"rate": 10.0, "priority": 600, "conditions": ordinary, "suffix": "INTEREST-IL-GENERAL-10"},
+    ]
+
+
 def interest_branches(scope: dict, article: dict) -> list[dict] | None:
     if scope.get("income_type") != "interest" or not scope.get("source_sha256"):
         return None
+    br_branches = _br_interest_branches(scope, article)
+    if br_branches:
+        return br_branches
+
+    il_branches = _il_interest_branches(scope, article)
+    if il_branches:
+        return il_branches
+
     text = str(article.get("article_text") or "").lower()
     common = conditions(scope)
 
     residence_only = bool(scope.get("exclusive_residence_taxation_candidate")) or bool(
         re.search(
-            r"(?:zdaniť|zdanené|podliehajú\s+dani)[^.;]{0,120}(?:len|iba|výlučne)[^.;]{0,120}"
-            r"(?:druhom\s+zmluvnom\s+štáte|štáte,\s+ktorého\s+je\s+príjemca\s+rezidentom)",
+            r"(?:zdaniť|zdanené|podliehajú\s+dani|podliehajú\s+zdaneniu|možno\s+zdaniť)"
+            r"[^.;]{0,140}(?:len|iba|výlučne)[^.;]{0,140}"
+            r"(?:druhom\s+(?:zmluvnom\s+)?štáte|tomto\s+druhom\s+štáte|"
+            r"štáte,\s+ktorého\s+je\s+príjemca\s+rezidentom)",
             text,
             flags=re.S,
         )
@@ -251,13 +829,19 @@ def interest_branches(scope: dict, article: dict) -> list[dict] | None:
         if row.get("rate_percent") is not None
     ]
     unique_rates = sorted(set(rates))
+    if not unique_rates:
+        word_rate = _single_word_percent_rate(scope, article, allow_interest_exemption=True)
+        if word_rate is not None:
+            unique_rates = [float(word_rate)]
     if len(unique_rates) != 1:
         return None
     general_rate = unique_rates[0]
 
     has_explicit_exemption = bool(re.search(
-        r"(?:osloboden(?:é|ý|á|ia)|nepodliehajú\s+dani|sa\s+nezdaňujú|"
-        r"bez\s+ohľadu\s+na\s+ustanovenia\s+odseku\s+[12])",
+        r"(?:osloboden(?:é|ý|á|ia)|oslobodia\s+od\s+zdanenia|"
+        r"sú\s+oslobodené\s+od\s+dane|nepodliehajú\s+dani|sa\s+nezdaňujú|"
+        r"bez\s+ohľadu\s+na\s+ustanovenia\s+odseku\s+[12]|"
+        r"nehľadiac\s+na\s+ustanovenie\s+odseku\s+[12])",
         text,
     ))
     if not has_explicit_exemption:
@@ -292,11 +876,18 @@ def interest_branches(scope: dict, article: dict) -> list[dict] | None:
 def _royalty_categories_from_text(text: str) -> list[str]:
     lowered = text.lower()
     categories: list[str] = []
-    if any(token in lowered for token in ("autorsk", "literár", "umeleck", "vedeck")):
+    if (
+        any(token in lowered for token in ("autorsk", "literár", "umeleck"))
+        or re.search(r"vedeck(?:ého|é|ej|ému|om)?\s+diel", lowered)
+    ):
         categories.append(ROYALTY_UI_CATEGORIES["copyright"])
     if any(token in lowered for token in ("kinematograf", "film", "televíz", "rozhlas", "rádio")):
         categories.append(ROYALTY_UI_CATEGORIES["film"])
-    if any(token in lowered for token in ("počítač", "software", "programové vybaven")):
+    software_excluded = bool(re.search(
+        r"(?:s\s+výnimkou|okrem)[^.;]{0,80}(?:počítač|software|programové\s+vybaven)",
+        lowered,
+    ))
+    if not software_excluded and any(token in lowered for token in ("počítač", "software", "programové vybaven")):
         categories.append(ROYALTY_UI_CATEGORIES["software"])
     if any(token in lowered for token in (
         "patent", "ochrann", "známk", "návrh", "model", "plán", "tajného vzorca",
@@ -330,19 +921,22 @@ def _all_royalty_categories() -> list[str]:
 
 def _definition_letter(text: str, letter: str) -> str | None:
     lowered = text.lower()
-    definition = re.search(r"(?:\(3\)|\b3\.\s)[\s\S]{0,4200}", lowered)
-    haystack = definition.group(0) if definition else lowered
+    definition = re.search(
+        r"(?:\(3\)|\b3\.\s)([\s\S]*?)(?=(?:\(4\)|\b4\.\s)|$)",
+        lowered,
+    )
+    haystack = definition.group(1) if definition else lowered
     match = re.search(
-        rf"(?:^|[;:.]\s*){letter}\)\s*([\s\S]*?)(?=(?:[;:.]\s*)[a-d]\)\s|(?:\(4\)|\b4\.\s)|$)",
+        rf"(?:^|[\s,;:.]){letter}\)\s*([\s\S]*?)(?=[\s,;:.]+[a-f]\)\s|$)",
         haystack,
     )
-    return match.group(1) if match else None
+    return match.group(1).strip() if match else None
 
 
 def _categories_for_rate_clause(article_text: str, clause: str) -> list[str]:
     categories = _royalty_categories_from_text(clause)
     ref = re.search(
-        r"(?:odseku|odsek)\s*3\s*(?:písm(?:ena|eno)?\.?\s*)?([a-d])\)?",
+        r"(?:odseku|odsek)\s*3\s*(?:písm(?:ena|eno|ene)?\.?\s*)?([a-d])\)?",
         clause,
     )
     if ref:
@@ -355,8 +949,8 @@ def _categories_for_rate_clause(article_text: str, clause: str) -> list[str]:
 def _lettered_royalty_rate_branches(scope: dict, article_text: str) -> list[dict] | None:
     para = _article_paragraph_two(article_text)
     matches = list(re.finditer(
-        r"(?:^|[;:.]\s*)([a-d])\)\s*([0-9]+(?:[,.][0-9]+)?)\s*%\s*([\s\S]*?)"
-        r"(?=(?:[;:.]\s*)[a-d]\)\s*[0-9]|(?:\(3\)|\b3\.\s)|$)",
+        r"(?:^|[\s,;:.])([a-f])\)\s*([0-9]+(?:[,.][0-9]+)?)\s*(?:%|percent)\s*([\s\S]*?)"
+        r"(?=[\s,;:.]+[a-f]\)\s*[0-9]|(?:\(3\)|\b3\.\s)|$)",
         para,
     ))
     if len(matches) < 2:
@@ -414,6 +1008,458 @@ def _lettered_royalty_rate_branches(scope: dict, article_text: str) -> list[dict
     return branches or None
 
 
+def _royalty_letter_split(scope: dict, article_text: str) -> list[dict] | None:
+    """
+    Materialize the common two-letter royalty split where one definition
+    category is source-taxable at a stated ceiling and the complementary
+    category is explicitly or structurally residence-only.
+    """
+    para = _article_paragraph_two(article_text)
+    rate_match = re.search(
+        r"(?:odseku|odsek)\s*3\s*(?:písm(?:ena|eno|ene)?\.?\s*)?([ab])\)?"
+        r"[^%]{0,320}?([0-9]+(?:[,.][0-9]+)?)\s*(?:%|percent)",
+        para,
+        flags=re.S,
+    )
+    if not rate_match:
+        return None
+
+    taxed_letter = rate_match.group(1)
+    taxed_rate = _percent(rate_match.group(2))
+    candidate_rates = {
+        float(row["rate_percent"])
+        for row in scope.get("rate_candidates", [])
+        if row.get("rate_percent") is not None
+    }
+    if taxed_rate not in candidate_rates:
+        return None
+
+    other_letter = "b" if taxed_letter == "a" else "a"
+    definition = re.search(
+        r"(?:\(3\)|\b3\.\s)([\s\S]*?)(?=(?:\(4\)|\b4\.\s)|$)",
+        article_text,
+    )
+    definition_text = definition.group(1) if definition else ""
+
+    def extract_letter(letter: str) -> str | None:
+        match = re.search(
+            rf"(?:^|[\s,;:]){letter}\)\s*([\s\S]*?)(?=[\s,;:]+[ab]\)\s|$)",
+            definition_text,
+        )
+        return match.group(1) if match else None
+
+    # Prefer the paragraph-3 bounded extractor. The older helper can span
+    # across a comma-delimited next letter and therefore is unsafe here.
+    taxed_text = extract_letter(taxed_letter)
+    other_text = extract_letter(other_letter)
+    if not taxed_text or not other_text:
+        return None
+
+    taxed_categories = _royalty_categories_from_text(taxed_text)
+    exempt_categories = _royalty_categories_from_text(other_text)
+    if not taxed_categories or not exempt_categories:
+        return None
+    if set(taxed_categories) & set(exempt_categories):
+        return None
+
+    explicit_residence_only = bool(re.search(
+        rf"(?:odseku|odsek)\s*3\s*(?:písm(?:ena|eno|ene)?\.?\s*)?{other_letter}\)?"
+        r"[^.;]{0,260}(?:len|iba|výlučne)\s+v\s+(?:tomto\s+)?(?:štáte|druhom\s+štáte)",
+        para,
+        flags=re.S,
+    ))
+
+    # Older treaties state only that paragraph 3(a) royalties may be taxed at
+    # source. With paragraph 1 providing residence-state taxation and no other
+    # source-state grant for paragraph 3(b), the complementary category remains
+    # residence-only. Reject any paragraph that contains another source-taxable
+    # rate or an ambiguous multi-letter reference.
+    rate_mentions = re.findall(r"([0-9]+(?:[,.][0-9]+)?)\s*(?:%|percent)", para)
+    if len(rate_mentions) != 1 and not explicit_residence_only:
+        return None
+    if re.search(
+        rf"(?:odseku|odsek)\s*3\s*(?:písm(?:ena|eno|ene)?\.?\s*)?{other_letter}\)?"
+        r"[^.;]{0,260}(?:môžu\s+sa|môžu\s+byť|možno|sa\s+môžu)\s+zdaniť"
+        r"[^.;]{0,180}(?:zdroj|zmluvnom\s+štáte)",
+        para,
+        flags=re.S,
+    ):
+        return None
+
+    common = conditions(scope)
+    branches: list[dict] = []
+    for index, category in enumerate(exempt_categories, start=1):
+        branches.append({
+            "rate": 0.0,
+            "priority": 680,
+            "conditions": [
+                *common,
+                {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": category},
+            ],
+            "tax_treatment": "exclusive_foreign_taxation",
+            "suffix": f"ROYALTY-RESIDENCE-{other_letter.upper()}-{index}",
+        })
+    for index, category in enumerate(taxed_categories, start=1):
+        branches.append({
+            "rate": taxed_rate,
+            "priority": 680,
+            "conditions": [
+                *common,
+                {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": category},
+            ],
+            "suffix": f"ROYALTY-SOURCE-{taxed_letter.upper()}-{index}",
+        })
+    return branches
+
+
+def _fi_style_royalty_branches(scope: dict, article_text: str) -> list[dict] | None:
+    text = article_text.lower()
+    if not all(token in text for token in (
+        "finančný prenájom zariadenia",
+        "operatívny prenájom zariadenia",
+        "počítačového softvéru",
+    )):
+        return None
+    if "okrem druhov platieb uvedených v odseku 3 písm. a)" not in text:
+        return None
+
+    para = _article_paragraph_two(text)
+    rates = {
+        float(row["rate_percent"])
+        for row in scope.get("rate_candidates", [])
+        if row.get("rate_percent") is not None
+    }
+    if not {1.0, 5.0, 10.0} <= rates:
+        return None
+    common = conditions(scope)
+    mapping = [
+        (0.0, ROYALTY_UI_CATEGORIES["copyright"], "exclusive_foreign_taxation", "FI-COPYRIGHT"),
+        (1.0, ROYALTY_UI_CATEGORIES["equipment_financial"], None, "FI-FINANCIAL-LEASE"),
+        (5.0, ROYALTY_UI_CATEGORIES["equipment_operating"], None, "FI-OPERATING-LEASE"),
+        (5.0, ROYALTY_UI_CATEGORIES["film"], None, "FI-FILM"),
+        (5.0, ROYALTY_UI_CATEGORIES["software"], None, "FI-SOFTWARE"),
+        (10.0, ROYALTY_UI_CATEGORIES["industrial_ip"], None, "FI-INDUSTRIAL-IP"),
+    ]
+    branches = []
+    for rate, category, tax_treatment, suffix in mapping:
+        row = {
+            "rate": rate,
+            "priority": 700 if rate == 0.0 else 690,
+            "conditions": [
+                *common,
+                {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": category},
+            ],
+            "suffix": f"ROYALTY-{suffix}",
+        }
+        if tax_treatment:
+            row["tax_treatment"] = tax_treatment
+        branches.append(row)
+    return branches
+
+
+def _by_royalty_branches(scope: dict, article_text: str) -> list[dict] | None:
+    if scope.get("recipient_country") != "BY":
+        return None
+    rates = {
+        float(row["rate_percent"])
+        for row in scope.get("rate_candidates", [])
+        if row.get("rate_percent") is not None
+    }
+    text = article_text.lower()
+    if not {5.0, 10.0} <= rates:
+        return None
+    if not (
+        "5 % hrubej sumy licenčných poplatkov v prípade platieb uvedených v odseku 3 písm. a)" in text
+        and "10 % hrubej sumy licenčných poplatkov v prípade platieb uvedených v odseku 3 písm. b)" in text
+        and "10 % hrubej sumy licenčných poplatkov v prípade platieb uvedených v odseku 3 písm. c)" in text
+        and "dopravných vozidiel" in text
+    ):
+        return None
+
+    common = conditions(scope)
+    branches = []
+    for idx, category in enumerate(
+        [
+            ROYALTY_UI_CATEGORIES["copyright"],
+            ROYALTY_UI_CATEGORIES["film"],
+        ],
+        start=1,
+    ):
+        branches.append({
+            "rate": 5.0,
+            "priority": 690,
+            "conditions": [
+                *common,
+                {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": category},
+            ],
+            "suffix": f"ROYALTY-BY-COPYRIGHT-5-{idx}",
+        })
+
+    for idx, category in enumerate(
+        [
+            ROYALTY_UI_CATEGORIES["industrial_ip"],
+            ROYALTY_UI_CATEGORIES["equipment_financial"],
+            ROYALTY_UI_CATEGORIES["equipment_operating"],
+            ROYALTY_UI_CATEGORIES["other"],
+        ],
+        start=1,
+    ):
+        branches.append({
+            "rate": 10.0,
+            "priority": 680,
+            "conditions": [
+                *common,
+                {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": category},
+            ],
+            "suffix": f"ROYALTY-BY-OTHER-10-{idx}",
+        })
+
+    software = ROYALTY_UI_CATEGORIES["software"]
+    branches.extend([
+        {
+            "rate": 5.0,
+            "priority": 700,
+            "conditions": [
+                *common,
+                {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": software},
+                {
+                    "fact": "software_classified_as_article_12_3a_copyright",
+                    "fact_source": "transaction",
+                    "operator": "==",
+                    "value": True,
+                },
+            ],
+            "suffix": "ROYALTY-BY-SOFTWARE-COPYRIGHT-5",
+        },
+        {
+            "rate": 10.0,
+            "priority": 700,
+            "conditions": [
+                *common,
+                {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": software},
+                {
+                    "fact": "software_classified_as_article_12_3a_copyright",
+                    "fact_source": "transaction",
+                    "operator": "==",
+                    "value": False,
+                },
+            ],
+            "suffix": "ROYALTY-BY-SOFTWARE-OTHER-10",
+        },
+    ])
+    return branches
+
+
+def _id_royalty_branches(scope: dict, article_text: str) -> list[dict] | None:
+    if scope.get("recipient_country") != "ID":
+        return None
+    rates = {
+        float(row["rate_percent"])
+        for row in scope.get("rate_candidates", [])
+        if row.get("rate_percent") is not None
+    }
+    text = article_text.lower()
+    if not {10.0, 15.0} <= rates:
+        return None
+    if not (
+        "15 percent hrubej sumy licenčných poplatkov uvedených v odseku 3 písm. a) až d)" in text
+        and "10 percent hrubej sumy licenčných poplatkov uvedených v odseku 3 písm. e) a f)" in text
+    ):
+        return None
+
+    common = conditions(scope)
+    branches = [{
+        "rate": 10.0,
+        "priority": 720,
+        "conditions": [
+            *common,
+            {
+                "fact": "royalty_is_waiver",
+                "fact_source": "transaction",
+                "operator": "==",
+                "value": True,
+            },
+        ],
+        "suffix": "ROYALTY-ID-WAIVER-10",
+    }]
+
+    film_category = ROYALTY_UI_CATEGORIES["film"]
+    branches.append({
+        "rate": 10.0,
+        "priority": 700,
+        "conditions": [
+            *common,
+            {
+                "fact": "royalty_is_waiver",
+                "fact_source": "transaction",
+                "operator": "==",
+                "value": False,
+            },
+            {
+                "fact": "royalty_category",
+                "fact_source": "transaction",
+                "operator": "==",
+                "value": film_category,
+            },
+        ],
+        "suffix": "ROYALTY-ID-FILM-10",
+    })
+
+    for index, category in enumerate(
+        [cat for cat in _all_royalty_categories() if cat != film_category],
+        start=1,
+    ):
+        branches.append({
+            "rate": 15.0,
+            "priority": 680,
+            "conditions": [
+                *common,
+                {
+                    "fact": "royalty_is_waiver",
+                    "fact_source": "transaction",
+                    "operator": "==",
+                    "value": False,
+                },
+                {
+                    "fact": "royalty_category",
+                    "fact_source": "transaction",
+                    "operator": "==",
+                    "value": category,
+                },
+            ],
+            "suffix": f"ROYALTY-ID-GENERAL-15-{index}",
+        })
+    return branches
+
+
+def _special_royalty_branches(scope: dict, article_text: str) -> list[dict] | None:
+    para = _article_paragraph_two(article_text)
+    candidate_rates = {
+        float(row["rate_percent"])
+        for row in scope.get("rate_candidates", [])
+        if row.get("rate_percent") is not None
+    }
+    common = conditions(scope)
+
+    # Equipment-specific rate with an explicit all-other fallback (e.g. TW).
+    equipment = re.search(
+        r"a\)\s*([0-9]+(?:[,.][0-9]+)?)\s*(?:%|percent)"
+        r"[^.;]{0,320}(?:priemysel|obchod|vedeck)[^.;]{0,120}zariaden"
+        r"[\s\S]{0,320}?b\)[^.;]{0,160}(?:všetkých\s+ostatných|všetky\s+ostatné)"
+        r"[^0-9]{0,80}([0-9]+(?:[,.][0-9]+)?)\s*(?:%|percent)",
+        para,
+        flags=re.S,
+    )
+    if equipment:
+        equipment_rate = _percent(equipment.group(1))
+        fallback_rate = _percent(equipment.group(2))
+        if {equipment_rate, fallback_rate} <= candidate_rates:
+            equipment_categories = {
+                ROYALTY_UI_CATEGORIES["equipment_financial"],
+                ROYALTY_UI_CATEGORIES["equipment_operating"],
+            }
+            branches = []
+            for idx, category in enumerate(sorted(equipment_categories), start=1):
+                branches.append({
+                    "rate": equipment_rate,
+                    "priority": 690,
+                    "conditions": [
+                        *common,
+                        {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": category},
+                    ],
+                    "suffix": f"ROYALTY-EQUIPMENT-{idx}",
+                })
+            complement = [cat for cat in _all_royalty_categories() if cat not in equipment_categories]
+            for idx, category in enumerate(complement, start=1):
+                branches.append({
+                    "rate": fallback_rate,
+                    "priority": 680,
+                    "conditions": [
+                        *common,
+                        {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": category},
+                    ],
+                    "suffix": f"ROYALTY-FALLBACK-{idx}",
+                })
+            return branches
+
+    # Bullet-style rates explicitly tied to paragraph 3(a)/(b) (e.g. TN).
+    refs = list(re.finditer(
+        r"([0-9]+(?:[,.][0-9]+)?)\s*(?:%|percent)"
+        r"[^.;]{0,180}(?:odseku\s*3\s*|3\s*)([ab])\)",
+        para,
+        flags=re.S,
+    ))
+    if len(refs) == 2:
+        parsed = []
+        seen_letters = set()
+        for match in refs:
+            rate = _percent(match.group(1))
+            letter = match.group(2)
+            if rate not in candidate_rates or letter in seen_letters:
+                return None
+            definition = _definition_letter(article_text, letter)
+            categories = _royalty_categories_from_text(definition or "")
+            if not categories:
+                return None
+            parsed.append((rate, letter, categories))
+            seen_letters.add(letter)
+        if seen_letters == {"a", "b"}:
+            branches = []
+            for branch_index, (rate, letter, categories) in enumerate(parsed, start=1):
+                for category_index, category in enumerate(categories, start=1):
+                    branches.append({
+                        "rate": rate,
+                        "priority": 690,
+                        "conditions": [
+                            *common,
+                            {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": category},
+                        ],
+                        "suffix": f"ROYALTY-REF-{letter.upper()}-{branch_index}-{category_index}",
+                    })
+            return branches
+
+    # General source-state ceiling with a narrower non-film copyright
+    # residence-only carve-out (e.g. CA).
+    full = article_text.lower()
+    general_rates = sorted(candidate_rates)
+    copyright_carveout = (
+        len(general_rates) == 1
+        and "bez ohľadu na ustanovenia odseku 2" in full
+        and "autorské práva" in full
+        and "nezahŕňajúce licenčné poplatky súvisiace s hranými filmami" in full
+        and re.search(r"podliehajú\s+zdaneniu\s+len\s+v\s+tomto\s+druhom\s+štáte", full)
+    )
+    if copyright_carveout:
+        general_rate = general_rates[0]
+        copyright_category = ROYALTY_UI_CATEGORIES["copyright"]
+        branches = [{
+            "rate": 0.0,
+            "priority": 700,
+            "conditions": [
+                *common,
+                {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": copyright_category},
+            ],
+            "tax_treatment": "exclusive_foreign_taxation",
+            "suffix": "ROYALTY-COPYRIGHT-NONFILM-RESIDENCE",
+        }]
+        for idx, category in enumerate(
+            [cat for cat in _all_royalty_categories() if cat != copyright_category],
+            start=1,
+        ):
+            branches.append({
+                "rate": general_rate,
+                "priority": 680,
+                "conditions": [
+                    *common,
+                    {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": category},
+                ],
+                "suffix": f"ROYALTY-GENERAL-{idx}",
+            })
+        return branches
+
+    return None
+
+
 def royalty_branches(scope: dict, article: dict) -> list[dict] | None:
     """Materialize source-explicit royalty categories, never percentage lists alone."""
     if scope.get("income_type") != "royalty" or not scope.get("source_sha256"):
@@ -436,7 +1482,7 @@ def royalty_branches(scope: dict, article: dict) -> list[dict] | None:
         }]
 
     ref = re.search(
-        r"(?:odseku|odsek)\s*3\s*(?:písm(?:ena|eno)?\.?\s*)?([ab])\)?[^%]{0,240}"
+        r"(?:odseku|odsek)\s*3\s*(?:písm(?:ena|eno|ene)?\.?\s*)?([ab])\)?[^%]{0,240}"
         r"([0-9]+(?:[,.][0-9]+)?)\s*%",
         text,
         flags=re.S,
@@ -481,6 +1527,26 @@ def royalty_branches(scope: dict, article: dict) -> list[dict] | None:
                         "suffix": f"ROYALTY-SOURCE-{taxed_letter.upper()}-{index}",
                     })
                 return branches
+
+    by_style = _by_royalty_branches(scope, text)
+    if by_style:
+        return by_style
+
+    id_style = _id_royalty_branches(scope, text)
+    if id_style:
+        return id_style
+
+    fi_style = _fi_style_royalty_branches(scope, text)
+    if fi_style:
+        return fi_style
+
+    special = _special_royalty_branches(scope, text)
+    if special:
+        return special
+
+    letter_split = _royalty_letter_split(scope, text)
+    if letter_split:
+        return letter_split
 
     lettered = _lettered_royalty_rate_branches(scope, text)
     if lettered:
@@ -577,12 +1643,13 @@ def main() -> int:
                     article=article,
                     country=country,
                     income=income,
-                    rate=float(branch["rate"]),
+                    rate=(None if branch["rate"] is None else float(branch["rate"])),
                     priority=int(branch["priority"]),
                     rule_conditions=branch["conditions"],
-                    rule_suffix=f"DIVIDEND-BRANCH-{index}",
+                    rule_suffix=str(branch.get("suffix") or f"DIVIDEND-BRANCH-{index}"),
                     treaty_valid_from=treaty_valid_from,
                     coverage=coverage,
+                    tax_treatment=branch.get("tax_treatment"),
                 ))
             materialized.append(f"SK-{country}-{income}")
             materialization_modes["source_text_dividend_branch_pair"] += 1
@@ -634,7 +1701,45 @@ def main() -> int:
             ] += 1
             continue
 
-        if not is_safe_simple(scope, article):
+        safe_simple = is_safe_simple(scope, article)
+
+        if not safe_simple and _source_text_residence_only(article):
+            grouped[country].append(_make_rule(
+                scope=scope,
+                article=article,
+                country=country,
+                income=income,
+                rate=0.0,
+                priority=650,
+                rule_conditions=conditions(scope),
+                rule_suffix=f"{income.upper()}-SOURCE-TEXT-RESIDENCE-ONLY",
+                treaty_valid_from=treaty_valid_from,
+                coverage=coverage,
+                tax_treatment="exclusive_foreign_taxation",
+            ))
+            materialized.append(f"SK-{country}-{income}")
+            materialization_modes["source_text_explicit_residence_only"] += 1
+            continue
+
+        word_rate = _single_word_percent_rate(scope, article)
+        if word_rate is not None:
+            grouped[country].append(_make_rule(
+                scope=scope,
+                article=article,
+                country=country,
+                income=income,
+                rate=float(word_rate),
+                priority=600,
+                rule_conditions=conditions(scope),
+                rule_suffix=f"{income.upper()}-SOURCE-TEXT-WORD-RATE",
+                treaty_valid_from=treaty_valid_from,
+                coverage=coverage,
+            ))
+            materialized.append(f"SK-{country}-{income}")
+            materialization_modes["source_text_single_word_rate"] += 1
+            continue
+
+        if not safe_simple:
             unresolved.append({
                 "recipient_country": country,
                 "income_type": income,
@@ -715,9 +1820,16 @@ def main() -> int:
             "machine_rate_list_alone_is_never_sufficient_for_complex_branch_materialization": True,
             "source_text_explicit_dividend_branch_pairs_materialized": True,
             "source_text_fallback_phrase_required_for_dividend_branch_pair": True,
+            "single_rate_dividend_false_ownership_context_requires_one_paragraph_two_rate_and_no_threshold": True,
             "source_text_explicit_interest_exemption_branches_materialized": True,
+            "interest_word_rate_recovery_allowed_only_with_single_unambiguous_general_ceiling": True,
+            "interest_residence_only_wording_variants_materialized": True,
+            "source_text_explicit_residence_only_materialized": True,
+            "source_text_single_word_rate_requires_one_unambiguous_paragraph_two_ceiling": True,
+            "source_text_word_rate_complex_exemptions_and_category_splits_remain_fail_closed": True,
             "ordinary_interest_rate_requires_special_exemption_false_when_exemption_exists": True,
             "source_text_explicit_royalty_definition_letter_branches_materialized": True,
+            "source_text_two_letter_royalty_source_vs_residence_split_materialized": True,
             "royalty_category_materialization_uses_atomic_ui_taxonomy": True,
             "unmapped_royalty_categories_remain_fail_closed": True,
             "stage_rules_remain_needs_review_until_all_protocol_mli_and_release_gates_are_satisfied": True,

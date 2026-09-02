@@ -541,7 +541,7 @@
       ]
     },
     {
-      "rule_id": "SK-GB-INTEREST-TREATY-UNRESOLVED-FAIL-CLOSED",
+      "rule_id": "SK-GB-INTEREST-TREATY-INTEREST-RESIDENCE-ONLY",
       "income_type": "interest",
       "source_country": "SK",
       "recipient_country": "GB",
@@ -549,8 +549,8 @@
       "legal_layer": "treaty",
       "article": "11",
       "paragraph": null,
-      "rate": null,
-      "priority": 900,
+      "rate": 0.0,
+      "priority": 650,
       "conditions": [
         {
           "fact": "recipient_is_treaty_resident",
@@ -565,7 +565,7 @@
           "value": true
         }
       ],
-      "effect": "review_gate",
+      "effect": "rate",
       "effective_from": "1991-12-20",
       "verification_status": "needs_review",
       "source_text": "Článok 11 Úroky 1. Úroky, majúce zdroj v jednom zmluvnom štáte, ktoré poberá rezident druhého zmluvného štátu a ktorý je ich skutočným vlastníkom, budú zdanené iba v tomto druhom štáte. 2. Výraz „úroky“ použitý v tomto článku označuje príjmy z vládnych cenných papierov, obligácií alebo dlhopisov zabezpečených i nezabezpečených záložným právom na nehnuteľnosti alebo doložkou o účasti na zisku a z pohľadávok akéhokoľvek druhu, rovnako ako všetky ostatné príjmy, majúce charakter príjmov z pôžičiek, podľa daňového práva štátu, v ktorom je zdroj príjmu. 3. Ustanovenie odseku 1 tohto článku sa nepoužije, ak skutočný vlastník úrokov, ktorý je rezidentom v jednom zmluvnom štáte, vykonáva v druhom zmluvnom štáte, v ktorom majú úroky zdroj, priemyselnú alebo obchodnú činnosť prostredníctvom stálej prevádzkárne, ktorá je tam umiestnená, alebo nezávislé povolanie prostredníctvom stálej základne tam umiestnenej, a ak pohľadávka, z ktorej sa úroky platia, sa skutočne viaže k tejto stálej prevádzkárni alebo k tejto stálej základni. V takom prípade sa použijú ustanovenia článku 7 alebo článku 14 , podľa toho, o aký prípad ide. 4. Ak suma úrokov presahuje v dôsledku osobitných vzťahov existujúcich medzi platiteľom a skutočným vlastníkom úrokov alebo ktoré jeden aj druhý udržiava s treťou osobou, z akéhokoľvek dôvodu sumu, ktorú by bol dojednal platiteľ so skutočným vlastníkom, keby nebolo takých vzťahov, použijú sa ustanovenia tohto článku len na túto naposledy spomenutú sumu. Suma platieb, ktorá ju presahuje, bude v tomto prípade zdanená podľa právnych predpisov každého zmluvného štátu s prihliadnutím na ostatné ustanovenia tejto Zmluvy.",
@@ -583,7 +583,8 @@
       ],
       "decision_status": "REVIEW_REQUIRED",
       "final_rate_allowed": false,
-      "automatic_production_approval_forbidden": true
+      "automatic_production_approval_forbidden": true,
+      "tax_treatment": "exclusive_foreign_taxation"
     },
     {
       "rule_id": "SK-GB-MLI-GATE-ROYALTY-A3",

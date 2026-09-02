@@ -5,7 +5,7 @@
   },
   "rules": [
     {
-      "rule_id": "SK-OM-DIVIDEND-TREATY-UNRESOLVED-FAIL-CLOSED",
+      "rule_id": "SK-OM-DIVIDEND-TREATY-DIVIDEND-SOURCE-TEXT-RESIDENCE-ONLY",
       "income_type": "dividend",
       "source_country": "SK",
       "recipient_country": "OM",
@@ -13,8 +13,8 @@
       "legal_layer": "treaty",
       "article": "10",
       "paragraph": null,
-      "rate": null,
-      "priority": 900,
+      "rate": 0.0,
+      "priority": 650,
       "conditions": [
         {
           "fact": "recipient_is_treaty_resident",
@@ -35,7 +35,7 @@
           "value": false
         }
       ],
-      "effect": "review_gate",
+      "effect": "rate",
       "effective_from": "2021-11-15",
       "verification_status": "needs_review",
       "source_text": "Článok 10 Dividendy (1) Dividendy vyplácané spoločnosťou, ktorá je rezidentom jedného zmluvného štátu, rezidentovi druhého zmluvného štátu môžu sa zdaniť len v tom druhom zmluvnom štáte, ak je ten rezident skutočným vlastníkom dividend. (2) Pojem „dividendy“ použitý v tomto článku označuje príjmy z akcií, užívateľských („jouissance“) akcií, alebo („jouissance“) užívateľských práv, ťažobných akcií, zakladateľských akcií alebo iných práv, ktoré nie sú pohľadávkami, z podielov na zisku, ako aj iných príjmov, ktoré sa zdaňujú rovnakým spôsobom ako príjmy z akcií podľa právnych predpisov toho zmluvného štátu, ktorého je vyplácajúca spoločnosť rezidentom. (3) Ustanovenia odseku 1 sa neuplatnia, ak skutočný vlastník dividend, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, ktorého je spoločnosť vyplácajúca dividendy rezidentom, podnikateľskú činnosť prostredníctvom stálej prevádzkarne, ktorá sa tam nachádza, alebo vykonáva v tomto druhom zmluvnom štáte slobodné povolanie zo stálej základne, ktorá sa tam nachádza a vlastníctvo, v súvislosti s ktorým sa dividendy vyplácajú, sa skutočne viaže na túto stálu prevádzkareň alebo stálu základňu. V tom prípade sa podľa okolností uplatnia ustanovenia článku 7 alebo článku 14. (4) Ak spoločnosť, ktorá je rezidentom zmluvného štátu, poberá zisky alebo príjem z druhého zmluvného štátu, tento druhý zmluvný štát nemôže uložiť daň na dividendy platené spoločnosťou, s výnimkou ak sa tieto dividendy vyplácajú rezidentovi tohto druhého zmluvného štátu, alebo ak vlastníctvo v súvislosti s ktorým sa dividendy vyplácajú , sa skutočne viaže na stálu prevádzkareň alebo stálu zák ladňu, ktorá sa nachádza v tom druhom zmluvnom štáte, ani zdaniť nerozdelené zisky spoločnosti daňou z nerozdelených ziskov spoločnosti, aj keď vyplácané dividendy alebo nerozdelené zisky pozostávajú úplne alebo čiastočne zo ziskov alebo príjmu majúcich zdroj v tomto druhom zmluvnom štáte. (5) Ustanovenia tohto článku sa neuplatňujú, ak hlavným účelom alebo jedným z hlavných účelov zainteresovanej osoby bolo vytvorenie alebo pripísanie podielov alebo iných práv v súvislosti s ktorými sa dividendy vyplácajú bolo zneužitie tohto článku pomocou takého vytvorenia alebo pripísania.",
@@ -53,7 +53,8 @@
       ],
       "decision_status": "REVIEW_REQUIRED",
       "final_rate_allowed": false,
-      "automatic_production_approval_forbidden": true
+      "automatic_production_approval_forbidden": true,
+      "tax_treatment": "exclusive_foreign_taxation"
     },
     {
       "rule_id": "SK-OM-INTEREST-TREATY-INTEREST-SPECIAL-EXEMPTION",

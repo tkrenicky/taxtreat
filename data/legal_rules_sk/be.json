@@ -220,7 +220,7 @@
       ]
     },
     {
-      "rule_id": "SK-BE-DIVIDEND-TREATY-UNRESOLVED-FAIL-CLOSED",
+      "rule_id": "SK-BE-DIVIDEND-TREATY-DIVIDEND-BRANCH-2",
       "income_type": "dividend",
       "source_country": "SK",
       "recipient_country": "BE",
@@ -228,8 +228,8 @@
       "legal_layer": "treaty",
       "article": "10",
       "paragraph": null,
-      "rate": null,
-      "priority": 900,
+      "rate": 15.0,
+      "priority": 600,
       "conditions": [
         {
           "fact": "recipient_is_treaty_resident",
@@ -250,7 +250,80 @@
           "value": false
         }
       ],
-      "effect": "review_gate",
+      "effect": "rate",
+      "effective_from": "2000-06-13",
+      "verification_status": "needs_review",
+      "source_text": "Článok 10 Dividendy 1. Dividendy vyplácané spoločnosťou, ktorá je rezidentom jedného zmluvného štátu, osobe, ktorá je rezidentom druhého zmluvného štátu, môžu sa zdaniť v tomto druhom štáte. 2. Tieto dividendy však možno zdaniť aj v zmluvnom štáte, ktorého je spoločnosť vyplácajúca dividendy rezidentom, a to podľa právnych predpisov tohto štátu, ak však skutočný vlastník dividend je rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne a) 5 % hrubej sumy dividend, ak skutočným vlastníkom je spoločnosť, ktorá priamo alebo nepriamo vlastní najmenej 25 % majetku spoločnosti vyplácajúcej dividendy, b) 15 % hrubej sumy dividend vo všetkých ostatných prípadoch. Tento odsek sa nedotýka zdanenia ziskov spoločnosti, z ktorých sa dividendy vyplácajú. 3. Pojem „dividendy“ použitý v tomto článku označuje príjmy z akcií, „jouissance“ akcií alebo „jouissance“ práv, banských akcií, zakladateľských akcií alebo iných práv s výnimkou pohľadávok, z podielov na zisku, ako aj príjmy – aj keď sa vyplácajú vo forme úrokov – ktoré sa považujú za príjmy z akcií podľa vnútorných daňových predpisov štátu, ktorého je spoločnosť vyplácajúca dividendy rezidentom. 4. Ustanovenia odsekov 1 a 2 sa nepoužijú, ak skutočný vlastník dividend, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, ktorého rezidentom je spoločnosť vyplácajúca dividendy, priemyselnú alebo obchodnú činnosť prostredníctvom stálej prevádzkarne, ktorá je tam umiestnená, alebo ak vykonáva v tomto druhom štáte nezávislé povolanie prostredníctvom stálej základne tam umiestnenej a ak sa účasť, pre ktorú sa dividendy vyplácajú, skutočne viaže na túto stálu prevádzkareň alebo na túto stálu základňu. V takom prípade sa použijú ustanovenia článku 7 alebo článku 14 podľa toho, o aký prípad ide. 5. Ak spoločnosť, ktorá je rezidentom jedného zmluvného štátu, dosahuje zisky alebo príjmy z druhého zmluvného štátu, tento druhý štát nemôže zdaniť dividendy vyplácané spoločnosťou s výnimkou prípadov, ak sa tieto dividendy vyplácajú rezidentovi tohto druhého štátu alebo ak sa účasť, pre ktorú sa dividendy vyplácajú, skutočne viaže na stálu prevádzkareň alebo na stálu základňu, ktorá je umiestnená v tomto druhom štáte, ani podrobiť nerozdelené zisky spoločnosti dani z nerozdelených ziskov, aj keď vyplácané dividendy alebo nerozdelené zisky úplne alebo sčasti pozostávajú zo ziskov alebo z príjmov dosiahnutých v tomto druhom štáte.",
+      "source_id": "SK-SLOVLEX-50B53125EFDF5F07",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2007/92/vyhlasene_znenie.html",
+      "source_excerpt_hash": "c9eab7784e09609f1e927d531b0d1531f2776697f7a4962cb4838257e0ed7705",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-50B53125EFDF5F07"
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true
+    },
+    {
+      "rule_id": "SK-BE-DIVIDEND-TREATY-DIVIDEND-BRANCH-1",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "BE",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "10",
+      "paragraph": null,
+      "rate": 5.0,
+      "priority": 650,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        },
+        {
+          "fact": "recipient_entity_type",
+          "fact_source": "transaction",
+          "operator": "in",
+          "value": [
+            "company",
+            "corporate",
+            "company_other_than_partnership"
+          ]
+        },
+        {
+          "fact": "direct_ownership",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "ownership_percent",
+          "fact_source": "transaction",
+          "operator": ">=",
+          "value": 25.0
+        }
+      ],
+      "effect": "rate",
       "effective_from": "2000-06-13",
       "verification_status": "needs_review",
       "source_text": "Článok 10 Dividendy 1. Dividendy vyplácané spoločnosťou, ktorá je rezidentom jedného zmluvného štátu, osobe, ktorá je rezidentom druhého zmluvného štátu, môžu sa zdaniť v tomto druhom štáte. 2. Tieto dividendy však možno zdaniť aj v zmluvnom štáte, ktorého je spoločnosť vyplácajúca dividendy rezidentom, a to podľa právnych predpisov tohto štátu, ak však skutočný vlastník dividend je rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne a) 5 % hrubej sumy dividend, ak skutočným vlastníkom je spoločnosť, ktorá priamo alebo nepriamo vlastní najmenej 25 % majetku spoločnosti vyplácajúcej dividendy, b) 15 % hrubej sumy dividend vo všetkých ostatných prípadoch. Tento odsek sa nedotýka zdanenia ziskov spoločnosti, z ktorých sa dividendy vyplácajú. 3. Pojem „dividendy“ použitý v tomto článku označuje príjmy z akcií, „jouissance“ akcií alebo „jouissance“ práv, banských akcií, zakladateľských akcií alebo iných práv s výnimkou pohľadávok, z podielov na zisku, ako aj príjmy – aj keď sa vyplácajú vo forme úrokov – ktoré sa považujú za príjmy z akcií podľa vnútorných daňových predpisov štátu, ktorého je spoločnosť vyplácajúca dividendy rezidentom. 4. Ustanovenia odsekov 1 a 2 sa nepoužijú, ak skutočný vlastník dividend, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, ktorého rezidentom je spoločnosť vyplácajúca dividendy, priemyselnú alebo obchodnú činnosť prostredníctvom stálej prevádzkarne, ktorá je tam umiestnená, alebo ak vykonáva v tomto druhom štáte nezávislé povolanie prostredníctvom stálej základne tam umiestnenej a ak sa účasť, pre ktorú sa dividendy vyplácajú, skutočne viaže na túto stálu prevádzkareň alebo na túto stálu základňu. V takom prípade sa použijú ustanovenia článku 7 alebo článku 14 podľa toho, o aký prípad ide. 5. Ak spoločnosť, ktorá je rezidentom jedného zmluvného štátu, dosahuje zisky alebo príjmy z druhého zmluvného štátu, tento druhý štát nemôže zdaniť dividendy vyplácané spoločnosťou s výnimkou prípadov, ak sa tieto dividendy vyplácajú rezidentovi tohto druhého štátu alebo ak sa účasť, pre ktorú sa dividendy vyplácajú, skutočne viaže na stálu prevádzkareň alebo na stálu základňu, ktorá je umiestnená v tomto druhom štáte, ani podrobiť nerozdelené zisky spoločnosti dani z nerozdelených ziskov, aj keď vyplácané dividendy alebo nerozdelené zisky úplne alebo sčasti pozostávajú zo ziskov alebo z príjmov dosiahnutých v tomto druhom štáte.",
