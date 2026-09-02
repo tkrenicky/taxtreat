@@ -8,12 +8,13 @@ from taxtreat.tools.build_sk_structured_treaty_rules import royalty_branches
 
 
 ROOT = Path(__file__).resolve().parents[1]
+SEMANTIC = ROOT / "data/legal_reviews/sk_outbound/treaty_semantic_candidates.json"
 ARTICLES = ROOT / "data/legal_reviews/sk_outbound/treaty_article_machine_extraction.json"
 INDUSTRIAL = "patent_trademark_design_model_plan_secret_formula_process_or_knowhow"
 
 
-def _scope(country: str) -> dict:
-    payload = json.loads(ARTICLES.read_text(encoding="utf-8"))
+def _row(path: Path, country: str) -> dict:
+    payload = json.loads(path.read_text(encoding="utf-8"))
     return next(
         row
         for row in payload["scopes"]
@@ -21,15 +22,10 @@ def _scope(country: str) -> dict:
     )
 
 
-def _article(scope: dict) -> dict:
-    return {
-        "article_text": scope["article_text"],
-    }
-
-
 def _royalty_rows(country: str) -> list[dict]:
-    scope = _scope(country)
-    rows = royalty_branches(scope, _article(scope))
+    scope = _row(SEMANTIC, country)
+    article = _row(ARTICLES, country)
+    rows = royalty_branches(scope, article)
     assert rows
     return rows
 
