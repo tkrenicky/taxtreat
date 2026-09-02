@@ -33,6 +33,7 @@ REMEDIATION_PAIRS = {
     f"CZ-{row['country']}"
     for row in REMEDIATION["corrections"]
 }
+HISTORICAL_REHASH_PAIRS = REMEDIATION_PAIRS - {"CZ-GR"}
 
 
 def _hash_aligned_record():
@@ -59,7 +60,7 @@ def test_historical_primary_review_covers_exact_101_303_universe_but_is_stale_af
         validate_human_review_completion(QUEUE, RECORD)
 
 
-def test_semantic_rehash_invalidates_exactly_the_40_remediation_packages():
+def test_historical_semantic_rehash_invalidates_exactly_the_prior_40_packages():
     queue_hashes = {
         row["treaty_pair_id"]: row["package_sha256"]
         for row in QUEUE["packages"]
@@ -75,7 +76,7 @@ def test_semantic_rehash_invalidates_exactly_the_40_remediation_packages():
     }
 
     assert len(mismatched) == 40
-    assert mismatched == REMEDIATION_PAIRS
+    assert mismatched == HISTORICAL_REHASH_PAIRS
 
 
 def test_independent_qa_remains_real_and_pending():
