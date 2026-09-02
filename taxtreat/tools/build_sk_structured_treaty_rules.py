@@ -123,6 +123,83 @@ def _percent(value: str) -> float:
     return float(value.replace(",", "."))
 
 
+_WORD_PERCENT_RATES = {
+    "jeden": 1.0,
+    "dva": 2.0,
+    "dve": 2.0,
+    "tri": 3.0,
+    "štyri": 4.0,
+    "päť": 5.0,
+    "šesť": 6.0,
+    "sedem": 7.0,
+    "osem": 8.0,
+    "deväť": 9.0,
+    "desať": 10.0,
+    "jedenásť": 11.0,
+    "dvanásť": 12.0,
+    "trinásť": 13.0,
+    "štrnásť": 14.0,
+    "pätnásť": 15.0,
+    "dvadsať": 20.0,
+    "dvadsaťpäť": 25.0,
+}
+
+
+def _source_text_residence_only(article: dict) -> bool:
+    """Return True only for an explicit exclusive-residence rule in the operative opening text."""
+    text = str(article.get("article_text") or "").lower()
+    opening = text[:1600]
+    patterns = (
+        r"(?:podliehajú|podlieha|budú\s+podliehať)\s+zdaneniu\s+(?:len|iba|výlučne)\s+v\s+(?:tomto\s+)?druhom",
+        r"(?:sa\s+)?(?:zdaňujú|zdania|zdaní|zdanené)\s+(?:len|iba|výlučne)\s+v\s+(?:tomto\s+)?druhom",
+        r"(?:budú\s+)?zdanené\s+(?:len|iba|výlučne)\s+v\s+(?:tomto\s+)?druhom",
+    )
+    return any(re.search(pattern, opening, flags=re.S) for pattern in patterns)
+
+
+def _single_word_percent_rate(scope: dict, article: dict) -> float | None:
+    """
+    Recover one unambiguous source-state ceiling written as a Slovak number word.
+
+    This is intentionally narrower than semantic extraction: it is used only
+    when no numeric rate candidate exists, paragraph 2 contains exactly one
+    word-percent rate, and no explicit exception/category branch makes that
+    rate conditional.
+    """
+    if scope.get("rate_candidates"):
+        return None
+    if not scope.get("source_sha256"):
+        return None
+    if scope.get("semantic_status") != "machine_candidate_not_legal_conclusion":
+        return None
+    if int(scope.get("ownership_linked_rate_candidate_count") or 0) != 0:
+        return None
+    if scope.get("holding_period_candidates"):
+        return None
+
+    text = str(article.get("article_text") or "").lower()
+    para = _article_paragraph_two(text)
+    matches: list[float] = []
+    for word, rate in _WORD_PERCENT_RATES.items():
+        if re.search(rf"\b{re.escape(word)}\s+percent", para):
+            matches.append(rate)
+    unique = sorted(set(matches))
+    if len(unique) != 1:
+        return None
+
+    income = str(scope.get("income_type") or "")
+    if income == "interest" and re.search(
+        r"osloboden|nepodliehajú\s+dani|sa\s+nezdaňujú|bez\s+ohľadu\s+na\s+ustanovenia",
+        text,
+    ):
+        return None
+    if income == "dividend" and "osloboden" in text:
+        return None
+    if income == "royalty" and re.search(r"odseku\s*3\s*písm|podľa\s+písmena|písm\.", para):
+        return None
+    return unique[0]
+
+
 def dividend_branches(scope: dict, article: dict) -> list[dict] | None:
     if scope.get("income_type") != "dividend":
         return None
@@ -634,6 +711,42 @@ def main() -> int:
             ] += 1
             continue
 
+        if _source_text_residence_only(article):
+            grouped[country].append(_make_rule(
+                scope=scope,
+                article=article,
+                country=country,
+                income=income,
+                rate=0.0,
+                priority=650,
+                rule_conditions=conditions(scope),
+                rule_suffix=f"{income.upper()}-SOURCE-TEXT-RESIDENCE-ONLY",
+                treaty_valid_from=treaty_valid_from,
+                coverage=coverage,
+                tax_treatment="exclusive_foreign_taxation",
+            ))
+            materialized.append(f"SK-{country}-{income}")
+            materialization_modes["source_text_explicit_residence_only"] += 1
+            continue
+
+        word_rate = _single_word_percent_rate(scope, article)
+        if word_rate is not None:
+            grouped[country].append(_make_rule(
+                scope=scope,
+                article=article,
+                country=country,
+                income=income,
+                rate=float(word_rate),
+                priority=600,
+                rule_conditions=conditions(scope),
+                rule_suffix=f"{income.upper()}-SOURCE-TEXT-WORD-RATE",
+                treaty_valid_from=treaty_valid_from,
+                coverage=coverage,
+            ))
+            materialized.append(f"SK-{country}-{income}")
+            materialization_modes["source_text_single_word_rate"] += 1
+            continue
+
         if not is_safe_simple(scope, article):
             unresolved.append({
                 "recipient_country": country,
@@ -716,6 +829,9 @@ def main() -> int:
             "source_text_explicit_dividend_branch_pairs_materialized": True,
             "source_text_fallback_phrase_required_for_dividend_branch_pair": True,
             "source_text_explicit_interest_exemption_branches_materialized": True,
+            "source_text_explicit_residence_only_materialized": True,
+            "source_text_single_word_rate_requires_one_unambiguous_paragraph_two_ceiling": True,
+            "source_text_word_rate_complex_exemptions_and_category_splits_remain_fail_closed": True,
             "ordinary_interest_rate_requires_special_exemption_false_when_exemption_exists": True,
             "source_text_explicit_royalty_definition_letter_branches_materialized": True,
             "royalty_category_materialization_uses_atomic_ui_taxonomy": True,
