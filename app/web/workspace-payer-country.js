@@ -105,14 +105,11 @@
     applyCountryUi();
   }).observe(dialog, { attributes: true, attributeFilter: ["open"] });
 
-  form.addEventListener("submit", () => {
-    const selectedCountry = country.value;
-    const payerName = String(form.elements.payer_name?.value || "").trim();
-    window.setTimeout(() => {
-      const key = findPayerKeyByName(payerName);
-      sourceApi()?.setPayerCountry?.(key, selectedCountry);
-      refreshPayerCountryCopy();
-    }, 0);
+  window.addEventListener("taxtreat:payer-saved", (event) => {
+    const key = String(event.detail?.key || "");
+    const selectedCountry = String(event.detail?.country || country.value || "CZ");
+    if (key) sourceApi()?.setPayerCountry?.(key, selectedCountry);
+    refreshPayerCountryCopy();
   });
 
   // Do not observe the whole workspace here. The previous broad childList observer

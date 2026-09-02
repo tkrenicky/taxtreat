@@ -391,7 +391,34 @@ def company_registry_ares(ico: str):
 
 
 @app.get("/jurisdictions")
-def list_jurisdictions():
+def list_jurisdictions(source_country: str = "CZ"):
+    source = str(source_country or "CZ").upper()
+    if source == "SK":
+        jurisdictions = [
+            {
+                "country": partner["country"],
+                "iso2": partner["iso2"],
+                "income_types": ["dividend", "interest", "royalty"],
+                "review_ready_income_types": ["dividend", "interest", "royalty"],
+                "base_candidate_income_types": [],
+                "protocol_candidate_income_types": [],
+                "domestic_candidate_income_types": ["dividend", "interest", "royalty"],
+                "eu_relief_candidate_income_types": [],
+                "manual_rate_extraction_income_types": [],
+                "candidate_chain_assembled_income_types": ["dividend", "interest", "royalty"],
+                "candidate_chain_blocked_income_types": [],
+                "candidate_review_queued_income_types": [],
+                "candidate_review_approved_income_types": [],
+            }
+            for partner in load_partner_registry(source_country="SK")
+        ]
+        return {"total": len(jurisdictions), "jurisdictions": jurisdictions}
+    if source != "CZ":
+        raise HTTPException(
+            status_code=400,
+            detail={"code": "UNSUPPORTED_SOURCE_COUNTRY", "source_country": source},
+        )
+
     registry = (
         json.loads(LEGAL_REGISTRY.read_text(encoding="utf-8"))
         if LEGAL_REGISTRY.exists()

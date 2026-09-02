@@ -69,13 +69,15 @@
   function countryGenitive(code) {
     return knownCountryGenitives[String(code || "").toUpperCase()] || countryName(code);
   }
-  async function loadJurisdictionCatalog() {
+  async function loadJurisdictionCatalog(sourceCode = document.body.dataset.sourceCountry || "CZ") {
+    const normalizedSource = String(sourceCode || "CZ").toUpperCase();
+    const expectedCount = normalizedSource === "SK" ? 75 : 101;
     const selects = [recipientForm?.elements.recipient_country, recipientEditForm?.elements.recipient_country].filter(Boolean);
     selects.forEach((select) => { select.disabled = true; });
     try {
-      const response = await fetch("/jurisdictions", { cache: "no-store" });
+      const response = await fetch(`/jurisdictions?source_country=${normalizedSource}`, { cache: "no-store" });
       const body = await response.json();
-      if (!response.ok || !Array.isArray(body.jurisdictions) || body.jurisdictions.length !== 101) {
+      if (!response.ok || !Array.isArray(body.jurisdictions) || body.jurisdictions.length !== expectedCount) {
         throw new Error("Incomplete jurisdiction catalog");
       }
       const jurisdictions = [...body.jurisdictions].sort((a, b) =>
@@ -102,6 +104,9 @@
       selects.forEach((select) => { select.disabled = false; });
     }
   }
+  window.addEventListener("taxtreat:source-country-change", (event) => {
+    loadJurisdictionCatalog(event.detail?.code || "CZ");
+  });
   let recipient = {
     name: "Demo GmbH",
     country: "AT",
@@ -326,6 +331,7 @@
       dataBox: String(data.get("payer_data_box")).trim(),
       establishedAt: String(data.get("payer_established_at")).trim()
     };
+    let savedPayerKey = editingPayerKey;
     if (editingPayerKey) {
       const existing = payers.find((item) => item.key === editingPayerKey);
       if (existing) Object.assign(existing, values);
@@ -333,10 +339,17 @@
       const key = `payer-${Date.now()}`;
       payers.push({ key, ...values });
       activePayerKey = key;
+      savedPayerKey = key;
     }
     saveWorkspaceProfiles();
     renderPayers();
     renderRecipient();
+    window.dispatchEvent(new CustomEvent("taxtreat:payer-saved", {
+      detail: {
+        key: savedPayerKey,
+        country: String(data.get("payer_country") || "CZ").toUpperCase(),
+      },
+    }));
     if (payerDialog.open) payerDialog.close();
     return true;
   }
@@ -516,9 +529,15 @@
     recipientForm.hidden = true;
   });
 
-  function money(value) {
+  function activeSourceContext() {
+    const code = String(document.body.dataset.sourceCountry || "CZ").toUpperCase();
+    return window.TaxTreatSourceCountries?.get(code) || { code: "CZ", baseCurrency: "CZK" };
+  }
+
+  function money(value, currency = activeSourceContext().baseCurrency) {
     if (value === null || value === undefined || value === "") return "—";
-    return new Intl.NumberFormat("cs-CZ", { maximumFractionDigits: 0 }).format(Number(value)) + " Kč";
+    const suffix = currency === "CZK" ? "Kč" : currency;
+    return new Intl.NumberFormat("cs-CZ", { maximumFractionDigits: 2 }).format(Number(value)) + ` ${suffix}`;
   }
 
   function cnbSourceUrl(rateDate) {
@@ -1165,9 +1184,13 @@
       ? ` · ${citationParagraphLabel(citation.paragraph)}`
       : "";
     const en = document.documentElement.lang === "en";
+    const source = activeSourceContext();
+    const domesticLawTitle = source.code === "SK"
+      ? (en ? "Slovak Income Tax Act (Act No. 595/2003 Coll.)" : "Zákon č. 595/2003 Z. z. o dani z príjmov")
+      : (en ? "Czech Income Taxes Act (Act No. 586/1992 Coll.)" : "Zákon č. 586/1992 Sb., o daních z příjmů");
     title.textContent = ["treaty", "protocol", "mli"].includes(layer)
       ? `${en ? "Double Tax Treaty" : "Smlouva o zamezení dvojího zdanění"} · ${en ? "Article" : "článek"} ${citation.article || "—"}${paragraph}`
-      : `${en ? "Czech Income Taxes Act (Act No. 586/1992 Coll.)" : "Zákon č. 586/1992 Sb., o daních z příjmů"} · § ${citation.article || "—"}${paragraph}`;
+      : `${domesticLawTitle} · ${citation.article || "—"}${paragraph}`;
     const link = document.createElement("a"); link.href = citation.source_url; link.target = "_blank"; link.rel = "noreferrer noopener"; link.textContent = en ? "Open source ↗" : "Otevřít zdroj ↗";
     const detail = document.createElement("p");
     if (pathRole === "domestic_exemption_basis") {
@@ -1250,6 +1273,21 @@
     setText("#workspace-remittance-deadline", schedule.tax_remittance_deadline ? formatCzechDate(schedule.tax_remittance_deadline) : analysis.status === "FINAL" && nonTaxing ? (en ? "No tax remittance required" : "Daň se neodvádí") : (en ? "After completing the facts" : "Po doplnění údajů"));
     setText("#workspace-notification-deadline", schedule.notification_deadline ? formatCzechDate(schedule.notification_deadline) : schedule.notification_required === false ? (en ? "No notification required" : "Oznámení se nepodává") : (en ? "After completing the facts" : "Po doplnění údajů"));
     const note = document.querySelector("#workspace-deadline-note");
+    const source = activeSourceContext();
+    if (source.code === "SK") {
+      if (schedule.status !== "READY") {
+        note.textContent = en
+          ? "The Slovak remittance and notification deadlines cannot be finalized until the applicable tax treatment is determined."
+          : "Slovenské lehoty na odvod dane a oznámenie nemožno uzavrieť, kým sa neurčí použiteľné daňové zaobchádzanie.";
+      } else {
+        note.textContent = en
+          ? "The Slovak withholding-tax remittance and notification follow the deadline shown under Section 43(11) of Act No. 595/2003 Coll."
+          : "Odvod slovenskej zrážkovej dane a oznámenie sa riadia uvedenou lehotou podľa § 43 ods. 11 zákona č. 595/2003 Z. z.";
+      }
+      const caution = document.querySelector("#workspace-dividend-deadline-caution");
+      caution.hidden = !schedule.dividend_timing_review_required;
+      return;
+    }
     if (schedule.status !== "READY") note.textContent = en
       ? "The deadlines cannot be finalized until the applicable rule or the monthly aggregate relevant for the notification obligation can be determined."
       : "Lhůty nelze uzavřít, dokud zadané údaje neumožní přiřadit příslušné pravidlo nebo měsíční úhrn rozhodný pro oznamovací povinnost.";
@@ -1289,6 +1327,9 @@
   function informationalRuleStatement(analysis) {
     const selected = selectedRuleId(analysis);
     const en = document.documentElement.lang === "en";
+    const source = activeSourceContext();
+    const sourceCountryEn = source.code === "SK" ? "Slovakia" : "the Czech Republic";
+    const sourceCountryCs = source.code === "SK" ? "Slovenské republice" : "České republice";
     const citation = [...(analysis.legal_path || analysis.citations || [])]
       .find((item) => String(item.rule_id || "") === selected);
     let reference = en ? "the applied legal rule" : "použitého právního pravidla";
@@ -1300,26 +1341,26 @@
             ? `Article ${citation.article || "—"}${paragraph} of the Double Tax Treaty`
             : `článku ${citation.article || "—"}${paragraph} smlouvy o zamezení dvojího zdanění`)
         : layer === "eu_relief" || String(citation.path_role || "") === "domestic_exemption_basis"
-          ? (en ? "Section 19 of the Czech Income Taxes Act" : "§ 19 zákona č. 586/1992 Sb., o daních z příjmů")
+          ? (en ? `the domestic exemption under ${source.domesticLawLabel}` : `vnitrostátní osvobození podle ${source.domesticLawLabel}`)
           : (en
-              ? `Section ${citation.article || "—"}${paragraph} of the Czech Income Taxes Act`
-              : `§ ${citation.article || "—"}${paragraph} zákona č. 586/1992 Sb., o daních z příjmů`);
+              ? `${citation.article || "—"}${paragraph} of ${source.domesticLawLabel}`
+              : `${citation.article || "—"}${paragraph} ${source.domesticLawLabel}`);
     }
     const treatment = analysis.tax_treatment || analysis.candidate_tax_treatment;
     if (treatment === "exclusive_foreign_taxation") {
       return en
-        ? `Under ${reference}, the income is not taxable in the Czech Republic based on the entered facts.`
-        : `Podle ${reference} se při zadaných údajích příjem v České republice nezdaňuje.`;
+        ? `Under ${reference}, the income is not taxable in ${sourceCountryEn} based on the entered facts.`
+        : `Podle ${reference} se při zadaných údajích příjem ve ${sourceCountryCs} nezdaňuje.`;
     }
     if (treatment === "domestic_exemption") {
       return en
-        ? `Under ${reference}, the income is exempt from Czech withholding tax based on the entered facts.`
-        : `Podle ${reference} je při zadaných údajích příjem v České republice osvobozen od srážkové daně.`;
+        ? `Under ${reference}, the income is exempt from ${source.code === "SK" ? "Slovak" : "Czech"} withholding tax based on the entered facts.`
+        : `Podle ${reference} je při zadaných údajích příjem ve ${sourceCountryCs} osvobozen od srážkové daně.`;
     }
     const rate = analysis.rate ?? analysis.candidate_rate;
     if (rate !== null && rate !== undefined) {
       return en
-        ? `Under ${reference}, the Czech withholding tax rate is ${new Intl.NumberFormat("en-GB", { maximumFractionDigits: 2 }).format(Number(rate))}% based on the entered facts.`
+        ? `Under ${reference}, the ${source.code === "SK" ? "Slovak" : "Czech"} withholding tax rate is ${new Intl.NumberFormat("en-GB", { maximumFractionDigits: 2 }).format(Number(rate))}% based on the entered facts.`
         : `Podle ${reference} činí při zadaných údajích sazba srážkové daně ${new Intl.NumberFormat("cs-CZ", { maximumFractionDigits: 2 }).format(Number(rate))} %.`;
     }
     return en
@@ -1361,10 +1402,15 @@
     if (reasonCard) reasonCard.hidden = analysis.status !== "FINAL" && !treatyFallback;
     const nonTaxing = ["exclusive_foreign_taxation", "domestic_exemption"].includes(treatment);
     const en = document.documentElement.lang === "en";
-    setText("#workspace-tax-label", treatyFallback
+    const source = activeSourceContext();
+    setText("#workspace-tax-label", source.code === "SK"
+      ? source.taxResultLabelWithCurrency
+      : treatyFallback
       ? (en ? "Treaty fallback withholding tax" : "Srážková daň podle smluvního fallbacku")
       : nonTaxing ? "Česká daň k odvodu" : "Srážková daň v CZK");
-    setText("#workspace-tax-row-label", treatyFallback
+    setText("#workspace-tax-row-label", source.code === "SK"
+      ? source.taxResultLabel
+      : treatyFallback
       ? (en ? "Treaty fallback withholding tax" : "Srážková daň podle smluvního fallbacku")
       : nonTaxing ? "Česká daň k odvodu" : "Srážková daň");
     const fallbackGross = grossCzk !== null
@@ -1493,13 +1539,15 @@
     }
     if (incomeType === "interest" && armLengthAmount) facts.arm_length_amount = armLengthAmount === "true";
     if (incomeType === "royalty" && royaltyCategory) facts.royalty_category = royaltyCategory;
-    if (String(data.get("currency")) !== "CZK") {
+    const sourceCountry = String(document.body.dataset.sourceCountry || "CZ").toUpperCase();
+    const sourceContext = window.TaxTreatSourceCountries?.get(sourceCountry);
+    if (sourceContext?.fxProvider === "CNB" && String(data.get("currency")) !== sourceContext.baseCurrency) {
       const currentRate = clientAnswers.exchangeRate;
       if (!currentRate || currentRate.currency !== String(data.get("currency")) || currentRate.effective_date !== transactionDate) await loadCnbRate();
       syncExchangeRateFromField();
     }
     const payload = {
-      source_country: "CZ", recipient_country: recipient.country, income_type: incomeType, transaction_date: transactionDate,
+      source_country: sourceCountry, recipient_country: recipient.country, income_type: incomeType, transaction_date: transactionDate,
       facts, determinations: {}, transaction_amount: { amount: String(data.get("amount")), currency: String(data.get("currency")), payment_date: transactionDate, accounting_date: transactionDate }
     };
     if (incomeType === "interest") payload.transaction_amount.prior_same_type_monthly_amount_czk = String(data.get("prior_same_type_monthly_amount_czk") || "0");

@@ -97,6 +97,20 @@ def test_all_registered_jurisdictions_are_exposed():
     assert by_code["CO"]["candidate_chain_assembled_income_types"] == ["dividend", "interest", "royalty"]
 
 
+def test_all_75_slovak_treaty_partners_are_exposed_for_sk_payers():
+    response = client.get("/jurisdictions?source_country=SK")
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["total"] == 75
+    by_code = {row["iso2"]: row for row in payload["jurisdictions"]}
+    assert len(by_code) == 75
+    assert {"AT", "AU", "CZ", "US"}.issubset(by_code)
+    assert all(
+        row["income_types"] == ["dividend", "interest", "royalty"]
+        for row in by_code.values()
+    )
+
+
 def test_released_registered_scope_reaches_decision_engine():
     response = client.post(
         "/analysis",

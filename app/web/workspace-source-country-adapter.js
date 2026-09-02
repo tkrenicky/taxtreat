@@ -8,7 +8,14 @@
   const paymentForm = document.querySelector("#workspace-payment");
   if (!activePayerSelect || !paymentForm) return;
 
-  const payerCountries = new Map();
+  const payerCountryStorageKey = "taxtreat-payer-source-countries-v1";
+  let storedPayerCountries = {};
+  try {
+    storedPayerCountries = JSON.parse(localStorage.getItem(payerCountryStorageKey) || "{}") || {};
+  } catch (_problem) {
+    storedPayerCountries = {};
+  }
+  const payerCountries = new Map(Object.entries(storedPayerCountries));
   let currentCode = "CZ";
 
   function activePayerKey() {
@@ -31,6 +38,11 @@
     const normalizedKey = String(key || "");
     const normalizedCode = String(code || "CZ").toUpperCase();
     payerCountries.set(normalizedKey, normalizedCode);
+    try {
+      localStorage.setItem(payerCountryStorageKey, JSON.stringify(Object.fromEntries(payerCountries)));
+    } catch (_problem) {
+      // Source-country selection remains available for the current session.
+    }
     if (normalizedKey === activePayerKey()) applyContext(normalizedCode);
   }
 
@@ -41,6 +53,7 @@
     <span>Stát plátce</span>
     <select id="active-source-country" aria-label="Stát aktivního plátce">
       <option value="CZ">Česká republika</option>
+      <option value="SK">Slovensko</option>
     </select>
   `;
   activePayerSelect.closest(".payer-context")?.after(countryControl);
@@ -78,14 +91,15 @@
     if (sourceMetrics.length < 3) return;
 
     const metrics = ctx.sourceMetrics || {};
+    const en = document.documentElement.lang === "en";
     const jurisdictionLabel = sourceMetrics[0].querySelector("span");
     const jurisdictionValue = sourceMetrics[0].querySelector("strong");
     const scopeLabel = sourceMetrics[1].querySelector("span");
     const scopeValue = sourceMetrics[1].querySelector("strong");
 
-    if (jurisdictionLabel) jurisdictionLabel.textContent = metrics.jurisdictionLabel || "";
+    if (jurisdictionLabel) jurisdictionLabel.textContent = en ? (metrics.jurisdictionLabelEn || metrics.jurisdictionLabel || "") : (metrics.jurisdictionLabel || "");
     if (jurisdictionValue) jurisdictionValue.textContent = metrics.jurisdictionValue || "";
-    if (scopeLabel) scopeLabel.textContent = metrics.scopeLabel || "";
+    if (scopeLabel) scopeLabel.textContent = en ? (metrics.scopeLabelEn || metrics.scopeLabel || "") : (metrics.scopeLabel || "");
     if (scopeValue) scopeValue.textContent = metrics.scopeValue || "";
   }
 
@@ -99,21 +113,22 @@
   }
 
   function applyCopy(ctx) {
+    const en = document.documentElement.lang === "en";
     document.body.dataset.sourceCountry = ctx.code;
     const taxLabel = document.querySelector("#workspace-tax-label");
     const taxRowLabel = document.querySelector("#workspace-tax-row-label");
-    if (taxLabel) taxLabel.textContent = ctx.taxResultLabelWithCurrency;
-    if (taxRowLabel) taxRowLabel.textContent = ctx.taxResultLabel;
+    if (taxLabel) taxLabel.textContent = en ? (ctx.taxResultLabelWithCurrencyEn || ctx.taxResultLabelWithCurrency) : ctx.taxResultLabelWithCurrency;
+    if (taxRowLabel) taxRowLabel.textContent = en ? (ctx.taxResultLabelEn || ctx.taxResultLabel) : ctx.taxResultLabel;
     if (complianceHeading) complianceHeading.textContent = ctx.complianceLegalReference;
-    if (complianceTitle) complianceTitle.textContent = ctx.complianceTitle;
+    if (complianceTitle) complianceTitle.textContent = en ? (ctx.complianceTitleEn || ctx.complianceTitle) : ctx.complianceTitle;
 
-    if (complianceRows[1]?.querySelector("dt")) complianceRows[1].querySelector("dt").textContent = ctx.remittanceLabel;
-    if (complianceRows[2]?.querySelector("dt")) complianceRows[2].querySelector("dt").textContent = ctx.notificationLabel;
+    if (complianceRows[1]?.querySelector("dt")) complianceRows[1].querySelector("dt").textContent = en ? (ctx.remittanceLabelEn || ctx.remittanceLabel) : ctx.remittanceLabel;
+    if (complianceRows[2]?.querySelector("dt")) complianceRows[2].querySelector("dt").textContent = en ? (ctx.notificationLabelEn || ctx.notificationLabel) : ctx.notificationLabel;
 
     prereleaseNotice.textContent = ctx.prereleaseNotice || "";
-    if (complianceNote) complianceNote.textContent = ctx.complianceNoteDefault || "";
+    if (complianceNote) complianceNote.textContent = en ? (ctx.complianceNoteDefaultEn || ctx.complianceNoteDefault || "") : (ctx.complianceNoteDefault || "");
     if (metaDescription) metaDescription.content = ctx.metaDescription || "";
-    if (payersSubtitle) payersSubtitle.textContent = ctx.payerSubtitle || "";
+    if (payersSubtitle) payersSubtitle.textContent = en ? (ctx.payerSubtitleEn || ctx.payerSubtitle || "") : (ctx.payerSubtitle || "");
 
     setMatchingText(
       '[data-view="recipient-detail"] dt',
@@ -169,6 +184,11 @@
   activePayerSelect.addEventListener("change", () => {
     applyContext(inferredCountryForActivePayer());
   });
+  document.addEventListener("change", (event) => {
+    if (event.target?.id === "taxtreat-ui-language") {
+      window.setTimeout(() => applyContext(currentCode), 0);
+    }
+  }, true);
 
   function blockProhibitedFxListener(event) {
     const ctx = context();
@@ -224,5 +244,5 @@
     setPayerCountry,
   });
 
-  applyContext("CZ");
+  applyContext(inferredCountryForActivePayer());
 })();
