@@ -147,3 +147,32 @@ def test_tn_and_by_secondary_facts_are_client_answerable_booleans():
         question = _question(fact)
         assert question["client_answerable"] is True
         assert question["response_type"] == "boolean"
+
+
+def test_all_75_sk_royalty_builds_have_no_same_fact_signature_with_different_outcomes():
+    semantic = json.loads(SEMANTIC.read_text(encoding="utf-8"))
+    articles = json.loads(ARTICLES.read_text(encoding="utf-8"))
+    article_by_country = {
+        row["recipient_country"]: row
+        for row in articles["scopes"]
+        if row["income_type"] == "royalty"
+    }
+    royalty_scopes = [
+        row for row in semantic["scopes"] if row["income_type"] == "royalty"
+    ]
+    assert len(royalty_scopes) == 75
+
+    conflicts = []
+    for scope in royalty_scopes:
+        country = scope["recipient_country"]
+        rows = royalty_branches(scope, article_by_country[country]) or []
+        by_signature = {}
+        for row in rows:
+            signature = json.dumps(row["conditions"], sort_keys=True)
+            outcome = (row.get("rate"), row.get("tax_treatment"))
+            by_signature.setdefault(signature, set()).add(outcome)
+        for signature, outcomes in by_signature.items():
+            if len(outcomes) > 1:
+                conflicts.append((country, json.loads(signature), sorted(map(str, outcomes))))
+
+    assert conflicts == []
