@@ -220,7 +220,7 @@
       ]
     },
     {
-      "rule_id": "SK-MX-DIVIDEND-TREATY-UNRESOLVED-FAIL-CLOSED",
+      "rule_id": "SK-MX-DIVIDEND-TREATY-DIVIDEND-SOURCE-TEXT-RESIDENCE-ONLY",
       "income_type": "dividend",
       "source_country": "SK",
       "recipient_country": "MX",
@@ -228,8 +228,8 @@
       "legal_layer": "treaty",
       "article": "10",
       "paragraph": null,
-      "rate": null,
-      "priority": 900,
+      "rate": 0.0,
+      "priority": 650,
       "conditions": [
         {
           "fact": "recipient_is_treaty_resident",
@@ -244,7 +244,7 @@
           "value": true
         }
       ],
-      "effect": "review_gate",
+      "effect": "rate",
       "effective_from": "2007-09-28",
       "verification_status": "needs_review",
       "source_text": "Článok 10 Dividendy 1. Dividendy vyplácané spoločnosťou, ktorá je rezidentom jedného zmluvného štátu, rezidentovi druhého zmluvného štátu, ktorý je skutočným vlastníkom dividend, sa môžu zdaniť iba v tom druhom štáte. 2. Pojem „dividendy“ použitý v tomto článku označuje príjmy z akcií, užívateľských („jouissance“) akcií alebo („jouissance“) užívateľských práv, ťažobných akcií, zakladateľských akcií alebo iných práv, ktoré nie sú pohľadávkami, z podielov na zisku, ako aj iných príjmov, ktoré sa zdaňujú rovnakým spôsobom ako príjmy z akcií podľa právnych predpisov toho štátu, ktorého je vyplácajúca spoločnosť rezidentom.",
@@ -262,7 +262,8 @@
       ],
       "decision_status": "REVIEW_REQUIRED",
       "final_rate_allowed": false,
-      "automatic_production_approval_forbidden": true
+      "automatic_production_approval_forbidden": true,
+      "tax_treatment": "exclusive_foreign_taxation"
     },
     {
       "rule_id": "SK-MX-MLI-GATE-INTEREST-A7",
