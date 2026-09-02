@@ -3,11 +3,11 @@
   "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
   "source_country": "SK",
   "total_scopes": 225,
-  "materialized_scopes": 212,
-  "decision_materialized_scopes": 212,
-  "fail_closed_placeholder_scopes": 13,
+  "materialized_scopes": 215,
+  "decision_materialized_scopes": 215,
+  "fail_closed_placeholder_scopes": 10,
   "structured_scope_coverage": 225,
-  "unresolved_scopes": 13,
+  "unresolved_scopes": 10,
   "materialized_country_packages": 75,
   "materialized_scope_keys": [
     "SK-AE-dividend",
@@ -43,6 +43,7 @@
     "SK-BY-interest",
     "SK-CA-dividend",
     "SK-CA-interest",
+    "SK-CA-royalty",
     "SK-CH-dividend",
     "SK-CH-interest",
     "SK-CH-royalty",
@@ -202,11 +203,13 @@
     "SK-TM-royalty",
     "SK-TN-dividend",
     "SK-TN-interest",
+    "SK-TN-royalty",
     "SK-TR-dividend",
     "SK-TR-interest",
     "SK-TR-royalty",
     "SK-TW-dividend",
     "SK-TW-interest",
+    "SK-TW-royalty",
     "SK-UA-dividend",
     "SK-UA-interest",
     "SK-UA-royalty",
@@ -229,13 +232,13 @@
     "source_text_explicit_residence_only": 7,
     "source_text_interest_residence_only": 24,
     "source_text_interest_special_exemption": 32,
-    "source_text_royalty_category_branches": 15,
+    "source_text_royalty_category_branches": 18,
     "source_text_single_word_rate": 8
   },
   "unresolved_by_income": {
     "dividend": 5,
     "interest": 2,
-    "royalty": 6
+    "royalty": 3
   },
   "unresolved": [
     {
@@ -305,16 +308,6 @@
       "holding_period_candidates": []
     },
     {
-      "recipient_country": "CA",
-      "income_type": "royalty",
-      "rate_candidates": [
-        10.0
-      ],
-      "exclusive_residence_taxation_candidate": true,
-      "ownership_linked_rate_candidate_count": 0,
-      "holding_period_candidates": []
-    },
-    {
       "recipient_country": "LY",
       "income_type": "dividend",
       "rate_candidates": [],
@@ -346,28 +339,6 @@
       "income_type": "dividend",
       "rate_candidates": [
         15.0,
-        15.0
-      ],
-      "exclusive_residence_taxation_candidate": false,
-      "ownership_linked_rate_candidate_count": 0,
-      "holding_period_candidates": []
-    },
-    {
-      "recipient_country": "TW",
-      "income_type": "royalty",
-      "rate_candidates": [
-        5.0,
-        10.0
-      ],
-      "exclusive_residence_taxation_candidate": false,
-      "ownership_linked_rate_candidate_count": 0,
-      "holding_period_candidates": []
-    },
-    {
-      "recipient_country": "TN",
-      "income_type": "royalty",
-      "rate_candidates": [
-        5.0,
         15.0
       ],
       "exclusive_residence_taxation_candidate": false,
