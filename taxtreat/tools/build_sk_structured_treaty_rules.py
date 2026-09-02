@@ -946,6 +946,147 @@ def _categories_for_rate_clause(article_text: str, clause: str) -> list[str]:
     return categories
 
 
+def _br_vn_royalty_secondary_branches(scope: dict, article_text: str) -> list[dict] | None:
+    """Preserve treaty-specific splits hidden inside the broad industrial-IP UI bucket."""
+    country = scope.get("recipient_country")
+    if country not in {"BR", "VN"}:
+        return None
+
+    text = article_text.lower()
+    rates = {
+        float(row["rate_percent"])
+        for row in scope.get("rate_candidates", [])
+        if row.get("rate_percent") is not None
+    }
+    common = conditions(scope)
+    industrial = ROYALTY_UI_CATEGORIES["industrial_ip"]
+
+    patent_process = "patent_design_model_plan_secret_formula_or_process"
+    trademark = "trademark"
+    industrial_scientific_knowhow = "industrial_or_scientific_knowhow"
+    commercial_knowhow = "commercial_knowhow"
+
+    if country == "BR":
+        if not (
+            {15.0, 25.0} <= rates
+            and "25 % hrubej sumy licenčných poplatkov za použitie alebo za právo na použitie ochranných známok" in text
+            and "15 % hrubej sumy licenčných poplatkov vo všetkých ostatných prípadoch" in text
+        ):
+            return None
+        branches = [
+            {
+                "rate": 25.0,
+                "priority": 710,
+                "conditions": [
+                    *common,
+                    {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": industrial},
+                    {"fact": "royalty_industrial_ip_subcategory", "fact_source": "transaction", "operator": "==", "value": trademark},
+                ],
+                "suffix": "ROYALTY-BR-TRADEMARK-25",
+            },
+            {
+                "rate": 15.0,
+                "priority": 700,
+                "conditions": [
+                    *common,
+                    {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": industrial},
+                    {
+                        "fact": "royalty_industrial_ip_subcategory",
+                        "fact_source": "transaction",
+                        "operator": "in",
+                        "value": [patent_process, industrial_scientific_knowhow, commercial_knowhow],
+                    },
+                ],
+                "suffix": "ROYALTY-BR-OTHER-INDUSTRIAL-IP-15",
+            },
+        ]
+        for index, category in enumerate(
+            [cat for cat in _all_royalty_categories() if cat != industrial],
+            start=1,
+        ):
+            branches.append({
+                "rate": 15.0,
+                "priority": 680,
+                "conditions": [
+                    *common,
+                    {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": category},
+                ],
+                "suffix": f"ROYALTY-BR-FALLBACK-15-{index}",
+            })
+        return branches
+
+    if not (
+        {5.0, 10.0, 15.0} <= rates
+        and "5 percent hrubej sumy licenčných poplatkov" in text
+        and "10 percent hrubej sumy licenčných poplatkov" in text
+        and "15 percent hrubej sumy licenčných poplatkov vo všetkých ostatných prípadoch" in text
+        and "ochrannej známky" in text
+        and "obchodné skúsenosti" in text
+    ):
+        return None
+
+    branches = [
+        {
+            "rate": 5.0,
+            "priority": 710,
+            "conditions": [
+                *common,
+                {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": industrial},
+                {
+                    "fact": "royalty_industrial_ip_subcategory",
+                    "fact_source": "transaction",
+                    "operator": "in",
+                    "value": [patent_process, industrial_scientific_knowhow],
+                },
+            ],
+            "suffix": "ROYALTY-VN-PATENT-OR-INDUSTRIAL-SCIENTIFIC-KNOWHOW-5",
+        },
+        {
+            "rate": 10.0,
+            "priority": 710,
+            "conditions": [
+                *common,
+                {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": industrial},
+                {
+                    "fact": "royalty_industrial_ip_subcategory",
+                    "fact_source": "transaction",
+                    "operator": "in",
+                    "value": [trademark, commercial_knowhow],
+                },
+            ],
+            "suffix": "ROYALTY-VN-TRADEMARK-OR-COMMERCIAL-KNOWHOW-10",
+        },
+    ]
+    equipment = {
+        ROYALTY_UI_CATEGORIES["equipment_financial"],
+        ROYALTY_UI_CATEGORIES["equipment_operating"],
+    }
+    for index, category in enumerate(sorted(equipment), start=1):
+        branches.append({
+            "rate": 5.0,
+            "priority": 690,
+            "conditions": [
+                *common,
+                {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": category},
+            ],
+            "suffix": f"ROYALTY-VN-EQUIPMENT-5-{index}",
+        })
+    for index, category in enumerate(
+        [cat for cat in _all_royalty_categories() if cat != industrial and cat not in equipment],
+        start=1,
+    ):
+        branches.append({
+            "rate": 15.0,
+            "priority": 680,
+            "conditions": [
+                *common,
+                {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": category},
+            ],
+            "suffix": f"ROYALTY-VN-FALLBACK-15-{index}",
+        })
+    return branches
+
+
 def _lettered_royalty_rate_branches(scope: dict, article_text: str) -> list[dict] | None:
     para = _article_paragraph_two(article_text)
     matches = list(re.finditer(
@@ -1200,7 +1341,6 @@ def _by_royalty_branches(scope: dict, article_text: str) -> list[dict] | None:
             ROYALTY_UI_CATEGORIES["industrial_ip"],
             ROYALTY_UI_CATEGORIES["equipment_financial"],
             ROYALTY_UI_CATEGORIES["equipment_operating"],
-            ROYALTY_UI_CATEGORIES["other"],
         ],
         start=1,
     ):
@@ -1247,6 +1387,21 @@ def _by_royalty_branches(scope: dict, article_text: str) -> list[dict] | None:
             "suffix": "ROYALTY-BY-SOFTWARE-OTHER-10",
         },
     ])
+    branches.append({
+        "rate": 10.0,
+        "priority": 700,
+        "conditions": [
+            *common,
+            {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": ROYALTY_UI_CATEGORIES["other"]},
+            {
+                "fact": "royalty_is_transport_vehicle",
+                "fact_source": "transaction",
+                "operator": "==",
+                "value": True,
+            },
+        ],
+        "suffix": "ROYALTY-BY-TRANSPORT-VEHICLE-10",
+    })
     return branches
 
 
@@ -1416,6 +1571,26 @@ def _special_royalty_branches(scope: dict, article_text: str) -> list[dict] | No
                         ],
                         "suffix": f"ROYALTY-REF-{letter.upper()}-{branch_index}-{category_index}",
                     })
+            if (
+                scope.get("recipient_country") == "TN"
+                and "technické alebo ekonomické štúdie" in article_text.lower()
+                and "technickú pomoc" in article_text.lower()
+            ):
+                branches.append({
+                    "rate": 15.0,
+                    "priority": 700,
+                    "conditions": [
+                        *common,
+                        {"fact": "royalty_category", "fact_source": "transaction", "operator": "==", "value": ROYALTY_UI_CATEGORIES["other"]},
+                        {
+                            "fact": "royalty_is_technical_or_economic_study_or_technical_assistance",
+                            "fact_source": "transaction",
+                            "operator": "==",
+                            "value": True,
+                        },
+                    ],
+                    "suffix": "ROYALTY-TN-TECHNICAL-STUDY-OR-ASSISTANCE-15",
+                })
             return branches
 
     # General source-state ceiling with a narrower non-film copyright
@@ -1527,6 +1702,10 @@ def royalty_branches(scope: dict, article: dict) -> list[dict] | None:
                         "suffix": f"ROYALTY-SOURCE-{taxed_letter.upper()}-{index}",
                     })
                 return branches
+
+    secondary = _br_vn_royalty_secondary_branches(scope, text)
+    if secondary:
+        return secondary
 
     by_style = _by_royalty_branches(scope, text)
     if by_style:
