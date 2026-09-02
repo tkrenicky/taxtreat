@@ -66,14 +66,15 @@ def test_workspace_adapter_uses_country_profile_for_copy():
     assert "ctx.metaDescription" in text
 
 
-def test_public_web_is_cz_only_while_sk_remains_backend_onboarded():
+def test_public_web_exposes_released_sk_through_generic_adapter():
     context = CONTEXT.read_text(encoding="utf-8")
     adapter = ADAPTER.read_text(encoding="utf-8")
     backend = SK_BACKEND.read_text(encoding="utf-8")
 
-    assert 'SK: Object.freeze({' not in context
-    assert '<option value="SK">' not in adapter
-    assert 'countryControl.hidden = true;' in adapter
+    assert 'SK: Object.freeze({' in context
+    assert '<option value="SK">Slovensko</option>' in adapter
+    assert 'countryControl.hidden = true;' not in adapter
+    assert 'ctx.code === "SK"' not in adapter
 
     assert 'def evaluate_domestic_precedence(' in backend
     assert 'OUTSIDE_SUBJECT_OF_TAX' in backend
