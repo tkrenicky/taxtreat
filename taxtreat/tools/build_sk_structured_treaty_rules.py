@@ -52,8 +52,20 @@ def is_safe_simple(scope: dict, article: dict) -> bool:
         )
     if len(rates) != 1:
         return False
-    if int(scope.get("ownership_linked_rate_candidate_count") or 0) != 0:
-        return False
+    ownership_linked = int(scope.get("ownership_linked_rate_candidate_count") or 0)
+    if ownership_linked != 0:
+        if scope.get("income_type") != "dividend":
+            return False
+        paragraph_2 = _article_paragraph_two(str(article.get("article_text") or "").lower())
+        paragraph_2_rates = re.findall(r"([0-9]+(?:[,.][0-9]+)?)\s*%", paragraph_2)
+        has_ownership_threshold = bool(re.search(
+            r"(?:najmenej|aspoň)\s+[0-9]+(?:[,.][0-9]+)?\s*%|"
+            r"(?:priamo|nepriamo)[^.;]{0,140}[0-9]+(?:[,.][0-9]+)?\s*%",
+            paragraph_2,
+            flags=re.S,
+        ))
+        if len(paragraph_2_rates) != 1 or has_ownership_threshold:
+            return False
     if scope.get("holding_period_candidates"):
         return False
     if not scope.get("source_sha256"):
@@ -972,6 +984,7 @@ def main() -> int:
             "machine_rate_list_alone_is_never_sufficient_for_complex_branch_materialization": True,
             "source_text_explicit_dividend_branch_pairs_materialized": True,
             "source_text_fallback_phrase_required_for_dividend_branch_pair": True,
+            "single_rate_dividend_false_ownership_context_requires_one_paragraph_two_rate_and_no_threshold": True,
             "source_text_explicit_interest_exemption_branches_materialized": True,
             "source_text_explicit_residence_only_materialized": True,
             "source_text_single_word_rate_requires_one_unambiguous_paragraph_two_ceiling": True,
