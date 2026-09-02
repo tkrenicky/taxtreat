@@ -28,6 +28,7 @@ _TREATMENT_ORDER = {
     TaxTreatment.DOMESTIC_EXEMPTION: 0,
     TaxTreatment.EXCLUSIVE_FOREIGN_TAXATION: 1,
     TaxTreatment.TAXABLE_AT_RATE: 2,
+    TaxTreatment.DOMESTIC_RATE_APPLIES: 3,
     None: 9,
 }
 
