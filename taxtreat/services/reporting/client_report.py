@@ -225,6 +225,8 @@ def _result_conclusion(report, selected, rate_display):
         return f"Při splnění uvedených předpokladů se česká srážková daň neuplatní podle {reference}."
     if treatment == "domestic_exemption":
         return f"Při splnění uvedených předpokladů se uplatní osvobození od české srážkové daně podle {reference}."
+    if treatment == "domestic_rate_applies":
+        return f"{reference.capitalize()} umožňuje zdanění ve státě zdroje bez omezení smluvní sazby; použitelný režim a sazba se určí podle vnitrostátního práva."
     return f"Při splnění uvedených předpokladů činí česká srážková daň {rate_display} podle {reference}."
 
 
