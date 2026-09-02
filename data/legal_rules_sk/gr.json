@@ -5,7 +5,7 @@
   },
   "rules": [
     {
-      "rule_id": "SK-GR-DIVIDEND-TREATY-UNRESOLVED-FAIL-CLOSED",
+      "rule_id": "SK-GR-DIVIDEND-TREATY-DIVIDEND-GR-DOMESTIC-RATE",
       "income_type": "dividend",
       "source_country": "SK",
       "recipient_country": "GR",
@@ -14,7 +14,7 @@
       "article": "10",
       "paragraph": null,
       "rate": null,
-      "priority": 900,
+      "priority": 650,
       "conditions": [
         {
           "fact": "recipient_is_treaty_resident",
@@ -23,7 +23,7 @@
           "value": true
         }
       ],
-      "effect": "review_gate",
+      "effect": "rate",
       "effective_from": "1989-05-23",
       "verification_status": "needs_review",
       "source_text": "Článok 10 Dividendy 1. Dividendy vyplácané spoločnosťou, ktorá je rezidentom v jednom zmluvnom štáte, osobe, ktorá je rezidentom v druhom zmluvnom štáte, podliehajú zdaneniu v oboch zmluvných štátoch. 2. Výraz „dividendy“ použitý v tomto článku označuje príjmy z účastín, požitkových účastín alebo požitkových listov, kuksov, zakladateľských podielov alebo iných práv - s výnimkou pohľadávok - s podielom na zisku a príjmy z iných podielov na spoločnosti, ktoré sú podľa právnych predpisov štátov, v ktorom je spoločnosť, ktorá dividendy vypláca rezidentom, postavené na roveň príjmov z účastín. 3. Ustanovenie odseku 1 sa nepoužije, ak skutočný príjemca dividend, ktorý je rezidentom v jednom zmluvnom štáte, vykonáva v druhom zmluvnom štáte, v ktorom je rezidentom spoločnosť vyplácajúca dividendy, priemyselnú alebo obchodnú činnosť prostredníctvom stálej prevádzkárne, ktorá je tam umiestnená, alebo nezávislé povolanie prostredníctvom stálej základne tam umiestnenej, a ak účasť, pre ktorú sa dividendy vyplácajú, sa skutočne viaže k tejto stálej prevádzkárni alebo k tejto stálej základni. V takom prípade sa použijú ustanovenia článku 7 alebo článku 14 . 4. Ak spoločnosť, ktorá je rezidentom v jednom zmluvnom štáte, dosahuje zisky alebo príjmy z druhého zmluvného štátu, nemôže tento druhý štát zdaniť dividendy vyplácané spoločnosťou, ledaže sa tieto dividendy vyplácajú osobe, ktorá je rezidentom v tomto druhom štáte, alebo že účasť, pre ktorú sa dividendy vyplácajú, skutočne patrí k stálej prevádzkárni alebo k stálej základni, ktoré sú umiestnené v tomto druhom štáte, ani podrobiť nerozdelené zisky spoločnosti dani z nerozdelených ziskov, aj keď vyplácané dividendy alebo nerozdelené zisky pozostávajú úplne alebo sčasti zo ziskov alebo z príjmov docielených v tomto druhom štáte.",
@@ -41,7 +41,8 @@
       ],
       "decision_status": "REVIEW_REQUIRED",
       "final_rate_allowed": false,
-      "automatic_production_approval_forbidden": true
+      "automatic_production_approval_forbidden": true,
+      "tax_treatment": "domestic_rate_applies"
     },
     {
       "rule_id": "SK-GR-INTEREST-TREATY-SIMPLE-1",

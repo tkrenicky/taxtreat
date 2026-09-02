@@ -3,11 +3,11 @@
   "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
   "source_country": "SK",
   "total_scopes": 225,
-  "materialized_scopes": 223,
-  "decision_materialized_scopes": 223,
-  "fail_closed_placeholder_scopes": 2,
+  "materialized_scopes": 225,
+  "decision_materialized_scopes": 225,
+  "fail_closed_placeholder_scopes": 0,
   "structured_scope_coverage": 225,
-  "unresolved_scopes": 2,
+  "unresolved_scopes": 0,
   "materialized_country_packages": 75,
   "materialized_scope_keys": [
     "SK-AE-dividend",
@@ -85,6 +85,7 @@
     "SK-GE-dividend",
     "SK-GE-interest",
     "SK-GE-royalty",
+    "SK-GR-dividend",
     "SK-GR-interest",
     "SK-GR-royalty",
     "SK-HR-dividend",
@@ -141,6 +142,7 @@
     "SK-LV-dividend",
     "SK-LV-interest",
     "SK-LV-royalty",
+    "SK-LY-dividend",
     "SK-LY-interest",
     "SK-LY-royalty",
     "SK-MD-dividend",
@@ -236,7 +238,7 @@
   ],
   "materialization_modes": {
     "simple_single_rate": 88,
-    "source_text_dividend_branch_pair": 41,
+    "source_text_dividend_branch_pair": 43,
     "source_text_explicit_residence_only": 7,
     "source_text_interest_residence_only": 24,
     "source_text_interest_special_exemption": 34,
@@ -244,28 +246,11 @@
     "source_text_single_word_rate": 8
   },
   "unresolved_by_income": {
-    "dividend": 2,
+    "dividend": 0,
     "interest": 0,
     "royalty": 0
   },
-  "unresolved": [
-    {
-      "recipient_country": "GR",
-      "income_type": "dividend",
-      "rate_candidates": [],
-      "exclusive_residence_taxation_candidate": false,
-      "ownership_linked_rate_candidate_count": 0,
-      "holding_period_candidates": []
-    },
-    {
-      "recipient_country": "LY",
-      "income_type": "dividend",
-      "rate_candidates": [],
-      "exclusive_residence_taxation_candidate": false,
-      "ownership_linked_rate_candidate_count": 0,
-      "holding_period_candidates": []
-    }
-  ],
+  "unresolved": [],
   "policy": {
     "machine_rate_list_alone_is_never_sufficient_for_complex_branch_materialization": true,
     "source_text_explicit_dividend_branch_pairs_materialized": true,
