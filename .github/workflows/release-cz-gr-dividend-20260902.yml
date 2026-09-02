@@ -1,0 +1,94 @@
+name: One-shot CZ-GR dividend structural release
+
+on:
+  push:
+    branches: [fix/cz-gr-dividend-structural-20260902]
+    paths:
+      - ".github/workflows/release-cz-gr-dividend-20260902.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+          pip install --no-deps -e .
+      - name: Build deterministic CZ semantic remediation release
+        run: python scripts/release_stage6_semantic_remediation_20260901.py
+      - name: Validate live 303-scope coverage and GR structural outcome
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path(".")
+          files = sorted((root / "data/legal_rules_stage6").glob("*.json"))
+          assert len(files) == 101, len(files)
+          scopes = set()
+          for path in files:
+              payload = json.loads(path.read_text(encoding="utf-8"))
+              country = payload["country_pair"]["recipient_country"]
+              for rule in payload["rules"]:
+                  if rule.get("legal_layer") == "treaty":
+                      scopes.add((country, rule["income_type"]))
+          assert len(scopes) == 303, len(scopes)
+
+          gr = json.loads((root / "data/legal_rules_stage6/gr.json").read_text(encoding="utf-8"))
+          rules = [
+              r for r in gr["rules"]
+              if r.get("legal_layer") == "treaty" and r.get("income_type") == "dividend"
+          ]
+          assert len(rules) == 1, rules
+          rule = rules[0]
+          assert rule["rule_id"] == "CZ-GR-DIVIDEND-CURRENT-1"
+          assert rule["rate"] is None
+          assert rule["tax_treatment"] == "domestic_rate_applies"
+          assert rule["verification_status"] == "verified"
+          assert rule["verification_authority"] == "semantic_remediation_machine_validation"
+          assert any(
+              c.get("fact") == "permanent_establishment_connection"
+              and c.get("operator") == "=="
+              and str(c.get("value")).lower() == "false"
+              for c in rule.get("conditions", [])
+          )
+
+          release = json.loads(
+              (root / "data/legal_reviews/global_cz_outbound/semantic_remediation_machine_release_20260901.json")
+              .read_text(encoding="utf-8")
+          )
+          assert release["counts"]["released_scopes"] == 41
+          assert release["counts"]["released_packages"] == 41
+          assert any(
+              r["partner_country"] == "GR"
+              and r["income_type"] == "dividend"
+              and r["release_status"] == "released_after_machine_validation"
+              for r in release["records"]
+          )
+          print("CZ live Stage 6 coverage: 303/303")
+          print("CZ-GR dividend: domestic_rate_applies, machine validated")
+          PY
+      - name: Verify EN treaty locale coverage
+        run: python scripts/verify_en_treaty_locale_all_rules_20260828.py
+      - name: Verify dividend treaty fallback
+        run: python scripts/verify_dividend_treaty_fallback_all_partners_20260828.py
+      - name: Run targeted governance and runtime tests
+        run: |
+          python -m pytest             tests/test_stage6_production_rules.py             tests/test_stage6_runtime_canonical_gate.py             tests/test_stage6_semantic_remediation_projector_20260901.py             tests/test_semantic_remediation_machine_release_20260901.py             tests/test_tax_treatment_semantics.py             tests/test_legal_rule_reliability.py
+      - name: Remove one-shot workflow and commit generated release
+        run: |
+          git rm .github/workflows/release-cz-gr-dividend-20260902.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add             data/legal_rules_stage6             data/legal_reviews/global_cz_outbound/stage6_production_approval.json             data/legal_reviews/global_cz_outbound/stage6_rule_promotion.json             data/legal_reviews/global_cz_outbound/stage6_source_release.json             data/legal_reviews/global_cz_outbound/production_source_release_gate_v2.json             taxtreat/engine/legal_rule_engine.py
+          git commit -m "Release CZ-GR dividend structural treaty outcome"
+          git pull --rebase origin fix/cz-gr-dividend-structural-20260902
+          git push
