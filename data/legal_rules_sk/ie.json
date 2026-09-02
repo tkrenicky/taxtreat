@@ -572,7 +572,7 @@
       ]
     },
     {
-      "rule_id": "SK-IE-INTEREST-TREATY-UNRESOLVED-FAIL-CLOSED",
+      "rule_id": "SK-IE-INTEREST-TREATY-INTEREST-SOURCE-TEXT-RESIDENCE-ONLY",
       "income_type": "interest",
       "source_country": "SK",
       "recipient_country": "IE",
@@ -580,8 +580,8 @@
       "legal_layer": "treaty",
       "article": "11",
       "paragraph": null,
-      "rate": null,
-      "priority": 900,
+      "rate": 0.0,
+      "priority": 650,
       "conditions": [
         {
           "fact": "recipient_is_treaty_resident",
@@ -602,7 +602,7 @@
           "value": false
         }
       ],
-      "effect": "review_gate",
+      "effect": "rate",
       "effective_from": "1999-12-30",
       "verification_status": "needs_review",
       "source_text": "Článok 11 Úroky 1. Úroky majúce zdroj v jednom zmluvnom štáte, ktoré sa vyplácajú rezidentovi druhého zmluvného štátu, sa zdaňujú len v tomto druhom štáte, ak je tento rezident skutočným vlastníkom úrokov. 2. Výraz „úroky“ použitý v tomto článku označuje príjmy z akýchkoľvek pohľadávok zabezpečených či nezabezpečených záložným právom k nehnuteľnosti, či majú alebo nemajú právo účasti na zisku dlžníka, a najmä príjmy z vládnych cenných papierov a príjmy z obligácií alebo dlhopisov vrátane prémií a výhier spojených s týmito cennými papiermi, obligáciami alebo s dlhopismi, ale nezahŕňa akýkoľvek príjem, ktorý sa považuje za dividendu podľa článku 10 . Penále za oneskorenú platbu sa nepovažuje za úroky na účely tohto článku. 3. Ustanovenia odseku 1 sa nepoužijú, ak skutočný vlastník úrokov, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, v ktorom majú úroky zdroj, podnikateľskú činnosť prostredníctvom stálej prevádzkarne, ktorá je tam umiestnená, alebo v tomto druhom štáte vykonáva nezávislé povolanie zo stálej základne tam umiestnenej, a ak pohľadávka, z ktorej sa platia úroky, sa skutočne viaže na túto stálu prevádzkareň alebo na túto stálu základňu. V takom prípade sa podľa okolností použijú ustanovenia článku 7 alebo 14 . 4. Predpokladá sa, že úroky majú zdroj v zmluvnom štáte, ak platiteľ je rezidentom tohto štátu. Ak však osoba platiaca úroky, či je alebo nie je rezidentom niektorého zmluvného štátu, má v zmluvnom štáte stálu prevádzkareň alebo stálu základňu, v súvislosti s ktorou vznikol dlh, z ktorého sa platia úroky, a tieto úroky idú na ťarchu tejto stálej prevádzkarne alebo stálej základne, potom sa za zdroj takýchto úrokov považuje štát, v ktorom je umiestnená stála prevádzkareň alebo stála základňa. 5. Ak v dôsledku osobitných vzťahov existujúcich medzi platiteľom a skutočným vlastníkom úrokov alebo medzi nimi a treťou osobou suma úrokov vzťahujúca sa na pohľadávku, z ktorej sa platia, presahuje sumu, ktorú by bol dohodol platiteľ so skutočným vlastníkom, keby neboli takéto vzťahy, použijú sa ustanovenia tohto článku len na túto naposledy uvedenú sumu. Časť platieb presahujúca túto sumu sa v takom prípade zdaní podľa právnych predpisov každého zmluvného štátu s prihliadnutím na ostatné ustanovenia tejto zmluvy.",
@@ -620,7 +620,8 @@
       ],
       "decision_status": "REVIEW_REQUIRED",
       "final_rate_allowed": false,
-      "automatic_production_approval_forbidden": true
+      "automatic_production_approval_forbidden": true,
+      "tax_treatment": "exclusive_foreign_taxation"
     },
     {
       "rule_id": "SK-IE-MLI-GATE-ROYALTY-A3",

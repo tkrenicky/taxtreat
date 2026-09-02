@@ -44,7 +44,7 @@
       "automatic_production_approval_forbidden": true
     },
     {
-      "rule_id": "SK-SE-INTEREST-TREATY-UNRESOLVED-FAIL-CLOSED",
+      "rule_id": "SK-SE-INTEREST-TREATY-INTEREST-SOURCE-TEXT-RESIDENCE-ONLY",
       "income_type": "interest",
       "source_country": "SK",
       "recipient_country": "SE",
@@ -52,8 +52,8 @@
       "legal_layer": "treaty",
       "article": "11",
       "paragraph": null,
-      "rate": null,
-      "priority": 900,
+      "rate": 0.0,
+      "priority": 650,
       "conditions": [
         {
           "fact": "recipient_is_treaty_resident",
@@ -62,7 +62,7 @@
           "value": true
         }
       ],
-      "effect": "review_gate",
+      "effect": "rate",
       "effective_from": "1980-10-08",
       "verification_status": "needs_review",
       "source_text": "Článok 11 Úroky 1. Úroky majúce zdroj v jednom zmluvnom štáte a platené osobe majúcej bydlisko alebo sídlo v druhom zmluvnom štáte podliehajú zdaneniu iba v tomto druhom štáte. 2. Výraz „úroky“ použitý v tomto článku označuje príjmy z pohľadávok akéhokoľvek druhu, zabezpečených i nezabezpečených záložným právom na nehnuteľnosti, poskytujúcich i neposkytujúcich právo na účasť na zisku dlžníka, a najmä príjmy z verejných dlhopisov a obligácií včítane prémií a výher spojených s týmito cennými papiermi. 3. Ustanovenie odseku 1 sa nepoužije, ak príjemca úrokov, ktorý má bydlisko alebo sídlo v jednom zmluvnom štáte, vykonáva v druhom zmluvnom štáte, v ktorom majú úroky zdroj, priemyselnú alebo obchodnú činnosť prostredníctvom stálej prevádzkárne, ktorá je tam umiestnená, alebo vykonáva v tomto druhom štáte slobodné povolanie pomocou stálej základne tam umiestnenej a ak pohľadávka, z ktorej sa úroky platia, je skutočne spojená s takou stálou prevádzkárňou alebo stálou základňou. V takom prípade sa použijú ustanovenia článku 7 alebo článku 14 podľa toho, o aký prípad ide. 4. Ak suma platených úrokov, posudzované so zreteľom na pohľadávku, z ktorej sa platia, presahuje v dôsledku osobitných vzťahov existujúcich medzi platiteľom a príjemcom alebo medzi oboma a treťou osobou sumu, ktorú by bol dojednal platiteľ s príjemcom, keby také vzťahy neboli, použijú sa ustanovenia tohto článku len na túto poslednú sumu. Časť úrokov, ktorá ju presahuje, bude v tomto prípade podrobená zdaneniu podľa právnych predpisov každého zmluvného štátu s prihliadnutím na ostatné ustanovenia tejto Zmluvy.",
@@ -80,7 +80,8 @@
       ],
       "decision_status": "REVIEW_REQUIRED",
       "final_rate_allowed": false,
-      "automatic_production_approval_forbidden": true
+      "automatic_production_approval_forbidden": true,
+      "tax_treatment": "exclusive_foreign_taxation"
     },
     {
       "rule_id": "SK-SE-ROYALTY-TREATY-SIMPLE-1",

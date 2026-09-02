@@ -646,7 +646,7 @@
       ]
     },
     {
-      "rule_id": "SK-NL-INTEREST-TREATY-UNRESOLVED-FAIL-CLOSED",
+      "rule_id": "SK-NL-INTEREST-TREATY-INTEREST-SOURCE-TEXT-RESIDENCE-ONLY",
       "income_type": "interest",
       "source_country": "SK",
       "recipient_country": "NL",
@@ -654,8 +654,8 @@
       "legal_layer": "treaty",
       "article": "11",
       "paragraph": null,
-      "rate": null,
-      "priority": 900,
+      "rate": 0.0,
+      "priority": 650,
       "conditions": [
         {
           "fact": "recipient_is_treaty_resident",
@@ -664,7 +664,7 @@
           "value": true
         }
       ],
-      "effect": "review_gate",
+      "effect": "rate",
       "effective_from": "1974-11-05",
       "verification_status": "needs_review",
       "source_text": "Článok 11 Úroky 1. Úroky, ktoré majú zdroj v jednom z oboch štátov a vyplácajú sa osobe majúcej bydlisko alebo sídlo v druhom štáte, budú podliehať zdaneniu len v tomto druhom štáte. 2. Výraz „úroky“ použitý v tomto článku označuje príjmy z verejných dlhopisov, obligácií alebo dlžobných úpisov zabezpečených aj nezabezpečených záložným právom na nehnuteľnosti, pokiaľ neposkytujú právo na podiel na zisku, a z pohľadávok akéhokoľvek druhu nezabezpečených záložným právom na nehnuteľnosti, práve tak ako všetky iné príjmy postavené na roveň príjmom z pôžičiek daňovými predpismi štátu, v ktorom majú tieto príjmy zdroj. 3. Ustanovenie odseku 1 sa nepoužije, ak príjemca úrokov, ktorý má bydlisko alebo sídlo v jednom z oboch štátov, má v druhom štáte, v ktorom je zdroj úrokov, stálu prevádzkáreň, ku ktorej sa v skutočnosti viaže pohľadávka, ktorá je zdrojom úrokov. V takom prípade sa použije",
@@ -682,7 +682,8 @@
       ],
       "decision_status": "REVIEW_REQUIRED",
       "final_rate_allowed": false,
-      "automatic_production_approval_forbidden": true
+      "automatic_production_approval_forbidden": true,
+      "tax_treatment": "exclusive_foreign_taxation"
     },
     {
       "rule_id": "SK-NL-MLI-GATE-ROYALTY-A3",
