@@ -303,3 +303,28 @@ def test_pattern_review_coverage_fails_closed_without_evidence(
         "legal_review_coverage_evidence_missing"
         in exc_info.value.decision.blockers
     )
+
+
+def test_committed_sk_release_manifest_matches_structured_materialization_summary():
+    import json
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[1]
+    base = root / "data" / "legal_reviews" / "sk_outbound"
+    manifest = json.loads(
+        (base / "source_country_release_manifest.json").read_text(encoding="utf-8")
+    )
+    summary = json.loads(
+        (base / "structured_treaty_rule_materialization_summary.json").read_text(
+            encoding="utf-8"
+        )
+    )
+
+    materialization = manifest["structured_treaty_rule_materialization"]
+    assert materialization["status"] == "complete"
+    assert materialization["structured_scope_coverage"] == summary["structured_scope_coverage"] == 225
+    assert materialization["decision_materialized_scopes"] == summary["decision_materialized_scopes"] == 225
+    assert materialization["fail_closed_placeholder_scopes"] == summary["fail_closed_placeholder_scopes"] == 0
+    assert materialization["unresolved_scopes"] == summary["unresolved_scopes"] == 0
+    assert materialization["semantic_evidence_scope_count"] == summary["total_scopes"] == 225
+    assert manifest["expected_scope_count"] == summary["total_scopes"] == 225
