@@ -138,11 +138,22 @@ def main() -> int:
             )
             continue
         if selected_layer not in {"treaty", "protocol", "mli"}:
-            failures.append(
-                f"{country}: expected treaty/protocol/MLI selection, "
-                f"got {result.selected_rule_id} ({selected_layer})"
+            structural_domestic = any(
+                str(getattr(rule.tax_treatment, "value", rule.tax_treatment) or "")
+                == "domestic_rate_applies"
+                for rule in treaty
             )
-            continue
+            if not (
+                structural_domestic
+                and selected_layer == "domestic"
+                and result.rate is not None
+            ):
+                failures.append(
+                    f"{country}: expected treaty/protocol/MLI selection or a "
+                    "verified treaty domestic_rate_applies handoff, "
+                    f"got {result.selected_rule_id} ({selected_layer})"
+                )
+                continue
         if result.rate is None and str(result.tax_treatment.value if result.tax_treatment else "") != "exclusive_foreign_taxation":
             failures.append(
                 f"{country}: final treaty outcome has neither rate nor exclusive-foreign treatment"
