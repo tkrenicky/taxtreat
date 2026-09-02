@@ -326,10 +326,10 @@ def run_browser_audit(report: dict[str, Any]) -> None:
 
         # Cycle every recipient country option and every recipient type.
         for option in [x["value"] for x in new_options if x["value"]]:
-            new_country_select.select_option(option)
+            new_country_select.select_option(option, force=True)
         tested.append("all_101_new_recipient_country_options")
         for option in [x["value"] for x in edit_options if x["value"]]:
-            edit_country_select.select_option(option)
+            edit_country_select.select_option(option, force=True)
         tested.append("all_101_edit_recipient_country_options")
 
         page.locator("[data-create-recipient]").first.click()
