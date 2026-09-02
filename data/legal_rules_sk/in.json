@@ -713,7 +713,7 @@
       ]
     },
     {
-      "rule_id": "SK-IN-INTEREST-TREATY-UNRESOLVED-FAIL-CLOSED",
+      "rule_id": "SK-IN-INTEREST-TREATY-INTEREST-GENERAL",
       "income_type": "interest",
       "source_country": "SK",
       "recipient_country": "IN",
@@ -721,8 +721,8 @@
       "legal_layer": "treaty",
       "article": "11",
       "paragraph": null,
-      "rate": null,
-      "priority": 900,
+      "rate": 15.0,
+      "priority": 600,
       "conditions": [
         {
           "fact": "recipient_is_treaty_resident",
@@ -735,9 +735,15 @@
           "fact_source": "transaction",
           "operator": "==",
           "value": true
+        },
+        {
+          "fact": "article_11_special_exemption",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
         }
       ],
-      "effect": "review_gate",
+      "effect": "rate",
       "effective_from": "1987-03-13",
       "verification_status": "needs_review",
       "source_text": "Článok 11 Úroky 1. Úroky majúce zdroj v jednom zmluvnom štáte a platené osobe majúcej bydlisko alebo sídlo v druhom zmluvnom štáte sa môžu zdaniť v tomto druhom štáte. 2. Také úroky sa však môžu zdaniť tiež v zmluvnom štáte, v ktorom je ich zdroj, a to podľa právnych predpisov tohto štátu, ale ak príjemca je skutočným vlastníkom úrokov, daň takto ukladaná nepresiahne 15 % hrubej sumy úrokov. 3. Nehľadiac na ustanovenie odseku 2, a) úroky sa oslobodia od zdanenia v zmluvnom štáte, v ktorom je ich zdroj, za predpokladu, že ich príjemcom a skutočným vlastníkom je i) vláda, nižší správny útvar alebo miestny úrad druhého zmluvného štátu alebo ii) ústredná banka druhého zmluvného štátu; b) úroky sa oslobodia od zdanenia v zmluvnom štáte, v ktorom je ich zdroj, ak ich skutočným vlastníkom je osoba majúca bydlisko alebo sídlo v druhom zmluvnom štáte, ktorá tieto úroky poberá v súvislosti s pôžičkou alebo úverom, ktoré sa poskytli alebo zaručili: i) v prípade Československa Československou obchodnou bankou, pokiaľ úroky plynú výlučne z financovania vývozu a dovozu, ii) v prípade Indie Vývoznou a dovoznou bankou (the Export-Import Banka of India - Exim Bank), pokiaľ úroky plynú výlučne z financovania vývozu a dovozu, iii) akoukoľvek inštitúciou zmluvného štátu poverenou financovaním zahraničného obchodu z verejných prostriedkov, iv) akoukoľvek inou osobou za predpokladu, že pôžička alebo úver boli schválené vládou prvého zmluvného štátu. 4. Výraz „úroky“ použitý v tomto článku označuje príjmy z pohľadávok akéhokoľvek druhu zabezpečených i nezabezpečených záložným právom na nehnuteľnosti, poskytujúcich i neposkytujúcich právo na účasť na zisku dlžníka a obzvlášť príjmy z verejných dlhopisov a obligácií včítane prémií a výhier spojených a týmito dlhopismi a obligáciami. Penále za oneskorené platenie sa nepovažuje za úroky na účely tohto článku. 5. Ustanovenia odsekov 1 a 2 sa nepoužijú, ak skutočný vlastník úrokov, ktorý má bydlisko alebo sídlo v jednom zmluvnom štáte, vykonáva v druhom zmluvnom štáte, v ktorom majú úroky zdroj, priemyselnú alebo obchodnú činnosť prostredníctvom stálej prevádzkárne, ktorá je tam umiestnená, alebo poskytuje v tomto druhom štáte nezávisle osobné služby zo stálej základne tam umiestnenej a ak pohľadávka, z ktorej sú úroky platené, je skutočne spojená s takou stálou prevádzkárňou alebo stálou základňou. V takom prípade sa použijú ustanovenia článku 7 alebo článku 14 podľa toho, o aký prípad ide. 6. Bude sa predpokladať, že úroky majú zdroj v jednom zmluvnom štáte, ak je platcom tento zmluvný štát sám, nižší správny útvar alebo miestny úrad tohto štátu alebo osoba, ktorá má bydlisko alebo sídlo v tomto štáte. Ak však platca úrokov, či už má alebo nemá bydlisko alebo sídlo v niektorom zmluvnom štáte, má v jednom zmluvnom štáte stálu prevádzkáreň alebo stálu základňu, v spojení s ktorými vznikol záväzok platiť úroky, a ak také úroky idú na ťarchu tejto stálej prevádzkárne alebo stálej základne, bude sa predpokladať, že zdroj týchto úrokov je v zmluvnom štáte, v ktorom je stála prevádzkáreň alebo stála základňa umiestnená. 7. Ak suma úrokov, posudzované so zreteľom na pohľadávku, z ktorej sú platené, presahuje v dôsledku osobitných vzťahov existujúcich medzi platcom a skutočným vlastníkom úrokov alebo medzi oboma a treťou osobou sumu, ktorú by bol dojednal platca so skutočným vlastníkom, keby nebolo takých vzťahov, použijú sa ustanovenia tohto článku len na túto poslednú sumu. Časť platených úrokov, ktorá ju presahuje, bude v tomto prípade podrobená zdaneniu podľa právnych predpisov každého zmluvného štátu s prihliadnutím na ostatné ustanovenia tejto Zmluvy.",
@@ -756,6 +762,58 @@
       "decision_status": "REVIEW_REQUIRED",
       "final_rate_allowed": false,
       "automatic_production_approval_forbidden": true
+    },
+    {
+      "rule_id": "SK-IN-INTEREST-TREATY-INTEREST-SPECIAL-EXEMPTION",
+      "income_type": "interest",
+      "source_country": "SK",
+      "recipient_country": "IN",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "11",
+      "paragraph": null,
+      "rate": 0.0,
+      "priority": 700,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "article_11_special_exemption",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "rate",
+      "effective_from": "1987-03-13",
+      "verification_status": "needs_review",
+      "source_text": "Článok 11 Úroky 1. Úroky majúce zdroj v jednom zmluvnom štáte a platené osobe majúcej bydlisko alebo sídlo v druhom zmluvnom štáte sa môžu zdaniť v tomto druhom štáte. 2. Také úroky sa však môžu zdaniť tiež v zmluvnom štáte, v ktorom je ich zdroj, a to podľa právnych predpisov tohto štátu, ale ak príjemca je skutočným vlastníkom úrokov, daň takto ukladaná nepresiahne 15 % hrubej sumy úrokov. 3. Nehľadiac na ustanovenie odseku 2, a) úroky sa oslobodia od zdanenia v zmluvnom štáte, v ktorom je ich zdroj, za predpokladu, že ich príjemcom a skutočným vlastníkom je i) vláda, nižší správny útvar alebo miestny úrad druhého zmluvného štátu alebo ii) ústredná banka druhého zmluvného štátu; b) úroky sa oslobodia od zdanenia v zmluvnom štáte, v ktorom je ich zdroj, ak ich skutočným vlastníkom je osoba majúca bydlisko alebo sídlo v druhom zmluvnom štáte, ktorá tieto úroky poberá v súvislosti s pôžičkou alebo úverom, ktoré sa poskytli alebo zaručili: i) v prípade Československa Československou obchodnou bankou, pokiaľ úroky plynú výlučne z financovania vývozu a dovozu, ii) v prípade Indie Vývoznou a dovoznou bankou (the Export-Import Banka of India - Exim Bank), pokiaľ úroky plynú výlučne z financovania vývozu a dovozu, iii) akoukoľvek inštitúciou zmluvného štátu poverenou financovaním zahraničného obchodu z verejných prostriedkov, iv) akoukoľvek inou osobou za predpokladu, že pôžička alebo úver boli schválené vládou prvého zmluvného štátu. 4. Výraz „úroky“ použitý v tomto článku označuje príjmy z pohľadávok akéhokoľvek druhu zabezpečených i nezabezpečených záložným právom na nehnuteľnosti, poskytujúcich i neposkytujúcich právo na účasť na zisku dlžníka a obzvlášť príjmy z verejných dlhopisov a obligácií včítane prémií a výhier spojených a týmito dlhopismi a obligáciami. Penále za oneskorené platenie sa nepovažuje za úroky na účely tohto článku. 5. Ustanovenia odsekov 1 a 2 sa nepoužijú, ak skutočný vlastník úrokov, ktorý má bydlisko alebo sídlo v jednom zmluvnom štáte, vykonáva v druhom zmluvnom štáte, v ktorom majú úroky zdroj, priemyselnú alebo obchodnú činnosť prostredníctvom stálej prevádzkárne, ktorá je tam umiestnená, alebo poskytuje v tomto druhom štáte nezávisle osobné služby zo stálej základne tam umiestnenej a ak pohľadávka, z ktorej sú úroky platené, je skutočne spojená s takou stálou prevádzkárňou alebo stálou základňou. V takom prípade sa použijú ustanovenia článku 7 alebo článku 14 podľa toho, o aký prípad ide. 6. Bude sa predpokladať, že úroky majú zdroj v jednom zmluvnom štáte, ak je platcom tento zmluvný štát sám, nižší správny útvar alebo miestny úrad tohto štátu alebo osoba, ktorá má bydlisko alebo sídlo v tomto štáte. Ak však platca úrokov, či už má alebo nemá bydlisko alebo sídlo v niektorom zmluvnom štáte, má v jednom zmluvnom štáte stálu prevádzkáreň alebo stálu základňu, v spojení s ktorými vznikol záväzok platiť úroky, a ak také úroky idú na ťarchu tejto stálej prevádzkárne alebo stálej základne, bude sa predpokladať, že zdroj týchto úrokov je v zmluvnom štáte, v ktorom je stála prevádzkáreň alebo stála základňa umiestnená. 7. Ak suma úrokov, posudzované so zreteľom na pohľadávku, z ktorej sú platené, presahuje v dôsledku osobitných vzťahov existujúcich medzi platcom a skutočným vlastníkom úrokov alebo medzi oboma a treťou osobou sumu, ktorú by bol dojednal platca so skutočným vlastníkom, keby nebolo takých vzťahov, použijú sa ustanovenia tohto článku len na túto poslednú sumu. Časť platených úrokov, ktorá ju presahuje, bude v tomto prípade podrobená zdaneniu podľa právnych predpisov každého zmluvného štátu s prihliadnutím na ostatné ustanovenia tejto Zmluvy.",
+      "source_id": "SK-SLOVLEX-9AC3BCE7A1C51495",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/1987/77/vyhlasene_znenie.html",
+      "source_excerpt_hash": "5e218800e2b898d5eb4639e295b6f6ff45c688294ee05e03261f3a0ca871bc52",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-9AC3BCE7A1C51495"
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true,
+      "tax_treatment": "exclusive_foreign_taxation"
     },
     {
       "rule_id": "SK-IN-MLI-GATE-ROYALTY-A4",

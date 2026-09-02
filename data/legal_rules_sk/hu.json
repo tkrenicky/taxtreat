@@ -129,7 +129,7 @@
       "automatic_production_approval_forbidden": true
     },
     {
-      "rule_id": "SK-HU-INTEREST-TREATY-UNRESOLVED-FAIL-CLOSED",
+      "rule_id": "SK-HU-INTEREST-TREATY-INTEREST-RESIDENCE-ONLY",
       "income_type": "interest",
       "source_country": "SK",
       "recipient_country": "HU",
@@ -137,8 +137,8 @@
       "legal_layer": "treaty",
       "article": "11",
       "paragraph": null,
-      "rate": null,
-      "priority": 900,
+      "rate": 0.0,
+      "priority": 650,
       "conditions": [
         {
           "fact": "recipient_is_treaty_resident",
@@ -159,7 +159,7 @@
           "value": false
         }
       ],
-      "effect": "review_gate",
+      "effect": "rate",
       "effective_from": "1995-12-21",
       "verification_status": "needs_review",
       "source_text": "Článok 11 Úroky 1. Úroky, ktoré majú zdroj v jednom zmluvnom štáte a poberá ich rezident druhého zmluvného štátu, možno zdaniť iba v tomto druhom štáte, ak tento rezident je skutočným vlastníkom úroku. 2. Výraz „úroky“ použitý v tomto článku označuje príjmy z pohľadávok akéhokoľvek druhu zabezpečených i nezabezpečených záložným právom k nehnuteľnosti alebo či majú alebo nemajú právo účasti na zisku dlžníka, a najmä príjmy z vládnych cenných papierov a príjmy z obligácií alebo z dlhopisov vrátane prémií a výhier spojených s týmito cennými papiermi, obligáciami alebo s dlhopismi. 3. Ustanovenie odseku 1 sa nepoužije, ak skutočný vlastník úrokov, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, v ktorom majú úroky zdroj, priemyselnú alebo obchodnú činnosť prostredníctvom stálej prevádzkarne, ktorá je tam umiestnená, alebo nezávislé povolanie prostredníctvom stálej základne tam umiestnenej a ak sa pohľadávka, z ktorej sa úroky vyplácajú, skutočne viaže na túto stálu prevádzkareň alebo na túto stálu základňu. V takomto prípade sa použijú ustanovenia článku 7 alebo článku 14 podľa toho, o aký prípad ide. 4. Ak suma úrokov vzťahujúcich sa na pohľadávku, z ktorej sa úroky vyplácajú, presahuje v dôsledku osobitných vzťahov, ktoré existujú medzi platiteľom a skutočným vlastníkom úrokov alebo ktoré jeden aj druhý udržiavajú s treťou osobou, sumu, ktorú by bol dohodol platiteľ so skutočným vlastníkom, keby neboli takéto vzťahy, použijú sa ustanovenia tohto článku len na túto naposledy uvedenú sumu. Suma platieb, ktorá ju presahuje, sa v tomto prípade môže zdaniť podľa právnych predpisov každého zmluvného štátu s prihliadnutím na ostatné ustanovenia tejto zmluvy.",
@@ -177,7 +177,8 @@
       ],
       "decision_status": "REVIEW_REQUIRED",
       "final_rate_allowed": false,
-      "automatic_production_approval_forbidden": true
+      "automatic_production_approval_forbidden": true,
+      "tax_treatment": "exclusive_foreign_taxation"
     },
     {
       "rule_id": "SK-HU-ROYALTY-TREATY-SIMPLE-1",

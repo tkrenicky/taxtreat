@@ -541,7 +541,7 @@
       ]
     },
     {
-      "rule_id": "SK-TN-INTEREST-TREATY-SIMPLE-1",
+      "rule_id": "SK-TN-INTEREST-TREATY-INTEREST-RESIDENCE-ONLY",
       "income_type": "interest",
       "source_country": "SK",
       "recipient_country": "TN",
@@ -549,8 +549,8 @@
       "legal_layer": "treaty",
       "article": "11",
       "paragraph": null,
-      "rate": 12.0,
-      "priority": 600,
+      "rate": 0.0,
+      "priority": 650,
       "conditions": [
         {
           "fact": "recipient_is_treaty_resident",
@@ -577,7 +577,8 @@
       ],
       "decision_status": "REVIEW_REQUIRED",
       "final_rate_allowed": false,
-      "automatic_production_approval_forbidden": true
+      "automatic_production_approval_forbidden": true,
+      "tax_treatment": "exclusive_foreign_taxation"
     },
     {
       "rule_id": "SK-TN-MLI-GATE-ROYALTY-A7",

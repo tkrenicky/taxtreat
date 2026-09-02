@@ -3,11 +3,11 @@
   "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
   "source_country": "SK",
   "total_scopes": 225,
-  "materialized_scopes": 184,
-  "decision_materialized_scopes": 184,
-  "fail_closed_placeholder_scopes": 41,
+  "materialized_scopes": 188,
+  "decision_materialized_scopes": 188,
+  "fail_closed_placeholder_scopes": 37,
   "structured_scope_coverage": 225,
-  "unresolved_scopes": 41,
+  "unresolved_scopes": 37,
   "materialized_country_packages": 75,
   "materialized_scope_keys": [
     "SK-AE-dividend",
@@ -76,6 +76,7 @@
     "SK-HR-interest",
     "SK-HR-royalty",
     "SK-HU-dividend",
+    "SK-HU-interest",
     "SK-HU-royalty",
     "SK-ID-dividend",
     "SK-ID-interest",
@@ -84,6 +85,7 @@
     "SK-IL-dividend",
     "SK-IL-royalty",
     "SK-IN-dividend",
+    "SK-IN-interest",
     "SK-IN-royalty",
     "SK-IR-dividend",
     "SK-IR-interest",
@@ -158,6 +160,7 @@
     "SK-RS-interest",
     "SK-RS-royalty",
     "SK-RU-dividend",
+    "SK-RU-interest",
     "SK-RU-royalty",
     "SK-SA-dividend",
     "SK-SA-royalty",
@@ -193,20 +196,21 @@
     "SK-UZ-royalty",
     "SK-VN-interest",
     "SK-ZA-dividend",
+    "SK-ZA-interest",
     "SK-ZA-royalty"
   ],
   "materialization_modes": {
-    "simple_single_rate": 90,
+    "simple_single_rate": 89,
     "source_text_dividend_branch_pair": 33,
-    "source_text_explicit_residence_only": 11,
-    "source_text_interest_residence_only": 11,
+    "source_text_explicit_residence_only": 3,
+    "source_text_interest_residence_only": 24,
     "source_text_interest_special_exemption": 29,
     "source_text_royalty_category_branches": 2,
     "source_text_single_word_rate": 8
   },
   "unresolved_by_income": {
     "dividend": 14,
-    "interest": 9,
+    "interest": 5,
     "royalty": 18
   },
   "unresolved": [
@@ -330,16 +334,6 @@
       "holding_period_candidates": []
     },
     {
-      "recipient_country": "IN",
-      "income_type": "interest",
-      "rate_candidates": [
-        15.0
-      ],
-      "exclusive_residence_taxation_candidate": false,
-      "ownership_linked_rate_candidate_count": 0,
-      "holding_period_candidates": []
-    },
-    {
       "recipient_country": "ID",
       "income_type": "royalty",
       "rate_candidates": [
@@ -384,14 +378,6 @@
       "holding_period_candidates": []
     },
     {
-      "recipient_country": "ZA",
-      "income_type": "interest",
-      "rate_candidates": [],
-      "exclusive_residence_taxation_candidate": false,
-      "ownership_linked_rate_candidate_count": 0,
-      "holding_period_candidates": []
-    },
-    {
       "recipient_country": "CA",
       "income_type": "royalty",
       "rate_candidates": [
@@ -422,14 +408,6 @@
     {
       "recipient_country": "LY",
       "income_type": "dividend",
-      "rate_candidates": [],
-      "exclusive_residence_taxation_candidate": false,
-      "ownership_linked_rate_candidate_count": 0,
-      "holding_period_candidates": []
-    },
-    {
-      "recipient_country": "HU",
-      "income_type": "interest",
       "rate_candidates": [],
       "exclusive_residence_taxation_candidate": false,
       "ownership_linked_rate_candidate_count": 0,
@@ -505,14 +483,6 @@
         10.0,
         15.0
       ],
-      "exclusive_residence_taxation_candidate": false,
-      "ownership_linked_rate_candidate_count": 0,
-      "holding_period_candidates": []
-    },
-    {
-      "recipient_country": "RU",
-      "income_type": "interest",
-      "rate_candidates": [],
       "exclusive_residence_taxation_candidate": false,
       "ownership_linked_rate_candidate_count": 0,
       "holding_period_candidates": []
@@ -619,6 +589,8 @@
     "source_text_fallback_phrase_required_for_dividend_branch_pair": true,
     "single_rate_dividend_false_ownership_context_requires_one_paragraph_two_rate_and_no_threshold": true,
     "source_text_explicit_interest_exemption_branches_materialized": true,
+    "interest_word_rate_recovery_allowed_only_with_single_unambiguous_general_ceiling": true,
+    "interest_residence_only_wording_variants_materialized": true,
     "source_text_explicit_residence_only_materialized": true,
     "source_text_single_word_rate_requires_one_unambiguous_paragraph_two_ceiling": true,
     "source_text_word_rate_complex_exemptions_and_category_splits_remain_fail_closed": true,

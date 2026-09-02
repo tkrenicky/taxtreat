@@ -744,7 +744,7 @@
       ]
     },
     {
-      "rule_id": "SK-RU-INTEREST-TREATY-UNRESOLVED-FAIL-CLOSED",
+      "rule_id": "SK-RU-INTEREST-TREATY-INTEREST-RESIDENCE-ONLY",
       "income_type": "interest",
       "source_country": "SK",
       "recipient_country": "RU",
@@ -752,8 +752,8 @@
       "legal_layer": "treaty",
       "article": "11",
       "paragraph": null,
-      "rate": null,
-      "priority": 900,
+      "rate": 0.0,
+      "priority": 650,
       "conditions": [
         {
           "fact": "recipient_is_treaty_resident",
@@ -774,7 +774,7 @@
           "value": false
         }
       ],
-      "effect": "review_gate",
+      "effect": "rate",
       "effective_from": "1997-05-01",
       "verification_status": "needs_review",
       "source_text": "Článok 11 Úroky 1. Úroky majúce zdroj v jednom zmluvnom štáte, ktoré poberá rezident druhého zmluvného štátu, možno zdaniť iba v tomto druhom štáte, ak je tento rezident skutočným vlastníkom úrokov. 2. Výraz „úroky“ použitý v tomto článku označuje príjmy z pohľadávok akéhokoľvek druhu, a najmä príjmy z vládnych cenných papierov a príjmy z obligácií a dlhopisov vrátane prémií a výhier spojených s týmito cennými papiermi, obligáciami alebo dlhopismi. Penále za oneskorenú platbu sa nepovažuje za úroky na účely tohto článku. 3. Ustanovenie odseku 1 sa nepoužije, ak skutočný vlastník úrokov, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, v ktorom majú úroky zdroj, podnikateľskú činnosť prostredníctvom stálej prevádzkarne, ktorá je tam umiestnená, alebo v tomto druhom štáte vykonáva nezávislé povolanie zo stálej základne tam umiestnenej, a ak pohľadávka, z ktorej sú úroky platené, sa skutočne viaže na túto stálu prevádzkareň alebo na túto stálu základňu. V takomto prípade sa použijú ustanovenia článku 7 alebo 14 podľa toho, o aký prípad ide. 4. Ak suma úrokov, ktoré sa vzťahujú na pohľadávku, z ktorej sa platia, presahuje v dôsledku osobitných vzťahov existujúcich medzi platiteľom a skutočným vlastníkom úrokov alebo ktoré udržiava jeden aj druhý s treťou osobou, sumu, ktorú by bol dohodol platiteľ so skutočným vlastníkom úrokov, keby nebolo takýchto vzťahov, použijú sa ustanovenia tohto článku len na túto naposledy uvedenú sumu. Suma platieb, ktorá ju presahuje, sa môže v tomto prípade zdaniť podľa právnych predpisov každého zmluvného štátu s prihliadnutím na ostatné ustanovenia tejto zmluvy.",
@@ -792,7 +792,8 @@
       ],
       "decision_status": "REVIEW_REQUIRED",
       "final_rate_allowed": false,
-      "automatic_production_approval_forbidden": true
+      "automatic_production_approval_forbidden": true,
+      "tax_treatment": "exclusive_foreign_taxation"
     },
     {
       "rule_id": "SK-RU-MLI-GATE-ROYALTY-A3",

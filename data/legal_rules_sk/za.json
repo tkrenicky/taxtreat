@@ -559,7 +559,7 @@
       ]
     },
     {
-      "rule_id": "SK-ZA-INTEREST-TREATY-UNRESOLVED-FAIL-CLOSED",
+      "rule_id": "SK-ZA-INTEREST-TREATY-INTEREST-RESIDENCE-ONLY",
       "income_type": "interest",
       "source_country": "SK",
       "recipient_country": "ZA",
@@ -567,8 +567,8 @@
       "legal_layer": "treaty",
       "article": "11",
       "paragraph": null,
-      "rate": null,
-      "priority": 900,
+      "rate": 0.0,
+      "priority": 650,
       "conditions": [
         {
           "fact": "recipient_is_treaty_resident",
@@ -589,7 +589,7 @@
           "value": false
         }
       ],
-      "effect": "review_gate",
+      "effect": "rate",
       "effective_from": "1999-06-30",
       "verification_status": "needs_review",
       "source_text": "Článok 11 Úroky 1. Úroky majúce zdroj v jednom zmluvnom štáte a vyplácané rezidentovi druhého zmluvného štátu možno zdaniť len v tomto druhom štáte, ak tento rezident je skutočným vlastníkom úrokov. 2. Výraz „úroky“ použitý v tomto článku označuje príjmy z pohľadávok akéhokoľvek druhu zabezpečených alebo nezabezpečených záložným právom k nehnuteľnosti a bez ohľadu na to, či majú alebo nemajú právo účasti na zisku dlžníka, najmä príjmy z vládnych cenných papierov a príjmy z obligácií alebo dlhopisov vrátane prémií a výhier spojených s týmito cennými papiermi, obligáciami alebo dlhopismi. Penále za oneskorenú platbu sa nepovažuje za úroky na účely tohto článku. 3. Ustanovenie odseku 1 sa nepoužije, ak skutočný vlastník úrokov, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, v ktorom majú úroky zdroj, podnikateľskú činnosť prostredníctvom stálej prevádzkarne, ktorá je tam umiestnená, alebo v tomto druhom štáte vykonáva nezávislé povolanie zo stálej základne tam umiestnenej a ak pohľadávka, z ktorej sa platia úroky, skutočne sa viaže na túto stálu prevádzkareň alebo na túto stálu základňu. V takom prípade sa použijú ustanovenia článku 7 alebo článku 13 podľa toho, o aký prípad ide. 4. Ak suma úrokov vzťahujúcich sa na pohľadávku, z ktorej sa platia, presahuje v dôsledku osobitných vzťahov, ktoré existujú medzi platiteľom a skutočným vlastníkom úrokov alebo ktoré jeden aj druhý udržiavajú s treťou osobou, sumu, ktorú by bol dohodol platiteľ so skutočným vlastníkom, keby takéto vzťahy neexistovali, použijú sa ustanovenia tohto článku len na naposledy uvedenú sumu. Suma platieb, ktorá ju presahuje, bude v tomto prípade zdanená podľa právnych predpisov každého zmluvného štátu s prihliadnutím na ostatné ustanovenia tejto zmluvy.",
@@ -607,7 +607,8 @@
       ],
       "decision_status": "REVIEW_REQUIRED",
       "final_rate_allowed": false,
-      "automatic_production_approval_forbidden": true
+      "automatic_production_approval_forbidden": true,
+      "tax_treatment": "exclusive_foreign_taxation"
     },
     {
       "rule_id": "SK-ZA-MLI-GATE-ROYALTY-A3",
