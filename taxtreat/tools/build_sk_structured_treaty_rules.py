@@ -225,15 +225,29 @@ def dividend_branches(scope: dict, article: dict) -> list[dict] | None:
     if not text or not scope.get("source_sha256"):
         return None
 
-    fallback_match = re.search(
-        r"([0-9]+(?:[,.][0-9]+)?)\s*%[^.;]{0,180}(?:vo\s+všetkých\s+ostatných\s+prípadoch|"
+    fallback_phrase = re.search(
+        r"(?:vo\s+všetkých\s+ostatných\s+prípadoch|"
         r"v\s+ostatných\s+prípadoch|vo\s+všetkých\s+iných\s+prípadoch)",
         text,
         flags=re.S,
     )
-    if not fallback_match:
+    if not fallback_phrase:
         return None
-    fallback_rate = _percent(fallback_match.group(1))
+
+    # Use the rate closest to the fallback phrase. The previous regex could
+    # incorrectly capture the qualifying rate when both percentages appeared
+    # in the same sentence.
+    before_fallback = text[max(0, fallback_phrase.start() - 220):fallback_phrase.start()]
+    fallback_rates = list(re.finditer(r"([0-9]+(?:[,.][0-9]+)?)\s*%", before_fallback))
+    if not fallback_rates:
+        return None
+    fallback_rate = _percent(fallback_rates[-1].group(1))
+
+    # Three-or-more explicit lettered rate clauses need their own structured
+    # branch model; do not collapse them into a two-branch rule.
+    lettered_rates = re.findall(r"(?:^|[;,.]\s*)([a-d])\)\s*([0-9]+(?:[,.][0-9]+)?)\s*%", text)
+    if len(lettered_rates) > 2:
+        return None
 
     ownership_match = re.search(
         r"([0-9]+(?:[,.][0-9]+)?)\s*%[^.;]{0,650}?"
