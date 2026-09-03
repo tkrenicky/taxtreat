@@ -121,10 +121,8 @@
   document.querySelectorAll("[data-create-payer]").forEach((button) => {
     button.addEventListener("click", () => {
       country.dataset.userSelected = "false";
-      window.setTimeout(() => {
-        if (!form.elements.payer_name.value) country.value = "";
-        applyCountryUi();
-      }, 0);
+      if (!form.elements.payer_name.value) country.value = "";
+      applyCountryUi();
     });
   });
 
