@@ -88,7 +88,7 @@ def fill_dynamic_questions(page: Page) -> None:
 
 
 def start_flow(page: Page) -> None:
-    page.locator("[data-start-flow]").first.click()
+    page.locator("[data-start-flow]:visible").first.click()
     page.wait_for_function(
         "() => Boolean(document.querySelector('.flow-step[data-step=\"1\"].active'))"
     )
