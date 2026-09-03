@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      TAXTREAT_LIVE_BASE_URL: https://taxtreat.vercel.app
+      TAXTREAT_LIVE_BASE_URL: https://taxtreat-runtime.vercel.app
       TAXTREAT_LIVE_E2E_ARTIFACT_DIR: artifacts/live-production-e2e
     steps:
       - uses: actions/checkout@v4
@@ -29,6 +29,14 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install playwright
           python -m playwright install --with-deps chromium
+
+      - name: Diagnose runtime domain
+        run: |
+          for path in / /health/live /ui/cs; do
+            echo "===== $path ====="
+            curl -sS -D - --max-time 20 "$TAXTREAT_LIVE_BASE_URL$path" | head -c 3000 || true
+            echo
+          done
 
       - name: Run live production audit
         run: python scripts/verify_live_production_e2e.py
