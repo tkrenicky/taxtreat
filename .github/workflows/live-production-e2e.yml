@@ -1,0 +1,42 @@
+name: Live production E2E
+
+on:
+  pull_request:
+    paths:
+      - "scripts/verify_live_production_e2e.py"
+      - ".github/workflows/live-production-e2e.yml"
+      - "app/**"
+      - "taxtreat/**"
+      - "data/**"
+  workflow_dispatch:
+
+jobs:
+  live-production-e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      TAXTREAT_LIVE_BASE_URL: https://taxtreat.vercel.app
+      TAXTREAT_LIVE_E2E_ARTIFACT_DIR: artifacts/live-production-e2e
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Playwright
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Run live production audit
+        run: python scripts/verify_live_production_e2e.py
+
+      - name: Upload live audit artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-production-e2e
+          path: artifacts/live-production-e2e
+          if-no-files-found: ignore
