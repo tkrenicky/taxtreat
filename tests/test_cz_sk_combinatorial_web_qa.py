@@ -38,9 +38,9 @@ def test_combinatorial_gate_contains_real_web_visible_variants():
         "ownership_25",
         "holding_12m",
         "arm_length_false",
-        "royalty_category_computer_software",
-        "royalty_category_industrial_ip_knowhow",
-        "royalty_category_other",
+        '"computer_software"',
+        '"industrial_ip_knowhow"',
+        '"other"',
     ):
         assert marker in text
 
