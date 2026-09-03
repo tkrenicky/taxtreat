@@ -127,6 +127,23 @@ def numeric(value: Any) -> bool:
     return isinstance(value, (int, float)) and not isinstance(value, bool)
 
 
+def numeric_like(value: Any) -> float | None:
+    """Mirror the runtime's legacy numeric-threshold normalization."""
+    if isinstance(value, bool):
+        return None
+    if isinstance(value, (int, float)):
+        return float(value)
+    if isinstance(value, str):
+        normalized = value.strip()
+        if normalized.endswith("%"):
+            normalized = normalized[:-1].strip()
+        try:
+            return float(normalized)
+        except ValueError:
+            return None
+    return None
+
+
 def condition_values(operator: str, value: Any) -> tuple[Any, Any] | None:
     if operator in {"==", "is"}:
         if isinstance(value, bool):
@@ -146,16 +163,17 @@ def condition_values(operator: str, value: Any) -> tuple[Any, Any] | None:
             return "__taxtreat_other__", value
         return None
 
-    if numeric(value):
-        epsilon = 0.01 if isinstance(value, float) else 1
+    threshold = numeric_like(value)
+    if threshold is not None:
+        epsilon = 0.01
         if operator == ">=":
-            return value, value - epsilon
+            return threshold, threshold - epsilon
         if operator == ">":
-            return value + epsilon, value
+            return threshold + epsilon, threshold
         if operator == "<=":
-            return value, value + epsilon
+            return threshold, threshold + epsilon
         if operator == "<":
-            return value - epsilon, value
+            return threshold - epsilon, threshold
 
     if operator in {"in", "not in", "not_in"} and isinstance(value, list) and value:
         first = value[0]
@@ -271,13 +289,12 @@ def scenario_payloads(
         )
     else:
         for category in (
-            "copyright",
+            "copyright_literary_artistic_scientific_nonfilm_nonsoftware",
+            "cinematographic_films_or_broadcast_media",
             "computer_software",
-            "film_tv_radio",
-            "industrial_equipment",
-            "industrial_ip_knowhow",
-            "financial_lease",
-            "operating_lease",
+            "patent_trademark_design_model_plan_secret_formula_process_or_knowhow",
+            "financial_lease_of_equipment",
+            "operating_lease_or_other_use_of_equipment",
             "other",
         ):
             common.append((f"royalty_category_{category}", {"royalty_category": category}))
