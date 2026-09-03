@@ -324,10 +324,34 @@ def validate_analysis(
     if selected and not selected.startswith(f"{source_country}-"):
         issues.append(f"cross_source_rule:{selected}")
 
-    for key in ("withholding_tax_calculation", "withholding_compliance_schedule"):
-        item = analysis.get(key) or {}
-        if item and item.get("source_country") != source_country:
-            issues.append(f"{key}_source_mismatch")
+    calculation = analysis.get("withholding_tax_calculation") or {}
+    schedule = analysis.get("withholding_compliance_schedule") or {}
+
+    if source_country == "SK":
+        if calculation and calculation.get("source_country") != "SK":
+            issues.append("withholding_tax_calculation_source_mismatch")
+        if schedule and schedule.get("source_country") != "SK":
+            issues.append("withholding_compliance_schedule_source_mismatch")
+        serialized = repr({"calculation": calculation, "schedule": schedule})
+        for marker in ("586/1992", "§ 38d", "§ 38da", "CZK"):
+            if marker in serialized:
+                issues.append(f"sk_compliance_leak:{marker}")
+    else:
+        # CZ intentionally preserves the legacy calculation/compliance schema,
+        # which predates the source-country router and does not carry an
+        # explicit source_country field. Validate the established CZ contract
+        # instead of requiring the SK-only source marker.
+        if calculation:
+            if calculation.get("tax_currency") != "CZK":
+                issues.append("cz_calculation_tax_currency_mismatch")
+            if calculation.get("source_country") not in (None, "CZ"):
+                issues.append("cz_calculation_cross_source_marker")
+        if schedule:
+            serialized = repr(schedule)
+            if "595/2003" in serialized or "OZN4311v26" in serialized:
+                issues.append("cz_compliance_sk_leak")
+            if schedule.get("source_country") not in (None, "CZ"):
+                issues.append("cz_schedule_cross_source_marker")
 
 
 def run_qa(
