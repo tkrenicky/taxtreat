@@ -42,6 +42,8 @@
     royalty_is_waiver: ["Is the payment consideration for waiving or refraining from exercising the relevant right?", "Some treaties apply a specific rate to payments for waiving or refraining from exercising a right."],
     detailed_eligibility_review_required: ["A detailed treaty eligibility review is required for this branch.", "This condition cannot be reduced to a single factual confirmation without reviewing the relevant legal and transaction documents."],
     distributed_vs_undistributed_corporate_tax_rate_difference: ["Does the relevant corporate-tax-rate difference meet the treaty threshold?", "The applicable dividend rule depends on the specified difference between the taxation of distributed and undistributed profits."],
+    distribution_is_tax_deductible_for_payer: ["Is the distributed profit share, or any part of it, tax-deductible for the Slovak payer?", "For a Slovak corporate recipient, Section 12(7)(c) also depends on whether the distribution is deductible for the payer."],
+    distribution_category_is_section_3_1_f: ["Is this a special profit share covered by Section 3(1)(f) of the Slovak Income Tax Act?", "These special profit shares are an exception to the general corporate-dividend treatment under Section 12(7)(c)."],
   };
 
   const LABELS = {
