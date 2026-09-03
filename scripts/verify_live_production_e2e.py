@@ -88,7 +88,15 @@ def fill_dynamic_questions(page: Page) -> None:
 
 
 def start_flow(page: Page) -> None:
-    page.locator("[data-start-flow]:visible").first.click()
+    start = page.locator("[data-start-flow]:visible")
+    if start.count() == 0:
+        page.locator('[data-nav="dashboard"]:visible').first.click()
+        page.wait_for_function(
+            "() => Boolean(document.querySelector('[data-view=\"dashboard\"].active'))"
+        )
+        start = page.locator("[data-start-flow]:visible")
+    check(start.count() > 0, "No visible New calculation control is available")
+    start.first.click()
     page.wait_for_function(
         "() => Boolean(document.querySelector('.flow-step[data-step=\"1\"].active'))"
     )
