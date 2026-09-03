@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      TAXTREAT_LIVE_BASE_URL: https://taxtreat-bootstrap-preview-4p08md1ba.vercel.app
+      TAXTREAT_LIVE_BASE_URL: https://taxtreat-runtime-tomaskrenicky-9671s-projects.vercel.app
       TAXTREAT_LIVE_E2E_ARTIFACT_DIR: artifacts/live-production-e2e
     steps:
       - uses: actions/checkout@v4
