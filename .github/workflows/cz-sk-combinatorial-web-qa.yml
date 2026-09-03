@@ -1,0 +1,38 @@
+name: CZ/SK combinatorial web-contract QA
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - "app/**"
+      - "taxtreat/**"
+      - "data/legal_rules_stage6/**"
+      - "data/legal_rules_sk/**"
+      - "scripts/run_cz_sk_combinatorial_web_qa.py"
+      - ".github/workflows/cz-sk-combinatorial-web-qa.yml"
+  workflow_dispatch:
+
+jobs:
+  combinatorial-web-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+          pip install --no-deps -e .
+      - name: Run thousands of CZ/SK condition-derived web-contract scenarios
+        run: python scripts/run_cz_sk_combinatorial_web_qa.py
+      - name: Upload combinatorial QA evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cz-sk-combinatorial-web-qa
+          path: reports/cz_sk_combinatorial_web_qa.json
+          if-no-files-found: error
+          retention-days: 30
