@@ -1,0 +1,56 @@
+name: Build public runtime bundle
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - ".github/workflows/build-runtime-bundle-release.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build runtime bundle
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile, ZIP_DEFLATED
+          import os
+
+          root = Path(".")
+          include_roots = [Path("app"), Path("taxtreat"), Path("data")]
+          include_files = [Path("requirements.txt"), Path("pyproject.toml")]
+          excluded_suffixes = {".pdf", ".gz", ".zip", ".tar", ".tgz"}
+          excluded_parts = {"__pycache__"}
+
+          out = Path("runtime_bundle.zip")
+          with ZipFile(out, "w", compression=ZIP_DEFLATED, compresslevel=9) as zf:
+              for base in include_roots:
+                  for path in base.rglob("*"):
+                      if not path.is_file():
+                          continue
+                      if any(part in excluded_parts for part in path.parts):
+                          continue
+                      if path.suffix.lower() in excluded_suffixes:
+                          continue
+                      zf.write(path, path.as_posix())
+              for path in include_files:
+                  zf.write(path, path.as_posix())
+
+          print(f"bundle_bytes={out.stat().st_size}")
+          print(f"bundle_mb={out.stat().st_size / 1024 / 1024:.2f}")
+          PY
+
+      - name: Publish runtime-main release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete runtime-main --cleanup-tag --yes || true
+          gh release create runtime-main runtime_bundle.zip             --title "TaxTreat runtime main"             --notes "Runtime bundle generated from commit ${GITHUB_SHA}."
