@@ -103,7 +103,6 @@ def test_registered_released_sk_dividend_enters_domestic_first_evaluation():
         "distribution_category_is_section_3_1_f",
         "distribution_is_tax_deductible_for_payer",
         "recipient_entity_type",
-        "recipient_is_non_cooperating_state_taxpayer",
     ]
 
 
