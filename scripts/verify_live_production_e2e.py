@@ -12,8 +12,18 @@ from playwright.sync_api import Page, BrowserContext, sync_playwright
 BASE_URL = os.environ.get("TAXTREAT_LIVE_BASE_URL", "https://taxtreat.vercel.app").rstrip("/")
 ARTIFACT_DIR = Path(os.environ.get("TAXTREAT_LIVE_E2E_ARTIFACT_DIR", "artifacts/live-production-e2e"))
 ARTIFACT_DIR.mkdir(parents=True, exist_ok=True)
+VERCEL_OIDC_TOKEN = os.environ.get("TAXTREAT_VERCEL_OIDC_TOKEN", "").strip()
 
 INCOMES = ("dividend", "interest", "royalty")
+
+
+def browser_context(browser, **kwargs):
+    headers = dict(kwargs.pop("extra_http_headers", {}) or {})
+    if VERCEL_OIDC_TOKEN:
+        headers["x-vercel-trusted-oidc-idp-token"] = VERCEL_OIDC_TOKEN
+    if headers:
+        kwargs["extra_http_headers"] = headers
+    return browser.new_context(**kwargs)
 
 
 def check(condition: bool, message: str) -> None:
@@ -294,7 +304,8 @@ def run_case(
 
 
 def stable_locale_check(browser, path: str, expected_lang: str) -> None:
-    page = browser.new_page()
+    context = browser_context(browser)
+    page = context.new_page()
     page.set_default_timeout(12_000)
     errors: list[str] = []
     failed: list[str] = []
@@ -313,6 +324,7 @@ def stable_locale_check(browser, path: str, expected_lang: str) -> None:
     check(not errors, f"{path}: console errors {errors}")
     check(not failed, f"{path}: request failures {failed}")
     page.close()
+    context.close()
 
 
 def create_sk_payer(page: Page) -> None:
@@ -346,7 +358,7 @@ def main() -> int:
             stable_locale_check(browser, "/ui/en", "en")
             print("\nPASS stable CS/EN bootstrap")
 
-            context = browser.new_context(viewport={"width": 1440, "height": 1100})
+            context = browser_context(browser, viewport={"width": 1440, "height": 1100})
             page = context.new_page()
             page.set_default_timeout(12_000)
             page.set_default_navigation_timeout(20_000)
