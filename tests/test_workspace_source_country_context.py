@@ -21,7 +21,7 @@ def test_public_workspace_source_country_context_contains_released_cz_and_sk():
     assert 'fxProvider: null' in text
     assert 'Slovensko' in text
     assert 'OZN4311v26' in text
-    assert 'Slovenská zrážková daň' in text
+    assert 'Slovenská srážková daň' in text
 
 
 def test_public_workspace_derives_source_country_from_payer_without_mode_switch():
