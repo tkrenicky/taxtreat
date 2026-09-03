@@ -1,17 +1,25 @@
 name: Vercel production deploy
 
 on:
+  push:
+    branches: [ main ]
   workflow_dispatch:
 
 permissions:
   contents: read
 
+concurrency:
+  group: taxtreat-production-deploy
+  cancel-in-progress: true
+
 jobs:
   deploy-production:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     env:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: team_venWZarYV6y5GELQP60DFEsp
+      VERCEL_PROJECT_ID: prj_XPqvtCrJ9khKlw1R2Qpj7IAgRIws
     steps:
       - uses: actions/checkout@v4
 
@@ -23,12 +31,58 @@ jobs:
             exit 1
           fi
 
-      - name: Link TaxTreat Vercel project
+      - name: Bind TaxTreat Vercel project
         shell: bash
         run: |
-          npx --yes vercel@latest link --yes --project taxtreat --token "$VERCEL_TOKEN"
+          mkdir -p .vercel
+          cat > .vercel/project.json <<'JSON'
+          {"projectId":"prj_XPqvtCrJ9khKlw1R2Qpj7IAgRIws","orgId":"team_venWZarYV6y5GELQP60DFEsp","projectName":"taxtreat"}
+          JSON
 
-      - name: Deploy current main-compatible source to production
+      - name: Deploy current main to production
         shell: bash
         run: |
           npx --yes vercel@latest deploy --prod --yes --token "$VERCEL_TOKEN"
+
+      - name: Verify production alias exposes current build
+        shell: bash
+        run: |
+          python - <<'PY'
+          import time
+          import urllib.request
+
+          base = 'https://taxtreat.vercel.app'
+          expected = {
+              '/ui-assets/workspace-payer-country.js?v=20260821-freeze2': [
+                  'Vyber stát plátce',
+                  'country.dataset.userSelected = "true"',
+              ],
+              '/ui-assets/workspace.js?v=20260819-3': [
+                  'jurisdictionCatalogRequestVersion',
+                  'sourceCountry === "SK" ? "corporate" : "company"',
+              ],
+          }
+
+          for attempt in range(18):
+              missing = []
+              for path, markers in expected.items():
+                  req = urllib.request.Request(
+                      base + path,
+                      headers={
+                          'Cache-Control': 'no-cache',
+                          'User-Agent': 'taxtreat-deploy-check',
+                      },
+                  )
+                  with urllib.request.urlopen(req, timeout=20) as response:
+                      body = response.read().decode('utf-8')
+                  for marker in markers:
+                      if marker not in body:
+                          missing.append((path, marker))
+              if not missing:
+                  print('PRODUCTION_ASSET_MARKERS_OK')
+                  raise SystemExit(0)
+              print(f'Attempt {attempt + 1}/18: waiting for production alias; missing={missing}')
+              time.sleep(10)
+
+          raise SystemExit(f'Production alias did not expose the deployed build: {missing}')
+          PY
