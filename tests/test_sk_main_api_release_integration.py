@@ -22,14 +22,16 @@ def _production_payload():
     }
 
 
-def test_production_analysis_enters_sk_runtime_after_full_structured_scope_coverage():
+def test_production_analysis_resolves_standard_sk_corporate_dividend_from_cooperating_state():
     response = client.post("/analysis", json=_production_payload())
 
     assert response.status_code == 200
     payload = response.json()
-    assert payload["status"] == "REVIEW_REQUIRED"
+    assert payload["status"] == "FINAL"
     assert payload["rate"] is None
-    assert payload["requires_review"] is True
+    assert payload["requires_review"] is False
+    assert payload["tax_treatment"] == "outside_subject_of_tax"
+    assert payload["selected_rule_id"] == "SK-DIV-DOMESTIC-SECTION-12-7-C"
 
 
 def test_released_non_cz_source_country_returns_release_decision_without_fallthrough(monkeypatch):
