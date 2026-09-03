@@ -13,9 +13,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  combinatorial-web-contract:
+  scenario-inventory:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -26,13 +26,50 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements-dev.txt
           pip install --no-deps -e .
-      - name: Run thousands of CZ/SK condition-derived web-contract scenarios
-        run: python scripts/run_cz_sk_combinatorial_web_qa.py
-      - name: Upload combinatorial QA evidence
+      - name: Prove complete condition coverage and minimum scenario volume
+        run: |
+          python scripts/run_cz_sk_combinatorial_web_qa.py \
+            --count-only \
+            --output reports/cz_sk_combinatorial_inventory.json
+      - name: Upload scenario inventory
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: cz-sk-combinatorial-web-qa
-          path: reports/cz_sk_combinatorial_web_qa.json
+          name: cz-sk-combinatorial-scenario-inventory
+          path: reports/cz_sk_combinatorial_inventory.json
+          if-no-files-found: error
+          retention-days: 30
+
+  combinatorial-web-contract:
+    needs: scenario-inventory
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        source_country: [CZ, SK]
+        income_type: [dividend, interest, royalty]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+          pip install --no-deps -e .
+      - name: Run exhaustive condition-derived web-contract chunk
+        run: |
+          python scripts/run_cz_sk_combinatorial_web_qa.py \
+            --source-country "${{ matrix.source_country }}" \
+            --income-type "${{ matrix.income_type }}" \
+            --output "reports/cz_sk_${{ matrix.source_country }}_${{ matrix.income_type }}_combinatorial_web_qa.json"
+      - name: Upload chunk evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cz-sk-combinatorial-${{ matrix.source_country }}-${{ matrix.income_type }}
+          path: reports/cz_sk_${{ matrix.source_country }}_${{ matrix.income_type }}_combinatorial_web_qa.json
           if-no-files-found: error
           retention-days: 30
