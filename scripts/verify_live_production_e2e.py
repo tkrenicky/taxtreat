@@ -334,8 +334,8 @@ def create_sk_payer(page: Page) -> None:
     )
 
 
-def production_asset_fingerprint(browser) -> None:
-    request = browser.request
+def production_asset_fingerprint(playwright) -> None:
+    request = playwright.request.new_context()
     payer_asset = request.get(
         BASE_URL + "/ui-assets/workspace-payer-country.js?v=20260821-freeze2",
         timeout=20_000,
@@ -369,7 +369,7 @@ def main() -> int:
                 args=["--no-sandbox", "--disable-dev-shm-usage"],
             )
 
-            production_asset_fingerprint(browser)
+            production_asset_fingerprint(playwright)
             stable_locale_check(browser, "/ui/cs", "cs")
             stable_locale_check(browser, "/ui/en", "en")
             print("\nPASS stable CS/EN bootstrap")
