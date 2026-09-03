@@ -334,6 +334,33 @@ def create_sk_payer(page: Page) -> None:
     )
 
 
+def production_asset_fingerprint(browser) -> None:
+    request = browser.request
+    payer_asset = request.get(
+        BASE_URL + "/ui-assets/workspace-payer-country.js?v=20260821-freeze2",
+        timeout=20_000,
+    )
+    check(payer_asset.ok, f"payer-country asset HTTP {payer_asset.status}")
+    payer_js = payer_asset.text()
+
+    workspace_asset = request.get(
+        BASE_URL + "/ui-assets/workspace.js?v=20260819-3",
+        timeout=20_000,
+    )
+    check(workspace_asset.ok, f"workspace asset HTTP {workspace_asset.status}")
+    workspace_js = workspace_asset.text()
+
+    fingerprint = {
+        "payer_country_first_placeholder": "Select payer country" in payer_js and "Vyber stát plátce" in payer_js,
+        "payer_user_selection_guard": 'country.dataset.userSelected = "true"' in payer_js,
+        "jurisdiction_request_version_guard": "jurisdictionCatalogRequestVersion" in workspace_js,
+        "sk_corporate_mapping": 'sourceCountry === "SK" ? "corporate" : "company"' in workspace_js,
+    }
+    print("PRODUCTION_ASSET_FINGERPRINT", json.dumps(fingerprint, sort_keys=True))
+    missing = [key for key, value in fingerprint.items() if not value]
+    check(not missing, f"production deployment is stale/missing expected markers: {missing}")
+
+
 def main() -> int:
     try:
         with sync_playwright() as playwright:
@@ -342,6 +369,7 @@ def main() -> int:
                 args=["--no-sandbox", "--disable-dev-shm-usage"],
             )
 
+            production_asset_fingerprint(browser)
             stable_locale_check(browser, "/ui/cs", "cs")
             stable_locale_check(browser, "/ui/en", "en")
             print("\nPASS stable CS/EN bootstrap")
