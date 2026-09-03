@@ -1476,8 +1476,13 @@
     const data = new FormData(form);
     const error = document.querySelector("#workspace-error"); error.hidden = true;
     const transactionDate = String(data.get("transaction_date"));
+    const sourceCountry = String(document.body.dataset.sourceCountry || "CZ").toUpperCase();
     const facts = {
-      recipient_entity_type: recipient.type === "Fyzická osoba" ? "individual" : recipient.type === "Fond" ? "fund" : recipient.type === "Společnost" ? "company" : "other"
+      recipient_entity_type:
+        recipient.type === "Fyzická osoba" ? "individual" :
+        recipient.type === "Fond" ? "fund" :
+        recipient.type === "Společnost" ? (sourceCountry === "SK" ? "corporate" : "company") :
+        "other"
     };
     const beneficialOwner = data.get("beneficial_owner");
     const treatyResident = data.get("treaty_resident");
@@ -1539,7 +1544,6 @@
     }
     if (incomeType === "interest" && armLengthAmount) facts.arm_length_amount = armLengthAmount === "true";
     if (incomeType === "royalty" && royaltyCategory) facts.royalty_category = royaltyCategory;
-    const sourceCountry = String(document.body.dataset.sourceCountry || "CZ").toUpperCase();
     const sourceContext = window.TaxTreatSourceCountries?.get(sourceCountry);
     if (sourceContext?.fxProvider === "CNB" && String(data.get("currency")) !== sourceContext.baseCurrency) {
       const currentRate = clientAnswers.exchangeRate;
