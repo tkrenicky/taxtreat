@@ -143,6 +143,23 @@
     });
   }
 
+  function installSection19SourceGuard() {
+    let style = document.querySelector("#tt-cz-section19-source-guard");
+    if (!style) {
+      style = document.createElement("style");
+      style.id = "tt-cz-section19-source-guard";
+      document.head.append(style);
+    }
+    style.textContent = `
+      body[data-source-country="SK"] #cz-section19-facts {
+        display: none !important;
+      }
+      body[data-source-country="CZ"] #cz-section19-facts:not([hidden]) {
+        display: grid !important;
+      }
+    `;
+  }
+
   function syncSection19Visibility() {
     const box = document.querySelector("#cz-section19-facts");
     if (!box) return;
@@ -346,6 +363,7 @@
   });
 
   function boot() {
+    installSection19SourceGuard();
     addLanguageControl();
     addReportLanguageControl();
     addSection19Questions();
