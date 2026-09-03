@@ -107,6 +107,37 @@ FACT_GUIDANCE: dict[str, dict[str, Any]] = {
             "Zakladatelské dokumenty",
         ],
     },
+    "distribution_is_tax_deductible_for_payer": {
+        "prompt": (
+            "Je vyplácený podíl na zisku nebo jeho část u slovenského plátce "
+            "daňově uznatelným nákladem?"
+        ),
+        "why": (
+            "U slovenské právnické osoby je režim dividend podle § 12 odst. 7 "
+            "písm. c) navázán také na to, zda je distribuce u plátce daňově "
+            "uznatelná."
+        ),
+        "response_type": "boolean",
+        "documents": [
+            "Účetní a daňové podklady k rozdělení zisku",
+        ],
+    },
+    "distribution_category_is_section_3_1_f": {
+        "prompt": (
+            "Jde o zvláštní podíl podle § 3 odst. 1 písm. f) slovenského zákona "
+            "(např. podíl na výsledku podnikání tichého společníka v.o.s., "
+            "podíl společníka v.o.s. nebo komplementáře k.s.)?"
+        ),
+        "why": (
+            "Tyto zvláštní podíly jsou výjimkou z obecného režimu dividend "
+            "právnických osob podle § 12 odst. 7 písm. c)."
+        ),
+        "response_type": "boolean",
+        "documents": [
+            "Rozhodnutí o rozdělení zisku",
+            "Zakladatelské nebo společenské dokumenty plátce",
+        ],
+    },
     "treaty_specific_recipient_qualification": {
         "prompt": (
             "Ověřte, zda příjemce splňuje zvláštní status vyžadovaný "

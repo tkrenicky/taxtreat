@@ -69,7 +69,10 @@
   function countryGenitive(code) {
     return knownCountryGenitives[String(code || "").toUpperCase()] || countryName(code);
   }
+  let jurisdictionCatalogRequestVersion = 0;
+
   async function loadJurisdictionCatalog(sourceCode = document.body.dataset.sourceCountry || "CZ") {
+    const requestVersion = ++jurisdictionCatalogRequestVersion;
     const normalizedSource = String(sourceCode || "CZ").toUpperCase();
     const expectedCount = normalizedSource === "SK" ? 75 : 101;
     const selects = [recipientForm?.elements.recipient_country, recipientEditForm?.elements.recipient_country].filter(Boolean);
@@ -83,6 +86,17 @@
       const jurisdictions = [...body.jurisdictions].sort((a, b) =>
         countryName(a.iso2).localeCompare(countryName(b.iso2), "cs")
       );
+
+      const activeSource = String(
+        document.body.dataset.sourceCountry || "CZ"
+      ).toUpperCase();
+      if (
+        requestVersion !== jurisdictionCatalogRequestVersion
+        || activeSource !== normalizedSource
+      ) {
+        return;
+      }
+
       selects.forEach((select) => {
         const current = select.value;
         const placeholder = select.closest("#new-recipient-form") ? "Vyber stát" : null;
@@ -1278,11 +1292,11 @@
       if (schedule.status !== "READY") {
         note.textContent = en
           ? "The Slovak remittance and notification deadlines cannot be finalized until the applicable tax treatment is determined."
-          : "Slovenské lehoty na odvod dane a oznámenie nemožno uzavrieť, kým sa neurčí použiteľné daňové zaobchádzanie.";
+          : "Lhůty pro odvod slovenské srážkové daně a podání oznámení nelze uzavřít, dokud není určen použitelný daňový režim.";
       } else {
         note.textContent = en
           ? "The Slovak withholding-tax remittance and notification follow the deadline shown under Section 43(11) of Act No. 595/2003 Coll."
-          : "Odvod slovenskej zrážkovej dane a oznámenie sa riadia uvedenou lehotou podľa § 43 ods. 11 zákona č. 595/2003 Z. z.";
+          : "Odvod slovenské srážkové daně a podání oznámení se řídí uvedenou lhůtou podle § 43 odst. 11 zákona č. 595/2003 Z. z.";
       }
       const caution = document.querySelector("#workspace-dividend-deadline-caution");
       caution.hidden = !schedule.dividend_timing_review_required;
@@ -1352,6 +1366,11 @@
         ? `Under ${reference}, the income is not taxable in ${sourceCountryEn} based on the entered facts.`
         : `Podle ${reference} se při zadaných údajích příjem ve ${sourceCountryCs} nezdaňuje.`;
     }
+    if (treatment === "outside_subject_of_tax") {
+      return en
+        ? `Under ${reference}, the income is outside the scope of Slovak corporate income tax based on the entered facts.`
+        : `Podle ${reference} není při zadaných údajích příjem předmětem slovenské daně z příjmů právnických osob.`;
+    }
     if (treatment === "domestic_exemption") {
       return en
         ? `Under ${reference}, the income is exempt from ${source.code === "SK" ? "Slovak" : "Czech"} withholding tax based on the entered facts.`
@@ -1400,10 +1419,13 @@
     }
     const reasonCard = document.querySelector('.flow-step[data-step="4"] > article.reason');
     if (reasonCard) reasonCard.hidden = analysis.status !== "FINAL" && !treatyFallback;
-    const nonTaxing = ["exclusive_foreign_taxation", "domestic_exemption"].includes(treatment);
+    const nonTaxing = ["exclusive_foreign_taxation", "domestic_exemption", "outside_subject_of_tax"].includes(treatment);
+    const outsideSubject = treatment === "outside_subject_of_tax";
     const en = document.documentElement.lang === "en";
     const source = activeSourceContext();
-    setText("#workspace-tax-label", source.code === "SK"
+    setText("#workspace-tax-label", outsideSubject
+      ? (en ? "Tax treatment" : "Daňový režim")
+      : source.code === "SK"
       ? source.taxResultLabelWithCurrency
       : treatyFallback
       ? (en ? "Treaty fallback withholding tax" : "Srážková daň podle smluvního fallbacku")
@@ -1423,7 +1445,15 @@
         ? 0
         : fallbackGross * Number(analysis.candidate_rate) / 100
       : null;
-    setText("#workspace-tax", calculation ? money(taxCzk) : fallbackTax !== null ? money(fallbackTax) : "—");
+    setText("#workspace-tax",
+      outsideSubject
+        ? (en ? "Not subject to tax" : "Není předmětem daně")
+        : calculation
+          ? money(taxCzk)
+          : fallbackTax !== null
+            ? money(fallbackTax)
+            : "—"
+    );
     const incomeTypeLabels = { dividend: "Dividendy", interest: "Úroky", royalty: "Licenční poplatky" };
     const resultStep = document.querySelector('.flow-step[data-step="4"]');
     if (resultStep) resultStep.dataset.incomeType = payload.income_type || "";
@@ -1436,13 +1466,38 @@
         : (en
             ? `Treaty fallback: ${analysis.candidate_rate}% of the transaction value. The final Czech tax may be lower or zero if the domestic exemption applies.`
             : `Smluvní fallback: ${analysis.candidate_rate} % z hodnoty transakce. Konečná česká daň může být nižší nebo nulová, pokud se uplatní vnitrostátní osvobození.`)
+      : outsideSubject
+        ? (en
+            ? "The income is outside the scope of Slovak corporate income tax."
+            : "Příjem není předmětem slovenské daně z příjmů právnických osob.")
       : treatment === "exclusive_foreign_taxation" ? `Zdanění pouze ve státě rezidence příjemce (${countryName(recipient.country)})`
-      : treatment === "domestic_exemption" ? "Příjem je v České republice osvobozen"
+      : treatment === "domestic_exemption"
+        ? (source.code === "SK"
+            ? (en ? "The income is exempt under Slovak domestic law." : "Příjem je podle slovenského práva osvobozen.")
+            : (en ? "The income is exempt under Czech domestic law." : "Příjem je v České republice osvobozen."))
       : analysis.rate === null ? analysis.candidate_rate === null ? "Sazbu nelze určit bez doplnění potřebných podmínek" : `Sazba přiřazená podle dostupných údajů: ${analysis.candidate_rate} %`
       : `${analysis.rate} % z hodnoty transakce`);
     setText("#workspace-gross", grossCzk !== null ? money(grossCzk) : payload.transaction_amount.currency === "CZK" ? money(payload.transaction_amount.amount) : `${payload.transaction_amount.amount} ${payload.transaction_amount.currency}`);
-    setText("#workspace-tax-row", calculation ? money(taxCzk) : fallbackTax !== null ? money(fallbackTax) : "—");
-    setText("#workspace-net", calculation ? money(netCzk) : fallbackTax !== null && fallbackGross !== null ? money(fallbackGross - fallbackTax) : "—");
+    setText("#workspace-tax-row",
+      outsideSubject
+        ? (en ? "Not applicable" : "Neuplatňuje se")
+        : calculation
+          ? money(taxCzk)
+          : fallbackTax !== null
+            ? money(fallbackTax)
+            : "—"
+    );
+    setText("#workspace-net",
+      outsideSubject
+        ? (payload.transaction_amount.currency === "EUR"
+            ? `${payload.transaction_amount.amount} EUR`
+            : "—")
+        : calculation
+          ? money(netCzk)
+          : fallbackTax !== null && fallbackGross !== null
+            ? money(fallbackGross - fallbackTax)
+            : "—"
+    );
     setText("#workspace-reason", treatyFallback
       ? candidateTreatment === "exclusive_foreign_taxation"
         ? (en
@@ -1476,8 +1531,13 @@
     const data = new FormData(form);
     const error = document.querySelector("#workspace-error"); error.hidden = true;
     const transactionDate = String(data.get("transaction_date"));
+    const sourceCountry = String(document.body.dataset.sourceCountry || "CZ").toUpperCase();
     const facts = {
-      recipient_entity_type: recipient.type === "Fyzická osoba" ? "individual" : recipient.type === "Fond" ? "fund" : recipient.type === "Společnost" ? "company" : "other"
+      recipient_entity_type:
+        recipient.type === "Fyzická osoba" ? "individual" :
+        recipient.type === "Fond" ? "fund" :
+        recipient.type === "Společnost" ? (sourceCountry === "SK" ? "corporate" : "company") :
+        "other"
     };
     const beneficialOwner = data.get("beneficial_owner");
     const treatyResident = data.get("treaty_resident");
@@ -1539,7 +1599,6 @@
     }
     if (incomeType === "interest" && armLengthAmount) facts.arm_length_amount = armLengthAmount === "true";
     if (incomeType === "royalty" && royaltyCategory) facts.royalty_category = royaltyCategory;
-    const sourceCountry = String(document.body.dataset.sourceCountry || "CZ").toUpperCase();
     const sourceContext = window.TaxTreatSourceCountries?.get(sourceCountry);
     if (sourceContext?.fxProvider === "CNB" && String(data.get("currency")) !== sourceContext.baseCurrency) {
       const currentRate = clientAnswers.exchangeRate;

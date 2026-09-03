@@ -62,7 +62,7 @@ def test_workspace_browser_bundle_contains_released_slovak_copy():
     combined = ADAPTER.read_text(encoding="utf-8") + "\n" + CONTEXT.read_text(encoding="utf-8")
 
     assert 'Slovensko' in combined
-    assert 'Slovenská zrážková daň' in combined
+    assert 'Slovenská srážková daň' in combined
     assert 'OZN4311v26' in combined
     assert 'jurisdictionValue: "75"' in combined
     assert 'scopeValue: "225"' in combined

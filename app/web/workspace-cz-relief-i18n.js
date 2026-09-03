@@ -143,6 +143,34 @@
     });
   }
 
+  function installSection19SourceGuard() {
+    let style = document.querySelector("#tt-cz-section19-source-guard");
+    if (!style) {
+      style = document.createElement("style");
+      style.id = "tt-cz-section19-source-guard";
+      document.head.append(style);
+    }
+    style.textContent = `
+      body[data-source-country="SK"] #cz-section19-facts {
+        display: none !important;
+      }
+      body[data-source-country="CZ"] #cz-section19-facts:not([hidden]) {
+        display: grid !important;
+      }
+    `;
+  }
+
+  function syncSection19Visibility() {
+    const box = document.querySelector("#cz-section19-facts");
+    if (!box) return;
+    const isCz = String(document.body.dataset.sourceCountry || "CZ").toUpperCase() === "CZ";
+    box.hidden = !isCz;
+    box.style.display = isCz ? "grid" : "none";
+    box.querySelectorAll("select").forEach((field) => {
+      field.required = isCz && document.querySelector('#workspace-payment [name="income_type"]')?.value === "dividend";
+    });
+  }
+
   function addSection19Questions() {
     const root = document.querySelector("#dividend-facts");
     if (!root || document.querySelector("#cz-section19-facts")) return;
@@ -156,6 +184,7 @@
       <label><span>Podléhá příjemce ve státě své daňové rezidence běžné dani z příjmů právnických osob a není od této daně osvobozen ani v režimu s nulovou sazbou?</span><select name="section19_taxable_company"><option value="">Vyber odpověď</option><option value="true">Ano</option><option value="false">Ne</option></select><small>Jde o faktické daňové postavení příjemce, nikoli o posouzení českého § 19.</small></label>`;
     root.append(box);
     applyUiLanguage(box);
+    syncSection19Visibility();
   }
 
   function boolField(name) {
@@ -325,7 +354,16 @@
     return response;
   };
 
+  window.addEventListener("taxtreat:source-country-change", () => {
+    window.setTimeout(syncSection19Visibility, 0);
+  });
+
+  document.querySelector('#workspace-payment [name="income_type"]')?.addEventListener("change", () => {
+    window.setTimeout(syncSection19Visibility, 0);
+  });
+
   function boot() {
+    installSection19SourceGuard();
     addLanguageControl();
     addReportLanguageControl();
     addSection19Questions();

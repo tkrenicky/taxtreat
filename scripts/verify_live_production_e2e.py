@@ -61,12 +61,24 @@ def fill_dynamic_questions(page: Page) -> None:
 
             if tag == "SELECT":
                 options = item.locator("option")
+                path = item.get_attribute("data-input-path") or ""
                 chosen = None
-                for option_index in range(options.count()):
-                    value = options.nth(option_index).get_attribute("value")
-                    if value in ("true", "yes", "1"):
-                        chosen = value
-                        break
+
+                # Standard Slovak corporate dividend path under Section 12(7)(c):
+                # the distribution is not tax-deductible for the payer and is
+                # not a special Section 3(1)(f) profit share.
+                if path in {
+                    "facts.distribution_is_tax_deductible_for_payer",
+                    "facts.distribution_category_is_section_3_1_f",
+                }:
+                    chosen = "false"
+                else:
+                    for option_index in range(options.count()):
+                        value = options.nth(option_index).get_attribute("value")
+                        if value in ("true", "yes", "1"):
+                            chosen = value
+                            break
+
                 if chosen is None and options.count() > 1:
                     chosen = options.nth(1).get_attribute("value")
                 if chosen is not None:
@@ -238,6 +250,20 @@ def run_case(
         check("595/2003" in legal_ref, f"SK/{income}: Slovak legal reference missing")
         check("586/1992" not in legal_ref, f"SK/{income}: Czech legal reference leaked")
         check(page.locator('#workspace-payment [name="currency"]').input_value() == "EUR", "SK currency mismatch")
+
+        if income == "dividend":
+            check(
+                page.locator("#cz-section19-facts:visible").count() == 0,
+                "SK/dividend: Czech Section 19 controls are visible",
+            )
+            check(
+                "Není předmětem daně" in page.locator("#workspace-tax").inner_text(),
+                "SK/dividend: standard corporate dividend did not resolve to outside-subject treatment",
+            )
+            check(
+                "§ 12" in page.locator("#workspace-citations").inner_text(),
+                "SK/dividend: Section 12 legal basis missing from result",
+            )
 
     report_response = context.request.post(
         BASE_URL + "/analysis/report",
