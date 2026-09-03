@@ -1278,11 +1278,11 @@
       if (schedule.status !== "READY") {
         note.textContent = en
           ? "The Slovak remittance and notification deadlines cannot be finalized until the applicable tax treatment is determined."
-          : "Slovenské lehoty na odvod dane a oznámenie nemožno uzavrieť, kým sa neurčí použiteľné daňové zaobchádzanie.";
+          : "Lhůty pro odvod slovenské srážkové daně a podání oznámení nelze uzavřít, dokud není určen použitelný daňový režim.";
       } else {
         note.textContent = en
           ? "The Slovak withholding-tax remittance and notification follow the deadline shown under Section 43(11) of Act No. 595/2003 Coll."
-          : "Odvod slovenskej zrážkovej dane a oznámenie sa riadia uvedenou lehotou podľa § 43 ods. 11 zákona č. 595/2003 Z. z.";
+          : "Odvod slovenské srážkové daně a podání oznámení se řídí uvedenou lhůtou podle § 43 odst. 11 zákona č. 595/2003 Z. z.";
       }
       const caution = document.querySelector("#workspace-dividend-deadline-caution");
       caution.hidden = !schedule.dividend_timing_review_required;
