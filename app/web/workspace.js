@@ -69,7 +69,10 @@
   function countryGenitive(code) {
     return knownCountryGenitives[String(code || "").toUpperCase()] || countryName(code);
   }
+  let jurisdictionCatalogRequestVersion = 0;
+
   async function loadJurisdictionCatalog(sourceCode = document.body.dataset.sourceCountry || "CZ") {
+    const requestVersion = ++jurisdictionCatalogRequestVersion;
     const normalizedSource = String(sourceCode || "CZ").toUpperCase();
     const expectedCount = normalizedSource === "SK" ? 75 : 101;
     const selects = [recipientForm?.elements.recipient_country, recipientEditForm?.elements.recipient_country].filter(Boolean);
@@ -83,6 +86,17 @@
       const jurisdictions = [...body.jurisdictions].sort((a, b) =>
         countryName(a.iso2).localeCompare(countryName(b.iso2), "cs")
       );
+
+      const activeSource = String(
+        document.body.dataset.sourceCountry || "CZ"
+      ).toUpperCase();
+      if (
+        requestVersion !== jurisdictionCatalogRequestVersion
+        || activeSource !== normalizedSource
+      ) {
+        return;
+      }
+
       selects.forEach((select) => {
         const current = select.value;
         const placeholder = select.closest("#new-recipient-form") ? "Vyber stát" : null;
