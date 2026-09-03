@@ -236,7 +236,7 @@ def main() -> int:
             assert submitted["recipient_country"] in sk_partner_codes
             assert submitted["transaction_amount"]["currency"] == "EUR"
 
-            assert "Zrážková daň" in page.locator("#workspace-tax-label").inner_text()
+            assert "Srážková daň" in page.locator("#workspace-tax-label").inner_text()
             legal_reference = page.locator(
                 ".compliance-schedule .card-head span"
             ).inner_text()
