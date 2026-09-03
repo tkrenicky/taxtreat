@@ -1400,7 +1400,8 @@
     }
     const reasonCard = document.querySelector('.flow-step[data-step="4"] > article.reason');
     if (reasonCard) reasonCard.hidden = analysis.status !== "FINAL" && !treatyFallback;
-    const nonTaxing = ["exclusive_foreign_taxation", "domestic_exemption"].includes(treatment);
+    const nonTaxing = ["exclusive_foreign_taxation", "domestic_exemption", "outside_subject_of_tax"].includes(treatment);
+    const outsideSubject = treatment === "outside_subject_of_tax";
     const en = document.documentElement.lang === "en";
     const source = activeSourceContext();
     setText("#workspace-tax-label", source.code === "SK"
@@ -1423,7 +1424,15 @@
         ? 0
         : fallbackGross * Number(analysis.candidate_rate) / 100
       : null;
-    setText("#workspace-tax", calculation ? money(taxCzk) : fallbackTax !== null ? money(fallbackTax) : "—");
+    setText("#workspace-tax",
+      outsideSubject
+        ? (en ? "Not subject to tax" : "Není předmětem daně")
+        : calculation
+          ? money(taxCzk)
+          : fallbackTax !== null
+            ? money(fallbackTax)
+            : "—"
+    );
     const incomeTypeLabels = { dividend: "Dividendy", interest: "Úroky", royalty: "Licenční poplatky" };
     const resultStep = document.querySelector('.flow-step[data-step="4"]');
     if (resultStep) resultStep.dataset.incomeType = payload.income_type || "";
@@ -1436,13 +1445,38 @@
         : (en
             ? `Treaty fallback: ${analysis.candidate_rate}% of the transaction value. The final Czech tax may be lower or zero if the domestic exemption applies.`
             : `Smluvní fallback: ${analysis.candidate_rate} % z hodnoty transakce. Konečná česká daň může být nižší nebo nulová, pokud se uplatní vnitrostátní osvobození.`)
+      : outsideSubject
+        ? (en
+            ? "The income is outside the scope of Slovak corporate income tax."
+            : "Příjem není předmětem slovenské daně z příjmů právnických osob.")
       : treatment === "exclusive_foreign_taxation" ? `Zdanění pouze ve státě rezidence příjemce (${countryName(recipient.country)})`
-      : treatment === "domestic_exemption" ? "Příjem je v České republice osvobozen"
+      : treatment === "domestic_exemption"
+        ? (source.code === "SK"
+            ? (en ? "The income is exempt under Slovak domestic law." : "Příjem je podle slovenského práva osvobozen.")
+            : (en ? "The income is exempt under Czech domestic law." : "Příjem je v České republice osvobozen."))
       : analysis.rate === null ? analysis.candidate_rate === null ? "Sazbu nelze určit bez doplnění potřebných podmínek" : `Sazba přiřazená podle dostupných údajů: ${analysis.candidate_rate} %`
       : `${analysis.rate} % z hodnoty transakce`);
     setText("#workspace-gross", grossCzk !== null ? money(grossCzk) : payload.transaction_amount.currency === "CZK" ? money(payload.transaction_amount.amount) : `${payload.transaction_amount.amount} ${payload.transaction_amount.currency}`);
-    setText("#workspace-tax-row", calculation ? money(taxCzk) : fallbackTax !== null ? money(fallbackTax) : "—");
-    setText("#workspace-net", calculation ? money(netCzk) : fallbackTax !== null && fallbackGross !== null ? money(fallbackGross - fallbackTax) : "—");
+    setText("#workspace-tax-row",
+      outsideSubject
+        ? (en ? "Not applicable" : "Neuplatňuje se")
+        : calculation
+          ? money(taxCzk)
+          : fallbackTax !== null
+            ? money(fallbackTax)
+            : "—"
+    );
+    setText("#workspace-net",
+      outsideSubject
+        ? (payload.transaction_amount.currency === "EUR"
+            ? `${payload.transaction_amount.amount} EUR`
+            : "—")
+        : calculation
+          ? money(netCzk)
+          : fallbackTax !== null && fallbackGross !== null
+            ? money(fallbackGross - fallbackTax)
+            : "—"
+    );
     setText("#workspace-reason", treatyFallback
       ? candidateTreatment === "exclusive_foreign_taxation"
         ? (en
