@@ -39,7 +39,9 @@ def test_combinatorial_gate_contains_real_web_visible_variants():
         "holding_12m",
         "arm_length_false",
         '"computer_software"',
-        '"industrial_ip_knowhow"',
+        '"patent_trademark_design_model_plan_secret_formula_process_or_knowhow"',
+        '"financial_lease_of_equipment"',
+        '"operating_lease_or_other_use_of_equipment"',
         '"other"',
     ):
         assert marker in text
@@ -52,3 +54,11 @@ def test_combinatorial_workflow_runs_full_report_enabled_gate():
     assert "--skip-reports" not in text
     assert "timeout-minutes: 45" in text
     assert "upload-artifact@v4" in text
+
+
+def test_combinatorial_gate_mirrors_runtime_legacy_numeric_thresholds():
+    text = SCRIPT.read_text(encoding="utf-8")
+
+    assert "def numeric_like" in text
+    assert 'normalized.endswith("%")' in text
+    assert "threshold = numeric_like(value)" in text
