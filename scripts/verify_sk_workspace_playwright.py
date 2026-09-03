@@ -142,7 +142,16 @@ def main() -> int:
             page.locator('[data-nav="payers"]').click()
             page.locator("[data-create-payer]:visible").click()
             payer = page.locator("#payer-form")
+            assert payer.locator('[name="payer_country"]').input_value() == ""
+            assert payer.locator('[name="payer_id"]').is_hidden()
+            assert payer.locator("[data-ares-lookup]").is_hidden()
+
             payer.locator('[name="payer_country"]').select_option("SK")
+            page.wait_for_timeout(100)
+            assert payer.locator('[name="payer_country"]').input_value() == "SK"
+            assert payer.locator('[name="payer_id"]').is_visible()
+            assert payer.locator("[data-ares-lookup]").is_hidden()
+
             payer.locator('[name="payer_id"]').fill("12345678")
             payer.locator('[name="payer_name"]').fill("Demo SK s.r.o.")
             payer.locator('[name="payer_vat_id"]').fill("SK2020000000")

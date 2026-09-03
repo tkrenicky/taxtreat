@@ -112,23 +112,39 @@
     });
   }
 
-  country.addEventListener("change", applyCountryUi);
+  country.addEventListener("change", () => {
+    country.dataset.userSelected = "true";
+    applyCountryUi();
+  });
   activePayerSelect.addEventListener("change", () => window.setTimeout(refreshPayerCountryCopy, 0));
 
   document.querySelectorAll("[data-create-payer]").forEach((button) => {
-    button.addEventListener("click", () => window.setTimeout(() => {
-      if (!form.elements.payer_name.value) country.value = "";
-      applyCountryUi();
-    }, 0));
+    button.addEventListener("click", () => {
+      country.dataset.userSelected = "false";
+      window.setTimeout(() => {
+        if (!form.elements.payer_name.value) country.value = "";
+        applyCountryUi();
+      }, 0);
+    });
   });
 
   // This narrow observer only follows the dialog's own open attribute. It does not
   // mutate the observed attribute and therefore cannot create a DOM feedback loop.
   new MutationObserver(() => {
     if (!dialog.open) return;
+
+    if (country.dataset.userSelected === "true") {
+      applyCountryUi();
+      return;
+    }
+
     country.value = form.elements.payer_name?.value ? inferredEditorCountry() : "";
     applyCountryUi();
   }).observe(dialog, { attributes: true, attributeFilter: ["open"] });
+
+  dialog.addEventListener("close", () => {
+    country.dataset.userSelected = "false";
+  });
 
   window.addEventListener("taxtreat:payer-saved", (event) => {
     const key = String(event.detail?.key || "");
