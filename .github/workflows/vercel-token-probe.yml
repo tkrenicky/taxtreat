@@ -1,0 +1,24 @@
+name: Vercel token probe
+
+on:
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check VERCEL_TOKEN presence
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        shell: bash
+        run: |
+          if [ -n "$VERCEL_TOKEN" ]; then
+            echo "VERCEL_TOKEN_CONFIGURED"
+          else
+            echo "VERCEL_TOKEN_MISSING"
+            exit 2
+          fi
