@@ -313,7 +313,13 @@ def validate_analysis(
             issues.append(f"{key}_source_mismatch")
 
 
-def run_qa(*, include_reports: bool = True) -> dict[str, Any]:
+def run_qa(
+    *,
+    include_reports: bool = True,
+    source_filter: str | None = None,
+    income_filter: str | None = None,
+    execute_requests: bool = True,
+) -> dict[str, Any]:
     inv = inventory()
     client = TestClient(app)
     issues: list[dict[str, Any]] = []
@@ -324,6 +330,8 @@ def run_qa(*, include_reports: bool = True) -> dict[str, Any]:
     scenario_samples: list[dict[str, Any]] = []
 
     for source_country, expected in EXPECTED.items():
+        if source_filter is not None and source_country != source_filter:
+            continue
         actual = inv[source_country]
         if len(actual["countries"]) != expected["countries"]:
             issues.append(
@@ -345,6 +353,8 @@ def run_qa(*, include_reports: bool = True) -> dict[str, Any]:
             )
 
         for recipient_country, income_type in actual["scopes"]:
+            if income_filter is not None and income_type != income_filter:
+                continue
             scope_conditions = actual["conditions"].get((recipient_country, income_type), set())
             scenarios, unsupported_conditions = scenario_payloads(
                 source_country,
@@ -364,9 +374,12 @@ def run_qa(*, include_reports: bool = True) -> dict[str, Any]:
                 )
             source_counts[source_country]["scopes"] += 1
             source_counts[source_country]["scenarios"] += len(scenarios)
+            scenario_count += len(scenarios)
+
+            if not execute_requests:
+                continue
 
             for local_index, (scenario_label, payload) in enumerate(scenarios):
-                scenario_count += 1
                 scenario_issues: list[str] = []
 
                 analysis_response = client.post("/analysis", json=payload)
@@ -449,7 +462,7 @@ def run_qa(*, include_reports: bool = True) -> dict[str, Any]:
                         }
                     )
 
-    if scenario_count < MIN_EXPECTED_SCENARIOS:
+    if source_filter is None and income_filter is None and scenario_count < MIN_EXPECTED_SCENARIOS:
         issues.append(
             {
                 "kind": "insufficient_combinatorial_coverage",
@@ -480,6 +493,8 @@ def run_qa(*, include_reports: bool = True) -> dict[str, Any]:
             for source, counter in sorted(source_counts.items())
         },
         "minimum_expected_scenarios": MIN_EXPECTED_SCENARIOS,
+        "filters": {"source_country": source_filter, "income_type": income_filter},
+        "requests_executed": execute_requests,
         "fail_closed_on_unsupported_conditions": True,
         "pass": not issues,
         "issues": issues,
@@ -491,9 +506,17 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--skip-reports", action="store_true")
+    parser.add_argument("--source-country", choices=sorted(EXPECTED))
+    parser.add_argument("--income-type", choices=INCOME_TYPES)
+    parser.add_argument("--count-only", action="store_true")
     args = parser.parse_args()
 
-    result = run_qa(include_reports=not args.skip_reports)
+    result = run_qa(
+        include_reports=not args.skip_reports,
+        source_filter=args.source_country,
+        income_filter=args.income_type,
+        execute_requests=not args.count_only,
+    )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(
         json.dumps(result, ensure_ascii=False, indent=2) + "\n",
