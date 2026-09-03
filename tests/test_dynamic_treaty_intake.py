@@ -231,3 +231,37 @@ def test_pe_inverse_royalty_fact_is_explicitly_derived():
         ]
         == "permanent_establishment_connection"
     )
+
+
+def test_sk_dividend_domestic_transaction_facts_are_client_answerable():
+    from taxtreat.services.intake import build_intake_plan
+
+    result = build_intake_plan(
+        {
+            "source_country": "SK",
+            "recipient_country": "AT",
+            "income_type": "dividend",
+        },
+        {
+            "status": "REVIEW_REQUIRED",
+            "missing_facts": [
+                "distribution_is_tax_deductible_for_payer",
+                "distribution_category_is_section_3_1_f",
+            ],
+        },
+    )
+
+    questions = {
+        question["input_path"]: question
+        for question in result["questions"]
+        if question.get("client_answerable")
+    }
+
+    assert "facts.distribution_is_tax_deductible_for_payer" in questions
+    assert "facts.distribution_category_is_section_3_1_f" in questions
+    assert questions[
+        "facts.distribution_is_tax_deductible_for_payer"
+    ]["response_type"] == "boolean"
+    assert questions[
+        "facts.distribution_category_is_section_3_1_f"
+    ]["response_type"] == "boolean"
