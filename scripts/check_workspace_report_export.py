@@ -231,6 +231,7 @@ def main() -> int:
             page.get_by_role("button", name="Plátci", exact=True).click()
             page.get_by_role("button", name="Přidat plátce", exact=True).click()
             payer_form = page.locator("#payer-form")
+            payer_form.locator('select[name="payer_country"]').select_option("CZ")
             payer_form.locator('input[name="payer_id"]').fill("27082440")
             payer_form.locator('input[name="payer_name"]').wait_for()
             page.locator("[data-ares-lookup]").click()

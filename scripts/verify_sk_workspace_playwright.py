@@ -142,10 +142,10 @@ def main() -> int:
             page.locator('[data-nav="payers"]').click()
             page.locator("[data-create-payer]:visible").click()
             payer = page.locator("#payer-form")
+            payer.locator('[name="payer_country"]').select_option("SK")
             payer.locator('[name="payer_id"]').fill("12345678")
             payer.locator('[name="payer_name"]').fill("Demo SK s.r.o.")
             payer.locator('[name="payer_vat_id"]').fill("SK2020000000")
-            payer.locator('[name="payer_country"]').select_option("SK")
             payer.locator("[data-save-payer]").click()
 
             page.wait_for_function(

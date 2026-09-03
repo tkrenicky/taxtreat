@@ -320,10 +320,10 @@ def create_sk_payer(page: Page) -> None:
     page.locator("[data-create-payer]:visible").click()
 
     form = page.locator("#payer-form")
+    form.locator('[name="payer_country"]').select_option("SK")
     form.locator('[name="payer_id"]').fill("12345679")
     form.locator('[name="payer_name"]').fill("Live QA SK s.r.o.")
     form.locator('[name="payer_vat_id"]').fill("SK2020000000")
-    form.locator('[name="payer_country"]').select_option("SK")
     form.locator("[data-save-payer]").click()
 
     page.wait_for_function("() => document.body.dataset.sourceCountry === 'SK'")

@@ -16,6 +16,7 @@
   label.innerHTML = `
     <span>${en ? "Payer country *" : "Stát plátce *"}</span>
     <select name="payer_country" required>
+      <option value="">${en ? "Select payer country" : "Vyber stát plátce"}</option>
       <option value="CZ">${en ? "Czech Republic" : "Česká republika"}</option>
       <option value="SK">${en ? "Slovakia" : "Slovensko"}</option>
     </select>
@@ -27,6 +28,10 @@
   const country = label.querySelector("select");
   const aresButton = form.querySelector("[data-ares-lookup]");
   const aresStatus = form.querySelector("#ares-lookup-status");
+  const saveButton = form.querySelector("[data-save-payer]");
+  const payerDetailLabels = [...form.querySelectorAll(":scope > label")].filter(
+    (item) => item !== label
+  );
 
   function sourceApi() {
     return window.TaxTreatWorkspaceSourceCountry;
@@ -52,23 +57,43 @@
   }
 
   function applyCountryUi() {
+    const selected = country.value === "CZ" || country.value === "SK";
     const isSk = country.value === "SK";
+
+    payerDetailLabels.forEach((item) => {
+      item.hidden = !selected;
+    });
+
+    if (saveButton) {
+      saveButton.hidden = !selected;
+      saveButton.disabled = !selected;
+    }
+
     if (aresButton) {
-      aresButton.hidden = isSk;
-      aresButton.disabled = isSk;
+      aresButton.hidden = !selected || isSk;
+      aresButton.disabled = !selected || isSk;
     }
+
     if (aresStatus) {
-      const nextStatus = isSk
-        ? (en
-            ? "For a Slovak payer, data are not retrieved from the Czech ARES register; enter the identification details manually."
-            : "Pro slovenského plátce se údaje z českého registru ARES nenačítají; identifikační údaje vyplň ručně.")
-        : (en
-            ? "After entering the Company ID, you can retrieve identification details from ARES."
-            : "Po zadání IČO můžeš identifikační údaje načíst z ARES.");
-      if (aresStatus.textContent !== nextStatus) aresStatus.textContent = nextStatus;
+      if (!selected) {
+        aresStatus.hidden = true;
+      } else {
+        aresStatus.hidden = false;
+        const nextStatus = isSk
+          ? (en
+              ? "Slovak company-registry lookup will be offered here. Until it is connected, enter the identification details manually."
+              : "Zde bude dostupné načtení ze slovenského registru. Do jeho napojení zadej identifikační údaje ručně.")
+          : (en
+              ? "After entering the Company ID, you can retrieve identification details from ARES."
+              : "Po zadání IČO můžeš identifikační údaje načíst z ARES.");
+        if (aresStatus.textContent !== nextStatus) aresStatus.textContent = nextStatus;
+      }
     }
+
     const vat = form.elements.payer_vat_id;
-    if (vat && !vat.value) vat.placeholder = isSk ? "např. SK2020000000" : "např. CZ12345678";
+    if (vat && !vat.value && selected) {
+      vat.placeholder = isSk ? "např. SK2020000000" : "např. CZ12345678";
+    }
   }
 
   function refreshPayerCountryCopy() {
@@ -92,7 +117,7 @@
 
   document.querySelectorAll("[data-create-payer]").forEach((button) => {
     button.addEventListener("click", () => window.setTimeout(() => {
-      if (!form.elements.payer_name.value) country.value = "CZ";
+      if (!form.elements.payer_name.value) country.value = "";
       applyCountryUi();
     }, 0));
   });
@@ -101,7 +126,7 @@
   // mutate the observed attribute and therefore cannot create a DOM feedback loop.
   new MutationObserver(() => {
     if (!dialog.open) return;
-    country.value = inferredEditorCountry();
+    country.value = form.elements.payer_name?.value ? inferredEditorCountry() : "";
     applyCountryUi();
   }).observe(dialog, { attributes: true, attributeFilter: ["open"] });
 
