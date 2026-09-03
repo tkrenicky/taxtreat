@@ -1352,6 +1352,11 @@
         ? `Under ${reference}, the income is not taxable in ${sourceCountryEn} based on the entered facts.`
         : `Podle ${reference} se při zadaných údajích příjem ve ${sourceCountryCs} nezdaňuje.`;
     }
+    if (treatment === "outside_subject_of_tax") {
+      return en
+        ? `Under ${reference}, the income is outside the scope of Slovak corporate income tax based on the entered facts.`
+        : `Podle ${reference} není při zadaných údajích příjem předmětem slovenské daně z příjmů právnických osob.`;
+    }
     if (treatment === "domestic_exemption") {
       return en
         ? `Under ${reference}, the income is exempt from ${source.code === "SK" ? "Slovak" : "Czech"} withholding tax based on the entered facts.`
@@ -1404,7 +1409,9 @@
     const outsideSubject = treatment === "outside_subject_of_tax";
     const en = document.documentElement.lang === "en";
     const source = activeSourceContext();
-    setText("#workspace-tax-label", source.code === "SK"
+    setText("#workspace-tax-label", outsideSubject
+      ? (en ? "Tax treatment" : "Daňový režim")
+      : source.code === "SK"
       ? source.taxResultLabelWithCurrency
       : treatyFallback
       ? (en ? "Treaty fallback withholding tax" : "Srážková daň podle smluvního fallbacku")
