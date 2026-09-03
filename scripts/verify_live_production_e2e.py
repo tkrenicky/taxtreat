@@ -220,7 +220,10 @@ def run_case(
     print("    legal reference:", legal_ref)
 
     if source == "CZ":
-        check("586/1992" in legal_ref, f"CZ/{income}: Czech legal reference missing")
+        check(
+            ("586/1992" in legal_ref) or ("§ 38d" in legal_ref and "ZDP" in legal_ref),
+            f"CZ/{income}: Czech legal reference missing: {legal_ref}",
+        )
         check("595/2003" not in legal_ref, f"CZ/{income}: Slovak legal reference leaked")
         check(page.locator('#workspace-payment [name="currency"]').input_value() == "CZK", "CZ currency mismatch")
     else:
