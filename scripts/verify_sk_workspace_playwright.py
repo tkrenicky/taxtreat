@@ -53,7 +53,14 @@ def fill_client_questions(page) -> None:
             item = questions.nth(index)
             tag = item.evaluate("node => node.tagName")
             if tag == "SELECT":
-                item.select_option(index=1)
+                path = item.get_attribute("data-input-path") or ""
+                if path in {
+                    "facts.distribution_is_tax_deductible_for_payer",
+                    "facts.distribution_category_is_section_3_1_f",
+                }:
+                    item.select_option("false")
+                else:
+                    item.select_option(index=1)
             elif item.get_attribute("type") == "date":
                 item.fill("2025-01-01")
             else:
@@ -242,6 +249,46 @@ def main() -> int:
             ).inner_text()
             assert "595/2003" in legal_reference
             assert "586/1992" not in legal_reference
+
+            # Re-run the same local PR build through the standard SK corporate
+            # dividend path. This is the first real-user path that previously
+            # ended in a dead-end REVIEW_REQUIRED result.
+            page.locator('[data-nav="dashboard"]:visible').first.click()
+            page.locator("[data-start-flow]:visible").first.click()
+            page.locator('[data-next-step="2"]:visible').click()
+            page.locator('[data-next-step="3"]:visible').click()
+
+            form = page.locator("#workspace-payment")
+            form.locator('[name="income_type"]').select_option("dividend")
+            form.locator('[name="transaction_date"]').fill("2026-09-02")
+            form.locator('[name="amount"]').fill("100000")
+            form.locator(
+                'label:has([name="treaty_resident"][value="true"])'
+            ).click()
+            form.locator('[name="ownership_percent"]').fill("25")
+            form.locator('[name="direct_ownership"]').select_option("true")
+            form.locator('[name="holding_period_mode"]').select_option("known_date")
+            form.locator('[name="acquisition_date"]').fill("2024-01-01")
+            form.locator('[name="voting_ownership_percent"]').fill("25")
+
+            assert page.locator("#cz-section19-facts:visible").count() == 0
+
+            form.locator("#workspace-submit").click()
+            page.wait_for_function(
+                """() => Boolean(
+                    document.querySelector('.flow-step[data-step="4"].active') ||
+                    !document.querySelector('#workspace-follow-up').hidden
+                )"""
+            )
+            fill_client_questions(page)
+            page.wait_for_function(
+                "() => Boolean(document.querySelector('.flow-step[data-step=\"4\"].active'))"
+            )
+
+            assert "Není předmětem daně" in page.locator("#workspace-tax").inner_text()
+            assert "§ 12" in page.locator("#workspace-citations").inner_text()
+            assert "595/2003" in page.locator("#workspace-citations").inner_text()
+            assert "586/1992" not in page.locator("#workspace-citations").inner_text()
 
             page.locator('#taxtreat-language-controls [data-lang="en"]').click()
             page.wait_for_function("() => document.documentElement.lang === 'en'")
