@@ -1,0 +1,109 @@
+name: Live browser condition matrix
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - "app/**"
+      - "taxtreat/**"
+      - "data/legal_rules_stage6/**"
+      - "data/legal_rules_sk/**"
+      - "scripts/run_cz_sk_combinatorial_web_qa.py"
+      - "scripts/run_live_browser_condition_matrix.py"
+      - ".github/workflows/live-browser-condition-matrix.yml"
+  workflow_dispatch:
+
+jobs:
+  scenario-inventory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install inventory dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+          pip install --no-deps -e .
+          pip install playwright
+      - name: Count browser-reachable matrix
+        run: |
+          mkdir -p reports/live-browser-inventory
+          for source in CZ SK; do
+            for income in dividend interest royalty; do
+              for lang in cs en; do
+                for shard in 0 1 2 3; do
+                  python scripts/run_live_browser_condition_matrix.py                     --source-country "$source"                     --income-type "$income"                     --lang "$lang"                     --shard-index "$shard"                     --shard-count 4                     --count-only                     --output "reports/live-browser-inventory/${source}_${income}_${lang}_${shard}.json"
+                done
+              done
+            done
+          done
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          files = sorted(Path("reports/live-browser-inventory").glob("*.json"))
+          rows = [json.loads(path.read_text()) for path in files]
+          summary = {
+              "chunks": len(rows),
+              "scenarios": sum(row["scenarios"] for row in rows),
+              "by_source": {
+                  source: sum(row["scenarios"] for row in rows if row["source_country"] == source)
+                  for source in ("CZ", "SK")
+              },
+              "by_language": {
+                  lang: sum(row["scenarios"] for row in rows if row["lang"] == lang)
+                  for lang in ("cs", "en")
+              },
+          }
+          Path("reports/live-browser-inventory/summary.json").write_text(
+              json.dumps(summary, indent=2) + "\n"
+          )
+          print(json.dumps(summary, sort_keys=True))
+          PY
+      - name: Upload inventory
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-browser-condition-inventory
+          path: reports/live-browser-inventory
+          if-no-files-found: error
+          retention-days: 30
+
+  live-browser-matrix:
+    needs: scenario-inventory
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        source_country: [CZ, SK]
+        income_type: [dividend, interest, royalty]
+        lang: [cs, en]
+        shard: [0, 1, 2, 3]
+    env:
+      TAXTREAT_LIVE_BASE_URL: https://taxtreat.vercel.app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+          pip install --no-deps -e .
+          pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Run live browser chunk
+        run: |
+          mkdir -p reports/live-browser-matrix
+          python scripts/run_live_browser_condition_matrix.py             --source-country "${{ matrix.source_country }}"             --income-type "${{ matrix.income_type }}"             --lang "${{ matrix.lang }}"             --shard-index "${{ matrix.shard }}"             --shard-count 4             --output "reports/live-browser-matrix/${{ matrix.source_country }}_${{ matrix.income_type }}_${{ matrix.lang }}_${{ matrix.shard }}.json"
+      - name: Upload chunk evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-browser-${{ matrix.source_country }}-${{ matrix.income_type }}-${{ matrix.lang }}-${{ matrix.shard }}
+          path: reports/live-browser-matrix
+          if-no-files-found: ignore
+          retention-days: 30
