@@ -148,6 +148,7 @@
     if (!box) return;
     const isCz = String(document.body.dataset.sourceCountry || "CZ").toUpperCase() === "CZ";
     box.hidden = !isCz;
+    box.style.display = isCz ? "grid" : "none";
     box.querySelectorAll("select").forEach((field) => {
       field.required = isCz && document.querySelector('#workspace-payment [name="income_type"]')?.value === "dividend";
     });
