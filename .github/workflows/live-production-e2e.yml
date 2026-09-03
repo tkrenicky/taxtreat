@@ -30,6 +30,16 @@ jobs:
           python -m pip install playwright
           python -m playwright install --with-deps chromium
 
+      - name: Diagnose deployment HTTP
+        run: |
+          set +e
+          for path in / /health/live /ui/cs; do
+            echo "===== $path ====="
+            curl -sS -L -D - --max-time 30 "$TAXTREAT_LIVE_BASE_URL$path" | head -c 4000
+            echo
+          done
+          set -e
+
       - name: Run live production audit
         run: python scripts/verify_live_production_e2e.py
 
