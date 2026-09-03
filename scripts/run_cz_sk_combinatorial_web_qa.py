@@ -204,15 +204,24 @@ def scenario_payloads(
     recipient_country: str,
     income_type: str,
     scope_conditions: set[tuple[str, str, str, str]],
-) -> list[tuple[str, dict[str, Any]]]:
+) -> tuple[list[tuple[str, dict[str, Any]]], list[dict[str, Any]]]:
     scenarios: list[tuple[str, dict[str, Any]]] = [
         ("baseline", base_payload(source_country, recipient_country, income_type))
     ]
 
+    unsupported_conditions: list[dict[str, Any]] = []
     for fact_source, fact, operator, encoded_value in sorted(scope_conditions):
         expected = json.loads(encoded_value)
         pair = condition_values(operator, expected)
         if pair is None:
+            unsupported_conditions.append(
+                {
+                    "fact_source": fact_source,
+                    "fact": fact,
+                    "operator": operator,
+                    "value": expected,
+                }
+            )
             continue
         satisfying, failing = pair
         for label, candidate in (("match", satisfying), ("boundary_or_fail", failing)):
@@ -282,7 +291,7 @@ def scenario_payloads(
     for label, payload in scenarios:
         fingerprint = json.dumps(payload, sort_keys=True, ensure_ascii=False)
         deduped.setdefault(fingerprint, (label, payload))
-    return list(deduped.values())
+    return list(deduped.values()), unsupported_conditions
 
 
 def validate_analysis(
@@ -337,12 +346,22 @@ def run_qa(*, include_reports: bool = True) -> dict[str, Any]:
 
         for recipient_country, income_type in actual["scopes"]:
             scope_conditions = actual["conditions"].get((recipient_country, income_type), set())
-            scenarios = scenario_payloads(
+            scenarios, unsupported_conditions = scenario_payloads(
                 source_country,
                 recipient_country,
                 income_type,
                 scope_conditions,
             )
+            if unsupported_conditions:
+                issues.append(
+                    {
+                        "kind": "unsupported_rule_condition",
+                        "source_country": source_country,
+                        "recipient_country": recipient_country,
+                        "income_type": income_type,
+                        "conditions": unsupported_conditions,
+                    }
+                )
             source_counts[source_country]["scopes"] += 1
             source_counts[source_country]["scenarios"] += len(scenarios)
 
@@ -461,6 +480,7 @@ def run_qa(*, include_reports: bool = True) -> dict[str, Any]:
             for source, counter in sorted(source_counts.items())
         },
         "minimum_expected_scenarios": MIN_EXPECTED_SCENARIOS,
+        "fail_closed_on_unsupported_conditions": True,
         "pass": not issues,
         "issues": issues,
         "samples": scenario_samples,
