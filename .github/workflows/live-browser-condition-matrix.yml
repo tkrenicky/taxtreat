@@ -121,23 +121,9 @@ jobs:
           from pathlib import Path
           path = Path("scripts/run_live_browser_condition_matrix.py")
           text = path.read_text(encoding="utf-8")
-          old = '''    if source_country == "SK":
-        page.locator('[data-nav="payers"]').click()
-        page.locator("[data-create-payer]:visible").click()
-        form = page.locator("#payer-form")
-'''
-          new = '''    if source_country == "SK":
-        page.locator('[data-nav="payers"]:visible').first.click()
-        page.wait_for_function(
-            "() => Boolean(document.querySelector('[data-view=\\"payers\\"].active'))"
-        )
-        page.locator("[data-create-payer]:visible").first.click()
-        page.locator("#payer-dialog").wait_for(state="visible")
-        form = page.locator("#payer-dialog #payer-form")
-'''
-          if old not in text:
-              raise SystemExit("Expected SK bootstrap block not found")
-          path.write_text(text.replace(old, new, 1), encoding="utf-8")
+          text = text.replace("page.locator('[data-nav=\"payers\"]').click()", "page.locator('[data-nav=\"payers\"]:visible').first.click()\n        page.wait_for_function(\"() => Boolean(document.querySelector('[data-view=\\\"payers\\\"].active'))\")", 1)
+          text = text.replace("page.locator(\"[data-create-payer]:visible\").click()\n        form = page.locator(\"#payer-form\")", "page.locator(\"[data-create-payer]:visible\").first.click()\n        page.locator(\"#payer-dialog\").wait_for(state=\"visible\")\n        form = page.locator(\"#payer-dialog #payer-form\")", 1)
+          path.write_text(text, encoding="utf-8")
           PY
       - name: Run browser chunk
         run: |
