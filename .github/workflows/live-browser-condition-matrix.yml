@@ -35,7 +35,14 @@ jobs:
             for income in dividend interest royalty; do
               for lang in cs en; do
                 for shard in 0 1 2 3; do
-                  python scripts/run_live_browser_condition_matrix.py                     --source-country "$source"                     --income-type "$income"                     --lang "$lang"                     --shard-index "$shard"                     --shard-count 4                     --count-only                     --output "reports/live-browser-inventory/${source}_${income}_${lang}_${shard}.json"
+                  python scripts/run_live_browser_condition_matrix.py \
+                    --source-country "$source" \
+                    --income-type "$income" \
+                    --lang "$lang" \
+                    --shard-index "$shard" \
+                    --shard-count 4 \
+                    --count-only \
+                    --output "reports/live-browser-inventory/${source}_${income}_${lang}_${shard}.json"
                 done
               done
             done
@@ -82,7 +89,7 @@ jobs:
         lang: [cs, en]
         shard: [0, 1, 2, 3]
     env:
-      TAXTREAT_LIVE_BASE_URL: https://taxtreat.vercel.app
+      TAXTREAT_LIVE_BASE_URL: http://127.0.0.1:8000
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -95,10 +102,32 @@ jobs:
           pip install --no-deps -e .
           pip install playwright
           python -m playwright install --with-deps chromium
-      - name: Run live browser chunk
+      - name: Start current TaxTreat application
+        run: |
+          python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 > /tmp/taxtreat-uvicorn.log 2>&1 &
+          echo $! > /tmp/taxtreat-uvicorn.pid
+          for attempt in $(seq 1 60); do
+            if curl --fail --silent --show-error http://127.0.0.1:8000/ui/cs >/dev/null; then
+              echo "TaxTreat is ready"
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/taxtreat-uvicorn.log || true
+          exit 1
+      - name: Run browser chunk
         run: |
           mkdir -p reports/live-browser-matrix
-          python scripts/run_live_browser_condition_matrix.py             --source-country "${{ matrix.source_country }}"             --income-type "${{ matrix.income_type }}"             --lang "${{ matrix.lang }}"             --shard-index "${{ matrix.shard }}"             --shard-count 4             --output "reports/live-browser-matrix/${{ matrix.source_country }}_${{ matrix.income_type }}_${{ matrix.lang }}_${{ matrix.shard }}.json"
+          python scripts/run_live_browser_condition_matrix.py \
+            --source-country "${{ matrix.source_country }}" \
+            --income-type "${{ matrix.income_type }}" \
+            --lang "${{ matrix.lang }}" \
+            --shard-index "${{ matrix.shard }}" \
+            --shard-count 4 \
+            --output "reports/live-browser-matrix/${{ matrix.source_country }}_${{ matrix.income_type }}_${{ matrix.lang }}_${{ matrix.shard }}.json"
+      - name: Dump server log on failure
+        if: failure()
+        run: cat /tmp/taxtreat-uvicorn.log || true
       - name: Upload chunk evidence
         if: always()
         uses: actions/upload-artifact@v4
