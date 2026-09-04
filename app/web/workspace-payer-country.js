@@ -41,6 +41,23 @@
   activeCountryBadge.setAttribute("aria-live", "polite");
   payerContext?.after(activeCountryBadge);
 
+  if (!document.querySelector("#payer-country-badge-style")) {
+    const style = document.createElement("style");
+    style.id = "payer-country-badge-style";
+    style.textContent = `
+      .active-payer-country-badge{display:flex;align-items:center;gap:9px;min-width:150px;padding:7px 11px;border:1px solid #dfe4ee;border-radius:10px;background:#f8faff;box-shadow:0 3px 10px rgba(28,43,81,.05);white-space:nowrap}
+      .active-payer-country-badge[data-country="SK"]{background:#f7fbff;border-color:#d7e5f4}
+      .active-payer-country-badge .payer-country-flag{font-size:1.5rem;line-height:1;filter:saturate(.92)}
+      .active-payer-country-badge .payer-country-badge-copy{display:grid;gap:1px}
+      .active-payer-country-badge small{font-size:.57rem;line-height:1.1;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#778095}
+      .active-payer-country-badge strong{font-size:.72rem;line-height:1.2;color:#172033}
+      #payer-country-field select{font-weight:750}
+      @media(max-width:1050px){.active-payer-country-badge{order:2}}
+      @media(max-width:700px){.active-payer-country-badge{width:100%;order:3}.active-payer-country-badge strong{font-size:.78rem}}
+    `;
+    document.head.append(style);
+  }
+
   function sourceApi() {
     return window.TaxTreatWorkspaceSourceCountry;
   }
