@@ -152,6 +152,12 @@ jobs:
               raise SystemExit("recipient close patch target missing")
           text = text.replace(old, new, 1)
 
+          old = "def set_radio(form, name: str, value: bool) -> None:\n    form.locator(f'[name=\"{name}\"][value=\"{str(bool(value)).lower()}\"]').check()"
+          new = "def set_radio(form, name: str, value: bool) -> None:\n    radio = form.locator(f'[name=\"{name}\"][value=\"{str(bool(value)).lower()}\"]')\n    label = radio.locator(\"xpath=ancestor::label[1]\")\n    check(label.count() == 1, f\"missing visible label for {name}\")\n    label.click()\n    check(radio.is_checked(), f\"radio {name} did not become checked\")"
+          if old not in text:
+              raise SystemExit("segmented radio patch target missing")
+          text = text.replace(old, new, 1)
+
           path.write_text(text, encoding="utf-8")
           PY
       - name: Run browser chunk
