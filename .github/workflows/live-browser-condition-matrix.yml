@@ -115,14 +115,43 @@ jobs:
           done
           cat /tmp/taxtreat-uvicorn.log || true
           exit 1
-      - name: Harden payer dialog synchronization
+      - name: Synchronize native dialogs with real UI state
         run: |
           python - <<'PY'
           from pathlib import Path
           path = Path("scripts/run_live_browser_condition_matrix.py")
           text = path.read_text(encoding="utf-8")
-          text = text.replace("page.locator('[data-nav=\"payers\"]').click()", "page.locator('[data-nav=\"payers\"]:visible').first.click()\n        page.wait_for_function(\"() => Boolean(document.querySelector('[data-view=\\\"payers\\\"].active'))\")", 1)
-          text = text.replace("page.locator(\"[data-create-payer]:visible\").click()\n        form = page.locator(\"#payer-form\")", "page.locator(\"[data-create-payer]:visible\").first.click()\n        page.locator(\"#payer-dialog\").wait_for(state=\"visible\")\n        form = page.locator(\"#payer-dialog #payer-form\")", 1)
+
+          old = "page.locator('[data-nav=\"payers\"]').click()"
+          new = "page.locator('[data-nav=\"payers\"]:visible').first.click()\n        page.wait_for_function(\"() => Boolean(document.querySelector('[data-view=\\\"payers\\\"].active'))\")"
+          if old not in text:
+              raise SystemExit("payer navigation patch target missing")
+          text = text.replace(old, new, 1)
+
+          old = "page.locator(\"[data-create-payer]:visible\").click()\n        form = page.locator(\"#payer-form\")\n        form.locator('[name=\"payer_id\"]').fill(\"12345679\")"
+          new = "page.locator(\"[data-create-payer]:visible\").first.click()\n        page.wait_for_function(\"() => Boolean(document.querySelector('#payer-dialog')?.open)\")\n        form = page.locator(\"#payer-dialog #payer-form\")\n        payer_country = form.locator('[name=\"payer_country\"]')\n        payer_country.wait_for(state=\"visible\")\n        payer_country.select_option(\"SK\")\n        form.locator('[name=\"payer_id\"]').wait_for(state=\"visible\")\n        form.locator('[name=\"payer_id\"]').fill(\"12345679\")"
+          if old not in text:
+              raise SystemExit("payer dialog patch target missing")
+          text = text.replace(old, new, 1)
+
+          old = "        form.locator('[name=\"payer_country\"]').select_option(\"SK\")\n        form.locator(\"[data-save-payer]\").click()\n        page.wait_for_function(\"() => document.body.dataset.sourceCountry === 'SK'\")"
+          new = "        form.locator(\"[data-save-payer]\").click()\n        page.wait_for_function(\"() => !document.querySelector('#payer-dialog')?.open\")\n        page.wait_for_function(\"() => document.body.dataset.sourceCountry === 'SK'\")"
+          if old not in text:
+              raise SystemExit("payer save patch target missing")
+          text = text.replace(old, new, 1)
+
+          old = "    page.locator('[data-view=\"recipient-detail\"] [data-edit-recipient]:visible').click()\n    dialog = page.locator(\"#recipient-edit-form\")"
+          new = "    page.locator('[data-view=\"recipient-detail\"] [data-edit-recipient]:visible').click()\n    page.wait_for_function(\"() => Boolean(document.querySelector('#recipient-dialog')?.open)\")\n    dialog = page.locator(\"#recipient-dialog #recipient-edit-form\")"
+          if old not in text:
+              raise SystemExit("recipient open patch target missing")
+          text = text.replace(old, new, 1)
+
+          old = "    dialog.locator('button[type=\"submit\"]').click()\n    page.wait_for_function(\n        \"(code) => document.querySelector('#recipient-edit-form [name=recipient_country]').value === code\",\n        arg=recipient_country,\n    )"
+          new = "    dialog.locator('button[type=\"submit\"]').click()\n    page.wait_for_function(\"() => !document.querySelector('#recipient-dialog')?.open\")"
+          if old not in text:
+              raise SystemExit("recipient close patch target missing")
+          text = text.replace(old, new, 1)
+
           path.write_text(text, encoding="utf-8")
           PY
       - name: Run browser chunk
