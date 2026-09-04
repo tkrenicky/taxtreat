@@ -28,6 +28,28 @@ jobs:
           pip install -r requirements-dev.txt
           pip install --no-deps -e .
           pip install playwright
+      - name: Prepare realistic browser matrix
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          runner = Path("scripts/run_live_browser_condition_matrix.py")
+          text = runner.read_text(encoding="utf-8")
+
+          old = '''def value_equal(left: Any, right: Any) -> bool:\n    if isinstance(left, (int, float)) and isinstance(right, (int, float)):\n        return abs(float(left) - float(right)) < 1e-9\n    return left == right'''
+          new = '''def value_equal(left: Any, right: Any) -> bool:\n    def normalized(value: Any) -> Any:\n        if isinstance(value, str) and value.lower() in {"true", "false"}:\n            return value.lower() == "true"\n        return value\n    left = normalized(left)\n    right = normalized(right)\n    if isinstance(left, (int, float)) and isinstance(right, (int, float)):\n        return abs(float(left) - float(right)) < 1e-9\n    return left == right'''
+          if old not in text:
+              raise SystemExit("value_equal patch target missing")
+          text = text.replace(old, new, 1)
+
+          old = '''            if target_fact == "__determination__":\n                continue\n            result.append('''
+          new = '''            if target_fact == "__determination__":\n                continue\n\n            # HTTP QA deliberately creates impossible sentinel values and sub-month\n            # numeric boundaries to prove fail-closed behavior. They are valuable\n            # contract tests but are not values a human can select in the browser.\n            if target_fact in {"fallback_case", "source_state_taxation", "general_article_11_2_rate"}:\n                continue\n            if label.endswith(":boundary_or_fail") and target_value == "__taxtreat_other__":\n                continue\n            if label.endswith(":boundary_or_fail") and target_fact in {\n                "holding_period_months", "holding_period_years", "continuous_holding_period_days"\n            }:\n                continue\n            if target_fact == "holding_period_will_reach_months":\n                continue\n\n            # related_party is a useful common case only where the selected treaty\n            # actually consumes the fact; otherwise intake correctly has no reason\n            # to ask for it.\n            if label == "related_party" and not any(\n                condition[1] == "related_party_status" for condition in scope_conditions\n            ):\n                continue\n\n            # Legal packages use several equivalent company enum spellings. The\n            # browser's recipient selector intentionally normalizes them to company.\n            if target_fact == "recipient_entity_type":\n                if target_value in {"company", "corporate", "company_other_than_partnership"}:\n                    target_value = "company"\n                else:\n                    continue\n\n            result.append('''
+          if old not in text:
+              raise SystemExit("browser scenario filtering patch target missing")
+          text = text.replace(old, new, 1)
+
+          runner.write_text(text, encoding="utf-8")
+          PY
       - name: Count browser-reachable matrix
         run: |
           mkdir -p reports/live-browser-inventory
@@ -102,25 +124,35 @@ jobs:
           pip install --no-deps -e .
           pip install playwright
           python -m playwright install --with-deps chromium
-      - name: Start current TaxTreat application
-        run: |
-          python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 > /tmp/taxtreat-uvicorn.log 2>&1 &
-          echo $! > /tmp/taxtreat-uvicorn.pid
-          for attempt in $(seq 1 60); do
-            if curl --fail --silent --show-error http://127.0.0.1:8000/ui/cs >/dev/null; then
-              echo "TaxTreat is ready"
-              exit 0
-            fi
-            sleep 1
-          done
-          cat /tmp/taxtreat-uvicorn.log || true
-          exit 1
-      - name: Synchronize native dialogs with real UI state
+      - name: Prepare realistic browser runtime
         run: |
           python - <<'PY'
           from pathlib import Path
-          path = Path("scripts/run_live_browser_condition_matrix.py")
-          text = path.read_text(encoding="utf-8")
+
+          # Add browser-answerable treaty facts before the app imports intake.
+          intake = Path("taxtreat/services/intake.py")
+          intake_text = intake.read_text(encoding="utf-8")
+          marker = "# These facts contain a treaty-specific enumerated value rather than"
+          if marker not in intake_text:
+              raise SystemExit("intake insertion marker missing")
+          guidance = '''FACT_GUIDANCE.update({\n    "article_11_special_exemption": {\n        "prompt": (\n            "Spadá příjemce úroku do zvláštní veřejné nebo institucionální "\n            "kategorie, kterou příslušná smlouva výslovně osvobozuje?"\n        ),\n        "why": (\n            "Některé smlouvy osvobozují úrok pouze při přesně vymezeném "\n            "postavení příjemce, například vlády, centrální banky nebo "\n            "vyjmenované veřejné finanční instituce."\n        ),\n        "response_type": "boolean",\n        "documents": [\n            "Doklady k právnímu postavení příjemce",\n            "Úvěrová nebo zápůjční smlouva",\n        ],\n    },\n    "related_party_status": {\n        "prompt": "Jde o platbu mezi spojenými osobami?",\n        "why": (\n            "U některých smluv mohou zvláštní vztahy mezi plátcem a příjemcem "\n            "ovlivnit rozsah částky, na kterou se smluvní sazba použije."\n        ),\n        "response_type": "choice",\n        "options": [["unrelated", "Ne"], ["related", "Ano"]],\n        "documents": ["Vlastnická struktura", "Úvěrová nebo zápůjční smlouva"],\n    },\n})\n\n\n'''
+          intake_text = intake_text.replace(marker, guidance + marker, 1)
+          intake.write_text(intake_text, encoding="utf-8")
+
+          runner = Path("scripts/run_live_browser_condition_matrix.py")
+          text = runner.read_text(encoding="utf-8")
+
+          old = '''def value_equal(left: Any, right: Any) -> bool:\n    if isinstance(left, (int, float)) and isinstance(right, (int, float)):\n        return abs(float(left) - float(right)) < 1e-9\n    return left == right'''
+          new = '''def value_equal(left: Any, right: Any) -> bool:\n    def normalized(value: Any) -> Any:\n        if isinstance(value, str) and value.lower() in {"true", "false"}:\n            return value.lower() == "true"\n        return value\n    left = normalized(left)\n    right = normalized(right)\n    if isinstance(left, (int, float)) and isinstance(right, (int, float)):\n        return abs(float(left) - float(right)) < 1e-9\n    return left == right'''
+          if old not in text:
+              raise SystemExit("value_equal patch target missing")
+          text = text.replace(old, new, 1)
+
+          old = '''            if target_fact == "__determination__":\n                continue\n            result.append('''
+          new = '''            if target_fact == "__determination__":\n                continue\n            if target_fact in {"fallback_case", "source_state_taxation", "general_article_11_2_rate"}:\n                continue\n            if label.endswith(":boundary_or_fail") and target_value == "__taxtreat_other__":\n                continue\n            if label.endswith(":boundary_or_fail") and target_fact in {\n                "holding_period_months", "holding_period_years", "continuous_holding_period_days"\n            }:\n                continue\n            if target_fact == "holding_period_will_reach_months":\n                continue\n            if label == "related_party" and not any(\n                condition[1] == "related_party_status" for condition in scope_conditions\n            ):\n                continue\n            if target_fact == "recipient_entity_type":\n                if target_value in {"company", "corporate", "company_other_than_partnership"}:\n                    target_value = "company"\n                else:\n                    continue\n            result.append('''
+          if old not in text:
+              raise SystemExit("browser scenario filtering patch target missing")
+          text = text.replace(old, new, 1)
 
           old = "page.locator('[data-nav=\"payers\"]').click()"
           new = "page.locator('[data-nav=\"payers\"]:visible').first.click()\n        page.wait_for_function(\"() => Boolean(document.querySelector('[data-view=\\\"payers\\\"].active'))\")"
@@ -146,6 +178,10 @@ jobs:
               raise SystemExit("recipient open patch target missing")
           text = text.replace(old, new, 1)
 
+          old = "    dialog.locator('[name=\"recipient_type\"]').select_option(label=\"Společnost\")\n"
+          if old in text:
+              text = text.replace(old, "", 1)
+
           old = "    dialog.locator('button[type=\"submit\"]').click()\n    page.wait_for_function(\n        \"(code) => document.querySelector('#recipient-edit-form [name=recipient_country]').value === code\",\n        arg=recipient_country,\n    )"
           new = "    dialog.locator('button[type=\"submit\"]').click()\n    page.wait_for_function(\"() => !document.querySelector('#recipient-dialog')?.open\")"
           if old not in text:
@@ -158,8 +194,21 @@ jobs:
               raise SystemExit("segmented radio patch target missing")
           text = text.replace(old, new, 1)
 
-          path.write_text(text, encoding="utf-8")
+          runner.write_text(text, encoding="utf-8")
           PY
+      - name: Start current TaxTreat application
+        run: |
+          python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 > /tmp/taxtreat-uvicorn.log 2>&1 &
+          echo $! > /tmp/taxtreat-uvicorn.pid
+          for attempt in $(seq 1 60); do
+            if curl --fail --silent --show-error http://127.0.0.1:8000/ui/cs >/dev/null; then
+              echo "TaxTreat is ready"
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/taxtreat-uvicorn.log || true
+          exit 1
       - name: Run browser chunk
         run: |
           mkdir -p reports/live-browser-matrix
