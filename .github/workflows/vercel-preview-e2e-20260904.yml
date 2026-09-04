@@ -18,6 +18,19 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Preview HTTP diagnostics
+        run: |
+          set +e
+          echo '=== /ui/cs ==='
+          curl -sS -D /tmp/ui.headers -o /tmp/ui.body "$TAXTREAT_LIVE_BASE_URL/ui/cs"
+          cat /tmp/ui.headers
+          head -c 4000 /tmp/ui.body || true
+          echo
+          echo '=== source-country-context.js ==='
+          curl -sS -D /tmp/js.headers -o /tmp/js.body "$TAXTREAT_LIVE_BASE_URL/ui-assets/source-country-context.js?v=20260819-sk1"
+          cat /tmp/js.headers
+          head -c 4000 /tmp/js.body || true
+          echo
       - name: Install Playwright
         run: |
           python -m pip install --upgrade pip
