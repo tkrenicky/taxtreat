@@ -118,6 +118,15 @@ def test_payer_editor_contains_country_fact_and_handles_dynamic_edit_dialog():
     assert "🇨🇿" in text and "🇸🇰" in text
 
 
+def test_payer_country_ui_rechecks_runtime_language_after_language_switch():
+    text = PAYER_COUNTRY.read_text(encoding="utf-8")
+    assert "function isEnglish()" in text
+    assert "function localizedCountryName(code)" in text
+    assert 'event.target?.id !== "taxtreat-ui-language"' in text
+    assert "refreshCountryFieldCopy" in text
+    assert "Czech Republic|Slovensko|Slovakia" in text
+
+
 def test_report_regeneration_preserves_section19_facts_and_report_language():
     text = REPORT_CONTEXT.read_text(encoding="utf-8")
     assert 'url.endsWith("/analysis/report")' in text
