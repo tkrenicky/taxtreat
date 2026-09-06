@@ -220,15 +220,10 @@ def fill_primary_controls(page: Page, scenario: dict[str, Any]) -> None:
             control.fill(str(target_value))
 
     # Treaty datasets contain both historical names for the same arm's-length
-    # payment fact. The workspace exposes one primary control and serializes it
+    # payment fact. The workspace exposes one primary radio and serializes it
     # as facts.arm_length_amount, so drive that real control for either alias.
     if target_fact == "payment_is_arm_length_amount":
-        control = page.locator('#workspace-payment [name="arm_length_amount"]')
-        base.check(
-            control.count() == 1 and control.is_visible(),
-            "missing arm_length_amount primary control for payment alias",
-        )
-        control.select_option("true" if bool(target_value) else "false")
+        set_radio(page.locator("#workspace-payment"), "arm_length_amount", bool(target_value))
 
 
 def acquisition_date_for_months(payload: dict[str, Any], months: Any) -> str:
@@ -256,8 +251,9 @@ def assert_target_reached(
     submitted: dict[str, Any],
 ) -> None:
     target_fact = scenario["target_fact"]
+    facts = submitted.get("facts") or {}
+
     if target_fact == "payment_is_arm_length_amount":
-        facts = submitted.get("facts") or {}
         base.check(
             "arm_length_amount" in facts,
             f"unreachable UI fact payment_is_arm_length_amount for {scenario['label']}",
@@ -271,6 +267,36 @@ def assert_target_reached(
             ),
         )
         return
+
+    if target_fact == "holding_period_months":
+        if "holding_period_months" in facts:
+            base.check(
+                value_equal(facts["holding_period_months"], scenario["target_value"]),
+                (
+                    f"UI fact mismatch holding_period_months for {scenario['label']}: "
+                    f"expected={scenario['target_value']!r} "
+                    f"actual={facts['holding_period_months']!r}"
+                ),
+            )
+            return
+
+        derived = submitted.get("derived") or {}
+        expected_date = acquisition_date_for_months(
+            scenario["payload"], scenario["target_value"]
+        )
+        base.check(
+            "acquisition_date" in derived,
+            f"unreachable UI fact holding_period_months for {scenario['label']}",
+        )
+        base.check(
+            derived["acquisition_date"] == expected_date,
+            (
+                f"UI derived acquisition date mismatch for {scenario['label']}: "
+                f"expected={expected_date!r} actual={derived['acquisition_date']!r}"
+            ),
+        )
+        return
+
     base._original_assert_target_reached(scenario, submitted)
 
 
