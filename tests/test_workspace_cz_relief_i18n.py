@@ -105,13 +105,26 @@ def test_source_country_is_payer_derived_and_not_user_selectable():
 def test_payer_editor_contains_country_fact_and_handles_dynamic_edit_dialog():
     text = PAYER_COUNTRY.read_text(encoding="utf-8")
     assert "Stát plátce *" in text
-    assert '<option value="CZ">${en ? "Czech Republic" : "Česká republika"}</option>' in text
-    assert '<option value="SK">${en ? "Slovakia" : "Slovensko"}</option>' in text
+    assert '<option value="CZ">🇨🇿 ${en ? "Czech Republic" : "Česká republika"}</option>' in text
+    assert '<option value="SK">🇸🇰 ${en ? "Slovakia" : "Slovensko"}</option>' in text
     assert "určuje, která vnitrostátní pravidla srážkové daně" in text
     assert "setPayerCountry" in text
     assert "ARES" in text
     assert 'attributeFilter: ["open"]' in text
     assert "refreshPayerCountryCopy" in text
+    assert "active-payer-country-badge" in text
+    assert "payer-country-flag" in text
+    assert "taxtreat:source-country-change" in text
+    assert "🇨🇿" in text and "🇸🇰" in text
+
+
+def test_payer_country_ui_rechecks_runtime_language_after_language_switch():
+    text = PAYER_COUNTRY.read_text(encoding="utf-8")
+    assert "function isEnglish()" in text
+    assert "function localizedCountryName(code)" in text
+    assert 'event.target?.id !== "taxtreat-ui-language"' in text
+    assert "refreshCountryFieldCopy" in text
+    assert "Czech Republic|Slovensko|Slovakia" in text
 
 
 def test_report_regeneration_preserves_section19_facts_and_report_language():
