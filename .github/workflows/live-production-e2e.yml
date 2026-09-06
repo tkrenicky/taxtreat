@@ -1,14 +1,9 @@
 name: Live production E2E
 
 on:
-  pull_request:
-    paths:
-      - "scripts/verify_live_production_e2e.py"
-      - ".github/workflows/live-production-e2e.yml"
-      - "app/**"
-      - "taxtreat/**"
-      - "data/**"
   workflow_dispatch:
+  schedule:
+    - cron: "17 5 * * *"
 
 jobs:
   live-production-e2e:
