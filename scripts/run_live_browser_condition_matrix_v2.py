@@ -42,94 +42,47 @@ def value_equal(left: Any, right: Any) -> bool:
     return left == right
 
 
-def browser_scenarios(
-    *,
-    source_country: str,
-    income_type: str,
-    shard_index: int,
-    shard_count: int,
-) -> list[dict[str, Any]]:
-    raw = base._original_browser_scenarios(
-        source_country=source_country,
-        income_type=income_type,
-        shard_index=shard_index,
-        shard_count=shard_count,
-    )
+def browser_scenarios(*, source_country: str, income_type: str, shard_index: int, shard_count: int) -> list[dict[str, Any]]:
+    raw = base._original_browser_scenarios(source_country=source_country, income_type=income_type, shard_index=shard_index, shard_count=shard_count)
     inv = base.inventory()
     result: list[dict[str, Any]] = []
-
     for scenario in raw:
         item = deepcopy(scenario)
         target_fact = item.get("target_fact")
         target_value = item.get("target_value")
         label = str(item.get("label") or "")
         recipient_country = str(item.get("recipient_country") or "")
-        scope_conditions = inv[source_country]["conditions"].get(
-            (recipient_country, income_type), set()
-        )
-
+        scope_conditions = inv[source_country]["conditions"].get((recipient_country, income_type), set())
         if target_fact:
             guidance = intake.FACT_GUIDANCE.get(str(target_fact), {})
-            dynamic_browser_fact = bool(
-                guidance
-                and guidance.get("client_answerable", True) is not False
-                and guidance.get("response_type")
-            )
+            dynamic_browser_fact = bool(guidance and guidance.get("client_answerable", True) is not False and guidance.get("response_type"))
             if target_fact not in PRIMARY_BROWSER_FACTS and not dynamic_browser_fact:
                 continue
-
-        if target_fact in {
-            "fallback_case",
-            "source_state_taxation",
-            "general_article_11_2_rate",
-            "holding_period_will_reach_months",
-        }:
+        if target_fact in {"fallback_case", "source_state_taxation", "general_article_11_2_rate", "holding_period_will_reach_months"}:
             continue
-
         if label.endswith(":boundary_or_fail") and target_value == "__taxtreat_other__":
             continue
-
-        if label.endswith(":boundary_or_fail") and target_fact in {
-            "holding_period_months",
-            "holding_period_years",
-            "continuous_holding_period_days",
-        }:
+        if label.endswith(":boundary_or_fail") and target_fact in {"holding_period_months", "holding_period_years", "continuous_holding_period_days"}:
             continue
-
-        if label == "related_party" and not any(
-            condition[1] == "related_party_status" for condition in scope_conditions
-        ):
+        if label == "related_party" and not any(condition[1] == "related_party_status" for condition in scope_conditions):
             continue
-
         facts = item.get("payload", {}).get("facts", {})
         for key, value in list(facts.items()):
             facts[key] = normalized(value)
-
         if target_fact == "royalty_is_technical_or_economic_study_or_technical_assistance":
             item["payload"] = deepcopy(item["payload"])
             item["payload"]["facts"]["royalty_category"] = "other"
-
         result.append(item)
-
     return result
 
 
 def bootstrap(page: Page, source_country: str, lang: str) -> None:
-    page.goto(
-        f"{base.BASE_URL}/ui/{lang}",
-        wait_until="domcontentloaded",
-        timeout=20_000,
-    )
-    page.wait_for_function(
-        "() => Boolean(window.TaxTreatWorkspaceSourceCountry && window.TaxTreatSourceCountries)"
-    )
+    page.goto(f"{base.BASE_URL}/ui/{lang}", wait_until="domcontentloaded", timeout=20_000)
+    page.wait_for_function("() => Boolean(window.TaxTreatWorkspaceSourceCountry && window.TaxTreatSourceCountries)")
     page.wait_for_timeout(1000)
-
     if source_country == "SK":
         page.locator('[data-nav="payers"]:visible').first.click()
-        page.wait_for_function(
-            "() => Boolean(document.querySelector('[data-view=\"payers\"].active'))"
-        )
+        page.wait_for_function("() => Boolean(document.querySelector('[data-view=\"payers\"].active'))")
         page.locator("[data-create-payer]:visible").first.click()
         page.wait_for_function("() => Boolean(document.querySelector('#payer-dialog')?.open)")
         form = page.locator("#payer-dialog #payer-form")
@@ -143,21 +96,9 @@ def bootstrap(page: Page, source_country: str, lang: str) -> None:
         form.locator("[data-save-payer]").click()
         page.wait_for_function("() => !document.querySelector('#payer-dialog')?.open")
         page.wait_for_function("() => document.body.dataset.sourceCountry === 'SK'")
-
-    page.wait_for_function(
-        """(expected) => document.querySelectorAll(
-            '#new-recipient-form [name="recipient_country"] option'
-        ).length === expected""",
-        arg=base.source_partner_count(source_country),
-    )
-    base.check(
-        page.evaluate("document.body.dataset.sourceCountry") == source_country,
-        f"source-country bootstrap mismatch: {source_country}",
-    )
-    base.check(
-        page.evaluate("document.documentElement.lang") == lang,
-        f"language bootstrap mismatch: {lang}",
-    )
+    page.wait_for_function("""(expected) => document.querySelectorAll('#new-recipient-form [name="recipient_country"] option').length === expected""", arg=base.source_partner_count(source_country))
+    base.check(page.evaluate("document.body.dataset.sourceCountry") == source_country, f"source-country bootstrap mismatch: {source_country}")
+    base.check(page.evaluate("document.documentElement.lang") == lang, f"language bootstrap mismatch: {lang}")
 
 
 def set_recipient_country(page: Page, recipient_country: str) -> None:
@@ -175,16 +116,10 @@ def set_recipient_country(page: Page, recipient_country: str) -> None:
 
 
 def start_flow(page: Page) -> None:
-    # A completed calculation mutates substantial DOM state. Reload before
-    # every scenario so the matrix verifies persistence plus a clean browser
-    # lifecycle, rather than accidentally reusing hidden step/result nodes.
     page.reload(wait_until="domcontentloaded", timeout=20_000)
-    page.wait_for_function(
-        "() => Boolean(window.TaxTreatWorkspaceSourceCountry && window.TaxTreatSourceCountries)"
-    )
+    page.wait_for_function("() => Boolean(window.TaxTreatWorkspaceSourceCountry && window.TaxTreatSourceCountries)")
     page.wait_for_function("() => Boolean(document.body.dataset.sourceCountry)")
     page.wait_for_function("() => Boolean(document.querySelector('[data-nav=\"dashboard\"]'))")
-
     dashboard = page.locator('[data-nav="dashboard"]:visible')
     base.check(dashboard.count() > 0, "no visible dashboard navigation control")
     dashboard.first.click()
@@ -200,9 +135,7 @@ def start_flow(page: Page) -> None:
 
 
 def set_radio(form, name: str, value: bool) -> None:
-    radio = form.locator(
-        f'[name="{name}"][value="{str(bool(normalized(value))).lower()}"]'
-    )
+    radio = form.locator(f'[name="{name}"][value="{str(bool(normalized(value))).lower()}"]')
     label = radio.locator("xpath=ancestor::label[1]")
     base.check(label.count() == 1, f"missing visible label for {name}")
     label.click()
@@ -213,90 +146,46 @@ def fill_primary_controls(page: Page, scenario: dict[str, Any]) -> None:
     base._original_fill_primary_controls(page, scenario)
     target_fact = scenario.get("target_fact")
     target_value = normalized(scenario.get("target_value"))
-
     if target_fact == "voting_power_control":
         control = page.locator('#workspace-payment [name="voting_ownership_percent"]')
         if control.count() and control.is_visible():
             control.fill(str(target_value))
-
-    # Treaty datasets contain both historical names for the same arm's-length
-    # payment fact. The workspace exposes one primary radio and serializes it
-    # as facts.arm_length_amount, so drive that real control for either alias.
     if target_fact == "payment_is_arm_length_amount":
-        set_radio(page.locator("#workspace-payment"), "arm_length_amount", bool(target_value))
+        control = page.locator('#workspace-payment [name="arm_length_amount"]')
+        base.check(control.count() == 1 and control.is_visible(), "missing arm_length_amount primary control for payment alias")
+        control.select_option("true" if bool(target_value) else "false")
 
 
 def acquisition_date_for_months(payload: dict[str, Any], months: Any) -> str:
     transaction_date = date.fromisoformat(str(payload["transaction_date"]))
     numeric_months = float(months)
     rounded = int(round(numeric_months))
-    base.check(
-        abs(numeric_months - rounded) < 1e-9,
-        f"browser date input cannot represent fractional complete months: {months!r}",
-    )
+    base.check(abs(numeric_months - rounded) < 1e-9, f"browser date input cannot represent fractional complete months: {months!r}")
     return (transaction_date - relativedelta(months=rounded)).isoformat()
 
 
 def desired_for_path(payload: dict[str, Any], path: str) -> tuple[bool, Any]:
     if path == "derived.acquisition_date" and "holding_period_months" in payload.get("facts", {}):
-        return True, acquisition_date_for_months(
-            payload,
-            payload["facts"]["holding_period_months"],
-        )
+        return True, acquisition_date_for_months(payload, payload["facts"]["holding_period_months"])
     return base._original_desired_for_path(payload, path)
 
 
-def assert_target_reached(
-    scenario: dict[str, Any],
-    submitted: dict[str, Any],
-) -> None:
+def assert_target_reached(scenario: dict[str, Any], submitted: dict[str, Any]) -> None:
     target_fact = scenario["target_fact"]
     facts = submitted.get("facts") or {}
-
     if target_fact == "payment_is_arm_length_amount":
-        base.check(
-            "arm_length_amount" in facts,
-            f"unreachable UI fact payment_is_arm_length_amount for {scenario['label']}",
-        )
-        base.check(
-            value_equal(facts["arm_length_amount"], scenario["target_value"]),
-            (
-                f"UI fact mismatch payment_is_arm_length_amount for {scenario['label']}: "
-                f"expected={scenario['target_value']!r} "
-                f"actual_arm_length_amount={facts['arm_length_amount']!r}"
-            ),
-        )
+        base.check("arm_length_amount" in facts, f"unreachable UI fact payment_is_arm_length_amount for {scenario['label']}")
+        base.check(value_equal(facts["arm_length_amount"], scenario["target_value"]), f"UI fact mismatch payment_is_arm_length_amount for {scenario['label']}: expected={scenario['target_value']!r} actual_arm_length_amount={facts['arm_length_amount']!r}")
         return
-
     if target_fact == "holding_period_months":
         if "holding_period_months" in facts:
-            base.check(
-                value_equal(facts["holding_period_months"], scenario["target_value"]),
-                (
-                    f"UI fact mismatch holding_period_months for {scenario['label']}: "
-                    f"expected={scenario['target_value']!r} "
-                    f"actual={facts['holding_period_months']!r}"
-                ),
-            )
+            base.check(value_equal(facts["holding_period_months"], scenario["target_value"]), f"UI fact mismatch holding_period_months for {scenario['label']}: expected={scenario['target_value']!r} actual={facts['holding_period_months']!r}")
             return
-
         derived = submitted.get("derived") or {}
-        expected_date = acquisition_date_for_months(
-            scenario["payload"], scenario["target_value"]
-        )
-        base.check(
-            "acquisition_date" in derived,
-            f"unreachable UI fact holding_period_months for {scenario['label']}",
-        )
-        base.check(
-            derived["acquisition_date"] == expected_date,
-            (
-                f"UI derived acquisition date mismatch for {scenario['label']}: "
-                f"expected={expected_date!r} actual={derived['acquisition_date']!r}"
-            ),
-        )
+        expected_date = acquisition_date_for_months(scenario["payload"], scenario["target_value"])
+        base.check("acquisition_date" in derived, f"unreachable UI fact holding_period_months for {scenario['label']}")
+        base.check(derived["acquisition_date"] == expected_date, f"UI derived acquisition date mismatch for {scenario['label']}: expected={expected_date!r} actual={derived['acquisition_date']!r}")
         return
-
     base._original_assert_target_reached(scenario, submitted)
 
 
@@ -305,16 +194,12 @@ def finish_dynamic_questions(page: Page, payload: dict[str, Any]) -> None:
         if page.locator('.flow-step[data-step="4"].active').count():
             return
         if page.locator("#workspace-error").is_visible():
-            raise AssertionError(
-                "workspace error: " + page.locator("#workspace-error").inner_text().strip()
-            )
-
+            raise AssertionError("workspace error: " + page.locator("#workspace-error").inner_text().strip())
         questions = page.locator("#workspace-questions [data-input-path]")
         count = questions.count()
         if count == 0:
             page.wait_for_timeout(20)
             continue
-
         restart = False
         for index in range(count):
             if page.locator('.flow-step[data-step="4"].active').count():
@@ -329,28 +214,15 @@ def finish_dynamic_questions(page: Page, payload: dict[str, Any]) -> None:
                     restart = True
                     break
                 raise
-
         if restart:
             page.wait_for_timeout(10)
             continue
-
-        state = page.evaluate(
-            """() => {
-                if (document.querySelector('.flow-step[data-step="4"].active')) return 'result';
-                const button = document.querySelector('#workspace-submit');
-                if (button && !button.disabled &&
-                    (button.offsetWidth || button.offsetHeight || button.getClientRects().length)) {
-                    return 'submit';
-                }
-                return 'wait';
-            }"""
-        )
+        state = page.evaluate("""() => { if (document.querySelector('.flow-step[data-step="4"].active')) return 'result'; const button = document.querySelector('#workspace-submit'); if (button && !button.disabled && (button.offsetWidth || button.offsetHeight || button.getClientRects().length)) return 'submit'; return 'wait'; }""")
         if state == "result":
             return
         if state != "submit":
             page.wait_for_timeout(15)
             continue
-
         try:
             page.locator("#workspace-submit").click(timeout=1000)
         except Exception:
@@ -359,7 +231,6 @@ def finish_dynamic_questions(page: Page, payload: dict[str, Any]) -> None:
             page.wait_for_timeout(10)
             continue
         page.wait_for_timeout(30)
-
     raise AssertionError("dynamic questions did not resolve")
 
 
