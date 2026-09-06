@@ -6,26 +6,44 @@
   const activePayerSelect = document.querySelector("#active-payer-select");
   if (!form || !dialog || !activePayerSelect) return;
 
+  function isEnglish() {
+    return String(document.documentElement.lang || "").toLowerCase().startsWith("en");
+  }
+
+  function localizedCountryName(code) {
+    const en = isEnglish();
+    return String(code || "CZ").toUpperCase() === "SK"
+      ? (en ? "Slovakia" : "Slovensko")
+      : (en ? "Czech Republic" : "Česká republika");
+  }
+
   const originalCountryInput = [...form.querySelectorAll("label")].find((label) =>
     label.querySelector("span")?.textContent.trim() === "Stát"
   );
 
-  const en = String(document.documentElement.lang || "").toLowerCase().startsWith("en");
   const label = originalCountryInput || document.createElement("label");
   label.id = "payer-country-field";
-  label.innerHTML = `
-    <span>${en ? "Payer country *" : "Stát plátce *"}</span>
-    <select name="payer_country" required>
-      <option value="">${en ? "Select payer country" : "Vyber stát plátce"}</option>
-      <option value="CZ">🇨🇿 ${en ? "Czech Republic" : "Česká republika"}</option>
-      <option value="SK">🇸🇰 ${en ? "Slovakia" : "Slovensko"}</option>
-    </select>
-    <small>${en
-      ? "The payer’s country determines which domestic withholding tax rules TaxTreat applies. This is not a separate application-mode switch."
-      : "Stát plátce určuje, která vnitrostátní pravidla srážkové daně TaxTreat použije. Nejde o samostatný přepínač režimu aplikace."}</small>`;
   if (!originalCountryInput) form.querySelector(".flow-actions")?.before(label);
 
-  const country = label.querySelector("select");
+  function refreshCountryFieldCopy() {
+    const en = isEnglish();
+    const selected = label.querySelector('select[name="payer_country"]')?.value || "";
+    label.innerHTML = `
+      <span>${en ? "Payer country *" : "Stát plátce *"}</span>
+      <select name="payer_country" required>
+        <option value="">${en ? "Select payer country" : "Vyber stát plátce"}</option>
+        <option value="CZ">🇨🇿 ${en ? "Czech Republic" : "Česká republika"}</option>
+        <option value="SK">🇸🇰 ${en ? "Slovakia" : "Slovensko"}</option>
+      </select>
+      <small>${en
+        ? "The payer’s country determines which domestic withholding tax rules TaxTreat applies. This is not a separate application-mode switch."
+        : "Stát plátce určuje, která vnitrostátní pravidla srážkové daně TaxTreat použije. Nejde o samostatný přepínač režimu aplikace."}</small>`;
+    const select = label.querySelector('select[name="payer_country"]');
+    if (select) select.value = selected;
+    return select;
+  }
+
+  let country = refreshCountryFieldCopy();
   const aresButton = form.querySelector("[data-ares-lookup]");
   const aresStatus = form.querySelector("#ares-lookup-status");
   const saveButton = form.querySelector("[data-save-payer]");
@@ -83,11 +101,9 @@
 
   function updateActiveCountryBadge(code = sourceApi()?.getActiveCode?.() || countryForKey(activePayerSelect.value)) {
     const normalized = String(code || "CZ").toUpperCase() === "SK" ? "SK" : "CZ";
-    const isSk = normalized === "SK";
-    const flag = isSk ? "🇸🇰" : "🇨🇿";
-    const countryName = isSk
-      ? (en ? "Slovakia" : "Slovensko")
-      : (en ? "Czech Republic" : "Česká republika");
+    const flag = normalized === "SK" ? "🇸🇰" : "🇨🇿";
+    const countryName = localizedCountryName(normalized);
+    const en = isEnglish();
     const labelText = en ? "Payer country" : "Stát plátce";
     activeCountryBadge.dataset.country = normalized;
     activeCountryBadge.innerHTML = `
@@ -103,8 +119,9 @@
   }
 
   function applyCountryUi() {
-    const selected = country.value === "CZ" || country.value === "SK";
-    const isSk = country.value === "SK";
+    const selected = country?.value === "CZ" || country?.value === "SK";
+    const isSk = country?.value === "SK";
+    const en = isEnglish();
 
     payerDetailLabels.forEach((item) => {
       item.hidden = !selected;
@@ -151,20 +168,23 @@
       const meta = card.querySelector("p");
       if (!meta) return;
       const current = meta.textContent.replace(/^🇨🇿\s*/, "").replace(/^🇸🇰\s*/, "");
-      const nextCountry = code === "SK" ? "Slovensko" : "Česká republika";
+      const nextCountry = localizedCountryName(code);
       const flag = code === "SK" ? "🇸🇰" : "🇨🇿";
       const next = current
-        .replace(/^Česká republika/, nextCountry)
-        .replace(/^Slovensko/, nextCountry);
+        .replace(/^(Česká republika|Czech Republic|Slovensko|Slovakia)/, nextCountry);
       meta.textContent = `${flag} ${next}`;
     });
     updateActiveCountryBadge();
   }
 
-  country.addEventListener("change", () => {
-    country.dataset.userSelected = "true";
-    applyCountryUi();
-  });
+  function bindCountryChange() {
+    country?.addEventListener("change", () => {
+      country.dataset.userSelected = "true";
+      applyCountryUi();
+    });
+  }
+
+  bindCountryChange();
   activePayerSelect.addEventListener("change", () => window.setTimeout(refreshPayerCountryCopy, 0));
 
   document.querySelectorAll("[data-create-payer]").forEach((button) => {
@@ -200,6 +220,18 @@
 
   window.addEventListener("taxtreat:source-country-change", (event) => {
     updateActiveCountryBadge(event.detail?.code);
+  });
+
+  document.addEventListener("change", (event) => {
+    if (event.target?.id !== "taxtreat-ui-language") return;
+    window.setTimeout(() => {
+      const selected = country?.value || "";
+      country = refreshCountryFieldCopy();
+      country.value = selected;
+      bindCountryChange();
+      applyCountryUi();
+      refreshPayerCountryCopy();
+    }, 0);
   });
 
   document.addEventListener("click", (event) => {
