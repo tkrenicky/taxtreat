@@ -26,48 +26,13 @@ PRIMARY_BROWSER_FACTS = {
 }
 
 
-def install_runtime_guidance() -> None:
-    intake.FACT_GUIDANCE.update(
-        {
-            "article_11_special_exemption": {
-                "prompt": (
-                    "Spadá příjemce úroku do zvláštní veřejné nebo "
-                    "institucionální kategorie, kterou příslušná smlouva "
-                    "výslovně osvobozuje?"
-                ),
-                "why": (
-                    "Některé smlouvy osvobozují úrok pouze při přesně "
-                    "vymezeném postavení příjemce."
-                ),
-                "response_type": "boolean",
-                "documents": [
-                    "Doklady k právnímu postavení příjemce",
-                    "Úvěrová nebo zápůjční smlouva",
-                ],
-            },
-            "related_party_status": {
-                "prompt": "Jde o platbu mezi spojenými osobami?",
-                "why": (
-                    "U některých smluv mohou zvláštní vztahy mezi plátcem "
-                    "a příjemcem ovlivnit použitelný režim."
-                ),
-                "response_type": "choice",
-                "options": [["unrelated", "Ne"], ["related", "Ano"]],
-                "documents": [
-                    "Vlastnická struktura",
-                    "Úvěrová nebo zápůjční smlouva",
-                ],
-            },
-        }
-    )
+def normalized(value: Any) -> Any:
+    if isinstance(value, str) and value.lower() in {"true", "false"}:
+        return value.lower() == "true"
+    return value
 
 
 def value_equal(left: Any, right: Any) -> bool:
-    def normalized(value: Any) -> Any:
-        if isinstance(value, str) and value.lower() in {"true", "false"}:
-            return value.lower() == "true"
-        return value
-
     left = normalized(left)
     right = normalized(right)
     if isinstance(left, (int, float)) and isinstance(right, (int, float)):
@@ -101,6 +66,10 @@ def browser_scenarios(
             (recipient_country, income_type), set()
         )
 
+        # Only facts that the real application can actually collect belong in
+        # the browser-reachability matrix. Do not inject synthetic FACT_GUIDANCE
+        # in this test process: uvicorn runs in a separate process and would not
+        # see it, creating false "unreachable UI fact" failures.
         if target_fact:
             guidance = intake.FACT_GUIDANCE.get(str(target_fact), {})
             dynamic_browser_fact = bool(
@@ -137,6 +106,13 @@ def browser_scenarios(
             for condition in scope_conditions
         ):
             continue
+
+        # Normalize JSON-ish boolean strings before the base form filler sees
+        # them. bool("false") is True in Python and previously flipped several
+        # treaty-specific boolean scenarios.
+        facts = item.get("payload", {}).get("facts", {})
+        for key, value in list(facts.items()):
+            facts[key] = normalized(value)
 
         # Tunisia Article 12 only asks the technical/economic study or
         # technical-assistance question inside the treaty branch whose royalty
@@ -228,14 +204,55 @@ def set_recipient_country(page: Page, recipient_country: str) -> None:
     )
 
 
+def start_flow(page: Page) -> None:
+    # Always reset through Dashboard. Reusing the page after a completed result
+    # previously left step 4 active and allowed it to intercept the next
+    # scenario's step-1/step-2 clicks.
+    dashboard = page.locator('[data-nav="dashboard"]:visible')
+    base.check(dashboard.count() > 0, "no visible dashboard navigation control")
+    dashboard.first.click()
+    page.wait_for_function(
+        "() => Boolean(document.querySelector('[data-view=dashboard].active'))"
+    )
+    page.wait_for_function(
+        "() => !document.querySelector('.flow-step[data-step=\"4\"].active')"
+    )
+    start = page.locator("[data-start-flow]:visible")
+    base.check(start.count() > 0, "no visible New calculation control")
+    start.first.click()
+    page.wait_for_function(
+        "() => Boolean(document.querySelector('.flow-step[data-step=\"1\"].active'))"
+    )
+    page.locator('[data-next-step="2"]:visible').click()
+    page.wait_for_function(
+        "() => Boolean(document.querySelector('.flow-step[data-step=\"2\"].active'))"
+    )
+    page.locator('[data-next-step="3"]:visible').click()
+    page.wait_for_function(
+        "() => Boolean(document.querySelector('.flow-step[data-step=\"3\"].active'))"
+    )
+
+
 def set_radio(form, name: str, value: bool) -> None:
     radio = form.locator(
-        f'[name="{name}"][value="{str(bool(value)).lower()}"]'
+        f'[name="{name}"][value="{str(bool(normalized(value))).lower()}"]'
     )
     label = radio.locator("xpath=ancestor::label[1]")
     base.check(label.count() == 1, f"missing visible label for {name}")
     label.click()
     base.check(radio.is_checked(), f"radio {name} did not become checked")
+
+
+def fill_primary_controls(page: Page, scenario: dict[str, Any]) -> None:
+    base._original_fill_primary_controls(page, scenario)
+
+    # Some treaties express the dividend threshold as voting-power control.
+    # The client-facing workspace captures that through the same voting-percent
+    # control used for voting ownership, so drive it with the scenario target.
+    if scenario.get("target_fact") == "voting_power_control":
+        control = page.locator('#workspace-payment [name="voting_ownership_percent"]')
+        if control.count() and control.is_visible():
+            control.fill(str(scenario.get("target_value")))
 
 
 def finish_dynamic_questions(page: Page, payload: dict[str, Any]) -> None:
@@ -307,13 +324,15 @@ def finish_dynamic_questions(page: Page, payload: dict[str, Any]) -> None:
 
 
 def install() -> None:
-    install_runtime_guidance()
     base._original_browser_scenarios = base.browser_scenarios
+    base._original_fill_primary_controls = base.fill_primary_controls
     base.value_equal = value_equal
     base.browser_scenarios = browser_scenarios
     base.bootstrap = bootstrap
     base.set_recipient_country = set_recipient_country
+    base.start_flow = start_flow
     base.set_radio = set_radio
+    base.fill_primary_controls = fill_primary_controls
     base.finish_dynamic_questions = finish_dynamic_questions
 
 
