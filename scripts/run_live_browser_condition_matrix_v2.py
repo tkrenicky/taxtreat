@@ -66,10 +66,6 @@ def browser_scenarios(
             (recipient_country, income_type), set()
         )
 
-        # Only facts that the real application can actually collect belong in
-        # the browser-reachability matrix. Do not inject synthetic FACT_GUIDANCE
-        # in this test process: uvicorn runs in a separate process and would not
-        # see it, creating false "unreachable UI fact" failures.
         if target_fact:
             guidance = intake.FACT_GUIDANCE.get(str(target_fact), {})
             dynamic_browser_fact = bool(
@@ -107,17 +103,10 @@ def browser_scenarios(
         ):
             continue
 
-        # Normalize JSON-ish boolean strings before the base form filler sees
-        # them. bool("false") is True in Python and previously flipped several
-        # treaty-specific boolean scenarios.
         facts = item.get("payload", {}).get("facts", {})
         for key, value in list(facts.items()):
             facts[key] = normalized(value)
 
-        # Tunisia Article 12 only asks the technical/economic study or
-        # technical-assistance question inside the treaty branch whose royalty
-        # category is "other". Make that prerequisite explicit while keeping
-        # the boolean as the fact under test.
         if (
             target_fact
             == "royalty_is_technical_or_economic_study_or_technical_assistance"
@@ -205,17 +194,25 @@ def set_recipient_country(page: Page, recipient_country: str) -> None:
 
 
 def start_flow(page: Page) -> None:
-    # Always reset through Dashboard. Reusing the page after a completed result
-    # previously left step 4 active and allowed it to intercept the next
-    # scenario's step-1/step-2 clicks.
+    # A completed calculation mutates substantial DOM state. Reload before
+    # every scenario so the matrix verifies persistence plus a clean browser
+    # lifecycle, rather than accidentally reusing hidden step/result nodes.
+    page.reload(wait_until="domcontentloaded", timeout=20_000)
+    page.wait_for_function(
+        "() => Boolean(window.TaxTreatWorkspaceSourceCountry && window.TaxTreatSourceCountries)"
+    )
+    page.wait_for_function(
+        "() => Boolean(document.body.dataset.sourceCountry)"
+    )
+    page.wait_for_function(
+        "() => Boolean(document.querySelector('[data-nav=\"dashboard\"]:visible'))"
+    )
+
     dashboard = page.locator('[data-nav="dashboard"]:visible')
     base.check(dashboard.count() > 0, "no visible dashboard navigation control")
     dashboard.first.click()
     page.wait_for_function(
         "() => Boolean(document.querySelector('[data-view=dashboard].active'))"
-    )
-    page.wait_for_function(
-        "() => !document.querySelector('.flow-step[data-step=\"4\"].active')"
     )
     start = page.locator("[data-start-flow]:visible")
     base.check(start.count() > 0, "no visible New calculation control")
@@ -246,9 +243,6 @@ def set_radio(form, name: str, value: bool) -> None:
 def fill_primary_controls(page: Page, scenario: dict[str, Any]) -> None:
     base._original_fill_primary_controls(page, scenario)
 
-    # Some treaties express the dividend threshold as voting-power control.
-    # The client-facing workspace captures that through the same voting-percent
-    # control used for voting ownership, so drive it with the scenario target.
     if scenario.get("target_fact") == "voting_power_control":
         control = page.locator('#workspace-payment [name="voting_ownership_percent"]')
         if control.count() and control.is_visible():
