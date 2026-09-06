@@ -73,10 +73,7 @@ def browser_scenarios(
                 and guidance.get("client_answerable", True) is not False
                 and guidance.get("response_type")
             )
-            if (
-                target_fact not in PRIMARY_BROWSER_FACTS
-                and not dynamic_browser_fact
-            ):
+            if target_fact not in PRIMARY_BROWSER_FACTS and not dynamic_browser_fact:
                 continue
 
         if target_fact in {
@@ -98,8 +95,7 @@ def browser_scenarios(
             continue
 
         if label == "related_party" and not any(
-            condition[1] == "related_party_status"
-            for condition in scope_conditions
+            condition[1] == "related_party_status" for condition in scope_conditions
         ):
             continue
 
@@ -107,10 +103,7 @@ def browser_scenarios(
         for key, value in list(facts.items()):
             facts[key] = normalized(value)
 
-        if (
-            target_fact
-            == "royalty_is_technical_or_economic_study_or_technical_assistance"
-        ):
+        if target_fact == "royalty_is_technical_or_economic_study_or_technical_assistance":
             item["payload"] = deepcopy(item["payload"])
             item["payload"]["facts"]["royalty_category"] = "other"
 
@@ -136,9 +129,7 @@ def bootstrap(page: Page, source_country: str, lang: str) -> None:
             "() => Boolean(document.querySelector('[data-view=\"payers\"].active'))"
         )
         page.locator("[data-create-payer]:visible").first.click()
-        page.wait_for_function(
-            "() => Boolean(document.querySelector('#payer-dialog')?.open)"
-        )
+        page.wait_for_function("() => Boolean(document.querySelector('#payer-dialog')?.open)")
         form = page.locator("#payer-dialog #payer-form")
         country = form.locator('[name="payer_country"]')
         country.wait_for(state="visible")
@@ -148,12 +139,8 @@ def bootstrap(page: Page, source_country: str, lang: str) -> None:
         form.locator('[name="payer_name"]').fill("Matrix SK s.r.o.")
         form.locator('[name="payer_vat_id"]').fill("SK2020000000")
         form.locator("[data-save-payer]").click()
-        page.wait_for_function(
-            "() => !document.querySelector('#payer-dialog')?.open"
-        )
-        page.wait_for_function(
-            "() => document.body.dataset.sourceCountry === 'SK'"
-        )
+        page.wait_for_function("() => !document.querySelector('#payer-dialog')?.open")
+        page.wait_for_function("() => document.body.dataset.sourceCountry === 'SK'")
 
     page.wait_for_function(
         """(expected) => document.querySelectorAll(
@@ -174,23 +161,15 @@ def bootstrap(page: Page, source_country: str, lang: str) -> None:
 def set_recipient_country(page: Page, recipient_country: str) -> None:
     page.locator('[data-nav="recipients"]:visible').first.click()
     page.locator('[data-view="recipients"] [data-open-recipient]').click()
-    page.locator(
-        '[data-view="recipient-detail"] [data-edit-recipient]:visible'
-    ).click()
-    page.wait_for_function(
-        "() => Boolean(document.querySelector('#recipient-dialog')?.open)"
-    )
+    page.locator('[data-view="recipient-detail"] [data-edit-recipient]:visible').click()
+    page.wait_for_function("() => Boolean(document.querySelector('#recipient-dialog')?.open)")
     dialog = page.locator("#recipient-dialog #recipient-edit-form")
-    dialog.locator('[name="recipient_country"]').select_option(
-        recipient_country
-    )
+    dialog.locator('[name="recipient_country"]').select_option(recipient_country)
     dialog.locator('[name="beneficial_owner"]').select_option("")
     dialog.locator('[name="treaty_resident"]').select_option("")
     dialog.locator('[name="pe_connection"]').select_option("")
     dialog.locator('button[type="submit"]').click()
-    page.wait_for_function(
-        "() => !document.querySelector('#recipient-dialog')?.open"
-    )
+    page.wait_for_function("() => !document.querySelector('#recipient-dialog')?.open")
 
 
 def start_flow(page: Page) -> None:
@@ -201,33 +180,21 @@ def start_flow(page: Page) -> None:
     page.wait_for_function(
         "() => Boolean(window.TaxTreatWorkspaceSourceCountry && window.TaxTreatSourceCountries)"
     )
-    page.wait_for_function(
-        "() => Boolean(document.body.dataset.sourceCountry)"
-    )
-    page.wait_for_function(
-        "() => Boolean(document.querySelector('[data-nav=\"dashboard\"]:visible'))"
-    )
+    page.wait_for_function("() => Boolean(document.body.dataset.sourceCountry)")
+    page.wait_for_function("() => Boolean(document.querySelector('[data-nav=\"dashboard\"]'))")
 
     dashboard = page.locator('[data-nav="dashboard"]:visible')
     base.check(dashboard.count() > 0, "no visible dashboard navigation control")
     dashboard.first.click()
-    page.wait_for_function(
-        "() => Boolean(document.querySelector('[data-view=dashboard].active'))"
-    )
+    page.wait_for_function("() => Boolean(document.querySelector('[data-view=dashboard].active'))")
     start = page.locator("[data-start-flow]:visible")
     base.check(start.count() > 0, "no visible New calculation control")
     start.first.click()
-    page.wait_for_function(
-        "() => Boolean(document.querySelector('.flow-step[data-step=\"1\"].active'))"
-    )
+    page.wait_for_function("() => Boolean(document.querySelector('.flow-step[data-step=\"1\"].active'))")
     page.locator('[data-next-step="2"]:visible').click()
-    page.wait_for_function(
-        "() => Boolean(document.querySelector('.flow-step[data-step=\"2\"].active'))"
-    )
+    page.wait_for_function("() => Boolean(document.querySelector('.flow-step[data-step=\"2\"].active'))")
     page.locator('[data-next-step="3"]:visible').click()
-    page.wait_for_function(
-        "() => Boolean(document.querySelector('.flow-step[data-step=\"3\"].active'))"
-    )
+    page.wait_for_function("() => Boolean(document.querySelector('.flow-step[data-step=\"3\"].active'))")
 
 
 def set_radio(form, name: str, value: bool) -> None:
@@ -242,7 +209,6 @@ def set_radio(form, name: str, value: bool) -> None:
 
 def fill_primary_controls(page: Page, scenario: dict[str, Any]) -> None:
     base._original_fill_primary_controls(page, scenario)
-
     if scenario.get("target_fact") == "voting_power_control":
         control = page.locator('#workspace-payment [name="voting_ownership_percent"]')
         if control.count() and control.is_visible():
@@ -255,8 +221,7 @@ def finish_dynamic_questions(page: Page, payload: dict[str, Any]) -> None:
             return
         if page.locator("#workspace-error").is_visible():
             raise AssertionError(
-                "workspace error: "
-                + page.locator("#workspace-error").inner_text().strip()
+                "workspace error: " + page.locator("#workspace-error").inner_text().strip()
             )
 
         questions = page.locator("#workspace-questions [data-input-path]")
@@ -286,14 +251,10 @@ def finish_dynamic_questions(page: Page, payload: dict[str, Any]) -> None:
 
         state = page.evaluate(
             """() => {
-                if (document.querySelector('.flow-step[data-step="4"].active')) {
-                    return 'result';
-                }
+                if (document.querySelector('.flow-step[data-step="4"].active')) return 'result';
                 const button = document.querySelector('#workspace-submit');
-                if (
-                    button && !button.disabled &&
-                    (button.offsetWidth || button.offsetHeight || button.getClientRects().length)
-                ) {
+                if (button && !button.disabled &&
+                    (button.offsetWidth || button.offsetHeight || button.getClientRects().length)) {
                     return 'submit';
                 }
                 return 'wait';
