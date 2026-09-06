@@ -3,8 +3,10 @@ from __future__ import annotations
 import json
 import sys
 from copy import deepcopy
+from datetime import date
 from typing import Any
 
+from dateutil.relativedelta import relativedelta
 from playwright.sync_api import Page
 
 import run_live_browser_condition_matrix as base
@@ -209,10 +211,67 @@ def set_radio(form, name: str, value: bool) -> None:
 
 def fill_primary_controls(page: Page, scenario: dict[str, Any]) -> None:
     base._original_fill_primary_controls(page, scenario)
-    if scenario.get("target_fact") == "voting_power_control":
+    target_fact = scenario.get("target_fact")
+    target_value = normalized(scenario.get("target_value"))
+
+    if target_fact == "voting_power_control":
         control = page.locator('#workspace-payment [name="voting_ownership_percent"]')
         if control.count() and control.is_visible():
-            control.fill(str(scenario.get("target_value")))
+            control.fill(str(target_value))
+
+    # Treaty datasets contain both historical names for the same arm's-length
+    # payment fact. The workspace exposes one primary control and serializes it
+    # as facts.arm_length_amount, so drive that real control for either alias.
+    if target_fact == "payment_is_arm_length_amount":
+        control = page.locator('#workspace-payment [name="arm_length_amount"]')
+        base.check(
+            control.count() == 1 and control.is_visible(),
+            "missing arm_length_amount primary control for payment alias",
+        )
+        control.select_option("true" if bool(target_value) else "false")
+
+
+def acquisition_date_for_months(payload: dict[str, Any], months: Any) -> str:
+    transaction_date = date.fromisoformat(str(payload["transaction_date"]))
+    numeric_months = float(months)
+    rounded = int(round(numeric_months))
+    base.check(
+        abs(numeric_months - rounded) < 1e-9,
+        f"browser date input cannot represent fractional complete months: {months!r}",
+    )
+    return (transaction_date - relativedelta(months=rounded)).isoformat()
+
+
+def desired_for_path(payload: dict[str, Any], path: str) -> tuple[bool, Any]:
+    if path == "derived.acquisition_date" and "holding_period_months" in payload.get("facts", {}):
+        return True, acquisition_date_for_months(
+            payload,
+            payload["facts"]["holding_period_months"],
+        )
+    return base._original_desired_for_path(payload, path)
+
+
+def assert_target_reached(
+    scenario: dict[str, Any],
+    submitted: dict[str, Any],
+) -> None:
+    target_fact = scenario["target_fact"]
+    if target_fact == "payment_is_arm_length_amount":
+        facts = submitted.get("facts") or {}
+        base.check(
+            "arm_length_amount" in facts,
+            f"unreachable UI fact payment_is_arm_length_amount for {scenario['label']}",
+        )
+        base.check(
+            value_equal(facts["arm_length_amount"], scenario["target_value"]),
+            (
+                f"UI fact mismatch payment_is_arm_length_amount for {scenario['label']}: "
+                f"expected={scenario['target_value']!r} "
+                f"actual_arm_length_amount={facts['arm_length_amount']!r}"
+            ),
+        )
+        return
+    base._original_assert_target_reached(scenario, submitted)
 
 
 def finish_dynamic_questions(page: Page, payload: dict[str, Any]) -> None:
@@ -281,6 +340,8 @@ def finish_dynamic_questions(page: Page, payload: dict[str, Any]) -> None:
 def install() -> None:
     base._original_browser_scenarios = base.browser_scenarios
     base._original_fill_primary_controls = base.fill_primary_controls
+    base._original_desired_for_path = base.desired_for_path
+    base._original_assert_target_reached = base.assert_target_reached
     base.value_equal = value_equal
     base.browser_scenarios = browser_scenarios
     base.bootstrap = bootstrap
@@ -288,6 +349,8 @@ def install() -> None:
     base.start_flow = start_flow
     base.set_radio = set_radio
     base.fill_primary_controls = fill_primary_controls
+    base.desired_for_path = desired_for_path
+    base.assert_target_reached = assert_target_reached
     base.finish_dynamic_questions = finish_dynamic_questions
 
 
