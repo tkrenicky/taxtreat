@@ -12,6 +12,7 @@ on:
       - "scripts/run_live_browser_condition_matrix.py"
       - "scripts/run_live_browser_condition_matrix_v2.py"
       - "scripts/run_live_browser_condition_matrix_v3.py"
+      - "scripts/run_live_browser_condition_matrix_v4.py"
       - ".github/workflows/live-browser-condition-matrix.yml"
   workflow_dispatch:
 
@@ -36,7 +37,7 @@ jobs:
             for income in dividend interest royalty; do
               for lang in cs en; do
                 for shard in 0 1 2 3; do
-                  python scripts/run_live_browser_condition_matrix_v3.py \
+                  python scripts/run_live_browser_condition_matrix_v4.py \
                     --source-country "$source" \
                     --income-type "$income" \
                     --lang "$lang" \
@@ -118,7 +119,7 @@ jobs:
       - name: Run browser chunk
         run: |
           mkdir -p reports/live-browser-matrix
-          python scripts/run_live_browser_condition_matrix_v3.py \
+          python scripts/run_live_browser_condition_matrix_v4.py \
             --source-country "${{ matrix.source_country }}" \
             --income-type "${{ matrix.income_type }}" \
             --lang "${{ matrix.lang }}" \
