@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import sys
+from copy import deepcopy
 from datetime import date, timedelta
 from typing import Any
 
@@ -25,6 +26,38 @@ RECIPIENT_TYPE_FROM_FACT = {
     "other": "Jiný subjekt",
 }
 CURRENT_RECIPIENT_TYPE = "Společnost"
+
+
+# These treaty-specific questions sit below a canonical royalty-family choice.
+# The browser must enter that family through the real payment select before the
+# dynamic question can legitimately appear.
+ROYALTY_CATEGORY_FOR_TARGET = {
+    "royalty_industrial_ip_subcategory": "patent_trademark_design_model_plan_secret_formula_process_or_knowhow",
+    "royalty_is_waiver": "patent_trademark_design_model_plan_secret_formula_process_or_knowhow",
+}
+
+
+def browser_scenarios(
+    *,
+    source_country: str,
+    income_type: str,
+    shard_index: int,
+    shard_count: int,
+) -> list[dict[str, Any]]:
+    scenarios = v3.browser_scenarios(
+        source_country=source_country,
+        income_type=income_type,
+        shard_index=shard_index,
+        shard_count=shard_count,
+    )
+    result: list[dict[str, Any]] = []
+    for scenario in scenarios:
+        item = deepcopy(scenario)
+        category = ROYALTY_CATEGORY_FOR_TARGET.get(str(item.get("target_fact") or ""))
+        if category:
+            item["payload"]["facts"]["royalty_category"] = category
+        result.append(item)
+    return result
 
 
 def ensure_recipient_type(page, desired_type: str) -> None:
@@ -109,6 +142,7 @@ def fill_primary_controls(page, scenario: dict[str, Any]) -> None:
 
 def install() -> None:
     v3.install()
+    base.browser_scenarios = browser_scenarios
     base.fill_primary_controls = fill_primary_controls
 
 
