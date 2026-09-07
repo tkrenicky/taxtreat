@@ -9,14 +9,50 @@ import run_live_browser_condition_matrix_v2 as v2
 import run_live_browser_condition_matrix_v3 as v3
 
 
+RECIPIENT_TYPE_FOR_TARGET = {
+    "recipient_is_qualifying_pension_fund": "Fond",
+    "recipient_is_partnership": "Jiný subjekt",
+    "recipient_is_central_bank": "Jiný subjekt",
+    "article_10_public_body_exemption": "Jiný subjekt",
+    "article_11_public_body_exemption": "Jiný subjekt",
+    "article_11_3_public_financing_exemption": "Jiný subjekt",
+}
+
+
+def ensure_recipient_type(page, desired_type: str) -> None:
+    # We are already in payment step 3. Move back through the real flow UI,
+    # edit the persisted recipient profile, then return to payment. This avoids
+    # injecting browser state and verifies the same controls a user would use.
+    page.locator('[data-flow-step="2"]:visible').click()
+    page.wait_for_function(
+        "() => Boolean(document.querySelector('.flow-step[data-step=\"2\"].active'))"
+    )
+    page.locator('.flow-step[data-step="2"] [data-edit-recipient]:visible').click()
+    page.wait_for_function("() => Boolean(document.querySelector('#recipient-dialog')?.open)")
+    dialog = page.locator("#recipient-dialog #recipient-edit-form")
+    type_control = dialog.locator('[name="recipient_type"]')
+    base.check(type_control.count() == 1, "recipient type control missing")
+    type_control.select_option(label=desired_type)
+    dialog.locator('button[type="submit"]').click()
+    page.wait_for_function("() => !document.querySelector('#recipient-dialog')?.open")
+    page.locator('[data-next-step="3"]:visible').click()
+    page.wait_for_function(
+        "() => Boolean(document.querySelector('.flow-step[data-step=\"3\"].active'))"
+    )
+
+
 def fill_primary_controls(page, scenario: dict[str, Any]) -> None:
+    target_fact = scenario.get("target_fact")
+    target_value = scenario.get("target_value")
+
+    desired_recipient_type = RECIPIENT_TYPE_FOR_TARGET.get(str(target_fact))
+    if desired_recipient_type:
+        ensure_recipient_type(page, desired_recipient_type)
+
     # Run the current real-UI driver first, then correct the few target facts
     # whose historical scenario payload also contains a conflicting baseline
     # alias or whose threshold cannot be represented by v1's fixed date map.
     v2.fill_primary_controls(page, scenario)
-
-    target_fact = scenario.get("target_fact")
-    target_value = scenario.get("target_value")
     form = page.locator("#workspace-payment")
 
     if target_fact in {
