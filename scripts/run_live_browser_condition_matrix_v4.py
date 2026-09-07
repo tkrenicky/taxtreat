@@ -27,13 +27,60 @@ RECIPIENT_TYPE_FROM_FACT = {
 }
 CURRENT_RECIPIENT_TYPE = "Společnost"
 
+CANONICAL_COPYRIGHT = "copyright_literary_artistic_scientific_nonfilm_nonsoftware"
+CANONICAL_FILM = "cinematographic_films_or_broadcast_media"
+CANONICAL_SOFTWARE = "computer_software"
+CANONICAL_IP = "patent_trademark_design_model_plan_secret_formula_process_or_knowhow"
+CANONICAL_FINANCE_EQUIPMENT = "financial_lease_of_equipment"
+CANONICAL_OPERATING_EQUIPMENT = "operating_lease_or_other_use_of_equipment"
+CANONICAL_OTHER = "other"
 
 # These treaty-specific questions sit below a canonical royalty-family choice.
 # The browser must enter that family through the real payment select before the
 # dynamic question can legitimately appear.
 ROYALTY_CATEGORY_FOR_TARGET = {
-    "royalty_industrial_ip_subcategory": "patent_trademark_design_model_plan_secret_formula_process_or_knowhow",
-    "royalty_is_waiver": "patent_trademark_design_model_plan_secret_formula_process_or_knowhow",
+    "royalty_industrial_ip_subcategory": CANONICAL_IP,
+    "royalty_is_waiver": CANONICAL_IP,
+}
+
+# Legacy category values observed after the v3 broad-family pass. Values are
+# expanded to every current UI family they semantically contain. The Swedish
+# all-other branch is the explicit complement of its separate copyright branch
+# in the approved Stage 6 rules, so its expansion intentionally excludes only
+# that canonical copyright family.
+FINAL_LEGACY_ROYALTY_EXPANSIONS = {
+    "patent_trademark_design_model_plan_secret_formula_process_equipment_or_knowhow": (
+        CANONICAL_IP,
+        CANONICAL_FINANCE_EQUIPMENT,
+        CANONICAL_OPERATING_EQUIPMENT,
+    ),
+    "patent_trademark_design_model_plan_secret_formula_process_computer_program_equipment_or_knowhow": (
+        CANONICAL_SOFTWARE,
+        CANONICAL_IP,
+        CANONICAL_FINANCE_EQUIPMENT,
+        CANONICAL_OPERATING_EQUIPMENT,
+    ),
+    "industrial_commercial_scientific_equipment": (
+        CANONICAL_FINANCE_EQUIPMENT,
+        CANONICAL_OPERATING_EQUIPMENT,
+    ),
+    "cultural_copyright_literary_artistic_scientific_including_films_and_broadcast_media": (
+        CANONICAL_COPYRIGHT,
+        CANONICAL_FILM,
+    ),
+    "industrial_patent_trademark_design_model_plan_secret_formula_process_equipment_or_knowhow": (
+        CANONICAL_IP,
+        CANONICAL_FINANCE_EQUIPMENT,
+        CANONICAL_OPERATING_EQUIPMENT,
+    ),
+    "all_other_article_12_royalties": (
+        CANONICAL_FILM,
+        CANONICAL_SOFTWARE,
+        CANONICAL_IP,
+        CANONICAL_FINANCE_EQUIPMENT,
+        CANONICAL_OPERATING_EQUIPMENT,
+        CANONICAL_OTHER,
+    ),
 }
 
 
@@ -53,7 +100,34 @@ def browser_scenarios(
     result: list[dict[str, Any]] = []
     for scenario in scenarios:
         item = deepcopy(scenario)
-        category = ROYALTY_CATEGORY_FOR_TARGET.get(str(item.get("target_fact") or ""))
+        target_fact = str(item.get("target_fact") or "")
+        target_value = str(item.get("target_value") or "")
+
+        # Brazil's historical `royalty_category == trademark` is represented in
+        # the current UI by the industrial-IP family plus an explicit trademark
+        # subcategory question. Test that exact present-day path rather than
+        # pretending the old narrow category still exists as a primary option.
+        if target_fact == "royalty_category" and target_value == "trademark":
+            item["payload"]["facts"]["royalty_category"] = CANONICAL_IP
+            item["payload"]["facts"]["royalty_industrial_ip_subcategory"] = "trademark"
+            item["target_fact"] = "royalty_industrial_ip_subcategory"
+            item["target_value"] = "trademark"
+            item["label"] = f"{item['label']}:ui-industrial-ip-subcategory=trademark"
+            result.append(item)
+            continue
+
+        if target_fact == "royalty_category":
+            expansions = FINAL_LEGACY_ROYALTY_EXPANSIONS.get(target_value)
+            if expansions:
+                for canonical_category in expansions:
+                    expanded = deepcopy(item)
+                    expanded["target_value"] = canonical_category
+                    expanded["payload"]["facts"]["royalty_category"] = canonical_category
+                    expanded["label"] = f"{item['label']}:ui={canonical_category}"
+                    result.append(expanded)
+                continue
+
+        category = ROYALTY_CATEGORY_FOR_TARGET.get(target_fact)
         if category:
             item["payload"]["facts"]["royalty_category"] = category
         result.append(item)
@@ -65,9 +139,6 @@ def ensure_recipient_type(page, desired_type: str) -> None:
     if desired_type == CURRENT_RECIPIENT_TYPE:
         return
 
-    # We are already in payment step 3. Move back through the real flow UI,
-    # edit the persisted recipient profile, then return to payment. This avoids
-    # injecting browser state and verifies the same controls a user would use.
     page.locator('[data-flow-step="2"]:visible').click()
     page.wait_for_function(
         "() => Boolean(document.querySelector('.flow-step[data-step=\"2\"].active'))"
@@ -106,10 +177,6 @@ def fill_primary_controls(page, scenario: dict[str, Any]) -> None:
     target_value = scenario.get("target_value")
 
     ensure_recipient_type(page, desired_recipient_type(scenario))
-
-    # Run the current real-UI driver first, then correct the few target facts
-    # whose historical scenario payload also contains a conflicting baseline
-    # alias or whose threshold cannot be represented by v1's fixed date map.
     v2.fill_primary_controls(page, scenario)
     form = page.locator("#workspace-payment")
 
