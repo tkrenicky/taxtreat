@@ -17,9 +17,21 @@ RECIPIENT_TYPE_FOR_TARGET = {
     "article_11_public_body_exemption": "Jiný subjekt",
     "article_11_3_public_financing_exemption": "Jiný subjekt",
 }
+RECIPIENT_TYPE_FROM_FACT = {
+    "individual": "Fyzická osoba",
+    "fund": "Fond",
+    "company": "Společnost",
+    "corporate": "Společnost",
+    "other": "Jiný subjekt",
+}
+CURRENT_RECIPIENT_TYPE = "Společnost"
 
 
 def ensure_recipient_type(page, desired_type: str) -> None:
+    global CURRENT_RECIPIENT_TYPE
+    if desired_type == CURRENT_RECIPIENT_TYPE:
+        return
+
     # We are already in payment step 3. Move back through the real flow UI,
     # edit the persisted recipient profile, then return to payment. This avoids
     # injecting browser state and verifies the same controls a user would use.
@@ -39,15 +51,28 @@ def ensure_recipient_type(page, desired_type: str) -> None:
     page.wait_for_function(
         "() => Boolean(document.querySelector('.flow-step[data-step=\"3\"].active'))"
     )
+    CURRENT_RECIPIENT_TYPE = desired_type
+
+
+def desired_recipient_type(scenario: dict[str, Any]) -> str:
+    target_fact = str(scenario.get("target_fact") or "")
+    specialized = RECIPIENT_TYPE_FOR_TARGET.get(target_fact)
+    if specialized:
+        return specialized
+
+    entity_type = str(
+        (scenario.get("payload", {}).get("facts", {}) or {}).get(
+            "recipient_entity_type", "company"
+        )
+    )
+    return RECIPIENT_TYPE_FROM_FACT.get(entity_type, "Společnost")
 
 
 def fill_primary_controls(page, scenario: dict[str, Any]) -> None:
     target_fact = scenario.get("target_fact")
     target_value = scenario.get("target_value")
 
-    desired_recipient_type = RECIPIENT_TYPE_FOR_TARGET.get(str(target_fact))
-    if desired_recipient_type:
-        ensure_recipient_type(page, desired_recipient_type)
+    ensure_recipient_type(page, desired_recipient_type(scenario))
 
     # Run the current real-UI driver first, then correct the few target facts
     # whose historical scenario payload also contains a conflicting baseline
