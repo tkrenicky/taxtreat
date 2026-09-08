@@ -17,6 +17,12 @@ on:
       - ".github/workflows/live-browser-condition-matrix.yml"
   workflow_dispatch:
 
+# Keep only the newest browser matrix for a PR. This prevents obsolete matrix
+# runs from piling up every time the branch is updated.
+concurrency:
+  group: live-browser-condition-matrix-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   scenario-inventory:
     runs-on: ubuntu-latest
@@ -83,14 +89,16 @@ jobs:
   live-browser-matrix:
     needs: scenario-inventory
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 75
     strategy:
       fail-fast: false
+      # Six browser jobs leave GitHub Actions capacity for the normal tests,
+      # report acceptance and final workspace browser QA on the same PR.
+      max-parallel: 6
       matrix:
         source_country: [CZ, SK]
         income_type: [dividend, interest, royalty]
         lang: [cs, en]
-        shard: [0, 1, 2, 3]
     env:
       TAXTREAT_LIVE_BASE_URL: http://127.0.0.1:8000
     steps:
@@ -98,7 +106,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Install dependencies
+      - name: Install dependencies once for four shards
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements-dev.txt
@@ -117,24 +125,27 @@ jobs:
           done
           cat /tmp/taxtreat-uvicorn.log || true
           exit 1
-      - name: Run browser chunk
+      - name: Run all four browser shards
         run: |
           mkdir -p reports/live-browser-matrix
-          python scripts/run_live_browser_condition_matrix_v5.py \
-            --source-country "${{ matrix.source_country }}" \
-            --income-type "${{ matrix.income_type }}" \
-            --lang "${{ matrix.lang }}" \
-            --shard-index "${{ matrix.shard }}" \
-            --shard-count 4 \
-            --output "reports/live-browser-matrix/${{ matrix.source_country }}_${{ matrix.income_type }}_${{ matrix.lang }}_${{ matrix.shard }}.json"
+          for shard in 0 1 2 3; do
+            echo "Running ${{ matrix.source_country }} / ${{ matrix.income_type }} / ${{ matrix.lang }} / shard ${shard}"
+            python scripts/run_live_browser_condition_matrix_v5.py \
+              --source-country "${{ matrix.source_country }}" \
+              --income-type "${{ matrix.income_type }}" \
+              --lang "${{ matrix.lang }}" \
+              --shard-index "$shard" \
+              --shard-count 4 \
+              --output "reports/live-browser-matrix/${{ matrix.source_country }}_${{ matrix.income_type }}_${{ matrix.lang }}_${shard}.json"
+          done
       - name: Dump server log on failure
         if: failure()
         run: cat /tmp/taxtreat-uvicorn.log || true
-      - name: Upload chunk evidence
+      - name: Upload group evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: live-browser-${{ matrix.source_country }}-${{ matrix.income_type }}-${{ matrix.lang }}-${{ matrix.shard }}
+          name: live-browser-${{ matrix.source_country }}-${{ matrix.income_type }}-${{ matrix.lang }}
           path: reports/live-browser-matrix
           if-no-files-found: ignore
           retention-days: 30
