@@ -1,0 +1,46 @@
+name: Workspace final browser QA
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - "app/**"
+      - "taxtreat/**"
+      - "data/legal_rules_stage6/**"
+      - "data/legal_rules_sk/**"
+      - "scripts/**"
+      - ".github/workflows/workspace-final-browser-qa.yml"
+  workflow_dispatch:
+
+jobs:
+  workspace-final-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+          pip install --no-deps -e .
+          python -m playwright install --with-deps chromium
+      - name: Verify workspace bootstrap and integrity guards
+        run: python scripts/verify_web_integrity_guards_20260827.py
+      - name: Verify bilingual live workspace UI
+        run: python scripts/verify_manual_qa_i18n_20260826.py
+      - name: Verify profile controls, payer switching and reload persistence
+        timeout-minutes: 4
+        run: python scripts/verify_workspace_profile_and_fallback_20260828.py
+      - name: Verify Section 19 client intake completeness
+        timeout-minutes: 4
+        run: python scripts/verify_section19_completeness_browser_20260830.py
+      - name: Verify Section 19 result and report browser flow
+        timeout-minutes: 4
+        run: python scripts/verify_section19_primary_report_browser_20260830.py
+      - name: Verify EN fallback report locale
+        run: python scripts/verify_en_fallback_report_locale_20260828.py
+      - name: Verify condition-aware web/report integration
+        run: python scripts/verify_web_report_condition_aware_integration_20260830.py
