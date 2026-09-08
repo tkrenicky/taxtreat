@@ -12,6 +12,10 @@ on:
       - ".github/workflows/workspace-final-browser-qa.yml"
   workflow_dispatch:
 
+concurrency:
+  group: workspace-final-browser-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   workspace-final-browser:
     runs-on: ubuntu-latest
