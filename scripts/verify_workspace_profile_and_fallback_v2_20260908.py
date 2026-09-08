@@ -47,6 +47,10 @@ def main() -> int:
             page.wait_for_function("() => Boolean(document.querySelector('#payer-dialog')?.open)")
 
             payer = page.locator("#payer-dialog[open] #payer-form:visible")
+            payer.locator('[name="payer_country"]').select_option("CZ")
+            page.wait_for_function(
+                "() => Boolean(document.querySelector('#payer-dialog[open] #payer-form [name=\"payer_id\"]')?.offsetParent)"
+            )
             payer.locator('[name="payer_id"]').fill("12345679")
             payer.locator('[name="payer_name"]').fill("QA Payer s.r.o.")
             payer.locator('[data-save-payer]').click()
