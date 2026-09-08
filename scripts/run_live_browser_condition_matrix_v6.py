@@ -90,6 +90,32 @@ def intake_diagnostic() -> dict[str, Any]:
     }
 
 
+def finish_dynamic_questions(page, payload: dict[str, Any]) -> None:
+    try:
+        v5.finish_dynamic_questions(page, payload)
+    except AssertionError as exc:
+        if str(exc) != "dynamic questions did not resolve":
+            raise
+
+        # The final /analysis/intake response can arrive a fraction later than
+        # the DOM loop that just exhausted its client-answerable questions.
+        # Re-check the captured response after a short browser synchronization
+        # delay. Only a decisive FINAL or professional-only boundary is
+        # accepted; any remaining client question still fails closed.
+        page.wait_for_timeout(250)
+        if v4._legitimately_unreachable_after_intake():
+            return
+
+        diagnostic = json.dumps(
+            intake_diagnostic(),
+            sort_keys=True,
+            ensure_ascii=False,
+        )
+        raise AssertionError(
+            f"dynamic questions did not resolve; last_intake={diagnostic}"
+        ) from exc
+
+
 def assert_target_reached(
     scenario: dict[str, Any],
     submitted: dict[str, Any],
@@ -110,6 +136,7 @@ def assert_target_reached(
 def install() -> None:
     v5.install()
     v4.ensure_recipient_type = ensure_recipient_type
+    base.finish_dynamic_questions = finish_dynamic_questions
     base.assert_target_reached = assert_target_reached
 
 
