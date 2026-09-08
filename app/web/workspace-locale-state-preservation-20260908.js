@@ -115,8 +115,6 @@
 
     apply();
 
-    // Re-run only the controls that own conditional field visibility, then
-    // restore values once more because their handlers may rebuild dependent UI.
     const incomeType = document.querySelector('#workspace-payment [name="income_type"]');
     const holdingMode = document.querySelector('#workspace-payment [name="holding_period_mode"]');
     if (incomeType) incomeType.dispatchEvent(new Event("change", { bubbles: true }));
@@ -125,15 +123,18 @@
     [0, 60, 180, 500].forEach((delay) => window.setTimeout(apply, delay));
   }
 
-  // The locale router listens to click in document capture phase and performs
-  // the route change immediately. pointerdown happens earlier, so the current
-  // workspace state is safely captured before that router can navigate away.
-  document.addEventListener("pointerdown", (event) => {
+  function captureForLanguageControl(event) {
     const button = event.target?.closest?.("#taxtreat-language-controls [data-lang]");
     if (!button) return;
     const target = button.dataset.lang === "en" ? "en" : "cs";
     const current = document.documentElement.lang === "en" ? "en" : "cs";
     if (target !== current) captureState(target);
+  }
+
+  document.addEventListener("pointerdown", captureForLanguageControl, true);
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    captureForLanguageControl(event);
   }, true);
 
   if (document.readyState === "loading") {
