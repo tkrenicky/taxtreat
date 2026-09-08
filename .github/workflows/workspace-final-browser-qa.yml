@@ -35,7 +35,7 @@ jobs:
         run: python scripts/verify_workspace_navigation_mobile_language_20260908.py
       - name: Verify profile controls, payer switching and reload persistence
         timeout-minutes: 4
-        run: python scripts/verify_workspace_profile_and_fallback_20260828.py
+        run: python scripts/verify_workspace_profile_and_fallback_v2_20260908.py
       - name: Verify Section 19 client intake completeness
         timeout-minutes: 4
         run: python scripts/verify_section19_completeness_browser_20260830.py
