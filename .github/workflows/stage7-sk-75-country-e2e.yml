@@ -13,6 +13,10 @@ on:
       - ".github/workflows/stage7-sk-75-country-e2e.yml"
   workflow_dispatch:
 
+concurrency:
+  group: stage7-sk-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   sk-country-e2e:
     runs-on: ubuntu-latest
