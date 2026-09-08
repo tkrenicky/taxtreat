@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import sys
 from typing import Any
 
@@ -52,9 +53,64 @@ def ensure_recipient_type(page, desired_type: str) -> None:
     v4.CURRENT_RECIPIENT_TYPE = desired_type
 
 
+def intake_diagnostic() -> dict[str, Any]:
+    if not v4.LAST_INTAKE_RESPONSES:
+        return {"response_captured": False}
+
+    body = v4.LAST_INTAKE_RESPONSES[-1]
+    analysis = body.get("analysis") or {}
+    intake = body.get("intake") or {}
+    questions = intake.get("questions") or []
+    return {
+        "response_captured": True,
+        "analysis_status": analysis.get("status"),
+        "candidate_rule_id": analysis.get("candidate_rule_id"),
+        "selected_rule_id": analysis.get("selected_rule_id"),
+        "candidate_rate": analysis.get("candidate_rate"),
+        "rate": analysis.get("rate"),
+        "missing_facts": analysis.get("missing_facts") or [],
+        "failed_conditions": analysis.get("failed_conditions") or [],
+        "client_questions": [
+            {
+                "question_id": question.get("question_id"),
+                "input_path": question.get("input_path"),
+                "response_type": question.get("response_type"),
+            }
+            for question in questions
+            if question.get("client_answerable")
+        ],
+        "professional_questions": [
+            {
+                "question_id": question.get("question_id"),
+                "advisor_topic": question.get("advisor_topic"),
+            }
+            for question in questions
+            if not question.get("client_answerable")
+        ],
+    }
+
+
+def assert_target_reached(
+    scenario: dict[str, Any],
+    submitted: dict[str, Any],
+) -> None:
+    try:
+        v4.assert_target_reached(scenario, submitted)
+    except AssertionError as exc:
+        if "unreachable UI fact" not in str(exc):
+            raise
+        diagnostic = json.dumps(
+            intake_diagnostic(),
+            sort_keys=True,
+            ensure_ascii=False,
+        )
+        raise AssertionError(f"{exc}; last_intake={diagnostic}") from exc
+
+
 def install() -> None:
     v5.install()
     v4.ensure_recipient_type = ensure_recipient_type
+    base.assert_target_reached = assert_target_reached
 
 
 def main() -> int:
