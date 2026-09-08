@@ -31,6 +31,20 @@ def assert_no_console_errors(errors: list[str]) -> None:
     assert not relevant, relevant
 
 
+def fill_payment_probe(page) -> None:
+    form = page.locator("#workspace-payment")
+    form.locator('[name="income_type"]').select_option("interest")
+    form.locator('[name="transaction_date"]').fill("2026-09-08")
+    form.locator('[name="amount"]').fill("123456")
+
+
+def assert_payment_probe(page) -> None:
+    form = page.locator("#workspace-payment")
+    assert form.locator('[name="income_type"]').input_value() == "interest"
+    assert form.locator('[name="transaction_date"]').input_value() == "2026-09-08"
+    assert form.locator('[name="amount"]').input_value() == "123456"
+
+
 def main() -> int:
     process = subprocess.Popen(
         [sys.executable, "-m", "uvicorn", "app.main:app", "--host", HOST, "--port", str(PORT)],
@@ -65,16 +79,19 @@ def main() -> int:
             page.locator('.flow-step[data-step="1"] [data-next-step="2"]').click()
             page.locator('.flow-step[data-step="2"] [data-next-step="3"]').click()
             page.wait_for_function("() => document.querySelector('.flow-step[data-step=\"3\"]')?.classList.contains('active')")
+            fill_payment_probe(page)
 
             page.wait_for_selector('#taxtreat-language-controls .tt-lang-mini button[data-lang="en"]', state="visible")
             page.locator('#taxtreat-language-controls .tt-lang-mini button[data-lang="en"]').click()
             page.wait_for_function("() => document.documentElement.lang === 'en'")
-            assert page.locator('.flow-step[data-step="3"]').evaluate("el => el.classList.contains('active')")
+            page.wait_for_function("() => document.querySelector('.flow-step[data-step=\"3\"]')?.classList.contains('active')")
+            assert_payment_probe(page)
             assert page.evaluate("localStorage.getItem('taxtreat-ui-language')") == "en"
 
             page.locator('#taxtreat-language-controls .tt-lang-mini button[data-lang="cs"]').click()
             page.wait_for_function("() => document.documentElement.lang === 'cs'")
-            assert page.locator('.flow-step[data-step="3"]').evaluate("el => el.classList.contains('active')")
+            page.wait_for_function("() => document.querySelector('.flow-step[data-step=\"3\"]')?.classList.contains('active')")
+            assert_payment_probe(page)
             assert_no_console_errors(desktop_errors)
             page.close()
 
@@ -93,11 +110,13 @@ def main() -> int:
             mobile.wait_for_function("() => document.querySelector('.flow-step[data-step=\"2\"]')?.classList.contains('active')")
             mobile.locator('.flow-step[data-step="2"] [data-next-step="3"]').click()
             mobile.wait_for_function("() => document.querySelector('.flow-step[data-step=\"3\"]')?.classList.contains('active')")
+            fill_payment_probe(mobile)
 
             mobile.wait_for_selector('#taxtreat-language-controls .tt-lang-mini button[data-lang="en"]', state="visible")
             mobile.locator('#taxtreat-language-controls .tt-lang-mini button[data-lang="en"]').click()
             mobile.wait_for_function("() => document.documentElement.lang === 'en'")
-            assert mobile.locator('.flow-step[data-step="3"]').evaluate("el => el.classList.contains('active')")
+            mobile.wait_for_function("() => document.querySelector('.flow-step[data-step=\"3\"]')?.classList.contains('active')")
+            assert_payment_probe(mobile)
             assert_no_console_errors(mobile_errors)
 
             browser.close()
