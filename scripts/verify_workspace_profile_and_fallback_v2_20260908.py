@@ -46,7 +46,7 @@ def main() -> int:
             page.locator('[data-view="payers"] [data-create-payer]:visible').first.click()
             page.wait_for_function("() => Boolean(document.querySelector('#payer-dialog')?.open)")
 
-            payer = page.locator("#payer-dialog #payer-form")
+            payer = page.locator("#payer-dialog[open] #payer-form:visible")
             payer.locator('[name="payer_id"]').fill("12345679")
             payer.locator('[name="payer_name"]').fill("QA Payer s.r.o.")
             payer.locator('[data-save-payer]').click()
