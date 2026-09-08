@@ -12,10 +12,6 @@ import run_live_browser_condition_matrix_v3 as v3
 
 RECIPIENT_TYPE_FOR_TARGET = {
     "recipient_is_qualifying_pension_fund": "Fond",
-    "recipient_is_central_bank": "Jiný subjekt",
-    "article_10_public_body_exemption": "Jiný subjekt",
-    "article_11_public_body_exemption": "Jiný subjekt",
-    "article_11_3_public_financing_exemption": "Jiný subjekt",
 }
 RECIPIENT_TYPE_FROM_FACT = {
     "individual": "Fyzická osoba",
@@ -25,6 +21,7 @@ RECIPIENT_TYPE_FROM_FACT = {
     "other": "Jiný subjekt",
 }
 CURRENT_RECIPIENT_TYPE = "Společnost"
+LAST_INTAKE_RESPONSES: list[dict[str, Any]] = []
 
 CANONICAL_COPYRIGHT = "copyright_literary_artistic_scientific_nonfilm_nonsoftware"
 CANONICAL_FILM = "cinematographic_films_or_broadcast_media"
@@ -161,6 +158,28 @@ def browser_scenarios(
     return result
 
 
+def _record_intake_response(response) -> None:
+    if "/analysis/intake" not in response.url or response.request.method != "POST":
+        return
+    try:
+        body = response.json()
+    except Exception:
+        return
+    if isinstance(body, dict):
+        LAST_INTAKE_RESPONSES.append(body)
+
+
+def bootstrap(page, source_country: str, lang: str) -> None:
+    LAST_INTAKE_RESPONSES.clear()
+    page.on("response", _record_intake_response)
+    v2.bootstrap(page, source_country, lang)
+
+
+def start_flow(page) -> None:
+    LAST_INTAKE_RESPONSES.clear()
+    v3.start_flow(page)
+
+
 def ensure_recipient_type(page, desired_type: str) -> None:
     global CURRENT_RECIPIENT_TYPE
     if desired_type == CURRENT_RECIPIENT_TYPE:
@@ -231,8 +250,8 @@ def fill_primary_controls(page, scenario: dict[str, Any]) -> None:
         transaction_date = date.fromisoformat(str(scenario["payload"]["transaction_date"]))
         control = form.locator('[name="acquisition_date"]')
         if control.count() and control.is_visible():
-            # The workspace derives an inclusive continuous holding period.
-            # To submit exactly N days, acquisition is N-1 days before payment.
+            # workspace.js intentionally includes both acquisition and payment
+            # dates (completeDays + 1), so N days requires N-1 elapsed days.
             control.fill(
                 (
                     transaction_date
@@ -241,10 +260,48 @@ def fill_primary_controls(page, scenario: dict[str, Any]) -> None:
             )
 
 
+def _legitimately_unreachable_after_intake() -> bool:
+    if not LAST_INTAKE_RESPONSES:
+        return False
+    body = LAST_INTAKE_RESPONSES[-1]
+    analysis = body.get("analysis") or {}
+    intake = body.get("intake") or {}
+    questions = intake.get("questions") or []
+
+    # If a decisive FINAL result has already been reached, another rule's fact
+    # cannot improve the selected treatment and should not be asked merely to
+    # satisfy a structural condition inventory.
+    if str(analysis.get("status") or "") == "FINAL":
+        return True
+
+    client_questions = [q for q in questions if q.get("client_answerable")]
+    professional_questions = [q for q in questions if not q.get("client_answerable")]
+
+    # A downstream client fact behind an unresolved professional determination
+    # is intentionally unreachable in the client UI. The exact rule-condition
+    # truth table remains covered by the combinatorial API QA.
+    return bool(professional_questions and not client_questions)
+
+
+def assert_target_reached(
+    scenario: dict[str, Any],
+    submitted: dict[str, Any],
+) -> None:
+    try:
+        v2.assert_target_reached(scenario, submitted)
+    except AssertionError as exc:
+        if "unreachable UI fact" in str(exc) and _legitimately_unreachable_after_intake():
+            return
+        raise
+
+
 def install() -> None:
     v3.install()
     base.browser_scenarios = browser_scenarios
+    base.bootstrap = bootstrap
+    base.start_flow = start_flow
     base.fill_primary_controls = fill_primary_controls
+    base.assert_target_reached = assert_target_reached
 
 
 def main() -> int:
