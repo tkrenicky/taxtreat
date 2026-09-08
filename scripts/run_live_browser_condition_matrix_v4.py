@@ -12,7 +12,6 @@ import run_live_browser_condition_matrix_v3 as v3
 
 RECIPIENT_TYPE_FOR_TARGET = {
     "recipient_is_qualifying_pension_fund": "Fond",
-    "recipient_is_partnership": "Jiný subjekt",
     "recipient_is_central_bank": "Jiný subjekt",
     "article_10_public_body_exemption": "Jiný subjekt",
     "article_11_public_body_exemption": "Jiný subjekt",
@@ -35,19 +34,11 @@ CANONICAL_FINANCE_EQUIPMENT = "financial_lease_of_equipment"
 CANONICAL_OPERATING_EQUIPMENT = "operating_lease_or_other_use_of_equipment"
 CANONICAL_OTHER = "other"
 
-# These treaty-specific questions sit below a canonical royalty-family choice.
-# The browser must enter that family through the real payment select before the
-# dynamic question can legitimately appear.
 ROYALTY_CATEGORY_FOR_TARGET = {
     "royalty_industrial_ip_subcategory": CANONICAL_IP,
     "royalty_is_waiver": CANONICAL_IP,
 }
 
-# Legacy category values observed after the v3 broad-family pass. Values are
-# expanded to every current UI family they semantically contain. The Swedish
-# all-other branch is the explicit complement of its separate copyright branch
-# in the approved Stage 6 rules, so its expansion intentionally excludes only
-# that canonical copyright family.
 FINAL_LEGACY_ROYALTY_EXPANSIONS = {
     "patent_trademark_design_model_plan_secret_formula_process_equipment_or_knowhow": (
         CANONICAL_IP,
@@ -81,6 +72,29 @@ FINAL_LEGACY_ROYALTY_EXPANSIONS = {
         CANONICAL_OPERATING_EQUIPMENT,
         CANONICAL_OTHER,
     ),
+    "copyright_literary_artistic_scientific_including_cinematographic_films": (
+        CANONICAL_COPYRIGHT,
+        CANONICAL_FILM,
+    ),
+    "copyright_literary_artistic_scientific_excluding_computer_software_including_films_and_broadcast_media": (
+        CANONICAL_COPYRIGHT,
+        CANONICAL_FILM,
+    ),
+    "patent_trademark_design_model_plan_secret_formula_process_including_computer_software_equipment_or_knowhow": (
+        CANONICAL_SOFTWARE,
+        CANONICAL_IP,
+        CANONICAL_FINANCE_EQUIPMENT,
+        CANONICAL_OPERATING_EQUIPMENT,
+    ),
+    "copyright_literary_artistic_or_scientific_including_films_and_broadcast_recordings": (
+        CANONICAL_COPYRIGHT,
+        CANONICAL_FILM,
+    ),
+    "patent_trademark_design_model_plan_secret_formula_process_equipment_or_industrial_commercial_technical_technological_scientific_knowhow": (
+        CANONICAL_IP,
+        CANONICAL_FINANCE_EQUIPMENT,
+        CANONICAL_OPERATING_EQUIPMENT,
+    ),
 }
 
 
@@ -103,16 +117,29 @@ def browser_scenarios(
         target_fact = str(item.get("target_fact") or "")
         target_value = str(item.get("target_value") or "")
 
-        # Brazil's historical `royalty_category == trademark` is represented in
-        # the current UI by the industrial-IP family plus an explicit trademark
-        # subcategory question. Test that exact present-day path rather than
-        # pretending the old narrow category still exists as a primary option.
         if target_fact == "royalty_category" and target_value == "trademark":
             item["payload"]["facts"]["royalty_category"] = CANONICAL_IP
             item["payload"]["facts"]["royalty_industrial_ip_subcategory"] = "trademark"
             item["target_fact"] = "royalty_industrial_ip_subcategory"
             item["target_value"] = "trademark"
             item["label"] = f"{item['label']}:ui-industrial-ip-subcategory=trademark"
+            result.append(item)
+            continue
+
+        if (
+            target_fact == "royalty_category"
+            and target_value == "patent_trademark_design_model_plan_secret_formula_or_process"
+        ):
+            item["payload"]["facts"]["royalty_category"] = CANONICAL_IP
+            item["payload"]["facts"][
+                "royalty_industrial_ip_subcategory"
+            ] = "patent_design_model_plan_secret_formula_or_process"
+            item["target_fact"] = "royalty_industrial_ip_subcategory"
+            item["target_value"] = "patent_design_model_plan_secret_formula_or_process"
+            item["label"] = (
+                f"{item['label']}:ui-industrial-ip-subcategory="
+                "patent_design_model_plan_secret_formula_or_process"
+            )
             result.append(item)
             continue
 
@@ -204,7 +231,14 @@ def fill_primary_controls(page, scenario: dict[str, Any]) -> None:
         transaction_date = date.fromisoformat(str(scenario["payload"]["transaction_date"]))
         control = form.locator('[name="acquisition_date"]')
         if control.count() and control.is_visible():
-            control.fill((transaction_date - timedelta(days=rounded_days)).isoformat())
+            # The workspace derives an inclusive continuous holding period.
+            # To submit exactly N days, acquisition is N-1 days before payment.
+            control.fill(
+                (
+                    transaction_date
+                    - timedelta(days=max(rounded_days - 1, 0))
+                ).isoformat()
+            )
 
 
 def install() -> None:
