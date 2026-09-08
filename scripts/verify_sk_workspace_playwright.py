@@ -205,6 +205,7 @@ def main() -> int:
             page.locator('#taxtreat-language-controls [data-lang="cs"]').click()
             page.wait_for_function("() => document.documentElement.lang === 'cs'")
             wait_for_source_country(page, "SK", 76)
+            page.locator('[data-nav="dashboard"]:visible').first.click()
             page.locator("[data-start-flow]:visible").first.click()
             page.locator('[data-next-step="2"]:visible').click()
             page.locator('[data-next-step="3"]:visible').click()
