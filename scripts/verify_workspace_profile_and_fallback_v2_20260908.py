@@ -78,6 +78,9 @@ def main() -> int:
             assert page.locator("#flow-recipient-name").inner_text() == "QA GmbH"
 
             page.locator('.flow-step[data-step="2"] [data-next-step="3"]').click()
+            page.wait_for_function(
+                "() => document.querySelector('.flow-step[data-step=\"3\"]')?.classList.contains('active')"
+            )
             form = page.locator("#workspace-payment")
             form.locator('select[name="income_type"]').select_option("dividend")
             form.locator('input[name="transaction_date"]').fill("2026-08-11")
@@ -86,7 +89,9 @@ def main() -> int:
             form.locator('select[name="direct_ownership"]').select_option("true")
             form.locator('select[name="holding_period_mode"]').select_option("known_date")
             form.locator('input[name="acquisition_date"]').fill("2024-01-01")
-            form.locator('input[name="treaty_resident"][value="true"]').check()
+            treaty_resident_yes = form.locator('label:has(input[name="treaty_resident"][value="true"])')
+            treaty_resident_yes.click()
+            assert form.locator('input[name="treaty_resident"][value="true"]').is_checked()
             form.locator('input[name="voting_ownership_percent"]').fill("25")
             form.locator('select[name="section19_company_form"]').select_option("true")
             form.locator('select[name="section19_taxable_company"]').select_option("false")
