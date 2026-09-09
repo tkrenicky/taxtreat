@@ -188,26 +188,41 @@
     clearPendingRestore();
   }
 
-  function cancelStaleRestoreForUserFieldChange(event) {
-    if (!pendingLiveState) return;
-    const field = event.target;
-    if (!(field instanceof HTMLInputElement || field instanceof HTMLSelectElement || field instanceof HTMLTextAreaElement)) return;
-    if (field.id === "taxtreat-ui-language") return;
+  function isEditableField(target) {
+    return target instanceof HTMLInputElement || target instanceof HTMLSelectElement || target instanceof HTMLTextAreaElement;
+  }
 
-    // Locale restoration is only allowed to preserve the pre-switch state until
-    // the user makes a new deliberate choice. After that choice, especially a
-    // payer/source-country change, stale delayed writes must not overwrite the
-    // newly selected context, currency or form values.
+  function cancelStaleRestoreForDirectUserIntent(event) {
+    if (!pendingLiveState || !isEditableField(event.target)) return;
+    if (event.target.id === "taxtreat-ui-language") return;
     clearPendingRestore();
   }
 
-  document.addEventListener("pointerdown", captureForLanguageControl, true);
-  document.addEventListener("keydown", (event) => {
-    if (event.key !== "Enter" && event.key !== " ") return;
+  function cancelStaleRestoreForContextChange(event) {
+    if (!pendingLiveState) return;
+    const field = event.target;
+    if (!(field instanceof HTMLSelectElement)) return;
+    if (
+      field.id === "active-payer-select" ||
+      field.id === "active-source-country" ||
+      field.name === "payer_country"
+    ) {
+      clearPendingRestore();
+    }
+  }
+
+  document.addEventListener("pointerdown", (event) => {
     captureForLanguageControl(event);
+    cancelStaleRestoreForDirectUserIntent(event);
+  }, true);
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") captureForLanguageControl(event);
+    if (isEditableField(event.target) && event.target.id !== "taxtreat-ui-language") {
+      cancelStaleRestoreForDirectUserIntent(event);
+    }
   }, true);
   document.addEventListener("click", cancelStaleRestoreForNavigation, true);
-  document.addEventListener("change", cancelStaleRestoreForUserFieldChange, true);
+  document.addEventListener("change", cancelStaleRestoreForContextChange, true);
 
   const languageSelect = document.getElementById("taxtreat-ui-language");
   if (languageSelect) {
