@@ -39,6 +39,7 @@
 
   const ENHANCEMENT_SCRIPTS = [
     "/ui-assets/workspace-locale-state-preservation-20260908.js?v=20260908-locale-state1",
+    "/ui-assets/workspace-dynamic-number-step-20260909.js?v=20260909-number-step1",
     "/ui-assets/workspace-cz-relief-i18n.js?v=20260820-4",
     "/ui-assets/workspace-section19-completeness-20260830.js?v=20260830-s19complete1",
     "/ui-assets/source-country-context.js?v=20260819-sk1",
