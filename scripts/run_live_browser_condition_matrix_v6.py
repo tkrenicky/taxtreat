@@ -6,6 +6,7 @@ from typing import Any
 
 import run_live_browser_condition_matrix as base
 import run_live_browser_condition_matrix_v4 as v4
+import run_live_browser_condition_matrix_v5 as v5
 
 
 # Recipient-type options have locale-specific display labels and, because the
