@@ -20,6 +20,17 @@
     return document.querySelector("#taxtreat-ui-language")?.value || localStorage.getItem(UI_KEY) || "cs";
   }
 
+  function activeSourceCountry() {
+    return String(document.body?.dataset?.sourceCountry || "CZ").toUpperCase();
+  }
+
+  function supportsRegisteredTreatyLocales() {
+    // The current locale registries contain CZ-outbound treaty texts only.
+    // Never reuse them for an SK payer merely because the recipient ISO code
+    // is the same: that would display wording from a different treaty.
+    return activeSourceCountry() === "CZ";
+  }
+
   const PUBLIC_TREATY_TEXT_STATUSES = new Set([
     "official_treaty_text",
     "official_protocol_text",
@@ -108,6 +119,7 @@
   }
 
   function loadRegistry() {
+    if (!supportsRegisteredTreatyLocales()) return Promise.resolve({ entries: {} });
     if (!registryPromise) {
       registryPromise = fetch(REGISTRY_URL, { cache: "no-store" })
         .then((response) => {
@@ -123,6 +135,7 @@
   }
 
   function loadCountryRegistry(country) {
+    if (!supportsRegisteredTreatyLocales()) return Promise.resolve(null);
     const iso2 = String(country || "").toUpperCase();
     if (!iso2) return Promise.resolve(null);
     if (!countryRegistryPromises.has(iso2)) {

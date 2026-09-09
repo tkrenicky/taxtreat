@@ -278,9 +278,17 @@ def _legitimately_unreachable_after_intake() -> bool:
     professional_questions = [q for q in questions if not q.get("client_answerable")]
 
     # A downstream client fact behind an unresolved professional determination
-    # is intentionally unreachable in the client UI. The exact rule-condition
-    # truth table remains covered by the combinatorial API QA.
-    return bool(professional_questions and not client_questions)
+    # or a governance REVIEW_REQUIRED gate is intentionally unreachable in the
+    # client UI. The exact rule-condition truth table remains covered by the
+    # combinatorial API QA. Never accept this boundary while the server still
+    # exposes a client-answerable question.
+    return bool(
+        not client_questions
+        and (
+            professional_questions
+            or str(analysis.get("status") or "") == "REVIEW_REQUIRED"
+        )
+    )
 
 
 def assert_target_reached(

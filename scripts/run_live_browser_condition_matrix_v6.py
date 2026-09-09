@@ -6,7 +6,6 @@ from typing import Any
 
 import run_live_browser_condition_matrix as base
 import run_live_browser_condition_matrix_v4 as v4
-import run_live_browser_condition_matrix_v5 as v5
 
 
 # Recipient-type options have locale-specific display labels and, because the
@@ -91,29 +90,50 @@ def intake_diagnostic() -> dict[str, Any]:
 
 
 def finish_dynamic_questions(page, payload: dict[str, Any]) -> None:
-    try:
-        v5.finish_dynamic_questions(page, payload)
-    except AssertionError as exc:
-        if str(exc) != "dynamic questions did not resolve":
-            raise
+    for _ in range(30):
+        if page.locator('.flow-step[data-step="4"].active').count():
+            return
+        if page.locator("#workspace-error").is_visible():
+            raise AssertionError(
+                "workspace error: "
+                + page.locator("#workspace-error").inner_text().strip()
+            )
 
-        # The final /analysis/intake response can arrive a fraction later than
-        # the DOM loop that just exhausted its client-answerable questions.
-        # Re-check the captured response after a short browser synchronization
-        # delay. Only a decisive FINAL or professional-only boundary is
-        # accepted; any remaining client question still fails closed.
-        page.wait_for_timeout(250)
+        questions = page.locator("#workspace-questions [data-input-path]")
+        count = questions.count()
+        if count == 0:
+            if v4._legitimately_unreachable_after_intake():
+                return
+            page.wait_for_timeout(20)
+            continue
+
+        for index in range(count):
+            base.fill_question(questions.nth(index), payload)
+
+        # Wait for the actual intake response instead of racing the async fetch
+        # with a fixed sleep. The old loop could submit the same stale question
+        # set repeatedly and then diagnose the first response as the last one.
+        with page.expect_response(
+            lambda response: (
+                "/analysis/intake" in response.url
+                and response.request.method == "POST"
+            ),
+            timeout=10_000,
+        ):
+            page.locator("#workspace-submit").click()
+
+        page.wait_for_timeout(30)
         if v4._legitimately_unreachable_after_intake():
             return
 
-        diagnostic = json.dumps(
-            intake_diagnostic(),
-            sort_keys=True,
-            ensure_ascii=False,
-        )
-        raise AssertionError(
-            f"dynamic questions did not resolve; last_intake={diagnostic}"
-        ) from exc
+    diagnostic = json.dumps(
+        intake_diagnostic(),
+        sort_keys=True,
+        ensure_ascii=False,
+    )
+    raise AssertionError(
+        f"dynamic questions did not resolve; last_intake={diagnostic}"
+    )
 
 
 def assert_target_reached(
