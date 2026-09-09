@@ -119,6 +119,13 @@
     if (holdingMode) holdingMode.dispatchEvent(new Event("change", { bubbles: true }));
   }
 
+  function clearPendingRestore() {
+    if (!pendingLiveState) return;
+    liveRestoreToken += 1;
+    pendingLiveState = null;
+    try { sessionStorage.removeItem(STORAGE_KEY); } catch (_problem) {}
+  }
+
   function restoreState() {
     let state = null;
     try {
@@ -178,9 +185,20 @@
     // A locale switch needs a short restoration window while translation
     // handlers update the DOM. Once the user deliberately moves elsewhere,
     // that captured location is stale and must never win a later timer race.
-    liveRestoreToken += 1;
-    pendingLiveState = null;
-    try { sessionStorage.removeItem(STORAGE_KEY); } catch (_problem) {}
+    clearPendingRestore();
+  }
+
+  function cancelStaleRestoreForUserFieldChange(event) {
+    if (!pendingLiveState) return;
+    const field = event.target;
+    if (!(field instanceof HTMLInputElement || field instanceof HTMLSelectElement || field instanceof HTMLTextAreaElement)) return;
+    if (field.id === "taxtreat-ui-language") return;
+
+    // Locale restoration is only allowed to preserve the pre-switch state until
+    // the user makes a new deliberate choice. After that choice, especially a
+    // payer/source-country change, stale delayed writes must not overwrite the
+    // newly selected context, currency or form values.
+    clearPendingRestore();
   }
 
   document.addEventListener("pointerdown", captureForLanguageControl, true);
@@ -189,6 +207,7 @@
     captureForLanguageControl(event);
   }, true);
   document.addEventListener("click", cancelStaleRestoreForNavigation, true);
+  document.addEventListener("change", cancelStaleRestoreForUserFieldChange, true);
 
   const languageSelect = document.getElementById("taxtreat-ui-language");
   if (languageSelect) {
