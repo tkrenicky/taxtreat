@@ -44,31 +44,40 @@ def wait_for_source_country(page, code: str, expected_partner_options: int) -> N
 
 
 def advance_flow(page, from_step: int, to_step: int) -> None:
-    page.wait_for_function(
-        """([fromStep, toStep]) => [fromStep, toStep].some(
-            step => document.querySelector(`.flow-step[data-step="${step}"]`)?.classList.contains('active')
-        )""",
-        arg=[from_step, to_step],
-    )
-    if page.locator(f'.flow-step[data-step="{to_step}"].active').count():
-        return
-    advanced = page.evaluate(
-        """([fromStep, toStep]) => {
-            const button = document.querySelector(
-                `.flow-step[data-step="${fromStep}"].active [data-next-step="${toStep}"]`
-            );
-            if (!button) return false;
-            button.click();
-            return true;
-        }""",
-        [from_step, to_step],
-    )
-    if not advanced:
-        fail(f"missing step transition control {from_step} -> {to_step}")
-    page.wait_for_function(
-        "(step) => document.querySelector(`.flow-step[data-step=\"${step}\"]`)?.classList.contains('active')",
-        arg=to_step,
-    )
+    for _ in range(3):
+        page.wait_for_function(
+            """([fromStep, toStep]) => [fromStep, toStep].some(
+                step => document.querySelector(`.flow-step[data-step="${step}"]`)?.classList.contains('active')
+            )""",
+            arg=[from_step, to_step],
+        )
+        if not page.locator(f'.flow-step[data-step="{to_step}"].active').count():
+            advanced = page.evaluate(
+                """([fromStep, toStep]) => {
+                    const button = document.querySelector(
+                        `.flow-step[data-step="${fromStep}"].active [data-next-step="${toStep}"]`
+                    );
+                    if (!button) return false;
+                    button.click();
+                    return true;
+                }""",
+                [from_step, to_step],
+            )
+            if not advanced:
+                fail(f"missing step transition control {from_step} -> {to_step}")
+            page.wait_for_function(
+                "(step) => document.querySelector(`.flow-step[data-step=\"${step}\"]`)?.classList.contains('active')",
+                arg=to_step,
+            )
+
+        # Locale and workspace state restorers can finish just after the first
+        # active-state observation. Require the target to remain active before
+        # the caller starts filling controls that would otherwise be hidden.
+        page.wait_for_timeout(200)
+        if page.locator(f'.flow-step[data-step="{to_step}"].active').count():
+            return
+
+    fail(f"unstable step transition {from_step} -> {to_step}")
 
 
 def fill_client_questions(page) -> None:
