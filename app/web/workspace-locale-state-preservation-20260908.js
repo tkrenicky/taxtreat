@@ -136,7 +136,7 @@
 
     applyState(state);
     refreshDependentFields();
-    [0, 60, 180, 500, 1000].forEach((delay) => window.setTimeout(() => applyState(state), delay));
+    scheduleLiveRestore(state);
   }
 
   function scheduleLiveRestore(state) {
@@ -169,11 +169,26 @@
     }
   }
 
+  function cancelStaleRestoreForNavigation(event) {
+    const navigation = event.target?.closest?.(
+      "[data-nav],[data-flow-step],[data-next-step],[data-start-flow],#workspace-submit",
+    );
+    if (!navigation || !pendingLiveState) return;
+
+    // A locale switch needs a short restoration window while translation
+    // handlers update the DOM. Once the user deliberately moves elsewhere,
+    // that captured location is stale and must never win a later timer race.
+    liveRestoreToken += 1;
+    pendingLiveState = null;
+    try { sessionStorage.removeItem(STORAGE_KEY); } catch (_problem) {}
+  }
+
   document.addEventListener("pointerdown", captureForLanguageControl, true);
   document.addEventListener("keydown", (event) => {
     if (event.key !== "Enter" && event.key !== " ") return;
     captureForLanguageControl(event);
   }, true);
+  document.addEventListener("click", cancelStaleRestoreForNavigation, true);
 
   const languageSelect = document.getElementById("taxtreat-ui-language");
   if (languageSelect) {
