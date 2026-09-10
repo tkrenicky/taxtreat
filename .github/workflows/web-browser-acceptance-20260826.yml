@@ -21,7 +21,7 @@ on:
       - 'scripts/verify_holding_period_regressions_20260830.py'
       - 'scripts/verify_dividend_condition_semantics_20260830.py'
       - 'scripts/verify_dividend_rule_normalization_20260830.py'
-      - 'scripts/verify_workspace_profile_and_fallback_20260828.py'
+      - 'scripts/verify_workspace_profile_and_fallback_v2_20260908.py'
       - 'scripts/verify_section19_completeness_browser_20260830.py'
       - 'scripts/verify_section19_primary_report_browser_20260830.py'
       - 'scripts/verify_en_fallback_report_locale_20260828.py'
@@ -107,8 +107,8 @@ jobs:
       - name: Run bilingual manual-QA acceptance
         run: python scripts/verify_manual_qa_i18n_20260826.py
       - name: Run profile controls and dividend fallback acceptance
-        timeout-minutes: 3
-        run: python scripts/verify_workspace_profile_and_fallback_20260828.py
+        timeout-minutes: 4
+        run: python scripts/verify_workspace_profile_and_fallback_v2_20260908.py
       - name: Run Section 19 completeness browser acceptance
         timeout-minutes: 3
         run: python scripts/verify_section19_completeness_browser_20260830.py
