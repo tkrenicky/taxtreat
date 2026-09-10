@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "source_country": "AT",
+  "as_of": "2026-08-24",
+  "status": "curated_official_source_overrides_not_reviewed",
+  "purpose": "Provide official RIS consolidated royalty-article text where the publication PDF acquired through the ordinary instrument-chain workflow has no usable text layer. These overrides supplement evidence only and do not select the controlling instrument or release a treaty result.",
+  "partners": {
+    "Kuba / Cuba": [
+      {
+        "article_number": 12,
+        "authority": "Rechtsinformationssystem des Bundes (RIS)",
+        "gesetzesnummer": "20005011",
+        "url": "https://ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Anlage=&Artikel=12&Gesetzesnummer=20005011&Paragraf=&Uebergangsrecht=",
+        "reason": "Official publication treaty PDFs have an unusable text layer for deterministic Article 12 extraction; RIS provides the consolidated Article 12 as official HTML.",
+        "legal_review_completed": false,
+        "projection_released": false
+      }
+    ],
+    "Marokko / Morocco": [
+      {
+        "article_number": 12,
+        "authority": "Rechtsinformationssystem des Bundes (RIS)",
+        "gesetzesnummer": "20005133",
+        "url": "https://ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Anlage=&Artikel=12&Gesetzesnummer=20005133&Paragraf=&Uebergangsrecht=",
+        "reason": "Official publication treaty PDFs have an unusable text layer for deterministic Article 12 extraction; RIS provides the consolidated Article 12 as official HTML.",
+        "legal_review_completed": false,
+        "projection_released": false
+      }
+    ]
+  },
+  "release_constraints": [
+    "An override is an additional official evidence source only; it does not establish which treaty instrument controls.",
+    "The override registry must never contain a hard-coded treaty rate or released legal conclusion.",
+    "Only URLs on the existing Austrian official-source allowlist may be acquired.",
+    "A partner remains legally unreviewed and projection-released false after override acquisition.",
+    "These Article 12 overrides do not imply Article 10 or Article 11 evidence completeness."
+  ]
+}
