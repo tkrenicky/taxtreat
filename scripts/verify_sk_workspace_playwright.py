@@ -43,6 +43,43 @@ def wait_for_source_country(page, code: str, expected_partner_options: int) -> N
     )
 
 
+def advance_flow(page, from_step: int, to_step: int) -> None:
+    for _ in range(3):
+        page.wait_for_function(
+            """([fromStep, toStep]) => [fromStep, toStep].some(
+                step => document.querySelector(`.flow-step[data-step="${step}"]`)?.classList.contains('active')
+            )""",
+            arg=[from_step, to_step],
+        )
+        if not page.locator(f'.flow-step[data-step="{to_step}"].active').count():
+            advanced = page.evaluate(
+                """([fromStep, toStep]) => {
+                    const button = document.querySelector(
+                        `.flow-step[data-step="${fromStep}"].active [data-next-step="${toStep}"]`
+                    );
+                    if (!button) return false;
+                    button.click();
+                    return true;
+                }""",
+                [from_step, to_step],
+            )
+            if not advanced:
+                fail(f"missing step transition control {from_step} -> {to_step}")
+            page.wait_for_function(
+                "(step) => document.querySelector(`.flow-step[data-step=\"${step}\"]`)?.classList.contains('active')",
+                arg=to_step,
+            )
+
+        # Locale and workspace state restorers can finish just after the first
+        # active-state observation. Require the target to remain active before
+        # the caller starts filling controls that would otherwise be hidden.
+        page.wait_for_timeout(200)
+        if page.locator(f'.flow-step[data-step="{to_step}"].active').count():
+            return
+
+    fail(f"unstable step transition {from_step} -> {to_step}")
+
+
 def fill_client_questions(page) -> None:
     for _ in range(8):
         questions = page.locator("#workspace-questions [data-input-path]")
@@ -205,9 +242,13 @@ def main() -> int:
             page.locator('#taxtreat-language-controls [data-lang="cs"]').click()
             page.wait_for_function("() => document.documentElement.lang === 'cs'")
             wait_for_source_country(page, "SK", 76)
-            page.locator("[data-start-flow]").first.click()
-            page.locator('[data-next-step="2"]:visible').click()
-            page.locator('[data-next-step="3"]:visible').click()
+            page.locator('[data-nav="dashboard"]:visible').first.click()
+            page.wait_for_function(
+                "() => document.querySelector('[data-view=\"dashboard\"]')?.classList.contains('active')"
+            )
+            page.locator("[data-start-flow]:visible").first.click()
+            advance_flow(page, 1, 2)
+            advance_flow(page, 2, 3)
 
             form = page.locator("#workspace-payment")
             form.locator('[name="income_type"]').select_option("interest")
@@ -259,13 +300,13 @@ def main() -> int:
             assert "595/2003" in legal_reference
             assert "586/1992" not in legal_reference
 
-            # Re-run the same local PR build through the standard SK corporate
-            # dividend path. This is the first real-user path that previously
-            # ended in a dead-end REVIEW_REQUIRED result.
             page.locator('[data-nav="dashboard"]:visible').first.click()
+            page.wait_for_function(
+                "() => document.querySelector('[data-view=\"dashboard\"]')?.classList.contains('active')"
+            )
             page.locator("[data-start-flow]:visible").first.click()
-            page.locator('[data-next-step="2"]:visible').click()
-            page.locator('[data-next-step="3"]:visible').click()
+            advance_flow(page, 1, 2)
+            advance_flow(page, 2, 3)
 
             form = page.locator("#workspace-payment")
             form.locator('[name="income_type"]').select_option("dividend")

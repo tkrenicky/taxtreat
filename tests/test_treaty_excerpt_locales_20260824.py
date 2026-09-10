@@ -122,6 +122,15 @@ def test_runtime_prefers_resolved_rule_locale_then_article_fallback_and_is_fail_
     assert "MutationObserver" not in script
 
 
+def test_cz_treaty_locale_registry_is_never_reused_for_an_sk_payer():
+    script = RUNTIME.read_text(encoding="utf-8")
+    assert "function activeSourceCountry()" in script
+    assert "function supportsRegisteredTreatyLocales()" in script
+    assert 'return activeSourceCountry() === "CZ"' in script
+    assert "if (!supportsRegisteredTreatyLocales()) return Promise.resolve({ entries: {} })" in script
+    assert "if (!supportsRegisteredTreatyLocales()) return Promise.resolve(null)" in script
+
+
 def test_runtime_captures_selected_treaty_citation_from_live_and_stored_results():
     script = RUNTIME.read_text(encoding="utf-8")
     assert "let selectedTreatyCitation = null" in script
