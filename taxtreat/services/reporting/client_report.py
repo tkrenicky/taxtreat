@@ -141,6 +141,20 @@ def _legal_reference(report, source):
     return f"{ref} zákona č. 586/1992 Sb., o daních z příjmů"
 
 
+def _compact_legal_reference(source):
+    if not source:
+        return "—"
+    article = _article(source)
+    layer = str(source.get("legal_layer") or "")
+    if layer == "treaty":
+        return f"{article} SZDZ"
+    if layer == "protocol":
+        return f"{article} protokolu"
+    if layer == "mli":
+        return f"{article} MLI"
+    return f"{article} ZDP"
+
+
 def _source_link(source):
     if not source or not source.get("source_url"):
         return ""
@@ -434,7 +448,7 @@ def render_report_html(report):
     net_amount = calculation_context.net_amount
     fx_line = calculation_context.fx_line
 
-    selected_ref = _legal_reference(report, selected)
+    selected_ref = _compact_legal_reference(selected)
     selected_link = _source_link(selected)
     selected_excerpt = _operative_excerpt(selected)
     assumptions_html = _assumptions_html(report)
