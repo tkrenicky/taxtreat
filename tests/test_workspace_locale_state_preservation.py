@@ -20,7 +20,10 @@ def test_result_step_is_recomputed_in_target_locale_instead_of_repainting_dom():
 
     assert "function rerunResult(state)" in script
     assert "form.requestSubmit(submit)" in script
-    assert "if (state.rerunResult) rerunResult(state)" in script
+    assert "if (cancelled || !state.rerunResult) return" in script
+    assert "rerunResult(state)" in script
+    assert "window.location.pathname ===" in script
+    assert "/ui/${currentLocale}" in script
     assert "refreshDependencies()" in script
     assert "restoreFields(state)" in script
 
