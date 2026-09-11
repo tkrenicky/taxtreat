@@ -29,6 +29,8 @@ def _sample_report() -> dict:
         },
         "assumptions": {
             "transaction_facts": {
+                "report_payer_name": "Demo CZ s.r.o.",
+                "report_recipient_name": "Andorra Holdings S.A.",
                 "beneficial_owner": True,
                 "recipient_is_treaty_resident": True,
                 "permanent_establishment_connection": False,
