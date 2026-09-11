@@ -123,43 +123,175 @@
   function restoreState() {
     let state = null;
     try { state = JSON.parse(sessionStorage.getItem(STORAGE_KEY) || "null"); } catch (_problem) {}
+    const currentLocale = locale();
+    const canonicalTarget = new RegExp(`^/ui/${currentLocale}/?(() => {
+  "use strict";
+
+  const STORAGE_KEY = "taxtreat-locale-transition-state-v3";
+
+  function locale() {
+    return document.documentElement.lang === "en" ? "en" : "cs";
+  }
+
+  function fieldSnapshot(field, index) {
+    return {
+      form: field.closest("form")?.id || "page",
+      name: field.name || null,
+      id: field.id || null,
+      type: field.type || field.tagName.toLowerCase(),
+      index,
+      value: field.value,
+      checked: "checked" in field ? Boolean(field.checked) : null,
+    };
+  }
+
+  function buildState(targetLocale) {
+    const activeView = document.querySelector("[data-view].active")?.dataset.view || null;
+    const activeStep = document.querySelector(".flow-step.active")?.dataset.step || null;
+    const statusText = document.querySelector("#workspace-result-status")?.textContent || "";
+    return {
+      version: 3,
+      targetLocale,
+      activeView,
+      activeStep,
+      rerunResult:
+        activeView === "flow" &&
+        activeStep === "4" &&
+        !/ČEKÁ NA VÝPOČET|WAITING FOR CALCULATION/i.test(statusText),
+      fields: [...document.querySelectorAll("input,select,textarea")]
+        .filter((field) => field.id !== "taxtreat-ui-language")
+        .map(fieldSnapshot),
+      capturedAt: Date.now(),
+    };
+  }
+
+  function captureState(targetLocale) {
+    const state = buildState(targetLocale);
+    try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (_problem) {}
+    return state;
+  }
+
+  function matchingField(saved) {
+    if (saved.id) {
+      const byId = document.getElementById(saved.id);
+      if (byId) return byId;
+    }
+    if (!saved.name) return null;
+    const root = saved.form && saved.form !== "page" ? document.getElementById(saved.form) : document;
+    const candidates = [...(root || document).querySelectorAll(`[name="${CSS.escape(saved.name)}"]`)];
+    if (candidates.length === 1) return candidates[0];
+    const sameType = candidates.filter(
+      (item) => (item.type || item.tagName.toLowerCase()) === saved.type,
+    );
+    return sameType.find((item) => item.value === saved.value) || sameType[0] || candidates[0] || null;
+  }
+
+  function restoreFields(state) {
+    for (const saved of state.fields || []) {
+      const field = matchingField(saved);
+      if (!field || field.id === "taxtreat-ui-language") continue;
+      if (field.type === "checkbox" || field.type === "radio") {
+        field.checked = Boolean(saved.checked);
+      } else if (field.tagName === "SELECT") {
+        if ([...field.options].some((option) => option.value === saved.value)) field.value = saved.value;
+      } else {
+        field.value = saved.value ?? "";
+      }
+    }
+  }
+
+  function restoreNavigation(state) {
+    if (state.activeView) {
+      document.querySelectorAll("[data-view]").forEach((view) => {
+        view.classList.toggle("active", view.dataset.view === state.activeView);
+      });
+      document.querySelectorAll("[data-nav]").forEach((button) => {
+        button.classList.toggle(
+          "active",
+          state.activeView !== "flow" && button.dataset.nav === state.activeView,
+        );
+      });
+    }
+    if (state.activeView === "flow" && state.activeStep) {
+      const activeStep = Number(state.activeStep);
+      document.querySelectorAll(".flow-step").forEach((step) => {
+        step.classList.toggle("active", step.dataset.step === state.activeStep);
+      });
+      document.querySelectorAll("[data-flow-step]").forEach((button) => {
+        button.classList.toggle("active", Number(button.dataset.flowStep) <= activeStep);
+      });
+    }
+  }
+
+  function dispatchChange(field) {
+    if (field) field.dispatchEvent(new Event("change", { bubbles: true }));
+  }
+
+  function refreshDependencies() {
+    dispatchChange(document.querySelector("#active-payer-select"));
+    dispatchChange(document.querySelector('#workspace-payment [name="income_type"]'));
+    dispatchChange(document.querySelector('#workspace-payment [name="holding_period_mode"]'));
+    dispatchChange(document.querySelector('#workspace-payment [name="currency"]'));
+  }
+
+  function rerunResult(state) {
+    if (!state.rerunResult) return;
+    const form = document.querySelector("#workspace-payment");
+    const submit = document.querySelector("#workspace-submit");
+    if (!form || !submit) return;
+    form.requestSubmit(submit);
+  }
+
+  function clearState() {
+    try { sessionStorage.removeItem(STORAGE_KEY); } catch (_problem) {}
+  }
+
+).test(window.location.pathname);
     if (
       !state ||
       state.version !== 3 ||
-      state.targetLocale !== locale() ||
+      state.targetLocale !== currentLocale ||
+      !canonicalTarget ||
       Date.now() - Number(state.capturedAt || 0) > 60000
     ) {
+      if (state && (!canonicalTarget || Date.now() - Number(state.capturedAt || 0) > 60000)) clearState();
       return;
     }
 
-    // First restore the persisted payer/profile context and ordinary form fields.
+    // Consume the cross-page snapshot immediately. Timers below keep only the
+    // in-memory copy, so a reload or unrelated /ui navigation can never replay it.
+    clearState();
+
+    let cancelled = false;
+    const cancelPendingRestore = () => { cancelled = true; };
+    document.addEventListener("pointerdown", cancelPendingRestore, { capture: true, once: true });
+    document.addEventListener("keydown", cancelPendingRestore, { capture: true, once: true });
+
+    // Establish the saved view exactly once before dependent controls re-render.
     restoreFields(state);
     restoreNavigation(state);
 
-    // Re-render country/income dependent controls, then restore values that may
-    // have been recreated by those renderers.
     window.setTimeout(() => {
+      if (cancelled) return;
       refreshDependencies();
       restoreFields(state);
-      restoreNavigation(state);
     }, 50);
 
     window.setTimeout(() => {
+      if (cancelled) return;
       restoreFields(state);
       refreshDependencies();
       restoreFields(state);
-      restoreNavigation(state);
     }, 160);
 
-    // Step 4 contains computed DOM, not persistent state. Re-run the calculation
-    // in the canonical target locale instead of trying to repaint stale result DOM.
+    // Computed step-4 DOM is rebuilt in the target locale. Never restore the
+    // old navigation after this point: a user click must always win over timers.
     window.setTimeout(() => {
+      if (cancelled || !state.rerunResult) return;
       restoreFields(state);
       refreshDependencies();
       restoreFields(state);
-      if (state.rerunResult) rerunResult(state);
-      else restoreNavigation(state);
-      clearState();
+      rerunResult(state);
     }, 320);
   }
 
