@@ -4,28 +4,31 @@ from pathlib import Path
 SCRIPT = Path("app/web/workspace-locale-state-preservation-20260908.js")
 
 
-def test_delayed_locale_restore_is_cancelled_by_explicit_navigation():
+def test_locale_switch_captures_state_before_canonical_route_navigation():
     script = SCRIPT.read_text(encoding="utf-8")
 
-    assert "function cancelStaleRestoreForNavigation(event)" in script
-    assert (
-        '"[data-nav],[data-flow-step],[data-next-step],[data-start-flow],#workspace-submit"'
-        in script
-    )
-    assert "liveRestoreToken += 1" in script
-    assert "pendingLiveState = null" in script
-    assert "sessionStorage.removeItem(STORAGE_KEY)" in script
-    assert (
-        'document.addEventListener("click", cancelStaleRestoreForNavigation, true)'
-        in script
-    )
+    assert 'const STORAGE_KEY = "taxtreat-locale-transition-state-v3"' in script
+    assert 'document.addEventListener("pointerdown", captureForLanguageControl, true)' in script
+    assert 'event.target?.closest?.("#taxtreat-language-controls [data-lang]")' in script
+    assert 'sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state))' in script
+    assert 'activeView === "flow"' in script
+    assert 'activeStep === "4"' in script
 
 
-def test_reload_and_live_locale_restoration_share_the_cancellable_scheduler():
+def test_result_step_is_recomputed_in_target_locale_instead_of_repainting_dom():
     script = SCRIPT.read_text(encoding="utf-8")
-    restore_state = script.split("function restoreState()", 1)[1].split(
-        "function scheduleLiveRestore(state)", 1
-    )[0]
 
-    assert "scheduleLiveRestore(state)" in restore_state
-    assert "window.setTimeout(() => applyState(state)" not in restore_state
+    assert "function rerunResult(state)" in script
+    assert "form.requestSubmit(submit)" in script
+    assert "if (cancelled || !state.rerunResult) return" in script
+    assert "rerunResult(state)" in script
+    assert "window.location.pathname ===" in script
+    assert "/ui/${currentLocale}" in script
+    assert "refreshDependencies()" in script
+    assert "restoreFields(state)" in script
+
+    # The canonical /ui/cs and /ui/en routes own localization. Reintroducing
+    # a delayed live text-node translator would recreate the production race.
+    assert "scheduleLiveRestore" not in script
+    assert "translateResidue" not in script
+    assert "createTreeWalker" not in script

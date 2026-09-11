@@ -38,7 +38,7 @@
   }
 
   const ENHANCEMENT_SCRIPTS = [
-    "/ui-assets/workspace-locale-state-preservation-20260908.js?v=20260908-locale-state1",
+    "/ui-assets/workspace-locale-state-preservation-20260908.js?v=20260911-locale-state4",
     "/ui-assets/workspace-dynamic-number-step-20260909.js?v=20260909-number-step1",
     "/ui-assets/workspace-cz-relief-i18n.js?v=20260820-4",
     "/ui-assets/workspace-section19-completeness-20260830.js?v=20260830-s19complete1",
@@ -62,7 +62,7 @@
     "/ui-assets/workspace-canonical-live-i18n-20260824.js?v=20260824-canonical1",
     "/ui-assets/workspace-canonical-live-i18n-dynamic-20260824.js?v=20260824-canonical2",
     "/ui-assets/workspace-en-residual-hardening-20260826.js?v=20260826-enfix3",
-    "/ui-assets/workspace-treaty-excerpt-locales-20260824.js?v=20260827-provenance1",
+    "/ui-assets/workspace-treaty-excerpt-locales-20260824.js?v=20260911-1",
     "/ui-assets/workspace-output-status-integrity-20260830.js?v=20260830-status2",
     "/ui-assets/workspace-report-export-core.js?v=20260819-3",
     "/ui-assets/workspace-en-final-residue2-20260826.js?v=20260826-enfinal4",
