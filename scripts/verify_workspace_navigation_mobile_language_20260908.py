@@ -36,7 +36,13 @@ def fill_payment_probe(page) -> None:
     form.locator('[name="income_type"]').select_option("dividend")
     form.locator('[name="transaction_date"]').fill("2026-09-08")
     form.locator('[name="amount"]').fill("123456")
-    form.locator('[name="treaty_resident"][value="true"]').check(force=True)
+    form.locator('[name="treaty_resident"][value="true"]').evaluate(
+        """el => {
+          el.checked = true;
+          el.dispatchEvent(new Event("input", {bubbles:true}));
+          el.dispatchEvent(new Event("change", {bubbles:true}));
+        }"""
+    )
     form.locator('[name="ownership_percent"]').fill("25")
     form.locator('[name="direct_ownership"]').select_option("true")
     form.locator('[name="holding_period_mode"]').select_option("known_date")
