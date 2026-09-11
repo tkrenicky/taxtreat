@@ -12,6 +12,8 @@
   let selectedTreatyCitation = null;
   let registryPromise = null;
   let jurisdictionsPromise = null;
+  let pageIsLeaving = false;
+  window.addEventListener("pagehide", () => { pageIsLeaving = true; }, { once: true });
 
   function language() {
     const htmlLang = String(document.documentElement.lang || "").toLowerCase();
@@ -127,7 +129,10 @@
           return response.json();
         })
         .catch((problem) => {
-          console.error("TaxTreat treaty locale registry failed", problem);
+          // A canonical locale switch navigates to another document. Chromium can
+          // reject an in-flight fetch with TypeError: Failed to fetch while the
+          // old page is unloading; that is not a registry failure.
+          if (!pageIsLeaving) console.error("TaxTreat treaty locale registry failed", problem);
           return { entries: {} };
         });
     }
