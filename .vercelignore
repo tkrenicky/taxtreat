@@ -1,0 +1,22 @@
+# TaxTreat Vercel deployment slimming
+# Keep runtime application, legal-rule datasets and runtime legal evidence.
+# Exclude development, QA and repository-only material from Vercel uploads.
+
+.github/
+tests/
+scripts/
+reports/
+docs/
+reference_cases/
+imports/
+
+.coveragerc
+requirements-dev.txt
+MILESTONES.md
+PROJECT_BIBLE.md
+README.md
+
+# Local/development metadata
+.gitignore
+.gitattributes
+alembic.ini
