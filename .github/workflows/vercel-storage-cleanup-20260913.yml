@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - ops/vercel-storage-cleanup-20260913
+  pull_request:
+    branches:
+      - main
 
 permissions:
   contents: read
