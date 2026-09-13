@@ -1,7 +1,9 @@
 # TaxTreat Vercel deployment slimming
-# Keep runtime application, legal-rule datasets and runtime legal evidence.
-# Exclude development, QA and repository-only material from Vercel uploads.
+# Runtime application + released legal datasets stay included.
+# Development, QA, historical evidence and raw acquisition material stay in GitHub,
+# but are not uploaded into every Vercel deployment.
 
+# Repository/development-only material
 .github/
 tests/
 scripts/
@@ -9,14 +11,34 @@ reports/
 docs/
 reference_cases/
 imports/
+alembic/
+src/
 
 .coveragerc
 requirements-dev.txt
 MILESTONES.md
 PROJECT_BIBLE.md
 README.md
-
-# Local/development metadata
-.gitignore
-.gitattributes
 alembic.ini
+
+# Heavy source/review material not read by the production runtime.
+data/legal_sources/
+data/parsed/
+data/legal_consolidation/
+data/legal_rule_candidates/
+data/audits/
+data/extracted/
+data/generated/
+data/acceptance/
+data/golden_cases/
+
+# The historical CZ review workspace is ~21 MB. Production needs only the
+# released Stage-6 identity and canonical source gate. Keep SK review material
+# intact for now because SK runtime/release checks intentionally consume it.
+data/legal_reviews/**
+!data/legal_reviews/
+!data/legal_reviews/sk_outbound/
+!data/legal_reviews/sk_outbound/**
+!data/legal_reviews/global_cz_outbound/
+!data/legal_reviews/global_cz_outbound/stage6_source_release.json
+!data/legal_reviews/global_cz_outbound/production_source_release_gate_v2.json
