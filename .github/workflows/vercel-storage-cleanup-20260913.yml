@@ -1,0 +1,156 @@
+name: One-shot Vercel deployment storage cleanup
+
+on:
+  push:
+    branches:
+      - ops/vercel-storage-cleanup-20260913
+
+permissions:
+  contents: read
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_TEAM_ID: team_venWZarYV6y5GELQP60DFEsp
+      VERCEL_PROJECT_ID: prj_XPqvtCrJ9khKlw1R2Qpj7IAgRIws
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify Vercel token
+        shell: bash
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "VERCEL_TOKEN repository secret is missing"
+            exit 1
+          fi
+
+      - name: Inventory and remove obsolete deployments
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, os, time, urllib.parse, urllib.request, urllib.error
+          from pathlib import Path
+
+          token = os.environ["VERCEL_TOKEN"]
+          team = os.environ["VERCEL_TEAM_ID"]
+          project = os.environ["VERCEL_PROJECT_ID"]
+          base = "https://api.vercel.com"
+          headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
+
+          def get_json(url):
+              req = urllib.request.Request(url, headers=headers)
+              with urllib.request.urlopen(req, timeout=30) as r:
+                  return json.load(r)
+
+          def delete_deployment(uid):
+              url = f"{base}/v13/deployments/{uid}?teamId={urllib.parse.quote(team)}"
+              req = urllib.request.Request(url, headers=headers, method="DELETE")
+              with urllib.request.urlopen(req, timeout=30) as r:
+                  return json.load(r)
+
+          # Fetch every deployment for this project.
+          deployments = []
+          until = None
+          while True:
+              params = {"projectId": project, "teamId": team, "limit": 100}
+              if until is not None:
+                  params["until"] = str(until)
+              payload = get_json(f"{base}/v6/deployments?{urllib.parse.urlencode(params)}")
+              batch = payload.get("deployments") or []
+              deployments.extend(batch)
+              nxt = (payload.get("pagination") or {}).get("next")
+              if not batch or not nxt:
+                  break
+              until = nxt
+
+          deployments.sort(key=lambda d: int(d.get("created") or d.get("createdAt") or 0), reverse=True)
+
+          # Keep rollback safety but remove the historical preview pile.
+          prod_ready = [d for d in deployments if d.get("target") == "production" and d.get("state") == "READY"]
+          preview_ready = [d for d in deployments if d.get("target") != "production" and d.get("state") == "READY"]
+          keep_ids = {d.get("uid") for d in prod_ready[:2]}
+          keep_ids |= {d.get("uid") for d in preview_ready[:8]}
+
+          # Also keep anything created in the last 24h, regardless of state, so an
+          # in-flight/current review cannot be deleted underneath a user.
+          cutoff = int(time.time() * 1000) - 24 * 60 * 60 * 1000
+          for d in deployments:
+              created = int(d.get("created") or d.get("createdAt") or 0)
+              if created >= cutoff:
+                  keep_ids.add(d.get("uid"))
+
+          before = []
+          deleted = []
+          skipped = []
+          failed = []
+
+          for d in deployments:
+              row = {
+                  "uid": d.get("uid"),
+                  "url": d.get("url"),
+                  "state": d.get("state"),
+                  "target": d.get("target"),
+                  "created": d.get("created") or d.get("createdAt"),
+                  "gitBranch": (d.get("meta") or {}).get("githubCommitRef"),
+                  "gitSha": (d.get("meta") or {}).get("githubCommitSha"),
+              }
+              before.append(row)
+              uid = d.get("uid")
+              if not uid or uid in keep_ids:
+                  skipped.append(row)
+                  continue
+              try:
+                  result = delete_deployment(uid)
+                  row["delete_result"] = result
+                  deleted.append(row)
+              except urllib.error.HTTPError as exc:
+                  body = exc.read().decode("utf-8", "replace")
+                  row["error"] = f"HTTP {exc.code}: {body}"
+                  failed.append(row)
+              except Exception as exc:
+                  row["error"] = repr(exc)
+                  failed.append(row)
+
+          out = Path("vercel-cleanup")
+          out.mkdir(exist_ok=True)
+          (out / "before.json").write_text(json.dumps(before, indent=2), encoding="utf-8")
+          (out / "kept.json").write_text(json.dumps(skipped, indent=2), encoding="utf-8")
+          (out / "deleted.json").write_text(json.dumps(deleted, indent=2), encoding="utf-8")
+          (out / "failed.json").write_text(json.dumps(failed, indent=2), encoding="utf-8")
+
+          # Re-list after deletion for an auditable final count.
+          after_payload = get_json(
+              f"{base}/v6/deployments?"
+              + urllib.parse.urlencode({"projectId": project, "teamId": team, "limit": 100})
+          )
+          after = after_payload.get("deployments") or []
+          (out / "after-first-page.json").write_text(json.dumps(after, indent=2), encoding="utf-8")
+
+          summary = {
+              "project": project,
+              "team": team,
+              "before_count": len(deployments),
+              "deleted_count": len(deleted),
+              "kept_count": len(skipped),
+              "failed_count": len(failed),
+              "kept_production_ready": len([d for d in skipped if d.get("target") == "production" and d.get("state") == "READY"]),
+              "kept_preview_ready": len([d for d in skipped if d.get("target") != "production" and d.get("state") == "READY"]),
+          }
+          (out / "summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
+          print(json.dumps(summary, indent=2))
+
+          if failed:
+              raise SystemExit(f"{len(failed)} deployments could not be deleted; inspect artifact")
+          PY
+
+      - name: Upload cleanup inventory
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vercel-deployment-storage-cleanup-20260913
+          path: vercel-cleanup
+          if-no-files-found: warn
+          retention-days: 30
