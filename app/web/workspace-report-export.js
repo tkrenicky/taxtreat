@@ -38,13 +38,13 @@
   }
 
   const ENHANCEMENT_SCRIPTS = [
-    "/ui-assets/workspace-locale-state-preservation-20260908.js?v=20260911-locale-state4",
+    "/ui-assets/workspace-locale-state-preservation-20260908.js?v=20260914-locale-state5",
     "/ui-assets/workspace-dynamic-number-step-20260909.js?v=20260909-number-step1",
-    "/ui-assets/workspace-cz-relief-i18n.js?v=20260820-4",
+    "/ui-assets/workspace-cz-relief-i18n.js?v=20260914-s19layout1",
     "/ui-assets/workspace-section19-completeness-20260830.js?v=20260830-s19complete1",
     "/ui-assets/source-country-context.js?v=20260819-sk1",
     "/ui-assets/workspace-source-country-adapter.js?v=20260820-3",
-    "/ui-assets/workspace-payer-country.js?v=20260821-freeze2",
+    "/ui-assets/workspace-payer-country.js?v=20260914-header1",
     "/ui-assets/workspace-final-polish-v2.js?v=20260821-freeze1",
     "/ui-assets/workspace-report-context.js?v=20260820-1",
     "/ui-assets/workspace-ui-report-batch-20260821.js?v=20260821-batch1",
@@ -64,7 +64,7 @@
     "/ui-assets/workspace-en-residual-hardening-20260826.js?v=20260826-enfix3",
     "/ui-assets/workspace-treaty-excerpt-locales-20260824.js?v=20260911-1",
     "/ui-assets/workspace-output-status-integrity-20260830.js?v=20260830-status2",
-    "/ui-assets/workspace-report-export-core.js?v=20260819-3",
+    "/ui-assets/workspace-report-export-core.js?v=20260914-report1",
     "/ui-assets/workspace-en-final-residue2-20260826.js?v=20260826-enfinal4",
     "/ui-assets/workspace-en-stabilizer-20260826.js?v=20260826-enstable3",
     "/ui-assets/workspace-dynamic-intake-en-20260830.js?v=20260830-intake1",
