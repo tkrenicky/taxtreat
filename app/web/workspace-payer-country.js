@@ -67,8 +67,8 @@
       .active-payer-country-badge[data-country="SK"]{background:transparent;border-color:transparent}
       .active-payer-country-badge .payer-country-flag{display:none}
       .active-payer-country-badge .payer-country-badge-copy{display:grid;gap:1px}
-      .active-payer-country-badge small{font-size:.57rem;line-height:1.1;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#778095}
-      .active-payer-country-badge strong{font-size:.72rem;line-height:1.2;color:#172033}
+      .active-payer-country-badge small{font-size:.57rem;line-height:1.1;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#b9cbc6}
+      .active-payer-country-badge strong{font-size:.72rem;line-height:1.2;color:#fffdf8}
       #payer-country-field select{font-weight:750}
       @media(max-width:1050px){.active-payer-country-badge{order:2}}
       @media(max-width:700px){.active-payer-country-badge{width:100%;order:3}.active-payer-country-badge strong{font-size:.78rem}}
