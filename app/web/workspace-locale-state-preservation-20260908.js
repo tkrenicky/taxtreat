@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const STORAGE_KEY = "taxtreat-locale-transition-state-v4";
+  const STORAGE_KEY = "taxtreat-locale-transition-state-v3";
 
   function locale() {
     return document.documentElement.lang === "en" ? "en" : "cs";
@@ -24,7 +24,7 @@
     const activeStep = document.querySelector(".flow-step.active")?.dataset.step || null;
     const statusText = document.querySelector("#workspace-result-status")?.textContent || "";
     return {
-      version: 4,
+      version: 3,
       targetLocale,
       activeView,
       activeStep,
@@ -132,7 +132,7 @@
 
     if (
       !state ||
-      state.version !== 4 ||
+      state.version !== 3 ||
       state.targetLocale !== currentLocale ||
       !canonicalTarget ||
       expired
