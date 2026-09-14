@@ -156,6 +156,42 @@
       }
       body[data-source-country="CZ"] #cz-section19-facts:not([hidden]) {
         display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        column-gap: 24px !important;
+        row-gap: 18px !important;
+        align-items: start !important;
+      }
+      #cz-section19-facts > div:first-child {
+        grid-column: 1 / -1 !important;
+        margin: 0 !important;
+      }
+      #cz-section19-facts > label {
+        display: grid !important;
+        grid-template-rows: minmax(76px, auto) 60px auto !important;
+        align-content: start !important;
+        gap: 8px !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+      }
+      #cz-section19-facts > label > span,
+      #cz-section19-facts > label > select,
+      #cz-section19-facts > label > small {
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+      }
+      #cz-section19-facts > label > select {
+        height: 60px !important;
+        min-height: 60px !important;
+      }
+      @media (max-width: 760px) {
+        body[data-source-country="CZ"] #cz-section19-facts:not([hidden]) {
+          grid-template-columns: minmax(0, 1fr) !important;
+        }
+        #cz-section19-facts > label {
+          grid-template-rows: auto 60px auto !important;
+        }
       }
     `;
   }
@@ -177,7 +213,7 @@
     const box = document.createElement("section");
     box.id = "cz-section19-facts";
     box.className = "fact-question";
-    box.style.cssText = "display:grid;gap:14px;padding:16px;margin-top:12px;border:1px solid #d9e3de;border-radius:10px;background:#f7faf8";
+    box.style.cssText = "display:grid;gap:18px 24px;padding:20px 24px;margin-top:12px;border:1px solid #d9e3de;border-radius:10px;background:#f7faf8";
     box.innerHTML = `
       <div><strong>Ještě dva údaje pro možné osvobození</strong><small style="display:block;margin-top:5px">Podíl, přímé držení, dobu držby, skutečné vlastnictví a vazbu ke stálé provozovně už TaxTreat používá z odpovědí výše.</small></div>
       <label><span>Je příjemce běžnou obchodní společností (např. GmbH, AG, Ltd. nebo S.A.), nikoli fyzickou osobou, fondem nebo daňově transparentním subjektem?</span><select name="section19_company_form"><option value="">Vyber odpověď</option><option value="true">Ano</option><option value="false">Ne</option></select><small>Pokud si nejsi jistý právní formou příjemce, zvol raději „Ne“ nebo údaj ověř v korporátních podkladech.</small></label>
