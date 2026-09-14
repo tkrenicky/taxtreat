@@ -241,6 +241,36 @@ h2{font-size:16px;font-weight:600}h3{font-size:11px;font-weight:600}
   .page{min-height:297mm;height:auto;padding:0;background:#fff;overflow:visible}
   .sheet{min-height:297mm;height:auto;border-radius:0;box-shadow:none;overflow:visible}
 }
+
+/* 2026-09-11 readability pass */
+.flow-wrap{display:none!important}
+.hero p{font-size:10px;line-height:1.5}
+.key-fact span{font-size:6.8px}
+.key-fact b{font-size:10px}
+.basis-row,.fact-row,.calc-row,.assumption-row{font-size:9.5px;line-height:1.45}
+.basis-row b,.fact-row b,.calc-row b,.assumption-row b{max-width:58%}
+.conclusion{font-size:9.5px;line-height:1.6}
+.path-note{font-size:9.1px;line-height:1.55}
+.facts-card h3{font-size:16px}
+.assumption-note{font-size:8.3px;line-height:1.55}
+.calc-card>.kicker{font-size:7px}
+.fx{font-size:8px;line-height:1.5}
+.section-head p{font-size:10px;line-height:1.5}
+.legal-title-row h2{font-size:17px;line-height:1.38}
+.official{font-size:7.6px}
+.quote{font-size:9.6px;line-height:1.68}
+.transaction-gloss{font-size:8.8px;line-height:1.58}
+.legal-note{font-size:8px;line-height:1.5}
+.deadline-wrap h3,.support-wrap h3,.related-sources h3{font-size:10.5px}
+.deadline-card span{font-size:8.7px}
+.deadline-card b{font-size:18px}
+.deadline-card p{font-size:8.4px;line-height:1.55}
+.mini-card b{font-size:8.2px}
+.mini-card li{font-size:8.5px;line-height:1.55}
+.related-source{font-size:8px;line-height:1.45}
+.related-source span{font-size:7px}
+.hierarchy-note{font-size:8.7px;line-height:1.6}
+.disclaimer{font-size:7.2px;line-height:1.55}
 """
 
 

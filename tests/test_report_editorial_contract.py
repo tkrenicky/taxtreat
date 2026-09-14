@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 
 from taxtreat.services.reporting import render_report_html
 from taxtreat.services.reporting.client_report import (
+    _compact_legal_reference,
     _deadline_cards,
     _display_fact,
     _display_number,
@@ -192,6 +193,11 @@ def test_client_report_source_selection_and_legal_reference_fallbacks():
     assert "MLI" in _legal_reference(report, mli)
     assert "zákona č. 586/1992 Sb." in _legal_reference(report, domestic)
     assert _source_link(None) == ""
+    assert _compact_legal_reference(None) == "—"
+    assert _compact_legal_reference(treaty) == "čl. 10 odst. 2 SZDZ"
+    assert _compact_legal_reference(protocol) == "čl. 1 odst. 2 protokolu"
+    assert _compact_legal_reference(mli) == "čl. 7 odst. 1 MLI"
+    assert _compact_legal_reference(domestic) == "§ 36 odst. 1 ZDP"
 
 
 def test_client_report_excerpt_and_truncation_edge_cases():

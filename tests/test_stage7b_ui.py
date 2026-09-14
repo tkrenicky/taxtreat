@@ -49,7 +49,7 @@ def test_guided_intake_ui_is_served_without_changing_api_root():
 
 def test_guided_intake_assets_are_local_and_accessible():
     html = client.get("/ui").text
-    css = client.get("/ui-assets/workspace.css?v=20260819-3")
+    css = client.get("/ui-assets/workspace.css?v=20260911-1")
     javascript = client.get("/ui-assets/workspace.js?v=20260819-3")
     polish = client.get("/ui-assets/workspace-client-polish.css?v=20260819-3")
 
@@ -57,7 +57,7 @@ def test_guided_intake_assets_are_local_and_accessible():
     assert javascript.status_code == 200
     assert polish.status_code == 200
 
-    assert "/ui-assets/workspace.css?v=20260819-3" in html
+    assert "/ui-assets/workspace.css?v=20260911-1" in html
     assert "/ui-assets/workspace.js?v=20260819-3" in html
     assert "/ui-assets/workspace-client-polish.css?v=20260819-3" in html
 
@@ -199,7 +199,7 @@ def test_workspace_demo_assets_are_local_and_use_canonical_intake():
     assert css.status_code == 200
     assert javascript.status_code == 200
     assert designs.status_code == 200
-    assert "/ui-assets/workspace.css?v=20260819-3" in html
+    assert "/ui-assets/workspace.css?v=20260911-1" in html
     assert "/ui-assets/workspace.js?v=20260819-3" in html
     assert "/ui-assets/workspace-designs.css?v=20260819-3" in html
     assert 'id="design-switcher"' not in html
