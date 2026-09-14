@@ -73,3 +73,38 @@ def test_audit_never_promotes_keyword_or_percentage_flags_to_legal_projection():
     assert audit["policy"]["raw_percentage_tokens_are_not_rate_candidates"] is True
     assert audit["policy"]["ownership_and_historical_condition_percentages_cannot_create_rate_branches"] is True
     assert audit["policy"]["multiple_applicable_branches_with_different_results_must_fail_closed"] is True
+
+
+def test_audit_rejects_incomplete_scope_count():
+    source = json.loads(SOURCE.read_text(encoding="utf-8"))
+    source["scopes"] = [row for row in source["scopes"] if row.get("income_type") != "royalty"]
+    import pytest
+    with pytest.raises(ValueError, match="Expected 75 SK royalty scopes"):
+        build_audit(source)
+
+
+def test_audit_rejects_missing_country_or_article_text():
+    source = json.loads(SOURCE.read_text(encoding="utf-8"))
+    royalty = next(row for row in source["scopes"] if row.get("income_type") == "royalty")
+    royalty["article_text"] = ""
+    import pytest
+    with pytest.raises(ValueError, match="missing recipient country or article text"):
+        build_audit(source)
+
+
+def test_cli_writes_fail_closed_audit(tmp_path, monkeypatch, capsys):
+    from taxtreat.tools import audit_sk_royalty_categories as module
+
+    output = tmp_path / "audit.json"
+    monkeypatch.setattr(
+        "sys.argv",
+        ["audit_sk_royalty_categories", "--input", str(SOURCE), "--output", str(output)],
+    )
+    module.main()
+
+    payload = json.loads(output.read_text(encoding="utf-8"))
+    assert payload["royalty_scope_count"] == 75
+    assert payload["category_review_required_count"] == 20
+    assert payload["status"] == "royalty_category_audit_not_released"
+    stdout = capsys.readouterr().out
+    assert "75 scopes / 20 review-required" in stdout
