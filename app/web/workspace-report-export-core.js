@@ -17,6 +17,16 @@
   let lastAnalysisResponse = null;
   let pendingReportFingerprint = null;
 
+  function uiLanguage() {
+    const selected = document.querySelector("#taxtreat-ui-language")?.value;
+    if (selected === "en" || selected === "cs") return selected;
+    return document.documentElement.lang === "en" ? "en" : "cs";
+  }
+
+  function copy(cs, en) {
+    return uiLanguage() === "en" ? en : cs;
+  }
+
   function requestUrl(resource) {
     if (typeof resource === "string") return resource;
     if (resource && typeof resource.url === "string") return resource.url;
@@ -150,7 +160,10 @@
   function openStoredReport(record, printAfterLoad = false) {
     const reportWindow = window.open("", "_blank");
     if (!reportWindow) {
-      showExportProblem("Prohlížeč zablokoval nové okno. Povol vyskakovací okna pro TaxTreat a zkus export znovu.");
+      showExportProblem(copy(
+        "Prohlížeč zablokoval nové okno. Povol vyskakovací okna pro TaxTreat a zkus export znovu.",
+        "The browser blocked the report window. Allow pop-ups for TaxTreat and try again."
+      ));
       return;
     }
     prepareReportWindow(reportWindow, record.html, printAfterLoad);
@@ -448,23 +461,36 @@
 
   async function exportReport(printAfterLoad, button) {
     if (!lastAnalysisPayload) {
-      showExportProblem("Nejprve dokonči výpočet podle zadaných údajů. PDF lze vytvořit až po přiřazení právních pravidel.");
+      showExportProblem(copy(
+        "Nejprve dokonči výpočet podle zadaných údajů. PDF lze vytvořit až po přiřazení právních pravidel.",
+        "Complete the calculation first. The PDF report can be created after the legal rules have been assigned."
+      ));
       return;
     }
     const reportWindow = window.open("", "_blank");
     if (!reportWindow) {
-      showExportProblem("Prohlížeč zablokoval nové okno. Povol vyskakovací okna pro TaxTreat a zkus export znovu.");
+      showExportProblem(copy(
+        "Prohlížeč zablokoval nové okno. Povol vyskakovací okna pro TaxTreat a zkus export znovu.",
+        "The browser blocked the report window. Allow pop-ups for TaxTreat and try again."
+      ));
       return;
     }
     const originalLabel = button.textContent;
     button.disabled = true;
-    button.textContent = "Připravuji report…";
+    button.textContent = copy("Připravuji report…", "Preparing report…");
+    const loadingLang = uiLanguage();
+    const loadingTitle = copy("TaxTreat · Příprava reportu", "TaxTreat · Preparing report");
+    const loadingHeading = copy("Připravuji report", "Preparing report");
+    const loadingCopy = copy(
+      "TaxTreat vytváří výstup podle dokončeného výpočtu.",
+      "TaxTreat is creating the report from the completed calculation."
+    );
     reportWindow.document.write(`<!doctype html>
-<html lang="cs">
+<html lang="${loadingLang}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>TaxTreat · Příprava reportu</title>
+<title>${loadingTitle}</title>
 <style>
 body{
   margin:0;
@@ -495,8 +521,8 @@ p{
 </head>
 <body>
 <main>
-<strong>Připravuji report</strong>
-<p>TaxTreat vytváří výstup podle dokončeného výpočtu.</p>
+<strong>${loadingHeading}</strong>
+<p>${loadingCopy}</p>
 </main>
 </body>
 </html>`);
@@ -506,7 +532,7 @@ p{
       prepareReportWindow(reportWindow, record.html, printAfterLoad);
     } catch (problem) {
       reportWindow.close();
-      showExportProblem(problem?.message || "Report se nepodařilo vytvořit.");
+      showExportProblem(problem?.message || copy("Report se nepodařilo vytvořit.", "The report could not be created."));
     } finally {
       button.disabled = false;
       button.textContent = originalLabel;

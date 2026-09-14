@@ -184,12 +184,27 @@
     if (target !== locale()) captureState(target);
   }
 
-  // The canonical locale router listens on click and navigates to /ui/cs or /ui/en.
-  // Capture state earlier on pointer/keyboard intent so the router can navigate
-  // without any live DOM translation race.
+  // Capture state before navigation, then own the canonical route change.
+  // This avoids competing live-i18n click handlers and makes CS → EN and EN → CS
+  // use the same deterministic path.
   document.addEventListener("pointerdown", captureForLanguageControl, true);
   document.addEventListener("keydown", (event) => {
     if (event.key === "Enter" || event.key === " ") captureForLanguageControl(event);
+  }, true);
+  document.addEventListener("click", (event) => {
+    const button = event.target?.closest?.("#taxtreat-language-controls [data-lang]");
+    if (!button) return;
+    const target = button.dataset.lang === "en" ? "en" : "cs";
+    if (target === locale()) return;
+
+    captureState(target);
+    try { localStorage.setItem("taxtreat-ui-language", target); } catch (_problem) {}
+
+    event.preventDefault();
+    event.stopImmediatePropagation();
+
+    const suffix = `${window.location.search || ""}${window.location.hash || ""}`;
+    window.location.assign(`/ui/${target}${suffix}`);
   }, true);
 
   if (document.readyState === "loading") {
