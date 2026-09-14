@@ -1,0 +1,172 @@
+{
+  "schema_version": 1,
+  "source_country": "AT",
+  "as_of": "2026-08-25",
+  "status": "independent_primary_source_adjudication_not_released",
+  "secondary_source_scope": "User-provided Austrian WHT summary sections 7.3.4.1 to 7.3.4.5",
+  "policy": {
+    "secondary_source_never_controls_over_current_primary_law": true,
+    "current_primary_law_controls_if_secondary_source_is_stale": true,
+    "substantive_entitlement_collection_at_payment_and_refund_are_separate": true,
+    "future_law_is_not_applied_to_2026_transactions": true,
+    "out_of_scope_income_types_are_recorded_to_prevent_misclassification_not_added_to_runtime": true,
+    "no_claim_is_production_released_by_this_file": true
+  },
+  "claims": [
+    {
+      "claim_id": "AT-WHT-DIV-CORP-BASE-2026",
+      "topic": "dividend",
+      "secondary_source_claim": "Corporate dividend withholding can be reduced to the corporate rate from 2024.",
+      "adjudication": "verified_with_current_law_precision",
+      "current_rule": "For qualifying capital income of a corporate KESt debtor, § 93 Abs. 1a permits 23% withholding for income from 2024 onward; this is distinct from the general 27.5% capital-income rate.",
+      "decision_impact": "Use 23% only on the corporate-recipient domestic baseline route; do not hard-code 27.5% for corporate dividends.",
+      "primary_sources": [
+        "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004570&Paragraf=93"
+      ]
+    },
+    {
+      "claim_id": "AT-WHT-DIV-PSD-94",
+      "topic": "dividend",
+      "secondary_source_claim": "EU parent-company relief requires qualifying EU status, at least 10% participation and a continuous one-year holding period.",
+      "adjudication": "verified",
+      "current_rule": "Current § 94 Z 2 provides the qualifying EU-parent relief with a one-tenth participation and uninterrupted one-year holding requirement, subject to statutory anti-abuse / hidden-distribution restrictions.",
+      "decision_impact": "Domestic § 94 relief is evaluated before treaty relief and is represented as a non-rate exemption treatment.",
+      "primary_sources": [
+        "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004570&Paragraf=94"
+      ]
+    },
+    {
+      "claim_id": "AT-WHT-DIV-PSD-HOLDING-REFUND",
+      "topic": "dividend",
+      "secondary_source_claim": "If the one-year holding period is not complete at payment, withholding is provisional and relief may later be obtained by refund.",
+      "adjudication": "verified_and_decision_order_refined",
+      "current_rule": "Immediate § 94 Z 2 relief is unavailable before the one-year period is complete. Austrian guidance/case material confirms withholding, potentially at a treaty-reduced level, followed by a refund claim after the holding condition is met.",
+      "decision_impact": "Do not output 0% at payment merely because eventual directive relief is expected. Continue treaty analysis to determine the interim withholding amount.",
+      "primary_sources": [
+        "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004570&Paragraf=94",
+        "https://findok.bmf.gv.at/findok/"
+      ]
+    },
+    {
+      "claim_id": "AT-WHT-DIV-ANTI-ABUSE",
+      "topic": "dividend",
+      "secondary_source_claim": "Anti-abuse / hidden-distribution circumstances may block immediate source exemption and require withholding/refund treatment.",
+      "adjudication": "verified",
+      "current_rule": "Current § 94 Z 2 expressly preserves withholding in specified abuse/hidden-distribution circumstances; any later directive-compliant refund is a separate state requiring factual review.",
+      "decision_impact": "Source-relief eligibility and substantive/refund eligibility are separate review fields.",
+      "primary_sources": [
+        "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004570&Paragraf=94"
+      ]
+    },
+    {
+      "claim_id": "AT-WHT-DIV-PORTFOLIO-21",
+      "topic": "dividend",
+      "secondary_source_claim": "Portfolio corporate recipients can in defined cases obtain a refund where Austrian WHT cannot be credited in the residence state; third-country relief is possible with extensive administrative assistance and a sub-10% holding.",
+      "adjudication": "verified_with_refund_only_classification",
+      "current_rule": "§ 21 Abs. 1 Z 1a KStG provides a refund remedy subject to residence/administrative-assistance and non-creditability conditions; it is not an exemption at source.",
+      "decision_impact": "Never convert § 21 KStG refund eligibility into a 0% payment-date WHT result.",
+      "primary_sources": [
+        "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004569&Paragraf=21"
+      ]
+    },
+    {
+      "claim_id": "AT-WHT-INT-CORPORATE-98",
+      "topic": "interest",
+      "secondary_source_claim": "Austrian-source interest of a non-resident company without an Austrian PE is generally exempt subject to a four-part written declaration.",
+      "adjudication": "corrected_current_law",
+      "current_rule": "Current § 98 Abs. 1 Z 5 excludes interest not received by natural persons from Austrian limited tax liability. The older four-part declaration description is not used as the general current corporate-interest eligibility gate. Special § 99 categories still require separate classification.",
+      "decision_impact": "For an ordinary corporate recipient, current domestic no-WHT treatment is resolved under § 98 before treaty analysis; special interest categories remain fail-closed.",
+      "primary_sources": [
+        "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004570&Paragraf=98"
+      ]
+    },
+    {
+      "claim_id": "AT-WHT-ROY-GROSS-20",
+      "topic": "royalty",
+      "secondary_source_claim": "Royalties within the Austrian statutory royalty route are generally subject to 20% withholding.",
+      "adjudication": "verified_with_scope_guard",
+      "current_rule": "§ 99 Abs. 1 Z 3 together with § 100 provides the 20% gross-basis withholding route, but only after the payment is classified within the relevant rights-exploitation/source nexus.",
+      "decision_impact": "20% is not a generic rate for every payment labelled royalty and technical/commercial consulting must not leak into this classifier.",
+      "primary_sources": [
+        "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004570&Paragraf=99",
+        "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004570&Paragraf=100"
+      ]
+    },
+    {
+      "claim_id": "AT-WHT-ROY-NET-EXPENSES",
+      "topic": "royalty",
+      "secondary_source_claim": "Eligible EU/EEA recipients may deduct expenses at withholding stage and the WHT rate is 25%; expenses above EUR 2,000 require additional security of domestic taxation.",
+      "adjudication": "materially_corrected_current_law",
+      "current_rule": "Current § 99 Abs. 2 Z 2 allows directly related expenses for an EU/EEA limited taxpayer if disclosed in writing before payment. The current statutory security threshold is EUR 2,463. Under § 100 Abs. 1a Z 1 a corporate recipient uses 23% from 2024 on the net-after-admissible-expenses base. For non-corporate recipients, § 100 Abs. 1 uses 20% up to EUR 20,000 annual income and 25% on the excess.",
+      "decision_impact": "The review model must record both rate and tax base. A 20% gross route and 23% corporate net route must never be compared as if they applied to the same base.",
+      "primary_sources": [
+        "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004570&Paragraf=99",
+        "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004570&Paragraf=100"
+      ]
+    },
+    {
+      "claim_id": "AT-WHT-IR-99A",
+      "topic": "interest_and_royalty",
+      "secondary_source_claim": "The Interest and Royalties Directive relief requires beneficial ownership, qualifying EU entities, 25% association and a continuous one-year holding period; withholding/refund applies where the holding period is incomplete.",
+      "adjudication": "verified_and_expanded",
+      "current_rule": "Current § 99a confirms beneficial ownership, qualifying entity/tax conditions, a 25% direct relationship in either direction or common-parent alternative, one-year holding, documentary confirmations at payment, a statutory refund route where holding/documentation is missing, and exclusions for profit-participating claims, abuse and non-arm's-length excess.",
+      "decision_impact": "Substantive § 99a eligibility, documentation at payment, immediate source relief and later refund are separate decision states.",
+      "primary_sources": [
+        "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004570&Paragraf=99a"
+      ]
+    },
+    {
+      "claim_id": "AT-WHT-CH-ARTICLE9",
+      "topic": "switzerland",
+      "secondary_source_claim": "A special EU-Switzerland agreement can exempt qualifying intercompany dividends, interest and royalties, while more favourable treaty provisions remain available.",
+      "adjudication": "verified_current_but_conditions_refined",
+      "current_rule": "The former Article 15 was retained and renumbered Article 9. Current Article 9 generally requires a direct 25% relationship and two-year holding for dividends; for interest/royalties it requires a 25% direct association or common-parent relationship for two years, plus residence, entity/tax and anti-abuse conditions. More favourable DTT treatment remains unaffected.",
+      "decision_impact": "For CH, create a parallel Article 9 international-relief candidate and compare it with the applicable DTT; do not silently replace the DTT route.",
+      "primary_sources": [
+        "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02004A1229(01)-20260101"
+      ]
+    },
+    {
+      "claim_id": "AT-WHT-DBA-PROCEDURE",
+      "topic": "procedure",
+      "secondary_source_claim": "Treaty relief may be available at source or through refund and documentary requirements such as residence confirmation apply.",
+      "adjudication": "verified_current_procedure",
+      "current_rule": "The DBA-Entlastungsverordnung permits relief at source under its conditions; its use is optional for the Austrian payer. Current BMF materials continue to use ZS-QU1/ZS-QU2 for residence/treaty entitlement evidence, with simplified documentation in qualifying low-value cases. Failure to use or qualify for source relief does not destroy substantive treaty entitlement and may lead to a refund route.",
+      "decision_impact": "Treaty rate and payment-date withholding rate are separate outputs; documentary readiness is a reviewer fact.",
+      "primary_sources": [
+        "https://www.bmf.gv.at/themen/steuern/internationales-steuerrecht/rueckerstattung/Entlastung-von-%C3%B6sterreichischen-Abzugsteuern-an-der-Quelle.html",
+        "https://service.bmf.gv.at/service/anwend/formulare/show_mast.asp?Styp=KAT&Typ=SM&s=Doppelbesteuerungsabkommen"
+      ]
+    },
+    {
+      "claim_id": "AT-WHT-FASTER",
+      "topic": "future_law",
+      "secondary_source_claim": "FASTER must be transposed by 31 December 2028 and applies from 1 January 2030.",
+      "adjudication": "verified_future_only",
+      "current_rule": "Council Directive (EU) 2025/50 Article 25 requires transposition by 31 December 2028 and application from 1 January 2030.",
+      "decision_impact": "FASTER is displayed only as future-law context and must not alter a 2026 AT result.",
+      "primary_sources": [
+        "https://eur-lex.europa.eu/eli/dir/2025/50/oj/eng"
+      ]
+    },
+    {
+      "claim_id": "AT-WHT-OTHER-INCOME-GUARD",
+      "topic": "other_income",
+      "secondary_source_claim": "Technical/commercial consulting and supervisory-board payments can have separate Austrian withholding rules.",
+      "adjudication": "recorded_as_scope_guard",
+      "current_rule": "These are distinct statutory categories from the product's current dividend/interest/royalty scope.",
+      "decision_impact": "Do not add a new public transaction type in this workstream; use the finding as a semantic guard preventing consulting/service percentages from being classified as royalty rates.",
+      "primary_sources": [
+        "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004570&Paragraf=99"
+      ]
+    }
+  ],
+  "summary": {
+    "claim_count": 13,
+    "verified_or_verified_with_precision_count": 10,
+    "material_current_law_corrections_count": 2,
+    "scope_guard_count": 1,
+    "production_release_allowed": false,
+    "human_review_required": true
+  }
+}
