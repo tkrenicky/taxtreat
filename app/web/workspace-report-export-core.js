@@ -13,38 +13,13 @@
     interest: "Úroky",
     royalty: "Licenční poplatky",
   };
-  const REPORT_SESSION_KEY = "taxtreat-last-report-context-v1";
-
-  function loadReportContext() {
-    try {
-      const stored = JSON.parse(sessionStorage.getItem(REPORT_SESSION_KEY) || "null");
-      return stored && typeof stored === "object" ? stored : {};
-    } catch (_problem) {
-      return {};
-    }
-  }
-
-  function saveReportContext() {
-    try {
-      sessionStorage.setItem(REPORT_SESSION_KEY, JSON.stringify({
-        payload: lastAnalysisPayload,
-        response: lastAnalysisResponse,
-      }));
-    } catch (_problem) {
-      // Report persistence is a convenience layer; export must still work in-page.
-    }
-  }
-
-  const restoredReportContext = loadReportContext();
-  let lastAnalysisPayload = restoredReportContext.payload || null;
-  let lastAnalysisResponse = restoredReportContext.response || null;
+  let lastAnalysisPayload = null;
+  let lastAnalysisResponse = null;
   let pendingReportFingerprint = null;
 
   function uiLanguage() {
     const selected = document.querySelector("#taxtreat-ui-language")?.value;
     if (selected === "en" || selected === "cs") return selected;
-    const stored = localStorage.getItem("taxtreat-ui-language");
-    if (stored === "en" || stored === "cs") return stored;
     return document.documentElement.lang === "en" ? "en" : "cs";
   }
 
@@ -81,7 +56,6 @@
       if (payload && payload.source_country && payload.recipient_country) {
         options.body = JSON.stringify(payload);
         lastAnalysisPayload = payload;
-        saveReportContext();
         return payload;
       }
     } catch (_problem) {
@@ -203,7 +177,6 @@
     ) {
       lastAnalysisPayload = structuredClone(record.payload);
       lastAnalysisResponse = structuredClone(record.analysisResponse);
-      saveReportContext();
 
       window.TaxTreatWorkspace.openStoredResult(
         record.payload,
@@ -444,7 +417,6 @@
       response.clone().json().then((body) => {
         if (!clientQuestionsRemain(body)) {
           lastAnalysisResponse = body;
-          saveReportContext();
           cacheCompletedReport(payload, body);
         }
       }).catch(() => {});
@@ -497,7 +469,10 @@
     }
     const reportWindow = window.open("", "_blank");
     if (!reportWindow) {
-      showExportProblem("Prohlížeč zablokoval nové okno. Povol vyskakovací okna pro TaxTreat a zkus export znovu.");
+      showExportProblem(copy(
+        "Prohlížeč zablokoval nové okno. Povol vyskakovací okna pro TaxTreat a zkus export znovu.",
+        "The browser blocked the report window. Allow pop-ups for TaxTreat and try again."
+      ));
       return;
     }
     const originalLabel = button.textContent;
