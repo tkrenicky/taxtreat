@@ -41,6 +41,13 @@ def load(path: Path):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def _category_sensitive_royalty_requires_explicit_branch(scope: dict) -> bool:
+    return (
+        scope.get("income_type") == "royalty"
+        and str(scope.get("recipient_country") or "") in CATEGORY_SENSITIVE_REVIEW_COUNTRIES
+    )
+
+
 def is_safe_simple(scope: dict, article: dict) -> bool:
     rates = scope.get("rate_candidates") or []
     if scope.get("exclusive_residence_taxation_candidate"):
@@ -1906,7 +1913,7 @@ def main() -> int:
             continue
 
         safe_simple = is_safe_simple(scope, article)
-        if income == "royalty" and country in CATEGORY_SENSITIVE_REVIEW_COUNTRIES:
+        if _category_sensitive_royalty_requires_explicit_branch(scope):
             # PR #241's independent royalty audit identifies these treaty
             # relationships as category-sensitive. If none of the explicit
             # royalty branch builders above reconciled the source wording,
