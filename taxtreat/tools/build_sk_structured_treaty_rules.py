@@ -6,6 +6,8 @@ import re
 from collections import defaultdict
 from pathlib import Path
 
+from taxtreat.tools.audit_sk_royalty_categories import CATEGORY_SENSITIVE_REVIEW_COUNTRIES
+
 ROOT = Path(__file__).resolve().parents[2]
 BASE = ROOT / "data/legal_reviews/sk_outbound"
 SEMANTIC = BASE / "treaty_semantic_candidates.json"
@@ -37,6 +39,13 @@ ROYALTY_UI_CATEGORIES = {
 
 def load(path: Path):
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _category_sensitive_royalty_requires_explicit_branch(scope: dict) -> bool:
+    return (
+        scope.get("income_type") == "royalty"
+        and str(scope.get("recipient_country") or "") in CATEGORY_SENSITIVE_REVIEW_COUNTRIES
+    )
 
 
 def is_safe_simple(scope: dict, article: dict) -> bool:
@@ -1904,6 +1913,13 @@ def main() -> int:
             continue
 
         safe_simple = is_safe_simple(scope, article)
+        if _category_sensitive_royalty_requires_explicit_branch(scope):
+            # PR #241's independent royalty audit identifies these treaty
+            # relationships as category-sensitive. If none of the explicit
+            # royalty branch builders above reconciled the source wording,
+            # never collapse the scope into SIMPLE-1 merely because one
+            # machine rate candidate exists. Keep it fail-closed instead.
+            safe_simple = False
 
         if not safe_simple and _source_text_residence_only(article):
             grouped[country].append(_make_rule(
