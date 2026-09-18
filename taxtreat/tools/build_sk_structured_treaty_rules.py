@@ -1652,7 +1652,7 @@ def _es_gb_royalty_branches(scope: dict, article_text: str) -> list[dict] | None
     }
     common = conditions(scope)
     if (
-        "stálej prevádzkarne" in text
+        "stálej prevádzk" in text
         and not any(
             condition.get("fact") == "permanent_establishment_connection"
             for condition in common
