@@ -172,7 +172,11 @@ def test_new_spain_royalty_follow_up_facts_are_client_answerable():
             ],
         },
     )
-    questions = {question["fact"]: question for question in plan["questions"]}
+    questions = {
+        question["input_path"].removeprefix("facts."): question
+        for question in plan["questions"]
+        if str(question.get("input_path") or "").startswith("facts.")
+    }
 
     assert questions["recipient_taxed_in_residence"]["client_answerable"] is True
     assert questions["recipient_taxed_in_residence"]["response_type"] == "boolean"
