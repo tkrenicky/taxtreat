@@ -95,7 +95,7 @@ def test_es_royalty_uses_explicit_copyright_and_subject_to_tax_branches():
             "operator": "==",
             "value": True,
         }
-        for row in source_rows
+        for row in rows
     )
     assert all(
         _condition(row, "permanent_establishment_connection")["value"] is False
