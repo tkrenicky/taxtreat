@@ -1637,6 +1637,184 @@ def _special_royalty_branches(scope: dict, article_text: str) -> list[dict] | No
     return None
 
 
+
+def _es_gb_royalty_branches(scope: dict, article_text: str) -> list[dict] | None:
+    """Materialize the remaining audit-sensitive ES/GB royalty splits explicitly."""
+    country = scope.get("recipient_country")
+    if country not in {"ES", "GB"}:
+        return None
+
+    text = article_text.lower()
+    candidate_rates = {
+        float(row["rate_percent"])
+        for row in scope.get("rate_candidates", [])
+        if row.get("rate_percent") is not None
+    }
+    common = conditions(scope)
+    if (
+        "stálej prevádzk" in text
+        and not any(
+            condition.get("fact") == "permanent_establishment_connection"
+            for condition in common
+        )
+    ):
+        common = [
+            *common,
+            {
+                "fact": "permanent_establishment_connection",
+                "fact_source": "transaction",
+                "operator": "==",
+                "value": False,
+            },
+        ]
+
+    if country == "ES":
+        required = (
+            "daň však neprekročí 5 % hrubej sumy licenčných poplatkov",
+            "za predpokladu, že licenčné poplatky podliehajú zdaneniu v druhom zmluvnom štáte",
+            "autorské licenčné poplatky",
+            "s výnimkou licenčných poplatkov platených za kinematografické filmy",
+            "podliehajú zdaneniu iba v tomto druhom štáte",
+        )
+        if 5.0 not in candidate_rates or not all(token in text for token in required):
+            return None
+
+        copyright_category = ROYALTY_UI_CATEGORIES["copyright"]
+        taxed_in_residence = {
+            "fact": "recipient_taxed_in_residence",
+            "fact_source": "transaction",
+            "operator": "==",
+            "value": True,
+        }
+        branches = [
+            {
+                "rate": 0.0,
+                "priority": 710,
+                "conditions": [
+                    *common,
+                    {
+                        "fact": "royalty_category",
+                        "fact_source": "transaction",
+                        "operator": "==",
+                        "value": copyright_category,
+                    },
+                    {
+                        "fact": "royalty_copyright_subcategory",
+                        "fact_source": "transaction",
+                        "operator": "==",
+                        "value": "literary_dramatic_musical_or_artistic_nonfilm",
+                    },
+                    taxed_in_residence,
+                ],
+                "tax_treatment": "exclusive_foreign_taxation",
+                "suffix": "ROYALTY-ES-COPYRIGHT-RESIDENCE",
+            },
+            {
+                "rate": 5.0,
+                "priority": 700,
+                "conditions": [
+                    *common,
+                    {
+                        "fact": "royalty_category",
+                        "fact_source": "transaction",
+                        "operator": "==",
+                        "value": copyright_category,
+                    },
+                    {
+                        "fact": "royalty_copyright_subcategory",
+                        "fact_source": "transaction",
+                        "operator": "==",
+                        "value": "scientific_nonfilm",
+                    },
+                    taxed_in_residence,
+                ],
+                "suffix": "ROYALTY-ES-SCIENTIFIC-COPYRIGHT-SOURCE-5",
+            },
+        ]
+        for index, category in enumerate(
+            (
+                ROYALTY_UI_CATEGORIES["film"],
+                ROYALTY_UI_CATEGORIES["software"],
+                ROYALTY_UI_CATEGORIES["industrial_ip"],
+                ROYALTY_UI_CATEGORIES["equipment_financial"],
+                ROYALTY_UI_CATEGORIES["equipment_operating"],
+            ),
+            start=1,
+        ):
+            branches.append({
+                "rate": 5.0,
+                "priority": 690,
+                "conditions": [
+                    *common,
+                    {
+                        "fact": "royalty_category",
+                        "fact_source": "transaction",
+                        "operator": "==",
+                        "value": category,
+                    },
+                    taxed_in_residence,
+                ],
+                "suffix": f"ROYALTY-ES-SOURCE-5-{index}",
+            })
+        return branches
+
+    required = (
+        "budú zdanené iba v tomto druhom štáte",
+        "licenčné poplatky uvedené v pododseku 3 (a)",
+        "nepresiahne 10 % hrubej sumy z licenčných poplatkov",
+        "(a) použitie alebo právo na použitie patentu",
+        "(b) za použitie alebo právo na použitie autorského práva",
+    )
+    if 10.0 not in candidate_rates or not all(token in text for token in required):
+        return None
+
+    branches = []
+    for index, category in enumerate(
+        (
+            ROYALTY_UI_CATEGORIES["copyright"],
+            ROYALTY_UI_CATEGORIES["film"],
+        ),
+        start=1,
+    ):
+        branches.append({
+            "rate": 0.0,
+            "priority": 700,
+            "conditions": [
+                *common,
+                {
+                    "fact": "royalty_category",
+                    "fact_source": "transaction",
+                    "operator": "==",
+                    "value": category,
+                },
+            ],
+            "tax_treatment": "exclusive_foreign_taxation",
+            "suffix": f"ROYALTY-GB-RESIDENCE-{index}",
+        })
+    for index, category in enumerate(
+        (
+            ROYALTY_UI_CATEGORIES["industrial_ip"],
+            ROYALTY_UI_CATEGORIES["equipment_financial"],
+            ROYALTY_UI_CATEGORIES["equipment_operating"],
+        ),
+        start=1,
+    ):
+        branches.append({
+            "rate": 10.0,
+            "priority": 690,
+            "conditions": [
+                *common,
+                {
+                    "fact": "royalty_category",
+                    "fact_source": "transaction",
+                    "operator": "==",
+                    "value": category,
+                },
+            ],
+            "suffix": f"ROYALTY-GB-SOURCE-10-{index}",
+        })
+    return branches
+
 def royalty_branches(scope: dict, article: dict) -> list[dict] | None:
     """Materialize source-explicit royalty categories, never percentage lists alone."""
     if scope.get("income_type") != "royalty" or not scope.get("source_sha256"):
@@ -1704,6 +1882,10 @@ def royalty_branches(scope: dict, article: dict) -> list[dict] | None:
                         "suffix": f"ROYALTY-SOURCE-{taxed_letter.upper()}-{index}",
                     })
                 return branches
+
+    es_gb = _es_gb_royalty_branches(scope, text)
+    if es_gb:
+        return es_gb
 
     secondary = _br_vn_royalty_secondary_branches(scope, text)
     if secondary:

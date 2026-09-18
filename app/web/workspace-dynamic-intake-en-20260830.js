@@ -35,6 +35,7 @@
     loan_is_noncommercial: ["Is the loan non-commercial within the meaning of the applicable treaty?", "The treaty distinguishes this category from ordinary commercial financing."],
     minimum_loan_term_years: ["Does the financing satisfy the minimum term required by the applicable treaty?", "The special treaty branch is available only if the financing term meets the stated threshold."],
     recipient_country_royalty_wht: ["Does the residence-state royalty-tax condition required by the treaty apply?", "The treaty branch depends on the specified residence-state royalty taxation condition."],
+    royalty_copyright_subcategory: ["Which type of copyright work is covered by this royalty payment?", "The Spain treaty distinguishes literary, dramatic, musical or artistic works from scientific works for this royalty branch."],
     royalty_industrial_ip_subcategory: ["Which specific industrial right or know-how is covered by this royalty payment?", "This treaty applies different rates to items that are grouped into one broad industrial-rights and know-how category in the initial form."],
     royalty_is_transport_vehicle: ["Does the royalty payment relate to the use of, or the right to use, a transport vehicle?", "The Belarus treaty lists transport vehicles as a separate item in the royalty definition."],
     royalty_is_technical_or_economic_study_or_technical_assistance: ["Is the payment consideration for a technical or economic study or for technical assistance?", "The Tunisia treaty expressly includes these services in a royalty category with a specific rate."],
@@ -54,6 +55,7 @@
     payment_is_arm_length_amount: "arm's-length amount",
     recipient_entity_type: "recipient entity type",
     royalty_category: "royalty category",
+    royalty_copyright_subcategory: "copyright-work subcategory",
     royalty_industrial_ip_subcategory: "industrial-right or know-how subcategory",
     royalty_is_transport_vehicle: "transport-vehicle royalty",
     royalty_is_technical_or_economic_study_or_technical_assistance: "technical/economic study or technical-assistance royalty",
@@ -94,6 +96,11 @@
   }
 
   const OPTION_COPY = {
+    royalty_copyright_subcategory: {
+      literary_dramatic_musical_or_artistic_nonfilm: "Literary, dramatic, musical or artistic work other than film",
+      scientific_nonfilm: "Scientific work other than film",
+      other_or_unclear: "Other or unclear case",
+    },
     royalty_industrial_ip_subcategory: {
       patent_design_model_plan_secret_formula_or_process: "Patent, design/model, plan, secret formula or process",
       trademark: "Trademark",

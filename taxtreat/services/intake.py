@@ -205,6 +205,40 @@ FACT_GUIDANCE: dict[str, dict[str, Any]] = {
         ],
         "documents": ["Licenční smlouva", "Popis licencovaných práv"],
     },
+    "recipient_taxed_in_residence": {
+        "prompt": (
+            "Podléhají tyto licenční poplatky zdanění ve státě daňové "
+            "rezidence příjemce?"
+        ),
+        "why": (
+            "Některé smlouvy podmiňují omezení daně ve státě zdroje tím, "
+            "že příjem podléhá zdanění ve státě rezidence příjemce."
+        ),
+        "response_type": "boolean",
+        "documents": [
+            "Daňové posouzení příjmu ve státě rezidence příjemce",
+            "Relevantní daňové přiznání nebo potvrzení, pokud je k dispozici",
+        ],
+    },
+    "royalty_copyright_subcategory": {
+        "prompt": (
+            "Jaký typ autorského díla je předmětem této licenční platby?"
+        ),
+        "why": (
+            "Španělská smlouva rozlišuje mezi literárními, dramatickými, "
+            "hudebními nebo uměleckými díly a vědeckými díly."
+        ),
+        "response_type": "choice",
+        "options": [
+            [
+                "literary_dramatic_musical_or_artistic_nonfilm",
+                "Literární, dramatické, hudební nebo umělecké dílo mimo film",
+            ],
+            ["scientific_nonfilm", "Vědecké dílo mimo film"],
+            ["other_or_unclear", "Jiný nebo nejasný případ"],
+        ],
+        "documents": ["Licenční smlouva", "Popis licencovaného autorského díla"],
+    },
     "royalty_industrial_ip_subcategory": {
         "prompt": "Které konkrétní právo nebo know-how je předmětem této licenční platby?",
         "why": (
