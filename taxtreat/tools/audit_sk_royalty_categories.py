@@ -41,6 +41,13 @@ KNOWN_ADDITIONAL_DISCRIMINATORS: dict[str, tuple[str, ...]] = {
     "VN": ("trademark_vs_patent_design_process", "commercial_vs_industrial_or_scientific_knowhow"),
 }
 
+def category_sensitive_royalty_requires_explicit_branch(scope: dict[str, Any]) -> bool:
+    return (
+        scope.get("income_type") == "royalty"
+        and str(scope.get("recipient_country") or "") in CATEGORY_SENSITIVE_REVIEW_COUNTRIES
+    )
+
+
 _PERCENT_RE = re.compile(r"(\d+(?:[.,]\d+)?)\s*(?:%|percent)", flags=re.IGNORECASE)
 _RATE_CONTEXT_RE = re.compile(
     r"(?:hrub(?:ej|é|e|ú).{0,40}(?:sumy|sume)|gross.{0,40}amount|"
