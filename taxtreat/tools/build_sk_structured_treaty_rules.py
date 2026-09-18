@@ -1704,6 +1704,7 @@ def _es_gb_royalty_branches(scope: dict, article_text: str) -> list[dict] | None
                         "operator": "==",
                         "value": "literary_dramatic_musical_or_artistic_nonfilm",
                     },
+                    taxed_in_residence,
                 ],
                 "tax_treatment": "exclusive_foreign_taxation",
                 "suffix": "ROYALTY-ES-COPYRIGHT-RESIDENCE",
