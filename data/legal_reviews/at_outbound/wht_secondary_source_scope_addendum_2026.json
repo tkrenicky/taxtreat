@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "source_country": "AT",
+  "as_of": "2026-08-25",
+  "status": "scope_addendum_not_released",
+  "purpose": "Close residual claims from the supplied Austrian WHT summary without expanding the current public dividend/interest/royalty product scope.",
+  "items": [
+    {
+      "item_id": "AT-WHT-ROY-PE-ASSESSMENT",
+      "classification": "in_scope_decision_dimension",
+      "secondary_source_point": "Royalty income attributable to an Austrian PE is subject to assessment treatment with expenses and credit for withholding rather than ordinary final withholding character.",
+      "adjudication": "verified_as_assessment_character_not_source_exemption",
+      "decision_rule": "PE attribution must never synthesize 0% payment-date WHT. It changes whether withholding is creditable in Austrian assessment and whether expenses are considered in assessment.",
+      "primary_source": "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004570&Paragraf=102"
+    },
+    {
+      "item_id": "AT-WHT-SILENT-PARTNERSHIP",
+      "classification": "out_of_current_product_scope_guard",
+      "secondary_source_point": "Income from a typical silent partnership has a special Austrian withholding route and must not be treated as ordinary dividend or ordinary interest solely from its economic label.",
+      "adjudication": "retain_as_classification_guard",
+      "decision_rule": "If transaction facts indicate a typical silent-partnership participation, do not auto-classify the payment as ordinary dividend/interest; return out-of-current-scope/review until a dedicated statutory category is implemented.",
+      "primary_source": "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004570&Paragraf=99"
+    },
+    {
+      "item_id": "AT-WHT-TECHNICAL-CONSULTING",
+      "classification": "out_of_current_product_scope_guard",
+      "secondary_source_point": "Technical/commercial consulting can be a separate § 99 withholding category.",
+      "adjudication": "retain_as_classification_guard",
+      "decision_rule": "Technical-service percentages must never be extracted as royalty rates. A service payment outside the royalty definition remains outside the current three-income runtime scope.",
+      "primary_source": "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004570&Paragraf=99"
+    },
+    {
+      "item_id": "AT-WHT-SUPERVISORY-BOARD",
+      "classification": "out_of_current_product_scope_guard",
+      "secondary_source_point": "Supervisory-board remuneration has its own Austrian withholding treatment.",
+      "adjudication": "recorded_not_implemented",
+      "decision_rule": "Do not map supervisory-board remuneration to dividend, interest or royalty.",
+      "primary_source": "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004570&Paragraf=99"
+    },
+    {
+      "item_id": "AT-WHT-REAL-ESTATE-GAINS",
+      "classification": "out_of_current_product_scope_guard",
+      "secondary_source_point": "Austrian real-property disposals have a separate real-estate income tax regime, including a corporate 23% option/rate route from 2024.",
+      "adjudication": "verified_out_of_scope",
+      "decision_rule": "Do not treat real-estate disposal proceeds as any current WHT income type.",
+      "primary_source": "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004570&Paragraf=30b"
+    },
+    {
+      "item_id": "AT-WHT-BRANCH-PROFITS",
+      "classification": "out_of_current_product_scope_information",
+      "secondary_source_point": "Austria has no separate branch-profits/remittance tax in the supplied summary.",
+      "adjudication": "not_needed_for_current_three_income_decision_tree",
+      "decision_rule": "No runtime branch added; keep as scope documentation only. Absence of a branch-profits tax does not alter dividend/interest/royalty WHT classification.",
+      "primary_source": null
+    }
+  ],
+  "policy": {
+    "out_of_scope_claims_do_not_create_new_transaction_types": true,
+    "out_of_scope_claims_do_create_negative_classification_guards_where_needed": true,
+    "no_production_release": true
+  }
+}

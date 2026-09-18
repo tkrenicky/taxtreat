@@ -1,0 +1,164 @@
+{
+  "schema_version": 2,
+  "source_country": "AT",
+  "as_of": "2026-08-25",
+  "status": "candidate_model_not_released",
+  "legal_ordering": [
+    "domestic_scope",
+    "domestic_non_rate_relief",
+    "treaty_or_other_international_relief",
+    "procedural_relief_at_source_or_refund"
+  ],
+  "decision_dimensions": [
+    "substantive_tax_treatment",
+    "domestic_baseline_rate",
+    "withholding_due_at_payment",
+    "relief_at_source_availability",
+    "refund_eligibility",
+    "documentary_readiness"
+  ],
+  "income_types": {
+    "dividend": {
+      "base_domestic_layer": {
+        "legal_basis": ["§ 27a EStG 1988", "§ 93 EStG 1988", "§ 95 EStG 1988"],
+        "candidate_treatment": "taxable_at_rate",
+        "candidate_rate_percent_for_corporate_recipient_from_2024": 23,
+        "rate_is_recipient_status_dependent": true,
+        "status": "candidate_not_released"
+      },
+      "eu_parent_relief": {
+        "legal_basis": "§ 94 Z 2 EStG 1988",
+        "candidate_treatment": "domestic_exemption",
+        "minimum_participation_percent": 10,
+        "minimum_holding_period_months": 12,
+        "holding_period_must_be_uninterrupted": true,
+        "qualifying_recipient": "foreign corporation satisfying Annex 2 / Article 2 of Directive 2011/96/EU",
+        "source_relief_requires_holding_period_already_completed": true,
+        "incomplete_holding_period_collection_mechanism": "provisional_withholding_then_refund_candidate",
+        "anti_abuse_or_hidden_distribution_source_relief_block": true,
+        "anti_abuse_or_hidden_distribution_refund_requires_factual_review": true,
+        "treaty_may_still_reduce_provisional_withholding": true,
+        "status": "candidate_not_released"
+      },
+      "portfolio_refund_relief": {
+        "legal_basis": "§ 21 Abs. 1 Z 1a KStG 1988",
+        "candidate_treatment": "post_withholding_refund_only",
+        "eu_eea_recipient_candidate": true,
+        "third_country_candidate_requires_comprehensive_administrative_assistance": true,
+        "third_country_candidate_requires_participation_below_percent": 10,
+        "refund_limited_to_wht_not_creditable_in_residence_state": true,
+        "proof_of_non_creditability_required": true,
+        "must_never_be_represented_as_relief_at_source": true,
+        "status": "candidate_not_released"
+      }
+    },
+    "interest": {
+      "base_domestic_layer": {
+        "legal_basis": ["§ 98 Abs. 1 Z 5 EStG 1988"],
+        "corporate_recipient_current_treatment_candidate": "outside_limited_tax_liability",
+        "corporate_recipient_candidate_rate_percent": 0,
+        "current_primary_law_signal": "interest_not_received_by_natural_person_is_excluded_from_limited_tax_liability",
+        "legacy_written_declaration_conditions_not_used_as_current_corporate_eligibility_gate": true,
+        "special_section_99_interest_categories_require_separate_classification": true,
+        "status": "candidate_not_released",
+        "fail_closed_for_special_categories": true
+      },
+      "eu_interest_royalty_relief": {
+        "legal_basis": "§ 99a EStG 1988",
+        "candidate_treatment": "domestic_exemption",
+        "income_category": "interest",
+        "beneficial_owner_required": true,
+        "minimum_direct_participation_percent": 25,
+        "reverse_direct_participation_alternative_percent": 25,
+        "common_parent_direct_participation_alternative_percent": 25,
+        "minimum_holding_period_months": 12,
+        "holding_period_must_be_uninterrupted": true,
+        "eu_entity_form_residence_tax_conditions_required": true,
+        "qualifying_pe_conditions_may_apply": true,
+        "confirmations_must_be_available_at_payment_for_source_relief": true,
+        "refund_route_if_holding_period_or_confirmation_missing_at_payment": true,
+        "profit_participating_claim_excluded": true,
+        "anti_avoidance_or_abuse_excluded": true,
+        "excess_over_arm_length_not_exempt": true,
+        "status": "candidate_not_released"
+      }
+    },
+    "royalty": {
+      "base_domestic_layer": {
+        "legal_basis": ["§ 28 Abs. 1 Z 3 EStG 1988", "§ 98 EStG 1988", "§ 99 Abs. 1 Z 3 EStG 1988", "§ 100 EStG 1988"],
+        "candidate_treatment": "taxable_at_rate",
+        "candidate_rate_percent": 20,
+        "status": "category_mapping_required_before_release",
+        "required_classification": [
+          "whether the payment is income from granting or exploiting a right within § 28 Abs. 1 Z 3",
+          "whether the Austrian source nexus in § 98 is met",
+          "whether § 99 Abs. 1 Z 3 withholding applies"
+        ],
+        "technical_or_commercial_consulting_must_not_be_classified_as_royalty": true,
+        "fail_closed": true
+      },
+      "eu_interest_royalty_relief": {
+        "legal_basis": "§ 99a EStG 1988",
+        "candidate_treatment": "domestic_exemption",
+        "income_category": "royalty",
+        "beneficial_owner_required": true,
+        "minimum_direct_participation_percent": 25,
+        "reverse_direct_participation_alternative_percent": 25,
+        "common_parent_direct_participation_alternative_percent": 25,
+        "minimum_holding_period_months": 12,
+        "holding_period_must_be_uninterrupted": true,
+        "eu_entity_form_residence_tax_conditions_required": true,
+        "qualifying_pe_conditions_may_apply": true,
+        "confirmations_must_be_available_at_payment_for_source_relief": true,
+        "refund_route_if_holding_period_or_confirmation_missing_at_payment": true,
+        "profit_participating_claim_excluded": true,
+        "anti_avoidance_or_abuse_excluded": true,
+        "excess_over_arm_length_not_exempt": true,
+        "status": "candidate_not_released"
+      }
+    }
+  },
+  "procedural_relief_layer": {
+    "legal_source": "AT-BMF-DBA-RELIEF",
+    "framework": "DBA-Entlastungsverordnung, BGBl. III Nr. 92/2005 idgF",
+    "substantive_treaty_entitlement_is_separate": true,
+    "relief_at_source_requires_documentation": true,
+    "relief_at_source_is_optional_for_payer": true,
+    "relief_at_source_has_excluded_or_restricted_case_categories": true,
+    "refund_route_available_if_source_relief_not_used_or_not_permitted": true,
+    "treaty_rate_must_not_be_equated_with_amount_withheld_at_payment": true,
+    "refund_authority_candidate": "Finanzamt für Großbetriebe",
+    "status": "candidate_not_released"
+  },
+  "future_law": {
+    "faster_directive": {
+      "status": "future_only_not_current_decision_logic",
+      "national_transposition_deadline": "2028-12-31",
+      "application_from": "2030-01-01",
+      "must_not_change_2026_result": true
+    }
+  },
+  "primary_source_verification": {
+    "section_94": "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004570&Paragraf=94",
+    "section_98": "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004570&Paragraf=98",
+    "section_99a": "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004570&Paragraf=99a",
+    "section_99": "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004570&Paragraf=99",
+    "section_100": "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004570&Paragraf=100",
+    "kstg_section_21": "https://www.ris.bka.gv.at/NormDokument.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10004569&Paragraf=21",
+    "bmf_dba_relief_guidance": "https://findok.bmf.gv.at/findok/volltext?segmentId=76ea1c41-990c-4e8d-a23e-ecda26fdbefc"
+  },
+  "semantic_constraints": [
+    "A domestic exemption is a non-rate legal treatment and must not be represented merely as a treaty 0% rate.",
+    "Domestic scope and domestic exemption must be evaluated before treaty relief.",
+    "Substantive entitlement, withholding due at payment and later refund entitlement are separate decision dimensions.",
+    "A treaty maximum rate does not by itself prove that the same rate may be applied at source under Austrian procedure.",
+    "For § 94 Z 2, an incomplete one-year holding period blocks immediate source relief but may lead to later directive relief by refund; treaty relief must still be evaluated for the interim withholding amount.",
+    "For § 99a, substantive eligibility, documentary readiness for relief at source and refund eligibility are separate states.",
+    "Current § 98 corporate-interest exclusion takes precedence over obsolete or superseded secondary-source documentation conditions.",
+    "§ 21 Abs. 1 Z 1a KStG is a refund remedy and must never be converted into a source exemption.",
+    "The 20% royalty rate is only a candidate for payments actually within the §§ 28/98/99 statutory route and is not a generic Austrian royalty rate.",
+    "Technical and commercial consulting under § 99 must not leak into the royalty classifier.",
+    "FASTER is future law and must not affect a 2026 decision.",
+    "This model is evidence preparation only and must not register AT as a production source country."
+  ]
+}
