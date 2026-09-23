@@ -1905,11 +1905,16 @@ def _second_wave_royalty_branches(scope: dict, article_text: str) -> list[dict] 
         }
         determination_false = dict(determination_true)
         determination_false["value"] = False
+        exempt_common = [
+            condition
+            for condition in common
+            if condition.get("fact") != "permanent_establishment_connection"
+        ]
         return [
             {
                 "rate": 0.0,
                 "priority": 720,
-                "conditions": [*common, determination_true],
+                "conditions": [*exempt_common, determination_true],
                 "tax_treatment": "exclusive_foreign_taxation",
                 "suffix": "ROYALTY-AE-PUBLIC-INSTITUTION-EXEMPT",
             },
