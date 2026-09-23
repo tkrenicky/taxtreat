@@ -122,3 +122,29 @@ def test_cli_writes_fail_closed_audit(tmp_path, monkeypatch, capsys):
     assert payload["status"] == "royalty_category_audit_not_released"
     stdout = capsys.readouterr().out
     assert "75 scopes / 26 explicit-branch-review-required" in stdout
+
+
+def test_audit_rejects_category_queue_country_outside_scope(monkeypatch):
+    from taxtreat.tools import audit_sk_royalty_categories as module
+    import pytest
+
+    monkeypatch.setattr(
+        module,
+        "CATEGORY_SENSITIVE_REVIEW_COUNTRIES",
+        (*module.CATEGORY_SENSITIVE_REVIEW_COUNTRIES, "ZZ"),
+    )
+    with pytest.raises(ValueError, match="countries missing from the 75-scope universe"):
+        module.build_audit(json.loads(SOURCE.read_text(encoding="utf-8")))
+
+
+def test_audit_rejects_explicit_branch_queue_drift(monkeypatch):
+    from taxtreat.tools import audit_sk_royalty_categories as module
+    import pytest
+
+    monkeypatch.setattr(
+        module,
+        "ROYALTY_EXPLICIT_BRANCH_REQUIRED_COUNTRIES",
+        (*module.ROYALTY_EXPLICIT_BRANCH_REQUIRED_COUNTRIES, "ZZ"),
+    )
+    with pytest.raises(ValueError, match="explicit-branch review queue membership drifted"):
+        module.build_audit(json.loads(SOURCE.read_text(encoding="utf-8")))
