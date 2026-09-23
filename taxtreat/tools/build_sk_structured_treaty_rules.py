@@ -156,6 +156,18 @@ def _merge_royalty_source_conditions(
     article: dict,
 ) -> list[dict]:
     result = [dict(condition) for condition in branch_conditions]
+    ae_public_exemption = (
+        str(scope.get("recipient_country") or "") == "AE"
+        and any(
+            condition.get("fact") == "ae_royalty_public_institution_exemption"
+            and condition.get("fact_source") == "determination"
+            and condition.get("value") is True
+            for condition in result
+        )
+    )
+    if ae_public_exemption:
+        return result
+
     for condition in _royalty_source_conditions(scope, article):
         if condition.get("fact") != "permanent_establishment_connection":
             continue
