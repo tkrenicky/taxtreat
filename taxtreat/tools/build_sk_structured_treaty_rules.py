@@ -125,6 +125,49 @@ def conditions(scope: dict) -> list[dict]:
     return result
 
 
+
+def _royalty_source_conditions(scope: dict, article: dict) -> list[dict]:
+    """Recover explicit royalty PE/fixed-base carve-outs missed by semantic extraction."""
+    result = conditions(scope)
+    text = str(article.get("article_text") or "").lower()
+    pe_carveout_present = bool(re.search(
+        r"stál(?:ej|u|a|ou|e)?\s+prevádzk",
+        text,
+    ))
+    if (
+        pe_carveout_present
+        and not any(
+            condition.get("fact") == "permanent_establishment_connection"
+            for condition in result
+        )
+    ):
+        result.append({
+            "fact": "permanent_establishment_connection",
+            "fact_source": "transaction",
+            "operator": "==",
+            "value": False,
+        })
+    return result
+
+
+def _merge_royalty_source_conditions(
+    branch_conditions: list[dict],
+    scope: dict,
+    article: dict,
+) -> list[dict]:
+    result = [dict(condition) for condition in branch_conditions]
+    for condition in _royalty_source_conditions(scope, article):
+        if condition.get("fact") != "permanent_establishment_connection":
+            continue
+        if not any(
+            existing.get("fact") == condition.get("fact")
+            and existing.get("fact_source") == condition.get("fact_source")
+            for existing in result
+        ):
+            result.append(dict(condition))
+    return result
+
+
 def _article_paragraph_one(text: str) -> str:
     lowered = text.lower()
     start = re.search(r"(?:\(1\)|\b1\.\s)", lowered)
@@ -2263,7 +2306,9 @@ def main() -> int:
                     income=income,
                     rate=float(branch["rate"]),
                     priority=int(branch["priority"]),
-                    rule_conditions=branch["conditions"],
+                    rule_conditions=_merge_royalty_source_conditions(
+                        branch["conditions"], scope, article
+                    ),
                     rule_suffix=str(branch.get("suffix") or "ROYALTY-BRANCH"),
                     treaty_valid_from=treaty_valid_from,
                     coverage=coverage,
@@ -2294,7 +2339,11 @@ def main() -> int:
                 income=income,
                 rate=0.0,
                 priority=650,
-                rule_conditions=conditions(scope),
+                rule_conditions=(
+                    _royalty_source_conditions(scope, article)
+                    if income == "royalty"
+                    else conditions(scope)
+                ),
                 rule_suffix=f"{income.upper()}-SOURCE-TEXT-RESIDENCE-ONLY",
                 treaty_valid_from=treaty_valid_from,
                 coverage=coverage,
@@ -2313,7 +2362,11 @@ def main() -> int:
                 income=income,
                 rate=float(word_rate),
                 priority=600,
-                rule_conditions=conditions(scope),
+                rule_conditions=(
+                    _royalty_source_conditions(scope, article)
+                    if income == "royalty"
+                    else conditions(scope)
+                ),
                 rule_suffix=f"{income.upper()}-SOURCE-TEXT-WORD-RATE",
                 treaty_valid_from=treaty_valid_from,
                 coverage=coverage,
@@ -2342,7 +2395,11 @@ def main() -> int:
                 income=income,
                 rate=None,
                 priority=900,
-                rule_conditions=conditions(scope),
+                rule_conditions=(
+                    _royalty_source_conditions(scope, article)
+                    if income == "royalty"
+                    else conditions(scope)
+                ),
                 rule_suffix="UNRESOLVED-FAIL-CLOSED",
                 treaty_valid_from=treaty_valid_from,
                 coverage=coverage,
@@ -2359,7 +2416,11 @@ def main() -> int:
             income=income,
             rate=rate,
             priority=600,
-            rule_conditions=conditions(scope),
+            rule_conditions=(
+                _royalty_source_conditions(scope, article)
+                if income == "royalty"
+                else conditions(scope)
+            ),
             rule_suffix="SIMPLE-1",
             treaty_valid_from=treaty_valid_from,
             coverage=coverage,
