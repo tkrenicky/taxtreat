@@ -20,7 +20,10 @@ def _generated_rows(countries: list[str]) -> dict[str, list[dict]]:
     script = r"""
 import json
 from pathlib import Path
-from taxtreat.tools.build_sk_structured_treaty_rules import royalty_branches
+from taxtreat.tools.build_sk_structured_treaty_rules import (
+    _merge_royalty_source_conditions,
+    royalty_branches,
+)
 
 root = Path.cwd()
 semantic = json.loads(
@@ -44,7 +47,13 @@ for scope in semantic["scopes"]:
     country = scope["recipient_country"]
     if country not in requested:
         continue
-    result[country] = royalty_branches(scope, article_by_country[country]) or []
+    article = article_by_country[country]
+    rows = royalty_branches(scope, article) or []
+    for row in rows:
+        row["conditions"] = _merge_royalty_source_conditions(
+            row["conditions"], scope, article
+        )
+    result[country] = rows
 print(json.dumps(result, ensure_ascii=False))
 """
     completed = subprocess.run(
