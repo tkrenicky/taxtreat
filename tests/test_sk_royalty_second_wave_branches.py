@@ -165,3 +165,25 @@ def test_static_runtime_second_wave_matches_explicit_branch_policy():
         row["rule_id"] == "SK-JP-ROYALTY-TREATY-ROYALTY-JP-COPYRIGHT-RESIDENCE-1"
         for row in _static_rows("JP")
     )
+
+
+def test_all_static_sk_royalty_treaty_rules_enforce_pe_carveout():
+    files = sorted(RULE_DIR.glob("*.json"))
+    assert len(files) == 75
+
+    missing = []
+    for path in files:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        for row in payload["rules"]:
+            if row["income_type"] != "royalty" or row["legal_layer"] != "treaty":
+                continue
+            condition = _condition(row, "permanent_establishment_connection")
+            if condition != {
+                "fact": "permanent_establishment_connection",
+                "fact_source": "transaction",
+                "operator": "==",
+                "value": False,
+            }:
+                missing.append((payload["country_pair"]["recipient_country"], row["rule_id"]))
+
+    assert missing == []
