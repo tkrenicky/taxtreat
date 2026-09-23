@@ -156,7 +156,9 @@ def test_ae_public_institution_exemption_is_a_determination_not_a_simple_rate():
         "operator": "==",
         "value": True,
     }
+    assert _condition(exempt, "permanent_establishment_connection") is None
     assert _condition(ordinary, "ae_royalty_public_institution_exemption")["value"] is False
+    assert _condition(ordinary, "permanent_establishment_connection")["value"] is False
 
 
 def test_static_runtime_second_wave_matches_explicit_branch_policy():
@@ -185,6 +187,11 @@ def test_all_static_sk_royalty_treaty_rules_enforce_pe_carveout():
         payload = json.loads(path.read_text(encoding="utf-8"))
         for row in payload["rules"]:
             if row["income_type"] != "royalty" or row["legal_layer"] != "treaty":
+                continue
+            if row["rule_id"] == (
+                "SK-AE-ROYALTY-TREATY-ROYALTY-AE-PUBLIC-INSTITUTION-EXEMPT"
+            ):
+                assert _condition(row, "permanent_establishment_connection") is None
                 continue
             condition = _condition(row, "permanent_establishment_connection")
             if condition != {
