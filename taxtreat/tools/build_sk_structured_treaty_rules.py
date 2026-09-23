@@ -6,7 +6,7 @@ import re
 from collections import defaultdict
 from pathlib import Path
 
-from taxtreat.tools.audit_sk_royalty_categories import category_sensitive_royalty_requires_explicit_branch
+from taxtreat.tools.audit_sk_royalty_categories import royalty_requires_explicit_branch
 
 ROOT = Path(__file__).resolve().parents[2]
 BASE = ROOT / "data/legal_reviews/sk_outbound"
@@ -1815,6 +1815,191 @@ def _es_gb_royalty_branches(scope: dict, article_text: str) -> list[dict] | None
         })
     return branches
 
+
+def _second_wave_royalty_branches(scope: dict, article_text: str) -> list[dict] | None:
+    """Materialize source-explicit royalty splits missed by the first category audit."""
+    country = scope.get("recipient_country")
+    if country not in {"AE", "FR", "JP", "LK", "LU", "SE"}:
+        return None
+
+    text = article_text.lower()
+    candidate_rates = {
+        float(row["rate_percent"])
+        for row in scope.get("rate_candidates", [])
+        if row.get("rate_percent") is not None
+    }
+    common = conditions(scope)
+    if (
+        "stálej prevádzk" in text
+        and not any(
+            condition.get("fact") == "permanent_establishment_connection"
+            for condition in common
+        )
+    ):
+        common = [
+            *common,
+            {
+                "fact": "permanent_establishment_connection",
+                "fact_source": "transaction",
+                "operator": "==",
+                "value": False,
+            },
+        ]
+
+    if country == "AE":
+        if not (
+            10.0 in candidate_rates
+            and "budú oslobodené od dane" in text
+            and "centrálna banka spojených arabských emirátov" in text
+            and "investičný úrad emirátov" in text
+        ):
+            return None
+        determination_true = {
+            "fact": "ae_royalty_public_institution_exemption",
+            "fact_source": "determination",
+            "operator": "==",
+            "value": True,
+        }
+        determination_false = dict(determination_true)
+        determination_false["value"] = False
+        return [
+            {
+                "rate": 0.0,
+                "priority": 720,
+                "conditions": [*common, determination_true],
+                "tax_treatment": "exclusive_foreign_taxation",
+                "suffix": "ROYALTY-AE-PUBLIC-INSTITUTION-EXEMPT",
+            },
+            {
+                "rate": 10.0,
+                "priority": 690,
+                "conditions": [*common, determination_false],
+                "suffix": "ROYALTY-AE-GENERAL-10",
+            },
+        ]
+
+    rate_by_country = {"FR": 5.0, "JP": 10.0, "LK": 10.0, "LU": 10.0, "SE": 5.0}
+    source_rate = rate_by_country[country]
+    if source_rate not in candidate_rates:
+        return None
+
+    required_tokens = {
+        "FR": (
+            "licenčné poplatky plynúce z autorských práv",
+            "zdaňujú bez ohľadu na ustanovenie odseku 2 len",
+        ),
+        "SE": (
+            "licenčné poplatky plynúce z autorských práv",
+            "podliehajú bez ohľadu na ustanovenia odsekov 1 a 2 zdaneniu len",
+        ),
+        "JP": (
+            "priemyselné licenčné poplatky",
+            "kultúrne licenčné poplatky budú oslobodené",
+        ),
+        "LK": (
+            "autorského práva alebo kinematografických filmov",
+            "sa oslobodzuje od dane",
+        ),
+        "LU": (
+            "licenčné poplatky uvedené v pododseku a) odseku 3",
+            "b) autorského práva",
+        ),
+    }[country]
+    if not all(token in text for token in required_tokens):
+        return None
+
+    branches = []
+    for index, category in enumerate(
+        (
+            ROYALTY_UI_CATEGORIES["copyright"],
+            ROYALTY_UI_CATEGORIES["film"],
+        ),
+        start=1,
+    ):
+        branches.append({
+            "rate": 0.0,
+            "priority": 710,
+            "conditions": [
+                *common,
+                {
+                    "fact": "royalty_category",
+                    "fact_source": "transaction",
+                    "operator": "==",
+                    "value": category,
+                },
+            ],
+            "tax_treatment": "exclusive_foreign_taxation",
+            "suffix": f"ROYALTY-{country}-COPYRIGHT-RESIDENCE-{index}",
+        })
+
+    if country == "LK":
+        industrial = ROYALTY_UI_CATEGORIES["industrial_ip"]
+        for index, subcategory in enumerate(
+            (
+                "patent_design_model_plan_secret_formula_or_process",
+                "trademark",
+            ),
+            start=1,
+        ):
+            branches.append({
+                "rate": source_rate,
+                "priority": 700,
+                "conditions": [
+                    *common,
+                    {
+                        "fact": "royalty_category",
+                        "fact_source": "transaction",
+                        "operator": "==",
+                        "value": industrial,
+                    },
+                    {
+                        "fact": "royalty_industrial_ip_subcategory",
+                        "fact_source": "transaction",
+                        "operator": "==",
+                        "value": subcategory,
+                    },
+                ],
+                "suffix": f"ROYALTY-LK-INDUSTRIAL-IP-10-{index}",
+            })
+    else:
+        branches.append({
+            "rate": source_rate,
+            "priority": 700,
+            "conditions": [
+                *common,
+                {
+                    "fact": "royalty_category",
+                    "fact_source": "transaction",
+                    "operator": "==",
+                    "value": ROYALTY_UI_CATEGORIES["industrial_ip"],
+                },
+            ],
+            "suffix": f"ROYALTY-{country}-INDUSTRIAL-IP-{int(source_rate)}",
+        })
+
+    for index, category in enumerate(
+        (
+            ROYALTY_UI_CATEGORIES["equipment_financial"],
+            ROYALTY_UI_CATEGORIES["equipment_operating"],
+        ),
+        start=1,
+    ):
+        branches.append({
+            "rate": source_rate,
+            "priority": 690,
+            "conditions": [
+                *common,
+                {
+                    "fact": "royalty_category",
+                    "fact_source": "transaction",
+                    "operator": "==",
+                    "value": category,
+                },
+            ],
+            "suffix": f"ROYALTY-{country}-EQUIPMENT-{int(source_rate)}-{index}",
+        })
+    return branches
+
 def royalty_branches(scope: dict, article: dict) -> list[dict] | None:
     """Materialize source-explicit royalty categories, never percentage lists alone."""
     if scope.get("income_type") != "royalty" or not scope.get("source_sha256"):
@@ -1886,6 +2071,10 @@ def royalty_branches(scope: dict, article: dict) -> list[dict] | None:
     es_gb = _es_gb_royalty_branches(scope, text)
     if es_gb:
         return es_gb
+
+    second_wave = _second_wave_royalty_branches(scope, text)
+    if second_wave:
+        return second_wave
 
     secondary = _br_vn_royalty_secondary_branches(scope, text)
     if secondary:
@@ -2088,10 +2277,11 @@ def main() -> int:
             continue
 
         safe_simple = is_safe_simple(scope, article)
-        if category_sensitive_royalty_requires_explicit_branch(scope):
-            # PR #241's independent royalty audit identifies these treaty
-            # relationships as category-sensitive. If none of the explicit
-            # royalty branch builders above reconciled the source wording,
+        if royalty_requires_explicit_branch(scope):
+            # The independent royalty audit identifies these treaty
+            # relationships as requiring an explicit branch because of
+            # category-sensitive wording or a treaty-specific exemption.
+            # If none of the explicit royalty branch builders above reconciled the source wording,
             # never collapse the scope into SIMPLE-1 merely because one
             # machine rate candidate exists. Keep it fail-closed instead.
             safe_simple = False
