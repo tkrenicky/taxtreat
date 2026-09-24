@@ -2380,10 +2380,16 @@ def main() -> int:
                     tax_treatment=branch.get("tax_treatment"),
                 ))
             materialized.append(f"SK-{country}-{income}")
-            materialization_modes[
-                "source_text_royalty_category_branches" if len(branches) > 1
-                else "source_text_royalty_residence_only"
-            ] += 1
+            if any(
+                str(branch.get("suffix") or "").startswith("ROYALTY-OM-")
+                for branch in branches
+            ):
+                materialization_modes["source_text_royalty_special_conditions"] += 1
+            else:
+                materialization_modes[
+                    "source_text_royalty_category_branches" if len(branches) > 1
+                    else "source_text_royalty_residence_only"
+                ] += 1
             continue
 
         safe_simple = is_safe_simple(scope, article)
