@@ -22,8 +22,15 @@ BASE_CATEGORIES = (
 
 CATEGORY_SENSITIVE_REVIEW_COUNTRIES = (
     "AT", "AZ", "BR", "BY", "CA", "CH", "CY", "CZ", "DK", "ES",
-    "FI", "GB", "IE", "IT", "KR", "NO", "RO", "TN", "TW", "VN",
+    "FI", "FR", "GB", "IE", "IT", "JP", "KR", "LK", "LU", "NO",
+    "RO", "SE", "TN", "TW", "VN",
 )
+
+SPECIAL_EXEMPTION_REVIEW_COUNTRIES = ("AE",)
+
+ROYALTY_EXPLICIT_BRANCH_REQUIRED_COUNTRIES = tuple(dict.fromkeys(
+    (*CATEGORY_SENSITIVE_REVIEW_COUNTRIES, *SPECIAL_EXEMPTION_REVIEW_COUNTRIES)
+))
 
 KEYWORDS = {
     "software": (r"softv", r"software", r"computer", r"počítač"),
@@ -45,6 +52,14 @@ def category_sensitive_royalty_requires_explicit_branch(scope: dict[str, Any]) -
     return (
         scope.get("income_type") == "royalty"
         and str(scope.get("recipient_country") or "") in CATEGORY_SENSITIVE_REVIEW_COUNTRIES
+    )
+
+
+def royalty_requires_explicit_branch(scope: dict[str, Any]) -> bool:
+    return (
+        scope.get("income_type") == "royalty"
+        and str(scope.get("recipient_country") or "")
+        in ROYALTY_EXPLICIT_BRANCH_REQUIRED_COUNTRIES
     )
 
 
@@ -106,6 +121,8 @@ def build_audit(source: dict[str, Any]) -> dict[str, Any]:
             "additional_discriminators_required": extra,
             "multiple_rate_candidates_present": len(rates) > 1,
             "category_projection_review_required": country in CATEGORY_SENSITIVE_REVIEW_COUNTRIES,
+            "special_exemption_review_required": country in SPECIAL_EXEMPTION_REVIEW_COUNTRIES,
+            "explicit_branch_review_required": country in ROYALTY_EXPLICIT_BRANCH_REQUIRED_COUNTRIES,
             "projection_released": False,
             "legal_review_completed": False,
         })
@@ -122,7 +139,11 @@ def build_audit(source: dict[str, Any]) -> dict[str, Any]:
 
     elevated = [row for row in scopes if row["category_projection_review_required"]]
     if {row["scope_key"][1] for row in elevated} != set(CATEGORY_SENSITIVE_REVIEW_COUNTRIES):
-        raise ValueError("SK royalty reconciliation queue membership drifted from the explicit 20-country set")
+        raise ValueError("SK royalty category reconciliation queue membership drifted")
+
+    explicit_branch = [row for row in scopes if row["explicit_branch_review_required"]]
+    if {row["scope_key"][1] for row in explicit_branch} != set(ROYALTY_EXPLICIT_BRANCH_REQUIRED_COUNTRIES):
+        raise ValueError("SK royalty explicit-branch review queue membership drifted")
 
     return {
         "schema_version": 2,
@@ -132,6 +153,10 @@ def build_audit(source: dict[str, Any]) -> dict[str, Any]:
         "royalty_scope_count": len(scopes),
         "category_review_required_count": len(elevated),
         "category_review_required_countries": list(CATEGORY_SENSITIVE_REVIEW_COUNTRIES),
+        "special_exemption_review_required_count": len(SPECIAL_EXEMPTION_REVIEW_COUNTRIES),
+        "special_exemption_review_required_countries": list(SPECIAL_EXEMPTION_REVIEW_COUNTRIES),
+        "explicit_branch_review_required_count": len(explicit_branch),
+        "explicit_branch_review_required_countries": list(ROYALTY_EXPLICIT_BRANCH_REQUIRED_COUNTRIES),
         "policy": {
             "seven_base_categories_are_not_assumed_to_be_legally_exhaustive": True,
             "treaty_specific_discriminators_may_be_required": True,
@@ -158,9 +183,10 @@ def main() -> None:
     print(
         "SK royalty category audit:",
         result["royalty_scope_count"], "scopes /",
-        result["category_review_required_count"], "review-required",
+        result["explicit_branch_review_required_count"], "explicit-branch-review-required",
     )
-    print("Review-required countries:", result["category_review_required_countries"])
+    print("Category-review countries:", result["category_review_required_countries"])
+    print("Explicit-branch countries:", result["explicit_branch_review_required_countries"])
 
 
 if __name__ == "__main__":

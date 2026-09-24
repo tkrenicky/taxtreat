@@ -4,6 +4,8 @@ from pathlib import Path
 from taxtreat.tools.audit_sk_royalty_categories import (
     BASE_CATEGORIES,
     CATEGORY_SENSITIVE_REVIEW_COUNTRIES,
+    ROYALTY_EXPLICIT_BRANCH_REQUIRED_COUNTRIES,
+    SPECIAL_EXEMPTION_REVIEW_COUNTRIES,
     build_audit,
 )
 
@@ -28,11 +30,22 @@ def test_sk_royalty_audit_covers_all_75_scopes_and_releases_nothing():
     assert all(row["legal_review_completed"] is False for row in audit["scopes"])
 
 
-def test_category_sensitive_reconciliation_queue_is_exactly_20_countries():
+def test_category_sensitive_reconciliation_queue_includes_second_wave_countries():
     audit = _audit()
-    assert len(CATEGORY_SENSITIVE_REVIEW_COUNTRIES) == 20
-    assert audit["category_review_required_count"] == 20
+    assert len(CATEGORY_SENSITIVE_REVIEW_COUNTRIES) == 25
+    assert audit["category_review_required_count"] == 25
     assert audit["category_review_required_countries"] == list(CATEGORY_SENSITIVE_REVIEW_COUNTRIES)
+    assert {"FR", "JP", "LK", "LU", "SE"} <= set(CATEGORY_SENSITIVE_REVIEW_COUNTRIES)
+
+
+def test_explicit_branch_queue_also_captures_ae_public_institution_exemption():
+    audit = _audit()
+    assert SPECIAL_EXEMPTION_REVIEW_COUNTRIES == ("AE",)
+    assert len(ROYALTY_EXPLICIT_BRANCH_REQUIRED_COUNTRIES) == 26
+    assert audit["special_exemption_review_required_count"] == 1
+    assert audit["explicit_branch_review_required_count"] == 26
+    assert "AE" in audit["explicit_branch_review_required_countries"]
+    assert _scope(audit, "AE")["special_exemption_review_required"] is True
 
 
 def test_finland_requires_precise_lease_and_copyright_semantics():
@@ -104,7 +117,34 @@ def test_cli_writes_fail_closed_audit(tmp_path, monkeypatch, capsys):
 
     payload = json.loads(output.read_text(encoding="utf-8"))
     assert payload["royalty_scope_count"] == 75
-    assert payload["category_review_required_count"] == 20
+    assert payload["category_review_required_count"] == 25
+    assert payload["explicit_branch_review_required_count"] == 26
     assert payload["status"] == "royalty_category_audit_not_released"
     stdout = capsys.readouterr().out
-    assert "75 scopes / 20 review-required" in stdout
+    assert "75 scopes / 26 explicit-branch-review-required" in stdout
+
+
+def test_audit_rejects_category_queue_country_outside_scope(monkeypatch):
+    from taxtreat.tools import audit_sk_royalty_categories as module
+    import pytest
+
+    monkeypatch.setattr(
+        module,
+        "CATEGORY_SENSITIVE_REVIEW_COUNTRIES",
+        (*module.CATEGORY_SENSITIVE_REVIEW_COUNTRIES, "ZZ"),
+    )
+    with pytest.raises(ValueError, match="countries missing from the 75-scope universe"):
+        module.build_audit(json.loads(SOURCE.read_text(encoding="utf-8")))
+
+
+def test_audit_rejects_explicit_branch_queue_drift(monkeypatch):
+    from taxtreat.tools import audit_sk_royalty_categories as module
+    import pytest
+
+    monkeypatch.setattr(
+        module,
+        "ROYALTY_EXPLICIT_BRANCH_REQUIRED_COUNTRIES",
+        (*module.ROYALTY_EXPLICIT_BRANCH_REQUIRED_COUNTRIES, "ZZ"),
+    )
+    with pytest.raises(ValueError, match="explicit-branch review queue membership drifted"):
+        module.build_audit(json.loads(SOURCE.read_text(encoding="utf-8")))

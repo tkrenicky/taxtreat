@@ -53,7 +53,7 @@
       "legal_layer": "treaty",
       "article": "11",
       "paragraph": null,
-      "rate": 10.0,
+      "rate": 10,
       "priority": 600,
       "conditions": [
         {
@@ -98,7 +98,7 @@
       "legal_layer": "treaty",
       "article": "12",
       "paragraph": null,
-      "rate": 0.0,
+      "rate": 0,
       "priority": 680,
       "conditions": [
         {
@@ -112,6 +112,12 @@
           "fact_source": "transaction",
           "operator": "==",
           "value": "copyright_literary_artistic_scientific_nonfilm_nonsoftware"
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
         }
       ],
       "effect": "rate",
@@ -144,7 +150,7 @@
       "legal_layer": "treaty",
       "article": "12",
       "paragraph": null,
-      "rate": 0.0,
+      "rate": 0,
       "priority": 680,
       "conditions": [
         {
@@ -158,6 +164,12 @@
           "fact_source": "transaction",
           "operator": "==",
           "value": "cinematographic_films_or_broadcast_media"
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
         }
       ],
       "effect": "rate",
@@ -190,7 +202,7 @@
       "legal_layer": "treaty",
       "article": "12",
       "paragraph": null,
-      "rate": 10.0,
+      "rate": 10,
       "priority": 680,
       "conditions": [
         {
@@ -204,6 +216,12 @@
           "fact_source": "transaction",
           "operator": "==",
           "value": "patent_trademark_design_model_plan_secret_formula_process_or_knowhow"
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
         }
       ],
       "effect": "rate",
@@ -235,7 +253,7 @@
       "legal_layer": "treaty",
       "article": "12",
       "paragraph": null,
-      "rate": 10.0,
+      "rate": 10,
       "priority": 680,
       "conditions": [
         {
@@ -249,6 +267,12 @@
           "fact_source": "transaction",
           "operator": "==",
           "value": "financial_lease_of_equipment"
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
         }
       ],
       "effect": "rate",
@@ -280,7 +304,7 @@
       "legal_layer": "treaty",
       "article": "12",
       "paragraph": null,
-      "rate": 10.0,
+      "rate": 10,
       "priority": 680,
       "conditions": [
         {
@@ -294,6 +318,12 @@
           "fact_source": "transaction",
           "operator": "==",
           "value": "operating_lease_or_other_use_of_equipment"
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
         }
       ],
       "effect": "rate",

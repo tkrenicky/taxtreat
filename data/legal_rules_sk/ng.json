@@ -48,7 +48,7 @@
           "fact": "ownership_percent",
           "fact_source": "transaction",
           "operator": ">=",
-          "value": 10.0
+          "value": 10
         }
       ],
       "effect": "rate",
@@ -80,7 +80,7 @@
       "legal_layer": "treaty",
       "article": "9",
       "paragraph": null,
-      "rate": 15.0,
+      "rate": 15,
       "priority": 600,
       "conditions": [
         {
@@ -125,7 +125,7 @@
       "legal_layer": "treaty",
       "article": "10",
       "paragraph": null,
-      "rate": 0.0,
+      "rate": 0,
       "priority": 700,
       "conditions": [
         {
@@ -177,7 +177,7 @@
       "legal_layer": "treaty",
       "article": "10",
       "paragraph": null,
-      "rate": 15.0,
+      "rate": 15,
       "priority": 600,
       "conditions": [
         {
@@ -228,7 +228,7 @@
       "legal_layer": "treaty",
       "article": "11",
       "paragraph": null,
-      "rate": 10.0,
+      "rate": 10,
       "priority": 600,
       "conditions": [
         {
@@ -242,6 +242,12 @@
           "fact_source": "transaction",
           "operator": "==",
           "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
         }
       ],
       "effect": "rate",
