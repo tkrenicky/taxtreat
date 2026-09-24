@@ -1871,6 +1871,50 @@ def _es_gb_royalty_branches(scope: dict, article_text: str) -> list[dict] | None
     return branches
 
 
+
+def _om_royalty_branches(scope: dict, article_text: str) -> list[dict] | None:
+    """Materialize Oman's treaty-specific royalty legal conditions explicitly."""
+    if scope.get("recipient_country") != "OM":
+        return None
+
+    text = article_text.lower()
+    candidate_rates = {
+        float(row["rate_percent"])
+        for row in scope.get("rate_candidates", [])
+        if row.get("rate_percent") is not None
+    }
+    required = (
+        "nepresiahne 10 % hrubej sumy licenčných poplatkov",
+        "podnikateľské činnosti uvedené v článku 7 ods. 1 písm. c)",
+        "hlavným účelom alebo jedným z hlavných účelov",
+        "bolo zneužitie tohto článku",
+    )
+    if 10.0 not in candidate_rates or not all(token in text for token in required):
+        return None
+
+    common = _royalty_source_conditions(scope, {"article_text": article_text})
+    return [{
+        "rate": 10.0,
+        "priority": 705,
+        "conditions": [
+            *common,
+            {
+                "fact": "om_royalty_connected_to_article_7_1_c_activity",
+                "fact_source": "determination",
+                "operator": "==",
+                "value": False,
+            },
+            {
+                "fact": "om_royalty_main_purpose_abuse",
+                "fact_source": "determination",
+                "operator": "==",
+                "value": False,
+            },
+        ],
+        "suffix": "ROYALTY-OM-SOURCE-10-SPECIAL-CONDITIONS",
+    }]
+
+
 def _second_wave_royalty_branches(scope: dict, article_text: str) -> list[dict] | None:
     """Materialize source-explicit royalty splits missed by the first category audit."""
     country = scope.get("recipient_country")
@@ -2132,6 +2176,10 @@ def royalty_branches(scope: dict, article: dict) -> list[dict] | None:
     if es_gb:
         return es_gb
 
+    om_style = _om_royalty_branches(scope, text)
+    if om_style:
+        return om_style
+
     second_wave = _second_wave_royalty_branches(scope, text)
     if second_wave:
         return second_wave
@@ -2332,10 +2380,16 @@ def main() -> int:
                     tax_treatment=branch.get("tax_treatment"),
                 ))
             materialized.append(f"SK-{country}-{income}")
-            materialization_modes[
-                "source_text_royalty_category_branches" if len(branches) > 1
-                else "source_text_royalty_residence_only"
-            ] += 1
+            if any(
+                str(branch.get("suffix") or "").startswith("ROYALTY-OM-")
+                for branch in branches
+            ):
+                materialization_modes["source_text_royalty_special_conditions"] += 1
+            else:
+                materialization_modes[
+                    "source_text_royalty_category_branches" if len(branches) > 1
+                    else "source_text_royalty_residence_only"
+                ] += 1
             continue
 
         safe_simple = is_safe_simple(scope, article)
