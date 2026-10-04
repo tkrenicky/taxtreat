@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "source_country": "AT",
+  "status": "multilingual_verified_provision_store_not_released",
+  "purpose": "Persistent canonical storage for legally selected Austrian outbound treaty wording used by future Step 4 web outputs. Machine acquisition candidates must never be materialized here without controlling-text and language-authority adjudication.",
+  "key_format": "AT-<partner_iso>|treaty|<article>|<language>",
+  "required_languages": [
+    "de",
+    "en"
+  ],
+  "provisions": {},
+  "materialization_policy": {
+    "controlling_text_selected_required": true,
+    "language_authority_review_completed_required": true,
+    "official_source_url_required": true,
+    "official_source_sha256_required": true,
+    "canonical_text_sha256_required": true,
+    "authority_status_required": true,
+    "machine_translation_must_not_be_marked_authentic": true,
+    "translated_english_must_reference_selected_source_text_sha256": true,
+    "translated_english_must_be_marked_translation": true,
+    "step4_web_wording_release_requires_persistent_record": true,
+    "automatic_machine_candidate_materialization_forbidden": true
+  },
+  "release_state": {
+    "verified_provision_count": 0,
+    "german_provision_count": 0,
+    "english_provision_count": 0,
+    "translated_english_provision_count": 0,
+    "step4_wording_released": false
+  }
+}
