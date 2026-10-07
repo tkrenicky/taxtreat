@@ -545,6 +545,13 @@ def _exceptional_dividend_allocation_branches(scope: dict, article: dict) -> lis
     return None
 
 
+def dividend_requires_explicit_branch(scope: dict) -> bool:
+    return (
+        scope.get("income_type") == "dividend"
+        and scope.get("recipient_country") == "OM"
+    )
+
+
 def _om_dividend_branches(scope: dict, article: dict) -> list[dict] | None:
     if scope.get("income_type") != "dividend" or scope.get("recipient_country") != "OM":
         return None
@@ -2466,11 +2473,9 @@ def main() -> int:
                 ] += 1
             continue
 
-        dividend_requires_explicit_branch = (
-            income == "dividend" and country == "OM"
-        )
+        explicit_dividend_branch_required = dividend_requires_explicit_branch(scope)
         safe_simple = is_safe_simple(scope, article)
-        if dividend_requires_explicit_branch:
+        if explicit_dividend_branch_required:
             safe_simple = False
         if royalty_requires_explicit_branch(scope):
             # The independent royalty audit identifies these treaty
@@ -2483,7 +2488,7 @@ def main() -> int:
 
         if (
             not safe_simple
-            and not dividend_requires_explicit_branch
+            and not explicit_dividend_branch_required
             and _source_text_residence_only(article)
         ):
             grouped[country].append(_make_rule(
@@ -2509,7 +2514,7 @@ def main() -> int:
 
         word_rate = (
             None
-            if dividend_requires_explicit_branch
+            if explicit_dividend_branch_required
             else _single_word_percent_rate(scope, article)
         )
         if word_rate is not None:
