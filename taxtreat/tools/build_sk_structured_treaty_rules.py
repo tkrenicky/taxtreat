@@ -1003,6 +1003,29 @@ def _categories_for_rate_clause(article_text: str, clause: str) -> list[str]:
     return categories
 
 
+def _article_7_1_c_connection_guard(scope: dict, article_text: str) -> dict | None:
+    country = scope.get("recipient_country")
+    if country not in {"ID", "VN"}:
+        return None
+
+    text = article_text.lower()
+    if not (
+        "článku 7 ods. 1 písm. c)" in text
+        and (
+            "obchodné činnosti uvedené v článku 7 ods. 1 písm. c)" in text
+            or "podnikateľské činnosti uvedené v článku 7 ods. 1 písm. c)" in text
+        )
+    ):
+        return None
+
+    return {
+        "fact": "royalty_connected_to_article_7_1_c_activity",
+        "fact_source": "determination",
+        "operator": "==",
+        "value": False,
+    }
+
+
 def _br_vn_royalty_secondary_branches(scope: dict, article_text: str) -> list[dict] | None:
     """Preserve treaty-specific splits hidden inside the broad industrial-IP UI bucket."""
     country = scope.get("recipient_country")
@@ -1016,6 +1039,11 @@ def _br_vn_royalty_secondary_branches(scope: dict, article_text: str) -> list[di
         if row.get("rate_percent") is not None
     }
     common = conditions(scope)
+    article_7_1_c_guard = _article_7_1_c_connection_guard(scope, article_text)
+    if country == "VN":
+        if article_7_1_c_guard is None:
+            return None
+        common = [*common, article_7_1_c_guard]
     industrial = ROYALTY_UI_CATEGORIES["industrial_ip"]
 
     patent_process = "patent_design_model_plan_secret_formula_or_process"
@@ -1480,6 +1508,10 @@ def _id_royalty_branches(scope: dict, article_text: str) -> list[dict] | None:
         return None
 
     common = conditions(scope)
+    article_7_1_c_guard = _article_7_1_c_connection_guard(scope, article_text)
+    if article_7_1_c_guard is None:
+        return None
+    common = [*common, article_7_1_c_guard]
     branches = [{
         "rate": 10.0,
         "priority": 720,

@@ -185,7 +185,7 @@
       "legal_layer": "treaty",
       "article": "10",
       "paragraph": null,
-      "rate": 10.0,
+      "rate": 10,
       "priority": 600,
       "conditions": [
         {
@@ -236,7 +236,7 @@
       "legal_layer": "treaty",
       "article": "10",
       "paragraph": null,
-      "rate": 5.0,
+      "rate": 5,
       "priority": 650,
       "conditions": [
         {
@@ -277,7 +277,7 @@
           "fact": "ownership_percent",
           "fact_source": "transaction",
           "operator": ">=",
-          "value": 70.0
+          "value": 70
         }
       ],
       "effect": "rate",
@@ -481,7 +481,7 @@
       "legal_layer": "treaty",
       "article": "11",
       "paragraph": null,
-      "rate": 10.0,
+      "rate": 10,
       "priority": 600,
       "conditions": [
         {
@@ -538,7 +538,7 @@
       "legal_layer": "treaty",
       "article": "11",
       "paragraph": null,
-      "rate": 0.0,
+      "rate": 0,
       "priority": 700,
       "conditions": [
         {
@@ -768,7 +768,7 @@
       "legal_layer": "treaty",
       "article": "12",
       "paragraph": null,
-      "rate": 15.0,
+      "rate": 15,
       "priority": 680,
       "conditions": [
         {
@@ -794,6 +794,12 @@
           "fact_source": "transaction",
           "operator": "==",
           "value": "copyright_literary_artistic_scientific_nonfilm_nonsoftware"
+        },
+        {
+          "fact": "royalty_connected_to_article_7_1_c_activity",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": false
         }
       ],
       "effect": "rate",
@@ -825,7 +831,7 @@
       "legal_layer": "treaty",
       "article": "12",
       "paragraph": null,
-      "rate": 15.0,
+      "rate": 15,
       "priority": 680,
       "conditions": [
         {
@@ -851,6 +857,12 @@
           "fact_source": "transaction",
           "operator": "==",
           "value": "cinematographic_films_or_broadcast_media"
+        },
+        {
+          "fact": "royalty_connected_to_article_7_1_c_activity",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": false
         }
       ],
       "effect": "rate",
@@ -882,7 +894,7 @@
       "legal_layer": "treaty",
       "article": "12",
       "paragraph": null,
-      "rate": 15.0,
+      "rate": 15,
       "priority": 680,
       "conditions": [
         {
@@ -908,6 +920,12 @@
           "fact_source": "transaction",
           "operator": "==",
           "value": "computer_software"
+        },
+        {
+          "fact": "royalty_connected_to_article_7_1_c_activity",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": false
         }
       ],
       "effect": "rate",
@@ -939,7 +957,7 @@
       "legal_layer": "treaty",
       "article": "12",
       "paragraph": null,
-      "rate": 15.0,
+      "rate": 15,
       "priority": 680,
       "conditions": [
         {
@@ -965,6 +983,12 @@
           "fact_source": "transaction",
           "operator": "==",
           "value": "other"
+        },
+        {
+          "fact": "royalty_connected_to_article_7_1_c_activity",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": false
         }
       ],
       "effect": "rate",
@@ -996,7 +1020,7 @@
       "legal_layer": "treaty",
       "article": "12",
       "paragraph": null,
-      "rate": 5.0,
+      "rate": 5,
       "priority": 690,
       "conditions": [
         {
@@ -1022,6 +1046,12 @@
           "fact_source": "transaction",
           "operator": "==",
           "value": "financial_lease_of_equipment"
+        },
+        {
+          "fact": "royalty_connected_to_article_7_1_c_activity",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": false
         }
       ],
       "effect": "rate",
@@ -1053,7 +1083,7 @@
       "legal_layer": "treaty",
       "article": "12",
       "paragraph": null,
-      "rate": 5.0,
+      "rate": 5,
       "priority": 690,
       "conditions": [
         {
@@ -1079,6 +1109,12 @@
           "fact_source": "transaction",
           "operator": "==",
           "value": "operating_lease_or_other_use_of_equipment"
+        },
+        {
+          "fact": "royalty_connected_to_article_7_1_c_activity",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": false
         }
       ],
       "effect": "rate",
@@ -1110,7 +1146,7 @@
       "legal_layer": "treaty",
       "article": "12",
       "paragraph": null,
-      "rate": 5.0,
+      "rate": 5,
       "priority": 710,
       "conditions": [
         {
@@ -1145,6 +1181,12 @@
             "patent_design_model_plan_secret_formula_or_process",
             "industrial_or_scientific_knowhow"
           ]
+        },
+        {
+          "fact": "royalty_connected_to_article_7_1_c_activity",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": false
         }
       ],
       "effect": "rate",
@@ -1176,7 +1218,7 @@
       "legal_layer": "treaty",
       "article": "12",
       "paragraph": null,
-      "rate": 10.0,
+      "rate": 10,
       "priority": 710,
       "conditions": [
         {
@@ -1211,6 +1253,12 @@
             "trademark",
             "commercial_knowhow"
           ]
+        },
+        {
+          "fact": "royalty_connected_to_article_7_1_c_activity",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": false
         }
       ],
       "effect": "rate",
