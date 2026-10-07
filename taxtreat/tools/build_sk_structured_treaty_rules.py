@@ -2403,7 +2403,13 @@ def main() -> int:
                     tax_treatment=branch.get("tax_treatment"),
                 ))
             materialized.append(f"SK-{country}-{income}")
-            materialization_modes["source_text_dividend_branch_pair"] += 1
+            if any(
+                str(branch.get("suffix") or "").startswith("DIVIDEND-OM-")
+                for branch in branches
+            ):
+                materialization_modes["source_text_dividend_special_conditions"] += 1
+            else:
+                materialization_modes["source_text_dividend_branch_pair"] += 1
             continue
 
         branches = interest_branches(scope, article)
