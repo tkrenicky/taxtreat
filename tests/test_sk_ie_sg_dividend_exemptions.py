@@ -78,7 +78,7 @@ def test_ie_dividend_exemption_is_explicit_and_fail_closed():
     assert [row["rate"] for row in rows] == [0.0, 10.0]
     assert _condition(rows[0], "ie_dividend_direct_25_voting_exemption")["value"] is True
     assert _condition(rows[1], "ie_dividend_direct_25_voting_exemption")["value"] is False
-    assert rows[0]["tax_treatment"] == "source_state_exemption"
+    assert rows[0]["tax_treatment"] == "exclusive_foreign_taxation"
 
     static = _static("IE")
     assert len(static) == 2
@@ -95,7 +95,7 @@ def test_sg_government_exemption_is_explicit_and_ordinary_rates_require_false():
     rows = built["rows"]
     assert [row["rate"] for row in rows] == [0.0, 5.0, 10.0]
     assert _condition(rows[0], "sg_dividend_recipient_is_treaty_government")["value"] is True
-    assert rows[0]["tax_treatment"] == "source_state_exemption"
+    assert rows[0]["tax_treatment"] == "exclusive_foreign_taxation"
     assert all(
         _condition(row, "sg_dividend_recipient_is_treaty_government")["value"] is False
         for row in rows[1:]
