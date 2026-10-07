@@ -545,7 +545,43 @@ def _exceptional_dividend_allocation_branches(scope: dict, article: dict) -> lis
     return None
 
 
+def _om_dividend_branches(scope: dict, article: dict) -> list[dict] | None:
+    if scope.get("income_type") != "dividend" or scope.get("recipient_country") != "OM":
+        return None
+    if not scope.get("source_sha256"):
+        return None
+
+    text = str(article.get("article_text") or "").lower()
+    required = (
+        "môžu sa zdaniť len v tom druhom zmluvnom štáte",
+        "hlavným účelom alebo jedným z hlavných účelov",
+        "zneužitie tohto článku",
+    )
+    if not all(token in text for token in required):
+        return None
+
+    return [{
+        "rate": 0.0,
+        "priority": 705,
+        "conditions": [
+            *conditions(scope),
+            {
+                "fact": "om_dividend_main_purpose_abuse",
+                "fact_source": "determination",
+                "operator": "==",
+                "value": False,
+            },
+        ],
+        "tax_treatment": "exclusive_foreign_taxation",
+        "suffix": "DIVIDEND-OM-RESIDENCE-ONLY-MAIN-PURPOSE-GUARD",
+    }]
+
+
 def dividend_branches(scope: dict, article: dict) -> list[dict] | None:
+    om_branches = _om_dividend_branches(scope, article)
+    if om_branches:
+        return om_branches
+
     if scope.get("income_type") != "dividend":
         return None
 
