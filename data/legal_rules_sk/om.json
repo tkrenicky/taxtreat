@@ -5,7 +5,7 @@
   },
   "rules": [
     {
-      "rule_id": "SK-OM-DIVIDEND-TREATY-DIVIDEND-SOURCE-TEXT-RESIDENCE-ONLY",
+      "rule_id": "SK-OM-DIVIDEND-TREATY-DIVIDEND-OM-RESIDENCE-ONLY-MAIN-PURPOSE-GUARD",
       "income_type": "dividend",
       "source_country": "SK",
       "recipient_country": "OM",
@@ -14,7 +14,7 @@
       "article": "10",
       "paragraph": null,
       "rate": 0,
-      "priority": 650,
+      "priority": 705,
       "conditions": [
         {
           "fact": "recipient_is_treaty_resident",
@@ -31,6 +31,12 @@
         {
           "fact": "permanent_establishment_connection",
           "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        },
+        {
+          "fact": "om_dividend_main_purpose_abuse",
+          "fact_source": "determination",
           "operator": "==",
           "value": false
         }

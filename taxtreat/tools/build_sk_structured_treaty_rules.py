@@ -545,7 +545,50 @@ def _exceptional_dividend_allocation_branches(scope: dict, article: dict) -> lis
     return None
 
 
+def dividend_requires_explicit_branch(scope: dict) -> bool:
+    return (
+        scope.get("income_type") == "dividend"
+        and scope.get("recipient_country") == "OM"
+    )
+
+
+def _om_dividend_branches(scope: dict, article: dict) -> list[dict] | None:
+    if scope.get("income_type") != "dividend" or scope.get("recipient_country") != "OM":
+        return None
+    if not scope.get("source_sha256"):
+        return None
+
+    text = str(article.get("article_text") or "").lower()
+    required = (
+        "môžu sa zdaniť len v tom druhom zmluvnom štáte",
+        "hlavným účelom alebo jedným z hlavných účelov",
+        "zneužitie tohto článku",
+    )
+    if not all(token in text for token in required):
+        return None
+
+    return [{
+        "rate": 0.0,
+        "priority": 705,
+        "conditions": [
+            *conditions(scope),
+            {
+                "fact": "om_dividend_main_purpose_abuse",
+                "fact_source": "determination",
+                "operator": "==",
+                "value": False,
+            },
+        ],
+        "tax_treatment": "exclusive_foreign_taxation",
+        "suffix": "DIVIDEND-OM-RESIDENCE-ONLY-MAIN-PURPOSE-GUARD",
+    }]
+
+
 def dividend_branches(scope: dict, article: dict) -> list[dict] | None:
+    om_branches = _om_dividend_branches(scope, article)
+    if om_branches:
+        return om_branches
+
     if scope.get("income_type") != "dividend":
         return None
 
@@ -2367,7 +2410,13 @@ def main() -> int:
                     tax_treatment=branch.get("tax_treatment"),
                 ))
             materialized.append(f"SK-{country}-{income}")
-            materialization_modes["source_text_dividend_branch_pair"] += 1
+            if any(
+                str(branch.get("suffix") or "").startswith("DIVIDEND-OM-")
+                for branch in branches
+            ):
+                materialization_modes["source_text_dividend_special_conditions"] += 1
+            else:
+                materialization_modes["source_text_dividend_branch_pair"] += 1
             continue
 
         branches = interest_branches(scope, article)
@@ -2424,7 +2473,10 @@ def main() -> int:
                 ] += 1
             continue
 
+        explicit_dividend_branch_required = dividend_requires_explicit_branch(scope)
         safe_simple = is_safe_simple(scope, article)
+        if explicit_dividend_branch_required:
+            safe_simple = False
         if royalty_requires_explicit_branch(scope):
             # The independent royalty audit identifies these treaty
             # relationships as requiring an explicit branch because of
@@ -2434,7 +2486,11 @@ def main() -> int:
             # machine rate candidate exists. Keep it fail-closed instead.
             safe_simple = False
 
-        if not safe_simple and _source_text_residence_only(article):
+        if (
+            not safe_simple
+            and not explicit_dividend_branch_required
+            and _source_text_residence_only(article)
+        ):
             grouped[country].append(_make_rule(
                 scope=scope,
                 article=article,
@@ -2456,7 +2512,11 @@ def main() -> int:
             materialization_modes["source_text_explicit_residence_only"] += 1
             continue
 
-        word_rate = _single_word_percent_rate(scope, article)
+        word_rate = (
+            None
+            if explicit_dividend_branch_required
+            else _single_word_percent_rate(scope, article)
+        )
         if word_rate is not None:
             grouped[country].append(_make_rule(
                 scope=scope,
