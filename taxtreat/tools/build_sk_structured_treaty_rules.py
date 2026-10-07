@@ -517,7 +517,7 @@ def _special_dividend_exemption_branches(scope: dict, article: dict) -> list[dic
                 "rate": 0.0,
                 "priority": 720,
                 "conditions": [*common, exemption],
-                "tax_treatment": "source_state_exemption",
+                "tax_treatment": "exclusive_foreign_taxation",
                 "suffix": "DIVIDEND-IE-DIRECT-25-VOTING-EXEMPT",
             },
             {
@@ -574,7 +574,7 @@ def _special_dividend_exemption_branches(scope: dict, article: dict) -> list[dic
                 "rate": 0.0,
                 "priority": 730,
                 "conditions": [resident, government],
-                "tax_treatment": "source_state_exemption",
+                "tax_treatment": "exclusive_foreign_taxation",
                 "suffix": "DIVIDEND-SG-GOVERNMENT-EXEMPT",
             },
             {
