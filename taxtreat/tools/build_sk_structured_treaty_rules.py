@@ -2517,7 +2517,9 @@ def main() -> int:
                 ))
             materialized.append(f"SK-{country}-{income}")
             if any(
-                str(branch.get("suffix") or "").startswith("DIVIDEND-OM-")
+                str(branch.get("suffix") or "").startswith(
+                    ("DIVIDEND-IE-", "DIVIDEND-OM-", "DIVIDEND-SG-")
+                )
                 for branch in branches
             ):
                 materialization_modes["source_text_dividend_special_conditions"] += 1
