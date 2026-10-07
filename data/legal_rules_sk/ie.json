@@ -263,7 +263,7 @@
       ]
     },
     {
-      "rule_id": "SK-IE-DIVIDEND-TREATY-SIMPLE-1",
+      "rule_id": "SK-IE-DIVIDEND-TREATY-DIVIDEND-IE-DIRECT-25-VOTING-EXEMPT",
       "income_type": "dividend",
       "source_country": "SK",
       "recipient_country": "IE",
@@ -271,8 +271,8 @@
       "legal_layer": "treaty",
       "article": "10",
       "paragraph": null,
-      "rate": 10.0,
-      "priority": 600,
+      "rate": 0,
+      "priority": 720,
       "conditions": [
         {
           "fact": "recipient_is_treaty_resident",
@@ -289,6 +289,70 @@
         {
           "fact": "permanent_establishment_connection",
           "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        },
+        {
+          "fact": "ie_dividend_direct_25_voting_exemption",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "rate",
+      "effective_from": "1999-12-30",
+      "verification_status": "needs_review",
+      "source_text": "Článok 10 Dividendy 1. Dividendy vyplácané spoločnosťou, ktorá je rezidentom jedného zmluvného štátu, rezidentovi druhého zmluvného štátu, možno zdaniť v tomto druhom štáte. 2. S výnimkou odseku 3 možno tieto dividendy zdaniť aj v zmluvnom štáte, ktorého rezidentom je spoločnosť, ktorá ich vypláca, a to podľa právnych predpisov tohto štátu, ale ak je skutočný vlastník dividend rezidentom druhého zmluvného štátu, daň takto stanovená nepresiahne 10 percent hrubej sumy dividend. 3. Dividendy vyplácané spoločnosťou, ktorá je rezidentom zmluvného štátu, sú oslobodené od akejkoľvek dane z dividend v tomto štáte, ak skutočný vlastník dividend je rezidentom druhého zmluvného štátu, ktorý priamo vlastní najmenej 25 percent hlasovacích práv spoločnosti vyplácajúcej dividendy. 4. Ustanovenia odsekov 2 a 3 sa nedotýkajú zdanenia ziskov spoločnosti, z ktorých sa dividendy vyplácajú. 5. Výraz „dividendy“ použitý v tomto článku označuje príjmy zo všetkých druhov akcií alebo z iných práv s výnimkou pohľadávok, z podielov na zisku, ako aj akýkoľvek iný príjem alebo rozdelenie, ktoré je postavené na úroveň príjmov z akcií podľa daňových predpisov toho zmluvného štátu, ktorého spoločnosť vyplácajúca príjem alebo rozdelenie je rezidentom. 6. Ustanovenia odsekov 1, 2 a 3 sa nepoužijú, ak skutočný vlastník dividend, ktorý je rezidentom jedného zmluvného štátu, vykonáva v druhom zmluvnom štáte, ktorého rezidentom je spoločnosť vyplácajúca dividendy, podnikateľskú činnosť prostredníctvom stálej prevádzkarne, ktorá je tam umiestnená, alebo ak vykonáva v tomto druhom štáte nezávislé povolanie zo stálej základne tam umiestnenej a účasť, pre ktorú sa dividendy vyplácajú, sa skutočne viaže na túto stálu prevádzkareň alebo na túto stálu základňu. V takom prípade sa podľa okolností použijú ustanovenia článku 7 alebo 14 . 7. Ak spoločnosť, ktorá je rezidentom jedného zmluvného štátu, dosahuje zisky alebo príjmy z druhého zmluvného štátu, nemôže tento druhý štát zdaniť dividendy vyplácané spoločnosťou s výnimkou prípadov, ak sa tieto dividendy vyplácajú rezidentovi tohto druhého štátu alebo ak účasť, pre ktorú sa dividendy vyplácajú, sa skutočne viaže na stálu prevádzkareň alebo na stálu základňu, ktorá je umiestnená v tomto druhom štáte, a nemôže zdaniť ani nerozdelené zisky spoločnosti daňou z nerozdelených ziskov, aj keď vyplácané dividendy alebo nerozdelené zisky pozostávajú úplne alebo sčasti zo ziskov alebo z príjmov dosiahnutých v tomto druhom štáte.",
+      "source_id": "SK-SLOVLEX-6B39EE9F51371665",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/2000/365/vyhlasene_znenie.html",
+      "source_excerpt_hash": "a85eb7843605732f2d239c0eb18369972ee4418069341f634acb470ef3e95ae8",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-6B39EE9F51371665"
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true,
+      "tax_treatment": "source_state_exemption"
+    },
+    {
+      "rule_id": "SK-IE-DIVIDEND-TREATY-DIVIDEND-IE-OTHER",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "IE",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "10",
+      "paragraph": null,
+      "rate": 10,
+      "priority": 610,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "beneficial_owner",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "permanent_establishment_connection",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        },
+        {
+          "fact": "ie_dividend_direct_25_voting_exemption",
+          "fact_source": "determination",
           "operator": "==",
           "value": false
         }
@@ -580,7 +644,7 @@
       "legal_layer": "treaty",
       "article": "11",
       "paragraph": null,
-      "rate": 0.0,
+      "rate": 0,
       "priority": 650,
       "conditions": [
         {
@@ -890,7 +954,7 @@
       "legal_layer": "treaty",
       "article": "12",
       "paragraph": null,
-      "rate": 0.0,
+      "rate": 0,
       "priority": 680,
       "conditions": [
         {
@@ -948,7 +1012,7 @@
       "legal_layer": "treaty",
       "article": "12",
       "paragraph": null,
-      "rate": 0.0,
+      "rate": 0,
       "priority": 680,
       "conditions": [
         {
@@ -1006,7 +1070,7 @@
       "legal_layer": "treaty",
       "article": "12",
       "paragraph": null,
-      "rate": 10.0,
+      "rate": 10,
       "priority": 680,
       "conditions": [
         {
