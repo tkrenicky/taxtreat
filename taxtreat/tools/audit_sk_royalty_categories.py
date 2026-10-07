@@ -49,8 +49,13 @@ KNOWN_ADDITIONAL_DISCRIMINATORS: dict[str, tuple[str, ...]] = {
     "BR": ("trademark_vs_other_industrial_ip", "historical_related_party_transition_clause"),
     "BY": ("transport_vehicles",),
     "FI": ("copyright_exclusive_residence_treatment", "financial_vs_operating_equipment_lease"),
+    "ID": ("article_7_1_c_business_activity_connection",),
     "TN": ("technical_or_economic_studies", "technical_assistance"),
-    "VN": ("trademark_vs_patent_design_process", "commercial_vs_industrial_or_scientific_knowhow"),
+    "VN": (
+        "trademark_vs_patent_design_process",
+        "commercial_vs_industrial_or_scientific_knowhow",
+        "article_7_1_c_business_activity_connection",
+    ),
 }
 
 def category_sensitive_royalty_requires_explicit_branch(scope: dict[str, Any]) -> bool:
