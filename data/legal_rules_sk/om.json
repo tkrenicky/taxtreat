@@ -13,7 +13,7 @@
       "legal_layer": "treaty",
       "article": "10",
       "paragraph": null,
-      "rate": 0.0,
+      "rate": 0,
       "priority": 650,
       "conditions": [
         {
@@ -65,7 +65,7 @@
       "legal_layer": "treaty",
       "article": "11",
       "paragraph": null,
-      "rate": 0.0,
+      "rate": 0,
       "priority": 700,
       "conditions": [
         {
@@ -123,7 +123,7 @@
       "legal_layer": "treaty",
       "article": "11",
       "paragraph": null,
-      "rate": 10.0,
+      "rate": 10,
       "priority": 600,
       "conditions": [
         {
@@ -172,7 +172,7 @@
       "automatic_production_approval_forbidden": true
     },
     {
-      "rule_id": "SK-OM-ROYALTY-TREATY-SIMPLE-1",
+      "rule_id": "SK-OM-ROYALTY-TREATY-ROYALTY-OM-SOURCE-10-SPECIAL-CONDITIONS",
       "income_type": "royalty",
       "source_country": "SK",
       "recipient_country": "OM",
@@ -180,8 +180,8 @@
       "legal_layer": "treaty",
       "article": "12",
       "paragraph": null,
-      "rate": 10.0,
-      "priority": 600,
+      "rate": 10,
+      "priority": 705,
       "conditions": [
         {
           "fact": "recipient_is_treaty_resident",
@@ -198,6 +198,18 @@
         {
           "fact": "permanent_establishment_connection",
           "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        },
+        {
+          "fact": "om_royalty_connected_to_article_7_1_c_activity",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": false
+        },
+        {
+          "fact": "om_royalty_main_purpose_abuse",
+          "fact_source": "determination",
           "operator": "==",
           "value": false
         }

@@ -6,6 +6,7 @@ from taxtreat.tools.audit_sk_royalty_categories import (
     CATEGORY_SENSITIVE_REVIEW_COUNTRIES,
     ROYALTY_EXPLICIT_BRANCH_REQUIRED_COUNTRIES,
     SPECIAL_EXEMPTION_REVIEW_COUNTRIES,
+    SPECIAL_LEGAL_CONDITION_REVIEW_COUNTRIES,
     build_audit,
 )
 
@@ -41,11 +42,20 @@ def test_category_sensitive_reconciliation_queue_includes_second_wave_countries(
 def test_explicit_branch_queue_also_captures_ae_public_institution_exemption():
     audit = _audit()
     assert SPECIAL_EXEMPTION_REVIEW_COUNTRIES == ("AE",)
-    assert len(ROYALTY_EXPLICIT_BRANCH_REQUIRED_COUNTRIES) == 26
+    assert len(ROYALTY_EXPLICIT_BRANCH_REQUIRED_COUNTRIES) == 27
     assert audit["special_exemption_review_required_count"] == 1
-    assert audit["explicit_branch_review_required_count"] == 26
+    assert audit["explicit_branch_review_required_count"] == 27
     assert "AE" in audit["explicit_branch_review_required_countries"]
     assert _scope(audit, "AE")["special_exemption_review_required"] is True
+
+
+def test_explicit_branch_queue_captures_oman_special_legal_conditions():
+    audit = _audit()
+    assert SPECIAL_LEGAL_CONDITION_REVIEW_COUNTRIES == ("OM",)
+    assert audit["special_legal_condition_review_required_count"] == 1
+    assert audit["special_legal_condition_review_required_countries"] == ["OM"]
+    assert "OM" in audit["explicit_branch_review_required_countries"]
+    assert _scope(audit, "OM")["special_legal_condition_review_required"] is True
 
 
 def test_finland_requires_precise_lease_and_copyright_semantics():
@@ -118,10 +128,10 @@ def test_cli_writes_fail_closed_audit(tmp_path, monkeypatch, capsys):
     payload = json.loads(output.read_text(encoding="utf-8"))
     assert payload["royalty_scope_count"] == 75
     assert payload["category_review_required_count"] == 25
-    assert payload["explicit_branch_review_required_count"] == 26
+    assert payload["explicit_branch_review_required_count"] == 27
     assert payload["status"] == "royalty_category_audit_not_released"
     stdout = capsys.readouterr().out
-    assert "75 scopes / 26 explicit-branch-review-required" in stdout
+    assert "75 scopes / 27 explicit-branch-review-required" in stdout
 
 
 def test_audit_rejects_category_queue_country_outside_scope(monkeypatch):

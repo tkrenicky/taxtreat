@@ -27,9 +27,14 @@ CATEGORY_SENSITIVE_REVIEW_COUNTRIES = (
 )
 
 SPECIAL_EXEMPTION_REVIEW_COUNTRIES = ("AE",)
+SPECIAL_LEGAL_CONDITION_REVIEW_COUNTRIES = ("OM",)
 
 ROYALTY_EXPLICIT_BRANCH_REQUIRED_COUNTRIES = tuple(dict.fromkeys(
-    (*CATEGORY_SENSITIVE_REVIEW_COUNTRIES, *SPECIAL_EXEMPTION_REVIEW_COUNTRIES)
+    (
+        *CATEGORY_SENSITIVE_REVIEW_COUNTRIES,
+        *SPECIAL_EXEMPTION_REVIEW_COUNTRIES,
+        *SPECIAL_LEGAL_CONDITION_REVIEW_COUNTRIES,
+    )
 ))
 
 KEYWORDS = {
@@ -122,6 +127,7 @@ def build_audit(source: dict[str, Any]) -> dict[str, Any]:
             "multiple_rate_candidates_present": len(rates) > 1,
             "category_projection_review_required": country in CATEGORY_SENSITIVE_REVIEW_COUNTRIES,
             "special_exemption_review_required": country in SPECIAL_EXEMPTION_REVIEW_COUNTRIES,
+            "special_legal_condition_review_required": country in SPECIAL_LEGAL_CONDITION_REVIEW_COUNTRIES,
             "explicit_branch_review_required": country in ROYALTY_EXPLICIT_BRANCH_REQUIRED_COUNTRIES,
             "projection_released": False,
             "legal_review_completed": False,
@@ -155,6 +161,8 @@ def build_audit(source: dict[str, Any]) -> dict[str, Any]:
         "category_review_required_countries": list(CATEGORY_SENSITIVE_REVIEW_COUNTRIES),
         "special_exemption_review_required_count": len(SPECIAL_EXEMPTION_REVIEW_COUNTRIES),
         "special_exemption_review_required_countries": list(SPECIAL_EXEMPTION_REVIEW_COUNTRIES),
+        "special_legal_condition_review_required_count": len(SPECIAL_LEGAL_CONDITION_REVIEW_COUNTRIES),
+        "special_legal_condition_review_required_countries": list(SPECIAL_LEGAL_CONDITION_REVIEW_COUNTRIES),
         "explicit_branch_review_required_count": len(explicit_branch),
         "explicit_branch_review_required_countries": list(ROYALTY_EXPLICIT_BRANCH_REQUIRED_COUNTRIES),
         "policy": {
