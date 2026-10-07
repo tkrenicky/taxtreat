@@ -2,11 +2,8 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-
-from taxtreat.tools.build_sk_structured_treaty_rules import (
-    dividend_branches,
-    dividend_requires_explicit_branch,
-)
+import subprocess
+import sys
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -14,22 +11,56 @@ BASE = ROOT / "data/legal_reviews/sk_outbound"
 RULE_PATH = ROOT / "data/legal_rules_sk/om.json"
 
 
-def _om_scope_and_article() -> tuple[dict, dict]:
-    semantic = json.loads(
-        (BASE / "treaty_semantic_candidates.json").read_text(encoding="utf-8")
+def _generated_om_dividend() -> dict:
+    script = r"""
+import json
+from pathlib import Path
+from taxtreat.tools.build_sk_structured_treaty_rules import (
+    dividend_branches,
+    dividend_requires_explicit_branch,
+)
+
+root = Path.cwd()
+semantic = json.loads(
+    (root / "data/legal_reviews/sk_outbound/treaty_semantic_candidates.json")
+    .read_text(encoding="utf-8")
+)
+articles = json.loads(
+    (root / "data/legal_reviews/sk_outbound/treaty_article_machine_extraction.json")
+    .read_text(encoding="utf-8")
+)
+scope = next(
+    row for row in semantic["scopes"]
+    if row["recipient_country"] == "OM" and row["income_type"] == "dividend"
+)
+article = next(
+    row for row in articles["scopes"]
+    if row["recipient_country"] == "OM" and row["income_type"] == "dividend"
+)
+rows = dividend_branches(scope, article)
+broken_article = {
+    **article,
+    "article_text": article["article_text"].replace(
+        "zneužitie tohto článku", "missing anti-abuse wording"
+    ),
+}
+print(json.dumps({
+    "rows": rows,
+    "explicit_required": dividend_requires_explicit_branch(scope),
+    "other_country_required": dividend_requires_explicit_branch(
+        {**scope, "recipient_country": "AE"}
+    ),
+    "broken_rows": dividend_branches(scope, broken_article),
+}, ensure_ascii=False))
+"""
+    completed = subprocess.run(
+        [sys.executable, "-c", script],
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+        check=True,
     )
-    articles = json.loads(
-        (BASE / "treaty_article_machine_extraction.json").read_text(encoding="utf-8")
-    )
-    scope = next(
-        row for row in semantic["scopes"]
-        if row["recipient_country"] == "OM" and row["income_type"] == "dividend"
-    )
-    article = next(
-        row for row in articles["scopes"]
-        if row["recipient_country"] == "OM" and row["income_type"] == "dividend"
-    )
-    return scope, article
+    return json.loads(completed.stdout)
 
 
 def _condition(row: dict, fact: str) -> dict | None:
@@ -40,8 +71,8 @@ def _condition(row: dict, fact: str) -> dict | None:
 
 
 def test_oman_dividend_builder_requires_main_purpose_abuse_false():
-    scope, article = _om_scope_and_article()
-    rows = dividend_branches(scope, article)
+    built = _generated_om_dividend()
+    rows = built["rows"]
     assert rows is not None
     assert len(rows) == 1
 
@@ -58,19 +89,10 @@ def test_oman_dividend_builder_requires_main_purpose_abuse_false():
 
 
 def test_oman_dividend_is_hard_gated_before_generic_fallbacks():
-    scope, article = _om_scope_and_article()
-    assert dividend_requires_explicit_branch(scope) is True
-    assert dividend_requires_explicit_branch(
-        {**scope, "recipient_country": "AE"}
-    ) is False
-
-    broken_article = {
-        **article,
-        "article_text": article["article_text"].replace(
-            "zneužitie tohto článku", "missing anti-abuse wording"
-        ),
-    }
-    assert dividend_branches(scope, broken_article) is None
+    built = _generated_om_dividend()
+    assert built["explicit_required"] is True
+    assert built["other_country_required"] is False
+    assert built["broken_rows"] is None
 
 
 def test_oman_static_dividend_runtime_contains_main_purpose_guard():
