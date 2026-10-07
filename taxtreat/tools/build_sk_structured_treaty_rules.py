@@ -2466,7 +2466,12 @@ def main() -> int:
                 ] += 1
             continue
 
+        dividend_requires_explicit_branch = (
+            income == "dividend" and country == "OM"
+        )
         safe_simple = is_safe_simple(scope, article)
+        if dividend_requires_explicit_branch:
+            safe_simple = False
         if royalty_requires_explicit_branch(scope):
             # The independent royalty audit identifies these treaty
             # relationships as requiring an explicit branch because of
@@ -2476,7 +2481,11 @@ def main() -> int:
             # machine rate candidate exists. Keep it fail-closed instead.
             safe_simple = False
 
-        if not safe_simple and _source_text_residence_only(article):
+        if (
+            not safe_simple
+            and not dividend_requires_explicit_branch
+            and _source_text_residence_only(article)
+        ):
             grouped[country].append(_make_rule(
                 scope=scope,
                 article=article,
@@ -2498,7 +2507,11 @@ def main() -> int:
             materialization_modes["source_text_explicit_residence_only"] += 1
             continue
 
-        word_rate = _single_word_percent_rate(scope, article)
+        word_rate = (
+            None
+            if dividend_requires_explicit_branch
+            else _single_word_percent_rate(scope, article)
+        )
         if word_rate is not None:
             grouped[country].append(_make_rule(
                 scope=scope,
