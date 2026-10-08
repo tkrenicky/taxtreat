@@ -124,5 +124,5 @@ def test_materialization_summary_tracks_oman_dividend_special_condition():
         .read_text(encoding="utf-8")
     )
     modes = summary["materialization_modes"]
-    assert modes["source_text_dividend_special_conditions"] == 3
+    assert modes["source_text_dividend_special_conditions"] == 5
     assert modes["source_text_explicit_residence_only"] == 6
