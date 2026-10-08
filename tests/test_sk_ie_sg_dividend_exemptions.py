@@ -117,6 +117,6 @@ def test_summary_tracks_three_dividend_special_condition_scopes():
         .read_text(encoding="utf-8")
     )
     modes = summary["materialization_modes"]
-    assert modes["source_text_dividend_special_conditions"] == 3
+    assert modes["source_text_dividend_special_conditions"] == 5
     assert modes["simple_single_rate"] == 86
     assert modes["source_text_dividend_branch_pair"] == 42
