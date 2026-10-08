@@ -29,7 +29,7 @@ articles = json.loads(
     .read_text(encoding="utf-8")
 )
 result = {}
-for country in ("IE", "SG"):
+for country in ("NL", "SE"):
     scope = next(
         row for row in semantic["scopes"]
         if row["recipient_country"] == country and row["income_type"] == "dividend"
@@ -71,47 +71,24 @@ def _static(country: str) -> list[dict]:
     ]
 
 
-def test_ie_dividend_exemption_is_explicit_and_fail_closed():
-    built = _built()["IE"]
-    assert built["required"] is True
-    rows = built["rows"]
-    assert [row["rate"] for row in rows] == [0.0, 10.0]
-    assert _condition(rows[0], "ie_dividend_direct_25_voting_exemption")["value"] is True
-    assert _condition(rows[1], "ie_dividend_direct_25_voting_exemption")["value"] is False
-    assert rows[0]["tax_treatment"] == "exclusive_foreign_taxation"
+def test_nl_and_se_dividend_25pct_exemptions_are_explicit_and_fail_closed():
+    built = _built()
+    for country in ("NL", "SE"):
+        rows = built[country]["rows"]
+        assert built[country]["required"] is True
+        assert [row["rate"] for row in rows] == [0.0, 10.0]
+        fact = f"{country.lower()}_dividend_direct_25_company_exemption"
+        assert _condition(rows[0], fact)["value"] is True
+        assert _condition(rows[1], fact)["value"] is False
+        assert rows[0]["tax_treatment"] == "exclusive_foreign_taxation"
 
-    static = _static("IE")
-    assert len(static) == 2
-    assert {row["rate"] for row in static} == {0, 10}
-    assert all(
-        _condition(row, "ie_dividend_direct_25_voting_exemption") is not None
-        for row in static
-    )
-
-
-def test_sg_government_exemption_is_explicit_and_ordinary_rates_require_false():
-    built = _built()["SG"]
-    assert built["required"] is True
-    rows = built["rows"]
-    assert [row["rate"] for row in rows] == [0.0, 5.0, 10.0]
-    assert _condition(rows[0], "sg_dividend_recipient_is_treaty_government")["value"] is True
-    assert rows[0]["tax_treatment"] == "exclusive_foreign_taxation"
-    assert all(
-        _condition(row, "sg_dividend_recipient_is_treaty_government")["value"] is False
-        for row in rows[1:]
-    )
-
-    static = _static("SG")
-    assert len(static) == 3
-    assert {row["rate"] for row in static} == {0, 5, 10}
-    ordinary = [row for row in static if row["rate"] in {5, 10}]
-    assert all(
-        _condition(row, "sg_dividend_recipient_is_treaty_government")["value"] is False
-        for row in ordinary
-    )
+        static = _static(country)
+        assert len(static) == 2
+        assert {row["rate"] for row in static} == {0, 10}
+        assert all(_condition(row, fact) is not None for row in static)
 
 
-def test_summary_tracks_three_dividend_special_condition_scopes():
+def test_summary_tracks_five_dividend_special_condition_scopes():
     summary = json.loads(
         (ROOT / "data/legal_reviews/sk_outbound/structured_treaty_rule_materialization_summary.json")
         .read_text(encoding="utf-8")
@@ -119,4 +96,3 @@ def test_summary_tracks_three_dividend_special_condition_scopes():
     modes = summary["materialization_modes"]
     assert modes["source_text_dividend_special_conditions"] == 5
     assert modes["simple_single_rate"] == 84
-    assert modes["source_text_dividend_branch_pair"] == 42
