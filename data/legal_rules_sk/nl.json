@@ -306,7 +306,53 @@
       ]
     },
     {
-      "rule_id": "SK-NL-DIVIDEND-TREATY-SIMPLE-1",
+      "rule_id": "SK-NL-DIVIDEND-TREATY-DIVIDEND-NL-DIRECT-25-COMPANY-EXEMPT",
+      "income_type": "dividend",
+      "source_country": "SK",
+      "recipient_country": "NL",
+      "legal_instrument": "treaty",
+      "legal_layer": "treaty",
+      "article": "10",
+      "paragraph": null,
+      "rate": 0,
+      "priority": 720,
+      "conditions": [
+        {
+          "fact": "recipient_is_treaty_resident",
+          "fact_source": "transaction",
+          "operator": "==",
+          "value": true
+        },
+        {
+          "fact": "nl_dividend_direct_25_company_exemption",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": true
+        }
+      ],
+      "effect": "rate",
+      "effective_from": "1974-11-05",
+      "verification_status": "needs_review",
+      "source_text": "Článok 10 Dividendy 1. Dividendy vyplácané spoločnosťou, ktorá má sídlo v jednom z oboch štátov, osobe, ktorá má bydlisko alebo sídlo v druhom štáte, sa môžu zdaniť v tomto druhom štáte. 2. Jednako tieto dividendy sa môžu zdaniť v štáte, v ktorom má sídlo spoločnosť, ktorá ich vypláca, a to podľa zákonov tohto štátu. Takto určená daň však nemôže presiahnuť 10 % hrubej sumy dividend. 3. Štát, v ktorom má sídlo spoločnosť vyplácajúca dividendy, nezdaní bez ohľadu na ustanovenie odseku 2 dividendy vyplácané touto spoločnosťou spoločnosti, ktorej majetok je úplne alebo čiastočne rozdelený na akcie a ktorá má sídlo v druhom štáte a vlastní priamo najmenej 25 % majetku spoločnosti vyplácajúcej dividendy. 4. Príslušné úrady štátov upravia vzájomnou dohodou spôsob aplikácie odsekov 2 a 3. 5. Ustanovenia odsekov 2 a 3 sa nedotknú zdanenia ziskov spoločnosti, z ktorých sa dividendy vyplácajú. 6. Výraz „dividendy“ použitý v tomto článku označuje príjmy z akcií, z požitkových listov alebo práv, kuksov, zakladateľských podielov alebo iných práv s podielom na ziskoch, práve tak ako príjmy z pohľadávok s podielom na ziskoch a príjmy z iných spoločenských práv, ktoré sú postavené na roveň príjmom z akcií daňovými predpismi štátu, v ktorom má sídlo spoločnosť vyplácajúca dividendy. 7. Ustanovenia odsekov 1, 2 a 3 sa nepoužijú, ak príjemca dividend majúci bydlisko alebo sídlo v jednom z oboch štátov má v druhom štáte, v ktorom má sídlo spoločnosť vyplácajúca dividendy stálu prevádzkáreň, s ktorou je v skutočnosti spojená účasť, na základe ktorej sa dividendy vyplácajú. V takom prípade sa použijú ustanovenia článku 7 . 8. Ak spoločnosť, ktorá má sídlo v jednom štáte, dosahuje zisky alebo príjem z druhého štátu, tento druhý štát nesmie ukladať žiadne dane z dividend vyplácaných spoločnosťou osobám, ktoré nemajú bydlisko alebo sídlo v tomto druhom štáte, ani podrobiť nerozdelené zisky spoločnosti dani z nerozdelených ziskov, aj keď vyplácané dividendy alebo nerozdelené zisky pozostávajú úplne alebo čiastočne zo ziskov alebo príjmu, ktoré sa dosiahli v tomto druhom štáte.",
+      "source_id": "SK-SLOVLEX-9025B20EAE2A1EC7",
+      "source_url": "https://static.slov-lex.sk/static/SK/ZZ/1974/138/vyhlasene_znenie.html",
+      "source_excerpt_hash": "568634bc544b8db15c0ba091575cc5d34e9ae1ef4da5a5d2e17166aa0ab3d06f",
+      "verification_authority": "sk_legal_review_coverage_pattern_reconciliation",
+      "reviewer_id": "sk_legal_review_coverage",
+      "reviewed_at": "2026-08-21",
+      "approval_dataset_release": "sk-human-review-coverage-2026-08-21.2",
+      "approval_created_at": "2026-09-01",
+      "dataset_release": "sk-structured-treaty-rules-2026-09-01.4",
+      "evidence_source_ids": [
+        "SK-SLOVLEX-9025B20EAE2A1EC7"
+      ],
+      "decision_status": "REVIEW_REQUIRED",
+      "final_rate_allowed": false,
+      "automatic_production_approval_forbidden": true,
+      "tax_treatment": "exclusive_foreign_taxation"
+    },
+    {
+      "rule_id": "SK-NL-DIVIDEND-TREATY-DIVIDEND-NL-OTHER",
       "income_type": "dividend",
       "source_country": "SK",
       "recipient_country": "NL",
@@ -315,13 +361,19 @@
       "article": "10",
       "paragraph": null,
       "rate": 10,
-      "priority": 600,
+      "priority": 610,
       "conditions": [
         {
           "fact": "recipient_is_treaty_resident",
           "fact_source": "transaction",
           "operator": "==",
           "value": true
+        },
+        {
+          "fact": "nl_dividend_direct_25_company_exemption",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": false
         }
       ],
       "effect": "rate",
