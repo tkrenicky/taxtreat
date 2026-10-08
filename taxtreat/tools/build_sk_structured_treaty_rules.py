@@ -594,6 +594,54 @@ def _special_dividend_exemption_branches(scope: dict, article: dict) -> list[dic
     return None
 
 
+def _nl_se_dividend_exemption_branches(scope: dict, article: dict) -> list[dict] | None:
+    if scope.get("income_type") != "dividend" or not scope.get("source_sha256"):
+        return None
+    country = scope.get("recipient_country")
+    if country not in {"NL", "SE"}:
+        return None
+
+    text = str(article.get("article_text") or "").lower()
+    if country == "NL":
+        required = (
+            "nezdaní bez ohľadu na ustanovenie odseku 2",
+            "vlastní priamo najmenej 25 % majetku",
+            "nemôže presiahnuť 10 % hrubej sumy dividend",
+        )
+    else:
+        required = (
+            "nezdaní bez ohľadu na ustanovenie odseku 2",
+            "priamo vlastní najmenej 25% majetku",
+            "nepresiahne 10% z hrubej sumy dividend",
+        )
+    if not all(token in text for token in required):
+        return None
+
+    common = conditions(scope)
+    exemption = {
+        "fact": f"{country.lower()}_dividend_direct_25_company_exemption",
+        "fact_source": "determination",
+        "operator": "==",
+        "value": True,
+    }
+    non_exemption = {**exemption, "value": False}
+    return [
+        {
+            "rate": 0.0,
+            "priority": 720,
+            "conditions": [*common, exemption],
+            "tax_treatment": "exclusive_foreign_taxation",
+            "suffix": f"DIVIDEND-{country}-DIRECT-25-COMPANY-EXEMPT",
+        },
+        {
+            "rate": 10.0,
+            "priority": 610,
+            "conditions": [*common, non_exemption],
+            "suffix": f"DIVIDEND-{country}-OTHER",
+        },
+    ]
+
+
 def _exceptional_dividend_allocation_branches(scope: dict, article: dict) -> list[dict] | None:
     if scope.get("income_type") != "dividend" or not scope.get("source_sha256"):
         return None
@@ -650,7 +698,7 @@ def _exceptional_dividend_allocation_branches(scope: dict, article: dict) -> lis
 def dividend_requires_explicit_branch(scope: dict) -> bool:
     return (
         scope.get("income_type") == "dividend"
-        and scope.get("recipient_country") in {"IE", "OM", "SG"}
+        and scope.get("recipient_country") in {"IE", "NL", "OM", "SE", "SG"}
     )
 
 
@@ -694,6 +742,10 @@ def dividend_branches(scope: dict, article: dict) -> list[dict] | None:
     special_exemption = _special_dividend_exemption_branches(scope, article)
     if special_exemption:
         return special_exemption
+
+    nl_se_exemption = _nl_se_dividend_exemption_branches(scope, article)
+    if nl_se_exemption:
+        return nl_se_exemption
 
     if scope.get("income_type") != "dividend":
         return None
@@ -2518,7 +2570,7 @@ def main() -> int:
             materialized.append(f"SK-{country}-{income}")
             if any(
                 str(branch.get("suffix") or "").startswith(
-                    ("DIVIDEND-IE-", "DIVIDEND-OM-", "DIVIDEND-SG-")
+                    ("DIVIDEND-IE-", "DIVIDEND-NL-", "DIVIDEND-OM-", "DIVIDEND-SE-", "DIVIDEND-SG-")
                 )
                 for branch in branches
             ):
