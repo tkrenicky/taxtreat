@@ -1048,16 +1048,57 @@ def _il_interest_branches(scope: dict, article: dict) -> list[dict] | None:
     ]
 
 
+def _interest_arm_length_excess_guard(article: dict) -> dict | None:
+    text = str(article.get("article_text") or "").lower()
+    if not (
+        re.search(r"presahuje[^.;]{0,220}osobitn[^.;]{0,120}vzťah", text, flags=re.S)
+        and (
+            "sumu, ktorú by" in text
+            or "suma, ktorú by" in text
+            or "keby nebolo takých vzťahov" in text
+            or "keby neboli takéto vzťahy" in text
+        )
+    ):
+        return None
+    return {
+        "fact": "interest_payment_exceeds_arm_length_amount",
+        "fact_source": "determination",
+        "operator": "==",
+        "value": False,
+    }
+
+
+def _with_interest_source_conditions(
+    branches: list[dict] | None,
+    article: dict,
+) -> list[dict] | None:
+    if not branches:
+        return branches
+    guard = _interest_arm_length_excess_guard(article)
+    if guard is None:
+        return branches
+    enriched: list[dict] = []
+    for row in branches:
+        conditions_list = list(row.get("conditions") or [])
+        if not any(
+            condition.get("fact") == guard["fact"]
+            for condition in conditions_list
+        ):
+            conditions_list.append(dict(guard))
+        enriched.append({**row, "conditions": conditions_list})
+    return enriched
+
+
 def interest_branches(scope: dict, article: dict) -> list[dict] | None:
     if scope.get("income_type") != "interest" or not scope.get("source_sha256"):
         return None
     br_branches = _br_interest_branches(scope, article)
     if br_branches:
-        return br_branches
+        return _with_interest_source_conditions(br_branches, article)
 
     il_branches = _il_interest_branches(scope, article)
     if il_branches:
-        return il_branches
+        return _with_interest_source_conditions(il_branches, article)
 
     text = str(article.get("article_text") or "").lower()
     common = conditions(scope)
@@ -1073,13 +1114,13 @@ def interest_branches(scope: dict, article: dict) -> list[dict] | None:
         )
     )
     if residence_only:
-        return [{
+        return _with_interest_source_conditions([{
             "rate": 0.0,
             "priority": 650,
             "conditions": common,
             "tax_treatment": "exclusive_foreign_taxation",
             "suffix": "INTEREST-RESIDENCE-ONLY",
-        }]
+        }], article)
 
     rates = [
         float(row["rate_percent"])
@@ -1119,7 +1160,7 @@ def interest_branches(scope: dict, article: dict) -> list[dict] | None:
         "operator": "==",
         "value": False,
     })
-    return [
+    return _with_interest_source_conditions([
         {
             "rate": 0.0,
             "priority": 700,
@@ -1128,7 +1169,7 @@ def interest_branches(scope: dict, article: dict) -> list[dict] | None:
             "suffix": "INTEREST-SPECIAL-EXEMPTION",
         },
         {"rate": general_rate, "priority": 600, "conditions": ordinary, "suffix": "INTEREST-GENERAL"},
-    ]
+    ], article)
 
 
 def _royalty_categories_from_text(text: str) -> list[str]:
