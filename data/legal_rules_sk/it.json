@@ -60,6 +60,12 @@
           "fact_source": "transaction",
           "operator": "==",
           "value": true
+        },
+        {
+          "fact": "interest_payment_exceeds_arm_length_amount",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": false
         }
       ],
       "effect": "rate",
