@@ -1068,6 +1068,17 @@ def _interest_arm_length_excess_guard(article: dict) -> dict | None:
     }
 
 
+def _interest_source_conditions(scope: dict, article: dict) -> list[dict]:
+    result = list(conditions(scope))
+    guard = _interest_arm_length_excess_guard(article)
+    if guard is not None and not any(
+        condition.get("fact") == guard["fact"]
+        for condition in result
+    ):
+        result.append(guard)
+    return result
+
+
 def _with_interest_source_conditions(
     branches: list[dict] | None,
     article: dict,
@@ -2702,6 +2713,8 @@ def main() -> int:
                 rule_conditions=(
                     _royalty_source_conditions(scope, article)
                     if income == "royalty"
+                    else _interest_source_conditions(scope, article)
+                    if income == "interest"
                     else conditions(scope)
                 ),
                 rule_suffix=f"{income.upper()}-SOURCE-TEXT-RESIDENCE-ONLY",
@@ -2729,6 +2742,8 @@ def main() -> int:
                 rule_conditions=(
                     _royalty_source_conditions(scope, article)
                     if income == "royalty"
+                    else _interest_source_conditions(scope, article)
+                    if income == "interest"
                     else conditions(scope)
                 ),
                 rule_suffix=f"{income.upper()}-SOURCE-TEXT-WORD-RATE",
@@ -2762,6 +2777,8 @@ def main() -> int:
                 rule_conditions=(
                     _royalty_source_conditions(scope, article)
                     if income == "royalty"
+                    else _interest_source_conditions(scope, article)
+                    if income == "interest"
                     else conditions(scope)
                 ),
                 rule_suffix="UNRESOLVED-FAIL-CLOSED",
@@ -2783,6 +2800,8 @@ def main() -> int:
             rule_conditions=(
                 _royalty_source_conditions(scope, article)
                 if income == "royalty"
+                else _interest_source_conditions(scope, article)
+                if income == "interest"
                 else conditions(scope)
             ),
             rule_suffix="SIMPLE-1",
