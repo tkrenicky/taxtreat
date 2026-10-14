@@ -142,7 +142,7 @@
       "legal_layer": "treaty",
       "article": "10",
       "paragraph": null,
-      "rate": 10.0,
+      "rate": 10,
       "priority": 600,
       "conditions": [
         {
@@ -322,7 +322,7 @@
       "legal_layer": "treaty",
       "article": "11",
       "paragraph": null,
-      "rate": 10.0,
+      "rate": 10,
       "priority": 600,
       "conditions": [
         {
@@ -346,6 +346,12 @@
         {
           "fact": "article_11_special_exemption",
           "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        },
+        {
+          "fact": "interest_payment_exceeds_arm_length_amount",
+          "fact_source": "determination",
           "operator": "==",
           "value": false
         }
@@ -379,7 +385,7 @@
       "legal_layer": "treaty",
       "article": "11",
       "paragraph": null,
-      "rate": 0.0,
+      "rate": 0,
       "priority": 700,
       "conditions": [
         {
@@ -405,6 +411,12 @@
           "fact_source": "transaction",
           "operator": "==",
           "value": true
+        },
+        {
+          "fact": "interest_payment_exceeds_arm_length_amount",
+          "fact_source": "determination",
+          "operator": "==",
+          "value": false
         }
       ],
       "effect": "rate",
@@ -566,7 +578,7 @@
       "legal_layer": "treaty",
       "article": "12",
       "paragraph": null,
-      "rate": 10.0,
+      "rate": 10,
       "priority": 690,
       "conditions": [
         {
@@ -623,7 +635,7 @@
       "legal_layer": "treaty",
       "article": "12",
       "paragraph": null,
-      "rate": 10.0,
+      "rate": 10,
       "priority": 690,
       "conditions": [
         {
@@ -680,7 +692,7 @@
       "legal_layer": "treaty",
       "article": "12",
       "paragraph": null,
-      "rate": 10.0,
+      "rate": 10,
       "priority": 690,
       "conditions": [
         {
@@ -737,7 +749,7 @@
       "legal_layer": "treaty",
       "article": "12",
       "paragraph": null,
-      "rate": 15.0,
+      "rate": 15,
       "priority": 690,
       "conditions": [
         {
@@ -794,7 +806,7 @@
       "legal_layer": "treaty",
       "article": "12",
       "paragraph": null,
-      "rate": 15.0,
+      "rate": 15,
       "priority": 690,
       "conditions": [
         {
@@ -851,7 +863,7 @@
       "legal_layer": "treaty",
       "article": "12",
       "paragraph": null,
-      "rate": 15.0,
+      "rate": 15,
       "priority": 690,
       "conditions": [
         {
@@ -908,7 +920,7 @@
       "legal_layer": "treaty",
       "article": "12",
       "paragraph": null,
-      "rate": 15.0,
+      "rate": 15,
       "priority": 690,
       "conditions": [
         {
