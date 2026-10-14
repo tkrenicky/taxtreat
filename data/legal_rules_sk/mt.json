@@ -56,7 +56,7 @@
       "legal_layer": "treaty",
       "article": "10",
       "paragraph": null,
-      "rate": 5.0,
+      "rate": 5,
       "priority": 600,
       "conditions": [
         {
@@ -150,7 +150,7 @@
       "legal_layer": "treaty",
       "article": "11",
       "paragraph": null,
-      "rate": 0.0,
+      "rate": 0,
       "priority": 650,
       "conditions": [
         {
@@ -168,6 +168,12 @@
         {
           "fact": "permanent_establishment_connection",
           "fact_source": "transaction",
+          "operator": "==",
+          "value": false
+        },
+        {
+          "fact": "interest_payment_exceeds_arm_length_amount",
+          "fact_source": "determination",
           "operator": "==",
           "value": false
         }
@@ -245,7 +251,7 @@
       "legal_layer": "treaty",
       "article": "12",
       "paragraph": null,
-      "rate": 5.0,
+      "rate": 5,
       "priority": 600,
       "conditions": [
         {
